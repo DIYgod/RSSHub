@@ -1,28 +1,32 @@
 import { Data, DataItem, Route, ViewType } from '@/types';
-import { fetchNewsItems } from './utils';
+import { fetchNewsItems, fetchTag } from './utils';
 
-export const handler = async (): Promise<Data> => {
+export const handler = async (ctx): Promise<Data> => {
+    const slug = ctx.req.param('slug');
+
+    const { id, name } = await fetchTag(slug);
+
     const rootUrl = 'https://www.landiannews.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed`;
+    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&tags=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
 
     return {
-        title: '蓝点网',
+        title: `${name} - 蓝点网`,
         description: '给你感兴趣的内容!',
-        link: rootUrl,
+        link: `${rootUrl}archives/tag/${slug}`,
         item: items,
     };
 };
 
 export const route: Route = {
-    path: '/',
-    name: '首页',
+    path: '/tag/:slug',
+    name: '标签',
     url: 'www.landiannews.com',
-    maintainers: ['nczitzk', 'cscnk52'],
+    maintainers: ['cscnk52'],
     handler,
-    example: '/landiannews',
-    parameters: undefined,
+    example: '/landiannews/tag/linux-kernel',
+    parameters: { slug: '标签名称' },
     description: undefined,
     categories: ['new-media'],
     features: {
@@ -36,8 +40,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.landiannews.com'],
-            target: '/',
+            source: ['www.landiannews.com/archives/tag/:slug'],
+            target: '/tag/:slug',
         },
     ],
     view: ViewType.Articles,
