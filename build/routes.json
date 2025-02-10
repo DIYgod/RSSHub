@@ -3110,6 +3110,76 @@
     "url": "www.4gamers.com.tw",
     "lang": "zh-TW"
   },
+  "4khd": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "picture"
+        ],
+        "example": "/4khd/category/cosplay",
+        "parameters": {
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.4khd.com/pages/:category"
+            ],
+            "target": "/category/:category"
+          }
+        ],
+        "name": "Category",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "www.4khd.com/",
+        "location": "category.ts"
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "picture"
+        ],
+        "example": "/4khd",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.4khd.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "Latest",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "www.4khd.com/",
+        "location": "latest.ts"
+      }
+    },
+    "name": "4KHD",
+    "url": "www.4khd.net",
+    "description": "4KHD - HD Beautiful Girls",
+    "lang": "en"
+  },
   "4ksj": {
     "routes": {
       "/:id?": {

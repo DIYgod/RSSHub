@@ -1813,6 +1813,27 @@
       }
     ]
   },
+  "4khd.com": {
+    "_name": "4KHD",
+    "www": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/pages/:category"
+        ],
+        "target": "/4khd/category/:category"
+      },
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/4khd/"
+      }
+    ]
+  },
   "4kup.net": {
     "_name": "4KUP",
     ".": [

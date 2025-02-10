@@ -182,6 +182,12 @@
   "/4gamers/topic/:topic": [
     "bestpika"
   ],
+  "/4khd/category/:category": [
+    "AiraNadih"
+  ],
+  "/4khd/": [
+    "AiraNadih"
+  ],
   "/4ksj/:id?": [
     "nczitzk"
   ],
