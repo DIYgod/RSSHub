@@ -30,10 +30,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') ?? 'all';
+    const { category = 'all' } = ctx.req.param();
+    const apiKey = ctx.req.query('typesenseApiKey');
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const siteDomain = 'www.instructables.com';
-    const apiKey = 'NU5CdGwyRDdMVnVmM3l4cWNqQzFSVzJNZU5jaUxFU3dGK3J2L203MkVmVT02ZWFYeyJleGNsdWRlX2ZpZWxkcyI6WyJvdXRfb2YiLCJzZWFyY2hfdGltZV9tcyIsInN0ZXBCb2R5Il0sInBlcl9wYWdlIjo1MH0=';
 
     let pathPrefix, projectFilter;
     if (category === 'all') {
@@ -59,7 +60,7 @@ async function handler(ctx) {
             q: '*',
             query_by: 'title,stepBody,screenName',
             page: 1,
-            per_page: 50,
+            per_page: limit,
             sort_by: 'publishDate:desc',
             include_fields: 'title,urlString,coverImageUrl,screenName,publishDate,favorites,views,primaryClassification,featureFlag,prizeLevel,IMadeItCount',
             filter_by: `featureFlag:=true${projectFilter}`,
