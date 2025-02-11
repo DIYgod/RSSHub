@@ -2621,8 +2621,9 @@
   "/gcores/radios/:category?": [
     "eternasuno"
   ],
-  "/gcores/tag/:tag/:category?": [
-    "StevenRCE0"
+  "/gcores/tags/:id/:tab?": [
+    "StevenRCE0",
+    "nczitzk"
   ],
   "/gdsrx/:id?": [],
   "/gdufs/news": [

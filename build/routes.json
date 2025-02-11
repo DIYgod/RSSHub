@@ -33170,21 +33170,54 @@
         "url": "gcores.com/radios",
         "location": "radio.ts"
       },
-      "/tag/:tag/:category?": {
-        "path": "/tag/:tag/:category?",
-        "categories": [
-          "new-media",
-          "popular"
+      "/tags/:id/:tab?": {
+        "path": "/tags/:id/:tab?",
+        "name": "标签",
+        "url": "www.gcores.com",
+        "maintainers": [
+          "StevenRCE0",
+          "nczitzk"
         ],
-        "example": "/gcores/tag/42/articles",
+        "example": "/gcores/tags/1/articles",
         "parameters": {
-          "tag": "标签名，可在选定标签分类页面的 URL 中找到，如视觉动物——42",
-          "category": "分类名"
+          "id": {
+            "description": "标签 ID，可在对应标签页 URL 中找到"
+          },
+          "tab": {
+            "description": "类型，默认为空，即全部，可在对应标签页 URL 中找到",
+            "options": [
+              {
+                "label": "全部",
+                "value": ""
+              },
+              {
+                "label": "播客",
+                "value": "radios"
+              },
+              {
+                "label": "文章",
+                "value": "articles"
+              },
+              {
+                "label": "资讯",
+                "value": "news"
+              },
+              {
+                "label": "视频",
+                "value": "videos"
+              }
+            ]
+          }
         },
+        "description": ":::tip\n若订阅 [美国 - 文章](https://www.gcores.com/tags/1/originals?tab=articles)，网址为 `https://www.gcores.com/tags/1/originals?tab=articles`，请截取 `https://www.gcores.com/tags/` 到末尾 `/originals` 的部分 `1` 作为 `id` 参数填入，截取 `articles` 作为 `tab` 参数填入，此时目标路由为 [`/gcores/tags/1/articles`](https://rsshub.app/gcores/tags/1/articles)。\n:::\n\n| 全部 | 播客   | 文章     | 资讯 | 视频   |\n| ---- | ------ | -------- | ---- | ------ |\n|      | radios | articles | news | videos |\n",
+        "categories": [
+          "game"
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -33192,18 +33225,47 @@
         "radar": [
           {
             "source": [
-              "gcores.com/categories/:tag",
-              "gcores.com/"
+              "www.gcores.com/tags/:id/originals"
+            ]
+          },
+          {
+            "title": "全部",
+            "source": [
+              "www.gcores.com/tags/:id/originals"
             ],
-            "target": "/tag/:tag"
+            "target": "/gcores/tags/:id"
+          },
+          {
+            "title": "播客",
+            "source": [
+              "www.gcores.com/tags/:id/originals"
+            ],
+            "target": "/gcores/tags/:id/radios"
+          },
+          {
+            "title": "文章",
+            "source": [
+              "www.gcores.com/tags/:id/originals"
+            ],
+            "target": "/gcores/tags/:id/articles"
+          },
+          {
+            "title": "资讯",
+            "source": [
+              "www.gcores.com/tags/:id/originals"
+            ],
+            "target": "/gcores/tags/:id/news"
+          },
+          {
+            "title": "视频",
+            "source": [
+              "www.gcores.com/tags/:id/originals"
+            ],
+            "target": "/gcores/tags/:id/videos"
           }
         ],
-        "name": "标签",
-        "maintainers": [
-          "StevenRCE0"
-        ],
-        "description": "分类名同上。",
-        "location": "tag.ts"
+        "view": 0,
+        "location": "tags.ts"
       }
     },
     "name": "机核网",

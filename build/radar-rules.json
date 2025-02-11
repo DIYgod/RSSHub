@@ -12511,6 +12511,54 @@
           "/news"
         ],
         "target": "/gcores/gcores/news"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores(params,url)=>{const urlObj=new URL(url);const id=params.id;const tab=urlObj.searchParams.get(\"tab\")??void 0;return`/gcores/tags/${id}/${tab?`/${tab}`:\"\"}`}"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores/gcores/tags/:id"
+      },
+      {
+        "title": "播客",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores/gcores/tags/:id/radios"
+      },
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores/gcores/tags/:id/articles"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores/gcores/tags/:id/news"
+      },
+      {
+        "title": "视频",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/tags/:id/originals"
+        ],
+        "target": "/gcores/gcores/tags/:id/videos"
       }
     ],
     ".": [
@@ -12537,15 +12585,6 @@
           "/categories/:category"
         ],
         "target": "/gcores/radios/:category"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/categories/:tag",
-          "/"
-        ],
-        "target": "/gcores/tag/:tag"
       }
     ]
   },
