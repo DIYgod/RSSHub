@@ -183,7 +183,7 @@
         "globals": "15.14.0",
         "got": "14.4.6",
         "husky": "9.1.7",
-        "js-beautify": "1.15.2",
+        "js-beautify": "1.15.3",
         "lint-staged": "15.4.3",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
