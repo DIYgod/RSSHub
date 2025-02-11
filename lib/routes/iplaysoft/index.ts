@@ -19,7 +19,7 @@ export const handler = async (): Promise<Data> => {
 export const route: Route = {
     path: '/',
     name: '首页',
-    url: 'www.landiannews.com',
+    url: 'www.iplaysoft.com',
     maintainers: ['williamgateszhao', 'cscnk52'],
     handler,
     example: '/iplaysoft',
