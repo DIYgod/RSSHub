@@ -29,7 +29,7 @@ export const route: Route = {
     example: '/iplaysoft/category/system',
     parameters: { slug: '分类名称' },
     description: undefined,
-    categories: ['new-media'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,

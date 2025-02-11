@@ -29,7 +29,7 @@ export const route: Route = {
     example: '/iplaysoft/tag/windows',
     parameters: { slug: '标签名称' },
     description: undefined,
-    categories: ['new-media'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,

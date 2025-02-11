@@ -25,7 +25,7 @@ export const route: Route = {
     example: '/iplaysoft',
     parameters: undefined,
     description: undefined,
-    categories: ['new-media'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
