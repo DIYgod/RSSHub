@@ -43,9 +43,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const PR = JSON.parse(process.env.PULL_REQUEST)
+            const body = PR.body
             const number = PR.number
+            const sender = PR.user.login
             const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
-            return identify({ github, context, core }, number)
+            return identify({ github, context, core }, body, number, sender)
 
       - name: Fetch Docker image
         if: (env.TEST_CONTINUE)
