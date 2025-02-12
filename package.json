@@ -135,7 +135,7 @@
         "uuid": "11.0.5",
         "winston": "3.17.0",
         "xxhash-wasm": "1.1.0",
-        "zod": "3.24.1"
+        "zod": "3.24.2"
     },
     "devDependencies": {
         "@babel/preset-env": "7.26.8",
