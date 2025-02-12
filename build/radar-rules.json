@@ -18454,28 +18454,12 @@
     "_name": "异次元软件世界",
     "www": [
       {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/category/:slug"
-        ],
-        "target": "/iplaysoft/category/:slug"
-      },
-      {
-        "title": "首页",
+        "title": "全部文章",
         "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
           "/"
         ],
         "target": "/iplaysoft/"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/tag/:slug"
-        ],
-        "target": "/iplaysoft/tag/:slug"
       }
     ]
   },
