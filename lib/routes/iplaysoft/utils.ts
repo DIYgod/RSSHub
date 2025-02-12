@@ -25,7 +25,7 @@ async function fetchNewsItems(apiUrl: string) {
         title: item.title.rendered,
         description: item.content.rendered,
         link: item.link,
-        pubDate: new Date(item.date).toUTCString(),
+        pubDate: new Date(item.date_gmt).toUTCString(),
         author: item._embedded.author[0].name,
         category: item._embedded['wp:term'].flat().map((term) => term.name),
     }));
