@@ -1,0 +1,6 @@
+<h2>{{ headline }}</h2>
+<p>{{ description }}</p>
+<div>
+  <div><b>预警编号:</b>{{ identifier }}</div>
+  <div><b>发布时间:</b>{{ ctime }}</div>
+</div>
