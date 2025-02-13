@@ -4606,7 +4606,7 @@
     www:[ { title:"Changelog",
         docs:"https://docs.rsshub.app/routes/program-update",
         source:[ "/changelog" ],
-        target:"/cursor/cursor/changelog" } ] },
+        target:"/cursor/changelog" } ] },
   "cw.com.tw":{ _name:"天下雜誌",
     ".":[ { title:"作者",
         docs:"https://docs.rsshub.app/routes/traditional-media",
