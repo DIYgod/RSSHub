@@ -3793,8 +3793,15 @@
   "/investor/:category{.+}?": [
     "nczitzk"
   ],
+  "/iplaysoft/category/:slug": [
+    "cscnk52"
+  ],
   "/iplaysoft/": [
-    "williamgateszhao"
+    "williamgateszhao",
+    "cscnk52"
+  ],
+  "/iplaysoft/tag/:slug": [
+    "cscnk52"
   ],
   "/ippa/": [
     "cnkmmk"
