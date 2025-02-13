@@ -32,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: 'User Profile - Picnob',
-    maintainers: ['TonyRL', 'micheal-death'],
+    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih'],
     handler,
     view: ViewType.Pictures,
 };
@@ -97,6 +97,11 @@ async function handler(ctx) {
 
         const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
         posts = parsedData?.posts;
+    }
+
+    if (!posts?.items) {
+        await browser.close();
+        throw new Error('Failed to fetch posts data');
     }
 
     const list = await Promise.all(
