@@ -13,7 +13,7 @@ import puppeteer from '@/utils/puppeteer';
 import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
-    path: '/user/:id',
+    path: '/user/:id/:type?',
     categories: ['social-media', 'popular'],
     example: '/picnob/user/xlisa_olivex',
     parameters: { id: 'Instagram id' },
@@ -27,8 +27,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['piokok.com/profile/:id/*'],
+            source: ['piokok.com/profile/:id'],
             target: '/user/:id',
+        },
+        {
+            source: ['piokok.com/profile/:id/tagged'],
+            target: '/user/:id/tagged',
         },
     ],
     name: 'User Profile - Picnob',
@@ -41,6 +45,7 @@ async function handler(ctx) {
     // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'piokok' eventually
     const baseUrl = 'https://www.piokok.com';
     const id = ctx.req.param('id');
+    const type = ctx.req.param('type') ?? 'profile';
     const url = `${baseUrl}/profile/${id}/`;
 
     const browser = await puppeteer();
@@ -81,12 +86,14 @@ async function handler(ctx) {
         usePuppeteer: boolean;
     };
 
-    let posts;
+    const endpoint = type === 'tagged' ? 'tagged' : 'posts';
+    const apiUrl = `${baseUrl}/api/${endpoint}`;
+
+    let responseData;
     if (profile.usePuppeteer) {
-        const data = await puppeteerGet(`${baseUrl}/api/posts?userid=${profile.userId}`, browser);
-        posts = data.posts;
+        responseData = await puppeteerGet(`${apiUrl}?userid=${profile.userId}`, browser);
     } else {
-        const data = await ofetch(`${baseUrl}/api/posts`, {
+        const data = await ofetch(apiUrl, {
             headers: {
                 accept: 'application/json',
             },
@@ -94,14 +101,21 @@ async function handler(ctx) {
                 userid: profile.userId,
             },
         });
-
-        const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-        posts = parsedData?.posts;
+        responseData = typeof data === 'string' ? JSON.parse(data) : data;
     }
+
+    const posts = responseData?.posts;
 
     if (!posts?.items) {
         await browser.close();
         throw new Error('Failed to fetch posts data');
+    }
+
+    if (type === 'tagged') {
+        posts.items = posts.items.map((post, index) => {
+            const taggedPost = responseData.tagged.items[index] || {};
+            return { ...taggedPost, ...post };
+        });
     }
 
     const list = await Promise.all(
