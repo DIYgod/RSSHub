@@ -94,7 +94,9 @@ async function handler(ctx) {
                 userid: profile.userId,
             },
         });
-        posts = data.posts;
+
+        const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+        posts = parsedData?.posts;
     }
 
     const list = await Promise.all(
