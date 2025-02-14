@@ -72,7 +72,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `Reviews handle:${handle} page:${page} – Shopify App Store`,
         link: `${baseURL}/${handle}/reviews`,
         allowEmpty: true,
-        language: 'en-US',
+        language: 'en-us',
         item: items,
     };
 }
