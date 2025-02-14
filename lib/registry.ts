@@ -93,7 +93,11 @@ for (const namespace in namespaces) {
                     const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
                     namespaces[namespace].routes[path].handler = route.handler;
                 }
-                ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
+                const response = await namespaces[namespace].routes[path].handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
             }
         };
         subApp.get(path, wrappedHandler);
