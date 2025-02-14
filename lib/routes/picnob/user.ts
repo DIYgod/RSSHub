@@ -16,7 +16,10 @@ export const route: Route = {
     path: '/user/:id/:type?',
     categories: ['social-media', 'popular'],
     example: '/picnob/user/xlisa_olivex',
-    parameters: { id: 'Instagram id' },
+    parameters: {
+        id: 'Instagram id',
+        type: 'Type of profile page (profile or tagged)',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
