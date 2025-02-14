@@ -53,127 +53,140 @@ async function handler(ctx) {
 
     const browser = await puppeteer();
     // TODO: can't bypass cloudflare 403 error without puppeteer
-    const profile = (await cache.tryGet(`picnob:user:${id}`, async () => {
-        let html;
-        let usePuppeteer = false;
-        try {
-            const data = await ofetch(url, {
-                headers: {
-                    accept: 'text/html',
-                    referer: 'https://www.google.com/',
-                },
-            });
-            html = data;
-        } catch (error: any) {
-            if (error.message.includes('403')) {
+    try {
+        const profile = (await cache.tryGet(`picnob:user:${id}`, async () => {
+            let html;
+            let usePuppeteer = false;
+            try {
+                const data = await ofetch(url, {
+                    headers: {
+                        accept: 'text/html',
+                        referer: 'https://www.google.com/',
+                    },
+                });
+                html = data;
+            } catch {
                 html = await puppeteerGet(url, browser);
                 usePuppeteer = true;
             }
-        }
-        const $ = load(html);
-        const name = $('h1.fullname').text();
-        const userId = $('input[name=userid]').attr('value');
+            const $ = load(html);
+            const name = $('h1.fullname').text();
+            const userId = $('input[name=userid]').attr('value');
 
-        return {
-            name,
-            userId,
-            description: $('.info .sum').text(),
-            image: $('.ava .pic img').attr('src'),
-            usePuppeteer,
-        };
-    })) as {
-        name: string;
-        userId: string;
-        description: string;
-        image: string;
-        usePuppeteer: boolean;
-    };
-
-    const endpoint = type === 'tagged' ? 'tagged' : 'posts';
-    const apiUrl = `${baseUrl}/api/${endpoint}`;
-
-    let responseData;
-    if (profile.usePuppeteer) {
-        responseData = await puppeteerGet(`${apiUrl}?userid=${profile.userId}`, browser);
-    } else {
-        const data = await ofetch(apiUrl, {
-            headers: {
-                accept: 'application/json',
-            },
-            query: {
-                userid: profile.userId,
-            },
-        });
-        responseData = typeof data === 'string' ? JSON.parse(data) : data;
-    }
-
-    const posts = responseData?.posts;
-
-    if (!posts?.items) {
-        await browser.close();
-        throw new Error('Failed to fetch posts data');
-    }
-
-    if (type === 'tagged') {
-        posts.items = posts.items.map((post, index) => {
-            const taggedPost = responseData.tagged.items[index] || {};
-            return { ...taggedPost, ...post };
-        });
-    }
-
-    const list = await Promise.all(
-        posts.items.map(async (item) => {
-            const { shortcode, sum, sum_pure, type, time } = item;
-
-            const link = `${baseUrl}/post/${shortcode}/`;
-            if (type === 'img_multi') {
-                item.images = await cache.tryGet(link, async () => {
-                    let html;
-                    if (profile.usePuppeteer) {
-                        html = await puppeteerGet(link, browser);
-                    } else {
-                        const data = await ofetch(link);
-                        html = data;
-                    }
-                    const $ = load(html);
-                    return [
-                        ...new Set(
-                            $('.post_slide a')
-                                .toArray()
-                                .map((a: any) => {
-                                    a = $(a);
-                                    return {
-                                        ori: a.attr('href'),
-                                        url: a.find('img').attr('data-src'),
-                                        isVideo: !!a.find('.icon_play').length,
-                                    };
-                                })
-                        ),
-                    ];
-                });
+            if (!userId) {
+                throw new Error('Failed to get user ID');
             }
 
             return {
-                title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }) || sum_pure,
-                description: art(path.join(__dirname, 'templates/desc.art'), {
-                    item: {
-                        ...item,
-                        // Fix linebreaks
-                        sum: sum.replaceAll('\n', '<br>'),
-                    },
-                }),
-                link,
-                pubDate: parseDate(time, 'X'),
+                name,
+                userId,
+                description: $('.info .sum').text(),
+                image: $('.ava .pic img').attr('src'),
+                usePuppeteer,
             };
-        })
-    );
-    await browser.close();
+        })) as {
+            name: string;
+            userId: string;
+            description: string;
+            image: string;
+            usePuppeteer: boolean;
+        };
 
-    return {
-        title: `${profile.name} (@${id}) - Picnob`,
-        description: profile.description,
-        link: url,
-        image: profile.image,
-        item: list,
-    };
+        const endpoint = type === 'tagged' ? 'tagged' : 'posts';
+        const apiUrl = `${baseUrl}/api/${endpoint}`;
+
+        let responseData;
+        try {
+            if (profile.usePuppeteer) {
+                responseData = await puppeteerGet(`${apiUrl}?userid=${profile.userId}`, browser);
+                responseData = typeof responseData === 'string' ? JSON.parse(responseData) : responseData;
+            } else {
+                const data = await ofetch(apiUrl, {
+                    headers: {
+                        accept: 'application/json',
+                    },
+                    query: {
+                        userid: profile.userId,
+                    },
+                });
+                responseData = typeof data === 'string' ? JSON.parse(data) : data;
+            }
+        } catch {
+            responseData = await puppeteerGet(`${apiUrl}?userid=${profile.userId}`, browser);
+            responseData = typeof responseData === 'string' ? JSON.parse(responseData) : responseData;
+        }
+
+        const posts = responseData?.posts;
+
+        if (!posts?.items?.length) {
+            throw new Error('No posts found');
+        }
+
+        if (type === 'tagged') {
+            posts.items = posts.items.map((post, index) => {
+                const taggedPost = responseData.tagged.items[index] || {};
+                return { ...taggedPost, ...post };
+            });
+        }
+
+        const list = await Promise.all(
+            posts.items.map(async (item) => {
+                const { shortcode, sum, sum_pure, type, time } = item;
+
+                const link = `${baseUrl}/post/${shortcode}/`;
+                if (type === 'img_multi') {
+                    item.images = await cache.tryGet(link, async () => {
+                        let html;
+                        if (profile.usePuppeteer) {
+                            html = await puppeteerGet(link, browser);
+                        } else {
+                            const data = await ofetch(link);
+                            html = data;
+                        }
+                        const $ = load(html);
+                        return [
+                            ...new Set(
+                                $('.post_slide a')
+                                    .toArray()
+                                    .map((a: any) => {
+                                        a = $(a);
+                                        return {
+                                            ori: a.attr('href'),
+                                            url: a.find('img').attr('data-src'),
+                                            isVideo: !!a.find('.icon_play').length,
+                                        };
+                                    })
+                            ),
+                        ];
+                    });
+                }
+
+                return {
+                    title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }) || sum_pure,
+                    description: art(path.join(__dirname, 'templates/desc.art'), {
+                        item: {
+                            ...item,
+                            // Fix linebreaks
+                            sum: sum.replaceAll('\n', '<br>'),
+                        },
+                    }),
+                    link,
+                    pubDate: parseDate(time, 'X'),
+                };
+            })
+        );
+
+        return {
+            title: `${profile.name} (@${id}) - Picnob`,
+            description: profile.description,
+            link: url,
+            image: profile.image,
+            item: list,
+        };
+    } catch (error) {
+        await browser.close();
+        throw error;
+    } finally {
+        await browser.close();
+    }
 }
