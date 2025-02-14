@@ -13884,7 +13884,7 @@
       { title:"App store search",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/search" ],
-        target:"/shopify(_params,url)=>{const{searchParams}=new URL(url).searchParams;return searchParams.has(\"q\")?`/shopify/apps/search/${searchParams.get(\"q\")}`:null}" } ] },
+        target:"/shopify(_params,url)=>{const searchParams=new URL(url).searchParams;if(!searchParams.has(\"q\")){return\"\"}return`/shopify/apps/search/${searchParams.get(\"q\")}`}" } ] },
   "shoppingdesign.com.tw":{ _name:"Shopping Design",
     www:[ { title:"文章列表",
         docs:"https://docs.rsshub.app/routes/design",
