@@ -92,7 +92,7 @@ async function handler(ctx) {
             usePuppeteer: boolean;
         };
 
-        const profileTitle = type === 'tagged' ? `${profile.name} (@${id}) tagged posts - Picnob` : `${profile.name} (@${id}) public posts - Picnob`;
+        const profileTitle = `${profile.name} (@${id}) ${type === 'tagged' ? 'tagged' : 'public'} posts - Picnob`;
         const endpoint = type === 'tagged' ? 'tagged' : 'posts';
         const apiUrl = `${baseUrl}/api/${endpoint}`;
 
