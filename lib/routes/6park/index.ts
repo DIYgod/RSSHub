@@ -6,16 +6,21 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:id?/:type?/:keyword?',
+    path: '/index/:id?/:type?/:keyword?',
+    name: '首页',
+    maintainers: ['nczitzk', 'cscnk52'],
+    handler,
+    example: '/6park/index',
+    parameters: { id: '分站，见下表，默认为史海钩沉', type: '类型，可选值为 gold、type，默认为空', keyword: '关键词，可选，默认为空' },
     radar: [
         {
             source: ['club.6parkbbs.com/:id/index.php', 'club.6parkbbs.com/'],
             target: '/:id?',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
+    description: `| 婚姻家庭 | 魅力时尚 | 女性频道 | 生活百态 | 美食厨房 | 非常影音 | 车迷沙龙 | 游戏天地 | 卡通漫画 | 体坛纵横 | 运动健身 | 电脑前线 | 数码家电 | 旅游风向 | 摄影部落 | 奇珍异宝 | 笑口常开 | 娱乐八卦 | 吃喝玩乐 | 文化长廊 | 军事纵横 | 百家论坛 | 科技频道 | 爱子情怀 | 健康人生 | 博论天下 | 史海钩沉 | 网际谈兵 | 经济观察 | 谈股论金 | 杂论闲侃 | 唯美乐园 | 学习园地 | 命理玄机 | 宠物情缘 | 网络歌坛 | 音乐殿堂 | 情感世界 |
+|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
+| life9    | life1    | chan10   | life2    | life6    | fr       | enter7   | enter3   | enter6   | enter5   | sport    | know1    | chan6    | life7    | chan8    | page     | enter1   | enter8   | netstar  | life10   | nz       | other    | chan2    | chan5    | life5    | bolun    | chan1    | military | finance  | chan4    | pk       | gz1      | gz2      | gz3      | life8    | chan7    | enter4   | life3    |`,
 };
 
 async function handler(ctx) {

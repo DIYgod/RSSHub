@@ -5,7 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/stickerpack/:name',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Pictures,
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },

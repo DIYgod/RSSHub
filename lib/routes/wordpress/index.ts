@@ -142,7 +142,7 @@ export const route: Route = {
     parameters: { url: 'URL, <https://wordpress.org/news> by default', filter: 'Filter, see below' },
     description: `If you subscribe to [WordPress News](https://wordpress.org/news/)，where the URL is \`https://wordpress.org/news/\`, Encode the URL using \`encodeURIComponent()\` and then use it as the parameter. Therefore, the route will be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews).
 
-  :::tip
+::: tip
   If you wish to subscribe to specific categories or tags, you can fill in the "filter" parameter in the route. \`/category/Podcast\` to subscribe to the Podcast category. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast).
 
   You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
@@ -150,7 +150,7 @@ export const route: Route = {
   Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
   
   You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
-  :::`,
+:::`,
     categories: ['blog'],
 
     features: {

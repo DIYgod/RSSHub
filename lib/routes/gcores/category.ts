@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/gcores/category/news',
     parameters: { category: '分类名' },
     features: {
@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['MoguCloud', 'StevenRCE0'],
     handler,
     description: `| 资讯 | 视频   | 电台   | 文章     |
-  | ---- | ------ | ------ | -------- |
-  | news | videos | radios | articles |`,
+| ---- | ------ | ------ | -------- |
+| news | videos | radios | articles |`,
 };
 
 async function handler(ctx) {

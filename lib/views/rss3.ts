@@ -6,9 +6,10 @@ import dayjs from 'dayjs';
  * @returns `JSON.stringify`-ed [UMS Result](https://docs.rss3.io/docs/unified-metadata-schemas)
  */
 
-const NETWORK = 'RSS';
+const NETWORK = 'rsshub';
 const TAG = 'RSS';
 const TYPE = 'feed';
+const PLATFORM = 'RSSHub';
 
 const rss3 = (data) => {
     const currentUnixTsp = dayjs().unix();
@@ -29,7 +30,7 @@ const rss3 = (data) => {
                     {
                         tag: TAG,
                         type: TYPE,
-                        platform: owner,
+                        platform: PLATFORM,
                         from: owner,
                         to: owner,
                         metadata: {

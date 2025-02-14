@@ -12,7 +12,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/column/:channel',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/guokr/column/calendar',
     parameters: { channel: '专栏类别' },
     radar: [
@@ -25,8 +25,8 @@ export const route: Route = {
     handler,
     url: 'guokr.com/',
     description: `| 物种日历 | 吃货研究所 | 美丽也是技术活 |
-  | -------- | ---------- | -------------- |
-  | calendar | institute  | beauty         |`,
+| -------- | ---------- | -------------- |
+| calendar | institute  | beauty         |`,
 };
 
 async function handler(ctx) {

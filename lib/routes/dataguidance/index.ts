@@ -40,7 +40,7 @@ async function handler() {
 
                 const detailResponse = await ofetch(detailUrl);
 
-                item.description = detailResponse.contentBody?.text.en;
+                item.description = detailResponse.contentBody?.html.en.replaceAll('\n', '<br>');
                 delete item.url;
                 return item;
             })

@@ -26,9 +26,9 @@ export const route: Route = {
     handler,
     description: `Refer to the URL format \`pubs.aip.org/:pub/:jrn\`
 
-  :::tip
+::: tip
   More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

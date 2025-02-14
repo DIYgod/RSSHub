@@ -30,8 +30,8 @@ export const route: Route = {
     handler,
     url: 'rodong.rep.kp/cn/index.php',
     description: `| 조선어 | English | 中文 |
-  | ------ | ------- | ---- |
-  | ko     | en      | cn   |`,
+| ------ | ------- | ---- |
+| ko     | en      | cn   |`,
 };
 
 async function handler(ctx) {

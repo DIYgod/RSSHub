@@ -51,7 +51,7 @@ export interface MisskeyNote {
 }
 
 // https://github.com/misskey-dev/misskey/blob/d2e8dc4fe3c6e90e68001ed1f092d4e3d2454283/packages/backend/src/models/json-schema/user.ts
-interface MisskeyUser {
+export interface MisskeyUser {
     id: string;
     name: string | null;
     username: string;

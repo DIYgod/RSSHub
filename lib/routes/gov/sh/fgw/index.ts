@@ -113,13 +113,13 @@ export const route: Route = {
     handler,
     example: '/gov/sh/fgw/fgw_zxxxgk',
     parameters: { category: '分类，默认为 `fgw_zxxxgk`，即最新信息公开，可在对应分类页 URL 中找到' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [最新信息公开](https://fgw.sh.gov.cn/fgw_zxxxgk/index.html)，网址为 \`https://fgw.sh.gov.cn/fgw_zxxxgk/index.html\`。截取 \`https://fgw.sh.gov.cn/\` 到末尾 \`/index.html\` 的部分 \`fgw_zxxxgk\` 作为参数填入，此时路由为 [\`/gov/sh/fgw/fgw_zxxxgk\`](https://rsshub.app/gov/sh/fgw/fgw_zxxxgk)。
-  :::
+:::
 
-  | 最新信息公开 | 要闻动态   |
-  | ------------ | ---------- |
-  | fgw_zxxxgk   | fgw_fzggdt |
+| 最新信息公开 | 要闻动态   |
+| ------------ | ---------- |
+| fgw_zxxxgk   | fgw_fzggdt |
   `,
     categories: ['government'],
 
