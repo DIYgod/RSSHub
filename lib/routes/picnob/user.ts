@@ -30,11 +30,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['piokok.com/profile/:id'],
+            source: ['pixwox.com/profile/:id'],
             target: '/user/:id',
         },
         {
-            source: ['piokok.com/profile/:id/tagged'],
+            source: ['pixwox.com/profile/:id/tagged'],
             target: '/user/:id/tagged',
         },
     ],
@@ -45,8 +45,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'piokok' eventually
-    const baseUrl = 'https://www.piokok.com';
+    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixwox' eventually
+    const baseUrl = 'https://www.pixwox.com';
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
@@ -92,8 +92,16 @@ async function handler(ctx) {
             usePuppeteer: boolean;
         };
 
-        const profileTitle = `${profile.name} (@${id}) ${type === 'tagged' ? 'tagged' : 'public'} posts - Picnob`;
-        const endpoint = type === 'tagged' ? 'tagged' : 'posts';
+        let profileTitle;
+        let endpoint;
+        if (type === 'tagged') {
+            profileTitle = `${profile.name} (@${id}) tagged posts - Picnob`;
+            endpoint = 'tagged';
+        } else {
+            profileTitle = `${profile.name} (@${id}) public posts - Picnob`;
+            endpoint = 'posts';
+        }
+
         const apiUrl = `${baseUrl}/api/${endpoint}`;
 
         let responseData;
