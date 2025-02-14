@@ -49,7 +49,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.piokok.com';
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'profile';
-    const url = `${baseUrl}/profile/${id}/`;
+    const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
     const browser = await puppeteer();
     // TODO: can't bypass cloudflare 403 error without puppeteer
@@ -58,7 +58,7 @@ async function handler(ctx) {
             let html;
             let usePuppeteer = false;
             try {
-                const data = await ofetch(url, {
+                const data = await ofetch(profileUrl, {
                     headers: {
                         accept: 'text/html',
                         referer: 'https://www.google.com/',
@@ -66,7 +66,7 @@ async function handler(ctx) {
                 });
                 html = data;
             } catch {
-                html = await puppeteerGet(url, browser);
+                html = await puppeteerGet(profileUrl, browser);
                 usePuppeteer = true;
             }
             const $ = load(html);
@@ -180,7 +180,7 @@ async function handler(ctx) {
         return {
             title: profileTitle,
             description: profile.description,
-            link: url,
+            link: profileUrl,
             image: profile.image,
             item: list,
         };
