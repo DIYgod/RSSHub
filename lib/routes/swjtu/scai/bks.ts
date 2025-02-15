@@ -73,7 +73,7 @@ async function handler() {
   const $list = $("div.list-top-item, div.item-wrapper");
 
   const items = await Promise.all(
-    $list.toArray().map(i => {
+    $list.toArray().map((i) => {
       const $item = $(i);
       return getItem($item, cache);
     })
