@@ -18,10 +18,11 @@ export const handler = async (ctx) => {
 
     const currentUrl = new URL(`${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`, rootUrl).href;
 
-    const myHeaders = new Headers();
-    myHeaders.append('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36');
-
-    const { data: response } = await got(currentUrl, { headers: myHeaders });
+    const { data: response } = await got(currentUrl, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36',
+        },
+    });
 
     const $ = load(response);
 
