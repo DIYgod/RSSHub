@@ -1,3 +1,6 @@
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import path from 'node:path';
 import { art } from '@/utils/render';
 import { config } from '@/config';
@@ -35,6 +38,6 @@ export function renderDesc(post, link, quality: 'sample' | 'orig') {
 export function getAPIKeys() {
     return {
         apiKey: config.gelbooru.apiKey || '',
-        apiKey: config.gelbooru.userId || '',
+        userId: config.gelbooru.userId || '',
     };
 }

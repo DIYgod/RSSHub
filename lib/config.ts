@@ -393,6 +393,10 @@ export type Config = {
     zsxq: {
         accessToken?: string;
     };
+    gelbooru: {
+        apiKey?: string;
+        userId?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
