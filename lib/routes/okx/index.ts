@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
@@ -118,6 +118,6 @@ async function handler(ctx: Context) {
     return {
         title: ssrData.appContext.serverSideProps.sectionOutline.title,
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
-        item: items,
+        item: items as DataItem[],
     };
 }
