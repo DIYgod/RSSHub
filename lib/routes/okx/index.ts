@@ -120,5 +120,6 @@ async function handler(ctx: Context) {
         title: ssrData?.appContext?.serverSideProps?.sectionOutline?.title || 'Unknown',
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
         item: items as DataItem[],
+        allowEmpty: true,
     };
 }
