@@ -93,7 +93,7 @@ async function handler(ctx: Context) {
     const $ = load(data);
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
-    const itemsTemp = ssrData.appContext.initialProps.sectionData.articleList.items.map((item: { title: string; slug: string; publishTime: string }) => ({
+    const itemsTemp: { title: string; link: string; pubDate: Date }[] = ssrData.appContext.initialProps.sectionData.articleList.items.map((item: { title: string; slug: string; publishTime: string }) => ({
         title: item.title,
         link: `${baseUrl}/zh-hans/help/${item.slug}`,
         pubDate: new Date(item.publishTime),
@@ -102,21 +102,15 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         itemsTemp.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const { data: response } = await got(item.link);
-                    const $ = load(response);
-                    const content = $('div[class^="index_richTextContent"]').html();
+                const content = await got(item.link).then((response) => {
+                    const $ = load(response.data);
+                    return $('div[class^="index_richTextContent"]').html();
+                });
 
-                    return {
-                        ...item,
-                        description: content,
-                    };
-                } catch (error) {
-                    return {
-                        ...item,
-                        description: '内容获取失败：' + (error instanceof Error ? error.message : 'Unknown Error'),
-                    };
-                }
+                return {
+                    ...item,
+                    description: content || '内容获取失败',
+                };
             })
         )
     );
