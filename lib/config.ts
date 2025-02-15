@@ -827,6 +827,10 @@ const calculateValue = () => {
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
         },
+        gelbooru: {
+            apiKey: envs.GELBOORU_API_KEY,
+            userId: envs.GELBOORU_USER_ID,
+        },
     };
 
     for (const name in _value) {
