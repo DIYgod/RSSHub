@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Gelbooru | Free Anime and Hentai Gallery',
+    name: 'Gelbooru',
     url: 'gelbooru.com',
     description: 'gelbooru posts',
 };
