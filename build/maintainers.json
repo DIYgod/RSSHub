@@ -5513,9 +5513,10 @@
   "/pianyuan/indexers/pianyuan/results/search/api": [
     "jerry1119"
   ],
-  "/picnob/user/:id": [
+  "/picnob/user/:id/:type?": [
     "TonyRL",
-    "micheal-death"
+    "micheal-death",
+    "AiraNadih"
   ],
   "/picuki/profile/:id/:type?/:functionalFlag?": [
     "hoilc",

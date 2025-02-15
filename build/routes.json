@@ -70024,15 +70024,16 @@
   },
   "picnob": {
     "routes": {
-      "/user/:id": {
-        "path": "/user/:id",
+      "/user/:id/:type?": {
+        "path": "/user/:id/:type?",
         "categories": [
           "social-media",
           "popular"
         ],
         "example": "/picnob/user/xlisa_olivex",
         "parameters": {
-          "id": "Instagram id"
+          "id": "Instagram id",
+          "type": "Type of profile page (profile or tagged)"
         },
         "features": {
           "requireConfig": false,
@@ -70045,15 +70046,22 @@
         "radar": [
           {
             "source": [
-              "piokok.com/profile/:id/*"
+              "pixwox.com/profile/:id"
             ],
             "target": "/user/:id"
+          },
+          {
+            "source": [
+              "pixwox.com/profile/:id/tagged"
+            ],
+            "target": "/user/:id/tagged"
           }
         ],
         "name": "User Profile - Picnob",
         "maintainers": [
           "TonyRL",
-          "micheal-death"
+          "micheal-death",
+          "AiraNadih"
         ],
         "view": 2,
         "location": "user.ts"

@@ -27534,16 +27534,24 @@
       }
     ]
   },
-  "piokok.com": {
+  "pixwox.com": {
     "_name": "Instagram",
     ".": [
       {
         "title": "User Profile - Picnob",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/profile/:id/*"
+          "/profile/:id"
         ],
         "target": "/picnob/user/:id"
+      },
+      {
+        "title": "User Profile - Picnob",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/profile/:id/tagged"
+        ],
+        "target": "/picnob/user/:id/tagged"
       }
     ]
   },
