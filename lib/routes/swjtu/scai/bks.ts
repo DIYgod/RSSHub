@@ -27,7 +27,7 @@ export const route: Route = {
     ],
     name: '计算机与人工智能学院',
     description: '本科生教育',
-    maintainers: ['AzureG03'],
+    maintainers: ['AzureG03', 'SuperJeason'],
     handler,
 };
 
@@ -39,12 +39,24 @@ const getItem = (item, cache) => {
         const res = await ofetch(link);
         const $ = load(res);
 
-        const pubDate = parseDate(
-            $('div.news-info span:nth-of-type(2)')
-                .text()
-                .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0]
-        );
+        // 尝试获取日期
+        let dateText = $('div.news-info span:nth-of-type(2)').text();
+        if (!dateText) {
+            dateText = $('div.news-top-bar span:nth-of-type(1)').text();
+        }
+        if (!dateText) {
+            //   console.error('Date not found for', link);
+            return null; // 或者返回一个默认值
+        }
+
+        const dateMatch = dateText.match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/);
+        if (!dateMatch) {
+            //   console.error('Invalid date format for', link);
+            return null; // 或者返回一个默认值
+        }
+        const pubDate = parseDate(dateMatch[0]);
         const description = $('div.content-main').html();
+
         return {
             title,
             pubDate,
