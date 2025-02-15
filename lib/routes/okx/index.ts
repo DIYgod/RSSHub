@@ -117,7 +117,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: ssrData.appContext.serverSideProps.sectionOutline.title,
+        title: ssrData?.appContext?.serverSideProps?.sectionOutline?.title || 'Unknown',
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
         item: items as DataItem[],
     };
