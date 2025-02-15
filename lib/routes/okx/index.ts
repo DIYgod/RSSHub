@@ -4,7 +4,6 @@ import { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:section?',
@@ -93,19 +92,12 @@ async function handler(ctx: Context) {
     const data = await ofetch(`${baseUrl}/zh-hans/help/section/announcements-${section}`);
     const $ = load(data);
 
-    const itemsTemp = $('ul[aria-describedby=help-load-more-desc] li')
-        .toArray()
-        .map((item) => {
-            const link = `${baseUrl}${$(item).find('a').attr('href')}`;
-            const title = $(item).find('a div[class^="index_title"]').text().trim();
-            const dateText = $(item).find('[data-testid="DateDisplay"]').text().trim(); // 从"发布于 2025年1月18日"提取日期
-            const pubDate = parseDate(dateText.replace('发布于 ', ''), 'YYYY年M月D日');
-            return {
-                title,
-                link,
-                pubDate,
-            };
-        });
+    const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
+    const itemsTemp = ssrData.appContext.initialProps.sectionData.articleList.items.map((item: { title: string; slug: string; publishTime: string }) => ({
+        title: item.title,
+        link: `${baseUrl}/zh-hans/help/${item.slug}`,
+        pubDate: new Date(item.publishTime),
+    }));
 
     const items = await Promise.all(
         itemsTemp.map((item) =>
@@ -130,7 +122,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('.okui-breadcrumbs-crumb-active').text().trim(),
+        title: ssrData.appContext.serverSideProps.sectionOutline.title,
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
         item: items,
     };
