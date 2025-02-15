@@ -29,7 +29,7 @@ export const route: Route = {
 
         通过添加查询参数 image 来获取 PDF 第一页截图。
 
-        同时使用 page 和 image 参数可能会导致触发反爬。
+        同时使用 page 和 image 参数可能会导致触发反爬并严重影响服务器开销。
 
         |       宏观研究        |            结构融资研究            |        评级研究        |       国际研究       |
         | :-------------------: | :--------------------------------: | :--------------------: | :------------------: |
@@ -123,44 +123,41 @@ async function handler(ctx) {
     const $ = load(response);
 
     const maxPageStr = $('div.py-pagination > ul.pagination > li.pagination-item').slice(-2, -1).find('a').text();
-    const maxPage = isNaN(+maxPageStr) ? 1 : +maxPageStr;
+    const maxPage = Number.isNaN(+maxPageStr) ? 1 : +maxPageStr;
 
     const page = ctx.req.query('page') ?? '1,1';
-    const [start, end] = page
+
+    const [start = 1, end = 1] = page
         .split(',')
         .slice(0, 2)
-        .reduce((a, n) => {
-            a.push(isNaN(+n) ? 1 : +n);
-            return a;
-        }, []);
+        .map((n: string) => (Number.isNaN(+n) ? 1 : +n));
 
     if (end > maxPage) {
         throw new Error(`End exceeds the maximum page limit of ${maxPage}`);
     }
 
+    const range: any[] = [];
+    for (const r of generateRange(start, end, maxPage)) {
+        range.push(`${linkUrl}?page=${r}`);
+    }
     const listAll = await Promise.all(
-        generateRange(start, end, maxPage)
-            .reduce((a: string[], p) => {
-                a.push(`${linkUrl}?page=${p}`);
-                return a;
-            }, [])
-            .map((url) =>
-                cache.tryGet(url, async () => {
-                    const responseSub = await ofetch(url);
-                    const $sub = load(responseSub);
-                    let itemsInfo = $sub('div.py-main');
-                    if (category === 'publication' && type) {
-                        if (type === 'periodical') {
-                            itemsInfo = itemsInfo.find('ul.py-list li div.py-periodical-box');
-                        } else if (type === 'monograph') {
-                            itemsInfo = itemsInfo.find('div.py-mrh-list > div.py-mrh-item');
-                        }
-                    } else {
-                        itemsInfo = itemsInfo.find('ul.py-list li');
+        range.map((url) =>
+            cache.tryGet(url, async () => {
+                const responseSub = await ofetch(url);
+                const $sub = load(responseSub);
+                let itemsInfo = $sub('div.py-main');
+                if (category === 'publication' && type) {
+                    if (type === 'periodical') {
+                        itemsInfo = itemsInfo.find('ul.py-list li div.py-periodical-box');
+                    } else if (type === 'monograph') {
+                        itemsInfo = itemsInfo.find('div.py-mrh-list > div.py-mrh-item');
                     }
-                    return itemsInfo.toArray().map((item) => getResearchItem(item, $sub, category, type));
-                })
-            )
+                } else {
+                    itemsInfo = itemsInfo.find('ul.py-list li');
+                }
+                return itemsInfo.toArray().map((item) => getResearchItem(item, $sub, category, type));
+            })
+        )
     );
 
     const list = listAll.flat();
@@ -227,6 +224,18 @@ async function handler(ctx) {
     };
 }
 
+const isFullURL = (str) => {
+    const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z0-9-]+)(\/\S*)?(\?\S*)?$/;
+    return regex.test(str);
+};
+
+const isPath = (str) => {
+    const regex = /^\/([a-zA-Z0-9\-/.]+(\?[a-zA-Z0-9\-/&=.]+)?)?$/;
+    return regex.test(str);
+};
+
+const isValidURL = (str) => isFullURL(str) || isPath(str);
+
 function getResearchItem(item, $, category, type) {
     item = $(item);
     const viewUrl = 'https://www.cspengyuan.com/static/clientlibs/pengyuancmscn/plugins/web/viewer.html?file=/content';
@@ -243,16 +252,6 @@ function getResearchItem(item, $, category, type) {
                   ? item.find('span.mrh-item-right-title > b').text().trim()
                   : a.text().trim()
             : a.text().trim();
-
-    const isFullURL = (str) => {
-        const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z0-9-]+)(\/[^\s]*)?(\?[^\s]*)?$/;
-        return regex.test(str);
-    };
-    const isPath = (str) => {
-        const regex = /^\/([a-zA-Z0-9\-\/\.]+(\?[a-zA-Z0-9\-\/&=\.]+)?)?$/;
-        return regex.test(str);
-    };
-    const isValidURL = (str) => isFullURL(str) || isPath(str);
 
     const link = isValidURL(a.attr('href')) ? `https://www.cspengyuan.com${a.attr('href')}` : null;
 
