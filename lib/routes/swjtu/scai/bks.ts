@@ -27,7 +27,7 @@ export const route: Route = {
     ],
     name: '计算机与人工智能学院',
     description: '本科生教育',
-    maintainers: ['AzureG03', 'SuperJeason'],
+    maintainers: ['AzureG03'],
     handler,
 };
 
