@@ -47,7 +47,7 @@ async function handler(ctx) {
         $(e).parent().remove();
     });
 
-    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .fl, .leftItem')
+    let items = $('.p6, div.p2j_list, div.headingNews, div.ej_list_box, .leftItem')
         .find('a')
         .slice(0, limit)
         .toArray()
@@ -75,7 +75,7 @@ async function handler(ctx) {
 
                     content('.paper_num, #rwb_tjyd').remove();
 
-                    item.description = content('.rm_txt_con, .show_text').html();
+                    item.description = content('#rwb_zw').html();
                     item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)[1], 'YYYY年MM月DD日 HH:mm'), +8);
                 } catch (error) {
                     item.description = error;
