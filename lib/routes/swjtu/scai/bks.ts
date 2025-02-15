@@ -34,10 +34,6 @@ export const route: Route = {
 const getItem = (item, cache) => {
   const title = item.find("a").text();
   const link = `${rootURL}${item.find("a").attr("href").slice(2)}`;
-  if (!title || !link) {
-    // console.error("Title or link not found for item");
-    return null; // 或者其他默认值
-  }
 
   return cache.tryGet(link, async () => {
     const res = await ofetch(link);
