@@ -55716,6 +55716,39 @@
     ],
     "lang": "en"
   },
+  "mashiro": {
+    "routes": {
+      "/:lang": {
+        "path": "/:lang",
+        "categories": [
+          "blog"
+        ],
+        "example": "/mashiro/en",
+        "parameters": {
+          "lang": "the language of the site. Can be either `en` or `zh-cn`. Default: `en`"
+        },
+        "radar": [
+          {
+            "source": [
+              "mashiro.best/",
+              "mashiro.best/:lang/"
+            ]
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "MuenYu"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "Mashiro's Baumkuchen",
+    "url": "mashiro.best",
+    "description": "Muen's blog posts",
+    "zh": {
+      "name": "真白的年轮面包"
+    }
+  },
   "mastodon": {
     "routes": {
       "/account_id/:site/:account_id/statuses/:only_media?": {

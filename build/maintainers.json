@@ -4504,6 +4504,9 @@
   "/manyvids/profile/vids/:uid": [
     "TonyRL"
   ],
+  "/mashiro/:lang": [
+    "MuenYu"
+  ],
   "/mastodon/account_id/:site/:account_id/statuses/:only_media?": [
     "notofoe",
     "pseudoyu"

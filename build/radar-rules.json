@@ -20731,6 +20731,20 @@
       }
     ]
   },
+  "mashiro.best": {
+    "_name": "Mashiro's Baumkuchen",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/",
+          "/:lang/"
+        ],
+        "target": "/mashiro/:lang"
+      }
+    ]
+  },
   "matters.town": {
     "_name": "Matters",
     ".": [
