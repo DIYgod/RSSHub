@@ -18,7 +18,10 @@ export const handler = async (ctx) => {
 
     const currentUrl = new URL(`${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`, rootUrl).href;
 
-    const { data: response } = await got(currentUrl);
+    const myHeaders = new Headers();
+    myHeaders.append('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36');
+
+    const { data: response } = await got(currentUrl,{headers: myHeaders});
 
     const $ = load(response);
 
@@ -118,9 +121,9 @@ export const route: Route = {
   \`1lou.me/\` 后的内容填入 params 参数，以下是几个例子：
 
   若订阅 [大陆电视剧](https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0)，网址为 \`https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`tagids\`，此时路由为 [\`/1lou/forum-2-1?tagids=0_97_0_0\`](https://rsshub.app/1lou/forum-2-1?tagids=0_97_0_0)。
-  
+
   若订阅 [最新发帖电视剧](https://www.1lou.me/forum-2-1.htm?orderby=tid&digest=0)，网址为 \`https://www.1lou.me/forum-2-1.htm?orderby=tid&digest=0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`orderby\`，此时路由为 [\`/1lou/forum-2-1?orderby=tid\`](https://rsshub.app/1lou/forum-2-1?orderby=tid)。
-  
+
   若订阅 [搜素繁花主题贴](https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm)，网址为 \`https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`search-_E7_B9_81_E8_8A_B1-1\` 作为参数，此时路由为 [\`/1lou/search-_E7_B9_81_E8_8A_B1-1\`](https://rsshub.app/1lou/search-_E7_B9_81_E8_8A_B1-1)。
 :::`,
     categories: ['multimedia'],
