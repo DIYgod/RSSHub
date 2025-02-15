@@ -180,6 +180,7 @@ async function handler(ctx) {
                         },
                     }),
                     link,
+                    guid: shortcode,
                     pubDate: parseDate(time, 'X'),
                 };
             })
