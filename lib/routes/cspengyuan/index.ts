@@ -1,11 +1,12 @@
 import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
+import got from 'got';
+import https from 'https';
 
 export const route: Route = {
     path: '/credit-research/:category/:type?',
@@ -119,8 +120,12 @@ async function handler(ctx) {
               ? `${rootUrl}${category}/${type}.html`
               : `${rootUrl}${category}-research/${type}.html`;
 
-    const response = await ofetch(linkUrl);
-    const $ = load(response);
+    const agent = new https.Agent({
+        rejectUnauthorized: false, // 禁用证书验证
+    });
+
+    const response = await got(linkUrl, { agent: { https: agent } });
+    const $ = load(response.body);
 
     const maxPageStr = $('div.py-pagination > ul.pagination > li.pagination-item').slice(-2, -1).find('a').text();
     const maxPage = Number.isNaN(+maxPageStr) ? 1 : +maxPageStr;
@@ -143,8 +148,8 @@ async function handler(ctx) {
     const listAll = await Promise.all(
         range.map((url) =>
             cache.tryGet(url, async () => {
-                const responseSub = await ofetch(url);
-                const $sub = load(responseSub);
+                const responseSub = await got(linkUrl, { agent: { https: agent } });
+                const $sub = load(responseSub.body);
                 let itemsInfo = $sub('div.py-main');
                 if (category === 'publication' && type) {
                     if (type === 'periodical') {
@@ -170,8 +175,8 @@ async function handler(ctx) {
             .map((item) =>
                 cache.tryGet(item.link, async () => {
                     if (category === 'publication') {
-                        const response = await ofetch(item.link);
-                        const content = load(response);
+                        const response = await got(item.link, { agent: { https: agent } });
+                        const content = load(response.body);
                         const p = content('div.mrh-dtl-right-top > p');
                         const b = content('div.mrh-dtl-right-bom');
                         const imgUrl = content('img').attr('src');
