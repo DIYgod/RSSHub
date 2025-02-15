@@ -34,17 +34,33 @@ export const route: Route = {
 const getItem = (item, cache) => {
     const title = item.find('a').text();
     const link = `${rootURL}${item.find('a').attr('href').slice(2)}`;
+    if (!title || !link) {
+        // console.error("Title or link not found for item");
+        return null; // 或者其他默认值
+    }
 
     return cache.tryGet(link, async () => {
         const res = await ofetch(link);
         const $ = load(res);
 
-        const pubDate = parseDate(
-            $('div.news-info span:nth-of-type(2)')
-                .text()
-                .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0]
-        );
+        // 尝试获取日期
+        let dateText = $('div.news-info span:nth-of-type(2)').text();
+        if (!dateText) {
+            dateText = $('div.news-top-bar span:nth-of-type(1)').text();
+        }
+        if (!dateText) {
+            //   console.error("Date not found for", link);
+            return null; // 或者返回一个默认值
+        }
+
+        const dateMatch = dateText.match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/);
+        if (!dateMatch) {
+            //   console.error("Invalid date format for", link);
+            return null; // 或者返回一个默认值
+        }
+        const pubDate = parseDate(dateMatch[0]);
         const description = $('div.content-main').html();
+
         return {
             title,
             pubDate,
