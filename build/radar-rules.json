@@ -25568,6 +25568,19 @@
       }
     ]
   },
+  "okx.com": {
+    "_name": "欧易 OKX",
+    "www": [
+      {
+        "title": "公告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/zh-hans/help/section/:section"
+        ],
+        "target": "/okx/:section"
+      }
+    ]
+  },
   "olevod.one": {
     "_name": "欧乐影院",
     "www": [
