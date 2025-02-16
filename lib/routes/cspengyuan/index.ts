@@ -57,7 +57,7 @@ export const route: Route = {
         {
             title: '宏观研究',
             source: ['www.cspengyuan.com/pengyuancmscn/credit-research/macro-research.html'],
-            target: '/cspengyuan/credit-research/macro',
+            target: '/credit-research/macro',
         },
         {
             title: '债市周报',
