@@ -1,6 +1,6 @@
 <div>
   {{if isVideo}}
-    <video controls="true" muted src="{{contentURL}}"></video>
+    <video controls preload="metadata" src="{{contentURL}}"></video>
   {{else}}
     <img src="{{contentURL}}" />
   {{/if}}

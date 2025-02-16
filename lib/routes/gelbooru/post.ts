@@ -43,7 +43,7 @@ export const route: Route = {
             source: ['gelbooru.com/index.php'],
         },
     ],
-    name: 'Gelbooru标签查询',
+    name: '标签查询',
     maintainers: ['magicFeirl'],
     description: `
 - 默认查询: \`/gelbooru/post\` 功能等同查询 Gelbooru 网站最新的投稿
