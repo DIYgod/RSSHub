@@ -116,8 +116,6 @@ async function handler(ctx) {
               ? `${rootUrl}${category}/${type}.html`
               : `${rootUrl}${category}-research/${type}.html`;
 
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // 目标站点证书链有问题
-
     const response = await browser(linkUrl);
 
     const $ = load(response);
