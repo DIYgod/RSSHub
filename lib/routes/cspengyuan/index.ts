@@ -3,9 +3,13 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/credit-research/:category/:type?',
@@ -114,7 +118,7 @@ async function handler(ctx) {
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // 目标站点证书链有问题
 
-    const response = await ofetch(linkUrl);
+    const response = await browser(linkUrl);
 
     const $ = load(response);
 
@@ -139,7 +143,7 @@ async function handler(ctx) {
             .map((item) =>
                 cache.tryGet(item.link, async () => {
                     if (category === 'publication') {
-                        const response = await ofetch(item.link);
+                        const response = await browser(item.link);
                         const content = load(response);
                         const p = content('div.mrh-dtl-right-top > p');
                         const b = content('div.mrh-dtl-right-bom');
@@ -176,17 +180,34 @@ async function handler(ctx) {
     };
 }
 
-const isFullURL = (str) => {
+const browser = async (link: string) => {
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+    logger.http(`Requesting ${link}`);
+    await page.goto(link, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.content();
+    await page.close();
+    await browser.close();
+    return response;
+};
+
+const isFullURL = (str: string) => {
     const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z0-9-]+)(\/\S*)?(\?\S*)?$/;
     return regex.test(str);
 };
 
-const isPath = (str) => {
+const isPath = (str: string) => {
     const regex = /^\/([a-zA-Z0-9\-/.]+(\?[a-zA-Z0-9\-/&=.]+)?)?$/;
     return regex.test(str);
 };
 
-const isValidURL = (str) => isFullURL(str) || isPath(str);
+const isValidURL = (str: string) => isFullURL(str) || isPath(str);
 
 function getResearchItem(item, $, category, type) {
     item = $(item);
