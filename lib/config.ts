@@ -176,6 +176,10 @@ export type Config = {
     guozaoke: {
         cookies?: string;
     };
+    gelbooru: {
+        apiKey?: string;
+        userId?: string;
+    };
     hefeng: {
         key?: string;
     };
@@ -608,6 +612,10 @@ const calculateValue = () => {
         },
         guozaoke: {
             cookies: envs.GUOZAOKE_COOKIES,
+        },
+        gelbooru: {
+            apiKey: envs.GELBOORU_API_KEY,
+            userId: envs.GELBOORU_USER_ID,
         },
         hefeng: {
             // weather
