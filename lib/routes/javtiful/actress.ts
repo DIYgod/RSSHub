@@ -31,7 +31,7 @@ async function handler(ctx): Promise<Data> {
         link: `https://javtiful.com/actress/${id}`,
         allowEmpty: true,
         item: items,
-        image: $('.content-section-title img').attr('src'),
+        image: $('.content-section-title img poster').attr('src'),
         language: $('html').attr('lang'),
     };
 }
