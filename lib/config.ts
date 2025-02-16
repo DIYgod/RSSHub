@@ -176,6 +176,10 @@ export type Config = {
     guozaoke: {
         cookies?: string;
     };
+    gelbooru: {
+        apiKey?: string;
+        userId?: string;
+    };
     hefeng: {
         key?: string;
     };
@@ -393,10 +397,6 @@ export type Config = {
     zsxq: {
         accessToken?: string;
     };
-    gelbooru: {
-        apiKey?: string;
-        userId?: string;
-    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -612,6 +612,10 @@ const calculateValue = () => {
         },
         guozaoke: {
             cookies: envs.GUOZAOKE_COOKIES,
+        },
+        gelbooru: {
+            apiKey: envs.GELBOORU_API_KEY,
+            userId: envs.GELBOORU_USER_ID,
         },
         hefeng: {
             // weather
@@ -830,10 +834,6 @@ const calculateValue = () => {
         },
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
-        },
-        gelbooru: {
-            apiKey: envs.GELBOORU_API_KEY,
-            userId: envs.GELBOORU_USER_ID,
         },
     };
 
