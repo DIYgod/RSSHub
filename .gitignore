@@ -20,6 +20,8 @@ docs/.vuepress/dist
 node_modules
 tmp
 dist
+# Auto-generated, see scripts/workflow/build-routes.ts
+lib/routes/bilibili/wasm-exec.js
 
 Session.vim
 combined.log

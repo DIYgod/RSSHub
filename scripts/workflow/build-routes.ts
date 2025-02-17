@@ -1,5 +1,6 @@
 import { namespaces } from '../../lib/registry';
 import { RadarItem } from '../../lib/types';
+import got from '../../lib/utils/got';
 import { parse } from 'tldts';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -71,3 +72,9 @@ fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JS
 fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
 fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
 fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
+
+(async () => {
+    const golang_ver = '1.24.0';
+    const wasm_exec_resp = await got(`https://github.com/golang/go/raw/refs/tags/go${golang_ver}/lib/wasm/wasm_exec.js`);
+    fs.writeFileSync(path.join(__dirname, '../../lib/routes/bilibili/wasm-exec.js'), wasm_exec_resp.data + '\nexport const Go = globalThis.Go;\n');
+})();
