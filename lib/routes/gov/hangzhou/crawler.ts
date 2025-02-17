@@ -13,8 +13,6 @@ export async function zjzwfwCrawler(item: any, browser: any): Promise<string> {
             page.on('request', (request) => {
                 request.continue({
                     ...request.headers(),
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                    'Accept-Language': 'en-US,en;q=0.9',
                 });
             });
             page.on('response', (response) => {
@@ -50,7 +48,6 @@ export async function zjzwfwCrawler(item: any, browser: any): Promise<string> {
             });
             await Promise.all([
                 page.goto(item.link, { waitUntil: 'networkidle0' }),
-                // capture the targeted css/js resources even there is no active internet connection
                 resourcePromise.catch((error) => {
                     logger.error('Resource loading error:', error);
                     throw error;
