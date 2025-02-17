@@ -3,12 +3,26 @@ import got from '@/utils/got';
 import { Context } from 'hono';
 
 export const route: Route = {
-    path: '/version/:versionType?/:linkType?',
+    path: '/version/:versionType?/:linkType?/:lang?',
     categories: ['game'],
-    example: '/minecraft/version',
+    example: '/minecraft/version/all/official/en',
     parameters: {
         versionType: `Game version type, \`all\` by default`,
         linkType: `Link added to feed, \`official\` by default`,
+        lang: {
+            description: 'Language',
+            options: [
+                {
+                    label: 'Chinese',
+                    value: 'zh',
+                },
+                {
+                    label: 'English',
+                    value: 'en',
+                },
+            ],
+            default: 'en',
+        },
     },
     features: {
         requireConfig: false,
@@ -30,14 +44,14 @@ export const route: Route = {
     description: `
 | Version                    | versionType |
 | -------------------------- | ----------- |
-| 正式版                     | release     |
-| 快照                       | snapshot    |
-| Alpha 及更早的版本         | old_alpha  |
-| Beta 版                    | old_beta   |
+| Release / 正式版                     | release     |
+| Snapshot / 快照                       | snapshot    |
+| Alpha and earlier/ 及更早的版本         | old_alpha  |
+| Beta version / 版                    | old_beta   |
 | Target                     | linkType    |
 | -------------------------- | --------    |
 | minecraft.net              | official    |
-| 英文 Minecraft Wiki 版本页 | enwiki      |
+| English Minecraft Wiki version page | enwiki      |
 | 中文 Minecraft Wiki 版本页 | zhwiki      |
 `,
     zh: {
@@ -51,12 +65,30 @@ interface VersionInManifest {
     releaseTime: string;
 }
 
-const typeName = {
-    release: '正式版',
-    snapshot: '快照',
-    old_alpha: 'Alpha及更早的版本',
-    old_beta: 'Beta版',
-};
+const i18n = {
+    en: {
+        typeName: {
+            release: ' Official version',
+            snapshot: ' Snapshot',
+            old_alpha: ' Alpha and earlier',
+            old_beta: ' Beta version',
+        },
+        version: ' version ',
+        title_ending: ' game update',
+        update: ' update'
+    },
+    zh: {
+        typeName: {
+            release: '正式版',
+            snapshot: '快照',
+            old_alpha: 'Alpha及更早的版本',
+            old_beta: 'Beta版',
+        },
+        version: '版',
+        title_ending: '游戏更新',
+        update: ' 更新'
+    }
+}
 
 const linkFormatter: any = {
     official: () => `https://www.minecraft.net`,
@@ -114,21 +146,26 @@ async function handler(ctx?: Context) {
 
     const versionType = ctx?.req.param('versionType') ?? 'all';
     const linkType = ctx?.req.param('linkType') ?? 'official';
+    const lang = ctx?.req.param('lang') ?? 'en';
     const linker = linkFormatter[linkType] ?? linkFormatter.official;
 
     if (versionType !== 'all') {
         data = data.filter((item) => item.type === versionType);
     }
 
-    const title = `Minecraft Java版${versionType === 'all' ? '' : (typeName[versionType] ?? versionType)}游戏更新`;
+    const title = (
+        `Minecraft Java${i18n[lang].version}`
+        `${versionType === 'all' ? '' : (i18n[lang.typeName[versionType] ?? versionType)}`
+        `${i18n[lang].title_ending}`
+    );
 
     return {
         title,
         link: `https://www.minecraft.net/`,
         description: title,
         item: data.map((item) => ({
-            title: `${item.id} ${typeName[item.type] || ''}更新`,
-            description: `${item.id} ${typeName[item.type] || ''}更新`,
+            title: `${item.id} ${i18n[lang].typeName[item.type] || ''}${i18n[lang].update}`,
+            description: `${item.id} ${i18n[lang].typeName[item.type] || ''}${i18n[lang].update}`,
             pubDate: new Date(item.releaseTime).toUTCString(),
             link: linker(item),
             guid: item.id + item.type,
