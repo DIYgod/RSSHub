@@ -8078,6 +8078,9 @@
     "xyqfer",
     "Fatpandac"
   ],
+  "/youmemark/:userid": [
+    "pseudoyu"
+  ],
   "/youtube/channel/:id/:embed?": [
     "DIYgod"
   ],

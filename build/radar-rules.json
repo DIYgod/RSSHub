@@ -35882,6 +35882,19 @@
       }
     ]
   },
+  "youmemark.com": {
+    "_name": "YouMeMark",
+    ".": [
+      {
+        "title": "Bookmarks",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/user/:userid"
+        ],
+        "target": "/youmemark/:userid"
+      }
+    ]
+  },
   "youtube.com": {
     "_name": "YouTube",
     "www": [
