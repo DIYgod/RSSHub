@@ -12559,6 +12559,14 @@
           "/tags/:id/originals"
         ],
         "target": "/gcores/gcores/tags/:id/videos"
+      },
+      {
+        "title": "视频",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/videos"
+        ],
+        "target": "/gcores/gcores/videos"
       }
     ],
     ".": [
