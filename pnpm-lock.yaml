@@ -60,8 +60,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.5.172
-        version: 0.5.172(hono@4.7.1)
+        specifier: 0.5.173
+        version: 0.5.173(hono@4.7.1)
       '@sentry/node':
         specifier: 7.119.1
         version: 7.119.1
@@ -996,6 +996,10 @@ packages:
     resolution: {integrity: sha512-qyRplbeIpNZhmzOysF/wFMuP9sctmh2cFzRAZOn1YapxBsE1i9bJIY586R/WBLfLcmcBlM8ROBiQURnnNy+zfA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/template@7.26.9':
+    resolution: {integrity: sha512-qyRplbeIpNZhmzOysF/wFMuP9sctmh2cFzRAZOn1YapxBsE1i9bJIY586R/WBLfLcmcBlM8ROBiQURnnNy+zfA==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/traverse@7.26.8':
     resolution: {integrity: sha512-nic9tRkjYH0oB2dzr/JoGIm+4Q6SuYeLEiIiZDwBscRMYFJ+tMAz98fuel9ZnbXViA2I0HVSSRRK8DW5fjXStA==}
     engines: {node: '>=6.9.0'}
@@ -1844,8 +1848,8 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/hono-api-reference@0.5.172':
-    resolution: {integrity: sha512-2fd7PidgQWSzP8IKjApK16aN0lDtcV2muigBO/AIdMUzEowRlDFt6nhqrCDkFerX/6mCqmTewFczo731cL+kHg==}
+  '@scalar/hono-api-reference@0.5.173':
+    resolution: {integrity: sha512-3d92BE7yBba0BXbt+ZWRjd66oSG7yhL04c5BxB8bgQY54bUsCcCAzMdZFt65JbB8zJ6ffWZNB+FZWkGR3KDmdg==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -1854,8 +1858,8 @@ packages:
     resolution: {integrity: sha512-oOTG3JQifg55U3DhKB7WdNIxFnJzbPJe7rqdyWdio977l8IkxQTVmObftJhdNIMvhV2K+1f/bDoMQGu6yTaD0A==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.0.31':
-    resolution: {integrity: sha512-xagRDDqqf+tMTtChUggQHIzjMbfHe/3ntiZpF4RDgrU5yA3v/eYFwLjb+OgfcMpU1c02FSUeKa6FN7e7DZcXgg==}
+  '@scalar/types@0.0.32':
+    resolution: {integrity: sha512-WHMkFQw4cu1mrG4pEiTUXVBBs205kHECdLM/5F7ATI0A7Axv6G1GgofkwbyCAayUjNk82uaCXzSOgPojbq4iGQ==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -2138,8 +2142,8 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
-  '@unhead/schema@1.11.18':
-    resolution: {integrity: sha512-a3TA/OJCRdfbFhcA3Hq24k1ZU1o9szicESrw8DZcGyQFacHnh84mVgnyqSkMnwgCmfN4kvjSiTBlLEHS6+wATw==}
+  '@unhead/schema@1.11.19':
+    resolution: {integrity: sha512-7VhYHWK7xHgljdv+C01MepCSYZO2v6OhgsfKWPxRQBDDGfUKCUaChox0XMq3tFvXP6u4zSp6yzcDw2yxCfVMwg==}
 
   '@vercel/nft@0.29.1':
     resolution: {integrity: sha512-6239JJM1V9b3OjvZIjbe+47/hGxMr44FEzlbTErrqzebCaoKAHK+yvahn3gdNacybDUbTxVF8Zuh0vqaeM8aKQ==}
@@ -5894,6 +5898,14 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 3.1.0
 
+  '@babel/generator@7.26.9':
+    dependencies:
+      '@babel/parser': 7.26.9
+      '@babel/types': 7.26.9
+      '@jridgewell/gen-mapping': 0.3.8
+      '@jridgewell/trace-mapping': 0.3.25
+      jsesc: 3.1.0
+
   '@babel/helper-annotate-as-pure@7.25.9':
     dependencies:
       '@babel/types': 7.26.8
@@ -6031,6 +6043,10 @@ snapshots:
       picocolors: 1.1.1
 
   '@babel/parser@7.26.8':
+    dependencies:
+      '@babel/types': 7.26.9
+
+  '@babel/parser@7.26.9':
     dependencies:
       '@babel/types': 7.26.9
 
@@ -6551,11 +6567,29 @@ snapshots:
       '@babel/parser': 7.26.9
       '@babel/types': 7.26.9
 
+  '@babel/template@7.26.9':
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@babel/parser': 7.26.9
+      '@babel/types': 7.26.9
+
   '@babel/traverse@7.26.8':
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/generator': 7.26.8
       '@babel/parser': 7.26.8
+      '@babel/template': 7.26.9
+      '@babel/types': 7.26.9
+      debug: 4.4.0
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@babel/traverse@7.26.9':
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@babel/generator': 7.26.9
+      '@babel/parser': 7.26.9
       '@babel/template': 7.26.9
       '@babel/types': 7.26.9
       debug: 4.4.0
@@ -7327,17 +7361,17 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/hono-api-reference@0.5.172(hono@4.7.1)':
+  '@scalar/hono-api-reference@0.5.173(hono@4.7.1)':
     dependencies:
-      '@scalar/types': 0.0.31
+      '@scalar/types': 0.0.32
       hono: 4.7.1
 
   '@scalar/openapi-types@0.1.7': {}
 
-  '@scalar/types@0.0.31':
+  '@scalar/types@0.0.32':
     dependencies:
       '@scalar/openapi-types': 0.1.7
-      '@unhead/schema': 1.11.18
+      '@unhead/schema': 1.11.19
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -7672,7 +7706,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/schema@1.11.18':
+  '@unhead/schema@1.11.19':
     dependencies:
       hookable: 5.5.3
       zhead: 2.2.4
