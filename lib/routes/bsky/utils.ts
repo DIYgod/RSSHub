@@ -45,4 +45,37 @@ const getAuthorFeed = (did, filter, tryGet) =>
         false
     );
 
-export { resolveHandle, getProfile, getAuthorFeed };
+// https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeed.json
+const getFeed = (uri, tryGet) =>
+    tryGet(
+        `bsky:feed:${uri}`,
+        async () => {
+            const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeed', {
+                searchParams: {
+                    feed: uri,
+                    limit: 30,
+                },
+            });
+            return data;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+// https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeedGenerator.json
+const getFeedGenerator = (uri, tryGet) =>
+    tryGet(
+        `bsky:feedGenerator:${uri}`,
+        async () => {
+            const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeedGenerator', {
+                searchParams: {
+                    feed: uri,
+                },
+            });
+            return data;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+export { resolveHandle, getProfile, getFeed, getAuthorFeed, getFeedGenerator };
