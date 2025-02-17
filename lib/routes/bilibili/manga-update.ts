@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { Go } from './wasm-exec.js';
 
 export const route: Route = {
     path: '/manga/update/:comicid',
@@ -28,6 +27,9 @@ export const route: Route = {
 
 // Based on https://github.com/SocialSisterYi/bilibili-API-collect/issues/1168#issuecomment-2620749895
 async function genReqSign(query, body) {
+    // Don't import on top-level to avoid a cyclic dependency - wasm-exec.js generated via `pnpm build`, which in turn needs wasm-exec.js to import routes correctly
+    const { Go } = await import('./wasm-exec.js');
+
     // Cache the wasm binary as it's quite large (~2MB)
     // Here the binary is saved as base64 as the cache stores strings
     const wasm_buffer_base64 = await cache.tryGet('bilibili-manga-wasm-20250208', async () => {
