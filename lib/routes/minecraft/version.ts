@@ -155,7 +155,7 @@ async function handler(ctx?: Context) {
 
     const title = (
         `Minecraft Java${i18n[lang].version}`
-        `${versionType === 'all' ? '' : (i18n[lang.typeName[versionType] ?? versionType)}`
+        `${versionType === 'all' ? '' : (i18n[lang].typeName[versionType] ?? versionType)}`
         `${i18n[lang].title_ending}`
     );
 
