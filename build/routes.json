@@ -14114,6 +14114,32 @@
   },
   "bsky": {
     "routes": {
+      "/profile/:handle/feed/:space/:routeParams?": {
+        "path": "/profile/:handle/feed/:space/:routeParams?",
+        "categories": [
+          "social-media",
+          "popular"
+        ],
+        "view": 1,
+        "example": "/bsky.app/profile/jaz.bsky.social/feed/cv:cat",
+        "parameters": {
+          "handle": "User handle, can be found in URL",
+          "space": "Space ID, can be found in URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Feeds",
+        "maintainers": [
+          "FerrisChi"
+        ],
+        "location": "feeds.ts"
+      },
       "/keyword/:keyword": {
         "path": "/keyword/:keyword",
         "categories": [

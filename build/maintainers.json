@@ -1032,6 +1032,9 @@
   "/bse/:category?/:keyword?": [
     "nczitzk"
   ],
+  "/bsky/profile/:handle/feed/:space/:routeParams?": [
+    "FerrisChi"
+  ],
   "/bsky/keyword/:keyword": [
     "untitaker"
   ],
