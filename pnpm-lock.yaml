@@ -114,8 +114,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       form-data:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.2
+        version: 4.0.2
       googleapis:
         specifier: 144.0.0
         version: 144.0.0
@@ -3290,8 +3290,8 @@ packages:
     resolution: {integrity: sha512-XHIrMD0NpDrNM/Ckf7XJiBbLl57KEhT3+i3yY+eWm+cqYZJQTZrKo8Y8AWKnuV5GT4scfuUGt9LzNoIx3dU1nQ==}
     engines: {node: '>= 0.12'}
 
-  form-data@4.0.1:
-    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
+  form-data@4.0.2:
+    resolution: {integrity: sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==}
     engines: {node: '>= 6'}
 
   formidable@3.5.2:
@@ -7424,7 +7424,7 @@ snapshots:
   '@types/node-fetch@2.6.12':
     dependencies:
       '@types/node': 22.13.4
-      form-data: 4.0.1
+      form-data: 4.0.2
 
   '@types/node@22.13.4':
     dependencies:
@@ -7455,7 +7455,7 @@ snapshots:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
       '@types/node': 22.13.4
-      form-data: 4.0.1
+      form-data: 4.0.2
 
   '@types/supertest@6.0.2':
     dependencies:
@@ -8820,7 +8820,7 @@ snapshots:
     dependencies:
       camelcase-keys: 7.0.2
       decamelize-keys: 1.1.1
-      form-data: 4.0.1
+      form-data: 4.0.2
       got: 12.6.1
       he: 1.2.0
       hmacsha1: 1.0.0
@@ -8939,10 +8939,11 @@ snapshots:
       mime-types: 2.1.35
       safe-buffer: '@nolyfill/safe-buffer@1.0.41'
 
-  form-data@4.0.1:
+  form-data@4.0.2:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
       mime-types: 2.1.35
 
   formidable@3.5.2:
@@ -9553,7 +9554,7 @@ snapshots:
       cssstyle: 4.2.1
       data-urls: 5.0.0
       decimal.js: 10.5.0
-      form-data: 4.0.1
+      form-data: 4.0.2
       html-encoding-sniffer: 4.0.0
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
@@ -11060,7 +11061,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 4.4.0
       fast-safe-stringify: 2.1.1
-      form-data: 4.0.1
+      form-data: 4.0.2
       formidable: 3.5.2
       methods: 1.1.2
       mime: 2.6.0
