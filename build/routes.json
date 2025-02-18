@@ -58630,7 +58630,8 @@
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
-          "supportScihub": false
+          "supportScihub": false,
+          "supportRadar": true
         },
         "radar": [
           {
@@ -58642,7 +58643,8 @@
         "name": "技术团队博客",
         "url": "tech.meituan.com",
         "maintainers": [
-          "ktKongTong"
+          "ktKongTong",
+          "cscnk52"
         ],
         "location": "tech.ts"
       }
