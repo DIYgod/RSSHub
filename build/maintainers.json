@@ -3498,8 +3498,17 @@
   "/hrbeu/yjsy/list/:id": [
     "Derekmini"
   ],
+  "/hrbust/cs/:category?": [
+    "cscnk52"
+  ],
+  "/hrbust/gzc/:category?": [
+    "cscnk52"
+  ],
   "/hrbust/jwzx/:type?/:page?": [
     "LenaNouzen",
+    "cscnk52"
+  ],
+  "/hrbust/lib/:category?": [
     "cscnk52"
   ],
   "/hrbust/news/:category?": [

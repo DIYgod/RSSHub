@@ -16576,6 +16576,42 @@
   },
   "hrbust.edu.cn": {
     "_name": "哈尔滨理工大学",
+    "cs": [
+      {
+        "title": "计算机学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category/list.htm"
+        ],
+        "target": "/hrbust/cs/:category"
+      },
+      {
+        "title": "计算机学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hrbust/cs"
+      }
+    ],
+    "gzc": [
+      {
+        "title": "国有资产管理处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category/list.htm"
+        ],
+        "target": "/hrbust/gzc/:category"
+      },
+      {
+        "title": "国有资产管理处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hrbust/gzc"
+      }
+    ],
     "jwzx": [
       {
         "title": "教务处",
@@ -16584,6 +16620,24 @@
           "/homepage/index.do"
         ],
         "target": "/hrbust/jwzx"
+      }
+    ],
+    "lib": [
+      {
+        "title": "图书馆",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:category/list.htm"
+        ],
+        "target": "/hrbust/lib/:category"
+      },
+      {
+        "title": "图书馆",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/hrbust/lib"
       }
     ],
     "news": [
