@@ -1,9 +1,9 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -41,12 +41,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://news.hrbust.edu.cn/';
-
     const { category = 'lgyw' } = ctx.req.param();
-
-    const response = await got(`${rootUrl}${category}.htm`);
-
-    const $ = load(response.data);
+    const columnUrl = `${rootUrl}${category}.htm`;
+    const response = await ofetch(columnUrl);
+    const $ = load(response);
 
     const bigTitle = $('title').text().split('-')[0].trim();
 
@@ -72,8 +70,8 @@ async function handler(ctx) {
                     return item;
                 }
 
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
+                const detailResponse = await ofetch(item.link);
+                const content = load(detailResponse);
 
                 const dateText = content('p.xinxi span:contains("日期时间：")').text().replace('日期时间：', '').trim();
                 const pubTime = dateText ? timezone(parseDate(dateText), +8) : null;
@@ -98,8 +96,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `哈尔滨理工大学新闻网 - ${bigTitle}`,
-        link: `${rootUrl}${category}.htm`,
+        title: `${bigTitle} - 哈尔滨理工大学新闻网`,
+        link: columnUrl,
+        language: 'zh-CN',
         item: items,
     };
 }
