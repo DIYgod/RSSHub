@@ -151,7 +151,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://fantia.jp';
     const apiUrl = `${rootUrl}/api/v1/search/${type}?keyword=${keyword}&peroid=${period}&brand_type=0&category=${caty === 'all' ? '' : caty}&order=${order}${
-        rating === 'all' ? '' : rating === 'general' ? '&rating=general' : '&adult=1'
+        rating === 'all' ? '' : (rating === 'general' ? '&rating=general' : '&adult=1')
     }&per_page=30`;
     const response = await got({
         method: 'get',

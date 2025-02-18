@@ -66,7 +66,7 @@ async function handler(ctx) {
             'filter[until]': 0,
             id: symbol.toLowerCase(),
             include: 'author,primaryTickers,secondaryTickers,sentiments',
-            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : category === 'news' ? 40 : 20,
+            'page[size]': ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : (category === 'news' ? 40 : 20),
             'page[number]': 1,
         },
     });
