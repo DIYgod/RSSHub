@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '技术团队博客',
-    url: rootUrl,
+    url: 'tech.meituan.com',
     maintainers: ['ktKongTong', 'cscnk52'],
     handler,
 };
