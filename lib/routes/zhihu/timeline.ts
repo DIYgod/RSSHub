@@ -68,7 +68,6 @@ async function handler(ctx) {
             default:
                 return;
         }
-        return '';
     };
 
     /**
@@ -95,7 +94,7 @@ async function handler(ctx) {
         return (
             content
                 .map((e) => e.content)
-                .filter((e) => e instanceof String && !!e)
+                .filter((e) => !!e && typeof e === 'string')
                 // some content may not be wrapped in tag, it will cause error when parsing
                 .map((e) => `<div>${e}</div>`)
                 .join('')

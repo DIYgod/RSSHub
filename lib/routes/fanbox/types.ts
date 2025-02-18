@@ -196,10 +196,6 @@ export interface TextPost extends BasicPost {
     };
 }
 
-export interface PostDetailResponse {
-    body: PostDetail;
-}
-
 interface TextBlock {
     type: 'p';
     text: string;

@@ -8,7 +8,7 @@ export default function timezone(date, timezone = serverTimezone) {
         date = new Date(date);
     }
 
-    assert(date instanceof Date);
+    assert.ok(date instanceof Date);
 
     return new Date(date.getTime() - millisInAnHour * (timezone - serverTimezone));
 }

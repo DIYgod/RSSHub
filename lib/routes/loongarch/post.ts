@@ -1,5 +1,6 @@
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/post/:type?',

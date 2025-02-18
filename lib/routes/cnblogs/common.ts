@@ -28,7 +28,6 @@ export const route: Route = {
     handler,
     url: 'www.cnblogs.com/pick',
     description: `在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: \`https://www.cnblogs.com/cate/go/\`, 则: [\`/cnblogs/cate/go\`](https://rsshub.app/cnblogs/cate/go)`,
-    url: 'www.cnblogs.com/aggsite/headline',
 };
 
 async function handler(ctx) {

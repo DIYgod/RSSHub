@@ -519,7 +519,7 @@ async function handler(ctx) {
                             const mapBackground = locationObj.find('.tgme_widget_message_location').css('background-image');
                             const mapBackgroundUrl = mapBackground && mapBackground.match(/url\('(.*)'\)/);
                             const mapBackgroundUrlSrc = mapBackgroundUrl && mapBackgroundUrl[1];
-                            const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0];
+                            const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : (showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0]);
                             return locationLink ? `<a href="${locationLink}">${mapImgHtml}</a>` : mapImgHtml;
                         } else {
                             return '';

@@ -50,7 +50,7 @@ const processItems = async (apiUrl, limit, ...searchParams) => {
     let items = JSON.parse(String(zlib.inflateSync(Buffer.from(response.data?.list ?? response.data, 'base64'))));
 
     items = (items?.list ?? items).slice(0, limit).map((item) => {
-        const sourceType = item.source_type ?? (item.source_link ? (item.column?.title ? 'article' : 'news') : item.event_type ? 'event' : constants.defaultType);
+        const sourceType = item.source_type ?? (item.source_link ? (item.column?.title ? 'article' : 'news') : (item.event_type ? 'event' : constants.defaultType));
 
         item = item.source_type ? item[item.source_type] : item;
 

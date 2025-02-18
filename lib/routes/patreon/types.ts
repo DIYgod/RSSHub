@@ -83,6 +83,14 @@ interface Image {
     thumb_square_large_url?: string;
     thumb_square_url?: string;
     thumb_url?: string;
+    thumbnail: string;
+    default?: string;
+    default_blurred?: string;
+    default_blurred_small?: string;
+    default_small?: string;
+    original?: string;
+    thumbnail_large?: string;
+    thumbnail_small?: string;
 }
 
 interface PostMetadata {
@@ -323,18 +331,6 @@ interface VideoIssues {
         video_codec?: string;
         video_resolution?: string;
     };
-}
-
-interface Image {
-    thumbnail: string;
-    url: string;
-    default?: string;
-    default_blurred?: string;
-    default_blurred_small?: string;
-    default_small?: string;
-    original?: string;
-    thumbnail_large?: string;
-    thumbnail_small?: string;
 }
 
 interface Metadata {

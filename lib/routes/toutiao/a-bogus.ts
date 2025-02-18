@@ -43,9 +43,9 @@ function rotateLeft32(e, r) {
 
 function T(j) {
     if (0 <= j && j < 16) {
-        return 0x79_cc_45_19;
+        return 0x79_CC_45_19;
     } else if (16 <= j && j < 64) {
-        return 0x7a_87_9d_8a;
+        return 0x7A_87_9D_8A;
     } else {
         logger.error('invalid j for constant Tj');
     }
@@ -74,14 +74,14 @@ function GG(j, x, y, z) {
 }
 
 function reset(this: any) {
-    this.reg[0] = 0x73_80_16_6f;
-    this.reg[1] = 0x49_14_b2_b9;
-    this.reg[2] = 0x17_24_42_d7;
-    this.reg[3] = 0xda_8a_06_00;
-    this.reg[4] = 0xa9_6f_30_bc;
-    this.reg[5] = 0x16_31_38_aa;
-    this.reg[6] = 0xe3_8d_ee_4d;
-    this.reg[7] = 0xb0_fb_0e_4e;
+    this.reg[0] = 0x73_80_16_6F;
+    this.reg[1] = 0x49_14_B2_B9;
+    this.reg[2] = 0x17_24_42_D7;
+    this.reg[3] = 0xDA_8A_06_00;
+    this.reg[4] = 0xA9_6F_30_BC;
+    this.reg[5] = 0x16_31_38_AA;
+    this.reg[6] = 0xE3_8D_EE_4D;
+    this.reg[7] = 0xB0_FB_0E_4E;
     this.chunk = [];
     this.size = 0;
 }
@@ -172,17 +172,17 @@ function _compress(this: any, t) {
         const i = this.reg.slice(0);
         for (let c = 0; c < 64; c++) {
             let o = rotateLeft32(i[0], 12) + i[4] + rotateLeft32(T(c), c);
-            o = (0xff_ff_ff_ff & o) >>> 0;
+            o = (0xFF_FF_FF_FF & o) >>> 0;
             o = rotateLeft32(o, 7);
 
             const s = (o ^ rotateLeft32(i[0], 12)) >>> 0;
             let u = FF(c, i[0], i[1], i[2]);
             u = u + i[3] + s + f[c + 68];
-            u = (0xff_ff_ff_ff & u) >>> 0;
+            u = (0xFF_FF_FF_FF & u) >>> 0;
 
             let b = GG(c, i[4], i[5], i[6]);
             b = b + i[7] + o + f[c];
-            b = (0xff_ff_ff_ff & b) >>> 0;
+            b = (0xFF_FF_FF_FF & b) >>> 0;
             i[3] = i[2];
             i[2] = rotateLeft32(i[1], 9);
             i[1] = i[0];
@@ -206,10 +206,10 @@ function _fill(this: any) {
     }
     for (let i = 0; i < 4; i++) {
         const c = Math.floor(a / 0x1_00_00_00_00);
-        this.chunk.push((c >>> (8 * (3 - i))) & 0xff);
+        this.chunk.push((c >>> (8 * (3 - i))) & 0xFF);
     }
     for (let i = 0; i < 4; i++) {
-        this.chunk.push((a >>> (8 * (3 - i))) & 0xff);
+        this.chunk.push((a >>> (8 * (3 - i))) & 0xFF);
     }
 }
 

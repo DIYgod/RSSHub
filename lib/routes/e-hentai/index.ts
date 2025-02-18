@@ -35,7 +35,7 @@ async function handler(ctx) {
     $('.itd').parent().remove();
 
     let items = $('table.gltc tbody tr')
-        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
+        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : (needImages ? 16 : 26))
         .toArray()
         .map((item) => {
             item = $(item);

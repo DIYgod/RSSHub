@@ -1,6 +1,7 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/news',
