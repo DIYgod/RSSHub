@@ -32,7 +32,7 @@ export const route: Route = {
     url: 'www.cngal.org/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
@@ -45,5 +45,4 @@ async function handler(ctx) {
             link: `https://www.cngal.org/articles/index/${item.id}`,
         })),
     };
-    ctx.state.json = response.data;
 }

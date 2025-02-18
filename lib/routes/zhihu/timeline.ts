@@ -68,7 +68,6 @@ async function handler(ctx) {
             default:
                 return;
         }
-        return '';
     };
 
     /**
