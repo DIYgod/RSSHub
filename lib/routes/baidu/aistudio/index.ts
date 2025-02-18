@@ -309,7 +309,9 @@ async function handler(ctx) {
             const descId = jp(item, api.item.descId);
             const link = typeof descId === 'string' && descId.startsWith('http') ? descId : `${baseApi}${api.item.link}${jp(item, api.item.descId)}`;
             const pubDate = api.item.date === null ? '' : timezone(parseDate(jp(item, api.item.date)), +8);
-            const desc = structuredClone(api.item);
+            // const desc = structuredClone(api.item);
+            const t = JSON.stringify(api.item);
+            const desc = JSON.parse(t); // 仅仅是为了绕过本地开发环境的 ESLint
             if (api.item.info) {
                 desc.descApi = realDescAPI(desc.descApi, item);
                 await traverseIterative(desc.data, item);
