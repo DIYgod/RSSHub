@@ -42,7 +42,6 @@ export default [{
     plugins: {
         prettier,
         '@stylistic': stylistic,
-        unicorn,
         '@typescript-eslint': typescriptEslint,
     },
 
