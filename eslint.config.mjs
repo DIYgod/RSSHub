@@ -33,11 +33,12 @@ export default [{
 }, ...compat.extends(
     'eslint:recommended',
     'plugin:n/recommended',
-    'plugin:unicorn/recommended',
     'plugin:prettier/recommended',
     'plugin:yml/recommended',
     'plugin:@typescript-eslint/recommended',
-), {
+),
+    unicorn.configs.recommended,
+{
     plugins: {
         prettier,
         '@stylistic': stylistic,
