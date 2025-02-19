@@ -61,7 +61,7 @@ export const getCookieValueByKey = (key: string) =>
         ?.split(';')
         .map((e) => e.trim())
         .find((e) => e.startsWith(key + '='))
-        ?.slice(key.length + 1);
+        ?.slice(key.length + 1) || '';
 
 export const getSignedHeader = async (url: string, apiPath: string) => {
     // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
@@ -76,7 +76,6 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
         const script = await response1._data.text();
         const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1];
-
         const response2 = zseCk
             ? await ofetch.raw(url, {
                   headers: {
@@ -88,15 +87,13 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
               })
             : null;
 
-        const dc0 = (response2 || response1).headers
-            .getSetCookie()
-            .find((s) => s.startsWith('d_c0='))
-            ?.split(';')[0]
-            .trim()
-            .slice('d_c0='.length);
-        if (!dc0) {
-            throw new Error('Failed to extract `d_c0` from cookies');
-        }
+        const dc0 =
+            (response2 || response1).headers
+                .getSetCookie()
+                .find((s) => s.startsWith('d_c0='))
+                ?.split(';')[0]
+                .trim()
+                .slice('d_c0='.length) || '';
 
         return dc0;
     });

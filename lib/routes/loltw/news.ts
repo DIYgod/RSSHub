@@ -25,8 +25,8 @@ export const route: Route = {
     maintainers: ['hoilc'],
     handler,
     description: `| 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
-  | ----- | ---- | ------ | ------ | -------- | -------- |
-  | event | info | system | esport | patch    | TFTpatch |`,
+| ----- | ---- | ------ | ------ | -------- | -------- |
+| event | info | system | esport | patch    | TFTpatch |`,
 };
 
 async function handler(ctx) {

@@ -245,7 +245,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 quote += formatMedia(quoteData);
                 picsPrefix += generatePicsPrefix(quoteData);
-                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
+                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : (showSymbolForRetweetAndReply ? ' RT ' : '');
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
                 if (readable) {
@@ -277,15 +277,15 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         const isQuote = item.is_quote_status;
         if (!isRetweet && (!isQuote || showRetweetTextInTitle)) {
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
+                title += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
             }
             title += replaceBreak(originalItem.full_text);
         }
         if (isRetweet) {
-            title += showEmojiForRetweetAndReply ? '🔁 ' : showSymbolForRetweetAndReply ? 'RT ' : '';
+            title += showEmojiForRetweetAndReply ? '🔁 ' : (showSymbolForRetweetAndReply ? 'RT ' : '');
             title += item.user.name + ': ';
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? ' ↩️ ' : showSymbolForRetweetAndReply ? ' Re ' : '';
+                title += showEmojiForRetweetAndReply ? ' ↩️ ' : (showSymbolForRetweetAndReply ? ' Re ' : '');
             }
             title += replaceBreak(item.full_text);
         }
@@ -321,7 +321,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 description += '&ensp;';
             }
-            description += showEmojiForRetweetAndReply ? '🔁' : showSymbolForRetweetAndReply ? 'RT' : '';
+            description += showEmojiForRetweetAndReply ? '🔁' : (showSymbolForRetweetAndReply ? 'RT' : '');
             if (!showAuthorInDesc) {
                 description += '&ensp;';
                 if (readable) {
@@ -364,7 +364,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description += `:&ensp;`;
         }
         if (item.in_reply_to_screen_name) {
-            description += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
+            description += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
         }
 
         description += item.full_text;
@@ -405,6 +405,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 (isRetweet && {
                     links: [
                         {
+                            url: `https://x.com/${item.user?.screen_name}/status/${item.conversation_id_str}`,
                             type: 'repost',
                         },
                     ],

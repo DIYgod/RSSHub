@@ -143,24 +143,24 @@ export const route: Route = {
     handler,
     url: 'bse.cn/',
     description: `| 本所要闻        | 人才招聘 | 采购信息 | 业务通知   |
-  | --------------- | -------- | -------- | ---------- |
-  | important\_news | recruit  | purchase | news\_list |
+| --------------- | -------- | -------- | ---------- |
+| important\_news | recruit  | purchase | news\_list |
 
-  | 法律法规  | 公开征求意见    | 部门规章         | 发行融资   |
-  | --------- | --------------- | ---------------- | ---------- |
-  | law\_list | public\_opinion | regulation\_list | fxrz\_list |
+| 法律法规  | 公开征求意见    | 部门规章         | 发行融资   |
+| --------- | --------------- | ---------------- | ---------- |
+| law\_list | public\_opinion | regulation\_list | fxrz\_list |
 
-  | 持续监管   | 交易管理   | 市场管理   | 上市委会议公告  |
-  | ---------- | ---------- | ---------- | --------------- |
-  | cxjg\_list | jygl\_list | scgl\_list | meeting\_notice |
+| 持续监管   | 交易管理   | 市场管理   | 上市委会议公告  |
+| ---------- | ---------- | ---------- | --------------- |
+| cxjg\_list | jygl\_list | scgl\_list | meeting\_notice |
 
-  | 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
-  | ------------------ | ------------------ | ------------------ |
-  | meeting\_result    | meeting\_change    | bgcz\_notice       |
+| 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
+| ------------------ | ------------------ | ------------------ |
+| meeting\_result    | meeting\_change    | bgcz\_notice       |
 
-  | 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核           | 注册结果      |
-  | ---------------------- | ---------------------- | ------------------ | ------------- |
-  | bgcz\_result           | bgcz\_change           | termination\_audit | audit\_result |`,
+| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核           | 注册结果      |
+| ---------------------- | ---------------------- | ------------------ | ------------- |
+| bgcz\_result           | bgcz\_change           | termination\_audit | audit\_result |`,
 };
 
 async function handler(ctx) {

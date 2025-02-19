@@ -81,8 +81,8 @@ export const route: Route = {
     handler,
     url: 'hkej.com/',
     description: `| index    | stock    | hongkong | china    | international | property | current  |
-  | -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
-  | 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |`,
+| -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
+| 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |`,
 };
 
 async function handler(ctx) {

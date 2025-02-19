@@ -50,7 +50,6 @@ async function handler(ctx) {
             title: unsupported,
             item: [{ title: unsupported }],
         };
-        return;
     }
 
     let result = res.data.results.apps;

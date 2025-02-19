@@ -1,7 +1,7 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
-import utils from './utils';
+import utils, { getVideoUrl } from './utils';
 import logger from '@/utils/logger';
 
 export const route: Route = {
@@ -73,6 +73,14 @@ async function handler(ctx) {
                 link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: name,
                 comments: item.comment,
+                attachments: item.bvid
+                    ? [
+                          {
+                              url: getVideoUrl(item.bvid),
+                              mime_type: 'text/html',
+                          },
+                      ]
+                    : undefined,
             })),
     };
 }

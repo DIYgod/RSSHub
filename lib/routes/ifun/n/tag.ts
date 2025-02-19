@@ -45,7 +45,7 @@ export const route: Route = {
     parameters: {
         name: '专栏 id，可在对应专栏页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [zhihu](https://n.ifun.cool/article-list/2?tagName=zhihu)，网址为 \`https://n.ifun.cool/article-list/2?tagName=zhihu\`，请截取 \`tagName\` 的值 \`zhihu\` 作为 \`name\` 参数填入，此时目标路由为 [\`/ifun/n/tag/zhihu\`](https://rsshub.app/ifun/n/tag/zhihu)。
 
 更多专栏请见 [盐选故事专栏](https://n.ifun.cool/tags)。

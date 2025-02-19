@@ -29,9 +29,9 @@ export const route: Route = {
     name: '用户追漫更新',
     maintainers: ['yindaheng98'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

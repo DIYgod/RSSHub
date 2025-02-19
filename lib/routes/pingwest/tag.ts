@@ -22,17 +22,17 @@ export const route: Route = {
     handler,
     description: `内容类型
 
-  | 最新 | 热门 |
-  | ---- | ---- |
-  | 1    | 2    |
+| 最新 | 热门 |
+| ---- | ---- |
+| 1    | 2    |
 
   参数
 
   -   \`fulltext\`，全文输出，例如：\`/pingwest/tag/ChinaJoy/1/fulltext\`
 
-  :::tip
+::: tip
   该路由一次最多显示 30 条文章
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

@@ -20,8 +20,8 @@ export const route: Route = {
     ],
     handler,
     description: `| 简体中文 | 繁体中文 |
-  | -------- | -------- |
-  | zh-hans  | zh-hant  |`,
+| -------- | -------- |
+| zh-hans  | zh-hant  |`,
 };
 
 async function handler(ctx) {

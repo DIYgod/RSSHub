@@ -17,7 +17,7 @@ export const route: Route = {
     parameters: {
         path: '版块路径，默认为 `tzgg`（通知公告）',
     },
-    description: `:::tip
+    description: `::: tip
 
 版块路径（\`path\`）应填写板块 URL 中 \`http://www.sme.buaa.edu.cn/\` 和 \`.htm\` 之间的字段。
 
@@ -28,7 +28,7 @@ export const route: Route = {
 
 :::
 
-:::warning
+::: warning
 
 部分页面（如[学院介绍](http://www.sme.buaa.edu.cn/xygk/xyjs.htm)、[微纳中心](http://www.sme.buaa.edu.cn/wnzx.htm)、[院学生会](http://www.sme.buaa.edu.cn/xsgz/yxsh.htm)）存在无内容、内容跳转至外站等情况，因此可能出现解析失败的现象。
 

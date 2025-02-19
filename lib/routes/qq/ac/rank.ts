@@ -23,12 +23,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
-  | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-  | mt     | rise   | new    | pay    | top    | male   | female |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| mt     | rise   | new    | pay    | top    | male   | female |
 
-  :::tip
+::: tip
   \`time\` 参数仅在 \`type\` 参数选为 **月票榜** 的时候生效。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

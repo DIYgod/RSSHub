@@ -41,7 +41,7 @@ For a full list of RSS Feed Channels, please refer to the RSS feed page of the c
 | [Español](https://sp.yna.co.kr/channel/index)             |
 | [Français](https://fr.yna.co.kr/channel/index)            |
 
-:::tip
+::: tip
 For example, the path for the RSS feed url https://www.yna.co.kr/rss/economy.xml and https://cn.yna.co.kr/RSS/news.xml would be \`/ko/economy\` and \`/cn/news\` respectively. 
 :::
 `,

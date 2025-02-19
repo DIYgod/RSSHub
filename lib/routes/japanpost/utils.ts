@@ -57,10 +57,10 @@ const utils = {
 
         switch (l) {
             case 'ja':
-                customFormat = dayjs(t, formatJaDate, true).isValid() ? formatJaDate : dayjs(t, formatJaDateTime, true).isValid() ? formatJaDateTime : undefined;
+                customFormat = dayjs(t, formatJaDate, true).isValid() ? formatJaDate : (dayjs(t, formatJaDateTime, true).isValid() ? formatJaDateTime : undefined);
                 break;
             case 'en':
-                customFormat = dayjs(t, formatEnDate, true).isValid() ? formatEnDate : dayjs(t, formatEnDateTime, true).isValid() ? formatEnDateTime : undefined;
+                customFormat = dayjs(t, formatEnDate, true).isValid() ? formatEnDate : (dayjs(t, formatEnDateTime, true).isValid() ? formatEnDateTime : undefined);
                 break;
         }
 

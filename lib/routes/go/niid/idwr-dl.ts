@@ -77,9 +77,9 @@ export const route: Route = {
     handler,
     example: '/go/niid/idwr-dl/:year?',
     parameters: { year: 'Year, current year by default' },
-    description: `:::tip
+    description: `::: tip
   If you subscribe to [感染症発生動向調査週報ダウンロード2024年](https://www.niid.go.jp/niid/ja/idwr-dl/2024.html)，where the URL is \`https://www.niid.go.jp/niid/ja/idwr-dl/2024.html\`, extract the part \`https://www.niid.go.jp/niid/ja/idwr-dl/\` to the end, which is \`.html\`, and use it as the parameter to fill in. Therefore, the route will be [\`/go/niid/idwr-dl/2024\`](https://rsshub.app/go/niid/idwr-dl/2024).
-  :::`,
+:::`,
     categories: ['government'],
 
     features: {
