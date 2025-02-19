@@ -99865,8 +99865,8 @@
               "description": ""
             }
           ],
-          "requirePuppeteer": false,
-          "antiCrawler": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
