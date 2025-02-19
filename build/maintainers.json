@@ -6852,6 +6852,9 @@
   "/szse/rule/:channel{.+}?": [
     "nczitzk"
   ],
+  "/szse/disclosure/listed/notice": [
+    "nczitzk"
+  ],
   "/szu/yz/:type?": [
     "NagaruZ"
   ],

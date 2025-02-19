@@ -88366,6 +88366,37 @@
           }
         ],
         "location": "rule.ts"
+      },
+      "/disclosure/listed/notice": {
+        "path": "/disclosure/listed/notice",
+        "name": "上市公司公告",
+        "url": "www.szse.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/szse/disclosure/listed/notice",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.szse.cn/disclosure/listed/notice/index.html"
+            ],
+            "target": "/disclosure/listed/notice"
+          }
+        ],
+        "view": 0,
+        "location": "disclosure/listed-notice.ts"
       }
     },
     "name": "深圳证券交易所",

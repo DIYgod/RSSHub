@@ -32811,6 +32811,14 @@
           "/www/lawrules/rule/repeal/rules/index.html"
         ],
         "target": "/szse/rule/repeal/rules"
+      },
+      {
+        "title": "上市公司公告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/disclosure/listed/notice/index.html"
+        ],
+        "target": "/szse/disclosure/listed/notice"
       }
     ]
   },
