@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/news',
     radar: [
         {
-            source: ['www.dataguidance.com/info?article_type=news_post'],
+            source: ['www.dataguidance.com/info'],
         },
     ],
     maintainers: ['harveyqiu'],
