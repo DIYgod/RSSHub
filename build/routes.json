@@ -101427,7 +101427,7 @@
         "categories": [
           "blog"
         ],
-        "example": "/youmemark/Cds2gZ2HIDdS41IfC6kzE1DL9Su1MqUp",
+        "example": "/youmemark/pseudoyu",
         "parameters": {
           "userid": "`userid` is the user id of youmemark"
         },
@@ -101447,7 +101447,8 @@
           {
             "source": [
               "youmemark.com/user/:userid"
-            ]
+            ],
+            "target": "/:userid"
           }
         ],
         "description": "Get user's public bookmarks from YouMeMark\n::: tip\n  Add `?limit=<number>` to the end of the route to limit the number of items. Default is 10.\n:::",
