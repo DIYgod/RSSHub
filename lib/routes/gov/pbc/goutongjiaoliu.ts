@@ -75,7 +75,7 @@ async function handler() {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: '中国人民银行 - 沟通交流',

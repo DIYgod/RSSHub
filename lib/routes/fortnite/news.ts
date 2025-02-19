@@ -64,7 +64,7 @@ async function handler(ctx) {
     });
 
     await page.close();
-    browser.close();
+    await browser.close();
 
     const { blogList: list } = data;
     const items = await Promise.all(
