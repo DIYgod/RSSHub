@@ -1,0 +1,12 @@
+<h4>{{ part.segment1 }}</h4>
+<h4>{{ part.segment2 }}</h4>
+    {{if type == 'periodical'}}
+        <a download="{{ item.pdfName }}" href="https://www.cspengyuan.com{{ item.pdfUrl }}"
+        style="display: inline-block; padding: 10px 20px; background-color: red; color: white;
+        text-align: center; text-decoration: none; border-radius: 5px; font-size: 16px;">整刊下载</a><br>
+    {{/if}}
+    {{if type == 'monograph' }}
+        <h4><b>{{ part.segment3 }}</b></h4>
+        <p>{{ part.segment4 }}</p><br>
+    {{/if}}
+<img src="{{ imgUrl }}" height="50%" style="display: block; margin: 0 auto;">
