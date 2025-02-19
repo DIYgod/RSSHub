@@ -84,16 +84,52 @@ if (Object.keys(modules).length) {
 export { namespaces };
 
 const app = new Hono();
+const sortRoutes = (
+    routes: Record<
+        string,
+        Route & {
+            location: string;
+        }
+    >
+) =>
+    Object.entries(routes).sort(([pathA], [pathB]) => {
+        const segmentsA = pathA.split('/');
+        const segmentsB = pathB.split('/');
+        const lenA = segmentsA.length;
+        const lenB = segmentsB.length;
+        const minLen = Math.min(lenA, lenB);
+
+        for (let i = 0; i < minLen; i++) {
+            const segmentA = segmentsA[i];
+            const segmentB = segmentsB[i];
+
+            // Literal segments have priority over parameter segments
+            if (segmentA.startsWith(':') !== segmentB.startsWith(':')) {
+                return segmentA.startsWith(':') ? 1 : -1;
+            }
+        }
+
+        return 0;
+    });
+
 for (const namespace in namespaces) {
     const subApp = app.basePath(`/${namespace}`);
-    for (const path in namespaces[namespace].routes) {
+
+    const namespaceData = namespaces[namespace];
+    if (!namespaceData || !namespaceData.routes) {
+        continue;
+    }
+
+    const sortedRoutes = sortRoutes(namespaceData.routes);
+
+    for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
             if (!ctx.get('data')) {
-                if (typeof namespaces[namespace].routes[path].handler !== 'function') {
-                    const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
-                    namespaces[namespace].routes[path].handler = route.handler;
+                if (typeof routeData.handler !== 'function') {
+                    const { route } = await import(`./routes/${namespace}/${routeData.location}`);
+                    routeData.handler = route.handler;
                 }
-                ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));
+                ctx.set('data', await routeData.handler(ctx));
             }
         };
         subApp.get(path, wrappedHandler);
