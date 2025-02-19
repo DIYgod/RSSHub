@@ -118,7 +118,7 @@ async function handler(ctx) {
             });
             await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
             const res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
-            browser.close();
+            await browser.close();
 
             const rawData = JSON.parse(res).data;
             const data = decrypt(rawData).hot_list[0];

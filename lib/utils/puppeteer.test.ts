@@ -4,12 +4,12 @@ import { type Browser } from 'puppeteer';
 
 let browser: Browser | null = null;
 
-afterEach(() => {
+afterEach(async () => {
     if (browser) {
         // double insurance to close unclosed browser immediately after each test
         // if a test closure fails before it can close the browser, the browser process will probably be unclosed,
         // especially when the test unit is run through `npm run vitest puppeteer`
-        browser.close();
+        await browser.close();
         browser = null;
     }
     delete process.env.PROXY_URI;

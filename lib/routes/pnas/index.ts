@@ -108,7 +108,7 @@ async function handler(ctx) {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,

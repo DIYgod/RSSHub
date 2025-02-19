@@ -58,7 +58,7 @@ async function handler(ctx) {
             await page.goto(pageUrl, {
                 waitUntil: 'networkidle2',
             });
-            browser.close();
+            await browser.close();
 
             return roomInfo;
         },

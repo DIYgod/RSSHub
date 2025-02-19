@@ -54,8 +54,8 @@ const outPuppeteer = async (
                     }
                   : options
           ));
-    setTimeout(() => {
-        browser.close();
+    setTimeout(async () => {
+        await browser.close();
     }, 30000);
 
     return browser;

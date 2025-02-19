@@ -5,9 +5,9 @@ import type { Browser } from 'puppeteer';
 
 let browser: Browser | null = null;
 
-afterEach(() => {
+afterEach(async () => {
     if (browser) {
-        browser.close();
+        await browser.close();
         browser = null;
     }
 

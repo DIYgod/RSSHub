@@ -53,7 +53,7 @@ async function handler(ctx) {
                 waitUntil: 'networkidle0',
             });
             const SIGI_STATE = await page.evaluate(() => window.SIGI_STATE);
-            browser.close();
+            await browser.close();
 
             const lang = SIGI_STATE.AppContext.lang;
             const SharingMetaState = SIGI_STATE.SharingMetaState;

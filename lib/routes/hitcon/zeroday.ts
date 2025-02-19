@@ -63,7 +63,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     const response = await page.evaluate(() => document.documentElement.innerHTML);
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
     const items: DataItem[] = $('.zdui-strip-list>li')

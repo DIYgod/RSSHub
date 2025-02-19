@@ -28,9 +28,9 @@ async function handler() {
     page.on('request', (request) => {
         request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
     });
-    page.on('requestfinished', (request) => {
+    page.on('requestfinished', async (request) => {
         if (request.url() === link && request.response().status() === 403) {
-            page.close();
+            await page.close();
         }
     });
 
@@ -57,49 +57,45 @@ async function handler() {
     return {
         title,
         link,
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
+        item: list.toArray().map((item) => {
+            item = $(item);
 
-                    // remove event and styles
-                    item.find('*').removeAttr('onclick');
-                    item.find('*').removeAttr('onerror');
-                    item.find('*').removeAttr('style');
+            // remove event and styles
+            item.find('*').removeAttr('onclick');
+            item.find('*').removeAttr('onerror');
+            item.find('*').removeAttr('style');
 
-                    // format account style
-                    const account = item.find('.account-group-link-row');
-                    account.html(account.text());
+            // format account style
+            const account = item.find('.account-group-link-row');
+            account.html(account.text());
 
-                    // extract video tag from its player
-                    item.find('.plyr--video').each((_, player) => {
-                        player = $(player);
+            // extract video tag from its player
+            item.find('.plyr--video').each((_, player) => {
+                player = $(player);
 
-                        const video = player.find('video');
-                        player.replaceWith(video);
-                        const poster = video.attr('data-poster');
-                        video.attr('poster', 'https:' + poster);
+                const video = player.find('video');
+                player.replaceWith(video);
+                const poster = video.attr('data-poster');
+                video.attr('poster', 'https:' + poster);
 
-                        const source = video.find('source');
-                        const src = source.attr('src');
-                        source.attr('src', 'https:' + src);
-                    });
+                const source = video.find('source');
+                const src = source.attr('src');
+                source.attr('src', 'https:' + src);
+            });
 
-                    // correct src of img tags
-                    item.find('img').each((_, image) => {
-                        const src = $(image).attr('data-src');
-                        $(image).attr('src', 'https:' + src);
-                    });
+            // correct src of img tags
+            item.find('img').each((_, image) => {
+                const src = $(image).attr('data-src');
+                $(image).attr('src', 'https:' + src);
+            });
 
-                    return {
-                        title: item.find('.account-group').text() + ` - ${title}`,
-                        description: item.html(),
-                        link: item.find('.account-group-link-row').attr('href'),
-                        pubDate: parseDate(item.find('.profile-char').attr('datetime')),
-                        guid: item.find('a.tap-image').attr('data-tweet-id') || item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate(item.find('.profile-char').attr('datetime')).getTime(),
-                    };
-                })
-                .get(),
+            return {
+                title: item.find('.account-group').text() + ` - ${title}`,
+                description: item.html(),
+                link: item.find('.account-group-link-row').attr('href'),
+                pubDate: parseDate(item.find('.profile-char').attr('datetime')),
+                guid: item.find('a.tap-image').attr('data-tweet-id') || item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate(item.find('.profile-char').attr('datetime')).getTime(),
+            };
+        }),
     };
 }

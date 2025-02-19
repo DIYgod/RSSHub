@@ -14,7 +14,7 @@ const puppeteerGet = (url, cache) =>
             waitUntil: 'domcontentloaded',
         });
         const html = await page.evaluate(() => document.documentElement.innerHTML);
-        browser.close();
+        await browser.close();
         return html;
     });
 

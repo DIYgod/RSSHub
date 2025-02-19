@@ -60,7 +60,7 @@ async function handler(ctx: Context) {
     });
 
     const response = await page.content();
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
 

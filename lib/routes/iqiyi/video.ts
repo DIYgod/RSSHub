@@ -73,7 +73,7 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
-    browser.close();
+    await browser.close();
 
     return data;
 }
