@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/:userid',
     categories: ['blog'],
-    example: '/youmemark/Cds2gZ2HIDdS41IfC6kzE1DL9Su1MqUp',
+    example: '/youmemark/pseudoyu',
     parameters: { userid: '`userid` is the user id of youmemark' },
     features: {
         requireConfig: false,
@@ -22,6 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['youmemark.com/user/:userid'],
+            target: '/:userid',
         },
     ],
     description: `Get user's public bookmarks from YouMeMark
@@ -42,58 +43,39 @@ async function handler(ctx): Promise<Data> {
 
     const $ = load(response);
 
-    // Extract user info from the profile section
     const name = $('h2.font-bold').text().trim();
     const avatar = $('span.relative.flex img').attr('src');
-    const intro = $('.text-sm p').text().trim();
+    const intro = $('.text-center .prose p').first().text().trim();
 
-    // Extract bookmarks from the bookmarks section
     const items: Data['item'] = [];
-    $('div.flex.flex-col.gap-2').each((_, element) => {
-        const $item = $(element);
-        const $divs = $item.children('div');
-        if ($divs.length < 2) {
-            return;
-        }
+    $('h2:contains("收集箱")')
+        .next()
+        .find('> .rounded-lg')
+        .each((_, element) => {
+            const $item = $(element);
 
-        const $firstDiv = $divs.eq(0);
-        const $link = $firstDiv.find('a').first();
-        const $domain = $firstDiv.find('span').first();
+            const $linkDiv = $item.find('> div').first();
+            const $link = $linkDiv.find('a');
+            const title = $link.find('span').first().text().trim();
+            const domain = $link.find('span').last().text().trim().replaceAll(/[()]/g, '').trim();
+            const link = $link.attr('href');
 
-        // Check for blockquote content
-        let content = '';
-        if ($divs.length >= 3) {
-            const $contentDiv = $divs.eq(1);
-            const $blockquote = $contentDiv.find('blockquote');
-            if ($blockquote.length) {
-                content = $blockquote.text().trim();
+            const $contentDiv = $linkDiv.find('> div').first();
+            const content = $contentDiv.find('p').text().trim();
+
+            const dateStr = $item.children('div').last().text().trim();
+
+            if (link && title && dateStr) {
+                items.push({
+                    title,
+                    link,
+                    description: content,
+                    pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                    author: domain,
+                    guid: link,
+                });
             }
-        }
-
-        const $dateDiv = $divs.eq(-1);
-
-        if (!$link.length || !$dateDiv.length) {
-            return;
-        }
-
-        const link = $link.attr('href');
-        const title = $link.text().trim();
-        const domain = $domain.text().trim().replaceAll(/[()]/g, '');
-        const dateStr = $dateDiv.text().trim();
-
-        if (link && title && dateStr) {
-            const description = content || `${title} (${domain})`;
-
-            items.push({
-                title,
-                link,
-                description,
-                pubDate: parseDate(dateStr, 'YYYY-MM-DD HH:mm'),
-                author: domain,
-                guid: link,
-            });
-        }
-    });
+        });
 
     return {
         title: `${name}'s Bookmarks - YouMeMark`,
