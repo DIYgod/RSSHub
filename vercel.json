@@ -7,5 +7,13 @@
             "memory": 3008,
             "maxDuration": 30
         }
+    },
+    "env": {
+        "NODE_ENV": "production"
+    },
+    "build": {
+        "env": {
+            "NODE_ENV": "production"
+        }
     }
 }
