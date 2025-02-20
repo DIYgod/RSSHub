@@ -3,17 +3,26 @@ const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
 
 const config = require('../lib/config');
-config.set({
-    NO_LOGFILES: true,
-    PUPPETEER_WS_ENDPOINT: '',
-    CHROMIUM_EXECUTABLE_PATH: '/tmp/chromium',
-    CHROME_BIN: '/tmp/chromium',
-});
 
-// Configure puppeteer for Vercel
+// Configure chromium for Vercel
 if (process.env.VERCEL) {
-    process.env.PUPPETEER_BROWSER = 'chrome-aws-lambda';
-    process.env.PUPPETEER_EXECUTABLE_PATH = '/tmp/chromium';
+    const chromium = require('@sparticuz/chromium');
+    config.set({
+        NO_LOGFILES: true,
+        PUPPETEER_WS_ENDPOINT: '',
+        PUPPETEER_EXECUTABLE_PATH: await chromium.executablePath(),
+        CHROME_BIN: await chromium.executablePath(),
+        CHROMIUM_PATH: await chromium.executablePath(),
+        PUPPETEER_BROWSER_OPTIONS: {
+            args: chromium.args,
+            executablePath: await chromium.executablePath(),
+            headless: chromium.headless,
+        },
+    });
+} else {
+    config.set({
+        NO_LOGFILES: true,
+    });
 }
 
 const app = require('../lib/app');

@@ -4,8 +4,8 @@
     "routes": [{ "src": "/.*", "dest": "/api/vercel.js" }],
     "functions": {
         "api/vercel.js": {
-            "memory": 1024,
-            "maxDuration": 10
+            "memory": 3008,
+            "maxDuration": 30
         }
     }
 }
