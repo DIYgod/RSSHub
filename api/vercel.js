@@ -1,9 +1,9 @@
 const path = require('path');
 const moduleAlias = require('module-alias');
+const chromium = require('@sparticuz/chromium');
 moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
 
 const config = require('../lib/config');
-const chromium = require('@sparticuz/chromium');
 
 // Configure chromium for Vercel
 if (process.env.VERCEL) {
