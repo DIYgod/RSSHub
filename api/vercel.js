@@ -3,10 +3,10 @@ const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
 
 const config = require('../lib/config');
+const chromium = require('@sparticuz/chromium');
 
 // Configure chromium for Vercel
 if (process.env.VERCEL) {
-    const chromium = require('@sparticuz/chromium');
     config.set({
         NO_LOGFILES: true,
         PUPPETEER_WS_ENDPOINT: '',
@@ -27,6 +27,8 @@ if (process.env.VERCEL) {
 
 const app = require('../lib/app');
 
-module.exports = (req, res) => {
+function handler(req, res) {
     app.callback()(req, res);
-};
+}
+
+module.exports = handler;
