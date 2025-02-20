@@ -5,13 +5,14 @@ const chromium = require('@sparticuz/chromium');
 moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
 
 const config = require('../lib/config');
+const logger = require('../lib/utils/logger');
 const app = require('../lib/app');
 
 // Initialize configuration asynchronously
 async function initializeConfig() {
     if (process.env.VERCEL) {
         const execPath = await chromium.executablePath();
-        config.set({
+        const browserConfig = {
             NO_LOGFILES: true,
             PUPPETEER_WS_ENDPOINT: '',
             PUPPETEER_EXECUTABLE_PATH: execPath,
@@ -22,11 +23,15 @@ async function initializeConfig() {
                 executablePath: execPath,
                 headless: chromium.headless,
             },
-        });
+        };
+
+        config.set(browserConfig);
+        logger.info('Vercel environment configured', browserConfig);
     } else {
         config.set({
             NO_LOGFILES: true,
         });
+        logger.info('Local environment configured');
     }
 }
 
@@ -34,14 +39,18 @@ async function initializeConfig() {
 async function handler(req, res) {
     try {
         await initializeConfig();
+        logger.debug('Request received', {
+            method: req.method,
+            path: req.url,
+        });
+
         return app.callback()(req, res);
     } catch (error) {
-        // Option 1: Disable ESLint for this specific line
-        // eslint-disable-next-line no-console
-        console.error('Initialization error:', error);
-
-        // Option 2: Use a proper logger if available in your app
-        // logger.error('Initialization error:', error);
+        logger.error('Initialization error', {
+            error: error.message,
+            stack: error.stack,
+            details: error,
+        });
 
         res.status(500).json({
             error: 'Internal server error',
