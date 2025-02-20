@@ -46,8 +46,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| latest | bitcoin | ethereum | defi | inter\_blockchain | mining | safety | satoshi\_nakomoto | public\_blockchain |
-  | ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
-  | 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
+| ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
+| 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
 };
 
 async function handler(ctx) {

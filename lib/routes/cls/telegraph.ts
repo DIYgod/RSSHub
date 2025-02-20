@@ -44,8 +44,8 @@ export const route: Route = {
     handler,
     url: 'cls.cn/telegraph',
     description: `| 看盘  | 公司         | 解读    | 加红 | 推送  | 提醒   | 基金 | 港股 |
-  | ----- | ------------ | ------- | ---- | ----- | ------ | ---- | ---- |
-  | watch | announcement | explain | red  | jpush | remind | fund | hk   |`,
+| ----- | ------------ | ------- | ---- | ----- | ------ | ---- | ---- |
+| watch | announcement | explain | red  | jpush | remind | fund | hk   |`,
 };
 
 async function handler(ctx) {

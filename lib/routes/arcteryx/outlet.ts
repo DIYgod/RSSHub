@@ -30,15 +30,15 @@ export const route: Route = {
     handler,
     description: `Country
 
-  | United States | Canada | United Kingdom |
-  | ------------- | ------ | -------------- |
-  | us            | ca     | gb             |
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
   gender
 
-  | male | female |
-  | ---- | ------ |
-  | mens | womens |
+| male | female |
+| ---- | ------ |
+| mens | womens |
 
 ::: tip
   Parameter \`country\` can be found within the url of \`Arcteryx\` website.

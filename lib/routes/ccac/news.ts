@@ -24,9 +24,9 @@ export const route: Route = {
     handler,
     description: `Category
 
-  | All | Detected Cases | Investigation Reports or Recommendations | Annual Reports | CCAC's Updates |
-  | --- | -------------- | ---------------------------------------- | -------------- | -------------- |
-  | all | case           | Persuasion                               | AnnualReport   | PCANews        |`,
+| All | Detected Cases | Investigation Reports or Recommendations | Annual Reports | CCAC's Updates |
+| --- | -------------- | ---------------------------------------- | -------------- | -------------- |
+| all | case           | Persuasion                               | AnnualReport   | PCANews        |`,
 };
 
 async function handler(ctx) {

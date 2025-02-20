@@ -71,7 +71,7 @@ const getUser = (url, cache) =>
 
                 return { userPageData, notes, collect };
             } finally {
-                browser.close();
+                await browser.close();
             }
         },
         config.cache.routeExpire,
@@ -95,7 +95,7 @@ const getBoard = (url, cache) =>
                 const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
-                browser.close();
+                await browser.close();
             }
         },
         config.cache.routeExpire,

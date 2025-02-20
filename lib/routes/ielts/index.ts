@@ -38,7 +38,7 @@ async function handler() {
             await page.waitForSelector('div.container');
 
             const html = await page.evaluate(() => document.documentElement.innerHTML);
-            browser.close();
+            await browser.close();
             return html;
         },
         config.cache.routeExpire,

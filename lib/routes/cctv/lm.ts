@@ -28,12 +28,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
-  | -------- | ------ | -------- | ------ |
-  | jdft     | dzw    | jrsf     | kjl    |
+| -------- | ------ | -------- | ------ |
+| jdft     | dzw    | jrsf     | kjl    |
 
-  | 正大综艺 | 经济半小时 | 第一动画乐园 |
-  | -------- | ---------- | ------------ |
-  | zdzy     | jjbxs      | dydhly       |
+| 正大综艺 | 经济半小时 | 第一动画乐园 |
+| -------- | ---------- | ------------ |
+| zdzy     | jjbxs      | dydhly       |
 
 ::: tip
   更多栏目请看 [这里](https://tv.cctv.com/lm)

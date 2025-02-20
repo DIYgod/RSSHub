@@ -93,8 +93,8 @@ export const route: Route = {
     maintainers: ['zytomorrow'],
     handler,
     description: `| 法定主动内容 | 公示公告 |
-  | :----------: | :------: |
-  |    fdzdnr    |   gsgg   |`,
+| :----------: | :------: |
+|    fdzdnr    |   gsgg   |`,
 };
 
 async function handler(ctx) {

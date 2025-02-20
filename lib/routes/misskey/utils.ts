@@ -1,24 +1,24 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-import { art } from '@/utils/render';
-import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 import { MisskeyNote, MisskeyUser } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 
-const parseNotes = (data: MisskeyNote[], site: string) =>
+const parseNotes = (data: MisskeyNote[], site: string, simplifyAuthor: boolean = false) =>
     data.map((item: MisskeyNote) => {
         const isRenote = item.renote && Object.keys(item.renote).length > 0;
         const isReply = item.reply && Object.keys(item.reply).length > 0;
         const noteToUse: MisskeyNote = isRenote ? (item.renote as MisskeyNote) : item;
 
         const host = noteToUse.user.host ?? site;
-        const author = `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
+        const author = simplifyAuthor ? String(noteToUse.user.name) : `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
 
         const description = art(path.join(__dirname, 'templates/note.art'), {
             text: noteToUse.text,
@@ -30,7 +30,7 @@ const parseNotes = (data: MisskeyNote[], site: string) =>
         let title = '';
         if (isReply && item.reply) {
             const replyToHost = item.reply.user.host ?? site;
-            const replyToAuthor = `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
+            const replyToAuthor = simplifyAuthor ? item.reply.user.name : `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
             title = `Reply to ${replyToAuthor}: "${noteToUse.text ?? ''}"`;
         } else if (isRenote) {
             title = `Renote: ${author}: "${noteToUse.text ?? ''}"`;

@@ -148,7 +148,7 @@ export const route: Route = {
 | [zxyw](https://rsshub.app/chinacdc/zxyw)  | [tzgg](https://rsshub.app/chinacdc/tzgg)  |
 
 <details>
-  <summary>更多分类</summary>
+<summary>更多分类</summary>
 
 #### [党建园地](https://www.chinacdc.cn/dqgz/djgz/)
 

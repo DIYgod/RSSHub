@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['gdzhht'],
     handler,
     description: `| 学术预告 | 教研通知 | 海外学习 | 事务通知 |
-  | -------- | -------- | -------- | -------- |
-  | xsyg     | jytz     | hwxx     | swtz     |
+| -------- | -------- | -------- | -------- |
+| xsyg     | jytz     | hwxx     | swtz     |
 
 ::: warning
 由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。

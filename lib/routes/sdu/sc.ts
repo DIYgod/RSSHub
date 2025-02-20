@@ -25,8 +25,8 @@ export const route: Route = {
     maintainers: ['Ji4n1ng'],
     handler,
     description: `| 通知公告 | 学术动态 | 本科教育 | 研究生教育 |
-  | -------- | -------- | -------- | ---------- |
-  | 0        | 1        | 2        | 3          |`,
+| -------- | -------- | -------- | ---------- |
+| 0        | 1        | 2        | 3          |`,
 };
 
 async function handler(ctx) {

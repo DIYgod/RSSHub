@@ -15,8 +15,11 @@ export const route: Route = {
         {
             source: ['apps.shopify.com/search'],
             target: (_params, url) => {
-                const { searchParams } = new URL(url).searchParams;
-                return searchParams.has('q') ? `/shopify/apps/search/${searchParams.get('q')}` : null;
+                const searchParams = new URL(url).searchParams;
+                if (!searchParams.has('q')) {
+                    return '';
+                }
+                return `/shopify/apps/search/${searchParams.get('q')}`;
             },
         },
     ],
@@ -76,7 +79,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: `https://apps.shopify.com/search?q=${q}`,
         // description: `Search results for "${q}" – Shopify App Store`,
         allowEmpty: true,
-        language: 'en-US',
+        language: 'en-us',
         item: items,
     };
 }

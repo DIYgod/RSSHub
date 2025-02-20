@@ -100,6 +100,7 @@ const parseList = async (
                 $1('.overlay-microtransaction').remove();
                 $1('#video-freemium-player').remove();
                 $1('script').remove();
+                $1('.bff-google-ad').remove();
 
                 let articleBodyNode = $1('.articleBody');
                 if (articleBodyNode.length === 0) {

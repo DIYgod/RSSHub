@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['Cesaryuan', 'nczitzk'],
     handler,
     description: `| 动作    | 子程序      | 动作单      |
-  | ------- | ----------- | ----------- |
-  | Actions | SubPrograms | ActionLists |`,
+| ------- | ----------- | ----------- |
+| Actions | SubPrograms | ActionLists |`,
 };
 
 async function handler(ctx) {
