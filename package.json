@@ -34,7 +34,8 @@
     "prepare": "husky || true",
     "profiling": "NODE_ENV=production node --prof lib/index.js",
     "start": "node lib/index.js",
-    "test": "npm run format:check && npm run jest:coverage"
+    "test": "npm run format:check && npm run jest:coverage",
+    "verify-chromium": "node -e \"require('@sparticuz/chromium').test()\""
   },
   "lint-staged": {
     "*.js": [
