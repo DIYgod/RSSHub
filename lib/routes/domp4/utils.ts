@@ -3,7 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const defaultDomain = 'www.xlmp4.cc';
 
-const allowedDomains = new Set(['www.xlmp4.cc','www.momp4.cc','domp4.cc', 'mp4us.com', 'wemp4.com', 'dbmp4.com']);
+const allowedDomains = new Set(['www.xlmp4.cc', 'www.momp4.cc', 'domp4.cc', 'mp4us.com', 'wemp4.com', 'dbmp4.com']);
 
 /**
  * trackers from https://www.domp4.cc/Style/2020/js/base.js?v=2
