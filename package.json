@@ -64,7 +64,7 @@
         "@opentelemetry/semantic-conventions": "1.30.0",
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.25",
-        "@scalar/hono-api-reference": "0.5.174",
+        "@scalar/hono-api-reference": "0.5.175",
         "@sentry/node": "7.119.1",
         "@tonyrl/rand-user-agent": "2.0.81",
         "aes-js": "3.1.2",
