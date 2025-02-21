@@ -107,22 +107,22 @@ export const route: Route = {
         {
             title: '播客',
             source: ['www.gcores.com/categories/:id'],
-            target: '/gcores/categories/:id/radios',
+            target: '/categories/:id/radios',
         },
         {
             title: '文章',
             source: ['www.gcores.com/categories/:id'],
-            target: '/gcores/categories/:id/articles',
+            target: '/categories/:id/articles',
         },
         {
             title: '资讯',
             source: ['www.gcores.com/categories/:id'],
-            target: '/gcores/categories/:id/news',
+            target: '/categories/:id/news',
         },
         {
             title: '视频',
             source: ['www.gcores.com/categories/:id'],
-            target: '/gcores/categories/:id/videos',
+            target: '/categories/:id/videos',
         },
     ],
     view: viewType,
