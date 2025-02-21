@@ -2616,8 +2616,9 @@
     "MoguCloud",
     "StevenRCE0"
   ],
-  "/gcores/collections/:collection": [
-    "kudryavka1013"
+  "/gcores/collections/:id/:tab?": [
+    "kudryavka1013",
+    "nczitzk"
   ],
   "/gcores/news": [
     "nczitzk"
