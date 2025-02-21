@@ -102,27 +102,27 @@ export const route: Route = {
         {
             title: '全部',
             source: ['www.gcores.com/collections/:id'],
-            target: '/gcores/collections/:id',
+            target: '/collections/:id',
         },
         {
             title: '播客',
             source: ['www.gcores.com/collections/:id'],
-            target: '/gcores/collections/:id/radios',
+            target: '/collections/:id/radios',
         },
         {
             title: '文章',
             source: ['www.gcores.com/collections/:id'],
-            target: '/gcores/collections/:id/articles',
+            target: '/collections/:id/articles',
         },
         {
             title: '资讯',
             source: ['www.gcores.com/collections/:id'],
-            target: '/gcores/collections/:id/news',
+            target: '/collections/:id/news',
         },
         {
             title: '视频',
             source: ['www.gcores.com/collections/:id'],
-            target: '/gcores/collections/:id/videos',
+            target: '/collections/:id/videos',
         },
     ],
     view: viewType,
