@@ -33080,20 +33080,55 @@
         "view": 0,
         "location": "articles.ts"
       },
-      "/category/:category": {
-        "path": "/category/:category",
-        "categories": [
-          "new-media",
-          "popular"
+      "/categories/:id/:tab?": {
+        "path": "/categories/:id/:tab?",
+        "name": "分类",
+        "url": "www.gcores.com",
+        "maintainers": [
+          "MoguCloud",
+          "StevenRCE0",
+          "nczitzk"
         ],
-        "example": "/gcores/category/news",
+        "example": "/gcores/categories/1/articles",
         "parameters": {
-          "category": "分类名"
+          "id": {
+            "description": "分类 ID，可在对应分类页 URL 中找到"
+          },
+          "tab": {
+            "description": "类型，默认为空，即全部，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "全部",
+                "value": ""
+              },
+              {
+                "label": "播客",
+                "value": "radios"
+              },
+              {
+                "label": "文章",
+                "value": "articles"
+              },
+              {
+                "label": "资讯",
+                "value": "news"
+              },
+              {
+                "label": "视频",
+                "value": "videos"
+              }
+            ]
+          }
         },
+        "description": ":::tip\n若订阅 [文章 - 文章](https://www.gcores.com/categories/1?tab=articles)，网址为 `https://www.gcores.com/categories/1?tab=articles`，请截取 `https://www.gcores.com/categories/` 到末尾的部分 `1` 作为 `id` 参数填入，截取 `articles` 作为 `tab` 参数填入，此时目标路由为 [`/gcores/categories/1/articles`](https://rsshub.app/gcores/categories/1/articles)。\n:::\n\n| 全部 | 播客   | 文章     | 资讯 | 视频   |\n| ---- | ------ | -------- | ---- | ------ |\n|      | radios | articles | news | videos |\n",
+        "categories": [
+          "game"
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -33101,17 +33136,47 @@
         "radar": [
           {
             "source": [
-              "gcores.com/:category"
+              "www.gcores.com/categories/:id"
             ]
+          },
+          {
+            "title": "全部",
+            "source": [
+              "www.gcores.com/categories/:id"
+            ],
+            "target": "/gcores/categories/:id"
+          },
+          {
+            "title": "播客",
+            "source": [
+              "www.gcores.com/categories/:id"
+            ],
+            "target": "/categories/:id/radios"
+          },
+          {
+            "title": "文章",
+            "source": [
+              "www.gcores.com/categories/:id"
+            ],
+            "target": "/categories/:id/articles"
+          },
+          {
+            "title": "资讯",
+            "source": [
+              "www.gcores.com/categories/:id"
+            ],
+            "target": "/categories/:id/news"
+          },
+          {
+            "title": "视频",
+            "source": [
+              "www.gcores.com/categories/:id"
+            ],
+            "target": "/categories/:id/videos"
           }
         ],
-        "name": "分类",
-        "maintainers": [
-          "MoguCloud",
-          "StevenRCE0"
-        ],
-        "description": "| 资讯 | 视频   | 电台   | 文章     |\n| ---- | ------ | ------ | -------- |\n| news | videos | radios | articles |",
-        "location": "category.ts"
+        "view": 0,
+        "location": "categories.ts"
       },
       "/collections/:id/:tab?": {
         "path": "/collections/:id/:tab?",
