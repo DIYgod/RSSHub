@@ -1,4 +1,5 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -24,18 +25,50 @@ export const route: Route = {
     handler,
 };
 
+// Based on https://github.com/SocialSisterYi/bilibili-API-collect/issues/1168#issuecomment-2620749895
+async function genReqSign(query, body) {
+    // Don't import on top-level to avoid a cyclic dependency - wasm-exec.js generated via `pnpm build`, which in turn needs wasm-exec.js to import routes correctly
+    const { Go } = await import('./wasm-exec.js');
+
+    // Cache the wasm binary as it's quite large (~2MB)
+    // Here the binary is saved as base64 as the cache stores strings
+    const wasm_buffer_base64 = await cache.tryGet('bilibili-manga-wasm-20250208', async () => {
+        const wasm_resp = await got('https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm', {
+            responseType: 'arrayBuffer',
+        });
+        return Buffer.from(wasm_resp.data).toString('base64');
+    });
+    const wasm_buffer = Buffer.from(wasm_buffer_base64, 'base64');
+
+    const go = new Go();
+    const { instance } = await WebAssembly.instantiate(wasm_buffer, go.importObject);
+    go.run(instance);
+    if (void 0 === globalThis.genReqSign) {
+        throw new Error('WASM function not available');
+    }
+
+    const signature = globalThis.genReqSign(query, body, Date.now());
+
+    return signature.sign;
+}
+
 async function handler(ctx) {
     const comic_id = ctx.req.param('comicid').startsWith('mc') ? ctx.req.param('comicid').replace('mc', '') : ctx.req.param('comicid');
     const link = `https://manga.bilibili.com/detail/mc${comic_id}`;
 
     const spi_response = await got('https://api.bilibili.com/x/frontend/finger/spi');
 
+    const query = 'device=pc&platform=web&nov=25';
+    const body = JSON.stringify({
+        comic_id: Number(comic_id),
+    });
+
+    const ultra_sign = await genReqSign(query, body);
+
     const response = await got({
         method: 'POST',
-        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web`,
-        json: {
-            comic_id: Number(comic_id),
-        },
+        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?${query}&ultra_sign=${ultra_sign}`,
+        body,
         headers: {
             Referer: link,
             Cookie: `buvid3=${spi_response.data.data.b_3}; buvid4=${spi_response.data.data.b_4}`,
