@@ -32,11 +32,11 @@ export const route: Route = {
     name: '个人时间线',
     maintainers: ['zytomorrow', 'DIYgod', 'Rongronggg9'],
     handler,
-    description: `:::warning
+    description: `::: warning
   需要对应用户打开页面进行授权生成 token 才能生成内容
 
   自部署需要申请并配置微博 key，具体见部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -47,6 +47,7 @@ async function handler(ctx) {
     let displayVideo = '1';
     let displayArticle = '0';
     let displayComments = '0';
+    let showBloggerIcons = '0';
     if (routeParams) {
         if (routeParams === '1' || routeParams === '0') {
             displayVideo = routeParams;
@@ -55,6 +56,7 @@ async function handler(ctx) {
             displayVideo = fallback(undefined, queryToBoolean(routeParams.displayVideo), true) ? '1' : '0';
             displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false) ? '1' : '0';
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
+            showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
         }
     }
 
@@ -95,7 +97,8 @@ async function handler(ctx) {
             ctx.set({
                 'Cache-Control': 'no-cache',
             });
-            ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
+            return;
         }
         const resultItem = await Promise.all(
             response.statuses.map(async (item) => {
@@ -132,7 +135,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item);
+                    description = await weiboUtils.formatComments(ctx, description, item, showBloggerIcons);
                 }
 
                 // 文章的处理
@@ -183,6 +186,6 @@ async function handler(ctx) {
         ctx.set({
             'Cache-Control': 'no-cache',
         });
-        ctx.redirect(`https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
+        ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
     }
 }

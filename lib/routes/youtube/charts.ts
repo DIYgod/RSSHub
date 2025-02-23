@@ -14,47 +14,47 @@ export const route: Route = {
     handler,
     description: `Chart
 
-  | Top artists | Top songs | Top music videos | Trending       |
-  | ----------- | --------- | ---------------- | -------------- |
-  | TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
+| Top artists | Top songs | Top music videos | Trending       |
+| ----------- | --------- | ---------------- | -------------- |
+| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
 
   Country Code
 
-  | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
-  | --------- | --------- | ------- | ------- | ------- | ------ | ------ |
-  | ar        | au        | at      | be      | bo      | br     | ca     |
+| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
+| --------- | --------- | ------- | ------- | ------- | ------ | ------ |
+| ar        | au        | at      | be      | bo      | br     | ca     |
 
-  | Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
-  | ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
-  | cl    | co       | cr         | cz      | dk      | do                 | ec      |
+| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
+| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
+| cl    | co       | cr         | cz      | dk      | do                 | ec      |
 
-  | Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |
-  | ----- | ----------- | ------- | ------- | ------ | ------- | --------- |
-  | eg    | sv          | ee      | fi      | fr     | de      | gt        |
+| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |
+| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |
+| eg    | sv          | ee      | fi      | fr     | de      | gt        |
 
-  | Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |
-  | -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |
-  | hn       | hu      | is      | in    | id        | ie      | il     | it    |
+| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |
+| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |
+| hn       | hu      | is      | in    | id        | ie      | il     | it    |
 
-  | Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |
-  | ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |
-  | jp    | ke    | lu         | mx     | nl          | nz          | ni        |
+| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |
+| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |
+| jp    | ke    | lu         | mx     | nl          | nz          | ni        |
 
-  | Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |
-  | ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |
-  | ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
+| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |
+| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |
+| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
 
-  | Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
-  | ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |
-  | ru     | sa           | rs     | za           | kr          | es    | se     | ch          |
+| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
+| ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |
+| ru     | sa           | rs     | za           | kr          | es    | se     | ch          |
 
-  | Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
-  | -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
-  | tz       | tr     | ug     | ua      | ae                   | gb             | us            |
+| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
+| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
+| tz       | tr     | ug     | ua      | ae                   | gb             | us            |
 
-  | Uruguay | Zimbabwe |
-  | ------- | -------- |
-  | uy      | zw       |`,
+| Uruguay | Zimbabwe |
+| ------- | -------- |
+| uy      | zw       |`,
 };
 
 async function handler(ctx) {

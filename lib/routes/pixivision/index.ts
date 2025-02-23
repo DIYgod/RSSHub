@@ -1,4 +1,4 @@
-import { Route, DataItem, Data } from '@/types';
+import { Route, DataItem, Data, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +7,8 @@ import { processContent } from './utils';
 
 export const route: Route = {
     path: '/:lang/:category?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/pixivision/zh-tw',
     parameters: { lang: 'Language', category: 'Category' },
     features: {
@@ -20,9 +21,9 @@ export const route: Route = {
     },
     name: 'Category',
     maintainers: ['SnowAgar25'],
-    description: `:::tip
+    description: `::: tip
   \`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
-  :::`,
+:::`,
     radar: [
         {
             source: ['www.pixivision.net/:lang'],
@@ -51,11 +52,11 @@ async function handler(ctx): Promise<Data> {
     const $ = load(response);
 
     const list = $('li.article-card-container a[data-gtm-action="ClickTitle"]')
-        .map((_, elem) => ({
+        .toArray()
+        .map((elem) => ({
             title: $(elem).text(),
             link: new URL($(elem).attr('href') ?? '', baseUrl).href,
-        }))
-        .toArray();
+        }));
 
     const items = await Promise.all(
         list.map(async (item) => {

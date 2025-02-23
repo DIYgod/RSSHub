@@ -61,7 +61,7 @@ const handler = async () => {
         false
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: data.title,

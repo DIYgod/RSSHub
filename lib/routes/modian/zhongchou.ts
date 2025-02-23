@@ -12,33 +12,33 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     description: `分类
 
-    | 全部 | 游戏  | 动漫   | 出版       | 桌游       |
-    | ---- | ----- | ------ | ---------- | ---------- |
-    | all  | games | comics | publishing | tablegames |
+| 全部 | 游戏  | 动漫   | 出版       | 桌游       |
+| ---- | ----- | ------ | ---------- | ---------- |
+| all  | games | comics | publishing | tablegames |
 
-    | 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |
-    | ----- | -------- | ---------- | ----- | ---------- |
-    | cards | toys     | film-video | music | activities |
+| 卡牌  | 潮玩模型 | 影视       | 音乐  | 活动       |
+| ----- | -------- | ---------- | ----- | ---------- |
+| cards | toys     | film-video | music | activities |
 
-    | 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |
-    | ------ | ---------- | ---- | -------- | -------- |
-    | design | technology | food | charity  | animals  |
+| 设计   | 科技       | 食品 | 爱心通道 | 动物救助 |
+| ------ | ---------- | ---- | -------- | -------- |
+| design | technology | food | charity  | animals  |
 
-    | 个人愿望 | 其他   |
-    | -------- | ------ |
-    | wishes   | others |
+| 个人愿望 | 其他   |
+| -------- | ------ |
+| wishes   | others |
 
-    排序
+  排序
 
-    | 最新上线  | 金额最高   | 评论最多     |
-    | --------- | ---------- | ------------ |
-    | top\_time | top\_money | top\_comment |
+| 最新上线  | 金额最高   | 评论最多     |
+| --------- | ---------- | ------------ |
+| top\_time | top\_money | top\_comment |
 
-    状态
+  状态
 
-    | 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
-    | ---- | ---- | ------- | ------ | -------- |
-    | all  | idea | preheat | going  | success  |`,
+| 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
+| ---- | ---- | ------- | ------ | -------- |
+| all  | idea | preheat | going  | success  |`,
     handler,
     radar: [
         {

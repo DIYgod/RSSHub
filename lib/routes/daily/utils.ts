@@ -2,10 +2,19 @@ import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { config } from '@/config';
+import { art } from '@/utils/render';
+import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+import { DataItem } from '@/types';
+const __dirname = getCurrentPath(import.meta.url);
 
-const baseUrl = 'https://app.daily.dev';
-
-const getBuildId = () =>
+export const baseUrl = 'https://app.daily.dev';
+const gqlUrl = `https://api.daily.dev/graphql`;
+export const variables = {
+    version: 54,
+    loggedIn: false,
+};
+export const getBuildId = () =>
     cache.tryGet(
         'daily:buildId',
         async () => {
@@ -17,40 +26,42 @@ const getBuildId = () =>
         false
     );
 
-const getData = async (graphqlQuery) => {
-    const response = await ofetch(`${baseUrl}/api/graphql`, {
+export const getData = async (graphqlQuery, source = false) => {
+    const response = await ofetch(gqlUrl, {
         method: 'POST',
         body: graphqlQuery,
     });
-    return response.data.page.edges;
+    return source ? response.data.source : response.data.page.edges;
 };
 
-const getList = (data) =>
-    data.map((value) => {
-        const { id, title, image, permalink, summary, createdAt, numUpvotes, author, tags, numComments } = value.node;
-        const pubDate = parseDate(createdAt);
+const render = (data) => art(path.join(__dirname, 'templates/posts.art'), data);
+
+export const getList = (edges, innerSharedContent: boolean, dateSort: boolean) =>
+    edges.map(({ node }) => {
+        let link: string;
+        let title: string;
+        if (innerSharedContent && node.type === 'share') {
+            link = node.sharedPost.permalink;
+            title = node.sharedPost.title;
+        } else {
+            link = node.commentsPermalink ?? node.permalink;
+            title = node.title;
+        }
+
         return {
-            id,
+            id: node.id,
             title,
-            link: permalink,
-            description: summary,
-            author: author?.name,
-            itunes_item_image: image,
-            pubDate,
-            upvotes: numUpvotes,
-            comments: numComments,
-            category: tags,
-        };
+            link,
+            guid: node.permalink,
+            description: render({
+                image: node.image,
+                content: node.contentHtml?.replaceAll('\n', '<br>') ?? node.summary,
+            }),
+            author: node.author?.name,
+            itunes_item_image: node.image,
+            pubDate: dateSort ? parseDate(node.createdAt) : '',
+            upvotes: node.numUpvotes,
+            comments: node.numComments,
+            category: node.tags,
+        } as DataItem;
     });
-
-const getRedirectedLink = (data) =>
-    Promise.all(
-        data.map((v) =>
-            cache.tryGet(v.link, async () => {
-                const resp = await ofetch.raw(v.link);
-                return { ...v, link: resp.headers.get('location') };
-            })
-        )
-    );
-
-export { baseUrl, getBuildId, getData, getList, getRedirectedLink };

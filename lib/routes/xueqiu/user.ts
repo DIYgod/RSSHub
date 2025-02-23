@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['imlonghao'],
     handler,
     description: `| 原发布 | 长文 | 问答 | 热门 | 交易 |
-  | ------ | ---- | ---- | ---- | ---- |
-  | 0      | 2    | 4    | 9    | 11   |`,
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |`,
 };
 
 async function handler(ctx) {
@@ -48,7 +48,8 @@ async function handler(ctx) {
         11: '交易',
     };
 
-    const token = await parseToken();
+    const link = `${rootUrl}/u/${id}`;
+    const token = await parseToken(link);
     const res2 = await got({
         method: 'get',
         url: `${rootUrl}/v4/statuses/user_timeline.json`,
@@ -59,7 +60,7 @@ async function handler(ctx) {
         }),
         headers: {
             Cookie: token,
-            Referer: `${rootUrl}/u/${id}`,
+            Referer: link,
         },
     });
     const data = res2.data.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
@@ -71,7 +72,7 @@ async function handler(ctx) {
                     method: 'get',
                     url: rootUrl + item.target,
                     headers: {
-                        Referer: `${rootUrl}/u/${id}`,
+                        Referer: link,
                         Cookie: token,
                     },
                 });
@@ -94,7 +95,7 @@ async function handler(ctx) {
 
     return {
         title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
-        link: `${rootUrl}/u/${id}`,
+        link,
         description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
         item: items,
     };

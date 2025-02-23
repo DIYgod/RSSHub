@@ -39,12 +39,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
-  | ------- | ------------ | ---- | ----- | ---------- |
-  | zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 |
+| ------- | ------------ | ---- | ----- | ---------- |
+| zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 |
 
-  | 产业     | IPFS | 技术 | 百科  | 研报          |
-  | -------- | ---- | ---- | ----- | ------------- |
-  | industry | IPFS | tech | baike | capitalmarket |`,
+| 产业     | IPFS | 技术 | 百科  | 研报          |
+| -------- | ---- | ---- | ----- | ------------- |
+| industry | IPFS | tech | baike | capitalmarket |`,
 };
 
 async function handler(ctx) {

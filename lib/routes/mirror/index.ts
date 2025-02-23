@@ -11,7 +11,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/mirror/tingfei.eth',
     parameters: { id: 'user id' },
     features: {

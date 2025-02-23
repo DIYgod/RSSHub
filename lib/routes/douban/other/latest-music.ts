@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['fengkx', 'xyqfer'],
     handler,
     description: `| 华语    | 欧美    | 日韩        |
-  | ------- | ------- | ----------- |
-  | chinese | western | japankorean |`,
+| ------- | ------- | ----------- |
+| chinese | western | japankorean |`,
 };
 
 async function handler(ctx) {

@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
-import path from 'path';
+import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 
@@ -72,7 +72,7 @@ export const route: Route = {
                     author: itemDetail.byline,
                     pubDate: item.date,
                     // for videos and shortstops, no need to extract full text below
-                    description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : itemType === 'Shortstop' ? itemDetail.headline : '',
+                    description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : (itemType === 'Shortstop' ? itemDetail.headline : ''),
                 };
             });
 

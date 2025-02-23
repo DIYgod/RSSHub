@@ -2,12 +2,19 @@
   <a href="{{ pdfUrl }}">[PDF]</a>
 {{ /if }}
 
-{{ if siteUrl }}
-  <a href="{{ siteUrl }}">[Site]</a>
-{{ /if }}
-
 {{ if kimiUrl }}
   <a href="{{ kimiUrl }}">[Kimi]</a>
+{{ /if }}
+
+{{ if authors }}
+  <p>
+    <b>Authors:</b>
+    {{ each authors author }}
+      <a href="{{ author.url }}">
+        {{ author.name }}
+      </a>,
+    {{ /each }}
+  </p>
 {{ /if }}
 
 {{ if summary }}

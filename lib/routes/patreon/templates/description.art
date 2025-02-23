@@ -1,0 +1,41 @@
+{{ if attributes.post_type === 'image_file' }}
+    {{ each attributes.post_metadata.image_order mediaIdStr }}
+        {{ set img = included.find((i) => i.id === mediaIdStr) }}
+        {{ if img }}
+            <img src="{{ img.attributes.image_urls.original }}" alt="{{ img.attributes.file_name }}"><br>
+        {{ /if }}
+    {{ /each }}
+
+{{ else if attributes.post_type === 'video_external_file' }}
+    {{ if attributes.video_preview }}
+    <video controls preload="metadata" poster="{{ attributes.image.url }}">
+        <source src="{{ relationships.video_preview.attributes.download_url }}" type="video/mp4">
+    </video><br>
+    {{ /if }}
+
+{{ else if attributes.post_type === 'audio_file' || attributes.post_type === 'podcast' }}
+    <img src="{{ attributes.thumbnail.url }}"><br>
+    {{ set url = relationships.audio.attributes.download_url || relationships.audio_preview.attributes.download_url }}
+    <audio controls preload="metadata">
+        <source src="{{ url }}" type="audio/mpeg">
+    </audio><br>
+
+{{ else if attributes.post_type === 'video_embed' || attributes.post_type === 'link' }}
+    <img src="{{ attributes.image.url }}"><br>
+
+{{ else if attributes.post_type === 'text_only' }}
+
+{{ else }}
+Post type: "{{ attributes.post_type }}" is not supported. <br>
+
+{{ /if }}
+
+{{ if attributes.content || attributes.teaser_text }}
+    {{@ attributes.content || attributes.teaser_text }}
+{{ /if }}
+
+{{ if relationships.attachments_media }}
+    {{ each relationships.attachments_media media }}
+        <a href="{{ media.attributes.download_url }}">{{ media.attributes.file_name }}</a><br>
+    {{ /each }}
+{{ /if }}

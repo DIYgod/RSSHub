@@ -37,9 +37,9 @@ export const route: Route = {
     url: 'priconne-redive.jp/news',
     description: `服务器
 
-  | 国服  | 台服  | 日服  |
-  | ----- | ----- | ---- |
-  | zh-cn | zh-tw | jp   |`,
+| 国服  | 台服  | 日服  |
+| ----- | ----- | ---- |
+| zh-cn | zh-tw | jp   |`,
 };
 
 async function handler(ctx) {

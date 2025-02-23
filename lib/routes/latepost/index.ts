@@ -39,8 +39,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
-  | -------- | -------- | -------- | ---------- | ------ |
-  |          | 1        | 2        | 3          | 4      |`,
+| -------- | -------- | -------- | ---------- | ------ |
+|          | 1        | 2        | 3          | 4      |`,
 };
 
 async function handler(ctx) {
@@ -72,7 +72,7 @@ async function handler(ctx) {
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.detail_url, rootUrl).href,
-        category: [item.is_dj ? exclusiveCategory : undefined, item.programa ? columns[item.programa].title : undefined, ...item.label.map((c) => c.label)],
+        category: [item.is_dj ? exclusiveCategory : undefined, item.programa ? columns[item.programa]?.title : undefined, ...item.label.map((c) => c.label)],
         guid: item.id,
         pubDate: parseDate(item.release_time, ['MM月DD日', 'YYYY年MM月DD日']),
     }));

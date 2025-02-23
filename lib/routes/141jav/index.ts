@@ -66,7 +66,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     if (getSubPath(ctx) === '/') {
-        ctx.redirect(`/141jav${$('.overview').first().attr('href')}`);
+        ctx.set('redirect', `/141jav${$('.overview').first().attr('href')}`);
         return;
     }
 

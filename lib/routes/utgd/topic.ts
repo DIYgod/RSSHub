@@ -6,7 +6,7 @@ import { rootUrl, apiRootUrl, parseResult, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/utgd/topic/在线阅读专栏',
     parameters: { topic: '专题，默认为在线阅读专栏' },
     features: {
@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     url: 'utgd.net/topic',
     description: `| 在线阅读专栏 | 卡片笔记专题 |
-  | ------------ | ------------ |
+| ------------ | ------------ |
 
   更多专栏请见 [专题广场](https://utgd.net/topic)`,
 };

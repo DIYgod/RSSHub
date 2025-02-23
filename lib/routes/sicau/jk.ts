@@ -27,7 +27,7 @@ export const route: Route = {
     url: 'jk.sicau.edu.cn',
     description: `
 
-:::tip
+::: tip
 **本校学生**可以直接 POST \`https://jk.sicau.edu.cn/user/login/v1.0.0/snoLogin\` 从返回结果中的 \`token\` 字段拿到个人令牌，记得在url后添加以下**查询参数**：
 
 -   sid: \`f1c97a0e81c24e98adb1ebdadca0699b\`
@@ -36,7 +36,7 @@ export const route: Route = {
 
 :::
 
-:::warning
+::: warning
 由于i川农后台有请求限制，为避免一次性大量请求而被限流，每次只请求结果的第一页数据，即前20条
 :::
 

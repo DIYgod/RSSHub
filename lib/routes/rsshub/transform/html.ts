@@ -47,16 +47,16 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 
   Parameters parsing in the above example:
 
-  | Parameter     | Value                                     |
-  | ------------- | ----------------------------------------- |
-  | \`url\`         | \`https://wechat2rss.xlab.app/posts/list/\` |
-  | \`routeParams\` | \`item=div[class='post-content'] p a\`      |
+| Parameter     | Value                                     |
+| ------------- | ----------------------------------------- |
+| \`url\`         | \`https://wechat2rss.xlab.app/posts/list/\` |
+| \`routeParams\` | \`item=div[class='post-content'] p a\`      |
 
   Parsing of \`routeParams\` parameter:
 
-  | Parameter | Value                           |
-  | --------- | ------------------------------- |
-  | \`item\`    | \`div[class='post-content'] p a\` |`,
+| Parameter | Value                           |
+| --------- | ------------------------------- |
+| \`item\`    | \`div[class='post-content'] p a\` |`,
     handler: async (ctx) => {
         if (!config.feature.allow_user_supply_unsafe_domain) {
             throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
@@ -92,10 +92,10 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                     } else {
                         link = linkEle.is('a') ? linkEle.attr('href') : linkEle.find('a').attr('href');
                     }
-                    // 补全绝对链接
+                    // 补全绝对链接或相对链接
                     link = link.trim();
                     if (link && !link.startsWith('http')) {
-                        link = `${new URL(url).origin}${link}`;
+                        link = new URL(link, url).href;
                     }
 
                     const descEle = routeParams.get('itemDesc') ? item.find(routeParams.get('itemDesc')) : item;
@@ -124,7 +124,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                         return item;
                     }
 
-                    return cache.tryGet(item.link, async () => {
+                    return cache.tryGet(`transform:${item.link}:${itemContentSelector}`, async () => {
                         const response = await got({
                             method: 'get',
                             url: item.link,

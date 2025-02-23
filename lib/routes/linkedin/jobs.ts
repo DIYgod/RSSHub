@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { EXP_LEVELS, EXP_LEVELS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, KEYWORDS_QUERY_KEY, parseJobSearch, parseParamsToSearchParams, parseParamsToString, parseRouteParam } from './utils';
@@ -8,7 +8,8 @@ const JOB_SEARCH_PATH = '/jobs-guest/jobs/api/seeMoreJobPostings/search';
 
 export const route: Route = {
     path: '/jobs/:job_types/:exp_levels/:keywords?/:routeParams?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.Notifications,
     example: '/linkedin/jobs/C-P/1/software engineer',
     parameters: {
         job_types: "See the following table for details, use '-' as delimiter",
@@ -50,32 +51,32 @@ export const route: Route = {
     handler,
     description: `#### \`job_types\` list
 
-  | Full Time | Part Time | Contractor | All |
-  | --------- | --------- | ---------- | --- |
-  | F         | P         | C          | all |
+| Full Time | Part Time | Contractor | All |
+| --------- | --------- | ---------- | --- |
+| F         | P         | C          | all |
 
-  #### \`exp_levels\` list
+#### \`exp_levels\` list
 
-  | Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
-  | --------- | ----------- | --------- | ---------------- | -------- | --- |
-  | 1         | 2           | 3         | 4                | 5        | all |
+| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
+| --------- | ----------- | --------- | ---------------- | -------- | --- |
+| 1         | 2           | 3         | 4                | 5        | all |
 
-  #### \`routeParams\` additional query parameters
+#### \`routeParams\` additional query parameters
 
-  ##### \`f_WT\` list
+##### \`f_WT\` list
 
-  | Onsite | Remote | Hybrid |
-  | ------ | ------- | ------ |
-  |    1   |    2    |   3    |
+| Onsite | Remote | Hybrid |
+| ------ | ------- | ------ |
+|    1   |    2    |   3    |
 
-  ##### \`geoId\`
+##### \`geoId\`
 
   Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.
 
   For example:
   91000012 is the ID of East Asia.
 
-  ##### \`f_TPR\`
+##### \`f_TPR\`
 
   Time posted range. Here are some possible values:
 
