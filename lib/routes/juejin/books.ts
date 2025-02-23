@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,14 +28,12 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got({
-        method: 'post',
-        url: 'https://api.juejin.cn/booklet_api/v1/booklet/listbycategory',
-        json: { category_id: '0', cursor: '0', limit: 20 },
+    const response = await ofetch('https://api.juejin.cn/booklet_api/v1/booklet/listbycategory', {
+        method: 'POST',
+        body: { category_id: '0', cursor: '0', limit: 20 },
     });
 
-    const { data } = response.data;
-    const items = data.map(({ base_info }) => ({
+    const items = response.data.map(({ base_info }) => ({
         title: base_info.title,
         link: `https://juejin.cn/book/${base_info.booklet_id}`,
         description: `

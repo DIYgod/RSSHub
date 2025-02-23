@@ -5,7 +5,7 @@ import { getApiUrl, parseArticle } from './common';
 
 export const route: Route = {
     path: '/blog/:tag?',
-    categories: ['new-media'],
+    categories: ['programming'],
     example: '/openai/blog',
     parameters: { tag: 'Tag, see below, All by default' },
     features: {
@@ -20,8 +20,8 @@ export const route: Route = {
     maintainers: ['StevenRCE0', 'nczitzk'],
     handler,
     description: `| All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |
-  | --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
-  |     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |`,
+| --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
+|     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |`,
 };
 
 async function handler(ctx) {

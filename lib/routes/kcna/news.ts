@@ -7,9 +7,11 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
-import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
+import { fixDesc, fetchPhoto, fetchVideo } from './utils';
 import path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -34,20 +36,20 @@ export const route: Route = {
     maintainers: ['Rongronggg9'],
     handler,
     description: `| Language | 조선어 | English | 中国语 | Русский | Español | 日本語 |
-  | -------- | ------ | ------- | ------ | ------- | ------- | ------ |
-  | \`:lang\`  | \`kp\`   | \`en\`    | \`cn\`   | \`ru\`    | \`es\`    | \`jp\`   |
+| -------- | ------ | ------- | ------ | ------- | ------- | ------ |
+| \`:lang\`  | \`kp\`   | \`en\`    | \`cn\`   | \`ru\`    | \`es\`    | \`jp\`   |
 
-  | Category                                                         | \`:category\`                        |
-  | ---------------------------------------------------------------- | ---------------------------------- |
-  | WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`54c0ca4ca013a92cc9cf95bd4004c61a\` |
-  | Latest News (default)                                            | \`1ee9bdb7186944f765208f34ecfb5407\` |
-  | Top News                                                         | \`5394b80bdae203fadef02522cfb578c0\` |
-  | Home News                                                        | \`b2b3bcc1b0a4406ab0c36e45d5db58db\` |
-  | Documents                                                        | \`a8754921399857ebdbb97a98a1e741f5\` |
-  | World                                                            | \`593143484cf15d48ce85c26139582395\` |
-  | Society-Life                                                     | \`93102e5a735d03979bc58a3a7aefb75a\` |
-  | External                                                         | \`0f98b4623a3ef82aeea78df45c423fd0\` |
-  | News Commentary                                                  | \`12c03a49f7dbe829bceea8ac77088c21\` |`,
+| Category                                                         | \`:category\`                        |
+| ---------------------------------------------------------------- | ---------------------------------- |
+| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | \`54c0ca4ca013a92cc9cf95bd4004c61a\` |
+| Latest News (default)                                            | \`1ee9bdb7186944f765208f34ecfb5407\` |
+| Top News                                                         | \`5394b80bdae203fadef02522cfb578c0\` |
+| Home News                                                        | \`b2b3bcc1b0a4406ab0c36e45d5db58db\` |
+| Documents                                                        | \`a8754921399857ebdbb97a98a1e741f5\` |
+| World                                                            | \`593143484cf15d48ce85c26139582395\` |
+| Society-Life                                                     | \`93102e5a735d03979bc58a3a7aefb75a\` |
+| External                                                         | \`0f98b4623a3ef82aeea78df45c423fd0\` |
+| News Commentary                                                  | \`12c03a49f7dbe829bceea8ac77088c21\` |`,
 };
 
 async function handler(ctx) {
@@ -66,12 +68,12 @@ async function handler(ctx) {
         .map((_, item) => {
             item = $(item);
             const dateElem = item.find('.publish-time');
-            const dateString = dateElem.text();
+            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
             return {
                 title: item.text(),
                 link: rootUrl + item.attr('href'),
-                pubDate: parseJucheDate(dateString),
+                pubDate: timezone(parseDate(dateString[0]), +9),
             };
         })
         .get();
@@ -87,9 +89,9 @@ async function handler(ctx) {
             item.title = $('article-main-title').text() || item.title;
 
             const dateElem = $('.publish-time');
-            const dateString = dateElem.text();
+            const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
             dateElem.remove();
-            item.pubDate = parseJucheDate(dateString) || item.pubDate;
+            item.pubDate = dateString ? timezone(parseDate(dateString[0]), +9) : item.pubDate;
 
             const description = fixDesc($, $('.article-content-body .content-wrapper'));
 

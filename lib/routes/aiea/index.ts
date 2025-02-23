@@ -18,10 +18,10 @@ export const route: Route = {
     maintainers: ['zxx-457'],
     handler,
     description: `| Time frame |
-  | ---------- |
-  | upcoming   |
-  | past       |
-  | both       |`,
+| ---------- |
+| upcoming   |
+| past       |
+| both       |`,
 };
 
 async function handler(ctx) {

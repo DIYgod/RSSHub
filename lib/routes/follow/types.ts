@@ -3,9 +3,28 @@ export interface FollowResponse<T> {
     data: T;
 }
 
-export interface Subscription {
-    category: string;
+export type Subscription = FeedSubscription | ListSubscription | InboxSubscription;
+
+export interface Profile {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: unknown;
+    image: string;
+    handle: unknown;
+    createdAt: string;
+}
+
+export interface BaseSubscription {
     feedId: string;
+    isPrivate: boolean;
+    title: string | null;
+    userId: string;
+    view: number;
+}
+
+export interface FeedSubscription extends BaseSubscription {
+    category: string | null;
     feeds: {
         checkAt: string;
         description: string;
@@ -18,21 +37,42 @@ export interface Subscription {
         ownerUserId: string | null;
         siteUrl: string;
         title: string;
-        ttl: number;
+        type: 'feed';
         url: string;
     };
-    isPrivate: boolean;
-    title: string | null;
-    userId: string;
-    view: number;
 }
 
-export interface Profile {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: unknown;
-    image: string;
-    handle: unknown;
-    createdAt: string;
+export interface ListSubscription extends BaseSubscription {
+    lastViewedAt: string;
+    listId: string;
+    lists: {
+        description: string;
+        fee: number;
+        feedIds: string[];
+        id: string;
+        image: string;
+        owner: {
+            createdAt: string;
+            emailVerified: unknown;
+            handle: string | null;
+            id: string;
+            image: string;
+            name: string;
+        };
+        ownerUserId: string;
+        timelineUpdatedAt: string;
+        title: string;
+        type: 'list';
+        view: number;
+    };
+}
+
+export interface InboxSubscription extends BaseSubscription {
+    inboxes: {
+        type: 'inbox';
+        id: string;
+        secret: string;
+        title: string;
+    };
+    inboxId: string;
 }

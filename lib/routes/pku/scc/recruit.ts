@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['DylanXie123'],
     handler,
     description: `| xwrd     | tzgg     | zpxx     | sxxx     | cyxx     |
-  | -------- | -------- | -------- | -------- | -------- |
-  | 新闻热点 | 通知公告 | 招聘信息 | 实习信息 | 创业信息 |`,
+| -------- | -------- | -------- | -------- | -------- |
+| 新闻热点 | 通知公告 | 招聘信息 | 实习信息 | 创业信息 |`,
 };
 
 async function handler(ctx) {

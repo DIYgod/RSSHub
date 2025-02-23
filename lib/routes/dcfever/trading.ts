@@ -6,7 +6,7 @@ import { baseUrl, parseTradeItem } from './utils';
 
 export const route: Route = {
     path: '/trading/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dcfever/trading/1',
     parameters: { id: '分類 ID，見下表' },
     name: '二手市集',
@@ -14,9 +14,9 @@ export const route: Route = {
     handler,
     description: `[所有物品分類](https://www.dcfever.com/trading/index.php#all_cats)
 
-  | 攝影產品 | 電腦 | 手機通訊 | 影音產品 | 遊戲機、模型 | 電器傢俱 | 潮流服飾 | 手錶 | 單車及運動 | 其它 |
-  | -------- | ---- | -------- | -------- | ------------ | -------- | -------- | ---- | ---------- | ---- |
-  | 1        | 2    | 3        | 44       | 43           | 104      | 45       | 99   | 109        | 4    |`,
+| 攝影產品 | 電腦 | 手機通訊 | 影音產品 | 遊戲機、模型 | 電器傢俱 | 潮流服飾 | 手錶 | 單車及運動 | 其它 |
+| -------- | ---- | -------- | -------- | ------------ | -------- | -------- | ---- | ---------- | ---- |
+| 1        | 2    | 3        | 44       | 43           | 104      | 45       | 99   | 109        | 4    |`,
 };
 
 async function handler(ctx) {
@@ -29,16 +29,14 @@ async function handler(ctx) {
     const response = await ofetch(link.href);
     const $ = load(response);
 
-    const list = $('.item_list li a')
+    const list = $('.item_grid_wrap div a')
         .toArray()
-        .filter((item) => $(item).attr('href') !== '/documents/advertising.php')
         .map((item) => {
             item = $(item);
-            item.find('.optional').remove();
             return {
-                title: item.find('.trade_title').text(),
+                title: item.find('.lazyloadx').attr('alt'),
                 link: new URL(item.attr('href'), link.href).href,
-                author: item.find('.trade_info').text(),
+                author: item.find('.trade_info div span').eq(1).text(),
             };
         });
 

@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 备案公示 | 发行许可通告 | 重大题材立项     | 重大题材摄制    | 变更通报 |
-  | -------- | ------------ | ---------------- | --------------- | -------- |
-  | note     | announce     | importantLixiang | importantShezhi | changing |`,
+| -------- | ------------ | ---------------- | --------------- | -------- |
+| note     | announce     | importantLixiang | importantShezhi | changing |`,
 };
 
 async function handler(ctx) {

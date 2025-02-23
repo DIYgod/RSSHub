@@ -68,7 +68,7 @@ async function handler() {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: '中国人民银行 - 货币政策司公开市场交易公告',

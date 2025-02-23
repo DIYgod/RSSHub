@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
     url: 'caac.gov.cn/HDJL/',
     description: `| 机票 | 托运 | 无人机 | 体检 | 行政审批 | 投诉 |
-  | ---- | ---- | ------ | ---- | -------- | ---- |`,
+| ---- | ---- | ------ | ---- | -------- | ---- |`,
 };
 
 async function handler(ctx) {

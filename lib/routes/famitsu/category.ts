@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 新着        | Switch | PS5 | PS4 | PC ゲーム | ニュース | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
-  | ----------- | ------ | --- | --- | --------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
-  | new-article | switch | ps5 | ps4 | pc-game   | news     | videos | special-article | interview    | event-report   | review   | indie-game       |`,
+| ----------- | ------ | --- | --- | --------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
+| new-article | switch | ps5 | ps4 | pc-game   | news     | videos | special-article | interview    | event-report   | review   | indie-game       |`,
 };
 
 function getBuildId() {
@@ -106,7 +106,7 @@ async function handler(ctx) {
         },
     });
 
-    const list = (data.pageProps.categoryArticleData as CategoryArticle[])
+    const list = (data.pageProps.categoryArticleDataForPc as CategoryArticle[])
         .filter((item) => !item.advertiserName)
         .map((item) => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');

@@ -30,9 +30,9 @@ export const route: Route = {
     maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
     handler,
     url: 'www.customs.gov.cn/',
-    description: `:::warning
-  由于区域限制，建议在国内 IP 的机器上自建
-  :::`,
+    description: `::: warning
+由于区域限制，建议在国内 IP 的机器上自建
+:::`,
 };
 
 async function handler(ctx) {
@@ -81,6 +81,9 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
+                if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
+                    return info;
+                }
                 const response = await puppeteerGet(info.link, browser);
                 const $ = load(response);
                 let date;
@@ -101,7 +104,7 @@ async function handler(ctx) {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: `中国海关-${channelName}`,

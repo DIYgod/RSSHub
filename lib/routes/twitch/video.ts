@@ -1,5 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -14,9 +14,21 @@ const FILTER_NODE_TYPE_MAP = {
 
 export const route: Route = {
     path: '/video/:login/:filter?',
-    categories: ['live'],
+    categories: ['live', 'popular'],
+    view: ViewType.Videos,
     example: '/twitch/video/riotgames/highlights',
-    parameters: { login: 'Twitch username', filter: 'Video type, Default to all' },
+    parameters: {
+        login: 'Twitch username',
+        filter: {
+            description: 'Video type, Default to all',
+            options: [
+                { value: 'archive', label: 'Archive' },
+                { value: 'highlights', label: 'Highlights' },
+                { value: 'all', label: 'All' },
+            ],
+            default: 'all',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -34,9 +46,6 @@ export const route: Route = {
     name: 'Channel Video',
     maintainers: ['hoilc'],
     handler,
-    description: `| archive           | highlights                    | all        |
-| ----------------- | ----------------------------- | ---------- |
-| Recent broadcasts | Recent highlights and uploads | All videos |`,
 };
 
 async function handler(ctx) {

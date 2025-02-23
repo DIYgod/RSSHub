@@ -31,8 +31,8 @@ export const route: Route = {
     },
     handler,
     description: `| all  | digests | by_owner | questions | tasks |
-    | ---- | ------ | --------- | -------- | ------ |
-    | 最新 | 精华    | 只看星主    | 问答      | 作业   |`,
+| ---- | ------ | --------- | -------- | ------ |
+| 最新 | 精华    | 只看星主    | 问答      | 作业   |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +9,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/cngal/weekly',
     parameters: {},
     features: {
@@ -31,7 +32,7 @@ export const route: Route = {
     url: 'www.cngal.org/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
@@ -44,5 +45,4 @@ async function handler(ctx) {
             link: `https://www.cngal.org/articles/index/${item.id}`,
         })),
     };
-    ctx.state.json = response.data;
 }

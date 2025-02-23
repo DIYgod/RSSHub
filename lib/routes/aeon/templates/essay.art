@@ -1,3 +1,9 @@
-<img src="{{ banner }}" alt="">
+{{ if banner.url }}
+<figure>
+    <img src="{{ banner.url }}" alt="{{ banner.alt }}">
+    {{ if banner.caption }}
+    <figcaption>{{ banner.caption }}</figcaption>
+    {{ /if }}
+{{ /if }}
 {{@ authorsBio }}
-{{@ content}}
+{{@ content }}

@@ -1,11 +1,25 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/all/:order?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Pictures,
     example: '/hpoi/items/all',
-    parameters: { order: '排序, 见下表，默认为 add' },
+    parameters: {
+        order: {
+            description: '排序',
+            options: [
+                { value: 'release', label: '发售' },
+                { value: 'add', label: '入库' },
+                { value: 'hits', label: '总热度' },
+                { value: 'hits7Day', label: '一周热度' },
+                { value: 'hitsDay', label: '一天热度' },
+                { value: 'rating', label: '评价' },
+            ],
+            default: 'add',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,9 +38,6 @@ export const route: Route = {
     maintainers: ['DIYgod'],
     handler,
     url: 'www.hpoi.net/hobby/all',
-    description: `| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
-  | ------- | ---- | ------ | -------- | -------- | ------ |
-  | release | add  | hits   | hits7Day | hitsDay  | rating |`,
 };
 
 async function handler(ctx) {

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,9 +6,24 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/materials/:id?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/youzhiyouxing/materials',
-    parameters: { id: '分类，见下表，默认为全部' },
+    parameters: {
+        id: {
+            description: '分类',
+            options: [
+                { value: '0', label: '全部' },
+                { value: '4', label: '知行小酒馆' },
+                { value: '2', label: '知行黑板报' },
+                { value: '10', label: '无人知晓' },
+                { value: '1', label: '孟岩专栏' },
+                { value: '3', label: '知行读书会' },
+                { value: '11', label: '你好，同路人' },
+            ],
+            default: '0',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,8 +43,8 @@ export const route: Route = {
     handler,
     url: 'youzhiyouxing.cn/materials',
     description: `| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
-  | :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
-  |   0  |      4     |      2     |    10    |     1    |      3     |      11      |`,
+| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
+|   0  |      4     |      2     |    10    |     1    |      3     |      11      |`,
 };
 
 async function handler(ctx) {

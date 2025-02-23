@@ -32,15 +32,15 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'News',
-    maintainers: ['SuperPung'],
+    maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
     description: `| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
-  | :----------: | :----------: | :-----------: | :----------: | :-------------: |
-  |     focus    |    general   |    internal   |     media    |     picture     |`,
+| :----------: | :----------: | :-----------: | :----------: | :-------------: |
+|     focus    |    general   |    internal   |     media    |     picture     |`,
 };
 
 async function handler(ctx) {
-    const type = ctx.params && ctx.req.param('type');
+    const type = ctx.req.param('type');
     let path, subtitle;
 
     switch (type) {

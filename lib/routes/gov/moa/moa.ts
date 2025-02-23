@@ -8,13 +8,13 @@ const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
 
 export const route: Route = {
-    path: '/moa/:suburl{.+}',
+    path: '/moa/suburl/:suburl{.+}',
     categories: ['government'],
-    example: '/gov/moa/gk/zcjd/',
+    example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
             source: ['moa.gov.cn/'],
-            target: '/moa/:suburl',
+            target: '/moa/suburl/:suburl',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },

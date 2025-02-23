@@ -34,8 +34,8 @@ export const route: Route = {
     maintainers: ['shaokeyibb'],
     handler,
     description: `| 通知公告 |
-  | :------: |
-  |   tzgg   |`,
+| :------: |
+|   tzgg   |`,
 };
 
 async function handler(ctx) {

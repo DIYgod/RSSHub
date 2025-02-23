@@ -29,8 +29,8 @@ export const route: Route = {
     },
     handler,
     description: `| 缺省   | all  | closed | disclosed | patching |
-  | ------ | ---- | ------ | --------- | -------- |
-  | 活動中 | 全部 | 關閉   | 公開      | 修補中   |`,
+| ------ | ---- | ------ | --------- | -------- |
+| 活動中 | 全部 | 關閉   | 公開      | 修補中   |`,
 };
 
 const baseUrl = 'https://zeroday.hitcon.org/vulnerability';
@@ -63,7 +63,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     const response = await page.evaluate(() => document.documentElement.innerHTML);
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
     const items: DataItem[] = $('.zdui-strip-list>li')

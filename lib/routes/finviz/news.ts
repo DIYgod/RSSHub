@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -12,9 +12,15 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/finviz',
-    parameters: { category: 'Category, see below, News by default' },
+    parameters: {
+        category: {
+            description: 'Category, see below, News by default',
+            options: Object.keys(categories).map((key) => ({ value: key, label: key })),
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,8 +39,8 @@ export const route: Route = {
     handler,
     url: 'finviz.com/news.ashx',
     description: `| News | Blogs |
-  | ---- | ---- |
-  | news | blogs |`,
+| ---- | ---- |
+| news | blogs |`,
 };
 
 async function handler(ctx) {

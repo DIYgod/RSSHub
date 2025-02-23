@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
@@ -8,7 +9,7 @@ export const route: Route = {
     path: '/index/:category?',
     categories: ['university'],
     example: '/xaut/index/tzgg',
-    parameters: { category: '通知类别，默认为通知公告' },
+    parameters: { category: '通知类别，默认为学校新闻' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -20,19 +21,19 @@ export const route: Route = {
     name: '学校主页',
     maintainers: ['mocusez'],
     handler,
-    description: `| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
-  | :------: | :------: | :------: | :------: |
-  |   tzgg   |   xyyw   |   mtbd   |   xshd   |`,
+    description: `| 学校新闻 | 砥志研思 | 立德树人 | 传道授业 | 校闻周知 |
+| :------: | :------: | :------: | :------: | :------: |
+|   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |`,
 };
 
 async function handler(ctx) {
     let category = ctx.req.param('category');
-    const dic_html = { tzgg: 'tzgg.htm', xyyw: 'xyyw.htm', mtbd: 'mtbd1.htm', xshd: 'xshd.htm' };
-    const dic_title = { tzgg: '通知公告', xyyw: '校园要闻', mtbd: '媒体播报', xshd: '学术活动' };
+    const dic_html = { xxxw: 'xxxw.htm', dzys: 'dzys.htm', ldsr: 'ldsr.htm', cdsy: 'cdsy.htm', xwzz: 'xwzz.htm' };
+    const dic_title = { xxxw: '学校新闻', dzys: '砥志研思', ldsr: '立德树人', cdsy: '传道授业', xwzz: '校闻周知' };
 
     // 设置默认值
     if (dic_title[category] === undefined) {
-        category = 'tzgg';
+        category = 'xxxw';
     }
 
     const response = await got({
@@ -42,26 +43,18 @@ async function handler(ctx) {
     const data = response.body;
     const $ = load(data);
 
-    // 这个列表指通知公告详情列表
-    const list = $('.newslist_block ul a')
+    const list = $('div.nlist ul li')
         .map((_, item) => {
             item = $(item);
-            const temp = item.find('span').text();
-
             // link原来长这样：'../info/1196/13990.htm'
-            const link = item.attr('href').replace(/^\.\./, 'http://www.xaut.edu.cn');
-            let date = parseDate(temp.slice(-10, -1), 'YYYY-MM-DD');
-            let title = temp.slice(0, -10);
-
-            if (category === 'xshd') {
-                date = parseDate(temp.slice(-11, -1).replace('年', '-').replace('月', '-').replace('日', ''), 'YYYY-MM-DD');
-                title = temp.slice(0, -11);
-            }
+            const link = item.find('a').attr('href').replace(/^\.\./, 'http://www.xaut.edu.cn');
+            const pubDate = timezone(parseDate(item.find('div.time').text().trim()), +8);
+            const title = item.find('h5').text();
 
             return {
                 title,
                 link,
-                pubDate: date,
+                pubDate,
             };
         })
         .get();

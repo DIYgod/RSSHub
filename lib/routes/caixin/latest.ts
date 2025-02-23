@@ -1,16 +1,14 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
+import { getFulltext } from './utils-fulltext';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['traditional-media'],
+    categories: ['traditional-media', 'popular'],
+    view: ViewType.Articles,
     example: '/caixin/latest',
     parameters: {},
     features: {
@@ -30,10 +28,10 @@ export const route: Route = {
     maintainers: ['tpnonthealps'],
     handler,
     url: 'caixin.com/',
-    description: `说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。`,
+    description: `说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。订阅用户可根据文档设置环境变量后，在url传入\`fulltext=\`以解锁全文。`,
 };
 
-async function handler() {
+async function handler(ctx) {
     const { data } = await got('https://gateway.caixin.com/api/dataplatform/scroll/index');
 
     const list = data.data.articleList
@@ -48,21 +46,20 @@ async function handler() {
     const rss = await Promise.all(
         list.map((item) =>
             cache.tryGet(`caixin:latest:${item.link}`, async () => {
-                const entry_r = await got(item.link);
-                const $ = load(entry_r.data);
-
                 // desc
-                const desc = art(path.join(__dirname, 'templates/article.art'), {
-                    item,
-                    $,
-                });
+                const desc = await parseArticle(item);
 
-                item.description = desc;
+                if (ctx.req.query('fulltext') === 'true') {
+                    const authorizedFullText = await getFulltext(item.link);
+                    item.description = authorizedFullText === '' ? desc.description : authorizedFullText;
+                } else {
+                    item.description = desc.description;
+                }
                 // prevent cache coliision with /caixin/article and /caixin/:column/:category
                 // since those have podcasts
                 item.guid = `caixin:latest:${item.link}`;
 
-                return item;
+                return { ...desc, ...item };
             })
         )
     );

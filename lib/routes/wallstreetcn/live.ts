@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/live/:category?/:score?',
-    categories: ['traditional-media'],
+    categories: ['finance'],
     example: '/wallstreetcn/live',
     parameters: { category: '快讯分类，默认`global`，见下表', score: '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的' },
     features: {
@@ -40,8 +40,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
-  | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
-  | global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- |
+| global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
 };
 
 async function handler(ctx) {

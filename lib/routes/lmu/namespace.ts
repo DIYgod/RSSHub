@@ -6,7 +6,7 @@ export const namespace: Namespace = {
     description: `
 This namespace provides RSS feeds for various sections of the Ludwig Maximilian University of Munich (LMU) website, particularly for job openings in the academic staff section.
 
-:::tip
+::: tip
 For more information about LMU and their job offerings, visit their official website.
 :::
 `,
@@ -14,4 +14,5 @@ For more information about LMU and their job offerings, visit their official web
     zh: {
         name: '慕尼黑大学',
     },
+    lang: 'de',
 };

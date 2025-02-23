@@ -14,20 +14,20 @@ const types = {
 };
 
 export const route: Route = {
-    path: ['/ranking/:type?', '/report/:type?'],
+    path: '/ranking/:type?',
     example: '/hellogithub/ranking',
     name: '榜单报告',
     maintainers: ['moke8', 'nczitzk'],
     handler,
     description: `| 编程语言 | 服务器   | 数据库     |
-  | -------- | -------- | ---------- |
-  | tiobe    | netcraft | db-engines |`,
+| -------- | -------- | ---------- |
+| tiobe    | netcraft | db-engines |`,
 };
 
 async function handler(ctx) {
     let type = ctx.req.param('type') ?? 'tiobe';
 
-    type = type === 'webserver' ? 'netcraft' : type === 'db' ? 'db-engines' : type;
+    type = type === 'webserver' ? 'netcraft' : (type === 'db' ? 'db-engines' : type);
 
     const rootUrl = 'https://hellogithub.com';
     const currentUrl = `${rootUrl}/report/${type}`;
@@ -39,7 +39,7 @@ async function handler(ctx) {
 
     const buildId = buildResponse.data.match(/"buildId":"(.*?)",/)[1];
 
-    const apiUrl = `${rootUrl}/_next/data/${buildId}/report/${type}.json`;
+    const apiUrl = `${rootUrl}/_next/data/${buildId}/zh/report/${type}.json`;
 
     const response = await got({
         method: 'get',

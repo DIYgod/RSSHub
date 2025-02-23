@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/yjs',
@@ -21,32 +22,45 @@ export const route: Route = {
             source: ['yz.tongji.edu.cn/zsxw/ggtz.htm', 'yz.tongji.edu.cn/'],
         },
     ],
-    name: '研究生院通知公告',
-    maintainers: ['shengmaosu'],
+    name: '研究生招生网通知公告',
+    maintainers: ['shengmaosu', 'sitdownkevin'],
     handler,
     url: 'yz.tongji.edu.cn/zsxw/ggtz.htm',
 };
 
-async function handler() {
-    const link = 'https://yz.tongji.edu.cn/zsxw/ggtz.htm';
-    const response = await got(link);
+async function getNoticeContent(item) {
+    const response = await got(item.link);
     const $ = load(response.data);
-    const list = $('.list_main_content li');
+    const content = $('#vsb_content').html();
+    item.description = content;
+    return item;
+}
+
+async function handler() {
+    const baseUrl = 'https://yz.tongji.edu.cn';
+    const response = await got(`${baseUrl}/zsxw/ggtz.htm`);
+    const $ = load(response.body);
+    const container = $('#content-box > div.content > div.list_main_content > ul');
+    const items = container
+        .find('li')
+        .toArray()
+        .map((item) => {
+            const title = $(item).find('a').attr('title');
+            const linkRaw = $(item).find('a').attr('href');
+            const link = linkRaw.startsWith('http') ? linkRaw : new URL(linkRaw, `${baseUrl}/zsxw`).toString();
+            const pubDate = $(item).find('span').text();
+            return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
+        });
+
+    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
 
     return {
-        title: '同济大学研究生院',
-        link,
-        description: '同济大学研究生院通知公告',
-        item:
-            list &&
-            list.toArray().map((item) => {
-                item = $(item);
-                const a = item.find('a');
-                return {
-                    title: a.attr('title'),
-                    link: new URL(a.attr('href'), link).href,
-                    pubDate: parseDate(item.find('span').text(), 'YYYY-MM-DD'),
-                };
-            }),
+        title: '同济大学研究生招生网',
+        link: baseUrl,
+        description: '同济大学研究生招生网通知公告',
+        image: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        icon: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
+        item: itemsWithContent,
     };
 }

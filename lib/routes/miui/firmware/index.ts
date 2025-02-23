@@ -10,13 +10,13 @@ export const route: Route = {
     name: 'New firmware',
     maintainers: ['Indexyz'],
     description: `  | stable  | development |
-    | ------- | ----------- |
-    | release | dev         |
-  
-    | region | region |
-    | ------ | ------ |
-    | China  | cn     |
-    | Global | global |`,
+| ------- | ----------- |
+| release | dev         |
+
+| region | region |
+| ------ | ------ |
+| China  | cn     |
+| Global | global |`,
     handler,
 };
 

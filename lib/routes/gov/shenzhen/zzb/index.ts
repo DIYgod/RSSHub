@@ -29,8 +29,8 @@ export const route: Route = {
     handler,
     url: 'zzb.sz.gov.cn/*',
     description: `| 通知公告 | 任前公示 | 政策法规 | 工作动态 | 部门预算决算公开 | 业务表格下载 |
-  | :------: | :------: | :------: | :------: | :--------------: | :----------: |
-  |   tzgg   |   rqgs   |   zcfg   |   gzdt   |       xcbd       |     bgxz     |`,
+| :------: | :------: | :------: | :------: | :--------------: | :----------: |
+|   tzgg   |   rqgs   |   zcfg   |   gzdt   |       xcbd       |     bgxz     |`,
 };
 
 async function handler(ctx) {
