@@ -141,7 +141,7 @@
         "@babel/preset-env": "7.26.9",
         "@babel/preset-typescript": "7.26.0",
         "@bbob/types": "4.2.0",
-        "@eslint/eslintrc": "3.2.0",
+        "@eslint/eslintrc": "3.3.0",
         "@eslint/js": "9.20.0",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "4.0.1",
