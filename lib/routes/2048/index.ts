@@ -69,11 +69,7 @@ async function handler(ctx) {
     const rootUrl = 'https://hjd2048.com';
     // 获取地址发布页指向的 URL
     const domainInfo = (await cache.tryGet('2048:domainInfo', async () => {
-        const response = await ofetch('https://2048.info', {
-            headers: {
-                accept: '*/*',
-            },
-        });
+        const response = await ofetch('https://2048.info');
         const $ = load(response);
         const onclickValue = $('.button').first().attr('onclick');
         const targetUrl = onclickValue.match(/window\.open\('([^']+)'/)[1];
@@ -81,11 +77,7 @@ async function handler(ctx) {
         return {url: targetUrl};
     })) as { url: string};
     // 获取重定向后的url和safeid
-    const redirectResponse = await ofetch.raw(domainInfo.url, {
-            headers: {
-                accept: '*/*',
-            },
-    });
+    const redirectResponse = await ofetch.raw(domainInfo.url);
     const currentUrl = `${redirectResponse.url}thread.php?fid-${id}.html`;
     const redirectPageContent = load(redirectResponse._data);
     const safeId = redirectPageContent('script').text().match(/var safeid='(.*?)',/)?.[1] ?? '';
