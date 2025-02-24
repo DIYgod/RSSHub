@@ -66,8 +66,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0
       '@tonyrl/rand-user-agent':
-        specifier: 2.0.81
-        version: 2.0.81
+        specifier: 2.0.83
+        version: 2.0.83
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -2065,8 +2065,8 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tonyrl/rand-user-agent@2.0.81':
-    resolution: {integrity: sha512-pL8is8iSle1gVPeNGSIKNpnyDaxSChWAtG7Kbbx1wq91Y8NJ+O+S/AsNvrQ7GVzKZF7rPTiRGl2eHNDVjdR2/A==}
+  '@tonyrl/rand-user-agent@2.0.83':
+    resolution: {integrity: sha512-FqifQhfeJ1WojY8j6s7D3qcs20KhZwVggirT7btqi7g5bSTbbD4v0cuhxHaASyHlv3R757Jum2ro03dRVUXgVw==}
     engines: {node: '>=14.16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
@@ -7836,7 +7836,7 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tonyrl/rand-user-agent@2.0.81': {}
+  '@tonyrl/rand-user-agent@2.0.83': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
