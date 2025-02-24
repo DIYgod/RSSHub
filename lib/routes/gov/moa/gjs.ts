@@ -89,7 +89,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                         processedItem = {
                             ...processedItem,
-                            enclosure_url: enclosureUrl ? new URL(enclosureUrl, item.link).href : undefined,
+                            enclosure_url: new URL(enclosureUrl, item.link).href,
                             enclosure_type: enclosureType,
                             enclosure_title: enclosureTitle || title,
                         };
