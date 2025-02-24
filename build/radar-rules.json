@@ -14391,6 +14391,56 @@
   },
   "moa.gov.cn": {
     "_name": "上海市人民政府",
+    "www.gjs": [
+      {
+        "title": "中华人民共和国农业农村部国际合作司",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category%7B.+%7D"
+        ],
+        "target": "/govparams=>{const category=params.category;return`/gov/moa/gjs${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "工作动态",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/gzdt/"
+        ],
+        "target": "/gov/moa/gjs/gzdt"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/tzgg/"
+        ],
+        "target": "/gov/moa/gjs/tzgg"
+      },
+      {
+        "title": "“一带一路”合作和农业走出去",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ydylhzhhnyzcq/"
+        ],
+        "target": "/gov/moa/gjs/ydylhzhhnyzcq"
+      },
+      {
+        "title": "农业国际贸易监测与展望",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ncpmy/"
+        ],
+        "target": "/gov/moa/gjs/ncpmy"
+      },
+      {
+        "title": "多双边合作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/dsbhz/"
+        ],
+        "target": "/gov/moa/gjs/dsbhz"
+      }
+    ],
     ".": [
       {
         "title": "中华人民共和国农业农村部 - 新闻",
