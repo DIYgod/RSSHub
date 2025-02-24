@@ -19989,6 +19989,34 @@
     "url": "lock.cmpxchg8b.com",
     "lang": "en"
   },
+  "cmu": {
+    "routes": {
+      "/andypavlo/blog": {
+        "path": "/andypavlo/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/cmu/andypavlo/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Andy Pavlo Blog",
+        "maintainers": [
+          "mocusez"
+        ],
+        "location": "andypavlo/blog.ts"
+      }
+    },
+    "name": "Carnegie Mellon University",
+    "url": "www.cmu.edu",
+    "lang": "en"
+  },
   "cn-healthcare": {
     "routes": {
       "/index": {
