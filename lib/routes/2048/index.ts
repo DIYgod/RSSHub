@@ -74,13 +74,16 @@ async function handler(ctx) {
         const onclickValue = $('.button').first().attr('onclick');
         const targetUrl = onclickValue.match(/window\.open\('([^']+)'/)[1];
 
-        return {url: targetUrl};
-    })) as { url: string};
+        return { url: targetUrl };
+    })) as { url: string };
     // 获取重定向后的url和safeid
     const redirectResponse = await ofetch.raw(domainInfo.url);
     const currentUrl = `${redirectResponse.url}thread.php?fid-${id}.html`;
     const redirectPageContent = load(redirectResponse._data);
-    const safeId = redirectPageContent('script').text().match(/var safeid='(.*?)',/)?.[1] ?? '';
+    const safeId =
+        redirectPageContent('script')
+            .text()
+            .match(/var safeid='(.*?)',/)?.[1] ?? '';
 
     const response = await ofetch.raw(currentUrl, {
         headers: {
