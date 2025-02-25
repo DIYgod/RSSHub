@@ -1,7 +1,6 @@
 import { DataItem, Route } from '@/types';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
 
 // test url http://localhost:1200/asianfanfics/tag/milklove/N
@@ -9,7 +8,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/tag/:tag/:type',
     categories: ['reading'],
-    example: '/tag/milklove/N',
+    example: '/asianfanfics/tag/milklove/N',
     parameters: {
         tag: '标签',
         type: '排序类型',
@@ -30,9 +29,6 @@ export const route: Route = {
 - OS: One Shots 短篇
 `,
     handler,
-    features: {
-        requirePuppeteer: true,
-    },
 };
 
 type Type = 'L' | 'N' | 'O' | 'C' | 'OS';
@@ -47,38 +43,16 @@ const typeToText = {
 
 async function handler(ctx) {
     const tag = ctx.req.param('tag');
-    let type = ctx.req.param('type') as Type;
+    const type = ctx.req.param('type') as Type;
+
     if (!type || !['L', 'N', 'O', 'C', 'OS'].includes(type)) {
-        type = 'L';
+        throw new Error('Invalid type');
     }
     const link = `https://www.asianfanfics.com/browse/tag/${tag}/${type}`;
 
-    // require puppeteer utility class and initialise a browser instance
-    const browser = await puppeteer();
-    // open a new tab
-    const page = await browser.newPage();
-    // intercept all requests
-    await page.setRequestInterception(true);
-    // only allow certain types of requests to proceed
-    page.on('request', (request) => {
-        // in this case, we only allow document requests to proceed
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-    // ofetch requests will be logged automatically
-    // but puppeteer requests are not
-    // so we need to log them manually
-    logger.http(`Requesting ${link}`);
+    const response = await ofetch(link);
 
-    await page.goto(link, {
-        // specify how long to wait for the page to load
-        waitUntil: 'domcontentloaded',
-    });
-    // retrieve the HTML content of the page
-    const response = await page.content();
-    // close the tab
-    page.close();
-
-    const $ = load(response);
+    const $ = load(await response.text());
 
     const items: DataItem[] = $('.primary-container .excerpt')
         .toArray()
@@ -100,9 +74,6 @@ async function handler(ctx) {
                 pubDate,
             };
         });
-
-    // don't forget to close the browser instance at the end of the function
-    browser.close();
 
     return {
         title: `Asianfanfics 亚洲同人网 - 标签：${tag} - ${typeToText[type]}`,

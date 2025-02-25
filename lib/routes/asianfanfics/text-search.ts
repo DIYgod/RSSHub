@@ -1,7 +1,6 @@
 import { DataItem, Route } from '@/types';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
 
 // test url http://localhost:1200/asianfanfics/text-search/milklove
@@ -9,7 +8,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/text-search/:keyword',
     categories: ['reading'],
-    example: '/text-search/milklove',
+    example: '/asianfanfics/text-search/milklove',
     parameters: {
         keyword: '关键词',
     },
@@ -27,35 +26,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-
     const link = `https://www.asianfanfics.com/browse/text_search?q=${keyword}+`;
 
-    // require puppeteer utility class and initialise a browser instance
-    const browser = await puppeteer();
-    // open a new tab
-    const page = await browser.newPage();
-    // intercept all requests
-    await page.setRequestInterception(true);
-    // only allow certain types of requests to proceed
-    page.on('request', (request) => {
-        // in this case, we only allow document requests to proceed
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-    // ofetch requests will be logged automatically
-    // but puppeteer requests are not
-    // so we need to log them manually
-    logger.http(`Requesting ${link}`);
-
-    await page.goto(link, {
-        // specify how long to wait for the page to load
-        waitUntil: 'domcontentloaded',
-    });
-    // retrieve the HTML content of the page
-    const response = await page.content();
-    // close the tab
-    page.close();
-
-    const $ = load(response);
+    const response = await ofetch(link);
+    const $ = load(await response.text());
 
     const items: DataItem[] = $('.primary-container .excerpt')
         .toArray()
@@ -77,9 +51,6 @@ async function handler(ctx) {
                 pubDate,
             };
         });
-
-    // don't forget to close the browser instance at the end of the function
-    browser.close();
 
     return {
         title: `Asianfanfics 亚洲同人网 - 关键词：${keyword}`,
