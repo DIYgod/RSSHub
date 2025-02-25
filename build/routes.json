@@ -39885,6 +39885,55 @@
         "description": "| 工作动态 | 太原新闻 | 通知公告 | 县区动态 | 国内动态 | 图片新闻 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| gzdt     | tyxw     | gggs     | xqdt     | gndt     | tpxw     |",
         "location": "taiyuan/rsj.ts"
       },
+      "/tianjin/tjftz-notice/:channelId": {
+        "path": "/tianjin/tjftz-notice/:channelId",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/tianjin/tjftz-notice/6302",
+        "parameters": {
+          "channelId": "公告分类id、详细信息点击源网站https://www.tjftz.gov.cn/请求中寻找"
+        },
+        "radar": [
+          {
+            "source": [
+              "tjftz.gov.cn/channels/:channelId.html"
+            ],
+            "target": "/tianjin/tjftz-notice/:channelId"
+          }
+        ],
+        "name": "天津港保税区-公告",
+        "url": "tjftz.gov.cn",
+        "maintainers": [
+          "HaoyuLee"
+        ],
+        "description": "\n| 公告类别         | channelId |\n| ------------ | -- |\n| 首页>新闻>保税区要闻>区域聚焦     | 6302  |\n    ",
+        "location": "tianjin/tjftz.ts"
+      },
+      "/tianjin/tjrcgzw-notice/:cate/:subCate": {
+        "path": "/tianjin/tjrcgzw-notice/:cate/:subCate",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/tianjin/tjrcgzw-notice/rczc/sjrczc/",
+        "parameters": {
+          "channelId": "公告分类id、详细信息点击源网站https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/请求中寻找"
+        },
+        "radar": [
+          {
+            "source": [
+              "hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/"
+            ],
+            "target": "/tianjin/tjrcgzw-notice/:cate/:subCate"
+          }
+        ],
+        "name": "天津人才工作网-公告",
+        "url": "hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/",
+        "maintainers": [
+          "HaoyuLee"
+        ],
+        "location": "tianjin/tjrcgzw.ts"
+      },
       "/wuhan/sy/whyw": {
         "path": "/wuhan/sy/whyw",
         "categories": [
