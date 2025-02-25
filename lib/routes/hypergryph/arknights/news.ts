@@ -68,9 +68,9 @@ export const route: Route = {
     handler,
     url: 'ak-conf.hypergryph.com/news',
     description: `
-  | 全部 | 最新   | 公告         | 活动     | 新闻 |
-  | ---- | ------ | ------------ | -------- | ---- |
-  | ALL  | LATEST | ANNOUNCEMENT | ACTIVITY | NEWS |`,
+| 全部 | 最新   | 公告         | 活动     | 新闻 |
+| ---- | ------ | ------------ | -------- | ---- |
+| ALL  | LATEST | ANNOUNCEMENT | ACTIVITY | NEWS |`,
 };
 
 async function handler(ctx) {

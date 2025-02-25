@@ -68,6 +68,7 @@ async function handler(ctx) {
         title: `${userName} 的 bilibili 频道 ${channelInfo.meta.name}`,
         link,
         description: `${userName} 的 bilibili 频道`,
+        image: face,
         logo: face,
         icon: face,
         item: data.archives.map((item) => ({

@@ -8,17 +8,20 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+
 const rootUrl = 'https://devapi.qweather.com/v7/weather/now?';
+
 export const route: Route = {
     path: '/now/:location',
     categories: ['forecast'],
-    example: '/qweather/广州',
+    example: '/qweather/now/广州',
     parameters: { location: 'N' },
     features: {
         requireConfig: [
             {
                 name: 'HEFENG_KEY',
-                description: '',
+                description: '访问 `https://www.qweather.com/` 注册开发 API Key。',
             },
         ],
         requirePuppeteer: false,
@@ -30,21 +33,21 @@ export const route: Route = {
     name: '实时天气',
     maintainers: ['Rein-Ou'],
     handler,
-    description: `需自行注册获取 api 的 key，每小时更新一次数据`,
 };
 
 async function handler(ctx) {
-    const id = await cache.tryGet(ctx.req.param('location') + '_id', async () => {
+    if (!config.hefeng.key) {
+        throw new ConfigNotFoundError('QWeather RSS is disabled due to the lack of <a href="https://docs.rsshub.app/zh/install/config#%E5%92%8C%E9%A3%8E%E5%A4%A9%E6%B0%94">relevant config</a>');
+    }
+
+    const id = await cache.tryGet('qweather:' + ctx.req.param('location') + ':id', async () => {
         const response = await got(`https://geoapi.qweather.com/v2/city/lookup?location=${ctx.req.param('location')}&key=${config.hefeng.key}`);
-        const data = [];
-        for (const i in response.data.location) {
-            data.push(response.data.location[i]);
-        }
+        const data = response.data.location.map((loc) => loc);
         return data[0].id;
     });
     const requestUrl = rootUrl + 'key=' + config.hefeng.key + '&location=' + id;
     const responseData = await cache.tryGet(
-        ctx.req.param('location') + '_now',
+        'qweather:' + ctx.req.param('location') + ':now',
         async () => {
             const response = await got(requestUrl);
             return response.data;

@@ -86,6 +86,12 @@ export type Config = {
         promptTitle: string;
         promptDescription: string;
     };
+    follow: {
+        ownerUserId?: string;
+        description?: string;
+        price?: number;
+        userLimit?: number;
+    };
 
     // Route-specific Configurations
     bilibili: {
@@ -232,6 +238,9 @@ export type Config = {
         instance?: string;
         token?: string;
     };
+    misskey: {
+        accessToken?: string;
+    };
     mox: {
         cookie: string;
     };
@@ -251,6 +260,9 @@ export type Config = {
     };
     notion: {
         key?: string;
+    };
+    patreon: {
+        sessionId?: string;
     };
     pianyuan: {
         cookie?: string;
@@ -327,6 +339,7 @@ export type Config = {
         authenticationSecret?: string[];
         phoneOrEmail?: string[];
         authToken?: string[];
+        thirdPartyApi?: string;
     };
     uestc: {
         bbsCookie?: string;
@@ -347,6 +360,9 @@ export type Config = {
     xiaoyuzhou: {
         device_id?: string;
         refresh_token?: string;
+    };
+    xiaohongshu: {
+        cookie?: string;
     };
     ximalaya: {
         token?: string;
@@ -391,7 +407,7 @@ const toBoolean = (value: string | undefined, defaultValue: boolean) => {
     }
 };
 
-const toInt = (value: string | undefined, defaultValue: number) => (value === undefined ? defaultValue : Number.parseInt(value));
+const toInt = (value: string | undefined, defaultValue?: number) => (value === undefined ? defaultValue : Number.parseInt(value));
 
 const calculateValue = () => {
     const bilibili_cookies: Record<string, string | undefined> = {};
@@ -502,6 +518,12 @@ const calculateValue = () => {
             inputOption: envs.OPENAI_INPUT_OPTION || 'description',
             promptDescription: envs.OPENAI_PROMPT || 'Please summarize the following article and reply with markdown format.',
             promptTitle: envs.OPENAI_PROMPT_TITLE || 'Please translate the following title into Simplified Chinese and reply only translated text.',
+        },
+        follow: {
+            ownerUserId: envs.FOLLOW_OWNER_USER_ID,
+            description: envs.FOLLOW_DESCRIPTION,
+            price: toInt(envs.FOLLOW_PRICE),
+            userLimit: toInt(envs.FOLLOW_USER_LIMIT),
         },
 
         // Route-specific Configurations
@@ -650,6 +672,9 @@ const calculateValue = () => {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
         },
+        misskey: {
+            accessToken: envs.MISSKEY_ACCESS_TOKEN,
+        },
         mox: {
             cookie: envs.MOX_COOKIE,
         },
@@ -669,6 +694,9 @@ const calculateValue = () => {
         },
         notion: {
             key: envs.NOTION_TOKEN,
+        },
+        patreon: {
+            sessionId: envs.PATREON_SESSION_ID,
         },
         pianyuan: {
             cookie: envs.PIANYUAN_COOKIE,
@@ -745,6 +773,7 @@ const calculateValue = () => {
             authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
             phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
+            thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
         uestc: {
             bbsCookie: envs.UESTC_BBS_COOKIE,
@@ -765,6 +794,9 @@ const calculateValue = () => {
         xiaoyuzhou: {
             device_id: envs.XIAOYUZHOU_ID,
             refresh_token: envs.XIAOYUZHOU_TOKEN,
+        },
+        xiaohongshu: {
+            cookie: envs.XIAOHONGSHU_COOKIE,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,

@@ -1,0 +1,13 @@
+{{ if posts }}
+{{ each posts }}
+    <hr>
+    {{ if $value.localizedContentDate }}<p><i>{{ $value.localizedContentDate }}</i></p>{{ /if }}
+    {{ if $value.title }}<h2>{{ $value.title }}</h2>{{ /if }}
+    {{ if $value.persons }}
+        {{ each $value.persons }}
+        <p><i>{{ $value.fullName }}</i></p>
+        {{ /each }}
+    {{ /if }}
+    {{ if $value.text }}{{@ $value.text }}{{ /if }}
+{{ /each }}
+{{ /if }}

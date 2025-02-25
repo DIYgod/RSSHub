@@ -51,9 +51,8 @@ export async function getArticle(item) {
         const $ = load(html);
         const articleContentElement = $('body > div > main > section > div > div > div.post-content-contaier > div');
         const content = articleContentElement.html();
-        const modifiedContent = content?.replace(/\n/g, '<br>');
 
-        item.description = modifiedContent;
+        item.description = content;
         return item;
     } catch {
         // console.error(error);

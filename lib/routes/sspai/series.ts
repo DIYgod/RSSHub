@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/series',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/sspai/series',
     parameters: {},
     features: {

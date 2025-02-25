@@ -1,0 +1,34 @@
+<article>
+    <div class="stats">
+        <h1>Torrent download statistics</h1>
+        <ul>
+            {{each numStats}}
+            <li><span>{{$value.percent}}</span> {{$value.desc}}</li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="table-view">
+        <h1>Table View</h1>
+        {{if tableData}}
+        <table>
+            <tr><th>Category</th><th>Count</th><th>Percent</th></tr>
+            {{each tableData}}
+            <tr>
+                <td>{{$value.key}}</td>
+                <td>{{$value.count}}</td>
+                <td>{{$value.percent}}</td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+    </div>
+
+    <div class="top-list">
+        <h1>Top List</h1>
+        {{each topList}}
+        <h2>{{$value.title}}</h2>
+        {{@ $value.content}}
+        {{/each}}
+    </div>
+</article>

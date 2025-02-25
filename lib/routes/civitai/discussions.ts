@@ -30,7 +30,7 @@ export const route: Route = {
     name: 'Model discussions',
     maintainers: ['DIYgod'],
     handler,
-    description: `:::warning
+    description: `::: warning
 Need to configure \`CIVITAI_COOKIE\` to obtain image information of NSFW models.
 :::`,
 };

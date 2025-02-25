@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: 'Nyaa',
     url: 'nyaa.si',
     description: `
-    :::tip
+::: tip
 The 'Nyaa' includes several routes to access different parts of the site:
 1. \`/nyaa/search/:query?\` - Use this route to search for content with a specific query. For example, \`/nyaa/search/bocchi\` to search for bocchi related content.
 2. \`/nyaa/user/:username?\` - Access a user's profile by their username, e.g., \`/nyaa/user/ANiTorrent\`.

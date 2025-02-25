@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/839studio',
-    name: 'Unknown',
+    name: '澎湃美数课作品集',
     maintainers: ['umm233'],
     handler,
 };

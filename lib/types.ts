@@ -52,7 +52,7 @@ export type DataItem = {
     image?: string;
     banner?: string;
     updated?: number | string | Date;
-    language?: string;
+    language?: Language;
     enclosure_url?: string;
     enclosure_type?: string;
     enclosure_title?: string;
@@ -60,6 +60,13 @@ export type DataItem = {
     itunes_duration?: number | string;
     itunes_item_image?: string;
     media?: Record<string, Record<string, string>>;
+    attachments?: {
+        url: string;
+        mime_type: string;
+        title?: string;
+        size_in_bytes?: number;
+        duration_in_seconds?: number;
+    }[];
 
     _extra?: Record<string, any> & {
         links?: {
@@ -78,19 +85,125 @@ export type Data = {
     allowEmpty?: boolean;
     image?: string;
     author?: string;
-    language?: string;
+    language?: Language;
     feedLink?: string;
     lastBuildDate?: string;
     itunes_author?: string;
     itunes_category?: string;
     itunes_explicit?: string | boolean;
     id?: string;
-
+    icon?: string;
+    logo?: string;
     atomlink?: string;
     ttl?: number;
 };
 
-type Language = 'en' | 'de' | 'ja' | 'zh-CN' | 'zh-TW' | 'zh-HK' | 'pt' | 'fr' | 'ar-DZ' | 'ar-SA' | 'ar-MA' | 'ar-IQ' | 'ar-KW' | 'ar-TN' | 'fi' | 'it' | 'ru' | 'es' | 'ko' | 'tr' | 'ne' | 'other';
+type Language =
+    | 'af'
+    | 'sq'
+    | 'eu'
+    | 'be'
+    | 'bg'
+    | 'ca'
+    | 'zh-CN'
+    | 'zh-TW'
+    | 'zh-HK'
+    | 'hr'
+    | 'cs'
+    | 'ar-DZ'
+    | 'ar-SA'
+    | 'ar-MA'
+    | 'ar-IQ'
+    | 'ar-KW'
+    | 'ar-TN'
+    | 'da'
+    | 'nl'
+    | 'nl-be'
+    | 'nl-nl'
+    | 'en'
+    | 'en-au'
+    | 'en-bz'
+    | 'en-ca'
+    | 'en-ie'
+    | 'en-jm'
+    | 'en-nz'
+    | 'en-ph'
+    | 'en-za'
+    | 'en-tt'
+    | 'en-gb'
+    | 'en-us'
+    | 'en-zw'
+    | 'et'
+    | 'fo'
+    | 'fi'
+    | 'fr'
+    | 'fr-be'
+    | 'fr-ca'
+    | 'fr-fr'
+    | 'fr-lu'
+    | 'fr-mc'
+    | 'fr-ch'
+    | 'gl'
+    | 'gd'
+    | 'de'
+    | 'de-at'
+    | 'de-de'
+    | 'de-li'
+    | 'de-lu'
+    | 'de-ch'
+    | 'el'
+    | 'haw'
+    | 'hu'
+    | 'is'
+    | 'in'
+    | 'ga'
+    | 'it'
+    | 'it-it'
+    | 'it-ch'
+    | 'ja'
+    | 'ko'
+    | 'mk'
+    | 'no'
+    | 'pl'
+    | 'pt'
+    | 'pt-br'
+    | 'pt-pt'
+    | 'ro'
+    | 'ro-mo'
+    | 'ro-ro'
+    | 'ru'
+    | 'ru-mo'
+    | 'ru-ru'
+    | 'sr'
+    | 'sk'
+    | 'sl'
+    | 'es'
+    | 'es-ar'
+    | 'es-bo'
+    | 'es-cl'
+    | 'es-co'
+    | 'es-cr'
+    | 'es-do'
+    | 'es-ec'
+    | 'es-sv'
+    | 'es-gt'
+    | 'es-hn'
+    | 'es-mx'
+    | 'es-ni'
+    | 'es-pa'
+    | 'es-py'
+    | 'es-pe'
+    | 'es-pr'
+    | 'es-es'
+    | 'es-uy'
+    | 'es-ve'
+    | 'sv'
+    | 'sv-fi'
+    | 'sv-se'
+    | 'tr'
+    | 'uk'
+    | 'ne'
+    | 'other';
 
 // namespace
 interface NamespaceItem {
@@ -167,7 +280,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data> | Data;
+    handler: (ctx: Context) => Promise<Data | null> | Data | null;
 
     /**
      * An example URL of the route
@@ -247,9 +360,9 @@ interface RouteItem {
 }
 
 interface Route extends RouteItem {
-    ja?: NamespaceItem;
-    zh?: NamespaceItem;
-    'zh-TW'?: NamespaceItem;
+    ja?: RouteItem;
+    zh?: RouteItem;
+    'zh-TW'?: RouteItem;
 }
 
 export type { Route };

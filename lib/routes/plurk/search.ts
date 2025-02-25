@@ -6,7 +6,7 @@ import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
     example: '/plurk/search/FGO',
     parameters: { keyword: 'Search keyword' },
     features: {

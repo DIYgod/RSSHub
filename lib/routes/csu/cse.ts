@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['j1g5awi'],
     handler,
     description: `| 类型 | 学院新闻 | 通知公告 | 学术信息 | 学工动态 | 科研动态 |
-  | ---- | -------- | -------- | -------- | -------- | -------- |
-  | 参数 | xyxw     | tzgg     | xsxx     | xgdt     | kydt     |`,
+| ---- | -------- | -------- | -------- | -------- | -------- |
+| 参数 | xyxw     | tzgg     | xsxx     | xgdt     | kydt     |`,
 };
 
 async function handler(ctx) {

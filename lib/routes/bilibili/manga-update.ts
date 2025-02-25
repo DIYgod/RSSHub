@@ -28,6 +28,8 @@ async function handler(ctx) {
     const comic_id = ctx.req.param('comicid').startsWith('mc') ? ctx.req.param('comicid').replace('mc', '') : ctx.req.param('comicid');
     const link = `https://manga.bilibili.com/detail/mc${comic_id}`;
 
+    const spi_response = await got('https://api.bilibili.com/x/frontend/finger/spi');
+
     const response = await got({
         method: 'POST',
         url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?device=pc&platform=web`,
@@ -36,6 +38,7 @@ async function handler(ctx) {
         },
         headers: {
             Referer: link,
+            Cookie: `buvid3=${spi_response.data.data.b_3}; buvid4=${spi_response.data.data.b_4}`,
         },
     });
     const data = response.data.data;

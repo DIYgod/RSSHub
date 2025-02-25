@@ -30,11 +30,11 @@ export const route: Route = {
     handler,
     url: 'bendibao.com/',
     description: `| 城市名 | 缩写 |
-  | ------ | ---- |
-  | 北京   | bj   |
-  | 上海   | sh   |
-  | 广州   | gz   |
-  | 深圳   | sz   |
+| ------ | ---- |
+| 北京   | bj   |
+| 上海   | sh   |
+| 广州   | gz   |
+| 深圳   | sz   |
 
   更多城市请参见 [这里](http://www.bendibao.com/city.htm)
 

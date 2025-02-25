@@ -38,8 +38,8 @@ export const route: Route = {
     handler,
     url: 'news.uestc.edu.cn/',
     description: `| 学术    | 文化    | 公告         | 校内通知     |
-  | ------- | ------- | ------------ | ------------ |
-  | academy | culture | announcement | notification |`,
+| ------- | ------- | ------------ | ------------ |
+| academy | culture | announcement | notification |`,
 };
 
 async function handler(ctx) {
