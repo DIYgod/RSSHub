@@ -11,7 +11,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
+            source: ['hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
             target: '/tianjin/tjrcgzw-notice/:cate/:subCate',
         },
     ],
