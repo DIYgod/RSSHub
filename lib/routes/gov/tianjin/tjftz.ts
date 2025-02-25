@@ -30,7 +30,8 @@ export const route: Route = {
         const { data: response } = await got(url);
         const noticeCate = load(response)('.location').text().trim();
         const item = load(response)('#sec_right>ul>span>li>.layui-row')
-            .map((index, el) => {
+            .toArray()
+            .map((el) => {
                 const $ = load(el);
                 return {
                     title: `天津保税区:${$('a').attr('title')}`,
@@ -42,8 +43,7 @@ export const route: Route = {
                         <a href="https://www.tjftz.gov.cn${$('a').attr('href')}">${$('a').attr('title')}</a>
                     `,
                 };
-            })
-            .toArray();
+            });
         return {
             title: '天津港保税区-公告',
             link: url,

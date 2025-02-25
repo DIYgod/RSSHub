@@ -24,7 +24,8 @@ export const route: Route = {
         const { data: response } = await got(url);
         const noticeCate = load(response)('.routeBlockAuto').text().trim();
         const item = load(response)('ul.listUlBox01>li')
-            .map((index, el) => {
+            .toArray()
+            .map((el) => {
                 const $ = load(el);
                 const title = $('a').text().trim();
                 const href = $('a').attr('href') || '';
@@ -40,8 +41,7 @@ export const route: Route = {
                         <a href="${link}">${title}</a>
                     `,
                 };
-            })
-            .toArray();
+            });
         return {
             title: '天津人才工作网-公告',
             link: url,
