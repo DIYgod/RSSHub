@@ -58,7 +58,7 @@ async function handler(ctx) {
         itunes_category: meta.type,
         itunes_explicit: meta.explicit,
         allowEmpty: true,
-        item: episodes.map((x) => ({
+        item: episodes.filter(Boolean).map((x) => ({
             title: x.name,
             description: x.html_description,
             pubDate: parseDate(x.release_date),
