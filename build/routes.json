@@ -53577,6 +53577,36 @@
     "url": "layoffs.fyi",
     "lang": "en"
   },
+  "leagueoflegends": {
+    "routes": {
+      "/patch-notes": {
+        "path": "/patch-notes",
+        "categories": [
+          "game"
+        ],
+        "example": "/leagueoflegends/patch-notes",
+        "radar": [
+          {
+            "source": [
+              "www.leagueoflegends.com/en-us/news/tags/patch-notes/",
+              "www.leagueoflegends.com/en-us/news/game-updates/:postSlug"
+            ]
+          }
+        ],
+        "name": "Patch Notes",
+        "maintainers": [
+          "noahm"
+        ],
+        "location": "patch-notes.ts"
+      }
+    },
+    "name": "League of Legends",
+    "url": "leagueoflegends.com",
+    "categories": [
+      "game"
+    ],
+    "lang": "en"
+  },
   "learnblockchain": {
     "routes": {
       "/posts/:cid/:sort?": {

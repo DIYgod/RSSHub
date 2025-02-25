@@ -20091,6 +20091,20 @@
       }
     ]
   },
+  "leagueoflegends.com": {
+    "_name": "League of Legends",
+    "www": [
+      {
+        "title": "Patch Notes",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/en-us/news/tags/patch-notes/",
+          "/en-us/news/game-updates/:postSlug"
+        ],
+        "target": "/leagueoflegends/patch-notes"
+      }
+    ]
+  },
   "learnku.com": {
     "_name": "LearnKu",
     ".": [
