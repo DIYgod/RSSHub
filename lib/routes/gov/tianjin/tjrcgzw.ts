@@ -11,12 +11,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
+            source: ['hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/'],
             target: '/tianjin/tjrcgzw-notice/:cate/:subCate',
         },
     ],
     name: '天津人才工作网-公告',
-    url: 'https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/',
+    url: 'hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/',
     maintainers: ['HaoyuLee'],
     async handler(ctx) {
         const { cate, subCate } = ctx.req.param();
