@@ -16,7 +16,7 @@ export const route: Route = {
         },
     ],
     name: '天津人才工作网-公告',
-    url: 'https://hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/',
+    url: 'hrss.tj.gov.cn/ztzl/ztzl1/tjrcgzw/',
     maintainers: ['HaoyuLee'],
     async handler(ctx) {
         const { cate, subCate } = ctx.req.param();
