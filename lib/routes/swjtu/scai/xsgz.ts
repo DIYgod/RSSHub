@@ -57,7 +57,7 @@ const getItem = (item, cache) => {
 async function handler() {
     const res = await ofetch(pageURL);
 
-    const $ = load(res.data);
+    const $ = load(res);
     const $list = $('div.list-top-item, div.item-wrapper');
 
     const items = await Promise.all(
