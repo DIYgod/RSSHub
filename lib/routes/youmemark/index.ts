@@ -44,13 +44,13 @@ async function handler(ctx): Promise<Data> {
     const $ = load(response);
 
     const name = $('h2.font-bold').text().trim();
-    const avatar = $('span.relative.flex img').attr('src');
-    const intro = $('.text-center .prose p').first().text().trim();
+    const avatar = $('span.relative.flex img, span.relative.flex.shrink-0 img').attr('src');
+    const intro = $('.text-center .prose p, .text-sm.text-gray-500.text-center .prose p').first().text().trim();
 
     const items: Data['item'] = [];
     $('h2:contains("收集箱")')
-        .next()
-        .find('> .rounded-lg')
+        .parent()
+        .find('.rounded-lg.space-y-2')
         .each((_, element) => {
             const $item = $(element);
 
@@ -60,10 +60,10 @@ async function handler(ctx): Promise<Data> {
             const domain = $link.find('span').last().text().trim().replaceAll(/[()]/g, '').trim();
             const link = $link.attr('href');
 
-            const $contentDiv = $linkDiv.find('> div').first();
+            const $contentDiv = $linkDiv.find('> div.text-sm.text-gray-500');
             const content = $contentDiv.find('p').text().trim();
 
-            const dateStr = $item.children('div').last().text().trim();
+            const dateStr = $item.find('.text-xs.text-gray-500 span').text().trim();
 
             if (link && title && dateStr) {
                 items.push({
