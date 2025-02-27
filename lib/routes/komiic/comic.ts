@@ -3,10 +3,10 @@ import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/comic/:id/:limit?',
+    path: '/comic/:id',
     categories: ['anime'],
     example: '/komiic/comic/533',
-    parameters: { id: '漫画 ID', limit: '返回章节数量，默认为 0 返回所有章节' },
+    parameters: { id: '漫画 ID' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,7 +27,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { id, limit = 0 } = ctx.req.param();
+    const { id } = ctx.req.param();
+    const { limit = 0 } = ctx.req.query();
     const baseUrl = 'https://komiic.com';
 
     const { data: comicInfo } = await got.post(`${baseUrl}/api/query`, {
