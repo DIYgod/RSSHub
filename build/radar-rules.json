@@ -19822,6 +19822,19 @@
       }
     ]
   },
+  "komiic.com": {
+    "_name": "Komiic",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/comic/:id"
+        ],
+        "target": "/komiic/comic/:id"
+      }
+    ]
+  },
   "konachan.com": {
     "_name": "Konachan.com Anime Wallpapers",
     ".": [

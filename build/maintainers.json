@@ -4223,6 +4223,9 @@
   "/kisskiss/blog/:category?": [
     "keocheung"
   ],
+  "/komiic/comic/:id": [
+    "NekoAria"
+  ],
   "/konachan/post/popular_recent/:period?": [
     "magic-akari",
     "NekoAria"

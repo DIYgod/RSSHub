@@ -52674,6 +52674,44 @@
     "url": "www.kisskiss.tv",
     "lang": "ja"
   },
+  "komiic": {
+    "routes": {
+      "/comic/:id": {
+        "path": "/comic/:id",
+        "categories": [
+          "anime"
+        ],
+        "example": "/komiic/comic/533",
+        "parameters": {
+          "id": "漫画 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "komiic.com/comic/:id"
+            ],
+            "target": "/comic/:id"
+          }
+        ],
+        "name": "漫画更新",
+        "maintainers": [
+          "NekoAria"
+        ],
+        "location": "comic.ts"
+      }
+    },
+    "name": "Komiic",
+    "url": "komiic.com",
+    "lang": "zh-CN"
+  },
   "konachan": {
     "routes": {
       "/post/popular_recent/:period?": {
