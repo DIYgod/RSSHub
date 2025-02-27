@@ -32109,6 +32109,26 @@
         "target": "/swjtu/jyzpxx"
       }
     ],
+    "scai": [
+      {
+        "title": "计算机与人工智能学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/swjtu/scai/:type"
+      }
+    ],
+    "sports": [
+      {
+        "title": "体育学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/swjtu/sports"
+      }
+    ],
     "xg": [
       {
         "title": "扬华素质网",
@@ -32131,16 +32151,6 @@
           "/"
         ],
         "target": "/swjtu/gsee/yjs"
-      }
-    ],
-    "scai": [
-      {
-        "title": "计算机与人工智能学院",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/swjtu/scai/bks"
       }
     ]
   },

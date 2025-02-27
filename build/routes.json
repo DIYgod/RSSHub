@@ -84874,6 +84874,67 @@
         "url": "jiuye.swjtu.edu.cn/career",
         "location": "jyzpxx.ts"
       },
+      "/scai/:type": {
+        "path": "/scai/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/swjtu/scai/bks",
+        "parameters": {
+          "type": "通知类型"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "scai.swjtu.edu.cn/"
+            ]
+          }
+        ],
+        "name": "计算机与人工智能学院",
+        "description": "\n| 分区              | 参数         |\n| ----------------- | ----------- |\n| 本科生教育         | bks         |\n| 研究生教育         | yjs         |\n| 学生工作           | xsgz        |\n",
+        "maintainers": [
+          "AzureG03",
+          "SuperJeason"
+        ],
+        "location": "scai.ts"
+      },
+      "/sports": {
+        "path": "/sports",
+        "categories": [
+          "university"
+        ],
+        "example": "/swjtu/sports",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "sports.swjtu.edu.cn/"
+            ]
+          }
+        ],
+        "name": "体育学院",
+        "description": "新闻资讯",
+        "maintainers": [
+          "AzureG03"
+        ],
+        "location": "sports.ts"
+      },
       "/xg/:code?": {
         "path": "/xg/:code?",
         "categories": [
@@ -84961,40 +85022,10 @@
         ],
         "description": "#### 研究生通知 {#xi-nan-jiao-tong-da-xue-jiao-tong-yun-shu-yu-wu-liu-xue-yuan-yan-jiu-sheng-tong-zhi}",
         "location": "jtys/yjs.ts"
-      },
-      "/scai/bks": {
-        "path": "/scai/bks",
-        "categories": [
-          "university"
-        ],
-        "example": "/swjtu/scai/bks",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "scai.swjtu.edu.cn/"
-            ]
-          }
-        ],
-        "name": "计算机与人工智能学院",
-        "description": "本科生教育",
-        "maintainers": [
-          "AzureG03",
-          "SuperJeason"
-        ],
-        "location": "scai/bks.ts"
       }
     },
     "name": "西南交通大学",
-    "url": "ctt.swjtu.edu.cn",
+    "url": "www.swjtu.edu.cn",
     "lang": "zh-CN"
   },
   "swpu": {
