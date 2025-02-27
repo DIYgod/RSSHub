@@ -15436,7 +15436,7 @@
         source:[ "/" ],
         target:"/thepetcity/:term?" } ] },
   "theverge.com":{ _name:"The Verge",
-    ".":[ { title:"The Verge",
+    ".":[ { title:"Category",
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/:hub",
           "/" ],
