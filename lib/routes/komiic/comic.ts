@@ -3,10 +3,10 @@ import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/comic/:id/:chapterCnt?',
+    path: '/comic/:id/:limit?',
     categories: ['anime'],
     example: '/komiic/comic/533',
-    parameters: { id: '漫画 ID', chapterCnt: '返回章节数量，默认为 0 返回所有章节' },
+    parameters: { id: '漫画 ID', limit: '返回章节数量，默认为 0 返回所有章节' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://komiic.com/comic/:id'],
+            source: ['komiic.com/comic/:id'],
             target: '/comic/:id',
         },
     ],
@@ -27,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { id, chapterCnt = 0 } = ctx.req.param();
+    const { id, limit = 0 } = ctx.req.param();
     const baseUrl = 'https://komiic.com';
 
     const { data: comicInfo } = await got.post(`${baseUrl}/api/query`, {
@@ -63,7 +63,7 @@ async function handler(ctx) {
 
     const sortedChapters = chapterData.data.chaptersByComicId.sort((a, b) => Date.parse(b.dateUpdated) - Date.parse(a.dateUpdated));
 
-    const chapterLimit = Number(chapterCnt) || sortedChapters.length;
+    const chapterLimit = Number(limit) || sortedChapters.length;
     const filteredChapters = sortedChapters.slice(0, chapterLimit);
 
     const generateChapterDescription = (chapter) =>
