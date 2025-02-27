@@ -10,7 +10,7 @@ const pageURL = `${rootURL}/xwzx.htm`;
 export const route: Route = {
     path: '/sports',
     categories: ['university'],
-    example: '/swjtu/sports/news',
+    example: '/swjtu/sports',
     parameters: {},
     features: {
         requireConfig: false,
@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '体育学院',
-    description: `新闻资讯`,
+    description: '新闻资讯',
     maintainers: ['AzureG03'],
     handler,
 };
