@@ -1,5 +1,4 @@
 import { Route, Data, DataItem } from '@/types';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
@@ -65,8 +64,9 @@ async function handler(ctx): Promise<Data> {
     }
 
     const posts = await ofetch(apiUrl, {
-        params: {
+        query: {
             per_page: 20,
+            _embed: 'wp:featuredmedia',
         },
     });
 
@@ -74,38 +74,31 @@ async function handler(ctx): Promise<Data> {
         throw new Error('No posts found');
     }
 
-    const items = await Promise.all(
-        posts.map(async (post) => {
-            const $ = load(post.content.rendered);
+    const items = posts.map((post) => {
+        const $ = load(post.content.rendered);
 
-            // remove unnecessary title
-            $('h1').first().remove();
-            $('h2').first().remove();
+        // remove unnecessary title
+        $('h1').first().remove();
+        $('h2').first().remove();
 
-            let thumbnail = '';
-            if (post.featured_media) {
-                try {
-                    const mediaData = await ofetch(`https://news.toranoana.jp/wp-json/wp/v2/media/${post.featured_media}`);
-                    thumbnail = mediaData.media_details?.sizes?.medium?.source_url || mediaData.source_url;
-                } catch (error) {
-                    logger.warn(`Failed to fetch media for ID ${post.featured_media}:`, error);
-                }
-            }
+        let thumbnail = '';
+        if (post._embedded['wp:featuredmedia'][0].source_url) {
+            thumbnail = post._embedded['wp:featuredmedia'][0].source_url;
+        }
 
-            if (thumbnail) {
-                $('body').prepend(`<img src="${thumbnail}" alt="${post.title.rendered}" />`);
-            }
+        if (thumbnail) {
+            $('body').prepend(`<img src="${thumbnail}" alt="${post.title.rendered}" />`);
+        }
 
-            return {
-                title: post.title.rendered,
-                link: post.link,
-                description: $.html(),
-                pubDate: parseDate(post.date_gmt),
-                guid: post.link,
-                author: 'とらのあな',
-            };
-        })
-    );
+        return {
+            title: post.title.rendered,
+            link: post.link,
+            description: $.html(),
+            pubDate: parseDate(post.date_gmt),
+            guid: post.link,
+            author: 'とらのあな',
+        };
+    });
 
     return {
         title: category ? `とらのあな総合インフォメーション - ${category}` : 'とらのあな総合インフォメーション',
