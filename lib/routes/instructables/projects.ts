@@ -1,5 +1,8 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/projects/:category?',
@@ -31,10 +34,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
-    const apiKey = ctx.req.query('typesenseApiKey');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
-    const siteDomain = 'www.instructables.com';
+    const siteDomain = 'instructables.com';
 
     let pathPrefix, projectFilter;
     if (category === 'all') {
@@ -46,15 +48,19 @@ async function handler(ctx) {
         projectFilter = category === 'teachers' ? `&& teachers:=${filterValue}` : ` && category:=${filterValue}`;
     }
 
-    const link = `https://${siteDomain}/${pathPrefix}projects?projects=all`;
+    const pageLink = `https://${siteDomain}/${pathPrefix}projects`;
+
+    const pageResponse = await ofetch(pageLink);
+    const $ = load(pageResponse);
+    const { typesenseProxy, typesenseApiKey } = JSON.parse($('script#js-page-context').text());
 
     const response = await got({
         method: 'get',
-        url: `https://${siteDomain}/api_proxy/search/collections/projects/documents/search`,
+        url: `https://${siteDomain}${typesenseProxy}/collections/projects/documents/search`,
         headers: {
-            Referer: link,
+            Referer: pageLink,
             Host: siteDomain,
-            'x-typesense-api-key': apiKey,
+            'x-typesense-api-key': typesenseApiKey,
         },
         searchParams: {
             q: '*',
@@ -71,7 +77,7 @@ async function handler(ctx) {
 
     return {
         title: 'Instructables Projects', // 项目的标题
-        link, // 指向项目的链接
+        link: `https://${siteDomain}/projects`, // 指向项目的链接
         description: 'Instructables Projects', // 描述项目
         language: 'en', // 频道语言
         item: data.hits.map((item) => ({
@@ -79,7 +85,7 @@ async function handler(ctx) {
             link: `https://${siteDomain}/${item.document.urlString}`,
             author: item.document.screenName,
             description: `<img src="${item.document.coverImageUrl}?auto=webp&crop=1.2%3A1&frame=1&width=500" width="500">`,
-            pubDate: new Date(item.document.publishDate).toUTCString(),
+            pubDate: parseDate(item.document.publishDate),
             category: item.document.primaryClassification,
         })),
     };
