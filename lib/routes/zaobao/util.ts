@@ -97,8 +97,12 @@ const parseList = async (
                     time = new Date(JSON.parse(jsonText)?.datePublished);
                 } else {
                     // SG
-                    title = JSON.parse($1('#seo-article-page').text())['@graph'][0]?.headline;
-                    time = new Date(JSON.parse($1('#seo-article-page').text())['@graph'][0]?.datePublished);
+                    const jsonText = $1('#seo-article-page')
+                        .text()
+                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    const json = JSON.parse(jsonText);
+                    title = json['@graph'][0]?.headline;
+                    time = new Date(json['@graph'][0]?.datePublished);
                 }
 
                 $1('.overlay-microtransaction').remove();
