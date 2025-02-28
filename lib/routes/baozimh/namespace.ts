@@ -2,5 +2,5 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: '包子漫画',
-    url: 'cn.baozimhcn.com',
+    url: 'cn.dzmanga.com',
 };
