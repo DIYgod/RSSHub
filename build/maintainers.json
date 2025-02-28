@@ -7223,6 +7223,9 @@
   "/topys/:keyword?": [
     "nczitzk"
   ],
+  "/toranoana/news/:category?": [
+    "Tsuyumi25"
+  ],
   "/toutiao/user/token/:token": [
     "TonyRL"
   ],
