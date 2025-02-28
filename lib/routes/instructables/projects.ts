@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -54,15 +53,15 @@ async function handler(ctx) {
     const $ = load(pageResponse);
     const { typesenseProxy, typesenseApiKey } = JSON.parse($('script#js-page-context').text());
 
-    const response = await got({
+    const data = await ofetch(`${typesenseProxy}/collections/projects/documents/search`, {
         method: 'get',
-        url: `https://${siteDomain}${typesenseProxy}/collections/projects/documents/search`,
+        baseURL: `https://${siteDomain}`,
         headers: {
             Referer: pageLink,
             Host: siteDomain,
             'x-typesense-api-key': typesenseApiKey,
         },
-        searchParams: {
+        query: {
             q: '*',
             query_by: 'title,stepBody,screenName',
             page: 1,
@@ -71,9 +70,8 @@ async function handler(ctx) {
             include_fields: 'title,urlString,coverImageUrl,screenName,publishDate,favorites,views,primaryClassification,featureFlag,prizeLevel,IMadeItCount',
             filter_by: `featureFlag:=true${projectFilter}`,
         },
+        parseResponse: JSON.parse,
     });
-
-    const data = response.data;
 
     return {
         title: 'Instructables Projects', // 项目的标题
