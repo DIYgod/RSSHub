@@ -32,7 +32,7 @@ export const route: Route = {
             target: '/news/joshi',
         },
         {
-            title: 'とらのあなイラスト展',
+            title: 'イラスト展',
             source: ['news.toranoana.jp/exhibitions'],
             target: '/news/exhibition',
         },
