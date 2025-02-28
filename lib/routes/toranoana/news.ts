@@ -82,7 +82,7 @@ async function handler(ctx): Promise<Data> {
         $('h2').first().remove();
 
         let thumbnail = '';
-        if (post._embedded['wp:featuredmedia'][0].source_url) {
+        if (post._embedded && post._embedded['wp:featuredmedia'][0].source_url) {
             thumbnail = post._embedded['wp:featuredmedia'][0].source_url;
         }
 
