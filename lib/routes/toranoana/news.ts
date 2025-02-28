@@ -100,7 +100,7 @@ async function handler(ctx): Promise<Data> {
                 title: post.title.rendered,
                 link: post.link,
                 description: $.html(),
-                pubDate: parseDate(post.date),
+                pubDate: parseDate(post.date_gmt),
                 guid: post.link,
                 author: 'とらのあな',
             };
