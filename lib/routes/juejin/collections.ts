@@ -42,7 +42,7 @@ async function handler(ctx) {
     const collectionId = response.data.map((item) => item.tag_id);
 
     const temp = (await Promise.all(collectionId.map((id) => getArticleList(id)))) as Article[][];
-    const posts = temp.flat();
+    const posts = temp.flat().filter(Boolean);
     const list = parseList(posts);
 
     const result = await ProcessFeed(list);
