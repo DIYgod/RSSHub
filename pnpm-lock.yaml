@@ -243,8 +243,8 @@ importers:
         specifier: 4.0.1
         version: 4.0.1
       tldts:
-        specifier: 6.1.78
-        version: 6.1.78
+        specifier: 6.1.79
+        version: 6.1.79
       tosource:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
@@ -5512,11 +5512,11 @@ packages:
     resolution: {integrity: sha512-tcwMRIioTcF/FcxLev8MJWxCp+GUALRhFEqbDoZrnowmKSGqPrl5pqS+Sut2m8BgJ6S4FExCSSpGffZ0Tks6Aw==}
     hasBin: true
 
-  tldts-core@6.1.78:
-    resolution: {integrity: sha512-jS0svNsB99jR6AJBmfmEWuKIgz91Haya91Z43PATaeHJ24BkMoNRb/jlaD37VYjb0mYf6gRL/HOnvS1zEnYBiw==}
+  tldts-core@6.1.79:
+    resolution: {integrity: sha512-HM+Ud/2oQuHt4I43Nvjc213Zji/z25NSH5OkJskJwHXNtYh9DTRlHMDFhms9dFMP7qyve/yVaXFIxmcJ7TdOjw==}
 
-  tldts@6.1.78:
-    resolution: {integrity: sha512-fSgYrW0ITH0SR/CqKMXIruYIPpNu5aDgUp22UhYoSrnUQwc7SBqifEBFNce7AAcygUPBo6a/gbtcguWdmko4RQ==}
+  tldts@6.1.79:
+    resolution: {integrity: sha512-wjlYwK8lC/WcywLWf3A7qbK07SexezXjTRVwuPWXHvcjD7MnpPS2RXY5rLO3g12a8CNc7Y7jQRQsV7XyuBZjig==}
     hasBin: true
 
   tmp@0.0.33:
@@ -11738,11 +11738,11 @@ snapshots:
 
   tlds@1.255.0: {}
 
-  tldts-core@6.1.78: {}
+  tldts-core@6.1.79: {}
 
-  tldts@6.1.78:
+  tldts@6.1.79:
     dependencies:
-      tldts-core: 6.1.78
+      tldts-core: 6.1.79
 
   tmp@0.0.33:
     dependencies:
@@ -11778,7 +11778,7 @@ snapshots:
 
   tough-cookie@5.1.1:
     dependencies:
-      tldts: 6.1.78
+      tldts: 6.1.79
 
   tr46@0.0.3: {}
 
