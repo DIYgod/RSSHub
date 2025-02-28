@@ -2297,6 +2297,9 @@
   "/fanbox/:creator": [
     "KarasuShin"
   ],
+  "/fangchan/list/:id?": [
+    "nczitzk"
+  ],
   "/fanqienovel/page/:bookId": [
     "TonyRL"
   ],
@@ -7585,6 +7588,9 @@
   ],
   "/wabei/hot-recommend": [
     "p3psi-boo"
+  ],
+  "/wainao/topics/:id?": [
+    "nczitzk"
   ],
   "/wainao/wainao-reads": [
     "lucky13820"

@@ -11561,6 +11561,43 @@
       }
     ]
   },
+  "fangchan.com": {
+    "_name": "中房网",
+    "www": [
+      {
+        "title": "列表",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:id"
+        ],
+        "target": "/fangchanparams=>{const id=params.id;return`/fangchan/list/${id?`/${id}`:\"\"}`}"
+      },
+      {
+        "title": "数据研究",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/datalist"
+        ],
+        "target": "/fangchan/list/datalist"
+      },
+      {
+        "title": "行业测评",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/industrylist"
+        ],
+        "target": "/fangchan/list/industrylist"
+      },
+      {
+        "title": "政策法规",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/policylist"
+        ],
+        "target": "/fangchan/list/policylist"
+      }
+    ]
+  },
   "fanqienovel.com": {
     "_name": "番茄小说",
     ".": [
@@ -34943,6 +34980,86 @@
   "wainao.me": {
     "_name": "歪脑",
     "www": [
+      {
+        "title": "主题",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/:id"
+        ],
+        "target": "/wainao/topics/:id"
+      },
+      {
+        "title": "热点",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/hotspot"
+        ],
+        "target": "/wainao/topics/hotspot"
+      },
+      {
+        "title": "人物",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/people"
+        ],
+        "target": "/wainao/topics/people"
+      },
+      {
+        "title": "身份",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/identity"
+        ],
+        "target": "/wainao/topics/identity"
+      },
+      {
+        "title": "政治",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/politics"
+        ],
+        "target": "/wainao/topics/politics"
+      },
+      {
+        "title": "社会",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/society"
+        ],
+        "target": "/wainao/topics/society"
+      },
+      {
+        "title": "文化",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/culture"
+        ],
+        "target": "/wainao/topics/culture"
+      },
+      {
+        "title": "经济",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/economics"
+        ],
+        "target": "/wainao/topics/economics"
+      },
+      {
+        "title": "环境",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/environment"
+        ],
+        "target": "/wainao/topics/environment"
+      },
+      {
+        "title": "FUN",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/topics/fun"
+        ],
+        "target": "/wainao/topics/fun"
+      },
       {
         "title": "歪脑读",
         "docs": "https://docs.rsshub.app/routes/new-media",
