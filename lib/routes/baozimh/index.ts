@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const rootUrl = 'https://cn.baozimhcn.com';
+const rootUrl = 'https://cn.dzmanga.com';
 
 export const route: Route = {
     path: '/comic/:name',
@@ -25,7 +25,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cn.baozimhcn.com/comic/:name'],
+            source: ['cn.dzmanga.com/comic/:name'],
         },
     ],
     name: '订阅漫画',
