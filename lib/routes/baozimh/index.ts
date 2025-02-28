@@ -8,12 +8,12 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const rootUrl = 'https://www.baozimh.com';
+const rootUrl = 'https://cn.baozimhcn.com';
 
 export const route: Route = {
     path: '/comic/:name',
     categories: ['anime'],
-    example: '/baozimh/comic/guowangpaiming-shiricaofu',
+    example: '/comic/guowangpaiming-shiricaofu',
     parameters: { name: '漫画名称，在漫画链接可以得到(`comic/` 后的那段)' },
     features: {
         requireConfig: false,
@@ -25,7 +25,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.baozimh.com/comic/:name'],
+            source: ['cn.baozimhcn.com/comic/:name'],
         },
     ],
     name: '订阅漫画',
