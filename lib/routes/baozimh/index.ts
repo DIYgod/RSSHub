@@ -39,8 +39,8 @@ async function handler(ctx) {
 
     const response = await got(url);
     const $ = load(response.data);
-    const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
-    const list = $('#layout > div.comics-detail > div:nth-child(3) > div > div.pure-g')
+    const comicTitle = $('div > div.comics-card pure-u-1-3 pure-u-md-1-4 pure-u-lg-1-6 > div > a[2] > div > h3').text();
+    const list = $('#layout > div[2] > div[1] > div > div.pure-g')
         .first() // 最新章节
         .children()
         .toArray()
