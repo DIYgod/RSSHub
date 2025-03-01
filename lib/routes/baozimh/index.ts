@@ -13,7 +13,7 @@ const rootUrl = 'https://cn.dzmanga.com';
 export const route: Route = {
     path: '/comic/:name',
     categories: ['anime'],
-    example: '/comic/guowangpaiming-shiricaofu',
+    example: '/comic/yirenzhixia-dongmantang',
     parameters: { name: '漫画名称，在漫画链接可以得到(`comic/` 后的那段)' },
     features: {
         requireConfig: false,
@@ -39,8 +39,8 @@ async function handler(ctx) {
 
     const response = await got(url);
     const $ = load(response.data);
-    const comicTitle = $('div > div.comics-card pure-u-1-3 pure-u-md-1-4 pure-u-lg-1-6 > div > a[2] > div > h3').text();
-    const list = $('#layout > div[2] > div[1] > div > div.pure-g')
+    const comicTitle = $('#layout > div.mt-5.index > div:nth-child(1) > div > div.pure-g > div:nth-child(1) > a.comics-card__info > div > h3').text();
+    const list = $('#layout > div.mt-5.index > div:nth-child(1) > div > div.pure-g')
         .first() // 最新章节
         .children()
         .toArray()
