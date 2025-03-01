@@ -8,12 +8,12 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const rootUrl = 'https://cn.dzmanga.com';
+const rootUrl = 'https://www.baozimh.com';
 
 export const route: Route = {
     path: '/comic/:name',
     categories: ['anime'],
-    example: '/comic/yirenzhixia-dongmantang',
+    example: '/baozimh/comic/guowangpaiming-shiricaofu',
     parameters: { name: '漫画名称，在漫画链接可以得到(`comic/` 后的那段)' },
     features: {
         requireConfig: false,
@@ -25,7 +25,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cn.dzmanga.com/comic/:name'],
+            source: ['www.baozimh.com/comic/:name'],
         },
     ],
     name: '订阅漫画',
@@ -39,8 +39,8 @@ async function handler(ctx) {
 
     const response = await got(url);
     const $ = load(response.data);
-    const comicTitle = $('#layout > div.mt-5.index > div:nth-child(1) > div > div.pure-g > div:nth-child(1) > a.comics-card__info > div > h3').text();
-    const list = $('#layout > div.mt-5.index > div:nth-child(1) > div > div.pure-g')
+    const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
+    const list = $('#layout > div.comics-detail > div:nth-child(3) > div > div.pure-g')
         .first() // 最新章节
         .children()
         .toArray()
