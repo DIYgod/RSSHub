@@ -12144,6 +12144,19 @@
       }
     ]
   },
+  "forklog.com": {
+    "_name": "Forklog",
+    ".": [
+      {
+        "title": "Новости",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/news"
+        ],
+        "target": "/forklog/news"
+      }
+    ]
+  },
   "fortunechina.com": {
     "_name": "财富中文网",
     ".": [

@@ -31476,6 +31476,34 @@
     "url": "www.foreverblog.cn",
     "lang": "zh-CN"
   },
+  "forklog": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "finance"
+        ],
+        "example": "/forklog/news",
+        "radar": [
+          {
+            "source": [
+              "forklog.com/news"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "Новости",
+        "maintainers": [
+          "raven428"
+        ],
+        "url": "forklog.com/news",
+        "location": "index.ts"
+      }
+    },
+    "name": "Forklog",
+    "url": "forklog.com",
+    "lang": "ru"
+  },
   "fortnite": {
     "routes": {
       "/news/:options?": {
