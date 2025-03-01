@@ -20,13 +20,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got(
-        'https://forklog.com/wp-content/themes/forklogv2/ajax/getPosts.php', {
-            method: 'POST',
-            headers: { 'x-requested-with': 'XMLHttpRequest' },
-            form: { action: 'getPostsByCategory', postperpage: '333' },
-        }
-    );
+    const response = await got('https://forklog.com/wp-content/themes/forklogv2/ajax/getPosts.php', {
+        method: 'POST',
+        headers: { 'x-requested-with': 'XMLHttpRequest' },
+        form: { action: 'getPostsByCategory', postperpage: '333' },
+    });
     const items = JSON.parse(response.body).map((post) => {
         const link = post.link;
         const title = (post.title || post.text?.post_title)?.trim();
@@ -49,15 +47,17 @@ async function handler() {
             pubDate,
             description,
             category: ['news', 'crypto', 'finance'],
-            ...(imageSrc ? {
-                media: {
-                    thumbnail: {
-                        url: imageSrc,
-                        width: 250,
-                        height: 250,
-                    }
-                },
-            } : {}),
+            ...(imageSrc
+                ? {
+                      media: {
+                          thumbnail: {
+                              url: imageSrc,
+                              width: 250,
+                              height: 250,
+                          },
+                      },
+                  }
+                : {}),
             extra: {
                 views,
             },
