@@ -59,7 +59,7 @@ async function handler() {
                 if (nextPages.length) {
                     const pages = await Promise.all(
                         nextPages.map(async (url) => {
-                            const { data: response } = await got(url, {
+                            const response = await ofetch(url, {
                                 headers: {
                                     referer: item.link,
                                 },

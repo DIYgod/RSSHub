@@ -98,7 +98,7 @@ async function handler(ctx) {
             }
         }
         if (attributes.video_preview) {
-            relationships.video_preview = posts.included.find((i) => Number.parseInt(i.id) === attributes.video_preview.media_id) as unknown as MediaRelation;
+            relationships.video_preview = posts.included.find((i) => Number.parseInt(i.id) === attributes.video_preview?.media_id) as unknown as MediaRelation;
         }
 
         return {
@@ -110,7 +110,7 @@ async function handler(ctx) {
             }),
             link: attributes.url,
             pubDate: parseDate(attributes.published_at),
-            image: attributes.thumbnail?.url ?? attributes.image.url,
+            image: attributes.thumbnail?.url ?? attributes.image?.url,
             category: relationships.user_defined_tags?.map((tag) => tag.attributes.value),
         };
     });

@@ -153,7 +153,6 @@ export const route: Route = {
 | [数字治理](https://www.cuilingmag.com/category/digital_governance)         | [digital_governance](https://rsshub.app/cuilingmag/digital_governance)           |
 | [Noema精选](https://www.cuilingmag.com/category/selected_noema)            | [selected_noema](https://rsshub.app/cuilingmag/selected_noema)                   |
   `,
-    categories: ['new-media'],
 
     features: {
         requireConfig: false,

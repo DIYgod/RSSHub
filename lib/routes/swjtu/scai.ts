@@ -5,13 +5,12 @@ import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
 
 const rootURL = 'https://scai.swjtu.edu.cn';
-const pageURL = `${rootURL}/web/page-module.html?mid=B730BEB095B31840`;
 
 export const route: Route = {
-    path: '/scai/bks',
+    path: '/scai/:type',
     categories: ['university'],
     example: '/swjtu/scai/bks',
-    parameters: {},
+    parameters: { type: '通知类型' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -26,9 +25,30 @@ export const route: Route = {
         },
     ],
     name: '计算机与人工智能学院',
-    description: '本科生教育',
-    maintainers: ['AzureG03'],
+    description: `
+| 分区              | 参数         |
+| ----------------- | ----------- |
+| 本科生教育         | bks         |
+| 研究生教育         | yjs         |
+| 学生工作           | xsgz        |
+`,
+    maintainers: ['AzureG03', 'SuperJeason'],
     handler,
+};
+
+const partition = {
+    bks: {
+        title: '本科生教育',
+        url: `${rootURL}/web/page-module.html?mid=B730BEB095B31840`,
+    },
+    yjs: {
+        title: '研究生教育',
+        url: `${rootURL}/web/page-module.html?mid=6A69B0E32021446B`,
+    },
+    xsgz: {
+        title: '学生工作',
+        url: `${rootURL}/web/page-module.html?mid=F3D3909EB1861B5D`,
+    },
 };
 
 const getItem = (item, cache) => {
@@ -39,12 +59,16 @@ const getItem = (item, cache) => {
         const res = await ofetch(link);
         const $ = load(res);
 
-        const pubDate = parseDate(
-            $('div.news-info span:nth-of-type(2)')
-                .text()
-                .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)[0]
-        );
+        let dateText = $('div.news-info span:nth-of-type(2)').text();
+        // 转教务通知时的时间获取方法
+        if (!dateText) {
+            dateText = $('div.news-top-bar span:nth-of-type(1)').text();
+        }
+        // 'date' may be undefined. and 'parseDate' will return current time.
+        const date = dateText.match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)?.[0];
+        const pubDate = parseDate(date);
         const description = $('div.content-main').html();
+
         return {
             title,
             pubDate,
@@ -54,8 +78,10 @@ const getItem = (item, cache) => {
     });
 };
 
-async function handler() {
-    const res = await ofetch(pageURL);
+async function handler(ctx) {
+    const { type } = ctx.req.param();
+    const url = partition[type].url;
+    const res = await ofetch(url);
 
     const $ = load(res);
     const $list = $('div.list-top-item, div.item-wrapper');
@@ -68,8 +94,8 @@ async function handler() {
     );
 
     return {
-        title: '西南交大计算机学院-本科生教育',
-        link: pageURL,
+        title: `西南交大计院-${partition[type].title}`,
+        link: url,
         item: items,
         allowEmpty: true,
     };

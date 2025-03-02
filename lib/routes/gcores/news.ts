@@ -14,6 +14,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const apiUrl: string = new URL('gapi/v1/articles', baseUrl).href;
 
     const query = {
+        'page[limit]': limit,
+        sort: '-published-at',
+        include: 'category,user,media',
+        'filter[list-all]': 1,
         'filter[is-news]': 1,
     };
 

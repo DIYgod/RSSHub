@@ -169,15 +169,15 @@ const getLiveIDFromShortID = (shortID) => {
     });
 };
 
-const getUsernameFromLiveID = (liveID) => {
-    const key = `bili-username-from-liveID-${liveID}`;
+const getUserInfoFromLiveID = (liveID) => {
+    const key = `bili-userinfo-from-liveID-${liveID}`;
     return cache.tryGet(key, async () => {
         const { data: nameResponse } = await got(`https://api.live.bilibili.com/live_user/v1/UserInfo/get_anchor_in_room?roomid=${liveID}`, {
             headers: {
                 Referer: `https://live.bilibili.com/${liveID}`,
             },
         });
-        return nameResponse.data.info.uname;
+        return nameResponse.data.info;
     });
 };
 
@@ -280,7 +280,7 @@ export default {
     getUsernameFromUID,
     getUsernameAndFaceFromUID,
     getLiveIDFromShortID,
-    getUsernameFromLiveID,
+    getUserInfoFromLiveID,
     getVideoNameFromId,
     getCidFromId,
     getAidFromBvid,
