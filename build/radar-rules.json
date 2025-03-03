@@ -10252,6 +10252,19 @@
       }
     ]
   },
+  "decrypt.co": {
+    "_name": "Decrypt",
+    ".": [
+      {
+        "title": "Decrypt News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/decrypt/"
+      }
+    ]
+  },
   "igetget.com": {
     "_name": "得到",
     ".": [

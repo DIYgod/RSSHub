@@ -1814,6 +1814,9 @@
   "/dealstreetasia/section/:section": [
     "jack2game"
   ],
+  "/decrypt/": [
+    "pseudoyu"
+  ],
   "/dedao/articles/:id?": [
     "Jacky-Chen-Pro"
   ],

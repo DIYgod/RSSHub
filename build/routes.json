@@ -24152,6 +24152,43 @@
     "url": "dealstreetasia.com",
     "lang": "en"
   },
+  "decrypt": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/decrypt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Decrypt News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "decrypt.co/"
+            ],
+            "target": "/"
+          }
+        ],
+        "description": "Get latest news from Decrypt.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Decrypt",
+    "url": "decrypt.co",
+    "lang": "en"
+  },
   "dedao": {
     "routes": {
       "/articles/:id?": {
