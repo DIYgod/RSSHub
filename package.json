@@ -95,6 +95,7 @@
         "ip-regex": "5.0.0",
         "jsdom": "26.0.0",
         "json-bigint": "1.0.0",
+        "jsonpath-plus": "^10.3.0",
         "jsrsasign": "10.9.0",
         "lru-cache": "11.0.2",
         "lz-string": "1.5.0",
