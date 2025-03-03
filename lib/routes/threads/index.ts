@@ -1,8 +1,9 @@
 import { Route, ViewType } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { threadUrl, profileUrl, extractTokens, getUserId, buildContent, createClient, makeRequest } from './utils';
+import { threadUrl, profileUrl, extractTokens, getUserId, buildContent } from './utils';
 import { JSDOM } from 'jsdom';
 import { JSONPath } from 'jsonpath-plus';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
@@ -52,9 +53,23 @@ async function handler(ctx) {
         replies: params.get('replies') ?? false,
     };
 
-    const client = await createClient();
-    const response = await makeRequest(client, user);
-    const dom = new JSDOM(response.body);
+    const response = await ofetch(profileUrl(user), {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Encoding': 'gzip, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
+        },
+    });
+
+    const dom = new JSDOM(response);
 
     let threadsData: ThreadItem[] | null = null;
     for (const el of dom.window.document.querySelectorAll('script[data-sjs]')) {
