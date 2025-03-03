@@ -152,7 +152,7 @@
         "@types/etag": "1.8.3",
         "@types/fs-extra": "11.0.4",
         "@types/html-to-text": "9.0.4",
-        "@types/imapflow": "1.0.19",
+        "@types/imapflow": "1.0.20",
         "@types/js-beautify": "1.14.3",
         "@types/jsdom": "21.1.7",
         "@types/json-bigint": "1.0.4",
