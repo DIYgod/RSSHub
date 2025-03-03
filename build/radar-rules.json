@@ -9294,6 +9294,19 @@
       }
     ]
   },
+  "cointelegraph.com": {
+    "_name": "Cointelegraph",
+    ".": [
+      {
+        "title": "Cointelegraph News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/cointelegraph/"
+      }
+    ]
+  },
   "colamanga.com": {
     "_name": "COLAMANGA",
     "www": [

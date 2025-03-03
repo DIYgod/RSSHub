@@ -21035,6 +21035,43 @@
     "url": "coindesk.com",
     "lang": "en"
   },
+  "cointelegraph": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/cointelegraph",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Cointelegraph News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cointelegraph.com/"
+            ],
+            "target": "/"
+          }
+        ],
+        "description": "Get latest news from Cointelegraph with full text.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Cointelegraph",
+    "url": "cointelegraph.com",
+    "lang": "en"
+  },
   "colamanga": {
     "routes": {
       "/:id": {
