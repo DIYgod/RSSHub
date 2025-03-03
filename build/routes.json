@@ -21029,11 +21029,42 @@
         ],
         "url": "coindesk.com/",
         "location": "index.ts"
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "finance"
+        ],
+        "example": "/coindesk/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "CoinDesk News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "coindesk.com/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "description": "Get latest news from CoinDesk with full text.",
+        "location": "news.ts"
       }
     },
-    "name": "CoinDesk Consensus Magazine",
+    "name": "CoinDesk",
     "url": "coindesk.com",
-    "lang": "en"
+    "lang": "en",
+    "description": "CoinDesk is a news site specializing in bitcoin and digital currencies, delivering news, analysis, and information about the blockchain ecosystem."
   },
   "cointelegraph": {
     "routes": {
