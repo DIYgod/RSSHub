@@ -2,8 +2,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import cache from '@/utils/cache';
 import NotFoundError from '@/errors/types/not-found';
-import { connect, type ClientHttp2Session } from 'node:http2';
-import * as zlib from 'zlib';
+import ofetch from '@/utils/ofetch';
 import { JSDOM } from 'jsdom';
 import { JSONPath } from 'jsonpath-plus';
 
@@ -12,82 +11,24 @@ const threadUrl = (code: string) => `https://www.threads.net/t/${code}`;
 
 const USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
 
-interface ResponseData {
-    statusCode: number | undefined;
-    headers: any;
-    body: string;
-}
-
-export function createClient(): Promise<ClientHttp2Session> {
-    return new Promise((resolve, reject) => {
-        const client = connect('https://www.threads.net', {});
-
-        client.on('error', reject);
-        client.on('connect', () => resolve(client));
-        client.on('timeout', () => reject(new Error('Connection timeout')));
-    });
-}
-
-export const makeRequest = (client: ClientHttp2Session, user: string): Promise<ResponseData> =>
-    new Promise((resolve, reject) => {
-        const req = client.request({
-            ':path': `/@${user}`,
+const extractTokens = async (user): Promise<{ lsd: string }> => {
+    const response = await ofetch(profileUrl(user), {
+        headers: {
+            'User-Agent': USER_AGENT,
             Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
             'Accept-Encoding': 'gzip, br',
             'Accept-Language': 'zh-CN,zh;q=0.9',
             'Cache-Control': 'no-cache',
             Pragma: 'no-cache',
-            Priority: 'u=0, i',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1',
             'Upgrade-Insecure-Requests': '1',
-            'User-Agent': USER_AGENT,
-        });
-
-        req.on('response', (headers) => {
-            const contentEncoding = headers['content-encoding'];
-            let encodingStream = req;
-
-            if (contentEncoding === 'gzip') {
-                // @ts-ignore
-                encodingStream = encodingStream.pipe(zlib.createGunzip());
-            } else if (contentEncoding === 'br') {
-                // @ts-ignore
-                encodingStream = encodingStream.pipe(zlib.createBrotliDecompress());
-            }
-
-            encodingStream.setEncoding('utf8');
-
-            let data = '';
-            encodingStream.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            encodingStream.on('end', () => {
-                resolve({
-                    statusCode: 200,
-                    headers: data,
-                    body: data,
-                });
-            });
-        });
-
-        req.on('timeout', () => {
-            req.destroy();
-            reject(new Error('Request timeout'));
-        });
-
-        req.on('error', reject);
-        req.end();
+        },
     });
 
-const extractTokens = async (user): Promise<{ lsd: string }> => {
-    const client = await createClient();
-    const response = await makeRequest(client, user);
-    const $ = load(response.body);
-
+    const $ = load(response);
     const data = $('script:contains("LSD"):first').text();
     const lsd = data.match(/"LSD",\[],{"token":"([\w@-]+)"},/)?.[1];
 
@@ -101,9 +42,23 @@ const extractTokens = async (user): Promise<{ lsd: string }> => {
 const getUserId = (user: string): Promise<string> =>
     cache
         .tryGet(`threads:userId:${user}`, async () => {
-            const client = await createClient();
-            const response = await makeRequest(client, user);
-            const dom = new JSDOM(response.body);
+            const response = await ofetch(profileUrl(user), {
+                headers: {
+                    'User-Agent': USER_AGENT,
+                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                    'Accept-Encoding': 'gzip, br',
+                    'Accept-Language': 'zh-CN,zh;q=0.9',
+                    'Cache-Control': 'no-cache',
+                    Pragma: 'no-cache',
+                    'Sec-Fetch-Dest': 'document',
+                    'Sec-Fetch-Mode': 'navigate',
+                    'Sec-Fetch-Site': 'none',
+                    'Sec-Fetch-User': '?1',
+                    'Upgrade-Insecure-Requests': '1',
+                },
+            });
+
+            const dom = new JSDOM(response);
 
             for (const el of dom.window.document.querySelectorAll('script[data-sjs]')) {
                 try {
