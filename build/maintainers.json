@@ -1651,6 +1651,9 @@
   "/crossbell/notes/source/:source": [
     "DIYgod"
   ],
+  "/cryptoslate/": [
+    "pseudoyu"
+  ],
   "/cs/:category{.+}?": [
     "nczitzk"
   ],

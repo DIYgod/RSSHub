@@ -9705,6 +9705,19 @@
       }
     ]
   },
+  "cryptoslate.com": {
+    "_name": "CryptoSlate",
+    ".": [
+      {
+        "title": "CryptoSlate News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/cryptoslate/"
+      }
+    ]
+  },
   "csdn.net": {
     "_name": "CSDN",
     "blog": [
