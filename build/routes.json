@@ -13299,6 +13299,43 @@
     "url": "news.blizzard.com",
     "lang": "en"
   },
+  "blockworks": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/blockworks",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "blockworks.co/"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "Blockworks News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "description": "Blockworks news with full text support.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Blockworks",
+    "url": "blockworks.co",
+    "lang": "en"
+  },
   "blogread": {
     "routes": {
       "/newest": {

@@ -5760,6 +5760,19 @@
       }
     ]
   },
+  "blockworks.co": {
+    "_name": "Blockworks",
+    ".": [
+      {
+        "title": "Blockworks News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/blockworks/"
+      }
+    ]
+  },
   "blogread.cn": {
     "_name": "技术头条",
     ".": [

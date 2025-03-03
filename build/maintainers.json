@@ -971,6 +971,9 @@
   "/blizzard/news/:language?/:category?": [
     "nczitzk"
   ],
+  "/blockworks/": [
+    "pseudoyu"
+  ],
   "/blogread/newest": [
     "fashioncj"
   ],
