@@ -1,4 +1,6 @@
 import { DataItem, Route } from '@/types';
+
+import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
@@ -13,7 +15,7 @@ export const route: Route = {
         tag: '标签',
         type: '排序类型',
     },
-    name: '亚洲同人网标签',
+    name: 'asianfanfics标签',
     maintainers: ['KazooTTT'],
     radar: [
         {
@@ -21,7 +23,7 @@ export const route: Route = {
             target: '/tag/:tag/:type',
         },
     ],
-    description: `匹配亚洲同人网标签，支持类型：
+    description: `匹配asianfanfics标签，支持排序类型：
 - L: Latest 最近更新
 - N: Newest 最近发布
 - O: Oldest 最早发布
@@ -46,13 +48,17 @@ async function handler(ctx) {
     const type = ctx.req.param('type') as Type;
 
     if (!type || !['L', 'N', 'O', 'C', 'OS'].includes(type)) {
-        throw new Error('Invalid type');
+        throw new Error('无效的排序类型');
     }
     const link = `https://www.asianfanfics.com/browse/tag/${tag}/${type}`;
 
-    const response = await ofetch(link);
-
-    const $ = load(await response.text());
+    const response = await ofetch(link, {
+        headers: {
+            'user-agent': config.trueUA,
+            Referer: 'https://www.asianfanfics.com/',
+        },
+    });
+    const $ = load(response);
 
     const items: DataItem[] = $('.primary-container .excerpt')
         .toArray()
@@ -76,7 +82,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `Asianfanfics 亚洲同人网 - 标签：${tag} - ${typeToText[type]}`,
+        title: `Asianfanfics - 标签：${tag} - ${typeToText[type]}`,
         link,
         item: items,
     };

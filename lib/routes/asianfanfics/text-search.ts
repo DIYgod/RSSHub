@@ -1,3 +1,4 @@
+import { config } from '@/config';
 import { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -12,7 +13,7 @@ export const route: Route = {
     parameters: {
         keyword: '关键词',
     },
-    name: '亚洲同人网关键词',
+    name: 'asianfanfics关键词',
     maintainers: ['KazooTTT'],
     radar: [
         {
@@ -20,16 +21,23 @@ export const route: Route = {
             target: '/text-search/:keyword',
         },
     ],
-    description: `匹配亚洲同人网搜索关键词`,
+    description: `匹配asianfanfics搜索关键词`,
     handler,
 };
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
+    if (keyword.trim() === '') {
+        throw new Error('关键词不能为空');
+    }
     const link = `https://www.asianfanfics.com/browse/text_search?q=${keyword}+`;
 
-    const response = await ofetch(link);
-    const $ = load(await response.text());
+    const response = await ofetch(link, {
+        headers: {
+            'user-agent': config.trueUA,
+        },
+    });
+    const $ = load(response);
 
     const items: DataItem[] = $('.primary-container .excerpt')
         .toArray()
@@ -53,7 +61,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `Asianfanfics 亚洲同人网 - 关键词：${keyword}`,
+        title: `Asianfanfics - 关键词：${keyword}`,
         link,
         item: items,
     };
