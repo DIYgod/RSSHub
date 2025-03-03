@@ -7029,6 +7029,9 @@
     "EthanWng97",
     "pseudoyu"
   ],
+  "/theblock/category/:category": [
+    "pseudoyu"
+  ],
   "/theblockbeats/:channel?/:original?": [
     "Fatpandac",
     "jameshih"

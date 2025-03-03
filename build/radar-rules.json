@@ -33536,6 +33536,19 @@
       }
     ]
   },
+  "theblock.co": {
+    "_name": "TheBlock",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/theblock/category/:category"
+      }
+    ]
+  },
   "theblockbeats.info": {
     "_name": "律动 BlockBeats",
     "www": [
