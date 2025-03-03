@@ -3170,6 +3170,9 @@
   "/gq/news": [
     "EthanWng97"
   ],
+  "/grainoil/:category/:id": [
+    "nczitzk"
+  ],
   "/greasyfork/scripts/:script/feedback": [
     "miles170"
   ],

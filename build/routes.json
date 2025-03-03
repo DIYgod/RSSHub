@@ -40421,6 +40421,129 @@
     "url": "gq.com",
     "lang": "en"
   },
+  "grainoil": {
+    "routes": {
+      "/:category/:id": {
+        "path": "/:category/:id",
+        "name": "分类",
+        "url": "load.grainoil.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/grainoil/newsListHome/3",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `newsListHome`，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "newsListHome",
+                "value": "newsListHome"
+              },
+              {
+                "label": "newsListChannel",
+                "value": "newsListChannel"
+              }
+            ]
+          },
+          "id": {
+            "description": "分类 ID，可在对应分类页 URL 中找到"
+          }
+        },
+        "description": ":::tip\n若订阅 [政务信息](http://load.grainoil.com.cn/newsListHome/1430.jspx)，网址为 `http://load.grainoil.com.cn/newsListHome/1430.jspx`，请截取 `https://load.grainoil.com.cn/` 到末尾 `.jspx` 的部分 `newsListHome/1430` 作为 `category` 和 `id`参数填入，此时目标路由为 [`/grainoil/newsListHome/1430`](https://rsshub.app/grainoil/newsListHome/1430)。\n\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n| 分类     | ID                 |\n| -------- | ------------------ |\n| 政务信息 | newsListHome/1430  |\n| 要闻动态 | newsListHome/3     |\n| 产业经济 | newsListHome/1469  |\n| 产业信息 | newsListHome/1471  |\n| 爱粮节粮 | newsListHome/1470  |\n| 政策法规 | newsListChannel/18 |\n| 生产气象 | newsListChannel/19 |\n| 统计资料 | newsListChannel/20 |\n| 综合信息 | newsListChannel/21 |\n\n</details>\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "load.grainoil.com.cn/:category/:id"
+            ]
+          },
+          {
+            "title": "政务信息",
+            "source": [
+              "load.grainoil.com.cn/newsListHome/1430.jspx"
+            ],
+            "target": "/newsListHome/1430"
+          },
+          {
+            "title": "要闻动态",
+            "source": [
+              "load.grainoil.com.cn/newsListHome/3.jspx"
+            ],
+            "target": "/newsListHome/3"
+          },
+          {
+            "title": "产业经济",
+            "source": [
+              "load.grainoil.com.cn/newsListHome/1469.jspx"
+            ],
+            "target": "/newsListHome/1469"
+          },
+          {
+            "title": "产业信息",
+            "source": [
+              "load.grainoil.com.cn/newsListHome/1471.jspx"
+            ],
+            "target": "/newsListHome/1471"
+          },
+          {
+            "title": "爱粮节粮",
+            "source": [
+              "load.grainoil.com.cn/newsListHome/1470.jspx"
+            ],
+            "target": "/newsListHome/1470"
+          },
+          {
+            "title": "政策法规",
+            "source": [
+              "load.grainoil.com.cn/newsListChannel/18.jspx"
+            ],
+            "target": "/newsListChannel/18"
+          },
+          {
+            "title": "生产气象",
+            "source": [
+              "load.grainoil.com.cn/newsListChannel/19.jspx"
+            ],
+            "target": "/newsListChannel/19"
+          },
+          {
+            "title": "统计资料",
+            "source": [
+              "load.grainoil.com.cn/newsListChannel/20.jspx"
+            ],
+            "target": "/newsListChannel/20"
+          },
+          {
+            "title": "综合信息",
+            "source": [
+              "load.grainoil.com.cn/newsListChannel/21.jspx"
+            ],
+            "target": "/newsListChannel/21"
+          }
+        ],
+        "view": 0,
+        "location": "category.ts"
+      }
+    },
+    "name": "国家粮油信息中心",
+    "url": "load.grainoil.com.cn",
+    "categories": [
+      "new-media"
+    ],
+    "description": "中国粮食信息网",
+    "lang": "zh-CN"
+  },
   "greasyfork": {
     "routes": {
       "/scripts/:script/feedback": {
