@@ -1,6 +1,8 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
 import { load } from 'cheerio';
+import { parseItem } from './utils';
 const rootUrl = 'https://www.coindesk.com';
 
 export const route: Route = {
@@ -27,29 +29,23 @@ export const route: Route = {
     url: 'coindesk.com/',
 };
 
-async function handler(ctx) {
-    const channel = ctx.req.param('channel') ?? 'consensus-magazine';
+async function handler() {
+    const channel = 'consensus-magazine';
 
-    const response = await got.get(`${rootUrl}/${channel}/`);
-    const $ = load(response.data);
-    const content = JSON.parse(
-        $('#fusion-metadata')
-            .text()
-            .match(/Fusion\.contentCache=(.*?);Fusion\.layout/)[1]
-    );
+    const response = await ofetch(`${rootUrl}/${channel}`);
+    const $ = load(response);
 
-    const o1 = content['websked-collections'];
-    // Object key names are different every week
-    const articles = o1[Object.keys(o1)[2]];
+    const list = $('div h2')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            return {
+                title: $item.text(),
+                link: rootUrl + $item.parent().attr('href'),
+            };
+        });
 
-    const list = articles.data;
-
-    const items = list.map((item) => ({
-        title: item.headlines.basic,
-        link: rootUrl + item.canonical_url,
-        description: item.subheadlines.basic,
-        pubDate: item.display_date,
-    }));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
 
     return {
         title: 'CoinDesk Consensus Magazine',
