@@ -51,9 +51,7 @@ async function handler(ctx): Promise<Data> {
                 cache.tryGet(`theblock:article:${article.url}`, async () => {
                     try {
                         // Try to get the full article
-                        const articleResponse = await ofetch(`https://www.theblock.co/api/post/${article.id}/`, {
-                            retry: 1,
-                        });
+                        const articleResponse = await ofetch(`https://www.theblock.co/api/post/${article.id}/`);
 
                         const post = articleResponse.post;
                         const $ = load(post.body, null, false);
