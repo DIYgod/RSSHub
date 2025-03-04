@@ -4545,7 +4545,7 @@
         source:[ "/*" ],
         target:"/crossbell/notes" } ] },
   "cryptoslate.com":{ _name:"CryptoSlate",
-    ".":[ { title:"CryptoSlate News",
+    ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/cryptoslate/" } ] },
