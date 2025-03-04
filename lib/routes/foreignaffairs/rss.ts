@@ -18,9 +18,8 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'RSS',
-    maintainers: [],
+    maintainers: ['Andvari'],
     handler,
-    description: ``,
 };
 
 async function handler() {
