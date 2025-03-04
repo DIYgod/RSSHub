@@ -19,7 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Decrypt News',
+    name: 'News',
     maintainers: ['pseudoyu'],
     handler,
     radar: [
@@ -28,111 +28,83 @@ export const route: Route = {
             target: '/',
         },
     ],
-    description: `Get latest news from Decrypt.`,
+    description: 'Get latest news from Decrypt.',
 };
 
 async function handler(ctx): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
-    const rssUrl = 'https://decrypt.co/feed/';
+    const rssUrl = 'https://decrypt.co/feed';
 
     const feed = await parser.parseURL(rssUrl);
 
     const items = await Promise.all(
-        feed.items.slice(0, limit).map((item) =>
-            cache.tryGet(`decrypt:article:${item.link || ''}`, async () => {
-                if (!item.link) {
-                    return {};
-                }
+        feed.items
+            .filter((item) => item && item.link && !item.link.includes('/videos'))
+            .slice(0, limit)
+            .map((item) =>
+                cache.tryGet(`decrypt:article:${item.link}`, async () => {
+                    if (!item.link) {
+                        return {};
+                    }
 
-                try {
-                    const fullText = await extractFullText(item.link);
-
-                    // If we got the full text, use it
-                    if (fullText) {
+                    try {
+                        const result = await extractFullText(item.link);
                         return {
                             title: item.title || 'Untitled',
                             link: item.link.split('?')[0], // Clean URL by removing query parameters
                             pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                            description: fullText,
+                            description: result?.fullText ?? (item.content || ''),
+                            author: item.creator || 'Decrypt',
+                            category: result?.tags ? [...new Set([...(item.categories ?? []), ...result.tags])] : item.categories || [],
+                            guid: item.guid || item.link,
+                            image: result?.featuredImage ?? item.enclosure?.url,
+                        };
+                    } catch (error: any) {
+                        logger.warn(`Couldn't fetch full content for ${item.link}: ${error.message}`);
+
+                        // Fallback to RSS content
+                        return {
+                            title: item.title || 'Untitled',
+                            link: item.link.split('?')[0],
+                            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                            description: item.content || '',
                             author: item.creator || 'Decrypt',
                             category: item.categories || [],
                             guid: item.guid || item.link,
-                            image: (item as any).media?.thumbnail?.[0]?.$?.url,
+                            image: item.enclosure?.url,
                         };
                     }
-
-                    // If we couldn't get the full text, use the summary from RSS
-                    return {
-                        title: item.title || 'Untitled',
-                        link: item.link.split('?')[0],
-                        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                        description: item.content || (item as any).description || '',
-                        author: item.creator || 'Decrypt',
-                        category: item.categories || [],
-                        guid: item.guid || item.link,
-                        image: (item as any).media?.thumbnail?.[0]?.$?.url,
-                    };
-                } catch (error: any) {
-                    logger.warn(`Couldn't fetch full content for ${item.link}: ${error.message}`);
-
-                    // Fallback to RSS content
-                    return {
-                        title: item.title || 'Untitled',
-                        link: item.link.split('?')[0],
-                        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                        description: item.content || (item as any).description || '',
-                        author: item.creator || 'Decrypt',
-                        category: item.categories || [],
-                        guid: item.guid || item.link,
-                        image: (item as any).media?.thumbnail?.[0]?.$?.url,
-                    };
-                }
-            })
-        )
+                })
+            )
     );
-
-    // Filter out video content and empty items
-    const filteredItems = items.filter((item) => item && item.link && !item.link.includes('/videos'));
 
     return {
         title: feed.title || 'Decrypt',
         link: feed.link || 'https://decrypt.co',
         description: feed.description || 'Latest news from Decrypt',
-        item: filteredItems,
+        item: items,
         language: feed.language || 'en',
         image: feed.image?.url,
     } as Data;
 }
 
-async function extractFullText(url: string): Promise<string | null> {
+async function extractFullText(url: string): Promise<{ fullText: string; featuredImage: string; tags: string[] } | null> {
     try {
-        const response = await ofetch(url, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
-            },
-        });
+        const response = await ofetch(url);
 
         const $ = load(response);
 
-        // Find the main article content based on the Python implementation
-        const articleSelector = String.raw`div.grid.grid-cols-1.md\:grid-cols-8.unreset.post-content.md\:pb-20`;
-        const article = $(articleSelector);
+        const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+        const post = nextData.props.pageProps.post;
 
-        if (article.length) {
-            // Remove unwanted elements as in the Python implementation
-            article.find('div.my-4.border-b.border-decryptGridline').remove();
+        if (post.content.length) {
+            const fullText = `<img src="${post.featuredImage.src}" alt="${post.featuredImage.alt}">` + post.content;
 
-            // Extract specific elements, similar to the Python implementation
-            const contentElements = article.find('p, li');
-            let fullText = '';
-
-            contentElements.each((_, element) => {
-                fullText += `<${element.name}>${$(element).html()}</${element.name}>`;
-            });
-
-            if (fullText) {
-                return fullText;
-            }
+            return {
+                fullText,
+                featuredImage: post.featuredImage.src,
+                tags: post.tags.data.map((tag) => tag.name),
+            };
         }
 
         return null;
