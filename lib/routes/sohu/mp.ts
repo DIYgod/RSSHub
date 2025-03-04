@@ -124,11 +124,12 @@ async function handler(ctx) {
             )
             .sort((a: any, b: any) => b.length - a.length)[0] || '{}'
     );
-    const renderData = JSON.parse(
+    const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/renderData:\s(.*)/)?.[1] || '{}'
+            .match(/({.*})/)?.[1]
     );
+    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
     const globalConst = JSON.parse(
         $('script:contains("globalConst")')
             .text()
