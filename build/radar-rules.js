@@ -4793,7 +4793,7 @@
         source:[ "/" ],
         target:"/dealstreetasia/section/:section" } ] },
   "decrypt.co":{ _name:"Decrypt",
-    ".":[ { title:"Decrypt News",
+    ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/decrypt/" } ] },
