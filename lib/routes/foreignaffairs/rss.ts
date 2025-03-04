@@ -24,7 +24,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `https://www.foreignaffairs.com/rss.xml`;
+    const link = 'https://www.foreignaffairs.com/rss.xml';
 
     const feed = await parser.parseURL(link);
 
