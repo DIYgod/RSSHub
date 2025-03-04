@@ -8255,7 +8255,8 @@
         "radar": [
           {
             "source": [
-              "anthropic.com"
+              "www.anthropic.com/news",
+              "www.anthropic.com"
             ]
           }
         ],
@@ -8263,7 +8264,7 @@
         "maintainers": [
           "etShaw-zh"
         ],
-        "url": "anthropic.com/news",
+        "url": "www.anthropic.com/news",
         "location": "news.ts"
       }
     },

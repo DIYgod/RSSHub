@@ -4625,11 +4625,12 @@
   },
   "anthropic.com": {
     "_name": "Anthropic",
-    ".": [
+    "www": [
       {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
+          "/news",
           "/"
         ],
         "target": "/anthropic/news"
