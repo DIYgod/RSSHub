@@ -20568,6 +20568,19 @@
       }
     ]
   },
+  "likeshop.me": {
+    "_name": "LikeShop",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/"
+        ],
+        "target": "/likeshop/:site"
+      }
+    ]
+  },
   "line.me": {
     "_name": "LINE",
     "today": [

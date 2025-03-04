@@ -54722,6 +54722,44 @@
     "url": "lightNovel.us",
     "lang": "zh-CN"
   },
+  "likeshop": {
+    "routes": {
+      "/:site": {
+        "path": "/:site",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/likeshop/bloombergpursuits",
+        "parameters": {
+          "site": "the site attached to likeshop.me/"
+        },
+        "radar": [
+          {
+            "source": [
+              "likeshop.me/"
+            ]
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Posts",
+        "maintainers": [
+          "nickyfoto"
+        ],
+        "description": "LikeShop link in bio takes your audience from Instagram and TikTok to your website in one easy step.",
+        "location": "index.ts"
+      }
+    },
+    "name": "LikeShop",
+    "url": "likeshop.me",
+    "lang": "en"
+  },
   "line": {
     "routes": {
       "/today/:edition/publisher/:id": {

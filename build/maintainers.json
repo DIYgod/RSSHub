@@ -4381,6 +4381,9 @@
   "/lightnovel/:keywords/:security_key?": [
     "nightmare-mio"
   ],
+  "/likeshop/:site": [
+    "nickyfoto"
+  ],
   "/line/today/:edition/publisher/:id": [
     "TonyRL"
   ],
