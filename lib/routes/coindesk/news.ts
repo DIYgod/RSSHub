@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const rssUrl = 'http://feeds.feedburner.com/Coindesk';
+    const rssUrl = 'https://feeds.feedburner.com/Coindesk';
     const feed = await parser.parseURL(rssUrl);
 
     const items = await Promise.all(feed.items.map((item) => cache.tryGet(item.link, () => parseItem(item))));
