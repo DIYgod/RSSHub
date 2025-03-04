@@ -153,7 +153,7 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       jsonpath-plus:
-        specifier: ^10.3.0
+        specifier: 10.3.0
         version: 10.3.0
       jsrsasign:
         specifier: 10.9.0

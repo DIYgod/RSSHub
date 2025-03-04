@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/category/:category',
     categories: ['finance'],
     example: '/theblock/category/crypto-ecosystems',
-    parameters: { category: '`category` is the category of theblock' },
+    parameters: { category: 'News category' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,7 +27,7 @@ export const route: Route = {
             target: '/category/:category',
         },
     ],
-    description: `Get latest news from TheBlock by category. Note that due to website limitations, only article summaries may be available.`,
+    description: 'Get latest news from TheBlock by category. Note that due to website limitations, only article summaries may be available.',
 };
 
 async function handler(ctx): Promise<Data> {
@@ -36,14 +36,8 @@ async function handler(ctx): Promise<Data> {
 
     const apiUrl = `https://www.theblock.co/api/category/${category}`;
 
-    const browserHeaders = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
-    };
-
     try {
-        const response = await ofetch(apiUrl, {
-            headers: browserHeaders,
-        });
+        const response = await ofetch(apiUrl);
 
         // Extract articles from the nested data structure
         const articles = response.data?.articles || [];
@@ -57,35 +51,31 @@ async function handler(ctx): Promise<Data> {
                 cache.tryGet(`theblock:article:${article.url}`, async () => {
                     try {
                         // Try to get the full article
-                        const articleResponse = await ofetch(article.url, {
-                            headers: browserHeaders,
-                            retry: 1,
-                        });
+                        const articleResponse = await ofetch(`https://www.theblock.co/api/post/${article.id}/`);
 
-                        const $ = load(articleResponse);
-                        const articleContent = $('#articleContent');
+                        const post = articleResponse.post;
+                        const $ = load(post.body, null, false);
 
                         // If we successfully got the article content
-                        if (articleContent.length) {
+                        if (post.body.length) {
                             // Remove unwanted elements
-                            articleContent.find('div.copyright').remove();
+                            $('.copyright').remove();
 
-                            // Extract specific elements, similar to the Python implementation
-                            const contentElements = articleContent.find('p, li, h2, h3');
                             let fullText = '';
 
-                            contentElements.each((_, element) => {
-                                fullText += $(element).html() + '<br>';
-                            });
+                            if (article.thumbnail) {
+                                fullText += `<p><img src="${post.thumbnail}" alt="${article.title}"></p>`;
+                            }
+                            fullText += post.intro + $.html();
 
                             if (fullText) {
                                 return {
                                     title: article.title,
                                     link: article.url,
-                                    pubDate: parseDate(article.publishedFormatted, 'MMMM D, YYYY, h:mmA [EST]'),
+                                    pubDate: parseDate(post.published),
                                     description: fullText,
-                                    author: article.author?.name || 'TheBlock',
-                                    category: article.categories?.map((cat) => cat.name) || [],
+                                    author: article.authors?.map((a) => a.name).join(', ') || 'TheBlock',
+                                    category: [...new Set([post.categories.name, ...post.categories.map((cat) => cat.name), ...post.tags.map((tag) => tag.name)])],
                                     guid: article.url,
                                     image: article.thumbnail,
                                 };
@@ -144,8 +134,8 @@ function createSummaryItem(article: any) {
         link: article.url,
         pubDate: parseDate(article.publishedFormatted, 'MMMM D, YYYY, h:mmA [EST]'),
         description,
-        author: article.author?.name || 'TheBlock',
-        category: article.categories?.map((cat) => cat.name) || [],
+        author: article.authors?.map((a) => a.name).join(', ') || 'TheBlock',
+        category: article.primaryCategory?.name || [],
         guid: article.url,
         image: article.thumbnail,
     };
