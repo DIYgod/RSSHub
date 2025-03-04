@@ -2711,7 +2711,7 @@
           "/" ],
         target:"/blizzard/news-cn/" } ] },
   "blockworks.co":{ _name:"Blockworks",
-    ".":[ { title:"Blockworks News",
+    ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/blockworks/" } ] },
