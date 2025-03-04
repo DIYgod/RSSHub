@@ -1,10 +1,10 @@
 import { Route } from '@/types';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:site',
-    categories: ['social-media', 'shopping'],
-    example: '/bloombergpursuits',
+    categories: ['social-media'],
+    example: '/likeshop/bloombergpursuits',
     parameters: { site: 'the site attached to likeshop.me/' },
     radar: [
         {
@@ -33,6 +33,7 @@ async function handler(ctx) {
         title: item.comment,
         link: item.product_url.split('?')[0],
         description: `<p><img src="${item.image_url.split('?')[0]}"></p>`,
+        guid: item.id,
     }));
     return {
         title: `@${site} Likeshop`,
