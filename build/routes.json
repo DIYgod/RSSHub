@@ -90653,7 +90653,7 @@
         ],
         "example": "/theblock/category/crypto-ecosystems",
         "parameters": {
-          "category": "`category` is the category of theblock"
+          "category": "News category"
         },
         "features": {
           "requireConfig": false,
