@@ -9306,7 +9306,7 @@
         "target": "/coindesk/consensus-magazine"
       },
       {
-        "title": "CoinDesk News",
+        "title": "News",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/"

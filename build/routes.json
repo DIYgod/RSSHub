@@ -21065,7 +21065,7 @@
           "jameshih"
         ],
         "url": "coindesk.com/",
-        "location": "index.ts"
+        "location": "consensus-magazine.ts"
       },
       "/news": {
         "path": "/news",
@@ -21082,7 +21082,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "CoinDesk News",
+        "name": "News",
         "maintainers": [
           "pseudoyu"
         ],

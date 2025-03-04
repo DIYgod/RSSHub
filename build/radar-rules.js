@@ -4348,7 +4348,7 @@
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/" ],
         target:"/coindesk/consensus-magazine" },
-      { title:"CoinDesk News",
+      { title:"News",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/coindesk/news" } ] },
