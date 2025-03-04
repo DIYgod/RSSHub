@@ -49,7 +49,7 @@ async function handler() {
     );
 
     return {
-        title: `Foreign Affairs - RSS`,
+        title: 'Foreign Affairs - RSS',
         link,
         item: items,
     };
