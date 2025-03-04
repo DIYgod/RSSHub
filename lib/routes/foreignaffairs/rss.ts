@@ -38,7 +38,7 @@ async function handler() {
 
                 const $ = load(response.data);
 
-                $('.paywall ').remove();
+                $('.paywall').remove();
                 $('.loading-indicator').remove();
                 item.description = $('.article-dropcap').html();
                 item.author = item.creator;
