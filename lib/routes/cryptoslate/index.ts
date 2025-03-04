@@ -26,7 +26,7 @@ export const route: Route = {
             target: '/',
         },
     ],
-    description: `Get latest news from CryptoSlate.`,
+    description: 'Get latest news from CryptoSlate.',
 };
 
 async function handler(ctx): Promise<Data> {
