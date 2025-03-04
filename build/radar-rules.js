@@ -4353,7 +4353,7 @@
         source:[ "/" ],
         target:"/coindesk/news" } ] },
   "cointelegraph.com":{ _name:"Cointelegraph",
-    ".":[ { title:"Cointelegraph News",
+    ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/" ],
         target:"/cointelegraph/" } ] },
