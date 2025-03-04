@@ -19,7 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Cointelegraph News',
+    name: 'News',
     maintainers: ['pseudoyu'],
     handler,
     radar: [
@@ -28,7 +28,7 @@ export const route: Route = {
             target: '/',
         },
     ],
-    description: `Get latest news from Cointelegraph with full text.`,
+    description: 'Get latest news from Cointelegraph with full text.',
 };
 
 async function handler(): Promise<Data> {
@@ -36,57 +36,39 @@ async function handler(): Promise<Data> {
     const feed = await parser.parseURL(rssUrl);
 
     const items = await Promise.all(
-        feed.items.map(async (item) => {
-            const link = item.link;
-            if (!link) {
-                return null;
-            }
+        feed.items
+            .filter((item) => item.link && /\/news|\/explained|\/innovation-circle/.test(item.link))
+            .map((item) => ({
+                ...item,
+                link: item.link?.split('?')[0],
+            }))
+            .map((item) =>
+                cache.tryGet(item.link!, async () => {
+                    const link = item.link!;
 
-            const cleanLink = link.split('?')[0];
+                    // Extract full text
+                    const fullText = await extractFullText(link);
 
-            // Skip non-article content
-            if (!/\/news|\/explained|\/innovation-circle/.test(link)) {
-                return null;
-            }
+                    if (!fullText) {
+                        logger.warn(`Failed to extract content from ${link}`);
+                    }
 
-            // Get cover URL from media content
-            let coverUrl: string | undefined;
-            const mediaContent = (item as any).media?.content;
-            if (mediaContent && mediaContent.length > 0) {
-                const url = mediaContent[0].url;
-                if (url) {
-                    // Extract the required part of the cover URL
-                    const match = url.match(/(https:\/\/s3\.cointelegraph\.com\/.+)/);
-                    coverUrl = match ? match[1] : url;
-                }
-            }
-
-            // Extract full text
-            const fullText = await cache.tryGet(cleanLink, async () => {
-                const text = await extractFullText(cleanLink);
-                return text || '';
-            });
-
-            if (!fullText) {
-                logger.warn(`Failed to extract content from ${cleanLink}`);
-                return null;
-            }
-
-            // Create article item
-            return {
-                title: item.title || 'Untitled',
-                description: fullText,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : new Date(),
-                link: cleanLink,
-                author: item.creator || 'CoinTelegraph',
-                category: item.categories || [],
-                image: coverUrl,
-            } as DataItem;
-        })
+                    // Create article item
+                    return {
+                        title: item.title || 'Untitled',
+                        description: fullText || item.content,
+                        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                        link,
+                        author: item.creator || 'CoinTelegraph',
+                        category: item.categories?.map((c) => c.trim()) || [],
+                        image: item.enclosure?.url,
+                    } as DataItem;
+                })
+            )
     );
 
     // Filter out null items
-    const validItems = items.filter((item): item is NonNullable<typeof item> => item !== null);
+    const validItems = items.filter((item): item is DataItem => item !== null);
 
     return {
         title: feed.title || 'CoinTelegraph News',
@@ -101,29 +83,22 @@ async function extractFullText(url: string): Promise<string | null> {
     try {
         const response = await ofetch(url);
         const $ = load(response);
-        const article = $('.post-content');
-
-        if (!article.length) {
-            return null;
-        }
+        const nuxtData = $('script:contains("window.__NUXT__")').text();
+        const fullText = JSON.parse(nuxtData.match(/\.fullText=(".*?");/)?.[1] || '{}');
+        const cover = $('.post-cover__image');
 
         // Remove unwanted elements
-        article.find('div.article-interlink').remove();
-        article.find('div.article__badge').remove();
-        article.find('div.article__share').remove();
+        cover.find('source').remove();
+        cover.find('img').removeAttr('srcset');
+        cover.find('img').attr(
+            'src',
+            cover
+                .find('img')
+                .attr('src')
+                ?.match(/(https:\/\/s3\.cointelegraph\.com\/.+)/)?.[1] || ''
+        );
 
-        // Extract text from paragraphs and list items
-        const textElements = article.find('p, li');
-        let fullText = '';
-
-        textElements.each((_, element) => {
-            const text = $(element).text().trim();
-            if (text) {
-                fullText += `<p>${text}</p>`;
-            }
-        });
-
-        return fullText || null;
+        return cover.html() + fullText || null;
     } catch (error) {
         logger.error(`Error fetching article content: ${error}`);
         return null;
