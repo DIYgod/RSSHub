@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/category/:category',
     categories: ['finance'],
     example: '/theblock/category/crypto-ecosystems',
-    parameters: { category: '`category` is the category of theblock' },
+    parameters: { category: 'News category' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
