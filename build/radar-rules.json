@@ -4838,6 +4838,27 @@
       }
     ]
   },
+  "asianfanfics.com": {
+    "_name": "Asianfanfics",
+    "www": [
+      {
+        "title": "asianfanfics标签",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/browse/tag/:tag/:type"
+        ],
+        "target": "/asianfanfics/tag/:tag/:type"
+      },
+      {
+        "title": "asianfanfics关键词",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/browse/text_search?q=:keyword"
+        ],
+        "target": "/asianfanfics/text-search/:keyword"
+      }
+    ]
+  },
   "asiantolick.com": {
     "_name": "Asian to lick",
     ".": [
