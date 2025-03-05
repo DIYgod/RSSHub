@@ -103,7 +103,10 @@ const parseSimpleDetail = ($ele) => {
     const link = new URL($ele.attr('href'), baseUrl).href;
     const thumb = $ele.children('img');
     const thumbSrc = thumb.attr('data-src') || thumb.attr('src');
-    const highResoThumbSrc = thumbSrc.replace('thumb', '1').replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net');
+    const highResoThumbSrc = thumbSrc
+        .replace('thumb', '1')
+        .replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net')
+        .replace('.webp.webp', '.webp');
     return {
         title: $ele.children('.caption').text(),
         link,
