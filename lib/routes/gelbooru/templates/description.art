@@ -1,0 +1,19 @@
+<div>
+  {{if isVideo}}
+    <video controls preload="metadata" src="{{contentURL}}"></video>
+  {{else}}
+    <img src="{{contentURL}}" />
+  {{/if}}
+</div>
+<h2>Info of <a href="{{link}}">#{{id}}</a>: </h2>
+<p>
+  {{if isHttp}}
+    <a href="{{source}}">Source</a>
+  {{else}}
+    <span>Source: {{source}}</span>
+  {{/if}}
+  ({{sourceHost}})
+</p>
+<p>Upload by: <a href="https://gelbooru.com/index.php?page=post&s=list&tags=user:{{owner}}">{{owner}}</a></p>
+<p>Score: {{score}}</p>
+<p>Tags: <p>{{tags}}</p></p>
