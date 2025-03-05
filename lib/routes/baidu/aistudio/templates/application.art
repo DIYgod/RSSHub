@@ -1,0 +1,11 @@
+### {{ name }}
+
+> {{ description }}
+
+![]({{ icon }})
+
+```yaml
+{{@ yaml }}
+```
+
+{{@ readme }}
