@@ -2,7 +2,6 @@ import { Route, ViewType, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://jannyai.com';
 
@@ -30,7 +29,7 @@ export const route: Route = {
             target: '/search/:keyword',
         },
     ],
-    name: '搜索',
+    name: '搜索结果',
     maintainers: ['xuanipvp'],
     handler,
     description: '获取JannyAI网站搜索结果中的角色列表',
@@ -52,7 +51,6 @@ async function handler(ctx) {
         return {
             title,
             link,
-            pubDate: parseDate(new Date().toISOString()), // 使用当前时间作为发布时间
             author: 'JannyAI',
             guid: link,
             imageUrl, // 临时存储图片URL，后续处理时使用
@@ -62,7 +60,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { title, link, pubDate, author, guid, imageUrl } = item;
+                const { title, link, author, guid, imageUrl } = item;
 
                 try {
                     // 获取角色详情页内容
@@ -92,7 +90,6 @@ async function handler(ctx) {
                         title,
                         link,
                         description: htmlDescription,
-                        pubDate,
                         author,
                         guid,
                     } as DataItem;
@@ -101,7 +98,6 @@ async function handler(ctx) {
                         title,
                         link,
                         description: `<p>获取角色详情失败</p><p><img src="${imageUrl}" alt="${title}"></p>`,
-                        pubDate,
                         author,
                         guid,
                     } as DataItem;
