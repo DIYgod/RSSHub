@@ -33,11 +33,7 @@ export const route: Route = {
     name: '特定类别角色',
     maintainers: ['xuanipvp'],
     handler,
-    description: `获取JannyAI网站特定类别的角色列表
-
-| 男性角色 | 女性角色 | 非二元角色 | 名人 | 原创角色 | 虚构角色 | 真实人物 | 游戏角色 | 动漫角色 | 历史角色 |
-| -------- | -------- | ---------- | ---- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3          | 4    | 5        | 6        | 7        | 8        | 9        | 10       |`,
+    description: `获取JannyAI网站特定类别的角色列表`,
 };
 
 async function handler(ctx) {
