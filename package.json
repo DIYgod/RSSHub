@@ -168,7 +168,7 @@
         "@types/tiny-async-pool": "2.0.3",
         "@types/title": "3.4.3",
         "@types/uuid": "10.0.0",
-        "@typescript-eslint/eslint-plugin": "8.25.0",
+        "@typescript-eslint/eslint-plugin": "8.26.0",
         "@typescript-eslint/parser": "8.26.0",
         "@vercel/nft": "0.29.2",
         "@vitest/coverage-v8": "2.1.9",
