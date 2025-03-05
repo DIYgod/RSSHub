@@ -25,10 +25,10 @@ importers:
         version: 4.2.0
       '@hono/node-server':
         specifier: 1.13.8
-        version: 1.13.8(hono@4.7.2)
+        version: 1.13.8(hono@4.7.4)
       '@hono/zod-openapi':
         specifier: 0.19.2
-        version: 0.19.2(hono@4.7.2)(zod@3.24.2)
+        version: 0.19.2(hono@4.7.4)(zod@3.24.2)
       '@notionhq/client':
         specifier: 2.2.16
         version: 2.2.16
@@ -60,8 +60,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.5.179
-        version: 0.5.179(@hyperjump/browser@1.2.0)(hono@4.7.2)(tailwindcss@4.0.9)(typescript@5.7.3)
+        specifier: 0.5.180
+        version: 0.5.180(@hyperjump/browser@1.2.0)(hono@4.7.4)(tailwindcss@4.0.9)(typescript@5.7.3)
       '@sentry/node':
         specifier: 9.2.0
         version: 9.2.0
@@ -120,8 +120,8 @@ importers:
         specifier: 146.0.0
         version: 146.0.0
       hono:
-        specifier: 4.7.2
-        version: 4.7.2
+        specifier: 4.7.4
+        version: 4.7.4
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -135,8 +135,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.181
-        version: 1.0.181
+        specifier: 1.0.182
+        version: 1.0.182
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -391,8 +391,8 @@ importers:
         specifier: 8.1.0
         version: 8.1.0(eslint@9.21.0)
       eslint-plugin-n:
-        specifier: 17.16.1
-        version: 17.16.1(eslint@9.21.0)(typescript@5.7.3)
+        specifier: 17.16.2
+        version: 17.16.2(eslint@9.21.0)
       eslint-plugin-prettier:
         specifier: 5.2.3
         version: 5.2.3(@types/eslint@9.6.1)(eslint-config-prettier@10.0.2(eslint@9.21.0))(eslint@9.21.0)(prettier@3.5.3)
@@ -2146,12 +2146,12 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/api-client@2.2.55':
-    resolution: {integrity: sha512-8icQpf8oiPTJgYCom2wKg/U4UwTrkMUXtssynX2WknbdROb09gpvEiYsBg3VQBZY/rEw0PeLvz7+JO8OYLwAOg==}
+  '@scalar/api-client@2.2.56':
+    resolution: {integrity: sha512-ilY0geYUg90xVameaQ3IJm1/gO9MOmvcQEm98/IfizoYJ5P9aFnXphwEvR+K0xeSD6QYXdaz4ir5UB31Jkuueg==}
     engines: {node: '>=18'}
 
-  '@scalar/api-reference@1.25.126':
-    resolution: {integrity: sha512-Z8zfUeaenJrumhnQIKWuNzup3WsEbsLZdSgIPFtETRKPFyLGB8/qruboMbua0xo7NuytAit0FCMvK3u42DvTUQ==}
+  '@scalar/api-reference@1.25.127':
+    resolution: {integrity: sha512-wDCDhkskVdAUbRdHB4LuFkR45nhbe3PW4yeXgkaWZqJOsh6/kpq+cgLVX4nET1lcHhnjYGWppBtqRx2fclXDjQ==}
     engines: {node: '>=18'}
 
   '@scalar/code-highlight@0.0.23':
@@ -2166,8 +2166,8 @@ packages:
     resolution: {integrity: sha512-EQW9N1+mDORhsbjdtCI3XDvmUKsuKw1uf6r3kT1Mm2zQKT+rWwA0ChsAkEN6OG62C0YumMuXpH71h1seAWptxw==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.5.179':
-    resolution: {integrity: sha512-75TYi++hJvW8IGoK6F9+MY063odu2P701Sf+HZoej2FYcxZVUI7e8mHpVxaaqZmWqml65wVjWhnr8S39/9xjHg==}
+  '@scalar/hono-api-reference@0.5.180':
+    resolution: {integrity: sha512-gDvJX4ohgQ1WpVFQmjwoYyeWMQlsBiTSa62UH+s9KVguT0kolZGk34LaYrxjwil2l10WVPoMHxGgnaZsu/wioQ==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -3647,8 +3647,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@17.16.1:
-    resolution: {integrity: sha512-/7FVAwjUrix9P5lycnsYRIQRwFo/DZROD+ZXWLpE+/EZWLyuLvyFaRdAPYJSz+nlAdZIZp+LAzlBerQSVYUNFg==}
+  eslint-plugin-n@17.16.2:
+    resolution: {integrity: sha512-iQM5Oj+9o0KaeLoObJC/uxNGpktZCkYiTTBo8PkRWq3HwNcRxwpvSDFjBhQ5+HLJzBTy+CLDC5+bw0Z5GyhlOQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -4210,8 +4210,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.7.2:
-    resolution: {integrity: sha512-8V5XxoOF6SI12jkHkzX/6aLBMU5GEF5g387EjVSQipS0DlxWgWGSMeEayY3CRBjtTUQYwLHx9JYouWqKzy2Vng==}
+  hono@4.7.4:
+    resolution: {integrity: sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -4321,8 +4321,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.181:
-    resolution: {integrity: sha512-WrKRU1rffzWr/oZI6/jS5IgmdczSzRjpE0jvk6LOGlp+HJRXBnl3CzwHkJXCfq/1M4EsrVQyy+1WiQYuiIkRiw==}
+  imapflow@1.0.182:
+    resolution: {integrity: sha512-PH0SVEQxK+LfwJ+HXZJEpt9HPAzLN5+YjTq0ekT/rY1zJ8SEJWhJuWEfk4lSj0d0idb7HGTYFMI3NOyDg5rixw==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -5071,10 +5071,6 @@ packages:
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
-
-  minimatch@10.0.1:
-    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
-    engines: {node: 20 || >=22}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -6317,11 +6313,6 @@ packages:
   ts-custom-error@3.3.1:
     resolution: {integrity: sha512-5OX1tzOjxWEgsr/YEUWSuPrQ00deKLh6D7OTWcvNHm12/7QPyRh8SYpyWvA4IZv8H/+GQWQEh/kwo95Q9OVW1A==}
     engines: {node: '>=14.0.0'}
-
-  ts-declaration-location@1.0.5:
-    resolution: {integrity: sha512-WqmlO9IoeYwCqJ2E9kHMcY9GZhhfLYItC3VnHDlPOrg6nNdUWS4wn4hhDZUPt60m1EvtjPIZyprTjpI992Bgzw==}
-    peerDependencies:
-      typescript: '>=4.0.0'
 
   ts-deepmerge@7.0.2:
     resolution: {integrity: sha512-akcpDTPuez4xzULo5NwuoKwYRtjQJ9eoNfBACiBMaXwNAx7B1PKfe5wqUFJuW5uKzQ68YjDFwPaWHDG1KnFGsA==}
@@ -7965,20 +7956,20 @@ snapshots:
       '@tanstack/vue-virtual': 3.13.2(vue@3.5.13(typescript@5.7.3))
       vue: 3.5.13(typescript@5.7.3)
 
-  '@hono/node-server@1.13.8(hono@4.7.2)':
+  '@hono/node-server@1.13.8(hono@4.7.4)':
     dependencies:
-      hono: 4.7.2
+      hono: 4.7.4
 
-  '@hono/zod-openapi@0.19.2(hono@4.7.2)(zod@3.24.2)':
+  '@hono/zod-openapi@0.19.2(hono@4.7.4)(zod@3.24.2)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.2)
-      '@hono/zod-validator': 0.4.3(hono@4.7.2)(zod@3.24.2)
-      hono: 4.7.2
+      '@hono/zod-validator': 0.4.3(hono@4.7.4)(zod@3.24.2)
+      hono: 4.7.4
       zod: 3.24.2
 
-  '@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2)':
+  '@hono/zod-validator@0.4.3(hono@4.7.4)(zod@3.24.2)':
     dependencies:
-      hono: 4.7.2
+      hono: 4.7.4
       zod: 3.24.2
 
   '@humanfs/core@0.19.1': {}
@@ -8769,7 +8760,7 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/api-client@2.2.55(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)':
+  '@scalar/api-client@2.2.56(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)':
     dependencies:
       '@headlessui/tailwindcss': 0.2.2(tailwindcss@4.0.9)
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.7.3))
@@ -8820,11 +8811,11 @@ snapshots:
       - typescript
       - universal-cookie
 
-  '@scalar/api-reference@1.25.126(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)':
+  '@scalar/api-reference@1.25.127(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)':
     dependencies:
       '@floating-ui/vue': 1.1.6(vue@3.5.13(typescript@5.7.3))
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.7.3))
-      '@scalar/api-client': 2.2.55(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)
+      '@scalar/api-client': 2.2.56(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)
       '@scalar/code-highlight': 0.0.23
       '@scalar/components': 0.13.28(typescript@5.7.3)
       '@scalar/oas-utils': 0.2.110(@hyperjump/browser@1.2.0)
@@ -8907,11 +8898,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@scalar/hono-api-reference@0.5.179(@hyperjump/browser@1.2.0)(hono@4.7.2)(tailwindcss@4.0.9)(typescript@5.7.3)':
+  '@scalar/hono-api-reference@0.5.180(@hyperjump/browser@1.2.0)(hono@4.7.4)(tailwindcss@4.0.9)(typescript@5.7.3)':
     dependencies:
-      '@scalar/api-reference': 1.25.126(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)
+      '@scalar/api-reference': 1.25.127(@hyperjump/browser@1.2.0)(tailwindcss@4.0.9)(typescript@5.7.3)
       '@scalar/types': 0.0.36
-      hono: 4.7.2
+      hono: 4.7.4
     transitivePeerDependencies:
       - '@hyperjump/browser'
       - '@vue/composition-api'
@@ -10636,10 +10627,9 @@ snapshots:
       eslint: 9.21.0
       eslint-compat-utils: 0.5.1(eslint@9.21.0)
 
-  eslint-plugin-n@17.16.1(eslint@9.21.0)(typescript@5.7.3):
+  eslint-plugin-n@17.16.2(eslint@9.21.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.1(eslint@9.21.0)
-      '@typescript-eslint/utils': 8.25.0(eslint@9.21.0)(typescript@5.7.3)
       enhanced-resolve: 5.18.1
       eslint: 9.21.0
       eslint-plugin-es-x: 7.8.0(eslint@9.21.0)
@@ -10648,10 +10638,6 @@ snapshots:
       ignore: 5.3.2
       minimatch: 9.0.5
       semver: 7.7.1
-      ts-declaration-location: 1.0.5(typescript@5.7.3)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   eslint-plugin-prettier@5.2.3(@types/eslint@9.6.1)(eslint-config-prettier@10.0.2(eslint@9.21.0))(eslint@9.21.0)(prettier@3.5.3):
     dependencies:
@@ -11413,7 +11399,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.7.2: {}
+  hono@4.7.4: {}
 
   hookable@5.5.3: {}
 
@@ -11541,7 +11527,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.181:
+  imapflow@1.0.182:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
@@ -12487,10 +12473,6 @@ snapshots:
   mimic-response@4.0.0: {}
 
   min-indent@1.0.1: {}
-
-  minimatch@10.0.1:
-    dependencies:
-      brace-expansion: 2.0.1
 
   minimatch@3.1.2:
     dependencies:
@@ -13849,11 +13831,6 @@ snapshots:
   ts-custom-error@2.2.2: {}
 
   ts-custom-error@3.3.1: {}
-
-  ts-declaration-location@1.0.5(typescript@5.7.3):
-    dependencies:
-      minimatch: 10.0.1
-      typescript: 5.7.3
 
   ts-deepmerge@7.0.2: {}
 
