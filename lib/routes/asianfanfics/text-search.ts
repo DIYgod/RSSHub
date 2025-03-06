@@ -13,7 +13,7 @@ export const route: Route = {
     parameters: {
         keyword: '关键词',
     },
-    name: 'asianfanfics关键词',
+    name: '关键词',
     maintainers: ['KazooTTT'],
     radar: [
         {
@@ -21,7 +21,7 @@ export const route: Route = {
             target: '/text-search/:keyword',
         },
     ],
-    description: `匹配asianfanfics搜索关键词`,
+    description: '匹配asianfanfics搜索关键词',
     handler,
 };
 

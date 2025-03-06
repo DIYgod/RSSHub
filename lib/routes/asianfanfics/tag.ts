@@ -15,7 +15,7 @@ export const route: Route = {
         tag: '标签',
         type: '排序类型',
     },
-    name: 'asianfanfics标签',
+    name: '标签',
     maintainers: ['KazooTTT'],
     radar: [
         {
