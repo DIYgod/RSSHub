@@ -48,8 +48,16 @@ async function handler() {
                 $('div[class^="PostDetail_b-social-share"]').remove();
 
                 const content = $('div[class*="PostDetail_post-detail__"]');
-                content.find('img').removeAttr('style srcset');
-                content.find('img').attr('src', new URLSearchParams(content.find('img').attr('src')).get('/_next/image?url'));
+                content.find('img').each((_, e) => {
+                    const $e = $(e);
+                    $e.removeAttr('style srcset');
+                    const src = $e.attr('src');
+                    const params = new URLSearchParams(src);
+                    const newSrc = params.get('/_next/image?url');
+                    if (newSrc) {
+                        $e.attr('src', newSrc);
+                    }
+                });
 
                 item.description = content.html();
 
