@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -19,12 +20,15 @@ function fixUrl(itemLink, baseUrl) {
 }
 
 // discuz 7.x 与 discuz x系列 通用文章内容抓取
-async function loadContent(itemLink, header) {
-    const responseData = await ofetch(itemLink, {
+async function loadContent(itemLink, charset, header) {
+    // 处理编码问题
+    const response = await ofetch.raw(itemLink, {
         method: 'get',
+        responseType: 'arrayBuffer',
         headers: header,
     });
 
+    const responseData = iconv.decode(Buffer.from(response._data), charset ?? 'utf-8');
     if (!responseData) {
         const description = '获取详细内容失败';
         return { description };
@@ -72,12 +76,20 @@ async function handler(ctx) {
         Cookie: cookie,
     };
 
-    const responseData = await ofetch(link, {
+    const response = await ofetch.raw(link, {
         method: 'get',
+        responseType: 'arrayBuffer',
         headers: header,
     });
 
-    const $ = load(responseData);
+    const responseData = Buffer.from(response._data);
+    // 若没有指定编码，则默认utf-8
+    const contentType = response.headers['content-type'] || '';
+    let $ = load(iconv.decode(responseData, 'utf-8'));
+    const charset = contentType.match(/charset=([^;]*)/)?.[1] ?? $('meta[charset]').attr('charset') ?? $('meta[http-equiv="Content-Type"]').attr('content')?.split('charset=')?.[1];
+    if (charset?.toLowerCase() !== 'utf-8') {
+        $ = load(iconv.decode(responseData, charset ?? 'utf-8'));
+    }
 
     const version = ver ? `DISCUZ! ${ver}` : $('head > meta[name=generator]').attr('content');
 
@@ -102,7 +114,7 @@ async function handler(ctx) {
         items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const { description } = await loadContent(item.link, header);
+                    const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;
                     return item;
@@ -129,7 +141,7 @@ async function handler(ctx) {
         items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const { description } = await loadContent(item.link, header);
+                    const { description } = await loadContent(item.link, charset, header);
 
                     item.description = description;
                     return item;
