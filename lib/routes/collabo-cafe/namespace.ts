@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'コラボカフェ',
-    url: 'https://collabo-cafe.com/',
+    url: 'collabo-cafe.com',
     description: 'コラボカフェ - アニメ・漫画・ゲームのコラボ情報一覧まとめ',
     lang: 'ja',
     categories: ['anime'],
