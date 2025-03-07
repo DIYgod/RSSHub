@@ -1572,6 +1572,15 @@
   "/colamanga/:id": [
     "machsix"
   ],
+  "/collabo-cafe/category/:category": [
+    "cokemine"
+  ],
+  "/collabo-cafe/": [
+    "cokemine"
+  ],
+  "/collabo-cafe/tag/:tag": [
+    "cokemine"
+  ],
   "/comicat/search/:keyword": [
     "Cyang39"
   ],
