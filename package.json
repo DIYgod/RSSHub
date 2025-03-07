@@ -209,8 +209,7 @@
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1",
-            "telegram@2.26.16>store2": "~2.14.4"
+            "side-channel": "npm:@nolyfill/side-channel@^1"
         }
     }
 }
