@@ -34035,6 +34035,206 @@
         "title": "最新",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
+          "/column/:id"
+        ],
+        "target": "/tmtpost/column/:id"
+      },
+      {
+        "title": "AGI",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6916385"
+        ],
+        "target": "/tmtpost/column/6916385"
+      },
+      {
+        "title": "出海",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6998081"
+        ],
+        "target": "/tmtpost/column/6998081"
+      },
+      {
+        "title": "创新场景",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3882035"
+        ],
+        "target": "/tmtpost/column/3882035"
+      },
+      {
+        "title": "钛度号",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6100587"
+        ],
+        "target": "/tmtpost/column/6100587"
+      },
+      {
+        "title": "深度",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3189960"
+        ],
+        "target": "/tmtpost/column/3189960"
+      },
+      {
+        "title": "焦点",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6043895"
+        ],
+        "target": "/tmtpost/column/6043895"
+      },
+      {
+        "title": "创投",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/5994956"
+        ],
+        "target": "/tmtpost/column/5994956"
+      },
+      {
+        "title": "汽车",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/2573550"
+        ],
+        "target": "/tmtpost/column/2573550"
+      },
+      {
+        "title": "3C",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3615534"
+        ],
+        "target": "/tmtpost/column/3615534"
+      },
+      {
+        "title": "消费",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3882530"
+        ],
+        "target": "/tmtpost/column/3882530"
+      },
+      {
+        "title": "大健康",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3882507"
+        ],
+        "target": "/tmtpost/column/3882507"
+      },
+      {
+        "title": "金融",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3882486"
+        ],
+        "target": "/tmtpost/column/3882486"
+      },
+      {
+        "title": "钛智宏观",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/4277188"
+        ],
+        "target": "/tmtpost/column/4277188"
+      },
+      {
+        "title": "产业研究",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/5506730"
+        ],
+        "target": "/tmtpost/column/5506730"
+      },
+      {
+        "title": "地产",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/3882499"
+        ],
+        "target": "/tmtpost/column/3882499"
+      },
+      {
+        "title": "大公司",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/2446153"
+        ],
+        "target": "/tmtpost/column/2446153"
+      },
+      {
+        "title": "IPO",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6043750"
+        ],
+        "target": "/tmtpost/column/6043750"
+      },
+      {
+        "title": "钛度图闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/5750087"
+        ],
+        "target": "/tmtpost/column/5750087"
+      },
+      {
+        "title": "城视",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6998636"
+        ],
+        "target": "/tmtpost/column/6998636"
+      },
+      {
+        "title": "创业家",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/4273329"
+        ],
+        "target": "/tmtpost/column/4273329"
+      },
+      {
+        "title": "人文",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/6252390"
+        ],
+        "target": "/tmtpost/column/6252390"
+      },
+      {
+        "title": "新职业研究所",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/5750104"
+        ],
+        "target": "/tmtpost/column/5750104"
+      },
+      {
+        "title": "科普",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/5714992"
+        ],
+        "target": "/tmtpost/column/5714992"
+      },
+      {
+        "title": "文娱",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/2446157"
+        ],
+        "target": "/tmtpost/column/2446157"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
           "/"
         ],
         "target": "/tmtpost/new"
