@@ -91,7 +91,7 @@
         "iconv-lite": "0.6.3",
         "imapflow": "1.0.182",
         "instagram-private-api": "1.46.1",
-        "ioredis": "5.5.0",
+        "ioredis": "5.6.0",
         "ip-regex": "5.0.0",
         "jsdom": "26.0.0",
         "json-bigint": "1.0.0",
@@ -220,8 +220,7 @@
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1",
-            "telegram@2.26.16>store2": "~2.14.4"
+            "side-channel": "npm:@nolyfill/side-channel@^1"
         }
     }
 }
