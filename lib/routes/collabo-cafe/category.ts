@@ -5,9 +5,9 @@ import { Context } from 'hono';
 import { parseItems } from './parser';
 
 export const handler = async (ctx: Context): Promise<Data | null> => {
-    const { category, page } = ctx.req.param();
+    const { category } = ctx.req.param();
     const baseUrl = `https://collabo-cafe.com/events/category/${category}`;
-    const res = await ofetch(page ? `${baseUrl}/page/${page}` : baseUrl);
+    const res = await ofetch(baseUrl);
     const $ = load(res);
     const items = parseItems($);
 
@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data | null> => {
 };
 
 export const route: Route = {
-    path: '/category/:category/:page?',
+    path: '/category/:category',
     categories: ['anime'],
     example: '/collabo-cafe/category/cafe',
     parameters: { category: 'Category, refer to the original website (ジャンル別)' },

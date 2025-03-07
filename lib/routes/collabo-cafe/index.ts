@@ -1,13 +1,11 @@
 import { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { Context } from 'hono';
 import { parseItems } from './parser';
 
-export const handler = async (ctx: Context): Promise<Data | null> => {
+export const handler = async (): Promise<Data | null> => {
     const baseUrl = 'https://collabo-cafe.com/';
-    const { page } = ctx.req.param();
-    const res = await ofetch(page ? `${baseUrl}/page/${page}` : baseUrl);
+    const res = await ofetch(baseUrl);
     const $ = load(res);
     const items = parseItems($);
 
@@ -19,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data | null> => {
 };
 
 export const route: Route = {
-    path: '/:page?',
+    path: '/',
     categories: ['anime'],
     example: '/collabo-cafe/',
     parameters: undefined,
