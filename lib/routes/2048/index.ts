@@ -67,31 +67,27 @@ async function handler(ctx) {
     const id = ctx.req.param('id') ?? '3';
 
     const rootUrl = 'https://hjd2048.com';
-
+    // 获取地址发布页指向的 URL
     const domainInfo = (await cache.tryGet('2048:domainInfo', async () => {
-        const response = await ofetch('https://hjd.tw', {
-            headers: {
-                accept: '*/*',
-            },
-        });
-        let $ = load(response);
-        const targetLink = new URL($('.address-list a').eq(0).attr('href'), 'https://hjd.tw').href;
-        const redirectResponse = await ofetch.raw(targetLink);
-        $ = load(redirectResponse._data);
-        return {
-            url: redirectResponse.url,
-            cookie:
-                $('script')
-                    .text()
-                    .match(/var safeid='(.*?)',/)?.[1] ?? '',
-        };
-    })) as { url: string; cookie: string };
+        const response = await ofetch('https://2048.info');
+        const $ = load(response);
+        const onclickValue = $('.button').first().attr('onclick');
+        const targetUrl = onclickValue.match(/window\.open\('([^']+)'/)[1];
 
-    const currentUrl = `${domainInfo.url}thread.php?fid-${id}.html`;
+        return { url: targetUrl };
+    })) as { url: string };
+    // 获取重定向后的url和safeid
+    const redirectResponse = await ofetch.raw(domainInfo.url);
+    const currentUrl = `${redirectResponse.url}thread.php?fid-${id}.html`;
+    const redirectPageContent = load(redirectResponse._data);
+    const safeId =
+        redirectPageContent('script')
+            .text()
+            .match(/var safeid='(.*?)',/)?.[1] ?? '';
 
     const response = await ofetch.raw(currentUrl, {
         headers: {
-            cookie: `_safe=${domainInfo.cookie}`,
+            cookie: `_safe=${safeId}`,
         },
     });
 
@@ -121,7 +117,7 @@ async function handler(ctx) {
             cache.tryGet(item.guid, async () => {
                 const detailResponse = await ofetch(item.link, {
                     headers: {
-                        cookie: `_safe=${domainInfo.cookie}`,
+                        cookie: `_safe=${safeId}`,
                     },
                 });
 
@@ -130,7 +126,12 @@ async function handler(ctx) {
                 content('.ads, .tips').remove();
 
                 content('ignore_js_op').each(function () {
-                    content(this).replaceWith(`<img src="${content(this).find('img').attr('src')}">`);
+                    const img = content(this).find('img');
+                    const originalSrc = img.attr('data-original');
+                    const fallbackSrc = img.attr('src');
+                    // 判断是否有 data-original 属性，若有则使用其值，否则使用 src 属性值
+                    const imgSrc = originalSrc || fallbackSrc;
+                    content(this).replaceWith(`<img src="${imgSrc}">`);
                 });
 
                 item.author = content('.fl.black').first().text();
