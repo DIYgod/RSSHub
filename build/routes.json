@@ -56010,6 +56010,48 @@
     "url": "lsnu.edu.cn",
     "lang": "zh-CN"
   },
+  "ltaaa": {
+    "routes": {
+      "/article": {
+        "path": "/article",
+        "name": "网站翻译",
+        "url": "www.ltaaa.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/ltaaa/article",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ltaaa.cn/article"
+            ],
+            "target": "/article"
+          }
+        ],
+        "view": 0,
+        "location": "article.ts"
+      }
+    },
+    "name": "龙腾网",
+    "url": "ltaaa.cn",
+    "categories": [
+      "new-media"
+    ],
+    "description": "",
+    "lang": "zh-CN"
+  },
   "luma": {
     "routes": {
       "/:url": {

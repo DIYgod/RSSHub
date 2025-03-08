@@ -20948,6 +20948,19 @@
       }
     ]
   },
+  "ltaaa.cn": {
+    "_name": "龙腾网",
+    "www": [
+      {
+        "title": "网站翻译",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/article"
+        ],
+        "target": "/ltaaa/article"
+      }
+    ]
+  },
   "lu.ma": {
     "_name": "LuMa",
     ".": [
