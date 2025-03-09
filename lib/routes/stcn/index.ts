@@ -114,7 +114,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: ['/article/list/:id?'],
+    path: '/article/list/:id?',
     name: '列表',
     url: 'www.stcn.com',
     maintainers: ['nczitzk'],
