@@ -32116,6 +32116,127 @@
       }
     ]
   },
+  "stcn.com": {
+    "_name": "证券时报网",
+    "www": [
+      {
+        "title": "列表",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/:id"
+        ],
+        "target": "/stcn(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"type\")??params.id;return`/stcn/article/list${id?`/${id}`:\"\"}`}"
+      },
+      {
+        "title": "要闻",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/yw.html"
+        ],
+        "target": "/stcn/article/list/yw"
+      },
+      {
+        "title": "股市",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/gs.html"
+        ],
+        "target": "/stcn/article/list/gs"
+      },
+      {
+        "title": "公司",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/company.html"
+        ],
+        "target": "/stcn/article/list/company"
+      },
+      {
+        "title": "基金",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/fund.html"
+        ],
+        "target": "/stcn/article/list/fund"
+      },
+      {
+        "title": "金融",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/finance.html"
+        ],
+        "target": "/stcn/article/list/finance"
+      },
+      {
+        "title": "评论",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/comment.html"
+        ],
+        "target": "/stcn/article/list/comment"
+      },
+      {
+        "title": "产经",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/cj.html"
+        ],
+        "target": "/stcn/article/list/cj"
+      },
+      {
+        "title": "科创板",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/kcb.html"
+        ],
+        "target": "/stcn/article/list/kcb"
+      },
+      {
+        "title": "新三板",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/xsb.html"
+        ],
+        "target": "/stcn/article/list/xsb"
+      },
+      {
+        "title": "ESG",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/zk.html"
+        ],
+        "target": "/stcn/article/list/zk"
+      },
+      {
+        "title": "滚动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list.html",
+          "/article/list/gd.html"
+        ],
+        "target": "/stcn/article/list/gd"
+      },
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/list/kx.html"
+        ],
+        "target": "/stcn/article/list/kx"
+      }
+    ]
+  },
   "steamcommunity.com": {
     "_name": "Steam",
     ".": [

@@ -6765,7 +6765,10 @@
   "/stbu/xyxw": [
     "HyperCherry"
   ],
-  "/stcn/:id?": [
+  "/stcn/article/list/:id?": [
+    "nczitzk"
+  ],
+  "/stcn/article/list/kx": [
     "nczitzk"
   ],
   "/stdaily/digitalpaper": [
