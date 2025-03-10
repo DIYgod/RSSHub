@@ -134,8 +134,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.182
-        version: 1.0.182
+        specifier: 1.0.183
+        version: 1.0.183
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -176,8 +176,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       notion-to-md:
-        specifier: 3.1.6
-        version: 3.1.6
+        specifier: 3.1.7
+        version: 3.1.7
       oauth-1.0a:
         specifier: 2.2.6
         version: 2.2.6
@@ -348,8 +348,8 @@ importers:
         specifier: 2.0.4
         version: 2.0.4
       '@types/node':
-        specifier: 22.13.9
-        version: 22.13.9
+        specifier: 22.13.10
+        version: 22.13.10
       '@types/sanitize-html':
         specifier: 2.13.0
         version: 2.13.0
@@ -376,7 +376,7 @@ importers:
         version: 0.29.2(rollup@4.34.9)
       '@vitest/coverage-v8':
         specifier: 2.1.9
-        version: 2.1.9(vitest@2.1.9(@types/node@22.13.9)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)))
+        version: 2.1.9(vitest@2.1.9(@types/node@22.13.10)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)))
       discord-api-types:
         specifier: 0.37.119
         version: 0.37.119
@@ -445,10 +445,10 @@ importers:
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 5.1.4
-        version: 5.1.4(typescript@5.8.2)(vite@5.4.14(@types/node@22.13.9))
+        version: 5.1.4(typescript@5.8.2)(vite@5.4.14(@types/node@22.13.10))
       vitest:
         specifier: 2.1.9
-        version: 2.1.9(@types/node@22.13.9)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2))
+        version: 2.1.9(@types/node@22.13.10)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2))
       yaml-eslint-parser:
         specifier: 1.3.0
         version: 1.3.0
@@ -2171,8 +2171,8 @@ packages:
   '@types/node-fetch@2.6.12':
     resolution: {integrity: sha512-8nneRWKCg3rMtF69nLQJnOYUcbafYeFSjqkw3jCRLsqkWFlHaoQrr5mXmofFGOx3DKn7UfmBMyov8ySvLRVldA==}
 
-  '@types/node@22.13.9':
-    resolution: {integrity: sha512-acBjXdRJ3A6Pb3tqnw9HZmyR3Fiol3aGxRCK1x3d+6CDAMjl7I649wpSd+yNURCjbOUGu9tqtLKnTGxmK6CyGw==}
+  '@types/node@22.13.10':
+    resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -3811,8 +3811,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.182:
-    resolution: {integrity: sha512-PH0SVEQxK+LfwJ+HXZJEpt9HPAzLN5+YjTq0ekT/rY1zJ8SEJWhJuWEfk4lSj0d0idb7HGTYFMI3NOyDg5rixw==}
+  imapflow@1.0.183:
+    resolution: {integrity: sha512-0g8rolInITxDqC9jsPWalQjvQVpgWxlaW90BqX8fC++YGfYdafEOWUWOTRTO2O1siKZlhhLbYTJH+KwGguJIeQ==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4294,6 +4294,9 @@ packages:
   mailsplit@5.4.2:
     resolution: {integrity: sha512-4cczG/3Iu3pyl8JgQ76dKkisurZTmxMrA4dj/e8d2jKYcFTZ7MxOzg1gTioTDMPuFXwTrVuN/gxhkrO7wLg7qA==}
 
+  mailsplit@5.4.3:
+    resolution: {integrity: sha512-PFV0BBh4Tv7Omui5FtXXVtN4ExAxIi8Yvmb9JgBz+J6Hnnrv/YYXLlKKudLhXwd3/qWEATOslRsnzVCWDeCnmQ==}
+
   make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
@@ -4601,8 +4604,8 @@ packages:
     resolution: {integrity: sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==}
     engines: {node: '>=14.16'}
 
-  notion-to-md@3.1.6:
-    resolution: {integrity: sha512-rMfGrX34TBmmUelIIdEfAue/iojrhFVFO19+xrhdGzMAoSmY3m93J9r+c4/nX7rZ8HL1bFg7NwDhw7UcBqhC8Q==}
+  notion-to-md@3.1.7:
+    resolution: {integrity: sha512-DXW4JzDTXmH8VY9v+3Kv2lEI2jMzN23bUSO9hqqkVkTuI4hgbAhtfkTx3L6vw7M/J7wMdkqdF88Vw5dGKwZBIw==}
     engines: {node: '>=12'}
 
   npm-run-path@5.3.0:
@@ -5275,10 +5278,6 @@ packages:
   socks-proxy-agent@8.0.5:
     resolution: {integrity: sha512-HehCEsotFqbPW9sJ8WVYB6UbmIMv7kUUORIF2Nncq4VQvBfNBLibW9YZR5dlYCSUhwcD628pRllm7n+E+YTzJw==}
     engines: {node: '>= 14'}
-
-  socks@2.8.3:
-    resolution: {integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==}
-    engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
   socks@2.8.4:
     resolution: {integrity: sha512-D3YaD0aRxR3mEcqnidIs7ReYJFVzWdd6fXJYUM8ixcQcJRGTka/b3saV0KflYhyVJXKhb947GndU35SxYNResQ==}
@@ -7105,7 +7104,7 @@ snapshots:
       '@inquirer/figures': 1.0.10
       '@inquirer/type': 2.0.0
       '@types/mute-stream': 0.0.4
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       '@types/wrap-ansi': 3.0.0
       ansi-escapes: 4.3.2
       cli-width: 4.1.0
@@ -7843,7 +7842,7 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/cookie@0.6.0': {}
 
@@ -7864,12 +7863,12 @@ snapshots:
 
   '@types/etag@1.8.3':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/html-to-text@9.0.4': {}
 
@@ -7877,13 +7876,13 @@ snapshots:
 
   '@types/imapflow@1.0.20':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/js-beautify@1.14.3': {}
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       '@types/tough-cookie': 4.0.5
       parse5: 7.2.1
 
@@ -7893,7 +7892,7 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/jsrsasign@10.5.13': {}
 
@@ -7903,7 +7902,7 @@ snapshots:
 
   '@types/mailparser@3.4.5':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       iconv-lite: 0.6.3
 
   '@types/markdown-it@14.1.2':
@@ -7925,18 +7924,18 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/mysql@2.15.26':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/node-fetch@2.6.12':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       form-data: 4.0.2
 
-  '@types/node@22.13.9':
+  '@types/node@22.13.10':
     dependencies:
       undici-types: 6.20.0
 
@@ -7948,7 +7947,7 @@ snapshots:
 
   '@types/pg@8.6.1':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       pg-protocol: 1.7.1
       pg-types: 2.2.0
 
@@ -7960,7 +7959,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.3
 
@@ -7976,7 +7975,7 @@ snapshots:
     dependencies:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       form-data: 4.0.2
 
   '@types/supertest@6.0.2':
@@ -7986,7 +7985,7 @@ snapshots:
 
   '@types/tedious@4.0.14':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
 
   '@types/tiny-async-pool@2.0.3': {}
 
@@ -8004,7 +8003,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.26.0(@typescript-eslint/parser@8.26.0(eslint@9.21.0)(typescript@5.8.2))(eslint@9.21.0)(typescript@5.8.2)':
@@ -8110,7 +8109,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@22.13.9)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)))':
+  '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@22.13.10)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -8124,7 +8123,7 @@ snapshots:
       std-env: 3.8.1
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.1.9(@types/node@22.13.9)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2))
+      vitest: 2.1.9(@types/node@22.13.10)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2))
     transitivePeerDependencies:
       - supports-color
 
@@ -8135,14 +8134,14 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(msw@2.4.3(typescript@5.8.2))(vite@5.4.14(@types/node@22.13.9))':
+  '@vitest/mocker@2.1.9(msw@2.4.3(typescript@5.8.2))(vite@5.4.14(@types/node@22.13.10))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
       msw: 2.4.3(typescript@5.8.2)
-      vite: 5.4.14(@types/node@22.13.9)
+      vite: 5.4.14(@types/node@22.13.10)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -9847,17 +9846,17 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.182:
+  imapflow@1.0.183:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
       libbase64: 1.3.0
       libmime: 5.3.6
       libqp: 2.1.1
-      mailsplit: 5.4.2
+      mailsplit: 5.4.3
       nodemailer: 6.10.0
       pino: 9.6.0
-      socks: 2.8.3
+      socks: 2.8.4
 
   import-fresh@3.3.1:
     dependencies:
@@ -10361,6 +10360,12 @@ snapshots:
       libmime: 5.3.6
       libqp: 2.1.1
 
+  mailsplit@5.4.3:
+    dependencies:
+      libbase64: 1.3.0
+      libmime: 5.3.6
+      libqp: 2.1.1
+
   make-dir@4.0.0:
     dependencies:
       semver: 7.7.1
@@ -10713,7 +10718,7 @@ snapshots:
 
   normalize-url@8.0.1: {}
 
-  notion-to-md@3.1.6:
+  notion-to-md@3.1.7:
     dependencies:
       markdown-table: 2.0.0
       node-fetch: 2.7.0
@@ -11034,7 +11039,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       long: 5.3.1
 
   proxy-agent@6.4.0:
@@ -11475,11 +11480,6 @@ snapshots:
       socks: 2.8.4
     transitivePeerDependencies:
       - supports-color
-
-  socks@2.8.3:
-    dependencies:
-      ip-address: 9.0.5
-      smart-buffer: 4.2.0
 
   socks@2.8.4:
     dependencies:
@@ -11974,13 +11974,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@2.1.9(@types/node@22.13.9):
+  vite-node@2.1.9(@types/node@22.13.10):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       es-module-lexer: 1.6.0
       pathe: 1.1.2
-      vite: 5.4.14(@types/node@22.13.9)
+      vite: 5.4.14(@types/node@22.13.10)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11992,30 +11992,30 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.1.4(typescript@5.8.2)(vite@5.4.14(@types/node@22.13.9)):
+  vite-tsconfig-paths@5.1.4(typescript@5.8.2)(vite@5.4.14(@types/node@22.13.10)):
     dependencies:
       debug: 4.4.0
       globrex: 0.1.2
       tsconfck: 3.1.5(typescript@5.8.2)
     optionalDependencies:
-      vite: 5.4.14(@types/node@22.13.9)
+      vite: 5.4.14(@types/node@22.13.10)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.4.14(@types/node@22.13.9):
+  vite@5.4.14(@types/node@22.13.10):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
       rollup: 4.34.9
     optionalDependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       fsevents: 2.3.3
 
-  vitest@2.1.9(@types/node@22.13.9)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)):
+  vitest@2.1.9(@types/node@22.13.10)(jsdom@26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.2)):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.4.3(typescript@5.8.2))(vite@5.4.14(@types/node@22.13.9))
+      '@vitest/mocker': 2.1.9(msw@2.4.3(typescript@5.8.2))(vite@5.4.14(@types/node@22.13.10))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -12031,11 +12031,11 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.0.2
       tinyrainbow: 1.2.0
-      vite: 5.4.14(@types/node@22.13.9)
-      vite-node: 2.1.9(@types/node@22.13.9)
+      vite: 5.4.14(@types/node@22.13.10)
+      vite-node: 2.1.9(@types/node@22.13.10)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       jsdom: 26.0.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - less
