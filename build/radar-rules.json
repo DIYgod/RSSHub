@@ -36420,6 +36420,16 @@
         "target": "/xjtu/ee/:id?"
       }
     ],
+    "yz": [
+      {
+        "title": "研究生招生信息网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/:category.htm"
+        ],
+        "target": "/xjtu/yz/:category"
+      }
+    ],
     "gs": [
       {
         "title": "研究生院通知公告",
