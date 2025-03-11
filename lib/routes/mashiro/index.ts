@@ -26,6 +26,7 @@ export const route: Route = {
         const $ = load(response);
         const links = $('.archives-group article')
             .toArray()
+            .slice(0, 10)
             .map((item) => {
                 item = $(item);
                 const a = item.find('a').first();
