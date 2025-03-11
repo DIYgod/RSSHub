@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://yz.xjtu.edu.cn/index/:category.htm'],
+            source: ['yz.xjtu.edu.cn/index/:category.htm'],
             target: '/yz/:category',
         },
     ],
@@ -30,9 +30,9 @@ export const route: Route = {
     handler,
     description: `栏目类型
 
-    | 招生动态 | 通知公告 | 政策法规 | 招生统计 | 历年复试线 | 博士招生 | 硕士招生 | 推免生 | 其他招生 |
-    | -------- | -------- | -------- | -------- | ---------- | -------- | -------- | ------ | -------- |
-    | zsdt     | tzgg     | zcfg     | zstj     | lnfsx      | bszs     | sszs     | tms    | qtzs     |`,
+| 招生动态 | 通知公告 | 政策法规 | 招生统计 | 历年复试线 | 博士招生 | 硕士招生 | 推免生 | 其他招生 |
+| -------- | -------- | -------- | -------- | ---------- | -------- | -------- | ------ | -------- |
+| zsdt     | tzgg     | zcfg     | zstj     | lnfsx      | bszs     | sszs     | tms    | qtzs     |`,
 };
 async function handler(ctx) {
     const { category = 'zsdt' } = ctx.req.param();
@@ -49,7 +49,7 @@ async function handler(ctx) {
                 title: a.attr('title'),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate(item.find('span.date.fr').text()), +8),
-            } as Data;
+            } as DataItem;
         });
     const items = (
         await Promise.all(
@@ -71,6 +71,6 @@ async function handler(ctx) {
     return {
         title: '西安交通大学研究生招生信息网',
         link: 'https://yz.xjtu.edu.cn',
-        item: items as DataItem[],
-    };
+        item: items,
+    } as Data;
 }
