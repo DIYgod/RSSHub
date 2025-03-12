@@ -171,7 +171,7 @@ async function handler(ctx) {
         .map((element) => {
             const item = $(element);
             const linkElement = item.find('a');
-            const dateElement = schoolConfig.dateSelector && typeof schoolConfig.dateSelector === 'string' ? item.find(schoolConfig.dateSelector) : null;
+            const dateElement = schoolConfig.dateSelector ? item.find(String(schoolConfig.dateSelector)) : null;
             return {
                 title: linkElement.attr('title'),
                 link: new URL(linkElement.attr('href')!, baseUrl).href,
