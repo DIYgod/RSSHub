@@ -10,6 +10,7 @@ type SchoolItem = {
     name: string;
     code: string;
     SSL?: boolean;
+    www?: boolean;
     dateSelector?: string;
     newsListSelector: string;
     categories: {
@@ -72,6 +73,8 @@ const SCHOOLS: SchoolItem[] = [
     {
         name: '计算机学院',
         code: 'cs',
+        SSL: false,
+        www: true,
         dateSelector: undefined,
         newsListSelector: 'div.list dl dd h6',
         categories: [
@@ -159,7 +162,7 @@ async function handler(ctx) {
         return null;
     }
 
-    const baseUrl = `http${schoolConfig.SSL === false ? '' : 's'}://${schoolCode}.xjtu.edu.cn`;
+    const baseUrl = `http${schoolConfig.SSL === false ? '' : 's'}://${schoolConfig.www ? 'www.' : ''}${schoolCode}.xjtu.edu.cn`;
     const response = await ofetch(`${baseUrl}/${categoryConfig.path}.htm`);
     const $ = load(response);
 
@@ -168,10 +171,11 @@ async function handler(ctx) {
         .map((element) => {
             const item = $(element);
             const linkElement = item.find('a');
+            const dateElement = schoolConfig.dateSelector && typeof schoolConfig.dateSelector === 'string' ? item.find(schoolConfig.dateSelector) : null;
             return {
                 title: linkElement.attr('title'),
                 link: new URL(linkElement.attr('href')!, baseUrl).href,
-                pubDate: schoolConfig.dateSelector ? timezone(parseDate(item.find(schoolConfig.dateSelector).text()), +8) : undefined,
+                pubDate: dateElement ? timezone(parseDate(dateElement.text()), +8) : undefined,
             } as DataItem;
         });
 
