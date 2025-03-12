@@ -12789,6 +12789,38 @@
         "target": "/gcores/gcores/tags/:id/videos"
       },
       {
+        "title": "机组推荐",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/topics/home"
+        ],
+        "target": "/gcores/gcores/topics/recommend"
+      },
+      {
+        "title": "机组推荐",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/topics/:id"
+        ],
+        "target": "/gcores/gcores/topics/:id/recommend"
+      },
+      {
+        "title": "机组推荐",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/topics/home"
+        ],
+        "target": "/gcores/gcores/topics/recommend"
+      },
+      {
+        "title": "机组推荐",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/topics/:id"
+        ],
+        "target": "/gcores/gcores/topics/:id/recommend"
+      },
+      {
         "title": "视频",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [

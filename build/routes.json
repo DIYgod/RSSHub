@@ -33915,6 +33915,98 @@
         "view": 0,
         "location": "tags.ts"
       },
+      "/topics/:id/recommend": {
+        "path": [
+          "/topics/:id/recommend",
+          "/topics/recommend"
+        ],
+        "name": "机组推荐",
+        "url": "www.gcores.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gcores/topics/recommend",
+        "parameters": {
+          "id": {
+            "description": "小组 ID，默认为空，即全部，可在对应小组页 URL 中找到"
+          }
+        },
+        "description": ":::tip\n若订阅 [我的年度总结](https://www.gcores.com/topics/581)，网址为 `https://www.gcores.com/topics/581`，请截取 `https://www.gcores.com/topics/` 到末尾的部分 `581` 作为 `id` 参数填入，此时目标路由为 [`/gcores/topics/581/recommend`](https://rsshub.app/gcores/topics/581/recommend)。\n:::\n",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.gcores.com/topics/home"
+            ],
+            "target": "/gcores/topics/recommend"
+          },
+          {
+            "source": [
+              "www.gcores.com/topics/:id"
+            ],
+            "target": "/gcores/topics/:id/recommend"
+          }
+        ],
+        "view": 1,
+        "location": "topics.ts"
+      },
+      "/topics/recommend": {
+        "path": [
+          "/topics/:id/recommend",
+          "/topics/recommend"
+        ],
+        "name": "机组推荐",
+        "url": "www.gcores.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/gcores/topics/recommend",
+        "parameters": {
+          "id": {
+            "description": "小组 ID，默认为空，即全部，可在对应小组页 URL 中找到"
+          }
+        },
+        "description": ":::tip\n若订阅 [我的年度总结](https://www.gcores.com/topics/581)，网址为 `https://www.gcores.com/topics/581`，请截取 `https://www.gcores.com/topics/` 到末尾的部分 `581` 作为 `id` 参数填入，此时目标路由为 [`/gcores/topics/581/recommend`](https://rsshub.app/gcores/topics/581/recommend)。\n:::\n",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.gcores.com/topics/home"
+            ],
+            "target": "/gcores/topics/recommend"
+          },
+          {
+            "source": [
+              "www.gcores.com/topics/:id"
+            ],
+            "target": "/gcores/topics/:id/recommend"
+          }
+        ],
+        "view": 1,
+        "location": "topics.ts"
+      },
       "/videos": {
         "path": "/videos",
         "name": "视频",
