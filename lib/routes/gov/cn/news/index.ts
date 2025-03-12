@@ -20,11 +20,11 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '政府新闻',
-    maintainers: ['EsuRt', 'howfool'],
+    maintainers: ['EsuRt', 'howfool','zll17'],
     handler,
-    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 政策文件 |
-| :------: | :------: | :------: | :--------: | :------------: | :------: |
-|    bm    |    gd    |    yw    |     gwy    |     gwyzzjg    |  zhengce |`,
+    description: `| 政务部门 | 新闻要闻 | 国务院新闻 | 国务院工作会议 | 最新政策 |
+| :------: | :------: | :--------: | :------------: | :------: |
+|    bm    |    yw    |     gwy    |     gwyzzjg    |  zhengce |`,
 };
 
 async function handler(ctx) {
@@ -35,24 +35,19 @@ async function handler(ctx) {
     let list = '';
     switch (uid) {
         case 'bm':
-            url = `${originDomain}/lianbo/bumen/index.htm`;
+            url = `${originDomain}/lianbo/bumen/home_0.htm`;
             title = '中国政府网 - 部门政务';
             break;
         case 'yw':
             url = `${originDomain}/yaowen/index.htm`;
             title = '中国政府网 - 新闻要闻';
             break;
-        case 'gd':
-            // 因 /xinwen/gundong.htm 被重定向到 /yaowen/index.htm, 所以这里直接用要闻的代替了
-            url = `${originDomain}/yaowen/index.htm`;
-            title = '中国政府网 - 滚动新闻';
-            break;
         case 'gwy':
             url = `${originDomain}/pushinfo/v150203/`;
             title = '中国政府网 - 国务院信息';
             break;
         case 'zhengce':
-            url = 'http://sousuo.gov.cn/s.htm?t=zhengcelibrary';
+            url = `${originDomain}/zhengce/zuixin/home_0.htm`;
             title = '中国政府网 - 政策文件';
             break;
         case 'gwyzzjg':
@@ -64,13 +59,8 @@ async function handler(ctx) {
     }
     const listData = await got.get(url);
     const $ = load(listData.data);
-    if (url.includes('zhengcelibrary')) {
-        list = $('.dys_middle_result_content_item');
-    } else if (url.includes('bumen')) {
-        list = $('.infolist li');
-    } else {
-        list = $('.news_box .list li:not(.line)');
-    }
+
+    list = $('.news_box .list li');
 
     return {
         title,
