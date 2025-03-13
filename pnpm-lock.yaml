@@ -71,8 +71,8 @@ importers:
         specifier: 3.1.2
         version: 3.1.2
       art-template:
-        specifier: 4.13.2
-        version: 4.13.2
+        specifier: 4.13.3
+        version: 4.13.3
       cheerio:
         specifier: 1.0.0
         version: 1.0.0
@@ -2467,8 +2467,8 @@ packages:
     resolution: {integrity: sha512-sKpyeERZ02v1FeCZT8lrfJq5u6goHCtpTAzPwJYe7c8SPFOboNjNg1vz2L4VTn9T4PQxEx13TbXLmYUcS6Ug7Q==}
     engines: {node: '>=0.10.0'}
 
-  art-template@4.13.2:
-    resolution: {integrity: sha512-04ws5k+ndA5DghfheY4c8F1304XJKeTcaXqZCLpxFkNMSkaR3ChW1pX2i9d3sEEOZuLy7de8lFriRaik1jEeOQ==}
+  art-template@4.13.3:
+    resolution: {integrity: sha512-+BxRfoKNSipQP2yJSM55wFAAXYe42mxWF3LnIPGl9TmXnPlNpDR9NThqDU2Ns4yFJXVugHmy1m0LjyNjDFXZUA==}
     engines: {node: '>= 1.0.0'}
 
   asap@2.0.6:
@@ -2829,8 +2829,11 @@ packages:
     resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
     engines: {node: '>=18'}
 
-  commander@2.20.3:
-    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+  commander@2.17.1:
+    resolution: {integrity: sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==}
+
+  commander@2.19.0:
+    resolution: {integrity: sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==}
 
   component-emitter@1.3.1:
     resolution: {integrity: sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==}
@@ -3776,9 +3779,9 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
-  html-minifier@4.0.0:
-    resolution: {integrity: sha512-aoGxanpFPLg7MkIl/DDFYtb0iWz7jMFGqFhvEDZga6/4QTjneiD8I/NXL1x5aaoCp7FSIT6h/OhykDdPsbtMig==}
-    engines: {node: '>=6'}
+  html-minifier@3.5.21:
+    resolution: {integrity: sha512-LKUKwuJDhxNa3uf/LPR/KVjm/l3rBqtYeCOAekvG8F1vItxMUpueGd94i/asDDr8/1u7InxzFA5EeGjhhG5mMA==}
+    engines: {node: '>=4'}
     hasBin: true
 
   html-to-text@9.0.5:
@@ -5729,8 +5732,8 @@ packages:
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
 
-  uglify-js@3.19.3:
-    resolution: {integrity: sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==}
+  uglify-js@3.4.10:
+    resolution: {integrity: sha512-Y2VsbPVs0FIshJztycsO2SfPk7/KAF/T72qzv9u5EpQ4kB2hQoHlhNQTsNyy6ul7lQtqJN/AoWeS23OzEiEFxw==}
     engines: {node: '>=0.8.0'}
     hasBin: true
 
@@ -8354,12 +8357,12 @@ snapshots:
 
   arr-union@3.1.0: {}
 
-  art-template@4.13.2:
+  art-template@4.13.3:
     dependencies:
       acorn: 5.7.4
       escodegen: 1.14.3
       estraverse: 4.3.0
-      html-minifier: 4.0.0
+      html-minifier: 3.5.21
       is-keyword-js: 1.0.3
       js-tokens: 3.0.2
       merge-source-map: 1.1.0
@@ -8761,7 +8764,9 @@ snapshots:
 
   commander@13.1.0: {}
 
-  commander@2.20.3: {}
+  commander@2.17.1: {}
+
+  commander@2.19.0: {}
 
   component-emitter@1.3.1: {}
 
@@ -9862,15 +9867,15 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-minifier@4.0.0:
+  html-minifier@3.5.21:
     dependencies:
       camel-case: 3.0.0
       clean-css: 4.2.4
-      commander: 2.20.3
+      commander: 2.17.1
       he: 1.2.0
       param-case: 2.1.1
       relateurl: 0.2.7
-      uglify-js: 3.19.3
+      uglify-js: 3.4.10
 
   html-to-text@9.0.5:
     dependencies:
@@ -11991,7 +11996,10 @@ snapshots:
 
   ufo@1.5.4: {}
 
-  uglify-js@3.19.3: {}
+  uglify-js@3.4.10:
+    dependencies:
+      commander: 2.19.0
+      source-map: 0.6.1
 
   unbzip2-stream@1.4.3:
     dependencies:
