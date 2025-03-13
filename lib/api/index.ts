@@ -29,11 +29,6 @@ for (const path in docs.paths) {
     delete docs.paths[path];
 }
 app.get('/openapi.json', (ctx) => ctx.json(docs));
-app.get(
-    '/reference',
-    apiReference({
-        spec: { content: docs },
-    })
-);
+app.get('/reference', apiReference({ content: docs }));
 
 export default app;
