@@ -47249,11 +47249,32 @@
       "/category/:name": {
         "path": "/category/:name",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/ifanr/category/早报",
         "parameters": {
-          "name": "分类名称"
+          "name": {
+            "description": "分类名称",
+            "options": [
+              {
+                "value": "早报",
+                "label": "早报"
+              },
+              {
+                "value": "评测",
+                "label": "评测"
+              },
+              {
+                "value": "糖纸众测",
+                "label": "糖纸众测"
+              },
+              {
+                "value": "产品",
+                "label": "产品"
+              }
+            ]
+          }
         },
         "features": {
           "requireConfig": false,
@@ -47286,7 +47307,8 @@
         ],
         "example": "/ifanr/digest",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "features": {
           "requireConfig": false,
@@ -47311,7 +47333,8 @@
       "/index": {
         "path": "/index",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "view": 0,
         "example": "/ifanr/index",
