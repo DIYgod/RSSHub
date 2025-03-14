@@ -84,7 +84,7 @@ export const route: Route = {
     example: '/ifanr/digest',
     parameters: undefined,
     description: undefined,
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
