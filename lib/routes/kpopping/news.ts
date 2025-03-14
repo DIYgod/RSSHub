@@ -14,11 +14,11 @@ import path from 'node:path';
 const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const { category = 'gender-all/category-all/idol-any/group-any/order' } = ctx.req.param();
+    const { filter } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '2', 10);
 
     const baseUrl: string = 'https://kpopping.com';
-    const targetUrl: string = new URL(`news/${category}`, baseUrl).href;
+    const targetUrl: string = new URL(`news${filter ? `/${filter}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -151,15 +151,7 @@ export const route: Route = {
     handler,
     example: '/kpopping/news/gender-all/category-all/idol-any/group-any/order',
     parameters: {
-        filter: {
-            description: 'Filter, `gender-all/category-all/idol-any/group-any/order` by default',
-            options: [
-                {
-                    label: 'News',
-                    value: 'news',
-                },
-            ],
-        },
+        filter: 'Filter',
     },
     description: `:::tip
 If you subscribe to [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，where the URL is \`https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order\`, extract the part \`https://kpopping.com/news\` to the end, which is \`gender-male/category-all/idol-any/group-any/order\`, and use it as the parameter to fill in. Therefore, the route will be [\`/kpopping/news/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order).
@@ -177,11 +169,11 @@ If you subscribe to [All male articles](https://kpopping.com/news/gender-male/ca
     },
     radar: [
         {
-            source: ['kpopping.com/news/:category'],
+            source: ['kpopping.com/news/:filter'],
             target: (params) => {
-                const category: string = params.category;
+                const filter: string = params.filter;
 
-                return `/kpopping/news${category ? `/${category}` : ''}`;
+                return `/kpopping/news${filter ? `/${filter}` : ''}`;
             },
         },
     ],
@@ -195,7 +187,7 @@ If you subscribe to [All male articles](https://kpopping.com/news/gender-male/ca
         handler,
         example: '/kpopping/news/gender-all/category-all/idol-any/group-any/order',
         parameters: {
-            filter: '筛选，默认为 `gender-all/category-all/idol-any/group-any/order`，可在对应分类页 URL 中找到',
+            filter: '筛选，可在对应分类页 URL 中找到',
         },
         description: `:::tip
 若订阅 [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，网址为 \`https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order\`，请截取 \`https://kpopping.com/news/\` 到末尾的部分 \`gender-male/category-all/idol-any/group-any/order\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/kpopping/news/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order)。
