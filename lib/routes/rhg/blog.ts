@@ -27,9 +27,9 @@ export const route: Route = {
     handler,
 };
 
-const rootUrl = 'https://rhg.com/china/research';
 async function handler() {
-    const response = await ofetch(`https://rhg.com/china/research`);
+    const rootUrl = 'https://rhg.com/china/research';
+    const response = await ofetch(rootUrl);
     const $ = load(response);
     const items = $('.c-listing__list .c-card')
         .toArray()
