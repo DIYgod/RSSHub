@@ -9,30 +9,29 @@ export const route: Route = {
     name: 'Market',
     maintainers: ['canonnizq'],
 
-    handler: async (ctx) => {
-        let items = [];
+    handler: async () => {
+        const urls = Array.from({ length: 10 }, (_, i) => `https://cherrytimes.it/en/tag/markets?page=${i + 1}`);
+        const responses = await Promise.all(urls.map(url => ofetch(url)));
 
-        for (let i = 1; i <= 10; i++) {
-            const response = await ofetch(`https://cherrytimes.it/en/tag/markets?page=${i}`);
+        const items = responses.flatMap(response => {
             const $ = load(response);
+            return $('div.post-container').toArray().map((item) => {
+                const element = $(item);
+                const a = element.find('a').eq(1);
 
-            items = items.concat($('div.post-container')
-                .toArray().map((item) => {
-                    item = $(item);
-                    const a = item.find('a').eq(1);
-                    return {
-                        title: a.text(),
-                        link: a.attr('href'),
-                        description: item.find('p.excerpt').text(),
-                        category: item.find('a').last().text()
-                    };
-                }));
-        }
+                return {
+                    title: a.text().trim(),
+                    link: a.attr('href'),
+                    description: element.find('p.excerpt').text(),
+                    category: element.find('a').last().text(),
+                };
+            });
+        });
 
         return {
             title: 'Market',
             link: 'https://cherrytimes.it/en/tag/markets',
-            item: items
+            item: items,
         };
     },
 };
