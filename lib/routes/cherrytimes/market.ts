@@ -10,26 +10,22 @@ export const route: Route = {
     maintainers: ['canonnizq'],
 
     handler: async () => {
-        const urls = Array.from({ length: 10 }, (_, i) => `https://cherrytimes.it/en/tag/markets?page=${i + 1}`);
-        const responses = await Promise.all(urls.map((url) => ofetch(url)));
+        const response = await ofetch("https://cherrytimes.it/en/tag/markets?page=1");
+        const $ = load(response);
+        const items = $('div.post-container').toArray().map((item) => {
+            const element = $(item);
+            const a = element.find('a').eq(1);
 
-        const items = responses.flatMap((response) => {
-            const $ = load(response);
-            return $('div.post-container').toArray().map((item) => {
-                const element = $(item);
-                const a = element.find('a').eq(1);
-
-                return {
-                    title: a.text().trim(),
-                    link: a.attr('href'),
-                    description: element.find('p.excerpt').text(),
-                    category: element.find('a').last().text(),
-                };
-            });
+            return {
+                title: a.text(),
+                link: a.attr('href'),
+                description: element.find('p.excerpt').text(),
+                category: element.find('a').last().text(),
+            };
         });
 
         return {
-            title: 'Market',
+            title: 'Cherry Times - Market',
             link: 'https://cherrytimes.it/en/tag/markets',
             item: items,
         };
