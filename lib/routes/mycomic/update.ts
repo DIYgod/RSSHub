@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 export const route: Route = {
     path: '/update/:id',
     categories: ['anime'],
-    example: 'mycomic/update/1759',
+    example: '/mycomic/update/1759',
     parameters: { id: 'ID of the comic (e.g. 1759 for 獵人)' },
     radar: [
         {
@@ -24,8 +24,7 @@ export const route: Route = {
         const response = await ofetch(url);
         const $ = load(response);
 
-        const container = $('div.space-y-2.5 div.space-y-2.5').first();
-
+        const container = $('div.space-y-2.5').eq(9);
         const items = container.find('div.flex').toArray().map((item) => {
             const element = $(item);
             const date = element.find('div.flex-none.text-sm.text-zinc-500.dark:text-zinc-300.ml-2').text();
@@ -40,7 +39,7 @@ export const route: Route = {
         return {
             title: `Updates for ${$('div.truncate.whitespace-nowrap').text()}`,
             link: url,
-            items: items,
+            items,
         };
     },
 };
