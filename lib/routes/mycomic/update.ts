@@ -26,10 +26,10 @@ export const route: Route = {
 
         const container = $('div.space-y-2.5 div.space-y-2.5').first();
 
-        const items = container('div.flex').toArray().map((item) => {
+        const items = container.find('div.flex').toArray().map((item) => {
             const element = $(item);
             const date = element.find('div.flex-none.text-sm.text-zinc-500.dark:text-zinc-300.ml-2').text();
-            
+
             return {
                 title: element.find('div.truncate.grow.text-sm.text-zinc-500.dark:text-zinc-300').text(),
                 link: element.find('a').first().attr('href'),
