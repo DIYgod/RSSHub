@@ -39,6 +39,7 @@ interface ProcessedJobData {
     readonly job_category: string;
     readonly role_activities: readonly string[];
     readonly formatted_workplace_location?: string;
+    readonly estimated_publish_date_millis: string;
 }
 
 interface JobResult {
@@ -47,7 +48,6 @@ interface JobResult {
     readonly job_information: JobInformation;
     readonly v5_processed_job_data: ProcessedJobData;
     readonly _geoloc: readonly GeoLocation[];
-    readonly estimated_publish_date: string;
 }
 
 interface ApiResponse {
@@ -59,6 +59,7 @@ interface SearchParams {
     readonly keywords: string;
     readonly page?: number;
     readonly size?: number;
+    readonly sortBy?: 'date' | 'default' | 'compensation_desc' | 'experience_asc';
 }
 
 const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => ({
@@ -69,10 +70,11 @@ const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_S
 
 const fetchJobs = async (searchParams: SearchParams): Promise<ApiResponse> => {
     const payload = {
-        size: searchParams.size,
-        page: searchParams.page,
+        size: searchParams.size || 20,
+        page: searchParams.page || 0,
         searchState: {
             searchQuery: searchParams.keywords,
+            sortBy: searchParams.sortBy || 'date',
         },
     };
 
@@ -96,13 +98,13 @@ const renderJobDescription = (jobInfo: JobInformation, processedData: ProcessedJ
     });
 
 const transformJobItem = (item: JobResult) => {
-    const { job_information: jobInfo, v5_processed_job_data: processedData, estimated_publish_date, apply_url, id } = item;
+    const { job_information: jobInfo, v5_processed_job_data: processedData, apply_url, id } = item;
 
     return {
         title: `${jobInfo.title} - ${processedData.company_name}`,
         description: renderJobDescription(jobInfo, processedData),
         link: apply_url,
-        pubDate: new Date(estimated_publish_date).toUTCString(),
+        pubDate: new Date(processedData.estimated_publish_date_millis).toUTCString(),
         category: [processedData.job_category, ...processedData.role_activities, processedData.workplace_type].filter((x): x is string => !!x),
         author: processedData.company_name,
         guid: id,

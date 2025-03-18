@@ -25,34 +25,34 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| Categories    | parameter         |
-  | ------------- | ----------------- |
-  | Featured Map  | mind-map-examples |
-  | Business      | business          |
-  | Design        | design            |
-  | Education     | education         |
-  | Entertainment | entertainment     |
-  | Life          | life              |
-  | Marketing     | marketing         |
-  | Productivity  | productivity      |
-  | Summaries     | summaries         |
-  | Technology    | technology        |
-  | Other         | other             |
+| ------------- | ----------------- |
+| Featured Map  | mind-map-examples |
+| Business      | business          |
+| Design        | design            |
+| Education     | education         |
+| Entertainment | entertainment     |
+| Life          | life              |
+| Marketing     | marketing         |
+| Productivity  | productivity      |
+| Summaries     | summaries         |
+| Technology    | technology        |
+| Other         | other             |
 
-  | Languages  | parameter |
-  | ---------- | --------- |
-  | English    | en        |
-  | Deutsch    | de        |
-  | Français   | fr        |
-  | Español    | es        |
-  | Português  | pt        |
-  | Nederlands | nl        |
-  | Dansk      | da        |
-  | Русский    | ru        |
-  | 日本語     | ja        |
-  | Italiano   | it        |
-  | 简体中文   | zh        |
-  | 한국어     | ko        |
-  | Other      | other     |`,
+| Languages  | parameter |
+| ---------- | --------- |
+| English    | en        |
+| Deutsch    | de        |
+| Français   | fr        |
+| Español    | es        |
+| Português  | pt        |
+| Nederlands | nl        |
+| Dansk      | da        |
+| Русский    | ru        |
+| 日本語     | ja        |
+| Italiano   | it        |
+| 简体中文   | zh        |
+| 한국어     | ko        |
+| Other      | other     |`,
 };
 
 async function handler(ctx) {

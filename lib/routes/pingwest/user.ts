@@ -28,9 +28,9 @@ export const route: Route = {
     handler,
     description: `内容类型
 
-  | 文章    | 动态  |
-  | ------- | ----- |
-  | article | state |
+| 文章    | 动态  |
+| ------- | ----- |
+| article | state |
 
   参数
 

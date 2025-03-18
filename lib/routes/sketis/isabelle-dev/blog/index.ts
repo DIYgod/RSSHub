@@ -44,7 +44,7 @@ export const route: Route = {
     handler: async (ctx) => {
         const baseUrl = 'https://isabelle-dev.sketis.net';
         const { blog } = ctx.req.param();
-        const blogName = blog === '1' ? 'News' : blog === '2' ? 'Release' : 'UNKNOWN';
+        const blogName = blog === '1' ? 'News' : (blog === '2' ? 'Release' : 'UNKNOWN');
         const url = `${baseUrl}/phame/blog/view/${blog}/`;
         const response = await ofetch(url);
         const $ = load(response);

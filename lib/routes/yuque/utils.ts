@@ -8,6 +8,7 @@ const card2Html = (elem, link) => {
         case 'emoji':
         case 'flowchart2':
         case 'image':
+        case 'math':
         case 'mindmap':
         case 'puml':
             html = `<img src='${value.src}'>`;

@@ -29,8 +29,8 @@ export const route: Route = {
     handler,
     url: 'rsj.taiyuan.gov.cn/*',
     description: `| 工作动态 | 太原新闻 | 通知公告 | 县区动态 | 国内动态 | 图片新闻 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | gzdt     | tyxw     | gggs     | xqdt     | gndt     | tpxw     |`,
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| gzdt     | tyxw     | gggs     | xqdt     | gndt     | tpxw     |`,
 };
 
 async function handler(ctx) {

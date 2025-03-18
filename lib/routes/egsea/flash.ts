@@ -34,7 +34,7 @@ async function handler() {
 
     const out = response.data.data.map((item) => {
         const pubDate = parseDate(item.pageTime, 'X');
-        const link = 'https://www.egsea.com' + item.url;
+        const link = item.url;
         const title = item.title;
         const description = item.content;
 

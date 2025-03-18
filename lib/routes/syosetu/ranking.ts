@@ -149,19 +149,19 @@ export const route: Route = {
 | r | Ongoing Series |
 | er | Completed Series |
 
-:::warning
+::: warning
 Please note that novel type options may vary depending on the ranking category.
 
 ランキングの種類によって、小説タイプが異なる場合がございますのでご注意ください。
 :::
 
-:::danger 注意事項
+::: danger 注意事項
 The "注目度ランキング" (Attention Ranking) is not supported as syosetu does not provide a public API for this feature and the results cannot be replicated through the search API.
 
 「注目度ランキング」については、API が非公開で検索 API でも同様の結果を得ることができないため、本 Route ではサポートしておりません。
 :::
 
-:::tip 異世界転生/転移ランキングについて (Isekai)
+::: tip 異世界転生/転移ランキングについて (Isekai)
 When multiple works have the same points, their order may differ from syosetu's ranking as syosetu randomizes the order for works with identical points.
 
 集計の結果、同じポイントの作品が複数存在する場合、Syosetu ではランダムで順位が決定されるため、本 Route の順位と異なる場合があります。

@@ -26,21 +26,21 @@ export const route: Route = {
     handler,
     description: `Column 列表：
 
-  | 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
-  | ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
-  | economy | finance | china | science | international | opinion | culture | weekly |
+| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
+| ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
+| economy | finance | china | science | international | opinion | culture | weekly |
 
   以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
 
-  | 监管       | 银行 | 证券基金 | 信托保险         | 投资       | 创新       | 市场   |
-  | ---------- | ---- | -------- | ---------------- | ---------- | ---------- | ------ |
-  | regulation | bank | stock    | insurance\_trust | investment | innovation | market |
+| 监管       | 银行 | 证券基金 | 信托保险         | 投资       | 创新       | 市场   |
+| ---------- | ---- | -------- | ---------------- | ---------- | ---------- | ------ |
+| regulation | bank | stock    | insurance\_trust | investment | innovation | market |
 
   Category 列表：
 
-  | 封面报道   | 开卷  | 社论      | 时事             | 编辑寄语     | 经济    | 金融    | 商业     | 环境与科技              | 民生    | 副刊   |
-  | ---------- | ----- | --------- | ---------------- | ------------ | ------- | ------- | -------- | ----------------------- | ------- | ------ |
-  | coverstory | first | editorial | current\_affairs | editor\_desk | economy | finance | business | environment\_technology | cwcivil | column |`,
+| 封面报道   | 开卷  | 社论      | 时事             | 编辑寄语     | 经济    | 金融    | 商业     | 环境与科技              | 民生    | 副刊   |
+| ---------- | ----- | --------- | ---------------- | ------------ | ------- | ------- | -------- | ----------------------- | ------- | ------ |
+| coverstory | first | editorial | current\_affairs | editor\_desk | economy | finance | business | environment\_technology | cwcivil | column |`,
 };
 
 async function handler(ctx) {

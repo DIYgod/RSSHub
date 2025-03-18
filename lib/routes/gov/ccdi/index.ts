@@ -13,7 +13,7 @@ async function handler(ctx) {
     const defaultPath = '/yaowenn/';
 
     let pathname = getSubPath(ctx).replaceAll(/(^\/ccdi|\/$)/g, '');
-    pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
+    pathname = pathname === '' ? defaultPath : (pathname.endsWith('/') ? pathname : pathname + '/');
     const currentUrl = `${rootUrl}${pathname}`;
 
     const { list, title } = await parseNewsList(currentUrl, '.list_news_dl2 li', ctx);

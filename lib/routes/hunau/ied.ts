@@ -25,9 +25,9 @@ export const route: Route = {
     handler,
     url: 'xky.hunau.edu.cn/',
     description: `| 分类     | 公告通知 | 新闻快讯 | 其他分类... |
-  | -------- | -------- | -------- | ----------- |
-  | type     | xwzx     | xwzx     | 对应 URL    |
-  | category | tzgg     | xwkx     | 对应 URL    |`,
+| -------- | -------- | -------- | ----------- |
+| type     | xwzx     | xwzx     | 对应 URL    |
+| category | tzgg     | xwkx     | 对应 URL    |`,
 };
 
 async function handler(ctx) {

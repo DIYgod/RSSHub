@@ -78,16 +78,16 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
-  | ---------- | ---- | -------- | ---- | -------- | -------- |
-  | 184        | 110  | 73       | 164  | 74       | 75       |
+| ---------- | ---- | -------- | ---- | -------- | -------- |
+| 184        | 110  | 73       | 164  | 74       | 75       |
 
-  | 最新发表   | 最新动态        | 最热文章 |
-  | ---------- | --------------- | -------- |
-  | createTime | lastCommentTime | hotScore |
+| 最新发表   | 最新动态        | 最热文章 |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
 
-  | 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
-  | -------- | ------- | -------- | ------- | -------- |
-  | all      | oneDay  | threeDay | oneWeek | oneMonth |`,
+| 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
+| -------- | ------- | -------- | ------- | -------- |
+| all      | oneDay  | threeDay | oneWeek | oneMonth |`,
 };
 
 async function handler(ctx) {

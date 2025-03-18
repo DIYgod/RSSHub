@@ -17,6 +17,7 @@ export const route: Route = {
     radar: [
         {
             source: ['alistapart.com/blog/topic/:topic'],
+            target: '/:topic',
         },
     ],
     name: 'Topics',
@@ -25,51 +26,51 @@ export const route: Route = {
     url: 'alistapart.com/articles/',
     description: `You have the option to utilize the main heading or use individual categories as topics for the path.
 
-  | **Code**                    | *code*                    |
-  | --------------------------- | ------------------------- |
-  | **Application Development** | *application-development* |
-  | **Browsers**                | *browsers*                |
-  | **CSS**                     | *css*                     |
-  | **HTML**                    | *html*                    |
-  | **JavaScript**              | *javascript*              |
-  | **The Server Side**         | *the-server-side*         |
+| **Code**                    | *code*                    |
+| --------------------------- | ------------------------- |
+| **Application Development** | *application-development* |
+| **Browsers**                | *browsers*                |
+| **CSS**                     | *css*                     |
+| **HTML**                    | *html*                    |
+| **JavaScript**              | *javascript*              |
+| **The Server Side**         | *the-server-side*         |
 
-  | **Content**          | *content*          |
-  | -------------------- | ------------------ |
-  | **Community**        | *community*        |
-  | **Content Strategy** | *content-strategy* |
-  | **Writing**          | *writing*          |
+| **Content**          | *content*          |
+| -------------------- | ------------------ |
+| **Community**        | *community*        |
+| **Content Strategy** | *content-strategy* |
+| **Writing**          | *writing*          |
 
-  | **Design**                 | *design*               |
-  | -------------------------- | ---------------------- |
-  | **Brand Identity**         | *brand-identity*       |
-  | **Graphic Design**         | *graphic-design*       |
-  | **Layout & Grids**         | *layout-grids*         |
-  | **Mobile/Multidevice**     | *mobile-multidevice*   |
-  | **Responsive Design**      | *responsive-design*    |
-  | **Typography & Web Fonts** | *typography-web-fonts* |
+| **Design**                 | *design*               |
+| -------------------------- | ---------------------- |
+| **Brand Identity**         | *brand-identity*       |
+| **Graphic Design**         | *graphic-design*       |
+| **Layout & Grids**         | *layout-grids*         |
+| **Mobile/Multidevice**     | *mobile-multidevice*   |
+| **Responsive Design**      | *responsive-design*    |
+| **Typography & Web Fonts** | *typography-web-fonts* |
 
-  | **Industry & Business** | *industry-business* |
-  | ----------------------- | ------------------- |
-  | **Business**            | *business*          |
-  | **Career**              | *career*            |
-  | **Industry**            | *industry*          |
-  | **State of the Web**    | *state-of-the-web*  |
+| **Industry & Business** | *industry-business* |
+| ----------------------- | ------------------- |
+| **Business**            | *business*          |
+| **Career**              | *career*            |
+| **Industry**            | *industry*          |
+| **State of the Web**    | *state-of-the-web*  |
 
-  | **Process**            | *process*            |
-  | ---------------------- | -------------------- |
-  | **Creativity**         | *creativity*         |
-  | **Project Management** | *project-management* |
-  | **Web Strategy**       | *web-strategy*       |
-  | **Workflow & Tools**   | *workflow-tools*     |
+| **Process**            | *process*            |
+| ---------------------- | -------------------- |
+| **Creativity**         | *creativity*         |
+| **Project Management** | *project-management* |
+| **Web Strategy**       | *web-strategy*       |
+| **Workflow & Tools**   | *workflow-tools*     |
 
-  | **User Experience**          | *user-experience*          |
-  | ---------------------------- | -------------------------- |
-  | **Accessibility**            | *accessibility*            |
-  | **Information Architecture** | *information-architecture* |
-  | **Interaction Design**       | *interaction-design*       |
-  | **Usability**                | *usability*                |
-  | **User Research**            | *user-research*            |`,
+| **User Experience**          | *user-experience*          |
+| ---------------------------- | -------------------------- |
+| **Accessibility**            | *accessibility*            |
+| **Information Architecture** | *information-architecture* |
+| **Interaction Design**       | *interaction-design*       |
+| **Usability**                | *usability*                |
+| **User Research**            | *user-research*            |`,
 };
 
 async function handler(ctx) {

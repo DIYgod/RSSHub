@@ -164,6 +164,10 @@ export type Config = {
     game4399: {
         cookie?: string;
     };
+    gelbooru: {
+        apiKey?: string;
+        userId?: string;
+    };
     github: {
         access_token?: string;
     };
@@ -237,6 +241,9 @@ export type Config = {
     miniflux: {
         instance?: string;
         token?: string;
+    };
+    misskey: {
+        accessToken?: string;
     };
     mox: {
         cookie: string;
@@ -594,6 +601,10 @@ const calculateValue = () => {
         game4399: {
             cookie: envs.GAME_4399,
         },
+        gelbooru: {
+            apiKey: envs.GELBOORU_API_KEY,
+            userId: envs.GELBOORU_USER_ID,
+        },
         github: {
             access_token: envs.GITHUB_ACCESS_TOKEN,
         },
@@ -607,7 +618,6 @@ const calculateValue = () => {
             cookies: envs.GUOZAOKE_COOKIES,
         },
         hefeng: {
-            // weather
             key: envs.HEFENG_KEY,
         },
         infzm: {
@@ -668,6 +678,9 @@ const calculateValue = () => {
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
+        },
+        misskey: {
+            accessToken: envs.MISSKEY_ACCESS_TOKEN,
         },
         mox: {
             cookie: envs.MOX_COOKIE,

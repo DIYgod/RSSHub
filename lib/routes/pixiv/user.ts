@@ -50,7 +50,7 @@ async function handler(ctx) {
     return {
         title: `${username} 的 pixiv 动态`,
         link: `https://www.pixiv.net/users/${id}`,
-        image: illusts[0].user.profile_image_urls.medium,
+        image: pixivUtils.getProxiedImageUrl(illusts[0].user.profile_image_urls.medium),
         description: `${username} 的 pixiv 最新动态`,
         item: illusts.map((illust) => {
             const images = pixivUtils.getImgs(illust);

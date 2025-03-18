@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['LogicJake'],
     handler,
     description: `| 最新 | 周排行 | 月排行 |
-  | ---- | ------ | ------ |
-  | 0    | 7      | 30     |`,
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |`,
 };
 
 async function handler(ctx) {

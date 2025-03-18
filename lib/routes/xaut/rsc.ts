@@ -20,13 +20,13 @@ export const route: Route = {
     name: '人事处',
     maintainers: ['mocusez', 'light0926'],
     handler,
-    description: `:::warning
+    description: `::: warning
   有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
-  :::
+:::
 
-  | 通知公告 | 工作动态 |
-  | :------: | :------: |
-  |   tzgg   |   gzdt   |`,
+| 通知公告 | 工作动态 |
+| :------: | :------: |
+|   tzgg   |   gzdt   |`,
 };
 
 async function handler(ctx) {

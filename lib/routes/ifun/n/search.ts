@@ -44,7 +44,7 @@ export const route: Route = {
     parameters: {
         keywords: '搜索关键字',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [关键词：NPC](https://n.ifun.cool/search-result/?s=NPC)，网址为 \`https://n.ifun.cool/search-result/?s=NPC\`，请截取 \`s\` 的值 \`NPC\` 作为 \`keywords\` 参数填入，此时目标路由为 [\`/ifun/n/search/NPC\`](https://rsshub.app/ifun/n/search/NPC)。
 :::
     `,
