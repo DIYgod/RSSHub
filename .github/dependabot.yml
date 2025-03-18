@@ -21,6 +21,10 @@ updates:
       # no longer includes KJUR.crypto.Cipher for RSA
       - dependency-name: jsrsasign
         versions: ['>=11.0.0']
+    groups:
+      opentelemetry:
+        patterns:
+          - '@opentelemetry/*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
