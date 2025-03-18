@@ -4838,6 +4838,411 @@
       }
     ]
   },
+  "asiafruitchina.net": {
+    "_name": "亚洲水果",
+    ".": [
+      {
+        "title": "果蔬品项",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"id\")??void 0;return`/asiafruitchina/categories${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/all"
+      },
+      {
+        "title": "橙",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/chengzi"
+      },
+      {
+        "title": "百香果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/baixiangguo"
+      },
+      {
+        "title": "菠萝/凤梨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/boluo"
+      },
+      {
+        "title": "菠萝蜜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/boluomi"
+      },
+      {
+        "title": "草莓",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/caomei"
+      },
+      {
+        "title": "番荔枝/释迦",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/fanlizhi"
+      },
+      {
+        "title": "番茄",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/fanqie"
+      },
+      {
+        "title": "柑橘",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/ganju"
+      },
+      {
+        "title": "哈密瓜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/hamigua"
+      },
+      {
+        "title": "核果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/heguo"
+      },
+      {
+        "title": "红毛丹",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/hongmaodan"
+      },
+      {
+        "title": "火龙果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/huolongguo"
+      },
+      {
+        "title": "浆果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/jiangguo"
+      },
+      {
+        "title": "桔子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/juzi"
+      },
+      {
+        "title": "蓝莓",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/lanmei"
+      },
+      {
+        "title": "梨",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/li"
+      },
+      {
+        "title": "荔枝",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/lizhi"
+      },
+      {
+        "title": "李子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/lizi"
+      },
+      {
+        "title": "榴莲",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/liulian"
+      },
+      {
+        "title": "龙眼",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/lognyan"
+      },
+      {
+        "title": "芦笋",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/lusun"
+      },
+      {
+        "title": "蔓越莓",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/manyuemei"
+      },
+      {
+        "title": "芒果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/mangguo"
+      },
+      {
+        "title": "猕猴桃/奇异果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/mihoutao"
+      },
+      {
+        "title": "柠檬",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/ningmeng"
+      },
+      {
+        "title": "牛油果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/niuyouguo"
+      },
+      {
+        "title": "苹果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/pingguo"
+      },
+      {
+        "title": "葡萄/提子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/putao"
+      },
+      {
+        "title": "其他",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/qita"
+      },
+      {
+        "title": "奇异莓",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/qiyimei"
+      },
+      {
+        "title": "热带水果",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/redaishuiguo"
+      },
+      {
+        "title": "山竹",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/shanzhu"
+      },
+      {
+        "title": "石榴",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/shiliu"
+      },
+      {
+        "title": "蔬菜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/shucai"
+      },
+      {
+        "title": "树莓",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/shumei"
+      },
+      {
+        "title": "桃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/tao"
+      },
+      {
+        "title": "甜瓜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/tiangua"
+      },
+      {
+        "title": "甜椒",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/tianjiao"
+      },
+      {
+        "title": "甜柿",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/tianshi"
+      },
+      {
+        "title": "香蕉",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/xiangjiao"
+      },
+      {
+        "title": "西瓜",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/xigua"
+      },
+      {
+        "title": "西梅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/ximei"
+      },
+      {
+        "title": "杏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/xing"
+      },
+      {
+        "title": "椰子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/yezi"
+      },
+      {
+        "title": "杨梅",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/yangmei"
+      },
+      {
+        "title": "樱桃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/yintao"
+      },
+      {
+        "title": "油桃",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/youtao"
+      },
+      {
+        "title": "柚子",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/categories"
+        ],
+        "target": "/asiafruitchina/categories/youzi"
+      }
+    ]
+  },
   "asianfanfics.com": {
     "_name": "Asianfanfics",
     "www": [
