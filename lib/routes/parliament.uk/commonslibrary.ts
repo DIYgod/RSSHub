@@ -46,7 +46,7 @@ async function handler(ctx) {
             description: $(article).find('p').last().text().trim(),
             pubDate: timezone($(article).find('.card__date time').attr('datetime')),
         }));
-    browser.close();
+    await browser.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,
         link: url,

@@ -50,7 +50,7 @@ const handler = async (ctx) => {
         false
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: jrnlName,

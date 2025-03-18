@@ -41,13 +41,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://nic.hrbust.edu.cn/';
-
     const { category = 3988 } = ctx.req.param();
-
-    const url = `${rootUrl}${category}/list.htm`;
-
-    const response = await ofetch(url);
-
+    const columnUrl = `${rootUrl}${category}/list.htm`;
+    const response = await ofetch(columnUrl);
     const $ = load(response);
 
     const bigTitle = $('li.col_title').text();
@@ -93,8 +89,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `哈尔滨理工大学网络信息中心 - ${bigTitle}`,
-        link: rootUrl,
+        title: `${bigTitle} - 哈尔滨理工大学网络信息中心`,
+        link: columnUrl,
+        language: 'zh-CN',
         item: items,
     };
 }

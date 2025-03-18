@@ -101,7 +101,7 @@ async function ggtzParse(ctx, $) {
                     const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
                     let author = '';
                     let pubDate = '';
-                    if (articleData instanceof Function) {
+                    if (typeof articleData === 'function') {
                         const header = articleData('h1').next().text();
                         const index = header.indexOf('日期');
 
@@ -148,7 +148,7 @@ async function jwcParse(ctx, $) {
                     const { articleData, description } = await tryGetFullText(href, link, 'jwc');
 
                     let author = '';
-                    if (articleData instanceof Function) {
+                    if (typeof articleData === 'function') {
                         author = articleData('span[class=authorstyle259690]').text();
                     }
 
@@ -184,7 +184,7 @@ async function zsjycParse(ctx, $) {
                     const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
 
                     let pubDate = '';
-                    if (articleData instanceof Function) {
+                    if (typeof articleData === 'function') {
                         const date = articleData('span[class=timestyle127702]').text();
                         pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
                     } else {

@@ -1,0 +1,9 @@
+{{ if elements.length > 0 }}
+  {{ each elements element }}
+    {{ if element.type === 'text' }}
+      <p>{{ element.content }}</p>
+    {{ else if element.type === 'raw_html' }}
+      {{@ element.content }}
+    {{ /if }}
+  {{ /each }}
+{{ /if }}

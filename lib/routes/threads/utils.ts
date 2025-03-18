@@ -1,97 +1,91 @@
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import cache from '@/utils/cache';
-import { destr } from 'destr';
 import NotFoundError from '@/errors/types/not-found';
+import ofetch from '@/utils/ofetch';
+import { JSDOM } from 'jsdom';
+import { JSONPath } from 'jsonpath-plus';
 
 const profileUrl = (user: string) => `https://www.threads.net/@${user}`;
 const threadUrl = (code: string) => `https://www.threads.net/t/${code}`;
-const instagramUrl = (user: string) => `https://i.instagram.com/api/v1/users/web_profile_info/?username=${user}`;
 
-const apiUrl = 'https://www.threads.net/api/graphql';
-// const PROFILE_QUERY = 23_996_318_473_300_828; // no longer works
-const THREADS_QUERY = 6_232_751_443_445_612;
-const REPLIES_QUERY = 6_307_072_669_391_286;
-const USER_AGENT = 'Barcelona 289.0.0.77.109 Android';
-const appId = '238260118697367';
-const asbdId = '129477';
+const USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
 
 const extractTokens = async (user): Promise<{ lsd: string }> => {
     const response = await ofetch(profileUrl(user), {
         headers: {
             'User-Agent': USER_AGENT,
-            'X-IG-App-ID': appId,
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Encoding': 'gzip, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
         },
     });
+
     const $ = load(response);
-
     const data = $('script:contains("LSD"):first').text();
-
     const lsd = data.match(/"LSD",\[],{"token":"([\w@-]+)"},/)?.[1];
+
     if (!lsd) {
         throw new NotFoundError('LSD token not found');
     }
 
-    // const userId = data.match(/{"user_id":"(\d+)"},/)?.[1];
-
-    const ret = { lsd };
-    return ret;
+    return { lsd };
 };
 
-const makeHeader = (user: string, lsd: string) => ({
-    Accept: '*/*',
-    Host: 'www.threads.net',
-    Origin: 'https://www.threads.net',
-    Referer: profileUrl(user),
-    'User-Agent': USER_AGENT,
-    'X-FB-LSD': lsd,
-    'X-IG-App-ID': appId,
-    'Sec-Fetch-Site': 'same-origin',
-});
-
-// the formal way always reachs the rate limit, so use instagram api to get user id instead
-const getUserId = (user: string, lsd: string): Promise<string> =>
-    cache.tryGet(`threads:userId:${user}`, async () => {
-        const pathName = `/@${user}`;
-        const payload: any = {
-            'route_urls[0]': pathName,
-            __a: '1',
-            __comet_req: '29',
-            lsd,
-        };
-        const response = await ofetch('https://www.threads.net/ajax/bulk-route-definitions/', {
-            method: 'POST',
-            headers: {
-                ...makeHeader(user, lsd),
-                'content-type': 'application/x-www-form-urlencoded',
-                'X-ASBD-ID': asbdId,
-            },
-            body: new URLSearchParams(payload).toString(),
-            parseResponse: (txt) => destr(txt.slice(9)), // remove "for (;;);"
-        });
-
-        let userId = response.payload.payloads[pathName].result.exports.rootView.props.user_id;
-
-        if (!userId) {
-            const fallbackResponse = await ofetch(instagramUrl(user), {
-                headers: makeHeader(user, lsd),
+const getUserId = (user: string): Promise<string> =>
+    cache
+        .tryGet(`threads:userId:${user}`, async () => {
+            const response = await ofetch(profileUrl(user), {
+                headers: {
+                    'User-Agent': USER_AGENT,
+                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                    'Accept-Encoding': 'gzip, br',
+                    'Accept-Language': 'zh-CN,zh;q=0.9',
+                    'Cache-Control': 'no-cache',
+                    Pragma: 'no-cache',
+                    'Sec-Fetch-Dest': 'document',
+                    'Sec-Fetch-Mode': 'navigate',
+                    'Sec-Fetch-Site': 'none',
+                    'Sec-Fetch-User': '?1',
+                    'Upgrade-Insecure-Requests': '1',
+                },
             });
 
-            if (!fallbackResponse?.data?.user) {
-                throw new NotFoundError('Instagram getUser API response is invalid');
+            const dom = new JSDOM(response);
+
+            for (const el of dom.window.document.querySelectorAll('script[data-sjs]')) {
+                try {
+                    const data = JSONPath({
+                        path: '$..user_id',
+                        json: JSON.parse(el.textContent || ''),
+                    });
+
+                    if (data?.[0]) {
+                        return data[0];
+                    }
+                } catch {
+                    // Skip invalid JSON
+                }
             }
 
-            userId = fallbackResponse.data.user.id;
-            if (!userId) {
-                throw new NotFoundError('User ID not found in Instagram getUser API response');
+            throw new NotFoundError('User ID not found');
+        })
+        .then((result): string => {
+            if (!result || typeof result !== 'string') {
+                throw new TypeError('Invalid user ID type');
             }
-        }
-
-        return userId;
-    });
+            return result;
+        });
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
+
 const buildMedia = (post) => {
     let html = '';
 
@@ -99,25 +93,13 @@ const buildMedia = (post) => {
         for (const media of post.carousel_media) {
             const firstImage = media.image_versions2?.candidates[0];
             const firstVideo = media.video_versions?.[0];
-            if (firstVideo) {
-                html += `<video controls autoplay loop poster="${firstImage.url}">`;
-                html += `<source src="${firstVideo.url}"/>`;
-                html += '</video>';
-            } else {
-                html += `<img src="${firstImage.url}"/>`;
-            }
+            html += firstVideo ? `<video controls autoplay loop poster="${firstImage.url}"><source src="${firstVideo.url}"/></video>` : `<img src="${firstImage.url}"/>`;
         }
     } else {
         const mainImage = post.image_versions2?.candidates?.[0];
         const mainVideo = post.video_versions?.[0];
         if (mainImage) {
-            if (mainVideo) {
-                html += `<video controls autoplay loop poster="${mainImage.url}">`;
-                html += `<source src="${mainVideo.url}"/>`;
-                html += '</video>';
-            } else {
-                html += `<img src="${mainImage.url}"/>`;
-            }
+            html += mainVideo ? `<video controls autoplay loop poster="${mainImage.url}"><source src="${mainVideo.url}"/></video>` : `<img src="${mainImage.url}"/>`;
         }
     }
 
@@ -181,4 +163,4 @@ const buildContent = (item, options) => {
     return { title, description };
 };
 
-export { apiUrl, profileUrl, threadUrl, THREADS_QUERY, REPLIES_QUERY, USER_AGENT, extractTokens, getUserId, makeHeader, hasMedia, buildMedia, buildContent };
+export { profileUrl, threadUrl, extractTokens, getUserId, buildContent };
