@@ -164,6 +164,10 @@ export type Config = {
     game4399: {
         cookie?: string;
     };
+    gelbooru: {
+        apiKey?: string;
+        userId?: string;
+    };
     github: {
         access_token?: string;
     };
@@ -597,6 +601,10 @@ const calculateValue = () => {
         game4399: {
             cookie: envs.GAME_4399,
         },
+        gelbooru: {
+            apiKey: envs.GELBOORU_API_KEY,
+            userId: envs.GELBOORU_USER_ID,
+        },
         github: {
             access_token: envs.GITHUB_ACCESS_TOKEN,
         },
@@ -610,7 +618,6 @@ const calculateValue = () => {
             cookies: envs.GUOZAOKE_COOKIES,
         },
         hefeng: {
-            // weather
             key: envs.HEFENG_KEY,
         },
         infzm: {
