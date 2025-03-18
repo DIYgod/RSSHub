@@ -458,24 +458,24 @@ if (config.twitter.consumer_key && config.twitter.consumer_secret) {
 }
 
 const parseRouteParams = (routeParams) => {
-    let count, exclude_replies, include_rts, only_media;
+    let count, include_replies, include_rts, only_media;
     let force_web_api = false;
     switch (routeParams) {
         case 'exclude_rts_replies':
         case 'exclude_replies_rts':
-            exclude_replies = true;
+            include_replies = false;
             include_rts = false;
 
             break;
 
-        case 'exclude_replies':
-            exclude_replies = true;
+        case 'include_replies':
+            include_replies = true;
             include_rts = true;
 
             break;
 
         case 'exclude_rts':
-            exclude_replies = false;
+            include_replies = false;
             include_rts = false;
 
             break;
@@ -483,13 +483,13 @@ const parseRouteParams = (routeParams) => {
         default: {
             const parsed = new URLSearchParams(routeParams);
             count = fallback(undefined, queryToInteger(parsed.get('count')));
-            exclude_replies = fallback(undefined, queryToBoolean(parsed.get('excludeReplies')), false);
+            include_replies = fallback(undefined, queryToBoolean(parsed.get('includeReplies')), false);
             include_rts = fallback(undefined, queryToBoolean(parsed.get('includeRts')), true);
             force_web_api = fallback(undefined, queryToBoolean(parsed.get('forceWebApi')), false);
             only_media = fallback(undefined, queryToBoolean(parsed.get('onlyMedia')), false);
         }
     }
-    return { count, exclude_replies, include_rts, force_web_api, only_media };
+    return { count, include_replies, include_rts, force_web_api, only_media };
 };
 
 export const excludeRetweet = function (tweets) {
