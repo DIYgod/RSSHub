@@ -17942,6 +17942,24 @@
     "url": "chaping.cn",
     "lang": "zh-CN"
   },
+  "cherrytimes": {
+    "routes": {
+      "/market": {
+        "path": "/market",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/cherrytimes/market",
+        "name": "Market",
+        "maintainers": [
+          "canonnizq"
+        ],
+        "location": "market.ts"
+      }
+    },
+    "name": "Cherry Times",
+    "url": "cherrytimes.it"
+  },
   "chiculture": {
     "routes": {
       "/topic/:category?": {
