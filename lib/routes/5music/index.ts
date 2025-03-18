@@ -49,8 +49,8 @@ async function handler(ctx) {
             const artistCell = $(cells[0]);
             const artist = artistCell
                 .find('a')
-                .map((_, el) => $(el).text().trim())
                 .toArray()
+                .map((el) => $(el).text().trim())
                 .join(' / ');
 
             // 解析专辑信息
