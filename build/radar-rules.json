@@ -12965,6 +12965,19 @@
       }
     ]
   },
+  "gelbooru.com": {
+    "_name": "Gelbooru",
+    ".": [
+      {
+        "title": "标签查询",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/index.php"
+        ],
+        "target": "/gelbooru/post/:tags?/:quality?"
+      }
+    ]
+  },
   "gelonghui.com": {
     "_name": "格隆汇",
     ".": [
