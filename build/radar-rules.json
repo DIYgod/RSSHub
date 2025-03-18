@@ -20157,6 +20157,19 @@
       }
     ]
   },
+  "kpopping.com": {
+    "_name": "kpopping",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/:filter"
+        ],
+        "target": "/kpoppingparams=>{const filter=params.filter;return`/kpopping/news${filter?`/${filter}`:\"\"}`}"
+      }
+    ]
+  },
   "kuaidi100.com": {
     "_name": "快递 100",
     ".": [

@@ -4290,6 +4290,9 @@
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],
+  "/kpopping/news/:filter{.+}?": [
+    "nczitzk"
+  ],
   "/ktown4u/artistBrandlist/:grpNo/:grpNo2?": [
     "JamesWDGu"
   ],
