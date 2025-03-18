@@ -3,11 +3,11 @@ import utils from '../../utils';
 const handler = async (ctx) => {
     const id = ctx.req.param('id');
     // For compatibility
-    const { exclude_replies, include_rts, count } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { include_replies, include_rts, count } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const client = await utils.getAppClient();
     const user_timeline_query = {
         tweet_mode: 'extended',
-        exclude_replies,
+        exclude_replies: !include_replies,
         include_rts,
         count,
     };
