@@ -17203,6 +17203,20 @@
       }
     ]
   },
+  "hkushop.com": {
+    "_name": "環球唱片(香港)官方網上商店",
+    ".": [
+      {
+        "title": "HKU Shop 黑胶专区",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/vinyl-or-picture-lp.html",
+          "/"
+        ],
+        "target": "/hkushop/vinyl"
+      }
+    ]
+  },
   "voc.com.cn": {
     "_name": "湖南日报",
     ".": [

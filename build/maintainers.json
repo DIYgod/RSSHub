@@ -3483,6 +3483,9 @@
   "/hko/weather": [
     "calpa"
   ],
+  "/hkushop/vinyl/:cat?": [
+    "gideonsenku"
+  ],
   "/hljucm/yjsy/:category?": [
     "nczitzk"
   ],

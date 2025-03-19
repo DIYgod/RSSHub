@@ -44298,6 +44298,52 @@
     "description": "来自香港天文台的全球地震记录",
     "lang": "zh-HK"
   },
+  "hkushop": {
+    "routes": {
+      "/vinyl/:cat?": {
+        "path": "/vinyl/:cat?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/hkushop/vinyl",
+        "parameters": {
+          "cat": "分类，见下表，默认不分类"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "hkushop.com/vinyl-or-picture-lp.html",
+              "hkushop.com/"
+            ],
+            "target": "/vinyl"
+          }
+        ],
+        "name": "HKU Shop 黑胶专区",
+        "maintainers": [
+          "gideonsenku"
+        ],
+        "description": "常见分类:\n| 華語音樂 | 經典復刻 | 古典跨界 | 爵士音樂 | 國際音樂 | 電影原聲帶 | 黑膠日本音樂 |\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- |\n| 37 | 38 | 40 | 41 | 39 | 170 | 224 |",
+        "url": "hkushop.com/vinyl-or-picture-lp.html",
+        "location": "vinyl-or-picture-lp.ts"
+      }
+    },
+    "name": "環球唱片(香港)官方網上商店",
+    "url": "hkushop.com",
+    "lang": "zh-HK",
+    "categories": [
+      "shopping"
+    ],
+    "description": "環球唱片(香港)官方網上商店"
+  },
   "hljucm": {
     "routes": {
       "/yjsy/:category?": {
