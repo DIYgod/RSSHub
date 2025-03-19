@@ -12,35 +12,9 @@ on:
   pull_request: {}
 
 permissions:
-  contents: read
   checks: write
 
 jobs:
-  fix-pnpm-lock:
-    # workaround for https://github.com/dependabot/dependabot-core/issues/7258
-    # until https://github.com/pnpm/pnpm/issues/6530 is fixed
-    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - run: |
-          rm pnpm-lock.yaml
-          pnpm i
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'chore: fix pnpm install'
-          commit_user_name: dependabot[bot]
-          commit_user_email: 49699333+dependabot[bot]@users.noreply.github.com
-          commit_author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-
   vitest:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -53,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 20, 22 ]
+        node-version: [ latest, lts/*, lts/-1 ]
     name: Vitest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -73,8 +47,8 @@ jobs:
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == '20' }}
-        uses: codecov/codecov-action@v4
+        if: ${{ matrix.node-version == 'lts/*' }}
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
 
@@ -84,7 +58,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 20, 22 ]
+        node-version: [ latest, lts/*, lts/-1 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -136,10 +110,12 @@ jobs:
   all:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      attestations: write
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 20, 22 ]
+        node-version: [ 23, 22, 20 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4

@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/list/:region/:listId',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/yahoo/news/list/hk/09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454',
     parameters: { region: '`hk`, `tw`', listId: '見下表' },
     features: {
@@ -18,7 +18,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hk.news.yahoo.com/', 'tw.news.yahoo.com/'],
+            source: ['hk.news.yahoo.com/'],
+        },
+        {
+            source: ['tw.news.yahoo.com/'],
         },
     ],
     name: '合作媒體',

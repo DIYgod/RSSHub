@@ -1,10 +1,11 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import { fetchArticle } from '@/utils/wechat-mp';
+import { config } from '@/config';
 
 const configs = {
     all: {
@@ -57,8 +58,8 @@ export const route: Route = {
     maintainers: ['tgly307', 'zengxs'],
     handler,
     description: `| [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
-  | ------------------- | ------------------------ | ------------------- | ---------------------- |
-  | industry            | project                  | industry-news       | programming            |
+| ------------------- | ------------------------ | ------------------- | ---------------------- |
+| industry            | project                  | industry-news       | programming            |
 
   订阅 [全部板块资讯][osc_all] 可以使用 [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
 
@@ -73,17 +74,34 @@ export const route: Route = {
   [osc_pl]: https://www.oschina.net/news/programming "开源中国 - 编程语言资讯"`,
 };
 
+const getCookie = () =>
+    cache.tryGet(
+        'oschina:cookie',
+        async () => {
+            const res = await ofetch.raw('https://www.oschina.net/news');
+            const cookie = res.headers
+                .getSetCookie()
+                .map((i) => i.split(';')[0])
+                .join('; ');
+            return cookie;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const config = configs[category];
 
-    const res = await got(config.ajaxUrl, {
+    const cookie = await getCookie();
+    const res = await ofetch(config.ajaxUrl, {
         headers: {
             Referer: config.link,
             'X-Requested-With': 'XMLHttpRequest',
+            Cookie: cookie,
         },
     });
-    const $ = load(res.data);
+    const $ = load(res);
 
     $('.ad-wrap').remove();
 
@@ -104,23 +122,24 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (/^https?:\/\/(my|www)\.oschina.net\/.*$/.test(item.link)) {
-                    const detail = await got(item.link, {
+                    const detail = await ofetch(item.link, {
                         headers: {
                             Referer: config.link,
+                            Cookie: cookie,
                         },
                     });
-                    const content = load(detail.data);
+                    const content = load(detail);
                     content('.ad-wrap').remove();
 
                     item.description = content('.article-detail').html();
                     item.author = content('.article-box__meta .item').first().text();
                 } else if (/^https?:\/\/gitee\.com\/.*$/.test(item.link)) {
-                    const detail = await got(item.link, {
+                    const detail = await ofetch(item.link, {
                         headers: {
                             Referer: config.link,
                         },
                     });
-                    const content = load(detail.data);
+                    const content = load(detail);
 
                     item.description = content('.file_content').html();
                 } else if (/^https?:\/\/osc\.cool\/.*$/.test(item.link)) {

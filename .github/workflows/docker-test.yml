@@ -13,10 +13,6 @@ on:
     types: [opened, reopened, synchronize, edited]
   # Please, always create a pull request instead of push to master.
 
-permissions:
-  contents: read
-  pull-requests: write
-
 concurrency:
   group: docker-test-${{ github.ref_name }}
   cancel-in-progress: true
@@ -24,6 +20,9 @@ concurrency:
 jobs:
   test:
     name: Docker build & tests
+    permissions:
+      pull-requests: write
+      attestations: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

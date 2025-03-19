@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'job.hrbeu.edu.cn/*',
     description: `| 通知公告 | 热点新闻 |
-  | :------: | :------: |
-  |   tzgg   |   rdxw   |
+| :------: | :------: |
+|   tzgg   |   rdxw   |
 
 #### 大型招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-da-xing-zhao-pin-hui}
 

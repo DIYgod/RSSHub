@@ -2,7 +2,7 @@ import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils from './utils';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
@@ -16,14 +16,16 @@ export const route: Route = {
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',
         routeParams: `
-| 键           | 含义                              | 接受的值       | 默认值 |
-| ------------ | --------------------------------- | -------------- | ------ |
-| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
-| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
-| directLink   | 使用内容直链                      | 0/1/true/false | false  |
+| 键         | 含义                              | 接受的值       | 默认值 |
+| ---------- | --------------------------------- | -------------- | ------ |
+| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
+| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+| directLink | 使用内容直链                      | 0/1/true/false | false  |
+| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
+| offset     | 偏移状态                         | string         | ""  |
 
-用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\``,
+用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
     features: {
         requireConfig: [
@@ -107,16 +109,17 @@ const getDes = (data: Modules): string => {
 const getOriginTitle = (data?: Modules) => data && getTitle(data);
 const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
-const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
-    if (disableEmbed) {
+const getIframe = (data?: Modules, embed: boolean = true) => {
+    if (!embed) {
         return '';
     }
     const aid = data?.module_dynamic?.major?.archive?.aid;
     const bvid = data?.module_dynamic?.major?.archive?.bvid;
-    if (!aid) {
+    if (aid === undefined && bvid === undefined) {
         return '';
     }
-    return utils.iframe(aid, null, bvid);
+    // 不通过 utils.renderUGCDescription 渲染 img/description 以兼容其他格式的动态
+    return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
 };
 
 const getImgs = (data?: Modules) => {
@@ -145,7 +148,10 @@ const getImgs = (data?: Modules) => {
     if (major[type]?.cover) {
         imgUrls.push(major[type].cover);
     }
-    return imgUrls.map((url) => `<img src="${url}">`).join('');
+    return imgUrls
+        .filter(Boolean)
+        .map((url) => `<img src="${url}">`)
+        .join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -155,6 +161,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     }
     let url = '';
     let text = '';
+    let videoPageUrl;
     const major = data.module_dynamic?.major;
     if (!major) {
         return null;
@@ -173,6 +180,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
             text = `视频地址：<a href=${url}>${url}</a>`;
+            videoPageUrl = getVideoUrl(archive?.bvid);
             break;
         }
         case 'MAJOR_TYPE_COMMON':
@@ -209,6 +217,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
         case 'MAJOR_TYPE_LIVE_RCMD': {
             const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
             url = `https://live.bilibili.com/${live_play_info?.room_id}`;
+            videoPageUrl = getLiveUrl(live_play_info?.room_id);
             text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         }
@@ -218,6 +227,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     return {
         url,
         text,
+        videoPageUrl,
     };
 };
 
@@ -225,21 +235,17 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
+    const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
+    const hideGoods = fallback(undefined, queryToBoolean(routeParams.hideGoods), false);
 
     const cookie = await cacheIn.getCookie();
 
-    const response = await got({
-        method: 'get',
-        url: `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space`,
-        searchParams: {
-            host_mid: uid,
-            platform: 'web',
-            features: 'itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote',
-        },
+    const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+    const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
             Cookie: cookie,
@@ -247,8 +253,7 @@ async function handler(ctx) {
     });
     const body = JSONbig.parse(response.body);
     if (body?.code === -352) {
-        cacheIn.clearCookie();
-        throw new Error('The cookie has expired, please try again.');
+        throw new Error('Request failed, please try again.');
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
@@ -259,119 +264,134 @@ async function handler(ctx) {
     cache.set(`bili-userface-from-uid-${uid}`, face);
 
     const rssItems = await Promise.all(
-        items.map(async (item) => {
-            // const parsed = JSONbig.parse(item.card);
+        items
+            .filter((item) => {
+                if (hideGoods) {
+                    return item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS';
+                }
+                return true;
+            })
+            .map(async (item) => {
+                // const parsed = JSONbig.parse(item.card);
 
-            const data = item.modules;
-            const origin = item?.orig?.modules;
+                const data = item.modules;
+                const origin = item?.orig?.modules;
 
-            // link
-            let link = '';
-            if (item.id_str) {
-                link = `https://t.bilibili.com/${item.id_str}`;
-            }
+                // link
+                let link = '';
+                if (item.id_str) {
+                    link = `https://t.bilibili.com/${item.id_str}`;
+                }
 
-            let description = getDes(data) || '';
-            const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
-            const category: string[] = [];
-            // emoji
-            if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
-                const nodes = data.module_dynamic.desc.rich_text_nodes;
-                for (const node of nodes) {
-                    // 处理 emoji 的情况
-                    if (showEmoji && node?.emoji) {
-                        const emoji = node.emoji;
-                        description = description.replaceAll(
-                            emoji.text,
-                            `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
-                        );
-                    }
-                    // 处理转发带图评论的情况
-                    if (node?.pics?.length) {
-                        const { pics, text } = node;
-                        description = description.replaceAll(
-                            text,
-                            pics
-                                .map(
-                                    (pic) =>
-                                        `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
-                                )
-                                .join('<br>')
-                        );
-                    }
-                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
-                        // 将话题作为 category
-                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                let description = getDes(data) || '';
+                const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
+                const category: string[] = [];
+                // emoji
+                if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
+                    const nodes = data.module_dynamic.desc.rich_text_nodes;
+                    for (const node of nodes) {
+                        // 处理 emoji 的情况
+                        if (showEmoji && node?.emoji) {
+                            const emoji = node.emoji;
+                            description = description.replaceAll(
+                                emoji.text,
+                                `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                            );
+                        }
+                        // 处理转发带图评论的情况
+                        if (node?.pics?.length) {
+                            const { pics, text } = node;
+                            description = description.replaceAll(
+                                text,
+                                pics
+                                    .map(
+                                        (pic) =>
+                                            `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                    )
+                                    .join('<br>')
+                            );
+                        }
+                        if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                            // 将话题作为 category
+                            category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                        }
                     }
                 }
-            }
 
-            if (data.module_dynamic?.major?.opus?.summary?.rich_text_nodes?.length) {
-                const nodes = data.module_dynamic.major.opus.summary.rich_text_nodes;
-                for (const node of nodes) {
-                    if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
-                        // 将话题作为 category
-                        category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                if (data.module_dynamic?.major?.opus?.summary?.rich_text_nodes?.length) {
+                    const nodes = data.module_dynamic.major.opus.summary.rich_text_nodes;
+                    for (const node of nodes) {
+                        if (node?.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+                            // 将话题作为 category
+                            category.push(node.text.match(/#(\S+)#/)?.[1] || '');
+                        }
                     }
                 }
-            }
-            if (data.module_dynamic?.topic?.name) {
-                // 将话题作为 category
-                category.push(data.module_dynamic.topic.name);
-            }
-
-            if (item.type === 'DYNAMIC_TYPE_ARTICLE' && displayArticle) {
-                // 抓取专栏全文
-                const cvid = data.module_dynamic?.major?.opus?.jump_url?.match?.(/cv(\d+)/)?.[0];
-                if (cvid) {
-                    description = (await cacheIn.getArticleDataFromCvid(cvid, uid)).description || '';
+                if (data.module_dynamic?.topic?.name) {
+                    // 将话题作为 category
+                    category.push(data.module_dynamic.topic.name);
                 }
-            }
 
-            const urlResult = getUrl(item, useAvid);
-            const urlText = urlResult?.text;
-            if (urlResult && directLink) {
-                link = urlResult.url;
-            }
+                if (item.type === 'DYNAMIC_TYPE_ARTICLE' && displayArticle) {
+                    // 抓取专栏全文
+                    const cvid = data.module_dynamic?.major?.opus?.jump_url?.match?.(/cv(\d+)/)?.[0];
+                    if (cvid) {
+                        description = (await cacheIn.getArticleDataFromCvid(cvid, uid)).description || '';
+                    }
+                }
 
-            const originUrlResult = getUrl(item?.orig, useAvid);
-            const originUrlText = originUrlResult?.text;
-            if (originUrlResult && directLink) {
-                link = originUrlResult.url;
-            }
+                const urlResult = getUrl(item, useAvid);
+                const urlText = urlResult?.text;
+                if (urlResult && directLink) {
+                    link = urlResult.url;
+                }
 
-            let originDescription = '';
-            const originName = getOriginName(origin);
-            const originTitle = getOriginTitle(origin);
-            const originDes = getOriginDes(origin);
-            if (originName) {
-                originDescription += `//转发自: @${getOriginName(origin)}: `;
-            }
-            if (originTitle) {
-                originDescription += originTitle;
-            }
-            if (originDes) {
-                originDescription += `<br>${originDes}`;
-            }
+                const originUrlResult = getUrl(item?.orig, useAvid);
+                const originUrlText = originUrlResult?.text;
+                if (originUrlResult && directLink) {
+                    link = originUrlResult.url;
+                }
 
-            // 换行处理
-            description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-            originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+                let originDescription = '';
+                const originName = getOriginName(origin);
+                const originTitle = getOriginTitle(origin);
+                const originDes = getOriginDes(origin);
+                if (originName) {
+                    originDescription += `//转发自: @${getOriginName(origin)}: `;
+                }
+                if (originTitle) {
+                    originDescription += originTitle;
+                }
+                if (originDes) {
+                    originDescription += `<br>${originDes}`;
+                }
 
-            const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, disableEmbed), getIframe(origin, disableEmbed), getImgs(data), getImgs(origin)]
-                .filter(Boolean)
-                .map((e) => e?.trim())
-                .join('<br>');
+                // 换行处理
+                description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+                originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
+                const descriptions = [description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+                    .map((e) => e?.trim())
+                    .filter(Boolean)
+                    .join('<br>');
 
-            return {
-                title,
-                description: descriptions,
-                pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
-                link,
-                author,
-                category: category.length ? [...new Set(category)] : undefined,
-            };
-        })
+                return {
+                    title,
+                    description: descriptions,
+                    pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
+                    link,
+                    author,
+                    category: category.length ? [...new Set(category)] : undefined,
+                    attachments:
+                        urlResult?.videoPageUrl || originUrlResult?.videoPageUrl
+                            ? [
+                                  {
+                                      url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
+                                      mime_type: 'text/html',
+                                  },
+                              ]
+                            : undefined,
+                };
+            })
     );
 
     return {

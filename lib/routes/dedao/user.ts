@@ -15,7 +15,7 @@ const types = {
 
 export const route: Route = {
     path: '/user/:id/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og',
     parameters: { id: '用户 id，可在对应用户主页 URL 中找到', type: '类型，见下表，默认为`0`，即动态' },
     features: {
@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 动态 | 书评 | 视频 |
-  | ---- | ---- | ---- |
-  | 0    | 7    | 12   |`,
+| ---- | ---- | ---- |
+| 0    | 7    | 12   |`,
 };
 
 async function handler(ctx) {

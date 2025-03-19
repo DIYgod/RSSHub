@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'guancha.cn/',
     description: `| 精选      | 观书堂 | 在线课  | 观学院   |
-  | --------- | ------ | ------- | -------- |
-  | recommend | books  | courses | huodongs |`,
+| --------- | ------ | ------- | -------- |
+| recommend | books  | courses | huodongs |`,
 };
 
 async function handler(ctx) {
@@ -68,7 +68,7 @@ async function handler(ctx) {
 
                 for (const i of item.items) {
                     const newPubDate = new Date(i.publish_time);
-                    pubDate = pubDate > newPubDate ? pubDate : newPubDate;
+                    pubDate = Math.max(pubDate, newPubDate);
                     description += `<a href="${rootUrl}/zaixianke/content.html?id=${i.id}">${i.title}</a><br>`;
                 }
 

@@ -21,7 +21,7 @@ const loginLimiter = cache.clients.redisClient
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
 async function login({ username, password, authenticationSecret }) {
-    if (!username || !password || !authenticationSecret) {
+    if (!username || !password) {
         return;
     }
     try {
@@ -40,17 +40,26 @@ async function login({ username, password, authenticationSecret }) {
         await page.waitForSelector('input[autocomplete="current-password"]');
         await page.type('input[autocomplete="current-password"]', password);
         (await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]'))?.click();
-        await page.waitForSelector('input[inputmode="numeric"]');
-        const token = authenticator.generate(authenticationSecret);
-        await page.type('input[inputmode="numeric"]', token);
-        (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
+        if (authenticationSecret) {
+            await page.waitForSelector('input[inputmode="numeric"]');
+            const token = authenticator.generate(authenticationSecret);
+            await page.type('input[inputmode="numeric"]', token);
+            (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
+        }
         const waitForRequest = new Promise<string>((resolve) => {
-            page.on('requestfinished', async (request) => {
-                if (request.url().includes('/HomeTimeline')) {
+            page.on('response', async (response) => {
+                if (response.url().includes('/HomeTimeline')) {
+                    const data = await response.json();
+                    const message = data?.data?.home?.home_timeline_urt?.instructions?.[0]?.entries?.[0]?.entryId;
+                    if (message === 'messageprompt-suspended-prompt') {
+                        logger.error(`twitter debug: twitter username ${username} login failed: messageprompt-suspended-prompt`);
+                        resolve('');
+                    }
                     const cookies = await page.cookies();
                     for (const cookie of cookies) {
                         cookieJar.setCookieSync(`${cookie.name}=${cookie.value}`, 'https://x.com');
                     }
+                    logger.debug(`twitter debug: twitter username ${username} login success`);
                     resolve(JSON.stringify(cookieJar.serializeSync()));
                 }
             });
@@ -59,7 +68,7 @@ async function login({ username, password, authenticationSecret }) {
         await browser.close();
         return cookieString;
     } catch (error) {
-        logger.error(`Twitter username ${username} login failed:`, error);
+        logger.error(`twitter debug: twitter username ${username} login failed:`, error);
     }
 }
 

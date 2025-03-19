@@ -26,19 +26,19 @@ export const route: Route = {
     name: '客户端',
     maintainers: ['TimWu007'],
     handler,
-    description: `:::tip
+    description: `::: tip
   在北京时间深夜可能无法获取内容。
-  :::
+:::
 
   常用栏目 ID：
 
-  | 栏目名 | ID   |
-  | ------ | ---- |
-  | 首页   | 74   |
-  | 时局   | 374  |
-  | 广州   | 371  |
-  | 大湾区 | 397  |
-  | 城区   | 2980 |`,
+| 栏目名 | ID   |
+| ------ | ---- |
+| 首页   | 74   |
+| 时局   | 374  |
+| 广州   | 371  |
+| 大湾区 | 397  |
+| 城区   | 2980 |`,
 };
 
 async function handler(ctx) {

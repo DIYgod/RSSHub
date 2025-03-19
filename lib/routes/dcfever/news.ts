@@ -5,7 +5,7 @@ import { baseUrl, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dcfever/news',
     parameters: { type: '分類，預設為所有新聞' },
     name: '新聞中心',
@@ -18,8 +18,8 @@ export const route: Route = {
         },
     ],
     description: `| 所有新聞 | 攝影器材 | 手機通訊 | 汽車熱話 | 攝影文化    | 影片攝錄    | 測試報告 | 生活科技 | 攝影技巧  |
-  | -------- | -------- | -------- | -------- | ----------- | ----------- | -------- | -------- | --------- |
-  |          | camera   | mobile   | auto     | photography | videography | reviews  | gadget   | technique |`,
+| -------- | -------- | -------- | -------- | ----------- | ----------- | -------- | -------- | --------- |
+|          | camera   | mobile   | auto     | photography | videography | reviews  | gadget   | technique |`,
 };
 
 async function handler(ctx) {

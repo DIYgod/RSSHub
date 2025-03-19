@@ -5,7 +5,7 @@ const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
     path: '/rss/:category?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     example: '/apnews/rss/business',
     view: ViewType.Articles,
     parameters: {
@@ -38,7 +38,7 @@ async function handler(ctx) {
     const url = `${HOME_PAGE}/${rss}.rss`;
     const res = await parser.parseURL(url);
 
-    const items = await Promise.all(res.items.map((item) => fetchArticle(item)));
+    const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res;
 
     return {
         ...res,

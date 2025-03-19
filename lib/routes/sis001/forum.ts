@@ -1,10 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { config } from '@/config';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-const baseUrl = 'https://www.sis001.com';
+import type { Context } from 'hono';
+import { getCookie, getThread } from './common';
 
 export const route: Route = {
     path: '/forum/:id?',
@@ -20,16 +20,16 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '子版块',
-    maintainers: [],
+    maintainers: ['TonyRL'],
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { id = 76 } = ctx.req.param();
-    const url = `${baseUrl}/forum/forum-${id}-1.html`;
+    const url = `${config.sis001.baseUrl}/forum/forum-${id}-1.html`;
 
-    const response = await got(url);
-
+    const cookie = await getCookie(url);
+    const response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
     let items = $('form table')
@@ -41,37 +41,12 @@ async function handler(ctx) {
             item = $(item);
             return {
                 title: item.find('th em').text() + ' ' + item.find('span a').eq(0).text(),
-                link: new URL(item.find('span a').eq(0).attr('href'), `${baseUrl}/forum/`).href,
+                link: new URL(item.find('span a').eq(0).attr('href'), `${config.sis001.baseUrl}/forum/`).href,
                 author: item.find('.author a').text(),
-                pubDate: parseDate(item.find('.author em').text(), 'YYYY-M-D'),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-
-                item.category = $('.posttags a')
-                    .toArray()
-                    .map((a) => $(a).text());
-                item.pubDate = timezone(
-                    parseDate(
-                        $('.postinfo')
-                            .eq(0)
-                            .text()
-                            .match(/发表于 (.*)\s*只看该作者/)[1],
-                        'YYYY-M-D HH:mm'
-                    ),
-                    8
-                );
-                $('div[id^=postmessage_] table, fieldset, .posttags').remove();
-                item.description = $('div[id^=postmessage_]').eq(0).html() + ($('.defaultpost .postattachlist').html() ?? '');
-                return item;
-            })
-        )
-    );
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
 
     return {
         title: $('head title').text(),

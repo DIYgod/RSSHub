@@ -31,7 +31,8 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const items = $('.weui_media_box')
-        .map((_, ele) => {
+        .toArray()
+        .map((ele) => {
             const $item = load(ele);
             const link = $item('.weui_media_title a').attr('href');
             return {
@@ -40,13 +41,14 @@ async function handler(ctx) {
                 link,
                 pubDate: timezone(parseDate($item('.weui_media_extra_info').attr('title')), +8),
             };
-        })
-        .get();
+        });
 
     return {
         title: `微信公众号 - ${$('span.name').text()}`,
         link: url,
         description: $('div.Profile-sideColumnItemValue').text(),
-        item: await Promise.all(items.map((item) => finishArticleItem(item).catch(() => item))),
+        item: await Promise.all(items.map((item) => finishArticleItem(item))).catch((error) => {
+            throw error;
+        }),
     };
 }

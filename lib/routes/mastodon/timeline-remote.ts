@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
@@ -6,9 +6,20 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/remote/:site/:only_media?',
-    categories: ['social-media'],
+    categories: ['social-media', 'popular'],
+    view: ViewType.SocialMedia,
     example: '/mastodon/remote/pawoo.net/true',
-    parameters: { site: 'instance address, only domain, no `http://` or `https://` protocol header', only_media: 'whether only display media content, default to false, any value to true' },
+    parameters: {
+        site: 'instance address, only domain, no `http://` or `https://` protocol header',
+        only_media: {
+            description: 'whether only display media content, default to false, any value to true',
+            options: [
+                { value: 'true', label: 'true' },
+                { value: 'false', label: 'false' },
+            ],
+            default: 'false',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const site = ctx.req.param('site');
-    const only_media = ctx.req.param('only_media') ? 'true' : 'false';
+    const only_media = ctx.req.param('only_media') === 'true' ? 'true' : 'false';
     if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
@@ -36,7 +47,7 @@ async function handler(ctx) {
     const list = response.data;
 
     return {
-        title: `Federated Public${ctx.req.param('only_media') ? ' Media' : ''} Timeline on ${site}`,
+        title: `Federated Public${ctx.req.param('only_media') === 'true' ? ' Media' : ''} Timeline on ${site}`,
         link: `https://${site}`,
         item: utils.parseStatuses(list),
     };

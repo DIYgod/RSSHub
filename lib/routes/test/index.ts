@@ -32,7 +32,12 @@ async function handler(ctx) {
     if (ctx.req.param('id') === 'invalid-parameter-error') {
         throw new InvalidParameterError('Test invalid parameter error');
     }
+    if (ctx.req.param('id') === 'redirect') {
+        ctx.set('redirect', '/test/1');
+        return;
+    }
     let item: DataItem[] = [];
+    let image: string | null = null;
     switch (ctx.req.param('id')) {
         case 'filter':
             item = [
@@ -141,6 +146,7 @@ async function handler(ctx) {
             break;
         }
         case 'complicated':
+            image = 'https://mock.com/DIYgod/RSSHub.png';
             item.push(
                 {
                     title: `Complicated Title`,
@@ -166,15 +172,38 @@ async function handler(ctx) {
                     pubDate: new Date(`2019-3-1`).toUTCString(),
                     link: `https://mock.com/DIYgod/RSSHub`,
                     author: `DIYgod`,
+                },
+                {
+                    title: `Complicated Title`,
+                    description: `<a href="/DIYgod/RSSHub"></a>
+<img src="/DIYgod/RSSHub.jpg">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `//mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    enclosure_url: 'https://mock.com/DIYgod/RSSHub.png',
+                    enclosure_type: 'image/png',
+                    itunes_item_image: 'https://mock.com/DIYgod/RSSHub.gif',
+                },
+                {
+                    title: `Complicated Title`,
+                    description: `<a href="/DIYgod/RSSHub"></a>
+<img src="/DIYgod/RSSHub.jpg">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `//mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    image: 'https://mock.com/DIYgod/RSSHub.jpg',
                 }
             );
 
             break;
 
         case 'multimedia':
-            item.push({
-                title: `Multimedia Title`,
-                description: `<img src="/DIYgod/RSSHub.jpg">
+            item.push(
+                {
+                    title: `Multimedia Title`,
+                    description: `<img src="/DIYgod/RSSHub.jpg">
 <video src="/DIYgod/RSSHub.mp4"></video>
 <video poster="/DIYgod/RSSHub.jpg">
 <source src="/DIYgod/RSSHub.mp4" type="video/mp4">
@@ -182,10 +211,21 @@ async function handler(ctx) {
 </video>
 <audio src="/DIYgod/RSSHub.mp3"></audio>
 <iframe src="/DIYgod/RSSHub.html"></iframe>`,
-                pubDate: new Date(`2019-3-1`).toUTCString(),
-                link: `https://mock.com/DIYgod/RSSHub`,
-                author: `DIYgod`,
-            });
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `https://mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                },
+                {
+                    title: `Multimedia Title`,
+                    description: `<img src="/DIYgod/RSSHub.jpg">
+<video src="/DIYgod/RSSHub.mp4"></video>`,
+                    pubDate: new Date(`2019-3-1`).toUTCString(),
+                    link: `https://mock.com/DIYgod/RSSHub`,
+                    author: `DIYgod`,
+                    enclosure_url: 'https://mock.com/DIYgod/RSSHub.mp4',
+                    enclosure_type: 'video/mp4',
+                }
+            );
 
             break;
 
@@ -369,12 +409,13 @@ async function handler(ctx) {
     }
 
     return {
+        image,
         title: `Test ${ctx.req.param('id')}`,
         itunes_author: ctx.req.param('id') === 'enclosure' ? 'DIYgod' : null,
         link: 'https://github.com/DIYgod/RSSHub',
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description:
-            ctx.req.param('id') === 'complicated' ? '<img src="http://mock.com/DIYgod/DIYgod/RSSHub">' : ctx.req.param('id') === 'multimedia' ? '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video>' : 'A test route for RSSHub',
+            ctx.req.param('id') === 'complicated' ? '<img src="http://mock.com/DIYgod/DIYgod/RSSHub">' : (ctx.req.param('id') === 'multimedia' ? '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video>' : 'A test route for RSSHub'),
     };
 }

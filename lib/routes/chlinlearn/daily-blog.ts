@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 import timezone from '@/utils/timezone';
+import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/daily-blog',
@@ -24,9 +25,15 @@ export const route: Route = {
         },
     ],
     handler: async () => {
+        const r = CryptoJS.lib.WordArray.random(8).toString(CryptoJS.enc.Hex);
+        const n = Date.now();
+        const o = CryptoJS.SHA256('pHVp671B0tLkW40KCwyPrb6W1GEMEGyT' + r + n).toString(CryptoJS.enc.Hex);
         const data = await ofetch('https://daily-blog.chlinlearn.top/api/daily-blog/getBlogs/new?type=new&pageNum=1&pageSize=20', {
             headers: {
                 Referer: 'https://daily-blog.chlinlearn.top/blogs/1',
+                'x-req-nonce': r,
+                'x-req-timestamp': n,
+                'x-req-key': o,
             },
         });
         const items = data.rows.map((item) => ({

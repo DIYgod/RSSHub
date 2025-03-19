@@ -58,16 +58,16 @@ export const route: Route = {
     handler,
     url: 'guancha.cn/',
     description: `| 全部 | 评论 & 研究 | 要闻  | 风闻    | 热点新闻 | 滚动新闻 |
-  | ---- | ----------- | ----- | ------- | -------- | -------- |
-  | all  | review      | story | fengwen | redian   | gundong  |
+| ---- | ----------- | ----- | ------- | -------- | -------- |
+| all  | review      | story | fengwen | redian   | gundong  |
 
   home = 评论 & 研究 + 要闻 + 风闻
 
   others = 热点新闻 + 滚动新闻
 
-  :::tip
+::: tip
   观察者网首页左中右的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

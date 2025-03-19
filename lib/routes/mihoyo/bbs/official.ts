@@ -53,12 +53,13 @@ class MiHoYoOfficialError extends Error {
 
 const getNewsList = async ({ gids, type, page_size, last_id }) => {
     const query = new URLSearchParams({
+        client_type: '4',
         gids,
         type,
         page_size,
         last_id,
     }).toString();
-    const url = `https://bbs-api.miyoushe.com/post/wapi/getNewsList?${query}`;
+    const url = `https://bbs-api-static.miyoushe.com/painter/wapi/getNewsList?${query}`;
     const response = await got({
         method: 'get',
         url,
@@ -138,15 +139,15 @@ export const route: Route = {
     handler,
     description: `游戏 id
 
-  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
-  | ------ | ---- | ------ | ---------- | -------- | ------ |
-  | 1      | 2    | 3      | 4          | 6        | 8      |
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
+| ------ | ---- | ------ | ---------- | -------- | ------ |
+| 1      | 2    | 3      | 4          | 6        | 8      |
 
   公告类型
 
-  | 公告 | 活动 | 资讯 |
-  | ---- | ---- | ---- |
-  | 1    | 2    | 3    |`,
+| 公告 | 活动 | 资讯 |
+| ---- | ---- | ---- |
+| 1    | 2    | 3    |`,
 };
 
 async function handler(ctx) {

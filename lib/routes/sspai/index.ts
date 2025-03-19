@@ -61,9 +61,9 @@ async function handler() {
     );
 
     return {
-        title: '少数派 -- 首页',
+        title: '少数派',
         link: 'https://sspai.com',
-        description: '少数派 -- 首页',
+        description: '少数派首页',
         item: items,
     };
 }

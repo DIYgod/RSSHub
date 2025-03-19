@@ -13,7 +13,11 @@ export const route: Route = {
     example: '/ecnu/jwc',
     radar: [
         {
-            source: ['www.jwc.ecnu.edu.cn', 'www.ecnu.edu.cn'],
+            source: ['www.jwc.ecnu.edu.cn'],
+            target: '/tzgg',
+        },
+        {
+            source: ['www.ecnu.edu.cn'],
             target: '/tzgg',
         },
     ],

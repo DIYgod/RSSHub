@@ -4,21 +4,17 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/list/:id/:routeParams?',
-    categories: ['social-media'],
-    example: '/twitter/list/ladyleet/javascript',
-    parameters: { id: 'username', name: 'list name', routeParams: 'extra parameters, see the table above' },
+    categories: ['social-media', 'popular'],
+    example: '/twitter/list/1502570462752219136',
+    parameters: { id: 'list id, get from url', routeParams: 'extra parameters, see the table above' },
     features: {
         requireConfig: [
             {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
-            {
                 name: 'TWITTER_AUTH_TOKEN',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
                 description: 'Please see above for details.',
             },
         ],
@@ -29,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'List timeline',
-    maintainers: ['DIYgod', 'xyqfer'],
+    maintainers: ['DIYgod', 'xyqfer', 'pseudoyu'],
     handler,
     radar: [
         {
@@ -41,11 +37,17 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const { count } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
-    const data = await api.getList(id, params);
+    let data = await api.getList(id, params);
+    if (!include_rts) {
+        data = utils.excludeRetweet(data);
+    }
+    if (only_media) {
+        data = utils.keepOnlyMedia(data);
+    }
 
     return {
         title: `Twitter List - ${id}`,

@@ -26,9 +26,9 @@ export const route: Route = {
     name: '用户关注时间线',
     maintainers: ['SeanChao'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -60,12 +60,14 @@ async function handler(ctx) {
                 const questionId = e.target.question.id;
                 return `${urlBase}/question/${questionId}/answer/${id}`;
             }
+            case 'pin':
             case 'article':
                 return e.target.url;
             case 'question':
                 return `${urlBase}/question/${id}`;
+            default:
+                return;
         }
-        return '';
     };
 
     /**
@@ -92,7 +94,7 @@ async function handler(ctx) {
         return (
             content
                 .map((e) => e.content)
-                .filter((e) => e instanceof String && !!e)
+                .filter((e) => !!e && typeof e === 'string')
                 // some content may not be wrapped in tag, it will cause error when parsing
                 .map((e) => `<div>${e}</div>`)
                 .join('')
@@ -111,11 +113,12 @@ async function handler(ctx) {
             link,
             author: e.target.author ? e.target.author.name : '',
             guid: link,
+            category: [e.verb],
         };
     };
 
     const out = feeds
-        .filter((e) => e.verb && e.verb !== 'MEMBER_VOTEUP_ARTICLE' && e.verb !== 'MEMBER_VOTEUP_ANSWER')
+        .filter((e) => e.verb)
         .map((e) => {
             if (e && e.type && e.type === 'feed_group') {
                 // A feed group contains a list of feeds whose structure is the same as a single feed
@@ -134,6 +137,7 @@ async function handler(ctx) {
                     description,
                     pubDate,
                     guid,
+                    category: [e.verb],
                 };
             }
             return buildItem(e);

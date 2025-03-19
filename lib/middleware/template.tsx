@@ -74,8 +74,16 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 if (outputType !== 'rss') {
-                    item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
-                    item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                    try {
+                        item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
+                    } catch {
+                        item.pubDate = '';
+                    }
+                    try {
+                        item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                    } catch {
+                        item.updated = '';
+                    }
                 }
             }
         }
@@ -94,7 +102,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return ctx.json(result);
     }
 
-    if (ctx.get('no-content')) {
+    if (ctx.get('redirect')) {
+        return ctx.redirect(ctx.get('redirect'), 301);
+    } else if (ctx.get('no-content')) {
         return ctx.body(null);
     } else {
         // retain .ums for backward compatibility

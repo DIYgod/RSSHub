@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -37,9 +37,35 @@ const timeRangeEnum = new Set(['all', 'oneDay', 'threeDay', 'oneWeek', 'oneMonth
 
 export const route: Route = {
     path: '/article/:categoryId/:sortType?/:timeRange?',
-    categories: ['anime'],
+    categories: ['anime', 'popular'],
+    view: ViewType.Articles,
     example: '/acfun/article/110',
-    parameters: { categoryId: '分区 ID，见下表', sortType: '排序，见下表，默认为 `createTime`', timeRange: '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`' },
+    parameters: {
+        categoryId: {
+            description: '分区 ID',
+            options: Object.keys(categoryMap).map((id) => ({ value: id, label: categoryMap[id].title })),
+        },
+        sortType: {
+            description: '排序',
+            options: [
+                { value: 'createTime', label: '最新发表' },
+                { value: 'lastCommentTime', label: '最新动态' },
+                { value: 'hotScore', label: '最热文章' },
+            ],
+            default: 'createTime',
+        },
+        timeRange: {
+            description: '时间范围，仅在排序是 `hotScore` 有效',
+            options: [
+                { value: 'all', label: '时间不限' },
+                { value: 'oneDay', label: '24 小时' },
+                { value: 'threeDay', label: '三天' },
+                { value: 'oneWeek', label: '一周' },
+                { value: 'oneMonth', label: '一个月' },
+            ],
+            default: 'all',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -52,16 +78,16 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
-  | ---------- | ---- | -------- | ---- | -------- | -------- |
-  | 184        | 110  | 73       | 164  | 74       | 75       |
+| ---------- | ---- | -------- | ---- | -------- | -------- |
+| 184        | 110  | 73       | 164  | 74       | 75       |
 
-  | 最新发表   | 最新动态        | 最热文章 |
-  | ---------- | --------------- | -------- |
-  | createTime | lastCommentTime | hotScore |
+| 最新发表   | 最新动态        | 最热文章 |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
 
-  | 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
-  | -------- | ------- | -------- | ------- | -------- |
-  | all      | oneDay  | threeDay | oneWeek | oneMonth |`,
+| 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
+| -------- | ------- | -------- | ------- | -------- |
+| all      | oneDay  | threeDay | oneWeek | oneMonth |`,
 };
 
 async function handler(ctx) {

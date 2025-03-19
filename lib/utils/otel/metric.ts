@@ -1,8 +1,9 @@
 import { Resource } from '@opentelemetry/resources';
 import { PrometheusExporter, PrometheusSerializer } from '@opentelemetry/exporter-prometheus';
-import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { MeterProvider } from '@opentelemetry/sdk-metrics';
 import { Attributes } from '@opentelemetry/api';
+import { config } from '@/config';
 
 interface IMetricAttributes extends Attributes {
     method: string;
@@ -20,7 +21,7 @@ const exporter = new PrometheusExporter({});
 
 const provider = new MeterProvider({
     resource: new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: 'rsshub',
+        [ATTR_SERVICE_NAME]: 'rsshub',
     }),
     readers: [exporter],
 });
@@ -33,12 +34,12 @@ const requestTotal = meter.createCounter<IMetricAttributes>(`${METRIC_PREFIX}_re
 const requestErrorTotal = meter.createCounter<IMetricAttributes>(`${METRIC_PREFIX}_request_error_total`);
 const requestDurationSecondsBucket = meter.createHistogram<IHistogramAttributes>(`${METRIC_PREFIX}_request_duration_seconds_bucket`, {
     advice: {
-        explicitBucketBoundaries: [0.01, 0.1, 1, 2, 5, 15, 30, 60],
+        explicitBucketBoundaries: config.otel.seconds_bucket?.split(',').map(Number),
     },
 });
 const request_duration_milliseconds_bucket = meter.createHistogram<IHistogramAttributes>(`${METRIC_PREFIX}_request_duration_milliseconds_bucket`, {
     advice: {
-        explicitBucketBoundaries: [10, 20, 50, 100, 250, 500, 1000, 5000, 15000],
+        explicitBucketBoundaries: config.otel.milliseconds_bucket?.split(',').map(Number),
     },
 });
 

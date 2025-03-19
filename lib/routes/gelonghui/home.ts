@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -6,9 +6,21 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/home/:tag?',
-    categories: ['finance'],
+    categories: ['finance', 'popular'],
+    view: ViewType.Articles,
     example: '/gelonghui/home',
-    parameters: { tag: '分类标签，见下表，默认为 `web_home_page`' },
+    parameters: {
+        tag: {
+            description: '分类标签，见下表，默认为 `web_home_page`',
+            options: [
+                { value: 'web_home_page', label: '推荐' },
+                { value: 'stock', label: '股票' },
+                { value: 'fund', label: '基金' },
+                { value: 'new_stock', label: '新股' },
+                { value: 'research', label: '研报' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,8 +33,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 推荐            | 股票  | 基金 | 新股       | 研报     |
-  | --------------- | ----- | ---- | ---------- | -------- |
-  | web\_home\_page | stock | fund | new\_stock | research |`,
+| --------------- | ----- | ---- | ---------- | -------- |
+| web\_home\_page | stock | fund | new\_stock | research |`,
 };
 
 async function handler(ctx) {
