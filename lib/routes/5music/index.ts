@@ -23,13 +23,13 @@ export const route: Route = {
         },
     ],
     name: '新貨上架',
-    maintainers: ['@gideonsenku'],
+    maintainers: ['gideonsenku'],
     handler,
     description: `Categories:
 | 華語 | 西洋 | 東洋 | 韓語 | 古典 |
 | ---- | ---- | ---- | ---- | ---- |
 | A | B | F | M | D |`,
-    url: 'https://www.5music.com.tw/New_releases.asp',
+    url: 'www.5music.com.tw/New_releases.asp',
 };
 
 async function handler(ctx) {
