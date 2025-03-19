@@ -52,44 +52,58 @@ async function handler(ctx) {
             const author = item.source;
             const abstract = item.abstract;
 
-            return item.articletype === '4'
-                ? {
-                      title,
-                      description: abstract,
-                      link: itemUrl,
-                      author,
-                      pubDate,
-                  }
-                : cache.tryGet(itemUrl, async () => {
-                      const response = await got(itemUrl);
-                      const $ = load(response.data);
-                      const data = JSON.parse(
-                          $('script:contains("window.DATA")')
-                              .text()
-                              .match(/window\.DATA = ({.+});/)[1]
-                      );
-                      const $data = load(data.originContent?.text || '', null, false);
-                      if ($data) {
-                          // Not video page
-                          $data('*')
-                              .contents()
-                              .filter((_, elem) => elem.type === 'comment')
-                              .replaceWith((_, elem) =>
-                                  art(path.join(__dirname, '../templates/news/image.art'), {
-                                      attribute: elem.data.trim(),
-                                      originAttribute: data.originAttribute,
-                                  })
-                              );
-                      }
+            if (item.articletype === '4') {
+                // Video
+                return {
+                    title,
+                    description: `<a href=${item.url}><img src="${item.miniProShareImage}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
+                    link: itemUrl,
+                    author,
+                    pubDate,
+                };
+            }
 
-                      return {
-                          title,
-                          description: $data.html() || abstract,
-                          link: itemUrl,
-                          author,
-                          pubDate,
-                      };
-                  });
+            if (item.articletype === '118') {
+                // Xiao Video
+                return {
+                    title,
+                    description: `<a href=${item.url}><img src="${item.miniVideoPic}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
+                    link: itemUrl,
+                    author,
+                    pubDate,
+                };
+            }
+
+            return cache.tryGet(itemUrl, async () => {
+                const response = await got(itemUrl);
+                const $ = load(response.data);
+                const data = JSON.parse(
+                    $('script:contains("window.DATA")')
+                        .text()
+                        .match(/window\.DATA = ({.+});/)[1]
+                );
+                const $data = load(data.originContent?.text || '', null, false);
+                if ($data) {
+                    // Not video page
+                    $data('*')
+                        .contents()
+                        .filter((_, elem) => elem.type === 'comment')
+                        .replaceWith((_, elem) =>
+                            art(path.join(__dirname, '../templates/news/image.art'), {
+                                attribute: elem.data.trim(),
+                                originAttribute: data.originAttribute,
+                            })
+                        );
+                }
+
+                return {
+                    title,
+                    description: $data.html() || abstract,
+                    link: itemUrl,
+                    author,
+                    pubDate,
+                };
+            });
         })
     );
 
