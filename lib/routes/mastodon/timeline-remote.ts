@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const url = `http://${site}/api/v1/timelines/public?remote=true&only_media=${only_media}`;
 
-    const response = await got.get(url, { headers: utils.apiHeaders() });
+    const response = await got.get(url, { headers: utils.apiHeaders(site) });
     const list = response.data;
 
     return {
