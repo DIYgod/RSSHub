@@ -58,7 +58,7 @@ async function handler(ctx): Promise<Data> {
                 // Video
                 return {
                     title,
-                    description: `<a href=${item.url}><img src="${item.articletype === '4' ? item.miniProShareImage : item.miniVideoPic}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
+                    description: `<a href=${item.url}><img src="${item.articletype === '4' ? item.miniProShareImage : item.miniVideoPic}" style="width: 100%"></a>`,
                     link: itemUrl,
                     author,
                     pubDate,
