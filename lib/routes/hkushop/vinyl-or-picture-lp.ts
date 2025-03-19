@@ -3,7 +3,7 @@ import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/vinyl/:cat',
+    path: '/vinyl/:cat?',
     categories: ['shopping'],
     example: '/hkushop/vinyl',
     parameters: {
@@ -11,15 +11,16 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        supportRadar: true,
     },
     radar: [
         {
-            source: ['hkushop.com/vinyl-or-picture-lp.html'],
+            source: ['hkushop.com/vinyl-or-picture-lp.html', 'hkushop.com/'],
             target: '/vinyl',
         },
     ],
@@ -30,12 +31,13 @@ export const route: Route = {
 | 華語音樂 | 經典復刻 | 古典跨界 | 爵士音樂 | 國際音樂 | 電影原聲帶 | 黑膠日本音樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 37 | 38 | 40 | 41 | 39 | 170 | 224 |`,
-    url: 'hkushop.com/',
+    url: 'hkushop.com/vinyl-or-picture-lp.html',
 };
 
-async function handler() {
+async function handler(ctx) {
     const baseUrl = 'https://hkushop.com';
-    const url = `${baseUrl}/vinyl-or-picture-lp.html`;
+    const cat = ctx.req.param('cat') ?? '';
+    const url = cat ? `${baseUrl}/vinyl-or-picture-lp.html?cat=${cat}` : `${baseUrl}/vinyl-or-picture-lp.html`;
 
     const browser = await puppeteer();
     const page = await browser.newPage();
@@ -73,8 +75,10 @@ async function handler() {
             };
         });
 
+    const title = cat ? `黑胶\彩胶系列 - ${$('.page-title').text().trim()}` : String.raw`黑胶\彩胶系列 - HKU Shop 环球唱片网店`;
+
     return {
-        title: String.raw`黑胶\彩胶系列 - HKU Shop 环球唱片网店`,
+        title,
         link: url,
         description: 'HKU Shop 黑胶唱片最新商品信息',
         item: list,
