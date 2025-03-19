@@ -1948,6 +1948,20 @@
       }
     ]
   },
+  "5music.com.tw": {
+    "_name": "五大唱片",
+    "www": [
+      {
+        "title": "新貨上架",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/New_releases.asp",
+          "/"
+        ],
+        "target": "/5music/new-releases"
+      }
+    ]
+  },
   "69shuba.cx": {
     "_name": "69书吧",
     "www": [

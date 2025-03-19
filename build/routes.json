@@ -3617,6 +3617,51 @@
     "url": "csgo.5eplay.com",
     "lang": "zh-CN"
   },
+  "5music": {
+    "routes": {
+      "/new-releases/:category?": {
+        "path": "/new-releases/:category?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/5music/new-releases",
+        "parameters": {
+          "category": "Category, see below, defaults to all"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.5music.com.tw/New_releases.asp",
+              "www.5music.com.tw/"
+            ],
+            "target": "/new-releases"
+          }
+        ],
+        "name": "新貨上架",
+        "maintainers": [
+          "gideonsenku"
+        ],
+        "description": "Categories:\n| 華語 | 西洋 | 東洋 | 韓語 | 古典 |\n| ---- | ---- | ---- | ---- | ---- |\n| A | B | F | M | D |",
+        "url": "www.5music.com.tw/New_releases.asp",
+        "location": "index.ts"
+      }
+    },
+    "name": "五大唱片",
+    "url": "5music.com.tw",
+    "lang": "zh-TW",
+    "categories": [
+      "shopping"
+    ],
+    "description": "五大唱片是台湾五大唱片股份有限公司的简称，成立于1990年，是台湾最大的唱片公司之一。"
+  },
   "69shu": {
     "routes": {
       "/article/:id": {
