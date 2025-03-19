@@ -54,22 +54,11 @@ async function handler(ctx): Promise<Data> {
             const author = item.source;
             const abstract = item.abstract;
 
-            if (item.articletype === '4') {
+            if (item.articletype === '4' || item.articletype === '118') {
                 // Video
                 return {
                     title,
-                    description: `<a href=${item.url}><img src="${item.miniProShareImage}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
-                    link: itemUrl,
-                    author,
-                    pubDate,
-                };
-            }
-
-            if (item.articletype === '118') {
-                // Xiao Video
-                return {
-                    title,
-                    description: `<a href=${item.url}><img src="${item.miniVideoPic}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
+                    description: `<a href=${item.url}><img src="${item.articletype === '4' ? item.miniProShareImage : item.miniVideoPic}" style="width: 100%" referrerpolicy="no-referrer"></a>`,
                     link: itemUrl,
                     author,
                     pubDate,
