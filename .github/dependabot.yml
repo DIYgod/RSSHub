@@ -13,9 +13,9 @@ updates:
       # https://github.com/goofychris/art-template/issues/660 the issue created from original author stating v4.13.3
       # contains suspicious code and related issues (#658, #659) were deleted
       # related:
-      # https://github.com/fastify/point-of-view/issues/463 https://github.com/cnpm/bug-versions/pull/266
+      # https://github.com/fastify/point-of-view/issues/463 https://github.com/fastify/point-of-view/pull/461#issuecomment-2718888986
+      # https://github.com/cnpm/bug-versions/pull/266 https://github.com/cnpm/cnpmcore/issues/777
       # https://github.com/yoimiya-kokomi/Miao-Yunzai/pull/515 https://github.com/zhangfisher/flex-tools/commit/09b565dfe6e2932bb829613ddbe09f6d0acbccd4
-      # https://github.com/fastify/point-of-view/pull/461#issuecomment-2718888986
       - dependency-name: art-template
         versions: ['>=4.13.3']
       # no longer includes KJUR.crypto.Cipher for RSA
