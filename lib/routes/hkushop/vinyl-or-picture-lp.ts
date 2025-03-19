@@ -51,6 +51,7 @@ async function handler(ctx) {
 
     const response = await page.content();
     await page.close();
+    await browser.close();
 
     const $ = load(response);
 
