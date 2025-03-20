@@ -5254,6 +5254,14 @@
           "/categories"
         ],
         "target": "/asiafruitchina/categories/youzi"
+      },
+      {
+        "title": "行业资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/news"
+        ],
+        "target": "/asiafruitchina/asiafruitchina/news"
       }
     ]
   },

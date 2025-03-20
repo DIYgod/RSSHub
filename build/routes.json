@@ -9836,6 +9836,37 @@
         ],
         "view": 0,
         "location": "categories.ts"
+      },
+      "/news": {
+        "path": "/news",
+        "name": "行业资讯",
+        "url": "asiafruitchina.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/asiafruitchina/news",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "asiafruitchina.net/category/news"
+            ],
+            "target": "/asiafruitchina/news"
+          }
+        ],
+        "view": 0,
+        "location": "news.ts"
       }
     },
     "name": "亚洲水果",

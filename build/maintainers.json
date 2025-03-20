@@ -593,6 +593,9 @@
   "/asiafruitchina/categories/:category?": [
     "nczitzk"
   ],
+  "/asiafruitchina/news": [
+    "nczitzk"
+  ],
   "/asianfanfics/tag/:tag/:type": [
     "KazooTTT"
   ],
