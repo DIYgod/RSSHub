@@ -25,6 +25,9 @@ updates:
       opentelemetry:
         patterns:
           - '@opentelemetry/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
