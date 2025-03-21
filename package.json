@@ -191,7 +191,7 @@
         "node-network-devtools": "1.0.25",
         "prettier": "3.5.3",
         "remark-parse": "11.0.0",
-        "supertest": "7.0.0",
+        "supertest": "7.1.0",
         "typescript": "5.8.2",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
