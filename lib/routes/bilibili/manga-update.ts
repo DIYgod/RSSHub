@@ -32,16 +32,16 @@ async function genReqSign(query, body) {
 
     // Cache the wasm binary as it's quite large (~2MB)
     // Here the binary is saved as base64 as the cache stores strings
-    const wasm_buffer_base64 = await cache.tryGet('bilibili-manga-wasm-20250208', async () => {
-        const wasm_resp = await got('https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm', {
+    const wasmBufferBase64 = await cache.tryGet('bilibili-manga-wasm-20250208', async () => {
+        const wasmResp = await got('https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm', {
             responseType: 'arrayBuffer',
         });
-        return Buffer.from(wasm_resp.data).toString('base64');
+        return Buffer.from(wasmResp.data).toString('base64');
     });
-    const wasm_buffer = Buffer.from(wasm_buffer_base64, 'base64');
+    const wasmBuffer = Buffer.from(wasmBufferBase64, 'base64');
 
     const go = new Go();
-    const { instance } = await WebAssembly.instantiate(wasm_buffer, go.importObject);
+    const { instance } = await WebAssembly.instantiate(wasmBuffer, go.importObject);
     go.run(instance);
     if (void 0 === globalThis.genReqSign) {
         throw new Error('WASM function not available');
@@ -63,11 +63,11 @@ async function handler(ctx) {
         comic_id: Number(comic_id),
     });
 
-    const ultra_sign = await genReqSign(query, body);
+    const ultraSign = await genReqSign(query, body);
 
     const response = await got({
         method: 'POST',
-        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?${query}&ultra_sign=${ultra_sign}`,
+        url: `https://manga.bilibili.com/twirp/comic.v2.Comic/ComicDetail?${query}&ultra_sign=${ultraSign}`,
         body,
         headers: {
             Referer: link,
