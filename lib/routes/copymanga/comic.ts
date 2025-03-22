@@ -25,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '漫画更新',
-    maintainers: ['btdwv', 'marvolo666', 'yan12125'],
+    maintainers: ['btdwv', 'marvolo666'],
     handler,
 };
 
