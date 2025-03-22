@@ -24763,6 +24763,59 @@
       }
     ]
   },
+  "mycard520.com.tw": {
+    "_name": "MyCard娛樂中心",
+    "app": [
+      {
+        "title": "遊戲新聞",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/mycard520params=>{const category=params.category;return`/mycard520${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "最新遊戲",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/cardgame"
+        ],
+        "target": "/mycard520/category/cardgame"
+      },
+      {
+        "title": "手機遊戲",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/cardgame-mobile"
+        ],
+        "target": "/mycard520/category/cardgame-mobile"
+      },
+      {
+        "title": "PC 遊戲",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/cardgame-pc"
+        ],
+        "target": "/mycard520/category/cardgame-pc"
+      },
+      {
+        "title": "電競賽事",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/cardgame-esports"
+        ],
+        "target": "/mycard520/category/cardgame-esports"
+      },
+      {
+        "title": "實況直播",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/cardgame-live"
+        ],
+        "target": "/mycard520/category/cardgame-live"
+      }
+    ]
+  },
   "mydrivers.com": {
     "_name": "快科技",
     "m": [

@@ -4853,6 +4853,9 @@
   "/my-formosa/": [
     "dzx-dzx"
   ],
+  "/mycard520/category/:category?": [
+    "nczitzk"
+  ],
   "/mydrivers/cid/:id?": [],
   "/mydrivers/zhibo": [],
   "/mydrivers/:category{.+}?": [],
