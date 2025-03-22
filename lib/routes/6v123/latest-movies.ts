@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import { processItems } from './utils';
 
-const baseURL = 'https://www.hao6v.cc/gvod/zx.html';
+const baseURL = 'https://www.hao6v.me/gvod/zx.html';
 
 export const route: Route = {
     path: '/latestMovies',
@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hao6v.com/', 'hao6v.com/gvod/zx.html'],
+            source: ['hao6v.me/', 'hao6v.me/gvod/zx.html'],
         },
     ],
     name: '最新电影',
