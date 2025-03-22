@@ -22436,8 +22436,7 @@
         "name": "漫画更新",
         "maintainers": [
           "btdwv",
-          "marvolo666",
-          "yan12125"
+          "marvolo666"
         ],
         "location": "comic.ts"
       }

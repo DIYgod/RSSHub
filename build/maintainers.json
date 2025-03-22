@@ -1635,8 +1635,7 @@
   ],
   "/copymanga/comic/:id/:chapterCnt?": [
     "btdwv",
-    "marvolo666",
-    "yan12125"
+    "marvolo666"
   ],
   "/cosplaytele/category/:category": [
     "AiraNadih"
