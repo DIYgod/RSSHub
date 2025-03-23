@@ -20602,6 +20602,14 @@
     "_name": "kpopping",
     ".": [
       {
+        "title": "Pics",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/kpics/:filter"
+        ],
+        "target": "/kpoppingparams=>{const filter=params.filter;return`/kpopping/kpics${filter?`/${filter}`:\"\"}`}"
+      },
+      {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [

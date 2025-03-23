@@ -4304,6 +4304,9 @@
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],
+  "/kpopping/kpics/:filter{.+}?": [
+    "nczitzk"
+  ],
   "/kpopping/news/:filter{.+}?": [
     "nczitzk"
   ],
