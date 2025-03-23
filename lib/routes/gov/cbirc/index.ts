@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -10,17 +10,17 @@ export const handler = async (ctx) => {
     const { id = '915' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 18;
 
-    const rootUrl = 'https://www.cbirc.gov.cn';
+    const rootUrl = 'https://www.nfra.gov.cn';
     const apiUrl = new URL(`cn/static/data/DocInfo/SelectDocByItemIdAndChild/data_itemId=${id},pageIndex=1,pageSize=18.json`, rootUrl).href;
     const apiBreadUrl = new URL(`cn/static/data/item/getItemBread/data_itemId=${id}.json`, rootUrl).href;
 
-    const { data: breadResponse } = await got(apiBreadUrl);
+    const breadResponse = await ofetch(apiBreadUrl);
 
     const item = breadResponse.data.find((b) => String(b.itemId) === id);
 
     const currentUrl = new URL(`cn/view/pages/ItemList.html?itemPId=${item.itemPid}&itemId=${id}&itemUrl=ItemListRightList.html`, rootUrl).href;
 
-    const { data: response } = await got(apiUrl);
+    const response = await ofetch(apiUrl);
 
     let items = response.data.rows.slice(0, limit).map((item) => {
         const title = item.docTitle;
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
             cache.tryGet(item.link, async () => {
                 const apiDocUrl = new URL(`cn/static/data/DocInfo/SelectByDocId/data_docId=${item.guid}.json`, rootUrl).href;
 
-                const { data: detailResponse } = await got(apiDocUrl);
+                const detailResponse = await ofetch(apiDocUrl);
 
                 const data = detailResponse.data;
 
@@ -70,22 +70,23 @@ export const handler = async (ctx) => {
                     text: $$('div.Section0').text(),
                 };
                 item.updated = parseDate(data.docEditdate);
-                item.language = $$('html').prop('lang');
+                item.language = $$('html').prop('lang') || '';
 
                 return item;
             })
         )
     );
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch(currentUrl);
 
     const $ = load(currentResponse);
 
     $('a.lyxd').remove();
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') || '';
 
-    const image = new URL($('div.header-left img').prop('src'), rootUrl).href;
+    const imageSrc = $('div.header-left img').prop('src');
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : '';
 
     return {
         title: `${$('title').text()} - ${item.itemName}`,
@@ -151,7 +152,7 @@ export const route: Route = {
 
 #### [互动交流](https://www.cbirc.gov.cn/cn/view/pages/hudongjiaoliu/hudongjiaoliu.html)
 
-| [政务咨询](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=946&itemUrl=tosubmenu:hudongjiaoliu/woyaozixun.html) | [征集调查](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=950&itemUrl=ItemListRightMore.html) | [国务院办公厅开通“国家政务服务投诉与建议”小程序](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=952&itemUrl=http://www.gov.cn/xinwen/2018-09/20/content_5323786.htm) |
+| [政务咨询](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=946&itemUrl=tosubmenu:hudongjiaoliu/woyaozixun.html) | [征集调查](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=950&itemUrl=ItemListRightMore.html) | [国务院办公厅开通"国家政务服务投诉与建议"小程序](https://www.cbirc.gov.cn/cn/view/pages/ItemList.html?itemPId=945&itemId=952&itemUrl=http://www.gov.cn/xinwen/2018-09/20/content_5323786.htm) |
 | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [946](https://rsshub.app/gov/cbirc/946)                                                                                                 | [950](https://rsshub.app/gov/cbirc/950)                                                                                | [952](https://rsshub.app/gov/cbirc/952)                                                                                                                                                       |
 
@@ -186,8 +187,8 @@ export const route: Route = {
         {
             source: ['www.cbirc.gov.cn/:id?'],
             target: (_, url) => {
-                url = new URL(url);
-                const id = url.searchParams.get('itemId');
+                const urlObj = new URL(url.toString());
+                const id = urlObj.searchParams.get('itemId');
 
                 return `/gov/cbirc${id ? `/${id}` : ''}`;
             },
@@ -313,7 +314,7 @@ export const route: Route = {
             target: '/cbirc/950',
         },
         {
-            title: '互动交流 - 国务院办公厅开通“国家政务服务投诉与建议”小程序',
+            title: '互动交流 - 国务院办公厅开通"国家政务服务投诉与建议"小程序',
             source: ['www.cbirc.gov.cn/cn/view/pages/ItemList.html'],
             target: '/cbirc/952',
         },
