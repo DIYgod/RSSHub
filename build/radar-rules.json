@@ -7041,7 +7041,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/gov(_,url)=>{url=new URL(url);const id=url.searchParams.get(\"itemId\");return`/gov/cbirc${id?`/${id}`:\"\"}`}"
+        "target": "/gov(_,url)=>{const urlObj=new URL(url.toString());const id=urlObj.searchParams.get(\"itemId\");return`/gov/cbirc${id?`/${id}`:\"\"}`}"
       },
       {
         "title": "首页 - 弹出公告",
@@ -7236,7 +7236,7 @@
         "target": "/gov/cbirc/950"
       },
       {
-        "title": "互动交流 - 国务院办公厅开通“国家政务服务投诉与建议”小程序",
+        "title": "互动交流 - 国务院办公厅开通\"国家政务服务投诉与建议\"小程序",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
           "/cn/view/pages/ItemList.html"
