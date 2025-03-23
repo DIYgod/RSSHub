@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { Buffer } from 'node:buffer';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { v4 as uuidv4 } from 'uuid';
 import { SearchResponse, ItemDetail, ShopItemDetail } from './types';
 import { parseDate } from '@/utils/parse-date';
@@ -161,7 +161,7 @@ function generateDPOP({ uuid, method, url }: { uuid: string; method: string; url
 
 const fetchFromMercari = async <T>(url: string, data: any, method: 'POST' | 'GET' = 'POST'): Promise<T> => {
     const DPOP = generateDPOP({
-        uuid: 'uuidv4()',
+        uuid: uuidv4(),
         method,
         url,
     });
@@ -169,10 +169,8 @@ const fetchFromMercari = async <T>(url: string, data: any, method: 'POST' | 'GET
     const headers = new Headers({
         DPOP,
         'X-Platform': 'web',
-        Accept: '*/*',
         'Accept-Encoding': 'gzip, deflate',
         'Content-Type': 'application/json; charset=utf-8',
-        'User-Agent': 'typescript-mercari',
     });
 
     const options = {
