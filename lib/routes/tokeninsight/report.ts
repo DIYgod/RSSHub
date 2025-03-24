@@ -31,9 +31,9 @@ export const route: Route = {
     handler,
     description: `Language:
 
-  | Chinese | English |
-  | ------- | ------- |
-  | zh      | en      |`,
+| Chinese | English |
+| ------- | ------- |
+| zh      | en      |`,
 };
 
 async function handler(ctx) {

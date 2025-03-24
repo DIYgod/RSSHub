@@ -2,7 +2,7 @@ import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils from './utils';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
@@ -23,6 +23,7 @@ export const route: Route = {
 | useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
 | directLink | 使用内容直链                      | 0/1/true/false | false  |
 | hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
+| offset     | 偏移状态                         | string         | ""  |
 
 用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
@@ -160,6 +161,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     }
     let url = '';
     let text = '';
+    let videoPageUrl;
     const major = data.module_dynamic?.major;
     if (!major) {
         return null;
@@ -178,6 +180,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
             text = `视频地址：<a href=${url}>${url}</a>`;
+            videoPageUrl = getVideoUrl(archive?.bvid);
             break;
         }
         case 'MAJOR_TYPE_COMMON':
@@ -214,6 +217,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
         case 'MAJOR_TYPE_LIVE_RCMD': {
             const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
             url = `https://live.bilibili.com/${live_play_info?.room_id}`;
+            videoPageUrl = getLiveUrl(live_play_info?.room_id);
             text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         }
@@ -223,6 +227,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     return {
         url,
         text,
+        videoPageUrl,
     };
 };
 
@@ -232,13 +237,14 @@ async function handler(ctx) {
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
+    const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
     const hideGoods = fallback(undefined, queryToBoolean(routeParams.hideGoods), false);
 
     const cookie = await cacheIn.getCookie();
 
-    const params = utils.addDmVerifyInfo(`host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+    const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
     const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
@@ -375,6 +381,15 @@ async function handler(ctx) {
                     link,
                     author,
                     category: category.length ? [...new Set(category)] : undefined,
+                    attachments:
+                        urlResult?.videoPageUrl || originUrlResult?.videoPageUrl
+                            ? [
+                                  {
+                                      url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
+                                      mime_type: 'text/html',
+                                  },
+                              ]
+                            : undefined,
                 };
             })
     );

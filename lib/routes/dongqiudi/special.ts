@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/special/:id',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     example: '/dongqiudi/special/41',
     parameters: { id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配' },
     radar: [
@@ -18,8 +18,8 @@ export const route: Route = {
     maintainers: ['dxmpalb'],
     handler,
     description: `| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
-  | ---------- | ------------ | -------------- |
-  | 41         | 52           | 53             |`,
+| ---------- | ------------ | -------------- |
+| 41         | 52           | 53             |`,
 };
 
 async function handler(ctx) {

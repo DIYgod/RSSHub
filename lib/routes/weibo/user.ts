@@ -45,9 +45,9 @@ export const route: Route = {
     name: '博主',
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9', 'Konano'],
     handler,
-    description: `:::warning
+    description: `::: warning
   部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -56,6 +56,7 @@ async function handler(ctx) {
     let displayArticle = '0';
     let displayComments = '0';
     let showRetweeted = '1';
+    let showBloggerIcons = '0';
     if (ctx.req.param('routeParams')) {
         if (ctx.req.param('routeParams') === '1' || ctx.req.param('routeParams') === '0') {
             displayVideo = ctx.req.param('routeParams');
@@ -65,6 +66,7 @@ async function handler(ctx) {
             displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false) ? '1' : '0';
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
             showRetweeted = fallback(undefined, queryToBoolean(routeParams.showRetweeted), false) ? '1' : '0';
+            showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
         }
     }
     const containerData = await cache.tryGet(
@@ -161,7 +163,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item.mblog);
+                    description = await weiboUtils.formatComments(ctx, description, item.mblog, showBloggerIcons);
                 }
 
                 // 文章的处理

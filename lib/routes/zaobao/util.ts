@@ -86,16 +86,31 @@ const parseList = async (
                 const article = await got_ins.get(link);
                 const $1 = load(article.data);
 
-                const time = (() =>
-                    $1("head script[type='application/json']").text() === ''
-                        ? new Date(JSON.parse($1("head script[type='application/ld+json']").eq(1).text())?.datePublished) // HK
-                        : new Date(Number(JSON.parse($1("head script[type='application/json']").text())?.articleDetails?.created) * 1000))(); // SG
+                let title, time;
+                if ($1('#seo-article-page').text() === '') {
+                    // HK
+                    title = $1('h1.article-title').text();
+                    const jsonText = $1("head script[type='application/ld+json']")
+                        .eq(1)
+                        .text()
+                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    time = new Date(JSON.parse(jsonText)?.datePublished);
+                } else {
+                    // SG
+                    const jsonText = $1('#seo-article-page')
+                        .text()
+                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    const json = JSON.parse(jsonText);
+                    title = json['@graph'][0]?.headline;
+                    time = new Date(json['@graph'][0]?.datePublished);
+                }
 
                 $1('.overlay-microtransaction').remove();
                 $1('#video-freemium-player').remove();
                 $1('script').remove();
+                $1('.bff-google-ad').remove();
 
-                let articleBodyNode = $1('.article-content-rawhtml');
+                let articleBodyNode = $1('.articleBody');
                 if (articleBodyNode.length === 0) {
                     // for HK version
                     orderContent($1('.article-body'));
@@ -107,8 +122,8 @@ const parseList = async (
                 const imageDataArray = processImageData($1);
 
                 return {
-                    // <- for SG version  -> for HK version
-                    title: $1('h1', '.content').text().trim() || $1('h1.article-title').text(),
+                    // <- for HK version  -> for SG version
+                    title,
                     description: art(path.join(__dirname, 'templates/zaobao.art'), {
                         articleBody,
                         imageDataArray,

@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['fuzy112'],
     handler,
     description: `| 硕士招生 | 博士招生 | 港澳台及中外合作办学 |
-  | -------- | -------- | -------------------- |
-  | 6676     | 6677     | 6679                 |`,
+| -------- | -------- | -------------------- |
+| 6676     | 6677     | 6679                 |`,
 };
 
 async function handler(ctx) {

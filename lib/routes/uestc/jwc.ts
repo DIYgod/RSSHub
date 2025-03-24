@@ -52,9 +52,9 @@ export const route: Route = {
     handler,
     url: 'www.jwc.uestc.edu.cn/',
     description: `\
-  | 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
-  | --------- | ------------ | ------------ | -------- | ------ |
-  | important | student      | teacher      | teaching | office |`,
+| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
+| --------- | ------------ | ------------ | -------- | ------ |
+| important | student      | teacher      | teaching | office |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

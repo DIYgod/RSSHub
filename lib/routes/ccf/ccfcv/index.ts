@@ -36,8 +36,8 @@ export const route: Route = {
     maintainers: ['elxy'],
     handler,
     description: `| 学术前沿 | 热点征文 | 学术会议 |
-  | -------- | -------- | -------- |
-  | xsqy     | rdzw     | xshy     |`,
+| -------- | -------- | -------- |
+| xsqy     | rdzw     | xshy     |`,
 };
 
 async function handler(ctx) {

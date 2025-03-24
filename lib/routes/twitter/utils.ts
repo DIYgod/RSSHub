@@ -52,6 +52,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         readable: fallback(params.readable, queryToBoolean(routeParams.get('readable')), false),
         authorNameBold: fallback(params.authorNameBold, queryToBoolean(routeParams.get('authorNameBold')), false),
         showAuthorInTitle: fallback(params.showAuthorInTitle, queryToBoolean(routeParams.get('showAuthorInTitle')), false),
+        showAuthorAsTitleOnly: fallback(params.showAuthorAsTitleOnly, queryToBoolean(routeParams.get('showAuthorAsTitleOnly')), false),
         showAuthorInDesc: fallback(params.showAuthorInDesc, queryToBoolean(routeParams.get('showAuthorInDesc')), false),
         showQuotedAuthorAvatarInDesc: fallback(params.showQuotedAuthorAvatarInDesc, queryToBoolean(routeParams.get('showQuotedAuthorAvatarInDesc')), false),
         showAuthorAvatarInDesc: fallback(params.showAuthorAvatarInDesc, queryToBoolean(routeParams.get('showAuthorAvatarInDesc')), false),
@@ -74,6 +75,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         readable,
         authorNameBold,
         showAuthorInTitle,
+        showAuthorAsTitleOnly,
         showAuthorInDesc,
         showQuotedAuthorAvatarInDesc,
         showAuthorAvatarInDesc,
@@ -243,7 +245,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 quote += formatMedia(quoteData);
                 picsPrefix += generatePicsPrefix(quoteData);
-                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
+                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : (showSymbolForRetweetAndReply ? ' RT ' : '');
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
                 if (readable) {
@@ -275,21 +277,25 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         const isQuote = item.is_quote_status;
         if (!isRetweet && (!isQuote || showRetweetTextInTitle)) {
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
+                title += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
             }
             title += replaceBreak(originalItem.full_text);
         }
         if (isRetweet) {
-            title += showEmojiForRetweetAndReply ? '🔁 ' : showSymbolForRetweetAndReply ? 'RT ' : '';
+            title += showEmojiForRetweetAndReply ? '🔁 ' : (showSymbolForRetweetAndReply ? 'RT ' : '');
             title += item.user.name + ': ';
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? ' ↩️ ' : showSymbolForRetweetAndReply ? ' Re ' : '';
+                title += showEmojiForRetweetAndReply ? ' ↩️ ' : (showSymbolForRetweetAndReply ? ' Re ' : '');
             }
             title += replaceBreak(item.full_text);
         }
 
         if (showQuotedInTitle) {
             title += quoteInTitle;
+        }
+
+        if (showAuthorAsTitleOnly) {
+            title = originalItem.user.name;
         }
 
         // Make description
@@ -315,7 +321,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 description += '&ensp;';
             }
-            description += showEmojiForRetweetAndReply ? '🔁' : showSymbolForRetweetAndReply ? 'RT' : '';
+            description += showEmojiForRetweetAndReply ? '🔁' : (showSymbolForRetweetAndReply ? 'RT' : '');
             if (!showAuthorInDesc) {
                 description += '&ensp;';
                 if (readable) {
@@ -358,7 +364,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description += `:&ensp;`;
         }
         if (item.in_reply_to_screen_name) {
-            description += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
+            description += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
         }
 
         description += item.full_text;
@@ -399,6 +405,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 (isRetweet && {
                     links: [
                         {
+                            url: `https://x.com/${item.user?.screen_name}/status/${item.conversation_id_str}`,
                             type: 'repost',
                         },
                     ],

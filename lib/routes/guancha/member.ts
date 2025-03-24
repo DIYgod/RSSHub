@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'guancha.cn/',
     description: `| 精选      | 观书堂 | 在线课  | 观学院   |
-  | --------- | ------ | ------- | -------- |
-  | recommend | books  | courses | huodongs |`,
+| --------- | ------ | ------- | -------- |
+| recommend | books  | courses | huodongs |`,
 };
 
 async function handler(ctx) {

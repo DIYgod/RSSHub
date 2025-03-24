@@ -32,7 +32,7 @@ vscode:
     - EditorConfig.EditorConfig
     - esbenp.prettier-vscode
     - deepscan.vscode-deepscan
-    - rangav.vscode-thunder-client
     - sonarsource.sonarlint-vscode
+    # - VASubasRaj.flashpost not available on Open VSX, Thunder Client is paywalled in WSL/Codespaces/SSH > 2.30.0
     - unifiedjs.vscode-mdx
     # - ZihanLi.at-helper not available on Open VSX

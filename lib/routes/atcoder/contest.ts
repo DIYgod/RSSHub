@@ -22,23 +22,23 @@ export const route: Route = {
     handler,
     description: `Rated Range
 
-  | ABC Class (Rated for \~1999) | ARC Class (Rated for \~2799) | AGC Class (Rated for \~9999) |
-  | ---------------------------- | ---------------------------- | ---------------------------- |
-  | 1                            | 2                            | 3                            |
+| ABC Class (Rated for \~1999) | ARC Class (Rated for \~2799) | AGC Class (Rated for \~9999) |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| 1                            | 2                            | 3                            |
 
   Category
 
-  | All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
-  | --- | ----------------------- | ------------ | ------------------- |
-  | 0   | 6                       | 50           | 101                 |
+| All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
+| --- | ----------------------- | ------------ | ------------------- |
+| 0   | 6                       | 50           | 101                 |
 
-  | JOI Archive | Sponsored Tournament | Sponsored Parallel(rated) |
-  | ----------- | -------------------- | ------------------------- |
-  | 200         | 1000                 | 1001                      |
+| JOI Archive | Sponsored Tournament | Sponsored Parallel(rated) |
+| ----------- | -------------------- | ------------------------- |
+| 200         | 1000                 | 1001                      |
 
-  | Sponsored Parallel(unrated) | Optimization Contest |
-  | --------------------------- | -------------------- |
-  | 1002                        | 1200                 |`,
+| Sponsored Parallel(unrated) | Optimization Contest |
+| --------------------------- | -------------------- |
+| 1002                        | 1200                 |`,
 };
 
 async function handler(ctx) {

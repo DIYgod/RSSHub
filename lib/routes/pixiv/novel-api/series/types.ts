@@ -28,6 +28,7 @@ export interface SeriesDetail {
         latestNovelId: string;
         xRestrict: number;
         isOriginal: boolean;
+        total: number;
         cover: {
             urls: {
                 original: string;
@@ -65,4 +66,29 @@ export interface SeriesFeed {
         author?: string;
         category?: string[];
     }>;
+}
+
+export interface AppUser {
+    id: number;
+    name: string;
+}
+
+export interface AppNovelSeriesDetail {
+    id: string;
+    title: string;
+    caption: string;
+    content_count: number;
+    is_concluded: boolean;
+    is_original: boolean;
+    user: AppUser;
+}
+
+export interface AppNovelSeries {
+    novel_series_detail: AppNovelSeriesDetail;
+    novels: {
+        id: string;
+        title: string;
+        create_date: Date;
+        user: AppUser;
+    }[];
 }

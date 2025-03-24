@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['YuYang'],
     handler,
     description: `| 公告         | 新闻 | 研报     |
-  | ------------ | ---- | -------- |
-  | announcement | news | research |`,
+| ------------ | ---- | -------- |
+| announcement | news | research |`,
 };
 
 async function handler(ctx) {

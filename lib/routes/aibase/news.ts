@@ -58,7 +58,7 @@ export const route: Route = {
     },
     example: '/aibase/news',
     description: '获取 AI 资讯列表',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,

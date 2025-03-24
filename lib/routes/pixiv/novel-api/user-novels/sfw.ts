@@ -40,12 +40,9 @@ export async function getSFWUserNovels(id: string, fullContent: boolean = false,
                 title: item.title,
                 description: `
                     <img src=${pixivUtils.getProxiedImageUrl(item.url)} />
+                    <div>
                     <p>${item.description}</p>
-                    <p>
-                    字數：${item.textCount}<br>
-                    閱讀時間：${item.readingTime} 分鐘<br>
-                    收藏數：${item.bookmarkCount}<br>
-                    </p>
+                    </div>
                 `,
                 link: `${baseUrl}/novel/show.php?id=${item.id}`,
                 author: item.userName,

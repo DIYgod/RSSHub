@@ -29,15 +29,15 @@ export const route: Route = {
     url: 'who.int/news',
     description: `Category
 
-  | Feature stories | Commentaries |
-  | --------------- | ------------ |
-  | feature-stories | commentaries |
+| Feature stories | Commentaries |
+| --------------- | ------------ |
+| feature-stories | commentaries |
 
   Language
 
-  | English | العربية | 中文 | Français | Русский | Español | Português |
-  | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-  | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
 
 async function handler(ctx) {
