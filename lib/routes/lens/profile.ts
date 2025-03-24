@@ -4,7 +4,7 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/profile/:handle',
     categories: ['social-media'],
-    example: '/lens/profile/lens/stani',
+    example: '/lens/profile/stani',
     parameters: { handle: 'Lens handle' },
     features: {
         requireConfig: false,
