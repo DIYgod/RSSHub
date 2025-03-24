@@ -55598,7 +55598,7 @@
         "categories": [
           "social-media"
         ],
-        "example": "/lens/profile/lens/stani",
+        "example": "/lens/profile/stani",
         "parameters": {
           "handle": "Lens handle"
         },
