@@ -12168,6 +12168,19 @@
       }
     ]
   },
+  "warpcast.com": {
+    "_name": "Farcaster",
+    ".": [
+      {
+        "title": "Farcaster User",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username"
+        ],
+        "target": "/farcaster/user/:username"
+      }
+    ]
+  },
   "farmatters.com": {
     "_name": "Farmatters",
     ".": [
@@ -20923,6 +20936,19 @@
           "/"
         ],
         "target": "/leiphone/newsflash"
+      }
+    ]
+  },
+  "hey.xyz": {
+    "_name": "Lens",
+    ".": [
+      {
+        "title": "Lens Profile",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/u/:handle"
+        ],
+        "target": "/lens/profile/:handle"
       }
     ]
   },

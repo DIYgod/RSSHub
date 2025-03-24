@@ -2359,6 +2359,9 @@
   "/fanxinzhui/": [
     "nczitzk"
   ],
+  "/farcaster/user/:username": [
+    "DIYgod"
+  ],
   "/farmatters/exclusive/:locale?": [
     "nczitzk"
   ],
@@ -4398,6 +4401,9 @@
   "/lemmy/:community/:sort?": [
     "wb14123",
     "pseudoyu"
+  ],
+  "/lens/profile/:handle": [
+    "DIYgod"
   ],
   "/lfsyd/home": [
     "auto-bot-ty"

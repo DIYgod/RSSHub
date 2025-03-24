@@ -30836,6 +30836,44 @@
     "url": "fanxinzhui.com",
     "lang": "zh-CN"
   },
+  "farcaster": {
+    "routes": {
+      "/user/:username": {
+        "path": "/user/:username",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/farcaster/user/vitalik.eth",
+        "parameters": {
+          "username": "Farcaster username"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "warpcast.com/:username"
+            ],
+            "target": "/user/:username"
+          }
+        ],
+        "name": "Farcaster User",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "user.ts"
+      }
+    },
+    "name": "Farcaster",
+    "url": "www.farcaster.xyz",
+    "lang": "en"
+  },
   "farmatters": {
     "routes": {
       "/exclusive/:locale?": {
@@ -55551,6 +55589,44 @@
     },
     "name": "Lemmy",
     "url": "join-lemmy.org",
+    "lang": "en"
+  },
+  "lens": {
+    "routes": {
+      "/profile/:handle": {
+        "path": "/profile/:handle",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/lens/profile/lens/stani",
+        "parameters": {
+          "handle": "Lens handle"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hey.xyz/u/:handle"
+            ],
+            "target": "/profile/:handle"
+          }
+        ],
+        "name": "Lens Profile",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "profile.ts"
+      }
+    },
+    "name": "Lens",
+    "url": "www.lens.xyz",
     "lang": "en"
   },
   "lfsyd": {
