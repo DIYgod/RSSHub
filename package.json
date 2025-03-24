@@ -115,7 +115,7 @@
         "puppeteer-extra-plugin-user-data-dir": "2.4.1",
         "puppeteer-extra-plugin-user-preferences": "2.4.1",
         "query-string": "9.1.1",
-        "rate-limiter-flexible": "6.2.0",
+        "rate-limiter-flexible": "6.2.1",
         "re2js": "1.1.0",
         "rfc4648": "1.5.4",
         "rss-parser": "3.13.0",
