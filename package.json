@@ -65,7 +65,7 @@
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.25",
         "@scalar/hono-api-reference": "0.7.2",
-        "@sentry/node": "9.7.0",
+        "@sentry/node": "9.8.0",
         "@tonyrl/rand-user-agent": "2.0.83",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
