@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'GitHub',
+    name: 'Mercari',
     url: 'jp.mercari.com',
     zh: { name: '煤炉' },
     ja: { name: 'メルカリ' },
