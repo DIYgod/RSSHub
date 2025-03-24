@@ -1,4 +1,5 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import { fetchSearchItems, fetchItemDetail, MercariSort, MercariOrder, MercariStatus, formatItemDetail } from './util';
 
 export const route: Route = {
@@ -55,7 +56,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { sort, order, status, keyword } = ctx.req.param();
     const searchItems = (await fetchSearchItems(MercariSort[sort], MercariOrder[order], MercariStatus[status], keyword)).items;
-    const items = await Promise.all(searchItems.map((item) => fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail))));
+    const items = await Promise.all(searchItems.map((item) => cache.tryGet(item.id, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
 
     return {
         title: `${keyword} の検索結果`,

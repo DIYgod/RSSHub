@@ -280,7 +280,6 @@ const formatItemDetail = (detail: ItemDetail | ShopItemDetail): DataItem => {
         const shopItemDetail = detail as ShopItemDetail;
         return {
             title: shopItemDetail.displayName,
-            // description: shopItemDetail.productDetail.description,
             description: art(path.join(__dirname, 'templates/shopItem.art'), shopItemDetail),
             pubDate: parseDate(shopItemDetail.createTime),
             guid: shopItemDetail.name,
