@@ -31,8 +31,7 @@ async function handler(ctx) {
     const token = config.telegram.token;
     const response = await ofetch(`https://api.telegram.org/bot${token}/getStickerSet?name=${name}`);
 
-    const data = response.result;
-    const list = data.stickers.map((item) => ({
+    const list = response.result.stickers.map((item) => ({
         title: item.emoji,
         description: item.file_id,
         guid: item.file_id,
@@ -41,7 +40,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(`telegram:stickerpack:${item.guid}`, async () => {
-                const response = await ofetch(`https://api.telegram.org/bot${token}/getFile?file_id=${item.file_id}`);
+                const response = await ofetch(`https://api.telegram.org/bot${token}/getFile?file_id=${item.guid}`);
                 item.description = `<img src="https://api.telegram.org/file/bot${token}/${response.result.file_path}" />`;
                 return item;
             })
@@ -49,7 +48,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${data.title} - Telegram Sticker Pack`,
+        title: `${response.result.title} - Telegram Sticker Pack`,
         link: `https://t.me/addstickers/${name}`,
         item: items,
     };
