@@ -6813,6 +6813,9 @@
   "/stcn/article/list/kx": [
     "nczitzk"
   ],
+  "/stcn/article/rank/:id?": [
+    "nczitzk"
+  ],
   "/stdaily/digitalpaper": [
     "lyqluis"
   ],
