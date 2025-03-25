@@ -4694,6 +4694,9 @@
     "ktKongTong",
     "cscnk52"
   ],
+  "/mercari/:sort/:order/:status/:keyword": [
+    "yana9i"
+  ],
   "/metacritic/:type?/:sort?/:filter?": [],
   "/meteor/boards": [
     "TonyRL"
