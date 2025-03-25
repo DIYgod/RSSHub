@@ -198,7 +198,7 @@
         "vitest": "2.1.9",
         "yaml-eslint-parser": "1.3.0"
     },
-    "packageManager": "pnpm@9.15.7+sha512.ed98f9c748442673c46964b70345bd2282c9b305e8eae539b34ab31d6ef24ef8dd59d8b55f27466f705500b009d9c113471cf87e544f3d5036b297330c26e996",
+    "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531",
     "engines": {
         "node": ">=22"
     },
@@ -215,12 +215,13 @@
             "vue-demi"
         ],
         "overrides": {
-            "art-template@4.13.2>html-minifier": "~4.0.0",
+            "art-template@4.13.2>html-minifier": "npm:html-minifier-terser@7.2.0",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1"
+            "side-channel": "npm:@nolyfill/side-channel@^1",
+            "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1"
         }
     }
 }
