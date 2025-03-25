@@ -13,7 +13,7 @@ export const route: Route = {
         },
     ],
     name: 'interest',
-    maintainers: ['K33k0'],
+    maintainers: ['K33k0', 'cscnk52'],
     categories: ['journal'],
     handler,
     url: 'academia.edu',
@@ -21,29 +21,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const interest = ctx.req.param('interest');
-    const response = await ofetch(`https://www.academia.edu/Documents/in/${interest}/MostRecent`);
+    const response = await ofetch(`https://www.academia.edu/Documents/in/${interest}`);
     const $ = load(response);
-    const list = $('.works > .u-borderBottom1')
+    const list = $('.works > .div')
         .toArray()
-        .map((item) => {
-            const tagsElem = $(item).find('li.InlineList-item.u-positionRelative > span > script').text().replaceAll('}{', '},{');
-            let categories = [];
-            if (tagsElem !== null) {
-                const categoriesJSON = JSON.parse(`[${tagsElem}]`);
-                categories = categoriesJSON.map((category) => category.name);
-            }
-
-            return {
-                title: $(item).find('.header .title').text(),
-                link: $(item).find('.header .title > a').attr('href'),
-                author: $(item).find('span[itemprop=author] > a').text(),
-                description: $(item).find('.complete').text(),
-                category: categories,
-            };
-        });
+        .map((item) => ({
+            title: $(item).find('.title').text(),
+            link: $(item).find('.title > a').attr('href'),
+            author: $(item).find('.authors').text().replace('by', '').trim(),
+            description: $(item).find('.summarized').text(),
+        }));
     return {
         title: `academia.edu | ${interest} documents`,
-        link: `https://academia.edu/Documents/in/${interest}/MostRecent`,
+        link: `https://academia.edu/Documents/in/${interest}`,
         item: list,
     };
 }
