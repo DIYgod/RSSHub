@@ -51,14 +51,7 @@ async function handler(ctx) {
             const link = 'https://www.asianfanfics.com' + $element.find('.excerpt__title a').attr('href');
             const author = $element.find('.excerpt__meta__name a').text().trim();
             const pubDate = parseDate($element.find('time').attr('datetime') || '');
-            const descHtml = $element.find('.excerpt__text').html();
-            const description = `<p>作者：${author}</p>${
-                descHtml
-                    ? `
-            <p>描述：</p>
-            ${descHtml}`
-                    : ''
-            }`;
+            const description = $element.find('.excerpt__text').html();
 
             return {
                 title,
