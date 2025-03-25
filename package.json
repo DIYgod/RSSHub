@@ -164,7 +164,7 @@
         "@types/module-alias": "2.0.4",
         "@types/node": "22.13.12",
         "@types/sanitize-html": "2.13.0",
-        "@types/supertest": "6.0.2",
+        "@types/supertest": "6.0.3",
         "@types/tiny-async-pool": "2.0.3",
         "@types/title": "3.4.3",
         "@types/uuid": "10.0.0",
