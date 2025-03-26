@@ -76,7 +76,7 @@ async function handler(ctx) {
 
     return {
         title: '航天与建筑工程学院 - ' + bigTitle,
-        link: rootUrl.concat('/', id, '/list.htm'),
+        link: `${rootUrl}/${id}/list.htm`,
         item: items,
     };
 }
