@@ -28,7 +28,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '触乐',
+    name: '分类',
     maintainers: ['dousha'],
     radar: [
         {
@@ -141,7 +141,7 @@ async function handler(ctx: Context): Promise<Data | null> {
     const items = await Promise.all(processedItems);
 
     return {
-        title: `${route.name} - ${subpath.title}`,
+        title: `触乐 - ${subpath.title}`,
         link: targetUrl,
         item: items,
     };
