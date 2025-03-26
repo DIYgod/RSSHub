@@ -58,6 +58,12 @@ const pathLut: Record<string, { title: string; suffix: string }> = {
         suffix: '/tag/index/id/20369.html',
     },
     news: {
+        // route from the old implementation
+        title: '动态资讯',
+        suffix: '/category/zsyx',
+    },
+    zsyx: {
+        // route for radar
         title: '动态资讯',
         suffix: '/category/zsyx',
     },
