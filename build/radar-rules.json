@@ -17387,6 +17387,16 @@
   },
   "hrbeu.edu.cn": {
     "_name": "哈尔滨工程大学",
+    "cec": [
+      {
+        "title": "航天与建筑工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:id/list.htm"
+        ],
+        "target": "/hrbeu/cec/:id"
+      }
+    ],
     "job": [
       {
         "title": "大型招聘会",

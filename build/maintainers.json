@@ -3560,6 +3560,9 @@
   "/hpoi/items/work/:id/:order?": [
     "DIYgod"
   ],
+  "/hrbeu/cec/:id": [
+    "tsinglinrain"
+  ],
   "/hrbeu/gx/card/:column/:id?": [],
   "/hrbeu/gx/list/:column/:id?": [],
   "/hrbeu/job/bigemploy": [

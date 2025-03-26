@@ -45181,6 +45181,37 @@
   },
   "hrbeu": {
     "routes": {
+      "/cec/:id": {
+        "path": "/cec/:id",
+        "categories": [
+          "university"
+        ],
+        "example": "/hrbeu/cec/tzgg",
+        "parameters": {
+          "id": "栏目编号，由 `URL` 中获取。"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cec.hrbeu.edu.cn/:id/list.htm"
+            ]
+          }
+        ],
+        "name": "航天与建筑工程学院",
+        "maintainers": [
+          "tsinglinrain"
+        ],
+        "description": "汉语拼音和中文不对应，猜测后三个为：教务工作、科研成果、学生工作的拼音。\n\n| 新闻动态 | 通知公告 | 综合办公 | 教务动态 | 科研动态 | 学工动态 |\n| :------: | :------: |:------: | :------: | :------: | :------: |\n|   xwdt   |   tzgg   |  zhbg   |   jxgz   |   kycg   |   xsgz   |",
+        "location": "cec/list.ts"
+      },
       "/gx/card/:column/:id?": {
         "path": "/gx/card/:column/:id?",
         "name": "Unknown",
