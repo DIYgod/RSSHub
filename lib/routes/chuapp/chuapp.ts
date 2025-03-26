@@ -105,7 +105,7 @@ async function handler(ctx: Context): Promise<Data | null> {
             title: $(element).attr('title'),
             link: $(element).attr('href'),
         }))
-        .get();
+        .toArray();
 
     const processedItems: Promise<DataItem>[] = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
