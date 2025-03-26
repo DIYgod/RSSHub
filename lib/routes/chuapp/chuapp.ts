@@ -101,11 +101,11 @@ async function handler(ctx: Context): Promise<Data | null> {
     const $ = load(response);
 
     const articles: RawArticle[] = $('a.fn-clear')
-        .map((_, element) => ({
+        .toArray()
+        .map((element) => ({
             title: $(element).attr('title'),
             link: $(element).attr('href'),
-        }))
-        .toArray();
+        }));
 
     const processedItems: Promise<DataItem>[] = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
