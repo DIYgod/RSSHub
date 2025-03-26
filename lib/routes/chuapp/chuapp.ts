@@ -13,12 +13,12 @@ export const route: Route = {
         category: '栏目分类，见下表',
     },
     description: `
-    | \`category\` | 栏目分类 |
-    | ------------ | ------- |
-    | \`daily\`    | 每日聚焦 |
-    | \`pcz\`      | 最好玩   |
-    | \`night\`    | 触乐夜话 |
-    | \`news\`     | 动态资讯 |
+  | \`category\` | 栏目分类 |
+  | ------------ | ------- |
+  | \`daily\`    | 每日聚焦 |
+  | \`pcz\`      | 最好玩   |
+  | \`night\`    | 触乐夜话 |
+  | \`news\`     | 动态资讯 |
     `,
     features: {
         requireConfig: false,
