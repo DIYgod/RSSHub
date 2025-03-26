@@ -85,6 +85,10 @@ function isValidArticle(article: RawArticle): article is ValidArticle {
     return 'title' in article && 'link' in article && article.title !== null && article.link !== null;
 }
 
+function toJavaScriptTimestamp(x: string | number | null | undefined): number {
+    return x ? Number(x) * 1000 : 0;
+}
+
 async function handler(ctx: Context): Promise<Data | null> {
     const { category = 'night' } = ctx.req.param();
     const subpath = pathLut[category];
@@ -126,7 +130,7 @@ async function handler(ctx: Context): Promise<Data | null> {
                         title: article.title,
                         link: article.link,
                         description: s('.content .the-content').html() || '',
-                        pubDate: parseDate(s('.friendly_time').attr('data-time') || ''),
+                        pubDate: parseDate(toJavaScriptTimestamp(s('.friendly_time').attr('data-time'))),
                         author: s('.author-time .fn-left').text() || '',
                     };
 
@@ -137,7 +141,7 @@ async function handler(ctx: Context): Promise<Data | null> {
     const items = await Promise.all(processedItems);
 
     return {
-        title: subpath.title,
+        title: `${route.name} - ${subpath.title}`,
         link: targetUrl,
         item: items,
     };
