@@ -27,10 +27,19 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
-        supportRadar: false,
     },
     name: '触乐',
     maintainers: ['dousha'],
+    radar: [
+        {
+            source: ['chuapp.com/category/:category'],
+            target: '/:category',
+        },
+        {
+            source: ['chuapp.com/tag/index/id/20369.html'],
+            target: '/night',
+        },
+    ],
     handler,
 };
 
