@@ -20054,6 +20054,51 @@
     "url": "chuanliu.org",
     "lang": "zh-CN"
   },
+  "chuapp": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "game"
+        ],
+        "example": "/chuapp/daily",
+        "parameters": {
+          "category": "栏目分类，见下表"
+        },
+        "description": "\n  | `category` | 栏目分类 |\n  | ------------ | ------- |\n  | `daily`    | 每日聚焦 |\n  | `pcz`      | 最好玩   |\n  | `night`    | 触乐夜话 |\n  | `news`     | 动态资讯 |\n    ",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "分类",
+        "maintainers": [
+          "dousha"
+        ],
+        "radar": [
+          {
+            "source": [
+              "chuapp.com/category/:category"
+            ],
+            "target": "/:category"
+          },
+          {
+            "source": [
+              "chuapp.com/tag/index/id/20369.html"
+            ],
+            "target": "/night"
+          }
+        ],
+        "location": "chuapp.ts"
+      }
+    },
+    "name": "触乐",
+    "url": "chuapp.com",
+    "lang": "zh-CN"
+  },
   "chub": {
     "routes": {
       "/characters": {
