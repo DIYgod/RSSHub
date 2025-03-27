@@ -79124,6 +79124,37 @@
         "description": "`sciencedirect.com/browse/calls-for-papers?subject=education` -> `/sciencedirect/call-for-paper/education`",
         "location": "call-for-paper.ts"
       },
+      "/journal/:id/current": {
+        "path": "/journal/:id/current",
+        "categories": [
+          "journal"
+        ],
+        "example": "/sciencedirect/journal/journal-of-financial-economics/current",
+        "parameters": {
+          "id": "Journal id, can be found in URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "sciencedirect.com/journal/:id",
+              "sciencedirect.com/"
+            ]
+          }
+        ],
+        "name": "Current Issue",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "current-issue.ts"
+      },
       "/journal/:id": {
         "path": "/journal/:id",
         "categories": [

@@ -6245,6 +6245,9 @@
   "/sciencedirect/call-for-paper/:subject": [
     "etShaw-zh"
   ],
+  "/sciencedirect/journal/:id/current": [
+    "TonyRL"
+  ],
   "/sciencedirect/journal/:id": [
     "nczitzk"
   ],
