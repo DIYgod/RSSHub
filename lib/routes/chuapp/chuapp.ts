@@ -119,24 +119,23 @@ async function handler(ctx: Context): Promise<Data | null> {
                 link: `/${article.link}`,
             };
         })
-        .map(
-            (article: ValidArticle) =>
-                cache.tryGet(article.link, async () => {
-                    const fullTextUrl = `${baseUrl}${article.link}`;
-                    const res = await ofetch(fullTextUrl);
-                    const s = load(res);
+        .map((article: ValidArticle) => {
+            const fullArticleUrl = `${baseUrl}${article.link}`;
+            return cache.tryGet(fullArticleUrl, async () => {
+                const res = await ofetch(fullArticleUrl);
+                const s = load(res);
 
-                    const item: DataItem = {
-                        title: article.title,
-                        link: article.link,
-                        description: s('.content .the-content').html() || '',
-                        pubDate: parseDate(toJavaScriptTimestamp(s('.friendly_time').attr('data-time'))),
-                        author: s('.author-time .fn-left').text() || '',
-                    };
+                const item: DataItem = {
+                    title: article.title,
+                    link: article.link,
+                    description: s('.content .the-content').html() || '',
+                    pubDate: parseDate(toJavaScriptTimestamp(s('.friendly_time').attr('data-time'))),
+                    author: s('.author-time .fn-left').text() || '',
+                };
 
-                    return item;
-                }) as Promise<DataItem>
-        );
+                return item;
+            }) as Promise<DataItem>;
+        });
 
     const items = await Promise.all(processedItems);
 
