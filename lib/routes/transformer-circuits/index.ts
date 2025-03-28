@@ -16,11 +16,11 @@ export const route: Route = {
         },
     ],
     name: 'Transformer Circuits Thread Articles',
-    maintainers: ['your-github-username'],
+    maintainers: ['shinmohuang'],
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const rootUrl = 'https://transformer-circuits.pub';
 
     // Fetch the main page
@@ -55,11 +55,10 @@ async function handler(ctx) {
                 if (byline.length) {
                     author = byline.text().trim();
                 }
-
                 // Extract description
                 const description = currentElement.find('.description').text().trim();
 
-                // Get the article URL 
+                // Get the article URL
                 const href = currentElement.attr('href');
                 const articleUrl = href ? (href.startsWith('http') ? href : `${rootUrl}/${href}`) : rootUrl;
 
@@ -85,4 +84,4 @@ async function handler(ctx) {
         item: articles,
         description: 'Research on reverse engineering transformer language models into human-understandable programs',
     };
-} 
+}
