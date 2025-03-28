@@ -23,7 +23,7 @@ export const route: Route = {
             source: ['news.cdu.edu.cn/'],
         },
     ],
-    name: '成都大学官网通知公告',
+    name: '通知公告',
     maintainers: ['uuwor'],
     handler,
     url: 'news.cdu.edu.cn/',
