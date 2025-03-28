@@ -80,23 +80,6 @@ async function handler() {
                     img.attr('style', 'max-width: 100%; height: auto;');
                 });
 
-                // YouTube iframe
-                article.find('iframe').each((_, el) => {
-                    const iframe = $(el);
-                    const src = iframe.attr('src');
-
-                    if (src?.includes('youtube.com')) {
-                        const wrapped = `
-                            <div style="position: relative; width: 100%; padding-top: 56.25%;">
-                                <iframe src="${src}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen referrerpolicy="no-referrer"></iframe>
-                            </div>
-                        `;
-                        iframe.replaceWith(wrapped);
-                    } else {
-                        iframe.attr('style', 'width: 100%; height: auto;');
-                    }
-                });
-
                 const datetime = article.find('time.date').attr('datetime');
                 const pubDate = datetime ? timezone(parseDate(datetime), 0) : undefined;
 
