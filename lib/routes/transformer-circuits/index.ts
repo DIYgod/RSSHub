@@ -5,17 +5,17 @@ import { parseDate } from '@/utils/parse-date';
 
 // Define the main route path
 export const route: Route = {
-    path: ['/', '/index'],
+    path: '/',
     categories: ['programming'],
     example: '/transformer-circuits',
     parameters: {},
     radar: [
         {
             source: ['transformer-circuits.pub/'],
-            target: '/transformer-circuits',
+            target: '/',
         },
     ],
-    name: 'Transformer Circuits Thread Articles',
+    name: 'Articles',
     maintainers: ['shinmohuang'],
     handler,
 };
@@ -27,21 +27,15 @@ async function handler() {
     const response = await ofetch(rootUrl);
     const $ = load(response);
 
-    // Get all the articles
-    const articles: DataItem[] = [];
+    // Get all the articles using .map() instead of .push()
+    const articles: DataItem[] = $('.toc a')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const currentElement = $item;
+            const dateElement = $item.prevAll('.date').first();
+            const currentDate = dateElement.text().trim();
 
-    // Find articles based on the actual HTML structure
-    let currentDate = '';
-
-    // The website structure has date headers followed by article links
-    $('.date').each((_, dateElem) => {
-        // Extract the date text (e.g., "March 2025")
-        currentDate = $(dateElem).text().trim();
-
-        // Process all articles that follow this date until the next date header
-        let currentElement = $(dateElem).next();
-
-        while (currentElement.length && !currentElement.hasClass('date')) {
             // Check if this is an article (either paper or note)
             if (currentElement.hasClass('paper') || currentElement.hasClass('note')) {
                 const articleType = currentElement.hasClass('paper') ? 'Paper' : 'Note';
@@ -63,20 +57,18 @@ async function handler() {
                 const articleUrl = href ? (href.startsWith('http') ? href : `${rootUrl}/${href}`) : rootUrl;
 
                 // Create article object
-                articles.push({
+                return {
                     title,
                     link: articleUrl,
                     pubDate: parseDate(currentDate, 'MMMM YYYY'),
                     author,
                     description: `${articleType}: ${description}`,
-                    category: ['AI', 'Machine Learning', 'Transformer Circuits'],
-                });
+                    category: ['AI', 'Machine Learning', 'Anthropic', 'Transformer Circuits'],
+                };
             }
-
-            // Move to the next element
-            currentElement = currentElement.next();
-        }
-    });
+            return null;
+        })
+        .filter(Boolean) as DataItem[];
 
     return {
         title: 'Transformer Circuits Thread',
