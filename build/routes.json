@@ -18023,6 +18023,35 @@
         ],
         "url": "jw.cdu.edu.cn/",
         "location": "jwgg.ts"
+      },
+      "/tzggcdunews": {
+        "path": "/tzggcdunews",
+        "categories": [
+          "university"
+        ],
+        "example": "/cdu/tzggcdunews",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "news.cdu.edu.cn/"
+            ]
+          }
+        ],
+        "name": "通知公告",
+        "maintainers": [
+          "uuwor"
+        ],
+        "url": "news.cdu.edu.cn/",
+        "location": "tzggcdunews.ts"
       }
     },
     "name": "成都大学",

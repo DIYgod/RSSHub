@@ -8116,6 +8116,16 @@
         ],
         "target": "/cdu/jwgg"
       }
+    ],
+    "news": [
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/cdu/tzggcdunews"
+      }
     ]
   },
   "cdzjryb.com": {
