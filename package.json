@@ -215,13 +215,13 @@
             "vue-demi"
         ],
         "overrides": {
-            "art-template@4.13.2>html-minifier": "npm:html-minifier-terser@7.2.0",
+            "art-template@4.13.2>html-minifier": "~4.0.0",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
+            "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1",
-            "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1"
+            "side-channel": "npm:@nolyfill/side-channel@^1"
         }
     }
 }
