@@ -26,41 +26,45 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['uuwor'],
     handler,
-    url: 'https://jw.cdu.edu.cn/', // 完整的 URL 地址
+    url: 'jw.cdu.edu.cn/',
 };
 
 async function handler() {
     const url = 'https://jw.cdu.edu.cn/jwgg.htm'; // 数据来源网页（待提取网页）
-    const response = await got.get(url); // 从一个对象中提取属性
-    const data = response.data; // 从一个对象(response)中提取属性
-    const $ = load(data); // load 函数将处理 data 并返回一个值，这个值会被赋值给 $。
-    
-    const list = $('.ListTable.dataTable.no-footer tbody tr.odd')
+    const response = await got.get(url);
+    const data = response.data;
+    const $ = load(data);
+    const list = $('.ListTable.dataTable.no-footer tbody tr[role="row"].odd')
         .slice(0, 10)
         .toArray()
         .map((e) => {
             const element = $(e);
-            const title = element.find('a').text().trim(); // 修正选择器，直接查找 <a> 标签
-            const link = element.find('a').attr('href');
-            const dateMatch = element.find('td.columnDate').text().match(/\d{4}-\d{2}-\d{2}/);
-            const pubDate = dateMatch ? timezone(parseDate(dateMatch[0]), 8) : null; // 添加检查以避免空值
+            const title = element.find('tr.odd a').text().trim(); /* 1.选择器 tr.odd a：这个选择器查找具有 class="odd" 的 <tr> 元素下的 <a> 标签。
+                                                                    2..text()：该方法获取选中元素的文本内容。
+                                                                    3..trim()：用于去掉字符串前后的空格，确保得到干净的文本。*/
+            const link = element.find('tr.odd a').attr('href');
+            const date = element
+                .find('tr.odd td.columnDate')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/);
+            const pubDate = timezone(parseDate(date), 8);
 
             return {
                 title,
-                link: `https://jw.cdu.edu.cn/${link}`, // 使用模板字符串使拼接更清晰
-                author: '成都大学教务处通知公告', // 固定作者信息
+                link: 'https://jw.cdu.edu.cn/' + link,
+                author: '成都大学教务处通知公告',
                 pubDate,
             };
         });
 
     const result = await Promise.all(
-        list.map(async (item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const itemResponse = await got.get(item.link);
-                const itemData = itemResponse.data;
-                const itemElement = load(itemData);
+                const itemReponse = await got.get(item.link);
+                const data = itemReponse.data;
+                const itemElement = load(data);
 
-                item.description = itemElement('.v_news_content').html(); // 提取描述内容
+                item.description = itemElement('.v_news_content').html();
 
                 return item;
             })
@@ -70,6 +74,6 @@ async function handler() {
     return {
         title: '成大教务处通知公告',
         link: url,
-        item: result.filter(item => item.pubDate), // 过滤掉没有发布日期的项目
+        item: result,
     };
 }
