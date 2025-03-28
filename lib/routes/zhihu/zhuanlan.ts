@@ -35,12 +35,11 @@ async function handler(ctx) {
         url = `https://www.zhihu.com/column/${id}`;
     }
 
-    const signedHeader = await getSignedHeader(url, `https://www.zhihu.com/api/v4/columns/${id}/items`);
+    const signedHeader = await getSignedHeader(url, `/api/v4/columns/${id}/items`);
     const listRes = await got({
         method: 'get',
         url: `https://www.zhihu.com/api/v4/columns/${id}/items`,
         headers: {
-            ...header,
             ...signedHeader,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },

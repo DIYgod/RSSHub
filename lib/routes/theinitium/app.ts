@@ -118,7 +118,7 @@ async function fetchAppPage(url: URL) {
 async function fetchWebPage(url: URL) {
     const response = await got(url.href);
     const $ = load(response.data);
-    const article = $('.wkwp-post-content');
+    const article = $('.entry-content');
     article.find('.block-related-articles').remove();
     article.find('figure.wp-block-pullquote').children().unwrap();
     article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
