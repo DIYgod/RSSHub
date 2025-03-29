@@ -107,11 +107,10 @@ async function fetchArticleContent(url) {
             }
         }
 
-        // Create full HTML with proper styling
+        // Create an HTML fragment (not a full document) for the RSS description
         return art(path.join(__dirname, 'templates/article.art'), {
             content,
             link: url,
-            title: $('title').text() || url.split('/').pop(),
         });
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error);
