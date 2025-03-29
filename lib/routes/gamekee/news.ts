@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/news',
@@ -23,26 +24,33 @@ export const route: Route = {
 
 async function handler() {
     const rootUrl = 'https://www.gamekee.com';
-    const url = `${rootUrl}/news`;
-    const response = await ofetch(url);
-    const $ = load(response);
-    const list = $('.list-box .item')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = new URL(item.attr('href'), rootUrl).href;
-            const title = item.find('.item-r .title').text();
-            return {
-                link,
-                title,
-            };
-        });
+    const url = `${rootUrl}/v1/index/newsList`;
+    const { data } = await ofetch(url, {
+        headers: {
+            'game-alias': 'www',
+            'device-num': '1',
+            'User-Agent': config.ua,
+        },
+        query: {
+            page_no: 1,
+            limit: 20,
+        },
+    });
+    const list = data.map((item) => {
+        const link = new URL(`${item.id}.html`, rootUrl).href;
+        const title = item.title;
+        const pubDate = timezone(parseDate(item.created_at, 'X'), +8);
+        return {
+            link,
+            title,
+            pubDate,
+        };
+    });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.pubDate = timezone(parseDate($('time').attr('datetime')), +8);
                 item.description = $('div.content').html();
                 return item;
             })
@@ -50,8 +58,8 @@ async function handler() {
     );
 
     return {
-        title: $('title').text(),
+        link: `${rootUrl}/news`,
+        title: '游戏情报|Gamekee',
         item: items,
-        link: url,
     };
 }
