@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { config } from '@/config';
 
 export const route: Route = {
@@ -39,7 +38,7 @@ async function handler() {
     const list = data.map((item) => {
         const link = new URL(`${item.id}.html`, rootUrl).href;
         const title = item.title;
-        const pubDate = timezone(parseDate(item.created_at, 'X'), +8);
+        const pubDate = parseDate(item.created_at, 'X');
         return {
             link,
             title,
