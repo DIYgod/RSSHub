@@ -34,7 +34,7 @@ async function handler() {
     // Get all article links and basic info
     const articlePromises = $('.toc a')
         .toArray()
-        .map(async (item) => {
+        .map((item) => {
             const $item = $(item);
             const currentElement = $item;
             const dateElement = $item.prevAll('.date').first();
@@ -44,39 +44,29 @@ async function handler() {
             if (currentElement.hasClass('paper') || currentElement.hasClass('note')) {
                 const articleType = currentElement.hasClass('paper') ? 'Paper' : 'Note';
 
-                // Extract title
+                // Extract title and metadata from the list page
                 const title = currentElement.find('h3').text().trim();
-
-                // Extract author if available
                 let author = '';
                 const byline = currentElement.find('.byline');
                 if (byline.length) {
                     author = byline.text().trim();
                 }
-
-                // Extract description
                 const description = currentElement.find('.description').text().trim();
-
-                // Get the article URL
                 const href = currentElement.attr('href');
                 const articleUrl = href ? (href.startsWith('http') ? href : `${rootUrl}/${href}`) : rootUrl;
 
-                // 使用 cache.tryGet 缓存文章内容
-                const fullContent = await cache.tryGet(
-                    articleUrl,
-                    async () => await fetchArticleContent(articleUrl),
-                    60 * 60 * 24 // 缓存24小时
-                );
-
-                // Create article object with full content
-                return {
-                    title,
-                    link: articleUrl,
-                    pubDate: parseDate(currentDate, 'MMMM YYYY'),
-                    author,
-                    description: fullContent || `${articleType}: ${description}`,
-                    category: ['AI', 'Machine Learning', 'Anthropic', 'Transformer Circuits'],
-                };
+                // Cache the whole article object instead of just the content
+                return cache.tryGet(articleUrl, async () => {
+                    const fullContent = await fetchArticleContent(articleUrl);
+                    return {
+                        title,
+                        link: articleUrl,
+                        pubDate: parseDate(currentDate, 'MMMM YYYY'),
+                        author,
+                        description: fullContent || `${articleType}: ${description}`,
+                        category: ['AI', 'Machine Learning', 'Anthropic', 'Transformer Circuits'],
+                    };
+                });
             }
             return null;
         });
@@ -88,7 +78,7 @@ async function handler() {
         title: 'Transformer Circuits Thread',
         link: rootUrl,
         item: articlesWithContent,
-        description: 'Research on reverse engineering transformer language models into human-understandable programs, feedId:128744138938804224+userId:94101804721377280',
+        description: 'Research on reverse engineering transformer language models into human-understandable programs',
     };
 }
 
@@ -96,10 +86,7 @@ async function handler() {
 async function fetchArticleContent(url) {
     try {
         logger.debug(`Fetching article content: ${url}`);
-        const response = await ofetch(url, {
-            timeout: 10000,
-            retry: 2,
-        });
+        const response = await ofetch(url);
         const $ = load(response);
 
         // Remove navigation and other unnecessary elements
@@ -108,9 +95,16 @@ async function fetchArticleContent(url) {
         // Get the main content - d-article is the custom tag used by this site
         let content = $('d-article').html();
 
-        // If d-article not found, try fallback selectors
+        // If d-article not found, try more specific fallback selectors
         if (!content) {
-            content = $('main, article, .content, .post-content').html() || $('body').html();
+            // Try to find content in common article containers, but avoid selecting the entire body
+            content = $('main article, .article-content, .post-content, .content-area').html() || $('.content, .article, .post').html() || $('main').html();
+
+            // If still no content found, log a warning
+            if (!content) {
+                logger.warn(`No suitable content container found for ${url}`);
+                content = `<p>Could not extract content. Please visit <a href="${url}">the original page</a>.</p>`;
+            }
         }
 
         // Create full HTML with proper styling
