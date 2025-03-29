@@ -33925,6 +33925,34 @@
     "url": "news.gamegene.cn",
     "lang": "zh-CN"
   },
+  "gamekee": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "game"
+        ],
+        "example": "/gamekee/news",
+        "radar": [
+          {
+            "source": [
+              "gamekee.com",
+              "gamekee.com/news"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "游戏情报",
+        "maintainers": [
+          "ueiu"
+        ],
+        "url": "gamekee.com/news",
+        "location": "news.ts"
+      }
+    },
+    "name": "GameKee | 游戏百科攻略",
+    "url": "www.gamekee.com"
+  },
   "gamer": {
     "routes": {
       "/gnn/:category?": {

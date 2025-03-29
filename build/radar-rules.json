@@ -13048,6 +13048,20 @@
       }
     ]
   },
+  "gamekee.com": {
+    "_name": "GameKee | 游戏百科攻略",
+    ".": [
+      {
+        "title": "游戏情报",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/",
+          "/news"
+        ],
+        "target": "/gamekee/news"
+      }
+    ]
+  },
   "gamer.com.tw": {
     "_name": "巴哈姆特電玩資訊站",
     "ani": [
