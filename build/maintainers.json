@@ -7352,6 +7352,9 @@
   "/transcriptforest/:channel?": [
     "nczitzk"
   ],
+  "/transformer-circuits/": [
+    "shinmohuang"
+  ],
   "/trending/:keywords/:numberOfDays?": [
     "Jkker"
   ],

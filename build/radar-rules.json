@@ -35315,6 +35315,19 @@
       }
     ]
   },
+  "transformer-circuits.pub": {
+    "_name": "Transformer Circuits",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/transformer-circuits/"
+      }
+    ]
+  },
   "tribalfootball.com": {
     "_name": "Tribal Football",
     ".": [

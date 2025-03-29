@@ -95100,6 +95100,34 @@
     "url": "www.transcriptforest.com",
     "lang": "en"
   },
+  "transformer-circuits": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "programming"
+        ],
+        "example": "/transformer-circuits",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "transformer-circuits.pub/"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "Articles",
+        "maintainers": [
+          "shinmohuang"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "Transformer Circuits",
+    "url": "transformer-circuits.pub",
+    "lang": "en"
+  },
   "trending": {
     "routes": {
       "/:keywords/:numberOfDays?": {
