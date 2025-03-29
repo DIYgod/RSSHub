@@ -57,8 +57,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 author,
                 content: {
-                    html: description ?? '',
-                    text: description ?? '',
+                    html: description,
+                    text: description,
                 },
                 image,
                 banner: image,
@@ -96,8 +96,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
                         author,
                         content: {
-                            html: description ?? '',
-                            text: description ?? '',
+                            html: description,
+                            text: description,
                         },
                         image,
                         banner: image,
@@ -154,7 +154,7 @@ export const route: Route = {
     handler,
     example: '/raspberrypi/magazine',
     parameters: undefined,
-    categories: ['new-media'],
+    categories: ['programming'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
