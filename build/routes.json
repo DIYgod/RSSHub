@@ -77427,6 +77427,48 @@
     "url": "rarehistoricalphotos.com",
     "lang": "en"
   },
+  "raspberrypi": {
+    "routes": {
+      "/magazine": {
+        "path": "/magazine",
+        "name": "Official Magazine",
+        "url": "magazine.raspberrypi.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/raspberrypi/magazine",
+        "categories": [
+          "programming"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "magazine.raspberrypi.com"
+            ],
+            "target": "/raspberrypi/magazine"
+          }
+        ],
+        "view": 0,
+        "location": "magazine.ts"
+      }
+    },
+    "name": "Raspberry Pi",
+    "url": "raspberrypi.com",
+    "categories": [
+      "programming"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "rattibha": {
     "routes": {
       "/user/:user": {

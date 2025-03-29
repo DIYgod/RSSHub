@@ -29887,6 +29887,19 @@
       }
     ]
   },
+  "raspberrypi.com": {
+    "_name": "Raspberry Pi",
+    "magazine": [
+      {
+        "title": "Official Magazine",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/raspberrypi/raspberrypi/magazine"
+      }
+    ]
+  },
   "rattibha.com": {
     "_name": "Rattibha",
     ".": [
