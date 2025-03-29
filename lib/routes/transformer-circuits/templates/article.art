@@ -69,7 +69,7 @@
         {{@ content }}
     </div>
     <div class="read-original">
-        <a href="{{ link }}" target="_blank">阅读原文</a>
+        <a href="{{ link }}" target="_blank">Read Original</a>
     </div>
 </body>
 </html> 
