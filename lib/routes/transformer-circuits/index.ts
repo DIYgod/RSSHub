@@ -85,7 +85,6 @@ async function handler() {
 // Function to fetch and parse article content
 async function fetchArticleContent(url) {
     try {
-        logger.debug(`Fetching article content: ${url}`);
         const response = await ofetch(url);
         const $ = load(response);
 
