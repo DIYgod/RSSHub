@@ -5,7 +5,12 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import logger from '@/utils/logger';
+
+// 为ES模块创建__dirname等价物
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Define the main route path
 export const route: Route = {
