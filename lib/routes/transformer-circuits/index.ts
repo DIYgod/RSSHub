@@ -1,7 +1,16 @@
 import { Route, DataItem } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import logger from '@/utils/logger';
+
+// 为ES模块创建__dirname等价物
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Define the main route path
 export const route: Route = {
@@ -27,8 +36,8 @@ async function handler() {
     const response = await ofetch(rootUrl);
     const $ = load(response);
 
-    // Get all the articles using .map() instead of .push()
-    const articles: DataItem[] = $('.toc a')
+    // Get all article links and basic info
+    const articlePromises = $('.toc a')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -40,40 +49,76 @@ async function handler() {
             if (currentElement.hasClass('paper') || currentElement.hasClass('note')) {
                 const articleType = currentElement.hasClass('paper') ? 'Paper' : 'Note';
 
-                // Extract title
+                // Extract title and metadata from the list page
                 const title = currentElement.find('h3').text().trim();
-
-                // Extract author if available (papers have bylines, notes don't always have them)
                 let author = '';
                 const byline = currentElement.find('.byline');
                 if (byline.length) {
                     author = byline.text().trim();
                 }
-                // Extract description
                 const description = currentElement.find('.description').text().trim();
-
-                // Get the article URL
                 const href = currentElement.attr('href');
                 const articleUrl = href ? (href.startsWith('http') ? href : `${rootUrl}/${href}`) : rootUrl;
 
-                // Create article object
-                return {
-                    title,
-                    link: articleUrl,
-                    pubDate: parseDate(currentDate, 'MMMM YYYY'),
-                    author,
-                    description: `${articleType}: ${description}`,
-                    category: ['AI', 'Machine Learning', 'Anthropic', 'Transformer Circuits'],
-                };
+                // Cache the whole article object instead of just the content
+                return cache.tryGet(articleUrl, async () => {
+                    const fullContent = await fetchArticleContent(articleUrl);
+                    return {
+                        title,
+                        link: articleUrl,
+                        pubDate: parseDate(currentDate, 'MMMM YYYY'),
+                        author,
+                        description: fullContent || `${articleType}: ${description}`,
+                        category: ['AI', 'Machine Learning', 'Anthropic', 'Transformer Circuits'],
+                    };
+                });
             }
             return null;
-        })
-        .filter(Boolean) as DataItem[];
+        });
+
+    // Wait for all article fetches to complete
+    const articlesWithContent = (await Promise.all(articlePromises)).filter(Boolean) as DataItem[];
 
     return {
         title: 'Transformer Circuits Thread',
         link: rootUrl,
-        item: articles,
+        item: articlesWithContent,
         description: 'Research on reverse engineering transformer language models into human-understandable programs',
     };
+}
+
+// Function to fetch and parse article content
+async function fetchArticleContent(url) {
+    try {
+        const response = await ofetch(url);
+        const $ = load(response);
+
+        // Remove navigation and other unnecessary elements
+        $('.article-header, .tooltip, modal, script, style, d-front-matter, .visual-toc').remove();
+
+        // Get the main content - d-article is the custom tag used by this site
+        let content = $('d-article').html();
+
+        // If d-article not found, try more specific fallback selectors
+        if (!content) {
+            // Try to find content in common article containers, but avoid selecting the entire body
+            content = $('main article, .article-content, .post-content, .content-area').html() || $('.content, .article, .post').html() || $('main').html();
+
+            // If still no content found, log a warning
+            if (!content) {
+                logger.warn(`No suitable content container found for ${url}`);
+                content = `<p>Could not extract content. Please visit <a href="${url}">the original page</a>.</p>`;
+            }
+        }
+
+        // Create an HTML fragment (not a full document) for the RSS description
+        return art(path.join(__dirname, 'templates/article.art'), {
+            content,
+            link: url,
+        });
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error(`Error fetching article content from ${url}: ${errorMessage}`);
+        return null; // Return null on error, we'll fall back to description
+    }
 }
