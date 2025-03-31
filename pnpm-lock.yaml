@@ -192,8 +192,8 @@ importers:
         specifier: 7.2.0
         version: 7.2.0
       proxy-chain:
-        specifier: 2.5.7
-        version: 2.5.7
+        specifier: 2.5.8
+        version: 2.5.8
       puppeteer:
         specifier: 22.6.2
         version: 22.6.2(bufferutil@4.0.9)(typescript@5.8.2)(utf-8-validate@5.0.10)
@@ -4876,8 +4876,8 @@ packages:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
 
-  proxy-chain@2.5.7:
-    resolution: {integrity: sha512-Tin+2iGrp/+gZGJymSeC+PVUFxWis2V2k66dpcKjXWGowPIB5X/Mt3ch86/PQZ8h3BdsgNL1vdbNusNgQ99OMw==}
+  proxy-chain@2.5.8:
+    resolution: {integrity: sha512-TqKOYRD/1Gga/JhiwmdYHJoj0zMJkKGofQ9bHQuSm+vexczatt81fkUHTVMyci+2mWczXiTNv1Eom+2v3Da5og==}
     engines: {node: '>=14'}
 
   proxy-from-env@1.1.0:
@@ -11012,7 +11012,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  proxy-chain@2.5.7:
+  proxy-chain@2.5.8:
     dependencies:
       socks: 2.8.4
       socks-proxy-agent: 8.0.5
