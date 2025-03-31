@@ -97206,6 +97206,45 @@
     "url": "www.ulapia.com",
     "lang": "zh-CN"
   },
+  "unipd": {
+    "routes": {
+      "/ilbolive/news": {
+        "path": "/ilbolive/news",
+        "name": "Il Bo Live - News",
+        "url": "ilbolive.unipd.it/it/news",
+        "maintainers": [
+          "Gexi0619"
+        ],
+        "example": "/unipd/ilbolive/news",
+        "parameters": {},
+        "description": "Il Bo Live - News",
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ilbolive.unipd.it/it/news"
+            ],
+            "target": "/ilbolive/news"
+          }
+        ],
+        "location": "ilbolive/news.ts"
+      }
+    },
+    "name": "Università di Padova",
+    "url": "unipd.it",
+    "lang": "it"
+  },
   "uniqlo": {
     "routes": {
       "/new/:country/:category": {

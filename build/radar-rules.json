@@ -35898,6 +35898,19 @@
       }
     ]
   },
+  "unipd.it": {
+    "_name": "Università di Padova",
+    "ilbolive": [
+      {
+        "title": "Il Bo Live - News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/it/news"
+        ],
+        "target": "/unipd/ilbolive/news"
+      }
+    ]
+  },
   "unraid.net": {
     "_name": "Unraid",
     ".": [
