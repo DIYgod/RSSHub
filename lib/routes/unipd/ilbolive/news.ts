@@ -67,9 +67,6 @@ async function handler() {
 
                 const article = $('article.post-generic');
 
-                // Delete header
-                article.find('.header').remove();
-
                 // Picture
                 article.find('img').each((_, el) => {
                     const img = $(el);
@@ -84,6 +81,9 @@ async function handler() {
                 const pubDate = datetime ? timezone(parseDate(datetime), 0) : undefined;
 
                 const author = article.find('.author a').text().trim();
+
+                // Delete header
+                article.find('.header').remove();
 
                 return {
                     ...item,
