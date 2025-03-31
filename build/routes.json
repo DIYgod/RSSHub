@@ -15365,6 +15365,132 @@
     "url": "bulianglin.com",
     "lang": "zh-CN"
   },
+  "bullionvault": {
+    "routes": {
+      "/gold-news/:category?": {
+        "path": "/gold-news/:category?",
+        "name": "Gold News",
+        "url": "bullionvault.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/bullionvault/gold-news",
+        "parameters": {
+          "category": {
+            "description": "Category",
+            "options": [
+              {
+                "label": "Gold market analysis & gold investment research",
+                "value": ""
+              },
+              {
+                "label": "Opinion & Analysis",
+                "value": "opinion-analysis"
+              },
+              {
+                "label": "Gold Price News",
+                "value": "gold-price-news"
+              },
+              {
+                "label": "Investment News",
+                "value": "news"
+              },
+              {
+                "label": "Gold Investor Index",
+                "value": "gold-investor-index"
+              },
+              {
+                "label": "Gold Infographics",
+                "value": "infographics"
+              },
+              {
+                "label": "Market Fundamentals",
+                "value": "market-fundamentals"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\nIf you subscribe to [Gold Price News](https://www.bullionvault.com/gold-news/gold-price-news)，where the URL is `https://www.bullionvault.com/gold-news/gold-price-news`, extract the part `https://www.bullionvault.com/gold-news/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/bullionvault/gold-news/gold-price-news`](https://rsshub.app/bullionvault/gold-news/gold-price-news).\n:::\n\n| Category                                                                          | ID                                                                                   |\n| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |\n| [Opinion & Analysis](https://www.bullionvault.com/gold-news/opinion-analysis)     | [opinion-analysis](https://rsshub.app/bullionvault/gold-news/opinion-analysis)       |\n| [Gold Price News](https://www.bullionvault.com/gold-news/gold-price-news)         | [gold-price-news](https://rsshub.app/bullionvault/gold-news/gold-price-news)         |\n| [Investment News](https://www.bullionvault.com/gold-news/news)                    | [news](https://rsshub.app/bullionvault/gold-news/news)                               |\n| [Gold Investor Index](https://www.bullionvault.com/gold-news/gold-investor-index) | [gold-investor-index](https://rsshub.app/bullionvault/gold-news/gold-investor-index) |\n| [Gold Infographics](https://www.bullionvault.com/gold-news/infographics)          | [infographics](https://rsshub.app/bullionvault/gold-news/infographics)               |\n| [Market Fundamentals](https://www.bullionvault.com/gold-news/market-fundamentals) | [market-fundamentals](https://rsshub.app/bullionvault/gold-news/market-fundamentals) |\n",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bullionvault.com/gold-news/:category"
+            ]
+          },
+          {
+            "title": "Gold market analysis & gold investment research",
+            "source": [
+              "bullionvault.com/gold-news"
+            ],
+            "target": "/gold-news"
+          },
+          {
+            "title": "Opinion & Analysis",
+            "source": [
+              "bullionvault.com/gold-news/opinion-analysis"
+            ],
+            "target": "/gold-news/opinion-analysis"
+          },
+          {
+            "title": "Gold Price News",
+            "source": [
+              "bullionvault.com/gold-news/gold-price-news"
+            ],
+            "target": "/gold-news/gold-price-news"
+          },
+          {
+            "title": "Investment News",
+            "source": [
+              "bullionvault.com/gold-news/news"
+            ],
+            "target": "/gold-news/news"
+          },
+          {
+            "title": "Gold Investor Index",
+            "source": [
+              "bullionvault.com/gold-news/gold-investor-index"
+            ],
+            "target": "/gold-news/gold-investor-index"
+          },
+          {
+            "title": "Gold Infographics",
+            "source": [
+              "bullionvault.com/gold-news/infographics"
+            ],
+            "target": "/gold-news/infographics"
+          },
+          {
+            "title": "Market Fundamentals",
+            "source": [
+              "bullionvault.com/gold-news/market-fundamentals"
+            ],
+            "target": "/gold-news/market-fundamentals"
+          }
+        ],
+        "view": 0,
+        "location": "gold-news.ts"
+      }
+    },
+    "name": "BullionVault",
+    "url": "bullionvault.com",
+    "categories": [
+      "finance"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "bupt": {
     "routes": {
       "/jwc/:type": {
