@@ -105871,9 +105871,10 @@
         },
         "name": "游研社 - 分类文章",
         "maintainers": [
-          "LightStrawberry"
+          "betta-cyber",
+          "dousha"
         ],
-        "description": "| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |\n| --------- | ------- | ------ | ------- | ---- | -------- |\n| recommend | history | big    | culture | news | retro    |",
+        "description": "| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 | 业界     |\n| --------- | ------- | ------ | ------- | ---- | -------- | -------- |\n| recommend | history | big    | culture | news | retro    | industry |",
         "location": "category.ts"
       },
       "/docs": {
