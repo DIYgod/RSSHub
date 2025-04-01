@@ -1,22 +1,26 @@
 import logger from '@/utils/logger';
 
 export async function crawler(item: any, browser: any): Promise<string> {
-    let page;
     try {
-        page = await browser.newPage();
         let response = '';
-        try {
-            await page.goto(item.link, { waitUntil: 'networkidle0' });
-            await page.waitForSelector('.item-left .item .title .button');
-            await page.locator('.item-left .item .title .button').click();
-            response = await page.content();
-        } catch (error) {
-            logger.error('Page Error when visiting /gov/hangzhou/zwfw:', error);
-        } finally {
-            if (page && !page.isClosed()) {
-                await page.close();
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            const resourceType = request.resourceType();
+            if (['document', 'script', 'stylesheet', 'xhr'].includes(resourceType)) {
+                request.continue();
+            } else {
+                request.abort();
             }
-        }
+        });
+        await page.goto(item.link, {
+            waitUntil: 'networkidle0',
+            timeout: 29000,
+        });
+        const selector = '.item-left .item .title .button';
+        await page.evaluate((selector) => document.querySelector(selector).click(), selector);
+        await page.waitForSelector('.item-left .item .bg_box div:nth-child(16)', { timeout: 5000 });
+        response = await page.content();
         return response || '';
     } catch (error) {
         logger.error('Error when visiting /gov/hangzhou/zwfw:', error);
