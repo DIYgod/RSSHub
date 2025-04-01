@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['university'],
     example: '/cupl/jwc',
     description: '中国政法大学教务处通知公告',
-    name: '中国政法大学',
+    name: '教务处通知公告',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
