@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '游研社 - 分类文章',
-    maintainers: ['LightStrawberry', 'dousha'],
+    maintainers: ['betta-cyber', 'dousha'],
     handler,
     description: `| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 | 业界     |
 | --------- | ------- | ------ | ------- | ---- | -------- | -------- |
@@ -47,7 +47,7 @@ async function handler(ctx) {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const first_part = $('.b-list-main-item')
+    const firstPart = $('.b-list-main-item')
         .toArray()
         .map((element) => {
             const s = $(element);
@@ -60,7 +60,7 @@ async function handler(ctx) {
             return info;
         });
 
-    const second_part = $('.list-container li')
+    const secondPart = $('.list-container li')
         .toArray()
         .map((element) => {
             const s = $(element);
@@ -74,7 +74,7 @@ async function handler(ctx) {
             return info;
         });
 
-    const entries = [...first_part, ...second_part];
+    const entries = [...firstPart, ...secondPart];
 
     return await getDescription(entries).then((items) => ({
         title: '游研社-' + $('title').text(),
