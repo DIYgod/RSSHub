@@ -25,14 +25,9 @@ export const route: Route = {
 | recommend | history | big    | culture | news | retro    | industry |`,
 };
 
-type RawArticleDescription = {
-    title: string;
-    link: string;
-    pubDate: string | Date;
-    author?: string;
-};
+type ArticleEntry = DataItem & { link: string };
 
-function getDescription(items: RawArticleDescription[]): Promise<DataItem[]> {
+function getDescription(items: ArticleEntry[]): Promise<DataItem[]> {
     return Promise.all(
         items.map((item) =>
             fetchDataItemCached(item.link, (pageContent) => {
@@ -56,12 +51,12 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const s = $(element);
-            const info = {
+            const info: ArticleEntry = {
                 title: s.find('.b-main-info-title').text(),
                 link: 'https://www.yystv.cn' + s.find('.b-main-info-title a').attr('href'),
                 pubDate: parseRelativeDate(s.find('.b-main-createtime').text()),
                 author: s.find('.b-author').text(),
-            } satisfies RawArticleDescription;
+            };
             return info;
         });
 
@@ -70,12 +65,12 @@ async function handler(ctx) {
         .map((element) => {
             const s = $(element);
             const articleDate = s.find('.c-999').text();
-            const info = {
+            const info: ArticleEntry = {
                 title: s.find('.list-article-title').text(),
                 link: 'https://www.yystv.cn' + s.find('a').attr('href'),
                 pubDate: articleDate.includes('-') ? parseDate(articleDate) : parseRelativeDate(articleDate),
                 author: s.find('.handler-author-link').text(),
-            } satisfies RawArticleDescription;
+            };
             return info;
         });
 
