@@ -25,7 +25,7 @@ export function parseItems($: CheerioAPI, baseUrl: string): Promise<DataItem[]> 
 
     return Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(`${baseUrl}${item.link}`, async () => {
                 const res = await ofetch(`${baseUrl}${item.link}`);
                 const $ = load(res);
                 const description = $('div.item-detail')
