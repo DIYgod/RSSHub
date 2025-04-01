@@ -14823,6 +14823,19 @@
       }
     ]
   },
+  "hangzhou.gov.cn": {
+    "_name": "上海市人民政府",
+    ".": [
+      {
+        "title": "政务服务公开",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/col/col1256349/index.html"
+        ],
+        "target": "/gov/hangzhou/zwfw"
+      }
+    ]
+  },
   "changsha.gov.cn": {
     "_name": "上海市人民政府",
     "wlwz": [

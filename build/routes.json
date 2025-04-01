@@ -38745,6 +38745,34 @@
         ],
         "location": "hainan/iitb/tzgg.ts"
       },
+      "/hangzhou/zwfw": {
+        "path": "/hangzhou/zwfw",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/hangzhou/zwfw",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hangzhou.gov.cn/col/col1256349/index.html"
+            ]
+          }
+        ],
+        "name": "政务服务公开",
+        "maintainers": [
+          "flynncao"
+        ],
+        "url": "hangzhou.gov.cn/col/col1256349/index.html",
+        "location": "hangzhou/zwfw.ts"
+      },
       "/hebei/czt/xwdt/:category?": {
         "path": "/hebei/czt/xwdt/:category?",
         "categories": [
@@ -41868,7 +41896,10 @@
       "government"
     ],
     "description": "",
-    "lang": "zh-CN"
+    "lang": "zh-CN",
+    "zh": {
+      "name": "杭州市人民政府"
+    }
   },
   "gq": {
     "routes": {
