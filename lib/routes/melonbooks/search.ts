@@ -38,7 +38,7 @@ export const route: Route = {
     name: '搜索结果',
     maintainers: ['cokemine'],
     description: `::: tip
-    如果你期望获取限制级内容，可以添加\`&adult_view=1\`参数
-  :::`,
+如果你期望获取限制级内容，可以添加\`&adult_view=1\`参数
+:::`,
     handler,
 };
