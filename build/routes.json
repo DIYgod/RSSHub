@@ -75205,6 +75205,119 @@
     "url": "www.playstation.com",
     "lang": "en"
   },
+  "psnine": {
+    "routes": {
+      "/game": {
+        "path": "/game",
+        "categories": [
+          "game"
+        ],
+        "example": "/psnine/game",
+        "name": "游戏",
+        "maintainers": [
+          "betta-cyber"
+        ],
+        "radar": [
+          {
+            "source": [
+              "psnine.com/psngame",
+              "psnine.com"
+            ]
+          }
+        ],
+        "location": "game.ts"
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "game"
+        ],
+        "example": "/psnine",
+        "name": "首页",
+        "maintainers": [
+          "betta-cyber"
+        ],
+        "radar": [
+          {
+            "source": [
+              "psnine.com"
+            ]
+          }
+        ],
+        "location": "index.ts"
+      },
+      "/node/:id?/:order?": {
+        "path": "/node/:id?/:order?",
+        "parameters": {
+          "id": "节点 id，见下表，默认为 news",
+          "order": "排序，`date` 即最新，默认为 `obdate` 即综合排序"
+        },
+        "categories": [
+          "game"
+        ],
+        "example": "/psnine/node/news",
+        "name": "节点",
+        "maintainers": [
+          "betta-cyber",
+          "nczitzk"
+        ],
+        "radar": [
+          {
+            "source": [
+              "psnine.com/node/:id"
+            ]
+          }
+        ],
+        "location": "node.ts"
+      },
+      "/shuzhe": {
+        "path": "/shuzhe",
+        "categories": [
+          "game"
+        ],
+        "example": "/psnine/shuzhe",
+        "name": "数折",
+        "maintainers": [
+          "betta-cyber"
+        ],
+        "radar": [
+          {
+            "source": [
+              "psnine.com/dd",
+              "psnine.com"
+            ]
+          }
+        ],
+        "location": "shuzhe.ts"
+      },
+      "/trade": {
+        "path": "/trade",
+        "categories": [
+          "game"
+        ],
+        "example": "/psnine/trade",
+        "name": "闲游",
+        "maintainers": [
+          "betta-cyber"
+        ],
+        "radar": [
+          {
+            "source": [
+              "psnine.com/trade",
+              "psnine.com"
+            ]
+          }
+        ],
+        "location": "trade.ts"
+      }
+    },
+    "name": "PSN 中文站",
+    "url": "psnine.com",
+    "lang": "zh-CN",
+    "categories": [
+      "game"
+    ]
+  },
   "psyche": {
     "routes": {
       "/topic/:topic": {

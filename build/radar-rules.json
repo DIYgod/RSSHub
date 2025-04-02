@@ -29341,6 +29341,54 @@
       }
     ]
   },
+  "psnine.com": {
+    "_name": "PSN 中文站",
+    ".": [
+      {
+        "title": "游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/psngame",
+          "/"
+        ],
+        "target": "/psnine/game"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/psnine/"
+      },
+      {
+        "title": "节点",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/node/:id"
+        ],
+        "target": "/psnine/node/:id?/:order?"
+      },
+      {
+        "title": "数折",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/dd",
+          "/"
+        ],
+        "target": "/psnine/shuzhe"
+      },
+      {
+        "title": "闲游",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/trade",
+          "/"
+        ],
+        "target": "/psnine/trade"
+      }
+    ]
+  },
   "psyche.co": {
     "_name": "Psyche",
     ".": [
