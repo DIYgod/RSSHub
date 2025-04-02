@@ -4716,6 +4716,9 @@
     "ktKongTong",
     "cscnk52"
   ],
+  "/melonbooks/search/:query?": [
+    "cokemine"
+  ],
   "/mercari/:sort/:order/:status/:keyword": [
     "yana9i"
   ],

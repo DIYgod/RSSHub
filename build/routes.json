@@ -61324,6 +61324,41 @@
     "url": "meituan.com",
     "lang": "zh-CN"
   },
+  "melonbooks": {
+    "routes": {
+      "/search/:query?": {
+        "path": "/search/:query?",
+        "categories": [
+          "anime"
+        ],
+        "example": "/melonbooks/search/name=けいおん",
+        "parameters": {
+          "category": "链接参数，对应网址问号后的内容，不携带问号"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "搜索结果",
+        "maintainers": [
+          "cokemine"
+        ],
+        "description": "::: tip\n如果你期望获取限制级内容，可以添加`&adult_view=1`参数\n:::",
+        "location": "search.ts"
+      }
+    },
+    "name": "メロンブックス",
+    "url": "www.melonbooks.co.jp",
+    "description": "サイン本の同人誌、同人ゲーム、同人音楽、同人グッズの通販は国内最大級、業界最速の萌えいっぱいの総合書店メロンブックスで。同人作品、同人委託の特典付商品も多数あり。直営店舗数も同人業界で最大級。",
+    "lang": "ja",
+    "categories": [
+      "anime"
+    ]
+  },
   "mercari": {
     "routes": {
       "/:sort/:order/:status/:keyword": {
