@@ -28,13 +28,7 @@ export function parseItems($: CheerioAPI, baseUrl: string, fetchRestrictedConten
             cache.tryGet(`${baseUrl}${item.link}`, async () => {
                 const res = await ofetch(`${baseUrl}${item.link}`);
                 const $ = load(res);
-                const description = [
-                    $.html('div.slider'),
-                    $.html('div.item-meta3'),
-                    ...$('div.item-detail')
-                        .toArray()
-                        .map((item) => $.html(item)),
-                ].join('');
+                const description = $.html('div.item-page');
                 return {
                     ...item,
                     description,
