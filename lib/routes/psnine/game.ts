@@ -28,9 +28,9 @@ const handler = async () => {
 };
 
 export const route: Route = {
-    path: '/psngame',
+    path: '/game',
     categories: ['game'],
-    example: '/psnine/psngame',
+    example: '/psnine/game',
     name: '游戏',
     maintainers: ['betta-cyber'],
     handler,
