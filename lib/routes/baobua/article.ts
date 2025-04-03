@@ -15,14 +15,11 @@ async function loadArticle(link) {
     const totalPagesMatch = totalPagesRegex.exec(article('title').text());
     const totalPages = totalPagesMatch ? Number.parseInt(totalPagesMatch[1]) : 1;
 
-    let pubDate = new Date();
-    const jsonldScripts = article('script[type="application/ld+json"]').toArray();
-    for (const script of jsonldScripts) {
-        const jsonData = JSON.parse(load(script).text() || '');
-        if (jsonData['@type'] === 'BlogPosting') {
-            pubDate = jsonData.datePublished ? parseDate(jsonData.datePublished) : new Date();
-            break;
-        }
+    let pubDate;
+    const blogPostingScript = article('script:contains("BlogPosting")').first();
+    if (blogPostingScript) {
+        const jsonData = JSON.parse(blogPostingScript.text());
+        pubDate = parseDate(jsonData.datePublished);
     }
 
     const contentDiv = article('.contentme2');

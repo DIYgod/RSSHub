@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['baobua.com/search?q=:keyword'],
+            source: ['baobua.com/search'],
             target: '/search/:keyword',
         },
     ],
