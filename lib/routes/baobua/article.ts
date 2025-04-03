@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -32,8 +33,12 @@ async function loadArticle(link) {
         const additionalContents = await Promise.all(
             Array.from({ length: totalPages - 1 }, async (_, i) => {
                 try {
-                    const response = await got(`${link}?page=${i + 2}`);
-                    const pageDom = load(response.body);
+                    const url = `${link}?page=${i + 2}`;
+                    const html = await cache.tryGet(url, async () => {
+                        const response = await got(url);
+                        return response.body;
+                    });
+                    const pageDom = load(typeof html === 'string' ? html : '');
                     return pageDom('.contentme2').html() ?? '';
                 } catch {
                     return '';
