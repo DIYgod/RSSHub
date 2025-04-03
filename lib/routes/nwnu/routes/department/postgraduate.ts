@@ -14,6 +14,10 @@ const COLUMNS: Record<string, { title: string; description: string }> = {
         title: '招生工作（包括硕士、博士招生）',
         description: '研究生院招生信息（包含硕士招生和博士招生两个栏目）',
     },
+    '2738': {
+        title: '工作动态',
+        description: '研究生院工作动态',
+    },
     '2712': {
         title: '博士招生',
         description: '研究生院博士研究生招生信息',
