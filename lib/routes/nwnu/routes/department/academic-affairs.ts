@@ -103,7 +103,7 @@ export const route: Route = {
     example: '/department/academic-affairs/tzgg',
     radar: [
         {
-            source: ['yjsy.nwnu.edu.cn/:column/list.htm'],
+            source: ['jwc.nwnu.edu.cn/:column/list.htm'],
             target: '/department/academic-affairs/:column',
         },
     ],
