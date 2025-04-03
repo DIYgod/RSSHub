@@ -4,6 +4,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import { processEmbedPDF } from '../lib/embed-resource';
 
 const WEBSITE_LOGO = 'https://www.nwnu.edu.cn/_upload/tpl/02/d9/729/template729/favicon.ico';
 const BASE_URL = 'https://yjsy.nwnu.edu.cn/';
@@ -78,7 +79,7 @@ const handler: Route['handler'] = async (ctx) => {
                     const CONTENT_SELECTOR = 'div.content_div';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
+                    const content = processEmbedPDF(BASE_URL, contentPage(CONTENT_SELECTOR).html() || '');
                     return {
                         title: item.title,
                         pubDate: item.date,

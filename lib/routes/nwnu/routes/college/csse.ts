@@ -4,6 +4,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import { processEmbedPDF } from '../lib/embed-resource';
 
 const WEBSITE_LOGO = 'https://jsj.nwnu.edu.cn/_upload/tpl/02/2e/558/template558/favicon.ico';
 const BASE_URL = 'https://jsj.nwnu.edu.cn/';
@@ -78,7 +79,7 @@ const handler: Route['handler'] = async (ctx) => {
                     const contentPage = load(contentResponse);
                     const dateString = contentPage(DATE_SELECTOR).text();
                     const date = parseDate(dateString.replace('年', '-').replace('月', '-').replace('日', ''));
-                    const content = contentPage(CONTENT_SELECTOR).html() || '';
+                    const content = processEmbedPDF(BASE_URL, contentPage(CONTENT_SELECTOR).html() || '');
                     return {
                         title: item.title,
                         pubDate: date,
