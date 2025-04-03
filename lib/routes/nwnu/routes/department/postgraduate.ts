@@ -58,19 +58,17 @@ const handler: Route['handler'] = async (ctx) => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const itemLinks = await Promise.all(
-        listItems.toArray().map((element) => {
-            const title = $(element).find('a:nth-child(2)').attr('title')!;
-            const date = parseDate($(element).find('span.pdate').text()!);
-            const relativeLink = $(element).find('a:nth-child(2)').attr('href')!;
-            const link = new URL(relativeLink, BASE_URL).href;
-            return {
-                title,
-                date,
-                link,
-            };
-        })
-    );
+    const itemLinks = listItems.toArray().map((element) => {
+        const title = $(element).find('a:nth-child(2)').attr('title')!;
+        const date = parseDate($(element).find('span.pdate').text()!);
+        const relativeLink = $(element).find('a:nth-child(2)').attr('href')!;
+        const link = new URL(relativeLink, BASE_URL).href;
+        return {
+            title,
+            date,
+            link,
+        };
+    });
 
     return {
         title: columnTitle,
@@ -123,6 +121,12 @@ export const route: Route = {
         supportScihub: false,
     },
     example: '/department/postgraduate/2701',
+    radar: [
+        {
+            source: ['yjsy.nwnu.edu.cn/:column/list.htm'],
+            target: '/department/postgraduate/:column',
+        },
+    ],
     description: `
 | 编号 | 标题                           | 描述                                               |
 | ---- | ------------------------------ | -------------------------------------------------- |

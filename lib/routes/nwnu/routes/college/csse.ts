@@ -50,20 +50,18 @@ const handler: Route['handler'] = async (ctx) => {
     const listItems = $(ITEM_SELECTOR);
 
     // Map through each list item to extract details
-    const itemLinks = await Promise.all(
-        listItems.toArray().map((element) => {
-            const title = $(element).find('div.right_list_text > p.p1 > a').text()!;
-            const imgRelativeLink = $(element).find('div.right_list_img > a > img').attr('src') || WEBSITE_LOGO;
-            const img = new URL(imgRelativeLink, BASE_URL).href;
-            const relativeHref = $(element).find('div.right_list_text > p.p1 > a').attr('href')!;
-            const link = new URL(relativeHref, BASE_URL).href;
-            return {
-                title,
-                img,
-                link,
-            };
-        })
-    );
+    const itemLinks = listItems.toArray().map((element) => {
+        const title = $(element).find('div.right_list_text > p.p1 > a').text()!;
+        const imgRelativeLink = $(element).find('div.right_list_img > a > img').attr('src') || WEBSITE_LOGO;
+        const img = new URL(imgRelativeLink, BASE_URL).href;
+        const relativeHref = $(element).find('div.right_list_text > p.p1 > a').attr('href')!;
+        const link = new URL(relativeHref, BASE_URL).href;
+        return {
+            title,
+            img,
+            link,
+        };
+    });
 
     return {
         title: columnTitle,
@@ -118,6 +116,12 @@ export const route: Route = {
         supportScihub: false,
     },
     example: '/college/csse/2435',
+    radar: [
+        {
+            source: ['jsj.nwnu.edu.cn/:column/list'],
+            target: '/college/csse/:column',
+        },
+    ],
     description: `
 | column | 标题       | 描述                                          |
 | ------ | ---------- | --------------------------------------------- |
