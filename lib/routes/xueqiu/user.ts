@@ -52,18 +52,17 @@ async function handler(ctx) {
 
     const browser = await puppeteer({ stealth: true });
     try {
-        const page = await browser.newPage();
-
-        // 设置更真实的浏览器特征
-        await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
-        await page.setViewport({
+        // 创建主页面
+        const mainPage = await browser.newPage();
+        await mainPage.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+        await mainPage.setViewport({
             width: 1920,
             height: 1080,
             deviceScaleFactor: 1,
         });
 
         // 设置必要的 headers
-        await page.setExtraHTTPHeaders({
+        await mainPage.setExtraHTTPHeaders({
             Cookie: token as string,
             Referer: link,
             Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -77,83 +76,57 @@ async function handler(ctx) {
             'Sec-Fetch-User': '?1',
         });
 
-        // 启用 JavaScript
-        await page.setJavaScriptEnabled(true);
-
-        // 访问页面
-        await page.goto(link, {
-            waitUntil: 'networkidle0',
+        // 访问用户页面
+        logger.debug('Navigating to user page...');
+        await mainPage.goto(link, {
+            waitUntil: 'domcontentloaded',
             timeout: 30000,
         });
 
-        // 模拟滚动
-        await page.evaluate(() => {
-            window.scrollBy(0, 300);
-        });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // 等待页面加载
+        await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
+        logger.debug('User page loaded');
 
-        // 直接访问 API
+        // 获取时间线数据
         const apiUrl = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}`;
-        const response = await page.goto(apiUrl, {
-            waitUntil: 'networkidle0',
-            timeout: 30000,
-        });
+        logger.debug('Fetching timeline data...');
 
-        if (!response) {
-            throw new Error('Failed to get API response');
-        }
+        // 使用 fetch 获取数据
+        const response = await mainPage.evaluate(async (url) => {
+            const response = await fetch(url);
+            return response.json();
+        }, apiUrl);
 
-        let responseData;
-        try {
-            responseData = await response.json();
-        } catch (error) {
-            logger.error('Error parsing JSON response:', error);
-            throw new Error('Failed to parse user timeline data');
-        }
-
-        if (!responseData || !responseData.statuses) {
-            logger.error('Invalid response data:', responseData);
+        if (!response || !response.statuses) {
             throw new Error('Invalid user timeline data received');
         }
 
-        const data = responseData.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+        const data = response.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
 
         if (!data.length) {
             throw new Error('No valid timeline data found');
         }
 
+        // 处理详情页
         const items = await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.target, async () => {
-                    // 访问详情页
-                    const detailPage = await browser.newPage();
-                    try {
-                        await detailPage.setExtraHTTPHeaders({
-                            Cookie: token as string,
-                            Referer: link,
-                        });
+                    // 使用主页面访问详情
+                    const detailUrl = rootUrl + item.target;
+                    logger.debug(`Fetching detail page: ${detailUrl}`);
 
-                        const detailUrl = rootUrl + item.target;
-                        await detailPage.goto(detailUrl, {
-                            waitUntil: 'networkidle0',
+                    try {
+                        // 访问详情页
+                        await mainPage.goto(detailUrl, {
+                            waitUntil: 'domcontentloaded',
                             timeout: 30000,
                         });
 
-                        // 等待页面内容加载
-                        await detailPage
-                            .waitForFunction(
-                                () => {
-                                    const content = document.querySelector('.article__bd');
-                                    return content !== null;
-                                },
-                                { timeout: 5000 }
-                            )
-                            .catch(() => {
-                                logger.debug(`Wait timeout: ${detailUrl}`);
-                            });
+                        // 等待页面加载
+                        await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
 
                         // 获取详情页内容
-                        const content = await detailPage.evaluate(() => {
+                        const content = await mainPage.evaluate(() => {
                             const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
                             const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
                             return {
@@ -176,17 +149,22 @@ async function handler(ctx) {
                             pubDate: parseDate(item.created_at),
                             link: rootUrl + item.target,
                         };
-                    } catch (error) {
-                        logger.error(`Error fetching detail page: ${error}`);
-                        // 如果获取详情页失败，返回基本信息
+                    } catch (error: any) {
+                        // 不记录 ERR_ABORTED 错误，因为这是预期的
+                        if (!error.message?.includes('ERR_ABORTED')) {
+                            logger.error(`Error fetching detail page: ${error}`);
+                        }
+
+                        // 直接返回基本信息
+                        const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
+                        const description = item.description + retweetedStatus;
+
                         return {
-                            title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
+                            title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
                             description: item.description,
                             pubDate: parseDate(item.created_at),
                             link: rootUrl + item.target,
                         };
-                    } finally {
-                        await detailPage.close();
                     }
                 })
             )
