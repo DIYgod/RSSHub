@@ -11105,6 +11105,108 @@
     "url": "bangumi.tv",
     "lang": "zh-CN"
   },
+  "baobua": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "picture"
+        ],
+        "example": "/baobua/category/network",
+        "parameters": {
+          "category": "Category"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "baobua.com/cat/:category"
+            ],
+            "target": "/category/:category"
+          }
+        ],
+        "name": "Category",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "baobua.com/",
+        "location": "category.ts"
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "picture"
+        ],
+        "example": "/baobua",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "baobua.com/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "Latest",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "baobua.com/",
+        "location": "latest.ts"
+      },
+      "/search/:keyword": {
+        "path": "/search/:keyword",
+        "categories": [
+          "picture"
+        ],
+        "example": "/baobua/search/cos",
+        "parameters": {
+          "keyword": "Keyword"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "baobua.com/search"
+            ],
+            "target": "/search/:keyword"
+          }
+        ],
+        "name": "Search",
+        "maintainers": [
+          "AiraNadih"
+        ],
+        "url": "baobua.com/",
+        "location": "search.ts"
+      }
+    },
+    "name": "BaoBua",
+    "url": "baobua.com",
+    "description": "BaoBua.Com - Hot beauty girl pics, girls photos, free watch online hd photo sets",
+    "lang": "en"
+  },
   "baoyu": {
     "routes": {
       "/blog": {

@@ -711,6 +711,15 @@
     "youyou-sudo",
     "honue"
   ],
+  "/baobua/category/:category": [
+    "AiraNadih"
+  ],
+  "/baobua/": [
+    "AiraNadih"
+  ],
+  "/baobua/search/:keyword": [
+    "AiraNadih"
+  ],
   "/baoyu/blog": [
     "liyaozhong"
   ],
