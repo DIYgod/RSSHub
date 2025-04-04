@@ -8,57 +8,9 @@ import { Context } from 'hono';
 import { ARTICLE_TYPE_NAME_MAPPING, CACHE_TTL_SECONDS, DEFAULT_LIMIT, SUPPORTED_LANGUAGES } from './constants';
 import { ArticleType, Parameters } from './enum';
 
-export const route: Route = {
-    path: `/:${Parameters.Language}/news/:${Parameters.Category}?`,
-    categories: ['game'],
-    example: `/wuthering-waves/:${Parameters.Language}/news/:${Parameters.Category}?`,
-    parameters: {
-        [Parameters.Language]: 'Language to fetch article information in (see table below for the supported language codes)',
-        [Parameters.Category]: 'Filter articles by their category (see table below for the supported category IDs)',
-    },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: [
-        {
-            source: [`wutheringwaves.kurogames.com/:${Parameters.Language}/main/#news`],
-            target: `/wuthering-waves/:${Parameters.Language}/news`,
-        },
-    ],
-    name: 'News',
-    maintainers: ['goestav'],
-    handler,
-    description: `
-        Language codes for the \`${Parameters.Language}\` parameter:
-
-        | Language | Code  |
-        |----------|-------|
-        | English  | en    |
-        | 日本語    | jp    |
-        | 한국어     | kr    |
-        | 繁體中文   | zh-tw |
-        | Español  | es    |
-        | Français | fr    |
-        | Deutsch  | de    |
-
-        IDs for the \`${Parameters.Category}\` parameter:
-
-        | Article Type | ID |
-        |--------------|----|
-        | Notice       | 58 |
-        | News         | 57 |
-        | Event        | 59 |
-    `,
-};
-
 /* Get the content of a news article. */
-function getArticleContent(language: string, articleId: number) {
-    return cache.tryGet(
+const getArticleContent = (language: string, articleId: number) =>
+    cache.tryGet(
         `wuthering-waves:${language}:article:${articleId}`,
         async () => {
             const response = await ofetch(`https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/${language}/article/${articleId}.json`);
@@ -67,10 +19,9 @@ function getArticleContent(language: string, articleId: number) {
         },
         CACHE_TTL_SECONDS
     );
-}
 
 /** Get the feed details. */
-async function handler(ctx: Context) {
+const handler = async (ctx: Context) => {
     // Prevent an accidental DOS attack since every article requires an additional request to fetch the content.
     const limitParameter = ctx.req.query(Parameters.Limit);
     const limitParsed = limitParameter ? Number.parseInt(limitParameter, 10) : DEFAULT_LIMIT;
@@ -158,4 +109,52 @@ async function handler(ctx: Context) {
         // Event category for example is empty
         allowEmpty: true,
     } as Data;
-}
+};
+
+export const route: Route = {
+    path: `/:${Parameters.Language}/news/:${Parameters.Category}?`,
+    categories: ['game'],
+    example: `/wuthering-waves/:${Parameters.Language}/news/:${Parameters.Category}?`,
+    parameters: {
+        [Parameters.Language]: 'Language to fetch article information in (see table below for the supported language codes)',
+        [Parameters.Category]: 'Filter articles by their category (see table below for the supported category IDs)',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: [`wutheringwaves.kurogames.com/:${Parameters.Language}/main/#news`],
+            target: `/wuthering-waves/:${Parameters.Language}/news`,
+        },
+    ],
+    name: 'News',
+    maintainers: ['goestav'],
+    handler,
+    description: `
+        Language codes for the \`${Parameters.Language}\` parameter:
+
+        | Language | Code  |
+        |----------|-------|
+        | English  | en    |
+        | 日本語    | jp    |
+        | 한국어     | kr    |
+        | 繁體中文   | zh-tw |
+        | Español  | es    |
+        | Français | fr    |
+        | Deutsch  | de    |
+
+        IDs for the \`${Parameters.Category}\` parameter:
+
+        | Article Type | ID |
+        |--------------|----|
+        | Notice       | 58 |
+        | News         | 57 |
+        | Event        | 59 |
+    `,
+};
