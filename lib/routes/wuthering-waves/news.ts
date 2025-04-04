@@ -54,7 +54,7 @@ const handler = async (ctx: Context) => {
     // Ignore duplicate articles
     const handledIds: number[] = [];
 
-    const items: DataItem[] = [];
+    const itemPromises: Promise<DataItem>[] = [];
 
     for (const article of responseData.article) {
         // Limit the amount of items to display in the feed
@@ -74,28 +74,29 @@ const handler = async (ctx: Context) => {
 
         handledIds.push(article.articleId);
 
-        // eslint-disable-next-line no-await-in-loop
-        const description = await getArticleContent(language, article.articleId);
-        const category = categories.get(article.articleType);
+        const promise = async () => {
+            const description = await getArticleContent(language, article.articleId);
+            const category = categories.get(article.articleType);
 
-        if (description === null) {
-            logger.error(`Failed to fetch Wuthering Waves article content for article with ID ${article.articleId}`);
-            continue;
-        }
+            if (description === null) {
+                logger.error(`Failed to fetch Wuthering Waves article content for article with ID ${article.articleId}`);
+            }
 
-        if (typeof description !== 'string') {
-            logger.error(`Expected Wuthering Waves article content for article with ID ${article.articleId} to be a string, but got ${typeof description} instead`);
-            continue;
-        }
+            if (typeof description !== 'string') {
+                logger.error(`Expected Wuthering Waves article content for article with ID ${article.articleId} to be a string, but got ${typeof description} instead`);
+            }
 
-        items.push({
-            title: article.articleTitle,
-            description,
-            category: category ? [category] : undefined,
-            pubDate: timezone(parseDate(article.createTime), 0),
-            link: `https://wutheringwaves.kurogames.com/${language}/main/news/detail/${article.articleId}`,
-            guid: article.articleId,
-        });
+            return {
+                title: article.articleTitle,
+                description,
+                category: category ? [category] : undefined,
+                pubDate: timezone(parseDate(article.createTime), 0),
+                link: `https://wutheringwaves.kurogames.com/${language}/main/news/detail/${article.articleId}`,
+                guid: article.articleId,
+            } as DataItem;
+        };
+
+        itemPromises.push(promise());
     }
 
     const titleCategory = categoryId ? ARTICLE_TYPE_NAME_MAPPING[categoryId] : 'Latest';
@@ -103,7 +104,7 @@ const handler = async (ctx: Context) => {
     return {
         title: `Wuthering Waves - ${titleCategory}`,
         link: 'https://wutheringwaves.kurogames.com/en/main#news',
-        item: items,
+        item: await Promise.all(itemPromises),
         icon: 'https://wutheringwaves.kurogames.com/favicon.ico',
         logo: 'https://wutheringwaves.kurogames.com/favicon.ico',
         // Event category for example is empty
