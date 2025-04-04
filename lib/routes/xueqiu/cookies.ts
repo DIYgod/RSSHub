@@ -1,6 +1,7 @@
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
+import { getCookies } from '@/utils/puppeteer-utils';
 
 export const parseToken = (link: string) =>
     cache.tryGet(
@@ -16,9 +17,8 @@ export const parseToken = (link: string) =>
                 waitUntil: 'domcontentloaded',
             });
             await page.evaluate(() => document.documentElement.innerHTML);
-            const cookies = await page.cookies();
-            await browser.close();
-            return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+            const cookies = await getCookies(page);
+            return cookies;
         },
         config.cache.routeExpire,
         false
