@@ -17,8 +17,8 @@ export const route: Route = {
     name: '国家统计局 通用',
     url: 'www.stats.gov.cn',
     categories: ['government'],
-    maintainers: ['bigfei', 'nczitzk'],
-    example: '/stats/sj/zxfb',
+    maintainers: ['bigfei', 'nczitzk', 'reply2future'],
+    example: '/gov/stats/sj/zxfb',
     handler,
     radar: [
         {
