@@ -1,8 +1,10 @@
+/* eslint-disable prefer-rest-params */
+/* eslint-disable default-case */
+/* eslint-disable unicorn/consistent-function-scoping */
+/* eslint-disable no-console */
 // Copyright 2018 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
-/* eslint-disable no-console */
 
 'use strict';
 
@@ -197,7 +199,7 @@
                 if (f === 0) {
                     return;
                 }
-                if (!isNaN(f)) {
+                if (!Number.isNaN(f)) {
                     return f;
                 }
 
@@ -209,7 +211,7 @@
                 const nanHead = 0x7F_F8_00_00;
 
                 if (typeof v === 'number' && v !== 0) {
-                    if (isNaN(v)) {
+                    if (Number.isNaN(v)) {
                         this.mem.setUint32(addr + 4, nanHead, true);
                         this.mem.setUint32(addr, 0, true);
                         return;

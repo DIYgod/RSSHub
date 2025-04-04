@@ -28,7 +28,7 @@ export const route: Route = {
 // Based on https://github.com/SocialSisterYi/bilibili-API-collect/issues/1168#issuecomment-2620749895
 async function genReqSign(query, body) {
     // Don't import on top-level to avoid a cyclic dependency - wasm-exec.js generated via `pnpm build`, which in turn needs wasm-exec.js to import routes correctly
-    const { Go } = await import('./wasm-exec.js');
+    const { Go } = await import('./wasm-exec');
 
     // Cache the wasm binary as it's quite large (~2MB)
     // Here the binary is saved as base64 as the cache stores strings
