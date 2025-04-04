@@ -128,8 +128,14 @@ async function handler(ctx) {
                 //       Need more investigation, pending for now since the current version works fine.
                 // TODO: getShowData() on demand? The API seems to return most things we need since 2022/05/21.
                 //       Need more investigation, pending for now since the current version works fine.
-                const key = 'weibo:user:' + item.mblog.bid;
-                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, item.mblog.bid));
+                let { bid } = item.mblog;
+                if (bid === '') {
+                    const url = new URL(item.scheme);
+                    bid = url.searchParams.get('mblogid');
+                    item.mblog.bid = bid;
+                }
+                const key = `weibo:user:${bid}`;
+                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, bid));
 
                 if (data && data.text) {
                     item.mblog.text = data.text;
