@@ -10,6 +10,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { JSDOM } from 'jsdom';
 
 export const route: Route = {
     path: '/stats/*',
@@ -111,7 +112,9 @@ async function handler(ctx) {
                 try {
                     item.author = detailResponse.data.match(/来源：(.*?)</)[1].trim();
                 } catch {
-                    item.author = content('div.detail-title-des h2 span').first().text().split(':').pop().trim();
+                    // deal with script rendering element like that `<script>var lay="";var lay1="国家统计局";if(lay1.length>0){document.write("<span>来源：国家统计局</span>")}else{if(lay.length>0){document.write("<span>来源：</span>")}}</script>`
+                    const _authorDom = new JSDOM(content('div.detail-title-des h2 script').text(), { runScripts: 'dangerously' }).window.document.querySelector('span');
+                    item.author = _authorDom?.textContent?.replace('来源：', '').trim();
                 }
 
                 content('.pchide').remove();
@@ -119,7 +122,7 @@ async function handler(ctx) {
                 item.title = item.title || content('div.detail-title h1').text();
                 item.pubDate = timezone(parseDate(content('div.detail-title-des h2 p, .info').first().text().trim()), +8);
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: content('.TRS_Editor').html(),
+                    description: content('.TRS_Editor').html() || content('.TRS_UEDITOR').html(),
                     attachments: content('a[oldsrc]')
                         .toArray()
                         .map((a) => {
