@@ -11262,6 +11262,19 @@
       }
     ]
   },
+  "diariofruticola.cl": {
+    "_name": "Diario Frutícola",
+    ".": [
+      {
+        "title": "Filtro",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/filtro/:filter"
+        ],
+        "target": "/diariofruticolaparams=>{const filter=params.filter;return`/diariofruticola/filtro${filter?`/${filter}`:\"\"}`}"
+      }
+    ]
+  },
   "diershoubing.com": {
     "_name": "二柄 APP",
     ".": [
