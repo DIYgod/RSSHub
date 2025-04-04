@@ -76,7 +76,7 @@
         "crypto-js": "4.2.0",
         "currency-symbol-map": "5.1.0",
         "dayjs": "1.11.8",
-        "destr": "2.0.3",
+        "destr": "2.0.5",
         "directory-import": "3.3.2",
         "dotenv": "16.4.7",
         "entities": "6.0.0",
