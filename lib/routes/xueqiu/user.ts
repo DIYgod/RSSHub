@@ -1,10 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
 import { parseToken } from '@/routes/xueqiu/cookies';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -15,7 +15,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -38,7 +38,6 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') || 10;
-    const source = type === '11' ? '买卖' : '';
     const typename = {
         10: '全部',
         0: '原发布',
@@ -50,53 +49,156 @@ async function handler(ctx) {
 
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
-    const res2 = await got({
-        method: 'get',
-        url: `${rootUrl}/v4/statuses/user_timeline.json`,
-        searchParams: queryString.stringify({
-            user_id: id,
-            type,
-            source,
-        }),
-        headers: {
-            Cookie: token,
+
+    const browser = await puppeteer({ stealth: true });
+    try {
+        const page = await browser.newPage();
+
+        // 设置更真实的浏览器特征
+        await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+        await page.setViewport({
+            width: 1920,
+            height: 1080,
+            deviceScaleFactor: 1,
+        });
+
+        // 设置必要的 headers
+        await page.setExtraHTTPHeaders({
+            Cookie: token as string,
             Referer: link,
-        },
-    });
-    const data = res2.data.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Cache-Control': 'max-age=0',
+            Connection: 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+        });
 
-    const items = await Promise.all(
-        data.map((item) =>
-            cache.tryGet(item.target, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: rootUrl + item.target,
-                    headers: {
-                        Referer: link,
-                        Cookie: token,
-                    },
-                });
+        // 启用 JavaScript
+        await page.setJavaScriptEnabled(true);
 
-                const data = JSON.parse(detailResponse.data.match(/SNOWMAN_STATUS = (.*?});/)[1]);
-                item.text = data.text;
+        // 访问页面
+        await page.goto(link, {
+            waitUntil: 'networkidle0',
+            timeout: 30000,
+        });
 
-                const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
-                const description = item.description + retweetedStatus;
+        // 模拟滚动
+        await page.evaluate(() => {
+            window.scrollBy(0, 300);
+        });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
-                return {
-                    title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
-                    description: item.text ? item.text + retweetedStatus : description,
-                    pubDate: parseDate(item.created_at),
-                    link: rootUrl + item.target,
-                };
-            })
-        )
-    );
+        // 直接访问 API
+        const apiUrl = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}`;
+        const response = await page.goto(apiUrl, {
+            waitUntil: 'networkidle0',
+            timeout: 30000,
+        });
 
-    return {
-        title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
-        link,
-        description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
-        item: items,
-    };
+        if (!response) {
+            throw new Error('Failed to get API response');
+        }
+
+        let responseData;
+        try {
+            responseData = await response.json();
+        } catch (error) {
+            logger.error('Error parsing JSON response:', error);
+            throw new Error('Failed to parse user timeline data');
+        }
+
+        if (!responseData || !responseData.statuses) {
+            logger.error('Invalid response data:', responseData);
+            throw new Error('Invalid user timeline data received');
+        }
+
+        const data = responseData.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+
+        if (!data.length) {
+            throw new Error('No valid timeline data found');
+        }
+
+        const items = await Promise.all(
+            data.map((item) =>
+                cache.tryGet(item.target, async () => {
+                    // 访问详情页
+                    const detailPage = await browser.newPage();
+                    try {
+                        await detailPage.setExtraHTTPHeaders({
+                            Cookie: token as string,
+                            Referer: link,
+                        });
+
+                        const detailUrl = rootUrl + item.target;
+                        await detailPage.goto(detailUrl, {
+                            waitUntil: 'networkidle0',
+                            timeout: 30000,
+                        });
+
+                        // 等待页面内容加载
+                        await detailPage
+                            .waitForFunction(
+                                () => {
+                                    const content = document.querySelector('.article__bd');
+                                    return content !== null;
+                                },
+                                { timeout: 5000 }
+                            )
+                            .catch(() => {
+                                logger.debug(`Wait timeout: ${detailUrl}`);
+                            });
+
+                        // 获取详情页内容
+                        const content = await detailPage.evaluate(() => {
+                            const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
+                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
+                            return {
+                                articleContent,
+                                statusData: statusMatch ? statusMatch[1] : null,
+                            };
+                        });
+
+                        if (content.statusData) {
+                            const data = JSON.parse(content.statusData);
+                            item.text = data.text;
+                        }
+
+                        const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
+                        const description = content.articleContent || item.description + retweetedStatus;
+
+                        return {
+                            title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
+                            description: item.text ? item.text + retweetedStatus : description,
+                            pubDate: parseDate(item.created_at),
+                            link: rootUrl + item.target,
+                        };
+                    } catch (error) {
+                        logger.error(`Error fetching detail page: ${error}`);
+                        // 如果获取详情页失败，返回基本信息
+                        return {
+                            title: item.title || sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} }),
+                            description: item.description,
+                            pubDate: parseDate(item.created_at),
+                            link: rootUrl + item.target,
+                        };
+                    } finally {
+                        await detailPage.close();
+                    }
+                })
+            )
+        );
+
+        return {
+            title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
+            link,
+            description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
+            item: items,
+        };
+    } finally {
+        await browser.close();
+    }
 }
