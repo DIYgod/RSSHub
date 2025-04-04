@@ -20,14 +20,20 @@ const getArticleContent = (language: string, articleId: number) =>
         CACHE_TTL_SECONDS
     );
 
+/** Parse a parameter as an integer. */
+const parseIntegerParameter = <T>(parameter: string, fallback: T) => {
+    const value = Number.parseInt(parameter, 10);
+
+    return Number.isNaN(value) ? fallback : value;
+};
+
 /** Get the feed details. */
 const handler = async (ctx: Context) => {
     // Prevent an accidental DOS attack since every article requires an additional request to fetch the content.
-    const limitParameter = ctx.req.query(Parameters.Limit) ?? '';
-    const limitParsed = Number.parseInt(limitParameter, 10) || DEFAULT_LIMIT;
+    const limitParsed = parseIntegerParameter(ctx.req.query(Parameters.Limit) ?? '', DEFAULT_LIMIT);
 
     /** The amount of articles to fetch. */
-    const limit = Number.isNaN(limitParsed) || limitParsed <= 0 ? 0 : limitParsed;
+    const limit = Math.max(limitParsed, 0);
 
     /** The language to fetch articles in. */
     const language = ctx.req.param(Parameters.Language) ?? 'en';
