@@ -98,7 +98,7 @@ const handler = async (ctx: Context) => {
         });
     }
 
-    const titleCategory = categoryId ? ARTICLE_TYPE_NAME_MAPPING[categoryId ?? ArticleType.News] : 'Latest';
+    const titleCategory = categoryId ? ARTICLE_TYPE_NAME_MAPPING[categoryId] : 'Latest';
 
     return {
         title: `Wuthering Waves - ${titleCategory}`,
