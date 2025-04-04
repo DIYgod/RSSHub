@@ -3,7 +3,6 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
 import { parseToken } from '@/routes/xueqiu/cookies';
-import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://xueqiu.com';
@@ -52,7 +51,6 @@ async function handler(ctx) {
 
     const browser = await puppeteer({ stealth: true });
     try {
-        // 创建主页面
         const mainPage = await browser.newPage();
         await mainPage.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
         await mainPage.setViewport({
@@ -61,7 +59,6 @@ async function handler(ctx) {
             deviceScaleFactor: 1,
         });
 
-        // 设置必要的 headers
         await mainPage.setExtraHTTPHeaders({
             Cookie: token as string,
             Referer: link,
@@ -76,56 +73,39 @@ async function handler(ctx) {
             'Sec-Fetch-User': '?1',
         });
 
-        // 访问用户页面
-        logger.debug('Navigating to user page...');
         await mainPage.goto(link, {
             waitUntil: 'domcontentloaded',
             timeout: 30000,
         });
-
-        // 等待页面加载
         await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
-        logger.debug('User page loaded');
 
-        // 获取时间线数据
         const apiUrl = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}`;
-        logger.debug('Fetching timeline data...');
-
-        // 使用 fetch 获取数据
         const response = await mainPage.evaluate(async (url) => {
             const response = await fetch(url);
             return response.json();
         }, apiUrl);
 
-        if (!response || !response.statuses) {
-            throw new Error('Invalid user timeline data received');
+        if (!response?.statuses) {
+            throw new Error('获取用户动态数据失败');
         }
 
-        const data = response.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+        const data = response.statuses.filter((s) => s.mark !== 1);
 
         if (!data.length) {
-            throw new Error('No valid timeline data found');
+            throw new Error('未找到有效的动态数据');
         }
 
-        // 处理详情页
         const items = await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.target, async () => {
-                    // 使用主页面访问详情
                     const detailUrl = rootUrl + item.target;
-                    logger.debug(`Fetching detail page: ${detailUrl}`);
-
                     try {
-                        // 访问详情页
                         await mainPage.goto(detailUrl, {
                             waitUntil: 'domcontentloaded',
                             timeout: 30000,
                         });
-
-                        // 等待页面加载
                         await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
 
-                        // 获取详情页内容
                         const content = await mainPage.evaluate(() => {
                             const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
                             const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
@@ -149,13 +129,10 @@ async function handler(ctx) {
                             pubDate: parseDate(item.created_at),
                             link: rootUrl + item.target,
                         };
-                    } catch (error: any) {
-                        // 不记录 ERR_ABORTED 错误，因为这是预期的
-                        if (!error.message?.includes('ERR_ABORTED')) {
-                            logger.error(`Error fetching detail page: ${error}`);
+                    } catch (error: unknown) {
+                        if (error instanceof Error && !error.message?.includes('ERR_ABORTED')) {
+                            throw error;
                         }
-
-                        // 直接返回基本信息
                         const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
                         const description = item.description + retweetedStatus;
 
