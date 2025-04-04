@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/newscdu/:category?',
     categories: ['university'],
-    example: '/newscdu/cdyw',
+    example: '/cdu/news',
     parameters: { category: '分类，见下表，默认为成大要闻' },
     features: {
         requireConfig: false,
