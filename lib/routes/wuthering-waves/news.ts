@@ -23,8 +23,8 @@ const getArticleContent = (language: string, articleId: number) =>
 /** Get the feed details. */
 const handler = async (ctx: Context) => {
     // Prevent an accidental DOS attack since every article requires an additional request to fetch the content.
-    const limitParameter = ctx.req.query(Parameters.Limit);
-    const limitParsed = limitParameter ? Number.parseInt(limitParameter, 10) : DEFAULT_LIMIT;
+    const limitParameter = ctx.req.query(Parameters.Limit) ?? '';
+    const limitParsed = Number.parseInt(limitParameter, 10) || DEFAULT_LIMIT;
 
     /** The amount of articles to fetch. */
     const limit = Number.isNaN(limitParsed) || limitParsed <= 0 ? 0 : limitParsed;
