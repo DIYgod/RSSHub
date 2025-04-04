@@ -1948,9 +1948,6 @@
   "/dianping/user/:id": [
     "pseudoyu"
   ],
-  "/diariofruticola/filtro/:filter{.+}": [
-    "nczitzk"
-  ],
   "/diershoubing/news": [
     "wushijishan"
   ],
