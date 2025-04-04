@@ -5357,6 +5357,15 @@
   "/nwafu/:type?": [
     "karinido"
   ],
+  "/nwnu/college/csse/:column": [
+    "PrinOrange"
+  ],
+  "/nwnu/department/academic-affairs/:column": [
+    "PrinOrange"
+  ],
+  "/nwnu/department/postgraduate/:column": [
+    "PrinOrange"
+  ],
   "/nyaa/search/:query?": [
     "Lava-Swimmer",
     "noname1776",
