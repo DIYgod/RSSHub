@@ -28,14 +28,14 @@ export const route: Route = {
         },
     ],
     name: '仓库提交',
-    maintainers: ['JiZhi-Error],
+    maintainers: ['JiZhi-Error'],
     handler,
 };
 
 async function handler(ctx) {
     const { owner, repo, branch } = ctx.req.param();
     // API路径
-    const apiUrl = `https://web-api.gitcode.com/api/v2/projects/${encodeURIComponent(owner)}%2F${encodeURIComponent(repo)}/repository/commits`;
+    const apiUrl = `https://web-api.gitcode.com/api/v2/projects/${encodeURIComponent(`${owner}/${repo}`)}/repository/commits`;
 
     const searchParams: Record<string, any> = {
         per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100,
