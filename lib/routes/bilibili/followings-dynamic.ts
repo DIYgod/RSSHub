@@ -18,7 +18,7 @@ export const route: Route = {
 | 键         | 含义                              | 接受的值       | 默认值 |
 | ---------- | --------------------------------- | -------------- | ------ |
 | showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| embed      | 默认开启内嵌视频                  | 任意值         |        |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
 | useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
 | directLink | 使用内容直链                      | 0/1/true/false | false  |
 | hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
@@ -45,9 +45,9 @@ export const route: Route = {
     name: '用户关注动态',
     maintainers: ['TigerCubDen', 'JimenezLi'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -55,7 +55,7 @@ async function handler(ctx) {
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const embed = !ctx.req.param('embed');
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
     const name = await cache.getUsernameFromUID(uid);

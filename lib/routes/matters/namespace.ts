@@ -3,6 +3,6 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'Matters',
     url: 'matters.town',
-    categories: ['new-media'],
+    categories: ['new-media', 'popular'],
     lang: 'en',
 };

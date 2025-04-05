@@ -13,6 +13,10 @@ export const route: Route = {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
+                description: 'Please see above for details.',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,

@@ -39,8 +39,8 @@ export const route: Route = {
     maintainers: ['wb121017405'],
     handler,
     description: `| 全部 | 影视资讯 | 收视快报 | 人人影评  | 人人剧评  | 新剧评测    | 片单推荐 |
-  | ---- | -------- | -------- | --------- | --------- | ----------- | -------- |
-  |      | news     | report   | m\_review | t\_review | new\_review | recom    |`,
+| ---- | -------- | -------- | --------- | --------- | ----------- | -------- |
+|      | news     | report   | m\_review | t\_review | new\_review | recom    |`,
 };
 
 async function handler(ctx) {

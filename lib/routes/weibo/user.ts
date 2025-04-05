@@ -45,9 +45,9 @@ export const route: Route = {
     name: '博主',
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9', 'Konano'],
     handler,
-    description: `:::warning
+    description: `::: warning
   部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -56,6 +56,7 @@ async function handler(ctx) {
     let displayArticle = '0';
     let displayComments = '0';
     let showRetweeted = '1';
+    let showBloggerIcons = '0';
     if (ctx.req.param('routeParams')) {
         if (ctx.req.param('routeParams') === '1' || ctx.req.param('routeParams') === '0') {
             displayVideo = ctx.req.param('routeParams');
@@ -65,6 +66,7 @@ async function handler(ctx) {
             displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false) ? '1' : '0';
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
             showRetweeted = fallback(undefined, queryToBoolean(routeParams.showRetweeted), false) ? '1' : '0';
+            showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
         }
     }
     const containerData = await cache.tryGet(
@@ -126,8 +128,14 @@ async function handler(ctx) {
                 //       Need more investigation, pending for now since the current version works fine.
                 // TODO: getShowData() on demand? The API seems to return most things we need since 2022/05/21.
                 //       Need more investigation, pending for now since the current version works fine.
-                const key = 'weibo:user:' + item.mblog.bid;
-                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, item.mblog.bid));
+                let { bid } = item.mblog;
+                if (bid === '') {
+                    const url = new URL(item.scheme);
+                    bid = url.searchParams.get('mblogid');
+                    item.mblog.bid = bid;
+                }
+                const key = `weibo:user:${bid}`;
+                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, bid));
 
                 if (data && data.text) {
                     item.mblog.text = data.text;
@@ -161,7 +169,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item.mblog);
+                    description = await weiboUtils.formatComments(ctx, description, item.mblog, showBloggerIcons);
                 }
 
                 // 文章的处理

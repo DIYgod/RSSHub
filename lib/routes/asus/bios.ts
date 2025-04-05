@@ -91,7 +91,6 @@ export const route: Route = {
                 'www.asus.com/:region/laptops/:productLine/:series/:model',
                 'www.asus.com/:region/motherboards-components/:productLine/:series/:model',
                 'www.asus.com/:region/networking-iot-servers/:productLine/:series/:model',
-                'asus.com.cn/',
             ],
             target: '/bios/:model',
         },
@@ -107,9 +106,7 @@ async function handler(ctx) {
     const language = ctx.req.param('lang') ?? 'en';
     const productInfo = await getProductInfo(model, language);
     const biosAPI =
-        language === 'zh'
-            ? `https://www.asus.com.cn/support/api/product.asmx/GetPDBIOS?website=cn&model=${model}&pdid=${productInfo.productID}&sitelang=cn`
-            : `https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&model=${model}&pdid=${productInfo.productID}&sitelang=en`;
+        language === 'zh' ? `https://www.asus.com.cn/support/api/product.asmx/GetPDBIOS?website=cn&model=${model}&sitelang=cn` : `https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&model=${model}&sitelang=en`;
 
     const response = await ofetch(biosAPI);
     const biosList = response.Result.Obj[0].Files;

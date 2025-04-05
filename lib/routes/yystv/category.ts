@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { fetchDataItemCached } from './fetcher';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
@@ -18,67 +18,65 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '游研社 - 分类文章',
-    maintainers: ['LightStrawberry'],
+    maintainers: ['betta-cyber', 'dousha'],
     handler,
-    description: `| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
-  | --------- | ------- | ------ | ------- | ---- | -------- |
-  | recommend | history | big    | culture | news | retro    |`,
+    description: `| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 | 业界     |
+| --------- | ------- | ------ | ------- | ---- | -------- | -------- |
+| recommend | history | big    | culture | news | retro    | industry |`,
 };
+
+type ArticleEntry = DataItem & { link: string };
+
+function getDescription(items: ArticleEntry[]): Promise<DataItem[]> {
+    return Promise.all(
+        items.map((item) =>
+            fetchDataItemCached(item.link, (pageContent) => {
+                const $ = load(pageContent);
+                const articleContent = $('.doc-content.rel').html() || '';
+
+                const assembledItem: DataItem = { ...item, description: articleContent };
+                return assembledItem;
+            })
+        )
+    );
+}
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = `https://www.yystv.cn/b/${category}`;
-    const response = await got({
-        method: 'get',
-        url,
-    });
+    const response = await ofetch(url);
+    const $ = load(response);
 
-    const data = response.data;
-    const $ = load(data);
-
-    const first_part = $('.b-list-main-item')
-        .slice(0, 2)
-        .map(function () {
-            const info = {
-                title: $(this).find('.b-main-info-title').text(),
-                link: 'https://www.yystv.cn' + $(this).find('.b-main-info-title a').attr('href'),
-                pubDate: parseRelativeDate($(this).find('.b-main-createtime').text()),
-                author: $(this).find('.b-author').text(),
+    const firstPart = $('.b-list-main-item')
+        .toArray()
+        .map((element) => {
+            const s = $(element);
+            const info: ArticleEntry = {
+                title: s.find('.b-main-info-title').text(),
+                link: 'https://www.yystv.cn' + s.find('.b-main-info-title a').attr('href'),
+                pubDate: parseRelativeDate(s.find('.b-main-createtime').text()),
+                author: s.find('.b-author').text(),
             };
             return info;
-        })
-        .get();
+        });
 
-    const second_part = $('.list-container li')
-        .slice(0, 18)
-        .map(function () {
-            const info = {
-                title: $('.list-article-title', this).text(),
-                link: 'https://www.yystv.cn' + $('a', this).attr('href'),
-                pubDate: $('.c-999', this).text().includes('-') ? parseDate($('.c-999', this).text()) : parseRelativeDate($('.c-999', this).text()),
-                author: $('.handler-author-link', this).text(),
+    const secondPart = $('.list-container li')
+        .toArray()
+        .map((element) => {
+            const s = $(element);
+            const articleDate = s.find('.c-999').text();
+            const info: ArticleEntry = {
+                title: s.find('.list-article-title').text(),
+                link: 'https://www.yystv.cn' + s.find('a').attr('href'),
+                pubDate: articleDate.includes('-') ? parseDate(articleDate) : parseRelativeDate(articleDate),
+                author: s.find('.handler-author-link').text(),
             };
             return info;
-        })
-        .get();
+        });
 
-    const items = [...first_part, ...second_part];
-    function getDescription(items) {
-        return Promise.all(
-            items.map(async (currentValue) => {
-                currentValue.description = await cache.tryGet(currentValue.link, async () => {
-                    const r = await got({
-                        url: currentValue.link,
-                        method: 'get',
-                    });
-                    const $ = load(r.data);
-                    return $('.doc-content.rel').html();
-                });
-                return currentValue;
-            })
-        );
-    }
-    await getDescription(items).then(() => ({
+    const entries = [...firstPart, ...secondPart];
+
+    return await getDescription(entries).then((items) => ({
         title: '游研社-' + $('title').text(),
         link: `https://www.yystv.cn/b/${category}`,
         item: items,

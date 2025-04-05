@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| Today's Featured Trope | Newest Trope |
-  | ---------------------- | ------------ |
-  | today                  | newest       |`,
+| ---------------------- | ------------ |
+| today                  | newest       |`,
 };
 
 async function handler(ctx) {

@@ -61,7 +61,7 @@ export const getCookieValueByKey = (key: string) =>
         ?.split(';')
         .map((e) => e.trim())
         .find((e) => e.startsWith(key + '='))
-        ?.slice(key.length + 1);
+        ?.slice(key.length + 1) || '';
 
 export const getSignedHeader = async (url: string, apiPath: string) => {
     // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
@@ -69,14 +69,13 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     // require users to set the cookie in environmental variables anymore.
 
     // fisrt: get cookie(dc_0) from zhihu.com
-    const dc0 = await cache.tryGet('zhihu:cookies:d_c0', async () => {
-        if (getCookieValueByKey('d_c0')) {
-            return getCookieValueByKey('d_c0');
+    const { dc0, zseCk } = await cache.tryGet('zhihu:cookies:d_c0', async () => {
+        if (getCookieValueByKey('d_c0') && getCookieValueByKey('__zse_ck')) {
+            return { dc0: getCookieValueByKey('d_c0'), zseCk: getCookieValueByKey('__zse_ck') };
         }
         const response1 = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
         const script = await response1._data.text();
         const zseCk = script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1];
-
         const response2 = zseCk
             ? await ofetch.raw(url, {
                   headers: {
@@ -88,17 +87,15 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
               })
             : null;
 
-        const dc0 = (response2 || response1).headers
-            .getSetCookie()
-            .find((s) => s.startsWith('d_c0='))
-            ?.split(';')[0]
-            .trim()
-            .slice('d_c0='.length);
-        if (!dc0) {
-            throw new Error('Failed to extract `d_c0` from cookies');
-        }
+        const dc0 =
+            (response2 || response1).headers
+                .getSetCookie()
+                .find((s) => s.startsWith('d_c0='))
+                ?.split(';')[0]
+                .trim()
+                .slice('d_c0='.length) || '';
 
-        return dc0;
+        return { dc0, zseCk };
     });
 
     // calculate x-zse-96, refer to https://github.com/srx-2000/spider_collection/issues/18
@@ -109,7 +106,7 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
     const zc0 = getCookieValueByKey('z_c0');
 
     return {
-        cookie: `d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
+        cookie: `__zse_ck=${zseCk}; d_c0=${dc0}${zc0 ? `;z_c0=${zc0}` : ''}`,
         'x-zse-96': xzse96,
         'x-app-za': 'OS=Web',
         'x-zse-93': xzse93,

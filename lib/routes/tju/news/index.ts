@@ -35,8 +35,8 @@ export const route: Route = {
     maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
     description: `| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
-  | :----------: | :----------: | :-----------: | :----------: | :-------------: |
-  |     focus    |    general   |    internal   |     media    |     picture     |`,
+| :----------: | :----------: | :-----------: | :----------: | :-------------: |
+|     focus    |    general   |    internal   |     media    |     picture     |`,
 };
 
 async function handler(ctx) {

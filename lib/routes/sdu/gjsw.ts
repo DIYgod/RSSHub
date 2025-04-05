@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['kukeya'],
     handler,
     description: `| 通知公告 |  
-  | -------- | 
-  | tzgg     |      `,
+| -------- | 
+| tzgg     |      `,
 };
 
 async function handler(ctx) {

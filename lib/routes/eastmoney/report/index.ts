@@ -44,8 +44,8 @@ export const route: Route = {
     maintainers: ['syzq'],
     handler,
     description: `| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 | 个股研报 |
-  | -------------- | ----------- | ------------ | -------- | -------- |
-  | strategyreport | macresearch | brokerreport | industry | stock    |`,
+| -------------- | ----------- | ------------ | -------- | -------- |
+| strategyreport | macresearch | brokerreport | industry | stock    |`,
 };
 
 async function handler(ctx) {

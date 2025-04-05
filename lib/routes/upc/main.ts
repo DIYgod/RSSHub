@@ -34,8 +34,8 @@ export const route: Route = {
     maintainers: ['Veagau'],
     handler,
     description: `| 通知公告 | 学术动态 |
-  | -------- | -------- |
-  | notice   | scholar  |`,
+| -------- | -------- |
+| notice   | scholar  |`,
 };
 
 async function handler(ctx) {

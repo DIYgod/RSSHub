@@ -36,13 +36,13 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen'],
     handler,
     url: 'weibo.com/',
-    description: `:::warning
+    description: `::: warning
   此方案必须使用用户\`Cookie\`进行抓取
 
   因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
 
   微博用户 Cookie 的配置可参照部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -141,7 +141,7 @@ async function handler(ctx) {
             }
 
             if (displayComments === '1') {
-                description = await weiboUtils.formatComments(ctx, description, item);
+                description = await weiboUtils.formatComments(ctx, description, item, '0');
             }
 
             if (displayArticle === '1') {

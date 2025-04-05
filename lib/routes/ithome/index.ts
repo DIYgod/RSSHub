@@ -53,8 +53,8 @@ export const route: Route = {
     maintainers: ['luyuhuang'],
     handler,
     description: `| it      | soft     | win10      | win11      | iphone      | ipad      | android      | digi     | next     |
-  | ------- | -------- | ---------- | ---------- | ----------- | --------- | ------------ | -------- | -------- |
-  | IT 资讯 | 软件之家 | win10 之家 | win11 之家 | iphone 之家 | ipad 之家 | android 之家 | 数码之家 | 智能时代 |`,
+| ------- | -------- | ---------- | ---------- | ----------- | --------- | ------------ | -------- | -------- |
+| IT 资讯 | 软件之家 | win10 之家 | win11 之家 | iphone 之家 | ipad 之家 | android 之家 | 数码之家 | 智能时代 |`,
 };
 
 async function handler(ctx) {

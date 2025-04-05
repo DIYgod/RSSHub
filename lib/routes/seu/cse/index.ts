@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['LogicJake'],
     handler,
     description: `| 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |`,
+| -------- | -------- | -------- | -------- | -------- |
+| xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |`,
 };
 
 async function handler(ctx) {

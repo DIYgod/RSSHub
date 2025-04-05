@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: '抖音直播',
     url: 'douyin.com',
-    description: `:::warning
+    description: `::: warning
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
 

@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |
-  | -------- | ------------ | -------- | ---------- |
-  | all      | experience   | news     | graduate   |`,
+| -------- | ------------ | -------- | ---------- |
+| all      | experience   | news     | graduate   |`,
 };
 
 async function handler(ctx) {

@@ -20,8 +20,8 @@ export const route: Route = {
     ],
     handler,
     description: `| 简体中文 | 繁体中文 |
-  | -------- | -------- |
-  | zh-hans  | zh-hant  |`,
+| -------- | -------- |
+| zh-hans  | zh-hant  |`,
 };
 
 async function handler(ctx) {
@@ -55,7 +55,7 @@ async function handler(ctx) {
                     intro: item.content,
                 }),
                 author: item.location,
-                category: item.tags.map((c) => c.name),
+                category: item.tags?.map((c) => c.name),
                 guid: `idaily-${item.guid}`,
                 pubDate: parseDate(item.pubdate_timestamp, 'X'),
                 updated: parseDate(item.lastupdate_timestamp, 'X'),

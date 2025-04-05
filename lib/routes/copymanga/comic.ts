@@ -25,7 +25,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '漫画更新',
-    maintainers: ['btdwv', 'marvolo666', 'yan12125'],
+    maintainers: ['btdwv', 'marvolo666'],
     handler,
 };
 
@@ -34,9 +34,9 @@ async function handler(ctx) {
     // 用于控制返回的章节数量
     const chapterCnt = Number(ctx.req.param('chapterCnt') || 10);
     // 直接调用拷贝漫画的接口
-    const host = 'copymanga.tv';
+    const host = 'www.mangacopy.com';
     const baseUrl = `https://${host}`;
-    const apiBaseUrl = `https://api.${host}`;
+    const apiBaseUrl = `https://${host}`;
     const strBaseUrl = `${apiBaseUrl}/api/v3/comic/${id}/group/default/chapters`;
     const iReqLimit = 500;
     // 获取漫画列表

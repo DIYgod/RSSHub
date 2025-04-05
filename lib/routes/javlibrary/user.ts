@@ -8,8 +8,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| Wanted     | Watched     | Owned     |
-  | ---------- | ----------- | --------- |
-  | userwanted | userwatched | userowned |`,
+| ---------- | ----------- | --------- |
+| userwanted | userwatched | userowned |`,
 };
 
 async function handler(ctx) {

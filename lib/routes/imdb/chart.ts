@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
 import { ChartTitleSearchConnection } from './types';
-import path from 'path';
+import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 
@@ -37,8 +37,8 @@ export const route: Route = {
     handler,
     url: 'www.imdb.com/chart/top/',
     description: `| Top 250 Movies | Most Popular Movies | Top 250 TV Shows | Most Popular TV Shows |
-  | -------------- | ------------------- | ---------------- | --------------------- |
-  | top            | moviemeter          | toptv            | tvmeter               |`,
+| -------------- | ------------------- | ---------------- | --------------------- |
+| top            | moviemeter          | toptv            | tvmeter               |`,
 };
 
 async function handler(ctx: Context) {
