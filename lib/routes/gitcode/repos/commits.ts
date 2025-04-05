@@ -39,12 +39,8 @@ async function handler(ctx) {
 
     const searchParams: Record<string, any> = {
         per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100,
+        ref_name: branch,
     };
-
-    // 如果指定了分支，则添加到查询参数中
-    if (branch) {
-        searchParams.ref_name = branch;
-    }
 
     const response = (await cache.tryGet(`${apiUrl}${branch ? `#${branch}` : ''}`, async () => {
         const { data } = await got(apiUrl, {
