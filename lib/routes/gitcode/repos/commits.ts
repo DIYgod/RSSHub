@@ -42,12 +42,9 @@ async function handler(ctx) {
         ref_name: branch,
     };
 
-    const response = (await cache.tryGet(`${apiUrl}${branch ? `#${branch}` : ''}`, async () => {
-        const { data } = await got(apiUrl, {
-            searchParams,
-        });
-        return data;
-    })) as { content: any[] };
+    const { data: response } = await got(apiUrl, {
+        searchParams,
+    });
 
     if (!response || !response.content) {
         throw new Error('无法获取提交数据');
