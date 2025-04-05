@@ -4,6 +4,8 @@ import { Job } from './models';
 /**
  * Constants
  */
+const BASE_URL = 'https://www.linkedin.com';
+
 const KEYWORDS_QUERY_KEY = 'keywords';
 
 const JOB_TYPES_QUERY_KEY = 'f_JT';
@@ -123,4 +125,4 @@ const parseRouteParam = (searchParam: string | null): string => {
     return encodeURIComponent(searchParam.split(',').join('-'));
 };
 
-export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, parseRouteParam, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };
+export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, parseRouteParam, BASE_URL, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };
