@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '仓库提交',
-    maintainers: [],
+    maintainers: ['JiZhi-Error],
     handler,
 };
 
