@@ -10,7 +10,6 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { JSDOM } from 'jsdom';
 
 export const route: Route = {
     path: '/stats/*',
@@ -109,13 +108,7 @@ async function handler(ctx) {
                     return item;
                 }
 
-                try {
-                    item.author = detailResponse.data.match(/来源：(.*?)</)[1].trim();
-                } catch {
-                    // deal with script rendering element like that `<script>var lay="";var lay1="国家统计局";if(lay1.length>0){document.write("<span>来源：国家统计局</span>")}else{if(lay.length>0){document.write("<span>来源：</span>")}}</script>`
-                    const _authorDom = new JSDOM(content('div.detail-title-des h2 script').text(), { runScripts: 'dangerously' }).window.document.querySelector('span');
-                    item.author = _authorDom?.textContent?.replace('来源：', '').trim();
-                }
+                item.author = detailResponse.data?.match(/来源：(.*?)</)?.[1]?.trim() ?? detailResponse.match(/来源：(.*?)</)?.[1]?.trim();
 
                 content('.pchide').remove();
 
