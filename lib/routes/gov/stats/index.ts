@@ -108,7 +108,7 @@ async function handler(ctx) {
                     return item;
                 }
 
-                item.author = detailResponse.data?.match(/来源：(.*?)</)?.[1]?.trim() ?? detailResponse.match(/来源：(.*?)</)?.[1]?.trim();
+                item.author = detailResponse.match(/来源：(.*?)</)?.[1]?.trim();
 
                 content('.pchide').remove();
 
