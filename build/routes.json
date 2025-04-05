@@ -41542,9 +41542,10 @@
         ],
         "maintainers": [
           "bigfei",
-          "nczitzk"
+          "nczitzk",
+          "reply2future"
         ],
-        "example": "/stats/sj/zxfb",
+        "example": "/gov/stats/sj/zxfb",
         "radar": [
           {
             "title": "国家统计局 通用",
