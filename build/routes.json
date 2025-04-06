@@ -35999,7 +35999,7 @@
         "categories": [
           "programming"
         ],
-        "example": "/gitcode/commits-api/openharmony-sig/flutter_flutter",
+        "example": "/gitcode/commits/openharmony-sig/flutter_flutter",
         "parameters": {
           "owner": "用户名/组织名",
           "repo": "仓库名",
