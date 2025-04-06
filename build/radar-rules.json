@@ -13715,6 +13715,20 @@
       }
     ]
   },
+  "gitcode.com": {
+    "_name": "GitCode",
+    ".": [
+      {
+        "title": "仓库提交",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo/commits",
+          "/:owner/:repo/commits/:branch"
+        ],
+        "target": "/gitcodeparams=>`/gitcode/commits/${params.owner}/${params.repo}${params.branch?`/${params.branch}`:\"\"}`"
+      }
+    ]
+  },
   "gitee.com": {
     "_name": "Gitee",
     ".": [

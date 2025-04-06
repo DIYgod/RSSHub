@@ -2779,6 +2779,9 @@
   "/gisreportsonline/:path{.*}": [
     "dzx-dzx"
   ],
+  "/gitcode/commits/:owner/:repo/:branch?": [
+    "JiZhi-Error"
+  ],
   "/gitee/commits/:owner/:repo": [
     "TonyRL"
   ],

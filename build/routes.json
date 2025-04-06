@@ -35992,6 +35992,46 @@
     "url": "www.gisreportsonline.com",
     "lang": "en"
   },
+  "gitcode": {
+    "routes": {
+      "/commits/:owner/:repo/:branch?": {
+        "path": "/commits/:owner/:repo/:branch?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/gitcode/commits-api/openharmony-sig/flutter_flutter",
+        "parameters": {
+          "owner": "用户名/组织名",
+          "repo": "仓库名",
+          "branch": "分支名，可选，默认为主分支"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gitcode.com/:owner/:repo/commits",
+              "gitcode.com/:owner/:repo/commits/:branch"
+            ]
+          }
+        ],
+        "name": "仓库提交",
+        "maintainers": [
+          "JiZhi-Error"
+        ],
+        "location": "repos/commits.ts"
+      }
+    },
+    "name": "GitCode",
+    "url": "gitcode.com",
+    "lang": "zh-CN"
+  },
   "gitee": {
     "routes": {
       "/commits/:owner/:repo": {
