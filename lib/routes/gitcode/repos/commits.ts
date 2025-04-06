@@ -10,7 +10,7 @@ const md = MarkdownIt({
 export const route: Route = {
     path: '/commits/:owner/:repo/:branch?',
     categories: ['programming'],
-    example: '/gitcode/commits-api/openharmony-sig/flutter_flutter',
+    example: '/gitcode/commits/openharmony-sig/flutter_flutter',
     parameters: { owner: '用户名/组织名', repo: '仓库名', branch: '分支名，可选，默认为主分支' },
     features: {
         requireConfig: false,
