@@ -1,6 +1,8 @@
 import { Route } from '@/types';
+import puppeteer from '@/utils/puppeteer';
 import { parseDate } from '@/utils/parse-date';
-import { BASE_URL } from './utils';
+import { parseCompanyName, parseCompanyPosts, BASE_URL } from './utils';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/company/:company_id/posts',
@@ -22,25 +24,36 @@ export const route: Route = {
     handler,
 };
 
-function handler(ctx) {
-    const { company_id } = ctx.req.param('company_id');
+async function handler(ctx) {
+    const company_id = ctx.req.param('company_id');
+
+    // Puppeteer setup
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
 
     const url = new URL(`${BASE_URL}/company/${company_id}`);
 
-    const posts = [];
-
-    // dummy data
-    posts.push({
-        title: 'This is my website',
-        link: 'https://saifazmi.com',
-        date: '1w',
+    logger.http(`Requesting ${url.href}`);
+    await page.goto(url.href, {
+        waitUntil: 'domcontentloaded',
     });
 
+    const response = await page.content();
+    page.close();
+    const companyName = parseCompanyName(response);
+    const posts = parseCompanyPosts(response);
+
     return {
-        title: `LinkedIn - ${company_id} Posts`,
+        title: `LinkedIn - ${companyName}'s Posts`,
         link: url.href,
         item: posts.map((post) => ({
-            title: post.title,
+            title: post.text,
+            description: post.text,
             link: post.link,
             pubDate: parseDate(post.date),
         })),

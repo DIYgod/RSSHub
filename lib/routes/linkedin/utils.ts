@@ -125,4 +125,53 @@ const parseRouteParam = (searchParam: string | null): string => {
     return encodeURIComponent(searchParam.split(',').join('-'));
 };
 
-export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, parseRouteParam, BASE_URL, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };
+/**
+ * Parse company profile page for posts
+ * Example page: https://www.linkedin.com/company/google/
+ *
+ * @param {String} data HTML string of company profile page
+ * @returns {Array<JSON>} Array of company posts
+ */
+function parseCompanyPosts(data) {
+    const $ = load(data);
+    const posts = $('ul.updates__list > li')
+        .toArray() // Convert the Cheerio object to a plain array
+        .map((elem) => {
+            const elemHtml = $(elem);
+            const link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+            const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
+            const date = elemHtml.find('time').text().trim();
+
+            return { link, text, date };
+        });
+
+    return posts;
+}
+
+/**
+ * Parse company profile page for its name
+ * Example page: https://www.linkedin.com/company/google/
+ *
+ * @param {String} data HTML string of company profile page
+ * @returns {String} Company name
+ */
+function parseCompanyName(data) {
+    const $ = load(data);
+    return $('h1.top-card-layout__title').text().trim();
+}
+
+export {
+    parseCompanyPosts,
+    parseCompanyName,
+    parseParamsToSearchParams,
+    parseParamsToString,
+    parseJobDetail,
+    parseJobSearch,
+    parseRouteParam,
+    BASE_URL,
+    JOB_TYPES,
+    JOB_TYPES_QUERY_KEY,
+    EXP_LEVELS,
+    EXP_LEVELS_QUERY_KEY,
+    KEYWORDS_QUERY_KEY,
+};
