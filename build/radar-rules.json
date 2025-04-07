@@ -8322,6 +8322,24 @@
   },
   "cdu.edu.cn": {
     "_name": "成都大学",
+    "news": [
+      {
+        "title": "成大人物",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/cdu/cdrw"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/cdu/tzggcdunews"
+      }
+    ],
     "jw": [
       {
         "title": "教务处通知公告",
@@ -8330,16 +8348,6 @@
           "/"
         ],
         "target": "/cdu/jwgg"
-      }
-    ],
-    "news": [
-      {
-        "title": "通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/cdu/tzggcdunews"
       }
     ]
   },

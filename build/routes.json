@@ -18409,6 +18409,35 @@
   },
   "cdu": {
     "routes": {
+      "/cdrw": {
+        "path": "/cdrw",
+        "categories": [
+          "university"
+        ],
+        "example": "/cdu/cdrw",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "news.cdu.edu.cn/"
+            ]
+          }
+        ],
+        "name": "成大人物",
+        "maintainers": [
+          "uuwor"
+        ],
+        "url": "news.cdu.edu.cn/",
+        "location": "cdrw.ts"
+      },
       "/jwgg": {
         "path": "/jwgg",
         "categories": [
