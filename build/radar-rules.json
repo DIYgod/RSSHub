@@ -245,6 +245,123 @@
       }
     ]
   },
+  "199it.com": {
+    "_name": "199it",
+    "www": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/199itparams=>{const category=params.category;return`/199it${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/newly"
+        ],
+        "target": "/199it/newly"
+      },
+      {
+        "title": "报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/report"
+        ],
+        "target": "/199it/archives/category/report"
+      },
+      {
+        "title": "新兴产业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/emerging"
+        ],
+        "target": "/199it/archives/category/emerging"
+      },
+      {
+        "title": "金融科技",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/fintech"
+        ],
+        "target": "/199it/archives/category/fintech"
+      },
+      {
+        "title": "共享经济",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/sharingeconomy"
+        ],
+        "target": "/199it/archives/category/sharingeconomy"
+      },
+      {
+        "title": "移动互联网",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/mobile-internet"
+        ],
+        "target": "/199it/archives/category/mobile-internet"
+      },
+      {
+        "title": "电子商务",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/electronic-commerce"
+        ],
+        "target": "/199it/archives/category/electronic-commerce"
+      },
+      {
+        "title": "社交网络",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/social-network"
+        ],
+        "target": "/199it/archives/category/social-network"
+      },
+      {
+        "title": "网络广告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/advertising"
+        ],
+        "target": "/199it/archives/category/advertising"
+      },
+      {
+        "title": "投资&amp;经济，互联网金融",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/economic-data"
+        ],
+        "target": "/199it/archives/category/economic-data"
+      },
+      {
+        "title": "服务",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/service"
+        ],
+        "target": "/199it/archives/category/service"
+      },
+      {
+        "title": "网络服务行业",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/dataindustry"
+        ],
+        "target": "/199it/archives/category/dataindustry"
+      },
+      {
+        "title": "用户研究",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/category/internet-users"
+        ],
+        "target": "/199it/archives/category/internet-users"
+      }
+    ]
+  },
   "1lou.me": {
     "_name": "BT 之家 1LOU 站",
     ".": [

@@ -1071,6 +1071,192 @@
     "description": "::: tip\n禁漫天堂有多个备用域名，本路由默认使用域名 `https://jmcomic.me`，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 `https://jmcomic1.me`，则在所有禁漫天堂路由最后加上 `?domain=jmcomic1.me` 即可，此时路由为 [`/18comic?domain=jmcomic1.me`](https://rsshub.app/18comic?domain=jmcomic1.me)\n:::",
     "lang": "zh-CN"
   },
+  "199it": {
+    "name": "199it",
+    "routes": {
+      "/:category{.+}?": {
+        "path": "/:category{.+}?",
+        "name": "资讯",
+        "url": "199it.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/199it/newly",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `newly`，即最新，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "最新",
+                "value": "newly"
+              },
+              {
+                "label": "报告",
+                "value": "archives/category/report"
+              },
+              {
+                "label": "新兴产业",
+                "value": "archives/category/emerging"
+              },
+              {
+                "label": "金融科技",
+                "value": "archives/category/fintech"
+              },
+              {
+                "label": "共享经济",
+                "value": "archives/category/sharingeconomy"
+              },
+              {
+                "label": "移动互联网",
+                "value": "archives/category/mobile-internet"
+              },
+              {
+                "label": "电子商务",
+                "value": "archives/category/electronic-commerce"
+              },
+              {
+                "label": "社交网络",
+                "value": "archives/category/social-network"
+              },
+              {
+                "label": "网络广告",
+                "value": "archives/category/advertising"
+              },
+              {
+                "label": "投资&amp;经济，互联网金融",
+                "value": "archives/category/economic-data"
+              },
+              {
+                "label": "服务",
+                "value": "archives/category/service"
+              },
+              {
+                "label": "网络服务行业",
+                "value": "archives/category/dataindustry"
+              },
+              {
+                "label": "用户研究",
+                "value": "archives/category/internet-users"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n若订阅 [研究报告](https://www.199it.com/archives/category/report)，网址为 `https://www.199it.com/archives/category/report`，请截取 `https://www.199it.com/archives/category/report` 到末尾的部分 `archives/category/report` 作为 `category` 参数填入，此时目标路由为 [`/199it/archives/category/report`](https://rsshub.app/199it/archives/category/report)。\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n| 分类                                                                              | ID                                                                                                      |\n| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |\n| [报告](http://www.199it.com/archives/category/report)                             | [archives/category/report](https://rsshub.app/199it/archives/category/report)                           |\n| [新兴产业](http://www.199it.com/archives/category/emerging)                       | [archives/category/emerging](https://rsshub.app/199it/archives/category/emerging)                       |\n| [金融科技](http://www.199it.com/archives/category/fintech)                        | [archives/category/fintech](https://rsshub.app/199it/archives/category/fintech)                         |\n| [共享经济](http://www.199it.com/archives/category/sharingeconomy)                 | [archives/category/sharingeconomy](https://rsshub.app/199it/archives/category/sharingeconomy)           |\n| [移动互联网](http://www.199it.com/archives/category/mobile-internet)              | [archives/category/mobile-internet](https://rsshub.app/199it/archives/category/mobile-internet)         |\n| [电子商务](http://www.199it.com/archives/category/electronic-commerce)            | [archives/category/electronic-commerce](https://rsshub.app/199it/archives/category/electronic-commerce) |\n| [社交网络](http://www.199it.com/archives/category/social-network)                 | [archives/category/social-network](https://rsshub.app/199it/archives/category/social-network)           |\n| [网络广告](http://www.199it.com/archives/category/advertising)                    | [archives/category/advertising](https://rsshub.app/199it/archives/category/advertising)                 |\n| [投资&amp;经济，互联网金融](http://www.199it.com/archives/category/economic-data) | [archives/category/economic-data](https://rsshub.app/199it/archives/category/economic-data)             |\n| [服务](http://www.199it.com/archives/category/service)                            | [archives/category/service](https://rsshub.app/199it/archives/category/service)                         |\n| [网络服务行业](http://www.199it.com/archives/category/dataindustry)               | [archives/category/dataindustry](https://rsshub.app/199it/archives/category/dataindustry)               |\n| [用户研究](http://www.199it.com/archives/category/internet-users)                 | [archives/category/internet-users](https://rsshub.app/199it/archives/category/internet-users)           |\n\n</details>\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.199it.com/:category"
+            ]
+          },
+          {
+            "title": "最新",
+            "source": [
+              "www.199it.com/newly"
+            ],
+            "target": "/newly"
+          },
+          {
+            "title": "报告",
+            "source": [
+              "www.199it.com/archives/category/report"
+            ],
+            "target": "/archives/category/report"
+          },
+          {
+            "title": "新兴产业",
+            "source": [
+              "www.199it.com/archives/category/emerging"
+            ],
+            "target": "/archives/category/emerging"
+          },
+          {
+            "title": "金融科技",
+            "source": [
+              "www.199it.com/archives/category/fintech"
+            ],
+            "target": "/archives/category/fintech"
+          },
+          {
+            "title": "共享经济",
+            "source": [
+              "www.199it.com/archives/category/sharingeconomy"
+            ],
+            "target": "/archives/category/sharingeconomy"
+          },
+          {
+            "title": "移动互联网",
+            "source": [
+              "www.199it.com/archives/category/mobile-internet"
+            ],
+            "target": "/archives/category/mobile-internet"
+          },
+          {
+            "title": "电子商务",
+            "source": [
+              "www.199it.com/archives/category/electronic-commerce"
+            ],
+            "target": "/archives/category/electronic-commerce"
+          },
+          {
+            "title": "社交网络",
+            "source": [
+              "www.199it.com/archives/category/social-network"
+            ],
+            "target": "/archives/category/social-network"
+          },
+          {
+            "title": "网络广告",
+            "source": [
+              "www.199it.com/archives/category/advertising"
+            ],
+            "target": "/archives/category/advertising"
+          },
+          {
+            "title": "投资&amp;经济，互联网金融",
+            "source": [
+              "www.199it.com/archives/category/economic-data"
+            ],
+            "target": "/archives/category/economic-data"
+          },
+          {
+            "title": "服务",
+            "source": [
+              "www.199it.com/archives/category/service"
+            ],
+            "target": "/archives/category/service"
+          },
+          {
+            "title": "网络服务行业",
+            "source": [
+              "www.199it.com/archives/category/dataindustry"
+            ],
+            "target": "/archives/category/dataindustry"
+          },
+          {
+            "title": "用户研究",
+            "source": [
+              "www.199it.com/archives/category/internet-users"
+            ],
+            "target": "/archives/category/internet-users"
+          }
+        ],
+        "view": 0,
+        "location": "index.ts"
+      }
+    }
+  },
   "19lou": {
     "routes": {
       "/:city?": {
