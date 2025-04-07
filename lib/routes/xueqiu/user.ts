@@ -52,32 +52,16 @@ async function handler(ctx) {
     const browser = await puppeteer({ stealth: true });
     try {
         const mainPage = await browser.newPage();
-        await mainPage.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
-        await mainPage.setViewport({
-            width: 1920,
-            height: 1080,
-            deviceScaleFactor: 1,
-        });
 
         await mainPage.setExtraHTTPHeaders({
             Cookie: token as string,
             Referer: link,
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-            'Cache-Control': 'max-age=0',
-            Connection: 'keep-alive',
-            'Upgrade-Insecure-Requests': '1',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
         });
 
         await mainPage.goto(link, {
             waitUntil: 'domcontentloaded',
-            timeout: 30000,
         });
-        await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
+        await mainPage.waitForFunction(() => document.readyState === 'complete');
 
         const apiUrl = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}`;
         const response = await mainPage.evaluate(async (url) => {
@@ -102,9 +86,8 @@ async function handler(ctx) {
                     try {
                         await mainPage.goto(detailUrl, {
                             waitUntil: 'domcontentloaded',
-                            timeout: 30000,
                         });
-                        await mainPage.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
+                        await mainPage.waitForFunction(() => document.readyState === 'complete');
 
                         const content = await mainPage.evaluate(() => {
                             const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
