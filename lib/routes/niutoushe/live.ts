@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const baseUrl = 'https://niutoushe.com';
     const url = `${baseUrl}/lives`;
 
@@ -58,18 +58,14 @@ async function handler(ctx) {
     // Get detailed content for each item
     const itemsWithContent = await Promise.all(
         items.map(async (item) => {
-            try {
-                const detailResponse = await got(item.link);
-                const $detail = load(detailResponse.data);
-                const content = $detail('div.live-cc').html() || '';
+            const detailResponse = await got(item.link);
+            const $detail = load(detailResponse.data);
+            const content = $detail('div.live-cc').html() || '';
 
-                return {
-                    ...item,
-                    description: content,
-                };
-            } catch (error) {
-                return item;
-            }
+            return {
+                ...item,
+                description: content,
+            };
         })
     );
 
