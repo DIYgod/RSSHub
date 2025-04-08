@@ -1,7 +1,7 @@
 import type { Route} from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/lives',
@@ -40,8 +40,8 @@ async function handler() {
             const link = $item.find('a').attr('href');
             const sourceUrl = link ? new URL(link, baseUrl).href : '';
             const sourceId = sourceUrl.split('/').pop();
-            const datetimeStr = $item.find('div.fenxiang span').text().trim();
-            const pubDate = parseDate(datetimeStr);
+            const datetimeStr = $item.find('div.fenxiang span').first().text().trim();
+            const pubDate = /小时前/.test(datetimeStr) ? parseRelativeDate(datetimeStr) : parseDate(datetimeStr);
             const author = '牛头社';
 
             return {
