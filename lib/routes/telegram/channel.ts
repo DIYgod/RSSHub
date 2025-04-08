@@ -719,7 +719,7 @@ async function handler(ctx) {
                     if (messageTextObj.length > 0 && !titleCompleteFlag) {
                         const _messageTextObj = $(messageTextObj.toString());
                         _messageTextObj.find('br').replaceWith('\n');
-                        const trimmedTitleText = _messageTextObj.text().replaceAll('\n', ' ').trim();
+                        const trimmedTitleText = _messageTextObj.text().split('\n').at(0)?.trim();
                         messageTitle += (messageTitle && trimmedTitleText ? ': ' : '') + trimmedTitleText;
                     }
 
