@@ -47,6 +47,7 @@ export const route: Route = {
         return {
             title: `LinkedIn - ${companyName}'s Posts`,
             link: url.href,
+            description: `This feed gets ${companyName}'s posts from LinkedIn`,
             item: posts.map((post) => ({
                 title: post.text,
                 description: post.text,
