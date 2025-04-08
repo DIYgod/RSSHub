@@ -1,6 +1,5 @@
 import { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
-import { parseDate } from '@/utils/parse-date';
 import { parseCompanyName, parseCompanyPosts, BASE_URL } from './utils';
 import logger from '@/utils/logger';
 
@@ -55,7 +54,7 @@ async function handler(ctx) {
             title: post.text,
             description: post.text,
             link: post.link,
-            pubDate: parseDate(post.date),
+            pubDate: post.date,
         })),
     };
 }

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { Job } from './models';
+import dayjs from 'dayjs';
 
 /**
  * Constants
@@ -140,7 +141,7 @@ function parseCompanyPosts(data) {
             const elemHtml = $(elem);
             const link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
             const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
-            const date = elemHtml.find('time').text().trim();
+            const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
 
             return { link, text, date };
         });
@@ -158,6 +159,28 @@ function parseCompanyPosts(data) {
 function parseCompanyName(data) {
     const $ = load(data);
     return $('h1.top-card-layout__title').text().trim();
+}
+
+/**
+ * Parse relative date shorthand string into a Date object
+ *
+ * @param {String} shorthand The shorthand string representing the date
+ * @returns {Date|null} The parsed date or null if the format is invalid
+ */
+function parseRelativeShorthandDate(shorthand) {
+    const match = shorthand.match(/^(\d+)([wdmyh])$/);
+    if (!match) {return null;}
+
+    const [, amount, unit] = match;
+    const unitMap = {
+        w: 'week',
+        d: 'day',
+        m: 'month',
+        y: 'year',
+        h: 'hour',
+    };
+
+    return dayjs().subtract(Number.parseInt(amount), unitMap[unit]);
 }
 
 export {
