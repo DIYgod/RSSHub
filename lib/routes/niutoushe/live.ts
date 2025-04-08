@@ -53,7 +53,7 @@ async function handler() {
                 guid: sourceId,
             };
         })
-        .get();
+        .toArray();
 
     // Get detailed content for each item
     const itemsWithContent = await Promise.all(
