@@ -20,41 +20,39 @@ export const route: Route = {
     },
     name: 'Company Posts',
     maintainers: ['saifazmi'],
-    handler,
+    handler: async (ctx) => {
+        const company_id = ctx.req.param('company_id');
+
+        // Puppeteer setup
+        const browser = await puppeteer();
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+
+        page.on('request', (request) => {
+            request.resourceType() === 'document' ? request.continue() : request.abort();
+        });
+
+        const url = new URL(`${BASE_URL}/company/${company_id}`);
+
+        logger.http(`Requesting ${url.href}`);
+        await page.goto(url.href, {
+            waitUntil: 'domcontentloaded',
+        });
+
+        const response = await page.content();
+        page.close();
+        const companyName = parseCompanyName(response);
+        const posts = parseCompanyPosts(response);
+
+        return {
+            title: `LinkedIn - ${companyName}'s Posts`,
+            link: url.href,
+            item: posts.map((post) => ({
+                title: post.text,
+                description: post.text,
+                link: post.link,
+                pubDate: post.date,
+            })),
+        };
+    },
 };
-
-async function handler(ctx) {
-    const company_id = ctx.req.param('company_id');
-
-    // Puppeteer setup
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
-    });
-
-    const url = new URL(`${BASE_URL}/company/${company_id}`);
-
-    logger.http(`Requesting ${url.href}`);
-    await page.goto(url.href, {
-        waitUntil: 'domcontentloaded',
-    });
-
-    const response = await page.content();
-    page.close();
-    const companyName = parseCompanyName(response);
-    const posts = parseCompanyPosts(response);
-
-    return {
-        title: `LinkedIn - ${companyName}'s Posts`,
-        link: url.href,
-        item: posts.map((post) => ({
-            title: post.text,
-            description: post.text,
-            link: post.link,
-            pubDate: post.date,
-        })),
-    };
-}
