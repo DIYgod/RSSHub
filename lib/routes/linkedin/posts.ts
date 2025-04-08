@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/company/:company_id/posts',
     categories: ['social-media'],
     example: '/linkedin/company/google/posts',
-    parameters: { company_id: "Company's LinkedIn profile ID " },
+    parameters: { company_id: "Company's LinkedIn profile ID" },
     description: "Get company's LinkedIn posts by company ID",
     features: {
         requireConfig: false,
