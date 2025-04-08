@@ -34,7 +34,8 @@ async function handler() {
     const $ = load(response.data);
 
     const items = $('div.live-info')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const $item = $(item);
             const title = $item.find('a h2').text().trim();
             const link = $item.find('a').attr('href');
@@ -52,8 +53,7 @@ async function handler() {
                 pubDate,
                 guid: sourceId,
             };
-        })
-        .toArray();
+        });
 
     // Get detailed content for each item
     const itemsWithContent = await Promise.all(
