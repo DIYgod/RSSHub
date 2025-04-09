@@ -2714,6 +2714,9 @@
   "/gcores/news": [
     "nczitzk"
   ],
+  "/gcores/radios/preview": [
+    "nczitzk"
+  ],
   "/gcores/radios/:category?": [
     "eternasuno"
   ],
@@ -4491,6 +4494,9 @@
   "/linkedin/jobs/:job_types/:exp_levels/:keywords?/:routeParams?": [
     "BrandNewLifeJackie26",
     "zhoukuncheng"
+  ],
+  "/linkedin/company/:company_id/posts": [
+    "saifazmi"
   ],
   "/linkedin/cn/jobs/:keywords?": [
     "bigfei"
