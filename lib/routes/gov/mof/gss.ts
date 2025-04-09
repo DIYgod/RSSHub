@@ -55,7 +55,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
 export const route: Route = {
     path: '/mof/gss/:category?',
     categories: ['government'],
-    example: '/gov/gss',
+    example: '/gov/mof/gss',
     parameters: { category: '列表标签，默认为政策发布' },
     features: {
         requireConfig: false,
