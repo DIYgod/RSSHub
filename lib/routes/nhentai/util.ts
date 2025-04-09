@@ -133,7 +133,9 @@ const getDetail = async (simple) => {
         .toArray()
         .map((ele) => new URL($(ele).attr('data-src'), baseUrl).href)
         .map((src) => src.replace(/(.+)(\d+)t\.(.+)/, (_, p1, p2, p3) => `${p1}${p2}.${p3}`)) // thumb to high-quality
-        .map((src) => src.replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net'));
+        .map((src) => src.replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net'))
+        .map((src) => src.replace(/\.(jpg|png|gif)\.webp$/, '.$1')) // 移除重複的.webp後綴
+        .map((src) => src.replace(/\.webp\.webp$/, '.webp')); // 處理.webp.webp的情況
 
     return {
         ...simple,
