@@ -40,7 +40,7 @@ export const route: Route = {
         });
 
         const response = await page.content();
-        page.close();
+        await page.close();
         const companyName = parseCompanyName(response);
         const posts = parseCompanyPosts(response);
 
