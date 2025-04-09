@@ -1,5 +1,6 @@
 import { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
+import { load } from 'cheerio';
 import { parseCompanyName, parseCompanyPosts, BASE_URL } from './utils';
 import logger from '@/utils/logger';
 
@@ -41,8 +42,11 @@ export const route: Route = {
 
         const response = await page.content();
         await page.close();
-        const companyName = parseCompanyName(response);
-        const posts = parseCompanyPosts(response);
+
+        const $ = load(response);
+        const companyName = parseCompanyName($);
+        const posts = parseCompanyPosts($);
+
         await browser.close();
 
         return {

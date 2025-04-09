@@ -130,11 +130,10 @@ const parseRouteParam = (searchParam: string | null): string => {
  * Parse company profile page for posts
  * Example page: https://www.linkedin.com/company/google/
  *
- * @param {String} data HTML string of company profile page
+ * @param {Cheerio} $ HTML string of company profile page
  * @returns {Array<JSON>} Array of company posts
  */
-function parseCompanyPosts(data) {
-    const $ = load(data);
+function parseCompanyPosts($) {
     const posts = $('ul.updates__list > li')
         .toArray() // Convert the Cheerio object to a plain array
         .map((elem) => {
@@ -153,11 +152,10 @@ function parseCompanyPosts(data) {
  * Parse company profile page for its name
  * Example page: https://www.linkedin.com/company/google/
  *
- * @param {String} data HTML string of company profile page
+ * @param {Cheerio} $ HTML string of company profile page
  * @returns {String} Company name
  */
-function parseCompanyName(data) {
-    const $ = load(data);
+function parseCompanyName($) {
     return $('h1.top-card-layout__title').text().trim();
 }
 
@@ -169,7 +167,9 @@ function parseCompanyName(data) {
  */
 function parseRelativeShorthandDate(shorthand) {
     const match = shorthand.match(/^(\d+)([wdmyh])$/);
-    if (!match) {return null;}
+    if (!match) {
+        return null;
+    }
 
     const [, amount, unit] = match;
     const unitMap = {
