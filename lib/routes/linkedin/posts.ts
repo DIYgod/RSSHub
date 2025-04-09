@@ -43,6 +43,7 @@ export const route: Route = {
         await page.close();
         const companyName = parseCompanyName(response);
         const posts = parseCompanyPosts(response);
+        await browser.close();
 
         return {
             title: `LinkedIn - ${companyName}'s Posts`,
