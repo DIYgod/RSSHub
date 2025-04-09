@@ -56855,31 +56855,6 @@
         "description": "#### `job_types` list\n\n| Full Time | Part Time | Contractor | All |\n| --------- | --------- | ---------- | --- |\n| F         | P         | C          | all |\n\n#### `exp_levels` list\n\n| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |\n| --------- | ----------- | --------- | ---------------- | -------- | --- |\n| 1         | 2           | 3         | 4                | 5        | all |\n\n#### `routeParams` additional query parameters\n\n##### `f_WT` list\n\n| Onsite | Remote | Hybrid |\n| ------ | ------- | ------ |\n|    1   |    2    |   3    |\n\n##### `geoId`\n\n  Geographic location ID. You can find this ID in the URL of a LinkedIn job search page that is filtered by location.\n\n  For example:\n  91000012 is the ID of East Asia.\n\n##### `f_TPR`\n\n  Time posted range. Here are some possible values:\n\n  *   `r86400`: Past 24 hours\n  *   `r604800`: Past week\n  *   `r2592000`: Past month\n\n  For example:\n\n  1.  If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`\n  2.  If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`\n  3.  If we want to search remote mid-senior level software engineer jobs in APAC posted within the last month, use `/linkedin/jobs/F/4/software%20engineer/f_WT=2&geoId=91000003&f_TPR=r2592000`\n\n  **To make it easier, the recommended way is to start a search on [LinkedIn](https://www.linkedin.com/jobs/search) and use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) to load the specific feed.**",
         "location": "jobs.ts"
       },
-      "/company/:company_id/posts": {
-        "path": "/company/:company_id/posts",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/linkedin/company/google/posts",
-        "parameters": {
-          "company_id": "Company's LinkedIn profile ID"
-        },
-        "description": "Get company's LinkedIn posts by company ID",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Company Posts",
-        "maintainers": [
-          "saifazmi"
-        ],
-        "location": "posts.ts"
-      },
       "/cn/jobs/:keywords?": {
         "path": "/cn/jobs/:keywords?",
         "categories": [
