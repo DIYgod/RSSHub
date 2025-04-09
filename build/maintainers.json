@@ -4492,6 +4492,9 @@
     "BrandNewLifeJackie26",
     "zhoukuncheng"
   ],
+  "/linkedin/company/:company_id/posts": [
+    "saifazmi"
+  ],
   "/linkedin/cn/jobs/:keywords?": [
     "bigfei"
   ],
