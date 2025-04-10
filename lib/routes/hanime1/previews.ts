@@ -1,6 +1,8 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
 import puppeteer from 'puppeteer';
+import { config } from '@/config';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/previews/:date',
@@ -24,22 +26,35 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
+        const baseUrl = 'https://hanime1.me';
         const { date } = ctx.req.param();
-        const url = `https://hanime1.me/previews/${date}`;
+        const link = `${baseUrl}/previews/${date}`;
 
-        const browser = await puppeteer.launch({
-            headless: true,
-        });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36');
-        await page.setExtraHTTPHeaders({
-            Referer: 'https://hanime1.me/',
-        });
-        await page.goto(url, { waitUntil: 'domcontentloaded' });
-        const html = await page.content();
-        await browser.close();
+        await page.setUserAgent(config.ua);
 
-        const $ = load(html);
+        // 拦截请求
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+            const resourceType = req.resourceType();
+            if (['document', 'script', 'xhr', 'fetch', 'image'].includes(resourceType)) {
+                req.continue();
+            } else {
+                req.abort();
+            }
+        });
+
+        // 记录请求
+        logger.http(`Fetching ${link}`);
+        await page.goto(link, {
+            waitUntil: 'domcontentloaded',
+            timeout: 60000, // 设置超时时间为60秒
+        });
+        const response = await page.content();
+        const $ = load(response);
+
+        page.close();
 
         const items = $('.content-padding .row')
             .toArray()
@@ -49,14 +64,13 @@ export const route: Route = {
                 const title = row.find('.preview-info-content h4').first().text().trim();
 
                 // 预览图
-                const coverImage = row.find('.preview-info-cover img').attr('src') || '';
+                const previewImageSrc = row.find('.preview-info-cover img').attr('src') || '';
 
-                // 发布时间
-                const releaseDate = row.find('.preview-info-cover div').text().trim();
-
+                // 发布时间 MMDD
+                const rawDate = row.find('.preview-info-cover div').text().trim();
                 // 链接
                 const modalSelector = row.find('.trailer-modal-trigger').attr('data-target') || '';
-                const videoUrl = modalSelector ? $(modalSelector).find('video source').attr('src') || '' : '';
+                const previewVideoLink = modalSelector ? $(modalSelector).find('video source').attr('src') || '' : '';
 
                 // 简介
                 const description = row.find('.caption').first().text().trim();
@@ -69,17 +83,22 @@ export const route: Route = {
 
                 return {
                     title,
-                    coverImage,
-                    releaseDate,
-                    videoUrl,
-                    description,
-                    tags,
+                    description: `
+                    <p>${description} </p>
+                    <p>Tags: [${tags.join(', ')}]</p>
+                    `,
+                    // image: previewImageSrc,
+                    enclosure_url: previewImageSrc,
+                    enclosure_type: 'image/jpeg',
+                    link: previewVideoLink,
+                    guid: `hanime1-${rawDate}-${title}`, // 上映时间和标题
                 };
             });
 
+        browser.close();
         return {
             title: `Hanime1 ${date}新番预告`,
-            link: url,
+            link,
             item: items,
         };
     },
