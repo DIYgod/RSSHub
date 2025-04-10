@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
-import puppeteer from 'puppeteer';
+import puppeteer from '@/utils/puppeteer';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
@@ -30,7 +30,7 @@ export const route: Route = {
         const { date } = ctx.req.param();
         const link = `${baseUrl}/previews/${date}`;
 
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer();
         const page = await browser.newPage();
         await page.setUserAgent(config.ua);
 
