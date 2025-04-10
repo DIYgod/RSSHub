@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/rhg/blog',
     url: 'rhg.com',
     name: 'Articles',
-    maintainers: ['xnum'],
+    maintainers: ['Deja-vuuu'],
     radar: [
         {
             title: 'China',
