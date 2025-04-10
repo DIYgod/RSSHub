@@ -15482,6 +15482,19 @@
       }
     ]
   },
+  "mof.gov.cn": {
+    "_name": "上海市人民政府",
+    "gss": [
+      {
+        "title": "关税政策文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/gzdt/:category/"
+        ],
+        "target": "/gov/mof/gss/:category"
+      }
+    ]
+  },
   "moj.gov.cn": {
     "_name": "上海市人民政府",
     "www": [

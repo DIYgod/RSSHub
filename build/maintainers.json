@@ -3100,6 +3100,9 @@
   "/gov/mof/bond/:category?": [
     "la3rence"
   ],
+  "/gov/mof/gss/:category?": [
+    "la3rence"
+  ],
   "/gov/mofcom/article/:suffix{.+}": [],
   "/gov/moj/lfyjzj": [
     "la3rence"

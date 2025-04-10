@@ -40175,6 +40175,38 @@
         "description": "#### 政府债券管理\n\n| 国债管理工作动态 | 记账式国债 (含特别国债) 发行 | 储蓄国债发行 | 地方政府债券管理      |\n| ---------------- | ---------------------------- | ------------ | --------------------- |\n| gzfxgzdt         | gzfxzjs                      | gzfxdzs      | difangzhengfuzhaiquan |",
         "location": "mof/bond.ts"
       },
+      "/mof/gss/:category?": {
+        "path": "/mof/gss/:category?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/mof/gss",
+        "parameters": {
+          "category": "列表标签，默认为政策发布"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "关税政策文件",
+        "maintainers": [
+          "la3rence"
+        ],
+        "description": "#### 关税文件发布\n\n| 政策发布 | 政策解读 |\n| ------------- | -------------- |\n| zhengcefabu   | zhengcejiedu   |",
+        "radar": [
+          {
+            "source": [
+              "gss.mof.gov.cn/gzdt/:category/"
+            ],
+            "target": "/mof/gss/:category"
+          }
+        ],
+        "location": "mof/gss.ts"
+      },
       "/mofcom/article/:suffix{.+}": {
         "path": "/mofcom/article/:suffix{.+}",
         "name": "Unknown",
