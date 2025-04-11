@@ -1,8 +1,7 @@
 import { Route } from '@/types';
-import { load } from 'cheerio';
-import puppeteer from '@/utils/puppeteer';
+import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
-import logger from '@/utils/logger';
+import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/previews/:date',
@@ -13,7 +12,7 @@ export const route: Route = {
     parameters: { date: { description: 'Date in YYYYMM format' } },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -30,31 +29,14 @@ export const route: Route = {
         const { date } = ctx.req.param();
         const link = `${baseUrl}/previews/${date}`;
 
-        const browser = await puppeteer();
-        const page = await browser.newPage();
-        await page.setUserAgent(config.ua);
-
-        // 拦截请求
-        await page.setRequestInterception(true);
-        page.on('request', (req) => {
-            const resourceType = req.resourceType();
-            if (['document', 'script', 'xhr', 'fetch', 'image'].includes(resourceType)) {
-                req.continue();
-            } else {
-                req.abort();
-            }
+        const response = await ofetch(link, {
+            headers: {
+                referer: baseUrl,
+                'user-agent': config.trueUA,
+            },
         });
 
-        // 记录请求
-        logger.http(`Fetching ${link}`);
-        await page.goto(link, {
-            waitUntil: 'domcontentloaded',
-            timeout: 60000, // 设置超时时间为60秒
-        });
-        const response = await page.content();
         const $ = load(response);
-
-        page.close();
 
         const items = $('.content-padding .row')
             .toArray()
@@ -95,7 +77,6 @@ export const route: Route = {
                 };
             });
 
-        browser.close();
         return {
             title: `Hanime1 ${date}新番预告`,
             link,
