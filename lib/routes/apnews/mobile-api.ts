@@ -27,7 +27,7 @@ export const route: Route = {
             source: ['apnews.com/'],
         },
     ],
-    name: 'News',
+    name: 'News (from mobile client API)',
     maintainers: ['dzx-dzx'],
     handler,
 };
