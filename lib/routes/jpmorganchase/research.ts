@@ -90,7 +90,7 @@ async function handler(): Promise<Data> {
         const maxItemCount = Number(meta['partition-size']);
         const items = (response.items as IndexEntry[]).slice(0, maxItemCount);
 
-        return await Promise.all(items.map(fetchDataItem));
+        return await Promise.all(items.map((it) => fetchDataItem(it)));
     })) as DataItem[];
 
     return {
