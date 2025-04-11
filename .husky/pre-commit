@@ -1,1 +1,3 @@
-lint-staged
+#!/bin/sh
+# 加载 fnm 环境变量，确保 node 命令可用
+eval "$(fnm env)"
