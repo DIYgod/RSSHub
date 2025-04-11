@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: `${author} - ${subtitle}`,
+        title: `${author} - ${route.name}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh',
