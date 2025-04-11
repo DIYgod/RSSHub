@@ -38,6 +38,7 @@ export function fetchArticle(item) {
             $('div.Enhancement').remove();
             const section = $("meta[property='article:section']").attr('content');
             return {
+                ...item,
                 title: ldjson.headline,
                 pubDate: parseDate(ldjson.datePublished),
                 updated: parseDate(ldjson.dateModified),
@@ -45,7 +46,6 @@ export function fetchArticle(item) {
                 category: [...(section ? [section] : []), ...(ldjson.keywords ?? [])],
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
                 author: ldjson.author,
-                ...item,
             };
         } else {
             // Live
@@ -56,11 +56,11 @@ export function fetchArticle(item) {
             const pubDate = url.hash ? parseDate(Number.parseInt($(url.hash).parent().attr('data-posted-date-timestamp'), 10)) : parseDate(ldjson.coverageStartTime);
 
             return {
+                ...item,
                 category: ldjson.keywords,
                 pubDate,
                 description,
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
-                ...item,
             };
         }
     });
