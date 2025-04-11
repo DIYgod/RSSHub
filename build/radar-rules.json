@@ -4772,12 +4772,12 @@
     "_name": "AP News",
     ".": [
       {
-        "title": "News",
+        "title": "News (from mobile client API)",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
           "/"
         ],
-        "target": "/apnews/api/:tags?"
+        "target": "/apnews/mobile/:path{.+}?"
       },
       {
         "title": "News",

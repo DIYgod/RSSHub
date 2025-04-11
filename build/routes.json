@@ -8593,72 +8593,17 @@
   },
   "apnews": {
     "routes": {
-      "/api/:tags?": {
-        "path": "/api/:tags?",
+      "/mobile/:path{.+}?": {
+        "path": "/mobile/:path{.+}?",
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
-        "example": "/apnews/api/apf-topnews",
+        "example": "/apnews/mobile/ap-top-news",
         "view": 0,
         "parameters": {
-          "tags": {
-            "description": "Getting a list of articles from a public API based on tags.",
-            "options": [
-              {
-                "value": "apf-topnews",
-                "label": "Top News"
-              },
-              {
-                "value": "apf-sports",
-                "label": "Sports"
-              },
-              {
-                "value": "apf-politics",
-                "label": "Politics"
-              },
-              {
-                "value": "apf-entertainment",
-                "label": "Entertainment"
-              },
-              {
-                "value": "apf-usnews",
-                "label": "US News"
-              },
-              {
-                "value": "apf-oddities",
-                "label": "Oddities"
-              },
-              {
-                "value": "apf-Travel",
-                "label": "Travel"
-              },
-              {
-                "value": "apf-technology",
-                "label": "Technology"
-              },
-              {
-                "value": "apf-lifestyle",
-                "label": "Lifestyle"
-              },
-              {
-                "value": "apf-business",
-                "label": "Business"
-              },
-              {
-                "value": "apf-Health",
-                "label": "Health"
-              },
-              {
-                "value": "apf-science",
-                "label": "Science"
-              },
-              {
-                "value": "apf-intlnews",
-                "label": "International News"
-              }
-            ],
-            "default": "apf-topnews"
+          "path": {
+            "description": "Corresponding path from AP News website",
+            "default": "ap-top-news"
           }
         },
         "features": {
@@ -8676,11 +8621,11 @@
             ]
           }
         ],
-        "name": "News",
+        "name": "News (from mobile client API)",
         "maintainers": [
           "dzx-dzx"
         ],
-        "location": "api.ts"
+        "location": "mobile-api.ts"
       },
       "/rss/:category?": {
         "path": "/rss/:category?",

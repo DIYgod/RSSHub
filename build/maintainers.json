@@ -513,7 +513,7 @@
   "/apkpure/versions/:pkg/:region?": [
     "maple3142"
   ],
-  "/apnews/api/:tags?": [
+  "/apnews/mobile/:path{.+}?": [
     "dzx-dzx"
   ],
   "/apnews/rss/:category?": [
