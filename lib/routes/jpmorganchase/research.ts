@@ -5,7 +5,8 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const base = 'https://www.jpmorganchase.com';
-const indexPageUrl = `${base}/services/json/v1/dynamic-grid.service/parent=jpmorganchase/global/US/en/home/institute/all-topics&comp=root/content-parsys/dynamic_grid&page=p1.json`;
+const frontPageUrl = `${base}/institute/all-topics`;
+const indexUrl = `${base}/services/json/v1/dynamic-grid.service/parent=jpmorganchase/global/US/en/home/institute/all-topics&comp=root/content-parsys/dynamic_grid&page=p1.json`;
 
 export const route: Route = {
     path: '/',
@@ -21,7 +22,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jpmorganchase.com/institute/'],
+            source: ['jpmorganchase.com/institute/all-topics'],
             target: '/',
         },
     ],
@@ -30,32 +31,6 @@ export const route: Route = {
     handler,
     url: 'www.jpmorganchase.com/institute/all-topics',
 };
-
-function fetchEntryCached(url: string) {
-    return cache.tryGet(url, async () => {
-        const response = await ofetch(url);
-        const $ = load(response);
-
-        const authors = $('.author-name')
-            .toArray()
-            .map((el) => $(el).text().trim());
-
-        return {
-            category: [$('.eyebrow').text()],
-            author: authors.join(', '),
-            title: $('h1').text(),
-            description: $('#main').html() || '',
-            link: url,
-            pubDate: parseDate($('.documentdate').text()),
-        } satisfies DataItem;
-    });
-}
-
-function parseDetails(link: string) {
-    const fullLink = `${base}${link}`;
-
-    return fetchEntryCached(fullLink);
-}
 
 type PartitionMeta = {
     'total-items': number;
@@ -76,19 +51,51 @@ type IndexEntry = {
     image: string;
 };
 
+function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
+    const url = `${base}${entry.link}`;
+
+    return cache.tryGet(url, async () => {
+        let authors: string[] = [];
+        let description: string = '';
+        let category: string[] = [];
+        let articleDate: string = entry.date;
+        const pageContent: string = await ofetch(url);
+
+        if (pageContent.length > 0) {
+            const $ = load(pageContent);
+
+            category = [$('.eyebrow').text()];
+            authors = $('.author-name')
+                .toArray()
+                .map((el) => $(el).text().trim());
+            articleDate = $('.date').text().trim() || entry.date;
+            description = $('.root').children('div').children('div:eq(1)').html() || '';
+        }
+
+        return {
+            category,
+            author: authors.join(', '),
+            title: entry.title,
+            description,
+            link: url,
+            pubDate: parseDate(articleDate),
+        } satisfies DataItem;
+    }) as Promise<DataItem>;
+}
+
 async function handler(): Promise<Data> {
-    const items = (await cache.tryGet(indexPageUrl, async () => {
-        const response = await ofetch(indexPageUrl);
+    const items = (await cache.tryGet(indexUrl, async () => {
+        const response = await ofetch(indexUrl);
         const meta = response.meta as PartitionMeta;
         const maxItemCount = Number(meta['partition-size']);
         const items = (response.items as IndexEntry[]).slice(0, maxItemCount);
 
-        return await Promise.all(items.map((it) => parseDetails(it.link)));
+        return await Promise.all(items.map(fetchDataItem));
     })) as DataItem[];
 
     return {
-        title: 'All Topics - JPMorgan Chase Institute',
-        link: indexPageUrl,
+        title: 'All Topics - JPMorganChase Institute',
+        link: frontPageUrl,
         item: items,
     };
 }
