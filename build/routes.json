@@ -43815,6 +43815,46 @@
     "url": "syosetu.org",
     "lang": "ja"
   },
+  "hanime1": {
+    "routes": {
+      "/previews/:date": {
+        "path": "/previews/:date",
+        "name": "新番预告",
+        "maintainers": [
+          "kjasn"
+        ],
+        "example": "/hanime1/previews/202504",
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "date": {
+            "description": "Date in YYYYMM format"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hanime1.me/previews/:date"
+            ],
+            "target": "/previews/:date"
+          }
+        ],
+        "location": "previews.ts"
+      }
+    },
+    "name": "Hanime1",
+    "url": "hanime1.me",
+    "description": "NSFW WARNING!!! It contains adult content. Hanime1 provides adult anime"
+  },
   "harvard": {
     "routes": {
       "/health/blog": {

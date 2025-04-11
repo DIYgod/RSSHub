@@ -17124,6 +17124,19 @@
       }
     ]
   },
+  "hanime1.me": {
+    "_name": "Hanime1",
+    ".": [
+      {
+        "title": "新番预告",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/previews/:date"
+        ],
+        "target": "/hanime1/previews/:date"
+      }
+    ]
+  },
   "harvard.edu": {
     "_name": "Harvard Health Publishing",
     "www.health": [
