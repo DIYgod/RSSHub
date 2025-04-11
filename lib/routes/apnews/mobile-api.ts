@@ -9,9 +9,8 @@ export const route: Route = {
     example: '/apnews/mobile/ap-top-news',
     view: ViewType.Articles,
     parameters: {
-        tags: {
-            description: '',
-            options: [{ value: '', label: '' }],
+        path: {
+            description: 'Corresponding path from AP News website',
             default: 'ap-top-news',
         },
     },
