@@ -8156,6 +8156,9 @@
   "/xjtu/yz/:category?": [
     "YoghurtGuy"
   ],
+  "/xjtu/zs/:category{.+}?": [
+    "nczitzk"
+  ],
   "/xjtu/2yuan/news/:id?": [
     "nczitzk"
   ],

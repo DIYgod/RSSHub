@@ -104078,6 +104078,64 @@
         "description": "栏目类型\n\n| 招生动态 | 通知公告 | 政策法规 | 招生统计 | 历年复试线 | 博士招生 | 硕士招生 | 推免生 | 其他招生 |\n| -------- | -------- | -------- | -------- | ---------- | -------- | -------- | ------ | -------- |\n| zsdt     | tzgg     | zcfg     | zstj     | lnfsx      | bszs     | sszs     | tms    | qtzs     |",
         "location": "yz.ts"
       },
+      "/zs/:category{.+}?": {
+        "path": "/zs/:category{.+}?",
+        "name": "本科招生网",
+        "url": "zs.xjtu.edu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/xjtu/zs/zsxx1/zskx",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 zsxx1/zskx，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "招生快讯",
+                "value": "zsxx1/zskx"
+              },
+              {
+                "label": "招生政策",
+                "value": "zsxx1/zszc"
+              },
+              {
+                "label": "招生计划",
+                "value": "zsxx1/zsjh"
+              },
+              {
+                "label": "阳光公告",
+                "value": "zsxx1/yggg"
+              },
+              {
+                "label": "历年录取",
+                "value": "zsxx1/lnlq"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n若订阅 [招生快讯](https://zs.xjtu.edu.cn/zsxx1/zskx.htm)，网址为 `https://zs.xjtu.edu.cn/zsxx1/zskx.htm`，请截取 `https://zs.xjtu.edu.cn/` 到末尾 `.htm` 的部分 `zsxx1/zskx` 作为 `category` 参数填入，此时目标路由为 [`/xjtu/zs/zsxx1/zskx`](https://rsshub.app/xjtu/zs/zsxx1/zskx)。\n:::\n\n| [招生快讯](https://zs.xjtu.edu.cn/zsxx1/zskx.htm)   | [招生政策](https://zs.xjtu.edu.cn/zsxx1/zszc.htm)   | [招生计划](https://zs.xjtu.edu.cn/zsxx1/zsjh.htm)   | [阳光公告](https://zs.xjtu.edu.cn/zsxx1/yggg.htm)   | [历年录取](https://zs.xjtu.edu.cn/zsxx1/lnlq.htm)   |\n| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |\n| [zsxx1/zskx](https://rsshub.app/xjtu/zs/zsxx1/zskx) | [zsxx1/zszc](https://rsshub.app/xjtu/zs/zsxx1/zszc) | [zsxx1/zsjh](https://rsshub.app/xjtu/zs/zsxx1/zsjh) | [zsxx1/yggg](https://rsshub.app/xjtu/zs/zsxx1/yggg) | [zsxx1/lnlq](https://rsshub.app/xjtu/zs/zsxx1/lnlq) |\n",
+        "categories": [
+          "university"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "zs.xjtu.edu.cn/:category"
+            ]
+          }
+        ],
+        "view": 0,
+        "location": "zs.ts"
+      },
       "/2yuan/news/:id?": {
         "path": "/2yuan/news/:id?",
         "categories": [
