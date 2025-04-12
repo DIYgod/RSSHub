@@ -59,7 +59,7 @@ const getItem = (item, cache) => {
     return cache.tryGet(link, async () => {
         const res = await ofetch(link);
         const $ = load(res);
-        let pubDate = new Date();
+        let pubDate: Date;
         let dateText = $('div.news-info span:nth-of-type(2)').text();
         // 转教务通知时的时间获取方法
         if (!dateText) {
@@ -82,7 +82,7 @@ const getItem = (item, cache) => {
             pubDate = new Date(dateText);
         }
         const description = $('div.content-main').html();
-
+        pubDate ||= new Date(); // 使用当前时间作为默认值
         return {
             title,
             pubDate,
