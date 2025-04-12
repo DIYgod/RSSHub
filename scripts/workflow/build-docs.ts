@@ -75,6 +75,7 @@ function generateMd(lang) {
             if (docs[category][namespace].name === 'Unknown') {
                 docs[category][namespace].name = namespace;
             }
+
             const namespaceItem = docs[category][namespace];
             const namespaceItemLang = docs[category][namespace][lang] || docs[category][namespace];
 
