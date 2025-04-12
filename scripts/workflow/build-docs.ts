@@ -38,9 +38,7 @@ for (const namespace in namespaces) {
                     routes: {},
                 };
             }
-            docs[category][namespace].name = namespaces[namespace].name;
-            docs[category][namespace].url = namespaces[namespace].url;
-            docs[category][namespace].description = namespaces[namespace].description;
+            docs[category][namespace] = namespaces[namespace];
             docs[category][namespace].routes[realPath] = data;
         }
     }
@@ -77,9 +75,12 @@ function generateMd(lang) {
             if (docs[category][namespace].name === 'Unknown') {
                 docs[category][namespace].name = namespace;
             }
-            md[category] += `## ${docs[category][namespace].name || namespace} ${docs[category][namespace].url ? `<Site url="${docs[category][namespace].url}"/>` : ''}\n\n`;
-            if (docs[category][namespace].description) {
-                md[category] += `${docs[category][namespace].description}\n\n`;
+            const namespaceItem = docs[category][namespace];
+            const namespaceItemLang = docs[category][namespace][lang] || docs[category][namespace];
+
+            md[category] += `## ${namespaceItemLang.name} ${namespaceItem.url ? `<Site url="${namespaceItem.url}"/>` : ''}\n\n`;
+            if (namespaceItemLang.description) {
+                md[category] += `${namespaceItemLang.description}\n\n`;
             }
 
             const realPaths = Object.keys(docs[category][namespace].routes).sort((a, b) => {
@@ -114,10 +115,14 @@ function generateMd(lang) {
                           message: test.failureMessages?.[0],
                       }
                     : undefined;
-                md[category] += `### ${data.name} ${data.url || docs[category][namespace].url ? `<Site url="${data.url || docs[category][namespace].url}" size="sm" />` : ''}\n\n`;
-                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(data).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
-                if (data.description) {
-                    md[category] += `${data.description}\n\n`;
+
+                const routeItem = data;
+                const routeItemLang = data[lang] || data;
+
+                md[category] += `### ${routeItemLang.name} ${routeItem.url || namespaceItem.url ? `<Site url="${routeItem.url || namespaceItem.url}" size="sm" />` : ''}\n\n`;
+                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(routeItem).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
+                if (routeItemLang.description) {
+                    md[category] += `${routeItemLang.description}\n\n`;
                 }
             }
         }
