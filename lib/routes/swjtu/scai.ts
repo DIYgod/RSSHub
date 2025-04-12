@@ -82,6 +82,7 @@ const getItem = (item, cache) => {
             pubDate = new Date(dateText);
         }
         const description = $('div.content-main').html();
+        // 确实无法获取时间就以当前时间为准
         pubDate ||= new Date(); // 使用当前时间作为默认值
         return {
             title,
