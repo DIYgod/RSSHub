@@ -4151,6 +4151,9 @@
   "/jimmyspa/news/:language": [
     "FYLSen"
   ],
+  "/jin10/category/:id": [
+    "laampui"
+  ],
   "/jin10/:important?": [
     "laampui"
   ],

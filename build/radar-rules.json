@@ -20192,6 +20192,14 @@
     "_name": "金十数据",
     ".": [
       {
+        "title": "外汇",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/jin10/category/:id"
+      },
+      {
         "title": "市场快讯",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
