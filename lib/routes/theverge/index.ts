@@ -1,8 +1,13 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+import path from 'node:path';
+import { art } from '@/utils/render';
+import { getCurrentPath } from '@/utils/helpers';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:hub?',
@@ -22,7 +27,7 @@ export const route: Route = {
             source: ['theverge.com/:hub', 'theverge.com/'],
         },
     ],
-    name: 'The Verge',
+    name: 'Category',
     maintainers: ['HenryQW', 'vbali'],
     handler,
     description: `| Hub         | Hub name            |
@@ -43,6 +48,37 @@ export const route: Route = {
   Provides a better reading experience (full text articles) over the official one.`,
 };
 
+const renderBlock = (b) => {
+    switch (b.__typename) {
+        case 'CoreEmbedBlockType':
+            return b.embedHtml;
+        case 'CoreGalleryBlockType':
+            return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
+        case 'CoreHeadingBlockType':
+            return `<h${b.level}>${b.contents.html}</h${b.level}>`;
+        case 'CoreHTMLBlockType':
+            return b.markup;
+        case 'CoreImageBlockType':
+            return `<figure><img src="${b.thumbnail.url.split('?')[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
+        case 'CoreListBlockType':
+            return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
+        case 'CoreParagraphBlockType':
+            return b.contents.html;
+        case 'CorePullquoteBlockType':
+            return `<blockquote>${b.contents.html}</blockquote>`;
+        case 'CoreQuoteBlockType':
+            return `<blockquote>${b.children.map((child) => renderBlock(child)).join('')}</blockquote>`;
+        case 'CoreSeparatorBlockType':
+            return '<hr>';
+        case 'HighlightBlockType':
+            return b.children.map((c) => renderBlock(c)).join('');
+        case 'MethodologyAccordionBlockType':
+            return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        default:
+            throw new Error(`Unsupported block type: ${b.__typename}`);
+    }
+};
+
 async function handler(ctx) {
     const link = ctx.req.param('hub') ? `https://www.theverge.com/${ctx.req.param('hub')}/rss/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
@@ -51,73 +87,48 @@ async function handler(ctx) {
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
+                const response = await ofetch(item.link);
 
-                const $ = load(response.data);
+                const $ = load(response);
 
-                const content = $('#content');
-                const body = $('.duet--article--article-body-component-container');
+                const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+                const node = nextData.props.pageProps.hydration.responses.find((x) => x.operationName === 'PostLayoutQuery' || x.operationName === 'StreamLayoutQuery').data.node;
 
-                // 处理封面图片
+                let description = art(path.join(__dirname, 'templates/header.art'), {
+                    featuredImage: node.featuredImage,
+                    ledeMediaData: node.ledeMediaData,
+                });
 
-                const cover = $('meta[property="og:image"]');
+                description += node.blocks
+                    .filter((b) => b.__typename !== 'NewsletterBlockType' && b.__typename !== 'RelatedPostsBlockType' && b.__typename !== 'ProductBlockType' && b.__typename !== 'TableOfContentsBlockType')
+                    .map((b) => renderBlock(b))
+                    .join('<br><br>');
 
-                if (cover.length > 0) {
-                    $(`<img src=${cover[0].attribs.content}>`).insertBefore(body[0].childNodes[0]);
+                if (node.__typename === 'StreamResourceType') {
+                    description += node.posts.edges
+                        .map(({ node: n }) => {
+                            let d =
+                                `<h2><a href="${n.permalink}">${n.promo.headline || n.title}</a></h2>` +
+                                art(path.join(__dirname, 'templates/header.art'), {
+                                    ledeMediaData: n.ledeMediaData,
+                                });
+                            switch (n.__typename) {
+                                case 'PostResourceType':
+                                    d += n.excerpt.map((e) => e.contents.html).join('<br>');
+                                    break;
+                                case 'QuickPostResourceType':
+                                    d += n.blocks.map((b) => renderBlock(b)).join('<br>');
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return d;
+                        })
+                        .join('<br>');
                 }
 
-                // 处理封面视频
-                $('div.l-col__main > div.c-video-embed, div.c-entry-hero > div.c-video-embed').each((i, e) => {
-                    const src = `https://volume.vox-cdn.com/embed/${e.attribs['data-volume-uuid']}?autoplay=false`;
-
-                    $(`<iframe src="${src}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no"></iframe>`).insertBefore(body[0].childNodes[0]);
-                });
-
-                // 处理封面视频
-                $('div.l-col__main > div.c-video-embed--media iframe').each((i, e) => {
-                    $(e).insertBefore(body[0].childNodes[0]);
-                });
-
-                // 处理文章图片
-                content.find('figure.e-image').each((i, e) => {
-                    let src, caption;
-
-                    // 处理 jpeg, png
-                    if ($(e).find('picture > source').length > 0) {
-                        src = $(e)
-                            .find('picture > img')[0]
-                            .attribs.srcset.match(/(?<=320w,).*?(?=520w)/g)[0]
-                            .trim();
-                    } else if ($(e).find('img.c-dynamic-image').length > 0) {
-                        // 处理 gif
-                        src = $(e).find('span.e-image__image')[0].attribs['data-original'];
-                    }
-
-                    // 处理 caption
-                    if ($(e).find('span.e-image__meta').length > 0) {
-                        caption = $(e).find('span.e-image__meta').text();
-                    }
-
-                    const figure = `<figure><img src=${src}>${caption ? `<br><figcaption>${caption}</figcaption>` : ''}</figure>`;
-
-                    $(figure).insertBefore(e);
-
-                    $(e).remove();
-                });
-
-                const lede = $('.duet--article--lede h2:first');
-                if (lede[0]) {
-                    lede.insertBefore(body[0].childNodes[0]);
-                }
-
-                // 移除无用 DOM
-                content.find('.duet--article--comments-join-the-conversation').remove();
-                content.find('.duet--recirculation--related-list').remove();
-                delete item.content;
-                delete item.contentSnippet;
-                delete item.isoDate;
-
-                item.description = body.html();
+                item.description = description;
+                item.category = node.categories;
 
                 return item;
             })

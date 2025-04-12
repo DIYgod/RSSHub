@@ -29,10 +29,10 @@ async function handler(ctx) {
 
     const data = JSON.parse(response.data.match(/window.__INITIAL_STATE__= (.*);<\/script>/)[1]);
 
-    let items = (category === 'news' ? data.news : category === 'figure' ? data.figure : data.videoList).map((item) => ({
+    let items = (category === 'news' ? data.news : (category === 'figure' ? data.figure : data.videoList)).map((item) => ({
         title: item.title,
         pubDate: parseDate(item.online_time),
-        link: `${rootUrl}/${category === 'news' ? 'article/' : category === 'figure' ? 'people/' : ''}${item.online_time.split('T')[0].split('-').join('')}/${item.token}`,
+        link: `${rootUrl}/${category === 'news' ? 'article/' : (category === 'figure' ? 'people/' : '')}${item.online_time.split('T')[0].split('-').join('')}/${item.token}`,
     }));
 
     items = await Promise.all(
@@ -53,7 +53,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `得到${category === 'video' ? '' : '大事件'} - ${category === 'news' ? '新闻' : category === 'figure' ? '人物故事' : '视频'}`,
+        title: `得到${category === 'video' ? '' : '大事件'} - ${category === 'news' ? '新闻' : (category === 'figure' ? '人物故事' : '视频')}`,
         link: rootUrl,
         item: items,
         description: data.description,

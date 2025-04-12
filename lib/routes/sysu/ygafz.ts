@@ -63,7 +63,7 @@ async function handler(ctx) {
         return jar;
     }, cookieJar);
 
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
     const list = $('.list-content a')

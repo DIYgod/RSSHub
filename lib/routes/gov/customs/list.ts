@@ -104,7 +104,7 @@ async function handler(ctx) {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: `中国海关-${channelName}`,

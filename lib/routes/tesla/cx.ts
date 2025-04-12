@@ -134,7 +134,7 @@ async function handler(ctx) {
             pageSize: limit,
             pageNumber: 0,
             benefitCategoryId: categoryObject?.id ?? undefined,
-            category: categoryObject ? undefined : category === '充电免停' ? 2 : undefined,
+            category: categoryObject ? undefined : (category === '充电免停' ? 2 : undefined),
             city,
         },
     });
