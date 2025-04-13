@@ -40,14 +40,17 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
+    const schemaShow = JSON.parse($(String.raw`#schema\:show`).text());
     const serializedServerData = JSON.parse($('#serialized-server-data').text());
 
+    const seoEpisodes = schemaShow.workExample;
     const originEpisodes = serializedServerData[0].data.shelves.find((item) => item.contentType === 'episode').items;
     const header = serializedServerData[0].data.shelves.find((item) => item.contentType === 'showHeaderRegular').items[0];
 
     const episodes = originEpisodes.map((item) => {
         // Try to keep line breaks in the description
-        const episodeDescription = item.summary.replaceAll('\n', '<br>');
+        const matchedSeoEpisode = seoEpisodes.find((seoEpisode) => seoEpisode.name === item.title) || null;
+        const episodeDescription = (matchedSeoEpisode ? matchedSeoEpisode.description : item.summary).replaceAll('\n', '<br>');
 
         return {
             title: item.title,
