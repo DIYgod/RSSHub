@@ -50,9 +50,9 @@ export const route: Route = {
 
                 // 发布时间 MMDD
                 const rawDate = row.find('.preview-info-cover div').text().trim();
-                // 链接
+                // 视频 选中模态框全局查找
                 const modalSelector = row.find('.trailer-modal-trigger').attr('data-target') || '';
-                const previewVideoLink = modalSelector ? $(modalSelector).find('video source').attr('src') || '' : '';
+                const previewVideoLink = modalSelector ? $(`${modalSelector} video source`).attr('src') || '' : '';
 
                 // 简介
                 const description = row.find('.caption').first().text().trim();
@@ -68,8 +68,11 @@ export const route: Route = {
                     description: `
                     <p>${description} </p>
                     <p>Tags: [${tags.join(', ')}]</p>
+                    <video controls width="100%" poster="${previewImageSrc}">
+                        <source src="${previewVideoLink}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     `,
-                    // image: previewImageSrc,
                     enclosure_url: previewImageSrc,
                     enclosure_type: 'image/jpeg',
                     link: previewVideoLink,
