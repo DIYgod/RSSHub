@@ -40,9 +40,10 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
+    const schemaShow = JSON.parse($(String.raw`#schema\:show`).text());
     const serializedServerData = JSON.parse($('#serialized-server-data').text());
 
-    const seoEpisodes = serializedServerData[0].data.seoData.schemaContent.workExample;
+    const seoEpisodes = schemaShow.workExample;
     const originEpisodes = serializedServerData[0].data.shelves.find((item) => item.contentType === 'episode').items;
     const header = serializedServerData[0].data.shelves.find((item) => item.contentType === 'showHeaderRegular').items[0];
 
