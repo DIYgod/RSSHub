@@ -5374,6 +5374,48 @@
     "url": "pubs.acs.org",
     "lang": "en"
   },
+  "adquan": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "name": "最新文章",
+        "url": "www.adquan.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/adquan",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.adquan.com"
+            ],
+            "target": "/"
+          }
+        ],
+        "view": 0,
+        "location": "index.ts"
+      }
+    },
+    "name": "广告门",
+    "url": "adquan.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "一个行业的跌宕起伏",
+    "lang": "zh-CN"
+  },
   "aeaweb": {
     "routes": {
       "/:id": {
