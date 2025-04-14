@@ -106307,8 +106307,8 @@
         "url": "www.youtube.com/feed/subscriptions",
         "location": "subscriptions.ts"
       },
-      "/user/:username/:embed?": {
-        "path": "/user/:username/:embed?",
+      "/user/:username/:routeParams?": {
+        "path": "/user/:username/:routeParams?",
         "categories": [
           "social-media",
           "popular"
@@ -106317,8 +106317,9 @@
         "example": "/youtube/user/@JFlaMusic",
         "parameters": {
           "username": "YouTuber handle with @",
-          "embed": "Default to embed the video, set to any value to disable embedding"
+          "routeParams": "Extra parameters, see the table below"
         },
+        "description": ":::tip Parameter\n| Name       | Description                                                                         | Default |\n| ---------- | ----------------------------------------------------------------------------------- | ------- |\n| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n:::",
         "features": {
           "requireConfig": [
             {
@@ -106343,7 +106344,8 @@
         ],
         "name": "Channel with user handle",
         "maintainers": [
-          "DIYgod"
+          "DIYgod",
+          "pseudoyu"
         ],
         "location": "user.ts"
       }

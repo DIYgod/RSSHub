@@ -8367,8 +8367,9 @@
   "/youtube/subscriptions/:embed?": [
     "TonyRL"
   ],
-  "/youtube/user/:username/:embed?": [
-    "DIYgod"
+  "/youtube/user/:username/:routeParams?": [
+    "DIYgod",
+    "pseudoyu"
   ],
   "/youzhiyouxing/materials/:id?": [
     "broven",
