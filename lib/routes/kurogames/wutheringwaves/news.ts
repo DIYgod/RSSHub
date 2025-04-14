@@ -33,7 +33,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
 | English  | en           |
 | 日本語    | jp           |
 | 한국어     | kr           |
-| 中國人    | zh (default) |
+| 简体中文   | zh (default) |
 | 繁體中文   | zh-tw        |
 | Español  | es           |
 | Français | fr           |
