@@ -11,6 +11,9 @@ export const route: Route = {
     path: `/wutheringwaves/news/:${Parameter.Language}?`,
     categories: ['game'],
     example: '/kurogames/wutheringwaves/news',
+    parameters: {
+        [Parameter.Language]: 'The language to use for the content. Default: `zh`.',
+    },
     name: '鸣潮 — 游戏公告、新闻与活动',
     radar: [
         {
