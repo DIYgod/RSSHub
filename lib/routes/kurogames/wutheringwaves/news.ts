@@ -43,7 +43,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
         const limitParam = ctx.req.query(Parameter.Limit);
         const languageParam = ctx.req.param(Parameter.Language);
 
-        const limit = parseInteger(limitParam, -1);
+        const limit = parseInteger(limitParam, 30);
         const language = languageParam || Language.Chinese;
 
         if (!isValidLanguage(language)) {
