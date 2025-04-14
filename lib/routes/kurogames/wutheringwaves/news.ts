@@ -53,19 +53,10 @@ Language codes for the \`${Parameter.Language}\` parameter:
         const handledIds: number[] = [];
 
         const articles = await fetchArticles(language);
+        const filteredArticles = articles.filter((a) => a.articleType !== 0).slice(0, limit);
 
         const item = await Promise.all(
-            articles.flatMap((article) => {
-                // Limit the amount of items to display in the feed
-                if (limit >= 0 && handledIds.length >= limit) {
-                    return [];
-                }
-
-                // Ignore duplicate articles
-                if (handledIds.includes(article.articleId)) {
-                    return [];
-                }
-
+            filteredArticles.map((article) => {
                 handledIds.push(article.articleId);
 
                 const contentUrl = getArticleContentLink(language, article.articleId);
@@ -75,16 +66,14 @@ Language codes for the \`${Parameter.Language}\` parameter:
                     link: getArticleLink(language, article.articleId),
                 };
 
-                return [
-                    cache.tryGet(`wutheringwaves:${language}:${article.articleId}`, async () => {
-                        const { articleContent } = await ofetch<Article>(contentUrl, { query: { t: Date.now() } });
-                        const $ = cheerio.load(articleContent);
+                return cache.tryGet(`wutheringwaves:${language}:${article.articleId}`, async () => {
+                    const { articleContent } = await ofetch<Article>(contentUrl, { query: { t: Date.now() } });
+                    const $ = cheerio.load(articleContent);
 
-                        item.description = $.html() ?? article.articleDesc ?? '';
+                    item.description = $.html() ?? article.articleDesc ?? '';
 
-                        return item;
-                    }) as Promise<DataItem>,
-                ];
+                    return item;
+                }) as Promise<DataItem>;
             })
         );
 
