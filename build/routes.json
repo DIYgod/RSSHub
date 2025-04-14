@@ -106093,16 +106093,30 @@
   },
   "youtube": {
     "routes": {
-      "/channel/:id/:embed?": {
-        "path": "/channel/:id/:embed?",
+      "/channel/:id/:routeParams?": {
+        "path": "/channel/:id/:routeParams?",
         "categories": [
           "social-media"
         ],
         "example": "/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ",
         "parameters": {
           "id": "YouTube channel id",
-          "embed": "Default to embed the video, set to any value to disable embedding"
+          "routeParams": "Extra parameters, see the table below"
         },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/channel/:id"
+            ],
+            "target": "/channel/:id"
+          }
+        ],
+        "name": "Channel with id",
+        "maintainers": [
+          "DIYgod",
+          "pseudoyu"
+        ],
+        "description": ":::tip Parameter\n| Name       | Description                                                                         | Default |\n| ---------- | ----------------------------------------------------------------------------------- | ------- |\n| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |\n| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |\n:::\n\n::: tip\nYouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).\n:::",
         "features": {
           "requireConfig": [
             {
@@ -106116,19 +106130,6 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "radar": [
-          {
-            "source": [
-              "www.youtube.com/channel/:id"
-            ],
-            "target": "/channel/:id"
-          }
-        ],
-        "name": "Channel with id",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "description": "::: tip\nYouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).\n:::",
         "location": "channel.ts"
       },
       "/charts/:category?/:country?/:embed?": {

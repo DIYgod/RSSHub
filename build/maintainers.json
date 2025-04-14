@@ -8345,8 +8345,9 @@
   "/youmemark/:userid": [
     "pseudoyu"
   ],
-  "/youtube/channel/:id/:embed?": [
-    "DIYgod"
+  "/youtube/channel/:id/:routeParams?": [
+    "DIYgod",
+    "pseudoyu"
   ],
   "/youtube/charts/:category?/:country?/:embed?": [
     "TonyRL"
