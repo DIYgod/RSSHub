@@ -69,7 +69,11 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
-    const playlistId = filterShorts ? 'UULF' + id.slice(2) : (await utils.getChannelWithId(id, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads; // Default uploads playlist
+    // Get original uploads playlist ID if needed
+    const originalPlaylistId = filterShorts ? null : (await utils.getChannelWithId(id, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+
+    // Use the utility function to get the appropriate playlist ID based on filterShorts setting
+    const playlistId = filterShorts ? utils.getPlaylistWithShortsFilter(id) : originalPlaylistId;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
