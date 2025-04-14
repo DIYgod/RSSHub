@@ -50,15 +50,11 @@ Language codes for the \`${Parameter.Language}\` parameter:
             throw new TypeError(`Language parameter is not valid. Please use one of the following: ${SUPPORTED_LANGUAGES.join(', ')}`);
         }
 
-        const handledIds: number[] = [];
-
         const articles = await fetchArticles(language);
         const filteredArticles = articles.filter((a) => a.articleType !== 0).slice(0, limit);
 
         const item = await Promise.all(
             filteredArticles.map((article) => {
-                handledIds.push(article.articleId);
-
                 const contentUrl = getArticleContentLink(language, article.articleId);
                 const item: DataItem = {
                     title: article.articleTitle,
