@@ -55540,12 +55540,15 @@
   },
   "kurogames": {
     "routes": {
-      "/wutheringwaves/news": {
-        "path": "/wutheringwaves/news",
+      "/wutheringwaves/news/:language?": {
+        "path": "/wutheringwaves/news/:language?",
         "categories": [
           "game"
         ],
         "example": "/kurogames/wutheringwaves/news",
+        "parameters": {
+          "language": "The language to use for the content. Default: `zh`."
+        },
         "name": "鸣潮 — 游戏公告、新闻与活动",
         "radar": [
           {
@@ -55553,16 +55556,24 @@
               "mc.kurogames.com/m/main/news",
               "mc.kurogames.com/main"
             ]
+          },
+          {
+            "title": "Wuthering Waves — Game announcements, news and events",
+            "source": [
+              "wutheringwaves.kurogames.com/en/main/news",
+              "wutheringwaves.kurogames.com/en/main"
+            ]
           }
         ],
         "maintainers": [
+          "goestav",
           "enpitsulin"
         ],
-        "description": "",
+        "description": "\nLanguage codes for the `language` parameter:\n\n| Language | Code         |\n|----------|--------------|\n| English  | en           |\n| 日本語    | jp           |\n| 한국어     | kr           |\n| 简体中文   | zh (default) |\n| 繁體中文   | zh-tw        |\n| Español  | es           |\n| Français | fr           |\n| Deutsch  | de           |\n    ",
         "location": "wutheringwaves/news.ts"
       }
     },
-    "name": "库洛游戏",
+    "name": "库洛游戏 | Kuro Games",
     "url": "www.kurogames.com",
     "categories": [
       "game"

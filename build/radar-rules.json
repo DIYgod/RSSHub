@@ -21068,7 +21068,7 @@
     ]
   },
   "kurogames.com": {
-    "_name": "库洛游戏",
+    "_name": "库洛游戏 | Kuro Games",
     "mc": [
       {
         "title": "鸣潮 — 游戏公告、新闻与活动",
@@ -21077,7 +21077,18 @@
           "/m/main/news",
           "/main"
         ],
-        "target": "/kurogames/wutheringwaves/news"
+        "target": "/kurogames/wutheringwaves/news/:language?"
+      }
+    ],
+    "wutheringwaves": [
+      {
+        "title": "Wuthering Waves — Game announcements, news and events",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/en/main/news",
+          "/en/main"
+        ],
+        "target": "/kurogames/wutheringwaves/news/:language?"
       }
     ]
   },
