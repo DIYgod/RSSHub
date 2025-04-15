@@ -40992,14 +40992,16 @@
           {
             "source": [
               "nea.gov.cn/sjzz/ghs/"
-            ]
+            ],
+            "target": "/nea/sjzz/ghs"
           }
         ],
         "name": "发展规划司",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "pseudoyu"
         ],
-        "url": "nea.gov.cn/sjzz/ghs/",
+        "url": "www.nea.gov.cn/sjzz/ghs/",
         "location": "nea/ghs.ts"
       },
       "/nifdc/:path{.+}?": {

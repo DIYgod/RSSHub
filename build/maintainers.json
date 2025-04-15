@@ -3127,7 +3127,8 @@
     "nczitzk"
   ],
   "/gov/nea/sjzz/ghs": [
-    "nczitzk"
+    "nczitzk",
+    "pseudoyu"
   ],
   "/gov/nifdc/:path{.+}?": [],
   "/gov/nmpa/*": [],
