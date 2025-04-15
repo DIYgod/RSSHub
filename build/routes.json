@@ -101292,14 +101292,15 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
         "name": "公众号（搜狗来源）",
         "maintainers": [
-          "EthanWng97"
+          "EthanWng97",
+          "pseudoyu"
         ],
         "location": "sogou.ts"
       },

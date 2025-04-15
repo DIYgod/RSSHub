@@ -7868,7 +7868,8 @@
     "MisteryMonster"
   ],
   "/wechat/sogou/:id": [
-    "EthanWng97"
+    "EthanWng97",
+    "pseudoyu"
   ],
   "/wechat/tgchannel/:id/:mpName?/:searchQueryType?": [
     "LogicJake",
