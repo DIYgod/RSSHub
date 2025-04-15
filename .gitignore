@@ -32,6 +32,7 @@ yarn.lock
 yarn-error.log
 
 # ai ide rules
+memory-bank/
 .roomodes
 .cursorrules
 .windsurfrules
