@@ -74,6 +74,7 @@ async function handler(ctx) {
     const items = response.map((item) => {
         const media = item._embedded['wp:featuredmedia'][0];
         const mediaDetails = media?.media_details;
+        const mediaSize = mediaDetails.sizes.large || mediaDetails.sizes.full;
         return {
             title: item.title.rendered.trim(),
             link: item.link,
@@ -93,9 +94,9 @@ async function handler(ctx) {
                           fileSize: mediaDetails.filesize,
                       },
                       thumbnail: {
-                          url: mediaDetails.sizes.large.source_url,
-                          height: mediaDetails.sizes.large.height,
-                          width: mediaDetails.sizes.large.width,
+                          url: mediaSize.source_url,
+                          height: mediaSize.height,
+                          width: mediaSize.width,
                       },
                   }
                 : undefined,
