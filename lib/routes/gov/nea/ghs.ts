@@ -35,7 +35,18 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
 
     const rootUrl = 'https://www.nea.gov.cn';
-    const jsonUrl = new URL('sjzz/ghs/ds_99a01b29f9a24ab58f7d64b36489500e.json', rootUrl).href;
+    const targetUrl: string = new URL('sjzz/ghs/', rootUrl).href;
+
+    const response = await ofetch(targetUrl);
+    const $ = load(response);
+
+    const dataSourceId: string | undefined = $('ul#showData0').attr('data')?.split(/:/).pop();
+
+    if (!dataSourceId) {
+        throw new Error('Data source ID not found');
+    }
+
+    const jsonUrl = new URL(`ds_${dataSourceId}.json`, targetUrl).href;
 
     const jsonData: NeaGhsResponse = await ofetch(jsonUrl);
 
@@ -48,10 +59,12 @@ async function handler(ctx) {
         return {
             title: titleText,
             link: itemLink,
-            pubDate: parseDate(item.publishTime),
+            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), +8) : undefined,
             description: item.summary?.trim() || titleText,
-            author: item.sourceText?.trim() || undefined,
-            category: [] as string[],
+            author: [...new Set([item.sourceText, item.author, item.editor, item.responsibleEditor].filter(Boolean))].map((author) => ({
+                name: author,
+            })),
+            category: item.keywords.split(/,/),
         };
     });
 
@@ -63,9 +76,8 @@ async function handler(ctx) {
                     const content = load(detailResponse);
 
                     item.title = content('meta[name="ArticleTitle"]').prop('content') || item.title;
-                    item.description = content('td.detail').html() || content('div.article-content td').html() || item.description;
-                    item.author = content('meta[name="ContentSource"]').prop('content') || item.author;
-                    item.category = content('meta[name="keywords"]').prop('content')?.split(/,/) ?? item.category;
+                    item.description = content('td.detail').html() || content('div.article-content').html() || item.description;
+                    item.category = [...new Set([...(item.category ?? []), ...(content('meta[name="keywords"]').attr('conetnt')?.split(/,/) ?? [])])];
                     const detailPubDate = content('meta[name="PubDate"]').prop('content');
                     item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), +8) : item.pubDate;
                 } catch {
@@ -81,7 +93,7 @@ async function handler(ctx) {
     return {
         item: filteredItems,
         title: '国家能源局 - 发展规划司工作进展',
-        link: 'https://www.nea.gov.cn/sjzz/ghs/',
+        link: targetUrl,
         description: '国家能源局 - 发展规划司工作进展',
     };
 }
@@ -92,6 +104,10 @@ interface NeaGhsItem {
     publishTime: string;
     summary?: string;
     sourceText?: string;
+    author?: string;
+    editor?: string;
+    responsibleEditor?: string;
+    keywords: string;
 }
 
 interface NeaGhsResponse {
