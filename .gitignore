@@ -30,3 +30,9 @@ package-lock.json
 # pnpm-lock.yaml
 yarn.lock
 yarn-error.log
+
+# ai ide rules
+memory-bank/
+.roomodes
+.cursorrules
+.windsurfrules
