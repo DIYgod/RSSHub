@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         请确保已阅读 [文档](https://docs.rsshub.app) 内相关部分，并按照模版提供信息，否则 issue 将被立即关闭。
-        由于部分源网站反爬缘故，演示地址一些 RSS 会返回 status code 403，该问题不是 RSSHub 所致，请勿提交 issue。
+        由于部分源网站反爬缘故，演示地址一些 RSS 会返回 status code 403 或者 fetch failed，该问题不是 RSSHub 所致，请勿提交 issue。
 
   - type: textarea
     id: routes
@@ -58,8 +58,8 @@ body:
       label: 部署
       multiple: false
       options:
-        - RSSHub 演示 (https://rsshub.app)
         - 自建
+        - RSSHub 演示 (https://rsshub.app)
     validations:
       required: true
 
