@@ -51,6 +51,18 @@ type IndexEntry = {
     image: string;
 };
 
+async function fetchIndexEntires(): Promise<IndexEntry[]> {
+    const response = await ofetch(indexUrl);
+    if (!('meta' in response)) {
+        return [];
+    }
+
+    const meta = response.meta as PartitionMeta;
+    const maxItemCount = Number(meta['partition-size']);
+
+    return (response.items as IndexEntry[]).slice(0, maxItemCount);
+}
+
 function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
     const url = `${base}${entry.link}`;
 
@@ -84,14 +96,8 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
 }
 
 async function handler(): Promise<Data> {
-    const items = (await cache.tryGet(indexUrl, async () => {
-        const response = await ofetch(indexUrl);
-        const meta = response.meta as PartitionMeta;
-        const maxItemCount = Number(meta['partition-size']);
-        const items = (response.items as IndexEntry[]).slice(0, maxItemCount);
-
-        return await Promise.all(items.map((it) => fetchDataItem(it)));
-    })) as DataItem[];
+    const entires = await fetchIndexEntires();
+    const items = await Promise.all(entires.map((it) => fetchDataItem(it)));
 
     return {
         title: 'All Topics - JPMorganChase Institute',
