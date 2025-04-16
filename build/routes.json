@@ -53759,6 +53759,44 @@
     "url": "www.jou.edu.cn",
     "lang": "zh-CN"
   },
+  "jpmorganchase": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "example": "/jpmorganchase",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "jpmorganchase.com/institute/all-topics"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "Research Topics",
+        "maintainers": [
+          "dousha"
+        ],
+        "url": "www.jpmorganchase.com/institute/all-topics",
+        "location": "research.ts"
+      }
+    },
+    "name": "JPMorgan Chase",
+    "url": "www.jpmorganchase.com",
+    "zh": {
+      "name": "摩根大通"
+    }
+  },
   "jpxgmn": {
     "routes": {
       "/search/:kw": {
