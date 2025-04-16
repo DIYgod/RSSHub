@@ -14,7 +14,7 @@ interface SogouItemInternal extends DataItem {
     };
 }
 
-async function fetchAndParsePage(wechatId: string, page: number): Promise<SogouItemInternal[]> {
+async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]> {
     const searchUrl = `${host}/weixin`;
     let response;
     try {
@@ -26,17 +26,16 @@ async function fetchAndParsePage(wechatId: string, page: number): Promise<SogouI
                 _sug_type_: '1',
                 type: '2',
                 query: wechatId,
-                page,
+                page: '1',
             },
             headers: {
                 Referer: host,
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                 Cookie: hardcodedCookie,
             },
         });
         response = { data: responseHtml };
     } catch (error) {
-        logger.error(`Failed to fetch Sogou search page ${page} for ${wechatId}: ${error instanceof Error ? error.message : String(error)}`);
+        logger.error(`Failed to fetch Sogou search for ${wechatId}: ${error instanceof Error ? error.message : String(error)}`);
         return [];
     }
 
@@ -48,7 +47,7 @@ async function fetchAndParsePage(wechatId: string, page: number): Promise<SogouI
         const title = $li.find('h3 > a').text().trim();
         const sogouLinkHref = $li.find('h3 > a').attr('href');
         if (!sogouLinkHref) {
-            logger.warn(`Skipping item with missing link for wechatId: ${wechatId} on page ${page}`);
+            logger.warn(`Skipping item with missing link for wechatId: ${wechatId}`);
             return null;
         }
         const sogouLink = host + sogouLinkHref;
@@ -61,10 +60,8 @@ async function fetchAndParsePage(wechatId: string, page: number): Promise<SogouI
         let realLink = sogouLink;
         try {
             const linkResponse = await ofetch.raw(sogouLink, {
-                method: 'GET',
                 headers: {
                     Referer: searchUrl,
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                     Cookie: hardcodedCookie,
                 },
                 redirect: 'manual',
@@ -89,10 +86,8 @@ async function fetchAndParsePage(wechatId: string, page: number): Promise<SogouI
                     } else {
                         try {
                             const intermediateResponse = await ofetch.raw(location, {
-                                method: 'GET',
                                 headers: {
                                     Referer: sogouLink,
-                                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                                     Cookie: hardcodedCookie,
                                 },
                                 redirect: 'manual',
@@ -160,18 +155,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const wechatId = ctx.req.param('id');
-    const pageCount = 3;
-    const pagePromises: Promise<SogouItemInternal[]>[] = [];
 
-    for (let page = 1; page <= pageCount; page++) {
-        pagePromises.push(fetchAndParsePage(wechatId, page));
-    }
+    const allItems: SogouItemInternal[] = await fetchAndParsePage(wechatId);
 
-    const pageResults: SogouItemInternal[][] = await Promise.all(pagePromises);
-
-    const allItems: SogouItemInternal[] = pageResults.flat();
-
-    const firstPageFirstItem = pageResults[0]?.[0];
+    const firstPageFirstItem = allItems[0];
     const accountTitle = firstPageFirstItem?.author || wechatId;
 
     const finalItemsPromises = allItems.map(async (item: SogouItemInternal): Promise<DataItem | null> => {
