@@ -33,7 +33,7 @@ const forumIdMaps = {
     zhtl: '95', //    综合讨论
     // no longer updated/available
     mrhj: '106', //   每日合集
-    ai: '113', //     AI 换脸电影
+    ai: '116', //     AI 换脸电影
     ydsc: '111', //   原档收藏 WMV
     hrxazp: '98', //  华人性爱自拍
 };
