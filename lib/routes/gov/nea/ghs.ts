@@ -50,7 +50,7 @@ async function handler(ctx) {
 
     const jsonData: NeaGhsResponse = await ofetch(jsonUrl);
 
-    const list: InternalDataItem[] = jsonData.datasource.slice(0, limit).map((item) => {
+    const list: DataItem[] = jsonData.datasource.slice(0, limit).map((item) => {
         const itemLink = new URL(item.publishUrl, rootUrl).href;
 
         const $title = load(item.showTitle);
@@ -69,7 +69,7 @@ async function handler(ctx) {
     });
 
     const items = await Promise.all(
-        list.map((item: InternalDataItem) =>
+        list.map((item: DataItem) =>
             cache.tryGet(item.link, async () => {
                 try {
                     const detailResponse = await ofetch(item.link);
@@ -114,13 +114,4 @@ interface NeaGhsResponse {
     categoryName?: string;
     categoryDesc?: string;
     datasource: NeaGhsItem[];
-}
-
-interface InternalDataItem {
-    title: string;
-    link: string;
-    pubDate: Date;
-    description: string;
-    author?: string;
-    category: string[];
 }
