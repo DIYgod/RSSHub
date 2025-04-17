@@ -119,7 +119,7 @@
         "re2js": "1.1.0",
         "rfc4648": "1.5.4",
         "rss-parser": "3.13.0",
-        "sanitize-html": "2.15.0",
+        "sanitize-html": "2.16.0",
         "simplecc-wasm": "1.1.0",
         "socks-proxy-agent": "8.0.5",
         "source-map": "0.7.4",
