@@ -25,6 +25,7 @@ for (const namespace in namespaces) {
         defaultCategory = 'other';
     }
     for (const path in namespaces[namespace].routes) {
+        const realPath = `/${namespace}${path}`;
         const data = namespaces[namespace].routes[path];
         const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
         // docs.json
@@ -38,6 +39,9 @@ for (const namespace in namespaces) {
                 };
             }
             docs[category][namespace] = namespaces[namespace];
+            // there need change routes index from `path` to `realPath` to fit test
+            delete docs[category][namespace].routes[path];
+            docs[category][namespace].routes[realPath] = data;
         }
     }
 }
