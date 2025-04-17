@@ -4037,9 +4037,13 @@
   ],
   "/jandan/": [
     "nczitzk",
-    "bigfei"
+    "bigfei",
+    "pseudoyu"
   ],
-  "/jandan/:category": [],
+  "/jandan/:category/:type?": [
+    "nczitzk",
+    "pseudoyu"
+  ],
   "/japanpost/track/:reqCode/:locale?": [
     "tuzi3040"
   ],

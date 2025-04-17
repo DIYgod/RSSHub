@@ -51391,17 +51391,105 @@
     "routes": {
       "/": {
         "path": "/",
-        "name": "Unknown",
+        "example": "/jandan",
+        "name": "Feed",
         "maintainers": [
           "nczitzk",
-          "bigfei"
+          "bigfei",
+          "pseudoyu"
+        ],
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "i.jandan.net"
+            ],
+            "target": "/jandan"
+          }
         ],
         "location": "index.ts"
       },
-      "/:category": {
-        "path": "/:category",
-        "name": "Unknown",
-        "maintainers": [],
+      "/:category/:type?": {
+        "path": "/:category/:type?",
+        "example": "/jandan/top",
+        "name": "Section",
+        "maintainers": [
+          "nczitzk",
+          "pseudoyu"
+        ],
+        "parameters": {
+          "category": {
+            "description": "板块",
+            "options": [
+              {
+                "label": "热榜",
+                "value": "top"
+              },
+              {
+                "label": "问答",
+                "value": "qa"
+              },
+              {
+                "label": "树洞",
+                "value": "treehole"
+              },
+              {
+                "label": "随手拍",
+                "value": "ooxx"
+              },
+              {
+                "label": "无聊图",
+                "value": "pic"
+              },
+              {
+                "label": "鱼塘",
+                "value": "bbs"
+              }
+            ]
+          },
+          "type": {
+            "description": "热榜类型，仅当 category 选择 `top` 时有效",
+            "default": "4hr",
+            "options": [
+              {
+                "label": "4小时热门",
+                "value": "4hr"
+              },
+              {
+                "label": "3天内无聊图",
+                "value": "pic3days"
+              },
+              {
+                "label": "7天内无聊图",
+                "value": "pic7days"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "i.jandan.net/:category"
+            ],
+            "target": "/jandan/:category?"
+          }
+        ],
         "location": "section.ts"
       }
     },
