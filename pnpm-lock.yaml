@@ -28,7 +28,7 @@ importers:
         version: 1.14.1(hono@4.7.7)
       '@hono/zod-openapi':
         specifier: 0.19.4
-        version: 0.19.4(hono@4.7.7)(zod@3.24.2)
+        version: 0.19.4(hono@4.7.7)(zod@3.24.3)
       '@notionhq/client':
         specifier: 2.3.0
         version: 2.3.0
@@ -60,11 +60,11 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.8.1
-        version: 0.8.1(hono@4.7.7)
+        specifier: 0.8.2
+        version: 0.8.2(hono@4.7.7)
       '@sentry/node':
-        specifier: 9.12.0
-        version: 9.12.0
+        specifier: 9.13.0
+        version: 9.13.0
       '@tonyrl/rand-user-agent':
         specifier: 2.0.83
         version: 2.0.83
@@ -225,8 +225,8 @@ importers:
         specifier: 3.13.0
         version: 3.13.0
       sanitize-html:
-        specifier: 2.15.0
-        version: 2.15.0
+        specifier: 2.16.0
+        version: 2.16.0
       simplecc-wasm:
         specifier: 1.1.0
         version: 1.1.0
@@ -276,8 +276,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       zod:
-        specifier: 3.24.2
-        version: 3.24.2
+        specifier: 3.24.3
+        version: 3.24.3
     devDependencies:
       '@babel/preset-env':
         specifier: 7.26.9
@@ -2048,12 +2048,12 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/core@0.2.7':
-    resolution: {integrity: sha512-8BeyxQiTzd3yST43x1w3t47kgkQSBVfR+bpruXaLFxeITWjzOTro5Ojh+enGWnooIfg5wMDpNqfDJCbGOVq1hg==}
+  '@scalar/core@0.2.8':
+    resolution: {integrity: sha512-4WjhJl0hJGgPGznmRvMFscY4ZMRbXgfEAsDGWl9eVqE/ZdXFxnoY2LsGhBALSKEYfwgNwLzk3A+0bCv2oU6N7g==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.8.1':
-    resolution: {integrity: sha512-bKPJ6QPBOUEGupq4wKF1iUl3upsVkTdhIIkUwtEpEx9ox3CCsp0kxAUykhSUuhZ3Xhy6WcuMdigOlU5PzTY8xA==}
+  '@scalar/hono-api-reference@0.8.2':
+    resolution: {integrity: sha512-sgNtRst9KTamZMxE66fuIczgTsG7Yeputoelvxw/O+5dcN4KPeZ8ac67aqFH9sG1t+bbQyxqZ+qn+6ESoZMJQw==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -2062,8 +2062,8 @@ packages:
     resolution: {integrity: sha512-waiKk12cRCqyUCWTOX0K1WEVX46+hVUK+zRPzAahDJ7G0TApvbNkuy5wx7aoUyEk++HHde0XuQnshXnt8jsddA==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.1.7':
-    resolution: {integrity: sha512-irIDYzTQG2KLvFbuTI8k2Pz/R4JR+zUUSykVTbEMatkzMmVFnn1VzNSMlODbadycwZunbnL2tA27AXed9URVjw==}
+  '@scalar/types@0.1.8':
+    resolution: {integrity: sha512-VL1dcLB6w7V0htFxIgcdQeQhD5LFW1oqWk9ZWfzd9Ekl0a3bDGc81R5S3fk6qCHahPZR3cVPr4rHVQh0aX+FrQ==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -2072,16 +2072,16 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@sentry/core@9.12.0':
-    resolution: {integrity: sha512-jOqQK/90uzHmsBvkPTj/DAEFvA5poX4ZRyC7LE1zjg4F5jdOp3+M4W3qCy0CkSTu88Zu5VWBoppCU2Bs34XEqg==}
+  '@sentry/core@9.13.0':
+    resolution: {integrity: sha512-Zn1Qec5XNkNRE/M5QjL6YJLghETg6P188G/v2OzdHdHIRf0Y58/SnJilu3louF+ogos6kaSqqdMgzqKgZ8tCdg==}
     engines: {node: '>=18'}
 
-  '@sentry/node@9.12.0':
-    resolution: {integrity: sha512-NZHneJovlLOdde85vJAIs7vIki36EfJ234d6YXHUE+874sxKMknB/wrzAZi5XS5nqT3kqIXD5KgjgDTjrhAENQ==}
+  '@sentry/node@9.13.0':
+    resolution: {integrity: sha512-75UVkrED5b0BaazNQKCmF8NqeqjErxildPojDyC037JN+cVFMPr/kFFGGm7E+eCvA/j2pAPUzqifHp/PjykPcw==}
     engines: {node: '>=18'}
 
-  '@sentry/opentelemetry@9.12.0':
-    resolution: {integrity: sha512-jQfI/UmgDDbcWY439r1Jz0Y4mqNn3a2JwruWfCHWzIqQMOgBzkzcp9lbZMx9iU+x1iZTTp9s80Dy5F9nG4KKMQ==}
+  '@sentry/opentelemetry@9.13.0':
+    resolution: {integrity: sha512-TLSP0n+sXKVcVkAM2ttVmXcAT2K3e9D5gdPfr6aCnW+KIGJuD7wzla/TIcTWFaVwUejbvXAB6IFpZ/qA8HFwyA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -5226,8 +5226,8 @@ packages:
     resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
     engines: {node: '>=10'}
 
-  sanitize-html@2.15.0:
-    resolution: {integrity: sha512-wIjst57vJGpLyBP8ioUbg6ThwJie5SuSIjHxJg53v5Fg+kUK+AXlb7bK3RNXpp315MvwM+0OBGCV6h5pPHsVhA==}
+  sanitize-html@2.16.0:
+    resolution: {integrity: sha512-0s4caLuHHaZFVxFTG74oW91+j6vW7gKbGD6CD2+miP73CE6z6YtOBN0ArtLd2UGyi4IC7K47v3ENUbQX4jV3Mg==}
 
   sax@1.4.1:
     resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
@@ -5695,8 +5695,8 @@ packages:
     resolution: {integrity: sha512-2dBz5D5ycHIoliLYLi0Q2V7KRaDlH0uWIvmk7TYlAg5slqwiPv1ezJdZm1QEM0xgk29oYWMCbIG7E6gHpvChlg==}
     engines: {node: '>=16'}
 
-  type-fest@4.39.1:
-    resolution: {integrity: sha512-uW9qzd66uyHYxwyVBYiwS4Oi0qZyUqwjU+Oevr6ZogYiXt99EOYtwvzMSLw1c3lYo2HzJsep/NB23iEVEgjG/w==}
+  type-fest@4.40.0:
+    resolution: {integrity: sha512-ABHZ2/tS2JkvH1PEjxFDTUWC8dB5OsIGZP4IFLhR293GqT5Y5qB1WwL2kMPYhQW9DVgVD8Hd7I8gjwPIf5GFkw==}
     engines: {node: '>=16'}
 
   type@2.7.3:
@@ -6098,8 +6098,8 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
-  zod@3.24.2:
-    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+  zod@3.24.3:
+    resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
 
 snapshots:
 
@@ -6116,10 +6116,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.3
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.24.2)':
+  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.24.3)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -7114,17 +7114,17 @@ snapshots:
     dependencies:
       hono: 4.7.7
 
-  '@hono/zod-openapi@0.19.4(hono@4.7.7)(zod@3.24.2)':
+  '@hono/zod-openapi@0.19.4(hono@4.7.7)(zod@3.24.3)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.2)
-      '@hono/zod-validator': 0.4.3(hono@4.7.7)(zod@3.24.2)
+      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.3)
+      '@hono/zod-validator': 0.4.3(hono@4.7.7)(zod@3.24.3)
       hono: 4.7.7
-      zod: 3.24.2
+      zod: 3.24.3
 
-  '@hono/zod-validator@0.4.3(hono@4.7.7)(zod@3.24.2)':
+  '@hono/zod-validator@0.4.3(hono@4.7.7)(zod@3.24.3)':
     dependencies:
       hono: 4.7.7
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@humanfs/core@0.19.1': {}
 
@@ -7818,26 +7818,26 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/core@0.2.7':
+  '@scalar/core@0.2.8':
     dependencies:
-      '@scalar/types': 0.1.7
+      '@scalar/types': 0.1.8
 
-  '@scalar/hono-api-reference@0.8.1(hono@4.7.7)':
+  '@scalar/hono-api-reference@0.8.2(hono@4.7.7)':
     dependencies:
-      '@scalar/core': 0.2.7
+      '@scalar/core': 0.2.8
       hono: 4.7.7
 
   '@scalar/openapi-types@0.2.0':
     dependencies:
-      zod: 3.24.2
+      zod: 3.24.3
 
-  '@scalar/types@0.1.7':
+  '@scalar/types@0.1.8':
     dependencies:
       '@scalar/openapi-types': 0.2.0
       '@unhead/schema': 1.11.20
       nanoid: 5.1.5
-      type-fest: 4.39.1
-      zod: 3.24.2
+      type-fest: 4.40.0
+      zod: 3.24.3
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -7846,9 +7846,9 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@sentry/core@9.12.0': {}
+  '@sentry/core@9.13.0': {}
 
-  '@sentry/node@9.12.0':
+  '@sentry/node@9.13.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/context-async-hooks': 1.30.1(@opentelemetry/api@1.9.0)
@@ -7881,13 +7881,13 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 1.30.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.32.0
       '@prisma/instrumentation': 6.5.0(@opentelemetry/api@1.9.0)
-      '@sentry/core': 9.12.0
-      '@sentry/opentelemetry': 9.12.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.32.0)
+      '@sentry/core': 9.13.0
+      '@sentry/opentelemetry': 9.13.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.32.0)
       import-in-the-middle: 1.13.1
     transitivePeerDependencies:
       - supports-color
 
-  '@sentry/opentelemetry@9.12.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.32.0)':
+  '@sentry/opentelemetry@9.13.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.32.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/context-async-hooks': 1.30.1(@opentelemetry/api@1.9.0)
@@ -7895,7 +7895,7 @@ snapshots:
       '@opentelemetry/instrumentation': 0.57.2(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 1.30.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.32.0
-      '@sentry/core': 9.12.0
+      '@sentry/core': 9.13.0
 
   '@sindresorhus/is@5.6.0': {}
 
@@ -11474,7 +11474,7 @@ snapshots:
 
   safe-stable-stringify@2.5.0: {}
 
-  sanitize-html@2.15.0:
+  sanitize-html@2.16.0:
     dependencies:
       deepmerge: 4.3.1
       escape-string-regexp: 4.0.0
@@ -11933,7 +11933,7 @@ snapshots:
 
   type-fest@4.38.0: {}
 
-  type-fest@4.39.1: {}
+  type-fest@4.40.0: {}
 
   type@2.7.3: {}
 
@@ -12310,4 +12310,4 @@ snapshots:
 
   zod@3.22.4: {}
 
-  zod@3.24.2: {}
+  zod@3.24.3: {}
