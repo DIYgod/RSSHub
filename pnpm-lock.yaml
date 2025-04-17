@@ -28,7 +28,7 @@ importers:
         version: 1.14.1(hono@4.7.7)
       '@hono/zod-openapi':
         specifier: 0.19.4
-        version: 0.19.4(hono@4.7.7)(zod@3.24.2)
+        version: 0.19.4(hono@4.7.7)(zod@3.24.3)
       '@notionhq/client':
         specifier: 2.3.0
         version: 2.3.0
@@ -276,8 +276,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       zod:
-        specifier: 3.24.2
-        version: 3.24.2
+        specifier: 3.24.3
+        version: 3.24.3
     devDependencies:
       '@babel/preset-env':
         specifier: 7.26.9
@@ -6098,8 +6098,8 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
-  zod@3.24.2:
-    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+  zod@3.24.3:
+    resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
 
 snapshots:
 
@@ -6116,10 +6116,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.3
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.24.2)':
+  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.24.3)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -7114,17 +7114,17 @@ snapshots:
     dependencies:
       hono: 4.7.7
 
-  '@hono/zod-openapi@0.19.4(hono@4.7.7)(zod@3.24.2)':
+  '@hono/zod-openapi@0.19.4(hono@4.7.7)(zod@3.24.3)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.2)
-      '@hono/zod-validator': 0.4.3(hono@4.7.7)(zod@3.24.2)
+      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.3)
+      '@hono/zod-validator': 0.4.3(hono@4.7.7)(zod@3.24.3)
       hono: 4.7.7
-      zod: 3.24.2
+      zod: 3.24.3
 
-  '@hono/zod-validator@0.4.3(hono@4.7.7)(zod@3.24.2)':
+  '@hono/zod-validator@0.4.3(hono@4.7.7)(zod@3.24.3)':
     dependencies:
       hono: 4.7.7
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@humanfs/core@0.19.1': {}
 
@@ -7829,7 +7829,7 @@ snapshots:
 
   '@scalar/openapi-types@0.2.0':
     dependencies:
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@scalar/types@0.1.8':
     dependencies:
@@ -7837,7 +7837,7 @@ snapshots:
       '@unhead/schema': 1.11.20
       nanoid: 5.1.5
       type-fest: 4.40.0
-      zod: 3.24.2
+      zod: 3.24.3
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -12310,4 +12310,4 @@ snapshots:
 
   zod@3.22.4: {}
 
-  zod@3.24.2: {}
+  zod@3.24.3: {}
