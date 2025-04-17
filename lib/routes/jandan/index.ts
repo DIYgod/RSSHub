@@ -1,6 +1,6 @@
 import { Route, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 
