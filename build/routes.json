@@ -5376,6 +5376,37 @@
   },
   "adquan": {
     "routes": {
+      "/case_library": {
+        "path": "/case_library",
+        "name": "案例库",
+        "url": "www.adquan.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/adquan/case_library",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.adquan.com/case_library/index"
+            ],
+            "target": "/case_library"
+          }
+        ],
+        "view": 0,
+        "location": "case-library.ts"
+      },
       "/": {
         "path": "/",
         "name": "最新文章",
