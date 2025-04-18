@@ -1,9 +1,9 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
-const defaultDomain = 'mp4us.com';
+const defaultDomain = 'www.xlmp4.com';
 
-const allowedDomains = new Set(['domp4.cc', 'mp4us.com', 'wemp4.com', 'dbmp4.com']);
+const allowedDomains = new Set(['www.xlmp4.com']);
 
 /**
  * trackers from https://www.domp4.cc/Style/2020/js/base.js?v=2
@@ -61,11 +61,11 @@ function getUrlType(url) {
  */
 function decodeCipherText(p, a, c, k, e, d) {
     e = function (c) {
-        return (c < a ? '' : e(Number.parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
+        return (c < a ? '' : e(Number.parseInt((c / a).toString()))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
     };
     if (!''.replace(/^/, String)) {
         while (c--) {
-            d[e(c)] = k[c] || e(c);
+            d[e(c.toString())] = k[c] || e(c.toString());
         }
         k = [
             function (e) {
@@ -79,7 +79,7 @@ function decodeCipherText(p, a, c, k, e, d) {
     }
     while (c--) {
         if (k[c]) {
-            p = p.replaceAll(new RegExp(String.raw`\b` + e(c) + String.raw`\b`, 'g'), k[c]);
+            p = p.replaceAll(new RegExp(String.raw`\b` + e(c.toString()) + String.raw`\b`, 'g'), k[c]);
         }
     }
     return p;

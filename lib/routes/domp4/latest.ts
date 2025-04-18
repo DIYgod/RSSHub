@@ -1,8 +1,8 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
-import { defaultDomain, ensureDomain } from './utils';
+import { ensureDomain } from './utils';
 
 function getItemList($, type) {
     const list = $(`#${type} .list-group-item`)
@@ -11,7 +11,7 @@ function getItemList($, type) {
             item = $(item);
             return {
                 title: item.find('a').text(),
-                link: `https://${defaultDomain}${item.find('a').attr('href')}`, // fixed domain for guid
+                link: `https://www.xlmp4.com${item.find('a').attr('href')}`,
             };
         });
     return list;
@@ -32,13 +32,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['domp4.cc/', 'domp4.cc/custom/update.html'],
+            source: ['www.xlmp4.com/', 'www.xlmp4.com/custom/update.html'],
         },
     ],
     name: '最近更新',
-    maintainers: ['savokiss'],
+    maintainers: ['savokiss', 'pseudoyu'],
     handler,
-    url: 'domp4.cc/',
+    url: 'www.xlmp4.com/',
 };
 
 async function handler(ctx) {
@@ -48,8 +48,8 @@ async function handler(ctx) {
     const hostUrl = ensureDomain(ctx, domain);
     const latestUrl = `${hostUrl}/custom/update.html`;
 
-    const res = await got.get(latestUrl);
-    const $ = load(res.data);
+    const res = await ofetch(latestUrl);
+    const $ = load(res);
     const list = getItemList($, type);
 
     return {
