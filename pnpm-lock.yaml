@@ -27,8 +27,8 @@ importers:
         specifier: 1.14.1
         version: 1.14.1(hono@4.7.7)
       '@hono/zod-openapi':
-        specifier: 0.19.4
-        version: 0.19.4(hono@4.7.7)(zod@3.24.3)
+        specifier: 0.19.5
+        version: 0.19.5(hono@4.7.7)(zod@3.24.3)
       '@notionhq/client':
         specifier: 2.3.0
         version: 2.3.0
@@ -177,8 +177,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       notion-to-md:
-        specifier: 3.1.7
-        version: 3.1.7
+        specifier: 3.1.8
+        version: 3.1.8
       oauth-1.0a:
         specifier: 2.2.6
         version: 2.2.6
@@ -1413,8 +1413,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@0.19.4':
-    resolution: {integrity: sha512-wt/Hn5TudVLGQxARVBBGDN/ckDOWUQrw9gdZoDBfRb5+G8+AJ/qeRDV8iorKE3SyEeiRkJ5ErKevkjCsAgH69Q==}
+  '@hono/zod-openapi@0.19.5':
+    resolution: {integrity: sha512-n2RqdZL7XIaWPwBNygctG/1eySyRtSBnS7l+pIsP3f2JW5P2l7Smm6SLluscrGwB5l2C2fxbfvhWoC6Ig+SxXw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
@@ -4632,8 +4632,8 @@ packages:
     resolution: {integrity: sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==}
     engines: {node: '>=14.16'}
 
-  notion-to-md@3.1.7:
-    resolution: {integrity: sha512-DXW4JzDTXmH8VY9v+3Kv2lEI2jMzN23bUSO9hqqkVkTuI4hgbAhtfkTx3L6vw7M/J7wMdkqdF88Vw5dGKwZBIw==}
+  notion-to-md@3.1.8:
+    resolution: {integrity: sha512-DuEslJAbmUG2IRVcoeiCdsE2tI8yXOG6NiHlzxYTcKMmkAtoj2Fgq35Gf5T8s92uzpT2ueVf3aCOq7XuVLVYOA==}
     engines: {node: '>=12'}
 
   npm-run-path@5.3.0:
@@ -7114,7 +7114,7 @@ snapshots:
     dependencies:
       hono: 4.7.7
 
-  '@hono/zod-openapi@0.19.4(hono@4.7.7)(zod@3.24.3)':
+  '@hono/zod-openapi@0.19.5(hono@4.7.7)(zod@3.24.3)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.3)
       '@hono/zod-validator': 0.4.3(hono@4.7.7)(zod@3.24.3)
@@ -10791,7 +10791,7 @@ snapshots:
 
   normalize-url@8.0.1: {}
 
-  notion-to-md@3.1.7:
+  notion-to-md@3.1.8:
     dependencies:
       markdown-table: 2.0.0
       node-fetch: 2.7.0
