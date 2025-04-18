@@ -74,7 +74,7 @@ export const route: Route = {
     path: '/detail/:id',
     categories: ['multimedia'],
     example: '/domp4/detail/LBTANI22222I',
-    parameters: { id: '从剧集详情页 URL 处获取，如：`https://www.mp4kan.com/html/LBTANI22222I.html`，取 `.html` 前面部分' },
+    parameters: { id: '从剧集详情页 URL 处获取，如：`https://www.xlmp4.com/html/LBTANI22222I.html`，取 `.html` 前面部分' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
