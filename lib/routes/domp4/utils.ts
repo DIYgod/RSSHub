@@ -1,12 +1,12 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
-const defaultDomain = 'mp4us.com';
+const defaultDomain = 'xlmp4.com';
 
-const allowedDomains = new Set(['domp4.cc', 'mp4us.com', 'wemp4.com', 'dbmp4.com']);
+const allowedDomains = new Set(['xlmp4.com']);
 
 /**
- * trackers from https://www.domp4.cc/Style/2020/js/base.js?v=2
+ * trackers from https://www.xlmp4.com/Style/2020/js/base.js?v=2
  */
 const magnetTrackers = [
     'https://tracker.iriseden.fr:443/announce',
