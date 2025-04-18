@@ -27535,7 +27535,7 @@
         ],
         "example": "/domp4/detail/LBTANI22222I",
         "parameters": {
-          "id": "从剧集详情页 URL 处获取，如：`https://www.mp4kan.com/html/LBTANI22222I.html`，取 `.html` 前面部分"
+          "id": "从剧集详情页 URL 处获取，如：`https://www.xlmp4.com/html/LBTANI22222I.html`，取 `.html` 前面部分"
         },
         "features": {
           "requireConfig": false,
@@ -27548,15 +27548,16 @@
         "radar": [
           {
             "source": [
-              "domp4.cc/detail/:id"
+              "www.xlmp4.com/detail/:id"
             ]
           }
         ],
         "name": "剧集订阅",
         "maintainers": [
-          "savokiss"
+          "savokiss",
+          "pseudoyu"
         ],
-        "description": "::: tip\n由于大部分详情页是 `/html/xxx.html`，还有部分是 `/detail/123.html`，所以此处做了兼容，id 取 `xxx` 或者 `123` 都可以。\n\n新增 `second` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: `/domp4/detail/LBTANI22222I?second=1`。\n:::",
+        "description": "::: tip\n由于大部分详情页是 `/html/xxx.html`，还有部分是 `/detail/123.html`，所以此处做了兼容，id 取 `xxx` 或者 `123` 都可以。\n\n新增 `second` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: `/domp4/detail/LBTANI22222I?second=1`。\n\n域名频繁更换，目前使用 www.xlmp4.com\n:::",
         "location": "detail.ts"
       },
       "/latest_movie_bt": {
@@ -27577,16 +27578,17 @@
         "radar": [
           {
             "source": [
-              "domp4.cc/",
-              "domp4.cc/custom/update.html"
+              "www.xlmp4.com/",
+              "www.xlmp4.com/custom/update.html"
             ]
           }
         ],
         "name": "最近更新的电源BT列表",
         "maintainers": [
-          "xianghuawe"
+          "xianghuawe",
+          "pseudoyu"
         ],
-        "url": "domp4.cc/",
+        "url": "www.xlmp4.com/",
         "location": "latest-movie-bt.ts"
       },
       "/latest/:type?": {
@@ -27609,22 +27611,23 @@
         "radar": [
           {
             "source": [
-              "domp4.cc/",
-              "domp4.cc/custom/update.html"
+              "www.xlmp4.com/",
+              "www.xlmp4.com/custom/update.html"
             ]
           }
         ],
         "name": "最近更新",
         "maintainers": [
-          "savokiss"
+          "savokiss",
+          "pseudoyu"
         ],
-        "url": "domp4.cc/",
+        "url": "www.xlmp4.com/",
         "location": "latest.ts"
       }
     },
     "name": "DoMP4 影视",
-    "url": "domp4.cc",
-    "description": "::: tip\n由于网站有多个备用域名，默认使用 `mp4us.com`，可以通过在路由最后加上 `?domain=<域名>` 切换域名。\n\n目前可用域名有：\n\n```javascript\n['domp4.cc', 'mp4kan.com', 'mp4us.com', 'wemp4.com', 'dbmp4.com']\n```\n:::",
+    "url": "www.xlmp4.com",
+    "description": "::: tip\n    域名频繁更换，目前使用 www.xlmp4.com\n:::",
     "lang": "zh-CN"
   },
   "dongqiudi": {
