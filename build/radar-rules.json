@@ -10105,6 +10105,19 @@
       }
     ]
   },
+  "coolpc.com.tw": {
+    "_name": "原價屋",
+    "www": [
+      {
+        "title": "促銷&開箱",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/coolpc/news"
+      }
+    ]
+  },
   "coomer.su": {
     "_name": "Coomer",
     ".": [

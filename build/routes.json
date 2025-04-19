@@ -22879,6 +22879,42 @@
     "description": "\n::: tip\n即日起，多数路由图片防盗链。\n需要将 `ALLOW_USER_HOTLINK_TEMPLATE` 环境变量设置为 `true` ，然后配置`image_hotlink_template` 。\n详见 [#16715](https://github.com/DIYgod/RSSHub/issues/16715)\n:::",
     "lang": "zh-CN"
   },
+  "coolpc": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/coolpc/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.coolpc.com.tw/"
+            ]
+          }
+        ],
+        "name": "促銷&開箱",
+        "maintainers": [
+          "david90103"
+        ],
+        "url": "www.coolpc.com.tw/",
+        "location": "news.ts"
+      }
+    },
+    "name": "原價屋",
+    "url": "www.coolpc.com.tw",
+    "lang": "zh-TW"
+  },
   "coomer": {
     "routes": {
       "/:source?/:id?": {
