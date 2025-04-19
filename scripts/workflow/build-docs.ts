@@ -9,6 +9,9 @@ const testResult = fullTests.testResults[0].assertionResults;
 
 const __dirname = getCurrentPath(import.meta.url);
 
+// should sync with Namespace and Route
+const languageList = ['zh', 'zh-tw', 'ja'];
+
 const docs = {};
 
 for (const namespace in namespaces) {
@@ -38,9 +41,9 @@ for (const namespace in namespaces) {
                     routes: {},
                 };
             }
-            docs[category][namespace].name = namespaces[namespace].name;
-            docs[category][namespace].url = namespaces[namespace].url;
-            docs[category][namespace].description = namespaces[namespace].description;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { routes: _, ...rest } = namespaces[namespace];
+            docs[category][namespace] = { ...docs[category][namespace], ...rest };
             docs[category][namespace].routes[realPath] = data;
         }
     }
@@ -77,9 +80,18 @@ function generateMd(lang) {
             if (docs[category][namespace].name === 'Unknown') {
                 docs[category][namespace].name = namespace;
             }
-            md[category] += `## ${docs[category][namespace].name || namespace} ${docs[category][namespace].url ? `<Site url="${docs[category][namespace].url}"/>` : ''}\n\n`;
-            if (docs[category][namespace].description) {
-                md[category] += `${docs[category][namespace].description}\n\n`;
+
+            const namespaceItemLang = docs[category][namespace];
+            for (const key of Object.keys(namespaceItemLang)) {
+                namespaceItemLang[key] = namespaceItemLang[lang]?.[key] || namespaceItemLang[key];
+            }
+            for (const la of languageList) {
+                delete namespaceItemLang[la];
+            }
+
+            md[category] += `## ${namespaceItemLang.name} ${namespaceItemLang.url ? `<Site url="${namespaceItemLang.url}"/>` : ''}\n\n`;
+            if (namespaceItemLang.description) {
+                md[category] += `${namespaceItemLang.description}\n\n`;
             }
 
             const realPaths = Object.keys(docs[category][namespace].routes).sort((a, b) => {
@@ -114,10 +126,19 @@ function generateMd(lang) {
                           message: test.failureMessages?.[0],
                       }
                     : undefined;
-                md[category] += `### ${data.name} ${data.url || docs[category][namespace].url ? `<Site url="${data.url || docs[category][namespace].url}" size="sm" />` : ''}\n\n`;
-                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(data).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
-                if (data.description) {
-                    md[category] += `${data.description}\n\n`;
+
+                const routeItemLang = data;
+                for (const key of Object.keys(routeItemLang)) {
+                    routeItemLang[key] = routeItemLang[lang]?.[key] || routeItemLang[key];
+                }
+                for (const la of languageList) {
+                    delete routeItemLang[la];
+                }
+
+                md[category] += `### ${routeItemLang.name} ${routeItemLang.url || namespaceItemLang.url ? `<Site url="${routeItemLang.url || namespaceItemLang.url}" size="sm" />` : ''}\n\n`;
+                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(routeItemLang).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
+                if (routeItemLang.description) {
+                    md[category] += `${routeItemLang.description}\n\n`;
                 }
             }
         }
