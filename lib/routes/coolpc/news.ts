@@ -41,7 +41,7 @@ async function handler() {
             title: $(item).find('h3 a').text(),
             description: $(item).find('.ultimate-layouts-excerpt').text(),
             link: $(item).find('h3 a').attr('href'),
-            pubDate: parseDate($(item).find('span').text(), 'YYYY/MM/DD'),
+            pubDate: parseDate($(item).find('.ultimate-layouts-metas-wrap span').eq(1).text(), 'YYYY/MM/DD'),
         }))
         .filter((item, index, self) => index === self.findIndex((i) => i.title === item.title));
 
