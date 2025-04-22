@@ -5863,6 +5863,49 @@ export default {
     "url": "afdian.net",
     "lang": "zh-CN"
   },
+  "aflcio": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "aflcio.org",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/aflcio/blog",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "aflcio.org/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "view": 0,
+        "location": "blog.ts",
+        "module": () => import('@/routes/aflcio/blog.ts')
+      }
+    },
+    "name": "AFL-CIO",
+    "url": "aflcio.org",
+    "categories": [
+      "other"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "afr": {
     "routes": {
       "/latest": {

@@ -2974,6 +2974,19 @@
       }
     ]
   },
+  "aflcio.org": {
+    "_name": "AFL-CIO",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/blog"
+        ],
+        "target": "/aflcio/blog"
+      }
+    ]
+  },
   "afr.com": {
     "_name": "The Australian Financial Review",
     "www": [

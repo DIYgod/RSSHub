@@ -350,6 +350,9 @@
   "/afdian/explore/:type/:category?": [
     "sanmmm"
   ],
+  "/aflcio/blog": [
+    "nczitzk"
+  ],
   "/afr/latest": [
     "TonyRL"
   ],
