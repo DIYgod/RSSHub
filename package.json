@@ -21,7 +21,7 @@
         "lib"
     ],
     "scripts": {
-        "build": "tsx scripts/workflow/build-routes.ts",
+        "build": "tsx scripts/workflow/build-routes.ts && tsdown",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
         "dev": "cross-env NODE_ENV=dev tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch --clear-screen=false lib/index.ts",
@@ -31,7 +31,7 @@
         "lint": "eslint --cache .",
         "prepare": "husky || true",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
-        "start": "cross-env NODE_ENV=production tsx lib/index.ts",
+        "start": "cross-env NODE_ENV=production node dist/index.js",
         "test": "npm run format:check && npm run vitest:coverage",
         "vitest": "cross-env NODE_ENV=test vitest",
         "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
