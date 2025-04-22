@@ -34,4 +34,4 @@ export const getUserVideosById = (id: string) =>
         false
     ) as Promise<VideoItem[]>;
 
-export const renderVideo = (video: Essential, embed: boolean) => art(path.join(__dirname, 'templates', 'video.art'), { video, embed });
+export const renderVideo = (video: Essential, embed: boolean) => art(path.join(__dirname, 'templates/video.art'), { video, embed });

@@ -6,9 +6,9 @@ import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 import { FetchError } from 'ofetch';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 
 export const route: Route = {
     path: '/app/:category{.+}?',

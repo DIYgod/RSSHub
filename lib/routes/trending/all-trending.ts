@@ -4,8 +4,8 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 import ofetch from '@/utils/ofetch';

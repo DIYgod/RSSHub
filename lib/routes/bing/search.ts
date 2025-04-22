@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import 'dayjs/locale/zh-cn';
 dayjs.extend(localizedFormat);
 

@@ -11,7 +11,7 @@ import path from 'node:path';
 import { getCurrentPath } from '@/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);
-const render = (data) => art(path.join(__dirname, 'templates', 'house.art'), data);
+const render = (data) => art(path.join(__dirname, 'templates/house.art'), data);
 
 export const route: Route = {
     path: '/rent/:city/:district?',

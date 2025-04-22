@@ -31,7 +31,7 @@ export const route: Route = {
 
 const baseUrl = 'https://web.bc3ts.net';
 
-const renderMedia = (media: Media[]) => art(path.join(__dirname, 'templates', 'media.art'), { media });
+const renderMedia = (media: Media[]) => art(path.join(__dirname, 'templates/media.art'), { media });
 
 async function handler(ctx) {
     const { sort = '1' } = ctx.req.param();

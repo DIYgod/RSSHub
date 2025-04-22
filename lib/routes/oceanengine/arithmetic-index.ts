@@ -74,7 +74,7 @@ const searchLinkUrls = (keyword) => [
 const searchLinkNames = ['今日热榜', '百度', '谷歌', '知乎', '微博', '抖音', '头条'];
 
 const createContent = (keyword, queryList, queryListText) =>
-    art(path.join(__dirname, 'templates', 'content.art'), {
+    art(path.join(__dirname, 'templates/content.art'), {
         keyword,
         queryListText,
         queries: queryList.map((query) => ({

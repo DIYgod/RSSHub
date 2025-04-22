@@ -134,7 +134,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = result.values.map((novel) => ({
         title: novel.title,
         link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: art(path.join(__dirname, 'templates', 'description.art'), {
+        description: art(path.join(__dirname, 'templates/description.art'), {
             novel,
             genreText: GenreNotation[novel.genre],
         }),

@@ -45,7 +45,7 @@ function getBuildId() {
 }
 
 function render(data) {
-    return art(path.join(__dirname, 'templates', 'description.art'), data);
+    return art(path.join(__dirname, 'templates/description.art'), data);
 }
 
 function renderJSON(c) {

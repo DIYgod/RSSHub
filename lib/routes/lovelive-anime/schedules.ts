@@ -7,8 +7,8 @@ import path from 'node:path';
 import { art } from '@/utils/render';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/scheduleDesc.art'), desc);
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 

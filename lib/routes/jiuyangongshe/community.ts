@@ -93,7 +93,7 @@ interface Community {
     serverTime: number;
 }
 
-const render = (data) => art(path.join(__dirname, 'templates', 'community-description.art'), data);
+const render = (data) => art(path.join(__dirname, 'templates/community-description.art'), data);
 
 export const route: Route = {
     path: '/community',

@@ -84,7 +84,7 @@ async function handler(ctx) {
                     extension: attachment.path.replace(/.*\./, '').toLowerCase(),
                 });
             }
-            const filesHTML = art(path.join(__dirname, 'templates', 'source.art'), { i });
+            const filesHTML = art(path.join(__dirname, 'templates/source.art'), { i });
             let $ = load(filesHTML);
             const coomerFiles = $('img, a, audio, video').map(function () {
                 return $(this).prop('outerHTML')!;

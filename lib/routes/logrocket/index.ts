@@ -54,10 +54,6 @@ async function handler(ctx) {
                 //
                 $('div.content-max-width .sidebar-container div.code-block').remove();
                 item.description = $('div.content-max-width .sidebar-container').html();
-                // item.description = art(path.join(__dirname, 'templates/description.art'), {
-                //     // header: $('#post-header').html(),
-                //     description: $('div.content-max-width .the-content-container').remove('.lr-content div.code-block.code-block-77').remove('.lr-content .code-block.code-block-57').html(),
-                // });
                 return item;
             })
         )

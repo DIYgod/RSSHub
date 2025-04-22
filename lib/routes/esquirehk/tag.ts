@@ -65,7 +65,7 @@ const handler = async (ctx) => {
 
                 item.description =
                     response.intro.raw +
-                    art(path.join(__dirname, 'templates', 'subpages.art'), {
+                    art(path.join(__dirname, 'templates/subpages.art'), {
                         subpages: response.subpages,
                     });
                 item.pubDate = parseDate(response.date.published, 'X');

@@ -63,7 +63,7 @@ async function handler(ctx) {
                 const video = item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0];
                 return {
                     title: item.title,
-                    description: art(path.join(__dirname, 'templates', 'video.art'), {
+                    description: art(path.join(__dirname, 'templates/video.art'), {
                         poster: item.video.origin_cover.url_list[0],
                         url: item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0],
                     }),

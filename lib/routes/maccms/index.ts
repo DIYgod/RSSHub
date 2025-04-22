@@ -7,7 +7,8 @@ import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 import { getCurrentPath } from '@/utils/helpers';
 
-const render = (vod: Vod, link: string) => art(path.join(getCurrentPath(import.meta.url), 'templates', 'vod.art'), { vod, link });
+const __dirname = getCurrentPath(import.meta.url);
+const render = (vod: Vod, link: string) => art(path.join(__dirname, 'templates/vod.art'), { vod, link });
 
 export const route: Route = {
     path: '/:domain/:type?/:size?',

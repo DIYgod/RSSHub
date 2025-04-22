@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 const render = (postImages, body) =>
-    art(path.join(__dirname, 'templates', 'post.art'), {
+    art(path.join(__dirname, 'templates/post.art'), {
         postImages,
         body,
     });
