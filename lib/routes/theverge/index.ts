@@ -5,9 +5,6 @@ import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:hub?',

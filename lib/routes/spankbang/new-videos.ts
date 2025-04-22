@@ -1,5 +1,4 @@
 import { Data, Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 
 import puppeteer from '@/utils/puppeteer';
 import * as cheerio from 'cheerio';
@@ -9,7 +8,6 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
 
-const __dirname = getCurrentPath(import.meta.url);
 const render = (data) => art(path.join(__dirname, 'templates/video.art'), data);
 
 const handler = async () => {

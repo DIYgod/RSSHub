@@ -3,15 +3,12 @@ import path from 'node:path';
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { queryToBoolean } from '@/utils/readable-social';
 
 import { baseUrl, getGuild, searchGuildMessages, SearchGuildMessagesParams, HasType, VALID_HAS_TYPES } from './discord-api';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/search/:guildId/:routeParams',
