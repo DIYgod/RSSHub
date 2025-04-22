@@ -43,5 +43,3 @@ vercel.json
 
 # rsshub auxiliary files
 lib/routes/**/radar.js
-
-lib
