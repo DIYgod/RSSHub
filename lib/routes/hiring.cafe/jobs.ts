@@ -2,10 +2,7 @@ import ofetch from '@/utils/ofetch';
 import path from 'node:path';
 import { art } from '@/utils/render';
 import { Context } from 'hono';
-import { getCurrentPath } from '@/utils/helpers';
 import { Route } from '@/types';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const CONFIG = {
     DEFAULT_PAGE_SIZE: 20,
