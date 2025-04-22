@@ -32,7 +32,7 @@ export default function artTemplatesPlugin(opts = {}) {
                 return null;
             }
 
-            const callRe = /path\.join\s*\(([^)]+)\)/g; // whole call
+            const callRe = /path\.(join|resolve)\s*\(([^)]+)\)/g; // whole call
             const strRe = /['"]([^'"]+\.art)['"]/g; // individual string literals
 
             let match,

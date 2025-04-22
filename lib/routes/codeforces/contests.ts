@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import ofetch from '@/utils/ofetch';
 import path from 'node:path';
@@ -10,7 +8,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import duration from 'dayjs/plugin/duration.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/zh-cn.js';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(duration);

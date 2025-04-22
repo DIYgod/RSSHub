@@ -3,9 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
 import path from 'node:path';
-const __dirname = getCurrentPath(import.meta.url);
 
 const baseUrl = 'https://seekingalpha.com';
 

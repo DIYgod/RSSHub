@@ -5,11 +5,9 @@ import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { config } from '@/config';
 import { ArticleDetail, Category, CategoryArticle } from './types';
 
-const __dirname = getCurrentPath(import.meta.url);
 const baseUrl = 'https://www.famitsu.com';
 
 export const route: Route = {

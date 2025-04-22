@@ -4,11 +4,8 @@ import path from 'node:path';
 import { Context } from 'hono';
 import { Genre, SearchBuilder, SearchParams, NarouNovelFetch, GenreNotation } from 'narou';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { getCurrentPath } from '@/utils/helpers';
 import { handleIsekaiRanking } from './ranking-isekai';
 import { RankingPeriod, periodToJapanese, novelTypeToJapanese, periodToOrder, RankingType, NovelType, isekaiCategoryToJapanese, IsekaiCategory } from './types/ranking';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const getParameters = () => {
     // Generate ranking type options

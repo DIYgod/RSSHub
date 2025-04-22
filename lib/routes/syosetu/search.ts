@@ -8,9 +8,6 @@ import { Join } from 'narou/util/type';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { SyosetuSub, NarouSearchParams, syosetuSubToJapanese } from './types/search';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 export const route: Route = {
     path: '/search/:sub/:query',
     categories: ['reading'],

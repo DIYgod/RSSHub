@@ -3,7 +3,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { FetchError } from 'ofetch';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
@@ -48,7 +47,6 @@ function handleDuplicates(array) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
-    const __dirname = getCurrentPath(import.meta.url);
     const headers = {
         Accept: '*/*',
         Connection: 'keep-alive',

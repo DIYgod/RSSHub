@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { JSDOM } from 'jsdom';
@@ -9,7 +6,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/zh-cn.js';
 dayjs.extend(localizedFormat);
 
 function nuxtReader(data) {

@@ -8,10 +8,7 @@ import { Feed } from './types';
 import RejectError from '@/errors/types/reject';
 import { config } from '@/config';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/user/token/:token',

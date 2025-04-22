@@ -5,9 +5,7 @@ import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
-import { getCurrentPath } from '@/utils/helpers';
 
-const __dirname = getCurrentPath(import.meta.url);
 const render = (work: Work, link: string) => art(path.join(__dirname, 'templates/work.art'), { work, link });
 
 export const route: Route = {

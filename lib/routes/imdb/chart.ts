@@ -4,10 +4,8 @@ import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
 import { ChartTitleSearchConnection } from './types';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 
-const __dirname = getCurrentPath(import.meta.url);
 const render = (data) => art(path.join(__dirname, 'templates/chart.art'), data);
 
 export const route: Route = {

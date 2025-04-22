@@ -6,7 +6,6 @@ import cache from '@/utils/cache';
 // import { getCurrentPath } from '@/utils/helpers';
 // import { art } from '@/utils/render';
 // import path from 'node:path';
-// const __dirname = getCurrentPath(import.meta.url);
 export const route: Route = {
     path: '/:type',
     categories: ['blog'],

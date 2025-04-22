@@ -4,9 +4,6 @@ import cache from '@/utils/cache';
 import { UserProfile, Videos } from './types';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/profile/vids/:uid',

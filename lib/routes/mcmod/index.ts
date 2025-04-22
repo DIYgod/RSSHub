@@ -6,9 +6,7 @@ import path from 'node:path';
 import cache from '@/utils/cache';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 
-const __dirname = getCurrentPath(import.meta.url);
 const render = (mod) => art(path.join(__dirname, 'templates/mod.art'), { mod });
 
 export const route: Route = {

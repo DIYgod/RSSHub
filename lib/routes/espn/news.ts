@@ -3,10 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const renderMedia = (media) =>
     art(path.join(__dirname, 'templates/media.art'), {

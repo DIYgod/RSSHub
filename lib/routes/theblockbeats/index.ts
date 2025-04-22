@@ -5,9 +5,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
