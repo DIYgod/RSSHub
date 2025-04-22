@@ -29,6 +29,7 @@ export default [{
         'lib/router.js',
         '**/babel.config.js',
         'scripts/docker/minify-docker.js',
+        'dist',
     ],
 }, ...compat.extends(
     'eslint:recommended',

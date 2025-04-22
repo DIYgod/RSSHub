@@ -7,8 +7,6 @@ import { Context } from 'hono';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 const baseUrl = 'https://kpmg.com';
 const payload = {

@@ -6,9 +6,6 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 // 合并不同 subjectType 的 type 映射
 const getTypeNames = (subjectType) => {
     const commonTypeNames = {

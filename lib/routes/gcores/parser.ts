@@ -1,9 +1,6 @@
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 interface Style {
     [key: string]: string;

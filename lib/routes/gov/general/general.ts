@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 // 来人拯救一下啊( >﹏<。)
@@ -187,7 +184,7 @@ const gdgov = async (info, ctx) => {
                     return {
                         link,
                         title: data.art_title,
-                        description: art(__dirname + '/templates/zcjdpt.art', data),
+                        description: art(path.join(__dirname, 'templates/zcjdpt.art'), data),
                         pubDate: timezone(parseDate(data.pub_time), +8),
                         author: /(本|本网|本站)/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -82,13 +80,30 @@ async function handler(ctx) {
         },
     });
 
-    const items = data.data.records.map((item) => ({
-        title: item.drgnamecn,
-        guid: item.acceptid,
-        pubDate: item.endNoticeDate ? parseDate(item.endNoticeDate) : null,
-        description: art(path.join(__dirname, `templates/xxgk/${category}.art`), { item }),
-        link: xxgkMap.xxgk[category].url,
-    }));
+    const items = data.data.records.map((item) => {
+        let description = '';
+        switch (category) {
+            case 'priorityApproval':
+                description = art(path.join(__dirname, 'templates/xxgk/priorityApproval.art'), { item });
+                break;
+            case 'breakthroughCure':
+                description = art(path.join(__dirname, 'templates/xxgk/breakthroughCure.art'), { item });
+                break;
+            case 'cliniCal':
+                description = art(path.join(__dirname, 'templates/xxgk/cliniCal.art'), { item });
+                break;
+            default:
+                description = '';
+        }
+
+        return {
+            title: item.drgnamecn,
+            guid: item.acceptid,
+            pubDate: item.endNoticeDate ? parseDate(item.endNoticeDate) : null,
+            description,
+            link: xxgkMap.xxgk[category].url,
+        };
+    });
 
     return {
         title: `${xxgkMap.xxgk[category].title} - 国家药品监督管理局药品审评中心`,

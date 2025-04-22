@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';

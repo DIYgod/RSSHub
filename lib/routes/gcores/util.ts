@@ -1,14 +1,11 @@
 import { type Data, type DataItem } from '@/types';
 
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { type CheerioAPI, load } from 'cheerio';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 import { parseContent } from './parser';
 

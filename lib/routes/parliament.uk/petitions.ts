@@ -4,12 +4,9 @@ import { type Context } from 'hono';
 import { load, type CheerioAPI } from 'cheerio';
 
 import { type DataItem, type Route, type Data, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import ofetch from '@/utils/ofetch';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { state = 'all' } = ctx.req.param();

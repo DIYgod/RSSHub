@@ -4,9 +4,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
 import logger from '@/utils/logger';
-const __dirname = getCurrentPath(import.meta.url);
 
 // 游戏id
 const GITS_MAP = {

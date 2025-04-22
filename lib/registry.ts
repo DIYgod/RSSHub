@@ -27,8 +27,10 @@ let namespaces: Record<
 > = {};
 
 switch (process.env.NODE_ENV) {
-    case 'test':
     case 'production':
+        namespaces = (await import('../assets/build/routes.js')).default;
+        break;
+    case 'test':
         // @ts-expect-error
         namespaces = await import('../assets/build/routes.json');
         break;
@@ -89,6 +91,7 @@ const sortRoutes = (
         string,
         Route & {
             location: string;
+            module?: () => Promise<{ route: Route }>;
         }
     >
 ) =>
@@ -126,8 +129,13 @@ for (const namespace in namespaces) {
         const wrappedHandler: Handler = async (ctx) => {
             if (!ctx.get('data')) {
                 if (typeof routeData.handler !== 'function') {
-                    const { route } = await import(`./routes/${namespace}/${routeData.location}`);
-                    routeData.handler = route.handler;
+                    if (process.env.NODE_ENV === 'test') {
+                        const { route } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = route.handler;
+                    } else if (routeData.module) {
+                        const { route } = await routeData.module();
+                        routeData.handler = route.handler;
+                    }
                 }
                 ctx.set('data', await routeData.handler(ctx));
             }

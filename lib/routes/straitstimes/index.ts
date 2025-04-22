@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
@@ -62,7 +61,6 @@ async function handler(ctx) {
     const section = ctx.req.param('section') ? ctx.req.param('section').toLowerCase() : undefined;
     const apiKey = 'T9XUJM9rAZoLOd2CAx2wCBSTrm3xoyPw';
     const platform = 'iosflex';
-    const __dirname = getCurrentPath(import.meta.url);
     let feed;
     const response = await got({
         method: 'get',

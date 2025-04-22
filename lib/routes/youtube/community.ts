@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -51,7 +49,7 @@ async function handler(ctx) {
             const media = post.backstageAttachment?.postMultiImageRenderer?.images.map((i) => i.backstageImageRenderer.image.thumbnails.pop()) ?? [post.backstageAttachment?.backstageImageRenderer?.image.thumbnails.pop()];
             return {
                 title: post.contentText.runs[0].text,
-                description: art(path.join(__dirname, 'templates', 'community.art'), {
+                description: art(path.join(__dirname, 'templates/community.art'), {
                     runs: post.contentText.runs,
                     media,
                 }),

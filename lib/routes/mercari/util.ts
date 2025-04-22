@@ -8,8 +8,6 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { DataItem } from '@/types';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 const rootURL = 'https://api.mercari.jp/';
 const rootProductURL = 'https://jp.mercari.com/item/';
 const rootShopProductURL = 'https://jp.mercari.com/shops/product/';

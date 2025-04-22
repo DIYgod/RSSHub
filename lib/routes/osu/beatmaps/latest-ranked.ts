@@ -6,8 +6,6 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 const actualParametersDescTable = `
 | Name              | Default  | Description                                                                                                                                                                                                                                          |

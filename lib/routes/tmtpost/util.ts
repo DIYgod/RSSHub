@@ -2,14 +2,11 @@ import { type Data, type DataItem } from '@/types';
 
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { type CheerioAPI, load } from 'cheerio';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const baseUrl: string = 'https://www.tmtpost.com';
 const apiBaseUrl: string = 'https://api.tmtpost.com';

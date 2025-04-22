@@ -1,5 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
@@ -10,8 +9,6 @@ import path from 'node:path';
 import querystring from 'querystring';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import tglibchannel from './tglib/channel';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 /* message types */
 const REPLY = 'REPLY';

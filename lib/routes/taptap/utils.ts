@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import path from 'node:path';

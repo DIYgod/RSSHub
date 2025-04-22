@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import path from 'node:path';
 import { art } from '@/utils/render';
 import { config } from '@/config';

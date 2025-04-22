@@ -8,9 +8,6 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { destr } from 'destr';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 const topics = new Set(['style', 'watches', 'lifestyle', 'health', 'money-investment', 'gear', 'people', 'watch', 'mens-talk']);
 
 const handler = async (ctx) => {
@@ -65,7 +62,7 @@ const handler = async (ctx) => {
 
                 item.description =
                     response.intro.raw +
-                    art(path.join(__dirname, 'templates', 'subpages.art'), {
+                    art(path.join(__dirname, 'templates/subpages.art'), {
                         subpages: response.subpages,
                     });
                 item.pubDate = parseDate(response.date.published, 'X');

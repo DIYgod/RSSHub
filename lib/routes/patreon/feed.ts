@@ -6,11 +6,8 @@ import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 import { config } from '@/config';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:creator',
