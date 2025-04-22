@@ -75,6 +75,7 @@ RUN \
     # mv /app/app-minimal/node_modules /app/ && \
     # rm -rf /app/app-minimal && \
     npm run build && \
+    find /app/lib -mindepth 1 -not -path "/app/lib/assets*" -exec rm -rf {} \; 2>/dev/null || true && \
     ls -la /app && \
     du -hd1 /app
 
