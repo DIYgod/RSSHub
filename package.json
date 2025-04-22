@@ -213,6 +213,7 @@
             "msw",
             "protobufjs",
             "puppeteer",
+            "rolldown",
             "utf-8-validate",
             "vue-demi"
         ],
