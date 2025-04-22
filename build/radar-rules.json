@@ -139,6 +139,19 @@
       }
     ]
   },
+  "10000link.com": {
+    "_name": "10000万联网",
+    "info": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/10000link(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"chid\")??void 0;const category=params.category;return`/10000link/info${category?`/${category}${id?`/${id}`:\"\"}`:\"\"}`}"
+      }
+    ]
+  },
   "10jqka.com.cn": {
     "_name": "同花顺财经",
     "news": [
