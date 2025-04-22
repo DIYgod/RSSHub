@@ -81,7 +81,7 @@ jobs:
           push: true
           tags: ${{ steps.meta-ordinary.outputs.tags }}
           labels: ${{ steps.meta-ordinary.outputs.labels }}
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           cache-from: type=gha,scope=docker-release
           cache-to: type=gha,mode=max,scope=docker-release
 
@@ -113,7 +113,7 @@ jobs:
           push: true
           tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
           labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
