@@ -5,9 +5,6 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const getUserInfoById = (id: string) => cache.tryGet(`nicovideo:user:${id}`, () => ofetch<UserInfo>(`https://embed.nicovideo.jp/users/${id}`)) as Promise<UserInfo>;
 
@@ -34,4 +31,4 @@ export const getUserVideosById = (id: string) =>
         false
     ) as Promise<VideoItem[]>;
 
-export const renderVideo = (video: Essential, embed: boolean) => art(path.join(__dirname, 'templates', 'video.art'), { video, embed });
+export const renderVideo = (video: Essential, embed: boolean) => art(path.join(__dirname, 'templates/video.art'), { video, embed });
