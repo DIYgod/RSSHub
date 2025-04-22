@@ -17,9 +17,10 @@ RUN \
         pnpm config set registry https://registry.npmmirror.com ; \
     fi;
 
-COPY ./tsconfig.json /app/
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
+COPY ./tsconfig.json /app/
+COPY ./tsdown.config.ts /app/
 
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
@@ -40,41 +41,44 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version
-    # grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
-    # grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
+    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version && \
+    grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
+    grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
 # ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:22-bookworm-slim AS docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
-WORKDIR /app
-# COPY --from=dep-version-parser /ver/* /minifier/
+WORKDIR /minifier
+COPY --from=dep-version-parser /ver/* /minifier/
 
-# ARG USE_CHINA_NPM_REGISTRY=0
-# RUN \
-#     set -ex && \
-#     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-#         npm config set registry https://registry.npmmirror.com && \
-#         yarn config set registry https://registry.npmmirror.com && \
-#         pnpm config set registry https://registry.npmmirror.com ; \
-#     fi; \
-#     corepack enable pnpm && \
-#     pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
+ARG USE_CHINA_NPM_REGISTRY=0
+RUN \
+    set -ex && \
+    if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
+        npm config set registry https://registry.npmmirror.com && \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
+    fi; \
+    npm install -g corepack@latest && \
+    corepack use pnpm@latest-9 && \
+    pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
 COPY --from=dep-builder /app /app
 
+WORKDIR /app
 RUN \
     set -ex && \
-    # cp /app/scripts/docker/minify-docker.js /minifier/ && \
-    # export PROJECT_ROOT=/app && \
-    # node /minifier/minify-docker.js && \
-    # rm -rf /app/node_modules /app/scripts && \
-    # mv /app/app-minimal/node_modules /app/ && \
-    # rm -rf /app/app-minimal && \
-    npm run build && \
+    pnpm build && \
+    find /app/lib -mindepth 1 -not -path "/app/lib/assets*" -exec rm -rf {} \; 2>/dev/null || true && \
+    cp /app/scripts/docker/minify-docker.js /minifier/ && \
+    export PROJECT_ROOT=/app && \
+    node /minifier/minify-docker.js && \
+    rm -rf /app/node_modules /app/scripts && \
+    mv /app/app-minimal/node_modules /app/ && \
+    rm -rf /app/app-minimal && \
     ls -la /app && \
     du -hd1 /app
 
