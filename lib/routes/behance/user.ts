@@ -5,9 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPageQuery } from './queries';
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:user/:type?',

@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -7,8 +6,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/jiangsu/wlt/:page?',

@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import util from './utils';
+import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -55,7 +55,7 @@ async function handler(ctx) {
 
     const list = $('.list_txt a').get();
 
-    const result = await util.ProcessFeed(list, cache);
+    const result = await ProcessFeed(list, cache);
 
     return {
         title: '南京师范大学教务处 - ' + title,

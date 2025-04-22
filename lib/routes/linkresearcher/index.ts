@@ -6,11 +6,9 @@ import crypto from 'crypto';
 import type { Context } from 'hono';
 import type { DetailResponse, SearchResultItem } from './types';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const __dirname = getCurrentPath(import.meta.url);
 const templatePath = path.join(__dirname, 'templates/bilingual.art');
 
 const baseURL = 'https://www.linkresearcher.com';

@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';

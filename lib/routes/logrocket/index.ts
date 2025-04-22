@@ -3,10 +3,7 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-// import { getCurrentPath } from '@/utils/helpers';
-// import { art } from '@/utils/render';
-// import path from 'node:path';
-// const __dirname = getCurrentPath(import.meta.url);
+
 export const route: Route = {
     path: '/:type',
     categories: ['blog'],
@@ -54,10 +51,6 @@ async function handler(ctx) {
                 //
                 $('div.content-max-width .sidebar-container div.code-block').remove();
                 item.description = $('div.content-max-width .sidebar-container').html();
-                // item.description = art(path.join(__dirname, 'templates/description.art'), {
-                //     // header: $('#post-header').html(),
-                //     description: $('div.content-max-width .the-content-container').remove('.lr-content div.code-block.code-block-77').remove('.lr-content .code-block.code-block-57').html(),
-                // });
                 return item;
             })
         )
