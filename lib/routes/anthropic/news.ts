@@ -2,6 +2,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { Route } from '@/types';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/news',
@@ -39,8 +40,9 @@ async function handler() {
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
@@ -62,8 +64,8 @@ async function handler() {
                 item.description = content.html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 5 }
     );
 
     return {
