@@ -1,7 +1,6 @@
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 import type { FetchOptions, FetchRequest, ResponseType } from 'ofetch';
-import asyncPool from 'tiny-async-pool';
 import type { PortfolioDetailResponse, PortfolioResponse, UserNextData } from './types';
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
@@ -33,14 +32,6 @@ export async function parseUserData(user: string) {
         const data = await customFetch<UserNextData>(`${HOST}/_next/data/${buildId}/${user}.json`);
         return data.pageProps.user;
     })) as Promise<UserNextData['pageProps']['user']>;
-}
-
-export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
-    const results: Awaited<OUT[]> = [];
-    for await (const result of asyncPool(poolLimit, array, iteratorFn)) {
-        results.push(result);
-    }
-    return results;
 }
 
 export async function fetchPortfolioItem(item: PortfolioResponse['data'][number]) {
