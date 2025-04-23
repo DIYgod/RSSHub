@@ -96157,40 +96157,39 @@
   },
   "tfc-taiwan": {
     "routes": {
-      "/:type?": {
-        "name": "最新相關資訊 / 最新查核報告",
+      "/category/:category": {
+        "name": "分類",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "example": "/tfc-taiwan/category/weekly-top-ten-rumors",
+        "path": "/category/:category",
+        "parameters": {
+          "category": "分類，見下表，預設為 `weekly-top-ten-rumors`"
+        },
+        "url": "tfc-taiwan.org.tw/category/rumor-mill/",
+        "description": "| 謠言風向球 | 議題觀察室        | TOP10                 | 名家專欄       | 國際視野             |\n| ---------- | ----------------- | --------------------- | -------------- | -------------------- |\n| rumor-mill | issue-observatory | weekly-top-ten-rumors | expert-columns | research-and-updates |",
+        "location": "category.ts",
+        "module": "() => import('@/routes/tfc-taiwan/category.ts')"
+      },
+      "/": {
+        "name": "最新查核報告",
         "maintainers": [
           "TonyRL"
         ],
         "example": "/tfc-taiwan",
-        "path": "/:type?",
-        "parameters": {
-          "type": "分類，見下表，預設為 `report`"
-        },
-        "url": "tfc-taiwan.org.tw/articles/report",
-        "description": "| 最新相關資訊 | 最新查核報告 |\n| ------------ | ------------ |\n| info         | report       |",
+        "path": "/",
+        "url": "tfc-taiwan.org.tw/latest-news/",
         "location": "index.ts",
         "module": "() => import('@/routes/tfc-taiwan/index.ts')"
-      },
-      "/:type/:id{.+}": {
-        "name": "專題 / 重點專區",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "example": "/tfc-taiwan/category/242",
-        "path": "/:type/:id{.+}",
-        "parameters": {
-          "type": "分類，見下表，預設為 `report`"
-        },
-        "url": "tfc-taiwan.org.tw/articles/report",
-        "description": "| 專題     | 重點專區 |\n| -------- | -------- |\n| category | topic    |",
-        "location": "topic.ts",
-        "module": "() => import('@/routes/tfc-taiwan/topic.ts')"
       }
     },
-    "name": "台灣事實查核中心",
+    "name": "Taiwan FactCheck Center",
     "url": "tfc-taiwan.org.tw",
-    "lang": "zh-TW"
+    "lang": "zh-TW",
+    "zh-TW": {
+      "name": "台灣事實查核中心"
+    }
   },
   "tgbus": {
     "routes": {

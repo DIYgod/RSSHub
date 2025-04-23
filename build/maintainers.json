@@ -7220,10 +7220,10 @@
     "DIYgod",
     "NeverBehave"
   ],
-  "/tfc-taiwan/:type?": [
+  "/tfc-taiwan/category/:category": [
     "TonyRL"
   ],
-  "/tfc-taiwan/:type/:id{.+}": [
+  "/tfc-taiwan/": [
     "TonyRL"
   ],
   "/tgbus/list/:category": [
