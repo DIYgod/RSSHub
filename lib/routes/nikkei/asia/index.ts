@@ -20,26 +20,33 @@ export const route: Route = {
 };
 
 async function handler() {
-    const currentUrl = 'https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/pugpig_atom_contents.json';
+    const currentUrl = 'https://asia.nikkei.com/api/__service/next_api/v1/graphql';
 
     const response = await got({
         method: 'get',
         url: currentUrl,
+        searchParams: {
+            operationName: 'GetLatestHeadlinesStream',
+            variables: '{}',
+            extensions: '{"persistedQuery":{"version":1,"sha256Hash":"287aed8784a3f55ad444bb6b550ebdafb40b0da60c7800081e7343d889975fe8"}}',
+        },
+        headers: {
+            'content-type': 'application/json',
+        },
     });
 
-    const stories = response.data.stories.filter((story) => story.type === 'article');
+    const list = response.data.data.getLatestHeadlines.items.map((item) => ({ ...item, link: new URL(item.path, 'https://asia.nikkei.com').pathname }));
 
     const items = await Promise.all(
-        stories.map((item) =>
-            cache.tryGet(item.url, async () => {
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
                 const fulltext = await got({
                     method: 'get',
                     url: `https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/${item.url}`,
                 });
 
-                item.pubDate = parseDate(item.published);
-                item.link = item.shareurl;
-                item.category = item.section;
+                item.pubDate = parseDate(item.displayDate);
+                item.category = item.primaryTag.name;
 
                 const fulltextcontent = load(fulltext.data);
                 fulltextcontent('.pp-header-group__headline, .lightbox__control, .o-ads, #AdAsia').remove();
