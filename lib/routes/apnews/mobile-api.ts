@@ -1,5 +1,6 @@
 import { Route, ViewType } from '@/types';
-import { asyncPoolAll, fetchArticle } from './utils';
+import { fetchArticle } from './utils';
+import pMap from 'p-map';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -83,7 +84,7 @@ async function handler(ctx) {
         .sort((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
-    const items = ctx.req.query('fulltext') === 'true' ? await asyncPoolAll(10, list, (item) => fetchArticle(item)) : list;
+    const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
     return {
         title: screen.category ?? screen.title,

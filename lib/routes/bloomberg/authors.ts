@@ -2,7 +2,8 @@ import { Route, ViewType } from '@/types';
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
-import { asyncPoolAll, parseArticle } from './utils';
+import { parseArticle } from './utils';
+import pMap from 'p-map';
 
 const parseAuthorNewsList = async (slug) => {
     const baseURL = `https://www.bloomberg.com/authors/${slug}`;
@@ -66,7 +67,7 @@ async function handler(ctx) {
         list = (await rssParser.parseURL(`${link}.rss`)).items;
     }
 
-    const item = await asyncPoolAll(1, list, (item) => parseArticle(item));
+    const item = await pMap(list, (item) => parseArticle(item), { concurrency: 1 });
     const authorName = item.find((i) => i.author)?.author ?? slug;
 
     return {

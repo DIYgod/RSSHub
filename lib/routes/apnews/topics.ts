@@ -1,7 +1,8 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { asyncPoolAll, fetchArticle, removeDuplicateByKey } from './utils';
+import { fetchArticle, removeDuplicateByKey } from './utils';
+import pMap from 'p-map';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
@@ -50,7 +51,7 @@ async function handler(ctx) {
         }))
         .filter((e) => typeof e.link === 'string');
 
-    const items = ctx.req.query('fulltext') === 'true' ? await asyncPoolAll(10, list, (item) => fetchArticle(item)) : list;
+    const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
     return {
         title: $('title').text(),

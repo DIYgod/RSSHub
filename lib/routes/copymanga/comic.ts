@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/comic/:id/:chapterCnt?',
@@ -126,15 +126,7 @@ async function handler(ctx) {
         };
     };
 
-    const asyncPoolAll = async (...args) => {
-        const results = [];
-        for await (const result of asyncPool(...args)) {
-            results.push(result);
-        }
-        return results;
-    };
-
-    const result = await asyncPoolAll(3, chapterArray.slice(0, chapterCnt), (chapter) => cache.tryGet(chapter.link, () => genResult(chapter)));
+    const result = await pMap(chapterArray.slice(0, chapterCnt), (chapter) => cache.tryGet(chapter.link, () => genResult(chapter)), { concurrency: 3 });
     const items = [...result, ...chapterArray.slice(chapterCnt)];
 
     return {

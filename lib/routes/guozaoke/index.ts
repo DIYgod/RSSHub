@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/default',
@@ -54,42 +54,41 @@ async function handler() {
         })
         .filter((item) => item !== undefined);
 
-    const out = [];
-    for await (const result of asyncPool(2, items, (item) =>
-        cache.tryGet(item.link, async () => {
-            const url = `https://www.guozaoke.com${item.link}`;
-            const res = await got({
-                method: 'get',
-                url,
-                headers: {
-                    Cookie: config.guozaoke.cookies,
-                    'User-Agent': config.ua,
-                },
-            });
+    const out = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const url = `https://www.guozaoke.com${item.link}`;
+                const res = await got({
+                    method: 'get',
+                    url,
+                    headers: {
+                        Cookie: config.guozaoke.cookies,
+                    },
+                });
 
-            const $ = load(res.data);
-            let content = $('div.ui-content').html();
-            content = content ? content.trim() : '';
-            const comments = $('.reply-item').map((i, el) => {
-                const $el = $(el);
-                const comment = $el.find('span.content').text().trim();
-                const author = $el.find('span.username').text();
-                return {
-                    comment,
-                    author,
-                };
-            });
-            if (comments && comments.length > 0) {
-                for (const item of comments) {
-                    content += '<br>' + item.author + ': ' + item.comment;
+                const $ = load(res.data);
+                let content = $('div.ui-content').html();
+                content = content ? content.trim() : '';
+                const comments = $('.reply-item').map((i, el) => {
+                    const $el = $(el);
+                    const comment = $el.find('span.content').text().trim();
+                    const author = $el.find('span.username').text();
+                    return {
+                        comment,
+                        author,
+                    };
+                });
+                if (comments && comments.length > 0) {
+                    for (const item of comments) {
+                        content += '<br>' + item.author + ': ' + item.comment;
+                    }
                 }
-            }
-            item.description = content;
-            return item;
-        })
-    )) {
-        out.push(result);
-    }
+                item.description = content;
+                return item;
+            }),
+        { concurrency: 2 }
+    );
 
     return {
         title: '过早客',

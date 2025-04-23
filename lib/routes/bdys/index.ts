@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -139,43 +139,42 @@ async function handler(ctx) {
         cookie: `JSESSIONID=${jsessionid}`,
     };
 
-    const items = [];
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                    headers,
+                });
+                const downloadResponse = await got({
+                    method: 'get',
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
+                    headers,
+                });
+                const content = load(detailResponse.data);
 
-    for await (const data of asyncPool(1, list, (item) =>
-        cache.tryGet(item.link, async () => {
-            const detailResponse = await got({
-                method: 'get',
-                url: item.link,
-                headers,
-            });
-            const downloadResponse = await got({
-                method: 'get',
-                url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
-                headers,
-            });
-            const content = load(detailResponse.data);
+                content('svg').remove();
+                const torrents = content('.download-list .list-group');
 
-            content('svg').remove();
-            const torrents = content('.download-list .list-group');
+                item.description = art(path.join(__dirname, 'templates/desc.art'), {
+                    info: content('.row.mt-3').html(),
+                    synopsis: content('#synopsis').html(),
+                    links: downloadResponse.data,
+                    torrents: torrents.html(),
+                });
 
-            item.description = art(path.join(__dirname, 'templates/desc.art'), {
-                info: content('.row.mt-3').html(),
-                synopsis: content('#synopsis').html(),
-                links: downloadResponse.data,
-                torrents: torrents.html(),
-            });
+                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
+                item.guid = `${item.link}#${content('.card h1').text()}`;
 
-            item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
-            item.guid = `${item.link}#${content('.card h1').text()}`;
+                item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;
+                item.enclosure_type = 'application/x-bittorrent';
 
-            item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;
-            item.enclosure_type = 'application/x-bittorrent';
-
-            return item;
-        })
-    )) {
-        items.push(data);
-    }
+                return item;
+            }),
+        { concurrency: 1 }
+    );
 
     return {
         title: '哔嘀影视',
