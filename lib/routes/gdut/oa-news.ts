@@ -210,7 +210,7 @@ async function handler(ctx) {
             });
             return data;
         },
-        { concurrency: 5 }
+        { concurrency: 2 }
     );
 
     return {

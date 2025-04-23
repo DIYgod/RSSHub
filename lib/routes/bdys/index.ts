@@ -173,7 +173,7 @@ async function handler(ctx) {
 
                 return item;
             }),
-        { concurrency: 2 }
+        { concurrency: 1 }
     );
 
     return {

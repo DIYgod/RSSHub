@@ -77,7 +77,7 @@ const handler: Route['handler'] = async (ctx) => {
             } as DataItem;
         });
 
-    const dataItems: DataItem[] = await pMap(contentLinkList, fetchDataItem, { concurrency: 2 });
+    const dataItems: DataItem[] = await pMap(contentLinkList, fetchDataItem, { concurrency: 1 });
 
     return {
         title: `中国人事考试网-${NEWS_TYPES[category].title}`,
