@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -175,7 +173,7 @@ async function handler(ctx) {
     const labels = parseTree(labelTree);
 
     const industryObj = industry ? industries.find((i) => i.key === industry || i.value === industry) : undefined;
-    const labelObj = label ? labels.find((i) => i.key === label || i.value === label) : industryObj ? undefined : labels.find((i) => i.key === industry || i.value === industry);
+    const labelObj = label ? labels.find((i) => i.key === label || i.value === label) : (industryObj ? undefined : labels.find((i) => i.key === industry || i.value === industry));
 
     const industryId = industryObj?.key ?? -1;
     const labelId = labelObj?.key ?? -1;

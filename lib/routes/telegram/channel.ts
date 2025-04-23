@@ -1,5 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
@@ -10,8 +9,6 @@ import path from 'node:path';
 import querystring from 'querystring';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import tglibchannel from './tglib/channel';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 /* message types */
 const REPLY = 'REPLY';
@@ -520,7 +517,7 @@ async function handler(ctx) {
                             const mapBackground = locationObj.find('.tgme_widget_message_location').css('background-image');
                             const mapBackgroundUrl = mapBackground && mapBackground.match(/url\('(.*)'\)/);
                             const mapBackgroundUrlSrc = mapBackgroundUrl && mapBackgroundUrl[1];
-                            const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0];
+                            const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : (showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0]);
                             return locationLink ? `<a href="${locationLink}">${mapImgHtml}</a>` : mapImgHtml;
                         } else {
                             return '';
@@ -720,7 +717,7 @@ async function handler(ctx) {
                     if (messageTextObj.length > 0 && !titleCompleteFlag) {
                         const _messageTextObj = $(messageTextObj.toString());
                         _messageTextObj.find('br').replaceWith('\n');
-                        const trimmedTitleText = _messageTextObj.text().replaceAll('\n', ' ').trim();
+                        const trimmedTitleText = _messageTextObj.text().split('\n').at(0)?.trim();
                         messageTitle += (messageTitle && trimmedTitleText ? ': ' : '') + trimmedTitleText;
                     }
 

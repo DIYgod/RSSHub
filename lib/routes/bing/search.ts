@@ -2,8 +2,8 @@ import { Route } from '@/types';
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import 'dayjs/locale/zh-cn';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
+import 'dayjs/locale/zh-cn.js';
 dayjs.extend(localizedFormat);
 
 export const route: Route = {

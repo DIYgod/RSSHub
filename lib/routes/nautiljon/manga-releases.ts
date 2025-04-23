@@ -8,7 +8,7 @@ const host = 'https://www.nautiljon.com';
 export const route: Route = {
     path: '/releases/manga',
     categories: ['reading'],
-    example: 'nautiljon/releases/manga',
+    example: '/nautiljon/releases/manga',
     parameters: {},
     features: {
         requireConfig: false,
@@ -29,6 +29,14 @@ export const route: Route = {
     url: 'nautiljon.com',
 };
 
+const isVolumeReleased = (releaseDate: string) => {
+    const releaseDateToCheck = parseDate(releaseDate, 'DD/MM/YYYY');
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    return releaseDateToCheck <= todayDate;
+};
+
 async function handler() {
     const response = await ofetch(`${host}/planning/manga/`, {
         headers: {
@@ -37,21 +45,24 @@ async function handler() {
     });
 
     const $ = load(response);
-    const items = $('table#planning tbody tr')
+    const list = $('table#planning tbody tr')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('td.p_titre').find('a.sim').first();
-            const img = item.find('td:nth-child(2) a').first();
+        .filter((item) => isVolumeReleased($(item).find('td').first().text()));
+    const items = list.map((item) => {
+        item = $(item);
+        const releaseDate = item.find('td').first().text();
 
-            return {
-                title: a.text(),
-                link: `${host}${a.attr('href')}`,
-                pubDate: parseDate(item.find('td').first().text(), 'DD/MM/YYYY'),
-                image: `${host}${img.attr('im')}`,
-                category: item.find('td.p_titre div.fl').first().text(),
-            };
-        });
+        const a = item.find('td.p_titre').find('a.sim').first();
+        const img = item.find('td:nth-child(2) a').first();
+
+        return {
+            title: a.text(),
+            link: `${host}${a.attr('href')}`,
+            pubDate: parseDate(releaseDate, 'DD/MM/YYYY'),
+            image: `${host}${img.attr('im')}`,
+            category: item.find('td.p_titre div.fl').first().text(),
+        };
+    });
 
     return {
         title: 'Nautiljon France Manga Releases',

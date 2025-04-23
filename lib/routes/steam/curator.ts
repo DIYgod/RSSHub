@@ -2,11 +2,8 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
 import path from 'node:path';
 import { art } from '@/utils/render';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/curator/:id/:routeParams?',

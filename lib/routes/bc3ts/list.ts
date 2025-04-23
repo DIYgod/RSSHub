@@ -7,9 +7,6 @@ import path from 'node:path';
 import { Media, PostResponse } from './types';
 import { config } from '@/config';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 export const route: Route = {
     path: '/post/list/:sort?',
     example: '/bc3ts/post/list',
@@ -31,7 +28,7 @@ export const route: Route = {
 
 const baseUrl = 'https://web.bc3ts.net';
 
-const renderMedia = (media: Media[]) => art(path.join(__dirname, 'templates', 'media.art'), { media });
+const renderMedia = (media: Media[]) => art(path.join(__dirname, 'templates/media.art'), { media });
 
 async function handler(ctx) {
     const { sort = '1' } = ctx.req.param();

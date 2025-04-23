@@ -40,7 +40,7 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
-    name: 'Unknown',
+    name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     features: {
         requirePuppeteer: true,
@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     await Promise.all([page.click('a.enter-btn'), page.waitForNavigation({ waitUntil: 'domcontentloaded' })]);
     const response = await page.content();
-    page.close();
+    await page.close();
 
     const $ = load(response);
 

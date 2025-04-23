@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
@@ -90,7 +88,7 @@ async function handler(ctx) {
                 item.category = [...keywords, topic];
                 item.author = PNASdataLayer.page.pageInfo.author;
                 item.doi = PNASdataLayer.page.pageInfo.DOI;
-                item.description = art(path.join(__dirname, 'templates', 'article.art'), {
+                item.description = art(path.join(__dirname, 'templates/article.art'), {
                     access: PNASdataLayer.user.access === 'yes',
                     //
                     abstracts: $('#abstracts .core-container').html(),
@@ -108,7 +106,7 @@ async function handler(ctx) {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,

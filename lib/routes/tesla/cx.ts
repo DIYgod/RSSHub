@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -134,7 +132,7 @@ async function handler(ctx) {
             pageSize: limit,
             pageNumber: 0,
             benefitCategoryId: categoryObject?.id ?? undefined,
-            category: categoryObject ? undefined : category === '充电免停' ? 2 : undefined,
+            category: categoryObject ? undefined : (category === '充电免停' ? 2 : undefined),
             city,
         },
     });

@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -32,7 +30,7 @@ export const route: Route = {
     url: 'www.cngal.org/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
@@ -45,5 +43,4 @@ async function handler(ctx) {
             link: `https://www.cngal.org/articles/index/${item.id}`,
         })),
     };
-    ctx.state.json = response.data;
 }

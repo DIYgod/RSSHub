@@ -1,6 +1,4 @@
 import { Route, Data } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -54,44 +52,47 @@ async function handler(ctx): Promise<Data> {
             const author = item.source;
             const abstract = item.abstract;
 
-            return item.articletype === '4'
-                ? {
-                      title,
-                      description: abstract,
-                      link: itemUrl,
-                      author,
-                      pubDate,
-                  }
-                : cache.tryGet(itemUrl, async () => {
-                      const response = await got(itemUrl);
-                      const $ = load(response.data);
-                      const data = JSON.parse(
-                          $('script:contains("window.DATA")')
-                              .text()
-                              .match(/window\.DATA = ({.+});/)[1]
-                      );
-                      const $data = load(data.originContent?.text || '', null, false);
-                      if ($data) {
-                          // Not video page
-                          $data('*')
-                              .contents()
-                              .filter((_, elem) => elem.type === 'comment')
-                              .replaceWith((_, elem) =>
-                                  art(path.join(__dirname, '../templates/news/image.art'), {
-                                      attribute: elem.data.trim(),
-                                      originAttribute: data.originAttribute,
-                                  })
-                              );
-                      }
+            if (item.articletype === '4' || item.articletype === '118') {
+                // Video
+                return {
+                    title,
+                    description: `<a href=${item.url}><img src="${item.articletype === '4' ? item.miniProShareImage : item.miniVideoPic}" style="width: 100%"></a>`,
+                    link: itemUrl,
+                    author,
+                    pubDate,
+                };
+            }
 
-                      return {
-                          title,
-                          description: $data.html() || abstract,
-                          link: itemUrl,
-                          author,
-                          pubDate,
-                      };
-                  });
+            return cache.tryGet(itemUrl, async () => {
+                const response = await got(itemUrl);
+                const $ = load(response.data);
+                const data = JSON.parse(
+                    $('script:contains("window.DATA")')
+                        .text()
+                        .match(/window\.DATA = ({.+});/)[1]
+                );
+                const $data = load(data.originContent?.text || '', null, false);
+                if ($data) {
+                    // Not video page
+                    $data('*')
+                        .contents()
+                        .filter((_, elem) => elem.type === 'comment')
+                        .replaceWith((_, elem) =>
+                            art(path.join(__dirname, '../templates/news/image.art'), {
+                                attribute: elem.data.trim(),
+                                originAttribute: data.originAttribute,
+                            })
+                        );
+                }
+
+                return {
+                    title,
+                    description: $data.html() || abstract,
+                    link: itemUrl,
+                    author,
+                    pubDate,
+                };
+            });
         })
     );
 

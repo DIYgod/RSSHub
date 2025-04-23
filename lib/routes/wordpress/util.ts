@@ -194,7 +194,7 @@ const fetchData = async (url: string, rootUrl: string): Promise<object> => {
     const $ = load(response);
 
     const title = $('title').first().text();
-    const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
+    const image = new URL($('link[rel="icon"]').last().attr('href') ?? 'wp-content/uploads/site_logo.png', rootUrl).href;
 
     return {
         title,

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -56,7 +54,7 @@ async function handler(ctx) {
 
     const toApiUrl = (date) => `${rootUrl}/cnt/utf8/content/${date}/articleList/list_${id}_all.js`;
 
-    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD')),
+    let apiUrl = id === 'ipo' ? ipoApiUrl : (id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD'))),
         hasArticle = false,
         items = [],
         i = 0,

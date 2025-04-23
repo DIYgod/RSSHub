@@ -6,9 +6,6 @@ import logger from '@/utils/logger';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     name: '漏洞',
@@ -63,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     const response = await page.evaluate(() => document.documentElement.innerHTML);
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
     const items: DataItem[] = $('.zdui-strip-list>li')

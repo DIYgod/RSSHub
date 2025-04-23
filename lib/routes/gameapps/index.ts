@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -59,7 +57,7 @@ async function handler() {
                 if (nextPages.length) {
                     const pages = await Promise.all(
                         nextPages.map(async (url) => {
-                            const { data: response } = await got(url, {
+                            const response = await ofetch(url, {
                                 headers: {
                                     referer: item.link,
                                 },

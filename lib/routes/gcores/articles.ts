@@ -1,11 +1,8 @@
 import { type Data, type Route, ViewType } from '@/types';
 
-import { getCurrentPath } from '@/utils/helpers';
 import { type Context } from 'hono';
 
 import { baseUrl, processItems } from './util';
-
-export const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
@@ -14,6 +11,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const apiUrl: string = new URL(`gapi/v1/articles`, baseUrl).href;
 
     const query = {
+        'page[limit]': limit,
+        sort: '-published-at',
+        include: 'category,user,media',
+        'filter[list-all]': 1,
         'filter[is-news]': 0,
     };
 

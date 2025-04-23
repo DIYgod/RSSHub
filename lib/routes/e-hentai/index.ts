@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -35,7 +33,7 @@ async function handler(ctx) {
     $('.itd').parent().remove();
 
     let items = $('table.gltc tbody tr')
-        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : needImages ? 16 : 26)
+        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) + 1 : (needImages ? 16 : 26))
         .toArray()
         .map((item) => {
             item = $(item);
