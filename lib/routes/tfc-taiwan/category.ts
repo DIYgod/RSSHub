@@ -26,12 +26,12 @@ const handler = async (ctx) => {
     const items = parseItem(postsResponse);
 
     return {
-        title: categoryInfo.title,
-        description: categoryInfo.og_site_name,
+        title: categoryInfo.yoast_head_json.title,
+        description: categoryInfo.yoast_head_json.og_site_name,
         image: categoryInfo.yoast_head_json.og_image[0].url,
         logo: categoryInfo.yoast_head_json.og_image[0].url,
         icon: categoryInfo.yoast_head_json.og_image[0].url,
-        link: categoryInfo.canonical,
+        link: categoryInfo.link,
         lang: 'zh-TW',
         item: items,
     };
