@@ -35,7 +35,7 @@ async function handler() {
         },
     });
 
-    const list = response.data.data.getLatestHeadlines.items.map((item) => ({ ...item, link: new URL(item.path, 'https://asia.nikkei.com').pathname }));
+    const list = response.data.data.getLatestHeadlines.items.map((item) => ({ ...item, link: new URL(item.path, 'https://asia.nikkei.com').href }));
 
     const items = await Promise.all(
         list.map((item) =>
