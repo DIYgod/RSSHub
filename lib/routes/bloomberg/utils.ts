@@ -1,7 +1,6 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import path from 'node:path';
-import asyncPool from 'tiny-async-pool';
 import { destr } from 'destr';
 
 import { parseDate } from '@/utils/parse-date';
@@ -604,12 +603,4 @@ const documentToHtmlString = async (document) => {
     return str;
 };
 
-const asyncPoolAll = async (...args) => {
-    const results = [];
-    for await (const result of asyncPool(...args)) {
-        results.push(result);
-    }
-    return results;
-};
-
-export { rootUrl, asyncPoolAll, parseNewsList, parseArticle };
+export { rootUrl, parseNewsList, parseArticle };
