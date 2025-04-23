@@ -40,29 +40,9 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const fulltext = await got({
-                    method: 'get',
-                    url: `https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/${item.url}`,
-                });
 
-                item.pubDate = parseDate(item.displayDate);
+                item.pubDate = parseDate(item.displayDate*1000);
                 item.category = item.primaryTag.name;
-
-                const fulltextcontent = load(fulltext.data);
-                fulltextcontent('.pp-header-group__headline, .lightbox__control, .o-ads, #AdAsia').remove();
-                fulltextcontent('img').each((_, img) => {
-                    if (img.attribs.full) {
-                        img.attribs.src = img.attribs.full;
-                        delete img.attribs.full;
-                    }
-                });
-                item.description =
-                    fulltextcontent('section[class="pp-article__header"]')
-                        .html()
-                        .replaceAll(/(?:\.{2}\/){4}/g, 'https://main-asianreview-nikkei.content.pugpig.com/') +
-                    fulltextcontent('section[class="pp-article__body"]')
-                        .html()
-                        .replaceAll(/(?:\.{2}\/){4}/g, 'https://main-asianreview-nikkei.content.pugpig.com/');
                 return item;
             })
         )
