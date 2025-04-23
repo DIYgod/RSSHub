@@ -1,7 +1,7 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { client, decodeMedia, getClient, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
-import { returnBigInt as bigInt } from 'telegram/Helpers';
-import { HTMLParser } from 'telegram/extensions/html';
+import { returnBigInt as bigInt } from 'telegram/Helpers.js';
+import { HTMLParser } from 'telegram/extensions/html.js';
 import { DataItem } from '@/types';
 import type { Api } from 'telegram';
 
