@@ -41,7 +41,7 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
 
-                item.pubDate = parseDate(item.displayDate*1000);
+                item.pubDate = parseDate(item.displayDate * 1000);
                 item.category = item.primaryTag.name;
                 return item;
             })
