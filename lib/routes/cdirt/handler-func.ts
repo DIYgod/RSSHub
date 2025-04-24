@@ -1,5 +1,5 @@
 import ofetch from '@/utils/ofetch';
-import dayjs from 'dayjs';
+import { parseDate } from '@/utils/parse-date';
 
 export async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
@@ -42,13 +42,12 @@ export async function handler(ctx) {
                 },
                 headers: defaultHeaders,
             });
-            const preParsedDate = details.data.publishDate + ' +0800';
-            const localizedDate = dayjs(preParsedDate).format('ddd YYYY-MM-DD HH:mm:ss ZZ')
+            const preParsedDate = `${details.data.publishDate} +0800`;
             return {
                 title: details.data.title,
-                link: 'https://edua.chengdurail.com/static/html/newsDetail.html?type=1&id=' + item.id,
+                link: `https://edua.chengdurail.com/static/html/newsDetail.html?type=1&id=${item.id}`,
                 description: details.data.content,
-                pubDate: localizedDate,
+                pubDate: parseDate(preParsedDate),
                 author: details.data.author
             };
         })

@@ -1,24 +1,26 @@
 import * as cheerio from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export async function handler() {
-    interface NewItem {
+    interface NewsItem {
         title: string,
-        link: string | undefined,
-        description: string | null,
-    };
+        link: string,
+        pudDate: Date | null,
+        description: string,
+    }
     const TARGET_URL = 'http://www.njupco.com/news/press';
     const $ = await cheerio.fromURL(TARGET_URL);
-    const items: NewItem[] = [];
+    const items: NewsItem[] = [];
     const promises: Promise<void>[] = [];
     $('div.left_con ul li').each((_, el) => {
         const linkUrl = $(el).children('b').children('a').attr('href');
         if (linkUrl?.includes('weixin') === true) {
             const content = $(el).children('div').text();
-            const lin = $(el).children('b').children('a').attr('href');
-            const item: NewItem = {
+            const item: NewsItem= {
                 title: $(el).children('b').children('a').text(),
-                link: lin,
-                description: `${content} <a href=${lin}>点击阅读微信公众号原文</a>`,
+                link: linkUrl!,
+                pubDate: el ? parseDate($(el).children('span').text()) : null,
+                description: `${content} <a href=${$(el).children('b').children('a').attr('href')}>点击阅读微信公众号原文</a>`,
             };
             items.push(item);
         } else {
@@ -26,9 +28,13 @@ export async function handler() {
             const promise =  cheerio.fromURL(contentUrl)
             .then(($content) => {
                 const content = $content('div.content').html();
-                const item: NewItem = {
+                const REGEX_DATE = /[1-2][0-9]+\-[0-1]?[0-9]\-[0-2]?[0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]/;
+                const dateOrigin = $content('div.ny_con').children('h2').text();
+                const date = dateOrigin.match(REGEX_DATE);
+                const item: NewsItem = {
                     title: $(el).children('b').children('a').text(),
-                    link: $(el).children('b').children('a').attr('href'),
+                    link: linkUrl!,
+                    pubDate: date ? parseDate(date[0]) : null,
                     description: content,
                 };
                 items.push(item);
