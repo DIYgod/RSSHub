@@ -40,10 +40,23 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
+                const title = item.name;
+                const pubDate = parseDate(item.displayDate * 1000);
+                const category = item.primaryTag.name;
 
-                item.pubDate = parseDate(item.displayDate * 1000);
-                item.category = item.primaryTag.name;
-                return item;
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const description = $('div[class^="NewsArticle_newsArticleContentContainerWrapper"]').html() || '';
+
+                const author = $('div[class^="NewsArticleDetails_newsArticleDetailsByline"]').text() || '';
+                return {
+                    title,
+                    pubDate,
+                    category,
+                    description,
+                    link: item.link,
+                    author,
+                };
             })
         )
     );
