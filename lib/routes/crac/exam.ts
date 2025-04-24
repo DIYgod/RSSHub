@@ -4,7 +4,7 @@ import got from '@/utils/got';
 export const route: Route = {
     path: '/exam',
     categories: ['government'],
-    example: '/exam',
+    example: '/crac/exam',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -13,7 +13,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '中国无线电协会业余无线电分会-考试信息',
+    name: '考试信息',
     maintainers: ['admxj'],
     handler,
 };
@@ -24,7 +24,7 @@ async function handler() {
     const response = await got({
         method: 'post',
         url: `${baseUrl}/app/exam_advice/examAdviceList`,
-        body: { req: { type: '0', page_no: '1', page_size: '10000' } },
+        body: { req: { type: '0', page_no: '1', page_size: '10' } },
     });
 
     const list = response.data.res.list.map((item) => {
@@ -34,10 +34,17 @@ async function handler() {
         return {
             title: item.name,
             link,
+            id: item.id,
+            author: item.exam.organizer,
             pubDate: item.createDate,
+            updated: item.updateDate,
             startDate: item.exam.signUpStartDate,
-            examType: item.examType,
-            description: item.content,
+            category: [item.examType],
+            image: item.weixin,
+            content: {
+                html: item.content,
+            },
+            description: item.exam.signUpStartDate,
         };
     });
 
