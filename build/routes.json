@@ -24299,6 +24299,27 @@
   },
   "crac": {
     "routes": {
+      "/exam": {
+        "path": "/exam",
+        "categories": [
+          "government"
+        ],
+        "example": "/crac/exam",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "考试信息",
+        "maintainers": [
+          "admxj"
+        ],
+        "location": "exam.ts",
+        "module": "() => import('@/routes/crac/exam.ts')"
+      },
       "/:type?": {
         "path": "/:type?",
         "categories": [
