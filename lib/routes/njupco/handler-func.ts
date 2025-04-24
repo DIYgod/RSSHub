@@ -6,8 +6,8 @@ export async function handler() {
         link: string | undefined,
         description: string | null,
     };
-    const targetUrl = 'http://www.njupco.com/news/press';
-    const $ = await cheerio.fromURL(targetUrl);
+    const TARGET_URL = 'http://www.njupco.com/news/press';
+    const $ = await cheerio.fromURL(TARGET_URL);
     const items: NewItem[] = [];
     const promises: Promise<void>[] = [];
     $('div.left_con ul li').each((_, el) => {
@@ -18,7 +18,7 @@ export async function handler() {
             const item: NewItem = {
                 title: $(el).children('b').children('a').text(),
                 link: lin,
-                description: content + `<a href=${lin}>点击阅读微信公众号原文</a>`,
+                description: `${content} <a href=${lin}>点击阅读微信公众号原文</a>`,
             };
             items.push(item);
         } else {

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 export async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
-    const mainAssortRule = {
+    const MAIN_RULES = {
         'news': [21, 23, 103],
         'notice': [9, 26, 101],
         'all': [9, 21, 23, 26, 101, 103],
@@ -14,14 +14,14 @@ export async function handler(ctx) {
         'talent': [24],
         'campus': [103],
     };
-    const listApiUrl = 'https://edua.chengdurail.com:60001/api/collegeIntroduce/commonIntroduceList';
-    const detailApiUrl = 'https://edua.chengdurail.com:60001/api/indexShow/indexShowDetail';
+    const LIST_API = 'https://edua.chengdurail.com:60001/api/collegeIntroduce/commonIntroduceList';
+    const DETAIL_API = 'https://edua.chengdurail.com:60001/api/indexShow/indexShowDetail';
     const defaultHeaders = {
         accept: 'application/json',
         'Origin': 'https://edua.chengdurail.com',
     };
-    const articalsInfoRaw =  await Promise.all(mainAssortRule[category].flatMap(async (typeNum: number) => {
-        const data = await ofetch(listApiUrl, {
+    const articalsInfoRaw =  await Promise.all(MAIN_RULES[category].flatMap(async (typeNum: number) => {
+        const data = await ofetch(LIST_API, {
             method: 'POST',
             body: {
                 "pageNum": 1,
@@ -35,7 +35,7 @@ export async function handler(ctx) {
     const articalsInfo = articalsInfoRaw.flat();
     const items = await Promise.all(
         articalsInfo.map(async (item) => {
-            const details = await ofetch(detailApiUrl, {
+            const details = await ofetch(DETAIL_API, {
                 method:'POST',
                 body: {
                     'titleId': item.id,
