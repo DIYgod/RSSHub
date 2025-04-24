@@ -1,52 +1,27 @@
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import path from 'node:path';
-import { art } from '@/utils/render';
-import asyncPool from 'tiny-async-pool';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
-const asyncPoolAll = async (...args) => {
-    const results = [];
-    for await (const result of asyncPool(...args)) {
-        results.push(result);
-    }
-    return results;
-};
+export const baseUrl = 'https://tfc-taiwan.org.tw';
 
-const baseUrl = 'https://tfc-taiwan.org.tw';
+export const parseItem = (postsResponse) =>
+    postsResponse.map((item) => ({
+        title: item.title.rendered,
+        pubDate: parseDate(item.date_gmt),
+        updated: parseDate(item.modified_gmt),
+        link: item.link,
+        description: item.content.rendered,
+        image: item.yoast_head_json.og_image[0].url,
+        author: item.author_info.display_name,
+        category: item.category_info.map((cat) => cat.name),
+    }));
 
-const parseList = (item) => {
-    const a = item.find('.entity-list-title a');
-    return {
-        title: a.text(),
-        description: item.find('.entity-list-body').text(),
-        link: new URL(a.attr('href'), baseUrl).href,
-        pubDate: item.find('.post-date').length ? parseDate(item.find('.post-date').text(), 'YYYY-MM-DD') : undefined,
-        image: item.find('.entity-list-img img').attr('src').split('?')[0],
-    };
-};
-
-const parseItems = (list, tryGet) =>
-    asyncPoolAll(10, list, (item) =>
-        tryGet(item.link, async () => {
-            const { data: response } = await got(item.link);
-            const $ = load(response);
-
-            $('.field-name-field-addthis, #fb-root, .fb-comments, .likecoin-embed, style[type="text/css"]').remove();
-
-            item.description = art(path.join(__dirname, 'templates/article.art'), {
-                headerImage: item.image,
-                content: $('#block-system-main .node-content').html(),
-            });
-
-            item.pubDate = $('meta[property="article:published_time"]').attr('content');
-            item.updated = $('meta[property="article:modified_time"]').attr('content');
-            item.category = $('.node-tags .field-item')
-                .toArray()
-                .map((item) => $(item).text());
-
-            return item;
+export const parsePost = (limit, categoryId) =>
+    cache.tryGet(`tfc-taiwan:posts:${categoryId ?? 'latest'}:${limit ?? 10}`, () =>
+        ofetch(`${baseUrl}/wp-json/wp/v2/posts`, {
+            query: {
+                categories: categoryId,
+                per_page: limit,
+            },
         })
     );
-
-export { baseUrl, parseList, parseItems };

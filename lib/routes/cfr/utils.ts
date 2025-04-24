@@ -4,7 +4,6 @@ import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import type { LinkData, VideoSetup } from './types';
-import asyncPool from 'tiny-async-pool';
 
 export function getDataItem(href: string) {
     const origin = 'https://www.cfr.org';
@@ -273,12 +272,4 @@ function parseDescription($description: Cheerio<Element>, $: CheerioAPI) {
     const description = $description.html() ?? '';
 
     return description;
-}
-
-export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
-    const results: Awaited<OUT[]> = [];
-    for await (const result of asyncPool(poolLimit, array, iteratorFn)) {
-        results.push(result);
-    }
-    return results;
 }
