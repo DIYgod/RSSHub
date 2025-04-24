@@ -6,11 +6,11 @@ export const route: Route = {
     path: '/limit',
     categories: ['traditional-media'],
     example: '/sohumobile/limit',
-    parameters: { },
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -23,7 +23,7 @@ export const route: Route = {
     ],
     name: '手机搜狐网-新闻',
     maintainers: ['asqwe1'],
-    handler: async (ctx) => {
+    handler: async () => {
         const response = await ofetch(`https://m.sohu.com/limit`);
         const $ = load(response);
         const items = $('.content-left  section > div.f')
@@ -35,7 +35,7 @@ export const route: Route = {
                 const a = item.find('a').first();
                 return {
                     title: a.text(),
-                    link: `${a.attr('href')}`,
+                    link: String(a.attr('href')),
                 };
             });
         // 在此处编写路由处理函数

@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/jinpin',
     categories: ['bbs'],
     example: '/52pojie/jinpin',
-    parameters: { },
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -23,7 +23,7 @@ export const route: Route = {
     ],
     name: '52pojie精品软件区最新发贴',
     maintainers: ['asqwe1'],
-    handler: async (ctx) => {
+    handler: async () => {
         const response = await ofetch(`https://www.52pojie.cn/forum.php?mod=forumdisplay&fid=16&filter=author&orderby=dateline`, {
         responseType: 'arrayBuffer', // 获取原始二进制数据
         });

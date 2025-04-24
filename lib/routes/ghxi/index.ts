@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/homepage',
     categories: ['other'],
     example: '/ghxi/homepage',
-    parameters: { },
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +22,7 @@ export const route: Route = {
     ],
     name: '果核剥壳网-首页新贴',
     maintainers: ['asqwe1'],
-    handler: async (ctx) => {
+    handler: async () => {
         const response = await ofetch(`https://www.ghxi.com/`);
         const $ = load(response);
         const items = $('#modules-4 > div > div.tab-wrap.active > ul > li > div.item-content')
@@ -35,7 +35,7 @@ export const route: Route = {
                 const p = item.find('p').first();
                 return {
                     title: a.text(),
-                    link: `${a.attr('href')}`,
+                    link: String(a.attr('href')),
                     content: p.text(),
                 };
             });
