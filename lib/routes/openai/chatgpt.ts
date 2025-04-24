@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 dayjs.extend(isSameOrBefore);
 
 export const route: Route = {

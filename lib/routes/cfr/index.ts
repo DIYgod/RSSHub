@@ -2,7 +2,8 @@ import type { Data, Route } from '@/types';
 import type { Context } from 'hono';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { asyncPoolAll, getDataItem } from './utils';
+import { getDataItem } from './utils';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/:category/:subCategory?',
@@ -48,7 +49,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const listSelector = selectorMap[category] ?? '.card-article-large__link';
 
-    const items = await asyncPoolAll(5, $(listSelector).toArray(), async (item) => await getDataItem($(item).attr('href')!));
+    const items = await pMap($(listSelector).toArray(), (item) => getDataItem($(item).attr('href')!), { concurrency: 5 });
 
     return {
         title: $('head title').text().replace(' | Council on Foreign Relations', ''),

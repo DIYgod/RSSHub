@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { google } from 'googleapis';
 const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';

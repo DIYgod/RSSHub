@@ -7,11 +7,8 @@ import { type DataItem, type Route, type Data, ViewType } from '@/types';
 
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
