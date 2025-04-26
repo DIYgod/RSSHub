@@ -20,43 +20,43 @@ export const route: Route = {
 };
 
 async function handler() {
-    const currentUrl = 'https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/pugpig_atom_contents.json';
+    const currentUrl = 'https://asia.nikkei.com/api/__service/next_api/v1/graphql';
 
     const response = await got({
         method: 'get',
         url: currentUrl,
+        searchParams: {
+            operationName: 'GetLatestHeadlinesStream',
+            variables: '{}',
+            extensions: '{"persistedQuery":{"version":1,"sha256Hash":"287aed8784a3f55ad444bb6b550ebdafb40b0da60c7800081e7343d889975fe8"}}',
+        },
+        headers: {
+            'content-type': 'application/json',
+        },
     });
 
-    const stories = response.data.stories.filter((story) => story.type === 'article');
+    const list = response.data.data.getLatestHeadlines.items.map((item) => ({ ...item, link: new URL(item.path, 'https://asia.nikkei.com').href }));
 
     const items = await Promise.all(
-        stories.map((item) =>
-            cache.tryGet(item.url, async () => {
-                const fulltext = await got({
-                    method: 'get',
-                    url: `https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/${item.url}`,
-                });
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const title = item.name;
+                const pubDate = parseDate(item.displayDate * 1000);
+                const category = item.primaryTag.name;
 
-                item.pubDate = parseDate(item.published);
-                item.link = item.shareurl;
-                item.category = item.section;
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const description = $('div[class^="NewsArticle_newsArticleContentContainerWrapper"]').html() || '';
 
-                const fulltextcontent = load(fulltext.data);
-                fulltextcontent('.pp-header-group__headline, .lightbox__control, .o-ads, #AdAsia').remove();
-                fulltextcontent('img').each((_, img) => {
-                    if (img.attribs.full) {
-                        img.attribs.src = img.attribs.full;
-                        delete img.attribs.full;
-                    }
-                });
-                item.description =
-                    fulltextcontent('section[class="pp-article__header"]')
-                        .html()
-                        .replaceAll(/(?:\.{2}\/){4}/g, 'https://main-asianreview-nikkei.content.pugpig.com/') +
-                    fulltextcontent('section[class="pp-article__body"]')
-                        .html()
-                        .replaceAll(/(?:\.{2}\/){4}/g, 'https://main-asianreview-nikkei.content.pugpig.com/');
-                return item;
+                const author = $('div[class^="NewsArticleDetails_newsArticleDetailsByline"]').text() || '';
+                return {
+                    title,
+                    pubDate,
+                    category,
+                    description,
+                    link: item.link,
+                    author,
+                };
             })
         )
     );
