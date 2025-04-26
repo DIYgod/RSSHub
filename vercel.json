@@ -9,5 +9,11 @@
             "source": "/(.*)",
             "destination": "/api/vercel.js"
         }
-    ]
+    ],
+    "functions": {
+        "api/vercel.js": {
+            "runtime": "nodejs",
+            "includeFiles": "api/**/*"
+        }
+    }
 }
