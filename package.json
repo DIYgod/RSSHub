@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts && tsdown",
-        "build:vercel": "tsx scripts/workflow/build-routes.ts && tsdown lib/vercel.ts",
+        "build:vercel": "tsx scripts/workflow/build-routes.ts && tsdown lib/vercel.ts -d dist/api",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
         "dev": "cross-env NODE_ENV=dev tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production tsx watch --clear-screen=false lib/index.ts",
