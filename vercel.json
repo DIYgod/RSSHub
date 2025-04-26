@@ -12,7 +12,7 @@
     ],
     "functions": {
         "api/vercel.js": {
-            "includeFiles": "api/**/*"
+            "includeFiles": "dist/**/*"
         }
     }
 }
