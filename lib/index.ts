@@ -8,7 +8,6 @@ const port = config.connect.port;
 const hostIPList = getLocalhostAddress();
 
 logger.info(`🎉 RSSHub is running on port ${port}! Cheers!`);
-logger.info('💖 Can you help keep this open source project alive? Please sponsor 👉 https://docs.rsshub.app/sponsor');
 logger.info(`🔗 Local: 👉 http://localhost:${port}`);
 if (config.listenInaddrAny) {
     for (const ip of hostIPList) {
