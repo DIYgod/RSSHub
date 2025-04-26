@@ -12,7 +12,6 @@
     ],
     "functions": {
         "api/vercel.js": {
-            "runtime": "nodejs",
             "includeFiles": "api/**/*"
         }
     }
