@@ -5,7 +5,7 @@ import { DataItem } from '@/types';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import _randUserAgent from '@/utils/rand-user-agent';
+import { config } from '@/config';
 
 export const BASE_URL = new URL('https://openai.com');
 
@@ -41,9 +41,7 @@ export const fetchArticleDetails = async (url: string) => {
 export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
     const page = await ofetch('https://openai.com/news/rss.xml', {
         responseType: 'text',
-        headers: {
-            'User-Agent': _randUserAgent({ browser: 'chrome', os: 'windows', device: 'desktop' }),
-        },
+        headers: { 'User-Agent': config.ua },
     });
 
     const $ = load(page, { xml: true });
