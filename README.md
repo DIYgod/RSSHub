@@ -10,7 +10,7 @@
 [![npm publish](https://img.shields.io/npm/dt/rsshub?label=npm%20downloads&logo=npm&style=flat-square)](https://www.npmjs.com/package/rsshub)
 [![test](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/test.yml?branch=master&label=test&logo=github&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square&logo=codecov)](https://app.codecov.io/gh/DIYgod/RSSHub/branch/master)
-[![Visitors](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub&count_bg=%23FF752E&title_bg=%23555555&icon=rss.svg&icon_color=%23FF752E&title=RSS+lovers&edge_flat=true)](https://github.com/DIYgod/RSSHub)
+[![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub&label=RSS+lovers&icon=rss-fill&color=%23ff752e)](https://github.com/DIYgod/RSSHub)
 
 [![Telegram group](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2Frsshub&query=count&color=2CA5E0&label=Telegram%20Group&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/rsshub) [![Telegram channel](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.swo.moe%2Fstats%2Ftelegram%2FawesomeRSSHub&query=count&color=2CA5E0&label=Telegram%20Channel&logo=telegram&cacheSeconds=3600&style=flat-square)](https://t.me/awesomeRSSHub) [![X (Twitter)](https://img.shields.io/badge/any_text-Follow-blue?color=2CA5E0&label=Twitter&logo=X&cacheSeconds=3600&style=flat-square)](https://x.com/intent/follow?screen_name=_RSSHub)
 
