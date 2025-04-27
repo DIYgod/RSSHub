@@ -23736,36 +23736,6 @@ export default {
     "url": "coomer.su",
     "lang": "en"
   },
-  "copernicium": {
-    "routes": {
-      "/:category?": {
-        "path": "/:category?",
-        "categories": [
-          "new-media"
-        ],
-        "radar": [
-          {
-            "source": [
-              "www.copernicium.tw"
-            ]
-          }
-        ],
-        "name": "分类",
-        "example": "/copernicium/环球视角",
-        "parameters": {
-          "category": "分类名"
-        },
-        "maintainers": [
-          "dzx-dzx"
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/copernicium/index.ts')
-      }
-    },
-    "name": "日新说",
-    "url": "www.copernicium.tw",
-    "lang": "zh-TW"
-  },
   "copymanga": {
     "routes": {
       "/comic/:id/:chapterCnt?": {
