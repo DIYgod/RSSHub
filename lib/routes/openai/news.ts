@@ -19,14 +19,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.param('limit') || 10;
+    const limit = Number.parseInt(ctx.req.param('limit') || '10');
 
     const link = new URL('/news/', BASE_URL).href;
-    const articles = await fetchArticles(limit);
 
     return {
         title: 'OpenAI News',
         link,
-        item: articles,
+        item: await fetchArticles(limit),
     };
 }
