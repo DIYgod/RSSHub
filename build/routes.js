@@ -8902,6 +8902,49 @@ export default {
     "url": "anthropic.com",
     "lang": "en"
   },
+  "anytxt": {
+    "routes": {
+      "/release-notes": {
+        "path": "/release-notes",
+        "name": "Release Notes",
+        "url": "anytxt.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/anytxt/release-notes",
+        "categories": [
+          "program-update"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "anytxt.net"
+            ],
+            "target": "/anytxt/release-notes"
+          }
+        ],
+        "view": 0,
+        "location": "release-notes.ts",
+        "module": () => import('@/routes/anytxt/release-notes.ts')
+      }
+    },
+    "name": "Anytxt Searcher",
+    "url": "anytxt.net",
+    "categories": [
+      "program-update"
+    ],
+    "description": "",
+    "lang": "zh-CN"
+  },
   "apache": {
     "routes": {
       "/apisix/blog": {

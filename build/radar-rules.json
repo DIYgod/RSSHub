@@ -4815,6 +4815,19 @@
       }
     ]
   },
+  "anytxt.net": {
+    "_name": "Anytxt Searcher",
+    ".": [
+      {
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/anytxt/anytxt/release-notes"
+      }
+    ]
+  },
   "apnews.com": {
     "_name": "AP News",
     ".": [
