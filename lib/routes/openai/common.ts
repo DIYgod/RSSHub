@@ -38,21 +38,22 @@ export const fetchArticleDetails = async (url: string) => {
 };
 
 /** Fetch all articles from OpenAI's RSS feed. */
-export const fetchArticles = (limit: number): Promise<DataItem[]> =>
-    cache.tryGet('openai:news', async () => {
-        const page = await ofetch('https://openai.com/news/rss.xml', {
-            responseType: 'text',
-            headers: { 'User-Agent': config.ua },
-        });
+export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
+    const page = await ofetch('https://openai.com/news/rss.xml', {
+        responseType: 'text',
+        headers: { 'User-Agent': config.ua },
+    });
 
-        const $ = load(page, { xml: true });
+    const $ = load(page, { xml: true });
 
-        return Promise.all(
-            $('item')
-                .toArray()
-                .slice(0, limit)
-                .map<Promise<DataItem>>(async (element) => {
-                    const id = $(element).find('guid').text();
+    return Promise.all(
+        $('item')
+            .toArray()
+            .slice(0, limit)
+            .map<Promise<DataItem>>((element) => {
+                const id = $(element).find('guid').text();
+
+                return cache.tryGet(`openai:news:${id}`, async () => {
                     const title = $(element).find('title').text();
                     const pubDate = $(element).find('pubDate').text();
                     const link = $(element).find('link').text();
@@ -67,9 +68,10 @@ export const fetchArticles = (limit: number): Promise<DataItem[]> =>
                         description: content,
                         category: categories,
                     } as DataItem;
-                })
-        );
-    }) as Promise<DataItem[]>;
+                }) as Promise<DataItem>;
+            })
+    );
+};
 
 const getApiUrl = async () => {
     const blogRootUrl = 'https://openai.com/blog';
