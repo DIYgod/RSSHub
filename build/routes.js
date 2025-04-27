@@ -72687,32 +72687,6 @@ export default {
   },
   "openai": {
     "routes": {
-      "/blog/:tag?": {
-        "path": "/blog/:tag?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/openai/blog",
-        "parameters": {
-          "tag": "Tag, see below, All by default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Blog",
-        "maintainers": [
-          "StevenRCE0",
-          "nczitzk"
-        ],
-        "description": "| All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |\n| --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |\n|     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |",
-        "location": "blog.ts",
-        "module": () => import('@/routes/openai/blog.ts')
-      },
       "/chatgpt/release-notes": {
         "path": "/chatgpt/release-notes",
         "categories": [
@@ -72754,6 +72728,29 @@ export default {
         "name": "Cookbook",
         "location": "cookbook.ts",
         "module": () => import('@/routes/openai/cookbook.ts')
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/openai/news",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "News",
+        "maintainers": [
+          "goestav",
+          "StevenRCE0",
+          "nczitzk"
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/openai/news.ts')
       },
       "/research": {
         "path": "/research",
