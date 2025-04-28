@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('column');
-    const limit = isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
+    const limit = Number.isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
 
     const response = await got({
         method: 'get',

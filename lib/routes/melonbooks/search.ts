@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseItems } from './parser';
 import { Context } from 'hono';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 
 export const handler = async (ctx: Context): Promise<Data | null> => {
     const baseUrl = 'https://www.melonbooks.co.jp';

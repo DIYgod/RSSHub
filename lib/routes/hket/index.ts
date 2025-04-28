@@ -125,7 +125,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'sran001' } = ctx.req.param();
-    const baseUrl = urlMap[category.substring(0, 4)].baseUrl;
+    const baseUrl = urlMap[category.slice(0, 4)].baseUrl;
 
     const response = await ofetch(`${baseUrl}/${category}`);
 

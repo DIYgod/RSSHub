@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';

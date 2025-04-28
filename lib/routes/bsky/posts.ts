@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import { resolveHandle, getProfile, getAuthorFeed } from './utils';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 
 export const route: Route = {
     path: '/profile/:handle/:routeParams?',

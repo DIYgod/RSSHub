@@ -1,4 +1,4 @@
-import URL from 'url';
+import URL from 'node:url';
 import { config } from '@/config';
 import { TwitterApi } from 'twitter-api-v2';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';

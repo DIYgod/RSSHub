@@ -81,7 +81,7 @@ async function handler() {
                     const matchesPubDate = heading.match(/\((\w+\s+\d{1,2})\)$/);
                     // 实现：当年度交替时，年份减去 1
                     if (matchesPubDate !== null) {
-                        const curMonth = 1 + 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',').indexOf(matchesPubDate[1].substring(0, 3));
+                        const curMonth = 1 + 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',').indexOf(matchesPubDate[1].slice(0, 3));
                         if (prevMonth !== -1 && prevMonth < curMonth) {
                             year--; // 年度交替：上一个月份数小于当前月份数；但排除 prevMonth==-1 的初始化情况
                         }
