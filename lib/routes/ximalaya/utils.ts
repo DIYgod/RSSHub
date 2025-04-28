@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
     const a = [

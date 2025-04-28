@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import CryptoJS from 'crypto-js';
 import { KJUR, KEYUTIL, hextob64 } from 'jsrsasign';
 

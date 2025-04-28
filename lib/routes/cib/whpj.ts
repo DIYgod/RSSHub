@@ -3,8 +3,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import https from 'https';
-import crypto from 'crypto';
+import https from 'node:https';
+import crypto from 'node:crypto';
 import { config } from '@/config';
 
 export const route: Route = {

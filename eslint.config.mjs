@@ -185,7 +185,7 @@ unicorn.configs.recommended,
         'unicorn/prefer-import-meta-properties': 'warn',
         'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
-        'unicorn/prefer-node-protocol': 'off',
+        'unicorn/prefer-node-protocol': 'warn',
 
         'unicorn/prefer-number-properties': ['warn', {
             checkInfinity: false,

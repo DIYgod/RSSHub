@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import zlib from 'zlib';
+import zlib from 'node:zlib';
 import { load } from 'cheerio';
 
 const baseUrl = 'https://wtu.91wllm.com/';
