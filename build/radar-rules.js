@@ -8936,7 +8936,7 @@
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/allnews" ],
         target:"/ielts/" } ],
-    jlpt:[ { title:"日本语能力测试JLPT通知",
+    jlpt:[ { title:"日本语能力测试 JLPT 通知",
         docs:"https://docs.rsshub.app/routes/study",
         source:[ "/" ],
         target:"/neea/jlpt" } ] },

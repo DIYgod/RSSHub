@@ -67726,7 +67726,7 @@
       },
       "/jlpt": {
         "path": "/jlpt",
-        "name": "日本语能力测试JLPT通知",
+        "name": "日本语能力测试 JLPT 通知",
         "url": "jlpt.neea.cn",
         "maintainers": [
           "nczitzk"
