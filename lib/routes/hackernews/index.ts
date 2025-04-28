@@ -128,7 +128,7 @@ async function handler(ctx) {
                     item.description = item.currentComment;
                 }
 
-                if (isNaN(item.comments)) {
+                if (Number.isNaN(item.comments)) {
                     item.comments = 0;
                 }
 

@@ -60,7 +60,7 @@ class Ucs2Text {
         if (_end === 0) {
             return new Ucs2Text('');
         }
-        if (((isNaN(_start) || 0 > _start) && (_start = 0), (isNaN(_end) || 0 > _end) && (_end = _len), _start > _len && (_start = _len), _end > _len && (_end = _len), _end < _start)) {
+        if (((Number.isNaN(_start) || 0 > _start) && (_start = 0), (Number.isNaN(_end) || 0 > _end) && (_end = _len), _start > _len && (_start = _len), _end > _len && (_end = _len), _end < _start)) {
             _len = [_start, _end];
             _end = _len[0];
             _start = _len[1];
