@@ -30161,7 +30161,7 @@
         "maintainers": [
           "quiniapiezoelectricity"
         ],
-        "description": "\nFor a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).\nRSS Feed Channels in other languages are also available, for example: `rss-chi-all` renders the RSS feed in Chinese and `rss-de-all` for the RSS Feed in German \n",
+        "description": "\nFor a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).\nRSS Feed Channels in other languages are also available, for example: `rss-chi-all` renders the RSS feed in Chinese and `rss-de-all` for the RSS Feed in German\n",
         "location": "rss.ts",
         "module": "() => import('@/routes/dw/rss.ts')"
       }
