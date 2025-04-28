@@ -243,7 +243,7 @@ async function getUserWithCookie(url: string, cookie: string) {
     for (const item of state.user.notes.flat()) {
         const path = paths[index];
         if (path && path.includes('?')) {
-            item.id = item.id + path?.substring(path.indexOf('?'));
+            item.id = item.id + path?.slice(path.indexOf('?'));
         }
         index = index + 1;
     }

@@ -14,7 +14,7 @@ async function loadContent(category, nameOrId, tryGet) {
     switch (category) {
         case 'user': {
             let userInfo, username, id;
-            if (isNaN(nameOrId)) {
+            if (Number.isNaN(nameOrId)) {
                 username = nameOrId;
                 id = await tryGet(`instagram:getIdByUsername:${username}`, () => ig.user.getIdByUsername(username), 31_536_000); // 1 year since it will never change
                 userInfo = await tryGet(`instagram:userInfo:${id}`, () => ig.user.info(id));

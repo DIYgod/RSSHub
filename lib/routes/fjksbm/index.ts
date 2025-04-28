@@ -35,7 +35,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? '0';
 
     const id = Number.parseInt(category);
-    const isNumber = !isNaN(id);
+    const isNumber = !Number.isNaN(id);
 
     const rootUrl = 'https://fjksbm.com';
     const currentUrl = `${rootUrl}/portal${isNumber ? '' : `/${category}`}`;

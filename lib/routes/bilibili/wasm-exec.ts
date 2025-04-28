@@ -23,8 +23,8 @@
                 outputBuf += decoder.decode(buf);
                 const nl = outputBuf.lastIndexOf('\n');
                 if (nl !== -1) {
-                    console.log(outputBuf.substring(0, nl));
-                    outputBuf = outputBuf.substring(nl + 1);
+                    console.log(outputBuf.slice(0, nl));
+                    outputBuf = outputBuf.slice(nl + 1);
                 }
                 return buf.length;
             },
@@ -552,7 +552,7 @@
             this.mem = new DataView(this._inst.exports.mem.buffer);
             this._values = [
                 // JS values that Go currently has references to, indexed by reference id
-                Number.NaN,
+                NaN,
                 0,
                 null,
                 true,

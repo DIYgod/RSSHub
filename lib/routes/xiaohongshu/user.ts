@@ -1,6 +1,6 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import { getUser, renderNotesFulltext, getUserWithCookie } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { config } from '@/config';
