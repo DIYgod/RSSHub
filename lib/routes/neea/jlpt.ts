@@ -86,7 +86,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
 export const route: Route = {
     path: '/jlpt',
-    name: '日本语能力测试JLPT通知',
+    name: '日本语能力测试 JLPT 通知',
     url: 'jlpt.neea.cn',
     maintainers: ['nczitzk'],
     handler,
