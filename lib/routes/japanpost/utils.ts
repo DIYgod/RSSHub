@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 import cityTimezones from 'city-timezones';
 import dayjs from 'dayjs';
