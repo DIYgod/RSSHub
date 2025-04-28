@@ -49,7 +49,11 @@ async function handler(ctx) {
 
                     const $ = load(res);
 
-                    return { ...e, description: $("[name='articleBody']").html() };
+                    return {
+                        ...e,
+                        description: $("[name='articleBody']").html(),
+                        author: $('meta[name="byl"]').attr('content'),
+                    };
                 })
             )
         ),

@@ -1,11 +1,14 @@
 .DS_Store
+.cursorrules
 .env*
 .eslintcache
 .idea
 .log
 .now
+.roomodes
 .vercel
 .vscode
+.windsurfrules
 .yarn
 .yarnrc.yml
 .pnp*
@@ -17,6 +20,7 @@ app-minimal/
 assets/build/
 coverage
 docs/.vuepress/dist
+memory-bank/
 node_modules
 tmp
 dist

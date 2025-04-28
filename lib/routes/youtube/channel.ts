@@ -7,10 +7,32 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/channel/:id/:embed?',
+    path: '/channel/:id/:routeParams?',
     categories: ['social-media'],
     example: '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
-    parameters: { id: 'YouTube channel id', embed: 'Default to embed the video, set to any value to disable embedding' },
+    parameters: {
+        id: 'YouTube channel id',
+        routeParams: 'Extra parameters, see the table below',
+    },
+    radar: [
+        {
+            source: ['www.youtube.com/channel/:id'],
+            target: '/channel/:id',
+        },
+    ],
+    name: 'Channel with id',
+    maintainers: ['DIYgod', 'pseudoyu'],
+    handler,
+    description: `:::tip Parameter
+| Name       | Description                                                                         | Default |
+| ---------- | ----------------------------------------------------------------------------------- | ------- |
+| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
+| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
+:::
+
+::: tip
+YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel\_id=UCDwDMPOZfxVV0x\_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
+:::`,
     features: {
         requireConfig: [
             {
@@ -24,18 +46,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['www.youtube.com/channel/:id'],
-            target: '/channel/:id',
-        },
-    ],
-    name: 'Channel with id',
-    maintainers: ['DIYgod'],
-    handler,
-    description: `::: tip
-YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel\_id=UCDwDMPOZfxVV0x\_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
-:::`,
 };
 
 async function handler(ctx) {
@@ -43,13 +53,27 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const id = ctx.req.param('id');
-    const embed = !ctx.req.param('embed');
+
+    // Parse route parameters
+    const routeParams = ctx.req.param('routeParams');
+    const params = new URLSearchParams(routeParams);
+
+    // Get embed parameter
+    const embed = !params.get('embed');
+
+    // Get filterShorts parameter (default to true if not specified)
+    const filterShortsStr = params.get('filterShorts');
+    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
 
     if (!utils.isYouTubeChannelId(id)) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
-    const playlistId = (await utils.getChannelWithId(id, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    // Get original uploads playlist ID if needed
+    const originalPlaylistId = filterShorts ? null : (await utils.getChannelWithId(id, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+
+    // Use the utility function to get the appropriate playlist ID based on filterShorts setting
+    const playlistId = filterShorts ? utils.getPlaylistWithShortsFilter(id) : originalPlaylistId;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
