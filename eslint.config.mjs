@@ -6,13 +6,10 @@ import n from 'eslint-plugin-n';
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import yamlParser from 'yaml-eslint-parser';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = import.meta.dirname;
 const compat = new FlatCompat({
     baseDirectory: __dirname,
     recommendedConfig: js.configs.recommended,
@@ -185,6 +182,7 @@ unicorn.configs.recommended,
 
         'unicorn/prefer-code-point': 'warn',
         'unicorn/prefer-global-this': 'off',
+        'unicorn/prefer-import-meta-properties': 'warn',
         'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
         'unicorn/prefer-node-protocol': 'off',

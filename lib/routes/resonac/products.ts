@@ -56,7 +56,7 @@ async function handler() {
         )
     );
 
-    const fullList = lists.flat(1); // flatten array
+    const fullList = lists.flat(); // flatten array
     // fullList = fullList.filter((item) => item.title !== 'Empty');
 
     const items = await Promise.all(
