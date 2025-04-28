@@ -552,7 +552,7 @@
             this.mem = new DataView(this._inst.exports.mem.buffer);
             this._values = [
                 // JS values that Go currently has references to, indexed by reference id
-                Number.NaN,
+                NaN,
                 0,
                 null,
                 true,

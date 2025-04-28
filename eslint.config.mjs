@@ -184,8 +184,9 @@ unicorn.configs.recommended,
         'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
 
-        'unicorn/prefer-number-properties': ['warn', {
+        'unicorn/prefer-number-properties': ['error', {
             checkInfinity: false,
+            checkNaN: false,
         }],
 
         'unicorn/prefer-object-from-entries': 'warn',
