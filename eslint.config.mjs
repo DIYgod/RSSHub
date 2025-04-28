@@ -181,7 +181,6 @@ unicorn.configs.recommended,
         'unicorn/prefer-code-point': 'warn',
         'unicorn/prefer-global-this': 'off',
         'unicorn/prefer-import-meta-properties': 'warn',
-        'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
 
         'unicorn/prefer-number-properties': ['error', {
@@ -189,11 +188,8 @@ unicorn.configs.recommended,
             checkNaN: false,
         }],
 
-        'unicorn/prefer-object-from-entries': 'warn',
-        'unicorn/prefer-regexp-test': 'warn',
         'unicorn/prefer-spread': 'warn',
-        'unicorn/prefer-string-replace-all': 'warn',
-        'unicorn/prefer-string-slice': 'off',
+        'unicorn/prefer-string-slice': 'warn',
 
         'unicorn/prefer-switch': ['warn', {
             emptyDefaultCase: 'do-nothing-comment',

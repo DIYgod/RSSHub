@@ -74,8 +74,8 @@ async function handler(ctx) {
             return '';
         }
 
-        const filter = item.substring(0, item.indexOf('='));
-        const option = item.substring(item.lastIndexOf('=') + 1);
+        const filter = item.slice(0, item.indexOf('='));
+        const option = item.slice(item.lastIndexOf('=') + 1);
 
         switch (filter) {
             case 'mark':

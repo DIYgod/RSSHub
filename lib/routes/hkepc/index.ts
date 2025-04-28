@@ -110,7 +110,7 @@ async function handler(ctx) {
                     .map((e) => $(e).text().trim());
                 item.description = content.html();
                 item.pubDate = timezone(parseDate($('.publishDate').text()), +8);
-                item.guid = item.link.substring(0, item.link.lastIndexOf('/'));
+                item.guid = item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return item;
             })
