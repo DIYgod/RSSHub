@@ -2,7 +2,6 @@ import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { config } from '@/config';
 
@@ -11,7 +10,7 @@ import healthz from '@/routes/healthz';
 import robotstxt from '@/routes/robots.txt';
 import metrics from '@/routes/metrics';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
 let namespaces: Record<
