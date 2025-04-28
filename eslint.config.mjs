@@ -21,7 +21,7 @@ export default [{
         '**/.vscode',
         '**/docker-compose.yml',
         '!.github',
-        'assets/build/radar-rules.js',
+        'assets/build',
         'lib/routes-deprecated',
         'lib/router.js',
         '**/babel.config.js',
@@ -131,7 +131,6 @@ unicorn.configs.recommended,
         }],
 
         // unicorn
-        'unicorn/consistent-destructuring': 'warn',
         'unicorn/consistent-function-scoping': 'warn',
         'unicorn/explicit-length-check': 'off',
 
@@ -140,7 +139,6 @@ unicorn.configs.recommended,
             ignore: [String.raw`.*\.(yaml|yml)$`, String.raw`RequestInProgress\.js$`],
         }],
 
-        'unicorn/new-for-builtins': 'off',
         'unicorn/no-array-callback-reference': 'warn',
         'unicorn/no-array-reduce': 'warn',
         'unicorn/no-await-expression-member': 'off',
@@ -183,19 +181,15 @@ unicorn.configs.recommended,
         'unicorn/prefer-code-point': 'warn',
         'unicorn/prefer-global-this': 'off',
         'unicorn/prefer-import-meta-properties': 'warn',
-        'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
-        'unicorn/prefer-node-protocol': 'off',
 
-        'unicorn/prefer-number-properties': ['warn', {
+        'unicorn/prefer-number-properties': ['error', {
             checkInfinity: false,
+            checkNaN: false,
         }],
 
-        'unicorn/prefer-object-from-entries': 'warn',
-        'unicorn/prefer-regexp-test': 'warn',
         'unicorn/prefer-spread': 'warn',
-        'unicorn/prefer-string-replace-all': 'warn',
-        'unicorn/prefer-string-slice': 'off',
+        'unicorn/prefer-string-slice': 'warn',
 
         'unicorn/prefer-switch': ['warn', {
             emptyDefaultCase: 'do-nothing-comment',

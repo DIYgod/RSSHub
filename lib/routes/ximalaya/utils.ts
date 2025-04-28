@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
     const a = [
@@ -67,7 +67,7 @@ const getParams = (ep) => {
         a2.push(((3 & e) << 6) | n);
     }
 
-    const r1 = Array.from(Array(256), (v, i) => i);
+    const r1 = Array.from(Array.from({ length: 256 }), (v, i) => i);
 
     let i = '';
     o = 0;

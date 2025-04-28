@@ -5,7 +5,7 @@ import { config } from '@/config';
 import utils from './utils';
 import JSONbig from 'json-bigint';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {

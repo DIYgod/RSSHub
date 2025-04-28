@@ -7,14 +7,14 @@ const mobileUa = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'm
 
 describe('rand-user-agent', () => {
     it('chrome should not include headlesschrome', () => {
-        const uaArr = Array(100)
+        const uaArr = Array.from({ length: 100 })
             .fill(null)
             .map(() => randUserAgent({ browser: 'chrome', os: 'windows' }));
         const match = uaArr.find((e) => !!(e.includes('Chrome-Lighthouse') || e.includes('HeadlessChrome')));
         expect(match).toBeFalsy();
     });
     it('chrome should not include electron', () => {
-        const uaArr = Array(100)
+        const uaArr = Array.from({ length: 100 })
             .fill(null)
             .map(() => randUserAgent({ browser: 'chrome', os: 'windows' }));
         const match = uaArr.find((e) => !!e.includes('Electron'));

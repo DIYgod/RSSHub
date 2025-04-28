@@ -23,7 +23,7 @@ export const route: Route = {
     handler,
     description: `
 For a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).
-RSS Feed Channels in other languages are also available, for example: \`rss-chi-all\` renders the RSS feed in Chinese and \`rss-de-all\` for the RSS Feed in German 
+RSS Feed Channels in other languages are also available, for example: \`rss-chi-all\` renders the RSS feed in Chinese and \`rss-de-all\` for the RSS Feed in German
 `,
 };
 
@@ -48,7 +48,7 @@ async function handler(ctx) {
             const link = new URL(item.link);
             link.search = '';
             item.link = link.href;
-            item.type = link.pathname.substring(link.pathname.lastIndexOf('/') + 1).startsWith('live-') ? 'liveblog' : 'article'; // dw rss feed only includes liveblogs and articles
+            item.type = link.pathname.slice(link.pathname.lastIndexOf('/') + 1).startsWith('live-') ? 'liveblog' : 'article'; // dw rss feed only includes liveblogs and articles
             return item;
         })
     );

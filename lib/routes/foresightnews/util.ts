@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import zlib from 'zlib';
+import zlib from 'node:zlib';
 
 const constants = {
     labelHot: '热门',

@@ -32,7 +32,7 @@ async function handler(ctx) {
     const infoUrl = 'https://www.infoq.cn/public/v1/topic/getInfo';
     const pageUrl = `https://www.infoq.cn/topic/${paramId}`;
 
-    const infoBody = isNaN(paramId) ? { alias: paramId } : { id: Number.parseInt(paramId) };
+    const infoBody = Number.isNaN(paramId) ? { alias: paramId } : { id: Number.parseInt(paramId) };
 
     const info = await got.post(infoUrl, {
         headers: {

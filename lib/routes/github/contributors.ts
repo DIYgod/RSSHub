@@ -52,7 +52,7 @@ async function handler(ctx) {
         const url_base = last_page_link.match(/<(.*)page=\d*/)[1];
         const page_count = Number(last_page_link.match(/page=(\d*)/)[1]);
 
-        const generate_array = (n) => [...Array(n - 1)].map((_, index) => index + 2);
+        const generate_array = (n) => Array.from({ length: n - 1 }).map((_, index) => index + 2);
         const page_array = generate_array(page_count);
 
         // Get everypage

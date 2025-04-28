@@ -1,6 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';

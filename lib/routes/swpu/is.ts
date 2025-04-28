@@ -40,7 +40,7 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     let title = $('title').text();
-    title = title.substring(0, title.indexOf('-'));
+    title = title.slice(0, title.indexOf('-'));
 
     const items = $('tr[height="20"]')
         .toArray()

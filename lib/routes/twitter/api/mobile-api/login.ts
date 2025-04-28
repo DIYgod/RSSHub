@@ -3,7 +3,7 @@
 import { bearerToken, guestActivateUrl } from './constants';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import { v5 as uuidv5 } from 'uuid';
 import { authenticator } from 'otplib';
 import logger from '@/utils/logger';

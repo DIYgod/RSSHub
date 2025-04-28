@@ -104,7 +104,7 @@ async function handler(ctx) {
             item = $(item);
             return {
                 title: item.text().trim(),
-                link: baseUrl + item.attr('href').substring(0, item.attr('href').lastIndexOf('/')),
+                link: baseUrl + item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
             };
         })
         .get();

@@ -101,13 +101,13 @@ async function handler(ctx) {
                   // fix .thread .top_3
                   .filter((_, elem) => {
                       const timeStr = $('.date', elem).eq(0).text();
-                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
+                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
                       return !elem.attribs.class.includes('top') || Date.now() - pubDate.valueOf() < timeDiff;
                   })
                   .map((_, elem) => {
                       const subject = $('.subject a', elem).eq(1);
                       const timeStr = $('.date', elem).eq(0).text();
-                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.substring(1));
+                      const pubDate = timeStr.endsWith('前') ? parseRelativeDate(timeStr) : parseDate(timeStr.slice(1));
 
                       const link = `${baseUrl}${subject.attr('href')}`;
                       const key = `kanxue: ${link}`;

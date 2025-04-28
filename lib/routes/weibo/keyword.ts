@@ -1,6 +1,6 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import weiboUtils from './utils';
 import timezone from '@/utils/timezone';

@@ -140,7 +140,7 @@ function seekContent(clist) {
         if (curitem.card_type === 9) {
             const tbpic = curitem.mblog.thumbnail_pic ?? '';
             const index = tbpic.lastIndexOf('/');
-            const thumbfolder = tbpic.substring(0, index + 1);
+            const thumbfolder = tbpic.slice(0, index + 1);
 
             const curcontent = load(curitem.mblog.text);
             if (wpic === 'true') {

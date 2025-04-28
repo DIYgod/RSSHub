@@ -3,8 +3,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import https from 'https';
-import crypto from 'crypto';
+import https from 'node:https';
+import crypto from 'node:crypto';
 import { config } from '@/config';
 
 export const route: Route = {
@@ -47,7 +47,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     let date = $('div.main-body').find('div.labe_text').text();
     date = date.split('\n\t')[1].replace('日期：', '').trim();
-    date = date.substring(0, 11) + date.substring(15);
+    date = date.slice(0, 11) + date.slice(15);
 
     const link = 'https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery/list?_search=false&dataSet.rows=80&dataSet.page=1&dataSet.sidx=&dataSet.sord=asc';
     const data = await cache.tryGet(

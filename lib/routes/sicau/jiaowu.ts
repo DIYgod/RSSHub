@@ -40,7 +40,7 @@ export const route: Route = {
                 const a = $(item);
                 const href = a.attr('href')!;
                 return {
-                    link: `${baseUrl}/${href.substring(href.lastIndexOf('/') + 1)}`,
+                    link: `${baseUrl}/${href.slice(href.lastIndexOf('/') + 1)}`,
                 } as DataItem;
             });
 

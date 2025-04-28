@@ -40,7 +40,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     let pageUrl = `https://www.zcool.com.cn/u/${uid}`;
-    if (isNaN(uid)) {
+    if (Number.isNaN(uid)) {
         if (!isValidHost(uid)) {
             throw new InvalidParameterError('Invalid uid');
         }

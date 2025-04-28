@@ -72,7 +72,7 @@ async function handler(ctx) {
 
             item.link = `${rootUrl}/item?id=${item.guid}`;
             item.origin = thing.find('.titleline').children('a').attr('href');
-            item.onStory = thing.find('.onstory').text().substring(2);
+            item.onStory = thing.find('.onstory').text().slice(2);
 
             item.comments = thing.next().find('a').last().text().split(' comment')[0];
             item.upvotes = thing.next().find('.score').text().split(' point')[0];
@@ -128,7 +128,7 @@ async function handler(ctx) {
                     item.description = item.currentComment;
                 }
 
-                if (isNaN(item.comments)) {
+                if (Number.isNaN(item.comments)) {
                     item.comments = 0;
                 }
 

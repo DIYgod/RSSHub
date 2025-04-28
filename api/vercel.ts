@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 const moduleAlias = require('module-alias');
 moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
 

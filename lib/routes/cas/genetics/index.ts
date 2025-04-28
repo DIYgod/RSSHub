@@ -22,7 +22,7 @@ async function handler(ctx) {
 
     let items;
 
-    if (path.substring(0, 3) === 'edu') {
+    if (path.slice(0, 3) === 'edu') {
         items = $('li.box-s.h16')
             .toArray()
             .map((item) => {
@@ -35,7 +35,7 @@ async function handler(ctx) {
                     pubDate: parseDate(date.text(), 'YYYY-MM-DD'),
                 };
             });
-    } else if (path.substring(0, 4) === 'dqyd') {
+    } else if (path.slice(0, 4) === 'dqyd') {
         items = $('div.list-tab ul li')
             .toArray()
             .map((item) => {

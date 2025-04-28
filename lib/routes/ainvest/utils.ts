@@ -1,15 +1,15 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import CryptoJS from 'crypto-js';
 import { KJUR, KEYUTIL, hextob64 } from 'jsrsasign';
 
 const publicKey =
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCARnxLlrhTK28bEV7s2IROjT73KLSjfqpKIvV8L+Yhe4BrF0Ut4oOH728HZlbSF0C3N0vXZjLAFesoS4v1pYOjVCPXl920Lh2seCv82m0cK78WMGuqZTfA44Nv7JsQMHC3+J6IZm8YD53ft2d8mYBFgKektduucjx8sObe7eRyoQIDAQAB';
 
-const randomString = (length) => {
+const randomString = (length: number) => {
     if (length > 32) {
         throw new Error('Max length is 32.');
     }
-    return uuidv4().replaceAll('-', '').substring(0, length);
+    return uuidv4().replaceAll('-', '').slice(0, length);
 };
 
 const uuidv4 = () => crypto.randomUUID();

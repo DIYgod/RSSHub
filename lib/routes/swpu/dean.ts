@@ -41,7 +41,7 @@ async function handler(ctx): Promise<Data> {
     const $ = load(res.data);
 
     let title = $('.r_list > h3').text();
-    title = title.substring(title.indexOf('：') + 1);
+    title = title.slice(title.indexOf('：') + 1);
 
     // 获取标题、时间及链接
     const items: DataItem[] = $('.r_list > ul > li')

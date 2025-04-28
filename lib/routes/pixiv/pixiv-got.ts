@@ -1,4 +1,4 @@
-import tls from 'tls';
+import tls from 'node:tls';
 import ipRegex from 'ip-regex';
 import got from '@/utils/got';
 import logger from '@/utils/logger';

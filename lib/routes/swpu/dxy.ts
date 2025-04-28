@@ -43,7 +43,7 @@ async function handler(ctx): Promise<Data> {
     const $ = load(res.data);
 
     let title = $('title').text();
-    title = title.substring(0, title.indexOf('-'));
+    title = title.slice(0, title.indexOf('-'));
 
     // 获取标题、时间及链接
     const items: DataItem[] = $('tr[height="20"]')
