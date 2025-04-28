@@ -109,30 +109,29 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
 
                     const mediaEls: Element[] = $$('div.pics').first().find('img').toArray();
-                    const medias: Record<string, Record<string, string>> = mediaEls.reduce((acc: Record<string, Record<string, string>>, mediaEl) => {
+                    const medias: Record<string, Record<string, string>> = {};
+                    let imageCount = 1;
+                    for (const mediaEl of mediaEls) {
                         const $$mediaEl: Cheerio<Element> = $$(mediaEl);
                         const url: string | undefined = $$mediaEl.attr('src') ? new URL($$mediaEl.attr('src') as string, baseUrl).href : undefined;
 
                         if (!url) {
-                            return acc;
+                            continue;
                         }
 
                         const medium: string = 'image';
-                        const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                        const key: string = `${medium}${count}`;
+                        const key: string = `${medium}${imageCount++}`;
 
-                        acc[key] = {
+                        medias[key] = {
                             url,
                             medium,
                             title: $$mediaEl.attr('alt') || title,
                             description: $$mediaEl.attr('alt') || title,
                             thumbnail: url,
                         };
+                    }
 
-                        return acc;
-                    }, {});
-
-                    if (medias) {
+                    if (Object.keys(medias).length > 0) {
                         processedItem = {
                             ...processedItem,
                             media: medias,
