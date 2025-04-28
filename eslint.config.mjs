@@ -131,7 +131,6 @@ unicorn.configs.recommended,
         }],
 
         // unicorn
-        'unicorn/consistent-destructuring': 'warn',
         'unicorn/consistent-function-scoping': 'warn',
         'unicorn/explicit-length-check': 'off',
 
@@ -140,7 +139,6 @@ unicorn.configs.recommended,
             ignore: [String.raw`.*\.(yaml|yml)$`, String.raw`RequestInProgress\.js$`],
         }],
 
-        'unicorn/new-for-builtins': 'off',
         'unicorn/no-array-callback-reference': 'warn',
         'unicorn/no-array-reduce': 'warn',
         'unicorn/no-await-expression-member': 'off',
@@ -185,7 +183,6 @@ unicorn.configs.recommended,
         'unicorn/prefer-import-meta-properties': 'warn',
         'unicorn/prefer-logical-operator-over-ternary': 'warn',
         'unicorn/prefer-module': 'off',
-        'unicorn/prefer-node-protocol': 'warn',
 
         'unicorn/prefer-number-properties': ['warn', {
             checkInfinity: false,
