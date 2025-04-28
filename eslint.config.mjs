@@ -21,7 +21,7 @@ export default [{
         '**/.vscode',
         '**/docker-compose.yml',
         '!.github',
-        'assets/build/radar-rules.js',
+        'assets/build',
         'lib/routes-deprecated',
         'lib/router.js',
         '**/babel.config.js',
