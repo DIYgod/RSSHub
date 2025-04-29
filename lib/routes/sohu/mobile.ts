@@ -92,6 +92,12 @@ function extractPlateBlockNewsLists(jsonData: any) {
             if (plateBlock?.param?.focusData?.list) {
                 result.push(...plateBlock.param.focusData.list);
             }
+            if (plateBlock?.param?.feedData0?.list) {
+                result.push(...plateBlock.param.feedData0.list);
+            }
+            if (plateBlock?.param?.feedData1?.list) {
+                result.push(...plateBlock.param.feedData1.list);
+            }
         }
     }
     return result;
