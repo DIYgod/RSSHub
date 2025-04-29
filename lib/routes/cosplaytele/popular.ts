@@ -1,9 +1,9 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
-import { WPPost } from './types';
 
 export const route: Route = {
     path: '/popular/:period',
@@ -64,12 +64,10 @@ async function handler(ctx) {
         .toArray()
         .map((post) => $(post).find('.wpp-post-title').attr('href'))
         .filter((link) => link !== undefined);
-    const slugs = links.map((link) => link.split('/').findLast(Boolean));
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?slug=${slugs.join(',')}&per_page=${limit}`);
 
     return {
         title,
         link: url,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: await Promise.all(links.map((link) => cache.tryGet(link, () => loadArticle(link)))),
     };
 }
