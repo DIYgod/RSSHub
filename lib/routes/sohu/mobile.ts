@@ -50,7 +50,7 @@ async function handler() {
                 title: item.title,
                 link: new URL(item.link || item.url, 'https://m.sohu.com').href
             };
-        }).filter((item) => item.link);
+        }).filter((item) => {return item?.title && item?.link});
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
@@ -72,7 +72,7 @@ async function handler() {
         return {
             title: '手机搜狐新闻',
             link: 'https://m.sohu.com/limit',
-            item: items.filter((item) => item?.title && item?.link),
+            item: items,
         };
     } catch (error) {
         logger.error('抓取失败:', error);
@@ -86,7 +86,7 @@ async function handler() {
 
 function extractPlateBlockNewsLists(jsonData: any) {
     const result: any[] = [];
-    Object.keys(jsonData).forEach(key => {
+    for (const key of Object.keys(jsonData)) {
         if (key.startsWith('PlateBlock')) {
             const plateBlock = jsonData[key];
             // 处理新闻列表
@@ -98,11 +98,13 @@ function extractPlateBlockNewsLists(jsonData: any) {
                 result.push(...plateBlock.param.focusData.list);
             }
         }
-    });
+    }
     return result;
 }
 // 日期解析辅助函数
 function parseDate(timeStr?: string) {
-    if (!timeStr) return '';
+    if (!timeStr) {
+        return '';
+    }
     return new Date(timeStr).toISOString();
 }
