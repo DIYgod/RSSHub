@@ -216,8 +216,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1
       rate-limiter-flexible:
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 7.1.0
+        version: 7.1.0
       re2js:
         specifier: 1.1.0
         version: 1.1.0
@@ -5351,8 +5351,8 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
 
-  rate-limiter-flexible@7.0.0:
-    resolution: {integrity: sha512-K1Y7WTh6m/MpgifDkBzexI0PfPYd+LaXRl+Aqq+LkKKIb68KLJxd/cp+Fw3iU1T0h3oQ9TwbR0m2/ksU70ML+g==}
+  rate-limiter-flexible@7.1.0:
+    resolution: {integrity: sha512-qXYzKWzlTOf7/BNjz1Jj03AgtTHoJZZAiiJ3hjLf8sqeG+EWZLeQ3xYtMPlMZLonlq+OyJUueHyK/H+q2Zc7Qw==}
 
   re2js@1.1.0:
     resolution: {integrity: sha512-ovDCIb2ZQR7Do3NzH2XEuXOzqd1q8srvkeaOVMf+EZNt1Z4JoUVvNKCR9qf8EbqoPhvLknkoyiiBzoQtmuzIbQ==}
@@ -11830,7 +11830,7 @@ snapshots:
 
   quick-lru@5.1.1: {}
 
-  rate-limiter-flexible@7.0.0: {}
+  rate-limiter-flexible@7.1.0: {}
 
   re2js@1.1.0: {}
 
