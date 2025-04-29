@@ -1,8 +1,9 @@
 import { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { load } from 'cheerio';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
-import { WPPost } from './types';
 
 export const route: Route = {
     path: '/',
@@ -31,11 +32,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 20;
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?per_page=${limit}`);
+    const response = await got(SUB_URL);
+    const $ = load(response.body);
+    const itemRaw = $('#content .post-item').slice(0, limit).toArray();
 
     return {
         title: `${SUB_NAME_PREFIX} - Latest`,
         link: SUB_URL,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: await Promise.all(
+            itemRaw.map((e) => {
+                const item = $(e);
+                const link = item.find('h5.post-title a').attr('href');
+                return cache.tryGet(link, () => loadArticle(link));
+            })
+        ),
     };
 }
