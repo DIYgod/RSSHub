@@ -41,11 +41,11 @@ async function handler() {
         }
         const renderData = JSON.parse(jsonMatch[1]);
         const list = extractPlateBlockNewsLists(renderData)
+            .filter((item) => item.id && item.url?.startsWith('//'));
             .map((item) => ({
                 title: item.title,
-                link: new URL(item.link || item.url, 'https://m.sohu.com').href,
+                link: new URL(item.url.split('?')[0], 'https://m.sohu.com').href,
             }))
-            .filter((item) => item?.title && item?.link);
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
