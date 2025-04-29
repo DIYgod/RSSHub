@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/mobile',
@@ -60,6 +61,7 @@ async function handler() {
                         item.description = $d('#articleContent').first().html();
                         return item;
                     } catch (error) {
+                        logger.error(`获取详情失败: ${item.link}`, error);
                         return item; // 返回基础信息
                     }
                 })
@@ -71,6 +73,7 @@ async function handler() {
             item: items.filter(Boolean), // 过滤空项
         };
     } catch (error) {
+        logger.error('抓取失败:', error);
         return {
             title: '手机搜狐新闻',
             link: 'https://m.sohu.com/limit',
