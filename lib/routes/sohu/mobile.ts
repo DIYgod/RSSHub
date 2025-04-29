@@ -45,12 +45,12 @@ async function handler() {
             throw new Error('WapHomeRenderData 数据未找到');
         }
         const renderData = JSON.parse(jsonMatch[1]);
-        const list = extractPlateBlockNewsLists(renderData).map((item) => {
-            return {
+        const list = extractPlateBlockNewsLists(renderData)
+            .map((item) => ({
                 title: item.title,
-                link: new URL(item.link || item.url, 'https://m.sohu.com').href
-            };
-        }).filter((item) => {return item?.title && item?.link});
+                link: new URL(item.link || item.url, 'https://m.sohu.com').href,
+            }))
+            .filter((item) => item?.title && item?.link);
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
