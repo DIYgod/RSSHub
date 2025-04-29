@@ -63,7 +63,8 @@ const types = {
 async function handler(ctx) {
     const { type } = ctx.req.param();
 
-    const link = `https://www.zxcs.info/${type}`;
+    const baseUrl = `https://www.zxcs.info`;
+    const link = `${baseUrl}/${type}`;
     const response = await ofetch(link);
     const $ = load(response);
 
@@ -89,15 +90,9 @@ async function handler(ctx) {
                 const response = await ofetch(String(item.link));
                 const $ = load(response);
                 const links = String(item.link).split('/');
-                const category = types[String(links.at(-2))];
-                item.category = [category];
-                let desc = '';
-                if (type === 'jinqigengxin') {
-                    desc = '类型：' + category + '<br>';
-                }
-                desc += '标签：' + $('.book-info__categories').first().html() + '<br>';
-                item.description = desc + $('.intro').first().html();
-                item.image = String($('.book-cover img').attr('src'));
+                item.category = [types[String(links.at(-2))]];
+                item.description = `标签：${$('.book-info__categories').first().html()}<br>${$('.intro').first().html()}`;
+                item.image = baseUrl + String($('.book-cover img').attr('src'));
                 item.author = $('.author').text();
                 return item;
             })
