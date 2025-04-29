@@ -23,18 +23,16 @@ const imgRootUrl = 'https://img.foresightnews.pro';
 const icon = new URL('foresight.ico', rootUrl).href;
 const image = new URL('vertical_logo.png', imgRootUrl).href;
 
-const processItems = async (apiUrl, limit, ...searchParams) => {
-    searchParams = {
-        ...searchParams.reduce(
-            (result, object) => ({
-                ...result,
-                ...object,
-            }),
-            {}
-        ),
-
+const processItems = async (apiUrl, limit, ...parameters) => {
+    let searchParams = {
         size: limit,
     };
+    for (const param of parameters) {
+        searchParams = {
+            ...searchParams,
+            ...param,
+        };
+    }
 
     const info = {
         column: '',

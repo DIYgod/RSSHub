@@ -1,7 +1,13 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
+import path from 'node:path';
+import { getCurrentPath } from '@/utils/helpers';
+import { art } from '@/utils/render';
+
+const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/user/:user',
@@ -30,37 +36,40 @@ async function handler(ctx) {
     const baseUrl = 'https://rattibha.com';
     const { user: twitterUser } = ctx.req.param();
 
-    const {
-        data: { user: userData },
-    } = await got(`${baseUrl}/user?id=${twitterUser}`, {
-        headers: {
-            accept: 'application/json',
-        },
+    const userData = await cache.tryGet(`rattibha:user:${twitterUser}`, async () => {
+        const data = await ofetch(`${baseUrl}/user`, {
+            query: { id: twitterUser },
+        });
+        return data.user;
     });
-    const { data: userThreads } = await got(`${baseUrl}/u_threads?id=${userData.account_user_id}`, { headers: { accept: 'application/json' } });
+
+    const userThreads = await cache.tryGet(
+        `rattibha:userThreads:${twitterUser}`,
+        () =>
+            ofetch(`${baseUrl}/u_threads`, {
+                query: {
+                    id: userData.account_user_id,
+                    page: 0,
+                    post_type: 0,
+                },
+            }),
+        config.cache.routeExpire,
+        false
+    );
 
     // extract the relevant data from the API response
-    const list = userThreads.map((item) => ({
-        title: item.thread.t.info.text,
+    const items = userThreads.map((item) => ({
+        title: item.thread.t.info.text.split('\n')[0],
         link: `${baseUrl}/thread/${item.thread_id}`,
         pubDate: parseDate(item.thread.created_at),
         updated: parseDate(item.thread.updated_at),
         author: userData.name,
-        threadData1URL: `${baseUrl}/thread?id=${item.thread_id}`,
-        threadData2URL: `${baseUrl}/threads?id=${item.thread_id}`,
+        category: item.thread.categories.map((category) => category.tag.name),
+        description: art(path.join(__dirname, 'templates/description.art'), {
+            text: item.thread.t.info.text.replaceAll('\n', '<br>'),
+            media: item.thread.m,
+        }),
     }));
-
-    // Get tweet full text
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: data1 } = await got(item.threadData1URL, { headers: { accept: 'application/json' } });
-                const { data: data2 } = await got(item.threadData2URL, { headers: { accept: 'application/json' } });
-                item.description = [...data1.tweets, ...data2].reduce((accumulator, tweet) => `${accumulator}${tweet.tweet_detail.info.text}<br>`, '');
-                return item;
-            })
-        )
-    );
 
     return {
         title: `سلاسل تغريدات ${twitterUser}`,
