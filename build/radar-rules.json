@@ -25342,6 +25342,22 @@
     "_name": "快科技",
     "m": [
       {
+        "title": "更多分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/mydrivers/zhibo"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/mydrivers/zhibo"
+      },
+      {
         "title": "排行",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [

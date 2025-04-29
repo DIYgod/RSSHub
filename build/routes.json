@@ -8462,7 +8462,7 @@
         "categories": [
           "new-media"
         ],
-        "example": "/ally/rail/hyzix/chengguijiaotong/",
+        "example": "/ally/rail/hyzix/chengguijiaotong",
         "parameters": {
           "category": "分类，可在 URL 中找到；略去则抓取首页",
           "topic": "话题，可在 URL 中找到；并非所有页面均有此字段"
@@ -41345,7 +41345,7 @@
         "parameters": {
           "category": "分类，默认为全部，见下表"
         },
-        "description": "::: tip\n  若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 `价格指数` 报告主题。此时路由为 [`/gov/moa/zdscxx/价格指数`](https://rsshub.app/gov/moa/zdscxx/价格指数)。\n  \n  若订阅 `央视网` 报告来源 的 `蔬菜生产` 报告主题。此时路由为 [`/gov/moa/zdscxx/央视网/蔬菜生产`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。\n:::\n\n| 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |\n| -------- | -------- | ------------ | ------------ | -------- | -------- |\n    ",
+        "description": "::: tip\n  若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 `价格指数` 报告主题。此时路由为 [`/gov/moa/zdscxx/价格指数`](https://rsshub.app/gov/moa/zdscxx/价格指数)。\n\n  若订阅 `央视网` 报告来源 的 `蔬菜生产` 报告主题。此时路由为 [`/gov/moa/zdscxx/央视网/蔬菜生产`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。\n:::\n\n| 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |\n| -------- | -------- | ------------ | ------------ | -------- | -------- |\n    ",
         "categories": [
           "government"
         ],
@@ -54130,19 +54130,75 @@
   },
   "jiemian": {
     "routes": {
-      "/list/:id": {
-        "path": "/list/:id",
-        "name": "Unknown",
-        "maintainers": [],
-        "location": "list.ts",
-        "module": "() => import('@/routes/jiemian/list.ts')"
+      "/account/main/1": {
+        "path": "/account/main/1",
+        "parameters": {
+          "id": "分类 id，见下表，可在对应分类页 URL 中找到"
+        },
+        "name": "界面号",
+        "example": "/jiemian/account/main/1",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "| [财经号](https://www.jiemian.com/account/main/1.html) | [城市号](https://www.jiemian.com/account/main/2.html) | [媒体号](https://www.jiemian.com/account/main/3.html) |\n| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |\n| 1                                                     | 2                                                     | 3                                                     |\n",
+        "location": "account.ts",
+        "module": "() => import('@/routes/jiemian/account.ts')"
       },
-      "/:category{.+}?": {
-        "path": "/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+      "/lists/:id": {
+        "path": "/lists/:id",
+        "parameters": {
+          "id": "分类 id，见下表，可在对应分类页 URL 中找到"
+        },
+        "name": "栏目",
+        "example": "/jiemian/lists/65",
+        "maintainers": [
+          "WenhuWee",
+          "nczitzk"
+        ],
+        "description": "| [首页](https://www.jiemian.com) | [商业](https://www.jiemian.com/lists/2.html) | [财经](https://www.jiemian.com/lists/800.html) | [新闻](https://www.jiemian.com/lists/801.html) | [文化生活](https://www.jiemian.com/lists/130.html) | [快报](https://www.jiemian.com/lists/4.html) |\n| ------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------- |\n|                                 | 2                                            | 800                                            | 801                                            | 130                                                | 4                                            |\n\n::: details 更多分类\n\n#### [首页](https://www.jiemian.com)\n\n| [科技](https://www.jiemian.com/lists/65.html) | [金融](https://www.jiemian.com/lists/9.html) | [证券](https://www.jiemian.com/lists/112.html) | [地产](https://www.jiemian.com/lists/62.html) | [汽车](https://www.jiemian.com/lists/51.html) | [健康](https://www.jiemian.com/lists/472.html) |\n| --------------------------------------------- | -------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |\n| 65                                            | 9                                            | 112                                            | 62                                            | 51                                            | 472                                            |\n\n| [大湾区](https://www.jiemian.com/lists/680.html) | [元宇宙](https://www.jiemian.com/lists/704.html) | [文旅](https://www.jiemian.com/lists/105.html) | [数据](https://www.jiemian.com/lists/154.html) | [ESG](https://www.jiemian.com/lists/712.html) | [双碳](https://www.jiemian.com/lists/877.html) |\n| ------------------------------------------------ | ------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |\n| 680                                              | 704                                              | 105                                            | 154                                            | 712                                           | 877                                            |\n\n| [电厂](https://www.jiemian.com/lists/872.html) |\n| ---------------------------------------------- |\n| 872                                            |\n\n#### [商业](https://www.jiemian.com/lists/2.html)\n\n| [科技](https://www.jiemian.com/lists/65.html) | [地产](https://www.jiemian.com/lists/62.html) | [ 汽车](https://www.jiemian.com/lists/51.html) | [消费](https://www.jiemian.com/lists/31.html) | [工业](https://www.jiemian.com/lists/28.html) | [时尚](https://www.jiemian.com/lists/68.html) |\n| --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |\n| 65                                            | 62                                            | 51                                             | 31                                            | 28                                            | 68                                            |\n\n| [交通](https://www.jiemian.com/lists/30.html) | [医药](https://www.jiemian.com/lists/472.html) | [互联网](https://www.jiemian.com/lists/851.html) | [创投 ](https://www.jiemian.com/lists/858.html) | [能源](https://www.jiemian.com/lists/856.html) | [数码](https://www.jiemian.com/lists/853.html) |\n| --------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ | ----------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| 30                                            | 472                                            | 851                                              | 858                                             | 856                                            | 853                                            |\n\n| [教育](https://www.jiemian.com/lists/256.html) | [食品](https://www.jiemian.com/lists/845.html) | [新能源](https://www.jiemian.com/lists/857.html) | [家电](https://www.jiemian.com/lists/850.html) | [健康](https://www.jiemian.com/lists/854.html) | [酒业](https://www.jiemian.com/lists/676.html) |\n| ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| 256                                            | 845                                            | 857                                              | 850                                            | 854                                            | 676                                            |\n\n| [物流](https://www.jiemian.com/lists/841.html) | [零售](https://www.jiemian.com/lists/847.html) | [美妆](https://www.jiemian.com/lists/838.html) | [楼市](https://www.jiemian.com/city/main/181.html) | [家居](https://www.jiemian.com/lists/694.html) | [餐饮](https://www.jiemian.com/lists/848.html) |\n| ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| 841                                            | 847                                            | 838                                            | city/main/181                                      | 694                                            | 848                                            |\n\n| [日用](https://www.jiemian.com/lists/846.html) | [企服](https://www.jiemian.com/lists/852.html) | [珠宝](https://www.jiemian.com/lists/839.html) | [腕表](https://www.jiemian.com/lists/840.html) | [ 商学院](https://www.jiemian.com/lists/605.html) | [元宇宙](https://www.jiemian.com/lists/704.html) |\n| ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------------- | ------------------------------------------------ |\n| 846                                            | 852                                            | 839                                            | 840                                            | 605                                               | 704                                              |\n\n| [电厂](https://www.jiemian.com/lists/872.html) | [农业](https://www.jiemian.com/lists/883.html) |\n| ---------------------------------------------- | ---------------------------------------------- |\n| 872                                            | 883                                            |\n\n#### [财经](https://www.jiemian.com/lists/800.html)\n\n| [金融](https://www.jiemian.com/lists/9.html) | [投资](https://www.jiemian.com/lists/86.html) | [证券](https://www.jiemian.com/lists/112.html) | [IPO](https://www.jiemian.com/lists/699.html) | [宏观](https://www.jiemian.com/lists/174.html) | [股市](https://www.jiemian.com/lists/418.html) |\n| -------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| 9                                            | 86                                            | 112                                            | 699                                           | 174                                            | 418                                            |\n\n| [财富](https://www.jiemian.com/lists/410.html) | [有连云](https://www.jiemian.com/lists/889.html) |\n| ---------------------------------------------- | ------------------------------------------------ |\n| 410                                            | 889                                              |\n\n#### [新闻](https://www.jiemian.com/lists/801.html)\n\n| [天下](https://www.jiemian.com/lists/32.html) | [中国](https://www.jiemian.com/lists/71.html) | [ 评论](https://www.jiemian.com/lists/8.html) | [数据](https://www.jiemian.com/lists/154.html) | [职场](https://www.jiemian.com/lists/50.html) | [国是](https://www.jiemian.com/lists/422.html) |\n| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |\n| 32                                            | 71                                            | 8                                             | 154                                            | 50                                            | 422                                            |\n\n| [体育](https://www.jiemian.com/lists/82.html) | [文娱](https://www.jiemian.com/lists/63.html) | [ 影像](https://www.jiemian.com/lists/225.html) | [营销](https://www.jiemian.com/lists/49.html) | [大 湾区](https://www.jiemian.com/lists/680.html) | [ESG](https://www.jiemian.com/lists/712.html) |\n| --------------------------------------------- | --------------------------------------------- | ----------------------------------------------- | --------------------------------------------- | ------------------------------------------------- | --------------------------------------------- |\n| 82                                            | 63                                            | 225                                             | 49                                            | 680                                               | 712                                           |\n\n| [双碳](https://www.jiemian.com/lists/877.html) | [长三角](https://www.jiemian.com/lists/917.html) |\n| ---------------------------------------------- | ------------------------------------------------ |\n| 877                                            | 917                                              |\n\n#### [文化生活](https://www.jiemian.com/lists/130.html)\n\n| [文化](https://www.jiemian.com/lists/130.html) | [文旅](https://www.jiemian.com/lists/105.html) | [生活方式](https://www.jiemian.com/lists/135.html) | [美食美酒](https://www.jiemian.com/lists/865.html) | [艺术](https://www.jiemian.com/lists/643.html) | [游戏](https://www.jiemian.com/lists/118.html) |\n| ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| 130                                            | 105                                            | 135                                                | 865                                                | 643                                            | 118                                            |\n\n| [正午](https://www.jiemian.com/lists/53.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) |\n| --------------------------------------------- | ------------------------------------------------------ |\n| 53                                            | video/lists/195_1                                     |\n\n#### [快报](https://www.jiemian.com/lists/4.html)\n\n| [今日热点](https://www.jiemian.com/lists/1324kb.html) | [公司头条](https://www.jiemian.com/lists/1322kb.html) | [股市前沿](https://www.jiemian.com/lists/1327kb.html) | [监管通报](https://www.jiemian.com/lists/1330kb.html) | [财经速览](https://www.jiemian.com/lists/1326kb.html) | [时事追踪](https://www.jiemian.com/lists/1325kb.html) |\n| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |\n| 1324kb                                                | 1322kb                                                | 1327kb                                                | 1330kb                                                | 1326kb                                                | 1325kb                                                |\n\n:::",
         "location": "lists.ts",
         "module": "() => import('@/routes/jiemian/lists.ts')"
+      },
+      "/special/1192": {
+        "path": "/special/1192",
+        "parameters": {
+          "id": "分类 id，见下表，可在对应分类页 URL 中找到"
+        },
+        "name": "专题",
+        "example": "/jiemian/special/1192",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "special.ts",
+        "module": "() => import('@/routes/jiemian/special.ts')"
+      },
+      "/video/lists/258_1": {
+        "path": "/video/lists/258_1",
+        "parameters": {
+          "id": "分类 id，见下表，可在对应分类页 URL 中找到"
+        },
+        "name": "视频",
+        "example": "/jiemian/video/lists/258_1",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "| [界面 Vnews](https://www.jiemian.com/video/lists/258_1.html) | [直播](https://www.jiemian.com/videoLive/lists_1.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) | [面谈](https://www.jiemian.com/video/lists/111_1.html) | [品牌创酷](https://www.jiemian.com/video/lists/226_1.html) | [番 茄社](https://www.jiemian.com/video/lists/567_1.html) |\n| ------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------- | --------------------------------------------------------- |\n| 258_1                                                       | videoLive/lists_1                                     | 195_1                                                 | 111_1                                                 | 226_1                                                     | 567_1                                                    |\n\n| [商业微史记](https://www.jiemian.com/video/lists/882_1.html) |\n| ------------------------------------------------------------ |\n| 882_1                                                       |",
+        "location": "video.ts",
+        "module": "() => import('@/routes/jiemian/video.ts')"
+      },
+      "/pro/lists/12": {
+        "path": "/pro/lists/12",
+        "parameters": {
+          "id": "分类 id，见下表，可在对应分类页 URL 中找到"
+        },
+        "name": "VIP",
+        "example": "/jiemian/pro/lists/12",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "description": "| [投资早晚报](https://www.jiemian.com/pro/lists/12.html) | [宏观晚 6 点](https://www.jiemian.com/pro/lists/20.html) | [打新早报](https://www.jiemian.com/pro/lists/21.html) | [盘前机会前瞻](https://www.jiemian.com/pro/lists/13.html) | [公告快评](https://www.jiemian.com/pro/lists/14.html) | [盘中必读](https://www.jiemian.com/pro/lists/15.html) |\n| ------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |\n| 12                                                      | 20                                                       | 21                                                    | 13                                                        | 14                                                    | 15                                                    |\n\n| [金股挖掘](https://www.jiemian.com/pro/lists/16.html) | [调研早知道](https://www.jiemian.com/pro/lists/17.html) | [研报新知](https://www.jiemian.com/pro/lists/18.html) | [大势侦察](https://www.jiemian.com/pro/lists/1.html) | [市场风向标](https://www.jiemian.com/pro/lists/19.html) |\n| ----------------------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |\n| 16                                                    | 17                                                      | 18                                                    | 1                                                    | 19                                                      |\n",
+        "location": "vip.ts",
+        "module": "() => import('@/routes/jiemian/vip.ts')"
       }
     },
     "name": "界面新闻",
@@ -66065,31 +66121,48 @@
   "mydrivers": {
     "routes": {
       "/cid/:id?": {
-        "path": [
-          "/cid/:id?",
-          "/zhibo"
+        "path": "/cid/:id?",
+        "name": "更多分类",
+        "parameters": {
+          "id": "分类，见下表，留空为直播"
+        },
+        "example": "/mydrivers/cid/2",
+        "maintainers": [
+          "nczitzk"
         ],
-        "name": "Unknown",
-        "maintainers": [],
         "url": "m.mydrivers.com/",
-        "location": "cid.ts",
-        "module": "() => import('@/routes/mydrivers/cid.ts')"
-      },
-      "/zhibo": {
-        "path": [
-          "/cid/:id?",
-          "/zhibo"
+        "radar": [
+          {
+            "source": [
+              "m.mydrivers.com/"
+            ],
+            "target": "/zhibo"
+          }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "m.mydrivers.com/",
+        "description": "::: details 更多分类\n\n| 电脑配件 | 手机之家 | 家用电器 | 网络设备 | 办公外设 | 游戏之家 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/2    | cid/3    | cid/4    | cid/5    | cid/6    | cid/7    |\n\n| 电脑软件 | 业内动向 | 品牌整机 | 其它资讯 | 显卡   | CPU    |\n| -------- | -------- | -------- | -------- | ------ | ------ |\n| cid/8    | cid/9    | cid/10   | cid/11   | cid/12 | cid/13 |\n\n| 主板   | 内存   | 硬盘   | 机箱   | 电源   | 散热器 |\n| ------ | ------ | ------ | ------ | ------ | ------ |\n| cid/14 | cid/15 | cid/16 | cid/17 | cid/18 | cid/19 |\n\n| 光驱   | 声卡   | 键鼠   | 音箱   | 手机厂商 | 手机配件 |\n| ------ | ------ | ------ | ------ | -------- | -------- |\n| cid/20 | cid/21 | cid/22 | cid/23 | cid/24   | cid/25   |\n\n| PDA    | MP3/MP4 | 摄像机 | 数码相机 | 摄像头 | 数码配件 |\n| ------ | ------- | ------ | -------- | ------ | -------- |\n| cid/26 | cid/27  | cid/29 | cid/30   | cid/31 | cid/32   |\n\n| 电子书 | 导航产品 | 录音笔 | 交换机 | 路由器 | 防火墙 |\n| ------ | -------- | ------ | ------ | ------ | ------ |\n| cid/33 | cid/34   | cid/35 | cid/37 | cid/38 | cid/40 |\n\n| 网卡   | 网络存储 | UPS    | 打印机 | 复印机 | 复合机 |\n| ------ | -------- | ------ | ------ | ------ | ------ |\n| cid/41 | cid/43   | cid/44 | cid/45 | cid/46 | cid/47 |\n\n| 投影仪 | 扫描仪 | 传真机 | 电脑游戏 | 主机游戏 | 游戏主机 |\n| ------ | ------ | ------ | -------- | -------- | -------- |\n| cid/48 | cid/49 | cid/51 | cid/52   | cid/53   | cid/54   |\n\n| 掌机游戏 | 电脑驱动 | 桌面系统 | 视点人物 | 数据报告 | 科技前沿 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/55   | cid/57   | cid/58   | cid/62   | cid/63   | cid/65   |\n\n| 笔记本 | 台式机 | 服务器 | 一体机 | 其他   | PC硬件 |\n| ------ | ------ | ------ | ------ | ------ | ------ |\n| cid/66 | cid/67 | cid/68 | cid/69 | cid/73 | cid/74 |\n\n| 时尚数码 | 软件驱动 | 显示器 | 音箱耳机 | 投影机  | 便携机  |\n| -------- | -------- | ------ | -------- | ------- | ------- |\n| cid/78   | cid/79   | cid/80 | cid/92   | cid/100 | cid/108 |\n\n| 手机    | MP3     | MP4     | 闪存盘  | DV摄像机 | U盘     |\n| ------- | ------- | ------- | ------- | -------- | ------- |\n| cid/109 | cid/112 | cid/113 | cid/114 | cid/115  | cid/116 |\n\n| GPS     | 移动硬盘 | 操作系统 | 驱动    | 软件    | 软件更新 |\n| ------- | -------- | -------- | ------- | ------- | -------- |\n| cid/117 | cid/119  | cid/120  | cid/121 | cid/122 | cid/123  |\n\n| 新软推荐 | 业界动态 | 软件评测 | 软件技巧 | 游戏相关 | 驱动研究 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/124  | cid/125  | cid/126  | cid/127  | cid/128  | cid/130  |\n\n| 游戏试玩 | 硬件学堂 | 实用技巧 | 新软体验 | 资讯教程 | 软件横评 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/131  | cid/132  | cid/133  | cid/134  | cid/135  | cid/136  |\n\n| Windows | Mac     | Linux   | 其它    | 使用技巧 | 深入研究 |\n| ------- | ------- | ------- | ------- | -------- | -------- |\n| cid/137 | cid/138 | cid/139 | cid/140 | cid/141  | cid/142  |\n\n| 游戏机  | 显示    | 存储    | 音频    | 外设    | 数码    |\n| ------- | ------- | ------- | ------- | ------- | ------- |\n| cid/144 | cid/145 | cid/146 | cid/147 | cid/148 | cid/151 |\n\n| 网络    | 办公    | 维修    | 安全    | 聊天    | 影音    |\n| ------- | ------- | ------- | ------- | ------- | ------- |\n| cid/152 | cid/154 | cid/155 | cid/156 | cid/157 | cid/158 |\n\n| 国内    | 国外    | 办公应用 | 设计创意 | 基础知识 | 程序    |\n| ------- | ------- | -------- | -------- | -------- | ------- |\n| cid/159 | cid/160 | cid/161  | cid/162  | cid/163  | cid/164 |\n\n| 其他硬件 | 电视卡/盒 | 游戏体验 | 平板电视 | 企业动态 | 天文航天 |\n| -------- | --------- | -------- | -------- | -------- | -------- |\n| cid/166  | cid/170   | cid/172  | cid/173  | cid/174  | cid/175  |\n\n| MID设备 | 数码相框 | 耳机    | 通讯运营商 | 电视盒  | 线材线缆 |\n| ------- | -------- | ------- | ---------- | ------- | -------- |\n| cid/176 | cid/177  | cid/179 | cid/180    | cid/182 | cid/183  |\n\n| 小家电  | 网络游戏 | 行情信息 | 科学动态 | 生物世界 | 历史考古 |\n| ------- | -------- | -------- | -------- | -------- | -------- |\n| cid/184 | cid/186  | cid/188  | cid/192  | cid/193  | cid/194  |\n\n| 生科医学 | 地理自然 | 工程建筑 | 苹果手机 | 谷歌Android | 塞班手机 |\n| -------- | -------- | -------- | -------- | ----------- | -------- |\n| cid/195  | cid/196  | cid/197  | cid/201  | cid/202     | cid/203  |\n\n| 黑莓手机 | 微软手机 | 移动处理器 | 山寨机  | 手机游戏 | 安卓应用 |\n| -------- | -------- | ---------- | ------- | -------- | -------- |\n| cid/204  | cid/205  | cid/206    | cid/208 | cid/209  | cid/210  |\n\n| 娱乐生活 | 明星全接触 | 电影影讯 | 电视节目 | 音乐戏曲 | 国际风云 |\n| -------- | ---------- | -------- | -------- | -------- | -------- |\n| cid/212  | cid/213    | cid/214  | cid/215  | cid/216  | cid/217  |\n\n| 国内传真 | 社会民生 | 生活百态 | 医药健康 | 家居尚品 | 星座旅游 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/218  | cid/219  | cid/220  | cid/221  | cid/222  | cid/223  |\n\n| 评论分析 | 体育竞技 | IT八卦  | 科技动态 | 游戏动态 | 手机系统 |\n| -------- | -------- | ------- | -------- | -------- | -------- |\n| cid/224  | cid/225  | cid/226 | cid/227  | cid/228  | cid/232  |\n\n| 智能设备 | 生活电器 | 汽车相关 | 飞机航空 | 手机周边 | 网络运营商 |\n| -------- | -------- | -------- | -------- | -------- | ---------- |\n| cid/233  | cid/234  | cid/235  | cid/236  | cid/237  | cid/238    |\n\n| 平板电脑 | 苹果iPad | 安卓平板 | Windows平板 | 创业路上 | 网友热议 |\n| -------- | -------- | -------- | ----------- | -------- | -------- |\n| cid/239  | cid/240  | cid/241  | cid/242     | cid/243  | cid/244  |\n\n| IT圈    | 数码周边 | 智能手环 | 智能眼镜 | 智能手表 | iOS应用 |\n| ------- | -------- | -------- | -------- | -------- | ------- |\n| cid/246 | cid/247  | cid/248  | cid/249  | cid/250  | cid/251 |\n\n| 壁纸主题 | 游戏厂商 | 数理化学 | 科普知识 | 奇趣探险 | 汽车世界 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/252  | cid/253  | cid/254  | cid/255  | cid/256  | cid/257  |\n\n| 传统汽车 | 电动汽车 | 新能源汽车 | 无人驾驶汽车 | 车载系统 | 车载配件 |\n| -------- | -------- | ---------- | ------------ | -------- | -------- |\n| cid/258  | cid/259  | cid/260    | cid/261      | cid/262  | cid/263  |\n\n| 汽车厂商 | 影音动漫 | 精彩影视 | 电影动画 | 艺术设计 | 摄影达人 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/264  | cid/265  | cid/266  | cid/267  | cid/269  | cid/270  |\n\n| 固件    | 样张赏析 | 创意摄影 | WP应用  | 教育未来 | 安卓手机 |\n| ------- | -------- | -------- | ------- | -------- | -------- |\n| cid/272 | cid/273  | cid/274  | cid/284 | cid/285  | cid/288  |\n\n| 智能穿戴 | 移动应用 | 电子竞技 | 游戏八卦 | 游戏评测 | 生活百科 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/290  | cid/292  | cid/297  | cid/298  | cid/299  | cid/301  |\n\n| 智能家居 | 智能插座 | 智能摄像头 | 智能路由器 | 智能体重秤 | 智能血压计 |\n| -------- | -------- | ---------- | ---------- | ---------- | ---------- |\n| cid/302  | cid/303  | cid/304    | cid/305    | cid/306    | cid/307    |\n\n| 空气净化器 | 智能净水器 | 电动两轮车 | 公司财报 | 智能行车记录仪 | 网络影视 |\n| ---------- | ---------- | ---------- | -------- | -------------- | -------- |\n| cid/308    | cid/309    | cid/310    | cid/311  | cid/312        | cid/313  |\n\n| 多轴无人机 | 摩托车  | 自行车  | 共享经济 | 生活周边 | 网络安全 |\n| ---------- | ------- | ------- | -------- | -------- | -------- |\n| cid/314    | cid/316 | cid/317 | cid/320  | cid/321  | cid/322  |\n\n| 考勤机  | 网络红人 | 火车高铁 | 机器人  | 其他网络 | 快递物流 |\n| ------- | -------- | -------- | ------- | -------- | -------- |\n| cid/323 | cid/324  | cid/325  | cid/326 | cid/327  | cid/328  |\n\n| 科技资讯 | 好货推荐 | 日常用品 | 餐饮零食 | 化妆品  | 运动健康 |\n| -------- | -------- | -------- | -------- | ------- | -------- |\n| cid/329  | cid/334  | cid/335  | cid/336  | cid/339 | cid/340  |\n\n| 酒水饮料 | 个人洗护 | 电子产品 | 服装鞋帽 | 会员卡  | 用户投稿 |\n| -------- | -------- | -------- | -------- | ------- | -------- |\n| cid/341  | cid/342  | cid/343  | cid/345  | cid/346 | cid/351  |\n\n| APP投稿 | PC投稿  | 视频快讯 | 新品开箱 | 技巧教程 | 科技快讯 |\n| ------- | ------- | -------- | -------- | -------- | -------- |\n| cid/352 | cid/353 | cid/354  | cid/355  | cid/356  | cid/357  |\n\n| 产品评测 | 人物专访 | 会议活动 | 数码影音 | 数码影像 | 游戏周边 |\n| -------- | -------- | -------- | -------- | -------- | -------- |\n| cid/358  | cid/359  | cid/360  | cid/361  | cid/362  | cid/368  |\n\n| 汽车周边 | 个人交通 | 其他交通 |\n| -------- | -------- | -------- |\n| cid/369  | cid/370  | cid/371  |\n\n:::",
         "location": "cid.ts",
         "module": "() => import('@/routes/mydrivers/cid.ts')"
       },
       "/:category{.+}?": {
         "path": "/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "分类",
+        "parameters": {
+          "category": "分类，见下表，默认为最新"
+        },
+        "example": "/mydrivers/bcid/801",
+        "maintainers": [
+          "kt286",
+          "nczitzk"
+        ],
+        "radar": [
+          {
+            "source": [
+              "m.mydrivers.com/"
+            ],
+            "target": "/zhibo"
+          }
+        ],
+        "description": "\n#### 板块\n\n| 电脑     | 手机     | 汽车     | 业界     | 游戏     |\n| -------- | -------- | -------- | -------- | -------- |\n| bcid/801 | bcid/802 | bcid/807 | bcid/803 | bcid/806 |\n\n#### 话题\n\n| 科学     | 排行     | 评测     | 一图     |\n| -------- | -------- | -------- | -------- |\n| tid/1000 | tid/1001 | tid/1002 | tid/1003 |\n\n#### 品牌\n\n| 安卓     | 阿里     | 微软    | 百度    | PS5       | Xbox     | 华为     |\n| -------- | -------- | ------- | ------- | --------- | -------- | -------- |\n| icid/121 | icid/270 | icid/90 | icid/67 | icid/6950 | icid/194 | icid/136 |\n\n| 小米      | VIVO     | 三星     | 魅族     | 一加     | 比亚迪   | 小鹏      |\n| --------- | -------- | -------- | -------- | -------- | -------- | --------- |\n| icid/9355 | icid/288 | icid/154 | icid/140 | icid/385 | icid/770 | icid/7259 |\n\n| 蔚来      | 理想       | 奔驰     | 宝马     | 大众     |\n| --------- | ---------- | -------- | -------- | -------- |\n| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |\n",
         "location": "index.ts",
         "module": "() => import('@/routes/mydrivers/index.ts')"
       },
@@ -99089,39 +99162,6 @@
     "name": "Transformer Circuits",
     "url": "transformer-circuits.pub",
     "lang": "en"
-  },
-  "trending": {
-    "routes": {
-      "/:keywords/:numberOfDays?": {
-        "path": "/:keywords/:numberOfDays?",
-        "categories": [
-          "other"
-        ],
-        "example": "/trending/唐山,打人/3",
-        "parameters": {
-          "keywords": "通过逗号区隔的关键词列表",
-          "numberOfDays": "向前追溯的天数，默认为3天"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "关键词聚合追踪",
-        "maintainers": [
-          "Jkker"
-        ],
-        "description": "追踪各大热搜榜上包含特定关键词的条目。\n\n当前收录榜单：*微博热搜*、*今日头条热搜*、*知乎热搜*、*知乎热门视频*、*知乎热门话题*。\n\n数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)",
-        "location": "all-trending.ts",
-        "module": "() => import('@/routes/trending/all-trending.ts')"
-      }
-    },
-    "name": "热搜聚合",
-    "url": "so.toutiao.com",
-    "lang": "zh-CN"
   },
   "trendingpapers": {
     "routes": {
