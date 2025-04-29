@@ -6,7 +6,7 @@ import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/mobile',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sohu/mobile',
     parameters: {},
     features: {
