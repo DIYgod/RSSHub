@@ -59,12 +59,10 @@ async function handler(ctx) {
         const link = `https://juejin.cn/pin/${guid}`;
         const pubDate = parseDate(item.msg_Info.ctime * 1000);
         const author = item.author_user_info.user_name;
-        const imgs = item.msg_Info.pic_list.reduce((imgs, item) => {
-            imgs += `
-          <img src="${item}"><br>
-        `;
-            return imgs;
-        }, '');
+        let imgs = '';
+        for (const img of item.msg_Info.pic_list) {
+            imgs += `<img src="${img}"><br>`;
+        }
         const description = `
             ${content.replaceAll('\n', '<br>')}<br>
             ${imgs}<br>

@@ -1,27 +1,37 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { config } from '@/config';
+import type { Context } from 'hono';
 const rootUrl = 'https://www.iguoguo.net';
 
-const getChildrenFromCheerioRoot = (cheerioInstance) => {
-    const root = cheerioInstance.root();
-    const rootKeys = Object.keys(root).filter((n) => n % 1 === 0);
-    const rootChildren = rootKeys.map((key) => root[key].children);
-    return rootChildren[0];
-};
+const getCategoryIdFromSlug = (slug) =>
+    cache.tryGet(`iguoguo:category:${slug}`, async () => {
+        const response = await ofetch(`${rootUrl}/wp-json/wp/v2/categories`, {
+            query: {
+                slug,
+            },
+        });
+        return response[0].id;
+    });
 
-const getComments = (a, node) => {
-    if (node.type === 'comment') {
-        return [...a, node.data];
-    } else if (node.type === 'tag' && node.children && node.children.length > 0) {
-        return [...a, ...node.children.reduce((accumulator, element) => getComments(accumulator, element), [])];
-    } else {
-        return a;
-    }
-};
+const getPostsByCategory = (categoryId, limit) =>
+    cache.tryGet(
+        `iguoguo:posts:${categoryId}`,
+        async () => {
+            const response = await ofetch(`${rootUrl}/wp-json/wp/v2/posts`, {
+                query: {
+                    categories: categoryId,
+                    per_page: limit,
+                },
+            });
+            return response;
+        },
+        config.cache.routeExpire,
+        false
+    );
 
 export const route: Route = {
     path: '/html5',
@@ -41,50 +51,42 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
-    const currentUrl = rootUrl.concat('/html5');
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-    const $ = load(response.data);
-    const list = $('a', '.post')
-        .filter((_, x) => $(x).attr('href').endsWith('.html'))
-        .filter((_, x) => $(x).children().eq(0).attr('src'))
-        .map((_, item) => ({
-            link: $(item).attr('href'),
-            cover: $(item).children().eq(0).attr('src'),
-        }))
-        .get();
+async function handler(ctx: Context) {
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '10');
+    const currentUrl = `${rootUrl}/html5`;
+    const categorySlug = 'h5';
+
+    const categoryId = await getCategoryIdFromSlug(categorySlug);
+    const posts = await getPostsByCategory(categoryId, limit);
 
     const mime = {
         jpg: 'jpeg',
         png: 'png',
     };
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(detailResponse.data);
-                item.title = content('h1', '.post-info').text();
-                item.description = content('div.clearfix', '.post_content').html();
-                const comments = getChildrenFromCheerioRoot(content).reduce((accumulator, element) => getComments(accumulator, element), []);
-                const date = comments.at(-1).trim().split(' ').slice(9, 11);
-                item.pubDate = timezone(parseDate(date[0] + date[1], 'YYYY-MM-DDHH:mm:ss'), +8);
-                item.media = {
-                    content: {
-                        url: item.cover,
-                        type: `image/${mime[item.cover.split('.').pop()]}`,
-                    },
-                };
-                return item;
-            })
-        )
-    );
+    const items = posts.map((item) => {
+        const $ = load(item.content.rendered);
+        const cover = $('p > img').first().attr('src');
+        $('p > img').first().remove();
+        $('h4').each((_, el) => {
+            if ($(el).text().includes('扫码欣赏')) {
+                $(el).remove();
+            }
+        });
+        return {
+            title: item.title.rendered,
+            description: $.html(),
+            link: item.link,
+            cover,
+            pubDate: parseDate(item.date_gmt),
+            media: cover && {
+                content: {
+                    url: cover,
+                    type: `image/${mime[cover.split('.').pop()]}`,
+                },
+            },
+        };
+    });
     return {
         title: '爱果果',
         link: currentUrl,
