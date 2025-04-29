@@ -22,11 +22,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const query = ctx.req.param('query') ?? ''; // beginDate=2018-08-18&endDate=2020-09-01&productId=600696
-    const queries = query.split('&').reduce((acc, cur) => {
-        const [key, value] = cur.split('=');
-        acc[key] = value;
-        return acc;
-    }, {});
+    const queries: Record<string, string> = {};
+    if (query) {
+        for (const pair of query.split('&')) {
+            const [key, value] = pair.split('=');
+            if (key) {
+                queries[key] = value;
+            }
+        }
+    }
     const pageUrl = `https://www.sse.com.cn/assortment/stock/list/info/announcement/index.shtml?productId=${queries.productId}`;
 
     const response = await got('https://query.sse.com.cn/security/stock/queryCompanyBulletin.do', {

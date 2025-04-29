@@ -43,19 +43,17 @@ const getInfo = (url, tryGet) =>
  * @param {...Object} searchParams - The search parameter objects.
  * @returns {Promise<Array>}       - The processed item array.
  */
-const processItems = async (apiUrl, limit, tryGet, ...searchParams) => {
+const processItems = async (apiUrl, limit, tryGet, ...params) => {
     // Merge search parameters
-    searchParams = {
-        ...searchParams.reduce(
-            (result, object) => ({
-                ...result,
-                ...object,
-            }),
-            {}
-        ),
-
+    let searchParams = {
         size: limit,
     };
+    for (const param of params) {
+        searchParams = {
+            ...searchParams,
+            ...param,
+        };
+    }
 
     const { data: response } = await got(apiUrl, {
         searchParams,

@@ -44,17 +44,17 @@ async function handler(ctx) {
 
     const api = getApi(category);
     api.searchParams.set('include', 'media');
-    api.searchParams.set('page[limit]', limit);
+    api.searchParams.set('page[limit]', limit.toString());
     api.searchParams.set('sort', '-published-at');
     api.searchParams.set('filter[list-all]', '0');
     api.searchParams.set('filter[is-require-privilege]', '0');
     api.searchParams.set('fields[radios]', 'title,cover,published-at,duration,content,media');
     const { data, included } = await get(api);
 
-    const audios = included.reduce((result, media) => {
-        result[media.id] = media.attributes.audio;
-        return result;
-    }, {});
+    const audios = {};
+    for (const media of included) {
+        audios[media.id] = media.attributes.audio;
+    }
 
     const item = data.map((radio) => {
         const { id, attributes, relationships } = radio;

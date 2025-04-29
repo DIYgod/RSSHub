@@ -94,19 +94,20 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
 
     const formatVideo = (media, extraAttrs = '') => {
         let content = '';
-        const video = media.video_info.variants.reduce((video, item) => {
-            if ((item.bitrate || 0) > (video.bitrate || -Infinity)) {
-                video = item;
-            }
-            return video;
-        }, {});
+        let bestVideo = null;
 
-        if (video.url) {
+        for (const item of media.video_info.variants) {
+            if (!bestVideo || (item.bitrate || 0) > (bestVideo.bitrate || -Infinity)) {
+                bestVideo = item;
+            }
+        }
+
+        if (bestVideo && bestVideo.url) {
             const gifAutoPlayAttr = media.type === 'animated_gif' ? `autoplay loop muted webkit-playsinline playsinline` : '';
             if (!readable) {
                 content += '<br>';
             }
-            content += `<video width="${media.sizes.large.w}" height="${media.sizes.large.h}" src='${video.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
+            content += `<video width="${media.sizes.large.w}" height="${media.sizes.large.h}" src='${bestVideo.url}' ${gifAutoPlayAttr} controls='controls' poster='${getOriginalImg(media.media_url_https)}' ${extraAttrs}></video>`;
         }
 
         return content;

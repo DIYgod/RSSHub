@@ -70,16 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.date').first().text();
                     const upDatedStr: string | undefined = pubDateStr;
 
-                    const clearIndex = $$pageBox
-                        .children()
-                        .toArray()
-                        .map((el, index) => ({ el, index }))
-                        .filter(({ el }) => el.tagName === 'div' && el.attributes.some((attr) => attr.name === 'style' && attr.value.split(';').some((prop) => prop.trim() === 'clear:both')))
-                        .reduce((_, { index }) => index, -1);
-
-                    if (clearIndex !== -1) {
-                        $$pageBox.children().slice(0, clearIndex).remove();
-                    }
+                    $$pageBox.find('h2, div.date, .the_champ_sharing_container').remove();
 
                     const description: string | undefined = $$pageBox.html() ?? item.description;
 
