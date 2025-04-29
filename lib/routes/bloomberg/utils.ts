@@ -197,10 +197,10 @@ const parseVideoPage = async (res, api, item) => {
 
 const parsePhotoEssaysPage = async (res, api, item) => {
     const $ = load(res.data.html);
-    const article_json = $(api.sel)
-        .toArray()
-        .map((e) => JSON.parse($(e).html()))
-        .reduce((pv, cv) => ({ ...pv, ...cv }), {});
+    const article_json = {};
+    for (const e of $(api.sel).toArray()) {
+        Object.assign(article_json, JSON.parse($(e).html()));
+    }
     const rss_item = {
         title: article_json.headline || item.title,
         link: article_json.canonical || item.link,
