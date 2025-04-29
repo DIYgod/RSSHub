@@ -31,11 +31,7 @@ export const route: Route = {
 
 async function handler() {
     try {
-        const response = await ofetch('https://m.sohu.com/limit', {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)'
-            }
-        });
+        const response = await ofetch('https://m.sohu.com/limit');
         // 从HTML中提取JSON数据
         const $ = cheerio.load(response);
         const jsonScript = $('script:contains("WapHomeRenderData")').html();
