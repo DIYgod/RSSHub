@@ -34,7 +34,7 @@ async function handler() {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)'
             }
-        });       
+        });
         const $ = cheerio.load(response);
         const list = $('.content-left  section > div.f').toArray()
             .map((item) => {
@@ -49,7 +49,7 @@ async function handler() {
                     link
                 };
             })
-            .filter(item => item.link); // 过滤无效链接
+            .filter((item) => item.link); // 过滤无效链接
 
         const items = await Promise.all(
             list.map((item) =>
@@ -57,10 +57,9 @@ async function handler() {
                     try {
                         const detailResp = await ofetch(item.link);
                         const $d = cheerio.load(detailResp);
-                        item.description = $d('#articleContent').first().html();                    
+                        item.description = $d('#articleContent').first().html();
                         return item;
-                    } catch (e) {
-                        console.error(`获取详情失败: ${item.link}`, e);
+                    } catch (error) {
                         return item; // 返回基础信息
                     }
                 })
@@ -71,8 +70,7 @@ async function handler() {
             link: 'https://m.sohu.com/limit',
             item: items.filter(Boolean), // 过滤空项
         };
-    } catch (e) {
-        console.error('抓取失败:', e);
+    } catch (error) {
         return {
             title: '手机搜狐新闻',
             link: 'https://m.sohu.com/limit',
