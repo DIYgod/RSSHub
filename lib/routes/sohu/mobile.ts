@@ -3,7 +3,6 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
 import logger from '@/utils/logger';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/mobile',
