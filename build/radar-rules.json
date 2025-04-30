@@ -9155,6 +9155,107 @@
       }
     ]
   },
+  "chinadaily.com.cn": {
+    "_name": "中国日报网",
+    "language": [
+      {
+        "title": "英语点津",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/chinadailyparams=>{const category=params.category;return`/chinadaily/language${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "精彩推荐",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/thelatest"
+        ],
+        "target": "/chinadaily/language/thelatest"
+      },
+      {
+        "title": "每日一词",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news_hotwords/word_of_the_day"
+        ],
+        "target": "/chinadaily/language/news_hotwords/word_of_the_day"
+      },
+      {
+        "title": "双语新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news_bilingual"
+        ],
+        "target": "/chinadaily/language/news_bilingual"
+      },
+      {
+        "title": "新闻热词",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news_hotwords"
+        ],
+        "target": "/chinadaily/language/news_hotwords"
+      },
+      {
+        "title": "实用口语",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/practice_tongue"
+        ],
+        "target": "/chinadaily/language/practice_tongue"
+      },
+      {
+        "title": "译词课堂",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/trans_collect"
+        ],
+        "target": "/chinadaily/language/trans_collect"
+      },
+      {
+        "title": "图片新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news_photo"
+        ],
+        "target": "/chinadaily/language/news_photo"
+      },
+      {
+        "title": "视频精选",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/video_links"
+        ],
+        "target": "/chinadaily/language/video_links"
+      },
+      {
+        "title": "新闻播报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/audio_cd"
+        ],
+        "target": "/chinadaily/language/audio_cd"
+      },
+      {
+        "title": "专栏作家",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/columnist"
+        ],
+        "target": "/chinadaily/language/columnist"
+      },
+      {
+        "title": "权威发布",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/5af95d44a3103f6866ee845c"
+        ],
+        "target": "/chinadaily/language/5af95d44a3103f6866ee845c"
+      }
+    ]
+  },
   "chinafactcheck.com": {
     "_name": "有据",
     ".": [

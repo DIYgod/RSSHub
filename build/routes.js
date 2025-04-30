@@ -20581,6 +20581,177 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
+  "chinadaily": {
+    "routes": {
+      "/language/:category{.+}?": {
+        "path": "/language/:category{.+}?",
+        "name": "英语点津",
+        "url": "language.chinadaily.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/chinadaily/language/thelatest",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `thelatest`，即精彩推荐，可在对应分类页 URL 中找到, Category, `thelatest`，即精彩推荐  by default",
+            "options": [
+              {
+                "label": "精彩推荐",
+                "value": "thelatest"
+              },
+              {
+                "label": "每日一词",
+                "value": "news_hotwords/word_of_the_day"
+              },
+              {
+                "label": "双语新闻",
+                "value": "news_bilingual"
+              },
+              {
+                "label": "新闻热词",
+                "value": "news_hotwords"
+              },
+              {
+                "label": "实用口语",
+                "value": "practice_tongue"
+              },
+              {
+                "label": "译词课堂",
+                "value": "trans_collect"
+              },
+              {
+                "label": "图片新闻",
+                "value": "news_photo"
+              },
+              {
+                "label": "视频精选",
+                "value": "video_links"
+              },
+              {
+                "label": "新闻播报",
+                "value": "audio_cd"
+              },
+              {
+                "label": "专栏作家",
+                "value": "columnist"
+              },
+              {
+                "label": "权威发布",
+                "value": "5af95d44a3103f6866ee845c"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n若订阅 [精彩推荐](https://language.chinadaily.com.cn/thelatest)，网址为 `https://language.chinadaily.com.cn/thelatest`，请截取 `https://language.chinadaily.com.cn/` 到末尾的部分 `thelatest` 作为 `category` 参数填入，此时目标路由为 [`/chinadaily/language/thelatest`](https://rsshub.app/chinadaily/language/thelatest)。\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n| 分类                                                                         | ID                                                                                                    |\n| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |\n| [精彩推荐](https://language.chinadaily.com.cn/thelatest)                     | [thelatest](https://rsshub.app/chinadaily/language/thelatest)                                         |\n| [每日一词](https://language.chinadaily.com.cn/news_hotwords/word_of_the_day) | [news_hotwords/word_of_the_day](https://rsshub.app/chinadaily/language/news_hotwords/word_of_the_day) |\n| [双语新闻](https://language.chinadaily.com.cn/news_bilingual)                | [news_bilingual](https://rsshub.app/chinadaily/language/news_bilingual)                               |\n| [新闻热词](https://language.chinadaily.com.cn/news_hotwords)                 | [news_hotwords](https://rsshub.app/chinadaily/language/news_hotwords)                                 |\n| [实用口语](https://language.chinadaily.com.cn/practice_tongue)               | [practice_tongue](https://rsshub.app/chinadaily/language/practice_tongue)                             |\n| [译词课堂](https://language.chinadaily.com.cn/trans_collect)                 | [trans_collect](https://rsshub.app/chinadaily/language/trans_collect)                                 |\n| [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news_photo](https://rsshub.app/chinadaily/language/news_photo)                                       |\n| [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video_links](https://rsshub.app/chinadaily/language/video_links)                                     |\n| [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio_cd](https://rsshub.app/chinadaily/language/audio_cd)                                           |\n| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio_cd](https://rsshub.app/chinadaily/language/columnist)                                          |\n| [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)           |\n\n</details>\n",
+        "categories": [
+          "traditional-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": true,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "language.chinadaily.com.cn/:category"
+            ]
+          },
+          {
+            "title": "精彩推荐",
+            "source": [
+              "language.chinadaily.com.cn/thelatest"
+            ],
+            "target": "/language/thelatest"
+          },
+          {
+            "title": "每日一词",
+            "source": [
+              "language.chinadaily.com.cn/news_hotwords/word_of_the_day"
+            ],
+            "target": "/language/news_hotwords/word_of_the_day"
+          },
+          {
+            "title": "双语新闻",
+            "source": [
+              "language.chinadaily.com.cn/news_bilingual"
+            ],
+            "target": "/language/news_bilingual"
+          },
+          {
+            "title": "新闻热词",
+            "source": [
+              "language.chinadaily.com.cn/news_hotwords"
+            ],
+            "target": "/language/news_hotwords"
+          },
+          {
+            "title": "实用口语",
+            "source": [
+              "language.chinadaily.com.cn/practice_tongue"
+            ],
+            "target": "/language/practice_tongue"
+          },
+          {
+            "title": "译词课堂",
+            "source": [
+              "language.chinadaily.com.cn/trans_collect"
+            ],
+            "target": "/language/trans_collect"
+          },
+          {
+            "title": "图片新闻",
+            "source": [
+              "language.chinadaily.com.cn/news_photo"
+            ],
+            "target": "/language/news_photo"
+          },
+          {
+            "title": "视频精选",
+            "source": [
+              "language.chinadaily.com.cn/video_links"
+            ],
+            "target": "/language/video_links"
+          },
+          {
+            "title": "新闻播报",
+            "source": [
+              "language.chinadaily.com.cn/audio_cd"
+            ],
+            "target": "/language/audio_cd"
+          },
+          {
+            "title": "专栏作家",
+            "source": [
+              "language.chinadaily.com.cn/columnist"
+            ],
+            "target": "/language/columnist"
+          },
+          {
+            "title": "权威发布",
+            "source": [
+              "language.chinadaily.com.cn/5af95d44a3103f6866ee845c"
+            ],
+            "target": "/language/5af95d44a3103f6866ee845c"
+          }
+        ],
+        "view": 0,
+        "location": "language.ts",
+        "module": () => import('@/routes/chinadaily/language.ts')
+      }
+    },
+    "name": "中国日报网",
+    "url": "chinadaily.com.cn",
+    "categories": [
+      "traditional-media"
+    ],
+    "description": "",
+    "lang": "zh-CN"
+  },
   "chinadegrees": {
     "routes": {
       "/:province?": {
