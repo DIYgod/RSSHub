@@ -41,7 +41,7 @@ async function handler() {
         }
         const renderData = JSON.parse(jsonMatch[1]);
         const list = extractPlateBlockNewsLists(renderData)
-            .filter((item) => item.id && item.url?.startsWith('//'));
+            .filter((item) => item.id && item.url?.startsWith('//'))
             .map((item) => ({
                 title: item.title,
                 link: new URL(item.url.split('?')[0], 'https://m.sohu.com').href,
