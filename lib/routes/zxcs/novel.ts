@@ -9,7 +9,7 @@ const types = {
     dushi: '都市',
     xianxia: '仙侠',
     xuanhuan: '玄幻',
-    qihuan: ' 奇幻',
+    qihuan: '奇幻',
     lishi: '历史',
     youxi: '游戏',
     wuxia: '武侠',
