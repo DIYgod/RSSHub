@@ -94,7 +94,7 @@ function extractPlateBlockNewsLists(jsonData: any) {
     return result;
 }
 
-function extractPubDate($: cheerio.CheerioAPI): string{
+function extractPubDate($: cheerio.CheerioAPI): string {
     const timeElements = [
         '.time',
         '#videoPublicTime',
@@ -102,14 +102,18 @@ function extractPubDate($: cheerio.CheerioAPI): string{
     ];
     for (const selector of timeElements) {
         const text = $(selector).first().text().trim();
-        if (!text) continue;
+        if (!text) {
+            continue;
+        }
         //  ‘奔流 · 昨天23:59 · 2074阅读’
-        const dateRegex = /\d{4}[-\/]\d{2}[-\/]\d{2} \d{2}:\d{2}|昨天\d{1,2}:\d{2}|\d+\s*小时前|\d+\s*分钟前|\d{2}-\d{2} \d{2}:\d{2}|今天\d{1,2}:\d{2}|\d{4}年\d{2}月\d{2}日 \d{2}:\d{2}/;
+        const dateRegex = /\d{4}[-/]\d{2}[-/]\d{2} \d{2}:\d{2}|昨天\d{1,2}:\d{2}|\d+\s*(?:小时|分钟)前|\d{2}-\d{2} \d{2}:\d{2}|今天\d{1,2}:\d{2}|\d{4}年\d{2}月\d{2}日 \d{2}:\d{2}/;
         const dateMatch = text.match(dateRegex);
         const date = dateMatch?.[0];
         if (date) {
             const newdate = parseDate(date);
-            if (newdate) return newdate;
+            if (newdate) {
+                return newdate;
+            }
         }
     }
     return new Date().toISOString();
@@ -122,12 +126,12 @@ function parseDate(timeStr?: string | null): string | null {
     }
     const cleanedStr = timeStr.trim();
     // "2025-04-29 23:32" 或 "2025/04/29 23:32"
-    const standardMatch = cleanedStr.match(/^(\d{4}[-\/]\d{2}[-\/]\d{2} \d{2}:\d{2})$/);
+    const standardMatch = cleanedStr.match(/^(\d{4}[-/]\d{2}[-/]\d{2} \d{2}:\d{2})$/);
     if (standardMatch) {
         // 替换斜杠为横杠确保兼容性
-        const normalizedDateStr = standardMatch[1].replace(/\//g, '-');
+        const normalizedDateStr = standardMatch[1].replaceAll('/', '-');
         const date = new Date(normalizedDateStr);
-        if (!isNaN(date.getTime())) {
+        if (!Number.isNaN(date.getTime())) {
             return date.toISOString();
         }
     }
@@ -138,7 +142,7 @@ function parseDate(timeStr?: string | null): string | null {
             const date = new Date();
             date.setDate(date.getDate() - 1);
             const [hours, minutes] = timeMatch[1].split(':');
-            date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            date.setHours(Number.parseInt(hours), Number.parseInt(minutes), 0, 0);
             return date.toISOString();
         }
     }
@@ -146,23 +150,23 @@ function parseDate(timeStr?: string | null): string | null {
     const hoursAgoMatch = cleanedStr.match(/(\d+)\s*小时前/);
     if (hoursAgoMatch) {
         const date = new Date();
-        date.setHours(date.getHours() - parseInt(hoursAgoMatch[1]));
+        date.setHours(date.getHours() - Number.parseInt(hoursAgoMatch[1]));
         return date.toISOString();
     }
     //  "n分钟前" 格式
     const minsAgoMatch = cleanedStr.match(/(\d+)\s*分钟前/);
     if (minsAgoMatch) {
         const date = new Date();
-        date.setMinutes(date.getMinutes() - parseInt(minsAgoMatch[1]));
+        date.setMinutes(date.getMinutes() - Number.parseInt(minsAgoMatch[1]));
         return date.toISOString();
     }
     // "04-29 23:32"
     const shortDateMatch = cleanedStr.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/);
     if (shortDateMatch) {
-        const [_, month, day, time] = shortDateMatch;
+        const [, month, day, time] = shortDateMatch;
         const currentYear = new Date().getFullYear();
         const date = new Date(`${currentYear}-${month}-${day} ${time}`);
-        if (!isNaN(date.getTime())) {
+        if (!Number.isNaN(date.getTime())) {
             return date.toISOString();
         }
     }
@@ -172,16 +176,16 @@ function parseDate(timeStr?: string | null): string | null {
         if (timeMatch) {
             const [hours, minutes] = timeMatch[1].split(':');
             const date = new Date();
-            date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            date.setHours(Number.parseInt(hours), Number.parseInt(minutes), 0, 0);
             return date.toISOString();
         }
     }
     //  "2025年04月29日 23:32"
     const chineseDateMatch = cleanedStr.match(/^(\d{4})年(\d{2})月(\d{2})日 (\d{2}:\d{2})$/);
     if (chineseDateMatch) {
-        const [_, year, month, day, time] = chineseDateMatch;
+        const [, year, month, day, time] = chineseDateMatch;
         const date = new Date(`${year}-${month}-${day} ${time}`);
-        if (!isNaN(date.getTime())) {
+        if (!Number.isNaN(date.getTime())) {
             return date.toISOString();
         }
     }
