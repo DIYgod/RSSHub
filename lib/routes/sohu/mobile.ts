@@ -3,6 +3,7 @@ import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/mobile',
@@ -64,7 +65,7 @@ async function handler() {
 
                     return {
                         ...item,
-                        description: description || getDescription($d) || item.title,
+                        description: getDescription($d) || description || item.title,
                         pubDate: pubDate || extractPubDate($d),
                     };
                 } catch (error) {
