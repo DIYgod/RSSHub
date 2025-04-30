@@ -2,7 +2,6 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -10,8 +9,6 @@ import timezone from '@/utils/timezone';
 import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
 import { type Context } from 'hono';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'thelatest' } = ctx.req.param();
@@ -172,7 +169,7 @@ export const route: Route = {
     url: 'language.chinadaily.com.cn',
     maintainers: ['nczitzk'],
     handler,
-    example: '/chinadaily/language/thelatest',
+    example: '/language/thelatest',
     parameters: {
         category: {
             description: '分类，默认为 `thelatest`，即精彩推荐，可在对应分类页 URL 中找到, Category, `thelatest`，即精彩推荐  by default',
@@ -269,57 +266,57 @@ export const route: Route = {
         {
             title: '精彩推荐',
             source: ['language.chinadaily.com.cn/thelatest'],
-            target: '/chinadaily/language/thelatest',
+            target: '/language/thelatest',
         },
         {
             title: '每日一词',
             source: ['language.chinadaily.com.cn/news_hotwords/word_of_the_day'],
-            target: '/chinadaily/language/news_hotwords/word_of_the_day',
+            target: '/language/news_hotwords/word_of_the_day',
         },
         {
             title: '双语新闻',
             source: ['language.chinadaily.com.cn/news_bilingual'],
-            target: '/chinadaily/language/news_bilingual',
+            target: '/language/news_bilingual',
         },
         {
             title: '新闻热词',
             source: ['language.chinadaily.com.cn/news_hotwords'],
-            target: '/chinadaily/language/news_hotwords',
+            target: '/language/news_hotwords',
         },
         {
             title: '实用口语',
             source: ['language.chinadaily.com.cn/practice_tongue'],
-            target: '/chinadaily/language/practice_tongue',
+            target: '/language/practice_tongue',
         },
         {
             title: '译词课堂',
             source: ['language.chinadaily.com.cn/trans_collect'],
-            target: '/chinadaily/language/trans_collect',
+            target: '/language/trans_collect',
         },
         {
             title: '图片新闻',
             source: ['language.chinadaily.com.cn/news_photo'],
-            target: '/chinadaily/language/news_photo',
+            target: '/language/news_photo',
         },
         {
             title: '视频精选',
             source: ['language.chinadaily.com.cn/video_links'],
-            target: '/chinadaily/language/video_links',
+            target: '/language/video_links',
         },
         {
             title: '新闻播报',
             source: ['language.chinadaily.com.cn/audio_cd'],
-            target: '/chinadaily/language/audio_cd',
+            target: '/language/audio_cd',
         },
         {
             title: '专栏作家',
             source: ['language.chinadaily.com.cn/columnist'],
-            target: '/chinadaily/language/columnist',
+            target: '/language/columnist',
         },
         {
             title: '权威发布',
             source: ['language.chinadaily.com.cn/5af95d44a3103f6866ee845c'],
-            target: '/chinadaily/language/5af95d44a3103f6866ee845c',
+            target: '/language/5af95d44a3103f6866ee845c',
         },
     ],
     view: ViewType.Articles,
