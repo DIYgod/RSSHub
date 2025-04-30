@@ -51,10 +51,21 @@ async function handler() {
                 try {
                     const detailResp = await ofetch(item.link);
                     const $d = cheerio.load(detailResp);
+
+                    let description = '';
+                    let pubDate = '';
+                    if (item.link.includes('/xtopic/')) {
+                        const fullArticleUrl = $d('.tpl-top-text-item-content').prop('href')?.split('?')[0]?.replace('www.sohu.com/', 'm.sohu.com/');
+                        const response = await ofetch(`https:${fullArticleUrl}`);
+                        const $ = cheerio.load(response);
+                        description = getDescription($);
+                        pubDate = extractPubDate($);
+                    }
+
                     return {
                         ...item,
-                        description: getDescription($d) || item.title,
-                        pubDate: extractPubDate($d),
+                        description: description || getDescription($d) || item.title,
+                        pubDate: pubDate || extractPubDate($d),
                     };
                 } catch (error) {
                     logger.error(`获取详情失败: ${item.link}`, error);
