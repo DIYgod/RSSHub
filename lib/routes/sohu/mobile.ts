@@ -106,28 +106,28 @@ function extractPlateBlockNewsLists(jsonData: any) {
 }
 
 function extractPubDate($: cheerio.CheerioAPI): string {
-    const timeElements = [
-        '.time',
-        '#videoPublicTime',
-        'div.channelHeaderContainer div.detail',
-    ];
+    const timeElements = ['.time', '#videoPublicTime'];
+    let date;
     for (const selector of timeElements) {
         const text = $(selector).first().text().trim();
         if (!text) {
             continue;
         }
-        //  ‘奔流 · 昨天23:59 · 2074阅读’
-        const dateRegex = /\d{4}[-/]\d{2}[-/]\d{2} \d{2}:\d{2}|昨天\d{1,2}:\d{2}|\d+\s*(?:小时|分钟)前|\d{2}-\d{2} \d{2}:\d{2}|今天\d{1,2}:\d{2}|\d{4}年\d{2}月\d{2}日 \d{2}:\d{2}/;
-        const dateMatch = text.match(dateRegex);
-        const date = dateMatch?.[0];
+
+        date = parseDate(text);
         if (date) {
-            const newdate = parseDate(date);
-            if (newdate) {
-                return newdate;
-            }
+            return date;
         }
     }
-    return new Date().toISOString();
+
+    const img = $('meta[name="share_img"]')
+        .toArray()
+        .map((i) => $(i).attr('src'))
+        .find((i) => i.includes('images01'));
+    date = img ? parseDate(img?.match(/images01\/(\d{8})\//i)?.[1]) : '';
+    if (date) {
+        return date;
+    }
 }
 
 // 日期解析辅助函数
