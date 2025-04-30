@@ -17764,4 +17764,9 @@
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/",
           "/notice/list.htm" ],
-        target:"/zuel/notice" } ] } })
+        target:"/zuel/notice" } ] },
+  "zxcs.info":{ _name:"知轩藏书",
+    ".":[ { title:"小说列表",
+        docs:"https://docs.rsshub.app/routes/reading",
+        source:[ "/:type" ],
+        target:"/zxcs/novel/:type" } ] } })

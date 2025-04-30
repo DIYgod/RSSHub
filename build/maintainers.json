@@ -8680,6 +8680,9 @@
   "/zuvio/student5/:board?": [
     "TonyRL"
   ],
+  "/zxcs/novel/:type": [
+    "liaochuan"
+  ],
   "/zyshow*": [],
   "/zyw/hot/:site?": [
     "nczitzk"

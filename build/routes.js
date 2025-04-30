@@ -112310,6 +112310,47 @@ export default {
     "url": "irs.zuvio.com.tw",
     "lang": "zh-TW"
   },
+  "zxcs": {
+    "routes": {
+      "/novel/:type": {
+        "path": "/novel/:type",
+        "name": "小说列表",
+        "url": "zxcs.info",
+        "maintainers": [
+          "liaochuan"
+        ],
+        "example": "/zxcs/novel/jinqigengxin",
+        "parameters": {
+          "type": "小说类型, 可在对应类型页 URL 中找到"
+        },
+        "description": "支持小说类型：jinqigengxin-近期更新,dushi-都市,xianxia-仙侠,xuanhuan-玄幻,qihuan-奇幻,lishi-历史,youxi-游戏,wuxia-武侠,kehuan-科幻,tiyu-体育,lingyi-灵异,junshi-军事,erciyuan-轻小说",
+        "categories": [
+          "reading"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "zxcs.info/:type"
+            ],
+            "target": "/novel/:type"
+          }
+        ],
+        "location": "novel.ts",
+        "module": () => import('@/routes/zxcs/novel.ts')
+      }
+    },
+    "name": "知轩藏书",
+    "url": "zxcs.info",
+    "lang": "zh-CN"
+  },
   "zyshow": {
     "routes": {
       "*": {
