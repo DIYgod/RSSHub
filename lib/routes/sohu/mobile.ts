@@ -193,17 +193,18 @@ function parseDate(timeStr?: string | null): string | null {
 }
 
 function getDescription($: cheerio.CheerioAPI) : string | null {
-    const selectors = [
-        '#articleContent',
-        'div.tpl-top-text-content-description',
-        'div.title-desc > div.desc > div',
-        '#videoTitle',
-    ];
-    for (const selector of selectors) {
-        const content = $(selector).first().html()?.trim();
-        if (content && content.length > 6) {
-            return content;
-        }
+    const content = $('#articleContent');
+    if (content.length) {
+        return content.first().html()?.trim();
     }
-    return null;
+    const video = $('#videoPlayer div');
+    if (video.length) {
+        return `<video controls preload="auto" poster="${video.attr('data-thumbnail')}"><source src="${video.attr('data-url')}" /></video>`;
+    }
+    const imageList = $('script:contains("imageList")').text();
+    if (imageList) {
+        const list = JSON.parse(imageList.match(/(\[.*\])/s)?.[1].replaceAll(/("description": ".*"),/g, '$1') || '[]');
+        return list.map((item: any) => `<img src="${item.url}" alt="${item.description || ''}" />`).join('');
+    }
+    return '';
 }
