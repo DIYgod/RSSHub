@@ -24,7 +24,7 @@ export const route: Route = {
     path: '/novel/:type',
     name: '小说列表',
     url: 'zxcs.info',
-    maintainers: ['liaocl'],
+    maintainers: ['liaochuan'],
     example: '/zxcs/novel/jinqigengxin',
     parameters: { type: '小说类型, 可在对应类型页 URL 中找到' },
     description: `支持小说类型：${Object.entries(types)
