@@ -121,7 +121,6 @@ function parseDate(timeStr?: string | null): string | null {
         return null;
     }
     const cleanedStr = timeStr.trim();
-    const now = new Date();
     // "2025-04-29 23:32" 或 "2025/04/29 23:32"
     const standardMatch = cleanedStr.match(/^(\d{4}[-\/]\d{2}[-\/]\d{2} \d{2}:\d{2})$/);
     if (standardMatch) {
