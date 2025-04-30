@@ -65,7 +65,7 @@ async function handler() {
 
                     return {
                         ...item,
-                        description: getDescription($d) || description || item.title,
+                        description: description || getDescription($d) || item.title,
                         pubDate: pubDate || extractPubDate($d),
                     };
                 } catch (error) {
