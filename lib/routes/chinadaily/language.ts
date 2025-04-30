@@ -169,7 +169,7 @@ export const route: Route = {
     url: 'language.chinadaily.com.cn',
     maintainers: ['nczitzk'],
     handler,
-    example: '/language/thelatest',
+    example: '/chinadaily/language/thelatest',
     parameters: {
         category: {
             description: '分类，默认为 `thelatest`，即精彩推荐，可在对应分类页 URL 中找到, Category, `thelatest`，即精彩推荐  by default',
