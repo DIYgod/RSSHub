@@ -30,53 +30,44 @@ export const route: Route = {
 };
 
 async function handler() {
-    try {
-        const response = await ofetch('https://m.sohu.com/limit');
-        // 从HTML中提取JSON数据
-        const $ = cheerio.load(response);
-        const jsonScript = $('script:contains("WapHomeRenderData")').text();
-        const jsonMatch = jsonScript?.match(/window\.WapHomeRenderData\s*=\s*({.*})/s);
-        if (!jsonMatch?.[1]) {
-            throw new Error('WapHomeRenderData 数据未找到');
-        }
-        const renderData = JSON.parse(jsonMatch[1]);
-        const list = extractPlateBlockNewsLists(renderData)
-            .filter((item) => item.id && item.url?.startsWith('//'))
-            .map((item) => ({
-                title: item.title,
-                link: new URL(item.url.split('?')[0], 'https://m.sohu.com').href,
-            }))
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const detailResp = await ofetch(item.link);
-                        const $d = cheerio.load(detailResp);
-                        return {
-                            ...item,
-                            description: $d('#articleContent').first().html(),
-                            pubDate: parseDate($d('.time').text()) // 添加时间解析
-                        };
-                    } catch (error) {
-                        logger.error(`获取详情失败: ${item.link}`, error);
-                        return item;
-                    }
-                })
-            )
-        );
-        return {
-            title: '手机搜狐新闻',
-            link: 'https://m.sohu.com/limit',
-            item: items,
-        };
-    } catch (error) {
-        logger.error('抓取失败:', error);
-        return {
-            title: '手机搜狐新闻',
-            link: 'https://m.sohu.com/limit',
-            item: [],
-        };
+    const response = await ofetch('https://m.sohu.com/limit');
+    // 从HTML中提取JSON数据
+    const $ = cheerio.load(response);
+    const jsonScript = $('script:contains("WapHomeRenderData")').text();
+    const jsonMatch = jsonScript?.match(/window\.WapHomeRenderData\s*=\s*({.*})/s);
+    if (!jsonMatch?.[1]) {
+        throw new Error('WapHomeRenderData 数据未找到');
     }
+    const renderData = JSON.parse(jsonMatch[1]);
+    const list = extractPlateBlockNewsLists(renderData)
+        .filter((item) => item.id && item.url?.startsWith('//'))
+        .map((item) => ({
+            title: item.title,
+            link: new URL(item.url.split('?')[0], 'https://m.sohu.com').href,
+        }));
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                try {
+                    const detailResp = await ofetch(item.link);
+                    const $d = cheerio.load(detailResp);
+                    return {
+                        ...item,
+                        description: getDescription($d) || item.title,
+                        pubDate: extractPubDate($d),
+                    };
+                } catch (error) {
+                    logger.error(`获取详情失败: ${item.link}`, error);
+                    return item;
+                }
+            })
+        )
+    );
+    return {
+        title: '手机搜狐新闻',
+        link: 'https://m.sohu.com/limit',
+        item: items.filter(Boolean),
+    };
 }
 
 function extractPlateBlockNewsLists(jsonData: any) {
@@ -102,10 +93,114 @@ function extractPlateBlockNewsLists(jsonData: any) {
     }
     return result;
 }
-// 日期解析辅助函数
-function parseDate(timeStr?: string) {
-    if (!timeStr) {
-        return '';
+
+function extractPubDate($: cheerio.CheerioAPI): string{
+    const timeElements = [
+        '.time',
+        '#videoPublicTime',
+        'div.channelHeaderContainer div.detail',
+    ];
+    for (const selector of timeElements) {
+        const text = $(selector).first().text().trim();
+        if (!text) continue;
+        //  ‘奔流 · 昨天23:59 · 2074阅读’
+        const dateRegex = /\d{4}[-\/]\d{2}[-\/]\d{2} \d{2}:\d{2}|昨天\d{1,2}:\d{2}|\d+\s*小时前|\d+\s*分钟前|\d{2}-\d{2} \d{2}:\d{2}|今天\d{1,2}:\d{2}|\d{4}年\d{2}月\d{2}日 \d{2}:\d{2}/;
+        const dateMatch = text.match(dateRegex);
+        const date = dateMatch?.[0];
+        if (date) {
+            const newdate = parseDate(date);
+            if (newdate) return newdate;
+        }
     }
-    return new Date(timeStr).toISOString();
+    return new Date().toISOString();
+}
+
+// 日期解析辅助函数
+function parseDate(timeStr?: string | null): string | null {
+    if (!timeStr?.trim()) {
+        return null;
+    }
+    const cleanedStr = timeStr.trim();
+    const now = new Date();
+    // "2025-04-29 23:32" 或 "2025/04/29 23:32"
+    const standardMatch = cleanedStr.match(/^(\d{4}[-\/]\d{2}[-\/]\d{2} \d{2}:\d{2})$/);
+    if (standardMatch) {
+        // 替换斜杠为横杠确保兼容性
+        const normalizedDateStr = standardMatch[1].replace(/\//g, '-');
+        const date = new Date(normalizedDateStr);
+        if (!isNaN(date.getTime())) {
+            return date.toISOString();
+        }
+    }
+    //  "昨天23:59" 格式
+    if (cleanedStr.includes('昨天')) {
+        const timeMatch = cleanedStr.match(/昨天(\d{1,2}:\d{2})/);
+        if (timeMatch) {
+            const date = new Date();
+            date.setDate(date.getDate() - 1);
+            const [hours, minutes] = timeMatch[1].split(':');
+            date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            return date.toISOString();
+        }
+    }
+    //  "n小时前" 格式
+    const hoursAgoMatch = cleanedStr.match(/(\d+)\s*小时前/);
+    if (hoursAgoMatch) {
+        const date = new Date();
+        date.setHours(date.getHours() - parseInt(hoursAgoMatch[1]));
+        return date.toISOString();
+    }
+    //  "n分钟前" 格式
+    const minsAgoMatch = cleanedStr.match(/(\d+)\s*分钟前/);
+    if (minsAgoMatch) {
+        const date = new Date();
+        date.setMinutes(date.getMinutes() - parseInt(minsAgoMatch[1]));
+        return date.toISOString();
+    }
+    // "04-29 23:32"
+    const shortDateMatch = cleanedStr.match(/^(\d{2})-(\d{2}) (\d{2}:\d{2})$/);
+    if (shortDateMatch) {
+        const [_, month, day, time] = shortDateMatch;
+        const currentYear = new Date().getFullYear();
+        const date = new Date(`${currentYear}-${month}-${day} ${time}`);
+        if (!isNaN(date.getTime())) {
+            return date.toISOString();
+        }
+    }
+    // "今天 HH:MM" 格式
+    if (cleanedStr.startsWith('今天')) {
+        const timeMatch = cleanedStr.match(/今天(\d{1,2}:\d{2})/);
+        if (timeMatch) {
+            const [hours, minutes] = timeMatch[1].split(':');
+            const date = new Date();
+            date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            return date.toISOString();
+        }
+    }
+    //  "2025年04月29日 23:32"
+    const chineseDateMatch = cleanedStr.match(/^(\d{4})年(\d{2})月(\d{2})日 (\d{2}:\d{2})$/);
+    if (chineseDateMatch) {
+        const [_, year, month, day, time] = chineseDateMatch;
+        const date = new Date(`${year}-${month}-${day} ${time}`);
+        if (!isNaN(date.getTime())) {
+            return date.toISOString();
+        }
+    }
+    return null;
+}
+
+function getDescription($: cheerio.CheerioAPI) : string | null {
+    const selectors = [
+        '#articleContent',
+        'div.tpl-top-text-content-description',
+        'div.title-desc > div.desc > div',
+        '#videoTitle',
+    ];
+    for (const selector of selectors) {
+        const content = $(selector).first().html()?.trim();
+        if (content && content.length > 6) {
+            return content;
+        }
+    }
+    return null;
 }
