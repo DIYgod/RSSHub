@@ -1,6 +1,5 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as url from 'node:url';
 import iconv from 'iconv-lite';
 import pLimit from 'p-limit'; // 引入 p-limit 库
 
@@ -57,7 +56,7 @@ const ProcessFeed = (list, caches) => {
                 const $label = $(".comiis_common a[data-track='版块页主题分类']");
                 const $title = $(".comiis_common a[data-track='版块页文章']");
                 // 还原相对链接为绝对链接
-                const itemUrl = url.resolve(host, $title.attr('href'));
+                const itemUrl = new URL($title.attr('href'), host).href;
 
                 // 列表上提取到的信息
                 const single = {
