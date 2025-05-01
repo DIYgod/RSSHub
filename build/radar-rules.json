@@ -32650,6 +32650,16 @@
   },
   "sohu.com": {
     "_name": "搜狐号",
+    "m": [
+      {
+        "title": "首页新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/limit"
+        ],
+        "target": "/sohu/mobile"
+      }
+    ],
     "mp": [
       {
         "title": "最新",

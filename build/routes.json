@@ -88114,6 +88114,37 @@
   },
   "sohu": {
     "routes": {
+      "/mobile": {
+        "path": "/mobile",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/sohu/mobile",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "m.sohu.com/limit"
+            ],
+            "target": "/mobile"
+          }
+        ],
+        "name": "首页新闻",
+        "maintainers": [
+          "asqwe1"
+        ],
+        "description": "订阅手机搜狐网的首页新闻",
+        "location": "mobile.ts",
+        "module": "() => import('@/routes/sohu/mobile.ts')"
+      },
       "/mp/:xpt": {
         "path": "/mp/:xpt",
         "categories": [
