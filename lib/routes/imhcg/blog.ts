@@ -14,7 +14,7 @@ export const route: Route = {
         },
     ],
     name: 'Engineering blogs',
-    maintainers: ['ZiHao256'],
+    maintainers: ['ZiHao256', 'qzydustin'],
     handler,
     url: 'infos.imhcg.cn',
 };
