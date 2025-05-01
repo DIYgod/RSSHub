@@ -3,51 +3,71 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import type { Context } from 'hono';
+import puppeteer from '@/utils/puppeteer';
+import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/:id?/:type?/:keyword?',
+    path: '/bbs4/:type?/:keyword?',
+    url: 'cool18.com/bbs4/',
+    example: 'cool18.com/bbs4',
+    parameters: { type: 'the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`', keyword: 'the keyword to search.' },
+    categories: ['bbs'],
     radar: [
         {
-            source: ['cool18.com/'],
+            source: ['cool18.com/bbs4/', 'www.cool18.com/bbs4/index.php?action=search&bbsdr=bbs4&act=:type&app=forum&keywords=:keyword&submit=%E6%9F%A5%E8%AF%A2', 'www.cool18.com/bbs4/index.php?app=forum&act=:type'],
+            target: '/bbs4/:type?/:keyword?',
         },
     ],
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
+    name: '禁忌书屋',
+    maintainers: ['nczitzk', 'Gabrlie'],
     handler,
-    url: 'cool18.com/',
 };
 
-async function handler(ctx) {
-    const id = ctx.req.param('id') ?? 'bbs4';
-    const type = ctx.req.param('type') ?? '';
-    const keyword = ctx.req.param('keyword') ?? '';
+async function handler(ctx: Context) {
+    const { type = 'home', keyword } = ctx.req.param();
 
-    const rootUrl = 'https://www.cool18.com';
-    const indexUrl = `${rootUrl}/${id}/index.php`;
-    const currentUrl = `${indexUrl}${keyword ? (type ? (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&${type}=${keyword}&submit=${type === 'type' ? '查询' : '栏目搜索'}`) : '') : ''}`;
+    const rootUrl = 'https://www.cool18.com/bbs4/';
+    const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const currentUrl = rootUrl + 'index.php' + params;
+
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+
+    page.on('request', (request) => {
+        ['document', 'script', 'xhr'].includes(request.resourceType()) ? request.continue() : request.abort();
     });
 
-    const $ = load(response.data);
+    logger.http(`Requesting ${currentUrl}`);
+    await page.goto(currentUrl, {
+        waitUntil: 'domcontentloaded',
+    });
 
-    let items = $('#d_list ul li, #thread_list li, .t_l .t_subject')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+    const response = await page.content();
+    await page.close();
+
+    const $ = load(response);
+
+    const list = $('#d_list ul li, #thread_list li, .t_l .t_subject')
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
-
-            const a = item.find('a').first();
+            const a = $(item).find('a').first();
 
             return {
-                link: `${rootUrl}/${id}/${a.attr('href')}`,
+                title: a.text(),
+                link: `${rootUrl}/${a.attr('href')}`,
+                pubDate: parseDate($(item).find('i').text(), 'MM/DD/YY'),
+                author: $(item).find('a').last().text(),
+                category: a.find('span').first().text(),
+                description: '',
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -55,18 +75,17 @@ async function handler(ctx) {
                 });
 
                 const content = load(detailResponse.data);
-
-                item.title = content('title').text().replace(' - cool18.com', '');
-                item.author = detailResponse.data.match(/送交者: .*>(.*)<.*\[/)[1];
-                item.pubDate = parseDate(detailResponse.data.match(/于 (.*) 已读/)[1]).toUTCString();
-                item.description = content('pre')
-                    .html()
-                    .replaceAll(/<font color="#E6E6DD">cool18.com<\/font>/g, '');
-
+                const preElement = content('pre');
+                if (preElement.length > 0) {
+                    const htmlContent = preElement.html();
+                    item.description = htmlContent ? htmlContent.replaceAll(/<font color="#E6E6DD">cool18.com<\/font>/g, '') : '';
+                }
                 return item;
             })
         )
     );
+
+    await browser.close();
 
     return {
         title: $('title').text(),
