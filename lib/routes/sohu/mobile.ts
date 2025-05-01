@@ -131,8 +131,7 @@ function extractPubDate($: cheerio.CheerioAPI): string {
     }
 }
 
-
-function getDescription($: cheerio.CheerioAPI) : string | null {
+function getDescription($: cheerio.CheerioAPI): string | null {
     const content = $('#articleContent');
     if (content.length) {
         return content.first().html()?.trim();
