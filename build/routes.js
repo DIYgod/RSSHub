@@ -51356,7 +51356,8 @@ export default {
         ],
         "name": "Engineering blogs",
         "maintainers": [
-          "ZiHao256"
+          "ZiHao256",
+          "qzydustin"
         ],
         "url": "infos.imhcg.cn",
         "location": "blog.ts",
