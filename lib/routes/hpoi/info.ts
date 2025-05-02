@@ -35,13 +35,7 @@ async function handler(ctx) {
     const { type = 'all' } = ctx.req.param();
     const baseUrl = 'https://www.hpoi.net';
     const reqUrl = `${baseUrl}/user/home/ajax`;
-    const response = await got.post(reqUrl, {
-        form: {
-            page: 1,
-            type: 'info',
-            catType: type,
-        },
-    });
+    const response = await got.post(`${reqUrl}?page=1&type=info&catType=${type}`);
     const $ = load(response.data);
 
     const items = $('.home-info')
