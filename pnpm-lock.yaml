@@ -60,8 +60,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.8.6
-        version: 0.8.6(hono@4.7.8)
+        specifier: 0.8.7
+        version: 0.8.7(hono@4.7.8)
       '@sentry/node':
         specifier: 9.15.0
         version: 9.15.0
@@ -322,8 +322,8 @@ importers:
         specifier: 9.0.4
         version: 9.0.4
       '@types/imapflow':
-        specifier: 1.0.20
-        version: 1.0.20
+        specifier: 1.0.21
+        version: 1.0.21
       '@types/js-beautify':
         specifier: 1.14.3
         version: 1.14.3
@@ -376,8 +376,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@22.15.3)(jsdom@26.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(lightningcss@1.29.3)(msw@2.4.3(typescript@5.8.3)))
       discord-api-types:
-        specifier: 0.38.1
-        version: 0.38.1
+        specifier: 0.38.2
+        version: 0.38.2
       eslint:
         specifier: 9.25.1
         version: 9.25.1(jiti@2.4.2)
@@ -2267,12 +2267,12 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/core@0.2.12':
-    resolution: {integrity: sha512-rAgRbHq8g4H1fffJMHrvmsOTqwUU3QNh1UgiOe7H8wy0yIVGN9C5YmduF99Mt+7V43oGposeHdlfs+ECSUk8Fg==}
+  '@scalar/core@0.2.13':
+    resolution: {integrity: sha512-d0MjF9hUh1rmK3nS1RkpVYLPO5oCl0pfS2mI6uzXmk7uspu2AE9YATbQ9j7SShM0UTOThKTtkYT8N2DJB3vE6g==}
     engines: {node: '>=18'}
 
-  '@scalar/hono-api-reference@0.8.6':
-    resolution: {integrity: sha512-aEiaX2DyNfwaYvP6GLWknEmaZJ0aLvx/DcrEvmkmzzx4wQv2UJP9kkHpWkoLVRQrZbLwjeTV7yDmXyVWrwWszg==}
+  '@scalar/hono-api-reference@0.8.7':
+    resolution: {integrity: sha512-ZKCzb2nylucwI+/YCL402pMAdq4JEoux4on72aD9rRxTuEsP3R3lVSTNt1rJMCpiXXZXyLk/caMVzvFreCsLgw==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
@@ -2281,8 +2281,8 @@ packages:
     resolution: {integrity: sha512-UMxX54taQXnEWYEuesbH+pkjlXRVV1u/Wx6YbVeU3QoJdFGqT3Z7si9zsokoG6MXDcdi1LGny7A0KwownmPvUQ==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.1.12':
-    resolution: {integrity: sha512-GSZ/eS94hNu/TkQHhAx96J0PD8tlm303OXRRyp5TPs+1UJ4HCC5LHjSnlz5WTZoi86/fup8R0MIHW9mJw7AoDg==}
+  '@scalar/types@0.1.13':
+    resolution: {integrity: sha512-9PgGX4TSNWUcfuGwE4kHvKypc5VhLS450C0V9IuhIIVLrLsyiz8ZA3X/lxQEPoB1zlFbUBmceLD6Xh9c41P7oQ==}
     engines: {node: '>=18'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -2389,8 +2389,8 @@ packages:
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
 
-  '@types/imapflow@1.0.20':
-    resolution: {integrity: sha512-kmBeiV815byuxYlu2lomAx3VY3SsyOYg4rDsK5vT6CGZ6Sow2AUEZwieql8uAizO6+p4sQchw/g3vQX76XBIpA==}
+  '@types/imapflow@1.0.21':
+    resolution: {integrity: sha512-7ZqYx+PX2bKs4DLP/tUlCWjlmIFJh6wBNte+94TTurUzIL2wlldJcXJEwzxMfhP6T6ppKY/XFTIcYoWh/vsrUg==}
 
   '@types/js-beautify@1.14.3':
     resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
@@ -3311,8 +3311,8 @@ packages:
     resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
-  discord-api-types@0.38.1:
-    resolution: {integrity: sha512-vsjsqjAuxsPhiwbPjTBeGQaDPlizFmSkU0mTzFGMgRxqCDIRBR7iTY74HacpzrDV0QtERHRKQEk1tq7drZUtHg==}
+  discord-api-types@0.38.2:
+    resolution: {integrity: sha512-GAPY1/Kv3aqEoBYgUYXB2tHdWJCZXfytlCzxZ4QMQ1/TIQn1JI+xUOukehl4iEa9m7fCURnMIOpOxpaTWqzX2w==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -6462,6 +6462,9 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
+
   zod@3.24.3:
     resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
 
@@ -8335,26 +8338,26 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/core@0.2.12':
+  '@scalar/core@0.2.13':
     dependencies:
-      '@scalar/types': 0.1.12
+      '@scalar/types': 0.1.13
 
-  '@scalar/hono-api-reference@0.8.6(hono@4.7.8)':
+  '@scalar/hono-api-reference@0.8.7(hono@4.7.8)':
     dependencies:
-      '@scalar/core': 0.2.12
+      '@scalar/core': 0.2.13
       hono: 4.7.8
 
   '@scalar/openapi-types@0.2.1':
     dependencies:
       zod: 3.24.3
 
-  '@scalar/types@0.1.12':
+  '@scalar/types@0.1.13':
     dependencies:
       '@scalar/openapi-types': 0.2.1
       '@unhead/schema': 1.11.20
       nanoid: 5.1.5
       type-fest: 4.40.1
-      zod: 3.24.3
+      zod: 3.24.1
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -8489,7 +8492,7 @@ snapshots:
 
   '@types/http-cache-semantics@4.0.4': {}
 
-  '@types/imapflow@1.0.20':
+  '@types/imapflow@1.0.21':
     dependencies:
       '@types/node': 22.15.3
 
@@ -9478,7 +9481,7 @@ snapshots:
 
   directory-import@3.3.2: {}
 
-  discord-api-types@0.38.1: {}
+  discord-api-types@0.38.2: {}
 
   doctrine@3.0.0:
     dependencies:
@@ -12983,5 +12986,7 @@ snapshots:
   zhead@2.2.4: {}
 
   zod@3.22.4: {}
+
+  zod@3.24.1: {}
 
   zod@3.24.3: {}
