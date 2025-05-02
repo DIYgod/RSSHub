@@ -17289,10 +17289,11 @@
     "_name": "Hanime1",
     ".": [
       {
-        "title": "新番预告",
+        "title": "每月新番",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
-          "/previews/:date"
+          "/previews/:date",
+          "/previews"
         ],
         "target": "/hanime1/previews/:date"
       }

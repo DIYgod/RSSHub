@@ -45407,9 +45407,9 @@
   },
   "hanime1": {
     "routes": {
-      "/previews/:date": {
-        "path": "/previews/:date",
-        "name": "新番预告",
+      "/previews/:date?": {
+        "path": "/previews/:date?",
+        "name": "每月新番",
         "maintainers": [
           "kjasn"
         ],
@@ -45419,7 +45419,7 @@
         ],
         "parameters": {
           "date": {
-            "description": "Date in YYYYMM format"
+            "description": "日期格式为 `YYYYMM`，默认值当月"
           }
         },
         "features": {
@@ -45433,7 +45433,8 @@
         "radar": [
           {
             "source": [
-              "hanime1.me/previews/:date"
+              "hanime1.me/previews/:date",
+              "hanime1.me/previews"
             ],
             "target": "/previews/:date"
           }
