@@ -1,0 +1,29 @@
+diff --git a/src/cli.js b/src/cli.js
+index 6edfcd23d58a1346a773e5d739d21778be39c941..cbddc609aaa78da04b410b45dddf75980785a062 100644
+--- a/src/cli.js
++++ b/src/cli.js
+@@ -54,7 +54,10 @@ const cli = {
+       // Show help
+       console.log(options.generateHelp());
+     } else {
+-      const configuration = { extensions };
++      const configuration = { };
++      if (extensions) {
++        configuration.extensions = extensions;
++      }
+       if (configFile) {
+         configuration.overrideConfigFile = configFile;
+       }
+diff --git a/src/config/options.js b/src/config/options.js
+index dac85019bac496b5bae6a0d27f44b92ec91af71b..87e43089afcb0b0ece161a050cc776fae56c5fc2 100644
+--- a/src/config/options.js
++++ b/src/config/options.js
+@@ -32,7 +32,7 @@ module.exports = optionator({
+   }, {
+     option     : 'ext',
+     type       : '[String]',
+-    default    : '.js',
++    default    : '',
+     description: 'Specify JavaScript file extensions'
+   }, {
+     option     : 'config',

@@ -13,6 +13,11 @@ overrides:
   safer-buffer: npm:@nolyfill/safer-buffer@^1
   side-channel: npm:@nolyfill/side-channel@^1
 
+patchedDependencies:
+  eslint-nibble@8.1.0:
+    hash: w5z6jxwjps4t4gxnmmngw67gmm
+    path: patches/eslint-nibble@8.1.0.patch
+
 importers:
 
   .:
@@ -386,7 +391,7 @@ importers:
         version: 10.1.2(eslint@9.25.1(jiti@2.4.2))
       eslint-nibble:
         specifier: 8.1.0
-        version: 8.1.0(eslint@9.25.1(jiti@2.4.2))
+        version: 8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.25.1(jiti@2.4.2))
       eslint-plugin-n:
         specifier: 17.17.0
         version: 17.17.0(eslint@9.25.1(jiti@2.4.2))
@@ -9739,7 +9744,7 @@ snapshots:
       strip-ansi: 5.2.0
       text-table: 0.2.0
 
-  eslint-nibble@8.1.0(eslint@9.25.1(jiti@2.4.2)):
+  eslint-nibble@8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.25.1(jiti@2.4.2)):
     dependencies:
       '@ianvs/eslint-stats': 2.0.0
       chalk: 4.1.2
