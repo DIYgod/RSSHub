@@ -224,6 +224,9 @@
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
             "side-channel": "npm:@nolyfill/side-channel@^1"
+        },
+        "patchedDependencies": {
+            "eslint-nibble@8.1.0": "patches/eslint-nibble@8.1.0.patch"
         }
     }
 }
