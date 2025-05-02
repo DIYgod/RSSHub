@@ -3436,6 +3436,9 @@
   "/hanime1/previews/:date?": [
     "kjasn"
   ],
+  "/hanime1/search/:params": [
+    "kjasn"
+  ],
   "/harvard/health/blog": [
     "nczitzk"
   ],
