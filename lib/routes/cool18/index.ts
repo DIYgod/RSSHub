@@ -8,15 +8,15 @@ import puppeteer from '@/utils/puppeteer';
 import logger from '@/utils/logger';
 
 export const route: Route = {
-    path: '/bbs4/:type?/:keyword?',
-    url: 'cool18.com/bbs4/',
+    path: '/:id/:type?/:keyword?',
+    url: 'cool18.com',
     example: 'cool18.com/bbs4',
-    parameters: { type: 'the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`', keyword: 'the keyword to search.' },
+    parameters: { id: 'the name of the bbs', type: 'the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`', keyword: 'the keyword to search.' },
     categories: ['bbs'],
     radar: [
         {
-            source: ['cool18.com/bbs4/', 'www.cool18.com/bbs4/index.php?action=search&bbsdr=bbs4&act=:type&app=forum&keywords=:keyword&submit=%E6%9F%A5%E8%AF%A2', 'www.cool18.com/bbs4/index.php?app=forum&act=:type'],
-            target: '/bbs4/:type?/:keyword?',
+            source: ['cool18.com/:id/', 'www.cool18.com/:id/index.php?action=search&bbsdr=:id&act=:type&app=forum&keywords=:keyword&submit=%E6%9F%A5%E8%AF%A2', 'www.cool18.com/:id/index.php?app=forum&act=:type'],
+            target: '/:id/:type?/:keyword?',
         },
     ],
     name: '禁忌书屋',
@@ -25,9 +25,9 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { type = 'home', keyword } = ctx.req.param();
+    const { id, type = 'home', keyword } = ctx.req.param();
 
-    const rootUrl = 'https://www.cool18.com/bbs4/';
+    const rootUrl = 'https://www.cool18.com/' + id + '/';
     const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
 
     const currentUrl = rootUrl + 'index.php' + params;
