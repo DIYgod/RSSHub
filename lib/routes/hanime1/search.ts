@@ -95,7 +95,7 @@ export const route: Route = {
 - 发布时间，年份和月份(year, month)，例如： \`year=2025&month=5\`，默认为\`全部时间\`
 
 **Tips**: 如果你不确定标签或类型的具体名字，可以直接去原网址选好筛选条件后，把网址中的参数复制过来使用。例如： \`https://hanime1.me/search?query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`，\`/search?\`后面的部分就是参数了,最后得到类似这样的路由 \`https://rsshub.app/hanime1/search/query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`
-            `,
+`,
         },
     },
     features: {
