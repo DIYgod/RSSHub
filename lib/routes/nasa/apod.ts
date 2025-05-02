@@ -41,11 +41,11 @@ async function handler(ctx) {
 
     const list = $('body > b > a')
         .slice(0, limit)
-        .map((_, el) => ({
+        .toArray()
+        .map((el) => ({
             title: $(el).text(),
             link: `https://apod.nasa.gov/apod/${$(el).attr('href')}`,
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

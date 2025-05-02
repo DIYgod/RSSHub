@@ -46,15 +46,15 @@ async function handler(ctx) {
 
     const $ = load(res.data);
     const items = $('.lm_list li')
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('a').text(),
                 link: `https://yxy.zcmu.edu.cn/${item.find('a').attr('href')}`,
                 pubDate: parseDate(item.find('span').text().trim()),
             };
-        })
-        .get();
+        });
 
     return {
         title: map.get(type).title,

@@ -35,14 +35,14 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     const list = $('.pressItem.clearfix')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             const c = load(e);
             return {
                 title: c('.hd a').text(),
                 link: `${utils.BASE_URL}${c('.hd a').attr('href')}`,
             };
-        })
-        .get();
+        });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

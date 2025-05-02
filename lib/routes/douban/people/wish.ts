@@ -64,7 +64,7 @@ async function handler(ctx) {
 
                     if (list) {
                         return Promise.all(
-                            list.get().map((item) => {
+                            list.toArray().map((item) => {
                                 item = $(item);
                                 const itemPicUrl = item.find('.pic a img').attr('src');
                                 const info = item.find('.info');

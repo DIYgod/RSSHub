@@ -44,7 +44,8 @@ async function handler(ctx) {
     const $ = load(data);
 
     const list = $('div.nlist ul li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             // link原来长这样：'../info/1196/13990.htm'
             const link = item.find('a').attr('href').replace(/^\.\./, 'http://www.xaut.edu.cn');
@@ -56,8 +57,7 @@ async function handler(ctx) {
                 link,
                 pubDate,
             };
-        })
-        .get();
+        });
 
     return {
         // 源标题

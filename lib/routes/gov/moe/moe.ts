@@ -61,48 +61,46 @@ async function handler(ctx) {
         title: name,
         link: moeUrl,
         item: await Promise.all(
-            newsLis
-                .map(async (_, item) => {
-                    item = $(item);
+            newsLis.toArray().map(async (item) => {
+                item = $(item);
 
-                    const firstA = item.find('a');
-                    const itemUrl = new URL(firstA.attr('href'), moeUrl).href;
+                const firstA = item.find('a');
+                const itemUrl = new URL(firstA.attr('href'), moeUrl).href;
 
-                    // some live pages have no content, just return the liva page url
-                    const infos = itemUrl.includes('/live/')
-                        ? {
-                              description: firstA.html(),
-                          }
-                        : await cache.tryGet(itemUrl, async () => {
-                              const res = {};
-                              const response = await got({
-                                  method: 'get',
-                                  url: itemUrl,
-                                  headers: {
-                                      Referer: moeUrl,
-                                  },
-                              });
-                              const data = load(response.data);
-
-                              if (itemUrl.includes('www.gov.cn')) {
-                                  res.description = data('#UCAP-CONTENT').html();
-                              } else if (itemUrl.includes('srcsite')) {
-                                  res.description = data('div#content_body_xxgk').html();
-                              } else if (itemUrl.includes('jyb_')) {
-                                  res.description = data('div.moe-detail-box').html() || data('div#moe-detail-box').html();
-                              }
-
-                              return res;
+                // some live pages have no content, just return the liva page url
+                const infos = itemUrl.includes('/live/')
+                    ? {
+                          description: firstA.html(),
+                      }
+                    : await cache.tryGet(itemUrl, async () => {
+                          const res = {};
+                          const response = await got({
+                              method: 'get',
+                              url: itemUrl,
+                              headers: {
+                                  Referer: moeUrl,
+                              },
                           });
+                          const data = load(response.data);
 
-                    return {
-                        title: firstA.text(),
-                        description: infos.description,
-                        link: itemUrl,
-                        pubDate: parseDate(item.find('span').text(), 'MM-DD'),
-                    };
-                })
-                .get()
+                          if (itemUrl.includes('www.gov.cn')) {
+                              res.description = data('#UCAP-CONTENT').html();
+                          } else if (itemUrl.includes('srcsite')) {
+                              res.description = data('div#content_body_xxgk').html();
+                          } else if (itemUrl.includes('jyb_')) {
+                              res.description = data('div.moe-detail-box').html() || data('div#moe-detail-box').html();
+                          }
+
+                          return res;
+                      });
+
+                return {
+                    title: firstA.text(),
+                    description: infos.description,
+                    link: itemUrl,
+                    pubDate: parseDate(item.find('span').text(), 'MM-DD'),
+                };
+            })
         ),
     };
 }

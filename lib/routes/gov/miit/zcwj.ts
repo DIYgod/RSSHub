@@ -25,7 +25,7 @@ async function handler() {
     const base_url = 'http://www.miit.gov.cn/n1146295/n1652858/';
     const response = await got.get(base_url);
     const $ = load(response.data);
-    const list = $('.clist_con li').get();
+    const list = $('.clist_con li').toArray();
 
     const ProcessFeed = (data) => {
         const $ = load(data);

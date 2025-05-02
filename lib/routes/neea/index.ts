@@ -33,7 +33,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const list = $(`#ReportIDname > a`).parent().parent().get();
+    const list = $(`#ReportIDname > a`).parent().parent().toArray();
 
     const process = await Promise.all(
         list.map(async (item) => {

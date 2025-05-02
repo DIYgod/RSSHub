@@ -58,7 +58,8 @@ async function handler(ctx) {
 
     const list = $(`stream-content[data-stream-name="${type}"]`)
         .find('.stream-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -67,8 +68,7 @@ async function handler(ctx) {
                 category: item.attr('data-topic'),
                 link: `${rootUrl}${item.attr('data-url')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

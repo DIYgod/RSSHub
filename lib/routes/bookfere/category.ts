@@ -51,20 +51,16 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link: url,
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    const date = item.find('time').attr('datetime');
-                    const pubDate = parseDate(date);
-                    return {
-                        title: item.find('h2 a').text(),
-                        link: item.find('h2 a').attr('href'),
-                        pubDate,
-                        description: item.find('p').text(),
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            const date = item.find('time').attr('datetime');
+            const pubDate = parseDate(date);
+            return {
+                title: item.find('h2 a').text(),
+                link: item.find('h2 a').attr('href'),
+                pubDate,
+                description: item.find('p').text(),
+            };
+        }),
     };
 }

@@ -75,7 +75,7 @@ async function handler() {
     const data = response.data;
 
     const $ = load(data);
-    const list = $('#main > div.container > div > div.span9 > div.page-he  > div  > ul > li').get();
+    const list = $('#main > div.container > div > div.span9 > div.page-he  > div  > ul > li').toArray();
 
     const detail = await load_detail(list, cache);
 

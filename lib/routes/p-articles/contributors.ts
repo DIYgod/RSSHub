@@ -26,14 +26,14 @@ async function handler(ctx) {
     const $ = load(response);
 
     const list = $('div.contect_box_05in > a')
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('h3').text().trim(),
-                link: new URL($(this).attr('href'), rootUrl).href,
+                title: $(element).find('h3').text().trim(),
+                link: new URL($(element).attr('href'), rootUrl).href,
             };
             return info;
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((info) =>

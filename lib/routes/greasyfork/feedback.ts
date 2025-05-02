@@ -38,7 +38,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name=description]').attr('content'),
         item: $('.script-discussion-list .discussion-list-container .discussion-list-item')
-            .get()
+            .toArray()
             .map((item) => {
                 item = $(item);
                 const metaItem = item.find('.discussion-meta .discussion-meta-item').eq(0);

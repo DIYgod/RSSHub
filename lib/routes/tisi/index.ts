@@ -30,13 +30,13 @@ async function handler() {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('div.new-artice-list-box')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('p.new-article-title > a').text(),
             link: new URL($(item).find('p.new-article-title > a').attr('href'), rootUrl).href,
             pubDate: parseDate($(item).find('p.new-article-date > span.left-span').text()),
             category: $(item).find('p.new-article-date > span:nth-child(1)').text(),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

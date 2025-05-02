@@ -39,15 +39,15 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('.elementor-heading-title a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

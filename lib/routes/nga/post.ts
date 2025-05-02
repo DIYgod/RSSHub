@@ -136,6 +136,6 @@ async function handler(ctx) {
     return {
         title: rssTitle,
         link: getPageUrl(tid, authorId, pageId),
-        item: items.get(),
+        item: items.toArray(),
     };
 }

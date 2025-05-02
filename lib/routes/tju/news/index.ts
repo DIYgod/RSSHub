@@ -97,7 +97,7 @@ async function handler(ctx) {
         const $ = load(response.data);
 
         let list;
-        list = type === 'picture' ? $('.picList > li').get() : $('.indexList > li').get();
+        list = type === 'picture' ? $('.picList > li').toArray() : $('.indexList > li').toArray();
 
         list = list.map((item) => {
             const href = $('h4 > a', item).attr('href');

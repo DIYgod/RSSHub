@@ -38,15 +38,15 @@ async function handler() {
     const html = await page.evaluate(() => document.documentElement.innerHTML);
     const $ = load(html);
     const list = $('font.newslist_style')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a[title]');
             return {
                 title: a.attr('title'),
                 link: new URL(a.attr('href'), 'http://www.pbc.gov.cn').href,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

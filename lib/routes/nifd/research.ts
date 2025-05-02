@@ -47,13 +47,13 @@ async function handler(ctx) {
     const response = await got.get(url);
     const $ = load(response.data);
     const list = $('div.qr-main-item')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2').text(),
             link: rootUrl + $(item).find('a').attr('href'),
             author: $(item).find('p > span:nth-child(2)').text(),
             pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

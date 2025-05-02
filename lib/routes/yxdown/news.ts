@@ -42,15 +42,15 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('.div_zixun h2 a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: `${rootUrl}${item.attr('href')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

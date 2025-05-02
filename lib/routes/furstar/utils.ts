@@ -50,12 +50,12 @@ const detailPage = (link, cache) =>
         const title = $('.row .panel-heading h2').text().trim(); // Get first title
         const desc = $('.character-description p').text().trim();
         const pics = $('.img-gallery .prettyPhoto')
-            .map((i, e) => {
+            .toArray()
+            .map((e) => {
                 const p = load(e);
                 const link = p('a').attr('href').trim();
                 return `${base}/${link.slice(2)}`;
-            })
-            .get();
+            });
 
         return {
             title,
@@ -69,18 +69,16 @@ const fetchAllCharacters = (data, base) => {
     // All character page
     const $ = load(data);
     const characters = $('.character-article');
-    const info = characters
-        .map((i, e) => {
-            const c = load(e);
-            const r = {
-                title: c('.character-headline').text().trim(),
-                headImage: c('.character-images img').attr('src').trim(),
-                detailPage: `${base}/${c('.character-images a').attr('href').trim()}`,
-                author: authorDetail(c('.character-description').html()),
-            };
-            return r;
-        })
-        .get();
+    const info = characters.toArray().map((e) => {
+        const c = load(e);
+        const r = {
+            title: c('.character-headline').text().trim(),
+            headImage: c('.character-images img').attr('src').trim(),
+            detailPage: `${base}/${c('.character-images a').attr('href').trim()}`,
+            author: authorDetail(c('.character-description').html()),
+        };
+        return r;
+    });
 
     return info;
 };

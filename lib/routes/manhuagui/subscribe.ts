@@ -61,16 +61,17 @@ async function handler() {
     const description = `${user_name} 的 漫画订阅`;
 
     const item = $('.dy_content_li')
-        .map(function () {
-            const img_src = $(this).find('img').attr('src'); // 漫画的封面
-            const manga_title = $(this).find('.co_1.c_space').first().text(); // 最新的一话题目
-            const title = $(this).find('img').attr('alt'); // 漫画的名字
-            const link = $(this).find('.co_1.c_space').first().children().attr('href'); // 漫画最新的链接
+        .toArray()
+        .map((item) => {
+            const img_src = $(item).find('img').attr('src'); // 漫画的封面
+            const manga_title = $(item).find('.co_1.c_space').first().text(); // 最新的一话题目
+            const title = $(item).find('img').attr('alt'); // 漫画的名字
+            const link = $(item).find('.co_1.c_space').first().children().attr('href'); // 漫画最新的链接
             const description = art(path.join(__dirname, 'templates/manga.art'), {
                 manga_title,
                 img_src,
             });
-            const pubDate = $(this).find('.co_1.c_space').first().next().text();
+            const pubDate = $(item).find('.co_1.c_space').first().next().text();
             const publishDate = parseRelativeDate(pubDate); // 处理相对时间
             const single = {
                 title,
@@ -79,8 +80,7 @@ async function handler() {
                 pubDate: publishDate,
             };
             return single;
-        })
-        .get(); // 这里获取数组= =
+        });
     return {
         title,
         link,

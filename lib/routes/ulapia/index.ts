@@ -51,15 +51,15 @@ async function handler(ctx) {
     const response = await got.get(url);
     const $ = load(response.data);
     const items = $(String(selectorMap[category]))
-        .filter((_, item) => $(item).find('img').attr('src'))
-        .map((_, item) => ({
+        .toArray()
+        .filter((item) => $(item).find('img').attr('src'))
+        .map((item) => ({
             title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
             author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
             link: $(item).find('h5.mb-1 > a').attr('href'),
             description: `<img src="${$(item).find('img').attr('src').split('!')[0]}">`,
             pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':')[1], 'YYYY-MM-DD'),
-        }))
-        .get();
+        }));
 
     return {
         title: ` ulapia - ${titleMap[category]}`,

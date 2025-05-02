@@ -123,7 +123,7 @@ async function handler(ctx) {
 
     const $ = load(gbk2utf8(response.data));
 
-    const list = $("[id*='normalthread']").get();
+    const list = $("[id*='normalthread']").toArray();
 
     const result = await util.ProcessFeed(list, cache);
 

@@ -13,10 +13,8 @@ const parseContent = (htmlString) => {
         .filter(function () {
             return this.nodeType === 3;
         })
-        .map(function () {
-            return $(this).text().trim();
-        })
-        .get();
+        .toArray()
+        .map((element) => $(element).text().trim());
 
     const content = $('[id^="vsb_content"]');
     $('form > div > ul a').each(function () {

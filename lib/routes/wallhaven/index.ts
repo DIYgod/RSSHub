@@ -45,14 +45,14 @@ async function handler(ctx) {
 
     let items = $('li > figure.thumb')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('img.lazyload').attr('data-src').split('/').pop(),
             description: $(item)
                 .html()
                 .match(/<img.*?>/)[0],
             link: $(item).find('a.preview').attr('href'),
-        }))
-        .get();
+        }));
     if (needDetails) {
         items = await Promise.all(
             items.map((item) =>

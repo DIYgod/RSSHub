@@ -102,7 +102,8 @@ async function handler(ctx) {
 
     const list = $('table.details_rows tbody tr')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a');
             return {
@@ -110,8 +111,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: new Date(item.find('span.source').text().replace('Published ', '').split(' CET | ')[0] + ' GMT+1').toUTCString(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -41,15 +41,15 @@ async function handler(ctx) {
 
     const list = $('#wp_news_w6 ul li')
         .slice(0, 10)
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('a').text(),
-                link: $(this).find('a').attr('href'),
-                date: $(this).find('span').text(),
+                title: $(element).find('a').text(),
+                link: $(element).find('a').attr('href'),
+                date: $(element).find('span').text(),
             };
             return info;
-        })
-        .get();
+        });
 
     const out = await Promise.all(
         list.map(async (info) => {

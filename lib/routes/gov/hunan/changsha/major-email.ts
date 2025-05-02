@@ -42,7 +42,8 @@ async function handler() {
     const $ = load(listPage.data);
     const list = $('.table1 tbody tr')
         .slice(1)
-        .map((_, tr) => {
+        .toArray()
+        .map((tr) => {
             tr = $(tr);
 
             return {
@@ -50,8 +51,7 @@ async function handler() {
                 link: baseUrl + tr.find('td[title] > a').attr('href'),
                 author: tr.find('td:last').text(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

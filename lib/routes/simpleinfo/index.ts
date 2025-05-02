@@ -53,15 +53,15 @@ async function handler(ctx) {
     $('.-ad').remove();
 
     const list = $('.article-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('.title').text(),
                 link: item.find('a').first().attr('href'),
                 category: item.find('.category').text(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

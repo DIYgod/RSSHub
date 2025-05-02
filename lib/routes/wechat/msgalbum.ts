@@ -32,7 +32,7 @@ async function handler(ctx) {
         url: `https://mp.weixin.qq.com/mp/appmsgalbum?__biz=${biz}&action=getalbum${aidurl}`,
     });
     const $ = load(HTMLresponse.data);
-    const list = $('li').get();
+    const list = $('li').toArray();
     const mptitle = $('.album__author-name').text() + `|` + $('.album__label-title').text();
     const articledata = await Promise.all(
         list.map((item) => {

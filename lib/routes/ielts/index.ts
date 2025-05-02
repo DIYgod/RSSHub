@@ -48,7 +48,7 @@ async function handler() {
     const $ = load(html);
 
     const list = $('#newsListUl li')
-        .get()
+        .toArray()
         .map((elem) => {
             const $elem = $(elem);
             return {

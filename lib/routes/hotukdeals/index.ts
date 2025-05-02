@@ -39,7 +39,8 @@ async function handler(ctx) {
         title: `hotukdeals ${type}`,
         link: `https://www.hotukdeals.com/${type}`,
         item: list
-            .map((index, item) => {
+            .toArray()
+            .map((item) => {
                 item = $(item);
                 return {
                     title: item.find('.cept-tt').text(),
@@ -47,7 +48,6 @@ async function handler(ctx) {
                     link: item.find('.cept-tt').attr('href'),
                 };
             })
-            .get()
             .reverse(),
     };
 }

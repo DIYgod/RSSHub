@@ -41,7 +41,7 @@ async function handler(ctx) {
     const link = url + type + '.htm';
     const response = await got.get(link);
     const $ = load(response.data);
-    const list = $('.download li').get();
+    const list = $('.download li').toArray();
     const out = await Promise.all(
         list.map((item) => {
             const $ = load(item);

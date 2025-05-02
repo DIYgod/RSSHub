@@ -43,21 +43,19 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('div.other-rec-wrap li');
-    const out = list
-        .map((index, item) => {
-            item = $(item);
+    const out = list.toArray().map((item) => {
+        item = $(item);
 
-            const img = `<img src="https:${item.find('.img-box img').attr('src')}">`;
-            const rank = `<p>评分：${item.find('.img-box span').text()}</p>`;
+        const img = `<img src="https:${item.find('.img-box img').attr('src')}">`;
+        const rank = `<p>评分：${item.find('.img-box span').text()}</p>`;
 
-            return {
-                title: item.find('.book-info h4 a').text(),
-                description: img + rank + item.find('p.intro').html(),
-                link: 'https:' + item.find('.book-info h4 a').attr('href'),
-                author: item.find('p.author a').text(),
-            };
-        })
-        .get();
+        return {
+            title: item.find('.book-info h4 a').text(),
+            description: img + rank + item.find('p.intro').html(),
+            link: 'https:' + item.find('.book-info h4 a').attr('href'),
+            author: item.find('p.author a').text(),
+        };
+    });
 
     return {
         title,

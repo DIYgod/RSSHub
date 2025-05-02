@@ -44,7 +44,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('a.tit')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -52,8 +53,7 @@ async function handler(ctx) {
                 pubDate: parseDate(item.prev().text()),
                 link: `${rootUrl}${item.attr('href').replace(/\.\./, '/')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

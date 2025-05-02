@@ -46,16 +46,14 @@ async function handler() {
         description: '特斯拉系统更新 - 最新发布',
         item:
             list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('.container h1').text(),
-                        description: item.find('.notes-container').text(),
-                        pubDate: null,
-                        link: item.find('.notes-container > .button-container > a').attr('href'),
-                    };
-                })
-                .get(),
+            list.toArray().map((item) => {
+                item = $(item);
+                return {
+                    title: item.find('.container h1').text(),
+                    description: item.find('.notes-container').text(),
+                    pubDate: null,
+                    link: item.find('.notes-container > .button-container > a').attr('href'),
+                };
+            }),
     };
 }

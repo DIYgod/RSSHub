@@ -150,7 +150,7 @@ function getBittorrent(cache, bittorrent_page_url) {
         try {
             const response = await got({ method: 'get', url: bittorrent_page_url, headers });
             const $ = load(response.data);
-            const el_forms = $('form').get();
+            const el_forms = $('form').toArray();
             let bittorrent_url;
             for (const el_form of el_forms) {
                 const el_a = $(el_form).find('a');

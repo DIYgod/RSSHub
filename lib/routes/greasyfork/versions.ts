@@ -37,7 +37,7 @@ async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name=description]').attr('content'),
         item: $('.history_versions li')
-            .get()
+            .toArray()
             .map((item) => {
                 item = $(item);
                 const versionNumberLink = item.find('.version-number a');

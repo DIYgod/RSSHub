@@ -53,8 +53,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const feed_title = $('div.location a')
         .slice(-2)
-        .map((index, element) => $(element).text())
-        .get()
+        .toArray()
+        .map((element) => $(element).text())
         .join(' > ');
 
     let items = $('.list ul li')

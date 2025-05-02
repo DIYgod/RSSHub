@@ -33,13 +33,13 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('div.articlecontent')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a.bigTitle').text(),
             pubDate: parseDate($(item).find('p').eq(1).text().replace('时间:', '').trim()),
             description: '点击标题，登录查看招聘详情',
             link: $(item).find('a.bigTitle').attr('href'),
-        }))
-        .get();
+        }));
 
     return {
         title: '大型招聘会',

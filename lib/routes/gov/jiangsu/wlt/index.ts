@@ -48,7 +48,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('.tg_tb1')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const i = $(item);
             const id = i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '';
             return {
@@ -58,7 +59,6 @@ async function handler(ctx) {
                 pubDate: '',
             };
         })
-        .get()
         .filter((e) => e.link);
     const items = await Promise.all(
         list.map((item) =>

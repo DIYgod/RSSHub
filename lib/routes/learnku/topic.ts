@@ -50,7 +50,7 @@ async function handler(ctx) {
 
     const data = response.data;
     const $ = load(data);
-    const list = $('.simple-topic').get();
+    const list = $('.simple-topic').toArray();
     const item = await Promise.all(
         list.map(async (item) => {
             const $ = load(item);

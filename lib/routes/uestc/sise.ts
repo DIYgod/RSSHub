@@ -83,7 +83,8 @@ async function handler(ctx) {
     const items = $(`div[id="${divId}"] p.news-item`);
 
     const out = $(items)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const now = dayjs();
             let date = dayjs(now.year() + '-' + item.find('span').text().replace('/', '-'));
@@ -99,8 +100,7 @@ async function handler(ctx) {
                 link: newsLink,
                 pubDate: newsPubDate,
             };
-        })
-        .get();
+        });
 
     return {
         title: `信软学院通知-${mapTitle[type]}`,

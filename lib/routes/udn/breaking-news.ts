@@ -118,7 +118,7 @@ const getLinkName = async (link) => {
         const result = await got(url);
         const $ = load(result.data);
         const data = $('.cate-list__subheader a')
-            .get()
+            .toArray()
             .map((item) => {
                 item = $(item);
                 return [item.attr('href'), item.text().trim()];

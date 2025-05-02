@@ -56,7 +56,8 @@ async function handler(ctx) {
     const items = $('div.notice-item.clearfix');
 
     const out = $(items)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const newsTitle = item.find('a').text().trim();
             const newsLink = baseUrl + item.find('a').attr('href');
@@ -69,8 +70,7 @@ async function handler(ctx) {
                 description: newsDescription,
                 pubDate: newsDate,
             };
-        })
-        .get();
+        });
 
     return {
         title: '新闻网通知',

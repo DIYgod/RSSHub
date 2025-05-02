@@ -39,13 +39,13 @@ async function handler() {
 
     const $ = load(response.data);
     const list = $('.news_list li')
-        .map((i, e) => ({
+        .toArray()
+        .map((e) => ({
             pubDate: parseDate($('span:nth-child(4)', e).text()),
             title: $('span.Article_BelongCreateOrg.newsfb', e).text() + $('span a', e).attr('title'),
             category: $('span.Article_BelongCreateOrg.newsfb', e).text().slice(1, -1),
             link: host + $('span a', e).attr('href'),
-        }))
-        .get();
+        }));
 
     const out = await Promise.all(
         list.map((item) =>

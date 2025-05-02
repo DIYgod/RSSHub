@@ -45,7 +45,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('.articleroll__article a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -53,8 +54,7 @@ async function handler(ctx) {
                 link: `${rootUrl}${item.attr('href')}`,
                 pubDate: parseDate(item.find('.meta').text()),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

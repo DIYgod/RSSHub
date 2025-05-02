@@ -35,12 +35,12 @@ async function handler() {
     const response = await got.post(url);
     const $ = load(response.data);
     const list = $('li.clearfix')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href'), host).href,
             author: $(item).find('span.fr').text().replaceAll('…', ''),
-        }))
-        .get();
+        }));
 
     const items = await processItems(list);
 

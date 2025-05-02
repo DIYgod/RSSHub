@@ -42,15 +42,15 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('ul li a b')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: item.parent().attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

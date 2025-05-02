@@ -57,13 +57,11 @@ async function handler(ctx) {
     });
     const $ = load(response.data);
     const list = $('a', '.common_newslist_pc')
-        .filter(function () {
-            return $(this).attr('href');
-        })
-        .map((_, item) => ({
+        .filter((element) => $(element).attr('href'))
+        .toArray()
+        .map((item) => ({
             link: rootUrl + $(item).attr('href'),
         }))
-        .get()
         .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 20) : 20);
 
     const items = await Promise.all(

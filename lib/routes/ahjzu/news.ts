@@ -42,7 +42,8 @@ async function handler() {
 
     const list = $('#wp_news_w9')
         .find('li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const date = item.find('.column-news-date').text();
 
@@ -54,8 +55,7 @@ async function handler() {
                 link,
                 pubDate: timezone(parseDate(date), +8),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

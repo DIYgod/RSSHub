@@ -42,25 +42,23 @@ async function handler(ctx) {
     const description = $('head meta[name=description]').attr('content');
     const language = 'ja';
 
-    const item = articles
-        .map((_, article) => {
-            const _subtitle = $('p.m-listitem__title span.subtitle', article).text();
-            const _title = $('p.m-listitem__title', article)
-                .contents()
-                .filter((_, el) => el.nodeType === 3)
-                .text();
-            const title = `${_subtitle} ${_title}`;
-            const author = $('p.m-listitem__author', article).text();
-            const pubDate = timezone(parseDate($('span.date', article).text(), 'YYYY-MM-DD'), +9);
-            const link = `${baseUrl}${$('a', article).attr('href')}`.replace(/\?summary$/, '');
-            return {
-                title,
-                author,
-                pubDate,
-                link,
-            };
-        })
-        .get();
+    const item = articles.toArray().map((article) => {
+        const _subtitle = $('p.m-listitem__title span.subtitle', article).text();
+        const _title = $('p.m-listitem__title', article)
+            .contents()
+            .filter((_, el) => el.nodeType === 3)
+            .text();
+        const title = `${_subtitle} ${_title}`;
+        const author = $('p.m-listitem__author', article).text();
+        const pubDate = timezone(parseDate($('span.date', article).text(), 'YYYY-MM-DD'), +9);
+        const link = `${baseUrl}${$('a', article).attr('href')}`.replace(/\?summary$/, '');
+        return {
+            title,
+            author,
+            pubDate,
+            link,
+        };
+    });
 
     return {
         title,

@@ -63,7 +63,8 @@ async function handler(ctx) {
     const title = sanitizeHtml($('head > title').text(), { allowedTags: [], allowedAttributes: {} });
 
     const list = $('.article-link li a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const dateElem = item.find('.publish-time');
             const dateString = dateElem.text().match(/\d+\.\d+\.\d+/);
@@ -73,8 +74,7 @@ async function handler(ctx) {
                 link: rootUrl + item.attr('href'),
                 pubDate: timezone(parseDate(dateString[0]), +9),
             };
-        })
-        .get();
+        });
 
     // avoid being IP-banned
     // if being banned, 103.35.255.254 (the last hop before www.kcna.kp - 175.45.176.71) will drop the packet
@@ -96,8 +96,8 @@ async function handler(ctx) {
 
                 // add picture and video
                 const media = $('.media-icon a')
-                    .map((_, elem) => rootUrl + elem.attribs.href)
-                    .get();
+                    .toArray()
+                    .map((elem) => rootUrl + elem.attribs.href);
                 let photo, video;
                 await Promise.all(
                     media.map(async (medium) => {

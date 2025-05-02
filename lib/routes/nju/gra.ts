@@ -43,7 +43,8 @@ async function handler() {
         title: '研究生院-动态通知',
         link: 'https://grawww.nju.edu.cn/905/list.htm',
         item: list
-            .map((index, item) => {
+            .toArray()
+            .map((item) => {
                 item = $(item);
 
                 const year = item.find('.news_days').first().text();
@@ -58,7 +59,6 @@ async function handler() {
                     pubDate: timezone(parseDate(year + day, 'YYYYMM-DD'), +8),
                 };
             })
-            .get()
             .filter(Boolean),
     };
 }

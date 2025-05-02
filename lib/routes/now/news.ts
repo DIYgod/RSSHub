@@ -67,15 +67,15 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $(`${category === '' ? '.homeFeaturedNews ' : '.newsCategoryColLeft '}.newsTitle`)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: `${rootUrl}${item.parent().parent().attr('href')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>
