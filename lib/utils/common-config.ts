@@ -43,7 +43,7 @@ async function buildData(data) {
     let charset = 'utf-8';
     for (const attr of contentType.split(';')) {
         if (attr.includes('charset=')) {
-            charset = (attr.split('=').pop() || 'utf-8').toLowerCase();
+            charset = attr.split('=').pop() || 'utf-8';
         }
     }
     // @ts-expect-error custom property
