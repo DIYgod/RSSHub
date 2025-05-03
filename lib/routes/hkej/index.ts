@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -106,7 +104,7 @@ async function handler(ctx) {
             item = $(item);
             return {
                 title: item.text().trim(),
-                link: baseUrl + item.attr('href').substring(0, item.attr('href').lastIndexOf('/')),
+                link: baseUrl + item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
             };
         })
         .get();

@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -105,7 +102,7 @@ async function ggtzParse(ctx, $) {
                         const header = articleData('h1').next().text();
                         const index = header.indexOf('日期');
 
-                        author = header.substring(0, index - 2) || '';
+                        author = header.slice(0, index - 2) || '';
 
                         const date = header.substring(index + 3, index + 19);
                         pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');

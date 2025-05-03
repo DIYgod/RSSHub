@@ -1,8 +1,5 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -14,9 +11,44 @@ import { rootUrl, title, categories, convertToQueryString, getInfo, processItems
 
 export const route: Route = {
     path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    name: '分类',
+    parameters: { category: '分类，见下表，默认为最新' },
+    example: '/mydrivers/bcid/801',
+    maintainers: ['kt286', 'nczitzk'],
     handler,
+    radar: [
+        {
+            source: ['m.mydrivers.com/'],
+            target: '/zhibo',
+        },
+    ],
+    description: `
+#### 板块
+
+| 电脑     | 手机     | 汽车     | 业界     | 游戏     |
+| -------- | -------- | -------- | -------- | -------- |
+| bcid/801 | bcid/802 | bcid/807 | bcid/803 | bcid/806 |
+
+#### 话题
+
+| 科学     | 排行     | 评测     | 一图     |
+| -------- | -------- | -------- | -------- |
+| tid/1000 | tid/1001 | tid/1002 | tid/1003 |
+
+#### 品牌
+
+| 安卓     | 阿里     | 微软    | 百度    | PS5       | Xbox     | 华为     |
+| -------- | -------- | ------- | ------- | --------- | -------- | -------- |
+| icid/121 | icid/270 | icid/90 | icid/67 | icid/6950 | icid/194 | icid/136 |
+
+| 小米      | VIVO     | 三星     | 魅族     | 一加     | 比亚迪   | 小鹏      |
+| --------- | -------- | -------- | -------- | -------- | -------- | --------- |
+| icid/9355 | icid/288 | icid/154 | icid/140 | icid/385 | icid/770 | icid/7259 |
+
+| 蔚来      | 理想       | 奔驰     | 宝马     | 大众     |
+| --------- | ---------- | -------- | -------- | -------- |
+| icid/7318 | icid/12947 | icid/429 | icid/461 | icid/481 |
+`,
 };
 
 async function handler(ctx) {
@@ -59,15 +91,11 @@ async function handler(ctx) {
             };
         });
 
-    items = await processItems(items, cache.tryGet);
+    items = await processItems(items);
 
     return {
-        ...(await getInfo(currentUrl, cache.tryGet)),
-        ...Object.fromEntries(
-            Object.entries({
-                item: items,
-                title: newTitle,
-            }).filter(([value]) => value)
-        ),
+        ...(await getInfo(currentUrl)),
+        ...(newTitle ? { title: newTitle } : {}),
+        item: items,
     };
 }

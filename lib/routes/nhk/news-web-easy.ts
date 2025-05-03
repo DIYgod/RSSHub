@@ -1,9 +1,7 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -35,33 +33,28 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { data } = await got('https://www3.nhk.or.jp/news/easy/news-list.json');
+    const data = await ofetch('https://www3.nhk.or.jp/news/easy/news-list.json');
     const dates = data[0];
 
-    let items = Object.values(dates).reduce((acc, articles) => {
-        for (const article of articles) {
-            const date = timezone(parseDate(article.news_prearranged_time), +9);
-
-            acc.push({
-                title: article.title,
-                description: art(path.join(__dirname, 'templates/news_web_easy.art'), {
-                    title: article.title_with_ruby,
-                    image: article.news_web_image_uri,
-                }),
-                guid: article.news_id,
-                pubDate: date,
-                link: `https://www3.nhk.or.jp/news/easy/${article.news_id}/${article.news_id}.html`,
-            });
-        }
-        return acc;
-    }, []);
+    let items = Object.values(dates).flatMap((articles) =>
+        articles.map((article) => ({
+            title: article.title,
+            description: art(path.join(__dirname, 'templates/news_web_easy.art'), {
+                title: article.title_with_ruby,
+                image: article.news_web_image_uri,
+            }),
+            guid: article.news_id,
+            pubDate: timezone(parseDate(article.news_prearranged_time), +9),
+            link: `https://www3.nhk.or.jp/news/easy/${article.news_id}/${article.news_id}.html`,
+        }))
+    );
 
     items = items.sort((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data } = await got(item.link);
+                const data = await ofetch(item.link);
                 const $ = load(data);
                 item.description += $('.article-body').html();
                 return item;

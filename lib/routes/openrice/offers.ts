@@ -2,8 +2,6 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 const baseUrl = 'https://www.openrice.com';
 
 export const route: Route = {

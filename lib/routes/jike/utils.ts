@@ -178,7 +178,6 @@ const constructTopicEntry = async (ctx, url) => {
         return {
             title: '主题 ID 不存在，或该主题暂无内容',
         };
-        return null;
     }
 
     const topic = data.topic;

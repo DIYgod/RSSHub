@@ -1,7 +1,8 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { asyncPoolAll, parseArticle } from './utils';
+import { parseArticle } from './utils';
+import pMap from 'p-map';
 const hostMap = {
     'en-us': 'https://www.wsj.com',
     'zh-cn': 'https://cn.wsj.com/zh-hans',
@@ -72,7 +73,7 @@ async function handler(ctx) {
         item.test = key;
         return item;
     });
-    const items = await asyncPoolAll(10, list, (item) => parseArticle(item));
+    const items = await pMap(list, (item) => parseArticle(item), { concurrency: 10 });
 
     return {
         title: `WSJ${subTitle}`,

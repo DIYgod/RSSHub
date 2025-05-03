@@ -45,7 +45,7 @@ async function handler(ctx) {
     const token = await utils.getPrivateToken();
 
     const limit = ctx.req.param('limit');
-    const pageSize = isNaN(Number.parseInt(limit)) ? 50 : Number.parseInt(limit);
+    const pageSize = Number.isNaN(Number.parseInt(limit)) ? 50 : Number.parseInt(limit);
 
     const itemsResponse = await ofetch(`https://api.spotify.com/v1/me/tracks?limit=${pageSize}`, {
         method: 'GET',

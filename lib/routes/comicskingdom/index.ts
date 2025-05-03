@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -65,7 +63,7 @@ async function handler(ctx) {
                     image,
                 });
                 // Pull the date out of the URL
-                const pubDate = parseDate(link.substring(link.lastIndexOf('/') + 1), 'YYYY-MM-DD');
+                const pubDate = parseDate(link.slice(link.lastIndexOf('/') + 1), 'YYYY-MM-DD');
 
                 return {
                     title,

@@ -1,6 +1,6 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import weiboUtils from './utils';
 import { config } from '@/config';
@@ -128,27 +128,34 @@ async function handler(ctx) {
                 //       Need more investigation, pending for now since the current version works fine.
                 // TODO: getShowData() on demand? The API seems to return most things we need since 2022/05/21.
                 //       Need more investigation, pending for now since the current version works fine.
-                const key = 'weibo:user:' + item.mblog.bid;
-                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, item.mblog.bid));
+                let { bid } = item.mblog;
+                const { retweeted_status, created_at } = item.mblog;
+                if (bid === '') {
+                    const url = new URL(item.scheme);
+                    bid = url.searchParams.get('mblogid');
+                    item.mblog.bid = bid;
+                }
+                const key = `weibo:user:${bid}`;
+                const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, bid));
 
                 if (data && data.text) {
                     item.mblog.text = data.text;
                     item.mblog.created_at = parseDate(data.created_at);
                     item.mblog.pics = data.pics;
-                    if (item.mblog.retweeted_status && data.retweeted_status) {
-                        item.mblog.retweeted_status.created_at = data.retweeted_status.created_at;
+                    if (retweeted_status && data.retweeted_status) {
+                        retweeted_status.created_at = data.retweeted_status.created_at;
                     }
                 } else {
-                    item.mblog.created_at = timezone(item.mblog.created_at, +8);
+                    item.mblog.created_at = timezone(created_at, +8);
                 }
 
                 // 转发的长微博处理
-                const retweet = item.mblog.retweeted_status;
+                const retweet = retweeted_status;
                 if (retweet && retweet.isLongText) {
                     // TODO: unify cache key and ...
                     const retweetData = await cache.tryGet(`weibo:retweeted:${retweet.user.id}:${retweet.bid}`, () => weiboUtils.getShowData(retweet.user.id, retweet.bid));
                     if (retweetData !== undefined && retweetData.text) {
-                        item.mblog.retweeted_status.text = retweetData.text;
+                        retweeted_status.text = retweetData.text;
                     }
                 }
 
@@ -158,7 +165,7 @@ async function handler(ctx) {
                 // 视频的处理
                 if (displayVideo === '1') {
                     // 含被转发微博时需要从被转发微博中获取视频
-                    description = item.mblog.retweeted_status ? weiboUtils.formatVideo(description, item.mblog.retweeted_status) : weiboUtils.formatVideo(description, item.mblog);
+                    description = retweeted_status ? weiboUtils.formatVideo(description, retweeted_status) : weiboUtils.formatVideo(description, item.mblog);
                 }
 
                 // 评论的处理
@@ -169,7 +176,7 @@ async function handler(ctx) {
                 // 文章的处理
                 if (displayArticle === '1') {
                     // 含被转发微博时需要从被转发微博中获取文章
-                    description = await (item.mblog.retweeted_status ? weiboUtils.formatArticle(ctx, description, item.mblog.retweeted_status) : weiboUtils.formatArticle(ctx, description, item.mblog));
+                    description = await (retweeted_status ? weiboUtils.formatArticle(ctx, description, retweeted_status) : weiboUtils.formatArticle(ctx, description, item.mblog));
                 }
 
                 return {

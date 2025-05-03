@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -112,7 +110,7 @@ async function handler(ctx) {
 
         if (item.price === 0) {
             finalPrice = 'Free';
-        } else if (!isNaN(price) && isFinite(price)) {
+        } else if (!Number.isNaN(price) && Number.isFinite(price)) {
             const rate = rates[iso];
             if (rate) {
                 finalPrice = `${(price * rate).toFixed(2)} ${iso}`;

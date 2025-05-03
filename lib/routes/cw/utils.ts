@@ -61,6 +61,7 @@ const parsePage = async (path, browser, ctx) => {
         waitUntil: 'domcontentloaded',
     });
 
+    await page.waitForSelector('.caption');
     const response = await page.evaluate(() => document.documentElement.innerHTML);
     await page.close();
     const $ = load(response);
@@ -98,6 +99,7 @@ const parseItems = (list, browser, tryGet) =>
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
+                await page.waitForSelector('.article__head .container');
 
                 const response = await page.evaluate(() => document.documentElement.innerHTML);
                 await page.close();

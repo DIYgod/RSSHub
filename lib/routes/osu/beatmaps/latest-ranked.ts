@@ -6,8 +6,6 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 const actualParametersDescTable = `
 | Name              | Default  | Description                                                                                                                                                                                                                                          |
@@ -235,9 +233,9 @@ async function handler(ctx): Promise<Data> {
     if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
-                upperLimit = Number.parseFloat(dfLimit.substring(1));
+                upperLimit = Number.parseFloat(dfLimit.slice(1));
             } else if (dfLimit.startsWith('L')) {
-                lowerLimit = Number.parseFloat(dfLimit.substring(1));
+                lowerLimit = Number.parseFloat(dfLimit.slice(1));
             }
         }
 

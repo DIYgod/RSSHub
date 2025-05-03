@@ -1,7 +1,7 @@
 import { Route, Data, DataItem } from '@/types';
 import type { Context } from 'hono';
 import got from '@/utils/got';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';

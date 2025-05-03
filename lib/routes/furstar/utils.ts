@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -56,7 +53,7 @@ const detailPage = (link, cache) =>
             .map((i, e) => {
                 const p = load(e);
                 const link = p('a').attr('href').trim();
-                return `${base}/${link.substring(2)}`;
+                return `${base}/${link.slice(2)}`;
             })
             .get();
 

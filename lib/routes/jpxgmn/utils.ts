@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
@@ -22,7 +19,7 @@ const getArticleDesc = async (articleUrl) => {
     }
     const images = getImages($content);
     const otherImages = await Promise.all(
-        [...Array(pageCnt - 1).keys()].map(async (pageIndex) => {
+        [...Array.from({ length: pageCnt - 1 }).keys()].map(async (pageIndex) => {
             const pageUrl = articleUrl.replace('.html', `_${pageIndex + 1}.html`);
             const pageResponse = await got(pageUrl);
             return getImages(load(pageResponse.data));

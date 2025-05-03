@@ -43,7 +43,7 @@ async function handler() {
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
                 const thisUrl = item.link;
-                const trueLink = thisUrl.includes('http') ? thisUrl : host + thisUrl.substring(1);
+                const trueLink = thisUrl.includes('http') ? thisUrl : host + thisUrl.slice(1);
                 const response = await got(trueLink);
                 const $ = load(response.data);
                 item.description = thisUrl.includes('http') ? $('#page-content').html() : $('div.TRS_Editor').html();

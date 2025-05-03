@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
@@ -8,8 +7,6 @@ import _ofetch from '@/utils/ofetch';
 import MarkdownIt from 'markdown-it';
 import type { Author, Project, Version } from '@/routes/modrinth/api';
 import type { Context } from 'hono';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const ofetch = _ofetch.create({
     headers: {

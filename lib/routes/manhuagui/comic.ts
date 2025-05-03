@@ -10,38 +10,37 @@ const getChapters = ($) => {
     let time_mark = 100;
     // 用于一次更新多个新章节的排序
     let new_time_mark = 0;
-    return $('h4')
-        .toArray()
-        .map((ele) => {
-            const categoryName = $(ele).text();
-            while (!$(ele.next).hasClass('chapter-list')) {
-                ele = ele.next;
-            }
-            ele = ele.next;
-            return $(ele)
-                .children('ul')
-                .toArray()
-                .reverse()
-                .reduce((acc, curr) => [...acc, ...$(curr).children('li').toArray()], [])
-                .map((ele) => {
-                    const a = $(ele).children('a');
-                    // 通过操作发布时间来对章节进行排序,如果是刚刚更新的单行本或者番外,保留最新更新时间
-                    let pDate = new Date(new Date($.pubDate) - time_mark++ * 1000);
-                    if (a.find('em').length > 0) {
-                        // 对更新的章节也进行排序
-                        pDate = new Date(new Date($.pubDate) - new_time_mark++ * 1000);
-                        $.newChapterCnt++;
-                    }
-                    return {
-                        link: new URL(a.attr('href'), baseUrl).href,
-                        title: a.attr('title'),
-                        pub_date: pDate,
-                        num: a.find('i').text(),
-                        category: categoryName,
-                    };
+    const result: DataItem[] = [];
+    $('h4').each((_, ele) => {
+        const categoryName = $(ele).text();
+        let nextEle = ele.next;
+        while (nextEle && !$(nextEle).hasClass('chapter-list')) {
+            nextEle = nextEle.next;
+        }
+        if (!nextEle) {
+            return;
+        }
+        for (const ul of $(nextEle).children('ul').toArray().reverse()) {
+            for (const li of $(ul).children('li').toArray()) {
+                const a = $(li).children('a');
+                // 通过操作发布时间来对章节进行排序,如果是刚刚更新的单行本或者番外,保留最新更新时间
+                let pDate = new Date(new Date($.pubDate) - time_mark++ * 1000);
+                if (a.find('em').length > 0) {
+                    // 对更新的章节也进行排序
+                    pDate = new Date(new Date($.pubDate) - new_time_mark++ * 1000);
+                    $.newChapterCnt++;
+                }
+                result.push({
+                    link: new URL(a.attr('href'), baseUrl).href,
+                    title: a.attr('title'),
+                    pub_date: pDate,
+                    num: a.find('i').text(),
+                    category: categoryName,
                 });
-        })
-        .reduce((acc, curr) => [...acc, ...curr]);
+            }
+        }
+    });
+    return result;
 };
 
 export const route: Route = {

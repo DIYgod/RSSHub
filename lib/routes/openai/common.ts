@@ -1,11 +1,77 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { DataItem } from '@/types';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { config } from '@/config';
+
+export const BASE_URL = new URL('https://openai.com');
+
+/** Fetch the details of an article. */
+export const fetchArticleDetails = async (url: string) => {
+    const page = await ofetch(url);
+    const $ = load(page);
+
+    const $article = $('#main article');
+
+    const categories = $('h1')
+        .prev()
+        .find('a[href]')
+        .toArray()
+        .map((element) => $(element).text());
+
+    // Article header (title, sub title and categories)
+    $($article.find('h1').parents().get(4)).remove();
+    // Related articles (can be the #citations section in some cases, so the last child needs to be removed first)
+    $article.children().last().remove();
+    // Article authors and tags
+    $article.find('#citations').remove();
+
+    return {
+        content: $article.html() ?? undefined,
+        // Categories can be found on https://openai.com/news/ and https://openai.com/research/index/
+        categories,
+        image: $('meta[property="og:image"]').attr('content'),
+    };
+};
+
+/** Fetch all articles from OpenAI's RSS feed. */
+export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
+    const page = await ofetch('https://openai.com/news/rss.xml', {
+        responseType: 'text',
+        headers: { 'User-Agent': config.ua },
+    });
+
+    const $ = load(page, { xml: true });
+
+    return Promise.all(
+        $('item')
+            .toArray()
+            .slice(0, limit)
+            .map<Promise<DataItem>>((element) => {
+                const id = $(element).find('guid').text();
+
+                return cache.tryGet(`openai:news:${id}`, async () => {
+                    const title = $(element).find('title').text();
+                    const pubDate = $(element).find('pubDate').text();
+                    const link = $(element).find('link').text();
+
+                    const { content, categories } = await fetchArticleDetails(link);
+
+                    return {
+                        guid: id,
+                        title,
+                        link,
+                        pubDate,
+                        description: content,
+                        category: categories,
+                    } as DataItem;
+                }) as Promise<DataItem>;
+            })
+    );
+};
 
 const getApiUrl = async () => {
     const blogRootUrl = 'https://openai.com/blog';
