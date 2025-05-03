@@ -41,7 +41,7 @@ async function handler() {
     const data = response.data;
 
     const $ = load(data);
-    const list = $('.note-list li').get();
+    const list = $('.note-list li').toArray();
 
     const result = await util.ProcessFeed(list, cache);
 

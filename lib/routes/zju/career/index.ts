@@ -41,21 +41,17 @@ async function handler(ctx) {
 
     const $ = load(res.data);
     const list = $('.com-list li');
-    const items =
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                const link = item.find('a').eq(0);
-                return {
-                    // title: item.find('a').attr('title'),
-                    title: item.find('span').eq(0).attr('title'),
-                    pubDate: parseDate(item.find('.news-time').text()),
+    const items = list.toArray().map((item) => {
+        item = $(item);
+        const link = item.find('a').eq(0);
+        return {
+            // title: item.find('a').attr('title'),
+            title: item.find('span').eq(0).attr('title'),
+            pubDate: parseDate(item.find('.news-time').text()),
 
-                    link: link.attr('href').startsWith('http') ? link.attr('href') : `${rootUrl}/jyxt${link.attr('data-src')}xwid=${link.attr('data-xwid')}&lmtype=${link.attr('data-lmtype')}`,
-                };
-            })
-            .get();
+            link: link.attr('href').startsWith('http') ? link.attr('href') : `${rootUrl}/jyxt${link.attr('data-src')}xwid=${link.attr('data-xwid')}&lmtype=${link.attr('data-lmtype')}`,
+        };
+    });
 
     return {
         title: map.get(type).title,

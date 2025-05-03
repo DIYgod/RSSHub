@@ -38,8 +38,8 @@ async function handler(ctx) {
     });
     const $ = load(res.data);
     const artists = $('.filter-item')
-        .map((i, e) => utils.authorDetail(e))
-        .get();
+        .toArray()
+        .map((e) => utils.authorDetail(e));
     artists.shift(); // the first one is "show all"
 
     return {

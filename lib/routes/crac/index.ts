@@ -37,14 +37,14 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('div.InCont_r_d_cont > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: new URL(item.find('a').attr('href'), baseUrl).href,
                 pubDate: parseDate(item.find('span.cont_d').text(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     await Promise.all(
         list.map((item) =>

@@ -45,15 +45,15 @@ async function handler(ctx) {
 
     const $ = load(res.data);
     const items = $('.winstyle196327 tr:lt(20)')
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('a').attr('title'),
                 link: `https://jwc.zcmu.edu.cn/${item.find('a').attr('href')}`,
                 pubDate: parseDate(item.find('span.timestyle196327').text().trim()),
             };
-        })
-        .get();
+        });
 
     return {
         title: map.get(type).title,

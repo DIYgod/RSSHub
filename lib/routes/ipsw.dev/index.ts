@@ -33,7 +33,8 @@ async function handler(ctx) {
     const productName = $('#IdentifierModal > div > div > div.modal-body > p:nth-child(1) > em').text();
 
     const list: Data[] = $('.firmware')
-        .map((index, element) => {
+        .toArray()
+        .map((element) => {
             const ele = $(element);
             const version = ele.find('td:nth-child(1) > div > div > strong').text();
             const build = ele.find('td:nth-child(1) > div > div > div > code').text();
@@ -51,8 +52,7 @@ async function handler(ctx) {
                     size,
                 }),
             };
-        })
-        .get();
+        });
 
     return {
         title: `${productName} Released`,

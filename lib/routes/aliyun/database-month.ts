@@ -33,7 +33,8 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $("ul[class='posts'] > li")
-        .map((i, e) => {
+        .toArray()
+        .map((e) => {
             const element = $(e);
             const title = element.find('a').text().trim();
             const link = `http://mysql.taobao.org${element.find('a').attr('href').trim()}/`;
@@ -42,8 +43,7 @@ async function handler() {
                 description: '',
                 link,
             };
-        })
-        .get();
+        });
 
     const result = await Promise.all(
         list.map((item) => {

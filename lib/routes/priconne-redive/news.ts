@@ -115,7 +115,7 @@ async function handler(ctx) {
                 url: 'http://www.princessconnect.so-net.tw/news',
             });
             const $ = load(response.data);
-            const list = $('.news_con dl dd').get();
+            const list = $('.news_con dl dd').toArray();
 
             const items = await Promise.all(
                 list.map((item) => {

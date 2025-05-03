@@ -47,7 +47,7 @@ async function handler(ctx) {
     const response = await got.get(url);
 
     const $ = load(response.data);
-    const list = $('#col1_content > div.list > ul > li').get();
+    const list = $('#col1_content > div.list > ul > li').toArray();
 
     const items = await Promise.all(
         list.map(async (item) => {

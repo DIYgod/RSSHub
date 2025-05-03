@@ -41,27 +41,25 @@ async function handler(ctx) {
     const $ = load(response.data);
     const lists = $('div.c-box > div > div.c-zx-list > ul > li');
     const reg = /日期：(.*?(\s\(.*?\))?)\s/;
-    const list = lists
-        .map((index, item) => {
-            item = $(item).find('div');
-            let date = reg.exec(item.find('div.r > p.other').text())[1];
-            if (date.includes('周') || date.includes('月')) {
-                date = /\((.*?)\)/.exec(date)[1];
-                date = parseDate(date, 'MM-DD');
-            } else if (date.includes('年')) {
-                date = /\((.*?)\)/.exec(date)[1];
-                date = parseDate(date, 'YYYY-MM-DD');
-            } else {
-                date = parseRelativeDate(date);
-            }
-            return {
-                title: item.find('div.r > p.r-top > span > a').text(),
-                pubDate: timezone(date, +8),
-                description: item.find('div.r > p.desc').text(),
-                link: item.find('div.r > p.r-top > span > a').attr('href'),
-            };
-        })
-        .get();
+    const list = lists.toArray().map((item) => {
+        item = $(item).find('div');
+        let date = reg.exec(item.find('div.r > p.other').text())[1];
+        if (date.includes('周') || date.includes('月')) {
+            date = /\((.*?)\)/.exec(date)[1];
+            date = parseDate(date, 'MM-DD');
+        } else if (date.includes('年')) {
+            date = /\((.*?)\)/.exec(date)[1];
+            date = parseDate(date, 'YYYY-MM-DD');
+        } else {
+            date = parseRelativeDate(date);
+        }
+        return {
+            title: item.find('div.r > p.r-top > span > a').text(),
+            pubDate: timezone(date, +8),
+            description: item.find('div.r > p.desc').text(),
+            link: item.find('div.r > p.r-top > span > a').attr('href'),
+        };
+    });
     const items =
         fulltext === 'y'
             ? await Promise.all(

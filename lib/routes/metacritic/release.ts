@@ -28,7 +28,7 @@ const handler = async (ctx) => {
     const data = response.body;
 
     const $ = load(data);
-    const list = $('.list_products > li').get().slice(0, 10);
+    const list = $('.list_products > li').toArray().slice(0, 10);
 
     const result = list.map((item) => {
         const $ = load(item);

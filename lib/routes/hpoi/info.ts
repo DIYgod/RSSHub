@@ -45,7 +45,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const items = $('.home-info')
-        .map((_, ele) => {
+        .toArray()
+        .map((ele) => {
             const $item = load(ele);
             const leftNode = $item('.overlay-container');
             const relativeLink = leftNode.find('a').first().attr('href');
@@ -62,8 +63,7 @@ async function handler(ctx) {
                 category: infoType,
                 description: [`类型:${typeName}`, infoTitle, `更新内容: ${infoType}`, `<img src="${imgUrl}"/>`].join('<br/>'),
             };
-        })
-        .get();
+        });
 
     const typeToLabel = {
         all: '全部',

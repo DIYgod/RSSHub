@@ -39,7 +39,7 @@ async function handler(ctx) {
     const name = $('a.active-trail').text();
     const items = await Promise.all(
         $('.title a')
-            .get()
+            .toArray()
             .map((item) => {
                 const link = baseUrl + $(item).attr('href');
                 return cache.tryGet(link, async () => {

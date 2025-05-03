@@ -48,7 +48,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('ul.container.list > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const link = $(item).find('a').attr('href');
             const absoluteLink = new URL(link, currentUrl).href;
             return {
@@ -56,8 +57,7 @@ async function handler(ctx) {
                 pubDate: parseDate($(item).find('span').text()),
                 link: absoluteLink,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

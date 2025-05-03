@@ -45,7 +45,8 @@ async function handler(ctx) {
     });
     const $2 = load(response2.data);
     const list = $2('.js-article')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const title = $2(item).find('.js-article-title').text();
             const authors = $2(item).find('.js-article__item__authors').text();
             const link = $2(item).find('.article-content-title').attr('href');
@@ -57,8 +58,7 @@ async function handler(ctx) {
                 authors,
                 issue,
             };
-        })
-        .get();
+        });
 
     const renderDesc = (item) =>
         art(path.join(__dirname, 'templates/description.art'), {

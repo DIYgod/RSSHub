@@ -37,15 +37,15 @@ async function handler() {
     const $ = load(response.data);
     const list = $('ul.list.whlist li')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a');
             return {
                 title: a.text(),
                 link: new URL(a.attr('href'), `http://www.chinatax.gov.cn`).toString(),
             };
-        })
-        .get();
+        });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

@@ -47,7 +47,8 @@ async function handler() {
     const $ = load(content);
 
     const out = $('.notice p')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const now = dayjs();
             let date = dayjs(now.year() + '-' + item.find('a.date').text());
@@ -60,8 +61,7 @@ async function handler() {
                 link: host + item.find('a[href]').attr('href'),
                 pubDate: parseDate(date),
             };
-        })
-        .get();
+        });
 
     return {
         title: '信通学院通知',

@@ -56,15 +56,15 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('.collect-hobby-list-small')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: titleMap[caty] + ': ' + item.find('.name').text(),
                 link: 'https://www.hpoi.net/' + item.find('.name').attr('href'),
                 description: `<img src="${item.find('img').attr('src').replace('/s/', '/n/')}"><br>${item.find('.pay').text()}<br>${item.find('.score').text()}`,
             };
-        })
-        .get();
+        });
 
     const title = $('.hpoi-collect-head .info p').eq(0).text() + '的手办 - ' + titleMap[caty];
 

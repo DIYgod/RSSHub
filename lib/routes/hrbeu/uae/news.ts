@@ -45,7 +45,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('h2').text();
     const items = $('li.wow.fadeInUp')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const title = $(item).find('a').attr('title');
             let link = $(item).find('a').attr('href');
             if (!link.startsWith('http')) {
@@ -62,8 +63,7 @@ async function handler(ctx) {
                 pubDate,
                 link,
             };
-        })
-        .get();
+        });
 
     const item = await Promise.all(
         items.map((item) =>

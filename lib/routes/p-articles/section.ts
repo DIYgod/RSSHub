@@ -32,14 +32,14 @@ async function handler(ctx) {
     };
 
     const list = $('div.contect_box_04 > a')
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('h1').text().trim(),
-                link: new URL($(this).attr('href'), rootUrl).href,
+                title: $(element).find('h1').text().trim(),
+                link: new URL($(element).attr('href'), rootUrl).href,
             };
             return info;
-        })
-        .get();
+        });
     list.unshift(topInfo);
 
     const items = await Promise.all(

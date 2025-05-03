@@ -68,7 +68,8 @@ async function handler(ctx) {
         dataTitle = $('h1').eq(0).text();
 
         items = $('article[itemprop=itemListElement]')
-            .map((index, elem) => {
+            .toArray()
+            .map((elem, index) => {
                 const $item = $(elem);
                 const firstInfo = $item.find('p').eq(0).text();
                 const $name = $item.find('h3[itemprop=name]');
@@ -95,8 +96,7 @@ async function handler(ctx) {
                     description: `<figure><img src="${imageLink}" alt="test"/><figcaption><span>${description}</span></figcaption></figure><br/>${firstInfo}<br/>Author: ${author}<br/>Publisher: ${publisher}`,
                     link: primaryLink,
                 };
-            })
-            .get();
+            });
     }
 
     return {

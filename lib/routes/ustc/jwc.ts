@@ -49,16 +49,16 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     let items = $(type === '' ? 'ul[class="article-list with-tag"] > li' : 'ul[class=article-list] > li')
-        .map(function () {
-            const child = $(this).children();
+        .toArray()
+        .map((element) => {
+            const child = $(element).children();
             const info = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(this).find('.date').text().trim(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), +8),
             };
             return info;
-        })
-        .get();
+        });
 
     items = await Promise.all(
         items

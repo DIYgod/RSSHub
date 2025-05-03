@@ -35,13 +35,13 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('div.FM-abox2A a.FM-abox2B')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: `https:${item.attr('href')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

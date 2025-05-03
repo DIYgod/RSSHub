@@ -45,12 +45,12 @@ async function handler(ctx) {
 
     const $ = load(responseHtml);
     const items = $('td > div')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('b > a').text(),
             link: $(item).find('b > a').attr('href'),
             description: $(item).find('img').html() + $(item).find('div:nth-child(2)').remove('b').end().html(),
-        }))
-        .get();
+        }));
 
     return {
         title: `轻小说文库 - ${cateTitleMap[category]}`,

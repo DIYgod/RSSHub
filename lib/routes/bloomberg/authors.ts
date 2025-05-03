@@ -15,18 +15,16 @@ const parseAuthorNewsList = async (slug) => {
     }
     const $ = load(resp.html);
     const articles = $('article.story-list-story');
-    return articles
-        .map((index, item) => {
-            item = $(item);
-            const headline = item.find('a.story-list-story__info__headline-link');
-            return {
-                title: headline.text(),
-                pubDate: item.attr('data-updated-at'),
-                guid: `bloomberg:${item.attr('data-id')}`,
-                link: new URL(headline.attr('href'), baseURL).href,
-            };
-        })
-        .get();
+    return articles.toArray().map((item) => {
+        item = $(item);
+        const headline = item.find('a.story-list-story__info__headline-link');
+        return {
+            title: headline.text(),
+            pubDate: item.attr('data-updated-at'),
+            guid: `bloomberg:${item.attr('data-id')}`,
+            link: new URL(headline.attr('href'), baseURL).href,
+        };
+    });
 };
 
 export const route: Route = {

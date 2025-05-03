@@ -40,14 +40,14 @@ async function handler(ctx) {
     const order_name = $('li.selected a').text();
 
     const list = $('li.clearfix')
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('div.discuss-main.clearfix a:first').text().trim().replace('\n', ' '),
-                link: $(this).find('div.discuss-main.clearfix a[rel]').attr('href'),
+                title: $(element).find('div.discuss-main.clearfix a:first').text().trim().replaceAll('\n', ' '),
+                link: $(element).find('div.discuss-main.clearfix a[rel]').attr('href'),
             };
             return info;
-        })
-        .get();
+        });
 
     const out = await Promise.all(
         list.map((info) => {

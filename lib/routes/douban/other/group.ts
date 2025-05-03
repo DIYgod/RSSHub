@@ -59,7 +59,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('.olt tr:not(.th)').slice(0, 30).get();
+    const list = $('.olt tr:not(.th)').slice(0, 30).toArray();
 
     const items = await Promise.all(
         list.map((item) => {

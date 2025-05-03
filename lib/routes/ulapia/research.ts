@@ -42,14 +42,14 @@ async function handler() {
                 const $ = load(response.data);
                 const items = $('div.row > div.col-md-6')
                     .slice(0, 6)
-                    .map((_, item) => ({
+                    .toArray()
+                    .map((item) => ({
                         title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
                         author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
                         link: $(item).find('h5.mb-1 > a').attr('href'),
                         description: `<img src="${$(item).find('img').attr('src').split('!')[0]}">`,
                         pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':')[1], 'YYYY-MM-DD'),
-                    }))
-                    .get();
+                    }));
 
                 return items;
             });

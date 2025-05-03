@@ -32,14 +32,14 @@ async function handler(ctx) {
     const items = list
         .find('li')
         .find('a')
-        .filter((idx, item) => $(item).attr('href').startsWith('/novel/'))
-        .map((idx, item) => ({
+        .toArray()
+        .filter((item) => $(item).attr('href').startsWith('/novel/'))
+        .map((item) => ({
             title: $(item).text(),
             author,
             description: $(item).text(),
             link: `https://www.linovelib.com${$(item).attr('href')}`,
-        }))
-        .get();
+        }));
     items.reverse();
 
     return {

@@ -36,15 +36,15 @@ async function handler() {
     const $ = load(listData.data);
     const list = $('div.index-four-content > div.article-box')
         .find('div.new-child')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('p.new-title').text(),
             link: new URL($(item).find('a').attr('href'), rootUrl).href,
             author: $(item)
                 .find('p.new-desc')
                 .text()
                 .match(/作者：(.*?)\s/)[1],
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

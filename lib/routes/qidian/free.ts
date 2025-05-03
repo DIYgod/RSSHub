@@ -44,23 +44,21 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('#limit-list li');
-    const out = list
-        .map((index, item) => {
-            item = $(item);
+    const out = list.toArray().map((item) => {
+        item = $(item);
 
-            const img = `<img src="https:${item.find('.book-img-box img').attr('src')}">`;
-            const rank = `<p>评分：${item.find('.score').text()}</p>`;
-            const update = `<a href=https:${item.find('p.update > a').attr('href')}>${item.find('p.update > a').text()}</a>`;
+        const img = `<img src="https:${item.find('.book-img-box img').attr('src')}">`;
+        const rank = `<p>评分：${item.find('.score').text()}</p>`;
+        const update = `<a href=https:${item.find('p.update > a').attr('href')}>${item.find('p.update > a').text()}</a>`;
 
-            return {
-                title: item.find('.book-mid-info h4 a').text(),
-                description: img + rank + update + '<br>' + item.find('p.intro').html(),
-                pubDate: parseRelativeDate(item.find('p.update span').text()),
-                link: 'https:' + item.find('.book-mid-info h4 a').attr('href'),
-                author: item.find('p.author a.name').text(),
-            };
-        })
-        .get();
+        return {
+            title: item.find('.book-mid-info h4 a').text(),
+            description: img + rank + update + '<br>' + item.find('p.intro').html(),
+            pubDate: parseRelativeDate(item.find('p.update span').text()),
+            link: 'https:' + item.find('.book-mid-info h4 a').attr('href'),
+            author: item.find('p.author a.name').text(),
+        };
+    });
 
     return {
         title,

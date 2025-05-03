@@ -30,11 +30,9 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('.zebra tr')
-        .filter(function () {
-            return $(this).find('.progress-bar span').text() !== '0%';
-        })
-        .map((i, e) => $(e).find('.title').attr('href'))
-        .get()
+        .filter((element) => $(element).find('.progress-bar span').text() !== '0%')
+        .toArray()
+        .map((e) => $(e).find('.title').attr('href'))
         .slice(0, 3);
 
     const items = await Promise.all(
@@ -49,44 +47,38 @@ async function handler(ctx) {
             const $ = load(response.data);
 
             const list = $('.zebra tr.completed');
-            const items = list
-                .map((i, item) => {
-                    item = $(item);
-                    const classMap = {
-                        Platinum: '白金',
-                        Gold: '金',
-                        Silver: '银',
-                        Bronze: '铜',
-                    };
-                    return {
-                        title: item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
-                        description: `<img src="${item.find('.trophy source').attr('srcset').split(' ')[1]}"><br>${item
-                            .find('.title')
-                            .parent()
-                            .contents()
-                            .filter(function () {
-                                return this.nodeType === 3;
-                            })
-                            .text()
-                            .trim()}<br>等级：${classMap[item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${item.find('.hover-show .typo-top').text()}`,
-                        link: 'https://psnprofiles.com' + item.find('.title').attr('href'),
-                        pubDate: new Date(
-                            +new Date(
-                                item
-                                    .find('.typo-top-date nobr')
-                                    .contents()
-                                    .filter(function () {
-                                        return this.nodeType === 3;
-                                    })
-                                    .text() +
-                                    ' ' +
-                                    item.find('.typo-bottom-date').text()
-                            ) +
-                                8 * 60 * 60 * 1000
-                        ).toUTCString(),
-                    };
-                })
-                .get();
+            const items = list.toArray().map((item) => {
+                item = $(item);
+                const classMap = {
+                    Platinum: '白金',
+                    Gold: '金',
+                    Silver: '银',
+                    Bronze: '铜',
+                };
+                return {
+                    title: item.find('.title').text() + ' - ' + $('.page h3').eq(0).text().trim().replace(' Trophies', ''),
+                    description: `<img src="${item.find('.trophy source').attr('srcset').split(' ')[1]}"><br>${item
+                        .find('.title')
+                        .parent()
+                        .contents()
+                        .filter((_, element) => element.nodeType === 3)
+                        .text()
+                        .trim()}<br>等级：${classMap[item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${item.find('.hover-show .typo-top').text()}`,
+                    link: 'https://psnprofiles.com' + item.find('.title').attr('href'),
+                    pubDate: new Date(
+                        +new Date(
+                            item
+                                .find('.typo-top-date nobr')
+                                .contents()
+                                .filter((_, element) => element.nodeType === 3)
+                                .text() +
+                                ' ' +
+                                item.find('.typo-bottom-date').text()
+                        ) +
+                            8 * 60 * 60 * 1000
+                    ).toUTCString(),
+                };
+            });
 
             return items;
         })

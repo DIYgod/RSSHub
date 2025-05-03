@@ -10,13 +10,9 @@ const parseContent = (htmlString) => {
 
     const info = $('.detail_main_content > h1')
         .contents()
-        .filter(function () {
-            return this.nodeType === 3;
-        })
-        .map(function () {
-            return $(this).text().trim();
-        })
-        .get();
+        .filter((_, element) => element.nodeType === 3)
+        .toArray()
+        .map((element) => $(element).text().trim());
 
     const content = $('[id^="vsb_content"]');
     $('form > div > ul a').each(function () {

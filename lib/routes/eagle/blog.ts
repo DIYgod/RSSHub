@@ -61,12 +61,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('div.categories-list > div > div > div > ul > li.active').text();
     const list = $('div.post-item')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('div.title').text(),
             link: new URL($(item).find('a').attr('href'), host).href,
             pubDate: parseDate($(item).find('div.metas > a > span').text().replace('・', '')),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

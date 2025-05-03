@@ -39,7 +39,8 @@ async function handler() {
         language: 'zh-CN',
         item: await Promise.all(
             $list('.Newslist-li')
-                .map((_, el) => {
+                .toArray()
+                .map((el) => {
                     const $el = $list(el);
                     const $a = $el.find('.Newslist-title a');
                     const href = $a.attr('href');
@@ -59,7 +60,6 @@ async function handler() {
                         };
                     });
                 })
-                .get()
         ),
     };
 }

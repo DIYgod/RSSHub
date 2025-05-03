@@ -29,28 +29,26 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('.recent-matches-bg-lose, .recent-matches-bg-win');
 
-    const matches = list
-        .map((_, item) => {
-            item = $(item);
+    const matches = list.toArray().map((item) => {
+        item = $(item);
 
-            const getRes = () => (item.attr('class') === 'recent-matches-bg-lose' ? 'LOSS' : 'WIN');
-            const result = getRes();
+        const getRes = () => (item.attr('class') === 'recent-matches-bg-lose' ? 'LOSS' : 'WIN');
+        const result = getRes();
 
-            const infoList = item.find('td');
+        const infoList = item.find('td');
 
-            const time = infoList.eq(0).text() + ' ' + infoList.eq(1).text();
-            const tournament = infoList.eq(6).text();
-            const score = infoList.eq(7).text();
-            const opponent = infoList.eq(8).text();
+        const time = infoList.eq(0).text() + ' ' + infoList.eq(1).text();
+        const tournament = infoList.eq(6).text();
+        const score = infoList.eq(7).text();
+        const opponent = infoList.eq(8).text();
 
-            return {
-                title: `[${result}] ${team} ${score} ${opponent} on ${tournament}`,
-                description: `${time},  ${team} ${score} ${opponent} on ${tournament}`,
-                link: currentUrl,
-                guid: currentUrl + time,
-            };
-        })
-        .get();
+        return {
+            title: `[${result}] ${team} ${score} ${opponent} on ${tournament}`,
+            description: `${time},  ${team} ${score} ${opponent} on ${tournament}`,
+            link: currentUrl,
+            guid: currentUrl + time,
+        };
+    });
 
     return {
         title: `[Counter-Strike] ${team} Match Results From Liquipedia`,

@@ -71,7 +71,7 @@ async function handler(ctx) {
     const $ = load(data);
 
     const title = $('title').text();
-    const items = $('#subIndex > div.main_frame_sub > div.detail_sub > div > div > div > ul > li').slice(0, 7).get();
+    const items = $('#subIndex > div.main_frame_sub > div.detail_sub > div > div > div > ul > li').slice(0, 7).toArray();
     const results = await Promise.all(
         items.map(async (item) => {
             const $ = load(item);

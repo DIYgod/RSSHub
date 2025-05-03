@@ -95,7 +95,7 @@ unicorn.configs.recommended,
         'no-new-func': 'error',
         'no-restricted-imports': 'error',
 
-        'no-restricted-syntax': ['warn', {
+        'no-restricted-syntax': ['error', {
             selector: "CallExpression[callee.property.name='get'][arguments.length=0]",
             message: "Please use .toArray() instead.",
         }, {

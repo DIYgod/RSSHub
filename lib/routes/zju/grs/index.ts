@@ -44,19 +44,15 @@ async function handler(ctx) {
     const $ = load(res.data);
     const list = $('#wp_news_w09').find('.list-item');
 
-    const items =
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('h3').attr('title'),
-                    pubDate: timezone(parseDate(item.find('.date').text().trim(), 'YY-MM-DD'), +8),
-                    link: `http://www.grs.zju.edu.cn${item.find('a').eq(-1).attr('href')}`,
-                    description: item.find('p').text(),
-                };
-            })
-            .get();
+    const items = list.toArray().map((item) => {
+        item = $(item);
+        return {
+            title: item.find('h3').attr('title'),
+            pubDate: timezone(parseDate(item.find('.date').text().trim(), 'YY-MM-DD'), +8),
+            link: `http://www.grs.zju.edu.cn${item.find('a').eq(-1).attr('href')}`,
+            description: item.find('p').text(),
+        };
+    });
 
     return {
         title: map.get(type).title,

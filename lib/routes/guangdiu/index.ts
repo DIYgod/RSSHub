@@ -34,11 +34,11 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('#mainleft > div.zkcontent > div.gooditem')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a.goodname').text().trim(),
             link: new URL($(item).find('div.iteminfoarea > h2 > a').attr('href'), host).href,
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

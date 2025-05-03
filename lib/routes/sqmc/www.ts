@@ -43,7 +43,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('div#wp_news_w9 ul li').get();
+    const list = $('div#wp_news_w9 ul li').toArray();
 
     return {
         title: `新乡医学院三全学院官网信息${$('title').text()}`,

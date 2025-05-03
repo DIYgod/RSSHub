@@ -46,15 +46,15 @@ async function handler(ctx) {
 
     const list = $('.list-4 a[title]')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: `${rootUrl}${item.attr('href').replace(/\.\./, '/')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

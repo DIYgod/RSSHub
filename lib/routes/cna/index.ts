@@ -67,7 +67,7 @@ async function handler(ctx) {
                 item.description = (topImage === null ? '' : topImage) + content('.paragraph').eq(0).html();
                 item.category = [
                     ...content("meta[property='article:tag']")
-                        .get()
+                        .toArray()
                         .map((e) => e.attribs.content),
                     content('.active > a').text(),
                 ];

@@ -72,14 +72,14 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#list > div.fl > ul > li > div > h2 > a')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.text(),
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

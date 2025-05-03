@@ -32,7 +32,7 @@ async function handler() {
     });
 
     const $ = load(response.data);
-    const list = $('.article-list li').get();
+    const list = $('.article-list li').toArray();
 
     return {
         title: 'Rust语言中文社区 | 新闻/聚合',

@@ -25,11 +25,11 @@ async function handler() {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('div.report-item')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a.report-item__link').attr('title'),
             link: $(item).find('a.report-item__link').attr('href'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

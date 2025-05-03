@@ -59,7 +59,8 @@ async function handler(ctx) {
 
     const list = $('.athing')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
-        .map((_, thing) => {
+        .toArray()
+        .map((thing) => {
             thing = $(thing);
 
             const item = {};
@@ -83,8 +84,7 @@ async function handler(ctx) {
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
             return item;
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

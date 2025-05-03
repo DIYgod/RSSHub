@@ -60,7 +60,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('ul.reco-job-list li')
         .slice(0, 30)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const title = item.find('a.reco-job-title');
             const company = item.find('div.reco-job-com a');
@@ -78,8 +79,7 @@ async function handler(ctx) {
                 link: url.resolve(rootUrl, title.attr('href')),
                 pubDate: date.toUTCString(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

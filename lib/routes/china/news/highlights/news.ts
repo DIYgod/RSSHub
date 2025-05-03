@@ -50,20 +50,16 @@ async function handler(ctx) {
     return {
         title: `中华网-${categoryTitle}新闻`,
         link: websiteUrl,
-        item:
-            news &&
-            news
-                .map((_, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('.item_title a').text(),
-                        author: item.find('.item_source').text(),
-                        category: `${categoryTitle}新闻`,
-                        pubDate: parseDate(item.find('.item_time').text()),
-                        description: item.find('.item_title a').text(),
-                        link: item.find('li a').attr('href'),
-                    };
-                })
-                .get(),
+        item: news.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('.item_title a').text(),
+                author: item.find('.item_source').text(),
+                category: `${categoryTitle}新闻`,
+                pubDate: parseDate(item.find('.item_time').text()),
+                description: item.find('.item_title a').text(),
+                link: item.find('li a').attr('href'),
+            };
+        }),
     };
 }

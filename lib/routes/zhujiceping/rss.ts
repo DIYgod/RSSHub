@@ -24,7 +24,8 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('article.excerpt')
-        .map((i, e) => {
+        .toArray()
+        .map((e) => {
             const element = $(e);
             const title = element.find('h2 > a').attr('title');
             const link = element.find('h2 > a').attr('href');
@@ -37,8 +38,7 @@ async function handler() {
                 link,
                 pubDate: parseDate(dateraw, 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     return {
         title: '国外主机测评',

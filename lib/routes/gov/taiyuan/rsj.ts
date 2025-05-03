@@ -50,7 +50,8 @@ async function handler(ctx) {
     const $ = load(response.data, { decodeEntities: false });
     const title = $('.tit').find('a:eq(2)').text();
     const list = $('.RightSide_con ul li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const link = $(item).find('a');
             const date = $(item).find('span.fr');
             return {
@@ -58,8 +59,7 @@ async function handler(ctx) {
                 link: link.attr('href'),
                 pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), +8),
             };
-        })
-        .get();
+        });
 
     return {
         title: '太原市人力资源和社会保障局 - ' + title,
