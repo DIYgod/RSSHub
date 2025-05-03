@@ -35,9 +35,9 @@ async function handler(ctx) {
     const itemArray = $('.archive-module-half-container,.archive-module-third-container')
         .toArray()
         .map((element) => ({
-                url: $(element).find('a').attr('href'),
-                title: $(element).find('.archive-module-text').first().text(),
-            }));
+            url: $(element).find('a').attr('href'),
+            title: $(element).find('.archive-module-text').first().text(),
+        }));
 
     const out = await utils.parseList(itemArray, ctx, utils.parseArticle);
 

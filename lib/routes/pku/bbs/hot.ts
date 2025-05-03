@@ -44,9 +44,9 @@ async function handler() {
     const listItems = $('#list-content .list-item')
         .toArray()
         .map((element) => ({
-                url: new URL($(element).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
-                title: $(element).find('.title').text(),
-            }))
+            url: new URL($(element).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
+            title: $(element).find('.title').text(),
+        }))
         .slice(0, 10);
 
     const item = await Promise.all(
