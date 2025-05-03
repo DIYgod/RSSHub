@@ -61,9 +61,7 @@ async function handler(ctx) {
                         .find('.title')
                         .parent()
                         .contents()
-                        .filter(function () {
-                            return this.nodeType === 3;
-                        })
+                        .filter((_, element) => element.nodeType === 3)
                         .text()
                         .trim()}<br>等级：${classMap[item.find('td').eq(5).find('img').attr('title')]}<br>珍贵度：${item.find('.hover-show .typo-top').text()}`,
                     link: 'https://psnprofiles.com' + item.find('.title').attr('href'),
@@ -72,9 +70,7 @@ async function handler(ctx) {
                             item
                                 .find('.typo-top-date nobr')
                                 .contents()
-                                .filter(function () {
-                                    return this.nodeType === 3;
-                                })
+                                .filter((_, element) => element.nodeType === 3)
                                 .text() +
                                 ' ' +
                                 item.find('.typo-bottom-date').text()
