@@ -28,11 +28,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['pixwox.com/profile/:id'],
+            source: ['www.pixnoy.com/profile/:id'],
             target: '/user/:id',
         },
         {
-            source: ['pixwox.com/profile/:id/tagged'],
+            source: ['www.pixnoy.com/profile/:id/tagged'],
             target: '/user/:id/tagged',
         },
     ],
@@ -43,8 +43,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixwox' eventually
-    const baseUrl = 'https://www.pixwox.com';
+    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixnoy' eventually
+    const baseUrl = 'https://www.pixnoy.com';
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
