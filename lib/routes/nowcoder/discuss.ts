@@ -43,7 +43,7 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const info = {
-                title: $(element).find('div.discuss-main.clearfix a:first').text().trim().replace('\n', ' '),
+                title: $(element).find('div.discuss-main.clearfix a:first').text().trim().replaceAll('\n', ' '),
                 link: $(element).find('div.discuss-main.clearfix a[rel]').attr('href'),
             };
             return info;
