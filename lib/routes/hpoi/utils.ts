@@ -65,15 +65,15 @@ const ProcessFeed = async (type, id, order) => {
         title: `Hpoi 手办维基 - ${MAPs[type].title}${id ? ` ${id}` : ''}`,
         link,
         item: $('.hpoi-glyphicons-list li')
-            .map((_index, _item) => {
+            .toArray()
+            .map((_item) => {
                 _item = $(_item);
                 return {
                     title: _item.find('.hpoi-detail-grid-title a').text(),
                     link: host + '/' + _item.find('a').attr('href'),
                     description: `<img src="${_item.find('img').attr('src').replace('/s/', '/n/')}">${_item.find('.hpoi-detail-grid-info').html().replaceAll('span>', 'p>')}`,
                 };
-            })
-            .get(),
+            }),
     };
 };
 

@@ -48,7 +48,8 @@ async function handler() {
     const items = $('dl.clearfix');
 
     const out = $(items)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const newsTitle = item.find('a').text();
             const newsLink = host + item.find('a[href]').attr('href').slice(3);
@@ -59,8 +60,7 @@ async function handler() {
                 link: newsLink,
                 pubDate: newsPubDate,
             };
-        })
-        .get();
+        });
 
     return {
         title: '电子科技大学自动化学院通知',

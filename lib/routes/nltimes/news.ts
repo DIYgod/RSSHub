@@ -61,7 +61,8 @@ async function handler(ctx) {
 
     const list = $('.news-card')
         .slice(0, 10)
-        .map((_, elem) => {
+        .toArray()
+        .map((elem) => {
             const item = {
                 link: $(elem).children('.news-card__title').first().children('a').first().attr('href'),
                 title: $(elem).children('.news-card__title').first().children('a').first().text(),
@@ -70,12 +71,11 @@ async function handler(ctx) {
                     .children('.news-card__categories')
                     .first()
                     .children('a')
-                    .map((_, elem) => $(elem).text())
-                    .get(),
+                    .toArray()
+                    .map((elem) => $(elem).text()),
             };
             return item;
-        })
-        .get();
+        });
 
     const ProcessFeed = (data) => {
         const $ = load(data);

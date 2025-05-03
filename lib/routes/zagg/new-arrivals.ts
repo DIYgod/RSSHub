@@ -46,20 +46,20 @@ async function handler(ctx) {
 
     const $ = load(products);
     const list = $('.item.product.product-item')
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const data = {};
-            const details = $(this).find('.product.details-box').html();
-            data.link = $(this).find('.product-item-link').eq(0).attr('href');
-            data.title = $(this).find('.product-item-link').text();
+            const details = $(element).find('.product.details-box').html();
+            data.link = $(element).find('.product-item-link').eq(0).attr('href');
+            data.title = $(element).find('.product-item-link').text();
             const regex = /(https.*?)\?/;
-            const imgUrl = $(this).find('img').eq(0).attr('data-src').match(regex)[1];
+            const imgUrl = $(element).find('img').eq(0).attr('data-src').match(regex)[1];
             const img = art(path.join(__dirname, 'templates/new-arrivals.art'), {
                 imgUrl,
             });
             data.description = details + img;
             return data;
-        })
-        .get();
+        });
     return {
         title: 'Zagg - New Arrivals',
         link: response.url,

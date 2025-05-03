@@ -29,19 +29,14 @@ async function getPage(id) {
     const $ = load(res.data);
     const list = $('.lm_new').find('li');
 
-    return (
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('a').text(),
-                    pubDate: parseDate(item.find('.fr').text()),
-                    link: new URL(item.find('a').attr('href'), host).href,
-                };
-            })
-            .get()
-    );
+    return list.toArray().map((item) => {
+        item = $(item);
+        return {
+            title: item.find('a').text(),
+            pubDate: parseDate(item.find('.fr').text()),
+            link: new URL(item.find('a').attr('href'), host).href,
+        };
+    });
 }
 
 export const route: Route = {
