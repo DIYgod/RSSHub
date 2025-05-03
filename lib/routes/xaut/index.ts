@@ -70,7 +70,7 @@ async function handler(ctx) {
         item: await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (!item.link.match('zhixing.xaut.edu.cn') && !item.link.match('xinwen.xaut.edu.cn')) {
+                    if (!item.link.includes('://zhixing.xaut.edu.cn/') && !item.link.includes('://xinwen.xaut.edu.cn/')) {
                         const res = await got({
                             method: 'get',
                             url: item.link,
