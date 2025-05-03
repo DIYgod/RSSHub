@@ -84092,7 +84092,7 @@ export default {
           "Ji4n1ng",
           "wiketool"
         ],
-        "description": "| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 | \n| -------- | -------- | -------- | -------- | -------- |\n| announcement | academic | technology | undergraduate | postgraduate |",
+        "description": "| 学院公告 | 学术报告 | 科技简讯 | 本科教育 | 研究生教育 |\n| -------- | -------- | -------- | -------- | -------- |\n| announcement | academic | technology | undergraduate | postgraduate |",
         "location": "cs/index.ts",
         "module": () => import('@/routes/sdu/cs/index.ts')
       },
