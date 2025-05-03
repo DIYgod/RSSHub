@@ -10,9 +10,7 @@ const parseContent = (htmlString) => {
 
     const info = $('.detail_main_content > h1')
         .contents()
-        .filter(function () {
-            return this.nodeType === 3;
-        })
+        .filter((_, element) => element.nodeType === 3)
         .toArray()
         .map((element) => $(element).text().trim());
 
