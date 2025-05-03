@@ -79,3 +79,20 @@ export async function fetchImages(url: string, title: string): Promise<DataItem[
         };
     });
 }
+
+export async function fetchForecastImage(url: string, title: string): Promise<DataItem[]> {
+    const page = await fetchPageCached(url);
+    const $ = load(page);
+    const imageUrl = $('#imgpath').attr('src') || '';
+    const referenceTime = $('#imgpath').attr('data-time') || '';
+    const imageItem = packImageElement(imageUrl, referenceTime);
+
+    return [
+        {
+            title: `${title} - ${imageItem.date.toISOString()}`,
+            description: imageItem.content,
+            link: url,
+            pubDate: imageItem.date,
+        },
+    ];
+}
