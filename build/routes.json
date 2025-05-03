@@ -76433,13 +76433,13 @@
         "radar": [
           {
             "source": [
-              "pixwox.com/profile/:id"
+              "www.pixnoy.com/profile/:id"
             ],
             "target": "/user/:id"
           },
           {
             "source": [
-              "pixwox.com/profile/:id/tagged"
+              "www.pixnoy.com/profile/:id/tagged"
             ],
             "target": "/user/:id/tagged"
           }
