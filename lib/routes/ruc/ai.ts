@@ -58,8 +58,8 @@ export const route: Route = {
                         item.description = frame
                             .children()
                             .slice(3)
-                            .map((i, el) => $.html(el))
-                            .get()
+                            .toArray()
+                            .map((el) => $.html(el))
                             .join('');
                     } catch {
                         item.description = '';

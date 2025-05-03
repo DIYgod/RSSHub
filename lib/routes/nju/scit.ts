@@ -44,15 +44,13 @@ async function handler(ctx) {
     return {
         title: `科学技术处-${type_dict[type][1]}`,
         link: type_dict[type][0],
-        item: list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('a').attr('title'),
-                    link: 'https://scit.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('.Article_PublishDate').first().text(), 'YYYY-MM-DD'), +8),
-                };
-            })
-            .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a').attr('title'),
+                link: 'https://scit.nju.edu.cn' + item.find('a').attr('href'),
+                pubDate: timezone(parseDate(item.find('.Article_PublishDate').first().text(), 'YYYY-MM-DD'), +8),
+            };
+        }),
     };
 }

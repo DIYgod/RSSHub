@@ -46,12 +46,10 @@ async function handler(ctx) {
     return {
         title: '品葱 - 发现',
         link: url,
-        item: list
-            .map((_, item) => ({
-                title: $(item).find('h4 a').text().trim(),
-                link: baseUrl + $(item).find('h4 a').attr('href'),
-                pubDate: parseDate($(item).attr('data-created-at') * 1000),
-            }))
-            .get(),
+        item: list.toArray().map((item) => ({
+            title: $(item).find('h4 a').text().trim(),
+            link: baseUrl + $(item).find('h4 a').attr('href'),
+            pubDate: parseDate($(item).attr('data-created-at') * 1000),
+        })),
     };
 }

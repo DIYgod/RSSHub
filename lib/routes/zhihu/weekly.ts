@@ -36,16 +36,16 @@ async function handler() {
     const description = $('p.Weekly-description').text();
     const out = $('div.Card-section.PubBookListItem')
         .slice(0, 10)
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('span.PubBookListItem-title').text(),
-                link: new URL($(this).find('a.PubBookListItem-buttonWrapper').attr('href'), host).href,
-                description: $(this).find('div.PubBookListItem-description').text(),
-                author: $(this).find('span.PubBookListItem-author').text(),
+                title: $(element).find('span.PubBookListItem-title').text(),
+                link: new URL($(element).find('a.PubBookListItem-buttonWrapper').attr('href'), host).href,
+                description: $(element).find('div.PubBookListItem-description').text(),
+                author: $(element).find('span.PubBookListItem-author').text(),
             };
             return info;
-        })
-        .get();
+        });
 
     return {
         title: '知乎周刊',

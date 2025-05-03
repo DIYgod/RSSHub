@@ -30,22 +30,20 @@ async function handler(ctx) {
 
     let dateRow = '';
     const item = await Promise.all(
-        data
-            .map((i, e) => {
-                let date = $(e).find('td').first().text().trim();
-                if (date.includes('-')) {
-                    dateRow = date.split(' ')[0];
-                } else {
-                    date = `${dateRow} ${date}`;
-                }
-                return {
-                    title: $(e).find('a').text(),
-                    pubDate: parseDate(date, 'MMM-DD-YY HH:mmA'),
-                    author: $(e).find('span').text(),
-                    link: $(e).find('a').attr('href'),
-                };
-            })
-            .get()
+        data.toArray().map((e) => {
+            let date = $(e).find('td').first().text().trim();
+            if (date.includes('-')) {
+                dateRow = date.split(' ')[0];
+            } else {
+                date = `${dateRow} ${date}`;
+            }
+            return {
+                title: $(e).find('a').text(),
+                pubDate: parseDate(date, 'MMM-DD-YY HH:mmA'),
+                author: $(e).find('span').text(),
+                link: $(e).find('a').attr('href'),
+            };
+        })
     );
 
     const name = $('.fullview-title b').text();
