@@ -1,5 +1,9 @@
 import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
+import { DataItem } from '@/types';
 import dayjs from 'dayjs';
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
 
 type ImageEntry = {
     date: Date;
@@ -42,4 +46,36 @@ export function packImageElement(imageUrl: string, referenceDateTime: string): I
         date: parsedDate,
         content: `<img src="${imageUrl}" />`,
     };
+}
+
+function fetchPageCached(url: string): Promise<string> {
+    return cache.tryGet(url, async () => {
+        const page = await ofetch(url);
+        return page;
+    }) as Promise<string>;
+}
+
+export async function fetchImages(url: string, title: string): Promise<DataItem[]> {
+    const page = await fetchPageCached(url);
+    const $ = load(page);
+    const timeColumnItems = $('.col-xs-12.time').toArray();
+
+    const entries = timeColumnItems.map((it) => {
+        const element = $(it);
+        const imageUrl = element.attr('data-img') || '';
+        const refernceTime = element.text().trim();
+
+        return packImageElement(imageUrl, refernceTime);
+    });
+
+    return entries.map((entry) => {
+        const date = entry.date;
+        const content = entry.content;
+        return {
+            title: `${title} - ${date.toISOString()}`,
+            description: content,
+            link: url,
+            pubDate: date,
+        };
+    });
 }

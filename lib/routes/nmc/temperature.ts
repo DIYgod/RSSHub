@@ -1,8 +1,6 @@
 import { Context } from 'hono';
-import { Route, Data, DataItem } from '@/types';
-import { packImageElement } from './image';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+import { Route, Data } from '@/types';
+import { fetchImages } from './image';
 
 export const route: Route = {
     path: '/observation/temperature/:frequency?',
@@ -25,7 +23,9 @@ export const route: Route = {
 | 频率 | 对应的值 |
 | ---- | -------- |
 | 逐时 | hourly |
-| 逐日 | daily |
+| 逐日平均 | daily |
+| 逐日最高 | daily-max |
+| 逐日最低 | daily-min |
 | 近 30 天最高气温 | max30d |
 | 近 30 天最低气温 | min30d |
 | 近 30 天平均气温 | avg30d |
@@ -33,47 +33,24 @@ export const route: Route = {
 };
 
 const urlLookup: Record<string, string> = {
-    'hourly': 'http://www.nmc.cn/publish/observations/hourly-temperature.html',
-    'daily': 'http://www.nmc.cn/publish/observations/day-temperature/avg.html',
-    'max30d': 'http://www.nmc.cn/publish/observations/high-30days.html',
-    'min30d': 'http://www.nmc.cn/publish/observations/low-30days.html',
-    'avg30d': 'http://www.nmc.cn/publish/observations/mta-30days.html',
+    hourly: 'http://www.nmc.cn/publish/observations/hourly-temperature.html',
+    daily: 'http://www.nmc.cn/publish/observations/day-temperature/avg.html',
+    'daily-max': 'http://www.nmc.cn/publish/observations/day-temperature/max.html',
+    'daily-min': 'http://www.nmc.cn/publish/observations/day-temperature/min.html',
+    max30d: 'http://www.nmc.cn/publish/observations/high-30days.html',
+    min30d: 'http://www.nmc.cn/publish/observations/low-30days.html',
+    avg30d: 'http://www.nmc.cn/publish/observations/mta-30days.html',
 };
 
 const titleLookup: Record<string, string> = {
-    'hourly': '逐时气温',
-    'daily': '逐日气温',
-    'max30d': '近 30 天最高气温',
-    'min30d': '近 30 天最低气温',
-    'avg30d': '近 30 天平均气温',
+    hourly: '逐时气温',
+    daily: '逐日平均气温',
+    'daily-max': '逐日最高气温',
+    'daily-min': '逐日最低气温',
+    max30d: '近 30 天最高气温',
+    min30d: '近 30 天最低气温',
+    avg30d: '近 30 天平均气温',
 };
-
-async function fetchImages(url: string, title: string): Promise<DataItem[]> {
-    const page = await ofetch(url);
-    const $ = load(page);
-    const timeColumnItems = $('.col-xs-12.time').toArray();
-
-    const entries = await Promise.all(
-        timeColumnItems.map((it) => {
-            const element = $(it);
-            const imageUrl = element.attr('data-img') || '';
-            const refernceTime = element.text().trim();
-
-            return packImageElement(imageUrl, refernceTime);
-        })
-    );
-
-    return entries.map((entry) => {
-        const date = entry.date;
-        const content = entry.content;
-        return {
-            title: `${title} - ${date.toISOString()}`,
-            description: content,
-            link: url,
-            pubDate: date,
-        };
-    });
-}
 
 async function handler(ctx: Context): Promise<Data> {
     const { frequency = 'hourly' } = ctx.req.param();
