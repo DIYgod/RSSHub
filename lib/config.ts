@@ -229,7 +229,6 @@ export type Config = {
         clientId?: string;
         clientSecret?: string;
         refreshToken?: string;
-        filteredLanguages?: string[];
     };
     manhuagui: {
         cookie?: string;
