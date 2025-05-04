@@ -26,7 +26,8 @@ const getSetting = async () => {
 
             return setting;
         },
-        config.cache.contentExpire
+        config.cache.contentExpire,
+        false
     );
 };
 

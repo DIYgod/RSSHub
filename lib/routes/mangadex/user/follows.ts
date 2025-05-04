@@ -120,7 +120,8 @@ async function handler(ctx) {
 
             return statuses;
         },
-        config.cache.contentExpire
+        config.cache.contentExpire,
+        false
     )) as Record<string, string>;
 
     const mangaIds = filterByValue(statuses, statusMap[followType]);
