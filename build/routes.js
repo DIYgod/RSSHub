@@ -55879,7 +55879,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.12356782.xyz/:tab"
+              "mei5.vip/:tab"
             ],
             "target": "/:tab"
           }
@@ -55900,7 +55900,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.12356782.xyz/"
+              "mei5.vip/"
             ],
             "target": "/weekly"
           }
