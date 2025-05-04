@@ -89,8 +89,7 @@ export async function getMangaMetaByIds(ids: string[], needCover: boolean = true
                 throw new Error('Failed to retrieve manga meta from MangaDex API.');
             }
             return data.data;
-        },
-        config.cache.contentExpire
+        }
     )) as any;
 
     const languages = [...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean);
@@ -140,15 +139,20 @@ const getMangaChapters = async (id: string, lang?: string | string[], limit?: nu
         translatedLanguage: languages,
     })}`;
 
-    const chapters = (await cache.tryGet(`mangadex:manga-chapters:${id}`, async () => {
-        const { data } = await got.get(url);
+    const chapters = (await cache.tryGet(
+        `mangadex:manga-chapters:${id}`,
+        async () => {
+            const { data } = await got.get(url);
 
-        if (data.result === 'error') {
-            throw new Error(data.errors[0].detail);
-        }
+            if (data.result === 'error') {
+                throw new Error(data.errors[0].detail);
+            }
 
-        return data.data;
-    })) as any;
+            return data.data;
+        },
+        config.cache.contentExpire,
+        false
+    )) as any;
 
     if (!chapters) {
         return [];
