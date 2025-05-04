@@ -37,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { id, type = 'home', keyword, pageSize } = ctx.req.param();
+    const { id, type = 'home', keyword, pageSize = '10' } = ctx.req.param();
 
     const rootUrl = 'https://www.cool18.com/' + id + '/index.php';
     const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
