@@ -4,14 +4,26 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
-import puppeteer from '@/utils/puppeteer';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+
+type PageDataItem = {
+    tid: string;
+    username: string;
+    subject: string;
+    dateline: string;
+    type: string;
+};
 
 export const route: Route = {
-    path: '/:id/:type?/:keyword?',
+    path: '/:id/:type?/:keyword?/:pageSize?',
     url: 'cool18.com',
     example: 'cool18.com/bbs4',
-    parameters: { id: 'the name of the bbs', type: 'the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`', keyword: 'the keyword to search.' },
+    parameters: {
+        id: 'the name of the bbs',
+        type: 'the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`',
+        keyword: 'the keyword to search.',
+        pageSize: 'the number of posts to fetch. If the type is not in search, you can type any words. Default: 10',
+    },
     categories: ['bbs'],
     radar: [
         {
@@ -19,52 +31,46 @@ export const route: Route = {
             target: '/:id/:type?/:keyword?',
         },
     ],
-    name: '禁忌书屋',
+    name: '留园网',
     maintainers: ['nczitzk', 'Gabrlie'],
     handler,
 };
 
 async function handler(ctx: Context) {
-    const { id, type = 'home', keyword } = ctx.req.param();
+    const { id, type = 'home', keyword, pageSize } = ctx.req.param();
 
-    const rootUrl = 'https://www.cool18.com/' + id + '/';
+    const rootUrl = 'https://www.cool18.com/' + id + '/index.php';
     const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
 
-    const currentUrl = rootUrl + 'index.php' + params;
+    const currentUrl = rootUrl + params;
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-
-    page.on('request', (request) => {
-        ['document', 'script', 'xhr'].includes(request.resourceType()) ? request.continue() : request.abort();
-    });
-
-    logger.http(`Requesting ${currentUrl}`);
-    await page.goto(currentUrl, {
-        waitUntil: 'domcontentloaded',
-    });
-
-    const response = await page.content();
-    await page.close();
+    const response = await ofetch(currentUrl);
 
     const $ = load(response);
 
-    const list = $('#d_list ul li, #thread_list li, .t_l .t_subject')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20)
-        .toArray()
-        .map((item) => {
-            const a = $(item).find('a').first();
+    const scripts = $('script').toArray();
 
-            return {
-                title: a.text(),
-                link: `${rootUrl}/${a.attr('href')}`,
-                pubDate: parseDate($(item).find('i').text(), 'MM/DD/YY'),
-                author: $(item).find('a').last().text(),
-                category: a.find('span').first().text(),
-                description: '',
-            };
-        });
+    let pageData = [];
+
+    for (const script of scripts) {
+        const scriptContent = $(script).html();
+        const match = scriptContent?.match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/);
+
+        if (match) {
+            pageData = JSON.parse(match[1]);
+        }
+    }
+
+    pageData.length = Number(pageSize);
+
+    const list = pageData.map((item: PageDataItem) => ({
+        title: item.subject,
+        link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
+        pubDate: parseDate(item.dateline, 'MM/DD/YY'),
+        author: item.username,
+        category: item.type,
+        description: '',
+    }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -84,8 +90,6 @@ async function handler(ctx: Context) {
             })
         )
     );
-
-    await browser.close();
 
     return {
         title: $('title').text(),
