@@ -18,21 +18,18 @@ import constants from './_constants';
 const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string | string[]) => {
     const includes = needCover ? ['cover_art'] : [];
 
-    const rawMangaMeta = (await cache.tryGet(
-        `mangadex:manga-meta:${id}`,
-        async () => {
-            const { data } = await got.get(
-                `${constants.API.MANGA_META}${id}${toQueryString({
-                    includes,
-                })}`
-            );
+    const rawMangaMeta = (await cache.tryGet(`mangadex:manga-meta:${id}`, async () => {
+        const { data } = await got.get(
+            `${constants.API.MANGA_META}${id}${toQueryString({
+                includes,
+            })}`
+        );
 
-            if (data.result === 'error') {
-                throw new Error(data.errors[0].detail);
-            }
-            return data.data;
+        if (data.result === 'error') {
+            throw new Error(data.errors[0].detail);
         }
-    )) as any;
+        return data.data;
+    })) as any;
 
     const relationships = (rawMangaMeta.relationships || []) as Array<{ type: string; id: string; attributes: any }>;
 
@@ -73,16 +70,18 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
  * @usage const mangaMetaMap = await getMangaMetaByIds(['f98660a1-d2e2-461c-960d-7bd13df8b76d']);
  */
 export async function getMangaMetaByIds(ids: string[], needCover: boolean = true, lang?: string | string[]): Promise<Map<string, { id: string; title: string; description: string; cover?: string }>> {
+    const deDuplidatedIds = [...new Set(ids)];
     const includes = needCover ? ['cover_art'] : [];
 
     const rawMangaMetas = (await cache.tryGet(
-        `mangadex:manga-meta:${md5(ids.join(''))}`, // shorten the key
+        `mangadex:manga-meta:${md5(deDuplidatedIds.join(''))}`, // shorten the key
         async () => {
             const { data } = await got.get(
                 constants.API.MANGA_META.slice(0, -1) +
                     toQueryString({
-                        ids,
+                        ids: deDuplidatedIds,
                         includes,
+                        limit: deDuplidatedIds.length,
                     })
             );
 
