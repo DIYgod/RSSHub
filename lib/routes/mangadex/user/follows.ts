@@ -129,18 +129,16 @@ async function handler(ctx) {
 
     const mangaChapters = await Promise.all(mangaIds.map((id) => getMangaChapters(id, undefined, 10)));
 
-    const mangas = mangaChapters
-        .flatMap((chapters, index) => {
-            const mangaMeta = mangaMetaMap.get(mangaIds[index]);
-            return chapters.map((chapter) => ({
-                title: mangaMeta?.title ?? 'Unknown',
-                link: chapter.link,
-                pubDate: chapter.pubDate,
-                description: chapter.title ?? '',
-                image: mangaMeta?.cover ?? '',
-            }));
-        })
-        .flat();
+    const mangas = mangaChapters.flatMap((chapters, index) => {
+        const mangaMeta = mangaMetaMap.get(mangaIds[index]);
+        return chapters.map((chapter) => ({
+            title: mangaMeta?.title ?? 'Unknown',
+            link: chapter.link,
+            pubDate: chapter.pubDate,
+            description: chapter.title ?? '',
+            image: mangaMeta?.cover ?? '',
+        }));
+    });
 
     return {
         title: `User Follows - ${labelMap[followType]} Mangas`,
