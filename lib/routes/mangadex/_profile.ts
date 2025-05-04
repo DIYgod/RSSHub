@@ -32,10 +32,6 @@ const getSetting = async () => {
 };
 
 const getFilteredLanguages = async (ingoreConfigNotFountError: boolean = true) => {
-    if (config.mangadex.filteredLanguages) {
-        return config.mangadex.filteredLanguages;
-    }
-
     try {
         const settings = (await getSetting()) as any;
         return settings.userPreferences.filteredLanguages as string[];

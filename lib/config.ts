@@ -675,7 +675,6 @@ const calculateValue = () => {
             clientId: envs.MANGADEX_CLIENT_ID,
             clientSecret: envs.MANGADEX_CLIENT_SECRET,
             refreshToken: envs.MANGADEX_REFRESH_TOKEN,
-            filteredLanguages: envs.MANGADEX_FILTERED_LANGUAGES?.split(','),
         },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
