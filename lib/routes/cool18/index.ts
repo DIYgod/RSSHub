@@ -47,30 +47,45 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
+    let list: any[];
 
-    const scripts = $('script').toArray();
+    if (type === 'home') {
+        const scripts = $('script').toArray();
+        let pageData = [];
+        for (const script of scripts) {
+            const scriptContent = $(script).html();
+            const match = scriptContent?.match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/);
 
-    let pageData = [];
-
-    for (const script of scripts) {
-        const scriptContent = $(script).html();
-        const match = scriptContent?.match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/);
-
-        if (match) {
-            pageData = JSON.parse(match[1]);
+            if (match) {
+                pageData = JSON.parse(match[1]);
+            }
         }
+        pageData.length = Number(pageSize);
+        list = pageData.map((item: PageDataItem) => ({
+            title: item.subject,
+            link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
+            pubDate: parseDate(item.dateline, 'MM/DD/YY'),
+            author: item.username,
+            category: item.type,
+            description: '',
+        }));
+    } else {
+        list = $('#d_list ul li, #thread_list li, .t_l .t_subject')
+            .slice(0, Number(pageSize))
+            .toArray()
+            .map((item) => {
+                const a = $(item).find('a').first();
+
+                return {
+                    title: a.text(),
+                    link: `${rootUrl}/${a.attr('href')}`,
+                    pubDate: parseDate($(item).find('i').text(), 'MM/DD/YY'),
+                    author: $(item).find('a').last().text(),
+                    category: a.find('span').first().text(),
+                    description: '',
+                };
+            });
     }
-
-    pageData.length = Number(pageSize);
-
-    const list = pageData.map((item: PageDataItem) => ({
-        title: item.subject,
-        link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
-        pubDate: parseDate(item.dateline, 'MM/DD/YY'),
-        author: item.username,
-        category: item.type,
-        description: '',
-    }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -92,7 +107,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('title').text(),
+        title: '123',
         link: currentUrl,
         item: items,
     };
