@@ -31,8 +31,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
                 throw new Error(data.errors[0].detail);
             }
             return data.data;
-        },
-        config.cache.contentExpire
+        }
     )) as any;
 
     const relationships = (rawMangaMeta.relationships || []) as Array<{ type: string; id: string; attributes: any }>;
