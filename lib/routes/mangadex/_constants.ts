@@ -60,7 +60,7 @@ export default {
          * @note Need configuration
          * @see https://api.mangadex.org/docs/02-authentication/personal-clients/
          */
-        TOEKN: 'https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token',
+        TOKEN: 'https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token',
 
         /**
          * Retrieve the user settings from MangaDex API.

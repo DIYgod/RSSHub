@@ -56,7 +56,7 @@ const getAccessTokenByUserCredentials = async () => {
         throw new ConfigNotFoundError('Cannot get refresh token since MangaDex username or password is not set');
     }
 
-    const response = await got.post(constants.API.TOEKN, {
+    const response = await got.post(constants.API.TOKEN, {
         headers: {
             'User-Agent': config.trueUA,
         },
@@ -89,7 +89,7 @@ const getAccessTokenByRefreshToken = async () => {
         throw new ConfigNotFoundError('Cannot get access token since MangaDex refresh token is not set.');
     }
 
-    const response = await got.post(constants.API.TOEKN, {
+    const response = await got.post(constants.API.TOKEN, {
         headers: {
             'User-Agent': config.trueUA,
         },
