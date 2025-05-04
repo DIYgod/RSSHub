@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { originUrl, getArticleDesc } from './utils';
+import { getOriginUrl, getArticleDesc } from './utils';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
@@ -17,7 +17,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { kw } = ctx.req.param();
-    const searchUrl = originUrl + `/plus/search/index.asp?keyword=${kw}`;
+    const searchUrl = (await getOriginUrl()) + `/plus/search/index.asp?keyword=${kw}`;
     const response = await ofetch.raw(searchUrl);
     const baseUrl = new URL(response.url).origin;
     const $ = load(response._data);

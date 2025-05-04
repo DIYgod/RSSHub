@@ -1,10 +1,18 @@
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 import path from 'node:path';
 
-const originUrl = 'http://www.jpxgmn.com';
+const indexUrl = 'http://mei8.vip/';
 
+const getOriginUrl = async () =>
+    await cache.tryGet('jpxgmn:originUrl', async () => {
+        const response = await got(indexUrl);
+        const $ = load(response.data);
+        const entries = $('ul > li > span');
+        return 'http://' + $(entries[Math.floor(Math.random() * entries.length)]).text();
+    });
 const getImages = ($articleContent) =>
     $articleContent('article > p img')
         .toArray()
@@ -30,4 +38,4 @@ const getArticleDesc = async (articleUrl) => {
     });
 };
 
-export { originUrl, getArticleDesc };
+export { getOriginUrl, getArticleDesc };
