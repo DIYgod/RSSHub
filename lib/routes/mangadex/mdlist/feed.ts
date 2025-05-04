@@ -145,7 +145,7 @@ async function handler(ctx) {
 
     return {
         title: `MangaDex MDList - ${listName} by ${listAuthor}`,
-        link: `https://mangadex.org/list/${id}/demolist?tab=feed`,
+        link: `https://mangadex.org/list/${id}?tab=feed`,
         description: 'The latest updates of all the manga in a sepcific list',
         item: feed.map((chapter) => {
             const mangaId = chapter.relationships.find((relationship) => relationship.type === 'manga')?.id;
