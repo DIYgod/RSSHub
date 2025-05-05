@@ -204,6 +204,9 @@ export type Config = {
     javdb: {
         session?: string;
     };
+    jumeili: {
+        cookie?: string;
+    };
     keylol: {
         cookie?: string;
     };
@@ -641,6 +644,9 @@ const calculateValue = () => {
         },
         javdb: {
             session: envs.JAVDB_SESSION,
+        },
+        jumeili: {
+            cookie: envs.JUMEILI_COOKIE,
         },
         keylol: {
             cookie: envs.KEYLOL_COOKIE,
