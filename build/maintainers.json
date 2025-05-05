@@ -4341,6 +4341,9 @@
   "/juejin/trending/:category/:type": [
     "moaix"
   ],
+  "/jumeili/home/:column?": [
+    "kjasn"
+  ],
   "/jump/discount/:platform/:filter?/:countries?": [
     "zytomorrow"
   ],

@@ -20936,6 +20936,20 @@
       }
     ]
   },
+  "jumeili.cn": {
+    "_name": "聚美丽",
+    "www": [
+      {
+        "title": "首页资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/",
+          "/"
+        ],
+        "target": "/jumeili/home/:column?"
+      }
+    ]
+  },
   "kadokawa.com.tw": {
     "_name": "台灣角川",
     ".": [

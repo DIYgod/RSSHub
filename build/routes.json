@@ -56477,6 +56477,49 @@
     "url": "juejin.cn",
     "lang": "zh-CN"
   },
+  "jumeili": {
+    "routes": {
+      "/home/:column?": {
+        "path": "/home/:column?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/jumeili/home",
+        "parameters": {
+          "column": "内容栏, 默认为 `0`（最新）。其他可选：`-1`（头条）、`62073`（精选）、`13243`（年度大会）等。详细可以在开发者工具 Network 面板中找到，如：`https://www.jumeili.cn/ws/AjaxService.ashx?act=index_article&page=1&pageSize=20&column=0`最后的 `column=0` 即为`column` 参数"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "JUMEILI_COOKIE",
+              "optional": true,
+              "description": "用户登录后，可以从浏览器开发者工具 Network 面板中的 jumeili 页面请求获取 Cookie，如：`ASP.NET_SessionId=xxx;jmlweb4=xxx`全部复制并设置为环境变量"
+            }
+          ],
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jumeili.cn/",
+              "jumeili.cn/"
+            ],
+            "target": "/home/:column?"
+          }
+        ],
+        "name": "首页资讯",
+        "maintainers": [
+          "kjasn"
+        ],
+        "description": ":::Warning\n未登录用户无法获取完整文章内容，只能看到预览内容。想要获取完整文章内容，需要设置`JUMEILI_COOKIE`环境变量。\n:::",
+        "location": "home.ts",
+        "module": "() => import('@/routes/jumeili/home.ts')"
+      }
+    },
+    "name": "聚美丽",
+    "url": "jumeili.cn",
+    "lang": "zh-CN"
+  },
   "jump": {
     "routes": {
       "/discount/:platform/:filter?/:countries?": {
