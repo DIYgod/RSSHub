@@ -95,7 +95,8 @@ async function handler(ctx) {
         const $ = load(iconv.decode(response.data, 'gbk'));
         const list = $('body > table:nth-child(3) > tbody > tr > td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
             .slice(1, -1)
-            .map((_index, item) => {
+            .toArray()
+            .map((item) => {
                 const href = $('td > a', item).attr('href');
                 const type = pageType(href);
                 return {
@@ -104,8 +105,7 @@ async function handler(ctx) {
                     pubDate: timezone(parseDate($('.font_10_time', item).text().slice(2, -2), 'YYYY-MM-DD'), +8),
                     type,
                 };
-            })
-            .get();
+            });
 
         const items = await Promise.all(
             list.map((item) => {

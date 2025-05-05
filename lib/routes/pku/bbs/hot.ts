@@ -42,13 +42,11 @@ async function handler() {
     const r = await got('https://bbs.pku.edu.cn/v2/hot-topic.php', { headers });
     const $ = load(r.body);
     const listItems = $('#list-content .list-item')
-        .map(function () {
-            return {
-                url: new URL($(this).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
-                title: $(this).find('.title').text(),
-            };
-        })
-        .get()
+        .toArray()
+        .map((element) => ({
+            url: new URL($(element).find('> a.link').attr('href'), 'https://bbs.pku.edu.cn/v2/').href,
+            title: $(element).find('.title').text(),
+        }))
         .slice(0, 10);
 
     const item = await Promise.all(

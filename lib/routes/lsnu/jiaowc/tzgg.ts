@@ -43,7 +43,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const list = $('tr[id^="line_u5_"]').get();
+    const list = $('tr[id^="line_u5_"]').toArray();
 
     const out = await Promise.all(
         list.map(async (item) => {

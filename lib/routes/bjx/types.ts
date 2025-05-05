@@ -40,18 +40,14 @@ async function handler(ctx) {
         title: `北极星太阳能光大网${typeName}`,
         description: $('meta[name="Description"]').attr('content'),
         link: `https://guangfu.bjx.com.cn/${type}/`,
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('a').attr('title'),
-                        description: item.html(),
-                        link: item.find('a').attr('href'),
-                        pubDate: parseDate(item.find('span').text()),
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a').attr('title'),
+                description: item.html(),
+                link: item.find('a').attr('href'),
+                pubDate: parseDate(item.find('span').text()),
+            };
+        }),
     };
 }

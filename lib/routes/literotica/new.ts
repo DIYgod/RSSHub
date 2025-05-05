@@ -40,7 +40,8 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('.b-46t')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             const a = item.find('.p-48y');
@@ -57,8 +58,7 @@ async function handler() {
                     .replace(/Submitted by/, '')
                     .trim(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>
