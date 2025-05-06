@@ -5764,7 +5764,10 @@
   "/penguin-random-house/the-read-down": [
     "StevenRCE0"
   ],
-  "/people/:site?/:category{.+}?": [],
+  "/people/:site?/:category{.+}?": [
+    "nczitzk",
+    "pseudoyu"
+  ],
   "/people/liuyan/:id/:state?": [
     "nczitzk"
   ],

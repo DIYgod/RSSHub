@@ -76204,8 +76204,12 @@
     "routes": {
       "/:site?/:category{.+}?": {
         "path": "/:site?/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+        "name": "首页头条",
+        "maintainers": [
+          "nczitzk",
+          "pseudoyu"
+        ],
+        "example": "/people",
         "location": "index.ts",
         "module": "() => import('@/routes/people/index.ts')"
       },
