@@ -15,7 +15,7 @@ type PageDataItem = {
 };
 
 export const route: Route = {
-    path: '/:id/:type?/:keyword?/:pageSize?',
+    path: '/:id?/:type?/:keyword?',
     url: 'cool18.com',
     example: 'cool18.com/bbs4',
     parameters: {
@@ -27,17 +27,17 @@ export const route: Route = {
     categories: ['bbs'],
     radar: [
         {
-            source: ['cool18.com/:id/', 'www.cool18.com/:id/index.php?action=search&bbsdr=:id&act=:type&app=forum&keywords=:keyword&submit=%E6%9F%A5%E8%AF%A2', 'www.cool18.com/:id/index.php?app=forum&act=:type'],
+            source: ['cool18.com/:id/'],
             target: '/:id/:type?/:keyword?',
         },
     ],
-    name: '留园网',
+    name: '禁忌书屋',
     maintainers: ['nczitzk', 'Gabrlie'],
     handler,
 };
 
 async function handler(ctx: Context) {
-    const { id, type = 'home', keyword, pageSize = '10' } = ctx.req.param();
+    const { id = 'bbs4', type = 'home', keyword } = ctx.req.param();
 
     const rootUrl = 'https://www.cool18.com/' + id + '/index.php';
     const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
@@ -50,17 +50,12 @@ async function handler(ctx: Context) {
     let list: any[];
 
     if (type === 'home') {
-        const scripts = $('script').toArray();
-        let pageData = [];
-        for (const script of scripts) {
-            const scriptContent = $(script).html();
-            const match = scriptContent?.match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/);
-
-            if (match) {
-                pageData = JSON.parse(match[1]);
-            }
-        }
-        pageData.length = Number(pageSize);
+        const pageData = JSON.parse(
+            $('script:contains("_PageData")')
+                .text()
+                .match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/)?.[1] || '[]'
+        );
+        pageData.length = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
         list = pageData.map((item: PageDataItem) => ({
             title: item.subject,
             link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
@@ -71,7 +66,7 @@ async function handler(ctx: Context) {
         }));
     } else {
         list = $('#d_list ul li, #thread_list li, .t_l .t_subject')
-            .slice(0, Number(pageSize))
+            .slice(0, ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20)
             .toArray()
             .map((item) => {
                 const a = $(item).find('a').first();
@@ -107,7 +102,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: '123',
+        title: $('title').text(),
         link: currentUrl,
         item: items,
     };
