@@ -383,6 +383,9 @@ importers:
       discord-api-types:
         specifier: 0.38.3
         version: 0.38.3
+      domhandler:
+        specifier: 5.0.3
+        version: 5.0.3
       eslint:
         specifier: 9.26.0
         version: 9.26.0(jiti@2.4.2)

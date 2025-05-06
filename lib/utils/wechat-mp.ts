@@ -26,7 +26,8 @@
  */
 
 import ofetch from '@/utils/ofetch';
-import { type Cheerio, type CheerioAPI, type Element, load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
