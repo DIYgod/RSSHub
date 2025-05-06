@@ -1,15 +1,18 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import pLimit from 'p-limit'; // 引入 p-limit 库
+import pMap from 'p-map'; // 引入 p-map 库
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// 修改 sleep 为 wait 函数
+function wait(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function loadContent(link) {
     // 添加随机延迟，假设延迟时间在1000毫秒到5000毫秒之间
-    await sleep(Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000);
+    await wait(Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000);
 
     const response = await got.get(link, {
         responseType: 'buffer',
@@ -46,34 +49,33 @@ async function loadContent(link) {
 
 const ProcessFeed = (list, caches) => {
     const host = 'https://www.flyert.com.cn';
-    const limit = pLimit(2); // 设置并发请求数量为 2
 
-    return Promise.all(
-        list.map((item) =>
-            limit(async () => {
-                const $ = load(item);
+    return pMap(
+        list,
+        async (item) => {
+            const $ = load(item);
 
-                const $label = $(".comiis_common a[data-track='版块页主题分类']");
-                const $title = $(".comiis_common a[data-track='版块页文章']");
-                // 还原相对链接为绝对链接
-                const itemUrl = new URL($title.attr('href'), host).href;
+            const $label = $(".comiis_common a[data-track='版块页主题分类']");
+            const $title = $(".comiis_common a[data-track='版块页文章']");
+            // 还原相对链接为绝对链接
+            const itemUrl = new URL($title.attr('href'), host).href;
 
-                // 列表上提取到的信息
-                const single = {
-                    title: $label.text() + '-' + $title.text(),
-                    link: itemUrl,
-                    guid: itemUrl,
-                };
+            // 列表上提取到的信息
+            const single = {
+                title: $label.text() + '-' + $title.text(),
+                link: itemUrl,
+                guid: itemUrl,
+            };
 
-                // 使用tryGet方法从缓存获取内容。
-                // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
-                const other = await caches.tryGet(itemUrl, () => loadContent(itemUrl));
+            // 使用tryGet方法从缓存获取内容。
+            // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
+            const other = await caches.tryGet(itemUrl, () => loadContent(itemUrl));
 
-                // 合并解析后的结果集作为该篇文章最终的输出结果
-                return Object.assign({}, single, other);
-            })
-        )
-    );
+            // 合并解析后的结果集作为该篇文章最终的输出结果
+            return Object.assign({}, single, other);
+        },
+        { concurrency: 2 }
+    ); // 设置并发请求数量为 2
 };
 
 export default { ProcessFeed };
