@@ -35,8 +35,8 @@ importers:
         specifier: 0.19.6
         version: 0.19.6(hono@4.7.8)(zod@3.24.4)
       '@notionhq/client':
-        specifier: 2.3.0
-        version: 2.3.0
+        specifier: 3.0.0
+        version: 3.0.0
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -1608,9 +1608,9 @@ packages:
     resolution: {integrity: sha512-y3SvzjuY1ygnzWA4Krwx/WaJAsTMP11DN+e21A8Fa8PW1oDtVB5NSRW7LWurAiS2oKRkuCgcjTYMkBuBkcPCRg==}
     engines: {node: '>=12.4.0'}
 
-  '@notionhq/client@2.3.0':
-    resolution: {integrity: sha512-l7WqTCpQqC+HibkB9chghONQTYcxNQT0/rOJemBfmuKQRTu2vuV8B3yA395iKaUdDo7HI+0KvQaz9687Xskzkw==}
-    engines: {node: '>=12'}
+  '@notionhq/client@3.0.0':
+    resolution: {integrity: sha512-TlWxZT/rsrjGWJOrnVuiLAlWNPXDumHyRMcw81bJcy2RupSyfjjUCYRELDEyZog48sjVK69/hHLIAwOF3C+ECQ==}
+    engines: {node: '>=18'}
 
   '@one-ini/wasm@0.1.1':
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
@@ -2447,9 +2447,6 @@ packages:
 
   '@types/mysql@2.15.26':
     resolution: {integrity: sha512-DSLCOXhkvfS5WNNPbfn2KdICAmk8lLc+/PNvnPnF7gOdMZCxopXduqv0OQ13y/yA/zXTSikZZqVgybUxOEg6YQ==}
-
-  '@types/node-fetch@2.6.12':
-    resolution: {integrity: sha512-8nneRWKCg3rMtF69nLQJnOYUcbafYeFSjqkw3jCRLsqkWFlHaoQrr5mXmofFGOx3DKn7UfmBMyov8ySvLRVldA==}
 
   '@types/node@22.15.12':
     resolution: {integrity: sha512-K0fpC/ZVeb8G9rm7bH7vI0KAec4XHEhBam616nVJCV51bKzJ6oA3luG4WdKoaztxe70QaNjS/xBmcDLmr4PiGw==}
@@ -7870,12 +7867,7 @@ snapshots:
 
   '@nolyfill/side-channel@1.0.44': {}
 
-  '@notionhq/client@2.3.0':
-    dependencies:
-      '@types/node-fetch': 2.6.12
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
+  '@notionhq/client@3.0.0': {}
 
   '@one-ini/wasm@0.1.1': {}
 
@@ -8729,11 +8721,6 @@ snapshots:
   '@types/mysql@2.15.26':
     dependencies:
       '@types/node': 22.15.12
-
-  '@types/node-fetch@2.6.12':
-    dependencies:
-      '@types/node': 22.15.12
-      form-data: 4.0.2
 
   '@types/node@22.15.12':
     dependencies:
