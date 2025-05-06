@@ -1,7 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load, type CheerioAPI, type Element } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
+import type { Element } from 'domhandler';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';

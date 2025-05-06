@@ -1,4 +1,5 @@
-import { type Cheerio, type CheerioAPI, type Element, load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import ofetch from '@/utils/ofetch';
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
