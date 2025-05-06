@@ -51,7 +51,7 @@ const handler = async (ctx) => {
 export const route: Route = {
     path: '/manga/:name',
     categories: ['anime'],
-    example: 'bakamh/manga/最强家丁',
+    example: '/bakamh/manga/最强家丁',
     parameters: { name: '漫画名称，漫画主页的地址栏中' },
     radar: [
         {
