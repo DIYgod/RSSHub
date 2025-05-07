@@ -80,25 +80,27 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = $('.home-info').toArray().map((ele) => {
-        const $item = load(ele);
-        const leftNode = $item('.overlay-container');
-        const relativeLink = leftNode.find('a').first().attr('href');
-        const typeName = leftNode.find('.type-name').first().text().trim();
-        const imgUrl = leftNode.find('img').first().attr('src');
-        const rightNode = $item('.home-info-content');
-        const infoType = rightNode.find('.user-name').contents()[0].data.trim();
-        const infoTitle = rightNode.find('.user-content').text();
-        const infoTime = rightNode.find('.type-time').text();
-        return {
-            title: infoTitle,
-            pubDate: parseRelativeDate(infoTime),
-            link: `${baseUrl}/${relativeLink}`,
-            category: infoType,
-            typeName,
-            description: [`类型:${typeName}`, infoTitle, `更新内容: ${infoType}`, `<img src="${imgUrl}"/>`].join('<br/>'),
-        };
-    });
+    const items = $('.home-info')
+        .toArray()
+        .map((ele) => {
+            const $item = load(ele);
+            const leftNode = $item('.overlay-container');
+            const relativeLink = leftNode.find('a').first().attr('href');
+            const typeName = leftNode.find('.type-name').first().text().trim();
+            const imgUrl = leftNode.find('img').first().attr('src');
+            const rightNode = $item('.home-info-content');
+            const infoType = rightNode.find('.user-name').contents()[0].data.trim();
+            const infoTitle = rightNode.find('.user-content').text();
+            const infoTime = rightNode.find('.type-time').text();
+            return {
+                title: infoTitle,
+                pubDate: parseRelativeDate(infoTime),
+                link: `${baseUrl}/${relativeLink}`,
+                category: infoType,
+                typeName,
+                description: [`类型:${typeName}`, infoTitle, `更新内容: ${infoType}`, `<img src="${imgUrl}"/>`].join('<br/>'),
+            };
+        });
 
     const items2 = filterSet.size > 0 ? items.filter((e) => filterSet.has(e.typeName)) : items;
 
