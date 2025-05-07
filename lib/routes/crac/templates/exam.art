@@ -52,5 +52,5 @@
             <td></td>
         </tr>
     </table>
-    <div class="content" id="detail_content">{{item.content}}</div>
+    <div class="content" id="detail_content">{{@item.content}}</div>
 </div>
