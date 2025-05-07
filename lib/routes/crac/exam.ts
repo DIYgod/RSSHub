@@ -1,5 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
+import path from 'node:path';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/exam',
@@ -41,7 +43,7 @@ async function handler() {
             startDate: item.exam.signUpStartDate,
             category: [item.examType],
             image: item.weixin,
-            description: buildDetailContent(item),
+            description: art(path.join(__dirname, 'templates/exam.art'), { item }),
         };
     });
     return {
@@ -51,56 +53,56 @@ async function handler() {
     };
 }
 
-function buildDetailContent(item) {
-    return `<div class="notice-info">
-    <h3 class="title" id="detail_title">${item.name}</h3>
-    <p class="time" id="detail_time">发布时间：${item.createDate}</p>
-    <table class="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
-        <tr>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">组织者：</th>
-            <td>${item.exam.organizer}</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">报名开始日期：</th>
-            <td>${item.exam.signUpStartDate}</td>
-        </tr>  
-        <tr>   
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">报名截止日期：</th>
-            <td>${item.exam.signUpEndDate}</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">补充材料截止日期：</th>
-            <td>${item.exam.supplementEndDate}</td>
-        </tr>  
-        <tr>   
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试日期：</th>
-            <td>${item.exam.examDate}</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">最多参考人数：</th>
-            <td>${item.exam.maxNum}</td>
-        </tr>  
-        <tr>   
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">联系方式：</th>
-            <td>${item.exam.telephone}</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试方式：</th>
-            <td>
-                ${item.exam.mode === 0 ? '机上考试' : (item.exam.mode === 1 ? '纸上考试' : '')}</td>
-            </td>
-        </tr>
-        <tr>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试类型：</th>
-            <td>${item.exam.type}类</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试地点：</th>
-            <td>${item.exam.examArea}</td>
-        </tr>  
-        <tr>   
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">电子邮箱：</th>
-            <td>${item.exam.email}</td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">备注：</th>
-            <td>${item.exam.remarks}</td>
-        </tr>  
-        <tr>   
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">微信群二维码：</th>
-            <td><img src="${item.exam.weixin}" style="width: auto;height: 100px;"></td>
-            <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;"></th>
-            <td></td>
-        </tr>
-    </table>
-    <div class="content" id="detail_content">${item.content}</div>
-</div>`;
-}
+// function buildDetailContent(item) {
+//     return `<div class="notice-info">
+//     <h3 class="title" id="detail_title">${item.name}</h3>
+//     <p class="time" id="detail_time">发布时间：${item.createDate}</p>
+//     <table class="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">组织者：</th>
+//             <td>${item.exam.organizer}</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">报名开始日期：</th>
+//             <td>${item.exam.signUpStartDate}</td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">报名截止日期：</th>
+//             <td>${item.exam.signUpEndDate}</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">补充材料截止日期：</th>
+//             <td>${item.exam.supplementEndDate}</td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试日期：</th>
+//             <td>${item.exam.examDate}</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">最多参考人数：</th>
+//             <td>${item.exam.maxNum}</td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">联系方式：</th>
+//             <td>${item.exam.telephone}</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试方式：</th>
+//             <td>
+//                 ${item.exam.mode === 0 ? '机上考试' : (item.exam.mode === 1 ? '纸上考试' : '')}</td>
+//             </td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试类型：</th>
+//             <td>${item.exam.type}类</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">考试地点：</th>
+//             <td>${item.exam.examArea}</td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">电子邮箱：</th>
+//             <td>${item.exam.email}</td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">备注：</th>
+//             <td>${item.exam.remarks}</td>
+//         </tr>
+//         <tr>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">微信群二维码：</th>
+//             <td><img src="${item.exam.weixin}" style="width: auto;height: 100px;"></td>
+//             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;"></th>
+//             <td></td>
+//         </tr>
+//     </table>
+//     <div class="content" id="detail_content">${item.content}</div>
+// </div>`;
+// }
