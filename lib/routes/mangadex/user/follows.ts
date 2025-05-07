@@ -51,9 +51,8 @@ It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for bett
         },
     },
     radar: [
-        // TODO: how to resolve the query string?
         {
-            source: ['mangadex.org/titles/follows', 'mangadex.org/titles/follows?tab=reading'],
+            source: ['mangadex.org/titles/follows'],
             target: '/user/follow/reading',
         },
     ],
