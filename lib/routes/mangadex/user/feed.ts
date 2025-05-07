@@ -27,10 +27,6 @@ export const route: Route = {
         lang: {
             description: 'The language of the followed manga',
         },
-        limit: {
-            description: '(Query Parameter) The number of followed manga to display',
-            default: DEFAULT_LIMIT.toString(),
-        },
     },
     features: {
         requireConfig: [
@@ -115,7 +111,7 @@ async function handler(ctx) {
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
     return {
-        title: 'MangaDex Follows',
+        title: 'User Follows',
         link: 'https://mangadex.org/titles/feed',
         description: 'The latest updates of all the manga you follow on MangaDex.',
         item: feed.map((chapter) => {

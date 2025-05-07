@@ -27,10 +27,6 @@ export const route: Route = {
         id: {
             description: 'The list id of the manga list',
         },
-        limit: {
-            description: '(Query Param) The number of manga to display',
-            default: DEFAULT_LIMIT.toString(),
-        },
         private: {
             description: '(Query Param) Needed to access private lists, any value will be treated as true',
         },
@@ -145,7 +141,7 @@ async function handler(ctx) {
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
     return {
-        title: `MangaDex MDList - ${listName} by ${listAuthor}`,
+        title: `MDList - ${listName} by ${listAuthor}`,
         link: `https://mangadex.org/list/${id}?tab=feed`,
         description: 'The latest updates of all the manga in a sepcific list',
         item: feed.map((chapter) => {
