@@ -390,8 +390,8 @@ importers:
         specifier: 9.26.0
         version: 9.26.0(jiti@2.4.2)
       eslint-config-prettier:
-        specifier: 10.1.2
-        version: 10.1.2(eslint@9.26.0(jiti@2.4.2))
+        specifier: 10.1.3
+        version: 10.1.3(eslint@9.26.0(jiti@2.4.2))
       eslint-nibble:
         specifier: 8.1.0
         version: 8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.26.0(jiti@2.4.2))
@@ -400,7 +400,7 @@ importers:
         version: 17.17.0(eslint@9.26.0(jiti@2.4.2))
       eslint-plugin-prettier:
         specifier: 5.4.0
-        version: 5.4.0(@types/eslint@9.6.1)(eslint-config-prettier@10.1.2(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(prettier@3.5.3)
+        version: 5.4.0(@types/eslint@9.6.1)(eslint-config-prettier@10.1.3(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-unicorn:
         specifier: 59.0.1
         version: 59.0.1(eslint@9.26.0(jiti@2.4.2))
@@ -494,6 +494,10 @@ packages:
     resolution: {integrity: sha512-Q+E+rd/yBzNQhXkG+zQnF58e4zoZfBedaxwzPmicKsiK3nt8iJYrSrDbjwFFDGC4f+rPafqRaPH6TsDoSvMf7A==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/compat-data@7.27.2':
+    resolution: {integrity: sha512-TUtMJYRPyUb/9aU8f3K0mjmjf6M9N5Woshn2CS6nqJSeJtTtQcpLUXjGt9vbF8ZGff0El99sWkLgzwW3VXnxZQ==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/core@7.26.10':
     resolution: {integrity: sha512-vMqyb7XCDMPvJFFOaT9kxtiRh42GwlZEg1/uIgtZshS5a/8OaduUfCi7kynKgc3Tw/6Uo2D+db9qBttghhmxwQ==}
     engines: {node: '>=6.9.0'}
@@ -512,6 +516,10 @@ packages:
 
   '@babel/helper-compilation-targets@7.27.1':
     resolution: {integrity: sha512-2YaDd/Rd9E598B5+WIc8wJPmWETiiJXFYVE60oX8FDohv7rAUU3CQj+A1MgeEmcsk2+dQuEjIe/GDvig0SqL4g==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/helper-compilation-targets@7.27.2':
+    resolution: {integrity: sha512-2+1thGUUWWjLTYTHZWK1n8Yga0ijBz1XAhUXcKy81rd5g6yh7hGqMp45v7cadSbEHc9G3OTv45SyneRN3ps4DQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-create-class-features-plugin@7.27.1':
@@ -604,6 +612,11 @@ packages:
 
   '@babel/parser@7.27.1':
     resolution: {integrity: sha512-I0dZ3ZpCrJ1c04OqlNsQcKiZlsrXf/kkE4FXzID9rIOYICsAbA8mMDzhW/luRNAHdCNt7os/u8wenklZDlUVUQ==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.27.2':
+    resolution: {integrity: sha512-QYLs8299NA7WM/bZAdp+CviYYkVoYXlDW2rzliy3chxd1PQjej7JORuMJDJXJUb9g0TT+B99EwaVLKmX+sPXWw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1002,6 +1015,10 @@ packages:
 
   '@babel/template@7.27.1':
     resolution: {integrity: sha512-Fyo3ghWMqkHHpHQCoBs2VnYjR4iWFFjguTDEqA5WgZDOrFesVjMhMM2FSqTKSoUSDO1VQtavj8NFpdRBEvJTtg==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/template@7.27.2':
+    resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/traverse@7.27.1':
@@ -3550,8 +3567,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-config-prettier@10.1.2:
-    resolution: {integrity: sha512-Epgp/EofAUeEpIdZkW60MHKvPyru1ruQJxPL+WIycnaPApuseK0Zpkrh/FwL9oIpQvIhJwV7ptOy0DWUjTlCiA==}
+  eslint-config-prettier@10.1.3:
+    resolution: {integrity: sha512-vDo4d9yQE+cS2tdIT4J02H/16veRvkHgiLDRpej+WL67oCfbOb97itZXn8wMPJ/GsiEBVjrjs//AVNw2Cp1EcA==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -6677,16 +6694,18 @@ snapshots:
 
   '@babel/compat-data@7.27.1': {}
 
+  '@babel/compat-data@7.27.2': {}
+
   '@babel/core@7.26.10':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.27.1
       '@babel/generator': 7.27.1
-      '@babel/helper-compilation-targets': 7.27.1
+      '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-module-transforms': 7.27.1(@babel/core@7.26.10)
       '@babel/helpers': 7.27.1
-      '@babel/parser': 7.27.1
-      '@babel/template': 7.27.1
+      '@babel/parser': 7.27.2
+      '@babel/template': 7.27.2
       '@babel/traverse': 7.27.1
       '@babel/types': 7.27.1
       convert-source-map: 2.0.0
@@ -6722,6 +6741,14 @@ snapshots:
       '@babel/compat-data': 7.27.1
       '@babel/helper-validator-option': 7.27.1
       browserslist: 4.24.4
+      lru-cache: 5.1.1
+      semver: 6.3.1
+
+  '@babel/helper-compilation-targets@7.27.2':
+    dependencies:
+      '@babel/compat-data': 7.27.2
+      '@babel/helper-validator-option': 7.27.1
+      browserslist: 4.24.5
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -6828,7 +6855,7 @@ snapshots:
 
   '@babel/helpers@7.27.1':
     dependencies:
-      '@babel/template': 7.27.1
+      '@babel/template': 7.27.2
       '@babel/types': 7.27.1
 
   '@babel/highlight@7.25.9':
@@ -6843,6 +6870,10 @@ snapshots:
       '@babel/types': 7.27.1
 
   '@babel/parser@7.27.1':
+    dependencies:
+      '@babel/types': 7.27.1
+
+  '@babel/parser@7.27.2':
     dependencies:
       '@babel/types': 7.27.1
 
@@ -7342,6 +7373,12 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/parser': 7.27.1
+      '@babel/types': 7.27.1
+
+  '@babel/template@7.27.2':
+    dependencies:
+      '@babel/code-frame': 7.27.1
+      '@babel/parser': 7.27.2
       '@babel/types': 7.27.1
 
   '@babel/traverse@7.27.1':
@@ -9936,7 +9973,7 @@ snapshots:
       eslint: 9.26.0(jiti@2.4.2)
       semver: 7.7.1
 
-  eslint-config-prettier@10.1.2(eslint@9.26.0(jiti@2.4.2)):
+  eslint-config-prettier@10.1.3(eslint@9.26.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.26.0(jiti@2.4.2)
 
@@ -9983,7 +10020,7 @@ snapshots:
       minimatch: 9.0.5
       semver: 7.7.1
 
-  eslint-plugin-prettier@5.4.0(@types/eslint@9.6.1)(eslint-config-prettier@10.1.2(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(prettier@3.5.3):
+  eslint-plugin-prettier@5.4.0(@types/eslint@9.6.1)(eslint-config-prettier@10.1.3(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(prettier@3.5.3):
     dependencies:
       eslint: 9.26.0(jiti@2.4.2)
       prettier: 3.5.3
@@ -9991,7 +10028,7 @@ snapshots:
       synckit: 0.11.4
     optionalDependencies:
       '@types/eslint': 9.6.1
-      eslint-config-prettier: 10.1.2(eslint@9.26.0(jiti@2.4.2))
+      eslint-config-prettier: 10.1.3(eslint@9.26.0(jiti@2.4.2))
 
   eslint-plugin-unicorn@59.0.1(eslint@9.26.0(jiti@2.4.2)):
     dependencies:
