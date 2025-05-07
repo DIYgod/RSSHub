@@ -109652,7 +109652,8 @@ export default {
       "/community/:handle": {
         "path": "/community/:handle",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "example": "/youtube/community/@JFlaMusic",
         "parameters": {
