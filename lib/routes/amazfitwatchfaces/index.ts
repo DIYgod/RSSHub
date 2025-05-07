@@ -265,6 +265,9 @@ export const route: Route = {
                 },
             ],
         },
+        searchParams: {
+            description: 'Search Params',
+        },
     },
     description: `:::tip
 If you subscribe to [Updated watch faces for Amazfit X](https://amazfitwatchfaces.com/amazfit-x/updated)，where the URL is \`https://amazfitwatchfaces.com/amazfit-x/updated\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`amazfit-x/updated\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/amazfit-x/updated\`](https://rsshub.app/amazfitwatchfaces/amazfit-x/updated).
@@ -301,7 +304,7 @@ If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9]
 
 </details>
 `,
-    categories: ['other'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -324,102 +327,102 @@ If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9]
         {
             title: 'Fresh watch faces for Amazfit X',
             source: ['amazfitwatchfaces.com/amazfit-x/fresh'],
-            target: '/amazfitwatchfaces/amazfit-x/fresh',
+            target: '/amazfit-x/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Band',
             source: ['amazfitwatchfaces.com/amazfit-band/fresh'],
-            target: '/amazfitwatchfaces/amazfit-band/fresh',
+            target: '/amazfit-band/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Bip',
             source: ['amazfitwatchfaces.com/bip/fresh'],
-            target: '/amazfitwatchfaces/bip/fresh',
+            target: '/bip/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Active',
             source: ['amazfitwatchfaces.com/active/fresh'],
-            target: '/amazfitwatchfaces/active/fresh',
+            target: '/active/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Balance',
             source: ['amazfitwatchfaces.com/balance/fresh'],
-            target: '/amazfitwatchfaces/balance/fresh',
+            target: '/balance/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Cheetah',
             source: ['amazfitwatchfaces.com/cheetah/fresh'],
-            target: '/amazfitwatchfaces/cheetah/fresh',
+            target: '/cheetah/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Falcon',
             source: ['amazfitwatchfaces.com/falcon/fresh'],
-            target: '/amazfitwatchfaces/falcon/fresh',
+            target: '/falcon/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit GTR',
             source: ['amazfitwatchfaces.com/gtr/fresh'],
-            target: '/amazfitwatchfaces/gtr/fresh',
+            target: '/gtr/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit GTS',
             source: ['amazfitwatchfaces.com/gts/fresh'],
-            target: '/amazfitwatchfaces/gts/fresh',
+            target: '/gts/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit T-Rex',
             source: ['amazfitwatchfaces.com/t-rex/fresh'],
-            target: '/amazfitwatchfaces/t-rex/fresh',
+            target: '/t-rex/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Stratos',
             source: ['amazfitwatchfaces.com/pace/fresh'],
-            target: '/amazfitwatchfaces/pace/fresh',
+            target: '/pace/fresh',
         },
         {
             title: 'Fresh watch faces for Amazfit Verge Lite',
             source: ['amazfitwatchfaces.com/verge-lite/fresh'],
-            target: '/amazfitwatchfaces/verge-lite/fresh',
+            target: '/verge-lite/fresh',
         },
         {
             title: 'Fresh watch faces for Haylou Watches',
             source: ['amazfitwatchfaces.com/haylou/fresh'],
-            target: '/amazfitwatchfaces/haylou/fresh',
+            target: '/haylou/fresh',
         },
         {
             title: 'Fresh watch faces for Huawei Watches',
             source: ['amazfitwatchfaces.com/huawei-watch-gt/fresh'],
-            target: '/amazfitwatchfaces/huawei-watch-gt/fresh',
+            target: '/huawei-watch-gt/fresh',
         },
         {
             title: 'Fresh watch faces for Xiaomi Mi Band 4',
             source: ['amazfitwatchfaces.com/mi-band-4/fresh'],
-            target: '/amazfitwatchfaces/mi-band-4/fresh',
+            target: '/mi-band-4/fresh',
         },
         {
             title: 'Fresh watch faces for Xiaomi Mi Band 5',
             source: ['amazfitwatchfaces.com/mi-band-5/fresh'],
-            target: '/amazfitwatchfaces/mi-band-5/fresh',
+            target: '/mi-band-5/fresh',
         },
         {
             title: 'Fresh watch faces for Xiaomi Mi Band 6',
             source: ['amazfitwatchfaces.com/mi-band-6/fresh'],
-            target: '/amazfitwatchfaces/mi-band-6/fresh',
+            target: '/mi-band-6/fresh',
         },
         {
             title: 'Fresh watch faces for Xiaomi Mi Band 7',
             source: ['amazfitwatchfaces.com/mi-band-7/fresh'],
-            target: '/amazfitwatchfaces/mi-band-7/fresh',
+            target: '/mi-band-7/fresh',
         },
         {
             title: 'Fresh watch faces for Xiaomi Smart Band 8',
-            source: ['amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_8'],
-            target: '/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_8',
+            source: ['amazfitwatchfaces.com/mi-band/fresh'],
+            target: '/mi-band/fresh/compatible=Smart_Band_8',
         },
         {
             title: 'Fresh watch faces for Xiaomi Smart Band 9',
-            source: ['amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_9'],
-            target: '/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_9',
+            source: ['amazfitwatchfaces.com/mi-band/fresh'],
+            target: '/mi-band/fresh/compatible=Smart_Band_9',
         },
     ],
     view: ViewType.Articles,
