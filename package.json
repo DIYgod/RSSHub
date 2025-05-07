@@ -159,7 +159,7 @@
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.13",
         "@types/lint-staged": "13.3.0",
-        "@types/mailparser": "3.4.5",
+        "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
         "@types/node": "22.15.12",
