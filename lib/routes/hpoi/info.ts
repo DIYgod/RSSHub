@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = $('.home-info').map((_, ele) => {
+    const items = $('.home-info').toArray().map((ele) => {
         const $item = load(ele);
         const leftNode = $item('.overlay-container');
         const relativeLink = leftNode.find('a').first().attr('href');
@@ -100,9 +100,7 @@ async function handler(ctx) {
         };
     });
 
-    const items1 = items.toArray();
-
-    const items2 = filterSet.size > 0 ? items1.filter((e) => filterSet.has(e.typeName)) : items1;
+    const items2 = filterSet.size > 0 ? items.filter((e) => filterSet.has(e.typeName)) : items;
 
     const typeToLabel = {
         all: '全部',
