@@ -23,7 +23,7 @@ export const route: Route = {
             ],
             default: 'all',
         },
-        include: {
+        catType: {
             description: '手办分类过滤, 使用|分割, 支持的分类见下表',
             default: 'all',
         },
