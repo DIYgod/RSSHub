@@ -23613,18 +23613,30 @@
     "routes": {
       "/:id?/:type?/:keyword?": {
         "path": "/:id?/:type?/:keyword?",
+        "url": "cool18.com",
+        "example": "cool18.com/bbs4",
+        "parameters": {
+          "id": "the name of the bbs",
+          "type": "the type of the post. Can be `home`, `gold` or `threadsearch`. Default: `home`",
+          "keyword": "the keyword to search.",
+          "pageSize": "the number of posts to fetch. If the type is not in search, you can type any words. Default: 10"
+        },
+        "categories": [
+          "bbs"
+        ],
         "radar": [
           {
             "source": [
-              "cool18.com/"
-            ]
+              "cool18.com/:id/"
+            ],
+            "target": "/:id/:type?/:keyword?"
           }
         ],
-        "name": "Unknown",
+        "name": "禁忌书屋",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "Gabrlie"
         ],
-        "url": "cool18.com/",
         "location": "index.ts",
         "module": "() => import('@/routes/cool18/index.ts')"
       }
