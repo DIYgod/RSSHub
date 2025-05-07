@@ -38,7 +38,7 @@ async function handler(ctx) {
                     return {
                         title: `${item.previousSibling.data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,
-                        pubDate: timezone(parseDate(`${href.replace(`/${category}/`, '').substring(0, 4)} ${dateStr}`, 'YYYY M月D日'), +8),
+                        pubDate: timezone(parseDate(`${href.replace(`/${category}/`, '').slice(0, 4)} ${dateStr}`, 'YYYY M月D日'), +8),
                     };
                 });
         });

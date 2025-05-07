@@ -110,7 +110,7 @@ async function handler(ctx) {
 
         if (item.price === 0) {
             finalPrice = 'Free';
-        } else if (!isNaN(price) && isFinite(price)) {
+        } else if (!Number.isNaN(price) && Number.isFinite(price)) {
             const rate = rates[iso];
             if (rate) {
                 finalPrice = `${(price * rate).toFixed(2)} ${iso}`;

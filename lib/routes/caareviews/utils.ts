@@ -11,12 +11,12 @@ const getList = async (url) => {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('#infinite-content > div')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('div.title').text().trim(),
             link: new URL($(item).find('div.title > em > a').attr('href'), rootUrl).href,
             author: $(item).find('div.contributors').text().trim(),
-        }))
-        .get();
+        }));
 
     return list;
 };

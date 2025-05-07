@@ -95,7 +95,8 @@ async function handler(ctx) {
         .children()
         .not('p,a,img,span')
         .slice(0, limit)
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             let aLabelNode;
             let tag;
@@ -113,8 +114,7 @@ async function handler(ctx) {
                 title: '[' + tag + ']' + aLabelNode.text(),
                 link: aLabelNode.attr('href').replace('//', 'https://'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map(async (item) => {

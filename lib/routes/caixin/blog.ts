@@ -38,7 +38,7 @@ async function handler(ctx) {
         const $ = load(response);
         const user = $('div.indexMainConri > script[type="text/javascript"]')
             .text()
-            .substring('window.user = '.length + 1)
+            .slice('window.user = '.length + 1)
             .split(';')[0]
             .replaceAll(/\s/g, '');
         const authorId = user.match(/id:"(\d+)"/)[1];

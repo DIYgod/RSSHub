@@ -1,6 +1,6 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { client, decodeMedia, getClient, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
-import { returnBigInt as bigInt } from 'telegram/Helpers.js';
+import { returnBigInt } from 'telegram/Helpers.js';
 import { HTMLParser } from 'telegram/extensions/html.js';
 import { DataItem } from '@/types';
 import type { Api } from 'telegram';
@@ -19,7 +19,7 @@ function parseRange(range, length) {
         const range = seg
             .split('-', 2)
             .filter((v) => !!v)
-            .map(bigInt);
+            .map((elem) => returnBigInt(elem));
         if (range.length < 2) {
             if (seg.startsWith('-')) {
                 range.unshift(0);
@@ -141,7 +141,7 @@ export default async function handler(ctx) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text ? message.text.substring(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+            const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
 
             item.push({
                 title,

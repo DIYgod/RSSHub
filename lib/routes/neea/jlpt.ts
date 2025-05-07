@@ -4,7 +4,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -86,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
 export const route: Route = {
     path: '/jlpt',
-    name: '日本语能力测试JLPT通知',
+    name: '日本语能力测试 JLPT 通知',
     url: 'jlpt.neea.cn',
     maintainers: ['nczitzk'],
     handler,

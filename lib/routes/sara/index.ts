@@ -44,7 +44,7 @@ export const route: Route = {
                     title: a.attr('title'),
                 };
             });
-        const items = (await Promise.all(list.map(getFeedItem))) as DataItem[];
+        const items = (await Promise.all(list.map((elem) => getFeedItem(elem)))) as DataItem[];
         return {
             title: typeMap[type],
             link: url,

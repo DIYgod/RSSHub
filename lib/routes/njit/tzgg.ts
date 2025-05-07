@@ -43,18 +43,18 @@ async function handler() {
 
     const urlList = $('body')
         .find('span.text a')
-        .map((i, e) => $(e).attr('href'))
-        .get();
+        .toArray()
+        .map((e) => $(e).attr('href'));
 
     const titleList = $('body')
         .find('span.text a')
-        .map((i, e) => $(e).attr('title'))
-        .get();
+        .toArray()
+        .map((e) => $(e).attr('title'));
 
     const dateList = $('body')
         .find('span.date')
-        .map((i, e) => '20' + $(e).text().slice(1, 9))
-        .get();
+        .toArray()
+        .map((e) => '20' + $(e).text().slice(1, 9));
 
     const out = await Promise.all(
         urlList.map((itemUrl, index) => {

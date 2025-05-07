@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -64,7 +64,7 @@ async function handler(ctx) {
 
                     if (list) {
                         return Promise.all(
-                            list.get().map((item) => {
+                            list.toArray().map((item) => {
                                 item = $(item);
                                 const itemPicUrl = item.find('.pic a img').attr('src');
                                 const info = item.find('.info');

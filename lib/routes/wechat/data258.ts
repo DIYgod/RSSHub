@@ -60,11 +60,11 @@ async function handler(ctx) {
         categoryPage && categoryPage.length
             ? $(categoryPage)
                   .find('li')
-                  .map((_, item) => parsePage($(item), 'h2 a', '.fly-list-info span'))
-                  .get() // got a category page
+                  .toArray()
+                  .map((item) => parsePage($(item), 'h2 a', '.fly-list-info span')) // got a category page
             : $('ul.jie-row li')
-                  .map((_, item) => parsePage($(item), 'a.jie-title', '.layui-hide-xs'))
-                  .get(); // got an MP page
+                  .toArray()
+                  .map((item) => parsePage($(item), 'a.jie-title', '.layui-hide-xs')); // got an MP page
 
     items = items.slice(0, limit); // limit to avoid being anti-crawled
 

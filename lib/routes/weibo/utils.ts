@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';

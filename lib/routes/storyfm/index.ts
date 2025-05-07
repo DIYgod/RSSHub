@@ -32,7 +32,8 @@ async function handler() {
     const $ = load(response.data);
     const cnMonth = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
     const items = $('.isotope > .isotope-item')
-        .map((_, ele) => {
+        .toArray()
+        .map((ele) => {
             const $item = load(ele);
             const img = $item('.isotope-img-container img').attr('src');
             const infoNode = $item('.isotope-index-text').first();
@@ -58,8 +59,7 @@ async function handler() {
                 link,
                 pubDate,
             };
-        })
-        .get();
+        });
     return {
         title: '故事说FM',
         description: '故事说FM',

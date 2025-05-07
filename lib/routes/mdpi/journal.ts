@@ -49,7 +49,8 @@ async function handler(ctx) {
     const $2 = load(response2.data);
     const issue = $2('.content__container').find('h1').text().trim();
     const list = $2('.article-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const title = $2(item).find('.title-link').text();
             const link = `${host}${$2(item).find('.title-link').attr('href')}`;
             const authors = $2(item).find('.authors').find('.inlineblock').text();
@@ -70,8 +71,7 @@ async function handler(ctx) {
                 issue,
                 img,
             };
-        })
-        .get();
+        });
 
     const renderDesc = (item) =>
         art(path.join(__dirname, 'templates/description.art'), {

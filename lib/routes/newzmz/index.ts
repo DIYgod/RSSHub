@@ -41,7 +41,7 @@ async function handler(ctx) {
     // then consider it as the id of a movie or TV show;
     // otherwise, consider it as the id for the category.
 
-    const isCategory = !isNaN(id);
+    const isCategory = !Number.isNaN(id);
 
     const currentUrl = new URL(isCategory ? 'index.html' : `details-${id}.html`, rootUrl).href;
 

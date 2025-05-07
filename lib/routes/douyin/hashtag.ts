@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cid = ctx.req.param('cid');
-    if (isNaN(cid)) {
+    if (Number.isNaN(cid)) {
         throw new InvalidParameterError('Invalid tag ID. Tag ID should be a number.');
     }
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));

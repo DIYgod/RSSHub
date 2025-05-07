@@ -28,7 +28,8 @@ async function handler() {
     const $ = load(response.data);
 
     const item = $('#showing-soon .item')
-        .map((index, ele) => {
+        .toArray()
+        .map((ele) => {
             const description = $(ele).html();
             const name = $('h3', ele).text().trim();
             const date = $('ul li', ele).eq(0).text().trim();
@@ -40,8 +41,7 @@ async function handler() {
                 link,
                 description,
             };
-        })
-        .get();
+        });
 
     return {
         title: '即将上映的电影',
