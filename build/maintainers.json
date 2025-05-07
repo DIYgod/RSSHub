@@ -3630,7 +3630,7 @@
   "/hpoi/items/character/:id/:order?": [
     "DIYgod"
   ],
-  "/hpoi/info/:type?": [
+  "/hpoi/info/:type?/:catType?": [
     "sanmmm DIYgod"
   ],
   "/hpoi/user/:user_id/:caty": [

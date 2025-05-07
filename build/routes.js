@@ -47525,29 +47525,57 @@ export default {
         "location": "character.ts",
         "module": () => import('@/routes/hpoi/character.ts')
       },
-      "/info/:type?": {
-        "path": "/info/:type?",
+      "/info/:type?/:catType?": {
+        "path": "/info/:type?/:catType?",
         "categories": [
           "anime"
         ],
-        "example": "/hpoi/info/all",
+        "example": "/hpoi/info/all/hobby|model",
         "parameters": {
           "type": {
-            "description": "分类",
+            "description": "情报类型",
             "options": [
               {
                 "value": "all",
                 "label": "全部"
               },
               {
+                "value": "confirm",
+                "label": "制作"
+              },
+              {
+                "value": "official_pic",
+                "label": "官图更新"
+              },
+              {
+                "value": "preorder",
+                "label": "开订"
+              },
+              {
+                "value": "delay",
+                "label": "延期"
+              },
+              {
+                "value": "release",
+                "label": "出荷"
+              },
+              {
+                "value": "reorder",
+                "label": "再版"
+              },
+              {
                 "value": "hobby",
-                "label": "手办"
+                "label": "手办(拟废弃, 无效果)"
               },
               {
                 "value": "model",
-                "label": "模型"
+                "label": "动漫模型(拟废弃, 无效果)"
               }
             ],
+            "default": "all"
+          },
+          "catType": {
+            "description": "手办分类过滤, 使用|分割, 支持的分类见下表",
             "default": "all"
           }
         },
@@ -47563,6 +47591,7 @@ export default {
         "maintainers": [
           "sanmmm DIYgod"
         ],
+        "description": "::: tip\n  情报类型中的*手办*、*模型*只是为了兼容, 实际效果等同于**全部**, 如果只需要**手办**类型的情报, 可以使用参数*catType*, e.g. /hpoi/info/all/hobby\n:::\n\n|  手办   | 动漫模型 | 真实模型 | 毛绒布偶 | doll娃娃 | GK/其他 |\n| ------ | ------- | ------- | ------- | ------- | ------ |\n| hobby  |  model  |  real   | moppet  |  doll   | gkdiy  |",
         "location": "info.ts",
         "module": () => import('@/routes/hpoi/info.ts')
       },
