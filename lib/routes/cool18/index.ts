@@ -1,6 +1,5 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
@@ -47,50 +46,46 @@ async function handler(ctx: Context) {
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
-    let list: any[];
 
-    if (type === 'home') {
-        const pageData = JSON.parse(
-            $('script:contains("_PageData")')
-                .text()
-                .match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/)?.[1] || '[]'
-        );
-        pageData.length = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
-        list = pageData.map((item: PageDataItem) => ({
-            title: item.subject,
-            link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
-            pubDate: parseDate(item.dateline, 'MM/DD/YY'),
-            author: item.username,
-            category: item.type,
-            description: '',
-        }));
-    } else {
-        list = $('#d_list ul li, #thread_list li, .t_l .t_subject')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20)
-            .toArray()
-            .map((item) => {
-                const a = $(item).find('a').first();
+    const limit = ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20;
 
-                return {
-                    title: a.text(),
-                    link: `${rootUrl}/${a.attr('href')}`,
-                    pubDate: parseDate($(item).find('i').text(), 'MM/DD/YY'),
-                    author: $(item).find('a').last().text(),
-                    category: a.find('span').first().text(),
-                    description: '',
-                };
-            });
-    }
+    const list =
+        type === 'home'
+            ? JSON.parse(
+                  $('script:contains("_PageData")')
+                      .text()
+                      .match(/const\s+_PageData\s*=\s*(\[[\s\S]*?]);/)?.[1] || '[]'
+              )
+                  .slice(0, limit)
+                  .map((item: PageDataItem) => ({
+                      title: item.subject,
+                      link: `${rootUrl}?app=forum&act=threadview&tid=${item.tid}`,
+                      pubDate: parseDate(item.dateline, 'MM/DD/YY'),
+                      author: item.username,
+                      category: item.type,
+                      description: '',
+                  }))
+            : $('#d_list ul li, #thread_list li, .t_l .t_subject')
+                  .slice(0, limit)
+                  .toArray()
+                  .map((item) => {
+                      const a = $(item).find('a').first();
+                      return {
+                          title: a.text(),
+                          link: `${rootUrl}/${a.attr('href')}`,
+                          pubDate: parseDate($(item).find('i').text(), 'MM/DD/YY'),
+                          author: $(item).find('a').last().text(),
+                          category: a.find('span').first().text(),
+                          description: '',
+                      };
+                  });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const detailResponse = await ofetch(item.link);
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
                 const preElement = content('pre');
                 if (preElement.length > 0) {
                     const htmlContent = preElement.html();
