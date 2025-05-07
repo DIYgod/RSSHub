@@ -110,7 +110,7 @@
         "p-map": "7.0.3",
         "pac-proxy-agent": "7.2.0",
         "proxy-chain": "2.5.8",
-        "puppeteer": "22.6.2",
+        "puppeteer": "24.8.1",
         "puppeteer-extra": "3.3.6",
         "puppeteer-extra-plugin-stealth": "2.11.2",
         "puppeteer-extra-plugin-user-data-dir": "2.4.1",
