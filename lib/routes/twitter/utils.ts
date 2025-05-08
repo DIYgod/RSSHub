@@ -67,6 +67,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.get('heightOfPics')), -1),
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.get('sizeOfAuthorAvatar')), 48),
         sizeOfQuotedAuthorAvatar: fallback(params.sizeOfQuotedAuthorAvatar, queryToInteger(routeParams.get('sizeOfQuotedAuthorAvatar')), 24),
+        mediaNumber: fallback(params.mediaNumber, queryToInteger(routeParams.get('mediaNumber')), false),
     };
 
     params = mergedParams;
@@ -85,7 +86,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         addLinkForPics,
         showTimestampInDescription,
         showQuotedInTitle,
-
+        mediaNumber,
         widthOfPics,
         heightOfPics,
         sizeOfAuthorAvatar,
@@ -159,8 +160,10 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
 
                 img += content;
 
-                img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
-                index++;
+                if (mediaNumber) {
+                    img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                    index++;
+                }
             }
         }
 
