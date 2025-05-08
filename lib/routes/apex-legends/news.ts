@@ -90,10 +90,6 @@ async function handler(ctx) {
                 source: ['www.ea.com/:lang/games/apex-legends/apex-legends/news'],
                 target: '/news/:lang',
             },
-            {
-                source: ['www.ea.com/:lang/games/apex-legends/apex-legends/news?type=:type'],
-                target: '/news/:lang/:type',
-            },
         ],
     };
 }
