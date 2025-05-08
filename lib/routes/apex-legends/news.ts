@@ -35,7 +35,7 @@ async function handler(ctx) {
     }
     const apiUrl = `https://drop-api.ea.com/news-articles/pagination?${apiParams}`;
     const response = await got(apiUrl);
-    const { items: newsItems, featured } = response.data;
+    const newsItems = response.data;
     type NewsItem = {
         title: string;
         description: string;
