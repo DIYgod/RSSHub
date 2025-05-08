@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/update',
@@ -22,7 +21,7 @@ export const route: Route = {
             target: '/update',
         },
     ],
-    name: '再漫画 - 最近更新',
+    name: '最近更新',
     maintainers: ['kjasn'],
     handler: async () => {
         const baseUrl = 'https://manhua.zaimanhua.com';
@@ -39,10 +38,11 @@ export const route: Route = {
         const items = data.map((item) => ({
             title: item.name,
             author: item.author,
-            link: `${baseUrl}/details/${item.id}`,
+            link: `${baseUrl}/view/${item.comic_py}/${item.id}/${item.last_update_chapter_id}`,
             image: item.cover,
-            description: `[${item.status}] #${item.types} | ${item.name} - ${item.last_update_chapter_name}`,
-            pubDate: timezone(parseDate(item.last_updatetime * 1000), +8),
+            description: `[${item.status}] | ${item.name} - ${item.last_update_chapter_name}`,
+            category: [item.status, ...item.types.split('/').map((type) => type.trim())],
+            pubDate: parseDate(item.last_updatetime * 1000),
         }));
 
         return {
