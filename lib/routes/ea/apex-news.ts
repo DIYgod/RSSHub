@@ -33,8 +33,7 @@ async function handler(ctx) {
         apiParams.append('locale', lang);
     }
     const apiUrl = `https://drop-api.ea.com/news-articles/pagination?${apiParams}`;
-    const response = await ofetch(apiUrl);
-    const newsItems = response;
+    const newsItems = await ofetch(apiUrl);
 
     type NewsItem = DataItem & {
         slug: string;
@@ -90,7 +89,7 @@ export const route: Route = {
             default: 'latest',
         },
     },
-    name: 'APEX Legends官网资讯',
+    name: 'APEX Legends 官网资讯',
     maintainers: ['IceChestnut'],
     handler,
     features: {
