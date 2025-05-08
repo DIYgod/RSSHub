@@ -43,25 +43,13 @@ async function handler(ctx) {
         pubDate: Date;
         slug: string;
     };
-    const allItems: NewsItem[] = [];
-    if (featured) {
-        allItems.push({
-            title: featured.title,
-            description: featured.summary,
-            link: `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news/${featured.slug}`,
-            pubDate: parseDate(featured.publishingDate),
-            slug: featured.slug,
-        });
-    }
-    allItems.push(
-        ...newsItems.map((item) => ({
-            title: item.title,
-            description: item.summary,
-            link: `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news/${item.slug}`,
-            pubDate: parseDate(item.publishingDate),
-            slug: item.slug,
-        }))
-    );
+    const allItems: NewsItem[] = [newsItems.featured, ...newsItems.items].filter(Boolean).map((item) => ({
+        title: item.title,
+        description: item.summary,
+        link: `https://www.ea.com${lang === 'en' ? '/' : '/' + lang + '/'}games/apex-legends/apex-legends/news/${item.slug}`,
+        pubDate: parseDate(item.publishingDate),
+        slug: item.slug,
+    }));
     const items = await Promise.all(
         allItems.map((item) =>
             cache.tryGet(item.link, async () => {
