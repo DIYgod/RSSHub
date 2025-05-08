@@ -102,7 +102,7 @@ async function handler(ctx) {
 
             return followedChapterFeed;
         },
-        config.cache.contentExpire,
+        config.cache.routeExpire,
         false
     )) as Record<string, any>[];
 

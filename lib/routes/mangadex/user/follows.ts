@@ -119,7 +119,7 @@ async function handler(ctx) {
 
             return statuses;
         },
-        config.cache.contentExpire,
+        config.cache.routeExpire,
         false
     )) as Record<string, string>;
 

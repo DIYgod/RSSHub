@@ -150,7 +150,7 @@ const getMangaChapters = async (id: string, lang?: string | string[], limit?: nu
 
             return data.data;
         },
-        config.cache.contentExpire,
+        config.cache.routeExpire,
         false
     )) as any;
 
