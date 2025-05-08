@@ -34201,7 +34201,7 @@ export default {
         "radar": [
           {
             "source": [
-              "flyert.com/"
+              "flyert.com.cn/"
             ]
           }
         ],
@@ -34280,7 +34280,7 @@ export default {
       }
     },
     "name": "飞客茶馆",
-    "url": "flyert.com",
+    "url": "flyert.com.cn",
     "description": "",
     "lang": "zh-CN"
   },
