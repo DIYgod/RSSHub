@@ -63,7 +63,7 @@ async function handler(ctx) {
             link: item.link,
             pubDate: item.pubDate,
         })),
-        image: 'https://drop-assets.ea.com/images/F1GeiHWipvvKj7GtUVP3U/31bb122451e2dea6d14c9b497f8e09d4/apex-white-nav-logo.svg'
+        image: 'https://drop-assets.ea.com/images/F1GeiHWipvvKj7GtUVP3U/31bb122451e2dea6d14c9b497f8e09d4/apex-white-nav-logo.svg',
     };
 }
 export const route: Route = {
