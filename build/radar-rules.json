@@ -18291,6 +18291,15 @@
     "_name": "Huggingface",
     ".": [
       {
+        "title": "Community Articles",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog/community",
+          "/"
+        ],
+        "target": "/huggingface/blog-community/:sort?"
+      },
+      {
         "title": "中文博客",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

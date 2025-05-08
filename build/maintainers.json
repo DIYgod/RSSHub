@@ -3693,6 +3693,9 @@
   "/hubu/zhxy/:category{.+}?": [
     "nczitzk"
   ],
+  "/huggingface/blog-community/:sort?": [
+    "yuguorui"
+  ],
   "/huggingface/blog-zh": [
     "zcf0508"
   ],
