@@ -8613,6 +8613,300 @@ export default {
     "url": "www.alternativeto.net",
     "lang": "en"
   },
+  "amazfitwatchfaces": {
+    "routes": {
+      "/:device/:sort/:searchParams?": {
+        "path": "/:device/:sort/:searchParams?",
+        "name": "Watch Faces",
+        "url": "amazfitwatchfaces.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/amazfitwatchfaces/amazfit-x/fresh",
+        "parameters": {
+          "device": {
+            "description": "Device Id",
+            "options": [
+              {
+                "label": "Amazfit X",
+                "value": "amazfit-x"
+              },
+              {
+                "label": "Amazfit Band",
+                "value": "amazfit-band"
+              },
+              {
+                "label": "Amazfit Bip",
+                "value": "bip"
+              },
+              {
+                "label": "Amazfit Active",
+                "value": "active"
+              },
+              {
+                "label": "Amazfit Balance",
+                "value": "balance"
+              },
+              {
+                "label": "Amazfit Cheetah",
+                "value": "cheetah"
+              },
+              {
+                "label": "Amazfit Falcon",
+                "value": "falcon"
+              },
+              {
+                "label": "Amazfit GTR",
+                "value": "gtr"
+              },
+              {
+                "label": "Amazfit GTS",
+                "value": "gts"
+              },
+              {
+                "label": "Amazfit T-Rex",
+                "value": "t-rex"
+              },
+              {
+                "label": "Amazfit Stratos",
+                "value": "pace"
+              },
+              {
+                "label": "Amazfit Verge Lite",
+                "value": "verge-lite"
+              },
+              {
+                "label": "Haylou Watches",
+                "value": "haylou"
+              },
+              {
+                "label": "Huawei Watches",
+                "value": "huawei-watch-gt"
+              },
+              {
+                "label": "Xiaomi Mi Band 4",
+                "value": "mi-band-4"
+              },
+              {
+                "label": "Xiaomi Mi Band 5",
+                "value": "mi-band-5"
+              },
+              {
+                "label": "Xiaomi Mi Band 6",
+                "value": "mi-band-6"
+              },
+              {
+                "label": "Xiaomi Mi Band 7",
+                "value": "mi-band-7"
+              },
+              {
+                "label": "Xiaomi Smart Band 8",
+                "value": "mi-band"
+              },
+              {
+                "label": "Xiaomi Smart Band 9",
+                "value": "mi-band"
+              }
+            ]
+          },
+          "sort": {
+            "description": "Sort By",
+            "options": [
+              {
+                "label": "Fresh",
+                "value": "fresh"
+              },
+              {
+                "label": "Updated",
+                "value": "updated"
+              },
+              {
+                "label": "Random",
+                "value": "random"
+              },
+              {
+                "label": "Top",
+                "value": "top"
+              }
+            ]
+          },
+          "searchParams": {
+            "description": "Search Params"
+          }
+        },
+        "description": ":::tip\nIf you subscribe to [Updated watch faces for Amazfit X](https://amazfitwatchfaces.com/amazfit-x/updated)，where the URL is `https://amazfitwatchfaces.com/amazfit-x/updated`, extract the part `https://amazfitwatchfaces.com/` to the end, which is `amazfit-x/updated`, and use it as the parameter to fill in. Therefore, the route will be [`/amazfitwatchfaces/amazfit-x/updated`](https://rsshub.app/amazfitwatchfaces/amazfit-x/updated).\n\nIf you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months)，where the URL is `https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months`, extract the part `https://amazfitwatchfaces.com/` to the end, which is `mi-band/top`, and use it as the parameter to fill in. Therefore, the route will be [`/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months`](https://rsshub.app/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months).\n\n:::\n\n<details>\n  <summary>More devices</summary>\n\n| Device Name                                                                                | Device Id       |\n| ------------------------------------------------------------------------------------------ | --------------- |\n| [Amazfit X](https://amazfitwatchfaces.com/amazfit-x/fresh)                                 | [amazfit-x](https://rsshub.app/amazfitwatchfaces/amazfit-x/fresh) |\n| [Amazfit Band](https://amazfitwatchfaces.com/amazfit-band/fresh)                           | [amazfit-band](https://rsshub.app/amazfitwatchfaces/amazfit-band/fresh) |\n| [Amazfit Bip](https://amazfitwatchfaces.com/bip/fresh)                                     | [bip](https://rsshub.app/amazfitwatchfaces/bip/fresh) |\n| [Amazfit Active](https://amazfitwatchfaces.com/active/fresh)                               | [active](https://rsshub.app/amazfitwatchfaces/active/fresh) |\n| [Amazfit Balance](https://amazfitwatchfaces.com/balance/fresh)                             | [balance](https://rsshub.app/amazfitwatchfaces/balance/fresh) |\n| [Amazfit Cheetah](https://amazfitwatchfaces.com/cheetah/fresh)                             | [cheetah](https://rsshub.app/amazfitwatchfaces/cheetah/fresh) |\n| [Amazfit Falcon](https://amazfitwatchfaces.com/falcon/fresh)                               | [falcon](https://rsshub.app/amazfitwatchfaces/falcon/fresh) |\n| [Amazfit GTR](https://amazfitwatchfaces.com/gtr/fresh)                                     | [gtr](https://rsshub.app/amazfitwatchfaces/gtr/fresh) |\n| [Amazfit GTS](https://amazfitwatchfaces.com/gts/fresh)                                     | [gts](https://rsshub.app/amazfitwatchfaces/gts/fresh) |\n| [Amazfit T-Rex](https://amazfitwatchfaces.com/t-rex/fresh)                                 | [t-rex](https://rsshub.app/amazfitwatchfaces/t-rex/fresh) |\n| [Amazfit Stratos](https://amazfitwatchfaces.com/pace/fresh)                                | [pace](https://rsshub.app/amazfitwatchfaces/pace/fresh) |\n| [Amazfit Verge Lite](https://amazfitwatchfaces.com/verge-lite/fresh)                       | [verge-lite](https://rsshub.app/amazfitwatchfaces/verge-lite/fresh) |\n| [Haylou Watches](https://amazfitwatchfaces.com/haylou/fresh)                               | [haylou](https://rsshub.app/amazfitwatchfaces/haylou/fresh) |\n| [Huawei Watches](https://amazfitwatchfaces.com/huawei-watch-gt/fresh)                      | [huawei-watch-gt](https://rsshub.app/amazfitwatchfaces/huawei-watch-gt/fresh) |\n| [Xiaomi Mi Band 4](https://amazfitwatchfaces.com/mi-band-4/fresh)                          | [mi-band-4](https://rsshub.app/amazfitwatchfaces/mi-band-4/fresh) |\n| [Xiaomi Mi Band 5](https://amazfitwatchfaces.com/mi-band-5/fresh)                          | [mi-band-5](https://rsshub.app/amazfitwatchfaces/mi-band-5/fresh) |\n| [Xiaomi Mi Band 6](https://amazfitwatchfaces.com/mi-band-6/fresh)                          | [mi-band-6](https://rsshub.app/amazfitwatchfaces/mi-band-6/fresh) |\n| [Xiaomi Mi Band 7](https://amazfitwatchfaces.com/mi-band-7/fresh)                          | [mi-band-7](https://rsshub.app/amazfitwatchfaces/mi-band-7/fresh) |\n| [Xiaomi Smart Band 8](https://amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_8) | [mi-band](https://rsshub.app/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_8) |\n| [Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_9) | [mi-band](https://rsshub.app/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_9) |\n\n</details>\n",
+        "categories": [
+          "program-update"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "amazfitwatchfaces.com/:device/:sort"
+            ]
+          },
+          {
+            "title": "Fresh watch faces for Amazfit X",
+            "source": [
+              "amazfitwatchfaces.com/amazfit-x/fresh"
+            ],
+            "target": "/amazfit-x/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Band",
+            "source": [
+              "amazfitwatchfaces.com/amazfit-band/fresh"
+            ],
+            "target": "/amazfit-band/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Bip",
+            "source": [
+              "amazfitwatchfaces.com/bip/fresh"
+            ],
+            "target": "/bip/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Active",
+            "source": [
+              "amazfitwatchfaces.com/active/fresh"
+            ],
+            "target": "/active/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Balance",
+            "source": [
+              "amazfitwatchfaces.com/balance/fresh"
+            ],
+            "target": "/balance/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Cheetah",
+            "source": [
+              "amazfitwatchfaces.com/cheetah/fresh"
+            ],
+            "target": "/cheetah/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Falcon",
+            "source": [
+              "amazfitwatchfaces.com/falcon/fresh"
+            ],
+            "target": "/falcon/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit GTR",
+            "source": [
+              "amazfitwatchfaces.com/gtr/fresh"
+            ],
+            "target": "/gtr/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit GTS",
+            "source": [
+              "amazfitwatchfaces.com/gts/fresh"
+            ],
+            "target": "/gts/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit T-Rex",
+            "source": [
+              "amazfitwatchfaces.com/t-rex/fresh"
+            ],
+            "target": "/t-rex/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Stratos",
+            "source": [
+              "amazfitwatchfaces.com/pace/fresh"
+            ],
+            "target": "/pace/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Amazfit Verge Lite",
+            "source": [
+              "amazfitwatchfaces.com/verge-lite/fresh"
+            ],
+            "target": "/verge-lite/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Haylou Watches",
+            "source": [
+              "amazfitwatchfaces.com/haylou/fresh"
+            ],
+            "target": "/haylou/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Huawei Watches",
+            "source": [
+              "amazfitwatchfaces.com/huawei-watch-gt/fresh"
+            ],
+            "target": "/huawei-watch-gt/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Mi Band 4",
+            "source": [
+              "amazfitwatchfaces.com/mi-band-4/fresh"
+            ],
+            "target": "/mi-band-4/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Mi Band 5",
+            "source": [
+              "amazfitwatchfaces.com/mi-band-5/fresh"
+            ],
+            "target": "/mi-band-5/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Mi Band 6",
+            "source": [
+              "amazfitwatchfaces.com/mi-band-6/fresh"
+            ],
+            "target": "/mi-band-6/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Mi Band 7",
+            "source": [
+              "amazfitwatchfaces.com/mi-band-7/fresh"
+            ],
+            "target": "/mi-band-7/fresh"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Smart Band 8",
+            "source": [
+              "amazfitwatchfaces.com/mi-band/fresh"
+            ],
+            "target": "/mi-band/fresh/compatible=Smart_Band_8"
+          },
+          {
+            "title": "Fresh watch faces for Xiaomi Smart Band 9",
+            "source": [
+              "amazfitwatchfaces.com/mi-band/fresh"
+            ],
+            "target": "/mi-band/fresh/compatible=Smart_Band_9"
+          }
+        ],
+        "view": 0,
+        "location": "index.ts",
+        "module": () => import('@/routes/amazfitwatchfaces/index.ts')
+      }
+    },
+    "name": "Amazfitwatchfaces",
+    "url": "amazfitwatchfaces.com",
+    "categories": [
+      "program-update"
+    ],
+    "description": "amazfitwatchfaces.com is the world's largest collection of watch faces for Amazfit, Zepp, Bip, Pace, Stratos, Cor, Verge, Verge Lite, GTR, GTS, T-Rex, watches. Here you can find everything you need to customize & personalize your device! The website also has catalogs of watch faces for Xiaomi, Haylou, Honor and Huawei watches.",
+    "lang": "en"
+  },
   "amazon": {
     "routes": {
       "/awsblogs/:locale?": {
