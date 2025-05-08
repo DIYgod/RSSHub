@@ -33,8 +33,7 @@ async function handler(ctx) {
         apiParams.append('locale', lang);
     }
     const apiUrl = `https://drop-api.ea.com/news-articles/pagination?${apiParams}`;
-    const response = await ofetch(apiUrl);
-    const newsItems = response;
+    const newsItems = await ofetch(apiUrl);
 
     type NewsItem = DataItem & {
         slug: string;
