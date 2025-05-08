@@ -1,6 +1,4 @@
 <div class="notice-info">
-    <h3 class="title" id="detail_title">{{item.name}}</h3>
-    <p class="time" id="detail_time">发布时间：{{item.createDate}}</p>
     <table class="exam-table" id="exam_table" style="width: 90%;margin: 30px auto 0;border: 1px solid #e2e5ef;">
         <tr>
             <th style="width: 15%;padding: 12px 0;text-align: right;font-weight: normal;background-color: #f3f8ff;">组织者：</th>
