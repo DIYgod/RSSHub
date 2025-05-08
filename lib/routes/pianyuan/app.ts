@@ -55,7 +55,7 @@ async function handler(ctx) {
     const response = await utils.request(link, cache);
     const $ = load(response.data);
     const detailLinks = $('#main-container > div > div.col-md-10 > table > tbody > tr')
-        .get()
+        .toArray()
         .map((tr) => $(tr).find('td.dt.prel.nobr > a').attr('href'));
     detailLinks.shift();
     const items = await utils.ProcessFeed(detailLinks, cache);

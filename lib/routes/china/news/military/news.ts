@@ -36,20 +36,16 @@ async function handler() {
     return {
         title: '中华网-军事新闻',
         link: 'https://military.china.com/news/',
-        item:
-            commonList &&
-            commonList
-                .map((_, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('h3.item_title').text(),
-                        author: '中华网军事',
-                        category: '中华网军事',
-                        pubDate: parseDate(item.find('em.item_time').text()),
-                        description: item.find('.item_source').text(),
-                        link: item.find('h3.item_title a').attr('href'),
-                    };
-                })
-                .get(),
+        item: commonList.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('h3.item_title').text(),
+                author: '中华网军事',
+                category: '中华网军事',
+                pubDate: parseDate(item.find('em.item_time').text()),
+                description: item.find('.item_source').text(),
+                link: item.find('h3.item_title a').attr('href'),
+            };
+        }),
     };
 }

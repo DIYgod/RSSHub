@@ -49,7 +49,8 @@ async function handler(ctx) {
         .trim();
 
     const list = $('li.list_item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             let link = $(item).find('a').attr('href');
             if (link.includes('page.htm')) {
                 link = `${rootUrl}${link}`;
@@ -59,8 +60,7 @@ async function handler(ctx) {
                 pubDate: parseDate($(item).find('span.Article_PublishDate').text()),
                 link,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

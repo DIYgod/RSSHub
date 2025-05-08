@@ -1,5 +1,6 @@
 import * as entities from 'entities';
-import { load, type CheerioAPI, type Element } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
+import type { Element } from 'domhandler';
 import { simplecc } from 'simplecc-wasm';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
