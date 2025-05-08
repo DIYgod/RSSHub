@@ -2265,6 +2265,9 @@
     "nczitzk"
   ],
   "/e-hentai/:what?/:id?/:needTorrents?/:needImages?": [],
+  "/ea/apex-news/:lang?/:type?": [
+    "IceChestnut"
+  ],
   "/eagle/blog/:cate?/:language?": [
     "Fatpandac"
   ],

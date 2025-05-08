@@ -31041,6 +31041,68 @@
     "url": "e-hentai.org",
     "lang": "en"
   },
+  "ea": {
+    "routes": {
+      "/apex-news/:lang?/:type?": {
+        "path": "/apex-news/:lang?/:type?",
+        "categories": [
+          "game"
+        ],
+        "example": "/ea/apex-news/zh-hant/game-updates",
+        "parameters": {
+          "lang": {
+            "description": "语言",
+            "options": [
+              {
+                "value": "zh-hant",
+                "label": "中文(繁体)"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              }
+            ],
+            "default": "en"
+          },
+          "type": {
+            "description": "资讯类型（可选）",
+            "options": [
+              {
+                "value": "news-article",
+                "label": "最新消息"
+              },
+              {
+                "value": "game-updates",
+                "label": "游戏更新"
+              },
+              {
+                "value": "latest",
+                "label": "全部"
+              }
+            ],
+            "default": "latest"
+          }
+        },
+        "name": "APEX Legends 官网资讯",
+        "maintainers": [
+          "IceChestnut"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "view": 0,
+        "location": "apex-news.ts",
+        "module": "() => import('@/routes/ea/apex-news.ts')"
+      }
+    },
+    "name": "EA Games",
+    "url": "www.ea.com"
+  },
   "eagle": {
     "routes": {
       "/blog/:cate?/:language?": {
