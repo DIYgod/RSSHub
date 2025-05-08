@@ -99,7 +99,7 @@ export const route: Route = {
             default: 'latest',
         },
     },
-    name: 'APEX Legends官网资讯',
+    name: 'APEX Legends 官网资讯',
     maintainers: ['IceChestnut'],
     handler,
     features: {
