@@ -58,7 +58,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     // For compatibility
-    const { count, include_replies, include_rts } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const { count, include_replies, include_rts, only_media } = utils.parseRouteParams(ctx.req.param('routeParams'));
     const params = count ? { count } : {};
 
     await api.init();
@@ -68,6 +68,9 @@ async function handler(ctx) {
         data = await (include_replies ? api.getUserTweetsAndReplies(id, params) : api.getUserTweets(id, params));
         if (!include_rts) {
             data = utils.excludeRetweet(data);
+        }
+        if (only_media) {
+            data = utils.keepOnlyMedia(data);
         }
     } catch (error) {
         logger.error(error);
