@@ -295,7 +295,14 @@ export const renderOGVDescription = (embed: boolean, img: string, description: s
     return rendered;
 };
 
-export const getVideoUrl = (bvid?: string) => (bvid ? `https://www.bilibili.com/blackboard/newplayer.html?isOutside=true&autoplay=true&danmaku=true&muted=false&highQuality=true&bvid=${bvid}` : undefined);
+export function getVideoUrl(bvid: string): string;
+export function getVideoUrl(bvid?: string): string | undefined;
+export function getVideoUrl(bvid?: string): string | undefined {
+    if (!bvid) {
+        return;
+    }
+    return `https://www.bilibili.com/blackboard/newplayer.html?isOutside=true&autoplay=true&danmaku=true&muted=false&highQuality=true&bvid=${bvid}`;
+}
 export const getLiveUrl = (roomId?: string) => (roomId ? `https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}` : undefined);
 
 export default {
