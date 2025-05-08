@@ -1,6 +1,5 @@
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { ViewType, type Route } from '@/types';
+import { ViewType, type Route, type DataItem } from '@/types';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -34,13 +33,10 @@ async function handler(ctx) {
         apiParams.append('locale', lang);
     }
     const apiUrl = `https://drop-api.ea.com/news-articles/pagination?${apiParams}`;
-    const response = await got(apiUrl);
-    const newsItems = response.data;
-    type NewsItem = {
-        title: string;
-        description: string;
-        link: string;
-        pubDate: Date;
+    const response = await ofetch(apiUrl);
+    const newsItems = response;
+
+    type NewsItem = DataItem & {
         slug: string;
     };
     const allItems: NewsItem[] = [newsItems.featured, ...newsItems.items].filter(Boolean).map((item) => ({
@@ -52,7 +48,7 @@ async function handler(ctx) {
     }));
     const items = await Promise.all(
         allItems.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link ?? '', async () => {
                 const response = await ofetch(`https://drop-api.ea.com/news-articles/${item.slug}${lang === 'en' ? '' : '?locale=' + lang}`);
                 item.description = md.render(response.body);
                 return item;
@@ -82,9 +78,9 @@ async function handler(ctx) {
     };
 }
 export const route: Route = {
-    path: '/news/:lang?/:type?',
+    path: '/apex-news/:lang?/:type?',
     categories: ['game'],
-    example: '/apex/news/zh-hant/game-updates',
+    example: '/ea/apex-news/zh-hant/game-updates',
     parameters: {
         lang: {
             description: '语言',
@@ -104,7 +100,7 @@ export const route: Route = {
             default: 'latest',
         },
     },
-    name: '官网资讯',
+    name: 'APEX Legends官网资讯',
     maintainers: ['IceChestnut'],
     handler,
     features: {
