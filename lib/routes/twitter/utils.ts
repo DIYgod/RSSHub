@@ -116,6 +116,8 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     const formatMedia = (item) => {
         let img = '';
         if (item.extended_entities) {
+            const mediaCount = item.extended_entities.media.length;
+            let index = 1;
             for (const media of item.extended_entities.media) {
                 // https://developer.x.com/en/docs/tweets/data-dictionary/overview/extended-entities-object
                 let content = '';
@@ -156,6 +158,9 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
 
                 img += content;
+
+                img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                index++;
             }
         }
 
