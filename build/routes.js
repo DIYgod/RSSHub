@@ -34201,7 +34201,7 @@ export default {
         "radar": [
           {
             "source": [
-              "flyert.com.cn/"
+              "flyert.com/"
             ]
           }
         ],
@@ -34280,7 +34280,7 @@ export default {
       }
     },
     "name": "飞客茶馆",
-    "url": "flyert.com.cn",
+    "url": "flyert.com",
     "description": "",
     "lang": "zh-CN"
   },
@@ -82347,16 +82347,23 @@ export default {
             "target": "/:path"
           }
         ],
-        "name": "Unknown",
-        "maintainers": [],
-        "url": "rfi.fr/*path",
+        "name": "Generic News",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "rfi.fr",
+        "example": "/rfi",
+        "description": "::: tip\n-   To subscribe to [English News](https://www.rfi.fr/en/), which URL is `https://www.rfi.fr/en`, you can get the route as [`/rfi/en`](https://rsshub.app/rfi/en).\n-   To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), which URL is `https://www.rfi.fr/en/europe`, you can get the route as [`/rfi/en/europe`](https://rsshub.app/rfi/en/europe).\n-   To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), which URL is `https://www.rfi.fr/en/tag/paris-olympics-2024`, you can get the route as [`/rfi/en/tag/paris-olympics-2024`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).\n:::\n\n::: warning\nThis route does not support podcasts, please use the Offical RSS feed instead.\n:::\n",
         "location": "news.ts",
         "module": () => import('@/routes/rfi/news.ts')
       }
     },
-    "name": "Radio France Internationale 法国国际广播电台",
+    "name": "Radio France Internationale",
     "url": "rfi.fr",
-    "lang": "fr"
+    "lang": "fr",
+    "zh": {
+      "name": "法国国际广播电台"
+    }
   },
   "right": {
     "routes": {

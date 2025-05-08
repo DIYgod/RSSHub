@@ -13158,7 +13158,7 @@
       }
     ]
   },
-  "flyert.com.cn": {
+  "flyert.com": {
     "_name": "飞客茶馆",
     ".": [
       {
@@ -13168,8 +13168,19 @@
           "/"
         ],
         "target": "/flyert/creditcard/:bank"
+      },
+      {
+        "title": "优惠信息",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/flyert/preferential"
       }
-    ],
+    ]
+  },
+  "flyert.com.cn": {
+    "_name": "飞客茶馆",
     "www": [
       {
         "title": "会员说",
@@ -13178,19 +13189,6 @@
           "/forum.php"
         ],
         "target": "/flyert(_,url)=>{const params=[...url.searchParams.entries()].map(([key,value])=>key+\"=\"+value).join(\"&\");return`/forum${params?`/${encodeURIComponent(params)}`:\"\"}`}"
-      }
-    ]
-  },
-  "flyert.com": {
-    "_name": "飞客茶馆",
-    ".": [
-      {
-        "title": "优惠信息",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/"
-        ],
-        "target": "/flyert/preferential"
       }
     ]
   },
@@ -30877,10 +30875,10 @@
     ]
   },
   "rfi.fr": {
-    "_name": "Radio France Internationale 法国国际广播电台",
+    "_name": "Radio France Internationale",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Generic News",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/*path"
