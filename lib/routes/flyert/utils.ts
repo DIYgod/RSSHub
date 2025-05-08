@@ -1,18 +1,15 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import pMap from 'p-map'; // 引入 p-map 库
+import pMap from 'p-map';
+import wait from '@/utils/wait';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 
-// 修改 sleep 为 wait 函数
-function wait(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 async function loadContent(link) {
-    // 添加随机延迟，假设延迟时间在1000毫秒到5000毫秒之间
-    await wait(Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000);
+    // 添加随机延迟，假设延迟时间在1000毫秒到3000毫秒之间
+    const randomDelay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+    await wait(randomDelay);
 
     const response = await got.get(link, {
         responseType: 'buffer',
