@@ -83,11 +83,6 @@ It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for bett
                 description: 'MangaDex Refresh Token, required when username and password are not set',
                 optional: true,
             },
-            {
-                name: 'MANGADEX_FILTERED_LANGUAGES',
-                description: 'MangaDex Filtered Languages',
-                optional: true,
-            },
         ],
     },
     handler,

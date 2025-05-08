@@ -58,11 +58,6 @@ export const route: Route = {
                 description: 'MangaDex Refresh Token, required when username and password are not set and the list is private',
                 optional: true,
             },
-            {
-                name: 'MANGADEX_FILTERED_LANGUAGES',
-                description: 'MangaDex Filtered Languages',
-                optional: true,
-            },
         ],
     },
     handler,
