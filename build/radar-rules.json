@@ -38507,6 +38507,19 @@
       }
     ]
   },
+  "zaimanhua.com": {
+    "_name": "再漫画",
+    "manhua": [
+      {
+        "title": "最近更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/update"
+        ],
+        "target": "/zaimanhua/update"
+      }
+    ]
+  },
   "myzaker.com": {
     "_name": "ZAKER",
     "www": [

@@ -110424,6 +110424,42 @@
     "url": "zagg.com",
     "lang": "en"
   },
+  "zaimanhua": {
+    "routes": {
+      "/update": {
+        "path": "/update",
+        "categories": [
+          "anime"
+        ],
+        "example": "/zaimanhua/update",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "manhua.zaimanhua.com/update"
+            ],
+            "target": "/update"
+          }
+        ],
+        "name": "最近更新",
+        "maintainers": [
+          "kjasn"
+        ],
+        "location": "update.ts",
+        "module": "() => import('@/routes/zaimanhua/update.ts')"
+      }
+    },
+    "name": "再漫画",
+    "url": "manhua.zaimanhua.com",
+    "lang": "zh-CN"
+  },
   "zaker": {
     "routes": {
       "/channel/:id?": {
