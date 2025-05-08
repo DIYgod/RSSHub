@@ -17,6 +17,12 @@ export const route: Route = {
     },
     name: '考试信息',
     maintainers: ['admxj'],
+    radar: [
+        {
+            source: ['www.crac.org.cn/*'],
+            target: '/exam',
+        },
+    ],
     handler,
 };
 
