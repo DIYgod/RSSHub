@@ -4,7 +4,7 @@ import path from 'node:path';
 import { categories } from './data';
 import { getCurrentPath } from '../../lib/utils/helpers';
 
-const fullTests = await (await fetch('https://raw.githubusercontent.com/DIYgod/RSSHub/gh-pages/build/test-full-routes.json')).json();
+const fullTests = await (await fetch('https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/test-full-routes.json')).json();
 const testResult = fullTests.testResults[0].assertionResults;
 
 const __dirname = getCurrentPath(import.meta.url);
