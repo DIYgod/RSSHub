@@ -24542,6 +24542,14 @@ export default {
         "maintainers": [
           "admxj"
         ],
+        "radar": [
+          {
+            "source": [
+              "www.crac.org.cn/*"
+            ],
+            "target": "/exam"
+          }
+        ],
         "location": "exam.ts",
         "module": () => import('@/routes/crac/exam.ts')
       },
@@ -24567,12 +24575,22 @@ export default {
           "Misaka13514"
         ],
         "description": "| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |\n| -------- | -------- | -------- | -------- | -------- | ------- | ---------- | -------- |\n| 1        | 2        | 3        | 5        | 6        | 7       | 8          | 9        |",
+        "radar": [
+          {
+            "source": [
+              "www.crac.org.cn/News/*"
+            ]
+          }
+        ],
         "location": "index.ts",
         "module": () => import('@/routes/crac/index.ts')
       }
     },
     "name": "中国无线电协会业余无线电分会",
     "url": "www.crac.org.cn",
+    "categories": [
+      "government"
+    ],
     "lang": "zh-CN"
   },
   "creative-comic": {
