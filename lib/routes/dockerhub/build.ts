@@ -1,6 +1,6 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
-import { hash } from './utils';
+import { Context } from 'hono';
+import { Data, Route, ViewType } from '@/types';
+import utils from './utils';
 
 export const route: Route = {
     path: '/build/:owner/:image/:tag?',
@@ -28,31 +28,29 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { owner, image, tag = 'latest' } = ctx.req.param();
 
     const namespace = `${owner}/${image}`;
-
-    const link = `https://hub.docker.com/r/${namespace}`;
-
-    const data = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/tags/${tag}`);
-    const metadata = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/`);
-
-    const item = data.data;
+    const item = await utils.getTag(namespace, tag);
+    const metadata = await utils.getMetadata(namespace);
+    const link = utils.getRepositoryLink(owner, image);
+    const firstImage = utils.sortedImages(item.images)[0];
 
     return {
         title: `${namespace}:${tag} build history`,
-        description: metadata.data.description,
+        description: metadata.description,
         link,
+        language: 'en',
         item: [
             {
-                title: `${namespace}:${tag} was built. ${(item.images[0].size / 1_000_000).toFixed(2)} MB`,
-                link: `https://hub.docker.com/layers/docker/${namespace}/${tag}/images/${item.images[0].digest.replace(':', '-')}`,
+                title: `${namespace}:${tag} was built. ${(firstImage.size / 1_000_000).toFixed(2)} MB`,
+                link: utils.getLayerLink(owner, image, tag, firstImage.digest),
                 author: owner,
-                pubDate: new Date(item.last_updated).toUTCString(),
+                pubDate: utils.getPubDate(item),
                 // only check for different images hashes (considering varients of all arches), since the tag name is already fixed
-                guid: hash(item.images),
+                guid: utils.getGuid(namespace, item),
             },
         ],
-    };
+    } as Data;
 }

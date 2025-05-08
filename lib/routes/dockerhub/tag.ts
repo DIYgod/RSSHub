@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { hash } from './utils';
+import { Context } from 'hono';
+import { Data, Route, ViewType } from '@/types';
+import utils from './utils';
 
 export const route: Route = {
     path: '/tag/:owner/:image/:limits?',
     categories: ['program-update'],
+    view: ViewType.Notifications,
     example: '/dockerhub/tag/library/mariadb',
     parameters: { owner: 'Image owner', image: 'Image name', limits: 'Tag count, 10 by default' },
     features: {
@@ -24,38 +24,32 @@ export const route: Route = {
 :::`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { owner, image, limits } = ctx.req.param();
-
-    const namespace = `${owner}/${image}`;
-    const link = `https://hub.docker.com/r/${namespace}`;
-
     const pageSize = Number.isNaN(Number.parseInt(limits)) ? 10 : Number.parseInt(limits);
 
-    const data = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/tags/?page_size=${pageSize}`);
-    const metadata = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/`);
-
-    const tags = data.data.results;
+    const namespace = `${owner}/${image}`;
+    const items = await utils.getTags(namespace, pageSize);
+    const metadata = await utils.getMetadata(namespace);
+    const link = utils.getRepositoryLink(owner, image);
 
     return {
         title: `${namespace} tags`,
-        description: metadata.data.description,
+        description: metadata.description,
         link,
         language: 'en',
-        item: tags.map((item) => {
-            const architectures = item.images?.length ? item.images.map((img) => `${img.os}/${img.architecture}`).join(', ') : 'unknown architectures';
-
-            const imageDigest = item.digest?.replace(':', '-') || '';
-            const layerLink = `https://hub.docker.com/layers/${owner === 'library' ? `${image}/` : ''}${namespace}/${item.name}/images/${imageDigest}`;
+        item: items.results.map((item) => {
+            const architectures = item.images.map((image) => utils.getArchitecture(image)).join(', ');
+            const firstImage = utils.sortedImages(item.images)[0];
 
             return {
                 title: `${namespace}:${item.name} was updated`,
                 description: `${namespace}:${item.name} was updated, supporting the ${architectures}`,
-                link: layerLink,
+                link: utils.getLayerLink(owner, image, item.name, firstImage.digest),
                 author: owner,
-                pubDate: parseDate(item.tag_last_pushed),
-                guid: `${namespace}:${item.name}@${hash(item.images || [])}`,
+                pubDate: utils.getPubDate(item),
+                guid: utils.getGuid(namespace, item),
             };
         }),
-    };
+    } as Data;
 }
