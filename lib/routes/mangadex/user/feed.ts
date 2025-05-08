@@ -12,7 +12,7 @@ const DEFAULT_LIMIT = 25;
 
 export const route: Route = {
     path: '/user/feed/follow/:lang?',
-    name: ' MangaDex Follows Feed',
+    name: ' Follows Feed',
     maintainers: ['chrisis58'],
     description: 'Get the latest updates of all the manga you follow on MangaDex.',
     example: '/mangadex/user/feed/follow/zh?limit=10',

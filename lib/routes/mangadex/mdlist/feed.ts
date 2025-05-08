@@ -11,7 +11,7 @@ import { toQueryString } from '../_utils';
 const DEFAULT_LIMIT = 25;
 
 export const route: Route = {
-    name: 'MangaDex MDList Feed',
+    name: 'MDList Feed',
     path: '/mdlist/:id/:lang?',
     radar: [
         {
