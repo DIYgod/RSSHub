@@ -1,3 +1,4 @@
+import type { Context } from 'hono';
 import JSONbig from 'json-bigint';
 import { DataItem, Route, ViewType } from '@/types';
 import got from '@/utils/got';
@@ -5,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
 import logger from '@/utils/logger';
-import { BilibiliWebDynamicResponse } from './api-interface';
+import type { BilibiliWebDynamicResponse } from './api-interface';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
@@ -32,7 +33,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const uid = ctx.req.param('uid');
     const embed = !ctx.req.param('embed');
     const cookie = await cache.getCookie();
