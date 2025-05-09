@@ -39,7 +39,8 @@ async function handler(ctx) {
         title: $('title').text(),
         link: url,
         item: $('.briefnews_con_li .li_img_de')
-            .map((_, item) => ({
+            .toArray()
+            .map((item) => ({
                 title: $(item).find('h3 a').text(),
                 link: $(item).find('h3 a').attr('href'),
                 author: $(item).find('.head_con_p_o span:nth-child(3)').text().split('：')[1],
@@ -47,9 +48,8 @@ async function handler(ctx) {
                 description: $(item).find('p.com_about').text(),
                 category: $(item)
                     .find('.u_comfoot a .bqwarp')
-                    .map((_, item) => $(item).text())
-                    .get(),
-            }))
-            .get(),
+                    .toArray()
+                    .map((item) => $(item).text()),
+            })),
     };
 }

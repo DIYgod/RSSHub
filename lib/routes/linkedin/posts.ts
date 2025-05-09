@@ -58,6 +58,7 @@ export const route: Route = {
                 description: post.text,
                 link: post.link,
                 pubDate: post.date,
+                updated: post.date,
             })),
         };
     },

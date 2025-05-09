@@ -107,7 +107,8 @@ async function handler(ctx) {
     const items = $('#m_posts_c')
         .children()
         .filter('table')
-        .map((ind, post_) => {
+        .toArray()
+        .map((post_) => {
             const post = $(post_);
             const posterId = post
                 .find('.posterinfo a')
@@ -136,6 +137,6 @@ async function handler(ctx) {
     return {
         title: rssTitle,
         link: getPageUrl(tid, authorId, pageId),
-        item: items.get(),
+        item: items,
     };
 }

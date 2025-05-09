@@ -55,7 +55,7 @@ async function handler(ctx) {
     const list = $('ol li.clearfix');
 
     const description = await Promise.all(
-        list.get().map((item) => {
+        list.toArray().map((item) => {
             item = $(item);
             const link = item.find('.more').attr('href');
             return cache.tryGet(link, async () => {
@@ -77,22 +77,20 @@ async function handler(ctx) {
     return {
         title: `${channel} | Vimeo channel`,
         link: url,
-        item: list
-            .map((index, item) => {
-                item = $(item);
-                const title = item.find('.title a').text();
-                const author = item.find('.meta a').text();
-                return {
-                    title,
-                    description: art(path.join(__dirname, 'templates/description.art'), {
-                        videoUrl: item.find('.more').attr('href'),
-                        vdescription: description[index] || '',
-                    }),
-                    pubDate: parseDate(item.find('time').attr('datetime')),
-                    link: `https://vimeo.com${item.find('.more').attr('href')}`,
-                    author,
-                };
-            })
-            .get(),
+        item: list.toArray().map((item, index) => {
+            item = $(item);
+            const title = item.find('.title a').text();
+            const author = item.find('.meta a').text();
+            return {
+                title,
+                description: art(path.join(__dirname, 'templates/description.art'), {
+                    videoUrl: item.find('.more').attr('href'),
+                    vdescription: description[index] || '',
+                }),
+                pubDate: parseDate(item.find('time').attr('datetime')),
+                link: `https://vimeo.com${item.find('.more').attr('href')}`,
+                author,
+            };
+        }),
     };
 }

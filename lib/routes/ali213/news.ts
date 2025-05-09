@@ -1,6 +1,7 @@
 import path from 'node:path';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 import { type DataItem, type Route, type Data, ViewType } from '@/types';
