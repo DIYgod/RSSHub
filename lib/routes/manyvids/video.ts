@@ -4,9 +4,6 @@ import cache from '@/utils/cache';
 import { UserProfile, Videos } from './types';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/profile/vids/:uid',
@@ -24,7 +21,7 @@ export const route: Route = {
 
 const getProfileById = (uid: string) => cache.tryGet(`manyvids:profile:${uid}`, () => ofetch(`https://www.manyvids.com/bff/profile/profiles/${uid}`)) as Promise<UserProfile>;
 
-const render = (data) => art(path.join(__dirname, 'templates', 'video.art'), data);
+const render = (data) => art(path.join(__dirname, 'templates/video.art'), data);
 
 async function handler(ctx) {
     const { uid } = ctx.req.param();

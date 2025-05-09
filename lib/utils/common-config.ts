@@ -1,10 +1,16 @@
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import iconv from 'iconv-lite';
+import { parseDate as _parseDate } from '@/utils/parse-date';
+import _timezone from '@/utils/timezone';
 
 function transElemText($, prop) {
     const regex = /\$\((.*)\)/g;
     let result = prop;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const parseDate = _parseDate;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const timezone = _timezone;
     if (regex.test(result)) {
         // eslint-disable-next-line no-eval
         result = eval(result);
@@ -43,7 +49,7 @@ async function buildData(data) {
     let charset = 'utf-8';
     for (const attr of contentType.split(';')) {
         if (attr.includes('charset=')) {
-            charset = attr.split('=').pop() || 'utf-8';
+            charset = (attr.split('=').pop() || 'utf-8').toLowerCase();
         }
     }
     // @ts-expect-error custom property
@@ -56,18 +62,16 @@ async function buildData(data) {
         title: getProp(data, 'title', $),
         description: getProp(data, 'description', $),
         allowEmpty: data.allowEmpty || false,
-        item: $item
-            .map((_, e) => {
-                const $elem = (selector) => $(e).find(selector);
-                return {
-                    title: getProp(data, ['item', 'title'], $elem),
-                    description: getProp(data, ['item', 'description'], $elem),
-                    pubDate: getProp(data, ['item', 'pubDate'], $elem),
-                    link: getProp(data, ['item', 'link'], $elem),
-                    guid: getProp(data, ['item', 'guid'], $elem),
-                };
-            })
-            .get(),
+        item: $item.toArray().map((e) => {
+            const $elem = (selector) => $(e).find(selector);
+            return {
+                title: getProp(data, ['item', 'title'], $elem),
+                description: getProp(data, ['item', 'description'], $elem),
+                pubDate: getProp(data, ['item', 'pubDate'], $elem),
+                link: getProp(data, ['item', 'link'], $elem),
+                guid: getProp(data, ['item', 'guid'], $elem),
+            };
+        }),
     };
 }
 

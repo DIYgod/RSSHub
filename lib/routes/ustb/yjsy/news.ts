@@ -432,53 +432,49 @@ async function handler(ctx) {
         title: struct[type].name,
         link: struct[type].link,
         description: '北京科技大学研究生院',
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    // logger.info("item:" + item);
+        item: list.toArray().map((item) => {
+            item = $(item);
+            // logger.info("item:" + item);
 
-                    // time
-                    let time = item.find($(struct[type].timeSelector.list)).text();
-                    let date;
-                    if (time !== '') {
-                        if (time.includes('[')) {
-                            time = time.slice(1, 11);
-                        }
-                        date = parseDate(time);
-                    }
-                    // logger.info("date:" + date);
+            // time
+            let time = item.find($(struct[type].timeSelector.list)).text();
+            let date;
+            if (time !== '') {
+                if (time.includes('[')) {
+                    time = time.slice(1, 11);
+                }
+                date = parseDate(time);
+            }
+            // logger.info("date:" + date);
 
-                    // link
-                    let link = item.find($(struct[type].linkSelector.list)).attr('href');
-                    if (link === undefined) {
-                        link = item.attr('href');
-                    }
-                    // logger.info("link:" + link);
+            // link
+            let link = item.find($(struct[type].linkSelector.list)).attr('href');
+            if (link === undefined) {
+                link = item.attr('href');
+            }
+            // logger.info("link:" + link);
 
-                    // title
-                    let title = item.find($(struct[type].titleSelector.list)).clone().children().remove().end().text();
-                    if (title === '') {
-                        title = item.find($(struct[type].titleSelector.list)).text();
-                    }
-                    // logger.info("title:" + title);
-                    // logger.info("=====");
+            // title
+            let title = item.find($(struct[type].titleSelector.list)).clone().children().remove().end().text();
+            if (title === '') {
+                title = item.find($(struct[type].titleSelector.list)).text();
+            }
+            // logger.info("title:" + title);
+            // logger.info("=====");
 
-                    // return
-                    return date === undefined
-                        ? {
-                              title,
-                              description: title,
-                              link,
-                          }
-                        : {
-                              title,
-                              description: title,
-                              link,
-                              pubDate: date,
-                          };
-                })
-                .get(),
+            // return
+            return date === undefined
+                ? {
+                      title,
+                      description: title,
+                      link,
+                  }
+                : {
+                      title,
+                      description: title,
+                      link,
+                      pubDate: date,
+                  };
+        }),
     };
 }

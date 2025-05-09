@@ -64,6 +64,7 @@ for (const namespace in namespaces) {
                 }
             }
         }
+        data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
 }
 
@@ -71,3 +72,4 @@ fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JS
 fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
 fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
 fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
+fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));

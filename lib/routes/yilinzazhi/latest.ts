@@ -68,7 +68,7 @@ async function handler(): Promise<Data> {
                 .toArray()
                 .map<Data>((aTag) => {
                     const href = $$(aTag).attr('href')!;
-                    const yearType = currentYear + href.substring(4, 5);
+                    const yearType = currentYear + href.slice(4, 5);
                     return {
                         title: $$(aTag).text(),
                         link: `${baseUrl}${currentYear}/yl${yearType}/${href}`,

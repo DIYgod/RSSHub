@@ -2,6 +2,7 @@ import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/stickerpack/:name',
@@ -27,20 +28,28 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('Telegram Sticker Pack RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const name = ctx.req.param('name');
+    const token = config.telegram.token;
+    const response = await ofetch(`https://api.telegram.org/bot${token}/getStickerSet?name=${name}`);
 
-    const response = await ofetch(`https://api.telegram.org/bot${config.telegram.token}/getStickerSet?name=${name}`, {
-        method: 'get',
-    });
+    const list = response.result.stickers.map((item) => ({
+        title: item.emoji,
+        description: item.file_id,
+        guid: item.file_id,
+    }));
 
-    const data = response.data.result;
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(`telegram:stickerpack:${item.guid}`, async () => {
+                const response = await ofetch(`https://api.telegram.org/bot${token}/getFile?file_id=${item.guid}`);
+                item.description = `<img src="https://api.telegram.org/file/bot${token}/${response.result.file_path}" />`;
+                return item;
+            })
+        )
+    );
 
     return {
-        title: `${data.title} - Telegram Sticker Pack`,
+        title: `${response.result.title} - Telegram Sticker Pack`,
         link: `https://t.me/addstickers/${name}`,
-        item: data.stickers.map((item) => ({
-            title: item.emoji,
-            description: item.file_id,
-            guid: item.file_id,
-        })),
+        item: items,
     };
 }

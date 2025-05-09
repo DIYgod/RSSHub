@@ -6,12 +6,9 @@ import { type Context } from 'hono';
 import { type DataItem, type Route, type Data, ViewType } from '@/types';
 
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const categoryMap = {
     媒体文娱: 59,

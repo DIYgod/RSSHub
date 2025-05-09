@@ -53,12 +53,12 @@ async function handler(ctx) {
 
     const author = $('meta[name="application-name"]').prop('content');
     const subtitle = $('meta[property="og:title"]').prop('content');
-    const image = 'https://readhub-oss.nocode.com/static/readhub.png';
+    const image = 'https://readhub.cn/icons/icon-192x192.png';
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl);
 
     return {
         item: items,
-        title: `${author} - ${subtitle}`,
+        title: `${author} - ${route.name}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: 'zh',

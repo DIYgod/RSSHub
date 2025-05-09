@@ -1,11 +1,8 @@
 import { type Data, type Route, ViewType } from '@/types';
 
-import { getCurrentPath } from '@/utils/helpers';
 import { type Context } from 'hono';
 
 import { baseUrl, processItems } from './util';
-
-export const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);

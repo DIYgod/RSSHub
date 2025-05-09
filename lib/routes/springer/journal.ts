@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -52,15 +50,16 @@ async function handler(ctx) {
     const $2 = load(response2.data);
     const issue = $2('h2.app-journal-latest-issue__heading').text();
     const list = $2('ol.u-list-reset > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
             const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
             const doi = link.replace('https://link.springer.com/article/', '');
             const img = $(item).find('img').attr('src');
             const authors = $(item)
                 .find('li')
-                .map((_, item) => $(item).text().trim())
-                .get()
+                .toArray()
+                .map((item) => $(item).text().trim())
                 .join('; ');
             return {
                 title,
@@ -70,8 +69,7 @@ async function handler(ctx) {
                 img,
                 authors,
             };
-        })
-        .get();
+        });
 
     const renderDesc = (item) =>
         art(path.join(__dirname, 'templates/description.art'), {

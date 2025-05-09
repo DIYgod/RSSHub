@@ -58,7 +58,8 @@ async function handler(ctx) {
     const $ = load(data);
 
     const list = $('.pressListItem')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             const title = item.find('.pressListItemTeaser > h3').text().trim();
@@ -72,8 +73,7 @@ async function handler(ctx) {
                 description: item.find('.pressListItemTeaser').html(),
                 pubDate: parseDate(item.find('.pressListItemDate > span').text(), 'DD.MM.YYYY'),
             };
-        })
-        .get();
+        });
 
     return {
         title: 'Verfassungsgerichtshof Baden-Württemberg - Pressemitteilungen',

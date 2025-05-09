@@ -5,9 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPageQuery } from './queries';
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/:user/:type?',
@@ -56,7 +54,7 @@ async function handler(ctx) {
 
     const uuid = crypto.randomUUID();
     const headers = {
-        Cookie: `gk_suid=${Math.random().toString().substring(2, 10)}, gki=; originalReferrer=; bcp=${uuid}`,
+        Cookie: `gk_suid=${Math.random().toString().slice(2, 10)}, gki=; originalReferrer=; bcp=${uuid}`,
         'X-BCP': uuid,
         'X-Requested-With': 'XMLHttpRequest',
     };

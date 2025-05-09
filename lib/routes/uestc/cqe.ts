@@ -68,7 +68,8 @@ async function handler(ctx) {
     const items = $('div.Newslist li');
 
     const out = $(items)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const newsTitle = item.find('a').attr('title');
             const newsLink = baseUrl + item.find('a').attr('href').slice(3);
@@ -79,8 +80,7 @@ async function handler(ctx) {
                 link: newsLink,
                 pubDate: newsPubDate,
             };
-        })
-        .get();
+        });
 
     return {
         title: `大学生文化素质教育中心-${mapTitle[type]}`,

@@ -1,14 +1,11 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/zh-cn.js';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
 import path from 'node:path';
 import { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, CrowdfundingList, DataResponse } from './types';
 

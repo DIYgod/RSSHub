@@ -40,7 +40,7 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
-    name: 'Unknown',
+    name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     features: {
         requirePuppeteer: true,

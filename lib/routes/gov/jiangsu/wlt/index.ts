@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -7,8 +6,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/jiangsu/wlt/:page?',
@@ -51,7 +48,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('.tg_tb1')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const i = $(item);
             const id = i.prop('onclick').match(/openDetail\('(\d+)'\)/)?.[1] || '';
             return {
@@ -61,7 +59,6 @@ async function handler(ctx) {
                 pubDate: '',
             };
         })
-        .get()
         .filter((e) => e.link);
     const items = await Promise.all(
         list.map((item) =>

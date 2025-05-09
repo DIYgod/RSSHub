@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     const author = items[0].author;
     const atIndex = author.indexOf('@'); // fing '@'
-    const source = atIndex === -1 ? author : author.substring(atIndex + 1).trim();
+    const source = atIndex === -1 ? author : author.slice(atIndex + 1).trim();
     // console.log(source);
 
     return {

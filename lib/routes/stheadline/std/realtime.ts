@@ -27,7 +27,7 @@ async function handler(ctx) {
             return {
                 title: item.attr('title'),
                 link: item.attr('href'),
-                guid: item.attr('href').substring(0, item.attr('href').lastIndexOf('/')),
+                guid: item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
             };
         });
 

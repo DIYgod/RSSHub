@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -50,14 +48,14 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('#div_md > table > tbody > tr > td:nth-child(1) > a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.prop('innerText').replaceAll(/\s/g, ''),
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

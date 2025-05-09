@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -76,48 +74,46 @@ async function handler(ctx) {
         const title = getLinksTitle(response).title;
         const list = getLinksTitle(response).list;
         const items = await Promise.all(
-            list
-                .map(async (_, item) => {
-                    // 第一页，获取搜各视频地址
-                    const link = $(item).attr('href');
-                    // 第二页数据分析+缓存
-                    const sec_data = await get_sec_page_data(link);
-                    // 传递
-                    const raw_pic_link = sec_data.raw_pic_link;
-                    const video_name = sec_data.video_name;
-                    const authors = sec_data.authors;
-                    const origins = sec_data.origins;
-                    const characters = sec_data.characters;
-                    const tags = sec_data.tags;
-                    const desc = sec_data.desc;
-                    const iwara_link = sec_data.iwara_link;
-                    const oreno3d_link = sec_data.oreno3d_link;
-                    // 打包,缓存HTML
-                    const description = art(path.join(__dirname, 'templates/description.art'), {
-                        raw_pic_link,
-                        video_name,
-                        authors,
-                        origins,
-                        characters,
-                        tags,
-                        desc,
-                        iwara_link,
-                        oreno3d_link,
-                    });
-                    const title = `${video_name} - ${authors}`;
-                    const realData = await cache.tryGet(oreno3d_link, () => {
-                        const result = {
-                            title,
-                            author: authors,
-                            link: oreno3d_link,
-                            category: tags.split(' '),
-                            description,
-                        };
-                        return result;
-                    });
-                    return realData;
-                })
-                .get()
+            list.toArray().map(async (item) => {
+                // 第一页，获取搜各视频地址
+                const link = $(item).attr('href');
+                // 第二页数据分析+缓存
+                const sec_data = await get_sec_page_data(link);
+                // 传递
+                const raw_pic_link = sec_data.raw_pic_link;
+                const video_name = sec_data.video_name;
+                const authors = sec_data.authors;
+                const origins = sec_data.origins;
+                const characters = sec_data.characters;
+                const tags = sec_data.tags;
+                const desc = sec_data.desc;
+                const iwara_link = sec_data.iwara_link;
+                const oreno3d_link = sec_data.oreno3d_link;
+                // 打包,缓存HTML
+                const description = art(path.join(__dirname, 'templates/description.art'), {
+                    raw_pic_link,
+                    video_name,
+                    authors,
+                    origins,
+                    characters,
+                    tags,
+                    desc,
+                    iwara_link,
+                    oreno3d_link,
+                });
+                const title = `${video_name} - ${authors}`;
+                const realData = await cache.tryGet(oreno3d_link, () => {
+                    const result = {
+                        title,
+                        author: authors,
+                        link: oreno3d_link,
+                        category: tags.split(' '),
+                        description,
+                    };
+                    return result;
+                });
+                return realData;
+            })
         );
         return { items, title };
     }

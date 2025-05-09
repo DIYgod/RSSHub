@@ -2,7 +2,6 @@ import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { config } from '@/config';
 
@@ -11,7 +10,7 @@ import healthz from '@/routes/healthz';
 import robotstxt from '@/routes/robots.txt';
 import metrics from '@/routes/metrics';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
 let namespaces: Record<
@@ -27,8 +26,10 @@ let namespaces: Record<
 > = {};
 
 switch (process.env.NODE_ENV) {
-    case 'test':
     case 'production':
+        namespaces = (await import('../assets/build/routes.js')).default;
+        break;
+    case 'test':
         // @ts-expect-error
         namespaces = await import('../assets/build/routes.json');
         break;
@@ -89,6 +90,7 @@ const sortRoutes = (
         string,
         Route & {
             location: string;
+            module?: () => Promise<{ route: Route }>;
         }
     >
 ) =>
@@ -126,8 +128,13 @@ for (const namespace in namespaces) {
         const wrappedHandler: Handler = async (ctx) => {
             if (!ctx.get('data')) {
                 if (typeof routeData.handler !== 'function') {
-                    const { route } = await import(`./routes/${namespace}/${routeData.location}`);
-                    routeData.handler = route.handler;
+                    if (process.env.NODE_ENV === 'test') {
+                        const { route } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = route.handler;
+                    } else if (routeData.module) {
+                        const { route } = await routeData.module();
+                        routeData.handler = route.handler;
+                    }
                 }
                 ctx.set('data', await routeData.handler(ctx));
             }

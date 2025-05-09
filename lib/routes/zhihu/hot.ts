@@ -82,7 +82,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '知乎热榜',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
 };
 
@@ -94,12 +94,15 @@ async function handler(ctx) {
         url: `https://www.zhihu.com/api/v3/feed/topstory/hot-lists/${category}?limit=50`,
     });
 
-    const items = response.data.data.map((item) => ({
-        link: `https://www.zhihu.com/question/${item.target.id}`,
-        title: item.target.title,
-        pubDate: parseDate(item.target.created * 1000),
-        description: item.target.excerpt ? `<p>${item.target.excerpt}</p>` : '',
-    }));
+    const items = response.data.data.map((item) => {
+        const questionId = item.target.url ? item.target.url.split('/').pop() : String(item.target.id);
+        return {
+            link: `https://www.zhihu.com/question/${questionId}`,
+            title: item.target.title,
+            pubDate: parseDate(item.target.created * 1000),
+            description: item.target.excerpt ? `<p>${item.target.excerpt}</p>` : '',
+        };
+    });
 
     return {
         title: `知乎热榜 - ${titles[category]}`,

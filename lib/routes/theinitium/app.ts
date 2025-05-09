@@ -1,13 +1,12 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load, type CheerioAPI, type Element } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
+import type { Element } from 'domhandler';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-import { getCurrentPath } from '@/utils/helpers';
 
-const __dirname = getCurrentPath(import.meta.url);
 const appUrl = 'https://app.theinitium.com/';
 const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
 
@@ -118,7 +117,7 @@ async function fetchAppPage(url: URL) {
 async function fetchWebPage(url: URL) {
     const response = await got(url.href);
     const $ = load(response.data);
-    const article = $('.wkwp-post-content');
+    const article = $('.entry-content');
     article.find('.block-related-articles').remove();
     article.find('figure.wp-block-pullquote').children().unwrap();
     article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');

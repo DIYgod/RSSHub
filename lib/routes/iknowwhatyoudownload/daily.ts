@@ -4,10 +4,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'path';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
+import path from 'node:path';
 
 interface TableData {
     key: string;

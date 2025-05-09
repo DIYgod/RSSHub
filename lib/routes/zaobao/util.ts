@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -146,8 +143,8 @@ const orderContent = (parent) => {
         .toArray()
         .sort((a, b) => {
             const index = Buffer.from(base32.parse('GM======')).toString(); // substring(3)
-            a = Buffer.from(base32.parse(parent.find(a).data('s').substring(index))).toString();
-            b = Buffer.from(base32.parse(parent.find(b).data('s').substring(index))).toString();
+            a = Buffer.from(base32.parse(parent.find(a).data('s').slice(index))).toString();
+            b = Buffer.from(base32.parse(parent.find(b).data('s').slice(index))).toString();
             return a - b;
         })
         .entries()) {

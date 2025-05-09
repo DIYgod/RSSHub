@@ -56,18 +56,18 @@ async function handler(ctx) {
 
     const urlList = $('.mainContent li')
         .slice(0, 10)
-        .map((i, e) => $('a', e).attr('href'))
-        .get();
+        .toArray()
+        .map((e) => $('a', e).attr('href'));
 
     const titleList = $('.mainContent li')
         .slice(0, 10)
-        .map((i, e) => $('a', e).text())
-        .get();
+        .toArray()
+        .map((e) => $('a', e).text());
 
     const dateList = $('.mainContent li')
         .slice(0, 10)
-        .map((i, e) => $('span', e).text())
-        .get();
+        .toArray()
+        .map((e) => $('span', e).text());
 
     const out = await Promise.all(
         urlList.map(async (itemUrl, index) => {

@@ -6,9 +6,8 @@ import path from 'node:path';
 import cache from '@/utils/cache';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 
-const render = (mod) => art(path.join(getCurrentPath(import.meta.url), 'templates', 'mod.art'), { mod });
+const render = (mod) => art(path.join(__dirname, 'templates/mod.art'), { mod });
 
 export const route: Route = {
     path: '/:type',
@@ -46,7 +45,7 @@ export const route: Route = {
                     title: each.find('div > .name > a').text(),
                     image: each.find('img').attr('src')?.split('@')[0],
                     link: each.children('a').attr('href'),
-                    pubDate: time.attr('title') && timezone(parseDate(time.attr('title')!.substring(6), 'YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: time.attr('title') && timezone(parseDate(time.attr('title')!.slice(6), 'YYYY-MM-DD HH:mm:ss'), +8),
                 };
             });
 

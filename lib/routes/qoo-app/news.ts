@@ -43,7 +43,7 @@ async function handler(ctx) {
 
         return {
             title: item.title.rendered,
-            link: item.link.substring(0, item.link.lastIndexOf('/')),
+            link: item.link.slice(0, item.link.lastIndexOf('/')),
             description: $.html(),
             pubDate: parseDate(item.date_gmt),
         };

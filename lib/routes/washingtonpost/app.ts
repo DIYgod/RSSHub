@@ -3,12 +3,11 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 import { FetchError } from 'ofetch';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 
 export const route: Route = {
     path: '/app/:category{.+}?',
@@ -48,7 +47,6 @@ function handleDuplicates(array) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
-    const __dirname = getCurrentPath(import.meta.url);
     const headers = {
         Accept: '*/*',
         Connection: 'keep-alive',

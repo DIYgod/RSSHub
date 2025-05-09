@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { google } from 'googleapis';
 const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';
@@ -154,6 +151,22 @@ export const getLive = (id, cache) =>
     });
 export const getVideoUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?controls=1&autoplay=1&mute=0`;
 
+// Get the appropriate playlist ID with or without shorts
+export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): string => {
+    // If filtering shorts is enabled
+    if (filterShorts) {
+        if (id.startsWith('UC')) {
+            // For channel IDs (UC...), convert to playlist format without shorts (UULF...)
+            return 'UULF' + id.slice(2);
+        } else if (id.startsWith('UU')) {
+            // For playlist IDs (UU...), convert to playlist format without shorts (UULF...)
+            return 'UULF' + id.slice(2);
+        }
+    }
+    // If filterShorts is false or the ID format doesn't match known patterns, return original ID
+    return id;
+};
+
 const youtubeUtils = {
     getPlaylistItems,
     getPlaylist,
@@ -167,5 +180,6 @@ const youtubeUtils = {
     isYouTubeChannelId,
     getLive,
     getVideoUrl,
+    getPlaylistWithShortsFilter,
 };
 export default youtubeUtils;

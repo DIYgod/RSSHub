@@ -4,8 +4,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: ['/:language?'],
@@ -55,7 +53,7 @@ async function handler(ctx) {
                     intro: item.content,
                 }),
                 author: item.location,
-                category: item.tags.map((c) => c.name),
+                category: item.tags?.map((c) => c.name),
                 guid: `idaily-${item.guid}`,
                 pubDate: parseDate(item.pubdate_timestamp, 'X'),
                 updated: parseDate(item.lastupdate_timestamp, 'X'),

@@ -34,15 +34,15 @@ async function handler(ctx) {
     const $ = load(listPage.data);
     const pageName = $('.mainRightBox .news-title').text();
     const list = $('.mainRightBox .announcements-title a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text().trim(),
                 link: baseUrl + item.attr('href').trim(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map(async (item) => {

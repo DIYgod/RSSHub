@@ -37,12 +37,12 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('ul.bl > li')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2 > a').text(),
             link: $(item).find('h2 > a').attr('href'),
             pubDate: timezone(parseDate($(item).find('div.c').attr('data-ot')), +8),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

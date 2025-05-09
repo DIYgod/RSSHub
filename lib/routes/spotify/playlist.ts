@@ -26,6 +26,9 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    description: `::: warning
+Due to [limitations by Spotify](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api), this endpoint is unable to access "Algorithmic and Spotify-owned editorial playlists".
+:::`,
     radar: [
         {
             source: ['open.spotify.com/playlist/:id'],

@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-const BASE_URL = 'https://www.ruankao.org.cn/index/work';
+const BASE_URL = 'https://www.ruankao.org.cn/index/work.html';
 
 const removeFontPresetting = (html: string = ''): string => {
     const $ = load(html);

@@ -22,6 +22,10 @@ updates:
       - dependency-name: jsrsasign
         versions: ['>=11.0.0']
     groups:
+      eslint:
+        patterns:
+          - 'eslint'
+          - '@eslint/*'
       opentelemetry:
         patterns:
           - '@opentelemetry/*'

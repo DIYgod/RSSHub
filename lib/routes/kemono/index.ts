@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -82,7 +80,7 @@ async function handler(ctx) {
                         .slice(0, limit)
                         .map((i) => ({
                             title: i.content,
-                            description: art(path.join(__dirname, 'templates', 'discord.art'), { i }),
+                            description: art(path.join(__dirname, 'templates/discord.art'), { i }),
                             author: `${i.author.username}#${i.author.discriminator}`,
                             pubDate: parseDate(i.published),
                             category: channel.name,
@@ -117,7 +115,7 @@ async function handler(ctx) {
                         extension: attachment.path.replace(/.*\./, '').toLowerCase(),
                     });
                 }
-                const filesHTML = art(path.join(__dirname, 'templates', 'source.art'), { i });
+                const filesHTML = art(path.join(__dirname, 'templates/source.art'), { i });
                 let $ = load(filesHTML);
                 const kemonoFiles = $('img, a, audio, video').map(function () {
                     return $(this).prop('outerHTML')!;

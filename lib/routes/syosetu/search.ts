@@ -8,9 +8,6 @@ import { Join } from 'narou/util/type';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { SyosetuSub, NarouSearchParams, syosetuSubToJapanese } from './types/search';
 
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 export const route: Route = {
     path: '/search/:sub/:query',
     categories: ['reading'],
@@ -134,7 +131,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = result.values.map((novel) => ({
         title: novel.title,
         link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: art(path.join(__dirname, 'templates', 'description.art'), {
+        description: art(path.join(__dirname, 'templates/description.art'), {
             novel,
             genreText: GenreNotation[novel.genre],
         }),

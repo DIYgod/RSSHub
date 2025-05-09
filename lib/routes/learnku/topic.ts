@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -52,7 +50,7 @@ async function handler(ctx) {
 
     const data = response.data;
     const $ = load(data);
-    const list = $('.simple-topic').get();
+    const list = $('.simple-topic').toArray();
     const item = await Promise.all(
         list.map(async (item) => {
             const $ = load(item);

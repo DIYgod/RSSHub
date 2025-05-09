@@ -2,7 +2,6 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -11,8 +10,6 @@ import timezone from '@/utils/timezone';
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const types = {
     newslist: 'newsList',

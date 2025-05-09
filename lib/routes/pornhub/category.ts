@@ -32,8 +32,8 @@ async function handler(ctx) {
         return data.categories;
     });
 
-    const categoryId = isNaN(category) ? categories.find((item) => item.category === category)?.id : category;
-    const categoryName = isNaN(category) ? category : categories.find((item) => item.id === Number.parseInt(category)).category;
+    const categoryId = Number.isNaN(category) ? categories.find((item) => item.category === category)?.id : category;
+    const categoryName = Number.isNaN(category) ? category : categories.find((item) => item.id === Number.parseInt(category)).category;
 
     const response = await cache.tryGet(
         `pornhub:category:${categoryName}`,
