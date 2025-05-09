@@ -4978,6 +4978,15 @@
     "_name": "Anthropic",
     "www": [
       {
+        "title": "Engineering",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/engineering",
+          "/"
+        ],
+        "target": "/anthropic/engineering"
+      },
+      {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [

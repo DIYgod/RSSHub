@@ -516,6 +516,9 @@
   "/anquanke/:category/:fulltext?": [
     "qwertyuiop6"
   ],
+  "/anthropic/engineering": [
+    "TonyRL"
+  ],
   "/anthropic/news": [
     "etShaw-zh"
   ],

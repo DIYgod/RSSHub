@@ -9168,6 +9168,28 @@ export default {
   },
   "anthropic": {
     "routes": {
+      "/engineering": {
+        "path": "/engineering",
+        "categories": [
+          "programming"
+        ],
+        "example": "/anthropic/engineering",
+        "radar": [
+          {
+            "source": [
+              "www.anthropic.com/engineering",
+              "www.anthropic.com"
+            ]
+          }
+        ],
+        "name": "Engineering",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.anthropic.com/engineering",
+        "location": "engineering.ts",
+        "module": () => import('@/routes/anthropic/engineering.ts')
+      },
       "/news": {
         "path": "/news",
         "categories": [
