@@ -59,7 +59,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = Object.hasOwn(map, ctx.req.param('category')) ? ctx.req.param('category') : '791';
-    const link = `${baseUrl}/${category}/list.htm`;
+    const link = category === '791' ? `${baseUrl}/` : `${baseUrl}/${category}/`;
 
     const response = await got(link);
     const $ = load(response.data);
