@@ -8,7 +8,6 @@ export const route: Route = {
     path: '/newthread',
     categories: ['bbs'],
     example: '/chongbuluo/newthread',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,15 +23,14 @@ export const route: Route = {
     ],
     name: '最新发表',
     maintainers: ['qiye45'],
-    url: 'https://www.chongbuluo.com/forum.php?mod=guide&view=newthread',
     handler,
 };
 
 async function handler() {
     const baseUrl = 'https://www.chongbuluo.com';
-    const url = `${baseUrl}/forum.php?mod=guide&view=newthread`;
+    const link = `${baseUrl}/forum.php?mod=guide&view=newthread`;
 
-    const response = await ofetch(url);
+    const response = await ofetch(link);
 
     const $ = load(response);
 
@@ -43,25 +41,25 @@ async function handler() {
                 const item = $(element);
                 const titleElement = item.find('th.common a.xst');
                 const title = titleElement.text().trim();
-                const link = titleElement.attr('href') || '';
-                const fullLink = link.startsWith('http') ? link : `${baseUrl}/${link}`;
+                const href = titleElement.attr('href') || '';
+                const threadLink = href.startsWith('http') ? href : `${baseUrl}/${href}`;
 
                 const author = item.find('td.by cite a').text().trim();
 
                 const pubDateText = item.find('td.by em a span').attr('title') || item.find('td.by em a').text().trim();
                 const pubDate = parseDate(pubDateText);
 
-                return await cache.tryGet(fullLink, async () => {
+                return await cache.tryGet(threadLink, async () => {
                     try {
-                        const threadResponse = await ofetch(fullLink);
-
+                        const threadResponse = await ofetch(threadLink);
                         const $thread = load(threadResponse);
+
                         // 查找第一个帖子内容
                         const content = $thread('.t_f').first().html()?.trim() || '';
 
                         return {
                             title,
-                            link: fullLink,
+                            link: threadLink,
                             description: content,
                             pubDate,
                             author,
@@ -69,7 +67,7 @@ async function handler() {
                     } catch {
                         return {
                             title,
-                            link: fullLink,
+                            link: threadLink,
                             description: '内容获取失败',
                             pubDate,
                             author,
@@ -81,8 +79,8 @@ async function handler() {
 
     return {
         title: '虫部落 - 最新发表',
-        link: url,
-        description: '虫部落论坛最新发表的帖子',
+        link,
+        description: '虫部落最新发表的帖子',
         item: items,
     };
 }
