@@ -2,7 +2,6 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 import cache from '@/utils/cache';
 
 export const route: Route = {
@@ -12,28 +11,28 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
+        requirePuppeteer: false,
         antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
     },
     radar: [
         {
             source: ['www.chongbuluo.com/'],
         },
     ],
-    name: '虫部落-最新发表',
+    name: '最新发表',
     maintainers: ['qiye45'],
-    handler,
     url: 'https://www.chongbuluo.com/forum.php?mod=guide&view=newthread',
+    handler,
 };
 
 async function handler() {
     const baseUrl = 'https://www.chongbuluo.com';
     const url = `${baseUrl}/forum.php?mod=guide&view=newthread`;
 
-    const response = await ofetch(url, {
-        headers: {
-            'User-Agent': config.ua,
-        },
-    });
+    const response = await ofetch(url);
 
     const $ = load(response);
 
@@ -54,11 +53,7 @@ async function handler() {
 
                 return await cache.tryGet(fullLink, async () => {
                     try {
-                        const threadResponse = await ofetch(fullLink, {
-                            headers: {
-                                'User-Agent': config.ua,
-                            },
-                        });
+                        const threadResponse = await ofetch(fullLink);
 
                         const $thread = load(threadResponse);
                         // 查找第一个帖子内容
