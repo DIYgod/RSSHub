@@ -9652,6 +9652,19 @@
       }
     ]
   },
+  "chongbuluo.com": {
+    "_name": "虫部落",
+    "www": [
+      {
+        "title": "最新发表",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/chongbuluo/newthread"
+      }
+    ]
+  },
   "chongdiantou.com": {
     "_name": "充电头网",
     "www": [

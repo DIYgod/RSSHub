@@ -21546,6 +21546,41 @@
     "url": "daily-blog.chlinlearn.top",
     "lang": "zh-CN"
   },
+  "chongbuluo": {
+    "routes": {
+      "/newthread": {
+        "path": "/newthread",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/chongbuluo/newthread",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.chongbuluo.com/"
+            ]
+          }
+        ],
+        "name": "最新发表",
+        "maintainers": [
+          "qiye45"
+        ],
+        "location": "index.ts",
+        "module": "() => import('@/routes/chongbuluo/index.ts')"
+      }
+    },
+    "name": "虫部落",
+    "url": "www.chongbuluo.com",
+    "lang": "zh-CN"
+  },
   "chongdiantou": {
     "routes": {
       "/": {
