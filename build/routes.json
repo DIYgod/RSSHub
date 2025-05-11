@@ -111582,7 +111582,12 @@
           }
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -111594,6 +111599,7 @@
           "nczitzk",
           "pseudoyu"
         ],
+        "description": "::: warning\n  需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n:::",
         "location": "hot.ts",
         "module": "() => import('@/routes/zhihu/hot.ts')"
       },
