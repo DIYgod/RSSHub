@@ -1,6 +1,8 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
+import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const titles = {
     total: '全站',
@@ -74,7 +76,12 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -84,14 +91,24 @@ export const route: Route = {
     name: '知乎热榜',
     maintainers: ['nczitzk', 'pseudoyu'],
     handler,
+    description: `::: warning
+  需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+:::`,
 };
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'total';
+    const cookie = config.zhihu.cookies;
+    if (cookie === undefined) {
+        throw new ConfigNotFoundError('缺少知乎用户登录后的 Cookie 值');
+    }
 
     const response = await got({
         method: 'get',
         url: `https://www.zhihu.com/api/v3/feed/topstory/hot-lists/${category}?limit=50`,
+        headers: {
+            Cookie: cookie,
+        },
     });
 
     const items = response.data.data.map((item) => {
