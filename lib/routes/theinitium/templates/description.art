@@ -12,6 +12,3 @@
 {{ if article }}
    {{@ article }}
 {{ /if }}
-{{ if copyright }}
-    <figure><small>{{@ copyright }}</small></figure>
-{{ /if }}
