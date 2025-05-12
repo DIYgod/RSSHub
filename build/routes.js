@@ -12310,6 +12310,23 @@ export default {
         "description": "Provides a better reading experience (full text articles) over the official ones.\n\n    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.",
         "location": "index.ts",
         "module": () => import('@/routes/bbc/index.ts')
+      },
+      "/learningenglish/:channel?": {
+        "name": "Learning English",
+        "maintainers": [
+          "Blank0120"
+        ],
+        "categories": [
+          "study"
+        ],
+        "path": "/learningenglish/:channel?",
+        "example": "/bbc/learningenglish/take-away-english",
+        "parameters": {
+          "channel": "channel, default to `take-away-english`"
+        },
+        "description": "| 随身英语 | 地道英语 | 媒体英语 | 英语大破解 | 一分钟英语 |\n| -------- | -------- | -------- | -------- | -------- |\n| take-away-english | authentic-real-english | media-english | lingohack | english-in-a-minute |\n\n| 短语动词 | 今日短语 | 你问我答 | 白领英语 | 亲子英语故事 |\n| -------- | -------- | -------- | -------- | -------- |\n| phrasal-verbs | todays-phrase | q-and-a | english-at-work | storytellers |",
+        "location": "learningenglish.ts",
+        "module": () => import('@/routes/bbc/learningenglish.ts')
       }
     },
     "name": "BBC",
