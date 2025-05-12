@@ -34,13 +34,11 @@ async function handler(ctx) {
     const $ = load(response);
 
     // get top article links
-    const firstItem = [
-        {
-            title: $('[data-widget-index=4]').find('h2').text(),
-            link: `${rootURL}${$('[data-widget-index=4]').find('h2 a').attr('href')}`,
-            pubDate: parseDate($('[data-widget-index=4]').find('.details h3').text()),
-        },
-    ];
+    const firstItem = {
+        title: $('[data-widget-index=4]').find('h2').text(),
+        link: `${rootURL}${$('[data-widget-index=4]').find('h2 a').attr('href')}`,
+        pubDate: parseDate($('[data-widget-index=4]').find('.details h3').text()),
+    };
 
     // get rest ul article links
     const restItems = $('.threecol li')
@@ -58,7 +56,7 @@ async function handler(ctx) {
 
     // try get article content detail
     const items = await Promise.all(
-        firstItem.concat(restItems).map((item) =>
+        [firstItem, ...restItems].map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, { parseResponse: (txt) => txt });
 
