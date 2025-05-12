@@ -80,7 +80,7 @@ async function handler(ctx: Context) {
 
                     const data: DataItem = {
                         title: dynamic?.title ?? '',
-                        description: !aid && !bvid ? '' : utils.renderUGCDescription(embed, '', '', aid, undefined, bvid),
+                        description: !aid && !bvid ? '' : utils.renderUGCDescription(embed, dynamic.cover, dynamic.desc, aid, undefined, bvid),
                         pubDate: author?.pub_ts ? parseDate(author.pub_ts, 'X') : undefined,
                         link: author?.pub_ts && author.pub_ts > utils.bvidTime && bvid ? `https://www.bilibili.com/video/${bvid}` : `https://www.bilibili.com/video/av${aid}`,
                         author: name ?? undefined,
