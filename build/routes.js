@@ -110863,6 +110863,39 @@ export default {
   },
   "zaimanhua": {
     "routes": {
+      "/comic/:id": {
+        "path": "/comic/:id",
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "id": "漫画ID"
+        },
+        "example": "/zaimanhua/comic/14488",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "manhua.zaimanhua.com/details",
+              "manhua.zaimanhua.com/details/:id"
+            ],
+            "target": "/comic/:id"
+          }
+        ],
+        "name": "漫画更新",
+        "maintainers": [
+          "kjasn"
+        ],
+        "location": "comic.ts",
+        "module": () => import('@/routes/zaimanhua/comic.ts')
+      },
       "/update": {
         "path": "/update",
         "categories": [
