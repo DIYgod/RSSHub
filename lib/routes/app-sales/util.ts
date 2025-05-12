@@ -40,7 +40,7 @@ const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
             const priceDisco: string = $el.find('div.price-disco').text()?.trim();
 
             const isHot: boolean = $el.hasClass('sale-hot');
-            const isFree: boolean = priceNew.toLocaleUpperCase() === 'FREE';
+            const isFree: boolean = priceNew?.toLocaleUpperCase() === 'FREE';
 
             const title: string = `${appName} ${formatPriceChangeTag(priceOld, priceNew, priceDisco)}`;
             const image: string | undefined = $el.find('div.app-icon img').attr('src');
@@ -119,36 +119,42 @@ const getAvailablePageUrls = ($: CheerioAPI, targetUrl: string): string[] =>
  * @returns Aggregated items array within specified limit.
  */
 const fetchItems = async ($: CheerioAPI, selector: string, targetUrl: string, country: string, limit: number): Promise<DataItem[]> => {
-    const initialItems: DataItem[] = processItems($, selector);
-
+    const initialItems = processItems($, selector);
     if (initialItems.length >= limit) {
         return initialItems.slice(0, limit);
     }
 
-    const pagePromises = getAvailablePageUrls($, targetUrl).map(async (url: string): Promise<DataItem[]> => {
+    /**
+     * Recursive helper function to process paginated URLs
+     *
+     * @param remainingUrls - Array of URLs yet to be processed
+     * @param aggregated - Accumulator for collected items
+     *
+     * @returns Promise resolving to aggregated items
+     */
+    const processPage = async (remainingUrls: string[], aggregated: DataItem[]): Promise<DataItem[]> => {
+        if (aggregated.length >= limit || remainingUrls.length === 0) {
+            return aggregated.slice(0, limit);
+        }
+
+        const [currentUrl, ...restUrls] = remainingUrls;
+
         try {
-            const response = await ofetch(url, {
+            const response = await ofetch(currentUrl, {
                 headers: {
                     Cookie: `countryId=${country};`,
                 },
             });
-            return processItems(load(response), selector);
+            const pageItems = processItems(load(response), selector);
+            const newItems = [...aggregated, ...pageItems];
+
+            return newItems.length >= limit ? newItems.slice(0, limit) : processPage(restUrls, newItems);
         } catch {
-            return [];
+            return processPage(restUrls, aggregated);
         }
-    });
+    };
 
-    const items: DataItem[] = [];
-
-    for await (const pageItems of pagePromises) {
-        items.push(...pageItems);
-
-        if (items.length + initialItems.length >= limit) {
-            break;
-        }
-    }
-
-    return [...initialItems, ...items].slice(0, limit);
+    return await processPage(getAvailablePageUrls($, targetUrl), initialItems);
 };
 
 export { baseUrl, fetchItems };

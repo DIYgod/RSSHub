@@ -9,7 +9,7 @@ import { baseUrl, fetchItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'highlights', country = 'us' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '200', 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
