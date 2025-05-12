@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    name: 'Learningenglish',
+    name: 'Learning English',
     maintainers: ['Blank0120'],
     categories: ['study'],
     handler,
