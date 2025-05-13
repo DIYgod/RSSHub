@@ -263,8 +263,8 @@ importers:
         specifier: 4.19.4
         version: 4.19.4
       twitter-api-v2:
-        specifier: 1.23.0
-        version: 1.23.0
+        specifier: 1.23.2
+        version: 1.23.2
       ufo:
         specifier: 1.6.1
         version: 1.6.1
@@ -6110,8 +6110,8 @@ packages:
   tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
 
-  twitter-api-v2@1.23.0:
-    resolution: {integrity: sha512-5i1agETVpTuY68Zuk9i2B3N9wHzc4JIWw0WKyG4CEaFv9mRKmU87roa+U1oYYXTChWb0HMcqfkwoBJHYmLbeDA==}
+  twitter-api-v2@1.23.2:
+    resolution: {integrity: sha512-m0CGXmfGwUhWBOOTVCIXIoSEXwGCQV3Es9yraCwUxaVrjJT2CQcqDrQsQTpBhtiAvVL2HS1cCEGsotNjfX9log==}
 
   type-check@0.3.2:
     resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
@@ -12786,7 +12786,7 @@ snapshots:
 
   tweetnacl@0.14.5: {}
 
-  twitter-api-v2@1.23.0: {}
+  twitter-api-v2@1.23.2: {}
 
   type-check@0.3.2:
     dependencies:
