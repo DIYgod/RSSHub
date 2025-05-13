@@ -24,7 +24,7 @@ const handler = async (ctx) => {
                 title: $item.find('a').text(),
                 link: $item.find('a').attr('href'),
                 guid: $item.find('a').attr('href'),
-                pubDate:  $item.find('i').text().replace(/ /g, ''),
+                pubDate:  $item.find('i').text().replaceAll(/ /g, ''),
             };
         });
 
@@ -41,7 +41,7 @@ const handler = async (ctx) => {
                 const containerDiv = $('<div class="image-container"></div>');
                 comicpage.appendTo(containerDiv);
                 item.description = containerDiv.html();
-                item.pubDate = parseDate(item.pubDate,'YYYY年M月D日');
+                item.pubDate = parseDate(item.pubDate, 'YYYY年M月D日');
                 return item;
             })
         )
