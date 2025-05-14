@@ -25,7 +25,7 @@ export const route: Route = {
     maintainers: ['ShabbyWhineYear'],
     handler: async () => {
 
-        const response = await ofetch(`https://www.chnmuseum.cn/zx/xwzt/`);
+        const response = await ofetch('https://www.chnmuseum.cn/zx/xwzt/');
         const $ = load(response);
 
         const items = $('ul.cj_hd_zhanh li')
