@@ -64,9 +64,9 @@ export const route: Route = {
 
         return {
             // 源标题
-            title: `中国国家博物馆资讯要闻`,
+            title: '中国国家博物馆资讯要闻',
             // 源链接
-            link: `https://www.chnmuseum.cn/zx/xingnew/`,
+            link: 'https://www.chnmuseum.cn/zx/xingnew/',
             // 源文章
             item: items,
         };
