@@ -169,7 +169,7 @@
         "@types/uuid": "10.0.0",
         "@typescript-eslint/eslint-plugin": "8.32.1",
         "@typescript-eslint/parser": "8.32.1",
-        "@vercel/nft": "0.29.2",
+        "@vercel/nft": "0.29.3",
         "@vitest/coverage-v8": "2.1.9",
         "discord-api-types": "0.38.5",
         "domhandler": "5.0.3",
