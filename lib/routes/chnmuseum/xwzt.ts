@@ -58,9 +58,9 @@ export const route: Route = {
 
         return {
             // 源标题
-            title: `中国国家博物馆资讯专题`,
+            title: '中国国家博物馆资讯专题',
             // 源链接
-            link: `https://www.chnmuseum.cn/zx/xwzt/`,
+            link: 'https://www.chnmuseum.cn/zx/xwzt/',
             // 源文章
             item: items,
         };
