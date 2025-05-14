@@ -24,7 +24,6 @@ export const route: Route = {
     name: '资讯专题',
     maintainers: ['ShabbyWhineYear'],
     handler: async () => {
-
         const response = await ofetch('https://www.chnmuseum.cn/zx/xwzt/');
         const $ = load(response);
 
