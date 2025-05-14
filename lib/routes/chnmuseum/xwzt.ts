@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/zx/xwzt',
-    categories: ['other'],
+    categories: ['travel'],
     example: '/zx/xwzt',
     parameters: {},
     features: {
