@@ -9652,6 +9652,27 @@
       }
     ]
   },
+  "chnmuseum.cn": {
+    "_name": "National Museum Of China",
+    ".": [
+      {
+        "title": "资讯要闻",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zx/xingnew"
+        ],
+        "target": "/chnmuseum/zx/xingnew"
+      },
+      {
+        "title": "资讯专题",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zx/xwzt"
+        ],
+        "target": "/chnmuseum/zx/xwzt"
+      }
+    ]
+  },
   "chongbuluo.com": {
     "_name": "虫部落",
     "www": [
