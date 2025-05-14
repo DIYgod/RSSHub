@@ -21563,6 +21563,76 @@
     "url": "daily-blog.chlinlearn.top",
     "lang": "zh-CN"
   },
+  "chnmuseum": {
+    "routes": {
+      "/zx/xingnew": {
+        "path": "/zx/xingnew",
+        "categories": [
+          "travel"
+        ],
+        "example": "/zx/xingnew",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "chnmuseum.cn/zx/xingnew"
+            ],
+            "target": "/zx/xingnew"
+          }
+        ],
+        "name": "资讯要闻",
+        "maintainers": [
+          "ShabbyWhineYear"
+        ],
+        "location": "xingnew.ts",
+        "module": "() => import('@/routes/chnmuseum/xingnew.ts')"
+      },
+      "/zx/xwzt": {
+        "path": "/zx/xwzt",
+        "categories": [
+          "travel"
+        ],
+        "example": "/zx/xwzt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "chnmuseum.cn/zx/xwzt"
+            ],
+            "target": "/zx/xwzt"
+          }
+        ],
+        "name": "资讯专题",
+        "maintainers": [
+          "ShabbyWhineYear"
+        ],
+        "location": "xwzt.ts",
+        "module": "() => import('@/routes/chnmuseum/xwzt.ts')"
+      }
+    },
+    "name": "National Museum Of China",
+    "url": "www.chnmuseum.cn",
+    "description": "中国国家博物馆（National Museum of China）位于北京市中心天安门广场东侧，东长安街南侧，与人民大会堂东西相对称，是一座系统展示中华民族文化历史的综合性博物馆，也是世界上最大的博物馆之一。",
+    "zh": {
+      "name": "中国国家博物馆"
+    }
+  },
   "chongbuluo": {
     "routes": {
       "/newthread": {
