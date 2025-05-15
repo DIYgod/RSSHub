@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/xna',
-    categories: ['bbs', 'blog'],
+    categories: ['bbs', 'blog', 'popular'],
     view: ViewType.Articles,
     example: '/v2ex/xna',
     parameters: {},
