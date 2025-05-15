@@ -1,0 +1,7 @@
+<div>
+排行：{{ index + 1 }} 播放次数：{{ record.playCount }} 得分：{{ record.score }}<br>
+歌曲：<a href="http://music.163.com/song?id={{ song.id }}">{{ song.name }}</a><br>
+歌手：{{ each song.ar a i }}<a href="https://music.163.com/artist?id={{ a.id }}">{{ a.name }}</a> {{ if i < song.ar.length - 1 }}/ {{ /if }}{{ /each }}
+<br>
+{{ if song.al }}歌曲图：<img src={{ song.al.picUrl }}><br>{{ /if }}
+</div>

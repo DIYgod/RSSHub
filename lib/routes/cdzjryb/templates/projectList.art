@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>区域</th>
+    <th>项目名称</th>
+    <th>预售证号</th>
+    <th>预售范围</th>
+    <th>住房套数</th>
+    <th>开发商咨询电话</th>
+    <th>登记开始时间</th>
+    <th>登记结束时间</th>
+    <th>名单外人员资格已释放时间</th>
+    <th>名单内人员资格已释放时间</th>
+    <th>预审码取得截止时间</th>
+    <th>项目报名状态</th>
+  </tr>
+  <tr>
+  <% for(let i = 2; i < item.length - 1; i++){ %>
+    <td><%= item[i] %></td>
+  <% } %>
+  </tr>
+</table>
+<h2 style="text-align: center;">登记规则</h2>
+{{@ notice }}

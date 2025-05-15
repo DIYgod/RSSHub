@@ -1,0 +1,15 @@
+<text>Family: {{item.family}}</text>
+<br>
+<text>Category: {{item.category}}</text>
+<br>
+<text>Subsets: {{item.subsets.join(',')}}</text>
+<br>
+<text>Version: {{item.version}}</text>
+<br>
+<text>Last modified: {{item.lastModified}}</text>
+<br>
+<Strong>File:</Strong>
+<br>
+{{each item.files}}
+<a href="{{$value}}">{{$index}}</a>&nbsp;&nbsp;
+{{/each}}

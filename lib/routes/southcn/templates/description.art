@@ -1,0 +1,6 @@
+{{ if thumb }}
+    <img src="{{ thumb }}">
+{{ /if }}
+{{ if description }}
+    <blockquote><p>{{ description }}</p></blockquote>
+{{ /if }}

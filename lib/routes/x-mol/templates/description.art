@@ -1,0 +1,6 @@
+{{ if image }}
+    <img src="{{ image }}"><br>
+{{ /if }}
+{{ if text }}
+    <p>{{ text }}</p>
+{{ /if }}

@@ -1,0 +1,3 @@
+<video src="{{videoUrl}}" poster="{{posterUrl}}" controls loop>
+    {{title}}
+</video>

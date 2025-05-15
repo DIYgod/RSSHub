@@ -1,0 +1,99 @@
+{{ if image }}
+<figure>
+  <img src="{{ image }}">
+</figure>
+{{ /if }}
+<table>
+  <tbody>
+    {{ if homepage }}
+    <tr>
+      <th>Homepage</th>
+      <td>{{ homepage }}</td>
+    </tr>
+    {{ /if }}
+    {{ if name && url }}
+    <tr>
+      <th>GitHub Repo</th>
+      <td><a href="{{ url }}">{{ name }}</a></td>
+    </tr>
+    {{ /if }}
+    {{ if description }}
+    <tr>
+      <th>Description</th>
+      <td>{{ description }}</td>
+    </tr>
+    {{ /if }}
+    {{ if summary }}
+    <tr>
+      <th>Summary</th>
+      <td>{{ summary }}</td>
+    </tr>
+    {{ /if }}
+    {{ if stars }}
+    <tr>
+      <th>Stars</th>
+      <td>{{ stars }}</td>
+    </tr>
+    {{ /if }}
+    {{ if forks }}
+    <tr>
+      <th>Forks</th>
+      <td>{{ forks }}</td>
+    </tr>
+    {{ /if }}
+    {{ if subscribers }}
+    <tr>
+      <th>Subscribers</th>
+      <td>{{ subscribers }}</td>
+    </tr>
+    {{ /if }}
+    {{ if language }}
+    <tr>
+      <th>Language</th>
+      <td>{{ language }}</td>
+    </tr>
+    {{ /if }}
+    {{ if license }}
+    <tr>
+      <th>License</th>
+      <td>{{ license }}</td>
+    </tr>
+    {{ /if }}
+    <tr>
+      <th>Is in Chinese</th>
+      <td>
+      {{ if isChinese }}
+        Yes
+      {{ else }}
+        No
+      {{ /if }}
+      </td>
+    </tr>
+    <tr>
+      <th>Is Organization</th>
+      <td>
+      {{ if isOrganization }}
+        Yes
+      {{ else }}
+        No
+      {{ /if }}
+      </td>
+    </tr>
+    <tr>
+      <th>Is Active</th>
+      <td>
+      {{ if isActive }}
+        Yes
+      {{ else }}
+        No
+      {{ /if }}
+      </td>
+    </tr>
+    {{ if openIssues }}
+    <tr>
+      <th>Open Issues</th>
+      <td>{{ openIssues }}</td>
+    </tr>
+    {{ /if }}
+  </tbody>
+</table>

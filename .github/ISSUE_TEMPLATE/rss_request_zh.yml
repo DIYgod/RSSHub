@@ -1,0 +1,83 @@
+name: 🧡 RSS 提案
+description: 提交新的 RSS 提案
+labels: ['RSS proposal']
+
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        请确保 [文档](https://docs.rsshub.app) 和 [issue](https://github.com/DIYgod/RSSHub/issues) 中没有相关内容，且源站没有提供 RSS，并按照模版提供信息
+        否则 issue 将被立即关闭
+
+        目前 RSS 提案滞销，如有能力请按照 [指南](https://docs.rsshub.app/joinus/quick-start) 自行编写并提交 PR
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 类型
+      multiple: false
+      options:
+        - 社交媒体
+        - 新媒体
+        - 传统媒体
+        - 论坛
+        - 博客
+        - 编程
+        - 设计
+        - 直播
+        - 音视频
+        - 图片
+        - 二次元
+        - 程序更新
+        - 大学通知
+        - 预报预警
+        - 出行旅游
+        - 购物
+        - 游戏
+        - 阅读
+        - 政务消息
+        - 学习
+        - 科学期刊
+        - 金融
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: site-url
+    attributes:
+      label: 网站地址
+      placeholder: https://example.com
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 网站描述
+      placeholder: 对网站的简短描述
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 需要生成什么内容？
+    validations:
+      required: true
+
+  - type: textarea
+    id: info
+    attributes:
+      label: 额外描述
+      placeholder: 如果提案需要额外描述，请在此处填写
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 这不是重复的 RSS 请求
+      options:
+        - label: 我已经搜索了[现有 issue](https://github.com/DIYgod/RSSHub/issues) 和 [pull requests](https://github.com/DIYgod/RSSHub/pulls)，以确保该 RSS 尚未被请求。
+          required: true
+

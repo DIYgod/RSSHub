@@ -1,0 +1,4 @@
+<blockquote>
+<p>{{ summary }}</p>
+</blockquote>
+<img src="{{ image }}">

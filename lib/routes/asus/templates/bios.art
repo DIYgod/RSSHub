@@ -1,0 +1,13 @@
+{{ if language !== 'zh' }}
+    <p><b>Changes:</b></p>
+    {{@ item.Description}}
+    <p><b>Version:</b> {{item.Version}}</p>
+    <p><b>Size:</b> {{item.FileSize}}</p>
+    <p><b>Download:</b> <a href="{{ item.DownloadUrl.Global }}">{{ item.DownloadUrl.Global.split('/').pop().split('?')[0] }}</a></p>
+{{ else }}
+    <p>更新信息：</p>
+    {{@ item.Description}}
+    <p>版本: {{item.Version}}</p>
+    <p>大小: {{item.FileSize}}</p>
+    <p>下载链接: <a href="{{item.DownloadUrl.China}}">中国下载</a> | <a href="{{item.DownloadUrl.Global}}">全球下载</a></p>
+{{ /if }}

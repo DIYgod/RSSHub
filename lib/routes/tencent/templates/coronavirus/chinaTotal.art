@@ -1,0 +1,6 @@
+<p>本土确诊：</p><p>+{{@localConfirmH5}}</p></br>
+<p>本土无症状：</p><p>+{{@localWzzAdd}}</p></br>
+<p>确诊病例：</p><p>+{{@confirmAdd}}</p></br>
+<p>现有本土确诊：</p><p>{{@localConfirm}}</p></br>
+<p>现有本土无症状：</p><p>{{@nowLocalWzz}}</p></br>
+<p>高风险地区：</p><p>{{@highRiskAreaNum}}</p></br>

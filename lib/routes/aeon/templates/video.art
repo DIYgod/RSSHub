@@ -1,0 +1,10 @@
+{{ set video = article.hosterId }}
+{{ if article.hoster === 'vimeo' }}
+    {{ set video = "https://player.vimeo.com/video/" + video + "?dnt=1" }}
+{{ else if article.hoster === 'youtube' }}
+    {{ set video = "https://www.youtube-nocookie.com/embed/" + video }}
+{{ /if }}
+
+<iframe width="672" height="377" src="{{ video }}" frameborder="0" allowfullscreen></iframe>
+{{@ article.credits }}
+{{@ article.description }}

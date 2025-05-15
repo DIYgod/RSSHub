@@ -1,0 +1,12 @@
+{{ if image }}
+    <img src={{image}} />
+{{ /if }}
+{{@ description }}
+{{ each sessions se }}
+    <div style="margin: 0.5em 0; padding: 0.5em 1em; border: 0.1em solid palevioletred;">
+        <p>{{se.date}} [{{se.youbi}}]</p>
+        <p style="color: palevioletred;">{{se.tourName}}</p>
+        <p>会場: {{se.area}} <a href={{se.mapURL}} target="_blank">{{se.place}}</a></p>
+        <p>開場/開演: {{se.open}}/{{se.start}}</p>
+    </div>
+{{ /each }}

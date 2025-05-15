@@ -1,0 +1,10 @@
+<a href='https://xueqiu.com/u/{{ item.user.id }}'><div style="font-weight: bold;">{{ item.user.screen_name }}:</div></a>
+<hr/>
+{{@ item.text }}
+<br/>
+{{ if item.retweeted_status }}
+<hr style="border:1 dashed #987cb9" />{{@ item.retweeted_status.text }}
+{{ else }}
+<hr/>
+{{ /if }}
+<div style="text-align:right">    ----来源于:{{ item.source }}</div>

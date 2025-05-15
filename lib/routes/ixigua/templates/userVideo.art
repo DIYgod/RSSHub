@@ -1,0 +1,5 @@
+{{ if !disableEmbed }}
+<iframe width="720" height="405" frameborder="0" allowfullscreen src="https://www.ixigua.com/iframe/{{ i.groupId }}?autoplay=0" referrerpolicy="unsafe-url" allowfullscreen></iframe><br>
+{{ /if }}
+<img src="{{ i.coverUrl }}" /><p>{{ i.abstract }}</p>
+

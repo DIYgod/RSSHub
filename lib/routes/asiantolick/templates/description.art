@@ -1,0 +1,9 @@
+{{@ description }}
+
+{{ if images }}
+  {{ each images image }}
+    <figure>
+      <img src="{{ image.src }}" alt="{{ image.alt }}">
+    </figure>
+  {{ /each }}
+{{ /if }}

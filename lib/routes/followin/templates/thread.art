@@ -1,0 +1,15 @@
+{{ each list l }}
+    {{@ l.translated_content.replaceAll('\n', '<br>') || l.content.replaceAll('\n', '<br>') }}
+    <br>
+    {{ if l.images.length }}
+        {{ each l.images img }}
+            <img src="{{ img }}">
+        {{ /each }}
+    {{ /if }}
+    {{ if l.link_previews.length }}
+        {{ each l.link_previews a }}
+            <a href="{{ a.link }}">{{ a.title }}<br>{{ a.content }}</a>
+        {{ /each }}
+    {{ /if }}
+    <br>
+{{ /each }}

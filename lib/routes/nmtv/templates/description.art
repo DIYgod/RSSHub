@@ -1,0 +1,9 @@
+{{ if type === 'audio' }}
+<audio controls="controls">
+<source src="{{ file }}" type="audio/mp3">
+</audio>
+{{ else if type === 'video' }}
+<video controls poster="{{ image }}">
+<source src="{{ file }}" type="video/mp4">
+</video>
+{{ /if }}
