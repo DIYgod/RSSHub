@@ -102088,7 +102088,7 @@ export default {
             ]
           }
         ],
-        "name": "News Flow",
+        "name": "News Feed",
         "maintainers": [
           "TonyRL"
         ],

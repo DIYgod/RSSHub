@@ -16892,7 +16892,7 @@
         source:[ "/community/apps" ],
         target:"/unraid/community-apps" } ] },
   "unusualwhales.com":{ _name:"Unusual Whales",
-    ".":[ { title:"News Flow",
+    ".":[ { title:"News Feed",
         docs:"https://docs.rsshub.app/routes/finance",
         source:[ "/news",
           "/" ],
