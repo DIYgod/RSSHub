@@ -103170,7 +103170,8 @@ export default {
         "path": "/xna",
         "categories": [
           "bbs",
-          "blog"
+          "blog",
+          "popular"
         ],
         "view": 0,
         "example": "/v2ex/xna",
