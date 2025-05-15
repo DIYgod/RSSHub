@@ -3,10 +3,11 @@ import { type DataItem } from '@/types';
 import { art } from '@/utils/render';
 import ofetch from '@/utils/ofetch';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import path from 'node:path';
 
-const baseUrl: string = 'https://app-sales.net';
+const baseUrl: string = 'https://www.app-sales.net';
 
 /**
  * Formats price change information into a standardized tag
@@ -26,7 +27,7 @@ const formatPriceChangeTag = (priceOld: string, priceNew: string, priceDisco: st
 const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
     $(selector)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             const appName: string = $el.find('p.app-name').text()?.trim();
@@ -98,12 +99,12 @@ const getAvailablePageUrls = ($: CheerioAPI, targetUrl: string): string[] =>
     $('ul.pagination li.waves-effect a')
         .slice(0, -1)
         .toArray()
-        .filter((el): Element => {
+        .filter((el) => {
             const $el: Cheerio<Element> = $(el);
 
             return $el.attr('href');
         })
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
 
             return new URL($el.attr('href') as string, targetUrl).href;
