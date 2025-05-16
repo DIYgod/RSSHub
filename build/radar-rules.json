@@ -9844,6 +9844,19 @@
       }
     ]
   },
+  "cih-index.com": {
+    "_name": "中指研究院",
+    "www": [
+      {
+        "title": "报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/report/list/:report"
+        ],
+        "target": "/cih-index/report/list/:report?"
+      }
+    ]
+  },
   "cisia.org": {
     "_name": "中国无机盐工业协会",
     "www": [
