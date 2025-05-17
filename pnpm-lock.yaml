@@ -281,7 +281,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtubei.js:
-        specifier: ^13.4.0
+        specifier: 13.4.0
         version: 13.4.0
       zod:
         specifier: 3.24.4

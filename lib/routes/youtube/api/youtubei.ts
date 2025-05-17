@@ -12,16 +12,19 @@ export const getChannelIdByUsername = (username: string) =>
         return navigationEndpoint.payload.browseId;
     });
 
-export const getDataByUsername = async ({ username, embed }: { username: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
-    const innertube = await innertubePromise;
+export const getDataByUsername = async ({ username, embed, filterShorts }: { username: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
     const channelId = (await getChannelIdByUsername(username)) as string;
+    return getDataByChannelId({ channelId, embed, filterShorts });
+};
 
+export const getDataByChannelId = async ({ channelId, embed }: { channelId: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
+    const innertube = await innertubePromise;
     const channel = await innertube.getChannel(channelId);
     const videos = await channel.getVideos();
 
     return {
-        title: `${channel.metadata.title || username} - YouTube`,
-        link: `https://www.youtube.com/${username}`,
+        title: `${channel.metadata.title || channelId} - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}`,
         image: channel.metadata.avatar?.[0].url,
         description: channel.metadata.description,
 
