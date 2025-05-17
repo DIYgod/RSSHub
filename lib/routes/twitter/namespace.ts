@@ -29,6 +29,7 @@ export const namespace: Namespace = {
 | \`forceWebApi\`                  | Force using Web API even if Developer API is configured, only available in \`/twitter/user\` and \`/twitter/keyword\`                    | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 | \`count\`                        | \`count\` parameter passed to Twitter API, only available in \`/twitter/user\`                                                           | Unspecified/Integer    | Unspecified                               |
 | \`onlyMedia\`                    | Only get tweets with a media                                                                                                             | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                 |
+| \`mediaNumber \`                 | Number the medias                                                                                                            | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                 |
 
 Specify different option values than default values to improve readability. The URL
 
