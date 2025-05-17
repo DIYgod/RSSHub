@@ -21,7 +21,7 @@ export default {
     de: {
         country: 'de',
         countryCN: '德国',
-        link: 'http://de.chineseembassy.org/chn/lsfw/jqtz/',
+        link: 'http://de.china-embassy.gov.cn/chn/lsfw/jqtz/',
         list: '#docMore a',
         title: '#article > table > tbody > tr:nth-child(2) b',
         description: '#article > table > tbody > tr:nth-child(10) > td > div',
