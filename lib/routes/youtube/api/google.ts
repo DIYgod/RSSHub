@@ -131,3 +131,34 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
             }),
     };
 };
+
+export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { channelId: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
+    // Get original uploads playlist ID if needed
+    const originalPlaylistId = filterShorts ? null : (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+
+    // Use the utility function to get the appropriate playlist ID based on filterShorts setting
+    const playlistId = filterShorts ? utils.getPlaylistWithShortsFilter(channelId) : originalPlaylistId;
+
+    const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
+
+    return {
+        title: `${data[0].snippet.channelTitle} - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}`,
+        description: `YouTube channel ${data[0].snippet.channelTitle}`,
+        item: data
+            .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
+            .map((item) => {
+                const snippet = item.snippet;
+                const videoId = snippet.resourceId.videoId;
+                const img = utils.getThumbnail(snippet.thumbnails);
+                return {
+                    title: snippet.title,
+                    description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
+                    pubDate: parseDate(snippet.publishedAt),
+                    link: `https://www.youtube.com/watch?v=${videoId}`,
+                    author: snippet.videoOwnerChannelTitle,
+                    image: img.url,
+                };
+            }),
+    };
+};

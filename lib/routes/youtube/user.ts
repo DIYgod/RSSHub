@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
 import { getDataByUsername as getDataByUsernameGoogle } from './api/google';
 import { callApi } from './utils';
@@ -25,6 +23,7 @@ export const route: Route = {
             {
                 name: 'YOUTUBE_KEY',
                 description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -45,9 +44,6 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.youtube || !config.youtube.key) {
-        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
-    }
     const username = ctx.req.param('username');
 
     // Parse route parameters
