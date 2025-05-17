@@ -1,46 +1,8 @@
 import { google } from 'googleapis';
-const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-
-let count = 0;
-const youtube = {};
-if (config.youtube && config.youtube.key) {
-    const keys = config.youtube.key.split(',');
-
-    for (const [index, key] of keys.entries()) {
-        if (key) {
-            youtube[index] = google.youtube({
-                version: 'v3',
-                auth: key,
-            });
-            count = index + 1;
-        }
-    }
-}
-
-let index = -1;
-const exec = async (func) => {
-    let result;
-    for (let i = 0; i < count; i++) {
-        index++;
-        try {
-            // eslint-disable-next-line no-await-in-loop
-            result = await func(youtube[index % count]);
-            break;
-        } catch {
-            // console.error(error);
-        }
-    }
-    return result;
-};
-
-let youtubeOAuth2Client;
-if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && config.youtube.refreshToken) {
-    youtubeOAuth2Client = new OAuth2(config.youtube.clientId, config.youtube.clientSecret, 'https://developers.google.com/oauthplayground');
-    youtubeOAuth2Client.setCredentials({ refresh_token: config.youtube.refreshToken });
-}
+import { youtubeOAuth2Client, exec } from './api/google';
 
 export const getPlaylistItems = (id, part, cache) =>
     cache.tryGet(
@@ -165,6 +127,17 @@ export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): st
     }
     // If filterShorts is false or the ID format doesn't match known patterns, return original ID
     return id;
+};
+
+export const callApi = async <T>({ googleApi, youtubeiApi, params }: { googleApi: (params: any) => Promise<T>; youtubeiApi: (params: any) => Promise<T>; params: any }): Promise<T> => {
+    if (config.youtube?.key) {
+        try {
+            return await googleApi(params);
+        } catch {
+            return await youtubeiApi(params);
+        }
+    }
+    return await youtubeiApi(params);
 };
 
 const youtubeUtils = {
