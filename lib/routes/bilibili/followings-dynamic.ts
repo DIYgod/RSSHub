@@ -7,6 +7,7 @@ import JSONbig from 'json-bigint';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import querystring from 'node:querystring';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/followings/dynamic/:uid/:routeParams?',
@@ -132,9 +133,14 @@ async function handler(ctx) {
         data.map(async (item) => {
             const parsed = JSONbig.parse(item.card);
             const data = parsed.apiSeasonInfo || (getTitle(parsed.item) ? parsed.item : parsed);
-            // parsed.origin is already parsed, and it may be json or string.
-            // Don't parse it again, or it will cause an error.
-            const origin = parsed.origin || null;
+            let origin = parsed.origin;
+            if (origin) {
+                try {
+                    origin = JSONbig.parse(origin);
+                } catch {
+                    logger.warn(`card.origin '${origin}' is not falsy-valued or a JSON string, fall back to unparsed value`);
+                }
+            }
 
             // img
             let imgHTML = '';
