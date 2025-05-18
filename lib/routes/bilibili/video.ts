@@ -7,6 +7,7 @@ import cache from './cache';
 import utils, { getVideoUrl } from './utils';
 import logger from '@/utils/logger';
 import type { BilibiliWebDynamicResponse } from './api-interface';
+import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
@@ -89,6 +90,7 @@ async function handler(ctx: Context) {
                                   {
                                       url: getVideoUrl(bvid),
                                       mime_type: 'text/html',
+                                      duration_in_seconds: parseDuration(dynamic?.duration_text),
                                   },
                               ]
                             : undefined,

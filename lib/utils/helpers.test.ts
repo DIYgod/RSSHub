@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getRouteNameFromPath, getSearchParamsString } from '@/utils/helpers';
+import { getRouteNameFromPath, getSearchParamsString, parseDuration } from '@/utils/helpers';
 
 describe('helpers', () => {
     it('getRouteNameFromPath', () => {
@@ -16,5 +16,12 @@ describe('helpers', () => {
         searchParams.append('ids[]', '1');
         searchParams.append('ids[]', '2');
         expect(getSearchParamsString(searchParams)).toBe('ids%5B%5D=1&ids%5B%5D=2');
+    });
+
+    it('parseDuration', () => {
+        expect(parseDuration('01:01:01')).toBe(3661);
+        expect(parseDuration('01:01')).toBe(61);
+        expect(parseDuration('00:01')).toBe(1);
+        expect(parseDuration('59')).toBe(59);
     });
 });
