@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils, { getVideoUrl } from './utils';
+import { parseDuration } from '@/utils/helpers';
 
 // https://www.bilibili.com/v/popular/rank/all
 
@@ -223,6 +224,7 @@ async function handler(ctx) {
                       {
                           url: getVideoUrl(item.bvid),
                           mime_type: 'text/html',
+                          duration_in_seconds: parseDuration(item.duration),
                       },
                   ]
                 : undefined,

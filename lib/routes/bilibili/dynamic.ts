@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -387,6 +388,7 @@ async function handler(ctx) {
                                   {
                                       url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
                                       mime_type: 'text/html',
+                                      duration_in_seconds: data.module_dynamic?.major?.archive?.duration_text ? parseDuration(data.module_dynamic.major.archive.duration_text) : undefined,
                                   },
                               ]
                             : undefined,
