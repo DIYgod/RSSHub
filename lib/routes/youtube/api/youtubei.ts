@@ -2,6 +2,7 @@ import cache from '@/utils/cache';
 import { Innertube } from 'youtubei.js';
 import utils, { getVideoUrl } from '../utils';
 import { Data } from '@/types';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 const innertubePromise = Innertube.create();
 
@@ -39,6 +40,7 @@ export const getDataByChannelId = async ({ channelId, embed }: { channelId: stri
                     link: `https://www.youtube.com/watch?v=${video.video_id}`,
                     author: typeof video.author === 'string' ? video.author : (video.author.name === 'N/A' ? undefined : video.author.name),
                     image: img,
+                    pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
                     attachments: [
                         {
                             url: getVideoUrl(video.video_id),
@@ -71,6 +73,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
                     title: video.title.text || `YouTube Video ${video.id}`,
                     description: utils.renderDescription(embed, video.id, img, ''),
                     link: `https://www.youtube.com/watch?v=${video.id}`,
+                    pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
                     author:
                         'author' in video
                             ? [
