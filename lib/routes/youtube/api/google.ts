@@ -162,3 +162,28 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
             }),
     };
 };
+
+export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean }): Promise<Data> => {
+    const playlistTitle = (await utils.getPlaylist(playlistId, 'snippet', cache)).data.items[0].snippet.title;
+
+    const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items.filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video');
+
+    return {
+        title: `${playlistTitle} by ${data[0].snippet.channelTitle} - YouTube`,
+        link: `https://www.youtube.com/playlist?list=${playlistId}`,
+        description: `${playlistTitle} by ${data[0].snippet.channelTitle}`,
+        item: data.map((item) => {
+            const snippet = item.snippet;
+            const videoId = snippet.resourceId.videoId;
+            const img = utils.getThumbnail(snippet.thumbnails);
+            return {
+                title: snippet.title,
+                description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
+                pubDate: parseDate(snippet.publishedAt),
+                link: `https://www.youtube.com/watch?v=${videoId}`,
+                author: snippet.videoOwnerChannelTitle,
+                image: img.url,
+            };
+        }),
+    };
+};
