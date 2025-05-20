@@ -20,7 +20,8 @@ const handler = async (ctx) => {
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
-            const itemDate = $item.find('i').text().replaceAll(/ /g, '');
+            const itemDate = $item.find('i').text().replaceAll(' ', '');
+
             return {
                 title: $item.find('a').text(),
                 link: $item.find('a').attr('href'),
