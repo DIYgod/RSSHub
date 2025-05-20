@@ -10,7 +10,7 @@ export const handler = (ctx: Context) => {
 
 export const route: Route = {
     path: '/blog',
-    categories: ['programming', 'blog'],
+    categories: ['programming'],
     example: '/tailwindcss/blog',
     features: {
         requireConfig: false,
