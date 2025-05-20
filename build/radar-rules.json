@@ -5853,6 +5853,19 @@
       }
     ]
   },
+  "bakamh.com": {
+    "_name": "巴卡漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/manga/:name/"
+        ],
+        "target": "/bakamh/manga/:name"
+      }
+    ]
+  },
   "bandcamp.com": {
     "_name": "Bandcamp",
     ".": [

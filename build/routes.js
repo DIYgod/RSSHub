@@ -11839,6 +11839,40 @@ export default {
     "description": "白鲸出海",
     "lang": "zh-CN"
   },
+  "bakamh": {
+    "routes": {
+      "/manga/:name": {
+        "path": "/manga/:name",
+        "categories": [
+          "anime"
+        ],
+        "example": "/bakamh/manga/最强家丁",
+        "parameters": {
+          "name": "漫画名称，漫画主页的地址栏中"
+        },
+        "radar": [
+          {
+            "source": [
+              "bakamh.com/manga/:name/"
+            ]
+          }
+        ],
+        "name": "漫画更新",
+        "maintainers": [
+          "yoyobase"
+        ],
+        "url": "bakamh.com",
+        "location": "manga.ts",
+        "module": () => import('@/routes/bakamh/manga.ts')
+      }
+    },
+    "name": "巴卡漫画",
+    "url": "bakamh.com",
+    "categories": [
+      "anime"
+    ],
+    "lang": "zh-CN"
+  },
   "bandcamp": {
     "routes": {
       "/live": {
