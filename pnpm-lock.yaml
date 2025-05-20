@@ -140,8 +140,8 @@ importers:
         specifier: 0.6.3
         version: 0.6.3
       imapflow:
-        specifier: 1.0.186
-        version: 1.0.186
+        specifier: 1.0.187
+        version: 1.0.187
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -4090,8 +4090,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.186:
-    resolution: {integrity: sha512-GrkuGsIJSzpQZvRCZQrGlAHdhaEE5K/0ybyu0lGLyEZLCjYoIQa+cPGCULX6Vf0kbG3sUDJDt46eNf6HG1dM9g==}
+  imapflow@1.0.187:
+    resolution: {integrity: sha512-h6C3isN+gsCncHZT9vh8DMRU9H1JPHXzkThj+xEwICXsRfX0fu2kMA2sVpl5a+rYuxr/d7uStm6hbWFsOlj44g==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4926,10 +4926,6 @@ packages:
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
-  nodemailer@6.10.0:
-    resolution: {integrity: sha512-SQ3wZCExjeSatLE/HBaXS5vqUOQk6GtBdIIKxiFdmm01mOQZX/POJkO3SUX1wDiYcwUOJwT23scFSC9fY2H8IA==}
-    engines: {node: '>=6.0.0'}
-
   nodemailer@7.0.3:
     resolution: {integrity: sha512-Ajq6Sz1x7cIK3pN6KesGTah+1gnwMnx5gKl3piQlQQE/PwyJ4Mbc8is2psWYxK3RJTVeqsDaCv8ZzXLCDHMTZw==}
     engines: {node: '>=6.0.0'}
@@ -5179,8 +5175,8 @@ packages:
   pino-std-serializers@7.0.0:
     resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
 
-  pino@9.6.0:
-    resolution: {integrity: sha512-i85pKRCt4qMjZ1+L7sy2Ag4t1atFcdbEt76+7iRJn1g2BvsnRMGu9p8pivl9fs63M2kF/A0OacFZhTub+m/qMg==}
+  pino@9.7.0:
+    resolution: {integrity: sha512-vnMCM6xZTb1WDmLvtG2lE/2p+t9hDEIvTWJsu6FejkE62vB7gDhvzrpFR4Cw2to+9JNQxVnkAKVPA1KPB98vWg==}
     hasBin: true
 
   pluralize@8.0.0:
@@ -5228,8 +5224,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  process-warning@4.0.1:
-    resolution: {integrity: sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q==}
+  process-warning@5.0.0:
+    resolution: {integrity: sha512-a39t9ApHNx2L4+HBnQKqxxHNs1r7KF+Intd8Q/g1bUh6q0WIp9voPXJ/x0j+ZL45KF1pJd9+q2jLIRMfvEshkA==}
 
   progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -10426,7 +10422,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.186:
+  imapflow@1.0.187:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.6.3
@@ -10434,8 +10430,8 @@ snapshots:
       libmime: 5.3.6
       libqp: 2.1.1
       mailsplit: 5.4.3
-      nodemailer: 6.10.0
-      pino: 9.6.0
+      nodemailer: 7.0.3
+      pino: 9.7.0
       socks: 2.8.4
 
   import-fresh@3.3.1:
@@ -11319,8 +11315,6 @@ snapshots:
 
   node-releases@2.0.19: {}
 
-  nodemailer@6.10.0: {}
-
   nodemailer@7.0.3: {}
 
   nopt@7.2.1:
@@ -11599,14 +11593,14 @@ snapshots:
 
   pino-std-serializers@7.0.0: {}
 
-  pino@9.6.0:
+  pino@9.7.0:
     dependencies:
       atomic-sleep: 1.0.0
       fast-redact: 3.5.0
       on-exit-leak-free: 2.1.2
       pino-abstract-transport: 2.0.0
       pino-std-serializers: 7.0.0
-      process-warning: 4.0.1
+      process-warning: 5.0.0
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.5.0
@@ -11663,7 +11657,7 @@ snapshots:
 
   prettier@3.5.3: {}
 
-  process-warning@4.0.1: {}
+  process-warning@5.0.0: {}
 
   progress@2.0.3: {}
 
