@@ -9,9 +9,7 @@ export const fetchArticleContent = async (url: string): Promise<string> => {
     const data = await ofetch(url, { responseType: 'text' });
     const $ = load(data);
 
-    const mainContentSelector = String.raw`.max-xl\:max-w-\(--breakpoint-md\):nth-of-type(4)`;
-
-    return $(mainContentSelector).children().first().html() ?? '';
+    return $('article.prose').html() ?? '';
 };
 
 /** Fetch the feed object. */
