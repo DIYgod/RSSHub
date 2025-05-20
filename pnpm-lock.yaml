@@ -33,7 +33,7 @@ importers:
         version: 1.14.1(hono@4.7.10)
       '@hono/zod-openapi':
         specifier: 0.19.6
-        version: 0.19.6(hono@4.7.10)(zod@3.24.4)
+        version: 0.19.6(hono@4.7.10)(zod@3.25.7)
       '@notionhq/client':
         specifier: 3.0.1
         version: 3.0.1
@@ -284,8 +284,8 @@ importers:
         specifier: 13.4.0
         version: 13.4.0
       zod:
-        specifier: 3.24.4
-        version: 3.24.4
+        specifier: 3.25.7
+        version: 3.25.7
     devDependencies:
       '@babel/preset-env':
         specifier: 7.27.2
@@ -6458,8 +6458,8 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
-  zod@3.24.4:
-    resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
+  zod@3.25.7:
+    resolution: {integrity: sha512-YGdT1cVRmKkOg6Sq7vY7IkxdphySKnXhaUmFI4r4FcuFVNgpCb9tZfNwXbT6BPjD5oz0nubFsoo9pIqKrDcCvg==}
 
 snapshots:
 
@@ -6476,10 +6476,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.3
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.24.4)':
+  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.25.7)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.24.4
+      zod: 3.25.7
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -7494,17 +7494,17 @@ snapshots:
     dependencies:
       hono: 4.7.10
 
-  '@hono/zod-openapi@0.19.6(hono@4.7.10)(zod@3.24.4)':
+  '@hono/zod-openapi@0.19.6(hono@4.7.10)(zod@3.25.7)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.4)
-      '@hono/zod-validator': 0.5.0(hono@4.7.10)(zod@3.24.4)
+      '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.25.7)
+      '@hono/zod-validator': 0.5.0(hono@4.7.10)(zod@3.25.7)
       hono: 4.7.10
-      zod: 3.24.4
+      zod: 3.25.7
 
-  '@hono/zod-validator@0.5.0(hono@4.7.10)(zod@3.24.4)':
+  '@hono/zod-validator@0.5.0(hono@4.7.10)(zod@3.25.7)':
     dependencies:
       hono: 4.7.10
-      zod: 3.24.4
+      zod: 3.25.7
 
   '@humanfs/core@0.19.1': {}
 
@@ -12951,4 +12951,4 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zod@3.24.4: {}
+  zod@3.25.7: {}
