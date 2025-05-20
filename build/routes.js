@@ -96518,6 +96518,34 @@ export default {
     "url": "public.tableau.com",
     "lang": "en"
   },
+  "tailwindcss": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/tailwindcss/blog",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Blog",
+        "maintainers": [
+          "goestav"
+        ],
+        "location": "blog.ts",
+        "module": () => import('@/routes/tailwindcss/blog.ts')
+      }
+    },
+    "name": "TailwindCSS",
+    "url": "tailwindcss.com",
+    "lang": "en"
+  },
   "taiwanmobile": {
     "routes": {
       "/rate-plans": {
