@@ -126,11 +126,12 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
         author: string;
         guid: string;
         pubDate: Date;
+        updated: Date;
     }> = [];
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {
             const link = `${urlPrex}/${id}`;
-            const { title, description, pubDate } = await getFullNote(link, displayLivePhoto);
+            const { title, description, pubDate, updated } = await getFullNote(link, displayLivePhoto);
             return {
                 title,
                 link,
@@ -138,6 +139,7 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
                 author: noteCard.user.nickName,
                 guid: noteCard.noteId,
                 pubDate,
+                updated,
             };
         })
     );
@@ -159,7 +161,8 @@ async function getFullNote(link, displayLivePhoto) {
         desc = desc.replaceAll(/\[.*?\]/g, '');
         desc = desc.replaceAll(/#(.*?)#/g, '#$1');
         desc = desc.replaceAll('\n', '<br>');
-        const pubDate = new Date(note.time);
+        const pubDate = parseDate(note.time, 'x');
+        const updated = parseDate(note.lastUpdateTime, 'x');
 
         let mediaContent = '';
         if (note.type === 'video') {
@@ -223,11 +226,12 @@ async function getFullNote(link, displayLivePhoto) {
 
         const description = `${mediaContent}<br>${title}<br>${desc}`;
         return {
-            title,
+            title: title || note.desc,
             description,
             pubDate,
+            updated,
         };
-    })) as Promise<{ title: string; description: string; pubDate: Date }>;
+    })) as Promise<{ title: string; description: string; pubDate: Date; updated: Date }>;
     return data;
 }
 
