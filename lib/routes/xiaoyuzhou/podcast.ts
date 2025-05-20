@@ -74,7 +74,7 @@ async function handler(ctx) {
         enclosure_type: 'audio/mpeg',
         link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
         pubDate: parseDate(item.pubDate),
-        description: item.shownotes,
+        description: item.description.replaceAll('\n', '<br>') || item.shownotes,
         itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
     }));
 
