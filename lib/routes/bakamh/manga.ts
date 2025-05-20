@@ -1,9 +1,8 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import {load} from 'cheerio';
+import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-
 
 const url = 'https://bakamh.com';
 
