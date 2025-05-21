@@ -8,6 +8,7 @@ process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
 
 const routes = {
     '/test/:id': '/test/1',
+    '/aibase/daily': '/aibase/daily',
 };
 if (process.env.FULL_ROUTES_TEST) {
     const { namespaces } = await import('@/registry');
@@ -41,6 +42,11 @@ async function checkRSS(response) {
     expect(parsed).toEqual(expect.any(Object));
     expect(parsed.title).toEqual(expect.any(String));
     expect(parsed.title).not.toBe('RSSHub');
+    // For /aibase/daily, check specific title and link
+    if (response.url.endsWith('/aibase/daily')) {
+        expect(parsed.title).toBe('AI日报');
+        expect(parsed.link).toBe('https://www.aibase.com/daily');
+    }
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
