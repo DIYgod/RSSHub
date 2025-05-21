@@ -122,8 +122,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       googleapis:
-        specifier: 148.0.0
-        version: 148.0.0
+        specifier: 149.0.0
+        version: 149.0.0
       hono:
         specifier: 4.7.10
         version: 4.7.10
@@ -3925,8 +3925,8 @@ packages:
     resolution: {integrity: sha512-/fhDZEJZvOV3X5jmD+fKxMqma5q2Q9nZNSF3kn1F18tpxmA86BcTxAGBQdM0N89Z3bEaIs+HVznSmFJEAmMTjA==}
     engines: {node: '>=14.0.0'}
 
-  googleapis@148.0.0:
-    resolution: {integrity: sha512-8PDG5VItm6E1TdZWDqtRrUJSlBcNwz0/MwCa6AL81y/RxPGXJRUwKqGZfCoVX1ZBbfr3I4NkDxBmeTyOAZSWqw==}
+  googleapis@149.0.0:
+    resolution: {integrity: sha512-LTMc/njwYy7KTeaUHDcQt7KxftHyghdzm2XzbL46PRLd1AXB09utT9Po2ZJn2X0EApz0pE2T5x5A9zM8iue6zw==}
     engines: {node: '>=14.0.0'}
 
   got@12.6.1:
@@ -4397,8 +4397,8 @@ packages:
   jsrsasign@10.9.0:
     resolution: {integrity: sha512-QWLUikj1SBJGuyGK8tjKSx3K7Y69KYJnrs/pQ1KZ6wvZIkHkWjZ1PJDpuvc1/28c1uP0KW9qn1eI1LzHQqDOwQ==}
 
-  jwa@2.0.0:
-    resolution: {integrity: sha512-jrZ2Qx916EA+fq9cEAeCROWPTfCwi1IVHqT2tapuqLEVVDKFDENFw1oL+MwrTvH6msKxsd1YTDVw6uKEcsrLEA==}
+  jwa@2.0.1:
+    resolution: {integrity: sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg==}
 
   jws@4.0.0:
     resolution: {integrity: sha512-KDncfTmOZoOMTFG4mBlG0qUIOlc03fmzH+ru6RgYVZhPkyiy/92Owlt/8UEN+a4TXR1FQetfIpJE8ApdvdVxTg==}
@@ -10227,7 +10227,7 @@ snapshots:
       - encoding
       - supports-color
 
-  googleapis@148.0.0:
+  googleapis@149.0.0:
     dependencies:
       google-auth-library: 9.15.1
       googleapis-common: 7.2.0
@@ -10744,7 +10744,7 @@ snapshots:
 
   jsrsasign@10.9.0: {}
 
-  jwa@2.0.0:
+  jwa@2.0.1:
     dependencies:
       buffer-equal-constant-time: 1.0.1
       ecdsa-sig-formatter: 1.0.11
@@ -10752,7 +10752,7 @@ snapshots:
 
   jws@4.0.0:
     dependencies:
-      jwa: 2.0.0
+      jwa: 2.0.1
       safe-buffer: '@nolyfill/safe-buffer@1.0.44'
 
   keyv@4.5.4:
