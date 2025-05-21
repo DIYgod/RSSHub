@@ -5,9 +5,9 @@ import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/blog',
+    path: '/code/blog',
     categories: ['programming'],
-    example: '/vscode/blog',
+    example: '/visualstudio/code/blog',
     parameters: {},
     features: {
         requireConfig: false,
@@ -20,10 +20,10 @@ export const route: Route = {
     radar: [
         {
             source: ['code.visualstudio.com/'],
-            target: '/blog',
+            target: '/code/blog',
         },
     ],
-    name: 'Blog',
+    name: 'Code Blog',
     maintainers: ['cscnk52'],
     handler,
     description: `Provides a better reading experience (full articles) over the official ones.`,
