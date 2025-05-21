@@ -23567,7 +23567,7 @@
         ],
         "name": "制作者 / 游戏新闻",
         "maintainers": [
-          "chengyuhui"
+          "kmod-midori"
         ],
         "location": "entry.ts",
         "module": "() => import('@/routes/cngal/entry.ts')"
@@ -23599,7 +23599,7 @@
         ],
         "name": "每周速报",
         "maintainers": [
-          "chengyuhui"
+          "kmod-midori"
         ],
         "url": "www.cngal.org/",
         "location": "weekly.ts",
@@ -34087,7 +34087,7 @@
         },
         "name": "FINAL FANTASY XIV (The Lodestone)",
         "maintainers": [
-          "chengyuhui"
+          "kmod-midori"
         ],
         "description": "Region\n\n| North Ameria | Europe | France | Germany | Japan |\n| ------------ | ------ | ------ | ------- | ----- |\n| na           | eu     | fr     | de      | jp    |\n\n  Category\n\n| all | topics | notices | maintenance | updates | status | developers |\n| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |",
         "location": "ff14-global.ts",
@@ -34116,7 +34116,7 @@
         },
         "name": "FINAL FANTASY XIV (The Lodestone)",
         "maintainers": [
-          "chengyuhui"
+          "kmod-midori"
         ],
         "description": "Region\n\n| North Ameria | Europe | France | Germany | Japan |\n| ------------ | ------ | ------ | ------- | ----- |\n| na           | eu     | fr     | de      | jp    |\n\n  Category\n\n| all | topics | notices | maintenance | updates | status | developers |\n| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |",
         "location": "ff14-global.ts",
