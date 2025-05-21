@@ -32,7 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const entryId = ctx.req.param('id');
 
-    const response = await got(`https://www.cngal.org/api/entries/GetEntryView/${entryId}`);
+    const response = await got(`https://api.cngal.org/api/entries/GetEntryView/${entryId}`);
 
     const data = response.data;
 
