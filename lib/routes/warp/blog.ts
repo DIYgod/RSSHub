@@ -65,6 +65,7 @@ async function handler() {
     return {
         title: feed.title,
         link: feed.link,
+        description: feed.description,
         item: items,
         language: 'en',
     } as Data;
