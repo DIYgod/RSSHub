@@ -163,7 +163,7 @@
         "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "22.15.19",
+        "@types/node": "22.15.21",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
         "@types/title": "3.4.3",
