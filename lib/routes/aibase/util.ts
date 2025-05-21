@@ -56,12 +56,15 @@ const buildApiUrl = async ($: CheerioAPI) => {
     const apiTagProcUrl = new URL(`${token}/ai/GetAiProductOfTag.aspx`, apiRootUrl).href;
     // AI 资讯列表
     const apiInfoListUrl = new URL(`${token}/ai/GetAiInfoList.aspx`, apiRootUrl).href;
+    // AI 日报
+    const aILogListUrl = new URL(`${token}/ai/v2/GetAILogList.aspx`, apiRootUrl).href;
 
     return {
         apiRecommListUrl,
         apiRecommProcUrl,
         apiTagProcUrl,
         apiInfoListUrl,
+        aILogListUrl,
     };
 };
 
