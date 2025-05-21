@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
+    const response = await got('https://api.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
         title: 'CnGal - 每周速报',
