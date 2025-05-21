@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '每周速报',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
     url: 'www.cngal.org/',
 };

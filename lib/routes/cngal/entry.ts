@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '制作者 / 游戏新闻',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
 };
 
