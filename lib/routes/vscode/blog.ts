@@ -23,7 +23,7 @@ export const route: Route = {
             target: '/blog',
         },
     ],
-    name: 'Visual Studio Code Blog',
+    name: 'Blog',
     maintainers: ['cscnk52'],
     handler,
     description: `Provides a better reading experience (full articles) over the official ones.`,
