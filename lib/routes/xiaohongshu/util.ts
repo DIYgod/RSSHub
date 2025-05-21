@@ -224,7 +224,7 @@ async function getFullNote(link, displayLivePhoto) {
                 .join('<br>');
         }
 
-        const description = `${mediaContent}<br>${title}<br>${desc}`;
+        const description = `${mediaContent}<br>${desc}`;
         return {
             title: title || note.desc,
             description,
