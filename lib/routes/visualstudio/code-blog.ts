@@ -1,4 +1,4 @@
-import { Route, DataItem, Data } from '@/types';
+import { Route, DataItem, Data, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/code/blog',
     categories: ['programming'],
     example: '/visualstudio/code/blog',
+    url: 'code.visualstudio.com',
     parameters: {},
     features: {
         requireConfig: false,
@@ -27,6 +28,7 @@ export const route: Route = {
     maintainers: ['cscnk52'],
     handler,
     description: `Provides a better reading experience (full articles) over the official ones.`,
+    view: ViewType.Notifications,
 };
 
 async function handler() {
