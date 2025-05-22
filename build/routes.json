@@ -103942,6 +103942,46 @@
       "study"
     ]
   },
+  "visualstudio": {
+    "routes": {
+      "/code/blog": {
+        "path": "/code/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/visualstudio/code/blog",
+        "url": "code.visualstudio.com",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "code.visualstudio.com/"
+            ],
+            "target": "/code/blog"
+          }
+        ],
+        "name": "Code Blog",
+        "maintainers": [
+          "cscnk52"
+        ],
+        "description": "Provides a better reading experience (full articles) over the official ones.",
+        "view": 5,
+        "location": "code-blog.ts",
+        "module": "() => import('@/routes/visualstudio/code-blog.ts')"
+      }
+    },
+    "name": "Visual Studio",
+    "url": "visualstudio.com",
+    "lang": "en"
+  },
   "vocus": {
     "routes": {
       "/publication/:id": {

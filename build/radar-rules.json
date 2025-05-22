@@ -37243,6 +37243,19 @@
       }
     ]
   },
+  "visualstudio.com": {
+    "_name": "Visual Studio",
+    "code": [
+      {
+        "title": "Code Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/visualstudio/code/blog"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
