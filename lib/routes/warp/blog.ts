@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['cscnk52'],
     handler,
-    description: `Provides a better reading experience (full articles) over the official ones.`,
+    description: 'Provides a better reading experience (full articles) over the official ones.',
     view: ViewType.Notifications,
 };
 
