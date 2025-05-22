@@ -74,6 +74,38 @@ export const route: Route = {
     ],
 };
 
+const langMap = {
+    english: 'en',
+    german: 'de',
+    french: 'fr',
+    italian: 'it',
+    korean: 'ko',
+    spanish: 'es',
+    schinese: 'zh-Hans',
+    tchinese: 'zh-Hant',
+    japanese: 'ja',
+    portuguese: 'pt-PT',
+    brazilian: 'pt-BR',
+    russian: 'ru',
+    polish: 'pl',
+    danish: 'da',
+    dutch: 'nl',
+    finnish: 'fi',
+    norwegian: 'no',
+    swedish: 'sv',
+    czech: 'cs',
+    hungarian: 'hu',
+    turkish: 'tr',
+    thai: 'th',
+    ukrainian: 'uk',
+    vietnamese: 'vi',
+    romanian: 'ro',
+    greek: 'el',
+    arabic: 'ar',
+    latam: 'es-419',
+    bulgarian: 'bg',
+};
+
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
@@ -96,14 +128,14 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items: DataItem[] = response.events.slice(0, limit).map((item): DataItem => {
         const title = item.event_name;
-        const description = bbobHTML(
+        const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
                 .replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
             [customPreset(), swapLinebreak]
-        );
+        )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
         const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
         const capsuleImage = jsondata.localized_capsule_image ? jsondata.localized_capsule_image[0] : null;
@@ -128,6 +160,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `App ${appid} News`,
         link: new URL(`app/${appid}/allnews/`, rootUrl).href,
         item: items,
+        language: langMap[language] || null,
     };
 }
 
