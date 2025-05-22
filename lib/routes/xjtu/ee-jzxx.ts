@@ -1,4 +1,4 @@
-import { Data, Route } from '@/types';
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -32,19 +32,14 @@ export const route: Route = {
 
 | 主页 | 本科生 | 研究生 | 科研学术 | 采购招标 | 招聘就业 | 行政办公
 | --- | ----- | ----- | ------ | ------- | ------ | ------
-|  -  |  bks  |  yjs  |  kyxs  |   cgzb  |  zpjy  | xzbg  `
+|  -  |  bks  |  yjs  |  kyxs  |   cgzb  |  zpjy  | xzbg  `,
 };
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? ''; // 默认是首页
     const baseUrl = 'https://ee.xjtu.edu.cn';
-    let rootUrl;
 
-    if (category === 'bks' || category === 'yjs' || category === 'kyxs' || category === 'cgzb' || category === 'zpjy' || category === 'xzbg') {
-        rootUrl = `${baseUrl}/jzxx/${category}.htm`;
-    } else {
-        rootUrl = `${baseUrl}/jzxx.htm`;
-    }
+    const rootUrl = ['bks', 'yjs', 'kyxs', 'cgzb', 'zpjy', 'xzbg'].includes(category) ? `${baseUrl}/jzxx/${category}.htm` : `${baseUrl}/jzxx.htm`;
 
     const response = await got(rootUrl);
     const $ = load(response.data);
@@ -56,7 +51,6 @@ async function handler(ctx) {
             const a = item.find('a');
             const title = a.text();
             const href = a.attr('href');
-        
             if (!href) {
                 return null; // 过滤无效链接
             }
@@ -65,7 +59,8 @@ async function handler(ctx) {
                 title,
                 link: new URL(href, baseUrl).href,
             };
-        }).filter((item): item is { title: string; link: string } => item !== null); 
+        })
+        .filter((item): item is { title: string; link: string } => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -88,8 +83,17 @@ async function handler(ctx) {
             })
         )
     );
+    const categoryMap = {
+        bks: '本科生',
+        yjs: '研究生',
+        kyxs: '科研学术',
+        cgzb: '采购招标',
+        zpjy: '招聘就业',
+        xzbg: '行政办公',
+    };
+
     return {
-        title: `西安交通大学电气学院通知 - ${category === 'bks' ? '本科生' : category === 'yjs' ? '研究生' : category === 'kyxs' ? '科研学术' : category === 'cgzb' ? '采购招标' : category === 'zpjy' ? '招聘就业' : category === 'xzbg' ? '行政办公' : '通知首页'}`,
+        title: `西安交通大学电气学院通知 - ${categoryMap[category] || '通知首页'}`, // 使用对象查找配合默认值
         link: rootUrl,
         item: items,
     };
