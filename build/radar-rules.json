@@ -5167,6 +5167,14 @@
           "/:country/service-programs"
         ],
         "target": "/apple/exchange_repair/:country"
+      },
+      {
+        "title": "Security releases",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:language/100100"
+        ],
+        "target": "/appleparams=>{const language=params.language;return`/apple/security-releases${language?`/${language}`:\"\"}`}"
       }
     ],
     "podcasts": [

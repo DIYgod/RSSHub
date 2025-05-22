@@ -582,6 +582,9 @@
   "/apple/podcast/:id/:region?": [
     "Acring"
   ],
+  "/apple/security-releases/:language?": [
+    "nczitzk"
+  ],
   "/appleinsider/:category?": [
     "nczitzk"
   ],
