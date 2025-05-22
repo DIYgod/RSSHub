@@ -13,7 +13,7 @@ export const route: Route = {
     url: 'steamcommunity.com',
     maintainers: ['keocheung'],
     handler,
-    example: '/news/958260',
+    example: '/news/958260/english',
     parameters: {
         appid: 'Game App ID, all digits, can be found in the URL',
         language: 'Language, english by default, see below for more languages',
@@ -75,7 +75,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const { appid = '1810920', language = 'english' } = ctx.req.param();
+    const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
     const limit = limitQuery ? Number.parseInt(limitQuery, 10) : 100;
 
@@ -96,25 +96,37 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items: DataItem[] = response.events.slice(0, limit).map((item): DataItem => {
         const title = item.event_name;
-        const description = bbobHTML(item.announcement_body.body.replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl), [customPreset(), swapLinebreak]);
+        const description = bbobHTML(
+            item.announcement_body.body
+                .replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl)
+                .replaceAll('[olist]', '[list=1]')
+                .replaceAll('[/olist]', '[/list]')
+                .replaceAll(/\[previewyoutube=([A-Za-z0-9_\-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
+            [customPreset(), swapLinebreak]
+        );
+        const jsondata = JSON.parse(item.jsondata);
+        const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
+        const capsuleImage = jsondata.localized_capsule_image ? jsondata.localized_capsule_image[0] : null;
 
         return {
             title,
             description,
             pubDate: parseDate(item.announcement_body.posttime, 'X'),
-            link: new URL(`games/${appid}/announcements/details/${item.announcement_body.gid}`, rootUrl).href,
+            link: new URL(`games/${appid}/announcements/detail/${item.announcement_body.gid}`, rootUrl).href,
             category: item.announcement_body.tags,
             content: {
                 html: description,
                 text: item.announcement_body.body,
             },
             updated: parseDate(item.announcement_body.updatetime, 'X'),
+            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, cdnRootUrl).href,
+            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, cdnRootUrl).href,
         };
     });
 
     return {
         title: `App ${appid} News`,
-        link: `https://steamcommunity.com/app/${appid}/allnews/`,
+        link: new URL(`app/${appid}/allnews/`, rootUrl).href,
         item: items,
     };
 }
