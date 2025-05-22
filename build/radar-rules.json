@@ -38225,6 +38225,14 @@
     "_name": "西安交通大学",
     "ee": [
       {
+        "title": "电气学院通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jzxx/:category?.htm"
+        ],
+        "target": "/xjtu/ee/jzxx/:category?"
+      },
+      {
         "title": "电气学院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [

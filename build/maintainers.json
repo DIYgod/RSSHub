@@ -8264,6 +8264,9 @@
   "/xjtu/dean/:subpath{.+}": [
     "hoilc"
   ],
+  "/xjtu/ee/jzxx/:category?": [
+    "riverflows2333"
+  ],
   "/xjtu/ee/:id?": [
     "DylanXie123"
   ],

@@ -108534,6 +108534,38 @@ export default {
         "location": "dean.ts",
         "module": () => import('@/routes/xjtu/dean.ts')
       },
+      "/ee/jzxx/:category?": {
+        "path": "/ee/jzxx/:category?",
+        "categories": [
+          "university"
+        ],
+        "example": "/xjtu/ee/jzxx/bks",
+        "parameters": {
+          "category": "类别：`bks`，默认为首页，详情在描述中"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ee.xjtu.edu.cn/jzxx/:category?.htm"
+            ]
+          }
+        ],
+        "name": "电气学院通知",
+        "maintainers": [
+          "riverflows2333"
+        ],
+        "description": "栏目类型\n\n| 主页 | 本科生 | 研究生 | 科研学术 | 采购招标 | 招聘就业 | 行政办公\n| --- | ----- | ----- | ------ | ------- | ------ | ------\n|  -  |  bks  |  yjs  |  kyxs  |   cgzb  |  zpjy  | xzbg  ",
+        "location": "ee-jzxx.ts",
+        "module": () => import('@/routes/xjtu/ee-jzxx.ts')
+      },
       "/ee/:id?": {
         "path": "/ee/:id?",
         "categories": [
