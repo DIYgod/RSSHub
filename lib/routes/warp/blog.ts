@@ -47,7 +47,12 @@ async function handler() {
                 main.find('[style]').removeAttr('style');
                 main.find('[class]').removeAttr('class');
                 main.find('[id]').removeAttr('id');
+                main.find('[preload]').removeAttr('preload');
                 main.find('script').remove();
+                main.find('figcaption').remove();
+
+                // remove title, time and button
+                main.find('section').first().find('div').first().remove();
 
                 item.content = main.html() as string;
 
