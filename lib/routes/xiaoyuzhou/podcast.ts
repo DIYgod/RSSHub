@@ -78,15 +78,14 @@ async function handler(ctx) {
         itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
     }));
 
-    // JSON no longer return 'shownotes'
-    // and 'description' don't contain image tag, only return text
-    // so fetch HTML content from episode page
     episodes = await Promise.all(
         episodes.map((item) =>
             cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
-                $ = load(data);
-                item.description = $('article').html() || item.title;
+                const eid = item.link.match(/episode\/([a-zA-Z0-9]+)/)[1];
+                const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${page_data.buildId}/episode/${eid}.json`;
+                const response = await ofetch(episodeLink);
+                const episodeItem = response.pageProps.episode;
+                item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
                 return item as DataItem;
             })
         )
