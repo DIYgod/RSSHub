@@ -108198,7 +108198,8 @@ export default {
         "maintainers": [
           "hondajojo",
           "jtsang4",
-          "pseudoyu"
+          "pseudoyu",
+          "cscnk52"
         ],
         "url": "xiaoyuzhoufm.com/",
         "location": "podcast.ts",
