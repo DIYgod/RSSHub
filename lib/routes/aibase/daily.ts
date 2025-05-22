@@ -19,9 +19,9 @@ export const route: Route = {
         const $ = load(currentHtml);
         const logoSrc = $('img.logo').prop('src');
         const image = logoSrc ? new URL(logoSrc, rootUrl).href : '';
-        const author = $('title').text().split(/_/).pop();
+        const author = 'AI Base';
         const { aILogListUrl } = await buildApiUrl($);
-        const response: NewsItem[] = await ofetch(aILogListUrl, {
+        const response: DailyData = await ofetch(aILogListUrl, {
             headers: {
                 accept: 'application/json;charset=utf-8',
             },
@@ -32,27 +32,27 @@ export const route: Route = {
                 isen: 0,
             },
         });
+        if (!response || !response.data) {
+            throw new Error('日报数据不存在或为空');
+        }
         const items = await Promise.all(
             response.data.slice(0, limit).map(async (item) => {
                 const articleUrl = `https://www.aibase.com/zh/news/${item.Id}`;
-                const description = await cache.tryGet(articleUrl, async () => {
-                    try {
-                        const articleHtml = await ofetch(articleUrl);
-                        const $ = load(articleHtml);
-                        const content = $('.post-content').html() || item.summary;
-                        return content ?? item.summary;
-                    } catch {
-                        return item.summary;
+                return await cache.tryGet(articleUrl, async () => {
+                    const articleHtml = await ofetch(articleUrl);
+                    const $ = load(articleHtml);
+                    const description = $('.post-content').html();
+                    if (!description) {
+                        throw new Error(`Empty content: ${articleUrl}`);
                     }
+                    return {
+                        title: item.title,
+                        link: articleUrl,
+                        description,
+                        pubDate: parseDate(item.addtime),
+                        author: 'AI Base',
+                    };
                 });
-
-                return {
-                    title: item.title,
-                    link: articleUrl,
-                    description,
-                    pubDate: parseDate(item.addtime),
-                    author: item.author || 'AI Base',
-                };
             })
         );
 
@@ -69,7 +69,7 @@ export const route: Route = {
     },
     example: '/aibase/daily',
     description: '获取 AI 日报',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -87,43 +87,24 @@ export const route: Route = {
     ],
 };
 
-/** API 返回的资讯结构 */
-interface NewsItem {
+interface DailyData {
+    has_more: boolean;
+    message: string;
+    data: DailyItem[];
+}
+interface DailyItem {
     /** 文章 ID */
     Id: number;
+    /** 添加时间 */
+    addtime: string;
     /** 文章标题 */
     title: string;
     /** 文章副标题 */
     subtitle: string;
     /** 文章简要描述 */
-    description: string;
+    desc: string;
     /** 文章主图 */
-    thumb: string;
-    classname: string;
-    /** 正文总结 */
-    summary: string;
-    /** 标签，字符串，样例：[\"人工智能\",\"Hingham高中\"] */
-    tags: string;
-    /** 可能是来源 */
-    sourcename: string;
-    /** 作者 */
-    author: string;
-    status: number;
-    url: string;
-    type: number;
-    added: number;
-    /** 添加时间 */
-    addtime: string;
-    /** 更新时间 */
-    upded: number;
-    updtime: string;
-    isshoulu: number;
-    vurl: string;
-    vsize: number;
-    weight: number;
-    isailog: number;
-    sites: string;
-    categrates: string;
-    /** 访问量 */
-    pv: number;
+    orgthumb: string;
+    playtime: number;
+    pv: string;
 }
