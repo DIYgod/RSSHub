@@ -13,7 +13,7 @@ export const route: Route = {
 
 async function handler() {
     const hostURL = 'https://www.chub.ai/characters';
-    const apiURL = 'https://api.chub.ai/search'';
+    const apiURL = 'https://api.chub.ai/search';
     const { data } = await ofetch(apiURL, {
         headers: { Accept: 'application/json' },
         query: {
