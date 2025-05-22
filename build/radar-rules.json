@@ -38931,6 +38931,19 @@
       }
     ]
   },
+  "zed.dev": {
+    "_name": "Zed",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/zed/blog"
+      }
+    ]
+  },
   "zhibo8.cc": {
     "_name": "直播吧",
     ".": [

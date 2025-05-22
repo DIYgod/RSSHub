@@ -111894,6 +111894,46 @@ export default {
     "url": "www.zcool.com.cn",
     "lang": "zh-CN"
   },
+  "zed": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/zed/blog",
+        "url": "zed.dev",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "zed.dev"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "name": "Blog",
+        "maintainers": [
+          "cscnk52"
+        ],
+        "description": "Provides a better reading experience (full articles) over the official ones.",
+        "view": 5,
+        "location": "blog.ts",
+        "module": () => import('@/routes/zed/blog.ts')
+      }
+    },
+    "name": "Zed",
+    "url": "zed.dev",
+    "lang": "en"
+  },
   "zhibo8": {
     "routes": {
       "/forum/:id": {
