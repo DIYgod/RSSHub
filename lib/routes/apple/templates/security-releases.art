@@ -1,0 +1,28 @@
+{{ if headers && infos }}
+  <table>
+    <tbody>
+      {{ if headers.length > 0 }}
+        <tr>
+          {{ each headers header }}
+            <th>
+              {{ header }}
+            </th>
+          {{ /each }}
+        </tr>
+      {{ /if }}
+      {{ if infos.length > 0 }}
+        <tr>
+          {{ each infos info }}
+            <td>
+              {{@ info }}
+            </td>
+          {{ /each }}
+        </tr>
+      {{ /if }}
+    </tbody>
+  </table>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}
