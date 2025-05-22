@@ -74,6 +74,7 @@ async function handler(ctx) {
         itunes_duration: item.duration,
         enclosure_type: 'audio/mpeg',
         link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
+        eid: item.eid,
         pubDate: parseDate(item.pubDate),
         itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
     }));
@@ -81,8 +82,7 @@ async function handler(ctx) {
     episodes = await Promise.all(
         episodes.map((item) =>
             cache.tryGet(item.link, async () => {
-                const eid = item.link.match(/episode\/([a-zA-Z0-9]+)/)[1];
-                const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${page_data.buildId}/episode/${eid}.json`;
+                const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${page_data.buildId}/episode/${item.eid}.json`;
                 const response = await ofetch(episodeLink);
                 const episodeItem = response.pageProps.episode;
                 item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
