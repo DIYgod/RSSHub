@@ -40,6 +40,10 @@ async function handler() {
                 const data = await ofetch(item.link as string);
                 const $ = load(data);
 
+                // remove title and time
+                $('main h1').first().remove();
+                $('main p').first().remove();
+
                 item.content = $('main').html() as string;
 
                 return {
