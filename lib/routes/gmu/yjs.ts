@@ -105,96 +105,94 @@ export async function handler(ctx) {
         throw new Error('No content found. The page structure might have changed.');
     }
 
-    const items = await Promise.all(
-        list
-            .toArray()
-            .map(async (item) => {
-                const element = $(item);
+    // Extract item processing logic to a separate function to reduce complexity
+    async function processYjsItem(item, type, subtype, baseUrl, link) {
+        const element = $(item);
 
-                // 针对不同栏目适配不同结构
-                let a, dateText, itemTitle, description;
-                if (["bmgk", "xzzx"].includes(type)) {
-                    // 适配部门概况、下载中心等栏目
-                    a = element.find('a').first();
-                    dateText = element.find('span.time').text().trim() || '';
-                    itemTitle = a.text().trim();
-                    description = element.find('p').text().trim() || '';
-                } else if (type === 'xsgz' && subtype === 'xshd') {
-                    // 适配学生活动特殊结构
-                    a = element.find('a').first();
-                    dateText = element.find('span.time').text().trim() || '';
-                    itemTitle = a.text().trim();
-                    description = element.find('p').text().trim() || '';
-                } else {
-                    // 默认结构
-                    a = element.find('h2 a').first();
-                    dateText = element.find('h2 span.time').text().trim();
-                    itemTitle = a.text().trim();
-                    description = element.find('p').text().trim();
-                }
+        // 针对不同栏目适配不同结构
+        let a, dateText, itemTitle, description;
+        if (['bmgk', 'xzzx'].includes(type)) {
+            // 适配部门概况、下载中心等栏目
+            a = element.find('a').first();
+            dateText = element.find('span.time').text().trim() || '';
+            itemTitle = a.text().trim();
+            description = element.find('p').text().trim() || '';
+        } else if (type === 'xsgz' && subtype === 'xshd') {
+            // 适配学生活动特殊结构
+            a = element.find('a').first();
+            dateText = element.find('span.time').text().trim() || '';
+            itemTitle = a.text().trim();
+            description = element.find('p').text().trim() || '';
+        } else {
+            // 默认结构
+            a = element.find('h2 a').first();
+            dateText = element.find('h2 span.time').text().trim();
+            itemTitle = a.text().trim();
+            description = element.find('p').text().trim();
+        }
 
-                const href = a.attr('href');
+        const href = a.attr('href');
 
-                if (!href || !itemTitle) {
-                    return null;
-                }
+        if (!href || !itemTitle) {
+            return null;
+        }
 
-                const pubDate = parseDate(dateText);
-                if (!pubDate) {
-                    return null;
-                }
+        const pubDate = parseDate(dateText);
+        if (!pubDate) {
+            return null;
+        }
 
-                let fullLink = href;
-                if (href.startsWith('/')) {
-                    fullLink = new URL(href, baseUrl).href;
-                } else if (!href.startsWith('http')) {
-                    const currentPath = new URL(link).pathname;
-                    const basePath = currentPath.slice(0, Math.max(0, currentPath.lastIndexOf('/') + 1));
-                    fullLink = new URL(basePath + href, baseUrl).href;
-                }
+        let fullLink = href;
+        if (href.startsWith('/')) {
+            fullLink = new URL(href, baseUrl).href;
+        } else if (!href.startsWith('http')) {
+            const currentPath = new URL(link).pathname;
+            const basePath = currentPath.slice(0, Math.max(0, currentPath.lastIndexOf('/') + 1));
+            fullLink = new URL(basePath + href, baseUrl).href;
+        }
 
-                try {
-                    const contentResponse = await got(fullLink, {
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                        timeout: 10000,
-                        retry: 3,
-                    });
-                    const content = load(contentResponse.data);
+        try {
+            const contentResponse = await got(fullLink, {
+                https: {
+                    rejectUnauthorized: false,
+                },
+                timeout: 10000,
+                retry: 3,
+            });
+            const content = load(contentResponse.data);
 
-                    // 更新选择器以适应研究生院网站的文章页面结构
-                    const articleTitle = content('.winstyle196327 .title').text().trim() || itemTitle;
-                    const articleInfo = content('.winstyle196327 .info').text().trim();
-                    const articleContent = content('.winstyle196327 .content').html() || description;
+            // 更新选择器以适应研究生院网站的文章页面结构
+            const articleTitle = content('.winstyle196327 .title').text().trim() || itemTitle;
+            const articleInfo = content('.winstyle196327 .info').text().trim();
+            const articleContent = content('.winstyle196327 .content').html() || description;
 
-                    const fullDescription = `
-                        <h1>${articleTitle}</h1>
-                        <div class="article-info">${articleInfo}</div>
-                        <div class="article-content">
-                            ${articleContent}
-                        </div>
-                        <p><a href="${fullLink}" target="_blank" rel="noopener noreferrer">查看原文</a></p>
-                    `;
+            const fullDescription = `
+                <h1>${articleTitle}</h1>
+                <div class="article-info">${articleInfo}</div>
+                <div class="article-content">
+                    ${articleContent}
+                </div>
+                <p><a href="${fullLink}" target="_blank" rel="noopener noreferrer">查看原文</a></p>
+            `;
 
-                    return {
-                        title: itemTitle,
-                        link: fullLink,
-                        pubDate,
-                        description: fullDescription,
-                    };
-                } catch {
-                    // 如果获取文章内容失败，返回列表页的简要信息
-                    return {
-                        title: itemTitle,
-                        link: fullLink,
-                        pubDate,
-                        description,
-                    };
-                }
-            })
-            .filter((item): item is Promise<{ title: string; link: string; pubDate: Date; description: string }> => item !== null)
-    );
+            return {
+                title: itemTitle,
+                link: fullLink,
+                pubDate,
+                description: fullDescription,
+            };
+        } catch {
+            // 如果获取文章内容失败，返回列表页的简要信息
+            return {
+                title: itemTitle,
+                link: fullLink,
+                pubDate,
+                description,
+            };
+        }
+    }
+
+    const items = await Promise.all(list.toArray().map((item) => processYjsItem(item, type, subtype, baseUrl, link)));
 
     const validItems = items.filter((item): item is { title: string; link: string; pubDate: Date; description: string } => item !== null);
 
