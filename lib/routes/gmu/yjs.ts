@@ -24,15 +24,10 @@ const sections = {
         xshd: { title: '学生工作 - 学生活动', path: '/xsgz/xshd.htm' },
         jzgz: { title: '学生工作 - 奖助工作', path: '/xsgz/jzgz.htm' },
     },
-    bmgk: {
-        bmjj: { title: '部门概况 - 部门简介', path: '/bmgk/bmjj.htm' },
-        bmzz: { title: '部门概况 - 部门职责', path: '/bmgk/bmzz.htm' },
-        lxwm: { title: '部门概况 - 联系我们', path: '/bmgk/lxwm.htm' },
-    },
     xzzx: {
         zsxz: { title: '下载中心 - 招生下载', path: '/xzzx/zsxz.htm' },
         pyxz: { title: '下载中心 - 培养下载', path: '/xzzx/pyxz.htm' },
-        xsxz: { title: '下载中心 - 学生下载', path: '/xzzx/xsxz.htm' },
+        // xsxz: { title: '下载中心 - 学生下载', path: '/xzzx/xsxz.htm' },
         xwxz: { title: '下载中心 - 学位下载', path: '/xzzx/xwxz.htm' },
     },
 };
@@ -69,12 +64,9 @@ export const route: Route = {
 | xsgz | xwsd | 学生工作新闻速递 |
 | xsgz | xshd | 学生工作学生活动 |
 | xsgz | jzgz | 学生工作奖助工作 |
-| bmgk | bmjj | 部门概况部门简介 |
-| bmgk | bmzz | 部门概况部门职责 |
-| bmgk | lxwm | 部门概况联系我们 |
 | xzzx | zsxz | 下载中心招生下载 |
 | xzzx | pyxz | 下载中心培养下载 |
-| xzzx | xsxz | 下载中心学生下载 |
+// | xzzx | xsxz | 下载中心学生下载 |
 | xzzx | xwxz | 下载中心学位下载 |`,
     radar: [
         {
@@ -118,11 +110,30 @@ export async function handler(ctx) {
             .toArray()
             .map(async (item) => {
                 const element = $(item);
-                const a = element.find('h2 a').first();
-                const dateText = element.find('h2 span.time').text().trim();
+
+                // 针对不同栏目适配不同结构
+                let a, dateText, itemTitle, description;
+                if (["bmgk", "xzzx"].includes(type)) {
+                    // 适配部门概况、下载中心等栏目
+                    a = element.find('a').first();
+                    dateText = element.find('span.time').text().trim() || '';
+                    itemTitle = a.text().trim();
+                    description = element.find('p').text().trim() || '';
+                } else if (type === 'xsgz' && subtype === 'xshd') {
+                    // 适配学生活动特殊结构
+                    a = element.find('a').first();
+                    dateText = element.find('span.time').text().trim() || '';
+                    itemTitle = a.text().trim();
+                    description = element.find('p').text().trim() || '';
+                } else {
+                    // 默认结构
+                    a = element.find('h2 a').first();
+                    dateText = element.find('h2 span.time').text().trim();
+                    itemTitle = a.text().trim();
+                    description = element.find('p').text().trim();
+                }
+
                 const href = a.attr('href');
-                const itemTitle = a.text().trim();
-                const description = element.find('p').text().trim();
 
                 if (!href || !itemTitle) {
                     return null;
