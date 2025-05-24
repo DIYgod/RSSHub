@@ -113,7 +113,8 @@ async function handler(ctx: Context): Promise<Data> {
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
-    const cdnRootUrl = 'https://clan.steamstatic.com/images';
+    const clanRootUrl = 'https://clan.fastly.steamstatic.com';
+    const sharedRootUrl = 'https://shared.fastly.steamstatic.com';
     const apiUrl = new URL('events/ajaxgetpartnereventspageable/', apiRootUrl).href;
 
     const { data: response } = await got(apiUrl, {
@@ -130,9 +131,11 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl)
+                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
+                .replaceAll(/(\[\/h\d\])\n/g, '$1')
+                .replaceAll(/(\[list(?:=.*?)?\])\n/g, '$1')
                 .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube-nocookie.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
             [customPreset(), swapLinebreak]
         )}</div>`;
@@ -151,14 +154,15 @@ async function handler(ctx: Context): Promise<Data> {
                 text: item.announcement_body.body,
             },
             updated: parseDate(item.announcement_body.updatetime, 'X'),
-            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, cdnRootUrl).href,
-            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, cdnRootUrl).href,
+            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href,
+            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href,
         };
     });
 
     return {
         title: `App ${appid} News`,
         link: new URL(`app/${appid}/allnews/`, rootUrl).href,
+        image: new URL(`store_item_assets/steam/apps/${appid}/hero_capsule.jpg`, sharedRootUrl).href,
         item: items,
         language: langMap[language] || null,
     };
@@ -177,6 +181,10 @@ const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
 
 const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     ...tags,
+    b: (node) => ({
+        tag: 'b',
+        content: node.content,
+    }),
     url: (node) => ({
         tag: 'a',
         attrs: {
