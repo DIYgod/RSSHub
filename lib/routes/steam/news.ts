@@ -185,6 +185,18 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
         tag: 'b',
         content: node.content,
     }),
+    i: (node) => ({
+        tag: 'i',
+        content: node.content,
+    }),
+    u: (node) => ({
+        tag: 'u',
+        content: node.content,
+    }),
+    s: (node) => ({
+        tag: 's',
+        content: node.content,
+    }),
     url: (node) => ({
         tag: 'a',
         attrs: {
