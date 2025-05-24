@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: 'Posts',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'AiraNadih'],
     handler,
     description: `Sources
 
@@ -39,6 +39,35 @@ export const route: Route = {
   There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
 :::`,
 };
+
+function parseJsonField(field: any): any {
+    if (typeof field === 'string') {
+        try {
+            let parsed = JSON.parse(field);
+            if (typeof parsed === 'string') {
+                try {
+                    parsed = JSON.parse(parsed);
+                } catch {
+                    return field;
+                }
+            }
+            return parsed;
+        } catch {
+            return field;
+        }
+    }
+    return field;
+}
+
+function buildLink(isPosts: boolean, rootUrl: string, source: string, id: string): string {
+    if (isPosts) {
+        return `${rootUrl}/posts`;
+    }
+    if (source === 'discord') {
+        return `${rootUrl}/${source}/server/${id}`;
+    }
+    return `${rootUrl}/${source}/user/${id}`;
+}
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
@@ -100,21 +129,36 @@ async function handler(ctx) {
             .filter((i) => i.content || i.attachments)
             .slice(0, limit)
             .map((i) => {
+                if (i.file) {
+                    i.file = parseJsonField(i.file);
+                }
+
+                if (i.attachments && Array.isArray(i.attachments)) {
+                    i.attachments = i.attachments.map((attachment) => parseJsonField(attachment));
+                }
+
                 i.files = [];
-                if ('path' in i.file) {
+
+                if (i.file && typeof i.file === 'object' && 'path' in i.file) {
                     i.files.push({
                         name: i.file.name,
                         path: i.file.path,
                         extension: i.file.path.replace(/.*\./, '').toLowerCase(),
                     });
                 }
-                for (const attachment of i.attachments) {
-                    i.files.push({
-                        name: attachment.name,
-                        path: attachment.path,
-                        extension: attachment.path.replace(/.*\./, '').toLowerCase(),
-                    });
+
+                if (i.attachments && Array.isArray(i.attachments)) {
+                    for (const attachment of i.attachments) {
+                        if (attachment && typeof attachment === 'object' && 'path' in attachment) {
+                            i.files.push({
+                                name: attachment.name,
+                                path: attachment.path,
+                                extension: attachment.path.replace(/.*\./, '').toLowerCase(),
+                            });
+                        }
+                    }
                 }
+
                 const filesHTML = art(path.join(__dirname, 'templates/source.art'), { i });
                 let $ = load(filesHTML);
                 const kemonoFiles = $('img, a, audio, video').map(function () {
@@ -174,7 +218,7 @@ async function handler(ctx) {
     return {
         title,
         image,
-        link: isPosts ? `${rootUrl}/posts` : (source === 'discord' ? `${rootUrl}/${source}/server/${id}` : `${rootUrl}/${source}/user/${id}`),
+        link: buildLink(isPosts, rootUrl, source, id),
         item: items,
     };
 }
