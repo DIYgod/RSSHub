@@ -133,7 +133,7 @@ async function handler(ctx: Context): Promise<Data> {
                 .replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
-                .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
+                .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube-nocookie.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
             [customPreset(), swapLinebreak]
         )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
