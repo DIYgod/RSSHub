@@ -8,10 +8,14 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: '/:source?/:id?',
+    path: '/:source?/:id?/:type?',
     categories: ['anime'],
     example: '/kemono',
-    parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL' },
+    parameters: {
+        source: 'Source, see below, Posts by default',
+        id: 'User id, can be found in URL',
+        type: 'Content type: announcements or fancards (optional)',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +26,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['kemono.su/:source/user/:id', 'kemono.su/'],
+            source: ['kemono.su/'],
+            target: '/kemono',
+        },
+        {
+            source: ['kemono.su/:source/user/:id'],
+            target: '/kemono/:source/:id',
+        },
+        {
+            source: ['kemono.su/:source/user/:id/announcements'],
+            target: '/kemono/:source/:id/announcements',
+        },
+        {
+            source: ['kemono.su/:source/user/:id/fancards'],
+            target: '/kemono/:source/:id/fancards',
         },
     ],
     name: 'Posts',
@@ -37,6 +54,10 @@ export const route: Route = {
 ::: tip
   When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
   There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
+  
+  Support for announcements and fancards:
+  - Use \`/:source/:id/announcements\` to get announcements
+  - Use \`/:source/:id/fancards\` to get fancards
 :::`,
 };
 
@@ -59,38 +80,54 @@ function parseJsonField(field: any): any {
     return field;
 }
 
-function buildLink(isPosts: boolean, rootUrl: string, source: string, id: string): string {
+function buildUrl(apiUrl: string, isPosts: boolean, source: string, id: string, type?: string): string {
+    if (isPosts) {
+        return `${apiUrl}/posts`;
+    }
+    if (source === 'discord') {
+        return `${apiUrl}/discord/channel/lookup/${id}`;
+    }
+    if (type) {
+        return `${apiUrl}/${source}/user/${id}/${type}`;
+    }
+    return `${apiUrl}/${source}/user/${id}`;
+}
+
+function buildLink(isPosts: boolean, rootUrl: string, source: string, id: string, type?: string): string {
     if (isPosts) {
         return `${rootUrl}/posts`;
     }
     if (source === 'discord') {
         return `${rootUrl}/${source}/server/${id}`;
     }
+    if (type) {
+        return `${rootUrl}/${source}/user/${id}/${type}`;
+    }
     return `${rootUrl}/${source}/user/${id}`;
+}
+
+async function getAuthor(profileUrl: string) {
+    const profileResponse = await got({ method: 'get', url: profileUrl });
+    return profileResponse.data.name;
 }
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
     const source = ctx.req.param('source') ?? 'posts';
     const id = ctx.req.param('id');
+    const type = ctx.req.param('type');
     const isPosts = source === 'posts';
 
     const rootUrl = 'https://kemono.su';
     const apiUrl = `${rootUrl}/api/v1`;
-    const discordUrl = `${apiUrl}/discord/channel/lookup/${id}`;
-    const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}`;
+    const profileUrl = source ? `${apiUrl}/${source}/user/${id}/profile` : '';
+    const currentUrl = buildUrl(apiUrl, isPosts, source, id, type);
 
-    const headers = {
-        cookie: '__ddg2=sBQ4uaaGecmfEUk7',
-    };
+    const response = await got({ method: 'get', url: currentUrl });
+    const author = isPosts || source === 'discord' ? '' : await getAuthor(profileUrl);
+    const image = isPosts || source === 'discord' ? `${rootUrl}/favicon.ico` : `https://img.kemono.su/icons/${source}/${id}`;
 
-    const response = await got({
-        method: 'get',
-        url: source === 'discord' ? discordUrl : currentUrl,
-        headers,
-    });
-
-    let items, title, image;
+    let items, title;
 
     if (source === 'discord') {
         title = `Posts of ${id} from Discord | Kemono`;
@@ -101,7 +138,6 @@ async function handler(ctx) {
                     const channelResponse = await got({
                         method: 'get',
                         url: `${rootUrl}/api/v1/discord/channel/${channel.id}?o=0`,
-                        headers,
                     });
 
                     return channelResponse.data
@@ -120,10 +156,37 @@ async function handler(ctx) {
             )
         );
         items = items.flat();
+    } else if (type === 'announcements') {
+        title = `Announcements of ${author} from ${source} | Kemono`;
+
+        items = response.data.slice(0, limit).map((announcement) => ({
+            title: `Announcement from ${announcement.published ? parseDate(announcement.published).toDateString() : 'Unknown Date'}`,
+            description: `<div>${announcement.content}</div>`,
+            author,
+            pubDate: parseDate(announcement.published),
+            guid: `kemono:${source}:${id}:announcement:${announcement.hash}`,
+            link: `${rootUrl}/${source}/user/${id}/announcements`,
+        }));
+    } else if (type === 'fancards') {
+        title = `Fancards of ${author} from ${source} | Kemono`;
+
+        items = response.data.slice(0, limit).map((fancard) => {
+            const imageUrl = `${fancard.server}${fancard.path}`;
+
+            return {
+                title: `Fancard ${fancard.id}`,
+                description: `<img src="${imageUrl}" />`,
+                author,
+                pubDate: parseDate(fancard.added),
+                guid: `kemono:${source}:${id}:fancard:${fancard.id}`,
+                link: imageUrl,
+                enclosure_url: imageUrl,
+                enclosure_type: fancard.mime,
+            };
+        });
     } else {
-        const author = isPosts ? '' : await getAuthor(currentUrl, headers);
         title = isPosts ? 'Kemono Posts' : `Posts of ${author} from ${source} | Kemono`;
-        image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.kemono.su/icons/${source}/${id}`;
+
         const responseData = isPosts ? response.data.posts : response.data;
         items = responseData
             .filter((i) => i.content || i.attachments)
@@ -218,16 +281,7 @@ async function handler(ctx) {
     return {
         title,
         image,
-        link: buildLink(isPosts, rootUrl, source, id),
+        link: buildLink(isPosts, rootUrl, source, id, type),
         item: items,
     };
-}
-
-async function getAuthor(currentUrl, headers) {
-    const profileResponse = await got({
-        method: 'get',
-        url: `${currentUrl}/profile`,
-        headers,
-    });
-    return profileResponse.data.name;
 }
