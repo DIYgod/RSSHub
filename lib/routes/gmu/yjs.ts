@@ -2,6 +2,8 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import type { Route } from '@/types';
+import type { Context } from 'hono';
+import cache from '@/utils/cache';
 
 const sections = {
     zsgz: {
@@ -36,10 +38,7 @@ export const route: Route = {
     path: '/yjs/:type/:subtype',
     categories: ['university'],
     example: '/gmu/yjs/zsgz/tzgg',
-    parameters: {
-        type: '分类，见下表',
-        subtype: '子分类，见下表',
-    },
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -50,24 +49,6 @@ export const route: Route = {
     },
     name: '研究生院',
     maintainers: ['FrankFahey'],
-    description: `| 分类 | 子分类 | 备注 |
-| ---- | ------ | ---- |
-| zsgz | tzgg | 招生工作通知公告 |
-| zsgz | xwsd | 招生工作新闻速递 |
-| pygz | tzgg | 培养工作通知公告 |
-| pygz | gzzd | 培养工作规章制度 |
-| xwgz | tzgg | 学位工作通知公告 |
-| xwgz | dsgl | 学位工作导师管理 |
-| xwgz | xwgl | 学位工作学位管理 |
-| xwgz | pggz | 学位工作评估工作 |
-| xsgz | tzgg | 学生工作通知公告 |
-| xsgz | xwsd | 学生工作新闻速递 |
-| xsgz | xshd | 学生工作学生活动 |
-| xsgz | jzgz | 学生工作奖助工作 |
-| xzzx | zsxz | 下载中心招生下载 |
-| xzzx | pyxz | 下载中心培养下载 |
-// | xzzx | xsxz | 下载中心学生下载 |
-| xzzx | xwxz | 下载中心学位下载 |`,
     radar: [
         {
             source: ['yjs.gmu.cn/:type/:subtype.htm', 'yjs.gmu.cn/'],
@@ -77,7 +58,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx) {
+export async function handler(ctx: Context) {
     const { type, subtype } = ctx.req.param();
 
     if (!sections[type] || !sections[type][subtype]) {
@@ -92,8 +73,6 @@ export async function handler(ctx) {
         https: {
             rejectUnauthorized: false,
         },
-        timeout: 10000,
-        retry: 3,
     });
 
     const $ = load(response.data);
@@ -105,105 +84,63 @@ export async function handler(ctx) {
         throw new Error('No content found. The page structure might have changed.');
     }
 
-    // Extract item processing logic to a separate function to reduce complexity
-    async function processYjsItem(item, type, subtype, baseUrl, link) {
-        const element = $(item);
+    const items = await Promise.all(
+        list.toArray().map(async (item) => {
+            const element = $(item);
+            const a = element.find('a');
+            const dateText = element.find('span').text();
+            const href = a.attr('href');
+            const itemTitle = a.text().trim();
 
-        // 针对不同栏目适配不同结构
-        let a, dateText, itemTitle, description;
-        if (['bmgk', 'xzzx'].includes(type)) {
-            // 适配部门概况、下载中心等栏目
-            a = element.find('a').first();
-            dateText = element.find('span.time').text().trim() || '';
-            itemTitle = a.text().trim();
-            description = element.find('p').text().trim() || '';
-        } else if (type === 'xsgz' && subtype === 'xshd') {
-            // 适配学生活动特殊结构
-            a = element.find('a').first();
-            dateText = element.find('span.time').text().trim() || '';
-            itemTitle = a.text().trim();
-            description = element.find('p').text().trim() || '';
-        } else {
-            // 默认结构
-            a = element.find('h2 a').first();
-            dateText = element.find('h2 span.time').text().trim();
-            itemTitle = a.text().trim();
-            description = element.find('p').text().trim();
-        }
+            if (!href || !itemTitle) {
+                return null;
+            }
 
-        const href = a.attr('href');
+            const pubDate = parseDate(dateText);
+            if (!pubDate) {
+                return null;
+            }
 
-        if (!href || !itemTitle) {
-            return null;
-        }
+            const fullLink = new URL(href, link).href;
 
-        const pubDate = parseDate(dateText);
-        if (!pubDate) {
-            return null;
-        }
+            // Use cache.tryGet to cache the article content
+            return await cache.tryGet(`gmu:yjs:${fullLink}`, async () => {
+                try {
+                    const contentResponse = await got(fullLink, {
+                        https: {
+                            rejectUnauthorized: false,
+                        },
+                    });
+                    const content = load(contentResponse.data);
 
-        let fullLink = href;
-        if (href.startsWith('/')) {
-            fullLink = new URL(href, baseUrl).href;
-        } else if (!href.startsWith('http')) {
-            const currentPath = new URL(link).pathname;
-            const basePath = currentPath.slice(0, Math.max(0, currentPath.lastIndexOf('/') + 1));
-            fullLink = new URL(basePath + href, baseUrl).href;
-        }
+                    // 获取新闻内容
+                    const articleContent = content('.v_news_content').html() || '暂无详细内容';
 
-        try {
-            const contentResponse = await got(fullLink, {
-                https: {
-                    rejectUnauthorized: false,
-                },
-                timeout: 10000,
-                retry: 3,
+                    return {
+                        title: itemTitle,
+                        link: fullLink,
+                        pubDate,
+                        description: articleContent,
+                    };
+                } catch {
+                    // 如果获取文章内容失败，返回基本信息
+                    return {
+                        title: itemTitle,
+                        link: fullLink,
+                        pubDate,
+                        description: '暂无详细内容',
+                    };
+                }
             });
-            const content = load(contentResponse.data);
+        })
+    );
 
-            // 更新选择器以适应研究生院网站的文章页面结构
-            const articleTitle = content('.winstyle196327 .title').text().trim() || itemTitle;
-            const articleInfo = content('.winstyle196327 .info').text().trim();
-            const articleContent = content('.winstyle196327 .content').html() || description;
-
-            const fullDescription = `
-                <h1>${articleTitle}</h1>
-                <div class="article-info">${articleInfo}</div>
-                <div class="article-content">
-                    ${articleContent}
-                </div>
-                <p><a href="${fullLink}" target="_blank" rel="noopener noreferrer">查看原文</a></p>
-            `;
-
-            return {
-                title: itemTitle,
-                link: fullLink,
-                pubDate,
-                description: fullDescription,
-            };
-        } catch {
-            // 如果获取文章内容失败，返回列表页的简要信息
-            return {
-                title: itemTitle,
-                link: fullLink,
-                pubDate,
-                description,
-            };
-        }
-    }
-
-    const items = await Promise.all(list.toArray().map((item) => processYjsItem(item, type, subtype, baseUrl, link)));
-
-    const validItems = items.filter((item): item is { title: string; link: string; pubDate: Date; description: string } => item !== null);
-
-    if (validItems.length === 0) {
-        throw new Error('No valid items found');
-    }
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Date; description: string } => item !== null);
 
     return {
         title,
         link,
-        description: title,
-        item: validItems,
+        description: `广州医科大学研究生院 - ${title}`,
+        item: result,
     };
 }
