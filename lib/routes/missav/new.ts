@@ -5,6 +5,7 @@ import * as cheerio from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/new',
@@ -12,7 +13,7 @@ export const route: Route = {
     example: '/missav/new',
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -34,11 +35,30 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://missav.ws';
-    const response = await ofetch(`${baseUrl}/dm397/new`, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
+    const url = `${baseUrl}/dm397/new`;
+
+    // const browser = await puppeteer();
+    const browser = await puppeteer({stealth: true});
+    const page = await browser.newPage();
+
+    // https://intoli.com/blog/not-possible-to-block-chrome-headless/
+    // Pass the User-Agent Test.
+    // const userAgent = 'Mozilla/5.0 (X11; Linux x86_64)' +
+    //     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36';
+    // await page.setUserAgent(userAgent);
+
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
     });
+    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    await browser.close();
+
+    // const response = await ofetch(`${baseUrl}/dm397/new`, {
+    //     headers: {
+    //         'User-Agent': config.trueUA,
+    //     },
+    // });
+
     const $ = cheerio.load(response);
 
     const items = $('.grid .group')
