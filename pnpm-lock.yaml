@@ -14,6 +14,21 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
 
 patchedDependencies:
+  '@bbob/core@4.2.0':
+    hash: v4tqyuhmd7ie4kskej63wpyoyy
+    path: patches/@bbob__core@4.2.0.patch
+  '@bbob/parser@4.2.0':
+    hash: 3jkidu2qub3svpiz24dcdrhuey
+    path: patches/@bbob__parser@4.2.0.patch
+  '@bbob/plugin-helper@4.2.0':
+    hash: 35vhlnm6zfsrye6wm5mvcuoqkq
+    path: patches/@bbob__plugin-helper@4.2.0.patch
+  '@bbob/preset-html5@4.2.0':
+    hash: 45t5oyykiv4ibbpruba4shbkca
+    path: patches/@bbob__preset-html5@4.2.0.patch
+  '@bbob/preset@4.2.0':
+    hash: hzdlptpstii55wqx3v2binf4i4
+    path: patches/@bbob__preset@4.2.0.patch
   eslint-nibble@8.1.0:
     hash: w5z6jxwjps4t4gxnmmngw67gmm
     path: patches/eslint-nibble@8.1.0.patch
@@ -27,7 +42,7 @@ importers:
         version: 4.2.0
       '@bbob/preset-html5':
         specifier: 4.2.0
-        version: 4.2.0
+        version: 4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)
       '@hono/node-server':
         specifier: 1.14.2
         version: 1.14.2(hono@4.7.10)
@@ -7146,36 +7161,36 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bbob/core@4.2.0':
+  '@bbob/core@4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)':
     dependencies:
-      '@bbob/parser': 4.2.0
-      '@bbob/plugin-helper': 4.2.0
+      '@bbob/parser': 4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
   '@bbob/html@4.2.0':
     dependencies:
-      '@bbob/core': 4.2.0
-      '@bbob/plugin-helper': 4.2.0
+      '@bbob/core': 4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
-  '@bbob/parser@4.2.0':
+  '@bbob/parser@4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
-  '@bbob/plugin-helper@4.2.0':
+  '@bbob/plugin-helper@4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)':
     dependencies:
       '@bbob/types': 4.2.0
 
-  '@bbob/preset-html5@4.2.0':
+  '@bbob/preset-html5@4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0
-      '@bbob/preset': 4.2.0
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/preset': 4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)
       '@bbob/types': 4.2.0
 
-  '@bbob/preset@4.2.0':
+  '@bbob/preset@4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
   '@bbob/types@4.2.0': {}

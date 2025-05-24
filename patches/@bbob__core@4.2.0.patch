@@ -1,0 +1,13 @@
+diff --git a/es/index.js b/es/index.js
+index 16a08f3ae8f30b8184f5e6decefdc1f66b0f1b64..aa97d18a201b2121ab5f865c60d5de9f5913eae6 100644
+--- a/es/index.js
++++ b/es/index.js
+@@ -1,6 +1,6 @@
+ import { parse } from '@bbob/parser';
+-import { iterate, match } from './utils';
+-import { C1, C2 } from './errors';
++import { iterate, match } from './utils.js';
++import { C1, C2 } from './errors.js';
+ export function createTree(tree, options) {
+     const extendedTree = tree;
+     extendedTree.messages = [
