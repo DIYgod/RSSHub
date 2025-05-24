@@ -34018,6 +34018,17 @@
         "target": "/steam/appcommunityfeed/:appid"
       },
       {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid",
+          "/app/:appid/allnews",
+          "/app/:appid/announcements",
+          "/app/:appid/news"
+        ],
+        "target": "/steam/news/:appid"
+      },
+      {
         "title": "Sharefile Changelog",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
