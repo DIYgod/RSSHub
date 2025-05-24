@@ -1,0 +1,33 @@
+diff --git a/es/TagNode.js b/es/TagNode.js
+index d07d4cc7be7d9a3f9b0b82e7e20b0288be3518a3..255f7116432fe5e662004f769afd18a6a5be243d 100644
+--- a/es/TagNode.js
++++ b/es/TagNode.js
+@@ -1,5 +1,5 @@
+-import { OPEN_BRAKET, CLOSE_BRAKET, SLASH } from './char';
+-import { getUniqAttr, getNodeLength, appendToNode, attrsToString, attrValue, isTagNode } from './helpers';
++import { OPEN_BRAKET, CLOSE_BRAKET, SLASH } from './char.js';
++import { getUniqAttr, getNodeLength, appendToNode, attrsToString, attrValue, isTagNode } from './helpers.js';
+ const getTagAttrs = (tag, params)=>{
+     const uniqAttr = getUniqAttr(params);
+     if (uniqAttr) {
+diff --git a/es/helpers.js b/es/helpers.js
+index fbb27792e9ca04f460cb9d991df3803b8625c615..b10a9bb0d7ff51eb5ab9471b40d0055196c3ccf4 100644
+--- a/es/helpers.js
++++ b/es/helpers.js
+@@ -1,4 +1,4 @@
+-import { N } from './char';
++import { N } from './char.js';
+ function isTagNode(el) {
+     return typeof el === 'object' && el !== null && 'tag' in el;
+ }
+diff --git a/es/index.js b/es/index.js
+index 3cfcb823c11fa6fdc7cef636d2c2ab2299cf8137..40253efe6a03b0e0ccfc0defc59c8a45370c5c90 100644
+--- a/es/index.js
++++ b/es/index.js
+@@ -1,3 +1,3 @@
+-export * from "./helpers";
+-export * from "./char";
+-export * from "./TagNode";
++export * from "./helpers.js";
++export * from "./char.js";
++export * from "./TagNode.js";
