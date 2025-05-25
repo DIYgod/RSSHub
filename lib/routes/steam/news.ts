@@ -1,5 +1,5 @@
 import { Route, Data, DataItem } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
+import type { BBobCoreTagNodeTree, PresetFactory, NodeContent } from '@bbob/types';
 
 import got from '@/utils/got';
 import bbobHTML from '@bbob/html';
@@ -137,7 +137,7 @@ async function handler(ctx: Context): Promise<Data> {
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')
                 .replaceAll(/(\[list(?:=.*?)?\])\n/g, '$1'),
-            [customPreset(), linebreakRenderer, urlRenderer]
+            [customPreset(), linebreakRenderer, plainUrlRenderer]
         )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
         const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
@@ -179,19 +179,44 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
         return node;
     });
 
-const urlRe = /^https?:\/\/[^\s]+/;
-
-const urlRenderer = (tree: BBobCoreTagNodeTree) =>
+const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && urlRe.test(node)) {
+        if (typeof node === 'string' && /https?:\/\/[^\s]+/.test(node)) {
+            let lastIndex = 0;
+            let match: RegExpExecArray | null;
+            const content: NodeContent[] = [];
+
+            const urlRe = /https?:\/\/[^\s]+/g;
+            while ((match = urlRe.exec(node)) !== null) {
+                if (match.index > lastIndex) {
+                    content.push(node.slice(lastIndex, match.index));
+                }
+                content.push({
+                    tag: 'a',
+                    attrs: {
+                        href: match[0],
+                        rel: 'noopener',
+                        target: '_blank',
+                    },
+                    content: match[0],
+                });
+
+                lastIndex = match.index + match[0].length;
+            }
+
+            if (lastIndex < node.length) {
+                content.push(node.slice(lastIndex));
+            }
+
+            if (content.length === 0) {
+                return node;
+            }
+            if (content.length === 1) {
+                return content[0];
+            }
             return {
-                tag: 'a',
-                attrs: {
-                    href: node,
-                    rel: 'noopener',
-                    target: '_blank',
-                },
-                content: node,
+                tag: 'span',
+                content,
             };
         }
         return node;
