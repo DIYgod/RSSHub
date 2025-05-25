@@ -140,8 +140,8 @@ async function handler(ctx: Context): Promise<Data> {
             [customPreset(), linebreakRenderer, plainUrlRenderer]
         )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
-        const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
-        const capsuleImage = jsondata.localized_capsule_image ? jsondata.localized_capsule_image[0] : null;
+        const titleImage = jsondata.localized_title_image?.[0];
+        const capsuleImage = jsondata.localized_capsule_image?.[0];
 
         return {
             title,
@@ -154,8 +154,8 @@ async function handler(ctx: Context): Promise<Data> {
                 text: item.announcement_body.body,
             },
             updated: parseDate(item.announcement_body.updatetime, 'X'),
-            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href,
-            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href,
+            image: capsuleImage ? new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href : undefined,
+            banner: titleImage ? new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href : undefined,
         };
     });
 
@@ -255,6 +255,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
             src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
+            allowFullScreen: '1',
         },
     }),
     video: (node, { render }) => ({
