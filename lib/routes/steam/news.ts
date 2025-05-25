@@ -1,9 +1,10 @@
 import { Route, Data, DataItem } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
+import type { BBobCoreTagNodeTree, PresetFactory, NodeContent } from '@bbob/types';
 
 import got from '@/utils/got';
 import bbobHTML from '@bbob/html';
 import presetHTML5 from '@bbob/preset-html5';
+import { getUniqAttr } from '@bbob/plugin-helper';
 import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
 
@@ -113,7 +114,8 @@ async function handler(ctx: Context): Promise<Data> {
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
-    const cdnRootUrl = 'https://clan.steamstatic.com/images';
+    const clanRootUrl = 'https://clan.fastly.steamstatic.com';
+    const sharedRootUrl = 'https://shared.fastly.steamstatic.com';
     const apiUrl = new URL('events/ajaxgetpartnereventspageable/', apiRootUrl).href;
 
     const { data: response } = await got(apiUrl, {
@@ -130,11 +132,12 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', cdnRootUrl)
+                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
-                .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube-nocookie.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
-            [customPreset(), swapLinebreak]
+                .replaceAll(/(\[\/h\d\])\n/g, '$1')
+                .replaceAll(/(\[list(?:=.*?)?\])\n/g, '$1'),
+            [customPreset(), linebreakRenderer, plainUrlRenderer]
         )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
         const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
@@ -151,20 +154,21 @@ async function handler(ctx: Context): Promise<Data> {
                 text: item.announcement_body.body,
             },
             updated: parseDate(item.announcement_body.updatetime, 'X'),
-            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, cdnRootUrl).href,
-            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, cdnRootUrl).href,
+            image: new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href,
+            banner: new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href,
         };
     });
 
     return {
         title: `App ${appid} News`,
         link: new URL(`app/${appid}/allnews/`, rootUrl).href,
+        image: new URL(`store_item_assets/steam/apps/${appid}/hero_capsule.jpg`, sharedRootUrl).href,
         item: items,
         language: langMap[language] || null,
     };
 }
 
-const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
+const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
         if (typeof node === 'string' && node === '\n') {
             return {
@@ -175,8 +179,67 @@ const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
         return node;
     });
 
+const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
+    tree.walk((node) => {
+        if (typeof node === 'string' && /https?:\/\/[^\s]+/.test(node)) {
+            let lastIndex = 0;
+            let match: RegExpExecArray | null;
+            const content: NodeContent[] = [];
+
+            const urlRe = /https?:\/\/[^\s]+/g;
+            while ((match = urlRe.exec(node)) !== null) {
+                if (match.index > lastIndex) {
+                    content.push(node.slice(lastIndex, match.index));
+                }
+                content.push({
+                    tag: 'a',
+                    attrs: {
+                        href: match[0],
+                        rel: 'noopener',
+                        target: '_blank',
+                    },
+                    content: match[0],
+                });
+
+                lastIndex = match.index + match[0].length;
+            }
+
+            if (lastIndex < node.length) {
+                content.push(node.slice(lastIndex));
+            }
+
+            if (content.length === 0) {
+                return node;
+            }
+            if (content.length === 1) {
+                return content[0];
+            }
+            return {
+                tag: 'span',
+                content,
+            };
+        }
+        return node;
+    });
+
 const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     ...tags,
+    b: (node) => ({
+        tag: 'b',
+        content: node.content,
+    }),
+    i: (node) => ({
+        tag: 'i',
+        content: node.content,
+    }),
+    u: (node) => ({
+        tag: 'u',
+        content: node.content,
+    }),
+    s: (node) => ({
+        tag: 's',
+        content: node.content,
+    }),
     url: (node) => ({
         tag: 'a',
         attrs: {
@@ -185,6 +248,14 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
             target: '_blank',
         },
         content: node.content,
+    }),
+    previewyoutube: (node) => ({
+        tag: 'iframe',
+        attrs: {
+            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
+            title: 'YouTube video player',
+            frameborder: '0',
+        },
     }),
     video: (node, { render }) => ({
         tag: 'video',
