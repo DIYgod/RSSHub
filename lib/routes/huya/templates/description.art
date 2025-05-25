@@ -1,0 +1,4 @@
+<img src="{{ screenshot }}" />
+<p>主播：{{ nick }}</p>
+<p>直播间标题：{{ introduction }}</p>
+<p>开播时间：{{ startTime }}</p>
