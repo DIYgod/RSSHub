@@ -78,7 +78,6 @@ async function handler(ctx) {
                     .each(function () {
                         const $li = $(this);
                         const newText = $li.html()?.replace(/已下载[\s\S]*?<\/span>次/g, '') ?? '';
-
                         $li.html(newText.replace(/<\/a>\s*$/, '</a>'));
                     })
                     .end()
