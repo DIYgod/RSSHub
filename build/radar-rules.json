@@ -38793,6 +38793,84 @@
       }
     ]
   },
+  "yuanliao.info": {
+    "_name": "猿料",
+    ".": [
+      {
+        "title": "主题",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/",
+          "/t/:tag"
+        ],
+        "target": "/yuanliaoparams=>{const tag=params.tag;return`/yuanliao${tag?`/${tag}`:\"\"}`}"
+      },
+      {
+        "title": "问题反馈",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/bug-report"
+        ],
+        "target": "/yuanliao/bug-report"
+      },
+      {
+        "title": "Windows",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/windows"
+        ],
+        "target": "/yuanliao/windows"
+      },
+      {
+        "title": "macOS",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/macos"
+        ],
+        "target": "/yuanliao/macos"
+      },
+      {
+        "title": "Linux",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/linux"
+        ],
+        "target": "/yuanliao/linux"
+      },
+      {
+        "title": "意见建议",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/suggestions"
+        ],
+        "target": "/yuanliao/suggestions"
+      },
+      {
+        "title": "插件发布",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/plugins"
+        ],
+        "target": "/yuanliao/plugins"
+      },
+      {
+        "title": "插件需求",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/plugin-needs"
+        ],
+        "target": "/yuanliao/plugin-needs"
+      },
+      {
+        "title": "开发者",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/developers"
+        ],
+        "target": "/yuanliao/developers"
+      }
+    ]
+  },
   "yuque.com": {
     "_name": "语雀",
     ".": [
