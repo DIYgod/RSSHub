@@ -60,21 +60,34 @@ async function handler(ctx) {
         // 提取TT_ROOM_DATA中的直播间标题
         const ttRoomData = ttRoomDataMatch ? JSON.parse(ttRoomDataMatch[1]) : {};
         const introduction = ttRoomData.introduction || '';
+
+        // 提取hyPlayerConfig数据
+        const hyPlayerConfigMatch = html.match(/var hyPlayerConfig = (\{.*?\});/s);
+        let gameFullName = '';
+        let startTime = Math.floor(Date.now() / 1000);
+        let screenshot = '';
         
-        // 提取直播间截图
-        const screenshotMatch = html.match(/screenshot\s*:\s*'([^']*?)'/);
-        const screenshot = screenshotMatch ? screenshotMatch[1] : '';
-        
-        // 提取开播时间
-        const startTimeMatch = html.match(/startTime\s*:\s*'?(\d+)'?/);
-        const startTime = startTimeMatch ? parseInt(startTimeMatch[1]) : Math.floor(Date.now() / 1000);
+        if (hyPlayerConfigMatch) {
+            try {
+                const hyPlayerConfig = JSON.parse(hyPlayerConfigMatch[1]);
+                if (hyPlayerConfig.stream && hyPlayerConfig.stream.data && hyPlayerConfig.stream.data[0]) {
+                    const gameLiveInfo = hyPlayerConfig.stream.data[0].gameLiveInfo;
+                    gameFullName = gameLiveInfo.gameFullName || '';
+                    startTime = gameLiveInfo.startTime || startTime;
+                    screenshot = gameLiveInfo.screenshot || '';
+                }
+            } catch (e) {
+                logger.error('解析hyPlayerConfig失败:', e.message);
+            }
+        }
         
         // 构建房间信息
         room_info = {
             nick: nick || `虎牙用户${id}`,
             introduction: introduction || pageTitle,
             screenshot: screenshot,
-            startTime: startTime
+            startTime: startTime,
+            gameFullName: gameFullName
         };
         
         let item = [];
@@ -85,6 +98,8 @@ async function handler(ctx) {
                     pubDate: parseDate(room_info.startTime * 1000),
                     guid: room_info.startTime,
                     link: `https://www.huya.com/${id}`,
+                    description: `主播：${room_info.nick}\n分区：${room_info.gameFullName || '未知'}\n开播时间：${new Date(room_info.startTime * 1000).toLocaleString()}`,
+                    image: room_info.screenshot,
                 },
             ];
         }
