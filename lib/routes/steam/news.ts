@@ -179,7 +179,7 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
         return node;
     });
 
-const urlRe = /https?:\/\/[^\s]+/g;
+const urlRe = /^https?:\/\/[^\s]+/;
 
 const urlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
