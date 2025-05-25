@@ -40,6 +40,9 @@ importers:
       '@bbob/html':
         specifier: 4.2.0
         version: 4.2.0
+      '@bbob/plugin-helper':
+        specifier: 4.2.0
+        version: 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/preset-html5':
         specifier: 4.2.0
         version: 4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)

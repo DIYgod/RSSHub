@@ -51,6 +51,7 @@
     },
     "dependencies": {
         "@bbob/html": "4.2.0",
+        "@bbob/plugin-helper": "4.2.0",
         "@bbob/preset-html5": "4.2.0",
         "@hono/node-server": "1.14.2",
         "@hono/zod-openapi": "0.19.6",
