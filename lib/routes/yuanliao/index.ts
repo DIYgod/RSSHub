@@ -40,9 +40,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const firstPostData = relationships?.firstPost?.data;
 
-        const description: string | undefined = includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml;
+        const description: string | undefined = firstPostData.type ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
         const pubDate: number | string = attributes.createdAt;
-        const linkUrl: string | undefined = `d/${item.id}`;
+        const linkUrl: string | undefined = item.id ? `d/${item.id}` : undefined;
         const categories: string[] = [...new Set(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);
 
         const userData = relationships?.user?.data;
