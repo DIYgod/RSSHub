@@ -4,6 +4,7 @@ import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
 import got from '@/utils/got';
 import bbobHTML from '@bbob/html';
 import presetHTML5 from '@bbob/preset-html5';
+import { getUniqAttr } from '@bbob/plugin-helper';
 import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
 
@@ -135,9 +136,8 @@ async function handler(ctx: Context): Promise<Data> {
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')
-                .replaceAll(/(\[list(?:=.*?)?\])\n/g, '$1')
-                .replaceAll(/\[previewyoutube=([A-Za-z0-9_-]+).*?\/previewyoutube\]/g, '<iframe src="https://www.youtube-nocookie.com/embed/$1" title="YouTube video player" frameborder="0"></iframe>'),
-            [customPreset(), swapLinebreak]
+                .replaceAll(/(\[list(?:=.*?)?\])\n/g, '$1'),
+            [customPreset(), linebreakRenderer, urlRenderer]
         )}</div>`;
         const jsondata = JSON.parse(item.jsondata);
         const titleImage = jsondata.localized_title_image ? jsondata.localized_capsule_image[0] : null;
@@ -168,12 +168,30 @@ async function handler(ctx: Context): Promise<Data> {
     };
 }
 
-const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
+const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
         if (typeof node === 'string' && node === '\n') {
             return {
                 tag: 'br',
                 content: null,
+            };
+        }
+        return node;
+    });
+
+const urlRe = /https?:\/\/[^\s]+/g;
+
+const urlRenderer = (tree: BBobCoreTagNodeTree) =>
+    tree.walk((node) => {
+        if (typeof node === 'string' && urlRe.test(node)) {
+            return {
+                tag: 'a',
+                attrs: {
+                    href: node,
+                    rel: 'noopener',
+                    target: '_blank',
+                },
+                content: node,
             };
         }
         return node;
@@ -205,6 +223,14 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
             target: '_blank',
         },
         content: node.content,
+    }),
+    previewyoutube: (node) => ({
+        tag: 'iframe',
+        attrs: {
+            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
+            title: 'YouTube video player',
+            frameborder: '0',
+        },
     }),
     video: (node, { render }) => ({
         tag: 'video',
