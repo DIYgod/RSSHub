@@ -28,11 +28,11 @@ services:
             core: # marked
                 hard: 0 # marked
                 soft: 0 # marked
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"]
-            interval: 30s
-            timeout: 10s
-            retries: 3
+        healthcheck: # marked
+            test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"] # marked
+            interval: 30s # marked
+            timeout: 10s # marked
+            retries: 3 # marked
 
     redis:
         image: redis:alpine
