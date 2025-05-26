@@ -53,8 +53,8 @@ importers:
         specifier: 0.19.6
         version: 0.19.6(hono@4.7.10)(zod@3.25.23)
       '@notionhq/client':
-        specifier: 3.1.1
-        version: 3.1.1
+        specifier: 3.1.2
+        version: 3.1.2
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -1620,8 +1620,8 @@ packages:
     resolution: {integrity: sha512-y3SvzjuY1ygnzWA4Krwx/WaJAsTMP11DN+e21A8Fa8PW1oDtVB5NSRW7LWurAiS2oKRkuCgcjTYMkBuBkcPCRg==}
     engines: {node: '>=12.4.0'}
 
-  '@notionhq/client@3.1.1':
-    resolution: {integrity: sha512-sAFNjrW5IVX1jgVRxn83mtLNphWsp4qj1koW5YKx9w0qH1pJLfJyAjedwvIFjWG2VNzPuXxVrXpQaRnxSUt5aQ==}
+  '@notionhq/client@3.1.2':
+    resolution: {integrity: sha512-EqJhtx5ekKW3wieENnDHPl5ZSgDxGyRP5r2664rPH39toW899sL000TSE7WHxenHb+kSIckVQ5OsT9tzPqbENg==}
     engines: {node: '>=18'}
 
   '@one-ini/wasm@0.1.1':
@@ -7531,7 +7531,7 @@ snapshots:
 
   '@nolyfill/side-channel@1.0.44': {}
 
-  '@notionhq/client@3.1.1': {}
+  '@notionhq/client@3.1.2': {}
 
   '@one-ini/wasm@0.1.1': {}
 
