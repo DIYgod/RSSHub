@@ -46,7 +46,7 @@ export async function handler(ctx) {
             ({
                 title: `${item.DriverName} ${item.Version}`,
                 link: `https://newsupport.lenovo.com.cn/driveDownloads_detail.html?driveId=${item.DriverEdtionId}`,
-                description: art(path.resolve(__dirname, 'templates/drive.art'), {
+                description: art(path.join(__dirname, 'templates/drive.art'), {
                     driveName: item.DriverName,
                     driveCode: item.DriverCode,
                     driveVersion: item.Version,
