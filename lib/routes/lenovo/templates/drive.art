@@ -1,0 +1,9 @@
+<div class="driver-info">
+  <h2>驱动信息</h2>
+  <ul>
+    <li><strong>驱动名称：</strong>{{ driveName }}</li>
+    <li><strong>驱动编码：</strong>{{ driveCode }}</li>
+    <li><strong>驱动版本：</strong>{{ driveVersion }}</li>
+    <li><strong>下载地址：</strong><a href="{{ downloadFilePath }}" download>{{ downloadFileName }}</a></li>
+  </ul>
+</div>
