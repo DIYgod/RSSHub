@@ -53,7 +53,7 @@ export async function handler(ctx) {
                     downloadFileName: item.FileName,
                     downloadFilePath: item.FilePath,
                 }),
-                pubDate: parseDate(item.CreateTime),
+                pubDate: parseDate(item.CreateTime, +8),
             }) as DataItem
     );
 
