@@ -27338,9 +27338,10 @@
         "title": "新聞",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
+          "/home/:category",
           "/"
         ],
-        "target": "/now/news/:category?/:id?"
+        "target": "/now/news/:category?"
       }
     ]
   },

@@ -71915,8 +71915,10 @@ export default {
         "radar": [
           {
             "source": [
+              "news.now.com/home/:category?",
               "news.now.com/"
-            ]
+            ],
+            "target": "/news/:category?"
           }
         ],
         "name": "新聞",
