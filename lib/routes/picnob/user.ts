@@ -52,77 +52,66 @@ async function handler(ctx) {
 
     try {
         let html;
+        let usePuppeteer = false;
         try {
             const data = await ofetch(profileUrl);
             html = data;
         } catch {
             html = await puppeteerGet(profileUrl, browser);
+            usePuppeteer = true;
         }
         const $ = load(html);
-        const name = $('h1.fullname').text();
 
-        const profile = {
-            name,
-            description: $('.info .sum').text(),
-            image: $('.ava .pic img').attr('src'),
-            items: $('.post_box')
-                .toArray()
-                .map((item) => {
-                    const $item = $(item);
-                    const sum = $item.find('.sum').text();
-                    const coverLink = $item.find('.cover_link').attr('href');
-                    const shortcode = coverLink?.split('/')?.[2];
+        const list = $('.post_box')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const sum = $item.find('.sum').text();
+                const coverLink = $item.find('.cover_link').attr('href');
+                const shortcode = coverLink?.split('/')?.[2];
 
-                    return {
-                        title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
-                        description: `<img src="${$item.find('.preview_w img').attr('data-src')}" /><br />${sum.replaceAll('\n', '<br>')}`,
-                        link: `${baseUrl}${coverLink}`,
-                        guid: shortcode,
-                        pubDate: parseRelativeDate($item.find('.time .txt').text()),
-                    };
-                }),
-        };
+                return {
+                    title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
+                    description: `<img src="${$item.find('.preview_w img').attr('data-src')}" /><br />${sum.replaceAll('\n', '<br>')}`,
+                    link: `${baseUrl}${coverLink}`,
+                    guid: shortcode,
+                    pubDate: parseRelativeDate($item.find('.time .txt').text()),
+                };
+            });
 
-        const profileTitle = type === 'tagged' ? `${profile.name} (@${id}) tagged posts - Picnob` : `${profile.name} (@${id}) public posts - Picnob`;
-
-        for (const item of profile.items) {
-            // eslint-disable-next-line no-await-in-loop
-            const newDescription = (await cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
-                try {
-                    let html;
+        const newDescription = await Promise.all(
+            list.map((item) =>
+                cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
                     try {
-                        const data = await ofetch(item.link);
-                        html = data;
-                    } catch {
-                        html = await puppeteerGet(item.link, browser);
-                    }
-                    const $ = load(html);
-                    if ($('.video_img').length > 0) {
-                        return `<video src="${$('.video_img a').attr('href')}" poster="${$('.video_img img').attr('data-src')}"></video><br />${$('.sum_full').text()}`;
-                    } else {
-                        let description = '';
-                        for (const slide of $('.swiper-slide').toArray()) {
-                            const $slide = $(slide);
-                            description += `<img src="${$slide.find('.pic img').attr('data-src')}" /><br />`;
+                        const html = usePuppeteer ? await puppeteerGet(item.link, browser) : await ofetch(item.link);
+                        const $ = load(html);
+                        if ($('.video_img').length > 0) {
+                            return `<video src="${$('.video_img a').attr('href')}" poster="${$('.video_img img').attr('data-src')}"></video><br />${$('.sum_full').text()}`;
+                        } else {
+                            let description = '';
+                            for (const slide of $('.swiper-slide').toArray()) {
+                                const $slide = $(slide);
+                                description += `<img src="${$slide.find('.pic img').attr('data-src')}" /><br />`;
+                            }
+                            description += $('.sum_full').text();
+                            return description;
                         }
-                        description += $('.sum_full').text();
-                        return description;
+                    } catch {
+                        return '';
                     }
-                } catch {
-                    return '';
-                }
-            })) as string;
-            if (newDescription) {
-                item.description = newDescription;
-            }
-        }
+                })
+            )
+        );
 
         return {
-            title: profileTitle,
-            description: profile.description,
+            title: `${$('h1.fullname').text()} (@${id}) ${type === 'tagged' ? 'tagged' : 'public'} posts - Picnob`,
+            description: $('.info .sum').text(),
             link: profileUrl,
-            image: profile.image,
-            item: profile.items,
+            image: $('.ava .pic img').attr('src'),
+            item: list.map((item, index) => ({
+                ...item,
+                description: newDescription[index] || item.description,
+            })),
         };
     } catch (error) {
         await browser.close();
