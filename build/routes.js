@@ -97977,7 +97977,8 @@ export default {
         "name": "新闻快讯",
         "maintainers": [
           "Fatpandac",
-          "jameshih"
+          "jameshih",
+          "DIYgod"
         ],
         "radar": [
           {
