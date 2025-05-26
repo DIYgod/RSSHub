@@ -21894,6 +21894,19 @@
       }
     ]
   },
+  "lenovo.com.cn": {
+    "_name": "联想",
+    ".": [
+      {
+        "title": "驱动",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/lenovo/drive/:selName"
+      }
+    ]
+  },
   "hey.xyz": {
     "_name": "Lens",
     ".": [
