@@ -54,7 +54,11 @@ async function handler(ctx) {
         let html;
         let usePuppeteer = false;
         try {
-            const data = await ofetch(profileUrl);
+            const data = await ofetch(profileUrl, {
+                headers: {
+                    'user-agent': 'PostmanRuntime/7.44.0',
+                },
+            });
             html = data;
         } catch {
             html = await puppeteerGet(profileUrl, browser);
@@ -83,7 +87,13 @@ async function handler(ctx) {
             list.map((item) =>
                 cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
                     try {
-                        const html = usePuppeteer ? await puppeteerGet(item.link, browser) : await ofetch(item.link);
+                        const html = usePuppeteer
+                            ? await puppeteerGet(item.link, browser)
+                            : await ofetch(item.link, {
+                                  headers: {
+                                      'user-agent': 'PostmanRuntime/7.44.0',
+                                  },
+                              });
                         const $ = load(html);
                         if ($('.video_img').length > 0) {
                             return `<video src="${$('.video_img a').attr('href')}" poster="${$('.video_img img').attr('data-src')}"></video><br />${$('.sum_full').text()}`;
