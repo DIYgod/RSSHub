@@ -208,10 +208,16 @@
     },
     "pnpm": {
         "onlyBuiltDependencies": [
+            "@bbob/core",
+            "@bbob/parser",
+            "@bbob/plugin-helper",
+            "@bbob/preset-html5",
+            "@bbob/preset",
             "bufferutil",
             "core-js",
             "es5-ext",
             "esbuild",
+            "eslint-nibble",
             "msw",
             "protobufjs",
             "puppeteer",
@@ -229,12 +235,12 @@
             "side-channel": "npm:@nolyfill/side-channel@^1"
         },
         "patchedDependencies": {
-            "eslint-nibble@8.1.0": "patches/eslint-nibble@8.1.0.patch",
-            "@bbob/preset-html5@4.2.0": "patches/@bbob__preset-html5@4.2.0.patch",
             "@bbob/core@4.2.0": "patches/@bbob__core@4.2.0.patch",
+            "@bbob/parser@4.2.0": "patches/@bbob__parser@4.2.0.patch",
             "@bbob/plugin-helper@4.2.0": "patches/@bbob__plugin-helper@4.2.0.patch",
+            "@bbob/preset-html5@4.2.0": "patches/@bbob__preset-html5@4.2.0.patch",
             "@bbob/preset@4.2.0": "patches/@bbob__preset@4.2.0.patch",
-            "@bbob/parser@4.2.0": "patches/@bbob__parser@4.2.0.patch"
+            "eslint-nibble@8.1.0": "patches/eslint-nibble@8.1.0.patch"
         }
     }
 }
