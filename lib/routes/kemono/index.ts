@@ -16,7 +16,7 @@ export const route: Route = {
     parameters: {
         source: 'Source, see below, Posts by default',
         id: 'User id, can be found in URL',
-        type: 'Content type: announcements or fancards (optional)',
+        type: 'Content type: announcements or fancards',
     },
     features: {
         requireConfig: false,
