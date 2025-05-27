@@ -58561,15 +58561,16 @@ export default {
   },
   "kemono": {
     "routes": {
-      "/:source?/:id?": {
-        "path": "/:source?/:id?",
+      "/:source?/:id?/:type?": {
+        "path": "/:source?/:id?/:type?",
         "categories": [
           "anime"
         ],
         "example": "/kemono",
         "parameters": {
           "source": "Source, see below, Posts by default",
-          "id": "User id, can be found in URL"
+          "id": "User id, can be found in URL",
+          "type": "Content type: announcements or fancards"
         },
         "features": {
           "requireConfig": false,
@@ -58582,16 +58583,35 @@ export default {
         "radar": [
           {
             "source": [
-              "kemono.su/:source/user/:id",
               "kemono.su/"
-            ]
+            ],
+            "target": "/kemono"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id"
+            ],
+            "target": "/kemono/:source/:id"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id/announcements"
+            ],
+            "target": "/kemono/:source/:id/announcements"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id/fancards"
+            ],
+            "target": "/kemono/:source/:id/fancards"
           }
         ],
         "name": "Posts",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "AiraNadih"
         ],
-        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n:::",
+        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n  \n  Support for announcements and fancards:\n  - Use `/:source/:id/announcements` to get announcements\n  - Use `/:source/:id/fancards` to get fancards\n:::",
         "location": "index.ts",
         "module": () => import('@/routes/kemono/index.ts')
       }

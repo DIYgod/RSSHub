@@ -21422,10 +21422,33 @@
         "title": "Posts",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
-          "/:source/user/:id",
           "/"
         ],
-        "target": "/kemono/:source?/:id?"
+        "target": "/kemono/kemono"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:source/user/:id"
+        ],
+        "target": "/kemono/kemono/:source/:id"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:source/user/:id/announcements"
+        ],
+        "target": "/kemono/kemono/:source/:id/announcements"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/:source/user/:id/fancards"
+        ],
+        "target": "/kemono/kemono/:source/:id/fancards"
       }
     ]
   },
