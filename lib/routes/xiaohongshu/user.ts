@@ -64,7 +64,7 @@ async function handler(ctx) {
     if (cookie && category === 'notes') {
         try {
             const urlNotePrefix = 'https://www.xiaohongshu.com/explore';
-            const user = await getUserWithCookie(url, cookie);
+            const user = await getUserWithCookie(url);
             const notes = await renderNotesFulltext(user.notes, urlNotePrefix, displayLivePhoto);
             return {
                 title: `${user.userPageData.basicInfo.nickname} - 笔记 • 小红书 / RED`,

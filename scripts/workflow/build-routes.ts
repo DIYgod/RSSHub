@@ -66,6 +66,10 @@ for (const namespace in namespaces) {
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
+    for (const path in namespaces[namespace].apiRoutes) {
+        const data = namespaces[namespace].apiRoutes[path];
+        data.module = `() => import('@/routes/${namespace}/${data.location}')`;
+    }
 }
 
 fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
