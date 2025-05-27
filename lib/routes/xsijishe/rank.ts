@@ -67,7 +67,7 @@ async function handler(ctx) {
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         Cookie: config.xsijishe.cookie,
-        'User-Agent': config.xsijishe.user_agent,
+        'User-Agent': config.xsijishe.userAgent || 'PostmanRuntime/7.44.0',
     };
 
     const resp = await got(url, {
