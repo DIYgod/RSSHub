@@ -14531,7 +14531,17 @@ export default {
       }
     },
     "name": "哔哩哔哩 bilibili",
-    "apiRoutes": {},
+    "apiRoutes": {
+      "/check-cookie": {
+        "path": "/check-cookie",
+        "description": "检查 bilibili cookie 是否有效",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "check-cookie.ts",
+        "module": () => import('@/routes/bilibili/check-cookie.ts')
+      }
+    },
     "url": "www.bilibili.com",
     "lang": "zh-CN"
   },
