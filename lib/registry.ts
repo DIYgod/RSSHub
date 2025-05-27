@@ -1,4 +1,4 @@
-import type { Namespace, Route } from '@/types';
+import type { APIRoute, Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
 import path from 'node:path';
@@ -19,6 +19,12 @@ let namespaces: Record<
         routes: Record<
             string,
             Route & {
+                location: string;
+            }
+        >;
+        apiRoutes: Record<
+            string,
+            APIRoute & {
                 location: string;
             }
         >;
@@ -48,6 +54,9 @@ if (Object.keys(modules).length) {
               }
             | {
                   namespace: Namespace;
+              }
+            | {
+                  apiRoute: APIRoute;
               };
         const namespace = module.split(/[/\\]/)[1];
         if ('namespace' in content) {
@@ -63,6 +72,7 @@ if (Object.keys(modules).length) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},
+                    apiRoutes: {},
                 };
             }
             if (Array.isArray(content.route.path)) {
@@ -75,6 +85,27 @@ if (Object.keys(modules).length) {
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
+                    location: module.split(/[/\\]/).slice(2).join('/'),
+                };
+            }
+        } else if ('apiRoute' in content) {
+            if (!namespaces[namespace]) {
+                namespaces[namespace] = {
+                    name: namespace,
+                    routes: {},
+                    apiRoutes: {},
+                };
+            }
+            if (Array.isArray(content.apiRoute.path)) {
+                for (const path of content.apiRoute.path) {
+                    namespaces[namespace].apiRoutes[path] = {
+                        ...content.apiRoute,
+                        location: module.split(/[/\\]/).slice(2).join('/'),
+                    };
+                }
+            } else {
+                namespaces[namespace].apiRoutes[content.apiRoute.path] = {
+                    ...content.apiRoute,
                     location: module.split(/[/\\]/).slice(2).join('/'),
                 };
             }
@@ -137,6 +168,42 @@ for (const namespace in namespaces) {
                     }
                 }
                 ctx.set('data', await routeData.handler(ctx));
+            }
+        };
+        subApp.get(path, wrappedHandler);
+    }
+}
+
+for (const namespace in namespaces) {
+    const subApp = app.basePath(`/api/${namespace}`);
+
+    const namespaceData = namespaces[namespace];
+    if (!namespaceData || !namespaceData.apiRoutes) {
+        continue;
+    }
+
+    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as [
+        string,
+        APIRoute & {
+            location: string;
+            module?: () => Promise<{ apiRoute: APIRoute }>;
+        },
+    ][];
+
+    for (const [path, routeData] of sortedRoutes) {
+        const wrappedHandler: Handler = async (ctx) => {
+            if (!ctx.get('apiData')) {
+                if (typeof routeData.handler !== 'function') {
+                    if (process.env.NODE_ENV === 'test') {
+                        const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = apiRoute.handler;
+                    } else if (routeData.module) {
+                        const { apiRoute } = await routeData.module();
+                        routeData.handler = apiRoute.handler;
+                    }
+                }
+                const data = await routeData.handler(ctx);
+                ctx.set('apiData', data);
             }
         };
         subApp.get(path, wrappedHandler);
