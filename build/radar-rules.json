@@ -29727,7 +29727,7 @@
     ]
   },
   "picuki.com": {
-    "_name": "Instagram",
+    "_name": "TikTok",
     "www": [
       {
         "title": "User Profile - Picuki",
@@ -29741,9 +29741,9 @@
         "title": "User Profile - Picuki",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/profile-tagged/:id"
+          "/story/:id"
         ],
-        "target": "/picuki/profile/:id/tagged"
+        "target": "/picuki/profile/:id/story"
       }
     ]
   },
