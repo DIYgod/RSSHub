@@ -117,7 +117,7 @@ async function handler(ctx) {
                         source: $item.find('.popup-open').data('source'),
                         id: videoId,
                     },
-                    link: `${baseUrl}/@${id}/video/${videoId}`,
+                    link: `${baseUrl}/media/${videoId}`,
                     guid: `https://www.tiktok.com/@${id}/video/${videoId}`,
                 };
             });
