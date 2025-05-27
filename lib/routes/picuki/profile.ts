@@ -15,15 +15,35 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/picuki/profile/linustech',
     parameters: {
-        id: 'Tiktok user id',
-        type: 'Type of profile page (profile or story)',
-        functionalFlag: `functional flag, see the table below
-
-| functionalFlag | Video embedding                         |
-| -------------- | --------------------------------------- |
-| 0              | off, only show video poster as an image |
-| 1 (default)    | on                                      |
-`,
+        id: 'Tiktok user id (without @)',
+        type: {
+            description: 'Type of profile page',
+            options: [
+                {
+                    value: 'profile',
+                    label: 'Profile Page',
+                },
+                {
+                    value: 'story',
+                    label: 'Story Page',
+                },
+            ],
+            default: 'profile',
+        },
+        functionalFlag: {
+            description: 'Functional flag for video embedding',
+            options: [
+                {
+                    value: '0',
+                    label: 'Off, only show video poster as an image',
+                },
+                {
+                    value: '1',
+                    label: 'On',
+                },
+            ],
+            default: '1',
+        },
     },
     features: {
         requireConfig: false,
