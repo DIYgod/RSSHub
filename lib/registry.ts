@@ -195,8 +195,8 @@ for (const namespace in namespaces) {
             if (!ctx.get('apiData')) {
                 if (typeof routeData.handler !== 'function') {
                     if (process.env.NODE_ENV === 'test') {
-                        const { route } = await import(`./routes/${namespace}/${routeData.location}`);
-                        routeData.handler = route.handler;
+                        const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = apiRoute.handler;
                     } else if (routeData.module) {
                         const { apiRoute } = await routeData.module();
                         routeData.handler = apiRoute.handler;
