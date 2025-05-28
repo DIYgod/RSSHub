@@ -51,7 +51,7 @@ importers:
         version: 1.14.3(hono@4.7.10)
       '@hono/zod-openapi':
         specifier: 0.19.7
-        version: 0.19.7(hono@4.7.10)(zod@3.25.30)
+        version: 0.19.7(hono@4.7.10)(zod@3.25.32)
       '@notionhq/client':
         specifier: 3.1.2
         version: 3.1.2
@@ -302,8 +302,8 @@ importers:
         specifier: 13.4.0
         version: 13.4.0
       zod:
-        specifier: 3.25.30
-        version: 3.25.30
+        specifier: 3.25.32
+        version: 3.25.32
     devDependencies:
       '@babel/preset-env':
         specifier: 7.27.2
@@ -6329,8 +6329,8 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
-  zod@3.25.30:
-    resolution: {integrity: sha512-VolhdEtu6TJr/fzGuHA/SZ5ixvXqA6ADOG9VRcQ3rdOKmF5hkmcJbyaQjUH5BgmpA9gej++zYRX7zjSmdReIwA==}
+  zod@3.25.32:
+    resolution: {integrity: sha512-OSm2xTIRfW8CV5/QKgngwmQW/8aPfGdaQFlrGoErlgg/Epm7cjb6K6VEyExfe65a3VybUOnu381edLb0dfJl0g==}
 
 snapshots:
 
@@ -6347,10 +6347,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.3
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.2(zod@3.25.30)':
+  '@asteasolutions/zod-to-openapi@7.3.2(zod@3.25.32)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.25.30
+      zod: 3.25.32
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -7393,17 +7393,17 @@ snapshots:
     dependencies:
       hono: 4.7.10
 
-  '@hono/zod-openapi@0.19.7(hono@4.7.10)(zod@3.25.30)':
+  '@hono/zod-openapi@0.19.7(hono@4.7.10)(zod@3.25.32)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.2(zod@3.25.30)
-      '@hono/zod-validator': 0.6.0(hono@4.7.10)(zod@3.25.30)
+      '@asteasolutions/zod-to-openapi': 7.3.2(zod@3.25.32)
+      '@hono/zod-validator': 0.6.0(hono@4.7.10)(zod@3.25.32)
       hono: 4.7.10
-      zod: 3.25.30
+      zod: 3.25.32
 
-  '@hono/zod-validator@0.6.0(hono@4.7.10)(zod@3.25.30)':
+  '@hono/zod-validator@0.6.0(hono@4.7.10)(zod@3.25.32)':
     dependencies:
       hono: 4.7.10
-      zod: 3.25.30
+      zod: 3.25.32
 
   '@humanfs/core@0.19.1': {}
 
@@ -12688,4 +12688,4 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zod@3.25.30: {}
+  zod@3.25.32: {}
