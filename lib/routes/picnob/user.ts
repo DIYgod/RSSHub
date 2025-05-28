@@ -54,11 +54,7 @@ async function handler(ctx) {
         let html;
         let usePuppeteer = false;
         try {
-            const data = await ofetch(profileUrl, {
-                headers: {
-                    'user-agent': 'PostmanRuntime/7.44.0',
-                },
-            });
+            const data = await ofetch(profileUrl);
             html = data;
         } catch {
             html = await puppeteerGet(profileUrl, browser);

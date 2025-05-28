@@ -2,7 +2,7 @@ import { config } from '@/config';
 import puppeteer from 'puppeteer';
 import logger from './logger';
 import proxy from './proxy';
-import proxyChain from 'proxy-chain';
+import { anonymizeProxy } from 'proxy-chain';
 
 import { type PuppeteerExtra, addExtra } from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
@@ -33,7 +33,7 @@ const outPuppeteer = async (
         if (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password) {
             // only proxies with authentication need to be anonymized
             if (proxy.proxyUrlHandler.protocol === 'http:') {
-                options.args.push(`--proxy-server=${await proxyChain.anonymizeProxy(proxy.proxyUri)}`);
+                options.args.push(`--proxy-server=${await anonymizeProxy(proxy.proxyUri)}`);
             } else {
                 logger.warn('SOCKS/HTTPS proxy with authentication is not supported by puppeteer, continue without proxy');
             }
