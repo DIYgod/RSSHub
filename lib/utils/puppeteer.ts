@@ -145,6 +145,10 @@ export const getPuppeteerPage = async (
 
     const page = await browser.newPage();
 
+    if (hasProxy) {
+        logger.debug(`Proxying request in puppeteer: ${url}`);
+    }
+
     if (hasProxy && (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password)) {
         await page.authenticate({
             username: proxy.proxyUrlHandler?.username,
