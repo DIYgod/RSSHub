@@ -114934,6 +114934,46 @@ export default {
     "url": "zodgame.xyz",
     "lang": "en"
   },
+  "zongheng": {
+    "routes": {
+      "/detail/:id": {
+        "path": "/detail/:id",
+        "categories": [
+          "reading"
+        ],
+        "example": "/zongheng/detail/1366535",
+        "parameters": {
+          "id": "作品 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.zongheng.org/detail/:id"
+            ]
+          }
+        ],
+        "name": "章节更新",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.zongheng.com",
+        "location": "detail.ts",
+        "module": () => import('@/routes/zongheng/detail.ts')
+      }
+    },
+    "name": "纵横中文网",
+    "apiRoutes": {},
+    "url": "www.zongheng.com",
+    "lang": "zh-CN"
+  },
   "zotero": {
     "routes": {
       "/versions": {

@@ -39422,6 +39422,19 @@
       }
     ]
   },
+  "zongheng.org": {
+    "_name": "纵横中文网",
+    "www": [
+      {
+        "title": "章节更新",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/detail/:id"
+        ],
+        "target": "/zongheng/detail/:id"
+      }
+    ]
+  },
   "zotero.org": {
     "_name": "Zotero",
     ".": [
