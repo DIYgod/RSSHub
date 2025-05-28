@@ -1,17 +1,19 @@
-const puppeteerGet = async (url, browser) => {
+import { getPuppeteerPage } from '@/utils/puppeteer';
+
+const puppeteerGet = async (url) => {
     let data;
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    const { destory } = await getPuppeteerPage(url, {
+        onBeforeLoad: async (page) => {
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' ? request.continue() : request.abort();
+            });
+            page.on('response', async (response) => {
+                data = await (response.request().url().includes('/api/posts') ? response.json() : response.text());
+            });
+        },
     });
-    page.on('response', async (response) => {
-        data = await (response.request().url().includes('/api/posts') ? response.json() : response.text());
-    });
-    await page.goto(url, {
-        waitUntil: 'domcontentloaded',
-    });
-    await page.close();
+    await destory();
     return data;
 };
 
