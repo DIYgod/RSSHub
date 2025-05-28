@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { id } = ctx.req.param();
 
-    const link = `'https://www.zongheng.com/detail/${id}`;
+    const link = `https://www.zongheng.com/detail/${id}`;
     const pageResponse = await ofetch(link);
     const $ = load(pageResponse);
 
