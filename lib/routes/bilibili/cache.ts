@@ -4,7 +4,7 @@ import utils from './utils';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 
 const getCookie = () => {
@@ -22,25 +22,26 @@ const getCookie = () => {
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        const browser = await puppeteer({
-            stealth: true,
+        let waitForRequest: Promise<string> = new Promise((resolve) => {
+            resolve('');
         });
-        const page = await browser.newPage();
-        const waitForRequest = new Promise<string>((resolve) => {
-            page.on('requestfinished', async (request) => {
-                if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
-                    const cookies = await page.cookies();
-                    let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-
-                    cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                    resolve(cookieString);
-                }
-            });
+        const { destory } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
+            onBeforeLoad: (page) => {
+                waitForRequest = new Promise<string>((resolve) => {
+                    page.on('requestfinished', async (request) => {
+                        if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
+                            const cookies = await page.cookies();
+                            let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                            resolve(cookieString);
+                        }
+                    });
+                });
+            },
         });
-        await page.goto('https://space.bilibili.com/1/dynamic');
         const cookieString = await waitForRequest;
         logger.debug(`Got bilibili cookie: ${cookieString}`);
-        await browser.close();
+        await destory();
         return cookieString;
     });
 };
