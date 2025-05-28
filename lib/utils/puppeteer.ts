@@ -72,7 +72,7 @@ export const getPuppeteerPage = async (
     instanceOptions: {
         onBeforeLoad?: (page: Page, browser?: Browser) => Promise<void> | void;
         gotoConfig?: {
-            waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0';
+            waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2';
         };
         noGoto?: boolean;
     } = {}
