@@ -187,7 +187,7 @@
         "got": "14.4.7",
         "husky": "9.1.7",
         "js-beautify": "1.15.4",
-        "lint-staged": "16.0.0",
+        "lint-staged": "16.1.0",
         "magic-string": "0.30.17",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
