@@ -17,6 +17,7 @@ afterEach(async () => {
     delete process.env.PROXY_HOST;
     delete process.env.PROXY_PORT;
     delete process.env.PROXY_AUTH;
+    delete process.env.PROXY_URL_REGEX;
 
     vi.resetModules();
 });
@@ -166,7 +167,9 @@ describe('getPuppeteerPage', () => {
         process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
 
         const { getPuppeteerPage } = await import('./puppeteer');
-        const pup = await getPuppeteerPage('https://www.google.com');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
         browser = pup.browser;
 
         // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
