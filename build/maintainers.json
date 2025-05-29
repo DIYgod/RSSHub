@@ -8622,9 +8622,10 @@
     "DHPO",
     "pseudoyu"
   ],
-  "/zhihu/hot/:category?": [
+  "/zhihu/hot": [
     "nczitzk",
-    "pseudoyu"
+    "pseudoyu",
+    "DIYgod"
   ],
   "/zhihu/posts/:usertype/:id": [
     "whtsky",
