@@ -51,6 +51,7 @@ export const route: Route = {
                 guid: item.id,
                 image,
             })),
+            allowEmpty: true,
         };
     },
 };
