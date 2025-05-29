@@ -40,6 +40,7 @@ async function handler(ctx) {
                     description: $('.content-body').html(),
                     pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
                     category: $("meta[name='keyword']").attr('content').split(','),
+                    guid: $('meta[property="dable:item_id"]').attr('content'),
                 };
             })
         )
