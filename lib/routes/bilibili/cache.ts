@@ -7,8 +7,8 @@ import logger from '@/utils/logger';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 
-const getCookie = () => {
-    if (Object.keys(config.bilibili.cookies).length > 0) {
+const getCookie = (disableConfig = false) => {
+    if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
         // Update b_lsid in cookies
         for (const key of Object.keys(config.bilibili.cookies)) {
             const cookie = config.bilibili.cookies[key];
