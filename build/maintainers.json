@@ -8622,7 +8622,7 @@
     "DHPO",
     "pseudoyu"
   ],
-  "/zhihu/hot": [
+  "/zhihu/hot/:category?": [
     "nczitzk",
     "pseudoyu",
     "DIYgod"

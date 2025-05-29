@@ -113497,8 +113497,8 @@ export default {
         "location": "daily.ts",
         "module": () => import('@/routes/zhihu/daily.ts')
       },
-      "/hot": {
-        "path": "/hot",
+      "/hot/:category?": {
+        "path": "/hot/:category?",
         "categories": [
           "social-media",
           "popular"
