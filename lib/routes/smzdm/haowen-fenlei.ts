@@ -4,13 +4,21 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
+import { getHeaders } from './utils';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 export const route: Route = {
     path: '/haowen/fenlei/:name/:sort?',
     categories: ['shopping'],
     example: '/smzdm/haowen/fenlei/shenghuodianqi',
     parameters: { name: '分类名，可在 URL 中查看', sort: '排序方式，默认为最新' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'SMZDM_COOKIE',
+                description: '什么值得买登录后的 Cookie 值',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -32,12 +40,18 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    if (!config.smzdm.cookie) {
+        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
+    }
+
     const name = ctx.req.param('name');
     const sort = ctx.req.param('sort') || '0';
 
     const link = sort === '0' ? `https://post.smzdm.com/fenlei/${name}/` : `https://post.smzdm.com/fenlei/${name}/hot_${sort}/`;
 
-    const response = await got.get(link);
+    const response = await got.get(link, {
+        headers: getHeaders(),
+    });
     const $ = load(response.data);
     const title = $('div.crumbs.nav-crumbs').text().split('>').pop();
 
@@ -58,7 +72,9 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const response = await got(item.link);
+                    const response = await got(item.link, {
+                        headers: getHeaders(),
+                    });
                     const $ = load(response.data);
                     item.description = $('article').html();
                     item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')), 8);

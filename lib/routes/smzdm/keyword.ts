@@ -3,6 +3,9 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { getHeaders } from './utils';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/keyword/:keyword',
@@ -11,7 +14,12 @@ export const route: Route = {
     example: '/smzdm/keyword/女装',
     parameters: { keyword: '你想订阅的关键词' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'SMZDM_COOKIE',
+                description: '什么值得买登录后的 Cookie 值',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -24,10 +32,15 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    if (!config.smzdm.cookie) {
+        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
+    }
+
     const keyword = ctx.req.param('keyword');
 
     const response = await got(`https://search.smzdm.com`, {
         headers: {
+            ...getHeaders(),
             Referer: `https://search.smzdm.com/?c=home&s=${encodeURIComponent(keyword)}&order=time&v=a`,
         },
         searchParams: {

@@ -2,6 +2,9 @@ import { Route, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { getHeaders } from './utils';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/product/:id',
@@ -9,7 +12,12 @@ export const route: Route = {
     example: '/smzdm/product/zm5vzpe',
     parameters: { id: '商品 id，网址上直接可以看到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'SMZDM_COOKIE',
+                description: '什么值得买登录后的 Cookie 值',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -28,9 +36,15 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    if (!config.smzdm.cookie) {
+        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
+    }
+
     const link = `https://wiki.smzdm.com/p/${ctx.req.param('id')}`;
 
-    const response = await ofetch(link);
+    const response = await ofetch(link, {
+        headers: getHeaders(),
+    });
     const $ = load(response);
     const title = $('title').text();
 
@@ -55,7 +69,9 @@ async function handler(ctx) {
     const out = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const response = await ofetch(item.link, {
+                    headers: getHeaders(),
+                });
                 const $ = load(response);
 
                 // filter outdated articles
