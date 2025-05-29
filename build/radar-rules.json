@@ -38811,7 +38811,8 @@
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/user/:username",
-          "/:username"
+          "/:username",
+          "/:username/videos"
         ],
         "target": "/youtube/user/:username"
       }

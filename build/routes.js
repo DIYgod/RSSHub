@@ -112141,7 +112141,8 @@ export default {
           {
             "source": [
               "www.youtube.com/user/:username",
-              "www.youtube.com/:username"
+              "www.youtube.com/:username",
+              "www.youtube.com/:username/videos"
             ],
             "target": "/user/:username"
           }
