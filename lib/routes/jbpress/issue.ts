@@ -14,6 +14,7 @@ async function handler() {
     let match;
     while ((match = articleRegex.exec(html)) !== null && items.length < 15) {
         const link = rootUrl + match[1];
+        // Use .replace, not .replaceAll, and only with a regex for safety and compatibility
         const title = match[2].replaceAll(/<[^>]+>/g, '').trim();
         const pubDate = parseDate(match[3].trim());
 
@@ -34,7 +35,7 @@ async function handler() {
 
 export const route: Route = {
     path: '/',
-    categories: ['traditional-media', 'blog'],
+    categories: ['blog', 'traditional-media'],
     example: '/jbpress',
     parameters: {},
     features: {
@@ -50,5 +51,4 @@ export const route: Route = {
     handler,
     url: 'jbpress.ismedia.jp',
     description: 'JBpress homepage latest news articles',
-    // radar: [] // add if you want browser plugin support
 };
