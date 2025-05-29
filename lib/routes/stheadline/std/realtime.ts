@@ -3,7 +3,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://std.stheadline.com';
 
@@ -20,14 +19,13 @@ async function handler(ctx) {
     const { data: response } = await got(url);
     const $ = load(response);
 
-    let items = $(`${category === '即時' ? '.moreNews > .col-md-4' : ''} .media-body > .my-2 > a`)
+    let items = $(`.news-block .news-detail > a`)
         .toArray()
         .map((item) => {
             item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href'),
-                guid: item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
+                title: item.find('.title').text(),
+                link: new URL(item.attr('href'), 'https://www.stheadline.com').href,
             };
         });
 
@@ -39,9 +37,9 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('.paragraphs').html(),
-                    pubDate: timezone(parseDate($('.content .date').text()), +8),
-                    category: [$('nav .nav-item.active a')?.text()?.trim(), ...$("meta[name='keyword']").attr('content').split(',')],
+                    description: $('.content-body').html(),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
+                    category: $("meta[name='keyword']").attr('content').split(','),
                 };
             })
         )
