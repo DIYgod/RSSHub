@@ -89482,7 +89482,12 @@ export default {
           "uid": "用户 id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89513,7 +89518,12 @@ export default {
           "uid": "用户id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89545,7 +89555,12 @@ export default {
           "sort": "排序方式，默认为最新"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89595,7 +89610,12 @@ export default {
           }
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89622,7 +89642,12 @@ export default {
           "keyword": "你想订阅的关键词"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89647,7 +89672,12 @@ export default {
           "id": "商品 id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89707,131 +89737,131 @@ export default {
             "description": "榜单ID",
             "options": [
               {
-                "label": "好价品类榜 - 全部",
+                "label": "好价品类榜-全部",
                 "value": "11"
               },
               {
-                "label": "好价品类榜 - 食品生鲜",
+                "label": "好价品类榜-食品生鲜",
                 "value": "12"
               },
               {
-                "label": "好价品类榜 - 电脑数码",
+                "label": "好价品类榜-电脑数码",
                 "value": "13"
               },
               {
-                "label": "好价品类榜 - 运动户外",
+                "label": "好价品类榜-运动户外",
                 "value": "14"
               },
               {
-                "label": "好价品类榜 - 家用电器",
+                "label": "好价品类榜-家用电器",
                 "value": "15"
               },
               {
-                "label": "好价品类榜 - 白菜",
+                "label": "好价品类榜-白菜",
                 "value": "17"
               },
               {
-                "label": "好价品类榜 - 服饰鞋包",
+                "label": "好价品类榜-服饰鞋包",
                 "value": "74"
               },
               {
-                "label": "好价品类榜 - 日用百货",
+                "label": "好价品类榜-日用百货",
                 "value": "75"
               },
               {
-                "label": "好价电商榜 - 券活动",
+                "label": "好价电商榜-券活动",
                 "value": "24"
               },
               {
-                "label": "好价电商榜 - 京东",
+                "label": "好价电商榜-京东",
                 "value": "23"
               },
               {
-                "label": "好价电商榜 - 天猫",
+                "label": "好价电商榜-天猫",
                 "value": "25"
               },
               {
-                "label": "好价电商榜 - 亚马逊中国",
+                "label": "好价电商榜-亚马逊中国",
                 "value": "26"
               },
               {
-                "label": "好价电商榜 - 国美在线",
+                "label": "好价电商榜-国美在线",
                 "value": "27"
               },
               {
-                "label": "好价电商榜 - 苏宁易购",
+                "label": "好价电商榜-苏宁易购",
                 "value": "28"
               },
               {
-                "label": "好价电商榜 - 网易",
+                "label": "好价电商榜-网易",
                 "value": "29"
               },
               {
-                "label": "好价电商榜 - 西集网",
+                "label": "好价电商榜-西集网",
                 "value": "30"
               },
               {
-                "label": "好价电商榜 - 美国亚马逊",
+                "label": "好价电商榜-美国亚马逊",
                 "value": "31"
               },
               {
-                "label": "好价电商榜 - 日本亚马逊",
+                "label": "好价电商榜-日本亚马逊",
                 "value": "32"
               },
               {
-                "label": "好价电商榜 - ebay",
+                "label": "好价电商榜-ebay",
                 "value": "33"
               },
               {
-                "label": "海淘 TOP 榜 - 全部",
+                "label": "海淘 TOP 榜-全部",
                 "value": "39"
               },
               {
-                "label": "海淘 TOP 榜 - 海外直邮",
+                "label": "海淘 TOP 榜-海外直邮",
                 "value": "34"
               },
               {
-                "label": "海淘 TOP 榜 - 美国榜",
+                "label": "海淘 TOP 榜-美国榜",
                 "value": "35"
               },
               {
-                "label": "海淘 TOP 榜 - 欧洲榜",
+                "label": "海淘 TOP 榜-欧洲榜",
                 "value": "36"
               },
               {
-                "label": "海淘 TOP 榜 - 澳新榜",
+                "label": "海淘 TOP 榜-澳新榜",
                 "value": "37"
               },
               {
-                "label": "海淘 TOP 榜 - 亚洲榜",
+                "label": "海淘 TOP 榜-亚洲榜",
                 "value": "38"
               },
               {
-                "label": "海淘 TOP 榜 - 晒物榜",
+                "label": "海淘 TOP 榜-晒物榜",
                 "value": "hsw"
               },
               {
-                "label": "好文排行榜 - 原创",
+                "label": "好文排行榜-原创",
                 "value": "yc"
               },
               {
-                "label": "好文排行榜 - 资讯",
+                "label": "好文排行榜-资讯",
                 "value": "zx"
               },
               {
-                "label": "好物排行榜 - 新晋榜",
+                "label": "好物排行榜-新晋榜",
                 "value": "hwall"
               },
               {
-                "label": "好物排行榜 - 消费众测",
+                "label": "好物排行榜-消费众测",
                 "value": "zc"
               },
               {
-                "label": "好物排行榜 - 新锐品牌",
+                "label": "好物排行榜-新锐品牌",
                 "value": "nb"
               },
               {
-                "label": "好物排行榜 - 好物榜单",
+                "label": "好物排行榜-好物榜单",
                 "value": "hw"
               }
             ]
@@ -89855,7 +89885,12 @@ export default {
           }
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
