@@ -4,7 +4,7 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/hot',
+    path: '/hot/:category?',
     categories: ['social-media', 'popular'],
     example: '/zhihu/hot',
     view: ViewType.Articles,
@@ -27,7 +27,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx) {
+    const category = ctx.req.param('category');
+    if (category) {
+        ctx.set('redirect', `/zhihu/hot`);
+        return null;
+    }
+
     const cookie = config.zhihu.cookies;
 
     const response = await got({
