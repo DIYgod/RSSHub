@@ -231,7 +231,7 @@ async function handler(ctx) {
 
     const response = await got(`https://www.smzdm.com/top/json_more`, {
         headers: {
-            Referer: 'https://www.smzdm.com/top/',
+            Referer: 'https://www.smzdm.com/top',
             ...getHeaders(),
         },
         searchParams: {
