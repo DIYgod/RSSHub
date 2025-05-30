@@ -50,8 +50,8 @@ importers:
         specifier: 1.14.3
         version: 1.14.3(hono@4.7.10)
       '@hono/zod-openapi':
-        specifier: 0.19.7
-        version: 0.19.7(hono@4.7.10)(zod@3.25.36)
+        specifier: 0.19.8
+        version: 0.19.8(hono@4.7.10)(zod@3.25.36)
       '@notionhq/client':
         specifier: 3.1.3
         version: 3.1.3
@@ -1448,18 +1448,18 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@0.19.7':
-    resolution: {integrity: sha512-S1IgblPPwx6yLYbrvLS0MJlvtmZpD6mDn0NqN+hYndoPUtDNqjNW/J7EmFAQu1Od8fYdIrwogcRL2rMANcULvA==}
+  '@hono/zod-openapi@0.19.8':
+    resolution: {integrity: sha512-CHUSW0K+bDGUYXovxQSbVjZffzoPeTsGu6wevPoGSmBdPuUw5yZqDeomnvyAAAAvEjhLQPlAsUyASc1Zi35exQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
       zod: 3.*
 
-  '@hono/zod-validator@0.6.0':
-    resolution: {integrity: sha512-3aVk+cvuOE/9D6H2ugaG1kt14NT9rFyZzwRW6+aaPhMufMSiyKNvb/7pscZ/U302F8cTPD2TSTJiOUmx6TPqGg==}
+  '@hono/zod-validator@0.7.0':
+    resolution: {integrity: sha512-qe2ZE6sHFE98dcUrbYMtS3bAV8hqcCOflykvZga2S7XhmNSZzT+dIz4OuMILsjLHkJw9JMn912/dB7dQOmuPvg==}
     peerDependencies:
       hono: '>=3.9.0'
-      zod: ^3.19.1
+      zod: ^3.25.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -7249,14 +7249,14 @@ snapshots:
     dependencies:
       hono: 4.7.10
 
-  '@hono/zod-openapi@0.19.7(hono@4.7.10)(zod@3.25.36)':
+  '@hono/zod-openapi@0.19.8(hono@4.7.10)(zod@3.25.36)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.2(zod@3.25.36)
-      '@hono/zod-validator': 0.6.0(hono@4.7.10)(zod@3.25.36)
+      '@hono/zod-validator': 0.7.0(hono@4.7.10)(zod@3.25.36)
       hono: 4.7.10
       zod: 3.25.36
 
-  '@hono/zod-validator@0.6.0(hono@4.7.10)(zod@3.25.36)':
+  '@hono/zod-validator@0.7.0(hono@4.7.10)(zod@3.25.36)':
     dependencies:
       hono: 4.7.10
       zod: 3.25.36
