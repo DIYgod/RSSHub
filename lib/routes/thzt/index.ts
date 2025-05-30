@@ -41,9 +41,8 @@ async function handler() {
             link,
         };
     }) as DataItem[];
-
     const items = await Promise.all(
-        list.map((item) =>
+        list.slice(0, 15).map((item) =>
             cache.tryGet(item.link!, async () => {
                 const articleUrl = `${baseUrl}/${item.link}`;
                 const response = await got({
