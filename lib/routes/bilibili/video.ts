@@ -11,7 +11,7 @@ import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },

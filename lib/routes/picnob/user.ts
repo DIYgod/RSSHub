@@ -9,7 +9,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/user/:id/:type?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/picnob/user/xlisa_olivex',
     parameters: {
         id: 'Instagram id',

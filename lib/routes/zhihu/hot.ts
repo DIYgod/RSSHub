@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hot/:category?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/zhihu/hot',
     view: ViewType.Articles,
     features: {

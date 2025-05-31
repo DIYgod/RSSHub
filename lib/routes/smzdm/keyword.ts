@@ -9,7 +9,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['shopping', 'popular'],
+    categories: ['shopping'],
     view: ViewType.Notifications,
     example: '/smzdm/keyword/女装',
     parameters: { keyword: '你想订阅的关键词' },

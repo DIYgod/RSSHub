@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     example: '/yilinzazhi/latest',
     radar: [

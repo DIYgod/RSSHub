@@ -171,7 +171,7 @@ const idOptions = [
 
 export const route: Route = {
     path: '/ranking/:rank_type/:rank_id/:hour',
-    categories: ['shopping', 'popular'],
+    categories: ['shopping'],
     view: ViewType.Notifications,
     example: '/smzdm/ranking/pinlei/11/3',
     parameters: {

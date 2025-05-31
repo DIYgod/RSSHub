@@ -8,7 +8,7 @@ const JOB_SEARCH_PATH = '/jobs-guest/jobs/api/seeMoreJobPostings/search';
 
 export const route: Route = {
     path: '/jobs/:job_types/:exp_levels/:keywords?/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Notifications,
     example: '/linkedin/jobs/C-P/1/software engineer',
     parameters: {

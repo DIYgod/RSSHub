@@ -38,7 +38,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:channel?/:original?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/theblockbeats/newsflash',
     parameters: {

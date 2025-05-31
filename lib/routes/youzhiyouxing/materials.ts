@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/materials/:id?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/youzhiyouxing/materials',
     parameters: {

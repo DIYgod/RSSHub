@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/tab/:tabid',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     view: ViewType.Articles,
     example: '/v2ex/tab/hot',
     parameters: { tabid: 'tab标签ID,在 URL 可以找到' },

@@ -11,7 +11,7 @@ export const route: Route = {
     name: 'User Activities',
     maintainers: ['hyoban'],
     example: '/github/activity/DIYgod',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     view: ViewType.Notifications,
     parameters: {
         user: 'GitHub username',

@@ -5,7 +5,7 @@ import { getDataByPlaylistId as getDataByPlaylistIdGoogle } from './api/google';
 
 export const route: Route = {
     path: '/playlist/:id/:embed?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z',
     parameters: { id: 'YouTube playlist id', embed: 'Default to embed the video, set to any value to disable embedding' },

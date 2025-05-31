@@ -9,7 +9,7 @@ import { isYouTubeChannelId } from './utils';
 
 export const route: Route = {
     path: '/community/:handle',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/youtube/community/@JFlaMusic',
     parameters: { handle: 'YouTube handles or channel id' },
     name: 'Community',

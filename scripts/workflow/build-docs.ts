@@ -7,6 +7,18 @@ import { getCurrentPath } from '../../lib/utils/helpers';
 const fullTests = await (await fetch('https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/test-full-routes.json')).json();
 const testResult = fullTests.testResults[0].assertionResults;
 
+const foloAnalysis = await (
+    await fetch('https://api.follow.is/discover/rsshub-analytics', {
+        headers: {
+            'user-agent': 'RSSHub',
+        },
+    })
+).json();
+const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
+    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
+    .slice(0, 150);
+
 const __dirname = getCurrentPath(import.meta.url);
 
 const docs = {};
@@ -28,6 +40,9 @@ for (const namespace in namespaces) {
         const realPath = `/${namespace}${path}`;
         const data = namespaces[namespace].routes[path];
         const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
+        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
+            categories.push('popular');
+        }
         // docs.json
         for (const category of categories) {
             if (!docs[category]) {
@@ -36,19 +51,21 @@ for (const namespace in namespaces) {
             if (!docs[category][namespace]) {
                 docs[category][namespace] = {
                     routes: {},
+                    heat: 0,
                 };
             }
             docs[category][namespace].name = namespaces[namespace].name;
             docs[category][namespace].url = namespaces[namespace].url;
             docs[category][namespace].description = namespaces[namespace].description;
-            docs[category][namespace].routes[realPath] = data;
+            docs[category][namespace].routes[realPath] = {
+                ...data,
+                heat: foloAnalysisResult[realPath]?.subscriptionCount || 0,
+                topFeeds: foloAnalysisResult[realPath]?.topFeeds || [],
+            };
+            docs[category][namespace].heat += foloAnalysisResult[realPath]?.subscriptionCount || 0;
         }
     }
 }
-
-// Generate markdown
-const pinyinCompare = new Intl.Collator('zh-Hans-CN-u-co-pinyin').compare;
-const isASCII = (str) => /^[\u0000-\u007F]*$/.test(str);
 
 function generateMd(lang) {
     const md = {};
@@ -61,17 +78,9 @@ function generateMd(lang) {
         md[category] = `# ${`${nameObj.icon} ${nameObj[lang]}`}\n\n`;
 
         const namespaces = Object.keys(docs[category]).sort((a, b) => {
-            const aname = docs[category][a].name[0];
-            const bname = docs[category][b].name[0];
-            const ia = isASCII(aname);
-            const ib = isASCII(bname);
-            if (ia && ib) {
-                return aname.toLowerCase() < bname.toLowerCase() ? -1 : 1;
-            } else if (ia || ib) {
-                return ia > ib ? -1 : 1;
-            } else {
-                return pinyinCompare(aname, bname);
-            }
+            const aname = docs[category][a].heat;
+            const bname = docs[category][b].heat;
+            return bname - aname;
         });
         for (const namespace of namespaces) {
             if (docs[category][namespace].name === 'Unknown') {
@@ -83,17 +92,9 @@ function generateMd(lang) {
             }
 
             const realPaths = Object.keys(docs[category][namespace].routes).sort((a, b) => {
-                const aname = docs[category][namespace].routes[a].name[0];
-                const bname = docs[category][namespace].routes[b].name[0];
-                const ia = isASCII(aname);
-                const ib = isASCII(bname);
-                if (ia && ib) {
-                    return aname.toLowerCase() < bname.toLowerCase() ? -1 : 1;
-                } else if (ia || ib) {
-                    return ia > ib ? -1 : 1;
-                } else {
-                    return pinyinCompare(aname, bname);
-                }
+                const aheat = docs[category][namespace].routes[a].heat;
+                const bheat = docs[category][namespace].routes[b].heat;
+                return bheat - aheat;
             });
 
             const processedPaths = new Set();

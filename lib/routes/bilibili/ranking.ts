@@ -118,7 +118,7 @@ export const route: Route = {
     path: '/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?',
     name: '排行榜',
     maintainers: ['DIYgod', 'hyoban'],
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/ranking/0',
     parameters: {

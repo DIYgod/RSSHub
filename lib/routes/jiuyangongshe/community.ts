@@ -94,7 +94,7 @@ const render = (data) => art(path.join(__dirname, 'templates/community-descripti
 
 export const route: Route = {
     path: '/community',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/jiuyangongshe/community',
     maintainers: ['TonyRL'],

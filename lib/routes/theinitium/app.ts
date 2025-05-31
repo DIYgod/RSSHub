@@ -12,7 +12,7 @@ const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone
 
 export const route: Route = {
     path: '/app/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/theinitium/app',
     parameters: {
         category: 'Category, see below, latest_sc by default',

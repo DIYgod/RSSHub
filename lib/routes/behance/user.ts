@@ -9,7 +9,7 @@ import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPa
 
 export const route: Route = {
     path: '/:user/:type?',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/behance/mishapetrick',
     parameters: {

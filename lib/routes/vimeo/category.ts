@@ -9,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/vimeo/category/documentary/staffpicks',
     parameters: {

@@ -132,7 +132,7 @@ const handler: Route['handler'] = async (ctx) => {
 
 export const route: Route = {
     path: '/announcement/:type',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/binance/announcement/new-cryptocurrency-listing',
     parameters: {

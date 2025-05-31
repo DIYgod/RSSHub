@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/douban/group/648102',
     parameters: {

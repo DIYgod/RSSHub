@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/scholar/:query',
-    categories: ['journal', 'popular'],
+    categories: ['journal'],
     example: '/google/scholar/data+visualization',
     parameters: { query: 'query statement which supports「Basic」and「Advanced」modes' },
     features: {

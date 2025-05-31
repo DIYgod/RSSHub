@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/list/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/tophub/list/Om4ejxvxEN',
     parameters: { id: '榜单id，可在 URL 中找到' },
     features: {
