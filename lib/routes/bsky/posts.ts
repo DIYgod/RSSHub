@@ -9,7 +9,7 @@ import querystring from 'node:querystring';
 
 export const route: Route = {
     path: '/profile/:handle/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bsky/profile/bsky.app',
     parameters: {

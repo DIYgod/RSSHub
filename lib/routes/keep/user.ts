@@ -6,7 +6,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/keep/user/556b02c1ab59390afea671ea',
     parameters: { id: 'Keep 用户 id' },
     features: {

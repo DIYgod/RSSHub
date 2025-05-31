@@ -55,7 +55,7 @@ const PATH_LIST = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/timednews/news',
     parameters: { type: '子分类，见下表，默认为全部' },
     features: {

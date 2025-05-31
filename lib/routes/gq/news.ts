@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 const host = 'https://www.gq.com';
 export const route: Route = {
     path: '/news',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/gq/news',
     parameters: {},

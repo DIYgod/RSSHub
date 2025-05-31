@@ -133,7 +133,7 @@ export const route: Route = {
     path: '/:category?',
     name: '分类',
     url: 'cuilingmag.com',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     maintainers: ['nczitzk'],
     handler,
     example: '/cuilingmag',

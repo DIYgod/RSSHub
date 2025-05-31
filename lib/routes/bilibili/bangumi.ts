@@ -11,7 +11,7 @@ export const route: Route = {
         embed: '默认为开启内嵌视频, 任意值为关闭',
     },
     example: '/bilibili/bangumi/media/9192',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     maintainers: ['DIYgod', 'nuomi1'],
     handler,

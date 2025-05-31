@@ -6,7 +6,7 @@ import { rootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: '/tag/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/huxiu/tag/291',
     parameters: { id: '标签 id，可在对应标签页 URL 中找到' },
     features: {

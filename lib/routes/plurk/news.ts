@@ -5,7 +5,7 @@ import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/plurk/news/:lang?',
     parameters: { lang: 'Language, see the table above, `en` by default' },
     features: {

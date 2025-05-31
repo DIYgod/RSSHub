@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/chapter/:id',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Notifications,
     example: '/qidian/chapter/1010400217',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },

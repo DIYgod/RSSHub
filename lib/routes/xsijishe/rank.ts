@@ -11,7 +11,7 @@ const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/rank/:type',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     example: '/xsijishe/rank/weekly',
     parameters: {
         type: {

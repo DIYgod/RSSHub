@@ -8,7 +8,7 @@ export const route: Route = {
     path: ['/author/:id/:type?', '/member/:id/:type?'],
     name: '用户',
     example: '/huxiu/member/2313050',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     parameters: { id: '用户 id，可在对应用户页 URL 中找到' },
     maintainers: ['nczitzk'],
     handler,

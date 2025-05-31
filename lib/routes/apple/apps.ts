@@ -17,7 +17,7 @@ const platforms = {
 
 export const route: Route = {
     path: '/apps/update/:country/:id/:platform?',
-    categories: ['program-update', 'popular'],
+    categories: ['program-update'],
     view: ViewType.Notifications,
     example: '/apple/apps/update/us/id408709785',
     parameters: {

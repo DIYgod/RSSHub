@@ -4,7 +4,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/daily-updates/news',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Notifications,
     example: '/stockedge/daily-updates/news',
     parameters: {},

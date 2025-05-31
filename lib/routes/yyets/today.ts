@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/today',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Notifications,
     example: '/yyets/today',
     parameters: {},

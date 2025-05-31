@@ -9,7 +9,7 @@ const baseUrl = 'https://www.dora-world.com';
 
 export const route: Route = {
     path: '/article/:topic/:topicId?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dora-world/article/contents',
     parameters: {

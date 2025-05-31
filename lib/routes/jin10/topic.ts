@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/jin10/topic/396',
     parameters: { id: 'N' },

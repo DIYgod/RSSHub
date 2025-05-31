@@ -14,7 +14,7 @@ const FILTER_NODE_TYPE_MAP = {
 
 export const route: Route = {
     path: '/video/:login/:filter?',
-    categories: ['live', 'popular'],
+    categories: ['live'],
     view: ViewType.Videos,
     example: '/twitch/video/riotgames/highlights',
     parameters: {

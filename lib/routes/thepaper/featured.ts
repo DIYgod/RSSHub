@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/featured',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepaper/featured',
     parameters: {},
     features: {

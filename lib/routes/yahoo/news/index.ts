@@ -6,7 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/:region/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/yahoo/news/hk/world',
     parameters: {
         region: 'Region, `hk/tw/au/ca/fr/malaysia/nz/sg/uk/en(us)`, the part represented by the asterisk (*) in *.news.yahoo.com',

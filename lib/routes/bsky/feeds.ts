@@ -8,7 +8,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/profile/:handle/feed/:space/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bsky.app/profile/jaz.bsky.social/feed/cv:cat',
     parameters: {

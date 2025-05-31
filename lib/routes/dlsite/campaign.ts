@@ -122,7 +122,7 @@ const setUrl = (info) => {
 
 export const route: Route = {
     path: '/campaign/:type/:free?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     example: '/dlsite/campaign/home',
     parameters: {
         type: {

@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/featured',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/grist/featured',
     parameters: {},
     features: {

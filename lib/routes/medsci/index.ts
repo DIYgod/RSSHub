@@ -6,7 +6,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:sid?/:tid?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/medsci',
     parameters: { sid: '科室，见下表，默认为推荐', tid: '亚专业，可在对应科室页 URL 中找到，默认为该科室的全部' },
     features: {

@@ -6,7 +6,7 @@ import { rootUrl, apiArticleRootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: ['/article', '/channel/:id?'],
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/huxiu/article',
     parameters: {},
     features: {

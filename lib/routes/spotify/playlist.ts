@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/playlist/:id',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/spotify/playlist/4UBVy1LttvodwivPUuwJk2',
     parameters: { id: 'Playlist ID' },

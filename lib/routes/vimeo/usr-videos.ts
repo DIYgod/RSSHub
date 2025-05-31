@@ -7,7 +7,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/user/:username/:cat?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/vimeo/user/filmsupply/picks',
     parameters: {

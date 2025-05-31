@@ -5,7 +5,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/recommend',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/infoq/recommend',
     parameters: {},
     features: {

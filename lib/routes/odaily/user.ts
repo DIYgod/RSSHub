@@ -8,7 +8,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily/user/2147486902',
     parameters: { id: '用户 id，可在用户页地址栏中找到' },
     features: {

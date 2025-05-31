@@ -5,7 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/stars/:user/:repo',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     example: '/github/stars/DIYgod/RSSHub',
     view: ViewType.Notifications,
     parameters: { user: 'GitHub username', repo: 'GitHub repo name' },

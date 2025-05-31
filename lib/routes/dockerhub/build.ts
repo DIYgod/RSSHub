@@ -4,7 +4,7 @@ import { hash } from './utils';
 
 export const route: Route = {
     path: '/build/:owner/:image/:tag?',
-    categories: ['program-update', 'popular'],
+    categories: ['program-update'],
     view: ViewType.Notifications,
     example: '/dockerhub/build/diygod/rsshub/latest',
     parameters: {

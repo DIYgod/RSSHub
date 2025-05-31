@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shortcuts',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/shortcuts',
     parameters: {},
     features: {

@@ -53,7 +53,7 @@ const infos = {
 
 export const route: Route = {
     path: '/new/:type',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dlsite/new/home',
     parameters: {

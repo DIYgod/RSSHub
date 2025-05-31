@@ -27,7 +27,7 @@ export const route: Route = {
     ],
     name: 'Works',
     maintainers: ['MegrezZhu', 'CoderTonyChan', 'nczitzk', 'Felix2yu'],
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     handler,
     url: 'www.javbus.com',

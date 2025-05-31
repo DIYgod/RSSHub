@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/provider/:region/:providerId',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/yahoo/news/provider/tw/yahoo_tech_tw_942',
     parameters: { region: '地區, hk 或 tw, 分别表示香港雅虎和台湾雅虎', providerId: '新聞來源 ID, 可透過路由"新聞來源列表"獲得' },
     features: {

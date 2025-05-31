@@ -9,7 +9,7 @@ import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/timeline/:account',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/fediverse/timeline/Mastodon@mastodon.social',
     parameters: { account: 'username@domain' },

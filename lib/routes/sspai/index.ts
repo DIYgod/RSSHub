@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/index',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     view: ViewType.Articles,
     example: '/sspai/index',
     parameters: {},

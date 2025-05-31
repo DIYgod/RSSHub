@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/:category?',
     name: '文章',
     maintainers: ['nczitzk', 'pseudoyu'],
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dedao',
     parameters: { category: '分类，见下表，默认为`news`' },
     description: `| 新闻 | 人物故事 | 视频 |

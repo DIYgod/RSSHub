@@ -14,7 +14,7 @@ const pageCount = 10;
 
 export const route: Route = {
     path: '/actors/:name/:id',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Videos,
     example: '/eventernote/actors/三森すずこ/2634',
     parameters: { name: '声优姓名', id: '声优 ID' },

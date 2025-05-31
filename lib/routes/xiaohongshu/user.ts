@@ -8,7 +8,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     maintainers: ['lotosbin', 'howerhe', 'rien7', 'dddaniel1', 'pseudoyu'],
     handler,

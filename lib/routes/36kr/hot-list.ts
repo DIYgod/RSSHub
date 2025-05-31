@@ -27,7 +27,7 @@ const categories = {
 
 export const route: Route = {
     path: '/hot-list/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/36kr/hot-list',
     parameters: { category: '分类，默认为24小时热榜' },
     features: {

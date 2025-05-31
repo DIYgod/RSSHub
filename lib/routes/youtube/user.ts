@@ -5,7 +5,7 @@ import { callApi } from './utils';
 
 export const route: Route = {
     path: '/user/:username/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/youtube/user/@JFlaMusic',
     parameters: {

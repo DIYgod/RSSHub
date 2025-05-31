@@ -31,7 +31,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/kepu/:channel?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hellobtc/kepu/latest',
     parameters: { channel: '类型，见下表，默认为最新' },
     features: {

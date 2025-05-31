@@ -10,7 +10,7 @@ import { getClientVal, sign } from './utils';
 
 export const route: Route = {
     path: '/program/:programId',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/tingtingfm/program/M7VJv6Jj4R',
     parameters: { programId: '节目 ID，可以在 URL 中找到' },

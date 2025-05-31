@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/routes/:lang?',
-    categories: ['program-update', 'popular'],
+    categories: ['program-update'],
     view: ViewType.Notifications,
     example: '/rsshub/routes/en',
     parameters: {

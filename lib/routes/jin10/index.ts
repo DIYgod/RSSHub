@@ -10,7 +10,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:important?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Notifications,
     example: '/jin10',
     parameters: { important: '只看重要，任意值开启，留空关闭' },

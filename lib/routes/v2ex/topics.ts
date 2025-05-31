@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topics/:type',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     view: ViewType.Articles,
     example: '/v2ex/topics/latest',
     parameters: {

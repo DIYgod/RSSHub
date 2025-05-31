@@ -11,7 +11,7 @@ import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bilibili/user/dynamic/2267573',
     parameters: {

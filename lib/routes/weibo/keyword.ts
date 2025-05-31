@@ -9,7 +9,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/weibo/keyword/RSSHub',
     parameters: { keyword: '你想订阅的微博关键词', routeParams: '额外参数；请参阅上面的说明和表格' },

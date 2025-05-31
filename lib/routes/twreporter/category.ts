@@ -6,7 +6,7 @@ import fetch from './fetch-article';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/twreporter/category/world',
     parameters: { category: 'Category' },
     features: {

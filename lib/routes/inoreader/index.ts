@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/html_clip/:user/:tag',
     example: '/inoreader/html_clip/1005137674/user-favorites',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     name: 'HTML Clip',
     maintainers: ['EthanWng97'],

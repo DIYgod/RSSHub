@@ -6,7 +6,7 @@ import { rootUrl, apiSearchRootUrl, generateSignature, processItems, fetchData }
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/huxiu/search/生活',
     parameters: { keyword: '关键字' },
     features: {

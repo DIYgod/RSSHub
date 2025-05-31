@@ -189,7 +189,7 @@ export const route: Route = {
 | [法律](https://top.aibase.com/discover/138-139) | [138-139](https://rsshub.app/aibase/discover/138-139) |
 </details>
     `,
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
 
     features: {
         requireConfig: false,

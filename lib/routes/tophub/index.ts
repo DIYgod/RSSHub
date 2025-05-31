@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/tophub/Om4ejxvxEN',
     parameters: { id: '榜单id，可在 URL 中找到' },
     features: {

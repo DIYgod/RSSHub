@@ -8,7 +8,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/activity',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily/activity',
     parameters: {},
     features: {

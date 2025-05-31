@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/freegames/:locale?/:country?',
-    categories: ['game', 'popular'],
+    categories: ['game'],
     view: ViewType.Notifications,
     example: '/epicgames/freegames/en-US/US',
     parameters: {

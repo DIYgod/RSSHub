@@ -18,7 +18,7 @@ const shortcuts = {
 
 export const route: Route = {
     path: '/:category/:subCategory?/:keyword?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/36kr/newsflashes',
     parameters: {
         category: '分类，必填项',

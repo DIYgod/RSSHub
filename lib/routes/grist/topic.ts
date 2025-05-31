@@ -3,7 +3,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/grist/topic/extreme-heat',
     parameters: { topic: 'Any Topic from Table below' },
     features: {
