@@ -92421,10 +92421,25 @@
   },
   "stheadline": {
     "routes": {
-      "/std/realtime/:category{.+}?": {
-        "path": "/std/realtime/:category{.+}?",
-        "name": "Unknown",
-        "maintainers": [],
+      "/std/:category{.+}?": {
+        "path": "/std/:category{.+}?",
+        "name": "即時",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "example": "/stheadline/std/realtimenews",
+        "parameters": {
+          "category": "分類路徑，URL 中 `www.stheadline.com/` 後至中文分類名前部分，預設為 `realtimenews`"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.stheadline.com/theme/:category/chineseCategory",
+              "www.stheadline.com/:category/:chineseCategory"
+            ],
+            "target": "/std/:category"
+          }
+        ],
         "location": "std/realtime.ts",
         "module": "() => import('@/routes/stheadline/std/realtime.ts')"
       }

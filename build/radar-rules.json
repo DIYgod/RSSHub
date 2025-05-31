@@ -34113,6 +34113,20 @@
       }
     ]
   },
+  "stheadline.com": {
+    "_name": "星島日報",
+    "www": [
+      {
+        "title": "即時",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/theme/:category/chineseCategory",
+          "/:category/:chineseCategory"
+        ],
+        "target": "/stheadline/std/:category"
+      }
+    ]
+  },
   "stockedge.com": {
     "_name": "Stock Edge",
     "web": [
