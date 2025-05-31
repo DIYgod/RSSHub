@@ -47030,6 +47030,35 @@
     "url": "web.cmc.hebtv.com",
     "lang": "zh-CN"
   },
+  "hedwig": {
+    "routes": {
+      "/posts/:site": {
+        "path": "/posts/:site",
+        "categories": [
+          "blog"
+        ],
+        "example": "/posts/walnut",
+        "parameters": {
+          "site": "站点名，原则上只要是 `{site}.hedwig.pub` 都可以匹配"
+        },
+        "features": {
+          "supportRadar": false
+        },
+        "name": "Posts",
+        "url": "hedwig.pub",
+        "maintainers": [
+          "zwithz",
+          "GetToSet"
+        ],
+        "view": 0,
+        "location": "posts.ts",
+        "module": "() => import('@/routes/hedwig/posts.ts')"
+      }
+    },
+    "name": "Hedwig",
+    "url": "hedwig.pub",
+    "lang": "zh-CN"
+  },
   "hellobtc": {
     "routes": {
       "/information/:channel?": {
