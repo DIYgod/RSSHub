@@ -21,7 +21,7 @@ export const route: Route = {
     },
     name: 'Posts',
     url: 'hedwig.pub',
-    maintainers: ['GetToSet'],
+    maintainers: ['zwithz', 'GetToSet'],
     view: ViewType.Articles,
     handler: async (ctx) => {
         const { site } = ctx.req.param();
