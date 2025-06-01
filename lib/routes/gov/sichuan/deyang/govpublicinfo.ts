@@ -28,8 +28,7 @@ const basicInfoDict = {
 const getInfoUrlList = async (rootUrl, infoBasicUrl) => {
     const response = await got(infoBasicUrl);
     const $ = load(response.data);
-    // 非当前日期文章计数，部分旧文章可能会置顶，目前为发现置顶数超过10
-    const infoList = $('body > div.container > div.ewb-white > div.ewb-job > ul > li')
+    const infoList = $('.list_div li')
         .toArray()
         .map((item) => ({
             title: $('a', item).attr('title'),
@@ -45,22 +44,22 @@ const getInfoContent = (rootUrl, item) =>
         // 部分网页会跳转其他类型网站,则不解析，直接附超链接
         try {
             const $ = load(response.data);
-            const fileList = $('#symbol > div:nth-child(4) > div > span > a')
+            const fileList = $('#attribute > span.gk.fj > file')
                 .toArray()
                 .map((item) => ({
                     name: $(item).text(),
                     url: `${rootUrl}/${$(item).attr('href')}`,
                 }));
-            const rawDate = $('#symbol > div:nth-child(1) > div:nth-child(3)').text().split('：')[1].trim();
+            const rawDate = $('#attribute > span:nth-child(3)').text().split('：')[1].trim();
             return {
-                title: $('#main').text().trim(),
-                id: $('#symbol > div:nth-child(1) > div:nth-child(1)').text().split('：')[1].trim(),
-                infoNum: $('#symbol > div:nth-child(1) > div:nth-child(2) > span').text().split('：')[1].trim(),
+                title: $('h1').text().trim(),
+                id: $('#attribute > span:nth-child(1)').text().split('：')[1].trim(),
+                infoNum: $('#attribute > span:nth-child(2)').text().split('：')[1].trim(),
                 pubDate: parseDate(timezone(rawDate, +8)),
                 date: rawDate,
-                keyWord: $('#symbol > div:nth-child(2) > div:nth-child(3)').text().split('：')[1].trim(),
-                source: $('#symbol > div:nth-child(2) > div:nth-child(2)').text().split('：')[1].trim(),
-                content: $('#container > div.ewb-white > div.ewb-article-detail').html(),
+                keyWord: $('#attribute > span:nth-child(6)').text().split('：')[1].trim(),
+                source: $('#attribute > span:nth-child(5)').text().split('：')[1].trim(),
+                content: $('body > section > article').html(),
                 file: fileList,
                 link: item.url,
                 _isCompleteInfo: true,
