@@ -51,7 +51,7 @@ importers:
         version: 1.14.3(hono@4.7.10)
       '@hono/zod-openapi':
         specifier: 0.19.8
-        version: 0.19.8(hono@4.7.10)(zod@3.25.42)
+        version: 0.19.8(hono@4.7.10)(zod@3.25.47)
       '@notionhq/client':
         specifier: 3.1.3
         version: 3.1.3
@@ -299,8 +299,8 @@ importers:
         specifier: 13.4.0
         version: 13.4.0
       zod:
-        specifier: 3.25.42
-        version: 3.25.42
+        specifier: 3.25.47
+        version: 3.25.47
     devDependencies:
       '@babel/preset-env':
         specifier: 7.27.2
@@ -595,8 +595,8 @@ packages:
     resolution: {integrity: sha512-NFJK2sHUvrjo8wAU/nQTWU890/zB2jj0qBcCbZbbf+005cAsv6tMjXz31fBign6M5ov1o0Bllu+9nbqkfsjjJQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helpers@7.27.3':
-    resolution: {integrity: sha512-h/eKy9agOya1IGuLaZ9tEUgz+uIRXcbtOhRtUyyMf8JFmn1iT13vnl/IGVWSkdOCG/pC57U4S1jnAabAavTMwg==}
+  '@babel/helpers@7.27.4':
+    resolution: {integrity: sha512-Y+bO6U+I7ZKaM5G5rDUZiYfUvQPUibYmAFe7EnKdnKBbVXDZxvp+MWOH5gYciY0EPk4EScsuFMQBbEfpdRKSCQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/highlight@7.25.9':
@@ -605,6 +605,11 @@ packages:
 
   '@babel/parser@7.27.3':
     resolution: {integrity: sha512-xyYxRj6+tLNDTWi0KCBcZ9V7yg3/lwL9DWh9Uwh/RIVlIfFidggcgxKX3GCXwCiswwcGRawBKbEg2LG/Y8eJhw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.27.4':
+    resolution: {integrity: sha512-BRmLHGwpUqLFR2jzx9orBuX/ABDkj2jLKOXrHDTN2aOKL+jFDDKaRNo9nyYsIl9h/UE/7lMKdDjKQQyxKKDZ7g==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1007,6 +1012,10 @@ packages:
 
   '@babel/traverse@7.27.3':
     resolution: {integrity: sha512-lId/IfN/Ye1CIu8xG7oKBHXd2iNb2aW1ilPszzGcJug6M8RCKfVNcYhpI5+bMvFYjK7lXIM0R+a+6r8xhHp2FQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/traverse@7.27.4':
+    resolution: {integrity: sha512-oNcu2QbHqts9BtOWJosOVJapWjBDSxGCpFvikNR5TGDYDQf3JwpIoMzIKrvfoti93cLfPJEG4tH9SPVeyCGgdA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.27.3':
@@ -6223,8 +6232,8 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
-  zod@3.25.42:
-    resolution: {integrity: sha512-PcALTLskaucbeHc41tU/xfjfhcz8z0GdhhDcSgrCTmSazUuqnYqiXO63M0QUBVwpBlsLsNVn5qHSC5Dw3KZvaQ==}
+  zod@3.25.47:
+    resolution: {integrity: sha512-+f8+agSYoT9niC0VUL60IuXnr81FJeJ27Lf5YPrmcxTWmygcpGBeEuAAovDDEjkyQ36KyqNswwbhISZ1Z7yY+A==}
 
 snapshots:
 
@@ -6241,10 +6250,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.2(zod@3.25.42)':
+  '@asteasolutions/zod-to-openapi@7.3.2(zod@3.25.47)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.25.42
+      zod: 3.25.47
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -6265,10 +6274,10 @@ snapshots:
       '@babel/generator': 7.27.3
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-module-transforms': 7.27.3(@babel/core@7.27.3)
-      '@babel/helpers': 7.27.3
-      '@babel/parser': 7.27.3
+      '@babel/helpers': 7.27.4
+      '@babel/parser': 7.27.4
       '@babel/template': 7.27.2
-      '@babel/traverse': 7.27.3
+      '@babel/traverse': 7.27.4
       '@babel/types': 7.27.3
       convert-source-map: 2.0.0
       debug: 4.4.1
@@ -6397,7 +6406,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/helpers@7.27.3':
+  '@babel/helpers@7.27.4':
     dependencies:
       '@babel/template': 7.27.2
       '@babel/types': 7.27.3
@@ -6410,6 +6419,10 @@ snapshots:
       picocolors: 1.1.1
 
   '@babel/parser@7.27.3':
+    dependencies:
+      '@babel/types': 7.27.3
+
+  '@babel/parser@7.27.4':
     dependencies:
       '@babel/types': 7.27.3
 
@@ -6923,6 +6936,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@babel/traverse@7.27.4':
+    dependencies:
+      '@babel/code-frame': 7.27.1
+      '@babel/generator': 7.27.3
+      '@babel/parser': 7.27.4
+      '@babel/template': 7.27.2
+      '@babel/types': 7.27.3
+      debug: 4.4.1
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/types@7.27.3':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
@@ -7249,17 +7274,17 @@ snapshots:
     dependencies:
       hono: 4.7.10
 
-  '@hono/zod-openapi@0.19.8(hono@4.7.10)(zod@3.25.42)':
+  '@hono/zod-openapi@0.19.8(hono@4.7.10)(zod@3.25.47)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.2(zod@3.25.42)
-      '@hono/zod-validator': 0.7.0(hono@4.7.10)(zod@3.25.42)
+      '@asteasolutions/zod-to-openapi': 7.3.2(zod@3.25.47)
+      '@hono/zod-validator': 0.7.0(hono@4.7.10)(zod@3.25.47)
       hono: 4.7.10
-      zod: 3.25.42
+      zod: 3.25.47
 
-  '@hono/zod-validator@0.7.0(hono@4.7.10)(zod@3.25.42)':
+  '@hono/zod-validator@0.7.0(hono@4.7.10)(zod@3.25.47)':
     dependencies:
       hono: 4.7.10
-      zod: 3.25.42
+      zod: 3.25.47
 
   '@humanfs/core@0.19.1': {}
 
@@ -12495,4 +12520,4 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zod@3.25.42: {}
+  zod@3.25.47: {}
