@@ -66207,6 +66207,35 @@
       "name": "美露可利"
     }
   },
+  "meta": {
+    "routes": {
+      "/ai/blog": {
+        "path": "/ai/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/meta/ai/blog",
+        "name": "AI Blog",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "ai.meta.com/blog/",
+        "radar": [
+          {
+            "source": [
+              "ai.meta.com/blog/",
+              "ai.meta.com"
+            ]
+          }
+        ],
+        "location": "ai-blog.ts",
+        "module": "() => import('@/routes/meta/ai-blog.ts')"
+      }
+    },
+    "name": "Meta",
+    "apiRoutes": {},
+    "url": "www.meta.com"
+  },
   "metacritic": {
     "routes": {
       "/:type?/:sort?/:filter?": {

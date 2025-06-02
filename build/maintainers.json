@@ -4867,6 +4867,9 @@
   "/mercari/:sort/:order/:status/:keyword": [
     "yana9i"
   ],
+  "/meta/ai/blog": [
+    "TonyRL"
+  ],
   "/metacritic/:type?/:sort?/:filter?": [],
   "/meteor/boards": [
     "TonyRL"

@@ -25333,6 +25333,20 @@
       }
     ]
   },
+  "meta.com": {
+    "_name": "Meta",
+    "ai": [
+      {
+        "title": "AI Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog/",
+          "/"
+        ],
+        "target": "/meta/ai/blog"
+      }
+    ]
+  },
   "meteor.today": {
     "_name": "Meteor",
     ".": [
