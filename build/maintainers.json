@@ -714,6 +714,9 @@
   "/bandcamp/weekly": [
     "nczitzk"
   ],
+  "/bandisoft/history/:id?/:language?": [
+    "nczitzk"
+  ],
   "/bangumi.moe/*": [
     "nczitzk"
   ],

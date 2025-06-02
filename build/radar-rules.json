@@ -5903,6 +5903,19 @@
       }
     ]
   },
+  "bandisoft.com": {
+    "_name": "Bandisoft",
+    "www": [
+      {
+        "title": "History",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:id/history"
+        ],
+        "target": "/bandisoftparams=>{const id=params.id;return`/bandisoft/history${id?`/${id}`:\"\"}`}"
+      }
+    ]
+  },
   "bangumi.moe": {
     "_name": "萌番组",
     ".": [
