@@ -7,66 +7,6 @@ import { type CheerioAPI, type Cheerio, load } from 'cheerio';
 import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
-export const handler = async (ctx: Context): Promise<Data> => {
-    const { language = 'en', id = 'bandizip' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
-
-    const baseUrl: string = `https://${language}.bandisoft.com`;
-    const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
-
-    const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
-    const lang = $('html').attr('lang') ?? 'en';
-    const author: string | undefined = $('meta[name="author"]').attr('content');
-
-    const items: DataItem[] = $('div.row')
-        .slice(0, limit)
-        .toArray()
-        .map((el): Element => {
-            const $el: Cheerio<Element> = $(el);
-
-            const version: string | undefined = $el.find('div.cell1').text();
-            const pubDateStr: string | undefined = $el.find('div.cell2').text();
-
-            const title: string = version;
-            const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
-
-            const linkUrl: string = targetUrl;
-            const guid: string = `bandisoft-${id}-${language}-${version}`;
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
-                title,
-                description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
-                author,
-                guid,
-                id: guid,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: lang,
-            };
-
-            return processedItem;
-        });
-
-    return {
-        title: $('title').text(),
-        description: $('meta[name="description"]').attr('content'),
-        link: targetUrl,
-        item: items,
-        allowEmpty: true,
-        image: $('img#logo_light').attr('src'),
-        author,
-        language: lang,
-        id: targetUrl,
-    };
-};
-
 const idOptions = [
     {
         label: 'Bandizip',
@@ -184,6 +124,78 @@ const languageOptions = [
         value: 'kr',
     },
 ];
+
+export const handler = async (ctx: Context): Promise<Data> => {
+    const { id = 'bandizip', language = 'en' } = ctx.req.param();
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
+
+    const validIds: Set<string> = new Set(idOptions.map((option) => option.value));
+
+    if (!validIds.has(id)) {
+        throw new Error(`Invalid id: ${id}. Allowed values are: ${[...validIds].join(', ')}`);
+    }
+
+    const validLanguages: Set<string> = new Set(languageOptions.map((option) => option.value));
+
+    if (!validLanguages.has(language)) {
+        throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);
+    }
+
+    const baseUrl: string = `https://${language}.bandisoft.com`;
+    const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
+
+    const response = await ofetch(targetUrl);
+    const $: CheerioAPI = load(response);
+    const lang = $('html').attr('lang') ?? 'en';
+    const author: string | undefined = $('meta[name="author"]').attr('content');
+
+    const items: DataItem[] = $('div.row')
+        .slice(0, limit)
+        .toArray()
+        .map((el): Element => {
+            const $el: Cheerio<Element> = $(el);
+
+            const version: string | undefined = $el.find('div.cell1').text();
+            const pubDateStr: string | undefined = $el.find('div.cell2').text();
+
+            const title: string = version;
+            const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
+
+            const linkUrl: string = targetUrl;
+            const guid: string = `bandisoft-${id}-${language}-${version}`;
+            const upDatedStr: string | undefined = pubDateStr;
+
+            const processedItem: DataItem = {
+                title,
+                description,
+                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                link: linkUrl,
+                author,
+                guid,
+                id: guid,
+                content: {
+                    html: description,
+                    text: description,
+                },
+                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                language: lang,
+            };
+
+            return processedItem;
+        });
+
+    return {
+        title: $('title').text(),
+        description: $('meta[name="description"]').attr('content'),
+        link: targetUrl,
+        item: items,
+        allowEmpty: true,
+        image: $('img#logo_light').attr('src'),
+        author,
+        language: lang,
+        id: targetUrl,
+    };
+};
 
 export const route: Route = {
     path: '/history/:id?/:language?',
