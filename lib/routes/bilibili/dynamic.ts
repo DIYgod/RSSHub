@@ -236,7 +236,7 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), false);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
     const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
@@ -297,7 +297,7 @@ async function handler(ctx) {
                 }
 
                 let description = getDes(data) || '';
-                const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
+                const title = getTitle(data);
                 const category: string[] = [];
                 // emoji
                 if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
@@ -382,13 +382,13 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-                const descriptions = [description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
                     .map((e) => e?.trim())
                     .filter(Boolean)
                     .join('<br>');
 
                 return {
-                    title,
+                    title: title || description,
                     description: descriptions,
                     pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                     link,
