@@ -8,6 +8,18 @@ import toSource from 'tosource';
 import { getCurrentPath } from '../../lib/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
+const foloAnalysis = await (
+    await fetch('https://api.follow.is/discover/rsshub-analytics', {
+        headers: {
+            'user-agent': 'RSSHub',
+        },
+    })
+).json();
+const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
+    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
+    .slice(0, 150);
+
 const maintainers: Record<string, string[]> = {};
 const radar: {
     [domain: string]: {
@@ -33,6 +45,9 @@ for (const namespace in namespaces) {
         const realPath = `/${namespace}${path}`;
         const data = namespaces[namespace].routes[path];
         const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
+        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
+            categories.push('popular');
+        }
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
