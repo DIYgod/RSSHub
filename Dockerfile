@@ -104,7 +104,7 @@ RUN \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
         corepack enable pnpm && \
-        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
+        pnpm --allow-build=puppeteer add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
         pnpm rb ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
