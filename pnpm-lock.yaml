@@ -15,22 +15,22 @@ overrides:
 
 patchedDependencies:
   '@bbob/core@4.2.0':
-    hash: v4tqyuhmd7ie4kskej63wpyoyy
+    hash: 2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4
     path: patches/@bbob__core@4.2.0.patch
   '@bbob/parser@4.2.0':
-    hash: 3jkidu2qub3svpiz24dcdrhuey
+    hash: 58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6
     path: patches/@bbob__parser@4.2.0.patch
   '@bbob/plugin-helper@4.2.0':
-    hash: 35vhlnm6zfsrye6wm5mvcuoqkq
+    hash: d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca
     path: patches/@bbob__plugin-helper@4.2.0.patch
   '@bbob/preset-html5@4.2.0':
-    hash: 45t5oyykiv4ibbpruba4shbkca
+    hash: 2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b
     path: patches/@bbob__preset-html5@4.2.0.patch
   '@bbob/preset@4.2.0':
-    hash: hzdlptpstii55wqx3v2binf4i4
+    hash: 6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed
     path: patches/@bbob__preset@4.2.0.patch
   eslint-nibble@8.1.0:
-    hash: w5z6jxwjps4t4gxnmmngw67gmm
+    hash: f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2
     path: patches/eslint-nibble@8.1.0.patch
 
 importers:
@@ -42,10 +42,10 @@ importers:
         version: 4.2.0
       '@bbob/plugin-helper':
         specifier: 4.2.0
-        version: 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+        version: 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
       '@bbob/preset-html5':
         specifier: 4.2.0
-        version: 4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)
+        version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
         specifier: 1.14.3
         version: 1.14.3(hono@4.7.11)
@@ -412,7 +412,7 @@ importers:
         version: 10.1.5(eslint@9.28.0(jiti@2.4.2))
       eslint-nibble:
         specifier: 8.1.0
-        version: 8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.28.0(jiti@2.4.2))
+        version: 8.1.0(patch_hash=f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2)(eslint@9.28.0(jiti@2.4.2))
       eslint-plugin-n:
         specifier: 17.19.0
         version: 17.19.0(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
@@ -6979,36 +6979,36 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bbob/core@4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)':
+  '@bbob/core@4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)':
     dependencies:
-      '@bbob/parser': 4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/parser': 4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
       '@bbob/types': 4.2.0
 
   '@bbob/html@4.2.0':
     dependencies:
-      '@bbob/core': 4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/core': 4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
       '@bbob/types': 4.2.0
 
-  '@bbob/parser@4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)':
+  '@bbob/parser@4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
       '@bbob/types': 4.2.0
 
-  '@bbob/plugin-helper@4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)':
+  '@bbob/plugin-helper@4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)':
     dependencies:
       '@bbob/types': 4.2.0
 
-  '@bbob/preset-html5@4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)':
+  '@bbob/preset-html5@4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
-      '@bbob/preset': 4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+      '@bbob/preset': 4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)
       '@bbob/types': 4.2.0
 
-  '@bbob/preset@4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)':
+  '@bbob/preset@4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
       '@bbob/types': 4.2.0
 
   '@bbob/types@4.2.0': {}
@@ -9421,7 +9421,7 @@ snapshots:
       strip-ansi: 5.2.0
       text-table: 0.2.0
 
-  eslint-nibble@8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.28.0(jiti@2.4.2)):
+  eslint-nibble@8.1.0(patch_hash=f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2)(eslint@9.28.0(jiti@2.4.2)):
     dependencies:
       '@ianvs/eslint-stats': 2.0.0
       chalk: 4.1.2
