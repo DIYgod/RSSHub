@@ -71,7 +71,7 @@ export default {
      * @param refresh Whether to renew the cache expiration time when the cache is hit. `true` by default.
      * @returns
      */
-    tryGet: async (key: string, getValueFunc: () => Promise<string | Record<string, any>>, maxAge = config.cache.contentExpire, refresh = true) => {
+    tryGet: async <T extends string | Record<string, any>>(key: string, getValueFunc: () => Promise<T>, maxAge = config.cache.contentExpire, refresh = true) => {
         if (typeof key !== 'string') {
             throw new TypeError('Cache key must be a string');
         }
@@ -87,7 +87,7 @@ export default {
                 v = parsed;
             }
 
-            return v;
+            return v as T;
         } else {
             const value = await getValueFunc();
             cacheModule.set(key, value, maxAge);
