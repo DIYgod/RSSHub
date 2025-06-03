@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
+import type { Data } from '@/types';
 
 export const route: Route = {
     path: '/scss/:type',
@@ -67,12 +68,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response.data);
     
-    let selector;
-    if (type === 'xwdt') {
-        selector = '.m-list3 li';
-    } else {
-        selector = '.Newslist li';
-    }
+    const selector = type === 'xwdt' ? '.m-list3 li' : '.Newslist li';
 
     const list = $(selector)
         .toArray()
@@ -100,16 +96,13 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse.data);
                 const newsContent = content('.v_news_content');
 
-                // 修复1：直接获取纯文本
-                item.description = newsContent.text().trim(); 
+                item.description = newsContent.text().trim();
 
-                // 修复2：健壮的日期解析
                 const pubDateText = content('.info').text().trim();
                 const cleanedPubDate = pubDateText.replace(/发布时间[:：]\s*/, '');
                 const parsedDate = parseDate(cleanedPubDate);
                 
-                // 修复3：日期解析容错
-                item.pubDate = isNaN(parsedDate) ? new Date() : timezone(parsedDate, +8);
+                item.pubDate = Number.isNaN(parsedDate.getTime()) ? new Date() : timezone(parsedDate.getTime(), +8);
 
                 return item;
             })
@@ -120,6 +113,6 @@ async function handler(ctx: Context) {
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
         link: currentUrl,
-        item: items,
+        item: items as Data['item'],
     };
 }
