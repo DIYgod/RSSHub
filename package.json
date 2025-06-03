@@ -109,7 +109,7 @@
         "otplib": "12.0.1",
         "p-map": "7.0.3",
         "pac-proxy-agent": "7.2.0",
-        "proxy-chain": "2.5.8",
+        "proxy-chain": "2.5.9",
         "puppeteer": "22.6.2",
         "puppeteer-extra": "3.3.6",
         "puppeteer-extra-plugin-stealth": "2.11.2",
