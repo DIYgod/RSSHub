@@ -14,13 +14,13 @@ export const route: Route = {
         type: {
             type: 'string',
             optional: false,
-            description: '信息类型，可选值：新闻动态(xwdt)，通知公告(tzgg)',
+            description: '信息类型，可选值：新闻动态，通知公告',
         },
     },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,  // 启用反爬虫保护
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -42,104 +42,72 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const type = ctx.req.param('type') || 'tzgg'; // 默认类型为通知公告
-
-    // 验证type参数有效性
-    if (!['xwdt', 'tzgg'].includes(type)) {
-        throw new Error(`Invalid type parameter: ${type}. Allowed values are 'xwdt' or 'tzgg'.`);
+    let type = ctx.req.param('type'); // 默认类型为通知公告
+    if (!type) {
+        type = 'tzgg';
     }
-
     const rootUrl = 'https://scss.bupt.edu.cn';
-    const typeConfig = {
-        xwdt: {
-            url: `${rootUrl}/index/xwdt.htm`,
-            title: '新闻动态',
-            selector: '.m-list3 li',
-        },
-        tzgg: {
-            url: `${rootUrl}/index/tzgg1.htm`,
-            title: '通知公告',
-            selector: '.Newslist li',
-        },
-    };
+    let currentUrl;
+    let pageTitle;
 
-    const { url: currentUrl, title: pageTitle, selector } = typeConfig[type];
+    if (type === 'xwdt') {
+        currentUrl = `${rootUrl}/index/xwdt.htm`;
+        pageTitle = '新闻动态';
+    } else if (type === 'tzgg') {
+        currentUrl = `${rootUrl}/index/tzgg1.htm`;
+        pageTitle = '通知公告';
+    } else {
+        throw new Error('Invalid type parameter');
+    }
 
     const response = await got({
         method: 'get',
         url: currentUrl,
-        // 添加请求头防止被反爬
-        headers: {
-            Referer: rootUrl,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        },
     });
 
     const $ = load(response.data);
 
+    const selector = type === 'xwdt' ? '.m-list3 li' : '.Newslist li';
+
     const list = $(selector)
         .toArray()
-        .filter((item) => {
-            const $item = $(item);
-            const $link = $item.find('a');
-            return $link.length > 0 && $link.attr('href');
-        })
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
-            const href = $link.attr('href') || '';
+            if ($link.length === 0 || !$link.attr('href')) {
+                return null;
+            }
+            const href = $link.attr('href');
             const link = new URL(href, rootUrl).href;
-
-            // 尝试从列表项中提取日期
-            const dateText = $item.find('span').text().trim();
-            const listDate = dateText ? parseDate(dateText) : null;
 
             return {
                 title: $link.text().trim(),
                 link,
-                pubDate: listDate,
             };
-        });
+        })
+        .filter(Boolean);
+
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await got({
-                        url: item.link,
-                        headers: {
-                            Referer: currentUrl,
-                        },
-                    });
+                const detailResponse = await got({ url: item.link });
+                const content = load(detailResponse.data);
+                const newsContent = content('.v_news_content');
 
-                    const content = load(detailResponse.data);
-                    const newsContent = content('.v_news_content');
+                item.description = newsContent.text().trim();
 
-                    // 优先使用详情页中的日期
-                    const pubDateText = content('.info').text().trim();
-                    const detailDate = pubDateText ? parseDate(pubDateText.replace(/发布时间[:：]\s*/, '')) : null;
+                const pubDateText = content('.info').text().trim();
+                const cleanedPubDate = pubDateText.replace(/发布时间[:：]\s*/, '');
+                const parsedDate = parseDate(cleanedPubDate);
 
-                    // 如果详情页没有日期，使用列表中的日期
-                    const pubDate = detailDate || item.pubDate || new Date();
+                item.pubDate = Number.isNaN(parsedDate.getTime()) ? new Date() : timezone(parsedDate.getTime(), +8);
 
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        description: newsContent.html() || newsContent.text().trim(), // 保留HTML格式
-                        pubDate: timezone(pubDate, +8),
-                    };
-                } catch (error) {
-                    // 如果详情页请求失败，返回基本信息
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        description: '获取内容失败，请直接访问原文链接',
-                        pubDate: item.pubDate ? timezone(item.pubDate, +8) : new Date(),
-                    };
-                }
+                return item;
             })
         )
     );
+
 
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
