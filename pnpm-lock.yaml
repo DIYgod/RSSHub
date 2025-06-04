@@ -83,8 +83,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.9.1
-        version: 0.9.1(hono@4.7.11)
+        specifier: 0.9.2
+        version: 0.9.2(hono@4.7.11)
       '@sentry/node':
         specifier: 9.24.0
         version: 9.24.0
@@ -2162,8 +2162,8 @@ packages:
     resolution: {integrity: sha512-k5TsihZcSdVnqE6JrRFdsvePDTe2RxjE+1wHdcnyFdIPief+ZdPn2fxCTlN0ozLoe08xlY3N9DHzDaneMpX58Q==}
     engines: {node: '>=20'}
 
-  '@scalar/hono-api-reference@0.9.1':
-    resolution: {integrity: sha512-IO0yPN/dssubWXNWL2xXMF6CsM/lnu56F3J0H/EtqEMT2PYCqvb2+HRbDYa9gwPbiaccZ+Me97HZJdh4pqvFMA==}
+  '@scalar/hono-api-reference@0.9.2':
+    resolution: {integrity: sha512-vGjzijTrNkfSLEBv013xzsTAQYhdVpuH0WACT2IlchjBcjUHKkvIktQ/N1z9bizysZYmH8HLG/BA0kXiSq/prg==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4.0.0
@@ -8030,7 +8030,7 @@ snapshots:
     dependencies:
       '@scalar/types': 0.2.1
 
-  '@scalar/hono-api-reference@0.9.1(hono@4.7.11)':
+  '@scalar/hono-api-reference@0.9.2(hono@4.7.11)':
     dependencies:
       '@scalar/core': 0.3.1
       hono: 4.7.11
