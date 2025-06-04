@@ -16644,7 +16644,8 @@ export default {
       "/:category": {
         "path": "/:category",
         "categories": [
-          "reading"
+          "reading",
+          "popular"
         ],
         "view": 0,
         "example": "/bookfere/skills",
@@ -27698,7 +27699,8 @@ export default {
       "/tugua": {
         "path": "/tugua",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "example": "/dapenti/tugua",
         "parameters": {},
@@ -56897,8 +56899,7 @@ export default {
       "/community": {
         "path": "/community",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/jiuyangongshe/community",
@@ -98446,8 +98447,7 @@ export default {
       "/blog": {
         "path": "/blog",
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "view": 0,
         "example": "/telegram/blog",
