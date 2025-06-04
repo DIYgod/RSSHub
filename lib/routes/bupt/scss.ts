@@ -81,7 +81,7 @@ async function handler(ctx: Context) {
             const link = new URL(href, rootUrl).href;
 
             return {
-                title: $link.text().trim(),
+                title: $link.attr('title').trim(),
                 link,
             };
         })
