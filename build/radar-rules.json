@@ -21551,9 +21551,19 @@
         "title": "Popular Recent Posts",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
+          "/post",
           "/post"
         ],
         "target": "/konachan/post/popular_recent/:period?"
+      },
+      {
+        "title": "Popular Recent Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/post",
+          "/post"
+        ],
+        "target": "/konachan/sfw/post/popular_recent/:period?"
       }
     ]
   },
