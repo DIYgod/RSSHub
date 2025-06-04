@@ -90,7 +90,7 @@ async function handler(ctx: Context) {
             const link = new URL(href, rootUrl).href;
 
             return {
-                title: $link.attr('title').trim(),
+                title: $link.text().trim(),
                 link,
             };
         })
@@ -100,28 +100,28 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const detailResponse = await got({ url: item.link });
                 const content = load(detailResponse.data);
                 const newsContent = content('.v_news_content');
 
-                item.description = newsContent.html().trim();
+                item.description = newsContent.text().trim();
 
                 newsContent.find('p, span, strong').each(function () {
                     const element = content(this);
                     const text = element.text().trim();
-    
+
+
                     if (text === '') {
                         element.remove();
                     } else {
                         element.replaceWith(text);
                     }
                 });
-                
+
+                // 清理后的内容转换为文本
                 const cleanedDescription = newsContent.text().trim();
-                
+
+                // 提取并格式化发布时间
                 item.description = cleanedDescription;
                 item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), +8);
 
@@ -129,6 +129,7 @@ async function handler(ctx: Context) {
             })
         )
     );
+
 
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
