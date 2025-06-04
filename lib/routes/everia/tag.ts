@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 export const route: Route = {
     path: '/tag/:tag',
     categories: ['picture'],
-    example: '/tag/hinatazaka46-日向坂46',
+    example: '/everia/tag/hinatazaka46-日向坂46',
     parameters: {
         tag: 'Tag of the image stream',
     },
@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://everia.club/tag/:tag'],
+            source: ['everia.club/tag/:tag'],
             target: '/tag/:tag',
         },
     ],
