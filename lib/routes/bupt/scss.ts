@@ -98,7 +98,7 @@ async function handler(ctx: Context) {
                 const content = load(detailResponse.data);
                 const newsContent = content('.v_news_content');
 
-                item.description = newsContent.text().trim();
+                item.description = newsContent.html().trim();
 
                 const pubDateText = content('.info').text().trim();
                 const cleanedPubDate = pubDateText.replace(/发布时间[:：]\s*/, '');
