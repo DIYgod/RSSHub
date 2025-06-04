@@ -7,14 +7,23 @@ import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
 
 export const route: Route = {
-    path: '/scss/:type',
+    path: '/scss/:type?',
     categories: ['university'],
     example: '/bupt/scss/xwdt',
     parameters: {
         type: {
-            type: 'string',
-            optional: false,
             description: '信息类型，可选值：新闻动态，通知公告',
+            default: 'tzgg',
+            options: [
+                {
+                    value: 'xwdt',
+                    label: '新闻动态'
+                },
+                {
+                    value: 'tzgg',
+                    label: '通知公告'
+                }
+            ]
         },
     },
     features: {
@@ -100,11 +109,21 @@ async function handler(ctx: Context) {
 
                 item.description = newsContent.html().trim();
 
-                const pubDateText = content('.info').text().trim();
-                const cleanedPubDate = pubDateText.replace(/发布时间[:：]\s*/, '');
-                const parsedDate = parseDate(cleanedPubDate);
-
-                item.pubDate = Number.isNaN(parsedDate.getTime()) ? new Date() : timezone(parsedDate.getTime(), +8);
+                newsContent.find('p, span, strong').each(function () {
+                    const element = content(this);
+                    const text = element.text().trim();
+    
+                    if (text === '') {
+                        element.remove();
+                    } else {
+                        element.replaceWith(text);
+                    }
+                });
+                
+                const cleanedDescription = newsContent.text().trim();
+                
+                item.description = cleanedDescription;
+                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), +8);
 
                 return item;
             })
