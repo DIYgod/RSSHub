@@ -12848,6 +12848,19 @@
       }
     ]
   },
+  "everia.club": {
+    "_name": "EVERIA.CLUB",
+    ".": [
+      {
+        "title": "Images with tag",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/everia/tag/:tag"
+      }
+    ]
+  },
   "f-droid.org": {
     "_name": "F-Droid",
     ".": [

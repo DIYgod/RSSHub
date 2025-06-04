@@ -33665,6 +33665,44 @@ export default {
     "url": "www.eventernote.com",
     "lang": "ja"
   },
+  "everia": {
+    "routes": {
+      "/tag/:tag": {
+        "path": "/tag/:tag",
+        "categories": [
+          "picture"
+        ],
+        "example": "/everia/tag/hinatazaka46-日向坂46",
+        "parameters": {
+          "tag": "Tag of the image stream"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "everia.club/tag/:tag"
+            ],
+            "target": "/tag/:tag"
+          }
+        ],
+        "name": "Images with tag",
+        "maintainers": [
+          "KTachibanaM"
+        ],
+        "location": "tag.ts",
+        "module": () => import('@/routes/everia/tag.ts')
+      }
+    },
+    "name": "EVERIA.CLUB",
+    "url": "everia.club"
+  },
   "f-droid": {
     "routes": {
       "/apprelease/:app": {

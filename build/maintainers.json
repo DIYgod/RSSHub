@@ -2427,6 +2427,9 @@
   "/eventernote/actors/:name/:id": [
     "KTachibanaM"
   ],
+  "/everia/tag/:tag": [
+    "KTachibanaM"
+  ],
   "/f-droid/apprelease/:app": [
     "garywill"
   ],
