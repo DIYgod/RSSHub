@@ -6,12 +6,10 @@ import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
 
 export const route: Route = {
-    path: '/tag/:tag',
+    path: '/search/:keyword',
     categories: ['picture'],
-    example: '/everia/tag/hinatazaka46-日向坂46',
-    parameters: {
-        tag: 'Tag of the image stream',
-    },
+    example: '/everia/search/日向坂46',
+    parameters: { keyword: 'Keyword' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -20,29 +18,22 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['everia.club/tag/:tag'],
-            target: '/tag/:tag',
-        },
-    ],
-    name: 'Images with tag',
+    name: 'Search',
     maintainers: ['KTachibanaM', 'AiraNadih'],
     handler,
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
-    const tag = ctx.req.param('tag');
-    const tagUrl = `${SUB_URL}tag/${tag}/`;
+    const keyword = ctx.req.param('keyword');
+    const url = `${SUB_URL}?s=${keyword}`;
 
-    const response = await got(tagUrl);
+    const response = await got(url);
     const $ = load(response.body);
-    const itemRaw = $('article.blog-entry').slice(0, limit).toArray();
+    const itemRaw = $('article.post').toArray();
 
     return {
-        title: `${SUB_NAME_PREFIX} - Tag: ${tag}`,
-        link: tagUrl,
+        title: `${SUB_NAME_PREFIX} - Search: ${keyword}`,
+        link: url,
         item: await Promise.all(
             itemRaw.map((e) => {
                 const item = $(e);
