@@ -12852,6 +12852,22 @@
     "_name": "EVERIA.CLUB",
     ".": [
       {
+        "title": "Images with category",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/everia/category/:category"
+      },
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/everia/"
+      },
+      {
         "title": "Images with tag",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [

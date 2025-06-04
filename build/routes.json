@@ -33665,6 +33665,95 @@
   },
   "everia": {
     "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "picture"
+        ],
+        "example": "/everia/category/cosplay",
+        "parameters": {
+          "category": "Category of the image stream"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "everia.club/category/:category"
+            ],
+            "target": "/category/:category"
+          }
+        ],
+        "name": "Images with category",
+        "maintainers": [
+          "KTachibanaM",
+          "AiraNadih"
+        ],
+        "location": "category.ts",
+        "module": "() => import('@/routes/everia/category.ts')"
+      },
+      "/": {
+        "path": "/",
+        "categories": [
+          "picture"
+        ],
+        "example": "/everia",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "everia.club/"
+            ],
+            "target": ""
+          }
+        ],
+        "name": "Latest",
+        "maintainers": [
+          "KTachibanaM",
+          "AiraNadih"
+        ],
+        "location": "latest.ts",
+        "module": "() => import('@/routes/everia/latest.ts')"
+      },
+      "/search/:keyword": {
+        "path": "/search/:keyword",
+        "categories": [
+          "picture"
+        ],
+        "example": "/everia/search/日向坂46",
+        "parameters": {
+          "keyword": "Keyword"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Search",
+        "maintainers": [
+          "KTachibanaM",
+          "AiraNadih"
+        ],
+        "location": "search.ts",
+        "module": "() => import('@/routes/everia/search.ts')"
+      },
       "/tag/:tag": {
         "path": "/tag/:tag",
         "categories": [
@@ -33692,13 +33781,15 @@
         ],
         "name": "Images with tag",
         "maintainers": [
-          "KTachibanaM"
+          "KTachibanaM",
+          "AiraNadih"
         ],
         "location": "tag.ts",
         "module": "() => import('@/routes/everia/tag.ts')"
       }
     },
     "name": "EVERIA.CLUB",
+    "apiRoutes": {},
     "url": "everia.club"
   },
   "f-droid": {

@@ -2427,8 +2427,21 @@
   "/eventernote/actors/:name/:id": [
     "KTachibanaM"
   ],
+  "/everia/category/:category": [
+    "KTachibanaM",
+    "AiraNadih"
+  ],
+  "/everia/": [
+    "KTachibanaM",
+    "AiraNadih"
+  ],
+  "/everia/search/:keyword": [
+    "KTachibanaM",
+    "AiraNadih"
+  ],
   "/everia/tag/:tag": [
-    "KTachibanaM"
+    "KTachibanaM",
+    "AiraNadih"
   ],
   "/f-droid/apprelease/:app": [
     "garywill"
