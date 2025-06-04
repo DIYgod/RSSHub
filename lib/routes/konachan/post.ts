@@ -21,6 +21,10 @@ export const route: Route = {
             ],
             default: '1d',
         },
+        safe_search: {
+            description: '是否使用无r18站点 konachan.net，若是则在路径前加上 `/sfw`，如`/konachan/sfw/post/popular_recent/1d`，若否则默认使用 konachan.com',
+            default: 'false',
+        },
     },
     radar: [
         {
