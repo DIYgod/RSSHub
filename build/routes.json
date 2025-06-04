@@ -40358,6 +40358,58 @@
   },
   "go": {
     "routes": {
+      "/jihs/idwr/:year?": {
+        "path": "/jihs/idwr/:year?",
+        "name": "感染症発生動向調査週報",
+        "url": "id-info.jihs.go.jp",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/go/jihs/idwr/2025",
+        "parameters": {
+          "year": {
+            "description": "Year, current year by default"
+          }
+        },
+        "description": ":::tip\nTo subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/), where the source URL is `https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/`, extract the certain parts from this URL to be used as parameters, resulting in the route as [`/go/jihs/idwr/2025`](https://rsshub.app/go/jihs/idwr/2025).\n:::\n",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "id-info.jihs.go.jp/surveillance/idwr/jp/idwr/:year"
+            ]
+          }
+        ],
+        "view": 0,
+        "zh": {
+          "path": "/jihs/idwr/:year?",
+          "name": "传染病发生动向调查周报",
+          "url": "id-info.jihs.go.jp",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/go/jihs/idwr/2025",
+          "parameters": {
+            "year": {
+              "description": "年份，默认为当前年份，可在对应页 URL 中找到"
+            }
+          },
+          "description": ":::tip\n若订阅 [传染病发生动向调查周报](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/)，网址为 `https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/`，请截取 `https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/` 到末尾 `/` 的部分 `2025` 作为 `year` 参数填入，此时目标路由为 [`/go/jihs/idwr/2025`](https://rsshub.app/go/jihs/idwr/2025)。\n:::\n"
+        },
+        "location": "jihs/idwr.ts",
+        "module": "() => import('@/routes/go/jihs/idwr.ts')"
+      },
       "/mhlw/pdf/:category{.+}?": {
         "path": "/mhlw/pdf/:category{.+}?",
         "name": "PDF",
@@ -40391,40 +40443,6 @@
         ],
         "location": "mhlw/pdf.ts",
         "module": "() => import('@/routes/go/mhlw/pdf.ts')"
-      },
-      "/niid/idwr-dl/:year?": {
-        "path": "/niid/idwr-dl/:year?",
-        "name": "感染症発生動向調査週報ダウンロード",
-        "url": "www.niid.go.jp",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "example": "/go/niid/idwr-dl/:year?",
-        "parameters": {
-          "year": "Year, current year by default"
-        },
-        "description": "::: tip\n  If you subscribe to [感染症発生動向調査週報ダウンロード2024年](https://www.niid.go.jp/niid/ja/idwr-dl/2024.html)，where the URL is `https://www.niid.go.jp/niid/ja/idwr-dl/2024.html`, extract the part `https://www.niid.go.jp/niid/ja/idwr-dl/` to the end, which is `.html`, and use it as the parameter to fill in. Therefore, the route will be [`/go/niid/idwr-dl/2024`](https://rsshub.app/go/niid/idwr-dl/2024).\n:::",
-        "categories": [
-          "government"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.niid.go.jp/niid/ja/idwr-dl/:year"
-            ]
-          }
-        ],
-        "location": "niid/idwr-dl.ts",
-        "module": "() => import('@/routes/go/niid/idwr-dl.ts')"
       }
     },
     "name": "JapanGov",

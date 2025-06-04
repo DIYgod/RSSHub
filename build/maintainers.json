@@ -2962,10 +2962,10 @@
   "/gmcmonline/chinacustoms": [
     "nczitzk"
   ],
-  "/go/mhlw/pdf/:category{.+}?": [
+  "/go/jihs/idwr/:year?": [
     "nczitzk"
   ],
-  "/go/niid/idwr-dl/:year?": [
+  "/go/mhlw/pdf/:category{.+}?": [
     "nczitzk"
   ],
   "/gocn/jobs": [
