@@ -18,12 +18,6 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['everia.club/?s=:keyword'],
-            target: '/search/:keyword',
-        },
-    ],
     name: 'Search',
     maintainers: ['KTachibanaM', 'AiraNadih'],
     handler,

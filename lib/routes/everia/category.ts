@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['picture'],
     example: '/everia/category/cosplay',
     parameters: {
-        tag: 'Tag of the image stream',
+        category: 'Category of the image stream',
     },
     features: {
         requireConfig: false,
