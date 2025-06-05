@@ -6,7 +6,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/home/:tag?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/gelonghui/home',
     parameters: {

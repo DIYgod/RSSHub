@@ -7,7 +7,7 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/caixin/latest',
     parameters: {},

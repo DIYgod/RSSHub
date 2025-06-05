@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/ftm',
     parameters: {},
     name: '文章',

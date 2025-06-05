@@ -13,7 +13,7 @@ const types = {
 
 export const route: Route = {
     path: '/user/:id/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og',
     parameters: { id: '用户 id，可在对应用户主页 URL 中找到', type: '类型，见下表，默认为`0`，即动态' },
     features: {

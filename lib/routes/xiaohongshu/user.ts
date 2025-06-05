@@ -8,7 +8,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     maintainers: ['lotosbin', 'howerhe', 'rien7', 'dddaniel1', 'pseudoyu'],
     handler,
@@ -64,7 +64,7 @@ async function handler(ctx) {
     if (cookie && category === 'notes') {
         try {
             const urlNotePrefix = 'https://www.xiaohongshu.com/explore';
-            const user = await getUserWithCookie(url, cookie);
+            const user = await getUserWithCookie(url);
             const notes = await renderNotesFulltext(user.notes, urlNotePrefix, displayLivePhoto);
             return {
                 title: `${user.userPageData.basicInfo.nickname} - 笔记 • 小红书 / RED`,

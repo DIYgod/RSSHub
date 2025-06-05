@@ -17,6 +17,7 @@ afterEach(async () => {
     delete process.env.PROXY_HOST;
     delete process.env.PROXY_PORT;
     delete process.env.PROXY_AUTH;
+    delete process.env.PROXY_URL_REGEX;
 
     vi.resetModules();
 });
@@ -140,5 +141,126 @@ describe('puppeteer', () => {
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=socks5:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
+    }, 10000);
+});
+
+describe('getPuppeteerPage', () => {
+    it('puppeteer run', async () => {
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com');
+        const page = pup.page;
+        browser = pup.browser;
+        const startTime = Date.now();
+
+        const html = await page.evaluate(() => document.body.innerHTML);
+        expect(html.length).toBeGreaterThan(0);
+
+        expect(browser.process()?.exitCode).toBe(null); // browser is still running
+        const sleepTime = 31 * 1000 - (Date.now() - startTime); // prevent long loading time from failing the test
+        if (sleepTime > 0) {
+            await wait(sleepTime);
+        }
+        expect(browser.process()?.exitCode).toBe(0); // browser is closed
+    }, 45000);
+
+    it('puppeteer accept http proxy uri w/ auth', async () => {
+        process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
+        browser = pup.browser;
+
+        // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
+        expect(browser.process()?.spawnargs.includes('--proxy-server=http://rsshub.proxy:2333')).toBe(true);
+    });
+
+    it('puppeteer respect proxy regex', async () => {
+        process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
+        process.env.PROXY_URL_REGEX = 'not-exist';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com');
+        browser = pup.browser;
+
+        // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
+        expect(browser.process()?.spawnargs.includes('--proxy-server=http://rsshub.proxy:2333')).toBe(false);
+    });
+
+    it('puppeteer reject https proxy uri w/ auth', async () => {
+        process.env.PROXY_URI = 'https://user:pass@rsshub.proxy:2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com');
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
+    });
+
+    it('puppeteer reject socks proxy uri w/ auth', async () => {
+        process.env.PROXY_URI = 'socks5://user:pass@rsshub.proxy:2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com');
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
+    });
+
+    it('puppeteer accept http proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'http';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.includes('--proxy-server=http://rsshub.proxy:2333')).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept https proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'https';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.includes('--proxy-server=https://rsshub.proxy:2333')).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept socks4a proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'socks4a';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.includes('--proxy-server=socks4://rsshub.proxy:2333')).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept socks5h proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'socks5h';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        const { getPuppeteerPage } = await import('./puppeteer');
+        const pup = await getPuppeteerPage('https://www.google.com', {
+            noGoto: true,
+        });
+        browser = pup.browser;
+
+        expect(browser.process()?.spawnargs.includes('--proxy-server=socks5://rsshub.proxy:2333')).toBe(true);
     }, 10000);
 });

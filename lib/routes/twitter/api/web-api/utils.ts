@@ -203,7 +203,7 @@ export const twitterGot = async (
                             }
                         }
                         logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
-                        await cache.set(`${lockPrefix}${auth.token}`, '1', 86400);
+                        await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
                     }
                 } else {
                     logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);

@@ -17,7 +17,7 @@ const categories = {
 
 export const route: Route = {
     path: '/lives/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Notifications,
     example: '/jinse/lives',
     parameters: {

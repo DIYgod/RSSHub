@@ -139,7 +139,7 @@ const findTypeLabel = (type: string) => {
 
 export const route: Route = {
     path: '/announcement/:type/:lang?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/bitget/announcement/all/zh-CN',
     parameters: {

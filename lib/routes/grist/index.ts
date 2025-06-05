@@ -10,7 +10,7 @@ export const route: Route = {
     ],
     name: 'Latest Articles',
     maintainers: ['Rjnishant530'],
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/grist',
     parameters: {},
     handler,

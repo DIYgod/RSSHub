@@ -7,10 +7,11 @@ import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bilibili/user/dynamic/2267573',
     parameters: {
@@ -235,25 +236,37 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), false);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
     const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
     const hideGoods = fallback(undefined, queryToBoolean(routeParams.hideGoods), false);
 
-    const cookie = await cacheIn.getCookie();
+    const getDynamic = async (cookie: string) => {
+        const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+        const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
+            headers: {
+                Referer: `https://space.bilibili.com/${uid}/`,
+                Cookie: cookie,
+            },
+        });
+        const body = JSONbig.parse(response.body);
+        return body;
+    };
 
-    const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
-    const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
-        headers: {
-            Referer: `https://space.bilibili.com/${uid}/`,
-            Cookie: cookie,
-        },
-    });
-    const body = JSONbig.parse(response.body);
+    let body: BilibiliWebDynamicResponse;
+
+    const cookie = (await cacheIn.getCookie()) as string;
+    body = await getDynamic(cookie);
+
     if (body?.code === -352) {
-        throw new Error('Request failed, please try again.');
+        const cookie = (await cacheIn.getCookie(true)) as string;
+        body = await getDynamic(cookie);
+
+        if (body?.code === -352) {
+            throw new Error('遇到源站风控校验，请稍后再试');
+        }
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
@@ -284,7 +297,7 @@ async function handler(ctx) {
                 }
 
                 let description = getDes(data) || '';
-                const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
+                const title = getTitle(data);
                 const category: string[] = [];
                 // emoji
                 if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
@@ -369,13 +382,13 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-                const descriptions = [description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
                     .map((e) => e?.trim())
                     .filter(Boolean)
                     .join('<br>');
 
                 return {
-                    title,
+                    title: title || description,
                     description: descriptions,
                     pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                     link,
@@ -387,6 +400,7 @@ async function handler(ctx) {
                                   {
                                       url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
                                       mime_type: 'text/html',
+                                      duration_in_seconds: data.module_dynamic?.major?.archive?.duration_text ? parseDuration(data.module_dynamic.major.archive.duration_text) : undefined,
                                   },
                               ]
                             : undefined,

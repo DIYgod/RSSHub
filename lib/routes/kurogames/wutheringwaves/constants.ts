@@ -21,7 +21,7 @@ export enum Parameter {
 export const SUPPORTED_LANGUAGES = Object.values(Language);
 
 export interface Article {
-    articleContent: string;
+    articleContent?: string;
     articleDesc: string;
     articleId: number;
     articleTitle: string;

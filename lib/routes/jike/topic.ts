@@ -9,7 +9,7 @@ const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 
 export const route: Route = {
     path: '/topic/:id/:showUid?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/jike/topic/556688fae4b00c57d9dd46ee',
     parameters: {
