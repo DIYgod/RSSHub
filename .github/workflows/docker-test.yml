@@ -59,7 +59,7 @@ jobs:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          labels: 'Auto: Route Test Failed'
+          labels: 'auto: DO NOT merge'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh

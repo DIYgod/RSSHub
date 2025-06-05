@@ -1,5 +1,5 @@
-const noFound = 'Auto: Route No Found';
-const testFailed = 'Auto: Route Test Failed';
+const noFound = 'auto: route no found';
+const testFailed = 'auto: DO NOT merge';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 
 export default async function identify({ github, context, core }, body, number, sender) {
@@ -89,7 +89,7 @@ export default async function identify({ github, context, core }, body, number, 
     if (allowedUser.has(sender)) {
         core.info('PR created by a allowed user, passing');
         await removeLabel();
-        await addLabels(['Auto: allowed']);
+        await addLabels(['auto: ready to merge']);
         return;
     } else {
         core.debug('PR created by ' + sender);
@@ -102,7 +102,7 @@ export default async function identify({ github, context, core }, body, number, 
         if (routes.length && routes[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
-            await addLabels(['Auto: Route Test Skipped']);
+            await addLabels(['auto: route test bypassed']);
 
             return;
         } else if (routes.length) {

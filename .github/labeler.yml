@@ -1,4 +1,4 @@
-'Route: deprecated':
+'route: deprecated':
 - changed-files:
   - any-glob-to-any-file: ['lib/router.js']
   - all-globs-to-any-file: ['lib/routes-deprecated/**/*.js', '!lib/routes-deprecated/index.js']

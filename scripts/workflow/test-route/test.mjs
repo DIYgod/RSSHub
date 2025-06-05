@@ -11,6 +11,8 @@ export default async function test({ github, context, core }, baseUrl, routes, n
     });
 
     let commentList = [];
+    let successCount = 0;
+    let failCount = 0;
     let comment = `Successfully [generated](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n`;
 
     for await (const lks of links) {
@@ -23,8 +25,10 @@ export default async function test({ github, context, core }, baseUrl, routes, n
         const body = await res.text();
         if (res.ok) {
             success = true;
+            successCount++;
             detail = jsBeautify.html(body.replaceAll(/\s+(\n|$)/g, '\n'), { indent_size: 2 });
         } else {
+            failCount++;
             detail = `HTTPError: Response code ${res.status} (${res.statusText})`;
             const errInfoList = body && body.match(/(?<=<p class="message">)(.+?)(?=<\/p>)/gs);
             if (errInfoList) {
@@ -67,12 +71,13 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
     }
 
     if (process.env.PULL_REQUEST) {
+        const resultLabel = failCount === links.length || successCount <= failCount ? 'auto: not ready to review' : 'auto: ready to review';
         await github.rest.issues
             .addLabels({
                 issue_number: number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                labels: ['Auto: Route Test Complete'],
+                labels: [resultLabel],
             })
             .catch((error) => {
                 core.warning(error);
