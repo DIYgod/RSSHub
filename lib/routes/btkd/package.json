@@ -1,0 +1,20 @@
+{
+  "name": "rss",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/rss": "^0.0.32",
+    "typescript": "^5.8.3"
+  }
+}
