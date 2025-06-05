@@ -40922,7 +40922,7 @@ export default {
         "example": "/google/search/rss/zh-CN,zh",
         "parameters": {
           "keyword": "Keyword",
-          "language": "Accept-Language. Example: zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"
+          "language": "Accept-Language. Example: `zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7`"
         },
         "features": {
           "requireConfig": false,
