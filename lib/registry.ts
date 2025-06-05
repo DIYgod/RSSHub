@@ -9,6 +9,7 @@ import index from '@/routes/index';
 import healthz from '@/routes/healthz';
 import robotstxt from '@/routes/robots.txt';
 import metrics from '@/routes/metrics';
+import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
 
@@ -157,6 +158,7 @@ for (const namespace in namespaces) {
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
+            logger.debug(`Matched route: ${ctx.req.routePath}`);
             if (!ctx.get('data')) {
                 if (typeof routeData.handler !== 'function') {
                     if (process.env.NODE_ENV === 'test') {
