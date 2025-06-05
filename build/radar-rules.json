@@ -10090,6 +10090,15 @@
           "/"
         ],
         "target": "/civitai/models"
+      },
+      {
+        "title": "User Article",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/user/:username",
+          "/user/:username/articles"
+        ],
+        "target": "/civitai/user/:username/articles"
       }
     ]
   },

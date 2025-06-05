@@ -23153,6 +23153,30 @@
         "url": "civitai.com/",
         "location": "models.ts",
         "module": "() => import('@/routes/civitai/models.ts')"
+      },
+      "/user/:username/articles": {
+        "path": "/user/:username/articles",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/civitai/user/Chenkin/articles",
+        "parameters": {
+          "username": "Username"
+        },
+        "radar": [
+          {
+            "source": [
+              "civitai.com/user/:username",
+              "civitai.com/user/:username/articles"
+            ]
+          }
+        ],
+        "name": "User Article",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "user.ts",
+        "module": "() => import('@/routes/civitai/user.ts')"
       }
     },
     "name": "Civitai",
