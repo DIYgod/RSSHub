@@ -12,7 +12,7 @@ interface Episode {
     itunes_duration?: string;
 }
 
-export default async (ctx: Context) => {
+const handler = async (ctx: Context) => {
     const url = 'https://www.xiaoyuzhoufm.com/podcast/664f1ae6aa419b1eeb6056b6';
     const { data: html } = await got(url);
     const $ = cheerio.load(html);
@@ -49,3 +49,5 @@ export default async (ctx: Context) => {
         item: items,
     };
 };
+
+export default handler;
