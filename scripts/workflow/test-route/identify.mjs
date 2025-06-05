@@ -1,5 +1,6 @@
 const noFound = 'auto: route no found';
-const testFailed = 'auto: DO NOT merge';
+const criticalFailure = 'auto: DO NOT merge';
+const routeTestFailed = 'auto: not ready to review';
 const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 
 export default async function identify({ github, context, core }, body, number, sender) {
@@ -81,8 +82,9 @@ export default async function identify({ github, context, core }, body, number, 
         if (issue.state === 'closed') {
             await updatePrState('open');
         }
-        if (issue.labels.some((e) => e.name === testFailed)) {
-            await removeLabel(testFailed);
+        if (issue.labels.some((e) => e.name === criticalFailure) || issue.labels.some((e) => e.name === routeTestFailed)) {
+            await removeLabel(criticalFailure);
+            await removeLabel(routeTestFailed);
         }
     }
 
