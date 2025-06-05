@@ -113,6 +113,7 @@ async function handler(ctx) {
     return {
         title: `中国海关-${channelName}`,
         link,
+        language: 'zh-CN',
         item: out,
     };
 }
