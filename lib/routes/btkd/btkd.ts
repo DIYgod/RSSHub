@@ -12,8 +12,8 @@ const route: Route = {
                     accept: 'application/vnd.github.html+json',
                 },
             });
-        } catch (e) {
-            // 需要根据自定义错误返回
+        } catch {
+            // 错误处理
         }
 
         const items = data.map((item) => ({
