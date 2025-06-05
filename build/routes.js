@@ -42219,7 +42219,7 @@ export default {
         ],
         "example": "/gov/customs/list/paimai",
         "parameters": {
-          "gchannel": "支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`"
+          "gchannel": "支持 `paimai`, `fagui` 及 `latest` 3 个频道，默认为 `paimai`"
         },
         "features": {
           "requireConfig": false,
@@ -42237,7 +42237,7 @@ export default {
             "target": "/customs/list"
           }
         ],
-        "name": "拍卖信息 / 海关法规",
+        "name": "拍卖信息 / 海关法规 / 最新文件",
         "maintainers": [
           "Jeason0228",
           "TonyRL",

@@ -7182,7 +7182,7 @@
         source:[ "/csrc/c101800/zfxxgk_zdgk.shtml" ],
         target:"/gov/csrc/zfxxgk_zdgk/c101800" } ] },
   "customs.gov.cn":{ _name:"上海市人民政府",
-    www:[ { title:"拍卖信息 / 海关法规",
+    www:[ { title:"拍卖信息 / 海关法规 / 最新文件",
         docs:"https://docs.rsshub.app/routes/government",
         source:[ "/" ],
         target:"/gov/customs/list" } ] },
