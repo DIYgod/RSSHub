@@ -1,53 +1,36 @@
-import got from '@/utils/got';
-import * as cheerio from 'cheerio';
-import type { Context } from 'koa';
+import { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
-interface Episode {
-    title: string;
-    description: string;
-    link: string;
-    enclosure_url?: string;
-    enclosure_type?: string;
-    pubDate?: string;
-    itunes_duration?: string;
-}
+const route: Route = {
+    async handler(ctx) {
+        const { user, repo = 'RSSHub' } = await ctx.req.param();
+        let data = [];
+        try {
+            data = await ofetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+                headers: {
+                    accept: 'application/vnd.github.html+json',
+                },
+            });
+        } catch (e) {
+            // 需要根据自定义错误返回
+        }
 
-const handler = async (ctx: Context) => {
-    const url = 'https://www.xiaoyuzhoufm.com/podcast/664f1ae6aa419b1eeb6056b6';
-    const { data: html } = await got(url);
-    const $ = cheerio.load(html);
+        const items = data.map((item) => ({
+            title: item.title,
+            link: item.html_url,
+            description: item.body_html,
+            pubDate: parseDate(item.created_at),
+            author: item.user.login,
+            category: item.labels?.map((label) => label.name) || [],
+        }));
 
-    // 节目基本信息
-    const title = $('title').text().replace(/ - 小宇宙.*/, '') || '半天空档';
-    const description = $('meta[name="description"]').attr('content') || '';
-
-    // 节目列表解析
-    const items: Episode[] = [];
-    $('ul.tab a.card').each((_, el) => {
-        const $el = $(el);
-        const epUrl = 'https://www.xiaoyuzhoufm.com' + $el.attr('href');
-        const epTitle = $el.find('.title').text().trim();
-        const epDesc = $el.find('.description p').text().trim();
-        const epCover = $el.find('img').attr('src');
-        const epDuration = $el.text().match(/\d+分钟/)?.[0] || '';
-        const epPubDate = $el.find('time').attr('datetime');
-        items.push({
-            title: epTitle,
-            description: epDesc,
-            link: epUrl,
-            enclosure_url: epCover,
-            enclosure_type: 'image/jpeg',
-            pubDate: epPubDate,
-            itunes_duration: epDuration,
-        });
-    });
-
-    ctx.state.data = {
-        title,
-        link: url,
-        description,
-        item: items,
-    };
+        return {
+            title: `${user}/${repo} issues`,
+            link: `https://github.com/${user}/${repo}/issues`,
+            item: items,
+        };
+    },
 };
 
-export default handler;
+export default route;
