@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/home',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     example: '/jianshu/home',
     parameters: {},

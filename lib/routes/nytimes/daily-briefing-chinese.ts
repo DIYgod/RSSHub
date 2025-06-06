@@ -9,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/daily_briefing_chinese',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     example: '/nytimes/daily_briefing_chinese',
     parameters: {},
     features: {

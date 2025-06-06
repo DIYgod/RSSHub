@@ -7,10 +7,11 @@ import cache from './cache';
 import utils, { getVideoUrl } from './utils';
 import logger from '@/utils/logger';
 import type { BilibiliWebDynamicResponse } from './api-interface';
+import { parseDuration } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
@@ -80,7 +81,7 @@ async function handler(ctx: Context) {
 
                     const data: DataItem = {
                         title: dynamic?.title ?? '',
-                        description: !aid && !bvid ? '' : utils.renderUGCDescription(embed, '', '', aid, undefined, bvid),
+                        description: !aid && !bvid ? '' : utils.renderUGCDescription(embed, dynamic.cover, dynamic.desc, aid, undefined, bvid),
                         pubDate: author?.pub_ts ? parseDate(author.pub_ts, 'X') : undefined,
                         link: author?.pub_ts && author.pub_ts > utils.bvidTime && bvid ? `https://www.bilibili.com/video/${bvid}` : `https://www.bilibili.com/video/av${aid}`,
                         author: name ?? undefined,
@@ -89,6 +90,7 @@ async function handler(ctx: Context) {
                                   {
                                       url: getVideoUrl(bvid),
                                       mime_type: 'text/html',
+                                      duration_in_seconds: parseDuration(dynamic?.duration_text),
                                   },
                               ]
                             : undefined,

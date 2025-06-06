@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     path: ['/portfolio/:user'],
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/cara/portfolio/fengz',
     parameters: { user: 'username' },
     name: 'Portfolio',

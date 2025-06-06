@@ -7,7 +7,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/pornstar/:username/:language?/:sort?',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/pornstar/june-liu/www/mr',
     parameters: {

@@ -1,6 +1,6 @@
 {{ if videos }}
 {{ each videos video }}
-<video poster= "video.poster" controls>
+<video poster="{{ video.poster }}" controls>
 <source src="{{ video.source }}" type="video/mp4">
 </video>
 {{ /each }}

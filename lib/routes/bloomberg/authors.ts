@@ -29,7 +29,7 @@ const parseAuthorNewsList = async (slug) => {
 
 export const route: Route = {
     path: '/authors/:id/:slug/:source?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine',
     parameters: { id: 'Author ID, can be found in URL', slug: 'Author Slug, can be found in URL', source: 'Data source, either `api` or `rss`,`api` by default' },

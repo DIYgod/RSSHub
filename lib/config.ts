@@ -408,6 +408,9 @@ export type Config = {
     zsxq: {
         accessToken?: string;
     };
+    smzdm: {
+        cookie?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -855,6 +858,9 @@ const calculateValue = () => {
         },
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
+        },
+        smzdm: {
+            cookie: envs.SMZDM_COOKIE,
         },
     };
 
