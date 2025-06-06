@@ -1,5 +1,3 @@
-import './news';
-import './yjs';
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
