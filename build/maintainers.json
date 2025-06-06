@@ -1484,6 +1484,9 @@
     "yuxinliu-alex"
   ],
   "/chinawriter/:id{.+}?": [],
+  "/chiphell/portal/:catId?": [
+    "tylinux"
+  ],
   "/chlinlearn/daily-blog": [
     "huyyi"
   ],

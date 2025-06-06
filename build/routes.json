@@ -22441,6 +22441,29 @@
     "url": "chinawriter.com.cn",
     "lang": "zh-CN"
   },
+  "chiphell": {
+    "routes": {
+      "/portal/:catId?": {
+        "path": "/portal/:catId?",
+        "name": "分类",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/chiphell/portal/1",
+        "parameters": {
+          "catId": "分类 ID，可在 URL 中找到，默认为 1"
+        },
+        "maintainers": [
+          "tylinux"
+        ],
+        "location": "portal.ts",
+        "module": "() => import('@/routes/chiphell/portal.ts')"
+      }
+    },
+    "name": "Chiphell",
+    "url": "www.chiphell.com",
+    "lang": "zh-CN"
+  },
   "chlinlearn": {
     "routes": {
       "/daily-blog": {
