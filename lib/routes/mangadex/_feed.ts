@@ -90,11 +90,12 @@ export async function getMangaMetaByIds(ids: string[], needCover: boolean = true
             }
             return data.data;
         }
-    )) as any;
+    )) as Array<any>;
 
     const languages = [...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean);
 
-    return rawMangaMetas.reduce((map, rawMangaMeta) => {
+    const map = new Map<string, { id: string; title: string; description: string; cover?: string }>();
+    for (const rawMangaMeta of rawMangaMetas) {
         const id = rawMangaMeta.id;
 
         const titles = {
@@ -116,8 +117,8 @@ export async function getMangaMetaByIds(ids: string[], needCover: boolean = true
         }
 
         map.set(id, manga);
-        return map;
-    }, new Map<string, { id: string; title: string; description: string; cover?: string }>());
+    }
+    return map;
 }
 
 /**
