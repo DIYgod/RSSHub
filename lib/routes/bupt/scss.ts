@@ -75,7 +75,7 @@ async function handler(ctx: Context) {
     });
 
     const $ = load(response.data);
-
+    
     const selector = type === 'xwdt' ? '.m-list3 li' : '.Newslist li';
 
     const list = $(selector)
@@ -88,7 +88,7 @@ async function handler(ctx: Context) {
             }
             const href = $link.attr('href');
             const link = new URL(href, rootUrl).href;
-
+            
             return {
                 title: $link.text().trim(),
                 link,
@@ -97,38 +97,36 @@ async function handler(ctx: Context) {
         .filter(Boolean);
 
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({ url: item.link });
-                const content = load(detailResponse.data);
-                const newsContent = content('.v_news_content');
-
-                item.description = newsContent.text().trim();
-
-                newsContent.find('p, span, strong').each(function () {
-                    const element = content(this);
-                    const text = element.text().trim();
-
-
-                    if (text === '') {
-                        element.remove();
-                    } else {
-                        element.replaceWith(text);
-                    }
-                });
-
-                // 清理后的内容转换为文本
-                const cleanedDescription = newsContent.text().trim();
-
-                // 提取并格式化发布时间
-                item.description = cleanedDescription;
-                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), +8);
-
-                return item;
-            })
-        )
-    );
+        const items = await Promise.all(
+            list.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    const detailResponse = await got({ 
+                        method: 'get',
+                        url: item.link 
+                    });
+                    const content = load(detailResponse.data);
+                    const newsContent = content('.v_news_content');
+                    
+                    newsContent.find('p, span, strong').each(function () {
+                        const element = content(this);
+                        const text = element.text().trim();
+                        
+                        if (text === '') {
+                            element.remove();
+                        } else {
+                            element.replaceWith(text);
+                        }
+                    });
+        
+                    // 清理后的内容转换为文本
+                    const cleanedDescription = newsContent.text().trim();
+        
+                    item.description = cleanedDescription;
+        
+                    return item;
+                })
+            )
+        );
 
 
     return {
