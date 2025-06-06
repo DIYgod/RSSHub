@@ -131,13 +131,14 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {
             const link = `${urlPrex}/${id}`;
+            const guid = `${urlPrex}/${noteCard.noteId}`;
             const { title, description, pubDate, updated } = await getFullNote(link, displayLivePhoto);
             return {
                 title,
                 link,
                 description,
                 author: noteCard.user.nickName,
-                guid: noteCard.noteId,
+                guid,
                 pubDate,
                 updated,
             };
