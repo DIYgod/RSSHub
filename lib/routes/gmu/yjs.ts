@@ -38,7 +38,34 @@ export const route: Route = {
     path: '/yjs/:type/:subtype',
     categories: ['university'],
     example: '/gmu/yjs/zsgz/tzgg',
-    parameters: {},
+    parameters: {
+        type: {
+            description: '分类，见下表',
+            options: [
+                { value: 'zsgz', label: '招生工作' },
+                { value: 'pygz', label: '培养工作' },
+                { value: 'xwgz', label: '学位工作' },
+                { value: 'xsgz', label: '学生工作' },
+                { value: 'xzzx', label: '下载中心' },
+            ],
+        },
+        subtype: {
+            description: '子分类，见下表',
+            options: [
+                { value: 'tzgg', label: '通知公告' },
+                { value: 'xwsd', label: '新闻速递' },
+                { value: 'gzzd', label: '规章制度' },
+                { value: 'dsgl', label: '导师管理' },
+                { value: 'xwgl', label: '学位管理' },
+                { value: 'pggz', label: '评估工作' },
+                { value: 'xshd', label: '学生活动' },
+                { value: 'jzgz', label: '奖助工作' },
+                { value: 'zsxz', label: '招生下载' },
+                { value: 'pyxz', label: '培养下载' },
+                { value: 'xwxz', label: '学位下载' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

@@ -6,10 +6,21 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/news/:type?',
+    path: '/news/:type',
     categories: ['university'],
     example: '/gmu/news/gyyw',
-    parameters: {},
+    parameters: {
+        type: {
+            description: '新闻类型，见下表，默认为 gyyw',
+            options: [
+                { value: 'gyyw', label: '赣医要闻' },
+                { value: 'ybdt', label: '院部动态' },
+                { value: 'mtgy', label: '媒体赣医' },
+                { value: 'xsjz', label: '学术讲座' },
+            ],
+            default: 'gyyw',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
