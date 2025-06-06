@@ -6246,6 +6246,19 @@
       }
     ]
   },
+  "bfl.ai": {
+    "_name": "BFL AI",
+    ".": [
+      {
+        "title": "Announcements",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/announcements"
+        ],
+        "target": "/bfl/announcements"
+      }
+    ]
+  },
   "bigquant.com": {
     "_name": "BigQuant",
     ".": [

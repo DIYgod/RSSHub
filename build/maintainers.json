@@ -801,6 +801,9 @@
   "/bestblogs/feeds/:category?": [
     "zhenlohuang"
   ],
+  "/bfl/announcements": [
+    "thirteenkai"
+  ],
   "/bgmlist/onair/:lang?": [
     "x2cf"
   ],

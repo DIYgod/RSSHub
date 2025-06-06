@@ -5828,8 +5828,7 @@ export default {
       "/:type": {
         "path": "/:type",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/aeon/essays",
         "parameters": {
@@ -13485,6 +13484,51 @@ export default {
     "url": "www.bestblogs.dev",
     "lang": "zh-CN"
   },
+  "bfl": {
+    "routes": {
+      "/announcements": {
+        "path": "/announcements",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bfl/announcements",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bfl.ai/announcements"
+            ],
+            "target": "/announcements",
+            "title": "Announcements"
+          }
+        ],
+        "name": "Announcements",
+        "maintainers": [
+          "thirteenkai"
+        ],
+        "url": "bfl.ai/announcements",
+        "description": "Fetches the latest announcements from Black Forest Labs (bfl.ai). Provides full article content by default with caching.",
+        "location": "announcements.ts",
+        "module": () => import('@/routes/bfl/announcements.ts')
+      }
+    },
+    "name": "BFL AI",
+    "apiRoutes": {},
+    "url": "bfl.ai",
+    "categories": [
+      "multimedia"
+    ],
+    "description": "来自黑森林实验室（bfl.ai）的公告和更新，这是一个前沿的人工智能实验室。",
+    "lang": "en"
+  },
   "bgmlist": {
     "routes": {
       "/onair/:lang?": {
@@ -13585,8 +13629,7 @@ export default {
       "/user/article/:uid": {
         "path": "/user/article/:uid",
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "example": "/bilibili/user/article/334958638",
         "parameters": {
@@ -53745,7 +53788,8 @@ export default {
           "id": "南方周末频道 id, 可在该频道的 URL 中找到（即 https://www.infzm.com/contents?term_id=:id)"
         },
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/infzm/1",
         "radar": [
@@ -56562,7 +56606,8 @@ export default {
       "/:important?": {
         "path": "/:important?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
         "view": 5,
         "example": "/jin10",
@@ -99888,7 +99933,8 @@ export default {
       "/featured": {
         "path": "/featured",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/thepaper/featured",
         "parameters": {},
@@ -100022,8 +100068,7 @@ export default {
       "/:term?": {
         "path": "/:term?",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/thepetcity",
         "parameters": {
@@ -114741,8 +114786,7 @@ export default {
       "/top20": {
         "path": "/top20",
         "categories": [
-          "blog",
-          "popular"
+          "blog"
         ],
         "example": "/zhubai/top20",
         "parameters": {},
