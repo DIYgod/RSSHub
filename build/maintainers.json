@@ -4809,8 +4809,18 @@
   "/malaysiakini/:lang/:category?": [
     "quiniapiezoelectricity"
   ],
-  "/mangadex/:id/:lang?": [
-    "vzz64"
+  "/mangadex/manga/:id/:lang?": [
+    "vzz64",
+    "chrisis58"
+  ],
+  "/mangadex/mdlist/:id/:lang?": [
+    "chrisis58"
+  ],
+  "/mangadex/user/feed/follow/:lang?": [
+    "chrisis58"
+  ],
+  "/mangadex/user/follow/:type?": [
+    "chrisis58"
   ],
   "/manhuagui/comic/:id/:chapterCnt?": [
     "MegrezZhu"

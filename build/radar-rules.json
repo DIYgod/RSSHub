@@ -22793,13 +22793,37 @@
     "_name": "MangaDex",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "Single Manga Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
-          "/title/:id/*",
+          "/title/:id/:suffix",
           "/title/:id"
         ],
-        "target": "/mangadex/:id"
+        "target": "/mangadex/manga/:id"
+      },
+      {
+        "title": "MDList Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/list/:id/:suffix"
+        ],
+        "target": "/mangadex/mdlist/:id"
+      },
+      {
+        "title": " Follows Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/titles/feed"
+        ],
+        "target": "/mangadex/user/feed/follow"
+      },
+      {
+        "title": "Logged User's Followed Mangas Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/titles/follows"
+        ],
+        "target": "/mangadex/user/follow/reading"
       }
     ]
   },

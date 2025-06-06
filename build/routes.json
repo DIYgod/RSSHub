@@ -63281,29 +63281,233 @@
   },
   "mangadex": {
     "routes": {
-      "/:id/:lang?": {
-        "path": "/:id/:lang?",
+      "/manga/:id/:lang?": {
+        "path": "/manga/:id/:lang?",
         "radar": [
           {
             "source": [
-              "mangadex.org/title/:id/*",
+              "mangadex.org/title/:id/:suffix",
               "mangadex.org/title/:id"
             ],
-            "target": "/:id"
+            "target": "/manga/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "Single Manga Feed",
         "maintainers": [
-          "vzz64"
+          "vzz64",
+          "chrisis58"
         ],
+        "example": "/mangadex/manga/f98660a1-d2e2-461c-960d-7bd13df8b76d/en",
         "location": "index.ts",
         "module": "() => import('@/routes/mangadex/index.ts')"
+      },
+      "/mdlist/:id/:lang?": {
+        "name": "MDList Feed",
+        "path": "/mdlist/:id/:lang?",
+        "radar": [
+          {
+            "source": [
+              "mangadex.org/list/:id/:suffix"
+            ],
+            "target": "/mdlist/:id"
+          }
+        ],
+        "description": "Sepcific MangaDex MDList Feed",
+        "example": "/mangadex/mdlist/10cca803-8dc9-4f0e-86a8-6659a3ce5188?limit=10&private=true",
+        "maintainers": [
+          "chrisis58"
+        ],
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "id": {
+            "description": "The list id of the manga list"
+          },
+          "private": {
+            "description": "(Query Param) Needed to access private lists, any value will be treated as true"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MANGADEX_USERNAME",
+              "description": "MangaDex Username, required when refresh-token is not set and the list is private",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_PASSWORD",
+              "description": "MangaDex Password, required when refresh-token is not set and the list is private",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_CLIENT_ID",
+              "description": "MangaDex Client ID, required when the list is private",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_CLIENT_SECRET",
+              "description": "MangaDex Client Secret, required when the list is private",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_REFRESH_TOKEN",
+              "description": "MangaDex Refresh Token, required when username and password are not set and the list is private",
+              "optional": true
+            }
+          ]
+        },
+        "location": "mdlist/feed.ts",
+        "module": "() => import('@/routes/mangadex/mdlist/feed.ts')"
+      },
+      "/user/feed/follow/:lang?": {
+        "path": "/user/feed/follow/:lang?",
+        "name": " Follows Feed",
+        "maintainers": [
+          "chrisis58"
+        ],
+        "description": "Get the latest updates of all the manga you follow on MangaDex.",
+        "example": "/mangadex/user/feed/follow/zh?limit=10",
+        "radar": [
+          {
+            "source": [
+              "mangadex.org/titles/feed"
+            ],
+            "target": "/user/feed/follow"
+          }
+        ],
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "lang": {
+            "description": "The language of the followed manga"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MANGADEX_USERNAME",
+              "description": "MangaDex Username, required when refresh-token is not set",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_PASSWORD",
+              "description": "MangaDex Password, required when refresh-token is not set",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_CLIENT_ID",
+              "description": "MangaDex Client ID",
+              "optional": false
+            },
+            {
+              "name": "MANGADEX_CLIENT_SECRET",
+              "description": "MangaDex Client Secret",
+              "optional": false
+            },
+            {
+              "name": "MANGADEX_REFRESH_TOKEN",
+              "description": "MangaDex Refresh Token, required when username and password are not set",
+              "optional": true
+            }
+          ]
+        },
+        "location": "user/feed.ts",
+        "module": "() => import('@/routes/mangadex/user/feed.ts')"
+      },
+      "/user/follow/:type?": {
+        "path": "/user/follow/:type?",
+        "name": "Logged User's Followed Mangas Feed",
+        "maintainers": [
+          "chrisis58"
+        ],
+        "example": "/mangadex/user/follow/reading",
+        "description": "Fetches the feed of mangas that you follow on MangaDex whick are in the specified status.\nCAUTION: With big amount of follows, it may take a long time to load or even fail.\nIt's recommended to use the `/mangadex/mdlist/:listId?` route instead for better performance, though it requires manual configuration.",
+        "categories": [
+          "anime"
+        ],
+        "parameters": {
+          "type": {
+            "description": "The type of follows to fetch",
+            "default": "reading",
+            "options": [
+              {
+                "value": "reading",
+                "label": "Reading"
+              },
+              {
+                "value": "plan-to-read",
+                "label": "Plan to Read"
+              },
+              {
+                "value": "completed",
+                "label": "Completed"
+              },
+              {
+                "value": "on-hold",
+                "label": "On Hold"
+              },
+              {
+                "value": "re-reading",
+                "label": "Re-reading"
+              },
+              {
+                "value": "dropped",
+                "label": "Dropped"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "mangadex.org/titles/follows"
+            ],
+            "target": "/user/follow/reading"
+          }
+        ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MANGADEX_USERNAME",
+              "description": "MangaDex Username, required when refresh-token is not set",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_PASSWORD",
+              "description": "MangaDex Password, required when refresh-token is not set",
+              "optional": true
+            },
+            {
+              "name": "MANGADEX_CLIENT_ID",
+              "description": "MangaDex Client ID",
+              "optional": false
+            },
+            {
+              "name": "MANGADEX_CLIENT_SECRET",
+              "description": "MangaDex Client Secret",
+              "optional": false
+            },
+            {
+              "name": "MANGADEX_REFRESH_TOKEN",
+              "description": "MangaDex Refresh Token, required when username and password are not set",
+              "optional": true
+            }
+          ]
+        },
+        "location": "user/follows.ts",
+        "module": "() => import('@/routes/mangadex/user/follows.ts')"
       }
     },
     "name": "MangaDex",
     "apiRoutes": {},
     "url": "mangadex.org",
-    "lang": "en"
+    "lang": "en",
+    "categories": [
+      "anime"
+    ],
+    "description": "MangaDex is an non-profit and ad-free manga reader offering high-quality images."
   },
   "manhuagui": {
     "routes": {
