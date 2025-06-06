@@ -83,10 +83,14 @@ async function handler(): Promise<Data> {
     // 并行获取所有文章的完整描述
     const items: DataItem[] = await Promise.all(preliminaryItems.map((item) => fetchDescription(item)));
 
+    const feedDescription = $('head meta[name="description"]').attr('content')?.trim() || 'Latest announcements from Black Forest Labs (bfl.ai).';
+
+    // Folo 验证码
+    const verificationString = ' feedId:153814816828039168+userId:42122329111016448';
     return {
         title: feedTitle,
         link: listPageUrl,
-        description: feedDescription,
+        description: (feedDescription || '') + verificationString,
         item: items,
         language: 'en',
     };
