@@ -750,6 +750,9 @@
     "youyou-sudo",
     "honue"
   ],
+  "/banyuetan/:id?": [
+    "nczitzk"
+  ],
   "/baobua/category/:category": [
     "AiraNadih"
   ],
