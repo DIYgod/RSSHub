@@ -5,7 +5,7 @@ import { rootUrl, apiRootUrl, parseResult, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/timeline',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/utgd/timeline',
     parameters: {},
     features: {

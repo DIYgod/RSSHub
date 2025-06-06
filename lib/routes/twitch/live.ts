@@ -7,7 +7,7 @@ const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 
 export const route: Route = {
     path: '/live/:login',
-    categories: ['live', 'popular'],
+    categories: ['live'],
     view: ViewType.Notifications,
     example: '/twitch/live/riotgames',
     parameters: { login: 'Twitch username' },

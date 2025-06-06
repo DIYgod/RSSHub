@@ -8,7 +8,7 @@ const endpoint = `${baseUrl}/wp-json`;
 
 export const route: Route = {
     path: '/cn/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/mckinsey/cn',
     parameters: {

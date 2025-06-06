@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/apod',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/nasa/apod',
     parameters: {},

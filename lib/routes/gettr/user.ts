@@ -13,7 +13,7 @@ const actionMap = {
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/gettr/user/jasonmillerindc',
     parameters: { id: 'User id' },

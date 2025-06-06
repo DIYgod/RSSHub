@@ -6,7 +6,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/fantia/user/3498',
     parameters: { id: 'User id, can be found in user profile URL' },

@@ -1,10 +1,8 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+import utils, { callApi } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { getDataByChannelId as getDataByChannelIdYoutubei } from './api/youtubei';
+import { getDataByChannelId as getDataByChannelIdGoogle } from './api/google';
 
 export const route: Route = {
     path: '/channel/:id/:routeParams?',
@@ -38,6 +36,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
             {
                 name: 'YOUTUBE_KEY',
                 description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -49,9 +48,6 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 };
 
 async function handler(ctx) {
-    if (!config.youtube || !config.youtube.key) {
-        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
-    }
     const id = ctx.req.param('id');
 
     // Parse route parameters
@@ -69,32 +65,11 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
-    // Get original uploads playlist ID if needed
-    const originalPlaylistId = filterShorts ? null : (await utils.getChannelWithId(id, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    const data = await callApi({
+        googleApi: getDataByChannelIdGoogle,
+        youtubeiApi: getDataByChannelIdYoutubei,
+        params: { channelId: id, embed, filterShorts },
+    });
 
-    // Use the utility function to get the appropriate playlist ID based on filterShorts setting
-    const playlistId = filterShorts ? utils.getPlaylistWithShortsFilter(id) : originalPlaylistId;
-
-    const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
-
-    return {
-        title: `${data[0].snippet.channelTitle} - YouTube`,
-        link: `https://www.youtube.com/channel/${id}`,
-        description: `YouTube channel ${data[0].snippet.channelTitle}`,
-        item: data
-            .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
-            .map((item) => {
-                const snippet = item.snippet;
-                const videoId = snippet.resourceId.videoId;
-                const img = utils.getThumbnail(snippet.thumbnails);
-                return {
-                    title: snippet.title,
-                    description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
-                    pubDate: parseDate(snippet.publishedAt),
-                    link: `https://www.youtube.com/watch?v=${videoId}`,
-                    author: snippet.videoOwnerChannelTitle,
-                    image: img.url,
-                };
-            }),
-    };
+    return data;
 }

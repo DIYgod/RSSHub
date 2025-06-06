@@ -6,7 +6,7 @@ import { apiBriefRootUrl, processItems, fetchBriefColumnData } from './util';
 
 export const route: Route = {
     path: '/briefcolumn/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/huxiu/briefcolumn/1',
     parameters: { id: '简报 id，可在对应简报页 URL 中找到' },
     features: {

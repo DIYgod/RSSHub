@@ -25,6 +25,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     await next();
 
+    if (ctx.req.routePath !== '/*') {
+        ctx.header('X-RSSHub-Route', ctx.req.routePath);
+    }
+
     const data: Data = ctx.get('data');
     if (!data || ctx.res.headers.get('ETag')) {
         return;

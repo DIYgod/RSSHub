@@ -10,7 +10,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/:community/:sort?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/lemmy/technology@lemmy.world/Hot',
     parameters: {
         community: 'Lemmmy community, for example technology@lemmy.world',

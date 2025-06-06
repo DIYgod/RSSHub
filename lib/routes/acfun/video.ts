@@ -15,7 +15,7 @@ export const route: Route = {
     parameters: {
         uid: '用户 UID',
     },
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     example: '/acfun/user/video/6102',
     view: ViewType.Videos,
     maintainers: ['wdssmq'],

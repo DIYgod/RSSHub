@@ -9,7 +9,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:uid',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/zcool/user/baiyong',
     parameters: { uid: '个性域名前缀或者用户ID' },

@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/acct/:acct/statuses/:only_media?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/mastodon/acct/Mastodon@mastodon.social/statuses',
     parameters: {

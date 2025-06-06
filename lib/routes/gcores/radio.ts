@@ -9,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/radios/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/gcores/radios/45',
     parameters: { category: '分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45' },
     features: {

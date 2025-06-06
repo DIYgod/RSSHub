@@ -8,7 +8,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/users/notes/:username/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/misskey/users/notes/support@misskey.io',
     parameters: {
