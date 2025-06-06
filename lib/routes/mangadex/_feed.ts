@@ -111,9 +111,11 @@ export async function getMangaMetaByIds(ids: string[], needCover: boolean = true
         let manga = { id, title, description, cover };
 
         if (needCover) {
-            const coverFilename = rawMangaMeta.relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName + '.512.jpg';
-            cover = `${constants.API.COVER_IMAGE}${rawMangaMeta.id}/${coverFilename}`;
-            manga = { ...manga, cover };
+            const coverFilename = rawMangaMeta.relationships.find((relationship) => relationship.type === 'cover_art')?.attributes.fileName;
+            if (coverFilename) {
+                cover = `${constants.API.COVER_IMAGE}${rawMangaMeta.id}/${coverFilename}.512.jpg`;
+                manga = { ...manga, cover };
+            }
         }
 
         map.set(id, manga);
