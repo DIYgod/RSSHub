@@ -51,7 +51,10 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    let type = ctx.req.param('type') || 'tzgg';
+    let type = ctx.req.param('type');
+    if(!type) {
+        type = 'tzgg'; // 默认值为通知公告
+    }
 
     const rootUrl = 'https://scss.bupt.edu.cn';
     let currentUrl;
