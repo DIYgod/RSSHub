@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/news/:type?',
+    path: '/news/:type',
     categories: ['university'],
     example: '/gmu/news/gyyw',
     parameters: {
