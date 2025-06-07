@@ -7,25 +7,10 @@ import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
 
 export const route: Route = {
-    path: '/scss/:type?',
+    path: '/scss/tzgg',
     categories: ['university'],
-    example: '/bupt/scss/xwdt',
-    parameters: {
-        type: {
-            description: '信息类型，可选值：新闻动态，通知公告',
-            default: 'tzgg',
-            options: [
-                {
-                    value: 'xwdt',
-                    label: '新闻动态'
-                },
-                {
-                    value: 'tzgg',
-                    label: '通知公告'
-                }
-            ]
-        },
-    },
+    example: '/bupt/scss/tzgg',
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -36,42 +21,22 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['scss.bupt.edu.cn/index/xwdt.htm'],
-            target: '/scss/xwdt',
-        },
-        {
             source: ['scss.bupt.edu.cn/index/tzgg1.htm'],
             target: '/scss/tzgg',
         },
     ],
-    name: '网络空间安全学院',
+    name: '网络空间安全学院 - 通知公告',
     maintainers: ['ziri2004'],
     handler,
     url: 'scss.bupt.edu.cn',
 };
 
 async function handler(ctx: Context) {
-    let type = ctx.req.param('type');
-    if (!type) {
-        type = 'tzgg'; // 默认值为通知公告
-    }
-
     const rootUrl = 'https://scss.bupt.edu.cn';
-    let currentUrl;
-    let pageTitle;
-    let selector;
+    const currentUrl = `${rootUrl}/index/tzgg1.htm`;
+    const pageTitle = '通知公告';
+    const selector = '.Newslist li';
 
-    if (type === 'xwdt') {
-        currentUrl = `${rootUrl}/index/xwdt.htm`;
-        pageTitle = '新闻动态';
-        selector = '.m-list3 li';
-    } else if (type === 'tzgg') {
-        currentUrl = `${rootUrl}/index/tzgg1.htm`;
-        pageTitle = '通知公告';
-        selector = '.Newslist li';
-    } else {
-        throw new Error('Invalid type parameter');
-    }
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -84,35 +49,27 @@ async function handler(ctx: Context) {
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
-            let rawDate = '';
-
             if ($link.length === 0 || !$link.attr('href')) {
                 return null;
             }
 
-            const href = $link.attr('href');
-            const link = new URL(href, rootUrl).href;
-            if (type === 'tzgg') {
-                rawDate = $item.find('span').text().replace('发布时间：', '').trim();
-            } else if (type === 'xwdt') {
-                rawDate = $item.find('span.time1').text().replace('发布时间：', '').trim();
-            }
+            const link = new URL($link.attr('href'), rootUrl).href;
+            const rawDate = $item.find('span').text().replace('发布时间：', '').trim();
 
             return {
                 title: $link.text().trim(),
                 link,
-                pubDateRaw: rawDate, // 暂存原始时间字符串
+                pubDateRaw: rawDate,
             };
         })
         .filter(Boolean);
-
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
-                    url: item.link
+                    url: item.link,
                 });
                 const content = load(detailResponse.data);
                 const newsContent = content('.v_news_content');
@@ -128,13 +85,12 @@ async function handler(ctx: Context) {
                 });
 
                 item.description = newsContent.html();
-                item.pubDate = timezone(parseDate(item.pubDateRaw), +8); // 正确设置 pubDate
+                item.pubDate = timezone(parseDate(item.pubDateRaw), +8);
 
                 return item;
             })
         )
     );
-
 
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
