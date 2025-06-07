@@ -8,7 +8,7 @@ const md = MarkdownIt({
 });
 
 export const route: Route = {
-    path: '/developer/harmonyos/sample-code',
+    path: '/huawei/developer/harmonyos/sample-code',
     categories: ['programming'],
     example: '/huawei/developer/harmonyos/sample-code',
     features: {
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['developer.huawei.com/consumer/cn/samples'],
-            target: '/developer/harmonyos/sample-code',
+            target: '/huawei/developer/harmonyos/sample-code',
         },
     ],
     name: 'HarmonyOS 示例代码',
