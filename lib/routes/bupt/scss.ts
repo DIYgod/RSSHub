@@ -119,18 +119,19 @@ async function handler(ctx: Context) {
                     }
                 });
 
-
-                const descText = newsContent.text();
-                const dateMatch = descText.match(/\d{4}年\d{1,2}月\d{1,2}日/);
-                if (dateMatch) {
-                    const formattedDate = dateMatch[0]
-                        .replace('年', '-')
-                        .replace('月', '-')
-                        .replace('日', '');
-                    item.pubDate = timezone(parseDate(formattedDate), +8);
-                } else {
-                    item.pubDate = undefined;
-                }
+                // 清理后的内容转换为文本
+                const cleanedDescription = newsContent.text().trim();
+                 // 提取并格式化发布时间
+                 item.description = cleanedDescription;
+                 const dateText = content('.info span').text().trim();
+                 if (dateText) {
+                     try {
+                         item.pubDate = timezone(parseDate(dateText), +8);
+                     } catch (error) {
+                         // 如果日期解析失败，不设置 pubDate
+                         console.error(`Failed to parse date: ${dateText}`);
+                     }
+                 }
 
                 item.description = content('.v_news_content').html();
                 return item;
@@ -138,13 +139,10 @@ async function handler(ctx: Context) {
         )
     );
 
-    const lastBuildDate = items.length > 0 && items[0].pubDate ? items[0].pubDate : new Date();
-
 
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
         link: currentUrl,
         item: items as Data['item'],
-        lastBuildDate,
     };
 }
