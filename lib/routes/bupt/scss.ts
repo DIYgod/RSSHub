@@ -42,7 +42,6 @@ async function handler() {
     });
 
     const $ = load(response.data);
-
     const list = $(selector)
         .toArray()
         .map((item) => {
