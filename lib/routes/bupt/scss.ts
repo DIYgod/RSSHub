@@ -4,7 +4,6 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import type { Context } from 'hono';
 
 export const route: Route = {
     path: '/scss/tzgg',
