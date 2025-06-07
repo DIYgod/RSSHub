@@ -51,24 +51,24 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    let type = ctx.req.param('type'); // 默认类型为通知公告
-    if (!type) {
-        type = 'tzgg';
-    }
+    let type = ctx.req.param('type') || 'tzgg';
+
     const rootUrl = 'https://scss.bupt.edu.cn';
     let currentUrl;
     let pageTitle;
+    let selector;
 
     if (type === 'xwdt') {
         currentUrl = `${rootUrl}/index/xwdt.htm`;
         pageTitle = '新闻动态';
+        selector = '.m-list3 li';
     } else if (type === 'tzgg') {
         currentUrl = `${rootUrl}/index/tzgg1.htm`;
         pageTitle = '通知公告';
+        selector = '.Newslist li';
     } else {
         throw new Error('Invalid type parameter');
     }
-
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -76,22 +76,29 @@ async function handler(ctx: Context) {
 
     const $ = load(response.data);
 
-    const selector = type === 'xwdt' ? '.m-list3 li' : '.Newslist li';
-
     const list = $(selector)
         .toArray()
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
+            let rawDate = '';
+
             if ($link.length === 0 || !$link.attr('href')) {
                 return null;
             }
+
             const href = $link.attr('href');
             const link = new URL(href, rootUrl).href;
+            if (type === 'tzgg') {
+                rawDate = $item.find('span').text().replace('发布时间：', '').trim();
+            } else if (type === 'xwdt') {
+                rawDate = $item.find('span.time1').text().replace('发布时间：', '').trim();
+            }
 
             return {
                 title: $link.text().trim(),
                 link,
+                pubDateRaw: rawDate, // 暂存原始时间字符串
             };
         })
         .filter(Boolean);
@@ -110,8 +117,6 @@ async function handler(ctx: Context) {
                 newsContent.find('p, span, strong').each(function () {
                     const element = content(this);
                     const text = element.text().trim();
-
-
                     if (text === '') {
                         element.remove();
                     } else {
@@ -119,21 +124,9 @@ async function handler(ctx: Context) {
                     }
                 });
 
-                // 清理后的内容转换为文本
-                const cleanedDescription = newsContent.text().trim();
-                 // 提取并格式化发布时间
-                 item.description = cleanedDescription;
-                 const dateText = content('.info span').text().trim();
-                 if (dateText) {
-                     try {
-                         item.pubDate = timezone(parseDate(dateText), +8);
-                     } catch (error) {
-                         // 如果日期解析失败，不设置 pubDate
-                         console.error(`Failed to parse date: ${dateText}`);
-                     }
-                 }
+                item.description = newsContent.html();
+                item.pubDate = timezone(parseDate(item.pubDateRaw), +8); // 正确设置 pubDate
 
-                item.description = content('.v_news_content').html();
                 return item;
             })
         )
