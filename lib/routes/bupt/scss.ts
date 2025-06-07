@@ -31,7 +31,7 @@ export const route: Route = {
     url: 'scss.bupt.edu.cn',
 };
 
-async function handler(ctx: Context) {
+async function handler(_ctx: Context) {
     const rootUrl = 'https://scss.bupt.edu.cn';
     const currentUrl = `${rootUrl}/index/tzgg1.htm`;
     const pageTitle = '通知公告';
