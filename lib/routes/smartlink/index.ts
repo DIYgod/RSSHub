@@ -1,4 +1,5 @@
 import { Route } from '@/types';
+import { toTitleCase } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 
 function parseTitle(smartlinkUrl: string): string {
@@ -14,10 +15,7 @@ function parseTitle(smartlinkUrl: string): string {
         const titleSlug = dateIndex !== -1 && dateIndex < pathSegments.length - 1 ? pathSegments[dateIndex + 1] : pathSegments.at(-1) || '';
 
         // Convert hyphens to spaces and capitalize each word
-        return titleSlug
-            .split('-')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
+        return toTitleCase(titleSlug.replaceAll('-', ' '));
     } catch {
         // If URL parsing fails, return the URL without query parameters as fallback
         return smartlinkUrl.split('?')[0];
@@ -33,7 +31,7 @@ function getTitle(item: any): string {
 export const route: Route = {
     path: '/:site',
     categories: ['social-media'],
-    example: '/smartlink.bio/bloombergpursuits',
+    example: '/smartlink/bloombergpursuits',
     parameters: { site: 'the site attached to smartlink.bio/' },
     radar: [
         {
@@ -65,6 +63,7 @@ async function handler(ctx) {
         title: getTitle(item),
         link: item.smartlink.split('?')[0],
         description: `<p><img src="${item.imageUrl.split('?')[0]}"></p>`,
+        pubDate: item.created,
         guid: item.id,
     }));
     return {
