@@ -51,7 +51,8 @@ async function handler() {
     const items = response.resultList.map((item) => ({
         title: md.renderInline(item.name),
         link: item.link,
-        description: md.render(`${item.description}<br><br>关键词: ${item.keywords}`),
+        description: md.render(item.description),
+        category: item.keywords,
         pubDate: parseDate(item.updateTime),
         author: 'HarmonyOS',
         id: item.id,
