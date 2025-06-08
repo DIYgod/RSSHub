@@ -17760,6 +17760,37 @@ export default {
         "url": "bupt.edu.cn/",
         "location": "rczp.ts",
         "module": () => import('@/routes/bupt/rczp.ts')
+      },
+      "/scss/tzgg": {
+        "path": "/scss/tzgg",
+        "categories": [
+          "university"
+        ],
+        "example": "/bupt/scss/tzgg",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "scss.bupt.edu.cn/index/tzgg1.htm"
+            ],
+            "target": "/scss/tzgg"
+          }
+        ],
+        "name": "网络空间安全学院 - 通知公告",
+        "maintainers": [
+          "ziri2004"
+        ],
+        "url": "scss.bupt.edu.cn",
+        "location": "scss.ts",
+        "module": () => import('@/routes/bupt/scss.ts')
       }
     },
     "name": "北京邮电大学",
