@@ -33140,6 +33140,19 @@
       }
     ]
   },
+  "smartlink.bio": {
+    "_name": "SmartLink",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/"
+        ],
+        "target": "/smartlink/:site"
+      }
+    ]
+  },
   "smashingmagazine.com": {
     "_name": "Smashing Magazine",
     ".": [

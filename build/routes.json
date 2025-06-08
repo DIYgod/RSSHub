@@ -90293,6 +90293,46 @@
     "url": "slowmist.com",
     "lang": "zh-CN"
   },
+  "smartlink": {
+    "routes": {
+      "/:site": {
+        "path": "/:site",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/smartlink/bloombergpursuits",
+        "parameters": {
+          "site": "the site attached to smartlink.bio/"
+        },
+        "radar": [
+          {
+            "source": [
+              "smartlink.bio/"
+            ]
+          }
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Posts",
+        "maintainers": [
+          "nickyfoto"
+        ],
+        "description": "smartlink.bio link in bio takes your audience from Instagram and TikTok to your website in one easy step.",
+        "location": "index.ts",
+        "module": "() => import('@/routes/smartlink/index.ts')"
+      }
+    },
+    "name": "SmartLink",
+    "apiRoutes": {},
+    "url": "smartlink.bio",
+    "lang": "en"
+  },
   "smashingmagazine": {
     "routes": {
       "/:category?": {
