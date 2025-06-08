@@ -82,7 +82,7 @@ async function handler() {
                     }
                 });
 
-                item.description = newsContent.html();
+                item.description = newsContent.text();
                 item.pubDate = timezone(parseDate(item.pubDateRaw), +8);
 
                 return item;
