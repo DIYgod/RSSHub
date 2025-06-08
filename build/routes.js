@@ -40564,6 +40564,192 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
+  "gmu": {
+    "routes": {
+      "/news/:type?": {
+        "path": "/news/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/gmu/news/gyyw",
+        "parameters": {
+          "type": {
+            "description": "新闻类型，见下表，默认为 gyyw",
+            "options": [
+              {
+                "value": "gyyw",
+                "label": "赣医要闻"
+              },
+              {
+                "value": "ybdt",
+                "label": "院部动态"
+              },
+              {
+                "value": "mtgy",
+                "label": "媒体赣医"
+              },
+              {
+                "value": "xsjz",
+                "label": "学术讲座"
+              }
+            ],
+            "default": "gyyw"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "gmu.cn/xwzx/gyyw.htm",
+              "gmu.cn/"
+            ],
+            "target": "/news/gyyw"
+          },
+          {
+            "source": [
+              "gmu.cn/xwzx/ybdt.htm"
+            ],
+            "target": "/news/ybdt"
+          },
+          {
+            "source": [
+              "gmu.cn/xwzx/mtgy.htm"
+            ],
+            "target": "/news/mtgy"
+          },
+          {
+            "source": [
+              "gmu.cn/xwzx/xsjz.htm"
+            ],
+            "target": "/news/xsjz"
+          }
+        ],
+        "name": "新闻中心",
+        "maintainers": [
+          "FrankFahey"
+        ],
+        "url": "gmu.cn/xwzx/gyyw.htm",
+        "location": "news.ts",
+        "module": () => import('@/routes/gmu/news.ts')
+      },
+      "/yjs/:type/:subtype": {
+        "path": "/yjs/:type/:subtype",
+        "categories": [
+          "university"
+        ],
+        "example": "/gmu/yjs/zsgz/tzgg",
+        "parameters": {
+          "type": {
+            "description": "分类，见下表",
+            "options": [
+              {
+                "value": "zsgz",
+                "label": "招生工作"
+              },
+              {
+                "value": "pygz",
+                "label": "培养工作"
+              },
+              {
+                "value": "xwgz",
+                "label": "学位工作"
+              },
+              {
+                "value": "xsgz",
+                "label": "学生工作"
+              },
+              {
+                "value": "xzzx",
+                "label": "下载中心"
+              }
+            ]
+          },
+          "subtype": {
+            "description": "子分类，见下表",
+            "options": [
+              {
+                "value": "tzgg",
+                "label": "通知公告"
+              },
+              {
+                "value": "xwsd",
+                "label": "新闻速递"
+              },
+              {
+                "value": "gzzd",
+                "label": "规章制度"
+              },
+              {
+                "value": "dsgl",
+                "label": "导师管理"
+              },
+              {
+                "value": "xwgl",
+                "label": "学位管理"
+              },
+              {
+                "value": "pggz",
+                "label": "评估工作"
+              },
+              {
+                "value": "xshd",
+                "label": "学生活动"
+              },
+              {
+                "value": "jzgz",
+                "label": "奖助工作"
+              },
+              {
+                "value": "zsxz",
+                "label": "招生下载"
+              },
+              {
+                "value": "pyxz",
+                "label": "培养下载"
+              },
+              {
+                "value": "xwxz",
+                "label": "学位下载"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "研究生院",
+        "maintainers": [
+          "FrankFahey"
+        ],
+        "radar": [
+          {
+            "source": [
+              "yjs.gmu.cn/:type/:subtype.htm",
+              "yjs.gmu.cn/"
+            ],
+            "target": "/yjs/:type/:subtype"
+          }
+        ],
+        "location": "yjs.ts",
+        "module": () => import('@/routes/gmu/yjs.ts')
+      }
+    },
+    "name": "赣南医科大学",
+    "url": "gmu.cn",
+    "lang": "zh-CN"
+  },
   "go": {
     "routes": {
       "/jihs/idwr/:year?": {

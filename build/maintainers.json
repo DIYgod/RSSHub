@@ -2974,6 +2974,12 @@
   "/gmcmonline/chinacustoms": [
     "nczitzk"
   ],
+  "/gmu/news/:type?": [
+    "FrankFahey"
+  ],
+  "/gmu/yjs/:type/:subtype": [
+    "FrankFahey"
+  ],
   "/go/jihs/idwr/:year?": [
     "nczitzk"
   ],
