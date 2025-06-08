@@ -3758,6 +3758,9 @@
   "/huanqiu/news/:category?": [
     "yuxinliu-alex"
   ],
+  "/huawei/developer/harmonyos/sample-code": [
+    "JiZhi-Error"
+  ],
   "/hubu/www/:category{.+}?": [
     "nczitzk"
   ],

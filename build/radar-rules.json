@@ -18566,6 +18566,19 @@
       }
     ]
   },
+  "huawei.com": {
+    "_name": "华为开发者联盟",
+    "developer": [
+      {
+        "title": "HarmonyOS 示例代码",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/consumer/cn/samples"
+        ],
+        "target": "/huawei/huawei/developer/harmonyos/sample-code"
+      }
+    ]
+  },
   "hubu.edu.cn": {
     "_name": "湖北大学",
     ".": [
