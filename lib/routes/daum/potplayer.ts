@@ -19,14 +19,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     // Group 3: Trailing hyphens (unused, but for context)
     // Group 4: Update content
     // Uses global and multiline flags for all matches and line start/end anchors
-    const updateRegex = /^(-+)\s*\n(.*?)\s*\n(-+)\s*\n([\s\S]*?)(?=\n-+|\Z)/gm;
+    const updateRegex = /^(-+)\s*\n(.*?)\s*\n(-+)\s*\n([\s\S]*?)(?=\n-{2,}|<\/p>)/gm;
 
     const items: DataItem[] = [];
     let match: RegExpExecArray | null;
 
     while ((match = updateRegex.exec(response)) !== null && items.length < limit) {
         const headerLine: string | undefined = match[2].trim();
-        const description: string | undefined = match[4].trim()?.replace(/\s(\+|\-)/g, '<br>$1');
+        const description: string | undefined = match[4].trim()?.replace(/(\s[+-])/g, '<br>$1');
 
         let version: string = 'N/A';
         let pubDateStr: string | undefined = undefined;
