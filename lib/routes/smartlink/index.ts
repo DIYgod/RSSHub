@@ -62,7 +62,7 @@ async function handler(ctx) {
     const items = parsedData.map((item) => ({
         title: getTitle(item),
         link: item.smartlink.split('?')[0],
-        description: `<p><img src="${item.imageUrl.split('?')[0]}"></p>`,
+        description: `<p><img src="${item.imageUrl}"></p>`,
         pubDate: item.created,
         guid: item.id,
     }));
