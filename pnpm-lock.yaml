@@ -337,8 +337,8 @@ importers:
         specifier: 9.6.1
         version: 9.6.1
       '@types/etag':
-        specifier: 1.8.3
-        version: 1.8.3
+        specifier: 1.8.4
+        version: 1.8.4
       '@types/fs-extra':
         specifier: 11.0.4
         version: 11.0.4
@@ -2277,8 +2277,8 @@ packages:
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
 
-  '@types/etag@1.8.3':
-    resolution: {integrity: sha512-QYHv9Yeh1ZYSMPQOoxY4XC4F1r+xRUiAriB303F4G6uBsT3KKX60DjiogvVv+2VISVDuJhcIzMdbjT+Bm938QQ==}
+  '@types/etag@1.8.4':
+    resolution: {integrity: sha512-f1z/UMth8gQ6636NBqhFmJ3zES7EuDcUnV6K1gl1osHp+85KPKX+VixYWUpqLkw1fftCagyHJjJOZjZkEi2rHw==}
 
   '@types/fs-extra@11.0.4':
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
@@ -8150,7 +8150,7 @@ snapshots:
 
   '@types/estree@1.0.7': {}
 
-  '@types/etag@1.8.3':
+  '@types/etag@1.8.4':
     dependencies:
       '@types/node': 22.15.30
 
