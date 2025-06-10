@@ -13204,7 +13204,8 @@ export default {
           "channel": "channel, default to `top stories`"
         },
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "description": "Provides a better reading experience (full text articles) over the official ones.\n\n    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.",
         "location": "index.ts",
@@ -23591,7 +23592,8 @@ export default {
       "/depth/:category?": {
         "path": "/depth/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
         "example": "/cls/depth/1000",
         "parameters": {
@@ -33063,8 +33065,7 @@ export default {
       "/:endpoint": {
         "path": "/:endpoint",
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "view": 0,
         "example": "/economist/latest",
@@ -41100,8 +41101,7 @@ export default {
       "/citations/:id": {
         "path": "/citations/:id",
         "categories": [
-          "journal",
-          "popular"
+          "journal"
         ],
         "example": "/google/citations/mlmE4JMAAAAJ",
         "parameters": {
@@ -71597,8 +71597,7 @@ export default {
       "/news/:lang?": {
         "path": "/news/:lang?",
         "categories": [
-          "traditional-media",
-          "popular"
+          "traditional-media"
         ],
         "view": 0,
         "example": "/nhk/news/en",
@@ -108369,7 +108368,8 @@ export default {
       "/search/hot/:fulltext?": {
         "path": "/search/hot/:fulltext?",
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "view": 1,
         "example": "/weibo/search/hot",
