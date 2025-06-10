@@ -297,8 +297,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtubei.js:
-        specifier: 13.4.0
-        version: 13.4.0
+        specifier: 14.0.0
+        version: 14.0.0
       zod:
         specifier: 3.25.57
         version: 3.25.57
@@ -6274,8 +6274,8 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
-  youtubei.js@13.4.0:
-    resolution: {integrity: sha512-+fmIZU/dWAjsROONrASy1REwVpy6umAPVuoNLr/4iNmZXl84LyBef0n3hrd1Vn9035EuINToGyQcBmifwUEemA==}
+  youtubei.js@14.0.0:
+    resolution: {integrity: sha512-KAFttOw+9fwwBUvBc1T7KzMNBLczDOuN/dfote8BA9CABxgx8MPgV+vZWlowdDB6DnHjSUYppv+xvJ4VNBLK9A==}
 
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
@@ -12603,7 +12603,7 @@ snapshots:
 
   yoctocolors-cjs@2.1.2: {}
 
-  youtubei.js@13.4.0:
+  youtubei.js@14.0.0:
     dependencies:
       '@bufbuild/protobuf': 2.5.2
       jintr: 3.3.1
