@@ -3310,6 +3310,24 @@
   },
   "aibase.com": {
     "_name": "AIbase",
+    "www": [
+      {
+        "title": "AI日报",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/daily"
+        ],
+        "target": "/aibase/daily"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/news"
+        ],
+        "target": "/aibase/news"
+      }
+    ],
     "top": [
       {
         "title": "发现",
@@ -4406,16 +4424,6 @@
           "/topic/%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1"
         ],
         "target": "/aibase/topic/室内设计"
-      }
-    ],
-    "www": [
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/zh/news"
-        ],
-        "target": "/aibase/news"
       }
     ]
   },

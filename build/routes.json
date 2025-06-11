@@ -6525,6 +6525,38 @@
   },
   "aibase": {
     "routes": {
+      "/daily": {
+        "path": "/daily",
+        "name": "AI日报",
+        "url": "www.aibase.com",
+        "maintainers": [
+          "3tuuu"
+        ],
+        "example": "/aibase/daily",
+        "description": "获取 AI 日报",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.aibase.com/zh/daily"
+            ],
+            "target": "/daily"
+          }
+        ],
+        "location": "daily.ts",
+        "module": "() => import('@/routes/aibase/daily.ts')"
+      },
       "/discover/:id?": {
         "path": "/discover/:id?",
         "name": "发现",
