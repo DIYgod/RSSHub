@@ -130,10 +130,33 @@ async function handler(ctx) {
             )
         );
 
+        const extractProfileImage = (user: any): string | undefined => {
+            if (!user?.profile_image_url || !user?.photo_domain) {
+                return undefined;
+            }
+
+            const imageUrls = user.profile_image_url.split(',').filter(Boolean);
+            if (imageUrls.length === 0) {
+                return undefined;
+            }
+
+            // Priority order for image sizes
+            const sizePriority = ['!180x180.png', '!50x50.png', '!30x30.png'];
+
+            const selectedImageUrl = sizePriority.map((size) => imageUrls.find((url) => url.includes(size))).find(Boolean) || imageUrls[0];
+
+            const baseDomain = user.photo_domain.startsWith('//') ? `https:${user.photo_domain}` : user.photo_domain;
+
+            return `${baseDomain}${selectedImageUrl}`;
+        };
+
+        const profileImage = extractProfileImage(data[0].user);
+
         return {
             title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
             link,
             description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
+            image: profileImage,
             item: items,
         };
     } finally {
