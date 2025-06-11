@@ -31,8 +31,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('div[data-slot="card-content"]').text();
             const pubDateStr: string | undefined = $el.find('div[data-slot="card-footer"] p').last().text();
             const linkUrl: string | undefined = $el.parent().attr('href');
-            const categoryEls: Element[] = $el.find('.category').toArray();
-            const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
             const authorEls: Element[] = $el.find('div[data-slot="card-footer"] p').first().find('span').toArray();
             const authors: DataItem['author'] = authorEls.map((authorEl) => {
                 const $authorEl: Cheerio<Element> = $(authorEl);
