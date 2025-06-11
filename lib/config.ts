@@ -255,6 +255,10 @@ export type Config = {
     misskey: {
         accessToken?: string;
     };
+    mixi2: {
+        authToken?: string;
+        authKey?: string;
+    };
     mox: {
         cookie: string;
     };
@@ -705,6 +709,10 @@ const calculateValue = () => {
         },
         misskey: {
             accessToken: envs.MISSKEY_ACCESS_TOKEN,
+        },
+        mixi2: {
+            authToken: envs.MIXI2_AUTH_TOKEN,
+            authKey: envs.MIXI2_AUTH_KEY,
         },
         mox: {
             cookie: envs.MOX_COOKIE,
