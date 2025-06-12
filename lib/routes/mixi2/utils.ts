@@ -18,7 +18,7 @@ export function getClient() {
 export function parsePost(post: Post) {
     let description = `<p>${post.text}</p>`;
 
-    for (const media of post?.medias ?? []) {
+    for (const media of post.medias ?? []) {
         if (media.category === Category.CATEGORY_POST_IMAGE) {
             description += `<img src="${media.postImage?.largeImageUrl ?? media.postImage?.smallImageUrl}"${media.description ? `alt="${media.description}"` : ''} />`;
         } else if (media.category === Category.CATEGORY_POST_VIDEO) {
