@@ -17,12 +17,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
     const title: string = $('title').first().text();
     const author: string | undefined = title.split(/\|/).pop()?.trim();
 
-    items = $('div[aria-label="changelog-layout"]')
+    const items: DataItem[] = $('div[aria-label="changelog-layout"]')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
