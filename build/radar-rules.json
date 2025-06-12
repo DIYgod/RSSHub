@@ -4953,6 +4953,18 @@
         ],
         "target": "/android/platform-tools-releases"
       }
+    ],
+    "source": [
+      {
+        "title": "Security Bulletins",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/docs/security/bulletin",
+          "/docs/security/bulletin/asb-overview",
+          "/"
+        ],
+        "target": "/android/security-bulletin"
+      }
     ]
   },
   "anime1.me": {

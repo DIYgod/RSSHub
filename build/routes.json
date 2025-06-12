@@ -9126,6 +9126,38 @@
         "url": "developer.android.com/studio/releases/platform-tools",
         "location": "platform-tools-releases.ts",
         "module": "() => import('@/routes/android/platform-tools-releases.ts')"
+      },
+      "/security-bulletin": {
+        "path": "/security-bulletin",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/android/security-bulletin",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "source.android.com/docs/security/bulletin",
+              "source.android.com/docs/security/bulletin/asb-overview",
+              "source.android.com/"
+            ]
+          }
+        ],
+        "name": "Security Bulletins",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "source.android.com/docs/security/bulletin/asb-overview",
+        "location": "security-bulletin.ts",
+        "module": "() => import('@/routes/android/security-bulletin.ts')"
       }
     },
     "name": "Android",
