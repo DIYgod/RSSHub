@@ -1,4 +1,4 @@
-import { Data, Route } from '@/types';
+import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
 import { getClient, parsePost } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -64,6 +64,7 @@ export const route: Route = {
             title: 'コミュニティ - メディア',
         },
     ],
+    view: ViewType.SocialMedia,
     handler,
     maintainers: ['KarasuShin'],
 };

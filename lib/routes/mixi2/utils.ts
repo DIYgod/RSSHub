@@ -1,4 +1,4 @@
-import { Category, MixiClient, Post } from 'mixi2';
+import { Category, MixiClient, type Post } from 'mixi2';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
