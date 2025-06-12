@@ -137,7 +137,7 @@
         "winston": "3.17.0",
         "xxhash-wasm": "1.1.0",
         "youtubei.js": "14.0.0",
-        "zod": "3.25.61"
+        "zod": "3.25.63"
     },
     "devDependencies": {
         "@babel/preset-env": "7.27.2",
