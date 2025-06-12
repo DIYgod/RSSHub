@@ -18,6 +18,7 @@ const handler = async (ctx: Context) => {
 
     return {
         title: '発見',
+        image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
             data?.posts?.map((post) => ({
                 title: `@${personasData.personas.find((persona) => persona.personaId === post.personaId)?.name}`,
