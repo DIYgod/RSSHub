@@ -34,7 +34,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['mixi.social/discovery'],
+            source: ['mixi.social/home/discovery'],
             target: '/discovery',
             title: '発見',
         },

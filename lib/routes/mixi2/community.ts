@@ -40,17 +40,25 @@ export const route: Route = {
     name: 'コミュニティ',
     categories: ['social-media'],
     example: '/mixi2/community/62e7e813-d242-4c54-a0ee-0aab5b2bbad2',
+    parameters: {
+        id: {
+            description: 'コミュニティID',
+        },
+        media: {
+            description: '`media`を入力するとメディアを含むポストのみを取得、デフォルトは空で全てのポストを取得',
+        },
+    },
     features: {
         supportRadar: true,
     },
     radar: [
         {
-            source: ['mixi.social/communities/:id'],
+            source: ['mixi.social/communities/:id', 'mixi.social/communities/:id/about'],
             target: '/community/:id',
             title: 'コミュニティ - ポスト',
         },
         {
-            source: ['mixi.social/communities/:id/media'],
+            source: ['mixi.social/communities/:id', 'mixi.social/communities/:id/about'],
             target: '/community/:id/media',
             title: 'コミュニティ - メディア',
         },

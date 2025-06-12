@@ -57,18 +57,26 @@ export const route: Route = {
     name: 'ユーザー',
     categories: ['social-media'],
     example: '/mixi2/user/@deyo',
+    parameters: {
+        id: {
+            description: 'ユーザーIDまたは@で始まるユーザー名',
+        },
+        media: {
+            description: '`media`を入力するとメディアを含むポストのみを取得、デフォルトは空で全てのポストを取得',
+        },
+    },
     features: {
         requireConfig: CONFIG_OPTIONS,
         supportRadar: true,
     },
     radar: [
         {
-            source: ['mixi.social/users/:id'],
+            source: ['mixi.social/:id'],
             target: '/user/:id',
             title: 'ユーザー - ポスト',
         },
         {
-            source: ['mixi.social/users/:id/media'],
+            source: ['mixi.social/:id'],
             target: '/user/:id/media',
             title: 'ユーザー - メディア',
         },

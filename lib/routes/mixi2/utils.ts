@@ -31,10 +31,10 @@ export function parsePost(post: Post) {
 export const CONFIG_OPTIONS = [
     {
         name: 'MIXI2_AUTH_TOKEN',
-        description: 'MIXI2ログイン後のセッション情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください',
+        description: 'mixi2ログイン後の情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください',
     },
     {
         name: 'MIXI2_AUTH_KEY',
-        description: 'MIXI2ログイン後のセッション情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください',
+        description: 'mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください',
     },
 ];
