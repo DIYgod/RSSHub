@@ -12,10 +12,15 @@ const handler = async (ctx: Context) => {
         limit,
     });
 
+    const personasData = await client.getPersonas({
+        personaIds: data?.posts?.map((post) => post.personaId) ?? [],
+    });
+
     return {
         title: '発見',
         item:
             data?.posts?.map((post) => ({
+                title: `@${personasData.personas.find((persona) => persona.personaId === post.personaId)?.name}`,
                 description: parsePost(post),
                 pubDate: parseDate(post.createdAt.seconds * 1e3),
                 guid: post.postId,

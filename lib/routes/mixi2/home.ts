@@ -12,6 +12,10 @@ const handler = async (ctx: Context) => {
         limit,
     });
 
+    const personasData = await client.getPersonas({
+        personaIds: data?.feeds?.map((feed) => feed.post.personaId) ?? [],
+    });
+
     return {
         title: 'フォロー中',
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
@@ -19,6 +23,7 @@ const handler = async (ctx: Context) => {
             data?.feeds
                 ?.filter((feed) => !feed.post.isDeleted)
                 .map((feed) => ({
+                    title: `@${personasData.personas.find((persona) => persona.personaId === feed.post.personaId)?.name}`,
                     description: parsePost(feed.post),
                     pubDate: parseDate(feed.post.createdAt.seconds * 1e3),
                     guid: feed.post.postId,

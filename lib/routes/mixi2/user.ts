@@ -45,6 +45,7 @@ const handler = async (ctx: Context) => {
             data?.posts
                 ?.filter((post) => !post.isDeleted)
                 .map((post) => ({
+                    title: `@${personaName}`,
                     description: parsePost(post),
                     pubDate: parseDate(post.createdAt.seconds * 1e3),
                     guid: post.postId,
