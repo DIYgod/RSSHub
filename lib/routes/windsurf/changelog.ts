@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     let items: DataItem[] = [];
 
-    const title: string = $('title').text();
+    const title: string = $('title').first().text();
     const author: string | undefined = title.split(/\|/).pop()?.trim();
 
     items = $('div[aria-label="changelog-layout"]')
