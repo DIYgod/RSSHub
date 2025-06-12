@@ -5402,8 +5402,7 @@
       "/article/:categoryId/:sortType?/:timeRange?": {
         "path": "/article/:categoryId/:sortType?/:timeRange?",
         "categories": [
-          "anime",
-          "popular"
+          "anime"
         ],
         "view": 0,
         "example": "/acfun/article/110",
@@ -43641,7 +43640,8 @@
       "/miit/zcjd": {
         "path": "/miit/zcjd",
         "categories": [
-          "government"
+          "government",
+          "popular"
         ],
         "example": "/gov/miit/zcjd",
         "parameters": {},
@@ -45724,7 +45724,8 @@
         "name": "国家统计局 通用",
         "url": "www.stats.gov.cn",
         "categories": [
-          "government"
+          "government",
+          "popular"
         ],
         "maintainers": [
           "bigfei",
@@ -55496,8 +55497,7 @@
       "/ranking/:type": {
         "path": "/ranking/:type",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/ithome/ranking/24h",
         "parameters": {
@@ -80819,7 +80819,8 @@
       "/av/:catid?": {
         "path": "/av/:catid?",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
         "example": "/playno1/av",
         "parameters": {
