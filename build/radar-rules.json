@@ -30789,6 +30789,20 @@
       }
     ]
   },
+  "python.org": {
+    "_name": "Python",
+    "www": [
+      {
+        "title": "Active Python Releases",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/",
+          "/downloads"
+        ],
+        "target": "/python/release"
+      }
+    ]
+  },
   "qbitai.com": {
     "_name": "量子位",
     ".": [
