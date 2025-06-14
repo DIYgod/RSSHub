@@ -1063,7 +1063,8 @@ export default {
       "/:type/:keyword{.*}?": {
         "path": "/:type/:keyword{.*}?",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
         "name": "通用",
         "maintainers": [
@@ -36236,8 +36237,7 @@ export default {
       "/news/:lang?": {
         "path": "/news/:lang?",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/followin/news",
@@ -94153,6 +94153,37 @@ export default {
   },
   "storm": {
     "routes": {
+      "/channel/:id?": {
+        "path": "/channel/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/storm/channel/2",
+        "parameters": {
+          "id": "ID，可在 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "storm.mg/channel/:id"
+            ]
+          }
+        ],
+        "name": "频道",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "location": "channel.ts",
+        "module": () => import('@/routes/storm/channel.ts')
+      },
       "/:category?/:id?": {
         "path": "/:category?/:id?",
         "categories": [

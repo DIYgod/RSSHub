@@ -34510,6 +34510,14 @@
     "_name": "風傳媒",
     ".": [
       {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/channel/:id"
+        ],
+        "target": "/storm/channel/:id?"
+      },
+      {
         "title": "分类",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [

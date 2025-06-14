@@ -7133,6 +7133,9 @@
   "/stockedge/daily-updates/news": [
     "Rjnishant530"
   ],
+  "/storm/channel/:id?": [
+    "dzx-dzx"
+  ],
   "/storm/:category?/:id?": [
     "nczitzk"
   ],
