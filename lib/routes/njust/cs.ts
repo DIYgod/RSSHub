@@ -11,7 +11,7 @@ const map = new Map([
     ['xsdt', { title: '南京理工大学计算机学院 -- 学术动态', id: '/5790' }],
 ]);
 
-const host = 'https://cs.njust.edu.cn/';
+const host = 'https://cs.njust.edu.cn';
 
 export const route: Route = {
     path: '/cs/:type?',
@@ -42,7 +42,6 @@ async function handler(ctx) {
     }
     const id = info.id;
     const siteUrl = host + id + '/list.htm';
-
     const html = await getContent(siteUrl, true);
     const $ = load(html);
     const list = $('div#wp_news_w9').find('a');
@@ -52,7 +51,7 @@ async function handler(ctx) {
         link: siteUrl,
         item: list.toArray().map((item) => ({
             title: $(item).find('span[class="column-news-title"]').text().trim(),
-            pubDate: timezone(parseDate($(item).find('span[class="column-news-date news-date-hide"]').text(), 'YYYY-MM-DD'), +8),
+            pubDate: timezone(parseDate($(item).find('span[class="column-news-date news-date-hide"]').text(), 'YYYY-MM-DD'), +0),
             link: $(item).attr('href'),
         })),
     };
