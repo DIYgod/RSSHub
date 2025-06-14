@@ -107759,6 +107759,35 @@
     "url": "wanqu.co",
     "lang": "zh-CN"
   },
+  "warhammer-community": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "game"
+        ],
+        "example": "/warhammer-community/news",
+        "radar": [
+          {
+            "source": [
+              "www.warhammer-community.com/en-gb/all-news-and-features/",
+              "www.warhammer-community.com/en-gb/"
+            ]
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.warhammer-community.com/en-gb/all-news-and-features/",
+        "location": "news.ts",
+        "module": "() => import('@/routes/warhammer-community/news.ts')"
+      }
+    },
+    "name": "Warhammer Community",
+    "url": "www.warhammer-community.com/en-gb/",
+    "lang": "en"
+  },
   "warp": {
     "routes": {
       "/blog": {
