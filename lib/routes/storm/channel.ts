@@ -23,13 +23,12 @@ export const route: Route = {
         },
     ],
     name: '频道',
-    maintainers: [''],
+    maintainers: ['dzx-dzx'],
     handler,
-    description: ``,
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '';
+    const id = ctx.req.param('id') ?? '2';
 
     const rootUrl = 'https://www.storm.mg';
     const currentUrl = new URL(`/api/getArticleList`, rootUrl).href;
