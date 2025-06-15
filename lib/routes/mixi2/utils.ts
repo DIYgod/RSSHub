@@ -52,5 +52,5 @@ export const CONFIG_OPTIONS = [
 ];
 
 export function postFilter(post: Post) {
-    return !post.isDeleted && !post.personaId;
+    return !post.isDeleted && post.personaId;
 }
