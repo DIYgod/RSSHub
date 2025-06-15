@@ -68598,6 +68598,193 @@
     "url": "www.mixcloud.com",
     "lang": "en"
   },
+  "mixi2": {
+    "routes": {
+      "/community/:id/:media?": {
+        "path": "/community/:id/:media?",
+        "name": "コミュニティ",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/mixi2/community/62e7e813-d242-4c54-a0ee-0aab5b2bbad2",
+        "parameters": {
+          "id": {
+            "description": "コミュニティID"
+          },
+          "media": {
+            "description": "`media`を入力するとメディアを含むポストのみを取得、デフォルトは空で全てのポストを取得"
+          }
+        },
+        "features": {
+          "supportRadar": true,
+          "requireConfig": [
+            {
+              "name": "MIXI2_AUTH_TOKEN",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください"
+            },
+            {
+              "name": "MIXI2_AUTH_KEY",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "mixi.social/communities/:id",
+              "mixi.social/communities/:id/about"
+            ],
+            "target": "/community/:id",
+            "title": "コミュニティ - ポスト"
+          },
+          {
+            "source": [
+              "mixi.social/communities/:id",
+              "mixi.social/communities/:id/about"
+            ],
+            "target": "/community/:id/media",
+            "title": "コミュニティ - メディア"
+          }
+        ],
+        "view": 1,
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "community.ts",
+        "module": "() => import('@/routes/mixi2/community.ts')"
+      },
+      "/discovery": {
+        "path": "/discovery",
+        "name": "発見",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/mixi2/discovery",
+        "features": {
+          "supportRadar": true,
+          "requireConfig": [
+            {
+              "name": "MIXI2_AUTH_TOKEN",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください"
+            },
+            {
+              "name": "MIXI2_AUTH_KEY",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "mixi.social/home/discovery"
+            ],
+            "target": "/discovery",
+            "title": "発見"
+          }
+        ],
+        "view": 1,
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "discovery.ts",
+        "module": "() => import('@/routes/mixi2/discovery.ts')"
+      },
+      "/home": {
+        "path": "/home",
+        "name": "フォロー中",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/mixi2/home",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MIXI2_AUTH_TOKEN",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください"
+            },
+            {
+              "name": "MIXI2_AUTH_KEY",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください"
+            }
+          ],
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "mixi.social/home"
+            ],
+            "target": "/home",
+            "title": "フォロー中"
+          }
+        ],
+        "view": 1,
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "home.ts",
+        "module": "() => import('@/routes/mixi2/home.ts')"
+      },
+      "/user/:name/:media?": {
+        "path": "/user/:name/:media?",
+        "name": "ユーザー",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/mixi2/user/@deyo",
+        "parameters": {
+          "name": {
+            "description": "@で始まるユーザー名"
+          },
+          "media": {
+            "description": "`media`を入力するとメディアを含むポストのみを取得、デフォルトは空で全てのポストを取得"
+          }
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MIXI2_AUTH_TOKEN",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでクッキーから `auth_token` の値を取得してください"
+            },
+            {
+              "name": "MIXI2_AUTH_KEY",
+              "description": "mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください"
+            }
+          ],
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "mixi.social/:id"
+            ],
+            "target": "/user/:id",
+            "title": "ユーザー - ポスト"
+          },
+          {
+            "source": [
+              "mixi.social/:id"
+            ],
+            "target": "/user/:id/media",
+            "title": "ユーザー - メディア"
+          }
+        ],
+        "view": 1,
+        "maintainers": [
+          "KarasuShin"
+        ],
+        "location": "user.ts",
+        "module": "() => import('@/routes/mixi2/user.ts')"
+      }
+    },
+    "name": "mixi2",
+    "apiRoutes": {},
+    "url": "mixi.social",
+    "lang": "ja",
+    "categories": [
+      "social-media"
+    ]
+  },
   "modb": {
     "routes": {
       "/topic/:id": {
