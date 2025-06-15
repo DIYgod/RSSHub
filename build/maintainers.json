@@ -6498,6 +6498,12 @@
   "/samsung/research/blog": [
     "nczitzk"
   ],
+  "/sankei/news/:category": [
+    "yuikisaito"
+  ],
+  "/sankei/topics/:topic": [
+    "yuikisaito"
+  ],
   "/sara/:type": [
     "HChenZi"
   ],
