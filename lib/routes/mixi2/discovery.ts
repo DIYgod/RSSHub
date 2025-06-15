@@ -18,6 +18,7 @@ const handler = async (ctx: Context) => {
 
     return {
         title: '発見',
+        link: 'https://mixi.social/home/discovery',
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
             data?.posts?.map((post) => ({
