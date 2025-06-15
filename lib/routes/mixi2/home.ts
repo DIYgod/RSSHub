@@ -18,6 +18,7 @@ const handler = async (ctx: Context) => {
 
     return {
         title: 'フォロー中',
+        link: 'https://mixi.social/home',
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
             data?.feeds
