@@ -191,6 +191,9 @@ importers:
       markdown-it:
         specifier: 14.1.0
         version: 14.1.0
+      mixi2:
+        specifier: 0.2.2
+        version: 0.2.2
       module-alias:
         specifier: 2.2.3
         version: 2.2.3
@@ -4687,6 +4690,9 @@ packages:
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
+  mixi2@0.2.2:
+    resolution: {integrity: sha512-8rgPNsuKIMzLctZ8oeo9idLTahvJCamljcdVth1Tx/Gqp7d3vAWzKYUsBNCr+wqD5zf/0rrYJPZCo0WZqadcbQ==}
 
   mixin-object@2.0.1:
     resolution: {integrity: sha512-ALGF1Jt9ouehcaXaHhn6t1yGWRqGaHkPFndtFVHfZXOvkIZ/yoGaSi0AHVTafb3ZBGg4dr/bDwnaEKqCXzchMA==}
@@ -10978,6 +10984,10 @@ snapshots:
       minipass: 7.1.2
 
   mitt@3.0.1: {}
+
+  mixi2@0.2.2:
+    dependencies:
+      protobufjs: 7.5.3
 
   mixin-object@2.0.1:
     dependencies:
