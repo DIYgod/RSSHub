@@ -1,7 +1,8 @@
-import { Category, MixiClient, type Post } from 'mixi2';
+import { Category, MixiClient, Persona, type Post } from 'mixi2';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export function getClient() {
     const { authToken, authKey } = config.mixi2;
@@ -26,6 +27,17 @@ export function parsePost(post: Post) {
         }
     }
     return description;
+}
+
+export function generatePostDataItem(post: Post, personas: Persona[]) {
+    const author = personas.find((persona) => persona.personaId === post.personaId);
+    return {
+        description: parsePost(post),
+        pubDate: parseDate(post.createdAt.seconds * 1e3),
+        guid: post.postId,
+        author: author?.name,
+        link: `https://mixi.social/@${author?.name}/posts/${post.postId}`,
+    };
 }
 
 export const CONFIG_OPTIONS = [

@@ -1,7 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, getClient, parsePost } from './utils';
-import { parseDate } from '@/utils/parse-date';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -25,9 +24,7 @@ const handler = async (ctx: Context) => {
                 ?.filter((feed) => !feed.post.isDeleted)
                 .map((feed) => ({
                     title: `@${personasData.personas.find((persona) => persona.personaId === feed.post.personaId)?.name}`,
-                    description: parsePost(feed.post),
-                    pubDate: parseDate(feed.post.createdAt.seconds * 1e3),
-                    guid: feed.post.postId,
+                    ...generatePostDataItem(feed.post, personasData.personas),
                 })) ?? [],
     } as Data;
 };

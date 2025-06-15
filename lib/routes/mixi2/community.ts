@@ -1,7 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, getClient, parsePost } from './utils';
-import { parseDate } from '@/utils/parse-date';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -21,6 +20,10 @@ const handler = async (ctx: Context) => {
         }),
     ]);
 
+    const personasData = await client.getPersonas({
+        personaIds: postsData.posts.map((post) => post.personaId),
+    });
+
     return {
         title: `${communityInfo.community.name} - ${mediaOnly ? 'メディア' : 'ポスト'}`,
         description: communityInfo.community.purpose.replaceAll('\n', ' '),
@@ -31,9 +34,7 @@ const handler = async (ctx: Context) => {
                 ?.filter((post) => !post.isDeleted)
                 .map((post) => ({
                     title: communityInfo.community.name,
-                    description: parsePost(post),
-                    pubDate: parseDate(post.createdAt.seconds * 1e3),
-                    guid: post.postId,
+                    ...generatePostDataItem(post, personasData.personas),
                 })) ?? [],
     } as Data;
 };

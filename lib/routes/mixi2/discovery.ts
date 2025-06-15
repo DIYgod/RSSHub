@@ -1,7 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, getClient, parsePost } from './utils';
-import { parseDate } from '@/utils/parse-date';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -21,12 +20,13 @@ const handler = async (ctx: Context) => {
         link: 'https://mixi.social/home/discovery',
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
-            data?.posts?.map((post) => ({
-                title: `@${personasData.personas.find((persona) => persona.personaId === post.personaId)?.name}`,
-                description: parsePost(post),
-                pubDate: parseDate(post.createdAt.seconds * 1e3),
-                guid: post.postId,
-            })) ?? [],
+            data?.posts?.map((post) => {
+                const author = personasData.personas.find((persona) => persona.personaId === post.personaId);
+                return {
+                    title: `@${author?.name}`,
+                    ...generatePostDataItem(post, personasData.personas),
+                };
+            }) ?? [],
     } as Data;
 };
 
