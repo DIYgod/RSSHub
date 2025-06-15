@@ -23,6 +23,8 @@ const handler = async (ctx: Context) => {
 
     return {
         title: `${communityInfo.community.name} - ${mediaOnly ? 'メディア' : 'ポスト'}`,
+        description: communityInfo.community.purpose.replaceAll('\n', ' '),
+        link: `https://mixi.social/communities/${communityId}/about`
         image: communityInfo.community.coverImage.postImage?.largeImageUrl,
         item:
             postsData?.posts
