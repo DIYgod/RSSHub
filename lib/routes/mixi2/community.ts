@@ -1,6 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -21,7 +21,7 @@ const handler = async (ctx: Context) => {
     ]);
 
     const personasData = await client.getPersonas({
-        personaIds: postsData.posts.map((post) => post.personaId),
+        personaIds: postsData?.posts.map((post) => post.personaId),
     });
 
     return {
@@ -30,12 +30,10 @@ const handler = async (ctx: Context) => {
         link: `https://mixi.social/communities/${communityId}/about`,
         image: communityInfo.community.coverImage.postImage?.largeImageUrl,
         item:
-            postsData?.posts
-                ?.filter((post) => !post.isDeleted)
-                .map((post) => ({
-                    title: communityInfo.community.name,
-                    ...generatePostDataItem(post, personasData.personas),
-                })) ?? [],
+            postsData?.posts?.filter(postFilter).map((post) => ({
+                title: communityInfo.community.name,
+                ...generatePostDataItem(post, personasData.personas),
+            })) ?? [],
     } as Data;
 };
 

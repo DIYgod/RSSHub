@@ -1,6 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -20,7 +20,7 @@ const handler = async (ctx: Context) => {
         link: 'https://mixi.social/home/discovery',
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
-            data?.posts?.map((post) => {
+            data?.posts?.filter(postFilter).map((post) => {
                 const author = personasData.personas.find((persona) => persona.personaId === post.personaId);
                 return {
                     title: `@${author?.name}`,

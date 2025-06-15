@@ -1,6 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, generatePostDataItem, getClient } from './utils';
+import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
 const handler = async (ctx: Context) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -21,7 +21,7 @@ const handler = async (ctx: Context) => {
         image: 'https://mixi.social/_next/static/media/image_logo.8bb36f11.svg',
         item:
             data?.feeds
-                ?.filter((feed) => !feed.post.isDeleted)
+                ?.filter((feed) => postFilter(feed.post))
                 .map((feed) => ({
                     title: `@${personasData.personas.find((persona) => persona.personaId === feed.post.personaId)?.name}`,
                     ...generatePostDataItem(feed.post, personasData.personas),

@@ -1,6 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { CONFIG_OPTIONS, getClient, parsePost } from './utils';
+import { CONFIG_OPTIONS, getClient, parsePost, postFilter } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
@@ -22,25 +22,23 @@ const handler = async (ctx: Context) => {
     const persona = userInfo.persona;
 
     const data = await client.getPersonalTimeline({
-        personaId: persona.personaId,
+        personaId: persona?.personaId,
         limit,
         mediaOnly,
     });
 
     return {
-        title: `${persona.name} - ${mediaOnly ? 'メディア' : 'ポスト'}`,
-        image: persona.avatarUrl,
+        title: `${persona?.name} - ${mediaOnly ? 'メディア' : 'ポスト'}`,
+        image: persona?.avatarUrl,
         item:
-            data?.posts
-                ?.filter((post) => !post.isDeleted)
-                .map((post) => ({
-                    title: `@${persona.name}`,
-                    description: parsePost(post),
-                    pubDate: parseDate(post.createdAt.seconds * 1e3),
-                    guid: post.postId,
-                    author: persona.name,
-                    link: `https://mixi.social/@${persona?.name}/posts/${post.postId}`,
-                })) ?? [],
+            data?.posts?.filter(postFilter).map((post) => ({
+                title: `@${persona?.name}`,
+                description: parsePost(post),
+                pubDate: parseDate(post.createdAt.seconds * 1e3),
+                guid: post.postId,
+                author: persona?.name,
+                link: `https://mixi.social/@${persona?.name}/posts/${post.postId}`,
+            })) ?? [],
     } as Data;
 };
 

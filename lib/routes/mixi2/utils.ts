@@ -50,3 +50,7 @@ export const CONFIG_OPTIONS = [
         description: 'mixi2ログイン後の情報。ブラウザのコンソールでリクエストヘッダーから `x-auth-key` の値を取得してください',
     },
 ];
+
+export function postFilter(post: Post) {
+    return !post.isDeleted && !post.personaId;
+}
