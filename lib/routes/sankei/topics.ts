@@ -7,14 +7,14 @@ import { parseDate } from '@/utils/parse-date';
 import { Context } from 'hono';
 
 export const route: Route = {
-    path: ['/topic/:topic'],
+    path: ['/topics/:topic'],
     categories: ['traditional-media'],
     example: '/sankei/topics/etc_100',
     parameters: { topic: 'Topic name (format included in URL). For example, for "Expo 2025 Osaka, Kansai, Japan Special Feature" https://www.sankei.com/tag/topic/etc_100, the value would be etc_100.' },
     radar: [
         {
             source: ['www.sankei.com/tag/topic/:topic'],
-            target: '/topic/:topic',
+            target: '/topics/:topic',
         },
     ],
     name: 'Topic',
