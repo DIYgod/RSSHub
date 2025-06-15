@@ -44,6 +44,7 @@ async function handler(ctx: Context): Promise<Data> {
             return cache.tryGet(link, async () => {
                 const detail = await got(link);
                 const $ = load(detail.body);
+                $('.inline-gptAd, .figure_image_sizer').remove();
                 const articleHTML = $('div.article-body').html() || '';
 
                 return {
