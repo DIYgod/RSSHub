@@ -1,6 +1,6 @@
 import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
-import { getClient, parsePost } from './utils';
+import { CONFIG_OPTIONS, getClient, parsePost } from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 const handler = async (ctx: Context) => {
@@ -24,7 +24,7 @@ const handler = async (ctx: Context) => {
     return {
         title: `${communityInfo.community.name} - ${mediaOnly ? 'メディア' : 'ポスト'}`,
         description: communityInfo.community.purpose.replaceAll('\n', ' '),
-        link: `https://mixi.social/communities/${communityId}/about`
+        link: `https://mixi.social/communities/${communityId}/about`,
         image: communityInfo.community.coverImage.postImage?.largeImageUrl,
         item:
             postsData?.posts
@@ -53,6 +53,7 @@ export const route: Route = {
     },
     features: {
         supportRadar: true,
+        requireConfig: CONFIG_OPTIONS,
     },
     radar: [
         {
