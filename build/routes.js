@@ -73128,6 +73128,32 @@ export default {
   },
   "njust": {
     "routes": {
+      "/cs/:type?": {
+        "path": "/cs/:type?",
+        "categories": [
+          "university"
+        ],
+        "example": "/njust/cs/xyxw",
+        "parameters": {
+          "type": "分类名，见下表，默认为学院新闻"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "计算机学院",
+        "maintainers": [
+          "Horacecxk",
+          "jasongzy"
+        ],
+        "description": "| 学院新闻 | 通知公告 | 学术动态 |\n| -------- | -------- | -------- |\n| xyxw     | tzgg     | xsdt     |",
+        "location": "cs.ts",
+        "module": () => import('@/routes/njust/cs.ts')
+      },
       "/cwc/:type?": {
         "path": "/cwc/:type?",
         "categories": [
