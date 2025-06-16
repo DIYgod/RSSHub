@@ -4880,6 +4880,9 @@
   "/mastodon/remote/:site/:only_media?": [
     "hoilc"
   ],
+  "/mathpix/blog": [
+    "nczitzk"
+  ],
   "/matters/author/:uid": [
     "Cerebrater",
     "xosdy"

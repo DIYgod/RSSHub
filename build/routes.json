@@ -1063,8 +1063,7 @@
       "/:type/:keyword{.*}?": {
         "path": "/:type/:keyword{.*}?",
         "categories": [
-          "multimedia",
-          "popular"
+          "multimedia"
         ],
         "name": "通用",
         "maintainers": [
@@ -3123,8 +3122,7 @@
       "/news/:category?": {
         "path": "/news/:category?",
         "categories": [
-          "game",
-          "popular"
+          "game"
         ],
         "example": "/3dmgame/news",
         "parameters": {
@@ -18431,7 +18429,8 @@
       "/latest": {
         "path": "/latest",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "view": 0,
         "example": "/caixin/latest",
@@ -64524,6 +64523,50 @@
     "apiRoutes": {},
     "url": "mastodon.social",
     "description": "::: tip\nOfficial user RSS:\n\n-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))\n-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))\n\nThese feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.\n:::",
+    "lang": "en"
+  },
+  "mathpix": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "mathpix.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/mathpix/blog",
+        "categories": [
+          "blog"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mathpix.com/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "view": 0,
+        "location": "blog.ts",
+        "module": "() => import('@/routes/mathpix/blog.ts')"
+      }
+    },
+    "name": "Mathpix",
+    "apiRoutes": {},
+    "url": "mathpix.com",
+    "categories": [
+      "blog"
+    ],
+    "description": "",
     "lang": "en"
   },
   "matters": {
@@ -114674,7 +114717,8 @@
       "/realtime/:section?": {
         "path": "/realtime/:section?",
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "example": "/zaobao/realtime/china",
         "parameters": {

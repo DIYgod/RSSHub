@@ -23124,6 +23124,19 @@
       }
     ]
   },
+  "mathpix.com": {
+    "_name": "Mathpix",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog"
+        ],
+        "target": "/mathpix/blog"
+      }
+    ]
+  },
   "matters.town": {
     "_name": "Matters",
     ".": [
