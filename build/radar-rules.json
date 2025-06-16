@@ -19907,6 +19907,19 @@
       }
     ]
   },
+  "hyperdash.info": {
+    "_name": "HyperDash",
+    ".": [
+      {
+        "title": "Top Traders",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/hyperdash/top-traders"
+      }
+    ]
+  },
   "arktca.com": {
     "_name": "鹰角网络",
     "aneot": [
