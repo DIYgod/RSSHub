@@ -1,0 +1,34 @@
+<h3>Trader #{{ rank }}</h3>
+
+<p><strong>Address:</strong> <code>{{ address }}</code></p>
+<p><strong>Account Value:</strong> {{ accountValue }}</p>
+
+<h4>Main Position</h4>
+<p><strong>Coin:</strong> {{ mainPosition.coin }}</p>
+<p><strong>Position Value:</strong> {{ mainPosition.value }}</p>
+<p><strong>Side:</strong> {{ mainPosition.side }}</p>
+<p><strong>Direction Bias:</strong> {{ directionBias }}</p>
+
+<h4>PnL Performance</h4>
+<table>
+    <tr>
+        <th>Period</th>
+        <th>PnL</th>
+    </tr>
+    <tr>
+        <td>Day</td>
+        <td>{{ pnl.day.value }}</td>
+    </tr>
+    <tr>
+        <td>Week</td>
+        <td>{{ pnl.week.value }}</td>
+    </tr>
+    <tr>
+        <td>Month</td>
+        <td>{{ pnl.month.value }}</td>
+    </tr>
+    <tr>
+        <td>All-time</td>
+        <td>{{ pnl.alltime.value }}</td>
+    </tr>
+</table>
