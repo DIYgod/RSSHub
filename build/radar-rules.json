@@ -36989,6 +36989,19 @@
       }
     ]
   },
+  "tver.jp": {
+    "_name": "TVer",
+    ".": [
+      {
+        "title": "Series",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/series/:id"
+        ],
+        "target": "/tver/series/:id"
+      }
+    ]
+  },
   "twitch.tv": {
     "_name": "Twitch",
     "www": [

@@ -7698,6 +7698,9 @@
   "/tvb/news/:category?/:language?": [
     "nczitzk"
   ],
+  "/tver/series/:id": [
+    "yuikisaito"
+  ],
   "/tvtropes/featured/:category?": [
     "nczitzk"
   ],

@@ -103613,6 +103613,37 @@ export default {
     "url": "tvb.com",
     "lang": "zh-HK"
   },
+  "tver": {
+    "routes": {
+      "/series/:id": {
+        "path": "/series/:id",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/tver/series/srx2o7o3c8",
+        "parameters": {
+          "category": "Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is \"srx2o7o3c8\"."
+        },
+        "radar": [
+          {
+            "source": [
+              "tver.jp/series/:id"
+            ],
+            "target": "/series/:id"
+          }
+        ],
+        "name": "Series",
+        "maintainers": [
+          "yuikisaito"
+        ],
+        "location": "series.ts",
+        "module": () => import('@/routes/tver/series.ts')
+      }
+    },
+    "name": "TVer",
+    "url": "tver.jp",
+    "lang": "ja"
+  },
   "tvtropes": {
     "routes": {
       "/featured/:category?": {
