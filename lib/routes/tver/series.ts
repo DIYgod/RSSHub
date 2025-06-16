@@ -6,7 +6,7 @@ import { Context } from 'hono';
 
 export const route: Route = {
     path: '/series/:id',
-    categories: ['multimedia', 'traditional-media'],
+    categories: ['traditional-media'],
     example: '/tver/series/srx2o7o3c8',
     parameters: {
         category: 'Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is "srx2o7o3c8".',
