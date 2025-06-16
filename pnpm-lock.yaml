@@ -237,8 +237,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1(puppeteer-extra@3.3.6(puppeteer-core@24.10.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))(puppeteer@24.10.1(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)))
       query-string:
-        specifier: 9.2.0
-        version: 9.2.0
+        specifier: 9.2.1
+        version: 9.2.1
       rate-limiter-flexible:
         specifier: 7.1.1
         version: 7.1.1
@@ -5226,8 +5226,8 @@ packages:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
 
-  query-string@9.2.0:
-    resolution: {integrity: sha512-YIRhrHujoQxhexwRLxfy3VSjOXmvZRd2nyw1PwL1UUqZ/ys1dEZd1+NSgXkne2l/4X/7OXkigEAuhTX0g/ivJQ==}
+  query-string@9.2.1:
+    resolution: {integrity: sha512-3jTGGLRzlhu/1ws2zlr4Q+GVMLCQTLFOj8CMX5x44cdZG9FQE07x2mQhaNxaKVPNmIDu0mvJ/cEwtY7Pim7hqA==}
     engines: {node: '>=18'}
 
   querystringify@2.2.0:
@@ -11553,7 +11553,7 @@ snapshots:
       split-on-first: 1.1.0
       strict-uri-encode: 2.0.0
 
-  query-string@9.2.0:
+  query-string@9.2.1:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
