@@ -403,8 +403,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@24.0.3)(jsdom@26.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.8.3)))
       discord-api-types:
-        specifier: 0.38.11
-        version: 0.38.11
+        specifier: 0.38.12
+        version: 0.38.12
       domhandler:
         specifier: 5.0.3
         version: 5.0.3
@@ -3224,8 +3224,8 @@ packages:
     resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
-  discord-api-types@0.38.11:
-    resolution: {integrity: sha512-XN0qhcQpetkyb/49hcDHuoeUPsQqOkb17wbV/t48gUkoEDi4ajhsxqugGcxvcN17BBtI9FPPWEgzv6IhQmCwyw==}
+  discord-api-types@0.38.12:
+    resolution: {integrity: sha512-vqkRM50N5Zc6OVckAqtSslbUEoXmpN4bd9xq2jkoK9fgO3KNRIOyMMQ7ipqjwjKuAgzWvU6G8bRIcYWaUe1sCA==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -9226,7 +9226,7 @@ snapshots:
 
   directory-import@3.3.2: {}
 
-  discord-api-types@0.38.11: {}
+  discord-api-types@0.38.12: {}
 
   doctrine@3.0.0:
     dependencies:
