@@ -17146,7 +17146,13 @@ export default {
           "keyword": "N"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "BSKY_AUTHORIZATION",
+              "description": "The authorization token for the Bluesky API",
+              "optional": false
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -17155,7 +17161,8 @@ export default {
         },
         "name": "Keywords",
         "maintainers": [
-          "untitaker"
+          "untitaker",
+          "DIYgod"
         ],
         "location": "keyword.ts",
         "module": () => import('@/routes/bsky/keyword.ts')
@@ -103622,7 +103629,7 @@ export default {
         ],
         "example": "/tver/series/srx2o7o3c8",
         "parameters": {
-          "category": "Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is \"srx2o7o3c8\"."
+          "id": "Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is \"srx2o7o3c8\"."
         },
         "radar": [
           {
