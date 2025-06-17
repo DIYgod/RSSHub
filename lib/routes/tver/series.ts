@@ -9,7 +9,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/tver/series/srx2o7o3c8',
     parameters: {
-        category: 'Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is "srx2o7o3c8".',
+        id: 'Series ID (as it appears in URLs). For example, in https://tver.jp/series/srx2o7o3c8, the ID is "srx2o7o3c8".',
     },
     radar: [
         {
@@ -81,7 +81,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: i.content.title,
                 link: `https://tver.jp/episodes/${i.content.id}`,
-                image: `https://statics.tver.jp/images/content/thumbnail/episode/large/${i.content.id}.jpg`,
+                image: `https://statics.tver.jp/images/content/thumbnail/episode/xlarge/${i.content.id}.jpg`,
                 pubDate: parsedPubDate,
             };
         });
@@ -91,7 +91,7 @@ async function handler(ctx: Context): Promise<Data> {
         description,
         author: broadcastProvider.name,
         link: `https://tver.jp/series/${id}`,
-        image: `https://statics.tver.jp/images/content/thumbnail/series/large/${id}.jpg`,
+        image: `https://statics.tver.jp/images/content/thumbnail/series/xlarge/${id}.jpg`,
         language: 'ja',
         item: items,
     };
