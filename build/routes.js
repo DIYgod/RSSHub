@@ -17146,13 +17146,7 @@ export default {
           "keyword": "N"
         },
         "features": {
-          "requireConfig": [
-            {
-              "name": "BSKY_AUTHORIZATION",
-              "description": "The authorization token for the Bluesky API",
-              "optional": false
-            }
-          ],
+          "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
