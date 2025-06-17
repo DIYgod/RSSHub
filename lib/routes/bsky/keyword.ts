@@ -1,5 +1,3 @@
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -9,13 +7,7 @@ export const route: Route = {
     example: '/bsky/keyword/hello',
     parameters: { keyword: 'N' },
     features: {
-        requireConfig: [
-            {
-                name: 'BSKY_AUTHORIZATION',
-                description: 'The authorization token for the Bluesky API',
-                optional: false,
-            },
-        ],
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -28,17 +20,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.bsky.authorization) {
-        throw new ConfigNotFoundError('BSKY_AUTHORIZATION is not set');
-    }
-
     const keyword = ctx.req.param('keyword');
 
-    const data = await ofetch(`https://stinkhorn.us-west.host.bsky.network/xrpc/app.bsky.feed.searchPosts?q=${encodeURIComponent(keyword)}&limit=25&sort=latest`, {
-        headers: {
-            Authorization: `Bearer ${config.bsky.authorization}`,
-        },
-    });
+    const data = await ofetch(`https://api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${encodeURIComponent(keyword)}&limit=25&sort=latest`);
 
     const items = data.posts.map((post) => ({
         title: post.record.text,
