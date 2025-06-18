@@ -32,132 +32,140 @@ const ProcessItems = async (ctx, currentUrl, title, excludeTags = new Set()) => 
         cookie && cookieJar.setCookie(cookie, rootUrl);
     }
 
-    let subject: string | undefined;
     const results = [] as DataItem[];
-    let page = 0;
     const batchSize = excludeTags.size > 0 ? 5 : limit;
-
-    while (results.length < limit) {
-        page += 1;
-        url.searchParams.set('page', String(page));
-
-        // eslint-disable-next-line no-await-in-loop
-        const response = await got({
-            method: 'get',
-            url: url.href,
-            cookieJar,
-            headers: {
-                'User-Agent': config.trueUA,
-            },
-        });
-
-        const $ = load(response.data);
-
-        $('.tags, .tag-can-play, .over18-modal').remove();
-
-        const items = $('div.item')
-            .toArray()
-            .map((item) => {
-                item = $(item);
-                return {
-                    title: item.find('.video-title').text(),
-                    link: `${rootUrl}${item.find('.box').attr('href')}`,
-                    pubDate: parseDate(item.find('.meta').text()),
-                };
-            });
-
-        if (items.length === 0) {
-            break;
-        }
-
-        for (let index = 0; index < items.length && results.length < limit; index += batchSize) {
-            let batch = items.slice(index, index + batchSize);
-
-            // eslint-disable-next-line no-await-in-loop
-            batch = await Promise.all(
-                batch.map((item) =>
-                    cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            cookieJar,
-                            headers: {
-                                'User-Agent': config.trueUA,
-                            },
-                        });
-
-                        const content = load(detailResponse.data);
-
-                        item.enclosure_type = 'application/x-bittorrent';
-                        item.enclosure_url = content('#magnets-content button[data-clipboard-text]').first().attr('data-clipboard-text');
-
-                        content('icon').remove();
-                        content('#modal-review-watched, #modal-comment-warning, #modal-save-list').remove();
-                        content('.review-buttons, .copy-to-clipboard, .preview-video-container, .play-button').remove();
-
-                        content('.preview-images img').each(function () {
-                            content(this).removeAttr('data-src');
-                            content(this).attr('src', content(this).parent().attr('href'));
-                        });
-
-                        const itemCategories = content('.panel-block .value a').toArray();
-                        const categoryIds: string[] = [];
-                        const category: string[] = [];
-                        for (const item_category of itemCategories) {
-                            if ('href' in item_category.attribs) {
-                                const match = item_category.attribs.href.match(itemCategoryRegex);
-                                if (match !== null) {
-                                    categoryIds.push(match[2]);
-                                }
-                            }
-                            category.push(content(item_category).text());
-                        }
-                        item.category = category;
-                        item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
-                        item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
-
-                        item._extra = {
-                            category_ids: categoryIds,
-                        };
-
-                        return item;
-                    })
-                )
-            );
-            for (const item of batch) {
-                if (results.length >= limit) {
-                    break;
-                }
-                let shouldExclude = false;
-                if (excludeTags.size > 0 && 'category_ids' in item._extra) {
-                    for (const categoryId of item._extra.category_ids) {
-                        if (excludeTags.has(categoryId)) {
-                            shouldExclude = true;
-                            break;
-                        }
-                    }
-                }
-                if (!shouldExclude) {
-                    results.push(item);
-                }
-            }
-        }
-
-        if (subject === undefined) {
-            const htmlTitle = $('title').text();
-            subject = htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
-        }
-
-        if ($('a.pagination-next').length === 0) {
-            break;
-        }
-    }
+    const subject = await processPages(rootUrl, url, 1, cookieJar, batchSize, limit, excludeTags, results);
 
     return {
         title: subject === '' ? title : `${subject} - ${title}`,
         link: url.href,
         item: results,
     };
+};
+
+const processPages = async (rootUrl, url, page, cookieJar, batchSize, limit, excludeTags, results) => {
+    url.searchParams.set('page', String(page));
+
+    const response = await got({
+        method: 'get',
+        url: url.href,
+        cookieJar,
+        headers: {
+            'User-Agent': config.trueUA,
+        },
+    });
+
+    const $ = load(response.data);
+
+    $('.tags, .tag-can-play, .over18-modal').remove();
+
+    const items = $('div.item')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            return {
+                title: item.find('.video-title').text(),
+                link: `${rootUrl}${item.find('.box').attr('href')}`,
+                pubDate: parseDate(item.find('.meta').text()),
+            };
+        });
+
+    if (items.length === 0) {
+        return null;
+    }
+
+    await processSinglePage(cookieJar, items, 0, limit, batchSize, excludeTags, results);
+
+    if ($('a.pagination-next').length !== 0 && results.length < limit) {
+        await processPages(rootUrl, url, page + 1, cookieJar, batchSize, limit, excludeTags, results);
+    }
+
+    if (page !== 1) {
+        return null;
+    }
+
+    const htmlTitle = $('title').text();
+    return htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
+};
+
+const processSinglePage = async (cookieJar, items, index, limit, batchSize, excludeTags, results) => {
+    if (index >= items.length) {
+        return;
+    }
+
+    let batch = items.slice(index, index + batchSize);
+
+    batch = await Promise.all(
+        batch.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                    cookieJar,
+                    headers: {
+                        'User-Agent': config.trueUA,
+                    },
+                });
+
+                const content = load(detailResponse.data);
+
+                item.enclosure_type = 'application/x-bittorrent';
+                item.enclosure_url = content('#magnets-content button[data-clipboard-text]').first().attr('data-clipboard-text');
+
+                content('icon').remove();
+                content('#modal-review-watched, #modal-comment-warning, #modal-save-list').remove();
+                content('.review-buttons, .copy-to-clipboard, .preview-video-container, .play-button').remove();
+
+                content('.preview-images img').each(function () {
+                    content(this).removeAttr('data-src');
+                    content(this).attr('src', content(this).parent().attr('href'));
+                });
+
+                const itemCategories = content('.panel-block .value a').toArray();
+                const categoryIds: string[] = [];
+                const category: string[] = [];
+                for (const item_category of itemCategories) {
+                    if ('href' in item_category.attribs) {
+                        const match = item_category.attribs.href.match(itemCategoryRegex);
+                        if (match !== null) {
+                            categoryIds.push(match[2]);
+                        }
+                    }
+                    category.push(content(item_category).text());
+                }
+                item.category = category;
+                item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
+                item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
+
+                item._extra = {
+                    category_ids: categoryIds,
+                };
+
+                return item;
+            })
+        )
+    );
+    for (const item of batch) {
+        if (results.length >= limit) {
+            break;
+        }
+        let shouldExclude = false;
+        if (excludeTags.size > 0 && 'category_ids' in item._extra) {
+            for (const categoryId of item._extra.category_ids) {
+                if (excludeTags.has(categoryId)) {
+                    shouldExclude = true;
+                    break;
+                }
+            }
+        }
+        if (!shouldExclude) {
+            results.push(item);
+        }
+    }
+
+    if (results.length < limit) {
+        await processSinglePage(cookieJar, items, index + batchSize, limit, batchSize, excludeTags, results);
+    }
 };
 
 export default { ProcessItems };
