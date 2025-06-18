@@ -82,13 +82,9 @@ async function handler(ctx) {
         description: userInfo?.description,
         item:
             data &&
-            utils.ProcessFeed(
-                ctx,
-                {
-                    data,
-                },
-                { userScreenName: userInfo?.screen_name, userName: userInfo?.name }
-            ),
+            utils.ProcessFeed(ctx, {
+                data,
+            }),
         allowEmpty: true,
     };
 }
