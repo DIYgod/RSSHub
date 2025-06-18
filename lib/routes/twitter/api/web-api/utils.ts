@@ -297,11 +297,31 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         continue;
                     }
                     t.legacy.user = t.core?.user_result?.result?.legacy || t.core?.user_results?.result?.legacy;
+                    // Add name and screen_name from core to maintain compatibility
+                    if (t.legacy.user && t.core?.user_results?.result?.core) {
+                        const coreUser = t.core.user_results.result.core;
+                        if (coreUser.name) {
+                            t.legacy.user.name = coreUser.name;
+                        }
+                        if (coreUser.screen_name) {
+                            t.legacy.user.screen_name = coreUser.screen_name;
+                        }
+                    }
                     t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
                     const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
                     if (quote) {
                         t.legacy.quoted_status = quote.legacy;
                         t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;
+                        // Add name and screen_name from core for quoted status user
+                        if (t.legacy.quoted_status.user && quote.core?.user_results?.result?.core) {
+                            const quoteCoreUser = quote.core.user_results.result.core;
+                            if (quoteCoreUser.name) {
+                                t.legacy.quoted_status.user.name = quoteCoreUser.name;
+                            }
+                            if (quoteCoreUser.screen_name) {
+                                t.legacy.quoted_status.user.screen_name = quoteCoreUser.screen_name;
+                            }
+                        }
                     }
                     if (t.note_tweet) {
                         const tmp = t.note_tweet.note_tweet_results.result;

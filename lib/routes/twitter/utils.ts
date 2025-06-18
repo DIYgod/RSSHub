@@ -68,8 +68,6 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.get('sizeOfAuthorAvatar')), 48),
         sizeOfQuotedAuthorAvatar: fallback(params.sizeOfQuotedAuthorAvatar, queryToInteger(routeParams.get('sizeOfQuotedAuthorAvatar')), 24),
         mediaNumber: fallback(params.mediaNumber, queryToInteger(routeParams.get('mediaNumber')), false),
-        userScreenName: params.userScreenName,
-        userName: params.userName,
     };
 
     params = mergedParams;
@@ -93,8 +91,6 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         heightOfPics,
         sizeOfAuthorAvatar,
         sizeOfQuotedAuthorAvatar,
-        userScreenName,
-        userName,
     } = params;
 
     const formatVideo = (media, extraAttrs = '') => {
@@ -320,12 +316,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (showAuthorInDesc) {
                 if (readable) {
                     description += '<small>';
-                    description += `<a href='https://x.com/${userScreenName}' target='_blank' rel='noopener noreferrer'>`;
+                    description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
                 }
                 if (authorNameBold) {
                     description += `<strong>`;
                 }
-                description += userName;
+                description += item.user?.name;
                 if (authorNameBold) {
                     description += `</strong>`;
                 }
@@ -338,12 +334,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (!showAuthorInDesc) {
                 description += '&ensp;';
                 if (readable) {
-                    description += `<a href='https://x.com/${item.user?.screen_name || userScreenName}' target='_blank' rel='noopener noreferrer'>`;
+                    description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
                 }
                 if (authorNameBold) {
                     description += `<strong>`;
                 }
-                description += item.user?.name || userName;
+                description += item.user?.name;
                 if (authorNameBold) {
                     description += `</strong>`;
                 }
@@ -358,7 +354,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
         if (showAuthorInDesc) {
             if (readable) {
-                description += `<a href='https://x.com/${item.user?.screen_name || userScreenName}' target='_blank' rel='noopener noreferrer'>`;
+                description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
             }
 
             if (showAuthorAvatarInDesc) {
@@ -367,7 +363,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (authorNameBold) {
                 description += `<strong>`;
             }
-            description += item.user?.name || userName;
+            description += item.user?.name;
             if (authorNameBold) {
                 description += `</strong>`;
             }
@@ -397,15 +393,15 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         const link =
-            userScreenName && (originalItem.id_str || originalItem.conversation_id_str)
-                ? `https://x.com/${userScreenName}/status/${originalItem.id_str || originalItem.conversation_id_str}`
-                : `https://x.com/${item.user?.screen_name || userScreenName}/status/${item.id_str || item.conversation_id_str}`;
+            originalItem.user?.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
+                ? `https://x.com/${originalItem.user?.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
+                : `https://x.com/${item.user?.screen_name}/status/${item.id_str || item.conversation_id_str}`;
         return {
             title,
             author: [
                 {
-                    name: userName,
-                    url: `https://x.com/${userScreenName}`,
+                    name: originalItem.user?.name,
+                    url: `https://x.com/${originalItem.user?.screen_name}`,
                     avatar: originalItem.user?.profile_image_url_https,
                 },
             ],
