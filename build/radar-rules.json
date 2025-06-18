@@ -38463,6 +38463,19 @@
       }
     ]
   },
+  "windsurf.com": {
+    "_name": "Windsurf",
+    ".": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/changelog"
+        ],
+        "target": "/windsurf/changelog"
+      }
+    ]
+  },
   "winstall.app": {
     "_name": "winstall",
     ".": [

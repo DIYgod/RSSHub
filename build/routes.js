@@ -39364,8 +39364,7 @@ export default {
       "/live": {
         "path": "/live",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/gelonghui/live",
@@ -46076,7 +46075,8 @@ export default {
           "/zhengce/:category{.+}?"
         ],
         "categories": [
-          "government"
+          "government",
+          "popular"
         ],
         "example": "/gov/zhengce/zuixin",
         "parameters": {},
@@ -46111,7 +46111,8 @@ export default {
           "/zhengce/:category{.+}?"
         ],
         "categories": [
-          "government"
+          "government",
+          "popular"
         ],
         "example": "/gov/zhengce/zuixin",
         "parameters": {},
@@ -109686,6 +109687,50 @@ export default {
     "apiRoutes": {},
     "url": "zh.wikinews.org",
     "lang": "zh-CN"
+  },
+  "windsurf": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "name": "Changelog",
+        "url": "windsurf.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/windsurf/changelog",
+        "categories": [
+          "programming"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "windsurf.com/changelog"
+            ],
+            "target": "/changelog"
+          }
+        ],
+        "view": 0,
+        "location": "changelog.ts",
+        "module": () => import('@/routes/windsurf/changelog.ts')
+      }
+    },
+    "name": "Windsurf",
+    "apiRoutes": {},
+    "url": "windsurf.com",
+    "categories": [
+      "programming"
+    ],
+    "description": "",
+    "lang": "en"
   },
   "winstall": {
     "routes": {
