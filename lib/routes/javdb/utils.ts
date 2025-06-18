@@ -6,7 +6,6 @@ import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
 
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import logger from '@/utils/logger';
 import { DataItem } from '@/types';
 const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 const itemCategoryRegex = /c(\d+)=(\d+)/;
@@ -41,8 +40,6 @@ const ProcessItems = async (ctx, currentUrl, title, excludeTags = new Set()) => 
     while (results.length < limit) {
         page += 1;
         url.searchParams.set('page', String(page));
-
-        logger.info(url.href);
 
         // eslint-disable-next-line no-await-in-loop
         const response = await got({
@@ -133,7 +130,6 @@ const ProcessItems = async (ctx, currentUrl, title, excludeTags = new Set()) => 
                 }
                 let shouldExclude = false;
                 if (excludeTags.size > 0 && 'category_ids' in item._extra) {
-                    logger.info(item._extra.category_ids);
                     for (const categoryId of item._extra.category_ids) {
                         if (excludeTags.has(categoryId)) {
                             shouldExclude = true;
