@@ -2,10 +2,14 @@ import { Route } from '@/types';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/actors/:id/:filter?',
+    path: '/actors/:id/:filter?/:addon_tags?',
     categories: ['multimedia'],
     example: '/javdb/actors/R2Vg',
-    parameters: { id: '编号，可在演员页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
+    parameters: {
+        id: '编号，可在演员页 URL 中找到',
+        filter: '过滤，见下表，默认为 `全部`',
+        addon_tags: '类别过滤规则，默认为不过滤类别',
+    },
     features: {
         requireConfig: [
             {
@@ -32,19 +36,28 @@ export const route: Route = {
     url: 'javdb.com/',
     description: `| 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |
 | ---- | ------ | -------- | ------ | ------ |
-|      | p      | s        | d      | c      |
+| a    | p      | s        | d      | c      |
 
   所有演员编号参见 [演員庫](https://javdb.com/actors)
 
-  可用 addon_tags 参数添加额外的过滤 tag，可从网页 url 中获取，例如 \`/javdb/actors/R2Vg?addon_tags=212,18\` 可筛选 \`VR\` 和 \`中出\`。`,
+  可使用 addon_tags 添加额外的 tag 过滤规则，\`+xxx\` 代表包含 id 为 \`xxx\` 的 tag，\`-xxx\`代表排除。当包含所有 \`+xxx\` 视为包含，在此基础上包含任意 \`-xxx\` 视为排除。
+
+  例如 \`/javdb/actors/R2Vg/d,+212,-8\` 可在筛选 \`可下載\` 的基础上继续筛选 \`VR\`，并排除 \`精選綜合\`。
+
+  当包含 \`-xxx\` 排除规则时，响应时间可能变长。`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const filter = ctx.req.param('filter') ?? '';
-    const addonTags = ctx.req.query('addon_tags') ?? '';
-
-    const finalTags = addonTags && filter ? `${filter},${addonTags}` : `${filter}${addonTags}`;
+    let filter = ctx.req.param('filter') ?? '';
+    filter = filter === 'a' ? '' : filter;
+    const addonTags = (ctx.req.param('addon_tags') ?? '').split(',');
+    const includeTags = addonTags
+        .filter((item) => item[0] === '+')
+        .map((item) => item.slice(1))
+        .join(',');
+    const excludeTags = new Set(addonTags.filter((item) => item[0] === '-').map((item) => item.slice(1)));
+    const finalTags = includeTags && filter ? `${filter},${includeTags}` : `${filter}${includeTags}`;
     const currentUrl = `/actors/${id}${finalTags ? `?t=${finalTags}` : ''}`;
 
     const filters = {
@@ -56,5 +69,5 @@ async function handler(ctx) {
     };
 
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} `;
-    return await utils.ProcessItems(ctx, currentUrl, title);
+    return await utils.ProcessItems(ctx, currentUrl, title, excludeTags);
 }
