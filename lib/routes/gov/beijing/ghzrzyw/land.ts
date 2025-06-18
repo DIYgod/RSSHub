@@ -68,7 +68,9 @@ async function handler(ctx) {
 
 function checkFilter(filter: string, data: Record<string, any>): boolean {
     // 如果filter为空，直接返回true
-    if (!filter) {return true;}
+    if (!filter) {
+        return true;
+    }
 
     // 按"-"分割条件组
     const conditionGroups = filter.split('-');
@@ -77,13 +79,17 @@ function checkFilter(filter: string, data: Record<string, any>): boolean {
     for (const group of conditionGroups) {
         // 按"_"分割条件组中的元素
         const parts = group.split('_');
-        if (parts.length < 2) {continue;} // 忽略无效条件组
+        if (parts.length < 2) {
+            continue;
+        } // 忽略无效条件组
 
         const [key, ...values] = parts; // 第一个元素为key，剩余为匹配值
         const dataValue = data[key]; // 从data中获取对应值
 
         // 如果data中不存在该key，当前条件组不满足
-        if (dataValue === undefined || dataValue === null) {return false;}
+        if (dataValue === undefined || dataValue === null) {
+            return false;
+        }
 
         const dataValueStr = String(dataValue); // 转换为字符串
         let matchFound = false;
@@ -97,7 +103,9 @@ function checkFilter(filter: string, data: Record<string, any>): boolean {
         }
 
         // 当前条件组未匹配则整体不满足
-        if (!matchFound) {return false;}
+        if (!matchFound) {
+            return false;
+        }
     }
 
     return true;
