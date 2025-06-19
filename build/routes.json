@@ -11597,6 +11597,50 @@
     "description": "News from the official site of men's professional tennis.",
     "lang": "en"
   },
+  "augmentcode": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "augmentcode.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/augmentcode/blog",
+        "categories": [
+          "programming"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "augmentcode.com/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "view": 0,
+        "location": "blog.ts",
+        "module": "() => import('@/routes/augmentcode/blog.ts')"
+      }
+    },
+    "name": "Augment Code",
+    "apiRoutes": {},
+    "url": "augmentcode.com",
+    "categories": [
+      "programming"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "auto-stats": {
     "routes": {
       "/:category?": {

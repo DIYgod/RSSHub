@@ -5812,6 +5812,19 @@
       }
     ]
   },
+  "augmentcode.com": {
+    "_name": "Augment Code",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog"
+        ],
+        "target": "/augmentcode/blog"
+      }
+    ]
+  },
   "baai.ac.cn": {
     "_name": "北京智源人工智能研究院",
     "hub": [
