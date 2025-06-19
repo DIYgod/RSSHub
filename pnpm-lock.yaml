@@ -457,8 +457,8 @@ importers:
         specifier: 2.4.3
         version: 2.4.3(typescript@5.8.3)
       node-network-devtools:
-        specifier: 1.0.26
-        version: 1.0.26(bufferutil@4.0.9)(undici@6.21.3)(utf-8-validate@5.0.10)
+        specifier: 1.0.28
+        version: 1.0.28(undici@6.21.3)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -2796,6 +2796,9 @@ packages:
   bignumber.js@9.3.0:
     resolution: {integrity: sha512-EM7aMFTXbptt/wZdMlBv2t8IViwQL+h6SLHosp8Yf0dqJMTnY6iL32opnAB6kAdL0SZPuvcAzFr31o0c/R3/RA==}
 
+  bindings@1.2.1:
+    resolution: {integrity: sha512-u4cBQNepWxYA55FunZSM7wMi55yQaN0otnhhilNoWHq0MfOfJeQx0v0mRRpolGOExPjZcl6FtB0BB8Xkb88F0g==}
+
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
 
@@ -2840,6 +2843,9 @@ packages:
 
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
+
+  bufferutil@1.1.0:
+    resolution: {integrity: sha512-bttEVtkre4VYrZH+ciatjApTuac7jLMQXVXzM/ymw82WFREdOrJO496C4Bkh0/FfYoBUSOFaAYF32a5Q8dyiLw==}
 
   bufferutil@4.0.9:
     resolution: {integrity: sha512-WDtdLmJvAuNNPzByAYpRo2rF1Mmradw6gvWsQKf63476DDXmomT9zUiGypLcG4ibIM67vhAj8jJRdbmEws2Aqw==}
@@ -3368,6 +3374,9 @@ packages:
 
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
+
+  endpoint@0.4.5:
+    resolution: {integrity: sha512-oA2ALUF+d4Y0I8/WMV/0BuAZGHxfIdAygr9ZXP4rfzmp5zpYZmYKHKAbqRQnrE1YGdPhVg4D24CQkyx2qYEoHg==}
 
   enhanced-resolve@5.18.1:
     resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
@@ -4101,6 +4110,9 @@ packages:
     resolution: {integrity: sha512-M1WuAmb7pn9zdFRtQYk26ZBoY043Sse0wVDdk4Bppr+JOXyQYybdtvK+l9wUibhtjdjvtoiNy8tk+EgsYIUqKg==}
     engines: {node: '>=12.0.0'}
 
+  inspector@0.5.0:
+    resolution: {integrity: sha512-qs91uK2uL3Bjcl+zSe088cR2Jh8TWgjifv54jsIvr593q92rUPFaTo+WZGvoyMgsRZWusZQR6JJmNA913QSZ+A==}
+
   instagram-private-api@1.46.1:
     resolution: {integrity: sha512-fq0q6UfhpikKZ5Kw8HNwS6YpsNghE9I/uc8AM9Do9nsQ+3H1u0jLz+0t/FcGkGTjZz5VGvU8s2VbWj9wxchwYg==}
     engines: {node: '>=8.0.0'}
@@ -4778,6 +4790,9 @@ packages:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
+  nan@1.8.4:
+    resolution: {integrity: sha512-609zQ1h3ApgH/94qmbbEklSrjcYYXCHnsWk4MAojq4OUk3tidhDYhPaMasMFKsZPZ96r4eQA1hbR2W4H7/77XA==}
+
   nano-spawn@1.0.2:
     resolution: {integrity: sha512-21t+ozMQDAL/UGgQVBbZ/xXvNO10++ZPuTmKRO8k9V3AClVRht49ahtDjfY8l1q6nSHOrE5ASfthzH3ol6R/hg==}
     engines: {node: '>=20.17'}
@@ -4838,8 +4853,8 @@ packages:
     resolution: {integrity: sha512-vv8fJuOUCCvSPjDjBLlMqYMHob4aGjkmrkaE42/mZr0VT+ZAU10jRF8oTnX9+pgU9/vYJ8P7YT3Vd6ajkmzSCw==}
     engines: {node: '>=0.12'}
 
-  node-network-devtools@1.0.26:
-    resolution: {integrity: sha512-brfAQhZ8Tl6X00RWbhAWCdWt9uOTGJm+Er1WD1kBiv97/3h3QIIFQC9DLNVIR4UXH15Goke1qYn689MyuQc78A==}
+  node-network-devtools@1.0.28:
+    resolution: {integrity: sha512-MeD23TdlSmT5utg7bwhEDXQp8Np4BIO+2M7fwzJUyJTLDy2gBIiB5kr6/3XMbU6wGN586xqRLha0StxtuZFb+g==}
     peerDependencies:
       undici: ^6
 
@@ -4932,6 +4947,10 @@ packages:
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
+
+  options@0.0.6:
+    resolution: {integrity: sha512-bOj3L1ypm++N+n7CEbbe473A414AB7z+amKYshRb//iuL3MpdDCLhPnw6aVTdKB9g5ZRVHIEp8eUln6L2NUStg==}
+    engines: {node: '>=0.4.0'}
 
   ora@5.4.1:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
@@ -5977,6 +5996,9 @@ packages:
     engines: {node: '>=0.8.0'}
     hasBin: true
 
+  ultron@1.0.2:
+    resolution: {integrity: sha512-QMpnpVtYaWEeY+MwKDN/UdKlE/LsFZXM5lO1u7GaZzNgmIbGixHEmVMIKT+vqYOALu3m5GYQy9kz4Xu4IVn7Ow==}
+
   unconfig@7.3.2:
     resolution: {integrity: sha512-nqG5NNL2wFVGZ0NA/aCFw0oJ2pxSf1lwg4Z5ill8wd7K4KX/rQbHlwbh+bjctXL5Ly1xtzHenHGOK0b+lG6JVg==}
 
@@ -6054,6 +6076,9 @@ packages:
 
   url-template@2.0.8:
     resolution: {integrity: sha512-XdVKMF4SJ0nP/O7XIPB0JwAEuT9lDIYnNsK8yGVe43y0AWoKeJNdv3ZNWh7ksJ6KqQFjOO6ox/VEitLnaVNufw==}
+
+  utf-8-validate@1.1.0:
+    resolution: {integrity: sha512-Qsgu1u2akdyOneurUEVf/tXhkqBQMoE3x0GY5+P7ayPHvVzTqOkkgBhtl26wm6ap10Amhwy0jIhPwMGywx76QQ==}
 
   utf-8-validate@5.0.10:
     resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
@@ -6244,6 +6269,9 @@ packages:
 
   write-file-atomic@1.3.4:
     resolution: {integrity: sha512-SdrHoC/yVBPpV0Xq/mUZQIpW2sWXAShb/V4pomcJXh92RuaO+f3UTWItiR3Px+pLnV2PvC2/bfn5cwr5X6Vfxw==}
+
+  ws@0.7.2:
+    resolution: {integrity: sha512-8mJ1Ku743qD/PKmO9Dg+y7BXTwzUgKdXguecfIyOVHFmez4JMqMF+V+M684btmQXHlwzyrJqRl3NYDltGDf6CQ==}
 
   ws@8.18.2:
     resolution: {integrity: sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==}
@@ -8848,6 +8876,9 @@ snapshots:
 
   bignumber.js@9.3.0: {}
 
+  bindings@1.2.1:
+    optional: true
+
   bindings@1.5.0:
     dependencies:
       file-uri-to-path: 1.0.0
@@ -8899,6 +8930,12 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  bufferutil@1.1.0:
+    dependencies:
+      bindings: 1.2.1
+      nan: 1.8.4
+    optional: true
 
   bufferutil@4.0.9:
     dependencies:
@@ -9424,6 +9461,10 @@ snapshots:
   end-of-stream@1.4.4:
     dependencies:
       once: 1.4.0
+
+  endpoint@0.4.5:
+    dependencies:
+      inherits: 2.0.4
 
   enhanced-resolve@5.18.1:
     dependencies:
@@ -10376,6 +10417,11 @@ snapshots:
       through: 2.3.8
       wrap-ansi: 6.2.0
 
+  inspector@0.5.0:
+    dependencies:
+      endpoint: 0.4.5
+      ws: 0.7.2
+
   instagram-private-api@1.46.1:
     dependencies:
       '@lifeomic/attempt': 3.1.0
@@ -11125,6 +11171,9 @@ snapshots:
 
   mute-stream@1.0.0: {}
 
+  nan@1.8.4:
+    optional: true
+
   nano-spawn@1.0.2: {}
 
   nanoid@3.3.11: {}
@@ -11163,14 +11212,15 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.26(bufferutil@4.0.9)(undici@6.21.3)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.28(undici@6.21.3)(utf-8-validate@5.0.10):
     dependencies:
+      bufferutil: 4.0.9
       iconv-lite: 0.6.3
+      inspector: 0.5.0
       open: 8.4.2
       undici: 6.21.3
       ws: 8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
-      - bufferutil
       - utf-8-validate
 
   node-releases@2.0.19: {}
@@ -11273,6 +11323,8 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
+
+  options@0.0.6: {}
 
   ora@5.4.1:
     dependencies:
@@ -12380,6 +12432,8 @@ snapshots:
 
   uglify-js@3.19.3: {}
 
+  ultron@1.0.2: {}
+
   unconfig@7.3.2:
     dependencies:
       '@quansync/fs': 0.1.3
@@ -12451,6 +12505,12 @@ snapshots:
       tlds: 1.259.0
 
   url-template@2.0.8: {}
+
+  utf-8-validate@1.1.0:
+    dependencies:
+      bindings: 1.2.1
+      nan: 1.8.4
+    optional: true
 
   utf-8-validate@5.0.10:
     dependencies:
@@ -12663,6 +12723,14 @@ snapshots:
       graceful-fs: 4.2.11
       imurmurhash: 0.1.4
       slide: 1.1.6
+
+  ws@0.7.2:
+    dependencies:
+      options: 0.0.6
+      ultron: 1.0.2
+    optionalDependencies:
+      bufferutil: 1.1.0
+      utf-8-validate: 1.1.0
 
   ws@8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     optionalDependencies:
