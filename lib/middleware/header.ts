@@ -1,4 +1,5 @@
 import { MiddlewareHandler } from 'hono';
+import { routePath } from 'hono/route';
 import etagCalculate from 'etag';
 import { config } from '@/config';
 import { Data } from '@/types';
@@ -24,9 +25,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     ctx.header('Access-Control-Allow-Origin', config.allowOrigin || new URL(ctx.req.url).host);
 
     await next();
+    const rPath = routePath(ctx);
 
-    if (ctx.req.routePath !== '/*') {
-        ctx.header('X-RSSHub-Route', ctx.req.routePath);
+    if (rPath !== '/*') {
+        ctx.header('X-RSSHub-Route', rPath);
     }
 
     const data: Data = ctx.get('data');
