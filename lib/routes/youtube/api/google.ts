@@ -9,7 +9,7 @@ import * as cheerio from 'cheerio';
 import NotFoundError from '@/errors/types/not-found';
 import { Data } from '@/types';
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
+import duration from 'dayjs/plugin/duration.js';
 dayjs.extend(duration);
 
 let count = 0;
