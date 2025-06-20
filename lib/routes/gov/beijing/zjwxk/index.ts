@@ -50,7 +50,7 @@ async function handler(ctx) {
     }
 
     // 并发请求所有组合
-    const promises = allCombinations.map(([qx, fw]) => requestData(ddlYT, qx, fw).catch());
+    const promises = allCombinations.map(([qx, fw]) => requestData(ddlYT, qx, fw));
 
     // 等待所有请求完成并合并结果
     const results = await Promise.all(promises);
