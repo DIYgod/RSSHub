@@ -109766,6 +109766,38 @@ export default {
   },
   "windsurf": {
     "routes": {
+      "/blog": {
+        "path": "/blog",
+        "name": "Blog",
+        "url": "windsurf.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/windsurf/blog",
+        "categories": [
+          "programming"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "windsurf.com/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "view": 0,
+        "location": "blog.ts",
+        "module": () => import('@/routes/windsurf/blog.ts')
+      },
       "/changelog": {
         "path": "/changelog",
         "name": "Changelog",

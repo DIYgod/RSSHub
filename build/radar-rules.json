@@ -38480,6 +38480,14 @@
     "_name": "Windsurf",
     ".": [
       {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog"
+        ],
+        "target": "/windsurf/blog"
+      },
+      {
         "title": "Changelog",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
