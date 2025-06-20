@@ -64484,6 +64484,38 @@ export default {
         "location": "acct.ts",
         "module": () => import('@/routes/mastodon/acct.ts')
       },
+      "/tag/:site/:hashtag/:only_media?": {
+        "path": "/tag/:site/:hashtag/:only_media?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/mastodon/tag/mastodon.social/gochisou/true",
+        "parameters": {
+          "site": "instance address, only domain, no `http://` or `https://` protocol header",
+          "hashtag": "Hashtag you want to subscribe to (without the # symbol)",
+          "only_media": {
+            "description": "whether only display media content, default to false, any value to true",
+            "options": [
+              {
+                "value": "true",
+                "label": "true"
+              },
+              {
+                "value": "false",
+                "label": "false"
+              }
+            ],
+            "default": "false"
+          }
+        },
+        "name": "Hashtag timeline",
+        "maintainers": [
+          "yuikisaito"
+        ],
+        "location": "tag.ts",
+        "module": () => import('@/routes/mastodon/tag.ts')
+      },
       "/timeline/:site/:only_media?": {
         "path": "/timeline/:site/:only_media?",
         "categories": [
