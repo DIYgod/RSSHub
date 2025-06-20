@@ -4,7 +4,7 @@ import { art } from '@/utils/render';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 import path from 'node:path';
 
