@@ -1,6 +1,7 @@
 import type { APIRoute, Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
+import { routePath } from 'hono/route';
 import path from 'node:path';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { config } from '@/config';
@@ -158,7 +159,7 @@ for (const namespace in namespaces) {
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
-            logger.debug(`Matched route: ${ctx.req.routePath}`);
+            logger.debug(`Matched route: ${routePath(ctx)}`);
             if (!ctx.get('data')) {
                 if (typeof routeData.handler !== 'function') {
                     if (process.env.NODE_ENV === 'test') {
