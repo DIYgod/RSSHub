@@ -30,7 +30,7 @@ export const route: Route = {
         target: '/cqu/jwc/:path',
         }
     ],
-    name: '重庆大学教务处',
+    name: '重庆大学本科教学信息网',
     maintainers: ['TonyRL'],
     handler,
 };
