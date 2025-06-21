@@ -50,7 +50,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch.raw(item.link);
-                if (!detailResponse.redirected) {
+                if (new URL(detailResponse.url).hostname !== 'mp.weixin.qq.com') {
                     return { ...item, description: $(detailResponse._data).find('.xwxq').html() };
                 }
                 item.link = detailResponse.url;
