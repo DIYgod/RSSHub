@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const list = $('.u22 li')
+    const list = $('.djdt li')
         .toArray()
         .map((item) => {
             item = $(item);
