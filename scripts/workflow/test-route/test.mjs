@@ -1,5 +1,8 @@
 import jsBeautify from 'js-beautify';
 
+const routeTestFailed = 'auto: not ready to review';
+const readyToReview = 'auto: ready to review';
+
 export default async function test({ github, context, core }, baseUrl, routes, number) {
     if (routes[0] === 'NOROUTE') {
         return;
@@ -71,7 +74,7 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
     }
 
     if (process.env.PULL_REQUEST) {
-        const resultLabel = failCount === links.length || successCount <= failCount ? 'auto: not ready to review' : 'auto: ready to review';
+        const resultLabel = failCount === links.length || successCount <= failCount ? routeTestFailed : readyToReview;
         await github.rest.issues
             .addLabels({
                 issue_number: number,
