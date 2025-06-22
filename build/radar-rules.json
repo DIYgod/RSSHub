@@ -10580,6 +10580,20 @@
       }
     ]
   },
+  "cockroachlabs.com": {
+    "_name": "Cockroach Labs",
+    ".": [
+      {
+        "title": "Blogs",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog/:category",
+          "/blog"
+        ],
+        "target": "/cockroachlabs/blog"
+      }
+    ]
+  },
   "codeforces.com": {
     "_name": "Codeforces",
     "www": [

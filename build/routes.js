@@ -24858,6 +24858,47 @@ export default {
     "url": "navi.cctv.com",
     "lang": "zh-CN"
   },
+  "cockroachlabs": {
+    "routes": {
+      "/blog/:category?": {
+        "name": "Blogs",
+        "maintainers": [
+          "CookiePieWw"
+        ],
+        "categories": [
+          "programming"
+        ],
+        "path": "/blog/:category?",
+        "example": "/cockroachlabs/blog/engineering",
+        "parameters": {
+          "category": "Blog category, e.g., engineering. Subscribe all recent articles if empty."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cockroachlabs.com/blog/:category",
+              "cockroachlabs.com/blog"
+            ],
+            "target": "/blog"
+          }
+        ],
+        "location": "blog.ts",
+        "module": () => import('@/routes/cockroachlabs/blog.ts')
+      }
+    },
+    "name": "Cockroach Labs",
+    "apiRoutes": {},
+    "url": "cockroachlabs.com",
+    "lang": "en"
+  },
   "codeforces": {
     "routes": {
       "/contests": {
