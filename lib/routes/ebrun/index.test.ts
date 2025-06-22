@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { runInContainer } from '@/utils/docker';
+import { runInContainer } from '../../utils/docker';
 
 
 describe('ebrun', () => {
