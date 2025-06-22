@@ -3,6 +3,7 @@ import { getCurrentPath } from '@/utils/helpers';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import type { Context } from 'hono';
 import timezone from '@/utils/timezone';
 
 const __dirname = getCurrentPath(import.meta.url);
@@ -33,7 +34,7 @@ export const route: Route = {
     description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
 };
 
-async function handler(ctx: any) {
+async function handler(ctx: Context) {
     const baseUrl = 'https://www.ebrun.com';
     
     // 获取首页内容
