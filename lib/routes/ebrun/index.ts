@@ -33,7 +33,7 @@ export const route: Route = {
     description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
 };
 
-async function handler() {
+async function handler(ctx: any) {
     const baseUrl = 'https://www.ebrun.com';
     
     // 获取首页内容
@@ -167,7 +167,7 @@ async function handler() {
         title: '亿邦动力 - 电商知识服务平台',
         link: baseUrl,
         description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
-        language: 'zh-CN',
+        language: 'zh-cn' as const,
         item: detailedItems,
     };
 }
