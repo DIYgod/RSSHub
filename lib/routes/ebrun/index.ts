@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: '最新资讯',
-    maintainers: ['your-github-username'],
+    maintainers: ['Vikati142'],
     handler,
     url: 'ebrun.com',
     description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
