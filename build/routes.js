@@ -90551,6 +90551,31 @@ export default {
         "location": "jwc.ts",
         "module": () => import('@/routes/sjtu/jwc.ts')
       },
+      "/seiee/icisee/:cat": {
+        "path": "/seiee/icisee/:cat",
+        "categories": [
+          "university"
+        ],
+        "example": "/sjtu/seiee/icisee/news",
+        "parameters": {
+          "cat": "子类别"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [],
+        "name": "集成电路学院（信息与电子工程学院）",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "location": "seiee/icisee.ts",
+        "module": () => import('@/routes/sjtu/seiee/icisee.ts')
+      },
       "/seiee/:path/:catID?/:searchCatCode?": {
         "path": "/seiee/:path/:catID?/:searchCatCode?",
         "categories": [
