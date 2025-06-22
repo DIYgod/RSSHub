@@ -63919,6 +63919,78 @@
     "apiRoutes": {},
     "lang": "en"
   },
+  "makerworld": {
+    "routes": {
+      "/contests": {
+        "path": "/contests",
+        "categories": [
+          "design"
+        ],
+        "example": "/makerworld/contests",
+        "name": "Contests",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "makerworld.com/:lang/contests"
+            ]
+          }
+        ],
+        "location": "contest.ts",
+        "module": "() => import('@/routes/makerworld/contest.ts')"
+      },
+      "/trending": {
+        "path": "/trending",
+        "categories": [
+          "design"
+        ],
+        "example": "/makerworld/trending",
+        "name": "Trending Models",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "makerworld.com/:lang"
+            ]
+          }
+        ],
+        "location": "trending.ts",
+        "module": "() => import('@/routes/makerworld/trending.ts')"
+      },
+      "/user/:handle/upload": {
+        "path": "/user/:handle/upload",
+        "categories": [
+          "design"
+        ],
+        "example": "/makerworld/@Wcad00/upload",
+        "parameters": {
+          "handle": "User handle"
+        },
+        "name": "User Uploads",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "radar": [
+          {
+            "source": [
+              "makerworld.com/:lang/:handle/upload",
+              "makerworld.com/:lang/:handle"
+            ]
+          }
+        ],
+        "location": "user-upload.ts",
+        "module": "() => import('@/routes/makerworld/user-upload.ts')"
+      }
+    },
+    "name": "MakerWorld",
+    "apiRoutes": {},
+    "url": "makerworld.com",
+    "lang": "en"
+  },
   "malaysiakini": {
     "routes": {
       "/:lang/:category?": {
