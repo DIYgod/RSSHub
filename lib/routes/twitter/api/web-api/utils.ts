@@ -248,7 +248,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             return instructions.instructions;
         }
 
-        const instructions = data?.user?.result?.timeline?.timeline?.instructions || data?.user?.result?.timeline?.timeline_v2?.instructions;
+        const userResult = data?.user?.result;
+        const timeline = userResult?.timeline?.timeline || userResult?.timeline?.timeline_v2 || userResult?.timeline_v2?.timeline;
+        const instructions = timeline?.instructions;
         if (!instructions) {
             logger.debug(`twitter debug: instructions not found in data: ${JSON.stringify(data)}`);
         }
