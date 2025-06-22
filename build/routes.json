@@ -1063,7 +1063,8 @@
       "/:type/:keyword{.*}?": {
         "path": "/:type/:keyword{.*}?",
         "categories": [
-          "multimedia"
+          "multimedia",
+          "popular"
         ],
         "name": "通用",
         "maintainers": [
@@ -5771,8 +5772,7 @@
       "/category/:category": {
         "path": "/category/:category",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/aeon/category/philosophy",
         "parameters": {
@@ -6845,7 +6845,8 @@
         "example": "/aibase/news",
         "description": "获取 AI 资讯列表",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "features": {
           "requireConfig": false,
@@ -13311,7 +13312,8 @@
           "channel": "channel, default to `top stories`"
         },
         "categories": [
-          "traditional-media"
+          "traditional-media",
+          "popular"
         ],
         "description": "Provides a better reading experience (full text articles) over the official ones.\n\n    Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.\n\n    -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.",
         "location": "index.ts",
@@ -15576,8 +15578,7 @@
       "/announcement/:type/:lang?": {
         "path": "/announcement/:type/:lang?",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/bitget/announcement/all/zh-CN",
@@ -29154,7 +29155,8 @@
       "/blog": {
         "path": "/blog",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/deepmind/blog",
         "parameters": {},
@@ -31469,7 +31471,7 @@
           "5upernova-heng",
           "honue"
         ],
-        "description": "| 榜单 / 集合        | 路由                          |\n| ------------------ | ----------------------------- |\n| 实时热门书影音     | subject_real_time_hotest   |\n| 影院热映           | movie_showing                |\n| 实时热门电影       | movie_real_time_hotest     |\n| 实时热门电视       | tv_real_time_hotest        |\n| 一周口碑电影榜     | movie_weekly_best           |\n| 华语口碑剧集榜     | tv_chinese_best_weekly     |\n| 全球口碑剧集榜     | tv_global_best_weekly      |\n| 国内口碑综艺榜     | show_chinese_best_weekly   |\n| 国外口碑综艺榜     | show_global_best_weekly    |\n| 热播新剧国产剧     | tv_domestic                  |\n| 热播新剧欧美剧     | tv_american                  |\n| 热播新剧日剧       | tv_japanese                  |\n| 热播新剧韩剧       | tv_korean                    |\n| 热播新剧动画       | tv_animation                 |\n| 虚构类小说热门榜   | book_fiction_hot_weekly    |\n| 非虚构类小说热门榜 | book_nonfiction_hot_weekly |\n| 热门单曲榜         | music_single                 |\n| 华语新碟榜         | music_chinese                |\n| ...                | ...                           |\n\n| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0-10     | 0      |\n\n  用例：`/douban/list/tv_korean/playable=1&score=8`\n\n  > 上面的榜单 / 集合并没有列举完整。\n  >\n  > 如何找到榜单对应的路由参数：\n  > 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n  > 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)",
+        "description": "| 榜单 / 集合        | 路由                          |\n| ------------------ | ----------------------------- |\n| 实时热门书影音     | subject_real_time_hotest   |\n| 影院热映           | movie_showing                |\n| 实时热门电影       | movie_real_time_hotest     |\n| 实时热门电视       | tv_real_time_hotest        |\n| 一周口碑电影榜     | movie_weekly_best           |\n| 华语口碑剧集榜     | tv_chinese_best_weekly     |\n| 全球口碑剧集榜     | tv_global_best_weekly      |\n| 国内口碑综艺榜     | show_chinese_best_weekly   |\n| 国外口碑综艺榜     | show_global_best_weekly    |\n| 热播新剧国产剧     | tv_domestic                  |\n| 热播新剧欧美剧     | tv_american                  |\n| 热播新剧日剧       | tv_japanese                  |\n| 热播新剧韩剧       | tv_korean                    |\n| 热播新剧动画       | tv_animation                 |\n| 虚构类小说热门榜   | book_fiction_hot_weekly    |\n| 非虚构类小说热门榜 | book_nonfiction_hot_weekly |\n| 热门单曲榜         | music_single                 |\n| 华语新碟榜         | music_chinese                |\n| ...                | ...                           |\n\n| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0.0-10.0 | 0      |\n\n  用例：`/douban/list/tv_korean/playable=1&score=8`\n\n  > 上面的榜单 / 集合并没有列举完整。\n  >\n  > 如何找到榜单对应的路由参数：\n  > 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n  > 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)",
         "location": "other/list.ts",
         "module": "() => import('@/routes/douban/other/list.ts')"
       },
@@ -35182,8 +35184,7 @@
       "/express-news": {
         "path": "/express-news",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/fastbull/express-news",
@@ -40316,8 +40317,7 @@
       "/issue/:user/:repo/:state?/:labels?": {
         "path": "/issue/:user/:repo/:state?/:labels?",
         "categories": [
-          "programming",
-          "popular"
+          "programming"
         ],
         "view": 5,
         "example": "/github/issue/DIYgod/RSSHub/open",
@@ -41375,7 +41375,8 @@
       "/citations/:id": {
         "path": "/citations/:id",
         "categories": [
-          "journal"
+          "journal",
+          "popular"
         ],
         "example": "/google/citations/mlmE4JMAAAAJ",
         "parameters": {
@@ -55613,7 +55614,8 @@
       "/ranking/:type": {
         "path": "/ranking/:type",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/ithome/ranking/24h",
         "parameters": {
@@ -57478,8 +57480,7 @@
       "/lives/:category?": {
         "path": "/lives/:category?",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 5,
         "example": "/jinse/lives",
@@ -81224,7 +81225,8 @@
       "/av/:catid?": {
         "path": "/av/:catid?",
         "categories": [
-          "bbs"
+          "bbs",
+          "popular"
         ],
         "example": "/playno1/av",
         "parameters": {
@@ -90550,6 +90552,31 @@
         "description": "| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 | 面向学生的通知 |\n| -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |\n| news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       | students  |",
         "location": "jwc.ts",
         "module": "() => import('@/routes/sjtu/jwc.ts')"
+      },
+      "/seiee/icisee/:cat": {
+        "path": "/seiee/icisee/:cat",
+        "categories": [
+          "university"
+        ],
+        "example": "/sjtu/seiee/icisee/news",
+        "parameters": {
+          "cat": "子类别"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [],
+        "name": "集成电路学院（信息与电子工程学院）",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "location": "seiee/icisee.ts",
+        "module": "() => import('@/routes/sjtu/seiee/icisee.ts')"
       },
       "/seiee/:path/:catID?/:searchCatCode?": {
         "path": "/seiee/:path/:catID?/:searchCatCode?",
@@ -100748,8 +100775,7 @@
       "/:channel?/:original?": {
         "path": "/:channel?/:original?",
         "categories": [
-          "finance",
-          "popular"
+          "finance"
         ],
         "view": 0,
         "example": "/theblockbeats/newsflash",
@@ -101792,8 +101818,7 @@
       "/news/:type?": {
         "path": "/news/:type?",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/timednews/news",
         "parameters": {
@@ -112956,7 +112981,8 @@
       "/post/popular_recent/:period?": {
         "path": "/post/popular_recent/:period?",
         "categories": [
-          "picture"
+          "picture",
+          "popular"
         ],
         "view": 2,
         "example": "/yande/post/popular_recent/1d",
@@ -114612,8 +114638,7 @@
       "/today": {
         "path": "/today",
         "categories": [
-          "multimedia",
-          "popular"
+          "multimedia"
         ],
         "view": 5,
         "example": "/yyets/today",
