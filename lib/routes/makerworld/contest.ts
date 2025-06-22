@@ -42,7 +42,7 @@ async function handler() {
     ];
 
     return {
-        title: `Contest - MakerWorld`,
+        title: 'Contest - MakerWorld',
         description: 'Join the contest to showcase your creativity and win substantial rewards',
         link: `${baseUrl}/en/contests`,
         image: `${baseUrl}/favicon_new.png`,
