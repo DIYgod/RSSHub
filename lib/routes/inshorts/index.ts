@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/:type?',
     categories: ['new-media'],
     example: '/inshorts/technology',
-    parameters: { type: '新闻类别，如：technology、world' },
+    parameters: { type: '新闻类别, 默认值为technology，可选值如：technology、world等, 详见:https://inshorts.com/en/read/' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -29,7 +29,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: currentUrl,
-        responseType: 'buffer',
     });
 
     const data = JSON.parse(response.data);
@@ -46,7 +45,7 @@ async function handler(ctx) {
 
     return {
         title: `Inshorts-${type}`,
-        link: currentUrl,
+        link: 'https://inshorts.com/en/read/${type}',
         item: items,
     };
 }
