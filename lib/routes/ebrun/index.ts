@@ -1,5 +1,4 @@
 import type { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -113,7 +112,7 @@ async function handler() {
                 // 如果没有找到内容，使用标题作为描述，否则截取摘要
                 description = (!description || description.length < 50)
                     ? item.title
-                    : description.substring(0, 300) + (description.length > 300 ? '...' : '');
+                    : description.slice(0, 300) + (description.length > 300 ? '...' : '');
                 // 尝试提取更准确的发布时间
                 const timeSelectors = [
                     '[class*="time"]',
@@ -137,8 +136,8 @@ async function handler() {
                     ...item,
                     description
                 };
-            } catch (error) {
-                console.warn(`Failed to fetch article content for ${item.link}:`, error);
+            } catch {
+                // Failed to fetch article content, return original item
                 return item;
             }
         })

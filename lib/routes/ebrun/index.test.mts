@@ -48,7 +48,7 @@ describe('ebrun', () => {
                 // 验证日期格式
                 if (firstItem.pubDate) {
                     expect(new Date(firstItem.pubDate)).toBeInstanceOf(Date);
-                    expect(isNaN(new Date(firstItem.pubDate).getTime())).toBe(false);
+                    expect(Number.isNaN(new Date(firstItem.pubDate).getTime())).toBe(false);
                 }
             }
         }
