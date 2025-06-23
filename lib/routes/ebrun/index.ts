@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Route, Data } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +30,7 @@ export const route: Route = {
     description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://www.ebrun.com';
 
     // 获取首页内容
@@ -41,7 +41,12 @@ async function handler() {
     });
 
     const $ = load(response.data);
-    const items = [];
+    const items: Array<{
+        title: string;
+        link: string;
+        pubDate: Date;
+        description: string;
+    }> = [];
 
     // 查找文章链接
     $('a[href]').each((_, elem) => {
@@ -147,7 +152,7 @@ async function handler() {
         title: '亿邦动力 - 电商知识服务平台',
         link: baseUrl,
         description: '亿邦动力最新电商资讯、跨境电商、产业互联网等内容',
-        language: 'zh-CN',
+        language: 'zh-cn' as const,
         item: detailedItems
     };
 }
