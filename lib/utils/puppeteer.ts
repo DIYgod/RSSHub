@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import puppeteer, { Browser, Page } from 'puppeteer';
+import puppeteer, { Browser, Page } from 'rebrowser-puppeteer';
 import logger from './logger';
 import proxy from './proxy';
 import { anonymizeProxy } from 'proxy-chain';
