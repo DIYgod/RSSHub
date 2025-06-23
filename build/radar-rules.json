@@ -9893,6 +9893,19 @@
       }
     ]
   },
+  "chocolatey.org": {
+    "_name": "Chocolatey",
+    "community": [
+      {
+        "title": "Package",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/packages"
+        ],
+        "target": "/chocolateyparams=>{const id=params.id;return`/chocolatey/package${id?`/${id}`:\"\"}`}"
+      }
+    ]
+  },
   "chongbuluo.com": {
     "_name": "虫部落",
     "www": [

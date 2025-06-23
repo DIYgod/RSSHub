@@ -22830,6 +22830,67 @@
       "name": "中国国家博物馆"
     }
   },
+  "chocolatey": {
+    "routes": {
+      "/packages/:id": {
+        "path": "/packages/:id",
+        "name": "Package",
+        "url": "community.chocolatey.org",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/chocolatey/packages/microsoft-edge",
+        "parameters": {
+          "id": {
+            "description": "Package ID"
+          }
+        },
+        "categories": [
+          "program-update"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "community.chocolatey.org/packages"
+            ]
+          }
+        ],
+        "view": 5,
+        "zh": {
+          "path": "/packages/:id",
+          "name": "程序包",
+          "url": "community.chocolatey.org",
+          "maintainers": [
+            "nczitzk"
+          ],
+          "example": "/chocolatey/package/microsoft-edge",
+          "parameters": {
+            "id": {
+              "description": "程序包 ID"
+            }
+          }
+        },
+        "location": "packages.ts",
+        "module": "() => import('@/routes/chocolatey/packages.ts')"
+      }
+    },
+    "name": "Chocolatey",
+    "url": "chocolatey.org",
+    "categories": [
+      "program-update"
+    ],
+    "description": "",
+    "lang": "en"
+  },
   "chongbuluo": {
     "routes": {
       "/newthread": {
