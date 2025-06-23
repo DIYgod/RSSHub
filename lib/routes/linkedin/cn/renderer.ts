@@ -75,7 +75,7 @@ class Ucs2Text {
             ? this.codePoints
                   .map((a) => {
                       let b = '';
-                      return 65535 < a && ((b += String.fromCharCode((((a -= 65536) >>> 10) & 1023) | 55296)), (a = 1023 & (56320 | a))), b + String.fromCharCode(a);
+                      return (65535 < a && ((b += String.fromCharCode((((a -= 65536) >>> 10) & 1023) | 55296)), (a = 1023 & (56320 | a))), b + String.fromCharCode(a));
                   })
                   .join('')
             : this.string;
