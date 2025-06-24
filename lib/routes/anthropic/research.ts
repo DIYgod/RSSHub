@@ -66,40 +66,16 @@ async function handler() {
             };
         });
 
-    const posts: { title: string; link: string; pubDate: Date }[] = [];
-
-    for (const d of fd) {
-        if (!Array.isArray(d.data)) {
-            continue;
-        }
-        for (const item of d.data) {
-            if (!item?.page?.sections) {
-                continue;
-            }
-            for (const section of item.page.sections) {
-                if (!section?.tabPages) {
-                    continue;
-                }
-                for (const tabPage of section.tabPages) {
-                    if (tabPage?.label !== 'Overview') {
-                        continue;
-                    }
-                    for (const ovSection of tabPage.sections) {
-                        if (ovSection?.title !== 'Publications') {
-                            continue;
-                        }
-                        for (const post of ovSection.posts) {
-                            posts.push({
-                                title: post.title,
-                                link: `https://www.anthropic.com/research/${post.slug.current}`,
-                                pubDate: parseDate(post.publishedOn),
-                            });
-                        }
-                    }
-                }
-            }
-        }
-    }
+    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
+    const tabPages = sections.flatMap((section) => section?.tabPages ?? []).filter((tabPage) => tabPage?.label === 'Overview');
+    const publicationSections = tabPages.flatMap((tabPage) => tabPage.sections).filter((section) => section?.title === 'Publications');
+    const posts = publicationSections
+        .flatMap((section) => section?.posts ?? [])
+        .map((post) => ({
+            title: post.title,
+            link: `https://www.anthropic.com/research/${post.slug.current}`,
+            pubDate: parseDate(post.publishedOn),
+        }));
 
     const items = await pMap(
         posts,
