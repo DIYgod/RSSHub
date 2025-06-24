@@ -7,8 +7,8 @@ export const route: Route = {
     example: '/njupco/news',
     radar: [
         {
-            source: ['http://www.njupco.com/'],
-        }
+            source: ['www.njupco.com'],
+        },
     ],
     name: '南京大学出版社',
     maintainers: ['ArtificialPigment'],

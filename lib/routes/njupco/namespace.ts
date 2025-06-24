@@ -1,7 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '南京大学出版社',
+    name: 'njupco',
     url: 'www.njupco.com',
-    lang: 'zh-CN',
+    zh: {
+        name: '南京大学出版社',
+    },
 };
