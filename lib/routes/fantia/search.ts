@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/fantia/search/posts/all/daily',
     parameters: {

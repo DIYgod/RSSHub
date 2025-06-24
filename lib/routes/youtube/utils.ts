@@ -1,46 +1,8 @@
 import { google } from 'googleapis';
-const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-
-let count = 0;
-const youtube = {};
-if (config.youtube && config.youtube.key) {
-    const keys = config.youtube.key.split(',');
-
-    for (const [index, key] of keys.entries()) {
-        if (key) {
-            youtube[index] = google.youtube({
-                version: 'v3',
-                auth: key,
-            });
-            count = index + 1;
-        }
-    }
-}
-
-let index = -1;
-const exec = async (func) => {
-    let result;
-    for (let i = 0; i < count; i++) {
-        index++;
-        try {
-            // eslint-disable-next-line no-await-in-loop
-            result = await func(youtube[index % count]);
-            break;
-        } catch {
-            // console.error(error);
-        }
-    }
-    return result;
-};
-
-let youtubeOAuth2Client;
-if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && config.youtube.refreshToken) {
-    youtubeOAuth2Client = new OAuth2(config.youtube.clientId, config.youtube.clientSecret, 'https://developers.google.com/oauthplayground');
-    youtubeOAuth2Client.setCredentials({ refresh_token: config.youtube.refreshToken });
-}
+import { youtubeOAuth2Client, exec } from './api/google';
 
 export const getPlaylistItems = (id, part, cache) =>
     cache.tryGet(
@@ -88,16 +50,16 @@ export const getChannelWithUsername = (username, part, cache) =>
         );
         return res;
     });
-// not in use
-// export const getVideoAuthor = async (id, part) => {
-//     const res = await exec((youtube) =>
-//         youtube.videos.list({
-//             part,
-//             id,
-//         })
-//     );
-//     return res;
-// }
+export const getVideos = (id, part, cache) =>
+    cache.tryGet(`youtube:getVideos:${id}`, async () => {
+        const res = await exec((youtube) =>
+            youtube.videos.list({
+                part,
+                id,
+            })
+        );
+        return res;
+    });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
 export const formatDescription = (description) => description.replaceAll(/\r\n|\r|\n/g, '<br>');
 export const renderDescription = (embed, videoId, img, description) =>
@@ -131,7 +93,9 @@ export async function getSubscriptionsRecusive(part, nextPageToken?) {
     // recursively get next page
     if (res.data.nextPageToken) {
         const next = await getSubscriptionsRecusive(part, res.data.nextPageToken);
-        res.data.items = [...res.data.items, ...next.data.items];
+        if (next.data.items) {
+            res.data.items = [...(res.data.items || []), ...next.data.items];
+        }
     }
     return res;
 }
@@ -167,11 +131,23 @@ export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): st
     return id;
 };
 
-const youtubeUtils = {
+export const callApi = async <T>({ googleApi, youtubeiApi, params }: { googleApi: (params: any) => Promise<T>; youtubeiApi: (params: any) => Promise<T>; params: any }): Promise<T> => {
+    if (config.youtube?.key) {
+        try {
+            return await googleApi(params);
+        } catch {
+            return await youtubeiApi(params);
+        }
+    }
+    return await youtubeiApi(params);
+};
+
+export default {
     getPlaylistItems,
     getPlaylist,
     getChannelWithId,
     getChannelWithUsername,
+    getVideos,
     getThumbnail,
     formatDescription,
     renderDescription,
@@ -182,4 +158,3 @@ const youtubeUtils = {
     getVideoUrl,
     getPlaylistWithShortsFilter,
 };
-export default youtubeUtils;

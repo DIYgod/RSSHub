@@ -6,7 +6,7 @@ import { baseUrl, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/agirls/topic/AppleWatch',
     parameters: { topic: '精选主题，可通过下方精选主题列表获得' },
     features: {

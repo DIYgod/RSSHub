@@ -1,10 +1,13 @@
 import { Route } from '@/types';
 
-import ofetch from '@/utils/ofetch';
+// import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { config } from '@/config';
+// import { config } from '@/config';
+import puppeteer from '@/utils/puppeteer';
+
+const urlPath = 'dm514/new';
 
 export const route: Route = {
     path: '/new',
@@ -12,7 +15,7 @@ export const route: Route = {
     example: '/missav/new',
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -20,10 +23,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['missav.ws/dm397/new', 'missav.ws/new', 'missav.ws/'],
+            source: [`missav.ws/${urlPath}`, 'missav.ws/new', 'missav.ws/'],
         },
         {
-            source: ['missav.ai/dm397/new', 'missav.ai/new', 'missav.ai/'],
+            source: [`missav.ai/${urlPath}`, 'missav.ai/new', 'missav.ai/'],
         },
     ],
     name: '最近更新',
@@ -34,11 +37,26 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://missav.ws';
-    const response = await ofetch(`${baseUrl}/dm397/new`, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
+    const url = `${baseUrl}/${urlPath}`;
+
+    const browser = await puppeteer({ stealth: true });
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
     });
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.evaluate(() => document.documentElement.innerHTML);
+    await browser.close();
+
+    // const response = await ofetch(`${baseUrl}/dm397/new`, {
+    //     headers: {
+    //         'User-Agent': config.trueUA,
+    //     },
+    // });
+
     const $ = cheerio.load(response);
 
     const items = $('.grid .group')

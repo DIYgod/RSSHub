@@ -2,7 +2,7 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 
@@ -126,18 +126,21 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
         author: string;
         guid: string;
         pubDate: Date;
+        updated: Date;
     }> = [];
     const promises = notes.flatMap((note) =>
         note.map(async ({ noteCard, id }) => {
             const link = `${urlPrex}/${id}`;
-            const { title, description, pubDate } = await getFullNote(link, displayLivePhoto);
+            const guid = `${urlPrex}/${noteCard.noteId}`;
+            const { title, description, pubDate, updated } = await getFullNote(link, displayLivePhoto);
             return {
                 title,
                 link,
                 description,
                 author: noteCard.user.nickName,
-                guid: noteCard.noteId,
+                guid,
                 pubDate,
+                updated,
             };
         })
     );
@@ -159,7 +162,8 @@ async function getFullNote(link, displayLivePhoto) {
         desc = desc.replaceAll(/\[.*?\]/g, '');
         desc = desc.replaceAll(/#(.*?)#/g, '#$1');
         desc = desc.replaceAll('\n', '<br>');
-        const pubDate = new Date(note.time);
+        const pubDate = parseDate(note.time, 'x');
+        const updated = parseDate(note.lastUpdateTime, 'x');
 
         let mediaContent = '';
         if (note.type === 'video') {
@@ -221,17 +225,19 @@ async function getFullNote(link, displayLivePhoto) {
                 .join('<br>');
         }
 
-        const description = `${mediaContent}<br>${title}<br>${desc}`;
+        const description = `${mediaContent}<br>${desc}`;
         return {
-            title,
+            title: title || note.desc,
             description,
             pubDate,
+            updated,
         };
-    })) as Promise<{ title: string; description: string; pubDate: Date }>;
+    })) as Promise<{ title: string; description: string; pubDate: Date; updated: Date }>;
     return data;
 }
 
-async function getUserWithCookie(url: string, cookie: string) {
+async function getUserWithCookie(url: string) {
+    const cookie = config.xiaohongshu.cookie;
     const res = await ofetch(url, {
         headers: getHeaders(cookie),
     });
@@ -263,4 +269,12 @@ function extractInitialState($) {
     return script;
 }
 
-export { getUser, getBoard, formatText, formatNote, renderNotesFulltext, getFullNote, getUserWithCookie };
+async function checkCookie() {
+    const cookie = config.xiaohongshu.cookie;
+    const res = await ofetch('https://edith.xiaohongshu.com/api/sns/web/v2/user/me', {
+        headers: getHeaders(cookie),
+    });
+    return res.code === 0 && !!res.data.user_id;
+}
+
+export { getUser, getBoard, formatText, formatNote, renderNotesFulltext, getFullNote, getUserWithCookie, checkCookie };

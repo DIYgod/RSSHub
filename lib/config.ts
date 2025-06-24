@@ -37,6 +37,7 @@ export type Config = {
     };
     // proxy
     proxyUri?: string;
+    proxyUris?: string[];
     proxy: {
         protocol?: string;
         host?: string;
@@ -44,6 +45,8 @@ export type Config = {
         auth?: string;
         url_regex: string;
         strategy: 'on_retry' | 'all';
+        failoverTimeout?: number;
+        healthCheckInterval?: number;
     };
     pacUri?: string;
     pacScript?: string;
@@ -226,6 +229,13 @@ export type Config = {
         password?: string;
         refreshToken?: string;
     };
+    mangadex: {
+        username?: string;
+        password?: string;
+        clientId?: string;
+        clientSecret?: string;
+        refreshToken?: string;
+    };
     manhuagui: {
         cookie?: string;
     };
@@ -247,6 +257,10 @@ export type Config = {
     };
     misskey: {
         accessToken?: string;
+    };
+    mixi2: {
+        authToken?: string;
+        authKey?: string;
     };
     mox: {
         cookie: string;
@@ -401,6 +415,9 @@ export type Config = {
     zsxq: {
         accessToken?: string;
     };
+    smzdm: {
+        cookie?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -446,7 +463,7 @@ const calculateValue = () => {
     const _value = {
         // app config
         disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
-        enableCluster: envs.ENABLE_CLUSTER,
+        enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
         puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
@@ -477,6 +494,11 @@ const calculateValue = () => {
         },
         // proxy
         proxyUri: envs.PROXY_URI,
+        proxyUris: envs.PROXY_URIS
+            ? envs.PROXY_URIS.split(',')
+                  .map((uri) => uri.trim())
+                  .filter(Boolean)
+            : undefined,
         proxy: {
             protocol: envs.PROXY_PROTOCOL,
             host: envs.PROXY_HOST,
@@ -484,6 +506,8 @@ const calculateValue = () => {
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
             strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
+            failoverTimeout: toInt(envs.PROXY_FAILOVER_TIMEOUT, 5000),
+            healthCheckInterval: toInt(envs.PROXY_HEALTH_CHECK_INTERVAL, 60000),
         },
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
@@ -667,6 +691,13 @@ const calculateValue = () => {
             password: envs.MALAYSIAKINI_PASSWORD,
             refreshToken: envs.MALAYSIAKINI_REFRESHTOKEN,
         },
+        mangadex: {
+            username: envs.MANGADEX_USERNAME, // required when refresh-token is not set
+            password: envs.MANGADEX_PASSWORD, // required when refresh-token is not set
+            clientId: envs.MANGADEX_CLIENT_ID,
+            clientSecret: envs.MANGADEX_CLIENT_SECRET,
+            refreshToken: envs.MANGADEX_REFRESH_TOKEN,
+        },
         manhuagui: {
             cookie: envs.MHGUI_COOKIE,
         },
@@ -688,6 +719,10 @@ const calculateValue = () => {
         },
         misskey: {
             accessToken: envs.MISSKEY_ACCESS_TOKEN,
+        },
+        mixi2: {
+            authToken: envs.MIXI2_AUTH_TOKEN,
+            authKey: envs.MIXI2_AUTH_KEY,
         },
         mox: {
             cookie: envs.MOX_COOKIE,
@@ -841,6 +876,9 @@ const calculateValue = () => {
         },
         zsxq: {
             accessToken: envs.ZSXQ_ACCESS_TOKEN,
+        },
+        smzdm: {
+            cookie: envs.SMZDM_COOKIE,
         },
     };
 

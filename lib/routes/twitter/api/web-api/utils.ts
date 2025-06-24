@@ -203,7 +203,7 @@ export const twitterGot = async (
                             }
                         }
                         logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
-                        await cache.set(`${lockPrefix}${auth.token}`, '1', 86400);
+                        await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
                     }
                 } else {
                     logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
@@ -248,7 +248,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             return instructions.instructions;
         }
 
-        const instructions = data?.user?.result?.timeline_v2?.timeline?.instructions;
+        const userResult = data?.user?.result;
+        const timeline = userResult?.timeline?.timeline || userResult?.timeline?.timeline_v2 || userResult?.timeline_v2?.timeline;
+        const instructions = timeline?.instructions;
         if (!instructions) {
             logger.debug(`twitter debug: instructions not found in data: ${JSON.stringify(data)}`);
         }
@@ -297,11 +299,31 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         continue;
                     }
                     t.legacy.user = t.core?.user_result?.result?.legacy || t.core?.user_results?.result?.legacy;
+                    // Add name and screen_name from core to maintain compatibility
+                    if (t.legacy.user && t.core?.user_results?.result?.core) {
+                        const coreUser = t.core.user_results.result.core;
+                        if (coreUser.name) {
+                            t.legacy.user.name = coreUser.name;
+                        }
+                        if (coreUser.screen_name) {
+                            t.legacy.user.screen_name = coreUser.screen_name;
+                        }
+                    }
                     t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
                     const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
                     if (quote) {
                         t.legacy.quoted_status = quote.legacy;
                         t.legacy.quoted_status.user = quote.core.user_result?.result?.legacy || quote.core.user_results?.result?.legacy;
+                        // Add name and screen_name from core for quoted status user
+                        if (t.legacy.quoted_status.user && quote.core?.user_results?.result?.core) {
+                            const quoteCoreUser = quote.core.user_results.result.core;
+                            if (quoteCoreUser.name) {
+                                t.legacy.quoted_status.user.name = quoteCoreUser.name;
+                            }
+                            if (quoteCoreUser.screen_name) {
+                                t.legacy.quoted_status.user.screen_name = quoteCoreUser.screen_name;
+                            }
+                        }
                     }
                     if (t.note_tweet) {
                         const tmp = t.note_tweet.note_tweet_results.result;

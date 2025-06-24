@@ -10,7 +10,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:topic?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/reuters/world/us',
     parameters: {
