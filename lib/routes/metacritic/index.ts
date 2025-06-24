@@ -21,7 +21,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.metacritic.com';
     const rootApiUrl = 'https://backend.metacritic.com';
-    const apiUrl = new URL('v1/xapi/finder/metacritic/web', rootApiUrl).href;
+    const apiUrl = new URL('finder/metacritic/web', rootApiUrl).href;
 
     const currentUrlObject = new URL(`/browse/${type}/all/all/all-time/${sort}/${filter ? `?${filter}` : ''}`, rootUrl);
     const currentUrlParams = currentUrlObject.searchParams;
