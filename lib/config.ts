@@ -37,6 +37,7 @@ export type Config = {
     };
     // proxy
     proxyUri?: string;
+    proxyUris?: string[];
     proxy: {
         protocol?: string;
         host?: string;
@@ -44,6 +45,8 @@ export type Config = {
         auth?: string;
         url_regex: string;
         strategy: 'on_retry' | 'all';
+        failoverTimeout?: number;
+        healthCheckInterval?: number;
     };
     pacUri?: string;
     pacScript?: string;
@@ -491,6 +494,11 @@ const calculateValue = () => {
         },
         // proxy
         proxyUri: envs.PROXY_URI,
+        proxyUris: envs.PROXY_URIS
+            ? envs.PROXY_URIS.split(',')
+                  .map((uri) => uri.trim())
+                  .filter(Boolean)
+            : undefined,
         proxy: {
             protocol: envs.PROXY_PROTOCOL,
             host: envs.PROXY_HOST,
@@ -498,6 +506,8 @@ const calculateValue = () => {
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
             strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
+            failoverTimeout: toInt(envs.PROXY_FAILOVER_TIMEOUT, 5000),
+            healthCheckInterval: toInt(envs.PROXY_HEALTH_CHECK_INTERVAL, 60000),
         },
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,

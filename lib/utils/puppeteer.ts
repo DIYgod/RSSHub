@@ -30,17 +30,18 @@ const outPuppeteer = async (
         insidePuppeteer.use(StealthPlugin());
     }
 
-    if (proxy.proxyUri && proxy.proxyObj.url_regex === '.*') {
-        if (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password) {
+    const currentProxy = proxy.getCurrentProxy();
+    if (currentProxy && proxy.proxyObj.url_regex === '.*') {
+        if (currentProxy.urlHandler?.username || currentProxy.urlHandler?.password) {
             // only proxies with authentication need to be anonymized
-            if (proxy.proxyUrlHandler.protocol === 'http:') {
-                options.args.push(`--proxy-server=${await anonymizeProxy(proxy.proxyUri)}`);
+            if (currentProxy.urlHandler.protocol === 'http:') {
+                options.args.push(`--proxy-server=${await anonymizeProxy(currentProxy.uri)}`);
             } else {
                 logger.warn('SOCKS/HTTPS proxy with authentication is not supported by puppeteer, continue without proxy');
             }
         } else {
             // Chromium cannot recognize socks5h and socks4a, so we need to trim their postfixes
-            options.args.push(`--proxy-server=${proxy.proxyUri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
+            options.args.push(`--proxy-server=${currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
         }
     }
     const browser = await (config.puppeteerWSEndpoint
@@ -101,11 +102,14 @@ export const getPuppeteerPage = async (
     }
 
     let hasProxy = false;
-    if (proxy.proxyUri && allowProxy) {
-        if (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password) {
+    let currentProxyState: any = null;
+    const currentProxy = proxy.getCurrentProxy();
+    if (currentProxy && allowProxy) {
+        currentProxyState = currentProxy;
+        if (currentProxy.urlHandler?.username || currentProxy.urlHandler?.password) {
             // only proxies with authentication need to be anonymized
-            if (proxy.proxyUrlHandler.protocol === 'http:') {
-                const urlObj = new URL(proxy.proxyUri);
+            if (currentProxy.urlHandler.protocol === 'http:') {
+                const urlObj = new URL(currentProxy.uri);
                 urlObj.username = '';
                 urlObj.password = '';
                 options.args.push(`--proxy-server=${urlObj.toString().replace(/\/$/, '')}`);
@@ -115,7 +119,7 @@ export const getPuppeteerPage = async (
             }
         } else {
             // Chromium cannot recognize socks5h and socks4a, so we need to trim their postfixes
-            options.args.push(`--proxy-server=${proxy.proxyUri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
+            options.args.push(`--proxy-server=${currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
             hasProxy = true;
         }
     }
@@ -145,14 +149,14 @@ export const getPuppeteerPage = async (
 
     const page = await browser.newPage();
 
-    if (hasProxy) {
-        logger.debug(`Proxying request in puppeteer: ${url}`);
+    if (hasProxy && currentProxyState) {
+        logger.debug(`Proxying request in puppeteer via ${currentProxyState.uri}: ${url}`);
     }
 
-    if (hasProxy && (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password)) {
+    if (hasProxy && currentProxyState && (currentProxyState.urlHandler?.username || currentProxyState.urlHandler?.password)) {
         await page.authenticate({
-            username: proxy.proxyUrlHandler?.username,
-            password: proxy.proxyUrlHandler?.password,
+            username: currentProxyState.urlHandler?.username,
+            password: currentProxyState.urlHandler?.password,
         });
     }
 
@@ -161,7 +165,16 @@ export const getPuppeteerPage = async (
     }
 
     if (!instanceOptions.noGoto) {
-        await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
+        try {
+            await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
+        } catch (error) {
+            if (hasProxy && currentProxyState && proxy.multiProxy) {
+                logger.warn(`Puppeteer navigation failed with proxy ${currentProxyState.uri}, marking as failed: ${error}`);
+                proxy.markProxyFailed(currentProxyState.uri);
+                throw error;
+            }
+            throw error;
+        }
     }
 
     return {
