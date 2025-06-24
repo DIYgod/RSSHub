@@ -2000,6 +2000,9 @@
   "/deepin/threads/:type?": [
     "myml"
   ],
+  "/deepl/blog/:lang?": [
+    "nczitzk"
+  ],
   "/deeplearning/the-batch/:tag{.+}?": [
     "nczitzk",
     "juvenn",

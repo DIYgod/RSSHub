@@ -11827,6 +11827,171 @@
       }
     ]
   },
+  "deepl.com": {
+    "_name": "DeepL",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:lang/blog"
+        ],
+        "target": "/deeplparams=>{const lang=params.lang;return`/deepl/blog${lang?`/${lang}`:\"\"}`}"
+      },
+      {
+        "title": "Deutsch",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/de/blog"
+        ],
+        "target": "/deepl/blog/de"
+      },
+      {
+        "title": "English",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en/blog"
+        ],
+        "target": "/deepl/blog/en"
+      },
+      {
+        "title": "Español",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/es/blog"
+        ],
+        "target": "/deepl/blog/es"
+      },
+      {
+        "title": "日本語",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/ja/blog"
+        ],
+        "target": "/deepl/blog/ja"
+      },
+      {
+        "title": "Français",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/fr/blog"
+        ],
+        "target": "/deepl/blog/fr"
+      },
+      {
+        "title": "Italiano",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/it/blog"
+        ],
+        "target": "/deepl/blog/it"
+      },
+      {
+        "title": "Bahasa Indonesia",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/id/blog"
+        ],
+        "target": "/deepl/blog/id"
+      },
+      {
+        "title": "한국어",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/ko/blog"
+        ],
+        "target": "/deepl/blog/ko"
+      },
+      {
+        "title": "Nederlands",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/nl/blog"
+        ],
+        "target": "/deepl/blog/nl"
+      },
+      {
+        "title": "Čeština",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cs/blog"
+        ],
+        "target": "/deepl/blog/cs"
+      },
+      {
+        "title": "Svenska",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/sv/blog"
+        ],
+        "target": "/deepl/blog/sv"
+      },
+      {
+        "title": "Polski",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/pl/blog"
+        ],
+        "target": "/deepl/blog/pl"
+      },
+      {
+        "title": "Português (Brasil)",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/pt-BR/blog"
+        ],
+        "target": "/deepl/blog/pt-BR"
+      },
+      {
+        "title": "Português",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/pt-PT/blog"
+        ],
+        "target": "/deepl/blog/pt-PT"
+      },
+      {
+        "title": "Türkçe",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tr/blog"
+        ],
+        "target": "/deepl/blog/tr"
+      },
+      {
+        "title": "Русский",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/ru/blog"
+        ],
+        "target": "/deepl/blog/ru"
+      },
+      {
+        "title": "简体中文",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh/blog"
+        ],
+        "target": "/deepl/blog/zh"
+      },
+      {
+        "title": "Українська",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/uk/blog"
+        ],
+        "target": "/deepl/blog/uk"
+      },
+      {
+        "title": "العربية",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/ar/blog"
+        ],
+        "target": "/deepl/blog/ar"
+      }
+    ]
+  },
   "deeplearning.ai": {
     "_name": "DeepLearning.AI",
     "www": [
