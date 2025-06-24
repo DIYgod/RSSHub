@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,7 +7,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/knowledge/:topic?/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dedao/knowledge',
     parameters: { topic: '话题 id，可在对应话题页 URL 中找到', type: '分享类型，`true` 指精选，`false` 指最新，默认为精选' },
     features: {

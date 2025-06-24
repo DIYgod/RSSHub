@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import utils, { getVideoUrl } from './utils';
+import { parseDuration } from '@/utils/helpers';
 
 // https://www.bilibili.com/v/popular/rank/all
 
@@ -117,7 +118,7 @@ export const route: Route = {
     path: '/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?',
     name: '排行榜',
     maintainers: ['DIYgod', 'hyoban'],
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/ranking/0',
     parameters: {
@@ -223,6 +224,7 @@ async function handler(ctx) {
                       {
                           url: getVideoUrl(item.bvid),
                           mime_type: 'text/html',
+                          duration_in_seconds: parseDuration(item.duration),
                       },
                   ]
                 : undefined,

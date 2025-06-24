@@ -6,7 +6,7 @@ import { handleDescription } from './utils';
 
 export const route: Route = {
     path: '/tv/:id/seasons/:lang?',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Notifications,
     example: '/themoviedb/tv/70593/seasons/en-US',
     parameters: { id: 'TV show ID', lang: 'Language' },

@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
@@ -70,7 +68,7 @@ const categoryMap = [
  */
 export const route: Route = {
     path: '/search/:category?/:order?/:time?/:query?',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/notefolio/search/1/pick/all/life',
     parameters: {

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
@@ -43,7 +41,7 @@ async function handler(ctx) {
 
         out = data.data.data.results.map((item) => ({
             title: item.title,
-            description: item.contentHtml + art(path.join(__dirname, 'templates', 'attachment.art'), { attachments: item.resList }),
+            description: item.contentHtml + art(path.join(__dirname, 'templates/attachment.art'), { attachments: item.resList }),
             pubDate: parseDate(item.publishedTime, 'x'),
             link: item.url,
         }));

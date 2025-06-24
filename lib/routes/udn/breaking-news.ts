@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -55,7 +53,7 @@ async function handler(ctx) {
                 let result = await got(link);
                 // VIP article requires redirection
                 // e.g. https://udn.com/news/story/7331/6576320
-                const vip = result.data.match(/<script language=javascript>window\.location\.href="(https?:\/\/[^"]+")/);
+                const vip = result.data.match(/<script language=javascript>window\.location\.href="(https?:\/\/[^"]+)"/);
                 if (vip) {
                     result = await got(vip[1]);
                 }
@@ -120,7 +118,7 @@ const getLinkName = async (link) => {
         const result = await got(url);
         const $ = load(result.data);
         const data = $('.cate-list__subheader a')
-            .get()
+            .toArray()
             .map((item) => {
                 item = $(item);
                 return [item.attr('href'), item.text().trim()];

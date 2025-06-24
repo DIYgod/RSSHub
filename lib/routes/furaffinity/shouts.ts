@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/shouts/:username',
     name: 'Shouts',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/shouts/fender',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: { username: 'Username, can find in userpage' },

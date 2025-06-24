@@ -34,19 +34,17 @@ async function handler(ctx) {
     const title = `FX-Markets ${pageTitle}`;
 
     const items = $('div#listings').children();
-    const articles = items
-        .map((i, el) => {
-            const $el = $(el);
-            const $titleEl = $el.find('h5 > a');
-            const articleURL = `https://www.fx-markets.com${$titleEl.attr('href')}`;
-            const articleTitle = $titleEl.attr('title');
-            return {
-                title: articleTitle,
-                link: articleURL,
-                pubDate: parseDate($el.find('time').text()),
-            };
-        })
-        .get();
+    const articles = items.toArray().map((el) => {
+        const $el = $(el);
+        const $titleEl = $el.find('h5 > a');
+        const articleURL = `https://www.fx-markets.com${$titleEl.attr('href')}`;
+        const articleTitle = $titleEl.attr('title');
+        return {
+            title: articleTitle,
+            link: articleURL,
+            pubDate: parseDate($el.find('time').text()),
+        };
+    });
 
     const result = await Promise.all(
         articles.map((item) =>
@@ -54,7 +52,7 @@ async function handler(ctx) {
                 const res = await got(item.link);
                 const doc = load(res.data);
                 // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
-                const dateScript = doc('script[type="application/ld+json"]').get()[0].children[0].data;
+                const dateScript = doc('script[type="application/ld+json"]').toArray()[0].children[0].data;
                 const re = /"datePublished": "(?<dateTimePub>.*)"/;
                 const dateStr = re.exec(dateScript).groups.dateTimePub;
                 const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');

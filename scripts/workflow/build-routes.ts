@@ -8,6 +8,18 @@ import toSource from 'tosource';
 import { getCurrentPath } from '../../lib/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
+const foloAnalysis = await (
+    await fetch('https://api.follow.is/discover/rsshub-analytics', {
+        headers: {
+            'user-agent': 'RSSHub',
+        },
+    })
+).json();
+const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
+    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
+    .slice(0, 150);
+
 const maintainers: Record<string, string[]> = {};
 const radar: {
     [domain: string]: {
@@ -33,6 +45,9 @@ for (const namespace in namespaces) {
         const realPath = `/${namespace}${path}`;
         const data = namespaces[namespace].routes[path];
         const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
+        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
+            categories.push('popular');
+        }
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
@@ -64,6 +79,11 @@ for (const namespace in namespaces) {
                 }
             }
         }
+        data.module = `() => import('@/routes/${namespace}/${data.location}')`;
+    }
+    for (const path in namespaces[namespace].apiRoutes) {
+        const data = namespaces[namespace].apiRoutes[path];
+        data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
 }
 
@@ -71,3 +91,4 @@ fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JS
 fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
 fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
 fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
+fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));

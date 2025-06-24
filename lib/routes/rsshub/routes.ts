@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/routes/:lang?',
-    categories: ['program-update', 'popular'],
+    categories: ['program-update'],
     view: ViewType.Notifications,
     example: '/rsshub/routes/en',
     parameters: {
@@ -97,7 +97,7 @@ async function handler(ctx) {
             return {
                 title: `${h2Title.text().trim()} - ${h3Title.text().trim()}`,
                 description: $item.html()?.replaceAll(/<!--.*?-->/g, ''),
-                link: `https://docs.rsshub.app/${lang}routes/${type}#${encodeURIComponent(h2Title.find('.header-anchor').attr('href') && h3Title.find('.header-anchor').attr('href')?.substring(1))}`,
+                link: `https://docs.rsshub.app/${lang}routes/${type}#${encodeURIComponent(h2Title.find('.header-anchor').attr('href') && h3Title.find('.header-anchor').attr('href')?.slice(1))}`,
                 guid: $item.attr('id'),
             };
         }),

@@ -1,8 +1,8 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type?',
@@ -23,6 +23,11 @@ export const route: Route = {
     description: `| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |
 | -------- | -------- | -------- | -------- | -------- | ------- | ---------- | -------- |
 | 1        | 2        | 3        | 5        | 6        | 7       | 8          | 9        |`,
+    radar: [
+        {
+            source: ['www.crac.org.cn/News/*'],
+        },
+    ],
 };
 
 async function handler(ctx) {
@@ -37,14 +42,14 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('div.InCont_r_d_cont > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: new URL(item.find('a').attr('href'), baseUrl).href,
                 pubDate: parseDate(item.find('span.cont_d').text(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     await Promise.all(
         list.map((item) =>

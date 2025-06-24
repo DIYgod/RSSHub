@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -102,14 +100,14 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('h3.in_news_u_t a, h4.hkej_hl-news_topic_2014 a, div.hkej_toc_listingAll_news2_2014 h3 a, div.hkej_toc_cat_top_detail h3 a, div.allNews div.news h1 a, div#div_listingAll div.news2 h3 a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.text().trim(),
-                link: baseUrl + item.attr('href').substring(0, item.attr('href').lastIndexOf('/')),
+                link: baseUrl + item.attr('href').slice(0, item.attr('href').lastIndexOf('/')),
             };
-        })
-        .get();
+        });
 
     const renderArticleImg = (pics) =>
         art(path.join(__dirname, 'templates/articleImg.art'), {
@@ -144,15 +142,13 @@ async function handler(ctx) {
                     content('.hkej_sub_ex_article_nonsubscriber_ad_2014').remove();
 
                     // fix article image
-                    const articleImg = (content('div.hkej_detail_thumb_2014 td a').length ? content('div.hkej_detail_thumb_2014 td a') : content('div.thumb td a'))
-                        .map((_, e) => {
-                            e = $(e);
-                            return {
-                                href: e.attr('href'),
-                                title: e.attr('title'),
-                            };
-                        })
-                        .get();
+                    const articleImg = (content('div.hkej_detail_thumb_2014 td a').length ? content('div.hkej_detail_thumb_2014 td a') : content('div.thumb td a')).toArray().map((e) => {
+                        e = $(e);
+                        return {
+                            href: e.attr('href'),
+                            title: e.attr('title'),
+                        };
+                    });
 
                     const pubDate = content('p.info span.date').text().trim();
 

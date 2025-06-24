@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
@@ -29,7 +27,7 @@ export const route: Route = {
     ],
     name: 'Works',
     maintainers: ['MegrezZhu', 'CoderTonyChan', 'nczitzk', 'Felix2yu'],
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     handler,
     url: 'www.javbus.com',

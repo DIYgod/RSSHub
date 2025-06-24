@@ -15,9 +15,7 @@
                 "eamodio.gitlens",
                 "EditorConfig.EditorConfig",
                 "esbenp.prettier-vscode",
-                "deepscan.vscode-deepscan",
                 "SonarSource.sonarlint-vscode",
-                "unifiedjs.vscode-mdx",
                 "VASubasRaj.flashpost", // Thunder Client is paywalled in WSL/Codespaces/SSH > 2.30.0
                 "ZihanLi.at-helper"
             ]

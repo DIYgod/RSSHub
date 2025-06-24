@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
@@ -12,7 +10,7 @@ const baseUrl = 'https://nautil.us';
 
 export const route: Route = {
     path: '/topic/:tid',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/nautil/topic/arts',
     parameters: { tid: 'topic' },
     features: {

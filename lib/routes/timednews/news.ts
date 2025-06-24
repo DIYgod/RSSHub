@@ -55,7 +55,7 @@ const PATH_LIST = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/timednews/news',
     parameters: { type: '子分类，见下表，默认为全部' },
     features: {
@@ -87,14 +87,14 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     const list = $('#content li')
-        .map((i, e) => {
+        .toArray()
+        .map((e) => {
             const c = load(e);
             return {
                 title: c('a').text().trim(),
                 link: c('a').attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

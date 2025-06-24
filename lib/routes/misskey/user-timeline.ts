@@ -3,12 +3,12 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { Data, Route, ViewType } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import utils from './utils';
 
 export const route: Route = {
     path: '/users/notes/:username/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/misskey/users/notes/support@misskey.io',
     parameters: {

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
@@ -11,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/radios/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/gcores/radios/45',
     parameters: { category: '分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45' },
     features: {
@@ -46,17 +44,17 @@ async function handler(ctx) {
 
     const api = getApi(category);
     api.searchParams.set('include', 'media');
-    api.searchParams.set('page[limit]', limit);
+    api.searchParams.set('page[limit]', limit.toString());
     api.searchParams.set('sort', '-published-at');
     api.searchParams.set('filter[list-all]', '0');
     api.searchParams.set('filter[is-require-privilege]', '0');
     api.searchParams.set('fields[radios]', 'title,cover,published-at,duration,content,media');
     const { data, included } = await get(api);
 
-    const audios = included.reduce((result, media) => {
-        result[media.id] = media.attributes.audio;
-        return result;
-    }, {});
+    const audios = {};
+    for (const media of included) {
+        audios[media.id] = media.attributes.audio;
+    }
 
     const item = data.map((radio) => {
         const { id, attributes, relationships } = radio;

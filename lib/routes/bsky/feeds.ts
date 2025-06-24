@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
@@ -10,7 +8,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/profile/:handle/feed/:space/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bsky.app/profile/jaz.bsky.social/feed/cv:cat',
     parameters: {

@@ -28,7 +28,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     // 只获取第一页的搜索结果
     const searchLinks = $('.nomt > a')
-        .get()
+        .toArray()
         .map((a) => $(a).attr('href'));
     if (searchLinks.length === 0) {
         throw new Error('pianyuan 搜索失败');
@@ -43,7 +43,7 @@ async function handler(ctx) {
                 const res = await utils.request(link, cache);
                 const content = load(res.data);
                 content('.ico.ico_bt')
-                    .get()
+                    .toArray()
                     .map((a) => detailLinks.push($(a).attr('href')));
             });
             return single;

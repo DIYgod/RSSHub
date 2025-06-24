@@ -8,7 +8,7 @@ const endpoint = `${baseUrl}/wp-json`;
 
 export const route: Route = {
     path: '/cn/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/mckinsey/cn',
     parameters: {
@@ -53,7 +53,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '25' } = ctx.req.param();
-    if (isNaN(category)) {
+    if (Number.isNaN(category)) {
         categories.find((c) => c.slug === category);
     }
 

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -45,15 +43,15 @@ async function handler(ctx) {
     const title = $('div.z > a').last().text();
     const list = $('tbody > tr')
         .slice(0, 25)
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('td.title2').text(),
             link: new URL($(item).find('td.title2 > a').attr('href'), rootUrl).href,
             author: $(item).find('td.author').text(),
             pubDate: timezone(parseDate($(item).find('td.dateline').text(), 'YYYY-M-D HH:mm'), +8),
             category: $(item).find('td.forum').text(),
         }))
-        .filter((_, item) => item.title)
-        .get();
+        .filter((item) => item.title);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -64,7 +62,8 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
                 item.description = content('div.c_table')
-                    .map((_, item) =>
+                    .toArray()
+                    .map((item) =>
                         art(path.join(__dirname, 'templates/fornumtopic.art'), {
                             content: content(item)
                                 .find('td.t_f')
@@ -82,7 +81,6 @@ async function handler(ctx) {
                             author: content(item).find('a.xw1').text().trim(),
                         })
                     )
-                    .get()
                     .join('\n');
 
                 return item;

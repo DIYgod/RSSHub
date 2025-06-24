@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,7 +10,7 @@ const apiUrl = 'https://nwapi.nhk.jp';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/nhk/news/en',
     parameters: {

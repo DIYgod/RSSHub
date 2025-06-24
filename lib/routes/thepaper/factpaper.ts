@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -11,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/factpaper/:status?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepaper/factpaper',
     parameters: { status: '状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`' },
     features: {

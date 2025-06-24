@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -47,7 +45,8 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     const items = $('.lczj_box tbody tr')
-        .map((i, e) => {
+        .toArray()
+        .map((e, i) => {
             if (i < 2) {
                 return null;
             }
@@ -62,8 +61,7 @@ async function handler(ctx) {
                     time: c('td:nth-child(6)').text(),
                 }),
             };
-        })
-        .get();
+        });
     items.pop();
 
     const ret = {

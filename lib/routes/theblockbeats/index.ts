@@ -5,13 +5,10 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
-const apiBase = `https://api.${domain}`;
+const apiBase = `https://api.blockbeats.cn`;
 
 const render = (data) => {
     const html = art(path.join(__dirname, 'templates/description.art'), data);
@@ -41,7 +38,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:channel?/:original?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/theblockbeats/newsflash',
     parameters: {
@@ -65,7 +62,7 @@ export const route: Route = {
         },
     },
     name: '新闻快讯',
-    maintainers: ['Fatpandac', 'jameshih'],
+    maintainers: ['Fatpandac', 'jameshih', 'DIYgod'],
     handler,
     radar: [
         {

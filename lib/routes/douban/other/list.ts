@@ -1,11 +1,9 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { fallback, queryToInteger } from '@/utils/readable-social';
+import { fallback, queryToInteger, queryToFloat } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/list/:type?/:routeParams?',
@@ -54,7 +52,7 @@ export const route: Route = {
 | 额外参数 | 含义                   | 接受的值 | 默认值 |
 | -------- | ---------------------- | -------- | ------ |
 | playable | 仅看有可播放片源的影片 | 0/1      | 0      |
-| score    | 筛选评分               | 0-10     | 0      |
+| score    | 筛选评分               | 0.0-10.0 | 0      |
 
   用例：\`/douban/list/tv_korean/playable=1&score=8\`
 
@@ -69,7 +67,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'subject_real_time_hotest';
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const playable = fallback(undefined, queryToInteger(routeParams.playable), 0);
-    const score = fallback(undefined, queryToInteger(routeParams.score), 0);
+    const score = fallback(undefined, queryToFloat(routeParams.score), 0);
     let start = 0;
     const count = 50;
     let items = [];

@@ -6,9 +6,6 @@ import logger from '@/utils/logger';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     name: '漏洞',

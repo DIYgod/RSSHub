@@ -1,9 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { getFullText } from './utils';
 
 export const route: Route = {
     path: '/:id?',
@@ -53,29 +53,7 @@ async function handler(ctx) {
         pubDate: timezone(parseDate(item.CreateTime), +8),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(detailResponse.data);
-                content('div.SubscriptionInner').remove();
-                const topImage = content('.fullPic').html();
-
-                item.description = (topImage === null ? '' : topImage) + content('.paragraph').eq(0).html();
-                item.category = [
-                    ...content("meta[property='article:tag']")
-                        .get()
-                        .map((e) => e.attribs.content),
-                    content('.active > a').text(),
-                ];
-
-                return item;
-            })
-        )
-    );
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, async () => await getFullText(item))));
 
     return {
         title: metadata.Title,

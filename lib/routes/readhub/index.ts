@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,7 +10,7 @@ import { rootUrl, apiTopicUrl, art, processItems } from './util';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/readhub',
     parameters: { category: '分类，见下表，默认为热门话题' },
     features: {

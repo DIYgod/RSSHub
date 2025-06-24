@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +8,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/list/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/tophub/list/Om4ejxvxEN',
     parameters: { id: '榜单id，可在 URL 中找到' },
     features: {

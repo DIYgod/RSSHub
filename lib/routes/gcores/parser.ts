@@ -1,9 +1,6 @@
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 interface Style {
     [key: string]: string;
@@ -225,7 +222,7 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
         lastOffset = range.offset + range.length;
     }
 
-    resultParts.push(text.substring(lastOffset));
+    resultParts.push(text.slice(lastOffset));
 
     return `${blockType.element ? `<${blockType.element}>` : ''}${resultParts.join('').replaceAll('\n', '<br>')}${blockType.element ? `</${blockType.element}>` : ''}`;
 };

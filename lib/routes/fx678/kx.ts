@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/kx',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Notifications,
     example: '/fx678/kx',
     parameters: {},
@@ -37,9 +37,9 @@ async function handler() {
     // 页面新闻消息列表
     const list = $('.body_zb ul .body_zb_li .zb_word')
         .find('.list_font_pic > a:first-child')
-        .map((i, e) => $(e).attr('href'))
+        .toArray()
         .slice(0, 30)
-        .get();
+        .map((e) => $(e).attr('href'));
 
     const out = await Promise.all(
         list.map((itemUrl) =>

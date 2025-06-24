@@ -7,7 +7,7 @@ const handler = async () => {
 
     const response = await got(`${url}/vul`);
     const $ = load(response.data);
-    const list = $('table>tbody>tr').get();
+    const list = $('table>tbody>tr').toArray();
 
     const items = list.map((i) => {
         const item = $(i);

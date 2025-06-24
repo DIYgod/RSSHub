@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hot/:bsn',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/gamer/hot/47157',
     parameters: { bsn: '板塊 id，在 URL 可以找到' },
@@ -35,13 +35,13 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('div.FM-abox2A a.FM-abox2B')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: `https:${item.attr('href')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

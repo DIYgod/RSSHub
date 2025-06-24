@@ -6,9 +6,6 @@ import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export function getHeaders() {
     const sessionid = config.fanbox.session;
@@ -169,7 +166,7 @@ async function parseDetail(i: PostDetailResponse['body']) {
 
 export function parseItem(item: PostItem) {
     return cache.tryGet(`fanbox-${item.id}-${item.updatedDatetime}`, async () => {
-        const postDetail = (await ofetch(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: getHeaders() })) as PostDetailResponse;
+        const postDetail = (await ofetch(`https://api.fanbox.cc/post.info?postId=${item.id}`, { headers: { ...getHeaders(), 'User-Agent': config.trueUA } })) as PostDetailResponse;
         return {
             title: item.title || `No title`,
             description: await parseDetail(postDetail.body),

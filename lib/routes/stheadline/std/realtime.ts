@@ -3,31 +3,37 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
-const baseUrl = 'https://std.stheadline.com';
+const baseUrl = 'https://www.stheadline.com';
 
 export const route: Route = {
-    path: '/std/realtime/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/std/:category{.+}?',
+    name: '即時',
+    maintainers: ['TonyRL'],
+    example: '/stheadline/std/realtimenews',
+    parameters: { category: '分類路徑，URL 中 `www.stheadline.com/` 後至中文分類名前部分，預設為 `realtimenews`' },
+    radar: [
+        {
+            source: ['www.stheadline.com/theme/:category/chineseCategory', 'www.stheadline.com/:category/:chineseCategory'],
+            target: '/std/:category',
+        },
+    ],
     handler,
 };
 
 async function handler(ctx) {
-    const { category = '即時' } = ctx.req.param();
-    const url = `${baseUrl}/realtime/${category}`;
+    const { category = 'realtimenews' } = ctx.req.param();
+    const url = `${baseUrl}/${category}`;
     const { data: response } = await got(url);
     const $ = load(response);
 
-    let items = $(`${category === '即時' ? '.moreNews > .col-md-4' : ''} .media-body > .my-2 > a`)
+    let items = $('.news-block .news-detail > a')
         .toArray()
         .map((item) => {
             item = $(item);
             return {
-                title: item.attr('title'),
-                link: item.attr('href'),
-                guid: item.attr('href').substring(0, item.attr('href').lastIndexOf('/')),
+                title: item.find('.title').text(),
+                link: new URL(item.attr('href'), 'https://www.stheadline.com').href,
             };
         });
 
@@ -39,18 +45,20 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('.paragraphs').html(),
-                    pubDate: timezone(parseDate($('.content .date').text()), +8),
-                    category: [$('nav .nav-item.active a')?.text()?.trim(), ...$("meta[name='keyword']").attr('content').split(',')],
+                    description: $('.content-body').html(),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
+                    category: $("meta[name='keyword']").attr('content').split(','),
+                    guid: item.link.slice(0, item.link.lastIndexOf('/')),
                 };
             })
         )
     );
 
     return {
-        title: $('head title').text(),
+        title: $('head meta[name="title"]').attr('content') || $('head title').text(),
         description: $('meta[name=description]').attr('content'),
-        image: 'https://std.stheadline.com/dist/images/favicon/icon-512.png',
+        image: 'https://www.sthlstatic.com/sthl/assets/favicon/android-icon-192x192.png',
+        language: 'zh-HK',
         link: url,
         item: items,
     };

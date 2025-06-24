@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -10,7 +8,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/mittrchina/index',
     parameters: { type: '类型，见下表，默认为首页资讯' },
     features: {

@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -12,7 +10,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:topic?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/reuters/world/us',
     parameters: {

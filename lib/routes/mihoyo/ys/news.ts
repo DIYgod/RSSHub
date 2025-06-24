@@ -1,19 +1,12 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 const categories = {
     latest: {
         main: {
-            id: 10,
-            slug: 10,
+            id: 719,
+            slug: 719,
             title: '最新',
         },
         'zh-tw': {
@@ -24,8 +17,8 @@ const categories = {
     },
     news: {
         main: {
-            id: 11,
-            slug: 11,
+            id: 720,
+            slug: 720,
             title: '新闻',
         },
         'zh-tw': {
@@ -36,8 +29,8 @@ const categories = {
     },
     notice: {
         main: {
-            id: 12,
-            slug: 12,
+            id: 721,
+            slug: 721,
             title: '公告',
         },
         'zh-tw': {
@@ -48,8 +41,8 @@ const categories = {
     },
     activity: {
         main: {
-            id: 258,
-            slug: 258,
+            id: 722,
+            slug: 722,
             title: '活动',
         },
         'zh-tw': {
@@ -66,7 +59,7 @@ const rootUrls = {
 };
 
 const apiRootUrls = {
-    main: 'https://content-static.mihoyo.com',
+    main: 'https://api-takumi-static.mihoyo.com',
     'zh-tw': 'https://api-os-takumi-static.hoyoverse.com',
 };
 
@@ -76,7 +69,7 @@ const currentUrls = {
 };
 
 const apiUrls = {
-    main: '/content/ysCn/getContentList',
+    main: '/content_v2_user/app/16471662a82d418a/getContentList',
     'zh-tw': '/content_v2_user/app/a1b1f9d3315447cc/getContentList',
 };
 
@@ -115,7 +108,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
     const params = {
-        main: `pageNum=1&channelId=${categories[category][location].id}&pageSize=${limit}`,
+        main: `iPage=1&sLangKey=zh-cn&iChanId=${categories[category][location].id}&iPageSize=${limit}`,
         'zh-tw': `iPage=1&sLangKey=zh-tw&iChanId=${categories[category][location].id}&iPageSize=${limit}`,
     };
 
@@ -129,63 +122,14 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const data = response.data.data.list;
-
-    let banner = '';
-
-    let items =
-        location === 'main'
-            ? data.map((item) => {
-                  banner = item.ext.filter((e) => e.arrtName === 'banner');
-
-                  return {
-                      author: item.author,
-                      title: item.title.trim(),
-                      pubDate: timezone(parseDate(item.start_time), +8),
-                      link: `${rootUrl}/main/news/detail/${item.contentId}`,
-                      image: banner.value ? banner.value[0].url : undefined,
-                  };
-              })
-            : data.map((item) => {
-                  banner = item.sExt ? JSON.parse(item.sExt).banner : undefined;
-
-                  return {
-                      author: item.sAuthor,
-                      title: item.sTitle.split('｜')[0],
-                      pubDate: timezone(parseDate(item.dtCreateTime), +8),
-                      link: `${rootUrl}/zh-tw/news/detail/${item.contentId}`,
-                      description: art(path.join(__dirname, '../templates/ys.art'), {
-                          image: banner ? banner[0].url : undefined,
-                          description: item.sContent,
-                      }),
-                  };
-              });
-
-    if (location === 'main') {
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-
-                    try {
-                        item.description = art(path.join(__dirname, '../templates/ys.art'), {
-                            image: item.image,
-                            description: JSON.parse(detailResponse.data.match(/,content:(".*?"),ext:/)[1].trim()),
-                        });
-                    } catch {
-                        // no-empty
-                    }
-
-                    delete item.image;
-
-                    return item;
-                })
-            )
-        );
-    }
+    const list = response.data.data.list;
+    const items = list.map((item) => ({
+        title: item.sTitle,
+        description: item.sContent,
+        link: `${rootUrl}${currentUrls[location]}/detail/${item.iInfoId}`,
+        pubDate: parseDate(item.dtStartTime),
+        category: item.sCategoryName,
+    }));
 
     return {
         title: `原神 - ${categories[category][location].title}`,

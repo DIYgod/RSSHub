@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 import { baseUrl, fetchItem, getSafeLineCookieWithData, parseList } from './utils';
 
 export const route: Route = {
@@ -26,10 +26,7 @@ async function handler() {
     const $ = cheerio.load(data);
     const list = parseList($);
 
-    const items = [];
-    for await (const item of asyncPool(2, list, (item) => cache.tryGet(item.link!, () => fetchItem(item, cookie)))) {
-        items.push(item);
-    }
+    const items = await pMap(list, (item) => cache.tryGet(item.link!, () => fetchItem(item, cookie)), { concurrency: 2 });
 
     return {
         title: 'ZAKER 精读新闻',

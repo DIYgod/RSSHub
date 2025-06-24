@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/list/:id/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/twitter/list/1502570462752219136',
     parameters: { id: 'list id, get from url', routeParams: 'extra parameters, see the table above' },
     features: {

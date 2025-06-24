@@ -37,12 +37,12 @@ async function handler() {
         link: baseUrl,
         description: $('meta[name="description"]').attr('content'),
         item: $('li.list')
-            .map((index, item) => ({
+            .toArray()
+            .map((item) => ({
                 title: $(item).find('a').text().trim(),
                 description: '',
                 pubDate: parseDate($(item).find('span').first().text(), '[YYYY-MM-DD]'),
                 link: baseUrl + $(item).find('a').attr('href'),
-            }))
-            .get(),
+            })),
     };
 }

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:section?/:type?/:user?',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
     parameters: {
@@ -59,7 +59,8 @@ async function handler(ctx) {
 
     const list = $('.athing')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
-        .map((_, thing) => {
+        .toArray()
+        .map((thing) => {
             thing = $(thing);
 
             const item = {};
@@ -72,7 +73,7 @@ async function handler(ctx) {
 
             item.link = `${rootUrl}/item?id=${item.guid}`;
             item.origin = thing.find('.titleline').children('a').attr('href');
-            item.onStory = thing.find('.onstory').text().substring(2);
+            item.onStory = thing.find('.onstory').text().slice(2);
 
             item.comments = thing.next().find('a').last().text().split(' comment')[0];
             item.upvotes = thing.next().find('.score').text().split(' point')[0];
@@ -83,8 +84,7 @@ async function handler(ctx) {
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
             return item;
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>
@@ -128,7 +128,7 @@ async function handler(ctx) {
                     item.description = item.currentComment;
                 }
 
-                if (isNaN(item.comments)) {
+                if (Number.isNaN(item.comments)) {
                     item.comments = 0;
                 }
 

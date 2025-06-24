@@ -234,7 +234,7 @@ export const TabParam = {
 
 export const CommonRouteProperties: Pick<Route, 'url' | 'categories' | 'maintainers' | 'view'> = {
     url: 'voronoiapp.com',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     maintainers: ['Cesaryuan'],
 };

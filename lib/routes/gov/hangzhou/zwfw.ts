@@ -1,6 +1,5 @@
 import { Route } from '@/types';
 import { load } from 'cheerio';
-const __dirname = getCurrentPath(import.meta.url);
 
 import puppeteer from '@/utils/puppeteer';
 import ofetch from '@/utils/ofetch';
@@ -11,7 +10,6 @@ import { crawler, analyzer } from './zjzwfw';
 import timezone from '@/utils/timezone';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/hangzhou/zwfw',
