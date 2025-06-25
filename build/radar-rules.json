@@ -5014,6 +5014,15 @@
           "/"
         ],
         "target": "/anthropic/news"
+      },
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/research",
+          "/"
+        ],
+        "target": "/anthropic/research"
       }
     ]
   },
