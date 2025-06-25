@@ -8,7 +8,10 @@ export const route: Route = {
     path: '/news/:type1/:type2',
     categories: ['government'],
     example: '/samrdprc/news/xfpzh/xfpgnzh',
-    parameters: { type: '召回类型ID，见下表' },
+    parameters: {
+        type1: '召回类型ID1，见下表',
+        type2: '召回类型ID2，见下表',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,7 +21,7 @@ export const route: Route = {
         supportScihub: false,
     },
     description: `
-| 类型中文 | 类型ID1 | 类型ID2 |
+| 类型中文 | 召回类型ID1 | 召回类型ID2 |
 | --- | --- | --- |
 | 消费品召回 | xfpzh | xfpgnzh |
 | 汽车召回 | qczh | gnzhqc |
@@ -69,7 +72,7 @@ export const route: Route = {
 
         return {
             title: `${typeName} - 国家市场监督管理总局`,
-            link: 'https://www.samrdprc.org.cn/',
+            link: url,
             item: items as DataItem[],
         };
     },
