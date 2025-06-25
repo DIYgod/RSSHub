@@ -9,10 +9,10 @@ export async function handler(ctx) {
         notice: [9, 26, 101],
         all: [9, 21, 23, 26, 101, 103],
         notification: [9],
-        job: [26],
-        calender: [101],
         party: [21],
         talent: [24],
+        job: [26],
+        calender: [101],
         campus: [103],
     };
     const LIST_API = 'https://edua.chengdurail.com:60001/api/collegeIntroduce/commonIntroduceList';
