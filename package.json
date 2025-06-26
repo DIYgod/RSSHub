@@ -179,7 +179,7 @@
         "eslint-config-prettier": "10.1.5",
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.20.0",
-        "eslint-plugin-prettier": "5.5.0",
+        "eslint-plugin-prettier": "5.5.1",
         "eslint-plugin-unicorn": "59.0.1",
         "eslint-plugin-yml": "1.18.0",
         "fs-extra": "11.3.0",
