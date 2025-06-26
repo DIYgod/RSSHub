@@ -6616,6 +6616,9 @@
   "/scnu/cs/match": [
     "fengkx"
   ],
+  "/scoop/apps/:query?": [
+    "nczitzk"
+  ],
   "/sctv/programme/:id?/:limit?/:isFull?": [
     "nczitzk"
   ],

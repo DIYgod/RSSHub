@@ -32166,6 +32166,20 @@
       }
     ]
   },
+  "scoop.sh": {
+    "_name": "Scoop",
+    ".": [
+      {
+        "title": "Apps",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/#/apps",
+          "/"
+        ],
+        "target": "/scoop(_,url)=>{const urlObj=new URL(url);const query=urlObj.searchParams.toString()??void 0;return`/scoop/apps${query?`/${query}`:\"\"}`}"
+      }
+    ]
+  },
   "scu.edu.cn": {
     "_name": "四川大学",
     "jwc": [
