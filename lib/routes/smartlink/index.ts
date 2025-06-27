@@ -22,10 +22,20 @@ function parseTitle(smartlinkUrl: string): string {
     }
 }
 
+function isYouTubeUrl(url: string): boolean {
+    try {
+        const parsedUrl = new URL(url);
+        const hostname = parsedUrl.hostname.toLowerCase();
+        return hostname === 'youtube.com' || hostname === 'www.youtube.com' || hostname === 'm.youtube.com' || hostname === 'youtu.be';
+    } catch {
+        return false;
+    }
+}
+
 function getTitle(item: any): string {
-    return item.type === 'video'
-        ? item.smartlink.split('?')[0] // For video items, use the full YouTube URL (without query parameters)
-        : parseTitle(item.smartlink); // Use existing parseTitle for photo items
+    return isYouTubeUrl(item.smartlink)
+        ? item.smartlink.split('?')[0] // For YouTube URLs, use the URL without query parameters
+        : parseTitle(item.smartlink); // Use existing parseTitle for other URLs
 }
 
 export const route: Route = {
