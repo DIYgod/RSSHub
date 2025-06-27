@@ -51,8 +51,8 @@ importers:
         specifier: 1.14.4
         version: 1.14.4(hono@4.8.3)
       '@hono/zod-openapi':
-        specifier: 0.19.8
-        version: 0.19.8(hono@4.8.3)(zod@3.25.67)
+        specifier: 0.19.9
+        version: 0.19.9(hono@4.8.3)(zod@3.25.67)
       '@notionhq/client':
         specifier: 3.1.3
         version: 3.1.3
@@ -496,8 +496,8 @@ packages:
   '@asamuzakjp/css-color@3.2.0':
     resolution: {integrity: sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==}
 
-  '@asteasolutions/zod-to-openapi@7.3.3':
-    resolution: {integrity: sha512-ioiw+R+gBGAUwmDp+/gJA16tedBivzDaji5wOvWej0ZYDE0CXTSSfJfXbrBIuWKh6JQhuXgNDniJdeDueKUZTA==}
+  '@asteasolutions/zod-to-openapi@7.3.4':
+    resolution: {integrity: sha512-/2rThQ5zPi9OzVwes6U7lK1+Yvug0iXu25olp7S0XsYmOqnyMfxH7gdSQjn/+DSOHRg7wnotwGJSyL+fBKdnEA==}
     peerDependencies:
       zod: ^3.20.2
 
@@ -1469,8 +1469,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@0.19.8':
-    resolution: {integrity: sha512-CHUSW0K+bDGUYXovxQSbVjZffzoPeTsGu6wevPoGSmBdPuUw5yZqDeomnvyAAAAvEjhLQPlAsUyASc1Zi35exQ==}
+  '@hono/zod-openapi@0.19.9':
+    resolution: {integrity: sha512-TonPfh8xUdsdzWNMiKOYSG4Wk2DkZIShHZoXkdOSjPmqpnobXpvSQU3w3XmB7N2t12I2NnnoGSHyMj+BXk+1bw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
@@ -4913,8 +4913,8 @@ packages:
   openapi-typescript-helpers@0.0.13:
     resolution: {integrity: sha512-z44WK2e7ygW3aUtAtiurfEACohf/Qt9g6BsejmIYgEoY4REHeRzgFJmO3ium0libsuzPc145I+8lE9aiiZrQvQ==}
 
-  openapi3-ts@4.4.0:
-    resolution: {integrity: sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==}
+  openapi3-ts@4.5.0:
+    resolution: {integrity: sha512-jaL+HgTq2Gj5jRcfdutgRGLosCy/hT8sQf6VOy+P+g36cZOjI1iukdPnijC+4CmeRzg/jEllJUboEic2FhxhtQ==}
 
   optionator@0.8.3:
     resolution: {integrity: sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA==}
@@ -6357,9 +6357,9 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.3(zod@3.25.67)':
+  '@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.67)':
     dependencies:
-      openapi3-ts: 4.4.0
+      openapi3-ts: 4.5.0
       zod: 3.25.67
 
   '@babel/code-frame@7.0.0':
@@ -7390,11 +7390,12 @@ snapshots:
     dependencies:
       hono: 4.8.3
 
-  '@hono/zod-openapi@0.19.8(hono@4.8.3)(zod@3.25.67)':
+  '@hono/zod-openapi@0.19.9(hono@4.8.3)(zod@3.25.67)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.67)
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.67)
       '@hono/zod-validator': 0.7.0(hono@4.8.3)(zod@3.25.67)
       hono: 4.8.3
+      openapi3-ts: 4.5.0
       zod: 3.25.67
 
   '@hono/zod-validator@0.7.0(hono@4.8.3)(zod@3.25.67)':
@@ -11245,7 +11246,7 @@ snapshots:
 
   openapi-typescript-helpers@0.0.13: {}
 
-  openapi3-ts@4.4.0:
+  openapi3-ts@4.5.0:
     dependencies:
       yaml: 2.8.0
 
