@@ -24,15 +24,31 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    // 获取用户输入的 year
-    const { year = currentYear() }: { year?: number } = ctx.req.param();
+    const current = currentYear();
 
-    // 替换 url
-    const sydwgkzpUrl = `https://rlsbj.cq.gov.cn/zwxx_182/sydw/sydwgkzp${year}/`;
+    // 获取用户输入的 year
+    const { year: tempYear } = ctx.req.param();
+    const year = /^\d{4}$/.test(tempYear) ? +tempYear : current;
+
+    // 替换 url, 如果是今年的话因为 url 格式不一样，所以我们先默认跳去首页获取 meta 信息里的跳转地址
+    const yearPart = year === current ? '' : `sydwgkzp${year}/`;
+    let sydwgkzpUrl = `https://rlsbj.cq.gov.cn/zwxx_182/sydw/${yearPart}`;
 
     const { data: response } = await got(sydwgkzpUrl);
 
-    const $ = load(response);
+    let $ = load(response);
+
+    // 检查是否存在 <meta http-equiv="Refresh"> 跳转
+    const metaRefresh = $('meta[http-equiv="Refresh"]').attr('content');
+
+    // 如果存在的话就使用 meta 提供的链接, 然后重新获取一次页面的内容
+    if (metaRefresh) {
+        const redirectPath = metaRefresh.split('URL=')[1];
+        sydwgkzpUrl = new URL(redirectPath, sydwgkzpUrl).href;
+
+        const { data: newResponse } = await got(sydwgkzpUrl);
+        $ = load(newResponse);
+    }
 
     // 获取所有的标题
     const list = $('ul[class="rsj-list1"] > li')
@@ -44,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
                 // 文章标题
                 title: title.text(),
                 // 文章链接
-                link: `${sydwgkzpUrl}${title.attr('href')}`,
+                link: new URL(title.attr('href'), sydwgkzpUrl).href,
                 // 文章发布日期
                 pubDate: parseDate(item.find('span').text()),
             };
@@ -64,7 +80,7 @@ async function handler(ctx: Context): Promise<Data> {
     );
 
     return {
-        title: '重庆市事业单位公开招聘',
+        title: `重庆市事业单位${year}年公开招聘`,
         link: sydwgkzpUrl,
         item: items,
     };
