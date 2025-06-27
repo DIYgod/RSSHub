@@ -33,179 +33,17 @@ async function handler() {
     const listUrl = `${baseUrl}/67629/list.htm`;
 
     // 获取列表页面
-    const response = await got({
-        method: 'get',
-        url: listUrl,
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        },
-    });
-
+    const response = await fetchListPage(listUrl);
     const $ = load(response.data);
-    const items: any[] = [];
 
-    // 查找所有包含通知链接的 a 标签
-    // 根据页面分析，通知链接通常包含 saa.zju.edu.cn 域名
-    $('a[href*="saa.zju.edu.cn"]').each((_, element) => {
-        const $element = $(element);
-        const title = $element.text().trim();
-        let link = $element.attr('href');
+    // 提取通知条目
+    const items = extractNoticeItems($, baseUrl);
 
-        // 过滤掉导航链接和其他非通知链接
-        if (title && link && (link.includes('/page.htm') || link.includes('/c67629a')) && !link.includes('/list.htm') && !link.includes('/main.htm') && title.length > 5) {
-            // 确保链接是完整的
-            if (!link.startsWith('http')) {
-                link = baseUrl + link;
-            }
-
-            // 查找日期：在同一行或相邻位置查找 YYYY-MM-DD 格式的日期
-            let pubDate: Date | null = null;
-            const elementText = $element.parent().text() || $element.closest('tr, li, div, p').text();
-            const dateMatch = elementText.match(/(\d{4}-\d{2}-\d{2})/);
-
-            if (dateMatch) {
-                pubDate = parseDate(dateMatch[1]);
-            }
-
-            // 避免重复添加
-            const exists = items.some((item) => item.link === link);
-            if (!exists) {
-                items.push({
-                    title,
-                    link,
-                    pubDate,
-                    description: title,
-                });
-            }
-        }
-    });
-
-    // 如果第一种方法没找到足够的条目，使用更宽泛的搜索
-    if (items.length < 5) {
-        // 查找所有可能的通知链接
-        $('a').each((_, element) => {
-            const $element = $(element);
-            const title = $element.text().trim();
-            let link = $element.attr('href');
-
-            if (title && link && // 检查是否是通知页面链接
-                (link.includes('/2024/') || link.includes('/2025/') || link.includes('/c67629a')) && link.includes('/page.htm')) {
-                    // 构建完整链接
-                    if (!link.startsWith('http')) {
-                        link = link.startsWith('/') ? baseUrl + link : baseUrl + '/' + link;
-                    }
-
-                    // 查找日期
-                    let pubDate: Date | null = null;
-                    const surroundingText = $element.parent().text() || $element.closest('tr, li, div, p').text();
-                    const dateMatch = surroundingText.match(/(\d{4}-\d{2}-\d{2})/);
-
-                    if (dateMatch) {
-                        pubDate = parseDate(dateMatch[1]);
-                    }
-
-                    // 避免重复添加
-                    const exists = items.some((item) => item.link === link);
-                    if (!exists && title.length > 5) {
-                        items.push({
-                            title,
-                            link,
-                            pubDate,
-                            description: title,
-                        });
-                    }
-                }
-        });
-    }
-
-    // 去重并按日期排序
-    const uniqueItems = items
-        .filter((item, index, self) => index === self.findIndex((t) => t.link === item.link))
-        .sort((a, b) => {
-            if (!a.pubDate && !b.pubDate) {return 0;}
-            if (!a.pubDate) {return 1;}
-            if (!b.pubDate) {return -1;}
-            return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
-        });
+    // 去重并排序
+    const uniqueItems = processAndSortItems(items);
 
     // 获取详细内容（仅处理前10条以提高性能）
-    const detailedItems = await Promise.all(
-        uniqueItems.slice(0, 10).map(async (item) => await cache.tryGet(item.link, async () => {
-                try {
-                    if (item.link.includes('saa.zju.edu.cn') && item.link.includes('/page.htm')) {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            timeout: {
-                                request: 5000, // 5秒超时
-                            },
-                            headers: {
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                            },
-                        });
-
-                        const detail$ = load(detailResponse.data);
-
-                        // 移除不需要的元素
-                        detail$('script, style, nav, header, footer, .nav, .menu, .sidebar, .header, .footer').remove();
-
-                        // 获取主要内容
-                        let content = '';
-
-                        // 查找包含发布日期信息的元素，通常正文就在附近
-                        const publishElement = detail$('*:contains("发布日期")');
-                        if (publishElement.length > 0) {
-                            // 从发布信息开始，获取后续的内容
-                            let contentElement = publishElement.parent().next();
-                            while (contentElement.length > 0 && contentElement.text().trim().length > 0) {
-                                content += contentElement.html() + '\n';
-                                contentElement = contentElement.next();
-                                // 限制获取的段落数量
-                                if (content.length > 2000) {break;}
-                            }
-                        }
-
-                        // 如果没有找到发布日期，尝试其他方法
-                        if (!content) {
-                            // 查找可能包含正文的div
-                            const possibleContainers = detail$('div').filter((_, el) => {
-                                const text = detail$(el).text();
-                                return text.length > 100 && text.length < 5000; // 合理的内容长度
-                            });
-
-                            if (possibleContainers.length > 0) {
-                                content = detail$(possibleContainers[0]).html() || '';
-                            }
-                        }
-
-                        // 最后手段：获取body中的主要文本内容
-                        if (!content) {
-                            const bodyText = detail$('body').clone();
-                            bodyText.find('script, style, nav, header, footer').remove();
-                            const mainText = bodyText.text().trim();
-                            if (mainText.length > 50) {
-                                content = `<p>${mainText.slice(0, 1000)}</p>`;
-                            }
-                        }
-
-                        // 尝试从详情页面提取更准确的发布日期
-                        const pageText = detail$('body').text();
-                        const publishMatch = pageText.match(/发布日期[：:]\s*(\d{4}-\d{2}-\d{2})/);
-                        if (publishMatch && !item.pubDate) {
-                            item.pubDate = parseDate(publishMatch[1]);
-                        }
-
-                        if (content && content.trim().length > 0) {
-                            item.description = content;
-                        }
-                    }
-                } catch {
-                    // 如果获取详细内容失败，保持原有的description
-                }
-
-                return item;
-            }))
-    );
+    const detailedItems = await Promise.all(uniqueItems.slice(0, 10).map(async (item) => await cache.tryGet(item.link, async () => await fetchItemDetail(item))));
 
     return {
         title: '浙江大学航空航天学院 - 通知公告',
@@ -213,4 +51,244 @@ async function handler() {
         description: '浙江大学航空航天学院最新通知公告RSS订阅',
         item: detailedItems,
     };
+}
+
+async function fetchListPage(url: string) {
+    return await got({
+        method: 'get',
+        url,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        },
+    });
+}
+
+function extractNoticeItems($: any, baseUrl: string) {
+    let items: any[] = [];
+
+    // 首先尝试提取标准通知链接
+    items = extractPrimaryNoticeLinks($, baseUrl);
+
+    // 如果没找到足够的条目，使用备选方法
+    if (items.length < 5) {
+        items = [...items, ...extractSecondaryNoticeLinks($, baseUrl)];
+    }
+
+    return items;
+}
+
+function extractPrimaryNoticeLinks($: any, baseUrl: string): any[] {
+    const items: any[] = [];
+
+    $('a[href*="saa.zju.edu.cn"]').each((_, element) => {
+        const noticeItem = extractNoticeFromElement($, element, baseUrl);
+        if (noticeItem && isValidPrimaryNotice(noticeItem)) {
+            addUniqueItem(items, noticeItem);
+        }
+    });
+
+    return items;
+}
+
+function extractSecondaryNoticeLinks($: any, baseUrl: string): any[] {
+    const items: any[] = [];
+
+    $('a').each((_, element) => {
+        const noticeItem = extractNoticeFromElement($, element, baseUrl);
+        if (noticeItem && isValidSecondaryNotice(noticeItem)) {
+            addUniqueItem(items, noticeItem);
+        }
+    });
+
+    return items;
+}
+
+function extractNoticeFromElement($: any, element: any, baseUrl: string) {
+    const $element = $(element);
+    const title = $element.text().trim();
+    let link = $element.attr('href');
+
+    if (!title || !link || title.length <= 5) {
+        return null;
+    }
+
+    // 构建完整链接
+    link = buildFullUrl(link, baseUrl);
+
+    // 提取发布日期
+    const pubDate = extractDateFromContext($, $element);
+
+    return {
+        title,
+        link,
+        pubDate,
+        description: title,
+    };
+}
+
+function isValidPrimaryNotice(item: any): boolean {
+    const { link } = item;
+    return (link.includes('/page.htm') || link.includes('/c67629a')) && !link.includes('/list.htm') && !link.includes('/main.htm');
+}
+
+function isValidSecondaryNotice(item: any): boolean {
+    const { link, title } = item;
+    return (link.includes('/2024/') || link.includes('/2025/') || link.includes('/c67629a')) && link.includes('/page.htm') && title.length > 5;
+}
+
+function buildFullUrl(link: string, baseUrl: string): string {
+    if (link.startsWith('http')) {
+        return link;
+    }
+    return link.startsWith('/') ? baseUrl + link : baseUrl + '/' + link;
+}
+
+function extractDateFromContext($: any, $element: any): Date | null {
+    const contextText = $element.parent().text() || $element.closest('tr, li, div, p').text();
+    const dateMatch = contextText.match(/(\d{4}-\d{2}-\d{2})/);
+    return dateMatch ? parseDate(dateMatch[1]) : null;
+}
+
+function addUniqueItem(items: any[], newItem: any): void {
+    const exists = items.some((item) => item.link === newItem.link);
+    if (!exists) {
+        items.push(newItem);
+    }
+}
+
+function processAndSortItems(items: any[]): any[] {
+    return items
+        .filter((item, index, self) => index === self.findIndex((t) => t.link === item.link))
+        .sort((a, b) => {
+            if (!a.pubDate && !b.pubDate) {
+                return 0;
+            }
+            if (!a.pubDate) {
+                return 1;
+            }
+            if (!b.pubDate) {
+                return -1;
+            }
+            return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+        });
+}
+
+async function fetchItemDetail(item: any) {
+    try {
+        if (shouldFetchDetailContent(item.link)) {
+            const detailResponse = await fetchDetailPage(item.link);
+            const detail$ = load(detailResponse.data);
+
+            cleanupDetailPage(detail$);
+            const content = extractMainContent(detail$);
+            const updatedPubDate = extractPublishDate(detail$, item);
+
+            return createDetailedItem(item, content, updatedPubDate);
+        }
+    } catch {
+        // 如果获取详细内容失败，保持原有的description
+    }
+    return item;
+}
+
+function shouldFetchDetailContent(link: string): boolean {
+    return link.includes('saa.zju.edu.cn') && link.includes('/page.htm');
+}
+
+async function fetchDetailPage(url: string) {
+    return await got({
+        method: 'get',
+        url,
+        timeout: 5000, // 5秒超时
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        },
+    });
+}
+
+function cleanupDetailPage(detail$: any) {
+    detail$('script, style, nav, header, footer, .nav, .menu, .sidebar, .header, .footer, .search-con, .layer, img').remove();
+}
+
+function extractMainContent(detail$: any): string {
+    return extractContentByArticleDiv(detail$) || extractContentByPublishDate(detail$) || extractContentByContainer(detail$) || extractContentFromBody(detail$);
+}
+
+function extractContentByArticleDiv(detail$: any): string {
+    // 优先提取 wp_articlecontent 中的内容
+    const articleContent = detail$('.wp_articlecontent');
+    if (articleContent.length > 0) {
+        return articleContent.html() || '';
+    }
+
+    // 其次尝试提取 article 或 entry 类中的内容
+    const entryContent = detail$('.entry .read, .article .read, .wp_articlecontent');
+    if (entryContent.length > 0) {
+        return entryContent.html() || '';
+    }
+
+    return '';
+}
+
+function extractContentByPublishDate(detail$: any): string {
+    const publishElement = detail$('*:contains("发布日期")');
+    if (publishElement.length === 0) {
+        return '';
+    }
+
+    let content = '';
+    let contentElement = publishElement.parent().next();
+
+    while (contentElement.length > 0 && contentElement.text().trim().length > 0) {
+        content += contentElement.html() + '\n';
+        contentElement = contentElement.next();
+
+        if (content.length > 2000) {
+            break;
+        }
+    }
+
+    return content;
+}
+
+function extractContentByContainer(detail$: any): string {
+    const possibleContainers = detail$('div').filter((_, el) => {
+        const text = detail$(el).text();
+        return text.length > 100 && text.length < 5000;
+    });
+
+    return possibleContainers.length > 0 ? detail$(possibleContainers[0]).html() || '' : '';
+}
+
+function extractContentFromBody(detail$: any): string {
+    const bodyText = detail$('body').clone();
+    bodyText.find('script, style, nav, header, footer').remove();
+    const mainText = bodyText.text().trim();
+
+    return mainText.length > 50 ? `<p>${mainText.slice(0, 1000)}</p>` : '';
+}
+
+function extractPublishDate(detail$: any, item: any): Date | null {
+    const pageText = detail$('body').text();
+    const publishMatch = pageText.match(/发布日期[：:]\s*(\d{4}-\d{2}-\d{2})/);
+
+    if (publishMatch && !item.pubDate) {
+        return parseDate(publishMatch[1]);
+    }
+
+    return item.pubDate;
+}
+
+function createDetailedItem(item: any, content: string, pubDate: Date | null) {
+    const updatedItem = { ...item };
+
+    if (pubDate) {
+        updatedItem.pubDate = pubDate;
+    }
+
+    if (content && content.trim().length > 0) {
+        updatedItem.description = content;
+    }
+
+    return updatedItem;
 }
