@@ -62,6 +62,22 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.description = content('div.qrd-content').html();
 
+                const $enclosureEl = content('div.report-bottom a').first();
+                const enclosureUrl = $enclosureEl.attr('href');
+
+                if (enclosureUrl) {
+                    const enclosureItem = {
+                        enclosure_url: new URL(enclosureUrl, rootUrl).href,
+                        enclosure_type: `application/${enclosureUrl.split(/\./).pop() ?? 'pdf'}`,
+                        enclosure_title: $enclosureEl.prev().text(),
+                    };
+
+                    item = {
+                        ...item,
+                        ...enclosureItem,
+                    };
+                }
+
                 return item;
             })
         )
