@@ -192,7 +192,7 @@
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.28",
-        "prettier": "3.6.1",
+        "prettier": "3.6.2",
         "remark-parse": "11.0.0",
         "supertest": "7.1.1",
         "tsdown": "0.12.9",
