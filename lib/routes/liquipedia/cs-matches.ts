@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -10,7 +10,8 @@ export const route: Route = {
             target: '/counterstrike/matches/:id',
         },
     ],
-    name: 'Unknown',
+    example: '/liquipedia/counterstrike/matches/Team_Falcons',
+    name: 'Counter-Strike Team Match Results',
     maintainers: ['CookiePieWw'],
     handler,
 };
@@ -21,26 +22,53 @@ async function handler(ctx) {
     const rootUrl = 'https://liquipedia.net';
     const currentUrl = `${rootUrl}/counterstrike/${team}/Matches`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const response = await ofetch(currentUrl);
+
+    const $ = load(response);
+    const table = $('table').first();
+    const header = table.find('th');
+    const columnMap: { date?: number; tournament?: number; score?: number; opponent?: number } = {};
+    header.each((index, element) => {
+        const text = $(element).text().trim().toLowerCase();
+        if (text.includes('date')) {
+            columnMap.date = index;
+        }
+        if (text.includes('tournament')) {
+            columnMap.tournament = index;
+        }
+        if (text.includes('score')) {
+            columnMap.score = index;
+        }
+        if (text.includes('opponent')) {
+            columnMap.opponent = index;
+        }
     });
 
-    const $ = load(response.data);
     const list = $('.recent-matches-bg-lose, .recent-matches-bg-win');
 
     const matches = list.toArray().map((item) => {
-        item = $(item);
+        const html = $(item);
 
-        const getRes = () => (item.attr('class') === 'recent-matches-bg-lose' ? 'LOSS' : 'WIN');
+        const getRes = () => (html.attr('class') === 'recent-matches-bg-lose' ? 'LOSS' : 'WIN');
         const result = getRes();
+        const infoList = html.find('td');
 
-        const infoList = item.find('td');
-
-        const time = infoList.eq(0).text() + ' ' + infoList.eq(1).text();
-        const tournament = infoList.eq(6).text();
-        const score = infoList.eq(7).text();
-        const opponent = infoList.eq(8).text();
+        const time = infoList
+            .eq(columnMap.date ?? 0)
+            .text()
+            .trim();
+        const tournament = infoList
+            .eq(columnMap.tournament ?? 5)
+            .text()
+            .trim();
+        const score = infoList
+            .eq(columnMap.score ?? 7)
+            .text()
+            .trim();
+        const opponent = infoList
+            .eq(columnMap.opponent ?? 8)
+            .text()
+            .trim();
 
         return {
             title: `[${result}] ${team} ${score} ${opponent} on ${tournament}`,
