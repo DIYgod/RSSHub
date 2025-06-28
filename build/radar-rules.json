@@ -22705,7 +22705,7 @@
     "_name": "Liquipedia",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Counter-Strike Team Match Results",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
           "/counterstrike/:id/Matches",

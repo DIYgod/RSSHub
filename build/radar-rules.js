@@ -10437,7 +10437,7 @@
         source:[ "/novel/:id/catalog" ],
         target:"/linovelib/volume/:id" } ] },
   "liquipedia.net":{ _name:"Liquipedia",
-    ".":[ { title:"Unknown",
+    ".":[ { title:"Counter-Strike Team Match Results",
         docs:"https://docs.rsshub.app/routes/game",
         source:[ "/counterstrike/:id/Matches",
           "/dota2/:id" ],
