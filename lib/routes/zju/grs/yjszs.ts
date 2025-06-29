@@ -20,7 +20,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '研究生院 - 研究生招生通知',
-    maintainers: ['heikuisey'],
+    maintainers: ['heikuisey130'],
     handler,
     description: '浙江大学研究生院招生通知',
 };
