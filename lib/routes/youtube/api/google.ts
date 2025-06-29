@@ -8,6 +8,9 @@ import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import NotFoundError from '@/errors/types/not-found';
 import { Data } from '@/types';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration.js';
+dayjs.extend(duration);
 
 let count = 0;
 const youtube = {};
@@ -102,6 +105,8 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
     if (!playlistItems) {
         throw new NotFoundError("This channel doesn't have any content.");
     }
+    const videoIds = playlistItems.data.items.map((item) => item.snippet.resourceId.videoId).join(',');
+    const videoDetails = await utils.getVideos(videoIds, 'contentDetails', cache);
 
     return {
         title: `${userHandleData?.channelName || username} - YouTube`,
@@ -114,6 +119,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
                 const snippet = item.snippet;
                 const videoId = snippet.resourceId.videoId;
                 const img = utils.getThumbnail(snippet.thumbnails);
+                const detail = videoDetails?.data.items.find((d) => d.id === videoId);
                 return {
                     title: snippet.title,
                     description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
@@ -125,6 +131,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
                         {
                             url: getVideoUrl(videoId),
                             mime_type: 'text/html',
+                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
                         },
                     ],
                 };
@@ -140,6 +147,8 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
     const playlistId = filterShorts ? utils.getPlaylistWithShortsFilter(channelId) : originalPlaylistId;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
+    const videoIds = data.map((item) => item.snippet.resourceId.videoId).join(',');
+    const videoDetails = await utils.getVideos(videoIds, 'contentDetails', cache);
 
     return {
         title: `${data[0].snippet.channelTitle} - YouTube`,
@@ -151,6 +160,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
                 const snippet = item.snippet;
                 const videoId = snippet.resourceId.videoId;
                 const img = utils.getThumbnail(snippet.thumbnails);
+                const detail = videoDetails?.data.items.find((d) => d.id === videoId);
                 return {
                     title: snippet.title,
                     description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
@@ -158,6 +168,13 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
                     link: `https://www.youtube.com/watch?v=${videoId}`,
                     author: snippet.videoOwnerChannelTitle,
                     image: img.url,
+                    attachments: [
+                        {
+                            url: getVideoUrl(videoId),
+                            mime_type: 'text/html',
+                            duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                        },
+                    ],
                 };
             }),
     };
@@ -167,6 +184,8 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
     const playlistTitle = (await utils.getPlaylist(playlistId, 'snippet', cache)).data.items[0].snippet.title;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items.filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video');
+    const videoIds = data.map((item) => item.snippet.resourceId.videoId).join(',');
+    const videoDetails = await utils.getVideos(videoIds, 'contentDetails', cache);
 
     return {
         title: `${playlistTitle} by ${data[0].snippet.channelTitle} - YouTube`,
@@ -176,6 +195,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
             const snippet = item.snippet;
             const videoId = snippet.resourceId.videoId;
             const img = utils.getThumbnail(snippet.thumbnails);
+            const detail = videoDetails?.data.items.find((d) => d.id === videoId);
             return {
                 title: snippet.title,
                 description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
@@ -183,6 +203,13 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
                 link: `https://www.youtube.com/watch?v=${videoId}`,
                 author: snippet.videoOwnerChannelTitle,
                 image: img.url,
+                attachments: [
+                    {
+                        url: getVideoUrl(videoId),
+                        mime_type: 'text/html',
+                        duration_in_seconds: detail?.contentDetails.duration ? dayjs.duration(detail.contentDetails.duration).asSeconds() : undefined,
+                    },
+                ],
             };
         }),
     };

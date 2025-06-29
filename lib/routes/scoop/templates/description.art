@@ -1,0 +1,56 @@
+{{ if item }}
+  <table>
+    <tbody>
+    {{ if item.Name }}
+      <tr>
+        <th>Name</th>
+        <td>{{ item.Name }}</td>
+      </tr>
+    {{ /if }}
+    {{ if item.Repository }}
+      <tr>
+        <th>Repository</th>
+        <td>
+          <a href="{{ item.Metadata.Repository }}">{{ item.Metadata.Repository.split(/\//).slice(-2).join('/') }}</a>
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if item.Committed }}
+      <tr>
+        <th>Committed</th>
+        <td><a href="{{ item.Metadata.Repository }}/commit/{{ item.Metadata.Sha }}">{{ item.Metadata.Committed }}</a></td>
+      </tr>
+    {{ /if }}
+    {{ if item.Version }}
+      <tr>
+        <th>Version</th>
+        <td><a href="{{ item.Metadata.Repository }}/blob/{{ item.Metadata.FilePath }}">v{{ item.Version }}</a></td>
+      </tr>
+    {{ /if }}
+    {{ if item.Description }}
+      <tr>
+        <th>Description</th>
+        <td>{{ item.Description }}</td>
+      </tr>
+    {{ /if }}
+    {{ if item.Homepage }}
+      </tr>
+        <th>Homepage</th>
+        <td><a href="{{ item.Homepage }}">{{ item.Homepage }}</a></td>
+      </tr>
+    {{ /if }}
+    {{ if item.License }}
+      <tr>
+        <th>License</th>
+        <td>{{ item.License }}</td>
+      </tr>
+    {{ /if }}
+    {{ if item.Note }}
+      <tr>
+        <th>Note</th>
+        <td>{{ item.Note }}</td>
+      </tr>
+    {{ /if }}
+    </tbody>
+  </table>
+{{ /if }}

@@ -115,5 +115,28 @@ jobs:
           labels: 'auto: DO NOT merge'
 
       - name: Print Docker container logs
-        if: (env.TEST_CONTINUE)
+        if: ${{ always() }}
         run: docker logs rsshub # logs/combined.log? Not so readable...
+
+  fail-build:
+    name: Fail build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      # https://github.com/orgs/community/discussions/25220
+      - name: Search the PR that triggered this workflow
+        uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
+        id: source-run-info
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sourceRunId: ${{ github.event.workflow_run.id }}
+
+      - name: Pull Request Labeler
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+          labels: 'auto: DO NOT merge'
