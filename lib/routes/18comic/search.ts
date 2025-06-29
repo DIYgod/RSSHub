@@ -39,63 +39,67 @@ export const route: Route = {
 :::`,
 };
 
-async function handlerForApi({ domain, limit, currentUrl, rootUrl, keyword, category, order }) {
-    let page = 1;
+async function handlerApiWithPage(params, page, total, fetchedTotal, filteredTotal) {
+    const { domain, limit, rootUrl, keyword, category, order } = params;
     const results: any[] = [];
-    let total = null;
-    let fetchedTotal = 0;
-    while (true) {
-        let apiUrl = getApiUrl();
-        apiUrl = `${apiUrl}/search?search_query=${keyword}&o=${order}&page=${page}`;
-        // eslint-disable-next-line no-await-in-loop
-        let apiResult = await ProcessApiItems(apiUrl);
-        total ??= apiResult.total;
-        const fetchItemsLength = apiResult.content.length;
-        fetchedTotal += fetchItemsLength;
-        let filteredItemsByCategory = apiResult.content;
-        // Filter items by category if not 'all'
-        if (category !== 'all') {
-            filteredItemsByCategory = apiResult.content.filter((item) => item.category.title === apiMapCategory(category));
-        }
-        filteredItemsByCategory = filteredItemsByCategory.slice(0, limit - results.length);
-        // eslint-disable-next-line no-await-in-loop
-        const tempResults = await Promise.all(
-            filteredItemsByCategory.map((item) =>
-                cache.tryGet(item.id, async () => {
-                    const tempResult = {};
-                    tempResult.title = item.name;
-                    tempResult.link = `${rootUrl}/album/${item.id}`;
-                    tempResult.guid = `18comic:/album/${item.id}`;
-                    tempResult.updated = parseDate(item.update_at);
-                    apiUrl = `${getApiUrl()}/album?id=${item.id}`;
-                    apiResult = await ProcessApiItems(apiUrl);
-                    tempResult.pubDate = new Date(apiResult.addtime * 1000);
-                    tempResult.category = apiResult.tags.map((tag) => tag);
-                    tempResult.author = apiResult.author.map((a) => a).join(', ');
-                    tempResult.description = art(path.join(__dirname, 'templates/description.art'), {
-                        introduction: apiResult.description,
-                        images: [
-                            `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
-                            // 取得的预览图片会被分割排序，所以先只取封面图
-                            // `https://cdn-msp3.${domain}/media/photos/${item.id}/00001.webp`,
-                            // `https://cdn-msp3.${domain}/media/photos/${item.id}/00002.webp`,
-                            // `https://cdn-msp3.${domain}/media/photos/${item.id}/00003.webp`,
-                        ],
-                        cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
-                        category: tempResult.category,
-                    });
-                    return tempResult;
-                })
-            )
-        );
-        results.push(...tempResults);
-
-        if (fetchedTotal < (total ?? 0) && results.length < limit) {
-            page++;
-        } else {
-            break;
-        }
+    let apiUrl = getApiUrl();
+    apiUrl = `${apiUrl}/search?search_query=${keyword}&o=${order}&page=${page}`;
+    let apiResult = await ProcessApiItems(apiUrl);
+    total ??= apiResult.total;
+    const fetchItemsLength = apiResult.content.length;
+    fetchedTotal += fetchItemsLength;
+    let filteredItemsByCategory = apiResult.content;
+    // Filter items by category if not 'all'
+    if (category !== 'all') {
+        filteredItemsByCategory = apiResult.content.filter((item) => item.category.title === apiMapCategory(category));
     }
+    filteredItemsByCategory = filteredItemsByCategory.slice(0, limit - filteredTotal);
+    filteredTotal = filteredTotal + filteredItemsByCategory.length;
+    const tempResults = await Promise.all(
+        filteredItemsByCategory.map((item) =>
+            cache.tryGet(item.id, async () => {
+                const tempResult = {};
+                tempResult.title = item.name;
+                tempResult.link = `${rootUrl}/album/${item.id}`;
+                tempResult.guid = `18comic:/album/${item.id}`;
+                tempResult.updated = parseDate(item.update_at);
+                apiUrl = `${getApiUrl()}/album?id=${item.id}`;
+                apiResult = await ProcessApiItems(apiUrl);
+                tempResult.pubDate = new Date(apiResult.addtime * 1000);
+                tempResult.category = apiResult.tags.map((tag) => tag);
+                tempResult.author = apiResult.author.map((a) => a).join(', ');
+                tempResult.description = art(path.join(__dirname, 'templates/description.art'), {
+                    introduction: apiResult.description,
+                    images: [
+                        `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                        // 取得的预览图片会被分割排序，所以先只取封面图
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00001.webp`,
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00002.webp`,
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00003.webp`,
+                    ],
+                    cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                    category: tempResult.category,
+                });
+                return tempResult;
+            })
+        )
+    );
+    results.push(...tempResults);
+
+    if (fetchedTotal < (total ?? 0) && filteredTotal < limit) {
+        const nextPageResult = await handlerApiWithPage(params, page + 1, total, fetchedTotal, filteredTotal);
+        results.push(...nextPageResult);
+    }
+    return results;
+}
+
+async function handlerForApi(params) {
+    const { currentUrl, keyword } = params;
+    const results: any[] = [];
+    const total = null;
+    const fetchedTotal = 0;
+    const filteredTotal = 0;
+    results.push(...(await handlerApiWithPage(params, 1, total, fetchedTotal, filteredTotal)));
     return {
         title: `Search Results For '${keyword}' - 禁漫天堂`,
         link: currentUrl.replace(/\?$/, ''),
@@ -116,7 +120,7 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
     if (api) {
-        return await handlerForApi({ domain, limit, currentUrl, rootUrl, keyword, category, order });
+        return await handlerForApi({ domain, limit, currentUrl, rootUrl, keyword, category, order, page: 1 });
     }
 
     return await ProcessItems(ctx, currentUrl, rootUrl);
