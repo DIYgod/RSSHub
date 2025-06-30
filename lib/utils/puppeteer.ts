@@ -19,7 +19,15 @@ const outPuppeteer = async (
     } = {}
 ) => {
     const options = {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-blink-features=AutomationControlled',
+            '--window-position=0,0',
+            '--ignore-certificate-errors',
+            '--ignore-certificate-errors-spki-list',
+            `--user-agent=${config.ua}`,
+        ],
         headless: true,
         ignoreHTTPSErrors: true,
     };
@@ -78,7 +86,15 @@ export const getPuppeteerPage = async (
     } = {}
 ) => {
     const options = {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-blink-features=AutomationControlled',
+            '--window-position=0,0',
+            '--ignore-certificate-errors',
+            '--ignore-certificate-errors-spki-list',
+            `--user-agent=${config.ua}`,
+        ],
         headless: true,
         ignoreHTTPSErrors: true,
     };
