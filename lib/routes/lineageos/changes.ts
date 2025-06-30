@@ -59,7 +59,7 @@ export const route: Route = {
     example: '/lineageos/changes',
     parameters: undefined,
     description: undefined,
-    categories: ['programming'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
