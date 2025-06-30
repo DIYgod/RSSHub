@@ -105,7 +105,8 @@ RUN \
         unset PUPPETEER_SKIP_DOWNLOAD && \
         corepack enable pnpm && \
         pnpm --allow-build=rebrowser-puppeteer add rebrowser-puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
-        pnpm rb ; \
+        pnpm rb && \
+        pnpx rebrowser-puppeteer browsers install chrome ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;
@@ -164,8 +165,7 @@ RUN \
         else \
             echo "Awesome! All shared libs are met!" ; \
         fi; \
-    fi; \
-    rm -rf /app/node_modules/.cache/puppeteer/chrome-headless-shell
+    fi;
 
 COPY --from=docker-minifier /app /app
 
