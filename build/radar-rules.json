@@ -26228,6 +26228,14 @@
           "/:username/:type"
         ],
         "target": "/mixcloud/:username/:type?"
+      },
+      {
+        "title": "Playlist",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:username/playlists/:playlist"
+        ],
+        "target": "/mixcloud/:username/playlists/:playlist"
       }
     ],
     "www": [
@@ -26238,6 +26246,14 @@
           "/:username/:type"
         ],
         "target": "/mixcloud/:username/:type?"
+      },
+      {
+        "title": "Playlist",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:username/playlists/:playlist"
+        ],
+        "target": "/mixcloud/:username/playlists/:playlist"
       }
     ]
   },

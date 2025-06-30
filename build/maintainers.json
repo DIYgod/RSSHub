@@ -5089,6 +5089,9 @@
   "/mixcloud/:username/:type?": [
     "Misaka13514"
   ],
+  "/mixcloud/:username/playlists/:playlist": [
+    "Misaka13514"
+  ],
   "/mixi2/community/:id/:media?": [
     "KarasuShin"
   ],
