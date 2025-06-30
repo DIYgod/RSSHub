@@ -6,13 +6,12 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { MIXCLOUD_CONFIG, TYPE_CONFIG, TYPE_NAMES, getObjectFields } from './config';
 
 export const route: Route = {
-    path: ['/:username/:type?', '/:username/playlists/:playlist'],
+    path: '/:username/:type?',
     categories: ['multimedia'],
     example: '/mixcloud/dholbach/uploads',
     parameters: {
         username: 'Username, can be found in URL',
         type: 'Type, see below, uploads by default',
-        playlist: 'Playlist slug, can be found in URL',
     },
     features: {
         requireConfig: false,
@@ -29,14 +28,8 @@ export const route: Route = {
         {
             source: ['www.mixcloud.com/:username/:type?'],
         },
-        {
-            source: ['mixcloud.com/:username/playlists/:playlist'],
-        },
-        {
-            source: ['www.mixcloud.com/:username/playlists/:playlist'],
-        },
     ],
-    name: 'User/Playlist',
+    name: 'User',
     maintainers: ['Misaka13514'],
     handler,
     description: `| Shows   | Reposts | Favorites | History | Stream |
@@ -104,7 +97,7 @@ function getPlaylistLink(username: string, type: string, playlistSlug?: string):
     return `${host}/${username}/${type === 'uploads' ? '' : type + '/'}`;
 }
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const username = ctx.req.param('username');
     const playlistSlug = ctx.req.param('playlist');
     const type = ctx.req.param('type') ?? (playlistSlug ? 'playlist' : 'uploads');
