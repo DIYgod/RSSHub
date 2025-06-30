@@ -3,7 +3,7 @@ import puppeteer from '@/utils/puppeteer';
 
 async function getContent(url, pptr = false) {
     if (pptr) {
-        const browser = await puppeteer({ stealth: true });
+        const browser = await puppeteer();
         try {
             const page = await browser.newPage();
             // 更改 window.navigator.webdriver 值以避开反爬

@@ -17,7 +17,7 @@ export const route: Route = {
 async function handler(ctx) {
     const cate = ctx.req.param('cate') ?? 'xwdt/zxyw';
     const url = `${rootURL}/${cate}/`;
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const data = await cache.tryGet(url, async () => {
         const page = await browser.newPage();
         await page.setRequestInterception(true);

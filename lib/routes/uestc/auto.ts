@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

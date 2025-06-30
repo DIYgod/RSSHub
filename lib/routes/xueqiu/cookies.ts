@@ -7,7 +7,7 @@ export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const browser = await puppeteer({ stealth: true });
+            const browser = await puppeteer();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {

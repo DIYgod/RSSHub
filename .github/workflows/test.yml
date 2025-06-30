@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies (pnpm)
         run: pnpm i
       - name: Run postinstall script for dependencies
-        run: pnpm rb
+        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
       - name: Build routes
         run: pnpm build
       - name: Test all and generate coverage
@@ -81,7 +81,7 @@ jobs:
         run: pnpm i
         env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Run postinstall script for dependencies
-        run: pnpm rb
+        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
         env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Build routes
         run: pnpm build
