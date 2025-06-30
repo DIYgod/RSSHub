@@ -2,10 +2,8 @@ services:
   - type: web
     name: rsshub
     env: node
-    plan: free
+    plan: hobby
+    repo: https://github.com/MrPach/RSSHub
     branch: master
-    buildCommand: NODE_OPTIONS="--max-old-space-size=1024" npm install && npm run build
+    buildCommand: 'NODE_OPTIONS="--max-old-space-size=1024" npm install && npm run build'
     startCommand: npm start
-    envVars:
-      - key: NODE_OPTIONS
-        value: --max_old_space_size=1024
