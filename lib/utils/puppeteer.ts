@@ -4,20 +4,11 @@ import logger from './logger';
 import proxy from './proxy';
 import { anonymizeProxy } from 'proxy-chain';
 
-import { type PuppeteerExtra, addExtra } from 'puppeteer-extra';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-
 /**
  * @deprecated use getPage instead
- * @param {Object} extraOptions
- * @param {boolean} extraOptions.stealth - Use puppeteer-extra-plugin-stealth
  * @returns Puppeteer browser
  */
-const outPuppeteer = async (
-    extraOptions: {
-        stealth?: boolean;
-    } = {}
-) => {
+const outPuppeteer = async () => {
     const options = {
         args: [
             '--no-sandbox',
@@ -32,11 +23,7 @@ const outPuppeteer = async (
         ignoreHTTPSErrors: true,
     };
 
-    let insidePuppeteer: PuppeteerExtra | typeof puppeteer = puppeteer;
-    if (extraOptions.stealth) {
-        insidePuppeteer = addExtra(puppeteer);
-        insidePuppeteer.use(StealthPlugin());
-    }
+    const insidePuppeteer: typeof puppeteer = puppeteer;
 
     if (proxy.proxyUri && proxy.proxyObj.url_regex === '.*') {
         if (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password) {
@@ -99,9 +86,7 @@ export const getPuppeteerPage = async (
         ignoreHTTPSErrors: true,
     };
 
-    let insidePuppeteer: PuppeteerExtra | typeof puppeteer = puppeteer;
-    insidePuppeteer = addExtra(puppeteer);
-    insidePuppeteer.use(StealthPlugin());
+    const insidePuppeteer: typeof puppeteer = puppeteer;
 
     let allowProxy = false;
     const proxyRegex = new RegExp(proxy.proxyObj.url_regex);

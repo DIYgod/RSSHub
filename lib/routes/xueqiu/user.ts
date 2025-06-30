@@ -49,7 +49,7 @@ async function handler(ctx) {
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     try {
         const mainPage = await browser.newPage();
 

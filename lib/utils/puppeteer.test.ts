@@ -47,7 +47,7 @@ describe('puppeteer', () => {
     if (!process.env.GITHUB_ACTIONS) {
         it('puppeteer without stealth', async () => {
             const { default: puppeteer } = await import('./puppeteer');
-            browser = await puppeteer({ stealth: false });
+            browser = await puppeteer();
             const page = await browser.newPage();
             await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
             // page rendering is not instant, wait for expected elements to appear
@@ -60,7 +60,7 @@ describe('puppeteer', () => {
 
         it('puppeteer with stealth', async () => {
             const { default: puppeteer } = await import('./puppeteer');
-            browser = await puppeteer({ stealth: true });
+            browser = await puppeteer();
             const page = await browser.newPage();
             await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
             // page rendering is not instant, wait for expected elements to appear
