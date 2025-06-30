@@ -2,7 +2,7 @@ services:
   - type: web
     name: rsshub
     env: node
-    plan: hobby
+    plan: free
     branch: master
     buildCommand: NODE_OPTIONS="--max-old-space-size=1024" npm install && npm run build
     startCommand: npm start
