@@ -5,5 +5,6 @@ services:
     plan: free
     repo: https://github.com/MrPach/RSSHub
     branch: master
-    buildCommand: 'NODE_OPTIONS="--max-old-space-size=128" npm install && npm run build'
+    buildCommand: >
+      NODE_OPTIONS="--max-old-space-size=128" npm install && npm run build
     startCommand: npm start
