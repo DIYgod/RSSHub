@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'LineageOS',
     url: 'lineageos.org',
-    categories: ['programming'],
+    categories: ['program-update'],
     description: '',
     lang: 'en',
 };
