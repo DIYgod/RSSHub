@@ -45,7 +45,7 @@ const apiMapCategory = (category) => {
 const getApiUrl = () => `https://${apiDomain}`;
 
 // using api to fetch data
-const ProcessApiItems = async (apiUrl) => {
+const processApiItems = async (apiUrl: string) => {
     apiUrl = apiUrl.replace(/\?$/, '');
     // get timestamp using javascript native api
     const ts = Date.now();
@@ -56,7 +56,6 @@ const ProcessApiItems = async (apiUrl) => {
 
     const response = await got(apiUrl, {
         headers: {
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
             token,
             tokenparam: tokenParam,
         },
@@ -152,4 +151,4 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     };
 };
 
-export { defaultDomain, getRootUrl, ProcessItems, getApiUrl, ProcessApiItems, apiMapCategory };
+export { defaultDomain, getRootUrl, ProcessItems, getApiUrl, processApiItems, apiMapCategory };
