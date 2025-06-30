@@ -7,7 +7,7 @@ import { config } from '@/config';
 export const route: Route = {
     path: '/user/:handle/upload',
     categories: ['design'],
-    example: '/makerworld/@Wcad00/upload',
+    example: '/makerworld/user/@Wcad00/upload',
     parameters: {
         handle: 'User handle',
     },
