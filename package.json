@@ -119,7 +119,6 @@
         "rate-limiter-flexible": "7.1.1",
         "re2js": "1.1.0",
         "rebrowser-puppeteer": "24.8.1",
-        "rebrowser-puppeteer-core": "24.8.1",
         "rfc4648": "1.5.4",
         "rss-parser": "3.13.0",
         "sanitize-html": "2.17.0",
