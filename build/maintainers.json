@@ -4676,6 +4676,9 @@
   "/line/today/:edition?/:tab?": [
     "nczitzk"
   ],
+  "/lineageos/changes": [
+    "nczitzk"
+  ],
   "/link3/events": [
     "cxheng315"
   ],

@@ -22654,6 +22654,19 @@
       }
     ]
   },
+  "lineageos.org": {
+    "_name": "LineageOS",
+    "download": [
+      {
+        "title": "Changes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/changes"
+        ],
+        "target": "/lineageos/changes"
+      }
+    ]
+  },
   "link3.to": {
     "_name": "Link3",
     ".": [
