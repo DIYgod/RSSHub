@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '网络空间安全学院 - 通知公告',
-    maintainers: [''],
+    maintainers: ['shrugginG'],
     handler,
     description: '东南大学网络空间安全学院通知公告',
 };
