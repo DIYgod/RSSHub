@@ -225,12 +225,7 @@ unicorn.configs.recommended,
 
         // https://github.com/eslint-community/eslint-plugin-n
         // node specific rules
-        'n/no-extraneous-require': ['error', {
-            allowModules: [
-                'puppeteer-extra-plugin-user-preferences',
-                'puppeteer-extra-plugin-user-data-dir',
-            ],
-        }],
+        'n/no-extraneous-require': 'error',
 
         'n/no-deprecated-api': 'warn',
         'n/no-missing-import': 'off',

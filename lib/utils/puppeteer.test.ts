@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
 import wait from './wait';
-import { type Browser } from 'puppeteer';
+import { type Browser } from 'rebrowser-puppeteer';
 
 let browser: Browser | null = null;
 
@@ -44,32 +44,19 @@ describe('puppeteer', () => {
         browser = null;
     }, 45000);
 
-    if (!process.env.GITHUB_ACTIONS) {
-        it('puppeteer without stealth', async () => {
-            const { default: puppeteer } = await import('./puppeteer');
-            browser = await puppeteer({ stealth: false });
-            const page = await browser.newPage();
-            await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
-            // page rendering is not instant, wait for expected elements to appear
-            const [webDriverTest, chromeTest] = await Promise.all(['webdriver', 'chrome'].map((t) => page.waitForSelector(`td#${t}-result.result.failed`).then((hd) => hd?.evaluate((e) => e.textContent))));
-            // the website return empty string from time to time for no reason
-            // since we don't really care whether puppeteer without stealth passes the bot test, just let it go
-            expect(['present (failed)', '']).toContain(webDriverTest);
-            expect(['missing (failed)', '']).toContain(chromeTest);
-        }, 20000);
-
-        it('puppeteer with stealth', async () => {
-            const { default: puppeteer } = await import('./puppeteer');
-            browser = await puppeteer({ stealth: true });
-            const page = await browser.newPage();
-            await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
-            // page rendering is not instant, wait for expected elements to appear
-            const [webDriverTest, chromeTest] = await Promise.all(['webdriver', 'chrome'].map((t) => page.waitForSelector(`td#${t}-result.result.passed`).then((hd) => hd?.evaluate((e) => e.textContent))));
-            // these are something we really care about
-            expect(webDriverTest).toBe('missing (passed)');
-            expect(chromeTest).toBe('present (passed)');
-        }, 20000);
-    }
+    // if (!process.env.GITHUB_ACTIONS) {
+    it('puppeteer stealth test', async () => {
+        const { default: puppeteer } = await import('./puppeteer');
+        browser = await puppeteer();
+        const page = await browser.newPage();
+        await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
+        // page rendering is not instant, wait for expected elements to appear
+        const [webDriverTest, chromeTest] = await Promise.all(['webdriver', 'chrome'].map((t) => page.waitForSelector(`td#${t}-result.result.passed`).then((hd) => hd?.evaluate((e) => e.textContent))));
+        // these are something we really care about
+        expect(webDriverTest).toBe('missing (passed)');
+        expect(chromeTest).toBe('present (passed)');
+    }, 20000);
+    // }
 
     it('puppeteer accept http proxy uri w/ auth', async () => {
         process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';

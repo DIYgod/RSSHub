@@ -59,7 +59,7 @@ async function handler(ctx) {
             break;
     }
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
 
     const list = await cache.tryGet(
         link,
