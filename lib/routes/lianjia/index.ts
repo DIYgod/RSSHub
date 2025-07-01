@@ -195,7 +195,7 @@ async function requestData(city: string, type: string, qu: string): Promise<any[
             image: item.imageUrl,
             // pubDate: parseDate(pub.text()),
             author: item.community,
-            description: `${item.community} 户型: ${item.layout} 面积: ${item.size} 价格: ${item.price} 朝向: ${item.direction} 楼层: ${item.floorInfo} tags: ${tags}`,
+            description: `价格: ${item.price} 楼层: ${item.floorInfo} 户型: ${item.layout} 面积: ${item.size}  朝向: ${item.direction} ${item.community} tags: ${tags}`,
         };
     });
 
