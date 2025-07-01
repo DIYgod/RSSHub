@@ -73,6 +73,7 @@ interface RentalInfo {
     lastUpdated: string;
     vrAvailable: boolean; // 新增VR标识
     sxzAvailable: boolean; // 新增省心租标识
+    imageUrl: string; // 新增图片URL字段
 }
 
 function parseRentalList(html: string): RentalInfo[] {
@@ -86,6 +87,11 @@ function parseRentalList(html: string): RentalInfo[] {
         const titleLink = $item.find('.content__list--item--title a');
         const title = titleLink.text().trim() || '无标题';
         const link = titleLink.attr('href') || '#';
+
+        // 提取图片URL - 新增功能
+        const imageContainer = $item.find('.content__list--item--aside');
+        let imageUrl = '';
+        imageUrl = imageContainer.length ? (imageContainer.find('img.lazyload').length ? imageContainer.find('img.lazyload').attr('data-src') || imageContainer.find('img.lazyload').attr('src') || '' : '') : '';
 
         // 提取区域信息 - 使用更健壮的选择器
         const regionLinks = $item.find('.content__list--item--des a');
@@ -160,6 +166,7 @@ function parseRentalList(html: string): RentalInfo[] {
             lastUpdated,
             vrAvailable,
             sxzAvailable,
+            imageUrl,
         });
     });
 
@@ -182,10 +189,10 @@ async function requestData(city: string, type: string, qu: string): Promise<any[
     // 从 API 响应中提取相关数据
     const items = list.map((item) => {
         const tags = item.tags.join(', ');
-        // console.log(item.tags, tags);
         return {
             title: item.title,
             link: `${baseUrl}${item.link}`,
+            image: item.imageUrl,
             // pubDate: parseDate(pub.text()),
             author: item.community,
             description: `${item.community} 户型: ${item.layout} 面积: ${item.size} 价格: ${item.price} 朝向: ${item.direction} 楼层: ${item.floorInfo} tags: ${tags}`,
