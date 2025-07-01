@@ -35,7 +35,7 @@ async function handler(ctx) {
 
     const data = JSON.parse(response.data.match(/"itemList":(\[.*?])/)[1]);
 
-    let items = data
+    const items = data
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .filter((item) => item.itemType !== 0)
         .map((item) => {
