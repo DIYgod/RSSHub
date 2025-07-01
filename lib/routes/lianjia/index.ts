@@ -91,7 +91,7 @@ function parseRentalList(html: string): RentalInfo[] {
         const regionLinks = $item.find('.content__list--item--des a');
         const region = regionLinks.eq(0).text().trim() || '';
         const area = regionLinks.eq(1).text().trim() || '';
-        const community = regionLinks.eq(2).text().trim() || '';
+        const community = regionLinks.length > 2 ? regionLinks.eq(2).text().trim() : '';
 
         // 提取详细描述 - 处理隐藏的楼层信息
         const des = $item.find('.content__list--item--des');
