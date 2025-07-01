@@ -62,7 +62,7 @@ async function handler(ctx) {
     filteredItemsByCategory = filteredItemsByCategory.slice(0, limit);
     const results = await Promise.all(
         filteredItemsByCategory.map((item) =>
-            cache.tryGet(item.id, async () => {
+            cache.tryGet(`18comic:search:${domain}:${item.id}`, async () => {
                 const result = {};
                 result.title = item.name;
                 result.link = `${rootUrl}/album/${item.id}`;
