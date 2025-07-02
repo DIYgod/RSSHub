@@ -74,7 +74,7 @@ async function handler(ctx) {
     const items = response.map((item) => {
         const media = item._embedded['wp:featuredmedia'][0];
         const mediaDetails = media?.media_details;
-        const mediaSize = mediaDetails.sizes.large || mediaDetails.sizes.full;
+        const mediaSize = mediaDetails?.sizes.large || mediaDetails?.sizes.full;
         return {
             title: item.title.rendered.trim(),
             link: item.link,
@@ -84,7 +84,7 @@ async function handler(ctx) {
             updated: parseDate(item.modified_gmt),
             author: item._embedded.author[0].name,
             category: item._embedded['wp:term'][0].map((category) => category.name.trim()),
-            media: media
+            media: mediaSize
                 ? {
                       content: {
                           url: media.source_url,
