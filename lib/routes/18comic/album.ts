@@ -66,7 +66,7 @@ async function handler(ctx) {
     } else {
         results = await Promise.all(
             apiResult.series.map((item, index) =>
-                cache.tryGet(`18comic:album:${domain}:${item.id}`, async () => {
+                cache.tryGet(`18comic:album:${item.id}`, async () => {
                     const chapterApiUrl = `${getApiUrl()}/chapter?id=${item.id}`;
                     const chapterResult = await processApiItems(chapterApiUrl);
                     const result = {};
