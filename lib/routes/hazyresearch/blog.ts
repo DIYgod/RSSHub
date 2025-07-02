@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/blog', '/'],
+    path: ['/blog'],
     categories: ['blog'],
     example: '/hazyresearch/blog',
     parameters: {},
@@ -25,77 +25,53 @@ export const route: Route = {
     name: 'Hazy Research Blog',
     maintainers: ['dvorak0'],
     handler,
-    url: 'https://hazyresearch.stanford.edu/blog',
+    url: 'hazyresearch.stanford.edu/blog',
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
-
-    const rootUrl = 'https://hazyresearch.stanford.edu';
-    const currentUrl = new URL('blog', rootUrl).href;
-
+    const baseUrl = 'https://hazyresearch.stanford.edu';
+    const currentUrl = `${baseUrl}/blog`;
     const { data: response } = await got(currentUrl);
     const $ = load(response);
 
-    let items = $('section.Blog_post__BYpPm')
-        .toArray()
-        .slice(0, limit)
-        .map((article) => {
-            const el = $(article);
-            const title = el.find('h2 a').text().trim();
-            const link = new URL(el.find('h2 a').attr('href'), rootUrl).href;
+    // Parse __NEXT_DATA__ for posts
+    const nextDataRaw = $('script#__NEXT_DATA__').html();
+    if (!nextDataRaw) throw new Error('No __NEXT_DATA__ found!');
+    const nextData = JSON.parse(nextDataRaw);
 
-            // Get date string, e.g., "Jun 18, 2025"
-            const metaText = el.find('p.Blog_meta__6TH_f').text();
-            const dateMatch = metaText.match(/[A-Za-z]+ \d{1,2}, \d{4}/);
-            const rawDate = dateMatch ? dateMatch[0] : '';
+    const posts = nextData.props.pageProps.posts || [];
+    const buildId = nextData.buildId;
 
-            // Parse and adjust for Stanford timezone offset (e.g., UTC-7)
-            const pubDate = parseDate(rawDate);
-            if (pubDate) {
-                // Offset in minutes: PDT is UTC-7, so add 7 hours to get UTC
-                const offsetMinutes = 7 * 60;
-                pubDate.setUTCMinutes(pubDate.getUTCMinutes() + offsetMinutes);
-            }
+    const list = posts.slice(0, 20).map((post) => ({
+        title: post.title,
+        link: `${baseUrl}/blog/${post.slug}`,
+        api: `${baseUrl}/_next/data/${buildId}/blog/${post.slug}.json`,
+        author: post.author,
+        pubDate: parseDate(post.dateString, 'MMM DD, YYYY', 'en', '+07:00'),
+    }));
 
-            const summary = title;
-
-            return {
-                title,
-                link,
-                pubDate,
-                description: summary,
-            };
-        });
-
-    // Optional: fetch each post for full content
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
-                const content = load(detailResponse);
-                const articleContent = content('main').html() || content('body').html();
-                item.description = articleContent;
+                // ✅ For full content, request real HTML page
+                const { data: html } = await got(item.link);
+                const $post = load(html);
+
+                // Adjust the selector to match your page structure!
+                const content = $post('div.Post_content__JuwtT').html();
+                item.description = content || '';
+
                 return item;
             })
         )
     );
 
-    const feedTitle = $('title').text();
-    const author = 'Hazy Research';
-    const icon = $('link[rel="icon"]').attr('href');
-
     return {
-        item: items,
-        title: `${author} - ${feedTitle}`,
+        title: 'Hazy Research Blog',
         link: currentUrl,
-        description: feedTitle,
+        description: 'Research updates from Stanford Hazy Research',
         language: 'en',
-        icon,
-        logo: icon,
-        subtitle: feedTitle,
-        author,
-        allowEmpty: true,
+        item: items,
     };
 }
 
