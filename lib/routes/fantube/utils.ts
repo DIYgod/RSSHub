@@ -30,7 +30,7 @@ export const getCreatorFragment = (username: string) =>
         return creatorFragment as CreatorFragment;
     });
 
-export const getCreatorPostReelList = (identifier, limit) =>
+export const getCreatorPostReelList = (identifier: string, limit: number): Promise<PostReelNode[]> =>
     cache.tryGet(`fantube:creatorPostReelList:${identifier}:${limit}`, async () => {
         const response = await ofetch('https://api.prd.fantube.tokyo/graphql', {
             headers: {
