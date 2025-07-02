@@ -31,7 +31,7 @@ export const getCreatorFragment = (username: string) =>
     });
 
 export const getCreatorPostReelList = (identifier, limit) =>
-    cache.tryGet(`fantube:CreatorPostList:${identifier}:${limit}`, async () => {
+    cache.tryGet(`fantube:creatorPostReelList:${identifier}:${limit}`, async () => {
         const response = await ofetch('https://api.prd.fantube.tokyo/graphql', {
             headers: {
                 Referer: baseUrl,
