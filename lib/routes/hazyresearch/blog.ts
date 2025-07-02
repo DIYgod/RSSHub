@@ -51,7 +51,7 @@ async function handler(ctx) {
             const rawDate = dateMatch ? dateMatch[0] : '';
 
             // Parse and adjust for Stanford timezone offset (e.g., UTC-7)
-            let pubDate = parseDate(rawDate);
+            const pubDate = parseDate(rawDate);
             if (pubDate) {
                 // Offset in minutes: PDT is UTC-7, so add 7 hours to get UTC
                 const offsetMinutes = 7 * 60;
