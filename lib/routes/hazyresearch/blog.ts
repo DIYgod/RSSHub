@@ -28,7 +28,7 @@ export const route: Route = {
     url: 'hazyresearch.stanford.edu/blog',
 };
 
-async function handler(ctx) {
+async function handler() {
     const baseUrl = 'https://hazyresearch.stanford.edu';
     const currentUrl = `${baseUrl}/blog`;
     const { data: response } = await got(currentUrl);
@@ -36,7 +36,6 @@ async function handler(ctx) {
 
     // Parse __NEXT_DATA__ for posts
     const nextDataRaw = $('script#__NEXT_DATA__').html();
-    if (!nextDataRaw) throw new Error('No __NEXT_DATA__ found!');
     const nextData = JSON.parse(nextDataRaw);
 
     const posts = nextData.props.pageProps.posts || [];
