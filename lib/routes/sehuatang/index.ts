@@ -1,10 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
 
 const host = 'https://www.sehuatang.net/';
 
@@ -42,9 +41,6 @@ export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
-    features: {
-        requirePuppeteer: true,
-    },
     handler,
     description: `**原创 BT 电影**
 
@@ -65,24 +61,16 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
+    const headers = {
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        Cookie: '_safe=vqd37pjm4p5uodq339yzk6b7jdt6oich',
+    };
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const response = await got(link, {
+        headers,
     });
-    logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
-    await page.waitForSelector('a.enter-btn', { visible: true });
-
-    await Promise.all([page.click('a.enter-btn'), page.waitForNavigation({ waitUntil: 'domcontentloaded' })]);
-    const response = await page.content();
-    await page.close();
-
-    const $ = load(response);
+    const $ = load(response.data);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
@@ -101,19 +89,11 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                const response = await got(info.link, {
+                    headers,
                 });
 
-                await page.goto(info.link, {
-                    // 指定页面等待载入的时间
-                    waitUntil: 'domcontentloaded',
-                });
-                const response = await page.content();
-
-                const $ = load(response);
+                const $ = load(response.data);
                 const postMessage = $("td[id^='postmessage']").slice(0, 1);
                 const images = $(postMessage).find('img');
                 for (const image of images) {
@@ -156,7 +136,7 @@ async function handler(ctx) {
             })
         )
     );
-    await browser.close();
+
     return {
         title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
         link,
