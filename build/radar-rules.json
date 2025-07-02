@@ -13389,6 +13389,19 @@
       }
     ]
   },
+  "fantube.tokyo": {
+    "_name": "FANTUBE",
+    "www": [
+      {
+        "title": "User Posts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/r18/creator/:identifier"
+        ],
+        "target": "/fantube/r18/creator/:identifier"
+      }
+    ]
+  },
   "fanxinzhui.com": {
     "_name": "追新番",
     ".": [
