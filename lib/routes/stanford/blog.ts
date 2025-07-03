@@ -47,7 +47,7 @@ async function handler() {
         link: `${baseUrl}/blog/${post.slug}`,
         api: `${baseUrl}/_next/data/${buildId}/blog/${post.slug}.json`,
         author: post.author,
-        pubDate: timezone(parseDate(post.dateString, 'MMM D, YYYY'), -7)
+        pubDate: timezone(parseDate(post.dateString, 'MMM D, YYYY'), -7),
     }));
 
     const items = await Promise.all(
@@ -75,4 +75,3 @@ async function handler() {
         item: items,
     };
 }
-
