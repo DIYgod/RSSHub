@@ -34572,6 +34572,19 @@
       }
     ]
   },
+  "stanford.edu": {
+    "_name": "Stanford",
+    "hazyresearch": [
+      {
+        "title": "Hazy Research Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog"
+        ],
+        "target": "/stanford/hazyresearch/blog"
+      }
+    ]
+  },
   "startuplatte.com": {
     "_name": "創新拿鐵",
     ".": [
