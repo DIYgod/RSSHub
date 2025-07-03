@@ -31,7 +31,7 @@ function safeNamespaces(namespaces: NamespacesType): NamespacesType {
 
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
 
-export type RoutesType = Record<
+type RoutesType = Record<
     string,
     Route & {
         location: string;
