@@ -5834,6 +5834,19 @@
       }
     ]
   },
+  "azul.com": {
+    "_name": "Azul",
+    "www": [
+      {
+        "title": "Downloads",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/downloads"
+        ],
+        "target": "/azul/downloads"
+      }
+    ]
+  },
   "baai.ac.cn": {
     "_name": "北京智源人工智能研究院",
     "hub": [
