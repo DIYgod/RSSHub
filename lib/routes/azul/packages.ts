@@ -85,7 +85,7 @@ export const route: Route = {
     example: '/azul/downloads',
     parameters: undefined,
     description: undefined,
-    categories: ['programming'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
