@@ -83,7 +83,7 @@ async function handler(ctx) {
                     description += body.html();
                 }
 
-                if (data.publisher.name === '轉角國際 udn Global') {
+                if (data.publisher.name.includes('轉角國際 udn Global')) {
                     // 轉角24小時
                     description = $('.story_body_content')
                         .html()
