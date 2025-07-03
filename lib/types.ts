@@ -346,6 +346,9 @@ interface RouteItem {
 
         /** Set to `true` if the feed supports Sci-Hub */
         supportScihub?: boolean;
+
+        /** Set to `true` if this feed is not safe for work */
+        nsfw?: boolean;
     };
 
     /**

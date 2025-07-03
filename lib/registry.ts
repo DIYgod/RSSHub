@@ -14,16 +14,34 @@ import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
 
+function isSafeRoutes(routes: RoutesType): boolean {
+    return Object.values(routes).every((route: Route) => !route.features?.nsfw);
+}
+
+function safeNamespaces(namespaces: NamespacesType): NamespacesType {
+    const safe: NamespacesType = {};
+
+    for (const [key, value] of Object.entries(namespaces)) {
+        if (value.routes === null || value.routes === undefined || isSafeRoutes(value.routes)) {
+            safe[key] = value;
+        }
+    }
+    return safe;
+}
+
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
-let namespaces: Record<
+
+type RoutesType = Record<
+    string,
+    Route & {
+        location: string;
+    }
+>;
+
+export type NamespacesType = Record<
     string,
     Namespace & {
-        routes: Record<
-            string,
-            Route & {
-                location: string;
-            }
-        >;
+        routes: RoutesType;
         apiRoutes: Record<
             string,
             APIRoute & {
@@ -31,7 +49,9 @@ let namespaces: Record<
             }
         >;
     }
-> = {};
+>;
+
+let namespaces: NamespacesType = {};
 
 switch (process.env.NODE_ENV) {
     case 'production':
@@ -40,12 +60,20 @@ switch (process.env.NODE_ENV) {
     case 'test':
         // @ts-expect-error
         namespaces = await import('../assets/build/routes.json');
+        if (namespaces.default) {
+            // @ts-ignore
+            namespaces = namespaces.default;
+        }
         break;
     default:
         modules = directoryImport({
             targetDirectoryPath: path.join(__dirname, './routes'),
             importPattern: /\.ts$/,
         }) as typeof modules;
+}
+
+if (config.feature.disable_nsfw) {
+    namespaces = safeNamespaces(namespaces);
 }
 
 if (Object.keys(modules).length) {
