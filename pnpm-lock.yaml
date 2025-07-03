@@ -52,7 +52,7 @@ importers:
         version: 1.14.4(hono@4.8.3)
       '@hono/zod-openapi':
         specifier: 0.19.9
-        version: 0.19.9(hono@4.8.3)(zod@3.25.67)
+        version: 0.19.9(hono@4.8.3)(zod@3.25.71)
       '@notionhq/client':
         specifier: 4.0.0
         version: 4.0.0
@@ -291,8 +291,8 @@ importers:
         specifier: 14.0.0
         version: 14.0.0
       zod:
-        specifier: 3.25.67
-        version: 3.25.67
+        specifier: 3.25.71
+        version: 3.25.71
     devDependencies:
       '@babel/preset-env':
         specifier: 7.27.2
@@ -508,6 +508,10 @@ packages:
     resolution: {integrity: sha512-ZGhA37l0e/g2s1Cnzdix0O3aLYm66eF8aufiVteOgnwxgnRP8GoyMj7VWsgWnQbVKXyge7hqrFh2K2TQM6t1Hw==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/generator@7.28.0':
+    resolution: {integrity: sha512-lJjzvrbEeWrhB4P3QBsH7tey117PjLZnDbLiQEKjQ/fNJTjuq4HSqgFA+UNSwZT8D7dxxbnuSBMsa1lrWzKlQg==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-annotate-as-pure@7.27.3':
     resolution: {integrity: sha512-fXSwMQqitTGeHLBC08Eq5yXz2m37E4pJX1qAU1+2cNedz/ifv/bVXft90VeSav5nFO61EcNgwr0aJxbyPaWBPg==}
     engines: {node: '>=6.9.0'}
@@ -532,6 +536,10 @@ packages:
     resolution: {integrity: sha512-uJnGFcPsWQK8fvjgGP5LZUZZsYGIoPeRjSF5PGwrelYgq7Q15/Ft9NGFp1zglwgIv//W0uG4BevRuSJRyylZPg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
+
+  '@babel/helper-globals@7.28.0':
+    resolution: {integrity: sha512-+W6cISkXFa1jXsDEdYA8HeevQT/FULhxzR99pxphltZcVaugps53THCeiWA8SguxxpSp3gKPiuYfSWopkLQ4hw==}
+    engines: {node: '>=6.9.0'}
 
   '@babel/helper-member-expression-to-functions@7.27.1':
     resolution: {integrity: sha512-E5chM8eWjTp/aNoVpcbfM7mLxu9XGLWYise2eBKGQomAk/Mb4XoxyqXTZbuTohbsl8EKqdlMhnDI2CCLfcs9wA==}
@@ -597,6 +605,11 @@ packages:
 
   '@babel/parser@7.27.7':
     resolution: {integrity: sha512-qnzXzDXdr/po3bOTbTIQZ7+TxNKxpkN5IifVLXS+r7qwynkZfPyjZfE7hCXbo7IoO9TNcSyibgONsf2HauUd3Q==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.28.0':
+    resolution: {integrity: sha512-jVZGvOxOuNSsuQuLRTh13nU0AogFlw32w/MT+LV6D3sP5WdbW61E77RnkbaO2dUvmPAYrBDJXGn5gGS6tH4j8g==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1001,8 +1014,16 @@ packages:
     resolution: {integrity: sha512-X6ZlfR/O/s5EQ/SnUSLzr+6kGnkg8HXGMzpgsMsrJVcfDtH1vIp6ctCN4eZ1LS5c0+te5Cb6Y514fASjMRJ1nw==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/traverse@7.28.0':
+    resolution: {integrity: sha512-mGe7UK5wWyh0bKRfupsUchrQGqvDbZDbKJw+kcRGSmdHVYrv+ltd0pnpDTVpiTqnaBru9iEvA8pz8W46v0Amwg==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/types@7.27.7':
     resolution: {integrity: sha512-8OLQgDScAOHXnAz2cV+RfzzNMipuLVBz2biuAJFMV9bfkNf393je3VM8CLkjQodW5+iWsSJdSgSWT6rsZoXHPw==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/types@7.28.0':
+    resolution: {integrity: sha512-jYnje+JyZG5YThjHiF28oT4SIZLnYOcSBb6+SDaFIyzDVSkXQmQQYclJ2R+YxcdmK0AX6x1E5OQNtuh3jHDrUg==}
     engines: {node: '>=6.9.0'}
 
   '@bbob/core@4.2.0':
@@ -1528,6 +1549,9 @@ packages:
   '@jridgewell/gen-mapping@0.3.11':
     resolution: {integrity: sha512-C512c1ytBTio4MrpWKlJpyFHT6+qfFL8SZ58zBzJ1OOzUEjHeF1BtjY2fH7n4x/g2OV/KiiMLAivOp1DXmiMMw==}
 
+  '@jridgewell/gen-mapping@0.3.12':
+    resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
+
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
     engines: {node: '>=6.0.0'}
@@ -1535,8 +1559,14 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.3':
     resolution: {integrity: sha512-AiR5uKpFxP3PjO4R19kQGIMwxyRyPuXmKEEy301V1C0+1rVjS94EZQXf1QKZYN8Q0YM+estSPhmx5JwNftv6nw==}
 
+  '@jridgewell/sourcemap-codec@1.5.4':
+    resolution: {integrity: sha512-VT2+G1VQs/9oz078bLrYbecdZKs912zQlkelYpuf+SXF+QvZDYJlbx/LSx+meSAwdDFnF8FVXW92AVjjkVmgFw==}
+
   '@jridgewell/trace-mapping@0.3.28':
     resolution: {integrity: sha512-KNNHHwW3EIp4EDYOvYFGyIFfx36R2dNJYH4knnZlF8T5jdbD5Wx8xmSaQ2gP9URkJ04LGEtlcCtwArKcmFcwKw==}
+
+  '@jridgewell/trace-mapping@0.3.29':
+    resolution: {integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==}
 
   '@jsep-plugin/assignment@1.3.0':
     resolution: {integrity: sha512-VVgV+CXrhbMI3aSusQyclHkenWSAm95WaiKrMxRFam3JSUiIaQjoMIw2sEs/OX4XifnqeQUN4DYbJjlA8EfktQ==}
@@ -6137,8 +6167,8 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
-  zod@3.25.67:
-    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+  zod@3.25.71:
+    resolution: {integrity: sha512-BsBc/NPk7h8WsUWYWYL+BajcJPY8YhjelaWu2NMLuzgraKAz4Lb4/6K11g9jpuDetjMiqhZ6YaexFLOC0Ogi3Q==}
 
 snapshots:
 
@@ -6155,10 +6185,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
 
-  '@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.67)':
+  '@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.71)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 3.25.67
+      zod: 3.25.71
 
   '@babel/code-frame@7.0.0':
     dependencies:
@@ -6176,14 +6206,14 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.27.1
-      '@babel/generator': 7.27.5
+      '@babel/generator': 7.28.0
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-module-transforms': 7.27.3(@babel/core@7.27.7)
       '@babel/helpers': 7.27.6
-      '@babel/parser': 7.27.7
+      '@babel/parser': 7.28.0
       '@babel/template': 7.27.2
-      '@babel/traverse': 7.27.7
-      '@babel/types': 7.27.7
+      '@babel/traverse': 7.28.0
+      '@babel/types': 7.28.0
       convert-source-map: 2.0.0
       debug: 4.4.1
       gensync: 1.0.0-beta.2
@@ -6198,6 +6228,14 @@ snapshots:
       '@babel/types': 7.27.7
       '@jridgewell/gen-mapping': 0.3.11
       '@jridgewell/trace-mapping': 0.3.28
+      jsesc: 3.1.0
+
+  '@babel/generator@7.28.0':
+    dependencies:
+      '@babel/parser': 7.28.0
+      '@babel/types': 7.28.0
+      '@jridgewell/gen-mapping': 0.3.12
+      '@jridgewell/trace-mapping': 0.3.29
       jsesc: 3.1.0
 
   '@babel/helper-annotate-as-pure@7.27.3':
@@ -6242,6 +6280,8 @@ snapshots:
       resolve: 1.22.10
     transitivePeerDependencies:
       - supports-color
+
+  '@babel/helper-globals@7.28.0': {}
 
   '@babel/helper-member-expression-to-functions@7.27.1':
     dependencies:
@@ -6314,7 +6354,7 @@ snapshots:
   '@babel/helpers@7.27.6':
     dependencies:
       '@babel/template': 7.27.2
-      '@babel/types': 7.27.7
+      '@babel/types': 7.28.0
 
   '@babel/highlight@7.25.9':
     dependencies:
@@ -6326,6 +6366,10 @@ snapshots:
   '@babel/parser@7.27.7':
     dependencies:
       '@babel/types': 7.27.7
+
+  '@babel/parser@7.28.0':
+    dependencies:
+      '@babel/types': 7.28.0
 
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.27.1(@babel/core@7.27.7)':
     dependencies:
@@ -6843,7 +6887,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@babel/traverse@7.28.0':
+    dependencies:
+      '@babel/code-frame': 7.27.1
+      '@babel/generator': 7.28.0
+      '@babel/helper-globals': 7.28.0
+      '@babel/parser': 7.28.0
+      '@babel/template': 7.27.2
+      '@babel/types': 7.28.0
+      debug: 4.4.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/types@7.27.7':
+    dependencies:
+      '@babel/helper-string-parser': 7.27.1
+      '@babel/helper-validator-identifier': 7.27.1
+
+  '@babel/types@7.28.0':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
@@ -7173,18 +7234,18 @@ snapshots:
     dependencies:
       hono: 4.8.3
 
-  '@hono/zod-openapi@0.19.9(hono@4.8.3)(zod@3.25.67)':
+  '@hono/zod-openapi@0.19.9(hono@4.8.3)(zod@3.25.71)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.67)
-      '@hono/zod-validator': 0.7.0(hono@4.8.3)(zod@3.25.67)
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.71)
+      '@hono/zod-validator': 0.7.0(hono@4.8.3)(zod@3.25.71)
       hono: 4.8.3
       openapi3-ts: 4.5.0
-      zod: 3.25.67
+      zod: 3.25.71
 
-  '@hono/zod-validator@0.7.0(hono@4.8.3)(zod@3.25.67)':
+  '@hono/zod-validator@0.7.0(hono@4.8.3)(zod@3.25.71)':
     dependencies:
       hono: 4.8.3
-      zod: 3.25.67
+      zod: 3.25.71
 
   '@humanfs/core@0.19.1': {}
 
@@ -7266,14 +7327,26 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.3
       '@jridgewell/trace-mapping': 0.3.28
 
+  '@jridgewell/gen-mapping@0.3.12':
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.4
+      '@jridgewell/trace-mapping': 0.3.29
+
   '@jridgewell/resolve-uri@3.1.2': {}
 
   '@jridgewell/sourcemap-codec@1.5.3': {}
+
+  '@jridgewell/sourcemap-codec@1.5.4': {}
 
   '@jridgewell/trace-mapping@0.3.28':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.3
+
+  '@jridgewell/trace-mapping@0.3.29':
+    dependencies:
+      '@jridgewell/resolve-uri': 3.1.2
+      '@jridgewell/sourcemap-codec': 1.5.4
 
   '@jsep-plugin/assignment@1.3.0(jsep@1.4.0)':
     dependencies:
@@ -8746,7 +8819,7 @@ snapshots:
     dependencies:
       devtools-protocol: 0.0.1439962
       mitt: 3.0.1
-      zod: 3.25.67
+      zod: 3.25.71
 
   ci-info@4.2.0: {}
 
@@ -12361,4 +12434,4 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zod@3.25.67: {}
+  zod@3.25.71: {}
