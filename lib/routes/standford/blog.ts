@@ -35,7 +35,7 @@ async function handler() {
     const $ = load(response);
 
     // Parse __NEXT_DATA__ for posts
-    const nextDataRaw = $('script#__NEXT_DATA__').html();
+    const nextDataRaw = $('script#__NEXT_DATA__').text();
     const nextData = JSON.parse(nextDataRaw);
 
     const posts = nextData.props.pageProps.posts || [];
@@ -57,7 +57,8 @@ async function handler() {
                 const $post = load(html);
 
                 // Adjust the selector to match your page structure!
-                const content = $post('div.Post_content__JuwtT').html();
+                const content = $post('main [class^="Post_content"]').html();
+
                 item.description = content || '';
 
                 return item;
