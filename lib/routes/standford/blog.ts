@@ -3,11 +3,12 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: ['/blog'],
+    path: ['/hazyresearch/blog'],
     categories: ['blog'],
-    example: '/hazyresearch/blog',
+    example: '/standford/hazyresearch/blog',
     parameters: {},
     features: {
         requireConfig: false,
@@ -41,12 +42,12 @@ async function handler() {
     const posts = nextData.props.pageProps.posts || [];
     const buildId = nextData.buildId;
 
-    const list = posts.slice(0, 20).map((post) => ({
+    const list = posts.map((post) => ({
         title: post.title,
         link: `${baseUrl}/blog/${post.slug}`,
         api: `${baseUrl}/_next/data/${buildId}/blog/${post.slug}.json`,
         author: post.author,
-        pubDate: parseDate(post.dateString, 'MMM DD, YYYY', 'en', '+07:00'),
+        pubDate: timezone(parseDate(post.dateString, 'MMM D, YYYY'), -7)
     }));
 
     const items = await Promise.all(
