@@ -19,6 +19,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['Urabartin'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
