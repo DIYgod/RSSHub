@@ -47,6 +47,9 @@ export const route: Route = {
 -  \`/141jav/date/2020/07/30\`
 
       \`date\` 类型的关键词必须填写 **日期(年/月/日)**`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

@@ -33,6 +33,9 @@ export const route: Route = {
     name: '禁忌书屋',
     maintainers: ['nczitzk', 'Gabrlie'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx: Context) {

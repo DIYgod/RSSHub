@@ -15,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '短篇', // 源名称
     maintainers: ['Lyunvy'], // 维护者

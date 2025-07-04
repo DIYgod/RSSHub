@@ -14,6 +14,7 @@ export const route: Route = {
         supportBT: true,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Tag',
     maintainers: ['yindaheng98', 'syrinka'],

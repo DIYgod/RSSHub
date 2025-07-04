@@ -81,4 +81,7 @@ export const route: Route = {
     maintainers: ['junfengP'],
     handler,
     url: 'www.jjmhw.cc',
+    features: {
+        nsfw: true,
+    },
 };

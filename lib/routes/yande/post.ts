@@ -30,6 +30,9 @@ export const route: Route = {
 | ------- | -------- | ------- | -------- |
 | 1d | 1w | 1m | 1y |`,
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

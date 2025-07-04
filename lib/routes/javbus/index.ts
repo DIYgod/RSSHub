@@ -37,6 +37,9 @@ export const route: Route = {
             description: 'Any path of list page on javbus',
         },
     },
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

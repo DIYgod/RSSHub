@@ -22,6 +22,7 @@ export const route: Route = {
                 optional: true,
             },
         ],
+        nsfw: true,
     },
 };
 
