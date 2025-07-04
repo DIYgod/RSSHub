@@ -43,6 +43,9 @@ export const route: Route = {
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,
+    features: {
+        nsfw: true,
+    },
     description: `**原创 BT 电影**
 
 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
@@ -108,7 +111,7 @@ async function handler(ctx) {
                 });
 
                 const $ = load(response);
-                const postMessage = $('div[id^="postmessage"]').slice(0, 1);
+                const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
                 const images = $(postMessage).find('img');
                 for (const image of images) {
                     const file = $(image).attr('file');
