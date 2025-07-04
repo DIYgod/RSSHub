@@ -1,10 +1,8 @@
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import puppeteer from '@/utils/puppeteer';
 import logger from '@/utils/logger';
-import { describe } from 'node:test';
 
 const getHlcg = async () => {
     const baseUrl = 'https://d2rpapu8kgjdgu.cloudfront.net';
@@ -33,10 +31,10 @@ const getHlcg = async () => {
         // We use the `map()` method to traverse the array and parse the data we need from each element.
         .map((item) => {
             item = $(item);
-            let a = item.find('a').first();
+            const a = item.find('a').first();
             return {
                 title: a.text(),
-                description: item.find(".placeholder-img").first().html(),
+                description: item.find('.placeholder-img').first().html(),
                 // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(item.find('relative-time').attr('datetime')),
@@ -49,7 +47,7 @@ const getHlcg = async () => {
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, () => {
+            cache.tryGet(item.link, async () => {
                 // // highlight-start
                 // // reuse the browser instance and open a new tab
                 // const page = await browser.newPage();
@@ -72,7 +70,8 @@ const getHlcg = async () => {
                 // const $ = load(response);
 
                 // item.description = $('.client-only-placeholder editormd-preview').first().html();
-
+                // await
+                await new Promise((resolve) => setTimeout(resolve, 1));
                 return item;
             })
         )
