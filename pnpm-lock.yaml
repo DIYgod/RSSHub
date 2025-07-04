@@ -222,8 +222,8 @@ importers:
         specifier: 2.5.9
         version: 2.5.9
       query-string:
-        specifier: 9.2.1
-        version: 9.2.1
+        specifier: 9.2.2
+        version: 9.2.2
       rate-limiter-flexible:
         specifier: 7.1.1
         version: 7.1.1
@@ -5061,8 +5061,8 @@ packages:
     resolution: {integrity: sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==}
     engines: {node: '>=6'}
 
-  query-string@9.2.1:
-    resolution: {integrity: sha512-3jTGGLRzlhu/1ws2zlr4Q+GVMLCQTLFOj8CMX5x44cdZG9FQE07x2mQhaNxaKVPNmIDu0mvJ/cEwtY7Pim7hqA==}
+  query-string@9.2.2:
+    resolution: {integrity: sha512-pDSIZJ9sFuOp6VnD+5IkakSVf+rICAuuU88Hcsr6AKL0QtxSIfVuKiVP2oahFI7tk3CRSexwV+Ya6MOoTxzg9g==}
     engines: {node: '>=18'}
 
   querystringify@2.2.0:
@@ -11247,7 +11247,7 @@ snapshots:
       split-on-first: 1.1.0
       strict-uri-encode: 2.0.0
 
-  query-string@9.2.1:
+  query-string@9.2.2:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
