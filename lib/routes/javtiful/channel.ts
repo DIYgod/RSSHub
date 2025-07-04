@@ -17,6 +17,9 @@ export const route: Route = {
             target: '/channel/:id',
         },
     ],
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx): Promise<Data> {
