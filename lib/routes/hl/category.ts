@@ -2,8 +2,8 @@ import { Route } from '@/types';
 import getHlcg from './hlcg';
 export const route: Route = {
     path: '/:category',
-    categories: ['traditional-media'],
-    example: 'd2rpapu8kgjdgu.cloudfront.net/hlcg',
+    categories: ['reading'],
+    example: '18hlw.com/hlcg',
     parameters: { category: '分类名' },
     features: {
         requireConfig: false,
@@ -15,23 +15,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['d2rpapu8kgjdgu.cloudfront.net/:category'],
+            source: ['18hlw.com/:category'],
         },
     ],
     name: 'hl',
-    maintainers: ['bomky'],
+    maintainers: ['zy97'],
     handler,
 };
 async function handler(ctx) {
-    const category = ctx.req.param('category');
-
+    let category = ctx.req.param('category');
     switch (category) {
         case 'hlcg':
-            // 每周质量报告
-            return await getHlcg();
-
+            category = 'hlcg';
+            break;
+        case 'jrrs':
+            category = 'jrrs';
+            break;
+        case 'jqrm':
+            category = 'jqrm';
+            break;
         default:
-            // 央视新闻
-            return await getHlcg();
+            category = 'hlcg';
+            break;
     }
+    return await getHlcg(category);
 }

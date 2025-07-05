@@ -2,6 +2,6 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'hl',
-    url: 'd2rpapu8kgjdgu.cloudfront.net',
+    url: '18hlw.com',
     lang: 'zh-CN',
 };
