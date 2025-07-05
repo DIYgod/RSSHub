@@ -220,6 +220,9 @@ export type Config = {
     lightnovel: {
         cookie?: string;
     };
+    lofter: {
+        cookies?: string;
+    };
     lorientlejour: {
         token?: string;
         username?: string;
@@ -682,6 +685,9 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        lofter: {
+            cookies: envs.LOFTER_COOKIE,
         },
         lorientlejour: {
             token: envs.LORIENTLEJOUR_TOKEN,
