@@ -26480,6 +26480,35 @@
       }
     ]
   },
+  "musify.club": {
+    "_name": "musify",
+    ".": [
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:language"
+        ],
+        "target": "/musify/:language"
+      },
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/en"
+        ],
+        "target": "/musify/en"
+      },
+      {
+        "title": "​​Последняя",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/musify/"
+      }
+    ]
+  },
   "mwm.net.cn": {
     "_name": "管理世界",
     ".": [
