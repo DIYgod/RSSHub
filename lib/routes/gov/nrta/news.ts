@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['yuxinliu-alex'],
     handler,
     description: `| 总局要闻 | 公告公示 | 工作动态 | 其他 |
-  | -------- | -------- | -------- | ---- |
-  | 112      | 113      | 114      |      |`,
+| -------- | -------- | -------- | ---- |
+| 112      | 113      | 114      |      |`,
 };
 
 async function handler(ctx) {
@@ -52,13 +52,13 @@ async function handler(ctx) {
     });
 
     const list = $('a', 'record')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

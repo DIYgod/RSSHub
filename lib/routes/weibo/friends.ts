@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { config } from '@/config';
 import weiboUtils from './utils';
@@ -141,7 +141,7 @@ async function handler(ctx) {
             }
 
             if (displayComments === '1') {
-                description = await weiboUtils.formatComments(ctx, description, item);
+                description = await weiboUtils.formatComments(ctx, description, item, '0');
             }
 
             if (displayArticle === '1') {

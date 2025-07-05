@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/scholar/:query',
-    categories: ['journal', 'popular'],
+    categories: ['journal'],
     example: '/google/scholar/data+visualization',
     parameters: { query: 'query statement which supports「Basic」and「Advanced」modes' },
     features: {
@@ -48,7 +48,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('#gs_res_ccl_mid .gs_r.gs_or.gs_scl .gs_ri').get();
+    const list = $('#gs_res_ccl_mid .gs_r.gs_or.gs_scl .gs_ri').toArray();
 
     const out = list.map((item) => {
         const $ = load(item);

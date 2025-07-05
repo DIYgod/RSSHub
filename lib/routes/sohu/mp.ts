@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -12,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/mp/:xpt',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sohu/mp/c29odXptdGhnbjZ3NEBzb2h1LmNvbQ==',
     parameters: { xpt: '搜狐号 xpt ，可在URL中找到或搜狐号 ID' },
     radar: [
@@ -124,11 +122,12 @@ async function handler(ctx) {
             )
             .sort((a: any, b: any) => b.length - a.length)[0] || '{}'
     );
-    const renderData = JSON.parse(
+    const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/renderData:\s(.*)/)?.[1] || '{}'
+            .match(/({.*})/)?.[1]
     );
+    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
     const globalConst = JSON.parse(
         $('script:contains("globalConst")')
             .text()

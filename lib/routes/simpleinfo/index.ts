@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/simpleinfo',
     parameters: { category: '分类名' },
     features: {
@@ -33,16 +31,16 @@ export const route: Route = {
     maintainers: ['haukeng'],
     handler,
     description: `| 夥伴聊聊 | 專案設計 |
-  | -------- | -------- |
-  | work     | talk     |
+| -------- | -------- |
+| work     | talk     |
 
-  | 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
-  | ---------- | ---------- | ---------- | --------------------- |
-  | news       | politics   | society    | psychology-philosophy |
+| 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
+| ---------- | ---------- | ---------- | --------------------- |
+| news       | politics   | society    | psychology-philosophy |
 
-  | 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
-  | ---------- | ------------------ | ---------- | ------------ | ------------ |
-  | science    | environment-health | acg        | book-sharing | other-topics |`,
+| 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
+| ---------- | ------------------ | ---------- | ------------ | ------------ |
+| science    | environment-health | acg        | book-sharing | other-topics |`,
 };
 
 async function handler(ctx) {
@@ -55,15 +53,15 @@ async function handler(ctx) {
     $('.-ad').remove();
 
     const list = $('.article-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('.title').text(),
                 link: item.find('a').first().attr('href'),
                 category: item.find('.category').text(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

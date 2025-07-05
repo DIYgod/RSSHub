@@ -12,14 +12,14 @@ export const route: Route = {
     name: 'OpenRice 開飯熱店 - 年度餐廳投票',
     description: `
   lang: 语言，见下方列表
-  | 简体 | 繁體 | EN |
-  | ----- | ------ | ----- |
-  | zh-cn | zh | en |
+| 简体 | 繁體 | EN |
+| ----- | ------ | ----- |
+| zh-cn | zh | en |
 
   categoryKey: 部分类别，见下方列表 (更多的类别可以在页面的link中对照获取)
-  | 中菜館 | 上海菜 | 粵菜 | 川菜 | 港式 | 粥粉麵店 | 廚師發辦 | 韓國菜 | 泰國菜 | 越南菜 |
-  | -------- | -------- | -------- |  -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | chinese | shanghainese | guangdong | sichuan | hkstyle | congee_noodles | omakase | korean | thai | vietnamese |
+| 中菜館 | 上海菜 | 粵菜 | 川菜 | 港式 | 粥粉麵店 | 廚師發辦 | 韓國菜 | 泰國菜 | 越南菜 |
+| -------- | -------- | -------- |  -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| chinese | shanghainese | guangdong | sichuan | hkstyle | congee_noodles | omakase | korean | thai | vietnamese |
   `,
 };
 

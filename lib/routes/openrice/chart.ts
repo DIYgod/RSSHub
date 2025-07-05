@@ -3,8 +3,6 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 const baseUrl = 'https://www.openrice.com';
 
 export const route: Route = {
@@ -16,13 +14,13 @@ export const route: Route = {
     parameters: { lang: '语言，缺省为 zh', category: '类别，缺省为 most-bookmarked' },
     name: '香港餐廳排行榜',
     description: `
-  | 简体 | 繁體 | EN |
-  | ----- | ------ | ----- |
-  | zh-cn | zh | en |
+| 简体 | 繁體 | EN |
+| ----- | ------ | ----- |
+| zh-cn | zh | en |
 
-  | 最多收藏 | 每周最高评分 | 最高浏览 | 最佳甜品餐厅 |
-  | ----- | ------ | ----- | ----- |
-  | most-bookmarked | best-rating | most-popular | best-dessert |
+| 最多收藏 | 每周最高评分 | 最高浏览 | 最佳甜品餐厅 |
+| ----- | ------ | ----- | ----- |
+| most-bookmarked | best-rating | most-popular | best-dessert |
   `,
 };
 

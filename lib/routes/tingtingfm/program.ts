@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,7 +10,7 @@ import { getClientVal, sign } from './utils';
 
 export const route: Route = {
     path: '/program/:programId',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/tingtingfm/program/M7VJv6Jj4R',
     parameters: { programId: '节目 ID，可以在 URL 中找到' },

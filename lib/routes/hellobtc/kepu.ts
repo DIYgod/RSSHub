@@ -31,7 +31,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/kepu/:channel?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hellobtc/kepu/latest',
     parameters: { channel: '类型，见下表，默认为最新' },
     features: {
@@ -46,8 +46,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| latest | bitcoin | ethereum | defi | inter\_blockchain | mining | safety | satoshi\_nakomoto | public\_blockchain |
-  | ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
-  | 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
+| ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
+| 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
 };
 
 async function handler(ctx) {
@@ -58,11 +58,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $(channelSelector[channel])
         .find('div.new_item')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a').text(),
             link: $(item).find('a').attr('href'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

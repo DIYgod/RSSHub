@@ -74,8 +74,8 @@ async function handler(ctx) {
             return '';
         }
 
-        const filter = item.substring(0, item.indexOf('='));
-        const option = item.substring(item.lastIndexOf('=') + 1);
+        const filter = item.slice(0, item.indexOf('='));
+        const option = item.slice(item.lastIndexOf('=') + 1);
 
         switch (filter) {
             case 'mark':
@@ -105,7 +105,7 @@ async function handler(ctx) {
                 break;
             // If user mistakenly set `category=Int`
             case 'category':
-                isNaN(Number.parseInt(option)) ? (item = '') : (item = `category_id=${option}`);
+                Number.isNaN(Number.parseInt(option)) ? (item = '') : (item = `category_id=${option}`);
                 break;
             case 'order':
                 if (option !== 'id' && option !== 'category_title' && option !== 'published_at' && option !== 'status' && option !== 'category_id') {
@@ -117,7 +117,7 @@ async function handler(ctx) {
             // parameter, since user may mistakenly input this parameter
             // several times.
             case 'limit':
-                if (!isNaN(option) && !setLimit.length) {
+                if (!Number.isNaN(option) && !setLimit.length) {
                     limit = option;
                     setLimit.push(1);
                 }
@@ -157,7 +157,7 @@ async function handler(ctx) {
 
     let queryLimit = ctx.req.query('limit');
     let result: Data;
-    if (feeds.search(/feeds?=/g) !== -1 || !isNaN(Number.parseInt(feeds.split('&').join('')))) {
+    if (feeds.search(/feeds?=/g) !== -1 || !Number.isNaN(Number.parseInt(feeds.split('&').join('')))) {
         const feedsID = feeds.replaceAll(/feeds?=/g, '');
         const feedsList = [feedsID.split('&')].flat();
 

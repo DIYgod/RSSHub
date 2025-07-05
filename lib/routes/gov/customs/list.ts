@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/customs/list/:gchannel?',
     categories: ['government'],
     example: '/gov/customs/list/paimai',
-    parameters: { gchannel: '支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`' },
+    parameters: { gchannel: '支持 `paimai`, `fagui` 及 `latest` 3 个频道，默认为 `paimai`' },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -26,7 +26,7 @@ export const route: Route = {
             target: '/customs/list',
         },
     ],
-    name: '拍卖信息 / 海关法规',
+    name: '拍卖信息 / 海关法规 / 最新文件',
     maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
     handler,
     url: 'www.customs.gov.cn/',
@@ -49,13 +49,17 @@ async function handler(ctx) {
             channelName = '海关法规';
             link = `${host}/customs/302249/302266/index.html`;
             break;
+        case 'latest':
+            channelName = '最新文件';
+            link = `${host}/customs/302249/2480148/index.html`;
+            break;
         default:
             channelName = '拍卖信息';
             link = `${host}/customs/302249/zfxxgk/2799825/2799883/index.html`;
             break;
     }
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
 
     const list = await cache.tryGet(
         link,
@@ -104,11 +108,12 @@ async function handler(ctx) {
         )
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title: `中国海关-${channelName}`,
         link,
+        language: 'zh-CN',
         item: out,
     };
 }

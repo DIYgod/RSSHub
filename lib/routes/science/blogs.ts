@@ -52,8 +52,8 @@ async function handler(ctx) {
 
             const response = await page.content();
 
-            page.close();
-            browser.close();
+            await page.close();
+            await browser.close();
             return response;
         },
         config.cache.routeExpire,

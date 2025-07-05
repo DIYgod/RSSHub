@@ -1,22 +1,20 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import { parseRelativeDate } from '@/utils/parse-date';
 import { puppeteerGet } from './utils';
-import puppeteer from '@/utils/puppeteer';
 import sanitizeHtml from 'sanitize-html';
+import cache from '@/utils/cache';
 
 export const route: Route = {
-    path: '/user/:id',
-    categories: ['social-media', 'popular'],
+    path: '/user/:id/:type?',
+    categories: ['social-media'],
     example: '/picnob/user/xlisa_olivex',
-    parameters: { id: 'Instagram id' },
+    parameters: {
+        id: 'Instagram id',
+        type: 'Type of profile page (profile or tagged)',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -27,129 +25,94 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['piokok.com/profile/:id/*'],
+            source: ['www.pixnoy.com/profile/:id'],
             target: '/user/:id',
+        },
+        {
+            source: ['www.pixnoy.com/profile/:id/tagged'],
+            target: '/user/:id/tagged',
         },
     ],
     name: 'User Profile - Picnob',
-    maintainers: ['TonyRL', 'micheal-death'],
+    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod'],
     handler,
     view: ViewType.Pictures,
 };
 
 async function handler(ctx) {
-    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'piokok' eventually
-    const baseUrl = 'https://www.piokok.com';
+    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixnoy' eventually
+    const baseUrl = 'https://www.pixnoy.com';
     const id = ctx.req.param('id');
-    const url = `${baseUrl}/profile/${id}/`;
+    const type = ctx.req.param('type') ?? 'profile';
+    const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
-    const browser = await puppeteer();
     // TODO: can't bypass cloudflare 403 error without puppeteer
-    const profile = (await cache.tryGet(`picnob:user:${id}`, async () => {
-        let html;
-        let usePuppeteer = false;
-        try {
-            const data = await ofetch(url, {
-                headers: {
-                    accept: 'text/html',
-                    referer: 'https://www.google.com/',
-                },
-            });
-            html = data;
-        } catch (error: any) {
-            if (error.message.includes('403')) {
-                html = await puppeteerGet(url, browser);
-                usePuppeteer = true;
-            }
-        }
-        const $ = load(html);
-        const name = $('h1.fullname').text();
-        const userId = $('input[name=userid]').attr('value');
-
-        return {
-            name,
-            userId,
-            description: $('.info .sum').text(),
-            image: $('.ava .pic img').attr('src'),
-            usePuppeteer,
-        };
-    })) as {
-        name: string;
-        userId: string;
-        description: string;
-        image: string;
-        usePuppeteer: boolean;
-    };
-
-    let posts;
-    if (profile.usePuppeteer) {
-        const data = await puppeteerGet(`${baseUrl}/api/posts?userid=${profile.userId}`, browser);
-        posts = data.posts;
-    } else {
-        const data = await ofetch(`${baseUrl}/api/posts`, {
-            headers: {
-                accept: 'application/json',
-            },
-            query: {
-                userid: profile.userId,
-            },
-        });
-        posts = data.posts;
+    let html;
+    let usePuppeteer = false;
+    try {
+        const data = await ofetch(profileUrl);
+        html = data;
+    } catch {
+        html = await puppeteerGet(profileUrl);
+        usePuppeteer = true;
     }
+    const $ = load(html);
 
-    const list = await Promise.all(
-        posts.items.map(async (item) => {
-            const { shortcode, sum, sum_pure, type, time } = item;
-
-            const link = `${baseUrl}/post/${shortcode}/`;
-            if (type === 'img_multi') {
-                item.images = await cache.tryGet(link, async () => {
-                    let html;
-                    if (profile.usePuppeteer) {
-                        html = await puppeteerGet(link, browser);
-                    } else {
-                        const data = await ofetch(link);
-                        html = data;
-                    }
-                    const $ = load(html);
-                    return [
-                        ...new Set(
-                            $('.post_slide a')
-                                .toArray()
-                                .map((a: any) => {
-                                    a = $(a);
-                                    return {
-                                        ori: a.attr('href'),
-                                        url: a.find('img').attr('data-src'),
-                                        isVideo: !!a.find('.icon_play').length,
-                                    };
-                                })
-                        ),
-                    ];
-                });
-            }
+    const list = $('.post_box')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const sum = $item.find('.sum').text();
+            const coverLink = $item.find('.cover_link').attr('href');
+            const shortcode = coverLink?.split('/')?.[2];
 
             return {
-                title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }) || sum_pure,
-                description: art(path.join(__dirname, 'templates/desc.art'), {
-                    item: {
-                        ...item,
-                        // Fix linebreaks
-                        sum: sum.replaceAll('\n', '<br>'),
-                    },
-                }),
-                link,
-                pubDate: parseDate(time, 'X'),
+                title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
+                description: `<img src="${$item.find('.preview_w img').attr('data-src')}" /><br />${sum.replaceAll('\n', '<br>')}`,
+                link: `${baseUrl}${coverLink}`,
+                guid: shortcode,
+                pubDate: parseRelativeDate($item.find('.time .txt').text()),
             };
-        })
+        });
+
+    const newDescription = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
+                try {
+                    const html = usePuppeteer
+                        ? await puppeteerGet(item.link)
+                        : await ofetch(item.link, {
+                              headers: {
+                                  'user-agent': 'PostmanRuntime/7.44.0',
+                              },
+                          });
+                    const $ = load(html);
+                    if ($('.video_img').length > 0) {
+                        return `<video src="${$('.video_img a').attr('href')}" poster="${$('.video_img img').attr('data-src')}"></video><br />${$('.sum_full').text()}`;
+                    } else {
+                        let description = '';
+                        for (const slide of $('.swiper-slide').toArray()) {
+                            const $slide = $(slide);
+                            description += `<img src="${$slide.find('.pic img').attr('data-src')}" /><br />`;
+                        }
+                        description += $('.sum_full').text();
+                        return description;
+                    }
+                } catch {
+                    return '';
+                }
+            })
+        )
     );
-    await browser.close();
 
     return {
-        title: `${profile.name} (@${id}) - Picnob`,
-        description: profile.description,
-        link: url,
-        image: profile.image,
-        item: list,
+        title: `${$('h1.fullname').text()} (@${id}) ${type === 'tagged' ? 'tagged' : 'public'} posts - Picnob`,
+        description: $('.info .sum').text(),
+        link: profileUrl,
+        image: $('.ava .pic img').attr('src'),
+        item: list.map((item, index) => ({
+            ...item,
+            description: newDescription[index] || item.description,
+        })),
     };
 }

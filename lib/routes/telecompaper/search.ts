@@ -21,15 +21,15 @@ export const route: Route = {
     handler,
     description: `Sorting
 
-  | Date Ascending | Date Descending |
-  | -------------- | --------------- |
-  | 1              | 2               |
+| Date Ascending | Date Descending |
+| -------------- | --------------- |
+| 1              | 2               |
 
   Date selection
 
-  | 1 month | 3 months | 6 months | 12 months | 24 months |
-  | ------- | -------- | -------- | --------- | --------- |
-  | 1       | 3        | 6        | 12        | 24        |`,
+| 1 month | 3 months | 6 months | 12 months | 24 months |
+| ------- | -------- | -------- | --------- | --------- |
+| 1       | 3        | 6        | 12        | 24        |`,
 };
 
 async function handler(ctx) {
@@ -72,7 +72,8 @@ async function handler(ctx) {
 
     const list = $('table.details_rows tbody tr')
         .slice(0, 15)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a');
             return {
@@ -80,8 +81,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: new Date(item.find('span.source').text().split(' | ')[0] + ' GMT+1').toUTCString(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

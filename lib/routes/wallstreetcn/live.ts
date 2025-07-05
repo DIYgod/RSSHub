@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,8 +38,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
-  | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
-  | global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- |
+| global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
 };
 
 async function handler(ctx) {

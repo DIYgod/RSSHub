@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -9,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/cngal/weekly',
     parameters: {},
@@ -27,13 +25,13 @@ export const route: Route = {
         },
     ],
     name: '每周速报',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
     url: 'www.cngal.org/',
 };
 
-async function handler(ctx) {
-    const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
+async function handler() {
+    const response = await got('https://api.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
         title: 'CnGal - 每周速报',
@@ -45,5 +43,4 @@ async function handler(ctx) {
             link: `https://www.cngal.org/articles/index/${item.id}`,
         })),
     };
-    ctx.state.json = response.data;
 }

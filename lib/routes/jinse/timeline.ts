@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -11,7 +9,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/timeline/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/jinse/timeline',
     parameters: {
@@ -48,9 +46,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 头条   | 独家 | 铭文    | 产业       | 项目 |
-  | ------ | ---- | ------- | ---------- | ---- |
-  | 政策   | AI   | Web 3.0 | 以太坊 2.0 | DeFi |
-  | Layer2 | NFT  | DAO     | 百科       |      |`,
+| ------ | ---- | ------- | ---------- | ---- |
+| 政策   | AI   | Web 3.0 | 以太坊 2.0 | DeFi |
+| Layer2 | NFT  | DAO     | 百科       |      |`,
 };
 
 async function handler(ctx) {

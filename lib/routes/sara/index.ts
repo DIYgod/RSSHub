@@ -23,8 +23,8 @@ export const route: Route = {
         supportScihub: false,
     },
     description: `| 协会动态 | 通知公告 |行业动态 |
-  | -------- | ------------ | -------- |
-  | dynamic | announcement | industry |`,
+| -------- | ------------ | -------- |
+| dynamic | announcement | industry |`,
 
     name: '新闻资讯',
     maintainers: ['HChenZi'],
@@ -44,7 +44,7 @@ export const route: Route = {
                     title: a.attr('title'),
                 };
             });
-        const items = (await Promise.all(list.map(getFeedItem))) as DataItem[];
+        const items = (await Promise.all(list.map((elem) => getFeedItem(elem)))) as DataItem[];
         return {
             title: typeMap[type],
             link: url,

@@ -6,7 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/remote/:site/:only_media?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/mastodon/remote/pawoo.net/true',
     parameters: {
@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const url = `http://${site}/api/v1/timelines/public?remote=true&only_media=${only_media}`;
 
-    const response = await got.get(url, { headers: utils.apiHeaders() });
+    const response = await got.get(url, { headers: utils.apiHeaders(site) });
     const list = response.data;
 
     return {

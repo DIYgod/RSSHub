@@ -1,24 +1,21 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
-import { art } from '@/utils/render';
-import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
-import { MisskeyNote } from './types';
+import { MisskeyNote, MisskeyUser } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 
-const parseNotes = (data: MisskeyNote[], site: string) =>
+const parseNotes = (data: MisskeyNote[], site: string, simplifyAuthor: boolean = false) =>
     data.map((item: MisskeyNote) => {
         const isRenote = item.renote && Object.keys(item.renote).length > 0;
         const isReply = item.reply && Object.keys(item.reply).length > 0;
         const noteToUse: MisskeyNote = isRenote ? (item.renote as MisskeyNote) : item;
 
         const host = noteToUse.user.host ?? site;
-        const author = `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
+        const author = simplifyAuthor ? String(noteToUse.user.name) : `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
 
         const description = art(path.join(__dirname, 'templates/note.art'), {
             text: noteToUse.text,
@@ -30,7 +27,7 @@ const parseNotes = (data: MisskeyNote[], site: string) =>
         let title = '';
         if (isReply && item.reply) {
             const replyToHost = item.reply.user.host ?? site;
-            const replyToAuthor = `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
+            const replyToAuthor = simplifyAuthor ? item.reply.user.name : `${item.reply.user.name} (${item.reply.user.username}@${replyToHost})`;
             title = `Reply to ${replyToAuthor}: "${noteToUse.text ?? ''}"`;
         } else if (isRenote) {
             title = `Renote: ${author}: "${noteToUse.text ?? ''}"`;
@@ -71,7 +68,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
     const searchUrl = `https://${site}/api/users/search-by-username-and-host`;
     const cacheUid = `misskey_username/${site}/${username}`;
 
-    const accountId = await cache.tryGet(cacheUid, async () => {
+    const userData = (await cache.tryGet(cacheUid, async () => {
         const searchResponse = await got({
             method: 'post',
             url: searchUrl,
@@ -82,13 +79,16 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
                 limit: 1,
             },
         });
-        const userData = searchResponse.data.find((item) => item.username === username);
+        const user = searchResponse.data.find((item) => item.username === username);
 
-        if (!userData) {
+        if (!user) {
             throw new Error(`username ${username} not found`);
         }
-        return userData.id;
-    });
+        return user;
+    })) as MisskeyUser;
+
+    const accountId = userData.id;
+    const avatarUrl = userData.avatarUrl;
 
     // https://misskey.io/api-doc#tag/users/operation/users___notes
     const usernotesUrl = `https://${site}/api/users/notes`;
@@ -106,7 +106,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
         },
     });
     const accountData = usernotesResponse.data;
-    return { site, accountId, accountData };
+    return { site, accountId, accountData, avatarUrl };
 }
 
 export default { parseNotes, getUserTimelineByUsername, allowSiteList };

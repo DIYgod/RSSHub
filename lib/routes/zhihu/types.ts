@@ -102,3 +102,29 @@ export interface Articles {
     };
     data: Article[];
 }
+
+export interface CollectionItem {
+    content: {
+        type: string;
+        title?: string;
+        question?: {
+            title: string;
+        };
+        url: string;
+        content: string;
+        video?: {
+            url: string;
+        };
+        updated?: number;
+        updated_time?: number;
+    };
+    collectionTitle?: string;
+}
+
+export interface Collection {
+    id: string;
+    title: string;
+    creator: {
+        name: string;
+    };
+}

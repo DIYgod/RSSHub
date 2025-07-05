@@ -6,7 +6,7 @@ import { baseUrl, parseTradeItem } from './utils';
 
 export const route: Route = {
     path: '/trading/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dcfever/trading/1',
     parameters: { id: '分類 ID，見下表' },
     name: '二手市集',
@@ -14,9 +14,9 @@ export const route: Route = {
     handler,
     description: `[所有物品分類](https://www.dcfever.com/trading/index.php#all_cats)
 
-  | 攝影產品 | 電腦 | 手機通訊 | 影音產品 | 遊戲機、模型 | 電器傢俱 | 潮流服飾 | 手錶 | 單車及運動 | 其它 |
-  | -------- | ---- | -------- | -------- | ------------ | -------- | -------- | ---- | ---------- | ---- |
-  | 1        | 2    | 3        | 44       | 43           | 104      | 45       | 99   | 109        | 4    |`,
+| 攝影產品 | 電腦 | 手機通訊 | 影音產品 | 遊戲機、模型 | 電器傢俱 | 潮流服飾 | 手錶 | 單車及運動 | 其它 |
+| -------- | ---- | -------- | -------- | ------------ | -------- | -------- | ---- | ---------- | ---- |
+| 1        | 2    | 3        | 44       | 43           | 104      | 45       | 99   | 109        | 4    |`,
 };
 
 async function handler(ctx) {

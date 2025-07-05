@@ -2,6 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/jwb',
@@ -30,7 +31,7 @@ async function handler() {
             const a = e.find('a');
             return {
                 title: e.find('a span').text(),
-                link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwb.bnu.edu.cn' + a.attr('href').substring(2),
+                link: a.attr('href').startsWith('http') ? a.attr('href') : 'https://jwb.bnu.edu.cn' + a.attr('href').slice(2),
                 pubDate: parseDate(e.find('span.fr.text-muted').text(), 'YYYY-MM-DD'),
             };
         });

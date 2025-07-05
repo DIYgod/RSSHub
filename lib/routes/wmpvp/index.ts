@@ -20,8 +20,8 @@ export const route: Route = {
     maintainers: ['tssujt'],
     handler,
     description: `| DOTA2 | CS2 |
-  | ----- | --- |
-  | 1     | 2   |`,
+| ----- | --- |
+| 1     | 2   |`,
 };
 
 const TYPE_MAP = {

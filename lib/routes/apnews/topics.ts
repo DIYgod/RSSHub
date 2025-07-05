@@ -1,7 +1,9 @@
+import { routePath } from 'hono/route';
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fetchArticle, removeDuplicateByKey } from './utils';
+import pMap from 'p-map';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
@@ -36,22 +38,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
+    const useNav = routePath(ctx) === '/apnews/nav/:nav{.*}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
 
-    const items = await Promise.all(
-        $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
-            .toArray()
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
-            .map((e) => ({
-                title: $(e).find('span.PagePromoContentIcons-text').text(),
-                link: $(e).find('a').attr('href'),
-            }))
-            .filter((e) => typeof e.link === 'string')
-            .map((item) => (ctx.req.query('fulltext') === 'true' ? fetchArticle(item) : item))
-    );
+    const list = $(':is(.PagePromo-content, .PageListStandardE-leadPromo-info) bsp-custom-headline')
+        .toArray()
+        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : Infinity)
+        .map((e) => ({
+            title: $(e).find('span.PagePromoContentIcons-text').text(),
+            link: $(e).find('a').attr('href'),
+        }))
+        .filter((e) => typeof e.link === 'string');
+
+    const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
     return {
         title: $('title').text(),

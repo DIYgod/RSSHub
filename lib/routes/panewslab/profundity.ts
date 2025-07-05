@@ -21,7 +21,7 @@ const categories = {
 
 export const route: Route = {
     path: '/profundity/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/panewslab/profundity',
     parameters: { category: '分类，见下表，默认为精选' },
     radar: [
@@ -34,7 +34,7 @@ export const route: Route = {
     handler,
     url: 'panewslab.com/',
     description: `| 精选 | 链游 | 元宇宙 | NFT | DeFi | 监管 | 央行数字货币 | 波卡 | Layer 2 | DAO | 融资 | 活动 |
-  | ---- | ---- | ------ | --- | ---- | ---- | ------------ | ---- | ------- | --- | ---- | ---- |`,
+| ---- | ---- | ------ | --- | ---- | ---- | ------------ | ---- | ------- | --- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

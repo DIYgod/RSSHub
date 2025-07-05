@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
@@ -24,9 +21,9 @@ const parseDyArticle = (item, tryGet) =>
             }
         });
 
-        const imgUrl = new URL(item.imgsrc);
+        const imgsrc = item.imgsrc ? new URL(item.imgsrc).searchParams.get('url') : false;
         item.description = art(path.join(__dirname, 'templates/dy.art'), {
-            imgsrc: imgUrl.searchParams.get('url'),
+            imgsrc,
             postBody: $('.post_body').html(),
         });
 

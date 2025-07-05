@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -9,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -40,63 +38,63 @@ export const route: Route = {
     handler,
     description: `#### 资源分类
 
-  | 不限 | 电影 | 电视剧 |
-  | ---- | ---- | ------ |
-  | all  | 0    | 1      |
+| 不限 | 电影 | 电视剧 |
+| ---- | ---- | ------ |
+| all  | 0    | 1      |
 
-  #### 影视类型
+#### 影视类型
 
-  | 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |
-  | ---- | ------- | ------ | ---- | ------ | ------ |
-  | all  | dongzuo | aiqing | xiju | kehuan | kongbu |
+| 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |
+| ---- | ------- | ------ | ---- | ------ | ------ |
+| all  | dongzuo | aiqing | xiju | kehuan | kongbu |
 
-  | 战争      | 武侠  | 魔幻   | 剧情   | 动画    | 惊悚     |
-  | --------- | ----- | ------ | ------ | ------- | -------- |
-  | zhanzheng | wuxia | mohuan | juqing | donghua | jingsong |
+| 战争      | 武侠  | 魔幻   | 剧情   | 动画    | 惊悚     |
+| --------- | ----- | ------ | ------ | ------- | -------- |
+| zhanzheng | wuxia | mohuan | juqing | donghua | jingsong |
 
-  | 3D | 灾难   | 悬疑   | 警匪    | 文艺  | 青春     |
-  | -- | ------ | ------ | ------- | ----- | -------- |
-  | 3D | zainan | xuanyi | jingfei | wenyi | qingchun |
+| 3D | 灾难   | 悬疑   | 警匪    | 文艺  | 青春     |
+| -- | ------ | ------ | ------- | ----- | -------- |
+| 3D | zainan | xuanyi | jingfei | wenyi | qingchun |
 
-  | 冒险    | 犯罪   | 纪录 | 古装     | 奇幻   | 国语  |
-  | ------- | ------ | ---- | -------- | ------ | ----- |
-  | maoxian | fanzui | jilu | guzhuang | qihuan | guoyu |
+| 冒险    | 犯罪   | 纪录 | 古装     | 奇幻   | 国语  |
+| ------- | ------ | ---- | -------- | ------ | ----- |
+| maoxian | fanzui | jilu | guzhuang | qihuan | guoyu |
 
-  | 综艺   | 历史  | 运动    | 原创压制   |
-  | ------ | ----- | ------- | ---------- |
-  | zongyi | lishi | yundong | yuanchuang |
+| 综艺   | 历史  | 运动    | 原创压制   |
+| ------ | ----- | ------- | ---------- |
+| zongyi | lishi | yundong | yuanchuang |
 
-  | 美剧  | 韩剧  | 国产电视剧 | 日剧 | 英剧   | 德剧 |
-  | ----- | ----- | ---------- | ---- | ------ | ---- |
-  | meiju | hanju | guoju      | riju | yingju | deju |
+| 美剧  | 韩剧  | 国产电视剧 | 日剧 | 英剧   | 德剧 |
+| ----- | ----- | ---------- | ---- | ------ | ---- |
+| meiju | hanju | guoju      | riju | yingju | deju |
 
-  | 俄剧 | 巴剧 | 加剧  | 西剧    | 意大利剧 | 泰剧  |
-  | ---- | ---- | ----- | ------- | -------- | ----- |
-  | eju  | baju | jiaju | spanish | yidaliju | taiju |
+| 俄剧 | 巴剧 | 加剧  | 西剧    | 意大利剧 | 泰剧  |
+| ---- | ---- | ----- | ------- | -------- | ----- |
+| eju  | baju | jiaju | spanish | yidaliju | taiju |
 
-  | 港台剧    | 法剧 | 澳剧 |
-  | --------- | ---- | ---- |
-  | gangtaiju | faju | aoju |
+| 港台剧    | 法剧 | 澳剧 |
+| --------- | ---- | ---- |
+| gangtaiju | faju | aoju |
 
-  #### 制片地区
+#### 制片地区
 
-  | 大陆 | 中国香港 | 中国台湾 |
-  | ---- | -------- | -------- |
+| 大陆 | 中国香港 | 中国台湾 |
+| ---- | -------- | -------- |
 
-  | 美国 | 英国 | 日本 | 韩国 | 法国 |
-  | ---- | ---- | ---- | ---- | ---- |
+| 美国 | 英国 | 日本 | 韩国 | 法国 |
+| ---- | ---- | ---- | ---- | ---- |
 
-  | 印度 | 德国 | 西班牙 | 意大利 | 澳大利亚 |
-  | ---- | ---- | ------ | ------ | -------- |
+| 印度 | 德国 | 西班牙 | 意大利 | 澳大利亚 |
+| ---- | ---- | ------ | ------ | -------- |
 
-  | 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |
-  | ------ | ---- | ---- | ---- | ------ | ------ |
+| 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |
+| ------ | ---- | ---- | ---- | ------ | ------ |
 
-  #### 影视排序
+#### 影视排序
 
-  | 更新时间 | 豆瓣评分 |
-  | -------- | -------- |
-  | 0        | 1        |`,
+| 更新时间 | 豆瓣评分 |
+| -------- | -------- |
+| 0        | 1        |`,
 };
 
 async function handler(ctx) {
@@ -141,43 +139,42 @@ async function handler(ctx) {
         cookie: `JSESSIONID=${jsessionid}`,
     };
 
-    const items = [];
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                    headers,
+                });
+                const downloadResponse = await got({
+                    method: 'get',
+                    url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
+                    headers,
+                });
+                const content = load(detailResponse.data);
 
-    for await (const data of asyncPool(1, list, (item) =>
-        cache.tryGet(item.link, async () => {
-            const detailResponse = await got({
-                method: 'get',
-                url: item.link,
-                headers,
-            });
-            const downloadResponse = await got({
-                method: 'get',
-                url: `${rootUrl}/downloadInfo/list?mid=${item.link.split('/')[4].split('.')[0]}`,
-                headers,
-            });
-            const content = load(detailResponse.data);
+                content('svg').remove();
+                const torrents = content('.download-list .list-group');
 
-            content('svg').remove();
-            const torrents = content('.download-list .list-group');
+                item.description = art(path.join(__dirname, 'templates/desc.art'), {
+                    info: content('.row.mt-3').html(),
+                    synopsis: content('#synopsis').html(),
+                    links: downloadResponse.data,
+                    torrents: torrents.html(),
+                });
 
-            item.description = art(path.join(__dirname, 'templates/desc.art'), {
-                info: content('.row.mt-3').html(),
-                synopsis: content('#synopsis').html(),
-                links: downloadResponse.data,
-                torrents: torrents.html(),
-            });
+                item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
+                item.guid = `${item.link}#${content('.card h1').text()}`;
 
-            item.pubDate = timezone(parseDate(content('.bg-purple-lt').text().replace('更新时间：', '')), +8);
-            item.guid = `${item.link}#${content('.card h1').text()}`;
+                item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;
+                item.enclosure_type = 'application/x-bittorrent';
 
-            item.enclosure_url = torrents.html() ? `${rootUrl}${torrents.find('a').first().attr('href')}` : downloadResponse.data.pop().url;
-            item.enclosure_type = 'application/x-bittorrent';
-
-            return item;
-        })
-    )) {
-        items.push(data);
-    }
+                return item;
+            }),
+        { concurrency: 1 }
+    );
 
     return {
         title: '哔嘀影视',

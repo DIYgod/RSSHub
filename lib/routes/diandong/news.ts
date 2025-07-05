@@ -19,7 +19,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/news/:cate?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/diandong/news',
     parameters: { cate: '分类，见下表，默认为推荐' },
     features: {
@@ -42,9 +42,9 @@ export const route: Route = {
     url: 'diandong.com/news',
     description: `分类
 
-  | 推荐 | 新车 | 导购 | 试驾 | 用车 | 技术 | 政策 | 行业 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 0    | 29   | 61   | 30   | 75   | 22   | 24   | 23   |`,
+| 推荐 | 新车 | 导购 | 试驾 | 用车 | 技术 | 政策 | 行业 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 29   | 61   | 30   | 75   | 22   | 24   | 23   |`,
 };
 
 async function handler(ctx) {

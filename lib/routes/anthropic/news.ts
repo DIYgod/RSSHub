@@ -1,6 +1,8 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { Route } from '@/types';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/news',
@@ -9,28 +11,28 @@ export const route: Route = {
     parameters: {},
     radar: [
         {
-            source: ['anthropic.com'],
+            source: ['www.anthropic.com/news', 'www.anthropic.com'],
         },
     ],
     name: 'News',
     maintainers: ['etShaw-zh'],
     handler,
-    url: 'anthropic.com/news',
+    url: 'www.anthropic.com/news',
 };
 
 async function handler() {
-    const link = 'https://anthropic.com/news';
-    const response = await got(link);
-    const $ = load(response.body);
+    const link = 'https://www.anthropic.com/news';
+    const response = await ofetch(link);
+    const $ = load(response);
 
     const list = $('.contentFadeUp a')
         .toArray()
         .map((e) => {
             e = $(e);
-            const title = e.find('h3.PostCard_post-heading__KPsva').text().trim(); // Extract title
-            const href = e.attr('href'); // Extract link
-            const pubDate = e.find('.PostList_post-date__giqsu').text().trim(); // Extract publication date
-            const fullLink = href.startsWith('http') ? href : `https://anthropic.com${href}`; // Complete relative links
+            const title = e.find('h3[class^="PostCard_post-heading__"]').text().trim();
+            const href = e.attr('href');
+            const pubDate = e.find('div[class^="PostList_post-date__"]').text().trim();
+            const fullLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
                 title,
                 link: fullLink,
@@ -38,17 +40,32 @@ async function handler() {
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.body);
+                const response = await ofetch(item.link);
+                const $ = load(response);
 
-                item.description = $('.text-b2.PostDetail_post-detail__uTcjp').html() || ''; // Full article content
+                $('div[class^="PostDetail_b-social-share"]').remove();
+
+                const content = $('div[class*="PostDetail_post-detail__"]');
+                content.find('img').each((_, e) => {
+                    const $e = $(e);
+                    $e.removeAttr('style srcset');
+                    const src = $e.attr('src');
+                    const params = new URLSearchParams(src);
+                    const newSrc = params.get('/_next/image?url');
+                    if (newSrc) {
+                        $e.attr('src', newSrc);
+                    }
+                });
+
+                item.description = content.html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 5 }
     );
 
     return {

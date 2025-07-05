@@ -43,8 +43,8 @@ export const route: Route = {
     maintainers: ['Veagau'],
     handler,
     description: `| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
-  | -------- | -------- | -------- | -------- |
-  | news     | scholar  | states   | notice   |`,
+| -------- | -------- | -------- | -------- |
+| news     | scholar  | states   | notice   |`,
 };
 
 async function handler(ctx) {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     example: '/bookfere/skills',
     parameters: {
@@ -32,8 +32,8 @@ export const route: Route = {
     maintainers: ['OdinZhang'],
     handler,
     description: `| 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | weekly   | skills   | books    | news     | essay    |`,
+| -------- | -------- | -------- | -------- | -------- |
+| weekly   | skills   | books    | news     | essay    |`,
 };
 
 async function handler(ctx) {
@@ -51,20 +51,16 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link: url,
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    const date = item.find('time').attr('datetime');
-                    const pubDate = parseDate(date);
-                    return {
-                        title: item.find('h2 a').text(),
-                        link: item.find('h2 a').attr('href'),
-                        pubDate,
-                        description: item.find('p').text(),
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            const date = item.find('time').attr('datetime');
+            const pubDate = parseDate(date);
+            return {
+                title: item.find('h2 a').text(),
+                link: item.find('h2 a').attr('href'),
+                pubDate,
+                description: item.find('p').text(),
+            };
+        }),
     };
 }

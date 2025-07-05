@@ -43,7 +43,7 @@ export const route: Route = {
 async function handler(ctx) {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
-    const number = ctx.req.param('number') && isNaN(Number.parseInt(ctx.req.param('number'))) ? 1 : Number.parseInt(ctx.req.param('number'));
+    const number = ctx.req.param('number') && Number.isNaN(Number.parseInt(ctx.req.param('number'))) ? 1 : Number.parseInt(ctx.req.param('number'));
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
     const headers =
         config.github && config.github.access_token
@@ -55,7 +55,7 @@ async function handler(ctx) {
                   Accept: 'application/vnd.github.v3+json',
               };
 
-    return await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
+    return await (Number.isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
 }
 
 async function allIssues(ctx, user, repo, limit, headers) {

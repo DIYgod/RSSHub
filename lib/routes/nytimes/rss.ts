@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/rss/:cat?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/nytimes/rss/HomePage',
     parameters: {
@@ -49,7 +49,11 @@ async function handler(ctx) {
 
                     const $ = load(res);
 
-                    return { ...e, description: $("[name='articleBody']").html() };
+                    return {
+                        ...e,
+                        description: $("[name='articleBody']").html(),
+                        author: $('meta[name="byl"]').attr('content'),
+                    };
                 })
             )
         ),

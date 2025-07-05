@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -13,7 +11,7 @@ const baseUrl = 'https://news.google.com';
 
 export const route: Route = {
     path: '/news/:category/:locale',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/google/news/Top stories/hl=en-US&gl=US&ceid=US:en',
     parameters: { category: 'Category Title', locale: 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters' },
     features: {

@@ -13,18 +13,18 @@ jobs:
       pull-requests: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       # https://github.com/orgs/community/discussions/25220
       - name: Search the PR that triggered this workflow
-        uses: potiuk/get-workflow-origin@v1_5
+        uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
         id: source-run-info
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sourceRunId: ${{ github.event.workflow_run.id }}
 
       - name: Fetch PR data via GitHub API
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
         id: pr-data
         with:
           route: GET /repos/{repo}/pulls/{number}
@@ -35,7 +35,7 @@ jobs:
 
       - name: Fetch affected routes
         id: fetch-route
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
@@ -51,7 +51,7 @@ jobs:
 
       - name: Fetch Docker image
         if: (env.TEST_CONTINUE)
-        uses: dawidd6/action-download-artifact@v7
+        uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
@@ -73,9 +73,9 @@ jobs:
             -p 1200:1200 \
             rsshub:latest
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         if: (env.TEST_CONTINUE)
         with:
           node-version: lts/*
@@ -89,7 +89,7 @@ jobs:
         if: (env.TEST_CONTINUE)
         id: generate-feedback
         timeout-minutes: 10
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
           TEST_BASEURL: http://localhost:1200
           TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
@@ -107,13 +107,36 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@v3
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
-          labels: 'Auto: Route Test Failed'
+          labels: 'auto: DO NOT merge'
 
       - name: Print Docker container logs
-        if: (env.TEST_CONTINUE)
+        if: ${{ always() }}
         run: docker logs rsshub # logs/combined.log? Not so readable...
+
+  fail-build:
+    name: Fail build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      # https://github.com/orgs/community/discussions/25220
+      - name: Search the PR that triggered this workflow
+        uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
+        id: source-run-info
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sourceRunId: ${{ github.event.workflow_run.id }}
+
+      - name: Pull Request Labeler
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+          labels: 'auto: DO NOT merge'

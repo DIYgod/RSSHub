@@ -32,8 +32,8 @@ export const route: Route = {
     maintainers: ['CCraftY'],
     handler,
     description: `| 通知公告 | 评优评奖 | 文明规范 | 创新创业 | 校园文化 | 心理驿站 | 日常通知 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 0        | 1        | 2        | 3        | 4        | 5        | 6        |`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        |`,
 };
 
 async function handler(ctx) {
@@ -46,15 +46,15 @@ async function handler(ctx) {
 
     const $ = load(res.data);
     const items = $('.lm_list li')
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('a').text(),
                 link: `https://yxy.zcmu.edu.cn/${item.find('a').attr('href')}`,
                 pubDate: parseDate(item.find('span').text().trim()),
             };
-        })
-        .get();
+        });
 
     return {
         title: map.get(type).title,

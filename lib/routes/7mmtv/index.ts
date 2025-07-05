@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -21,31 +19,32 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,
     description: `**Language**
 
-  | English | 日本語 | 한국의 | 中文 |
-  | ------- | ------ | ------ | ---- |
-  | en      | ja     | ko     | zh   |
+| English | 日本語 | 한국의 | 中文 |
+| ------- | ------ | ------ | ---- |
+| en      | ja     | ko     | zh   |
 
   **Category**
 
-  | Chinese subtitles AV | Censored       | Amateur          | Uncensored       | Asian self-timer | H comics     |
-  | -------------------- | -------------- | ---------------- | ---------------- | ---------------- | ------------ |
-  | chinese\_list        | censored\_list | amateurjav\_list | uncensored\_list | amateur\_list    | hcomic\_list |
+| Chinese subtitles AV | Censored       | Amateur          | Uncensored       | Asian self-timer | H comics     |
+| -------------------- | -------------- | ---------------- | ---------------- | ---------------- | ------------ |
+| chinese\_list        | censored\_list | amateurjav\_list | uncensored\_list | amateur\_list    | hcomic\_list |
 
-  | Chinese subtitles AV random | Censored random  | Amateur random     | Uncensored random  | Asian self-timer random | H comics random |
-  | --------------------------- | ---------------- | ------------------ | ------------------ | ----------------------- | --------------- |
-  | chinese\_random             | censored\_random | amateurjav\_random | uncensored\_random | amateur\_random         | hcomic\_random  |
+| Chinese subtitles AV random | Censored random  | Amateur random     | Uncensored random  | Asian self-timer random | H comics random |
+| --------------------------- | ---------------- | ------------------ | ------------------ | ----------------------- | --------------- |
+| chinese\_random             | censored\_random | amateurjav\_random | uncensored\_random | amateur\_random         | hcomic\_random  |
 
   **Server**
 
-  | All Server | fembed(Full DL) | streamsb(Full DL) | doodstream | streamtape(Full DL) | avgle | embedgram | videovard(Full DL) |
-  | ---------- | --------------- | ----------------- | ---------- | ------------------- | ----- | --------- | ------------------ |
-  | all        | 21              | 30                | 28         | 29                  | 17    | 34        | 33                 |`,
+| All Server | fembed(Full DL) | streamsb(Full DL) | doodstream | streamtape(Full DL) | avgle | embedgram | videovard(Full DL) |
+| ---------- | --------------- | ----------------- | ---------- | ------------------- | ----- | --------- | ------------------ |
+| all        | 21              | 30                | 28         | 29                  | 17    | 34        | 33                 |`,
 };
 
 async function handler(ctx) {

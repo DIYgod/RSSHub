@@ -19,7 +19,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily',
     parameters: { id: 'id，见下表，默认为最新' },
     features: {
@@ -40,8 +40,8 @@ export const route: Route = {
     handler,
     url: '0daily.com/',
     description: `| 最新 | 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
-  | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
-  | 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |`,
+| ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
+| 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |`,
 };
 
 async function handler(ctx) {

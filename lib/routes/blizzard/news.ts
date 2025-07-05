@@ -21,43 +21,43 @@ export const route: Route = {
     handler,
     description: `Categories
 
-  | Category               | Slug                |
-  | ---------------------- | ------------------- |
-  | All News               |                     |
-  | Diablo II: Resurrected | diablo2             |
-  | Diablo III             | diablo3             |
-  | Diablo IV              | diablo4             |
-  | Diablo Immortal        | diablo-immortal     |
-  | Hearthstone            | hearthstone         |
-  | Heroes of the Storm    | heroes-of-the-storm |
-  | Overwatch 2            | overwatch           |
-  | StarCraft: Remastered  | starcraft           |
-  | StarCraft II           | starcraft2          |
-  | World of Warcraft      | world-of-warcraft   |
-  | Warcraft 3: Reforged   | warcraft3           |
-  | Warcraft Rumble        | warcraft-rumble     |
-  | Battle.net             | battlenet           |
-  | BlizzCon               | blizzcon            |
-  | Inside Blizzard        | blizzard            |
+| Category               | Slug                |
+| ---------------------- | ------------------- |
+| All News               |                     |
+| Diablo II: Resurrected | diablo2             |
+| Diablo III             | diablo3             |
+| Diablo IV              | diablo4             |
+| Diablo Immortal        | diablo-immortal     |
+| Hearthstone            | hearthstone         |
+| Heroes of the Storm    | heroes-of-the-storm |
+| Overwatch 2            | overwatch           |
+| StarCraft: Remastered  | starcraft           |
+| StarCraft II           | starcraft2          |
+| World of Warcraft      | world-of-warcraft   |
+| Warcraft 3: Reforged   | warcraft3           |
+| Warcraft Rumble        | warcraft-rumble     |
+| Battle.net             | battlenet           |
+| BlizzCon               | blizzcon            |
+| Inside Blizzard        | blizzard            |
 
   Language codes
 
-  | Language           | Code  |
-  | ------------------ | ----- |
-  | Deutsch            | de-de |
-  | English (US)       | en-us |
-  | English (EU)       | en-gb |
-  | Español (EU)       | es-es |
-  | Español (Latino)   | es-mx |
-  | Français           | fr-fr |
-  | Italiano           | it-it |
-  | Português (Brasil) | pt-br |
-  | Polski             | pl-pl |
-  | Русский            | ru-ru |
-  | 한국어             | ko-kr |
-  | ภาษาไทย            | th-th |
-  | 日本語             | ja-jp |
-  | 繁體中文           | zh-tw |`,
+| Language           | Code  |
+| ------------------ | ----- |
+| Deutsch            | de-de |
+| English (US)       | en-us |
+| English (EU)       | en-gb |
+| Español (EU)       | es-es |
+| Español (Latino)   | es-mx |
+| Français           | fr-fr |
+| Italiano           | it-it |
+| Português (Brasil) | pt-br |
+| Polski             | pl-pl |
+| Русский            | ru-ru |
+| 한국어             | ko-kr |
+| ภาษาไทย            | th-th |
+| 日本語             | ja-jp |
+| 繁體中文           | zh-tw |`,
 };
 
 const GAME_MAP = {

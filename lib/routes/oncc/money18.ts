@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -41,8 +39,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 新聞總覽 | 全日焦點 | 板塊新聞 | 國際金融 | 大行報告 | A 股新聞 | 地產新聞 | 投資理財  | 新股 IPO | 科技財情 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- | -------- |
-  | exp      | fov      | industry | int      | recagent | ntlgroup | pro      | weainvest | ipo      | tech     |`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- | -------- |
+| exp      | fov      | industry | int      | recagent | ntlgroup | pro      | weainvest | ipo      | tech     |`,
 };
 
 async function handler(ctx) {
@@ -56,7 +54,7 @@ async function handler(ctx) {
 
     const toApiUrl = (date) => `${rootUrl}/cnt/utf8/content/${date}/articleList/list_${id}_all.js`;
 
-    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD')),
+    let apiUrl = id === 'ipo' ? ipoApiUrl : (id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD'))),
         hasArticle = false,
         items = [],
         i = 0,

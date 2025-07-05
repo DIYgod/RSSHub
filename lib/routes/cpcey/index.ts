@@ -34,8 +34,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 新闻稿 | 消费资讯 |
-  | :----: | :------: |
-  |   xwg  |   xfzx   |`,
+| :----: | :------: |
+|   xwg  |   xfzx   |`,
 };
 
 async function handler(ctx) {
@@ -45,7 +45,8 @@ async function handler(ctx) {
     const response = await got.get(url);
     const $ = load(response.data);
     const list = $('div.words > ul > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const date = $(item).find('span').text();
             const dateArr = date.split('-');
             const dateStr = Number.parseInt(dateArr[0]) + 1911 + '/' + dateArr[1] + '/' + dateArr[2];
@@ -55,8 +56,7 @@ async function handler(ctx) {
                 title: $(item).find('a').attr('title'),
                 pubDate: parseDate(dateStr, 'YYYY/MM/DD'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map(async (item) => {

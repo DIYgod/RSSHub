@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,8 +24,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 3D PORTRAITS | CHARACTERS |
-  | ------------ | ---------- |
-  | portraits    | characters |`,
+| ------------ | ---------- |
+| portraits    | characters |`,
 };
 
 async function handler(ctx) {

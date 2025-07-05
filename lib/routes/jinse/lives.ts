@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -19,7 +17,7 @@ const categories = {
 
 export const route: Route = {
     path: '/lives/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Notifications,
     example: '/jinse/lives',
     parameters: {
@@ -41,8 +39,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
-  | ---- | ---- | ---- | ---- | --- | ---- |
-  | 0    | 1    | 2    | 3    | 4   | 5    |`,
+| ---- | ---- | ---- | ---- | --- | ---- |
+| 0    | 1    | 2    | 3    | 4   | 5    |`,
 };
 
 async function handler(ctx) {

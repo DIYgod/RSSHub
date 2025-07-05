@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/post/popular_recent/:period?',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/yande/post/popular_recent/1d',
     parameters: {
@@ -27,9 +27,12 @@ export const route: Route = {
     name: 'Popular Recent Posts',
     maintainers: ['magic-akari', 'SettingDust', 'fashioncj', 'NekoAria'],
     description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
-  | ------- | -------- | ------- | -------- |
-  | 1d | 1w | 1m | 1y |`,
+| ------- | -------- | ------- | -------- |
+| 1d | 1w | 1m | 1y |`,
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

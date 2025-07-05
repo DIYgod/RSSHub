@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 中文 | English |
-  | ---- | ------- |
-  |      | en      |`,
+| ---- | ------- |
+|      | en      |`,
 };
 
 async function handler(ctx) {
@@ -43,7 +43,7 @@ async function handler(ctx) {
 
         return {
             title: item.title.rendered,
-            link: item.link.substring(0, item.link.lastIndexOf('/')),
+            link: item.link.slice(0, item.link.lastIndexOf('/')),
             description: $.html(),
             pubDate: parseDate(item.date_gmt),
         };

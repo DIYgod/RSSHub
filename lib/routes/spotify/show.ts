@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/show/:id',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/spotify/show/5CfCWKI5pZ28U0uOzXkDHe',
     parameters: { id: 'Show ID' },
@@ -58,7 +58,7 @@ async function handler(ctx) {
         itunes_category: meta.type,
         itunes_explicit: meta.explicit,
         allowEmpty: true,
-        item: episodes.map((x) => ({
+        item: episodes.filter(Boolean).map((x) => ({
             title: x.name,
             description: x.html_description,
             pubDate: parseDate(x.release_date),

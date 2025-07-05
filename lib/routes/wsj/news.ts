@@ -1,7 +1,8 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { asyncPoolAll, parseArticle } from './utils';
+import { parseArticle } from './utils';
+import pMap from 'p-map';
 const hostMap = {
     'en-us': 'https://www.wsj.com',
     'zh-cn': 'https://cn.wsj.com/zh-hans',
@@ -25,15 +26,15 @@ export const route: Route = {
     handler,
     description: `en\_us
 
-  | World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
-  | ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
-  | world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
+| World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
+| ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
+| world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
 
   zh-cn / zh-tw
 
-  | 国际  | 中国  | 金融市场 | 经济    | 商业     | 科技       | 派        | 专栏与观点 |
-  | ----- | ----- | -------- | ------- | -------- | ---------- | --------- | ---------- |
-  | world | china | markets  | economy | business | technology | life-arts | opinion    |
+| 国际  | 中国  | 金融市场 | 经济    | 商业     | 科技       | 派        | 专栏与观点 |
+| ----- | ----- | -------- | ------- | -------- | ---------- | --------- | ---------- |
+| world | china | markets  | economy | business | technology | life-arts | opinion    |
 
   Provide full article RSS for WSJ topics.`,
 };
@@ -72,7 +73,7 @@ async function handler(ctx) {
         item.test = key;
         return item;
     });
-    const items = await asyncPoolAll(10, list, (item) => parseArticle(item));
+    const items = await pMap(list, (item) => parseArticle(item), { concurrency: 10 });
 
     return {
         title: `WSJ${subTitle}`,

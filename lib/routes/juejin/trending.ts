@@ -1,7 +1,6 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import util from './utils';
+import ofetch from '@/utils/ofetch';
+import { getCategoryBrief, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/trending/:category/:type',
@@ -20,24 +19,24 @@ export const route: Route = {
     maintainers: ['moaix'],
     handler,
     description: `| category | 标签     |
-  | -------- | -------- |
-  | android  | Android  |
-  | frontend | 前端     |
-  | ios      | iOS      |
-  | backend  | 后端     |
-  | design   | 设计     |
-  | product  | 产品     |
-  | freebie  | 工具资源 |
-  | article  | 阅读     |
-  | ai       | 人工智能 |
-  | devops   | 运维     |
-  | all      | 全部     |
+| -------- | -------- |
+| android  | Android  |
+| frontend | 前端     |
+| ios      | iOS      |
+| backend  | 后端     |
+| design   | 设计     |
+| product  | 产品     |
+| freebie  | 工具资源 |
+| article  | 阅读     |
+| ai       | 人工智能 |
+| devops   | 运维     |
+| all      | 全部     |
 
-  | type       | 类型     |
-  | ---------- | -------- |
-  | weekly     | 本周最热 |
-  | monthly    | 本月最热 |
-  | historical | 历史最热 |`,
+| type       | 类型     |
+| ---------- | -------- |
+| weekly     | 本周最热 |
+| monthly    | 本月最热 |
+| historical | 历史最热 |`,
 };
 
 async function handler(ctx) {
@@ -46,11 +45,8 @@ async function handler(ctx) {
     let id = '';
     let name = '';
     let url = 'recommended';
-    const idResponse = await got({
-        method: 'get',
-        url: 'https://api.juejin.cn/tag_api/v1/query_category_briefs',
-    });
-    const cat = idResponse.data.data.find((item) => item.category_url === category);
+    const idResponse = await getCategoryBrief();
+    const cat = idResponse.find((item) => item.category_url === category);
     if (cat) {
         id = cat.category_id;
         name = cat.category_name;
@@ -97,18 +93,18 @@ async function handler(ctx) {
         getJson.cate_id = id;
     }
 
-    const trendingResponse = await got({
-        method: 'post',
-        url: getUrl,
-        json: getJson,
+    const trendingResponse = await ofetch(getUrl, {
+        method: 'POST',
+        body: getJson,
     });
-    let entrylist = trendingResponse.data.data;
+    let entrylist = trendingResponse.data;
 
     if (category === 'all' || category === 'devops' || category === 'product' || category === 'design') {
-        entrylist = trendingResponse.data.data.filter((item) => item.item_type === 2).map((item) => item.item_info);
+        entrylist = trendingResponse.data.filter((item) => item.item_type === 2).map((item) => item.item_info);
     }
+    const list = parseList(entrylist);
 
-    const resultItems = await util.ProcessFeed(entrylist, cache);
+    const resultItems = await ProcessFeed(list);
 
     return {
         title,

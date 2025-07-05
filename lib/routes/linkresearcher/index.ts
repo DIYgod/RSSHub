@@ -2,15 +2,13 @@ import { ViewType, type Data, type DataItem, type Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import type { Context } from 'hono';
 import type { DetailResponse, SearchResultItem } from './types';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
-const __dirname = getCurrentPath(import.meta.url);
 const templatePath = path.join(__dirname, 'templates/bilingual.art');
 
 const baseURL = 'https://www.linkresearcher.com';

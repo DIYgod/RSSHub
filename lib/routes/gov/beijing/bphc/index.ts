@@ -32,7 +32,7 @@ async function handler(ctx) {
     const defaultPath = 'announcement';
 
     const pathname = getSubPath(ctx).replaceAll(/(^\/beijing\/bphc|\/$)/g, '');
-    const key = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+    const key = pathname === '' ? defaultPath : (pathname.endsWith('/') ? pathname.slice(0, -1) : pathname);
     const obj = mapping[key];
     const currentUrl = `${rootUrl}${obj.list}`;
 

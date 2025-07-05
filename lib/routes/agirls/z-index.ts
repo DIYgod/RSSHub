@@ -6,7 +6,7 @@ import { baseUrl, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/agirls/app',
     parameters: { category: '分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分' },
     features: {
@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| App 评测 | 手机开箱 | 笔电开箱 | 3C 周边     | 教学小技巧 | 科技情报 |
-  | -------- | -------- | -------- | ----------- | ---------- | -------- |
-  | app      | phone    | computer | accessories | tutorial   | techlife |`,
+| -------- | -------- | -------- | ----------- | ---------- | -------- |
+| app      | phone    | computer | accessories | tutorial   | techlife |`,
 };
 
 async function handler(ctx) {

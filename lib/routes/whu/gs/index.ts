@@ -40,8 +40,8 @@ export const route: Route = {
     handler,
     url: 'gs.whu.edu.cn/index.htm',
     description: `| 公告类型 | 新闻动态 | 学术探索 | 院系风采 | 通知 (全部) | 通知 (招生) | 通知 (培养) | 通知 (学位) | 通知 (质量与专业学位) | 通知 (综合) |
-  | -------- | -------- | -------- | -------- | ----------- | ----------- | ----------- | ----------- | --------------------- | ----------- |
-  | 参数     | 0        | 1        | 2        | 3           | 4           | 5           | 6           | 7                     | 8           |`,
+| -------- | -------- | -------- | -------- | ----------- | ----------- | ----------- | ----------- | --------------------- | ----------- |
+| 参数     | 0        | 1        | 2        | 3           | 4           | 5           | 6           | 7                     | 8           |`,
 };
 
 async function handler(ctx) {
@@ -53,8 +53,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const feed_title = $('div.location a')
         .slice(-2)
-        .map((index, element) => $(element).text())
-        .get()
+        .toArray()
+        .map((element) => $(element).text())
         .join(' > ');
 
     let items = $('.list ul li')

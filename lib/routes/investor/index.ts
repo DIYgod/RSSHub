@@ -125,29 +125,29 @@ export const route: Route = {
   若订阅 [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)，网址为 \`https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/\`。截取 \`https://www.investor.org.cn/\` 到末尾 \`/\` 的部分 \`information_release/news_release_from_authorities/zjhfb\` 作为参数填入，此时路由为 [\`/investor/information_release/news_release_from_authorities/zjhfb\`](https://rsshub.app/investor/information_release/news_release_from_authorities/zjhfb)。
 :::
 
-  #### [权威发布](https://www.investor.org.cn/information_release/news_release_from_authorities/)
+#### [权威发布](https://www.investor.org.cn/information_release/news_release_from_authorities/)
 
-  | [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)                                                                  | [证券交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hsjysfb/)                                                                | [期货交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/qhjysfb/)                                                                | [行业协会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hyxhfb/)                                                                 | [其他](https://www.investor.org.cn/information_release/news_release_from_authorities/otner/)                                                                        |
-  | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | [/investor/information_release/news_release_from_authorities/zjhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/zjhfb/) | [/investor/information_release/news_release_from_authorities/hsjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hsjysfb/) | [/investor/information_release/news_release_from_authorities/qhjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/qhjysfb/) | [/investor/information_release/news_release_from_authorities/hyxhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hyxhfb/) | [/investor/information_release/news_release_from_authorities/otner/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/otner/) |
+| [证监会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/zjhfb/)                                                                  | [证券交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hsjysfb/)                                                                | [期货交易所发布](https://www.investor.org.cn/information_release/news_release_from_authorities/qhjysfb/)                                                                | [行业协会发布](https://www.investor.org.cn/information_release/news_release_from_authorities/hyxhfb/)                                                                 | [其他](https://www.investor.org.cn/information_release/news_release_from_authorities/otner/)                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [/investor/information_release/news_release_from_authorities/zjhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/zjhfb/) | [/investor/information_release/news_release_from_authorities/hsjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hsjysfb/) | [/investor/information_release/news_release_from_authorities/qhjysfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/qhjysfb/) | [/investor/information_release/news_release_from_authorities/hyxhfb/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/hyxhfb/) | [/investor/information_release/news_release_from_authorities/otner/](https://rsshub.app/investor/investor/information_release/news_release_from_authorities/otner/) |
 
-  #### [市场资讯](https://www.investor.org.cn/information_release/market_news/)
+#### [市场资讯](https://www.investor.org.cn/information_release/market_news/)
 
-  | [市场资讯](https://www.investor.org.cn/information_release/market_news/)                                   |
-  | ---------------------------------------------------------------------------------------------------------- |
-  | [/investor/information_release/market_news/](https://rsshub.app/investor/information_release/market_news/) |
+| [市场资讯](https://www.investor.org.cn/information_release/market_news/)                                   |
+| ---------------------------------------------------------------------------------------------------------- |
+| [/investor/information_release/market_news/](https://rsshub.app/investor/information_release/market_news/) |
 
-  #### [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)
+#### [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)
 
-  | [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)                                  |
-  | ------------------------------------------------------------------------------------------------------------------- |
-  | [/investorinformation_release/policy_interpretation/](https://rsshub.appinformation_release/policy_interpretation/) |
+| [政策解读](https://www.investor.org.cn/information_release/policy_interpretation/)                                  |
+| ------------------------------------------------------------------------------------------------------------------- |
+| [/investorinformation_release/policy_interpretation/](https://rsshub.appinformation_release/policy_interpretation/) |
 
-  #### [国际交流](https://www.investor.org.cn/information_release/international_communication/)
+#### [国际交流](https://www.investor.org.cn/information_release/international_communication/)
 
-  | [国际交流](https://www.investor.org.cn/information_release/international_communication/)                                          |
-  | --------------------------------------------------------------------------------------------------------------------------------- |
-  | [/investor/information_release/international_communication/](https://rsshub.app/information_release/international_communication/) |
+| [国际交流](https://www.investor.org.cn/information_release/international_communication/)                                          |
+| --------------------------------------------------------------------------------------------------------------------------------- |
+| [/investor/information_release/international_communication/](https://rsshub.app/information_release/international_communication/) |
   `,
     categories: ['finance'],
 

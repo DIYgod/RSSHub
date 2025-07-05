@@ -69,6 +69,9 @@ async function handler(ctx) {
 const getUserResource = (username: string) =>
     cache.tryGet(`pinterest:user:${username}`, async () => {
         const response = await ofetch(`${baseUrl}/resource/UserResource/get/`, {
+            headers: {
+                'x-pinterest-pws-handler': 'www/[username]/_created.js',
+            },
             query: {
                 source_url: `/${username}/_created`,
                 data: JSON.stringify({ options: { username, field_set_key: 'unauth_profile' }, context: {} }),
@@ -81,6 +84,9 @@ const getUserResource = (username: string) =>
 
 const getUserActivityPinsResource = async (username: string, userId: string) => {
     const response = await ofetch(`${baseUrl}/resource/UserActivityPinsResource/get/`, {
+        headers: {
+            'x-pinterest-pws-handler': 'www/[username]/_created.js',
+        },
         query: {
             source_url: `/${username}/_created`,
             data: JSON.stringify({ options: { exclude_add_pin_rep: true, field_set_key: 'grid_item', is_own_profile_pins: false, user_id: userId, username }, context: {} }),
@@ -93,6 +99,9 @@ const getUserActivityPinsResource = async (username: string, userId: string) => 
 
 const getBoardsFeedResource = async (username: string) => {
     const response = await ofetch(`${baseUrl}/resource/BoardsFeedResource/get/`, {
+        headers: {
+            'x-pinterest-pws-handler': 'www/[username]/_saved.js',
+        },
         query: {
             source_url: `/${username}/_saved`,
             data: JSON.stringify({ options: { field_set_key: 'profile_grid_item', filter_stories: false, sort: 'last_pinned_to', username }, context: {} }),

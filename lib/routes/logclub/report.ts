@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -27,8 +25,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 罗戈研究出品 | 物流报告       | 绿色双碳报告          |
-  | ------------ | -------------- | --------------------- |
-  | Report       | IndustryReport | GreenDualCarbonReport |`,
+| ------------ | -------------- | --------------------- |
+| Report       | IndustryReport | GreenDualCarbonReport |`,
 };
 
 async function handler(ctx) {

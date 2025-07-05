@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['dykderrick'],
     handler,
     description: `| Blog | In The News |
-  | ---- | ----------- |
-  | blog | inthenews   |`,
+| ---- | ----------- |
+| blog | inthenews   |`,
 };
 
 async function handler(ctx) {
@@ -58,7 +58,8 @@ async function handler(ctx) {
     const $ = load(data);
 
     const list = $(listSelector)
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const content = item.find('header').find('h2').find('a');
             const time = item.find('header').find('span.h4').text();
@@ -68,8 +69,7 @@ async function handler(ctx) {
                 time,
                 link: content.attr('href'),
             };
-        })
-        .get();
+        });
 
     const itemContent = await Promise.all(
         list.map((item) =>

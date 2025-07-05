@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
-  | ---- | -------------- | ---- | ------- |
-  |      | 10             | 5    | 11      |`,
+| ---- | -------------- | ---- | ------- |
+|      | 10             | 5    | 11      |`,
 };
 
 async function handler(ctx) {
@@ -40,7 +40,8 @@ async function handler(ctx) {
 
     const list = $('.entry-title a')
         .slice(0, 15)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -48,8 +49,7 @@ async function handler(ctx) {
                 link: item.attr('href'),
                 pubDate: parseDate(item.parent().next().find('.mh-meta-date').eq(-1).text().split('：')[1]),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

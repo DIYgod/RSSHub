@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -31,7 +28,7 @@ const parseBookInList = (element) => {
 
 const parsePubDate = (data) => {
     const dateString = data('script')
-        .get()
+        .toArray()
         .find((element) => {
             const fullString = element.children[0];
             if (!fullString || !fullString.data) {

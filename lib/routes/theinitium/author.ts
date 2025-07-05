@@ -19,5 +19,5 @@ export const route: Route = {
     ],
     handler,
     example: '/theinitium/author/ninghuilulu/zh-hans',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
 };

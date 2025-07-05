@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| 新闻动态 | 通知公告 | 科学研究 / 科研动态 |
-  | :------: | :------: | :-----------------: |
-  |   xwdt   |   tzgg   |      kxyj-kydt      |`,
+| :------: | :------: | :-----------------: |
+|   xwdt   |   tzgg   |      kxyj-kydt      |`,
 };
 
 async function handler(ctx) {
@@ -45,7 +45,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('h2').text();
     const items = $('li.wow.fadeInUp')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const title = $(item).find('a').attr('title');
             let link = $(item).find('a').attr('href');
             if (!link.startsWith('http')) {
@@ -62,8 +63,7 @@ async function handler(ctx) {
                 pubDate,
                 link,
             };
-        })
-        .get();
+        });
 
     const item = await Promise.all(
         items.map((item) =>

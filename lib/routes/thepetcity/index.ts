@@ -8,7 +8,7 @@ const baseUrl = 'https://thepetcity.co';
 
 export const route: Route = {
     path: '/:term?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepetcity',
     parameters: { term: '見下表，留空為全部文章' },
     radar: Object.entries(termsMap).map(([key, value]) => ({
@@ -21,12 +21,12 @@ export const route: Route = {
     handler,
     url: 'thepetcity.co/',
     description: `| Column Name       | TermID |
-  | -------------------- | ------ |
-  | Knowledge飼養大全     | 3      |
-  | Funny News毛孩趣聞    | 2      |
-  | Raise Pets 養寵物新手  | 5      |
-  | Hot Spot 毛孩打卡點    | 4      |
-  | Pet Staff 毛孩好物    | 1      |`,
+| -------------------- | ------ |
+| Knowledge飼養大全     | 3      |
+| Funny News毛孩趣聞    | 2      |
+| Raise Pets 養寵物新手  | 5      |
+| Hot Spot 毛孩打卡點    | 4      |
+| Pet Staff 毛孩好物    | 1      |`,
 };
 
 async function handler(ctx) {

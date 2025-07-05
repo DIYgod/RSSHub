@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['Caicailiushui'],
     handler,
     description: `| 全部公告 | 教学管理 | 各类资助 | 学科建设 | 海外交流 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | 1        | 2        | 3        | 4        | 5        |`,
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |`,
 };
 
 async function handler(ctx) {
@@ -44,19 +44,15 @@ async function handler(ctx) {
     const $ = load(res.data);
     const list = $('#wp_news_w09').find('.list-item');
 
-    const items =
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('h3').attr('title'),
-                    pubDate: timezone(parseDate(item.find('.date').text().trim(), 'YY-MM-DD'), +8),
-                    link: `http://www.grs.zju.edu.cn${item.find('a').eq(-1).attr('href')}`,
-                    description: item.find('p').text(),
-                };
-            })
-            .get();
+    const items = list.toArray().map((item) => {
+        item = $(item);
+        return {
+            title: item.find('h3').attr('title'),
+            pubDate: timezone(parseDate(item.find('.date').text().trim(), 'YY-MM-DD'), +8),
+            link: `http://www.grs.zju.edu.cn${item.find('a').eq(-1).attr('href')}`,
+            description: item.find('p').text(),
+        };
+    });
 
     return {
         title: map.get(type).title,

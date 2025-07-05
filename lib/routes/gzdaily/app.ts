@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -32,13 +30,13 @@ export const route: Route = {
 
   常用栏目 ID：
 
-  | 栏目名 | ID   |
-  | ------ | ---- |
-  | 首页   | 74   |
-  | 时局   | 374  |
-  | 广州   | 371  |
-  | 大湾区 | 397  |
-  | 城区   | 2980 |`,
+| 栏目名 | ID   |
+| ------ | ---- |
+| 首页   | 74   |
+| 时局   | 374  |
+| 广州   | 371  |
+| 大湾区 | 397  |
+| 城区   | 2980 |`,
 };
 
 async function handler(ctx) {

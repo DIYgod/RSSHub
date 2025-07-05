@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { config } from '@/config';
@@ -61,13 +59,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.issue-item')
         .slice(0, 10)
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h5.issue-item__title').text(),
             link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
             pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
-        }))
-        .get();
-
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

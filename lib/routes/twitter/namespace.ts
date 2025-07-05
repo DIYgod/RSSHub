@@ -24,11 +24,12 @@ export const namespace: Namespace = {
 | \`heightOfPics\`                 | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |
 | \`sizeOfAuthorAvatar\`           | Size of author's avatar                                                                                                              | Integer                | \`48\`                                      |
 | \`sizeOfQuotedAuthorAvatar\`     | Size of quoted tweet's author's avatar                                                                                               | Integer                | \`24\`                                      |
-| \`excludeReplies\`               | Exclude replies, only available in \`/twitter/user\`                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
+| \`includeReplies\`               | Include replies, only available in \`/twitter/user\`                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 | \`includeRts\`                   | Include retweets, only available in \`/twitter/user\`                                                                                  | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`                                    |
 | \`forceWebApi\`                  | Force using Web API even if Developer API is configured, only available in \`/twitter/user\` and \`/twitter/keyword\`                    | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 | \`count\`                        | \`count\` parameter passed to Twitter API, only available in \`/twitter/user\`                                                           | Unspecified/Integer    | Unspecified                               |
 | \`onlyMedia\`                    | Only get tweets with a media                                                                                                             | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                 |
+| \`mediaNumber \`                 | Number the medias                                                                                                            | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                 |
 
 Specify different option values than default values to improve readability. The URL
 

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -69,15 +67,15 @@ export const route: Route = {
     handler,
     description: `分类
 
-  | 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
-  | ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
-  | focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+| 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
+| ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+| focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
 
   语言
 
-  | 繁 | 简 |
-  | -- | -- |
-  | tc | sc |`,
+| 繁 | 简 |
+| -- | -- |
+| tc | sc |`,
 };
 
 async function handler(ctx) {

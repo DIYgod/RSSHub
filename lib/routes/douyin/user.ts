@@ -69,7 +69,7 @@ async function handler(ctx) {
                 waitUntil: 'networkidle2',
             });
 
-            browser.close();
+            await browser.close();
 
             if (!postData) {
                 throw new Error('Empty post data. The request may be filtered by WAF.');

@@ -1,6 +1,4 @@
 import { DataItem, Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';

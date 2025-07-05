@@ -31,6 +31,7 @@ export const namespace: Namespace = {
 | showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
 | preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
 | showRetweeted              | 是否显示转发的微博                                                 | 0/1/true/false | true                               |
+| showBloggerIcons           | 是否显示评论中博主的标志，只在显示热门评论时有效                                           | 0/1/true/false | false                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 

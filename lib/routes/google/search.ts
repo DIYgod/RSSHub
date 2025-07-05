@@ -1,21 +1,15 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { config } from '@/config';
-
-const renderDescription = (description, images) => art(path.join(__dirname, './templates/description.art'), { description, images });
 
 export const route: Route = {
     path: '/search/:keyword/:language?',
     categories: ['other'],
     example: '/google/search/rss/zh-CN,zh',
-    parameters: { keyword: 'Keyword', language: 'Accept-Language. Example: zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7' },
+    parameters: { keyword: 'Keyword', language: 'Accept-Language. Example: `zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,47 +24,39 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { keyword, language } = ctx.req.param();
+    const { keyword, language = 'en' } = ctx.req.param();
     const searchParams = new URLSearchParams({
         q: keyword,
     });
     const tempUrl = new URL('https://www.google.com/search');
     tempUrl.search = searchParams.toString();
     const url = tempUrl.toString();
-    const key = `google-search:${language}:${url}`;
+    const key = `google:search:${language}:${url}`;
     const items = await cache.tryGet(
         key,
         async () => {
-            const response = (
-                await got(url, {
-                    headers: {
-                        'Accept-Language': language,
-                    },
-                })
-            ).data;
+            const response = await ofetch(url, {
+                headers: {
+                    'Accept-Language': language,
+                    'User-Agent': 'Lynx/2.9.2 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/3.5.0',
+                },
+            });
             const $ = load(response);
-            const content = $('#rso');
-            return content
-                .find('> div')
+            return $('body > div > div > div > div > div > div > a')
                 .toArray()
                 .map((el) => {
                     const element = $(el);
-                    const link = element.find('div > div > div > div > div > span > a').first().attr('href');
-                    const title = element.find('div > div > div> div > div > span > a > h3').first().text();
-                    const imgs = element
-                        .find('img')
-                        .toArray()
-                        .map((_el) => $(_el).attr('src'));
-                    const description = element.find('div[style="-webkit-line-clamp:2"]').first().text() || element.find('div[role="heading"]').first().text();
-                    const author = element.find('div > div > div > div > div > span > a > div > div > span').first().text() || '';
+                    const link = element.attr('href')!;
+                    const title = element.find('span').first().text().trim();
+                    const description = element.parent().next().find('span > span').last().text().trim().replaceAll('�', '') || '';
+                    const author = element.find('span > span').text().trim() || '';
                     return {
-                        link,
+                        link: new URL(link, 'https://www.google.com').searchParams.get('q') || link,
                         title,
-                        description: renderDescription(description, imgs),
+                        description,
                         author,
                     };
-                })
-                .filter((e) => e?.link);
+                });
         },
         config.cache.routeExpire,
         false

@@ -5,7 +5,7 @@ import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem
 
 export const route: Route = {
     path: '/:categoryId?/:lang?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/followin',
     parameters: {
@@ -48,15 +48,15 @@ export const route: Route = {
     handler,
     description: `Category ID
 
-  | For You | Market | Meme | BRC20 | NFT | Thread | In-depth | Tutorials | Videos |
-  | ------- | ------ | ---- | ----- | --- | ------ | -------- | --------- | ------ |
-  | 1       | 9      | 13   | 14    | 3   | 5      | 6        | 8         | 11     |
+| For You | Market | Meme | BRC20 | NFT | Thread | In-depth | Tutorials | Videos |
+| ------- | ------ | ---- | ----- | --- | ------ | -------- | --------- | ------ |
+| 1       | 9      | 13   | 14    | 3   | 5      | 6        | 8         | 11     |
 
   Language
 
-  | English | 简体中文 | 繁體中文 | Tiếng Việt |
-  | ------- | -------- | -------- | ---------- |
-  | en      | zh-Hans  | zh-Hant  | vi         |`,
+| English | 简体中文 | 繁體中文 | Tiếng Việt |
+| ------- | -------- | -------- | ---------- |
+| en      | zh-Hans  | zh-Hant  | vi         |`,
 };
 
 async function handler(ctx) {

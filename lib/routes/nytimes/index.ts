@@ -8,7 +8,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/:lang?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/nytimes/dual',
     parameters: {
@@ -151,7 +151,7 @@ async function handler(ctx) {
         })
     );
 
-    browser.close();
+    await browser.close();
 
     return {
         title,

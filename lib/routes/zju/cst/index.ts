@@ -29,19 +29,14 @@ async function getPage(id) {
     const $ = load(res.data);
     const list = $('.lm_new').find('li');
 
-    return (
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('a').text(),
-                    pubDate: parseDate(item.find('.fr').text()),
-                    link: new URL(item.find('a').attr('href'), host).href,
-                };
-            })
-            .get()
-    );
+    return list.toArray().map((item) => {
+        item = $(item);
+        return {
+            title: item.find('a').text(),
+            pubDate: parseDate(item.find('.fr').text()),
+            link: new URL(item.find('a').attr('href'), host).href,
+        };
+    });
 }
 
 export const route: Route = {
@@ -59,8 +54,8 @@ export const route: Route = {
     },
     name: '软件学院',
     description: `| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国际实习 | 国内合作科研 | 国际合作科研 | 校园服务 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |
-  | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       |`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       |`,
     maintainers: ['yonvenne', 'zwithz'],
     handler,
 };

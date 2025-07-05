@@ -39,8 +39,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
-  | -------- | -------- | -------- | ---------- | ------ |
-  |          | 1        | 2        | 3          | 4      |`,
+| -------- | -------- | -------- | ---------- | ------ |
+|          | 1        | 2        | 3          | 4      |`,
 };
 
 async function handler(ctx) {
@@ -101,7 +101,7 @@ async function handler(ctx) {
                 const pubDate = content('div.article-header-date').text();
 
                 if (pubDate) {
-                    item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['MM月DD日 HH:mm', 'YYYY年MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
+                    item.pubDate = /\d+月\d+日/.test(pubDate) ? parseDate(pubDate, ['YYYY年MM月DD日 HH:mm', 'MM月DD日 HH:mm']) : parseRelativeDate(pubDate);
                 }
 
                 item.pubDate = timezone(item.pubDate, +8);

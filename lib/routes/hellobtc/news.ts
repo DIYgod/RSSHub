@@ -8,7 +8,7 @@ const rootUrl = 'https://www.hellobtc.com';
 
 export const route: Route = {
     path: '/news',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hellobtc/news',
     parameters: {},
     features: {
@@ -37,14 +37,14 @@ async function handler() {
     const $ = load(response.data);
     const items = $('nav.js-nav')
         .find('div.item')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2').text(),
             link: $(item).find('a').attr('href'),
             description: $(item).find('div.sub').text(),
             pubDate: timezone(parseDate($(item).find('span.date').text(), 'MM-DD HH:mm'), +8),
         }))
-        .filter(Boolean)
-        .get();
+        .filter(Boolean);
 
     return {
         title: `白话区块链 - 快讯`,

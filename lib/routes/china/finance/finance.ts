@@ -38,8 +38,8 @@ export const route: Route = {
     maintainers: ['KingJem'],
     handler,
     description: `| 推荐    | TMT | 金融    | 地产   | 消费    | 医药  | 酒业 | IPO 观察 |
-  | ------- | --- | ------- | ------ | ------- | ----- | ---- | -------- |
-  | tuijian | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO      |
+| ------- | --- | ------- | ------ | ------- | ----- | ---- | -------- |
+| tuijian | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO      |
 
   > Note: The default news num is \`30\`.
 
@@ -57,13 +57,13 @@ async function handler(ctx) {
     const listCategory = `中华网-财经-${categoryTitle}新闻`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
     const detailsUrls = $('.item-con-inner')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 link: item.find('.tit>a').attr('href'),
             };
         })
-        .get()
         .filter((item) => item.link !== void 0)
         .slice(0, limit);
 

@@ -1,13 +1,13 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
 import { parseCookieArray, constructCookieArray, setCookies, getCookies } from '@/utils/puppeteer-utils';
 import puppeteer from '@/utils/puppeteer';
-import type { Browser } from 'puppeteer';
+import type { Browser } from 'rebrowser-puppeteer';
 
 let browser: Browser | null = null;
 
-afterEach(() => {
+afterEach(async () => {
     if (browser) {
-        browser.close();
+        await browser.close();
         browser = null;
     }
 

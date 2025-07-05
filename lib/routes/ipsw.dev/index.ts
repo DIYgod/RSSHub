@@ -3,7 +3,6 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
 
 export const route: Route = {
     path: '/index/:productID',
@@ -19,7 +18,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { productID } = ctx.req.param();
-    const __dirname = getCurrentPath(import.meta.url);
     const link = `https://ipsw.dev/product/version/${productID}`;
 
     const resp = await got({
@@ -35,7 +33,8 @@ async function handler(ctx) {
     const productName = $('#IdentifierModal > div > div > div.modal-body > p:nth-child(1) > em').text();
 
     const list: Data[] = $('.firmware')
-        .map((index, element) => {
+        .toArray()
+        .map((element) => {
             const ele = $(element);
             const version = ele.find('td:nth-child(1) > div > div > strong').text();
             const build = ele.find('td:nth-child(1) > div > div > div > code').text();
@@ -53,8 +52,7 @@ async function handler(ctx) {
                     size,
                 }),
             };
-        })
-        .get();
+        });
 
     return {
         title: `${productName} Released`,

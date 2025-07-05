@@ -3,9 +3,6 @@ import { parseDate } from '@/utils/parse-date';
 import { showByUsername, getPostByAccountId, baseUrl } from './utils';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import { getCurrentPath } from '@/utils/helpers';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: '/user/:username',
@@ -19,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -31,7 +29,7 @@ export const route: Route = {
 };
 
 const render = (postImages, body) =>
-    art(path.join(__dirname, 'templates', 'post.art'), {
+    art(path.join(__dirname, 'templates/post.art'), {
         postImages,
         body,
     });

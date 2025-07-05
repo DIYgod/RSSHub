@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { config } from '@/config';
 import got from '@/utils/got';
@@ -11,7 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     example: '/github/trending/daily/javascript/en',
     view: ViewType.Notifications,
     parameters: {

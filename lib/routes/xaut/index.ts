@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['mocusez'],
     handler,
     description: `| 学校新闻 | 砥志研思 | 立德树人 | 传道授业 | 校闻周知 |
-  | :------: | :------: | :------: | :------: | :------: |
-  |   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |`,
+| :------: | :------: | :------: | :------: | :------: |
+|   xxxw   |   dzys   |   ldsr   |   cdsy   |   xwzz   |`,
 };
 
 async function handler(ctx) {
@@ -44,7 +44,8 @@ async function handler(ctx) {
     const $ = load(data);
 
     const list = $('div.nlist ul li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             // link原来长这样：'../info/1196/13990.htm'
             const link = item.find('a').attr('href').replace(/^\.\./, 'http://www.xaut.edu.cn');
@@ -56,8 +57,7 @@ async function handler(ctx) {
                 link,
                 pubDate,
             };
-        })
-        .get();
+        });
 
     return {
         // 源标题
@@ -70,7 +70,7 @@ async function handler(ctx) {
         item: await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (!item.link.match('zhixing.xaut.edu.cn') && !item.link.match('xinwen.xaut.edu.cn')) {
+                    if (!item.link.includes('://zhixing.xaut.edu.cn/') && !item.link.includes('://xinwen.xaut.edu.cn/')) {
                         const res = await got({
                             method: 'get',
                             url: item.link,

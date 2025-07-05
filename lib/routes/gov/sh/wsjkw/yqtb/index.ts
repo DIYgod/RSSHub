@@ -36,23 +36,19 @@ async function handler() {
     return {
         title: '疫情通报-上海卫健委',
         link: url,
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    const title = item.find('a').text();
-                    const address = item.find('a').attr('href');
-                    const host = `https://wsjkw.sh.gov.cn`;
-                    const pubDate = parseDate(item.find('span').text(), 'YYYY-MM-DD');
-                    return {
-                        title,
-                        description: title,
-                        pubDate,
-                        link: host + address,
-                        guid: host + address,
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            const title = item.find('a').text();
+            const address = item.find('a').attr('href');
+            const host = `https://wsjkw.sh.gov.cn`;
+            const pubDate = parseDate(item.find('span').text(), 'YYYY-MM-DD');
+            return {
+                title,
+                description: title,
+                pubDate,
+                link: host + address,
+                guid: host + address,
+            };
+        }),
     };
 }

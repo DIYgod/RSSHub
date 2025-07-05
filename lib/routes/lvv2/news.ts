@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -46,12 +44,12 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `|   热门   |   最新   |    得分    |   24 小时榜   |
-  | :------: | :------: | :--------: | :-----------: |
-  | sort-hot | sort-new | sort-score | sort-realtime |
+| :------: | :------: | :--------: | :-----------: |
+| sort-hot | sort-new | sort-score | sort-realtime |
 
-  | 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
-  | :------: | :------: | :----: | :------: | :------: |
-  |          |  t-hour  |  t-day |  t-week  |  t-month |`,
+| 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
+| :------: | :------: | :----: | :------: | :------: |
+|          |  t-hour  |  t-day |  t-week  |  t-month |`,
 };
 
 async function handler(ctx) {
@@ -62,14 +60,14 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('div.spacer > div')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h3 > a.title').text().trim(),
             author: $(item).find('a.author').text().trim(),
             link: new URL($(item).find('h3.title > a.title').attr('href'), rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
             pubDate: timezone(parseDate($(item).find('a.dateline > time').attr('datetime')), +8),
         }))
-        .filter((_, item) => item.title !== '')
-        .get();
+        .filter((item) => item.title !== '');
 
     const items = await Promise.all(
         list.map((item) =>

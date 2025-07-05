@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -36,14 +34,14 @@ export const route: Route = {
 
   栏目
 
-  | 新闻联播             | 新闻周刊             | 天下足球             |
-  | -------------------- | -------------------- | -------------------- |
-  | TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |`,
+| 新闻联播             | 新闻周刊             | 天下足球             |
+| -------------------- | -------------------- | -------------------- |
+| TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('column');
-    const limit = isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
+    const limit = Number.isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
 
     const response = await got({
         method: 'get',

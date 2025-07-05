@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'dky.sicau.edu.cn/',
     description: `| 本科生招生 | 研究生招生 | 毕业生选录指南 |
-  | ---------- | ---------- | -------------- |
-  | bkszs      | yjszs      | bysxlzn        |`,
+| ---------- | ---------- | -------------- |
+| bkszs      | yjszs      | bysxlzn        |`,
 };
 
 async function handler(ctx) {
@@ -44,7 +44,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('a.tit')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -52,8 +53,7 @@ async function handler(ctx) {
                 pubDate: parseDate(item.prev().text()),
                 link: `${rootUrl}${item.attr('href').replace(/\.\./, '/')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

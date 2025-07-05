@@ -2,6 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 const domain = 'mydrivers.com';
 const rootUrl = `https://m.${domain}`;
@@ -25,15 +26,12 @@ const convertToQueryString = (path) => {
     const parts = path.split('/');
     const queryStringParams = [];
 
-    for (const [key, value] of parts.reduce((acc, part, index) => {
-        if (index % 2 === 0) {
-            acc.push([part]);
-        } else {
-            acc.at(-1).push(part);
+    for (let i = 0; i < parts.length; i += 2) {
+        const key = parts[i];
+        const value = parts[i + 1];
+        if (key !== undefined && value !== undefined) {
+            queryStringParams.push(`${key}=${value}`);
         }
-        return acc;
-    }, [])) {
-        queryStringParams.push(`${key}=${value}`);
     }
 
     return `?${queryStringParams.join('&')}`;
@@ -42,12 +40,11 @@ const convertToQueryString = (path) => {
 /**
  * Retrieves information from a given URL using a provided tryGet function.
  * @param {string} url - The URL to retrieve information from.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @param {number|undefined} [range] - The index value of the range (optional).
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
-const getInfo = (url, tryGet, range) =>
-    tryGet(url, async () => {
+const getInfo = (url, range) =>
+    cache.tryGet(url, async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
@@ -79,10 +76,10 @@ const getInfo = (url, tryGet, range) =>
  * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
-const processItems = async (items, tryGet) =>
+const processItems = async (items) =>
     await Promise.all(
         items.map((item) =>
-            tryGet(`${domain}#${item.guid}`, async () => {
+            cache.tryGet(`${domain}#${item.guid}`, async () => {
                 const { data: detailResponse } = await got(`${rootUrl}/newsview/${item.guid}.html`);
 
                 const { data: voteResponse } = await got.post(apiVoteUrl, {

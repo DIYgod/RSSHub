@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -10,7 +8,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/mittrchina/index',
     parameters: { type: '类型，见下表，默认为首页资讯' },
     features: {
@@ -25,8 +23,8 @@ export const route: Route = {
     maintainers: ['EsuRt', 'queensferryme'],
     handler,
     description: `| 快讯     | 本周热文 | 首页资讯 | 视频  |
-  | -------- | -------- | -------- | ----- |
-  | breaking | hot      | index    | video |`,
+| -------- | -------- | -------- | ----- |
+| breaking | hot      | index    | video |`,
 };
 
 async function handler(ctx) {
@@ -82,10 +80,10 @@ async function handler(ctx) {
                           type: article.address.split('.').pop(),
                       },
                   })
-                : type === 'breaking'
+                : (type === 'breaking'
                   ? article.content
-                  : article.summary,
-        pubDate: article.start_time ? parseDate(article.start_time, 'X') : article.push_time ? parseDate(article.push_time, 'X') : undefined,
+                  : article.summary),
+        pubDate: article.start_time ? parseDate(article.start_time, 'X') : (article.push_time ? parseDate(article.push_time, 'X') : undefined),
         id: article.id,
         link: `https://www.mittrchina.com/news/detail/${article.id}`,
     }));

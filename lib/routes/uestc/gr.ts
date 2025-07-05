@@ -51,9 +51,9 @@ export const route: Route = {
     handler,
     url: 'gr.uestc.edu.cn/',
     description: `\
-  | 重要公告  | 教学管理 | 学位管理 | 学生管理 | 就业实践 |
-  | --------- | -------- | -------- | -------- | -------- |
-  | important | teaching | degree   | student  | practice |`,
+| 重要公告  | 教学管理 | 学位管理 | 学生管理 | 就业实践 |
+| --------- | -------- | -------- | -------- | -------- |
+| important | teaching | degree   | student  | practice |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

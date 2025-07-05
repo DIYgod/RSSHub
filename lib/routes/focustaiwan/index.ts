@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -27,12 +25,12 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| Latest | Editor's Picks | Photos of the Day |
-  | ------ | -------------- | ----------------- |
-  | news   | editorspicks   | photos            |
+| ------ | -------------- | ----------------- |
+| news   | editorspicks   | photos            |
 
-  | Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
-  | -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
-  | politics | cross-strait | business | society | science & tech | culture | sports |`,
+| Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
+| -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
+| politics | cross-strait | business | society | science & tech | culture | sports |`,
 };
 
 async function handler(ctx) {

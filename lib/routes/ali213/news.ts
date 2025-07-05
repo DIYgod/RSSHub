@@ -1,18 +1,16 @@
 import path from 'node:path';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 import { type DataItem, type Route, type Data, ViewType } from '@/types';
 
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
-import { getCurrentPath } from '@/utils/helpers';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
@@ -133,10 +131,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             .filter((_): _ is { url: string; type: string; content_html: string } => true);
 
                         return {
+                            ...item,
                             title,
                             description,
                             pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/)[0]), +8),
-                            author: item.author,
                             content: {
                                 html: description,
                                 text: $$('div#Content').html() ?? '',

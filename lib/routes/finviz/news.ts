@@ -12,7 +12,7 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/finviz',
     parameters: {
@@ -39,8 +39,8 @@ export const route: Route = {
     handler,
     url: 'finviz.com/news.ashx',
     description: `| News | Blogs |
-  | ---- | ---- |
-  | news | blogs |`,
+| ---- | ---- |
+| news | blogs |`,
 };
 
 async function handler(ctx) {

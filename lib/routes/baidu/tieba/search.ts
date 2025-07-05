@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -27,11 +25,11 @@ export const route: Route = {
     maintainers: ['JimenezLi'],
     handler,
     description: `| 键           | 含义                                                       | 接受的值      | 默认值 |
-  | ------------ | ---------------------------------------------------------- | ------------- | ------ |
-  | kw           | 在名为 kw 的贴吧中搜索                                     | 任意名称 / 无 | 无     |
-  | only_thread  | 只看主题帖，默认为 0 关闭                                  | 0/1           | 0      |
-  | rn           | 返回条目的数量                                             | 1-20          | 20     |
-  | sm           | 排序方式，0 为按时间顺序，1 为按时间倒序，2 为按相关性顺序 | 0/1/2         | 1      |
+| ------------ | ---------------------------------------------------------- | ------------- | ------ |
+| kw           | 在名为 kw 的贴吧中搜索                                     | 任意名称 / 无 | 无     |
+| only_thread  | 只看主题帖，默认为 0 关闭                                  | 0/1           | 0      |
+| rn           | 返回条目的数量                                             | 1-20          | 20     |
+| sm           | 排序方式，0 为按时间顺序，1 为按时间倒序，2 为按相关性顺序 | 0/1/2         | 1      |
 
   用例：\`/baidu/tieba/search/neuro/kw=neurosama&only_thread=1&sm=2\``,
 };

@@ -1,10 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import { config } from '@/config';
 
 const host = 'https://www.sehuatang.net/';
 
@@ -40,24 +40,39 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
-    name: 'Unknown',
+    name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
-    features: {
-        requirePuppeteer: true,
-    },
     handler,
+    features: {
+        nsfw: true,
+    },
     description: `**原创 BT 电影**
 
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+| 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+| -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+| gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
 
   **色花图片**
 
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
+| 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
 };
+
+const getSafeId = () =>
+    cache.tryGet(
+        'sehuatang:safeid',
+        async () => {
+            const response = await ofetch(host);
+            const $ = load(response);
+            const safeId = $('script:contains("safeid")')
+                .text()
+                .match(/safeid\s*=\s*'(.+)';/)?.[1];
+            return safeId;
+        },
+        config.cache.routeExpire,
+        false
+    );
 
 async function handler(ctx) {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
@@ -65,23 +80,13 @@ async function handler(ctx) {
     const type = ctx.req.param('type');
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
+    const headers = {
+        Cookie: `_safe=${await getSafeId()};`,
+    };
 
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const response = await ofetch(link, {
+        headers,
     });
-    logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
-    await page.waitForSelector('a.enter-btn', { visible: true });
-
-    await Promise.all([page.click('a.enter-btn'), page.waitForNavigation({ waitUntil: 'domcontentloaded' })]);
-    const response = await page.content();
-    page.close();
-
     const $ = load(response);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
@@ -101,20 +106,12 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                const response = await ofetch(info.link, {
+                    headers,
                 });
 
-                await page.goto(info.link, {
-                    // 指定页面等待载入的时间
-                    waitUntil: 'domcontentloaded',
-                });
-                const response = await page.content();
-                await page.close();
                 const $ = load(response);
-                const postMessage = $("td[id^='postmessage']").slice(0, 1);
+                const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
                 const images = $(postMessage).find('img');
                 for (const image of images) {
                     const file = $(image).attr('file');
@@ -151,11 +148,12 @@ async function handler(ctx) {
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }
+
                 return info;
             })
         )
     );
-    await browser.close();
+
     return {
         title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
         link,

@@ -1,8 +1,8 @@
-import { Resource } from '@opentelemetry/resources';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 import { PrometheusExporter, PrometheusSerializer } from '@opentelemetry/exporter-prometheus';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { MeterProvider } from '@opentelemetry/sdk-metrics';
-import { Attributes } from '@opentelemetry/api';
+import type { Attributes } from '@opentelemetry/api';
 import { config } from '@/config';
 
 interface IMetricAttributes extends Attributes {
@@ -20,7 +20,7 @@ const METRIC_PREFIX = 'rsshub';
 const exporter = new PrometheusExporter({});
 
 const provider = new MeterProvider({
-    resource: new Resource({
+    resource: resourceFromAttributes({
         [ATTR_SERVICE_NAME]: 'rsshub',
     }),
     readers: [exporter],

@@ -32,8 +32,8 @@ export const route: Route = {
     maintainers: ['FanofZY'],
     handler,
     description: `| 公告类型 | 学院新闻 | 学术科研 | 通知公告 |
-  | -------- | -------- | -------- | -------- |
-  | 参数     | 0        | 1        | 2        |`,
+| -------- | -------- | -------- | -------- |
+| 参数     | 0        | 1        | 2        |`,
 };
 
 async function handler(ctx) {
@@ -94,7 +94,7 @@ async function handler(ctx) {
                               const response = await got(item.link);
                               const $ = load(response.data);
 
-                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : $('.prompt').length ? $('.prompt').html() : item.title;
+                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : ($('.prompt').length ? $('.prompt').html() : item.title);
                           } catch {
                               return item.title;
                           }

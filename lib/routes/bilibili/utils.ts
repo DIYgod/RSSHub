@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
@@ -298,6 +295,13 @@ export const renderOGVDescription = (embed: boolean, img: string, description: s
     return rendered;
 };
 
+export function getVideoUrl(bvid: string): string;
+export function getVideoUrl(bvid?: string): string | undefined;
+export function getVideoUrl(bvid?: string): string | undefined {
+    return bvid ? `https://www.bilibili.com/blackboard/newplayer.html?isOutside=true&autoplay=true&danmaku=true&muted=false&highQuality=true&bvid=${bvid}` : undefined;
+}
+export const getLiveUrl = (roomId?: string) => (roomId ? `https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}` : undefined);
+
 export default {
     lsid,
     _uuid,
@@ -313,4 +317,5 @@ export default {
     getBangumiItems,
     renderUGCDescription,
     renderOGVDescription,
+    getVideoUrl,
 };

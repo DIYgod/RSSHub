@@ -4,11 +4,14 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
+import { puppeteerGet } from './utils';
+import puppeteer from '@/utils/puppeteer';
+
 const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/rank/:type',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     example: '/xsijishe/rank/weekly',
     parameters: {
         type: {
@@ -30,8 +33,8 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -56,12 +59,15 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
 
+    const browser = await puppeteer();
+    let usePuppeteer = false;
+
     const url = `${baseUrl}/portal.php`;
     const headers = {
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         Cookie: config.xsijishe.cookie,
-        'User-Agent': config.xsijishe.user_agent,
+        'User-Agent': config.xsijishe.userAgent,
     };
 
     const resp = await got(url, {
@@ -88,36 +94,62 @@ async function handler(ctx) {
             item = $(item);
             const title = item.find('h5').text().trim();
             const link = item.find('a').attr('href');
+            const description = item.find('img').prop('outerHTML');
             return {
                 title,
                 link: `${baseUrl}/${link}`,
+                description,
             };
         });
+
+    if (items.length > 0) {
+        const firstItem = items[0];
+        const resp = await got(firstItem.link, {
+            headers,
+        });
+        const $ = load(resp.data);
+        const firstViewBox = $('.t_f').first();
+        if (firstViewBox.length === 0) {
+            usePuppeteer = true;
+        }
+    }
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const resp = await got(item.link, {
-                    headers,
-                });
-                const $ = load(resp.data);
+                let data;
+                if (usePuppeteer) {
+                    data = await puppeteerGet(item.link, browser);
+                } else {
+                    const resp = await got(item.link, {
+                        headers,
+                    });
+                    data = resp.data;
+                }
+                const $ = load(data);
                 const firstViewBox = $('.t_f').first();
 
-                firstViewBox.find('img').each((_, img) => {
-                    img = $(img);
-                    if (img.attr('zoomfile')) {
-                        img.attr('src', img.attr('zoomfile'));
-                        img.removeAttr('zoomfile');
-                        img.removeAttr('file');
-                    }
-                    img.removeAttr('onmouseover');
-                });
+                if (firstViewBox.length === 1) {
+                    firstViewBox.find('img').each((_, img) => {
+                        img = $(img);
+                        if (img.attr('zoomfile')) {
+                            img.attr('src', img.attr('zoomfile'));
+                            img.removeAttr('zoomfile');
+                            img.removeAttr('file');
+                        }
+                        img.removeAttr('onmouseover');
+                    });
 
-                item.description = firstViewBox.html();
+                    item.description = firstViewBox.html();
+                }
+
                 return item;
             })
         )
     );
+
+    await browser.close();
+
     return {
         title,
         link: url,

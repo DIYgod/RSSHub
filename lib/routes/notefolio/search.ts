@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
@@ -70,7 +68,7 @@ const categoryMap = [
  */
 export const route: Route = {
     path: '/search/:category?/:order?/:time?/:query?',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/notefolio/search/1/pick/all/life',
     parameters: {
@@ -133,20 +131,20 @@ export const route: Route = {
     handler,
     url: 'notefolio.net/search',
     description: `| Category | Name in Korean     | Name in English         |
-  | -------- | ------------------ | ----------------------- |
-  | all      | 전체               | All                     |
-  | 1        | 영상/모션그래픽    | Video / Motion Graphics |
-  | 2        | 그래픽 디자인      | Graphic Design          |
-  | 3        | 브랜딩/편집        | Branding / Editing      |
-  | 4        | UI/UX              | UI/UX                   |
-  | 5        | 일러스트레이션     | Illustration            |
-  | 6        | 디지털 아트        | Digital Art             |
-  | 7        | 캐릭터 디자인      | Character Design        |
-  | 8        | 제품/패키지 디자인 | Product Package Design  |
-  | 9        | 포토그래피         | Photography             |
-  | 10       | 타이포그래피       | Typography              |
-  | 11       | 공예               | Crafts                  |
-  | 12       | 파인아트           | Fine Art                |`,
+| -------- | ------------------ | ----------------------- |
+| all      | 전체               | All                     |
+| 1        | 영상/모션그래픽    | Video / Motion Graphics |
+| 2        | 그래픽 디자인      | Graphic Design          |
+| 3        | 브랜딩/편집        | Branding / Editing      |
+| 4        | UI/UX              | UI/UX                   |
+| 5        | 일러스트레이션     | Illustration            |
+| 6        | 디지털 아트        | Digital Art             |
+| 7        | 캐릭터 디자인      | Character Design        |
+| 8        | 제품/패키지 디자인 | Product Package Design  |
+| 9        | 포토그래피         | Photography             |
+| 10       | 타이포그래피       | Typography              |
+| 11       | 공예               | Crafts                  |
+| 12       | 파인아트           | Fine Art                |`,
 };
 
 async function handler(ctx) {

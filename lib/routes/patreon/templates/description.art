@@ -23,6 +23,8 @@
 {{ else if attributes.post_type === 'video_embed' || attributes.post_type === 'link' }}
     <img src="{{ attributes.image.url }}"><br>
 
+{{ else if attributes.post_type === 'text_only' }}
+
 {{ else }}
 Post type: "{{ attributes.post_type }}" is not supported. <br>
 

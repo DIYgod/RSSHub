@@ -53,7 +53,7 @@ const infos = {
 
 export const route: Route = {
     path: '/new/:type',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dlsite/new/home',
     parameters: {
@@ -74,8 +74,8 @@ export const route: Route = {
     maintainers: ['cssxsh'],
     handler,
     description: `| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
-  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
-  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
+| ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
+| home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
 };
 
 async function handler(ctx) {

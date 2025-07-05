@@ -13,7 +13,12 @@ export const route: Route = {
     path: '/category/:name',
     categories: ['new-media'],
     example: '/ifanr/category/早报',
-    parameters: { name: '分类名称' },
+    parameters: {
+        name: {
+            description: '分类名称',
+            options: Object.keys(PATH_LIST).map((name) => ({ value: name, label: name })),
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

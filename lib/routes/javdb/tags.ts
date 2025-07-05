@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -38,9 +39,9 @@ export const route: Route = {
 
   分类
 
-  | 有碼     | 無碼       | 歐美    |
-  | -------- | ---------- | ------- |
-  | censored | uncensored | western |`,
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |`,
 };
 
 async function handler(ctx) {

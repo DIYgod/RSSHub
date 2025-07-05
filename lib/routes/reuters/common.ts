@@ -1,17 +1,16 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import randUserAgent from '@/utils/rand-user-agent';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:topic?',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/reuters/world/us',
     parameters: {
@@ -91,6 +90,14 @@ async function handler(ctx) {
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
 
+    const ua = randUserAgent({ browser: 'chrome', os: 'windows', device: 'desktop' });
+    const browserHeaders = {
+        'User-Agent': ua,
+        Accept: 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        Referer: 'https://www.reuters.com/',
+    };
+
     try {
         const { title, description, rootUrl, response } = await (async () => {
             if (MUST_FETCH_BY_TOPICS.has(category)) {
@@ -104,6 +111,7 @@ async function handler(ctx) {
                             website: 'reuters',
                         }),
                     },
+                    headers: browserHeaders,
                 });
 
                 return {
@@ -130,6 +138,7 @@ async function handler(ctx) {
                                 : {}),
                         }),
                     },
+                    headers: browserHeaders,
                 });
                 return {
                     title: response.result.section.title,
@@ -157,7 +166,9 @@ async function handler(ctx) {
             items.map((item) =>
                 ctx.req.query('fulltext') === 'true'
                     ? cache.tryGet(item.link, async () => {
-                          const detailResponse = await ofetch(item.link);
+                          const detailResponse = await ofetch(item.link, {
+                              headers: browserHeaders,
+                          });
                           const content = load(detailResponse.data);
 
                           if (detailResponse.url.startsWith('https://www.reuters.com/investigates/')) {
@@ -220,7 +231,9 @@ async function handler(ctx) {
         // Fallback to arc outboundfeeds if API fails
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 
-        const arcResponse = await ofetch(arcUrl);
+        const arcResponse = await ofetch(arcUrl, {
+            headers: browserHeaders,
+        });
         if (arcResponse.wireitems?.length) {
             const items = arcResponse.wireitems
                 .map((item) => {
