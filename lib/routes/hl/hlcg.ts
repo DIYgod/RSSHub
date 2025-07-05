@@ -40,52 +40,50 @@ const getHlcg = async (category) => {
         })
         .filter((item) => item.link.includes('archives') && item.title !== '热')
         .slice(0, 5);
-    const results = [];
+    const results = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                // highlight-start
+                // reuse the browser instance and open a new tab
+                const page = await browser.newPage();
+                logger.http(`Requesting ${item.link}`);
+                await page.setRequestInterception(true);
+                // only allow certain types of requests to proceed
+                page.on('request', (request) => {
+                    // in this case, we only allow document requests to proceed
+                    request.url().includes('.ts?auth_key=') ? request.abort() : request.continue();
+                });
+                await page.goto(item.link, { waitUntil: 'load' });
+                const response = await page.content();
+                // close the tab after retrieving the HTML content
+                page.close();
+                // highlight-end
+                const $ = load(response);
+                const published_time = $('meta[property="article:published_time"]').attr('content');
 
-    for (const item of list) {
-        // eslint-disable-next-line no-await-in-loop
-        const result = await cache.tryGet(item.link, async () => {
-            // highlight-start
-            // reuse the browser instance and open a new tab
-            const page = await browser.newPage();
-            logger.http(`Requesting ${item.link}`);
-            await page.setRequestInterception(true);
-            // only allow certain types of requests to proceed
-            page.on('request', (request) => {
-                // in this case, we only allow document requests to proceed
-                request.url().includes('.ts?auth_key=') ? request.abort() : request.continue();
-            });
-            await page.goto(item.link, { waitUntil: 'load' });
-            const response = await page.content();
-            // close the tab after retrieving the HTML content
-            page.close();
-            // highlight-end
-            const $ = load(response);
-            const published_time = $('meta[property="article:published_time"]').attr('content');
+                const content = $('.client-only-placeholder').first();
+                const videos = content.find('video');
+                content.find('blockquote').remove();
+                content.find('div').remove();
+                let description = content.html();
 
-            const content = $('.client-only-placeholder').first();
-            const videos = content.find('video');
-            content.find('blockquote').remove();
-            content.find('div').remove();
-            let description = content.html();
-
-            for (const video of videos.toArray()) {
-                const videoElement = $(video);
-                const m3u8Url = videoElement.attr('poster');
-                if (m3u8Url) {
-                    // console.log(`Found m3u8 URL: ${m3u8Url}`);
-                    const videoStr = renderDPlayer(m3u8Url);
-                    // console.log(`Rendering DPlayer for m3u8 URL: ${videoStr}`);
-                    // replace the video element with a DPlayer player
-                    description += videoStr;
+                for (const video of videos.toArray()) {
+                    const videoElement = $(video);
+                    const m3u8Url = videoElement.attr('poster');
+                    if (m3u8Url) {
+                        // console.log(`Found m3u8 URL: ${m3u8Url}`);
+                        const videoStr = renderDPlayer(m3u8Url);
+                        // console.log(`Rendering DPlayer for m3u8 URL: ${videoStr}`);
+                        // replace the video element with a DPlayer player
+                        description += videoStr;
+                    }
                 }
-            }
-            item.description = description;
-            item.pubDate = parseDate(published_time);
-            return item;
-        });
-        results.push(result);
-    }
+                item.description = description;
+                item.pubDate = parseDate(published_time);
+                return item;
+            })
+        )
+    );
 
     browser.close();
 
