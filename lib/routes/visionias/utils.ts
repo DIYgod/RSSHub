@@ -29,7 +29,7 @@ export async function extractNews(item, selector) {
         if (shortArticles.length !== 0) {
             const items = shortArticles.toArray().map((element) => {
                 const mainDiv = $$(element);
-                const title = mainDiv.find('a > div > h1').text().trim();
+                const title = mainDiv.find('a > div > h2').text().trim();
                 const id = mainDiv.find('a').attr('href');
                 const htmlContent = extractArticle(mainDiv.html());
                 const innerTags = mainDiv
@@ -94,7 +94,7 @@ export async function extractNews(item, selector) {
     });
 }
 
-function extractArticle(articleDiv, selectorString: string = '#article-content') {
+function extractArticle(articleDiv, selectorString: string = 'div.ck-content') {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
     const articleContent = articleDiv$.find(String(selectorString));
