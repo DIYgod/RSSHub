@@ -138,7 +138,7 @@ function extractPostDetails(data) {
     const summary = data.excerpt.rendered;
     const date = data.date_gmt;
     const updateDate = data.modified_gmt;
-    const author = data._embedded.author;
+    const author = data._embedded?.author;
     const authorName = author?.[0]?.name;
     const authorUrl = author?.[0]?.link;
     const authorAvatar = author?.[0]?.avatar_urls['48'];
