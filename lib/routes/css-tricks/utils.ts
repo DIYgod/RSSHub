@@ -12,12 +12,39 @@ type Card = {
     thumbnail: string;
 };
 
-export async function extractMiniCards(selector) {
+export async function extractMiniCards(cardselector: string, titleSelector: string = '', descSelector: string = '') {
     const response = await ofetch(rootUrl);
     const $ = load(response);
-    return $(selector).toArray();
+    const cards = $(cardselector).toArray();
+    const title = titleSelector ? $(titleSelector).text().trim() : '';
+    const description = descSelector ? $(descSelector).text().trim() : '';
+    return {
+        title,
+        description,
+        cards,
+    };
 }
-
+export function extractPicksCardsInfo(cards) {
+    return cards.map((card) => {
+        const $ = load(card);
+        const article = $('div.article-article');
+        const description = $('div.article-summary div').text().trim();
+        const date = article.find('span').text().trim();
+        const title = article.find('h2 > a:nth-child(2)').text();
+        const link = article.find('h2 > a:nth-child(2)').attr('href');
+        const tags = article
+            .find('div.tags cite a')
+            .toArray()
+            .map((tag) => $(tag).text().trim());
+        return {
+            title,
+            link,
+            description,
+            pubDate: parseDate(date),
+            category: tags,
+        };
+    });
+}
 function extractCardsInfo(cards) {
     return cards.map((card) => {
         const $ = load(card);
@@ -51,10 +78,10 @@ function extractMiniCardsInfo(cards) {
     });
 }
 
-export async function processWithWp(cards, mini: boolean = false) {
+export async function processWithWp(cards, mini: boolean = false, type: string = 'posts') {
     const cardsWithInfo = mini ? extractMiniCardsInfo(cards) : extractCardsInfo(cards);
     const ids = cardsWithInfo.map((card: Card) => card.id.replace('post-', ''));
-    const allPosts = await ofetch(`${rootUrl}/wp-json/wp/v2/posts?include=${ids.join(',')}&_embed&per_page=${ids.length}`);
+    const allPosts = await ofetch(`${rootUrl}/wp-json/wp/v2/${type}?include=${ids.join(',')}&_embed&per_page=${ids.length}`);
     // To maintain the ID/post Order
     const idMappedPost = Object.fromEntries(allPosts.map((post) => [post.id, post]));
     return ids.map((id) => extractPostDetails(idMappedPost[id]));
@@ -112,11 +139,11 @@ function extractPostDetails(data) {
     const date = data.date_gmt;
     const updateDate = data.modified_gmt;
     const author = data._embedded.author;
-    const authorName = author[0]?.name;
-    const authorUrl = author[0]?.link;
-    const authorAvatar = author[0]?.avatar_urls['48'];
-    const thumbnail = data._embedded['wp:featuredmedia']?.[0]?.source_url;
-    const tags = data._embedded['wp:term']?.[1]?.map((tag) => tag.name);
+    const authorName = author?.[0]?.name;
+    const authorUrl = author?.[0]?.link;
+    const authorAvatar = author?.[0]?.avatar_urls['48'];
+    const thumbnail = data._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+    const tags = data._embedded?.['wp:term']?.[1]?.map((tag) => tag.name);
     return {
         title,
         link,

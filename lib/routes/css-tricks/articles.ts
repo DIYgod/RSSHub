@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/articles',
     view: ViewType.Articles,
     categories: ['programming'],
-    example: '/articles',
+    example: '/css-tricks/articles',
     features: {
         requireConfig: false,
         requirePuppeteer: false,

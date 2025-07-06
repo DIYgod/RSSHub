@@ -4,7 +4,7 @@ export const route: Route = {
     path: '/popular',
     view: ViewType.Articles,
     categories: ['programming'],
-    example: '/popular',
+    example: '/css-tricks/popular',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const popularCards = await extractMiniCards('div.popular-articles > div.mini-card-grid article.mini-card.module.module-article');
+    const { cards: popularCards } = await extractMiniCards('div.popular-articles > div.mini-card-grid article.mini-card.module.module-article');
     const items = await processWithWp(popularCards, true);
     return {
         title: 'Popular this month',
