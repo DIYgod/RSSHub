@@ -280,7 +280,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         // Make title
         let title = '';
         if (showAuthorInTitle) {
-            title += userName + ': ';
+            title += originalItem.user?.name + ': ';
         }
         const isRetweet = originalItem !== item;
         const isQuote = item.is_quote_status;
@@ -304,7 +304,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         if (showAuthorAsTitleOnly) {
-            title = userName;
+            title = originalItem.user?.name;
         }
 
         // Make description
@@ -316,12 +316,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (showAuthorInDesc) {
                 if (readable) {
                     description += '<small>';
-                    description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
+                    description += `<a href='https://x.com/${originalItem.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
                 }
                 if (authorNameBold) {
                     description += `<strong>`;
                 }
-                description += item.user?.name;
+                description += originalItem.user?.name;
                 if (authorNameBold) {
                     description += `</strong>`;
                 }
