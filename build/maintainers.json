@@ -5159,6 +5159,9 @@
   "/musify/:language?": [
     "nczitzk"
   ],
+  "/musikguru/news": [
+    "nczitzk"
+  ],
   "/mwm/:category?": [
     "nczitzk"
   ],

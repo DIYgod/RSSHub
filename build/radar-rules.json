@@ -26509,6 +26509,19 @@
       }
     ]
   },
+  "musikguru.de": {
+    "_name": "MusikGuru",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/news"
+        ],
+        "target": "/musikgurunews"
+      }
+    ]
+  },
   "mwm.net.cn": {
     "_name": "管理世界",
     ".": [
