@@ -422,6 +422,9 @@ export type Config = {
     smzdm: {
         cookie?: string;
     };
+    reuters:{
+        ua?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -887,6 +890,9 @@ const calculateValue = () => {
         },
         smzdm: {
             cookie: envs.SMZDM_COOKIE,
+        },
+        reuters:{
+            ua: envs.REUTERS_UA,
         },
     };
 
