@@ -6,7 +6,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/:category/:topic?',
