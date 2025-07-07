@@ -128,10 +128,10 @@ async function handler(ctx) {
                             website: 'reuters',
                             ...(useSophi
                                 ? {
-                                    fetch_type: 'sophi',
-                                    sophi_page: '*',
-                                    sophi_widget: 'topic',
-                                }
+                                      fetch_type: 'sophi',
+                                      sophi_page: '*',
+                                      sophi_widget: 'topic',
+                                  }
                                 : {}),
                         }),
                     },
@@ -163,55 +163,55 @@ async function handler(ctx) {
             items.map((item) =>
                 ctx.req.query('fulltext') === 'true'
                     ? cache.tryGet(item.link, async () => {
-                        const detailResponse = await ofetch(item.link, {
-                            headers: browserHeaders,
-                        });
-                        const content = load(detailResponse.data);
+                          const detailResponse = await ofetch(item.link, {
+                              headers: browserHeaders,
+                          });
+                          const content = load(detailResponse.data);
 
-                        if (detailResponse.url.startsWith('https://www.reuters.com/investigates/')) {
-                            const ldJson = JSON.parse(content('script[type="application/ld+json"]').text());
-                            content('.special-report-article-container .container, #slide-dek, #slide-end, .share-in-article-container').remove();
+                          if (detailResponse.url.startsWith('https://www.reuters.com/investigates/')) {
+                              const ldJson = JSON.parse(content('script[type="application/ld+json"]').text());
+                              content('.special-report-article-container .container, #slide-dek, #slide-end, .share-in-article-container').remove();
 
-                            item.title = ldJson.headline;
-                            item.pubDate = parseDate(ldJson.dateCreated);
-                            item.author = ldJson.creator;
-                            item.category = ldJson.keywords;
-                            item.description = content('.special-report-article-container').html();
+                              item.title = ldJson.headline;
+                              item.pubDate = parseDate(ldJson.dateCreated);
+                              item.author = ldJson.creator;
+                              item.category = ldJson.keywords;
+                              item.description = content('.special-report-article-container').html();
 
-                            return item;
-                        }
+                              return item;
+                          }
 
-                        const matches = content('script#fusion-metadata')
-                            .text()
-                            .match(/Fusion.globalContent=({[\S\s]*?});/);
+                          const matches = content('script#fusion-metadata')
+                              .text()
+                              .match(/Fusion.globalContent=({[\S\s]*?});/);
 
-                        if (matches) {
-                            const data = JSON.parse(matches[1]);
+                          if (matches) {
+                              const data = JSON.parse(matches[1]);
 
-                            item.title = data.result.title || item.title;
-                            item.description = art(path.join(__dirname, 'templates/description.art'), {
-                                result: data.result,
-                            });
-                            item.pubDate = parseDate(data.result.display_time);
-                            item.author = data.result.authors.map((author) => author.name).join(', ');
-                            item.category = data.result.taxonomy.keywords;
+                              item.title = data.result.title || item.title;
+                              item.description = art(path.join(__dirname, 'templates/description.art'), {
+                                  result: data.result,
+                              });
+                              item.pubDate = parseDate(data.result.display_time);
+                              item.author = data.result.authors.map((author) => author.name).join(', ');
+                              item.category = data.result.taxonomy.keywords;
 
-                            return item;
-                        }
+                              return item;
+                          }
 
-                        content('.title').remove();
-                        content('.article-metadata').remove();
+                          content('.title').remove();
+                          content('.article-metadata').remove();
 
-                        item.title = content('meta[property="og:title"]').attr('content');
-                        item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(.*?)","dateModified/)[1]);
-                        item.author = detailResponse.data
-                            .match(/{"@type":"Person","name":"(.*?)"}/g)
-                            .map((p) => p.match(/"name":"(.*?)"/)[1])
-                            .join(', ');
-                        item.description = content('article').html();
+                          item.title = content('meta[property="og:title"]').attr('content');
+                          item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(.*?)","dateModified/)[1]);
+                          item.author = detailResponse.data
+                              .match(/{"@type":"Person","name":"(.*?)"}/g)
+                              .map((p) => p.match(/"name":"(.*?)"/)[1])
+                              .join(', ');
+                          item.description = content('article').html();
 
-                        return item;
-                    })
+                          return item;
+                      })
                     : item
             )
         );
