@@ -65,8 +65,8 @@ async function handler(ctx): Promise<Data> {
         language: 'en',
         item: items,
         image: `${baseUrl}/current-affairs/images/news-today-logo.svg`,
-        icon: `${baseUrl}/current-affairs/favicon.ico`,
-        logo: `${baseUrl}/current-affairs/favicon.ico`,
+        icon: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
+        logo: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
         allowEmpty: true,
     };
 }
@@ -86,15 +86,5 @@ async function processCurrentNews(currentUrl) {
             };
         });
     const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
-    const finalItems: any = [];
-    for (const news of newsPromises) {
-        if (news.status === 'fulfilled') {
-            finalItems.push(...(Array.isArray(news.value) ? news.value : [news.value]));
-        } else {
-            finalItems.push({
-                title: 'Error Parse News',
-            });
-        }
-    }
-    return finalItems;
+    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
 }

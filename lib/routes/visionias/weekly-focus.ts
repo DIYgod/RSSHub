@@ -49,8 +49,8 @@ async function handler(ctx): Promise<Data> {
         language: 'en',
         item: itemsPromise.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error Parse News' })),
         image: `${baseUrl}/current-affairs/images/weekly-focus-logo.svg`,
-        icon: `${baseUrl}/current-affairs/favicon.ico`,
-        logo: `${baseUrl}/current-affairs/favicon.ico`,
+        icon: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
+        logo: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
         allowEmpty: true,
     };
 }
