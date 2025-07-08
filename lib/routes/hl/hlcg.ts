@@ -59,7 +59,7 @@ const getHlcg = async (category) => {
                 page.close();
                 // highlight-end
                 const $ = load(response);
-                const published_time = $('meta[property="article:published_time"]').attr('content');
+                const publishedTime = $('meta[property="article:published_time"]').attr('content');
 
                 const content = $('.client-only-placeholder').first();
                 const videos = content.find('video');
@@ -79,7 +79,7 @@ const getHlcg = async (category) => {
                     }
                 }
                 item.description = description;
-                item.pubDate = parseDate(published_time);
+                item.pubDate = parseDate(publishedTime);
                 return item;
             })
         )
