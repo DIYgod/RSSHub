@@ -42,7 +42,7 @@ const WPTYPE = {
 
 async function handler(ctx) {
     const paramType = ctx.req.param('type');
-    const type = paramType && paramType !== '1' ? paramType : '2';
+    const type = paramType === '1' ? '2' : paramType;
     const baseSelector = `body > div.page-wrap > section.post-sliders > div:nth-child(${type})`;
     const titleSelector = `${baseSelector}>div.post-slider-header.header-card > h2`;
     const descSelector = `${baseSelector}>div.post-slider-header.header-card > p`;
