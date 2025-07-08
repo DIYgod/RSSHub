@@ -1,11 +1,10 @@
-
 import { Data, Route, ViewType } from '@/types';
 import { extractMiniCards, processWithWp, rootUrl } from './utils';
 export const route: Route = {
     path: '/collections/:type',
     view: ViewType.Articles,
     categories: ['programming'],
-    example: '/css-tricks/collections/1',
+    example: '/css-tricks/collections/2',
     parameters: {
         category: {
             description: 'Collection Type',
@@ -42,7 +41,8 @@ const WPTYPE = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') ?? '2';
+    const paramType = ctx.req.param('type');
+    const type = paramType && paramType !== '1' ? paramType : '2';
     const baseSelector = `body > div.page-wrap > section.post-sliders > div:nth-child(${type})`;
     const titleSelector = `${baseSelector}>div.post-slider-header.header-card > h2`;
     const descSelector = `${baseSelector}>div.post-slider-header.header-card > p`;

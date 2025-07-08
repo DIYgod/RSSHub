@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 
 export const rootUrl = 'https://css-tricks.com';
 type Card = {
@@ -24,27 +23,7 @@ export async function extractMiniCards(cardselector: string, titleSelector: stri
         cards,
     };
 }
-export function extractPicksCardsInfo(cards) {
-    return cards.map((card) => {
-        const $ = load(card);
-        const article = $('div.article-article');
-        const description = $('div.article-summary div').text().trim();
-        const date = article.find('span').text().trim();
-        const title = article.find('h2 > a:nth-child(2)').text();
-        const link = article.find('h2 > a:nth-child(2)').attr('href');
-        const tags = article
-            .find('div.tags cite a')
-            .toArray()
-            .map((tag) => $(tag).text().trim());
-        return {
-            title,
-            link,
-            description,
-            pubDate: parseDate(date),
-            category: tags,
-        };
-    });
-}
+
 function extractCardsInfo(cards) {
     return cards.map((card) => {
         const $ = load(card);
@@ -85,50 +64,6 @@ export async function processWithWp(cards, mini: boolean = false, type: string =
     // To maintain the ID/post Order
     const idMappedPost = Object.fromEntries(allPosts.map((post) => [post.id, post]));
     return ids.map((id) => extractPostDetails(idMappedPost[id]));
-}
-
-export async function processCards(cards, mini: boolean = false) {
-    const cardsWithInfo = mini ? extractMiniCardsInfo(cards) : extractCardsInfo(cards);
-    const cardsPromise = await Promise.allSettled(cardsWithInfo.map(async (card: Card) => await fetchCardDetails(card)));
-    return cardsPromise.filter((card) => card.status === 'fulfilled').map((card) => card.value as DataItem);
-}
-
-export async function fetchCardDetails(card: Card) {
-    return await cache.tryGet(`css-tricks:${card.id}`, async () => {
-        const response = await ofetch(card.link);
-        const $ = load(response);
-        const tags = $('meta[property="article:tag"]')
-            ?.toArray()
-            .map((tag) => $(tag).attr('content'));
-        const date = $('meta[property="article:published_time"]').attr('content') || '';
-        const updateDate = $('meta[property="article:modified_time"]').attr('content') || '';
-        const summary = $('meta[property="description"]').attr('content') || '';
-        const authorUrl = $('header.mega-header').find('div.author-row > a').attr('href');
-        const authorAvatar = $('header.mega-header').find('header.mega-header div.author-row > a >img').attr('src');
-        const authorName = $('header.mega-header').find('header.mega-header div.author-row > div > a.author-name').text();
-        const content = $('div.article-content').html() || '';
-        return {
-            title: card.title,
-            link: card.link,
-            description: content,
-            banner: card.thumbnail,
-            image: card.thumbnail,
-            pubDate: parseDate(date),
-            updated: parseDate(updateDate),
-            author: [
-                {
-                    name: authorName || '',
-                    url: authorUrl || '',
-                    avatar: authorAvatar || '',
-                },
-            ],
-            content: {
-                html: content,
-                text: summary,
-            },
-            category: tags,
-        } as DataItem;
-    });
 }
 
 function extractPostDetails(data) {
