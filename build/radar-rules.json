@@ -38177,6 +38177,22 @@
     "_name": "VisionIAS",
     ".": [
       {
+        "title": "Daily News Summary",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/current-affairs/upsc-daily-news-summary"
+        ],
+        "target": "/visionias/dailySummary"
+      },
+      {
+        "title": "Monthly Magazine",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/current-affairs/monthly-magazine"
+        ],
+        "target": "/visionias/monthlyMagazine"
+      },
+      {
         "title": "News Today",
         "docs": "https://docs.rsshub.app/routes/study",
         "source": [
