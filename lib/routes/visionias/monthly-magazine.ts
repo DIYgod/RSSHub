@@ -48,31 +48,21 @@ async function handler(): Promise<Data> {
 async function processNews(page) {
     const $ = load(page);
     const divItems = $(`#monthly-table-of-content>div`).toArray();
-    const linkItems: { title: string; link: string }[] = [];
-    for (const item of divItems) {
+    const linkItems = divItems.flatMap((item) => {
         const maintitle = $(item).find('button>div:nth-child(2) div.text-left').text().trim();
-        const links = $(item)
+        return $(item)
             .find('div>ul>li')
             .toArray()
             .map((li) => {
                 const itemTitle = $(li).find('a').text().trim();
                 const link = $(li).find('a').attr('href')?.trim() || '';
-                return { title: `${itemTitle} - ${maintitle}`, link };
+                return {
+                    title: `${itemTitle} - ${maintitle}`,
+                    link: link.includes('https://') ? link : `${baseUrl}${link}`,
+                };
             });
-        for (const { title, link } of links) {
-            linkItems.push({ title, link: link.includes('https://') ? link : `${baseUrl}${link}` });
-        }
-    }
+    });
     const newsPromises = await Promise.allSettled(linkItems.map((item) => extractNews(item, 'main > div > div.flex.flex-col> div.flex.flex-col.w-full.mt-10')));
-    const finalItems: any = [];
-    for (const news of newsPromises) {
-        if (news.status === 'fulfilled') {
-            finalItems.push(...(Array.isArray(news.value) ? news.value : [news.value]));
-        } else {
-            finalItems.push({
-                title: 'Error Parse News',
-            });
-        }
-    }
-    return finalItems;
+
+    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
 }

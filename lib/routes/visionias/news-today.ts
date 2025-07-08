@@ -86,15 +86,5 @@ async function processCurrentNews(currentUrl) {
             };
         });
     const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
-    const finalItems: any = [];
-    for (const news of newsPromises) {
-        if (news.status === 'fulfilled') {
-            finalItems.push(...(Array.isArray(news.value) ? news.value : [news.value]));
-        } else {
-            finalItems.push({
-                title: 'Error Parse News',
-            });
-        }
-    }
-    return finalItems;
+    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
 }
