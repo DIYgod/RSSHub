@@ -123,8 +123,8 @@ importers:
         specifier: 3.3.2
         version: 3.3.2
       dotenv:
-        specifier: 17.0.1
-        version: 17.0.1
+        specifier: 17.1.0
+        version: 17.1.0
       entities:
         specifier: 6.0.1
         version: 6.0.1
@@ -3224,8 +3224,8 @@ packages:
   domutils@3.2.2:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
 
-  dotenv@17.0.1:
-    resolution: {integrity: sha512-GLjkduuAL7IMJg/ZnOPm9AnWKJ82mSE2tzXLaJ/6hD6DhwGfZaXG77oB8qbReyiczNxnbxQKyh0OE5mXq0bAHA==}
+  dotenv@17.1.0:
+    resolution: {integrity: sha512-tG9VUTJTuju6GcXgbdsOuRhupE8cb4mRgY5JLRCh4MtGoVo3/gfGUtOMwmProM6d0ba2mCFvv+WrpYJV6qgJXQ==}
     engines: {node: '>=12'}
 
   dotenv@6.2.0:
@@ -9098,7 +9098,7 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
-  dotenv@17.0.1: {}
+  dotenv@17.1.0: {}
 
   dotenv@6.2.0: {}
 
