@@ -11157,6 +11157,35 @@
       }
     ]
   },
+  "css-tricks.com": {
+    "_name": "CSS-Tricks",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/category/articles/"
+        ],
+        "target": "/css-tricks/articles"
+      },
+      {
+        "title": "CSS Guides",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/css-tricks/collections/:type"
+      },
+      {
+        "title": "Popular this month",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/css-tricks/popular"
+      }
+    ]
+  },
   "csu.edu.cn": {
     "_name": "中南大学",
     "career": [
