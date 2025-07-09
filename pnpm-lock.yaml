@@ -138,8 +138,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       googleapis:
-        specifier: 150.0.1
-        version: 150.0.1
+        specifier: 152.0.0
+        version: 152.0.0
       hono:
         specifier: 4.8.4
         version: 4.8.4
@@ -3793,12 +3793,12 @@ packages:
     resolution: {integrity: sha512-rcX58I7nqpu4mbKztFeOAObbomBbHU2oIb/d3tJfF3dizGSApqtSwYJigGCooHdnMyQBIw8BrWyK96w3YXgr6A==}
     engines: {node: '>=14'}
 
-  googleapis-common@8.0.2-rc.0:
-    resolution: {integrity: sha512-JTcxRvmFa9Ec1uyfMEimEMeeKq1sHNZX3vn2qmoUMtnvixXXvcqTcbDZvEZXkEWpGlPlOf4joyep6/qs0BrLyg==}
+  googleapis-common@8.0.0:
+    resolution: {integrity: sha512-66if47It7y+Sab3HMkwEXx1kCq9qUC9px8ZXoj1CMrmLmUw81GpbnsNlXnlyZyGbGPGcj+tDD9XsZ23m7GLaJQ==}
     engines: {node: '>=18.0.0'}
 
-  googleapis@150.0.1:
-    resolution: {integrity: sha512-9Wa9vm3WtDpss0VFBHsbZWcoRccpOSWdpz7YIfb1LBXopZJEg/Zc8ymmaSgvDkP4FhN+pqPS9nZjO7REAJWSUg==}
+  googleapis@152.0.0:
+    resolution: {integrity: sha512-i/eo7ytwdWv9vONIY/MdUkSYOnGTtTMLP1y4eaTazGVArlmkH47Th07HLz8EYgIwsixqTR48bxAcdsGd9yoZqg==}
     engines: {node: '>=18'}
 
   got@12.6.1:
@@ -9818,7 +9818,7 @@ snapshots:
 
   google-logging-utils@1.1.1: {}
 
-  googleapis-common@8.0.2-rc.0:
+  googleapis-common@8.0.0:
     dependencies:
       extend: 3.0.2
       gaxios: 7.1.1
@@ -9828,10 +9828,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis@150.0.1:
+  googleapis@152.0.0:
     dependencies:
       google-auth-library: 10.1.0
-      googleapis-common: 8.0.2-rc.0
+      googleapis-common: 8.0.0
     transitivePeerDependencies:
       - supports-color
 
