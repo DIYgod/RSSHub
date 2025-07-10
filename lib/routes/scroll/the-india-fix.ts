@@ -1,7 +1,5 @@
 import { Data, Route, ViewType } from '@/types';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
-import { rootUrl, extractArticleLinks, fetchArticleContent } from './utils';
+import { rootUrl, extractFeedArticleLinks, fetchArticleContent } from './utils';
 
 export const route: Route = {
     path: '/theIndiaFix',
@@ -29,10 +27,7 @@ export const route: Route = {
 
 async function handler() {
     const currentUrl = `${rootUrl}/topic/56455/the-india-fix`;
-    const response = await ofetch(currentUrl);
-    const $ = load(response);
-
-    const articleLinks = extractArticleLinks($);
+    const articleLinks = await extractFeedArticleLinks('topic/56455');
     const items = await Promise.all(articleLinks.map((item) => fetchArticleContent(item)));
 
     return {

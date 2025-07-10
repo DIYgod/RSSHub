@@ -1,7 +1,5 @@
 import { Data, Route, ViewType } from '@/types';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
-import { rootUrl, extractArticleLinks, fetchArticleContent } from './utils';
+import { rootUrl, extractFeedArticleLinks, fetchArticleContent } from './utils';
 
 const categoryMap = {
     politics: '76',
@@ -54,10 +52,7 @@ async function handler(ctx: any) {
     }
 
     const currentUrl = `${rootUrl}/category/${categoryId}/${category}`;
-    const response = await ofetch(currentUrl);
-    const $ = load(response);
-
-    const articleLinks = extractArticleLinks($);
+    const articleLinks = await extractFeedArticleLinks(`category/${categoryId}`);
     const items = await Promise.all(articleLinks.map((item) => fetchArticleContent(item)));
 
     return {

@@ -1,5 +1,5 @@
 import { Data, Route, ViewType } from '@/types';
-import { rootUrl, extractMasonryArticleLinks, fetchArticleContent } from './utils';
+import { rootUrl, extractFeedArticleLinks, fetchArticleContent } from './utils';
 
 export const route: Route = {
     path: '/commonGround',
@@ -27,7 +27,7 @@ export const route: Route = {
 
 async function handler() {
     const currentUrl = `${rootUrl}/topic/56439/common-ground`;
-    const articleLinks = await extractMasonryArticleLinks();
+    const articleLinks = await extractFeedArticleLinks('topic/56439');
 
     const items = await Promise.all(articleLinks.map((item) => fetchArticleContent(item)));
 
