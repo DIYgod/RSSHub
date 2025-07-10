@@ -1,7 +1,5 @@
-package.json
-docs/.vuepress/dist
-package-lock.json
-.github/*.md
-renovate.json
-coverage
-.vscode/
+lib/routes-deprecated
+lib/router.js
+babel.config.js
+scripts/docker/minify-docker.js
+dist

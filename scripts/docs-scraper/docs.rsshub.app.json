@@ -1,0 +1,45 @@
+{
+    "index_uid": "rsshub-tmp",
+    "sitemap_urls": ["https://docs.rsshub.app/sitemap.xml"],
+    "start_urls": ["https://docs.rsshub.app"],
+    "selectors": {
+        "lvl0": {
+            "selector": ".menu__link.menu__link--active",
+            "global": true,
+            "default_value": "路由"
+        },
+        "lvl1": ".theme-doc-markdown h1",
+        "lvl2": ".theme-doc-markdown h2",
+        "lvl3": ".theme-doc-markdown h3",
+        "lvl4": ".theme-doc-markdown h4",
+        "lvl5": ".theme-doc-markdown h5",
+        "text": ".theme-doc-markdown p, .theme-doc-markdown .params, .theme-doc-markdown table, .theme-doc-markdown li ul li code"
+    },
+    "strip_chars": " .,;:#",
+    "scrap_start_urls": false,
+    "min_indexed_level": 1,
+    "js_render": true,
+    "js_wait": 2,
+    "custom_settings": {
+        "displayedAttributes": [
+            "hierarchy_radio_lvl1",
+            "hierarchy_radio_lvl2",
+            "hierarchy_radio_lvl3",
+            "hierarchy_radio_lvl4",
+            "hierarchy_radio_lvl5",
+            "hierarchy_lvl0",
+            "hierarchy_lvl1",
+            "hierarchy_lvl2",
+            "hierarchy_lvl3",
+            "hierarchy_lvl4",
+            "hierarchy_lvl5",
+            "hierarchy_lvl6",
+            "anchor",
+            "url",
+            "content"
+        ],
+        "searchableAttributes": ["hierarchy_lvl2", "hierarchy_lvl3", "hierarchy_lvl4", "anchor", "content", "hierarchy_lvl5", "hierarchy_lvl1"],
+        "sortableAttributes": ["anchor"]
+    },
+    "selectors_exclude": [".badge", ".author", ".alert"]
+}

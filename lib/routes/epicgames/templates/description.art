@@ -1,0 +1,3 @@
+<p>{{ description }}</p>
+<img src="{{ image }}">
+<p>Free Now to {{ endDate }}</p>

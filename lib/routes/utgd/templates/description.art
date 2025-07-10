@@ -1,0 +1,11 @@
+{{ if image }}
+<img src="{{ image }}">
+<br>
+{{ /if }}
+{{ if membership }}
+<br>
+UNTAG Premium
+{{ /if }}
+{{ if description }}
+{{@ description }}
+{{ /if }}

@@ -1,0 +1,15 @@
+{{ if primaryImage.url }}
+<figure>
+  <img src="{{ primaryImage.url }}" alt="{{ primaryImage.caption.plainText }}" />
+  <figcaption>{{ primaryImage.caption.plainText }}</figcaption>
+</figure>
+<br>
+{{ /if }}
+
+Original title: {{ originalTitleText.text }}<br>
+
+{{ if certificate }}{{ certificate.rating }}{{ /if }}
+{{ if ratingsSummary.aggregateRating }}IMDb RATING: {{ ratingsSummary.aggregateRating }}/10 ({{ ratingsSummary.voteCount }}){{ /if }}
+<br><br>
+
+{{ plot.plotText.plainText }}

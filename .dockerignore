@@ -1,27 +1,45 @@
-node_modules
-npm-debug.log
-Dockerfile*
-docker-compose*
-.dockerignore
-.gitignore
-LICENSE
-.vscode
+# folders
+.devcontainer
 .github
-assets
+.husky
+.idea
+.vscode
+Dockerfile*
+LICENSE
+Procfile
+app-minimal
 coverage
-docs
+node_modules
 test
+
+# files
 .codecov.yml
+.dockerignore
+.editorconfig
+.env
 .eslint*
+.gitignore
+.gitpod.yml
+.markdownlint.jsonc
 .prettier*
 .(yarn|npm|nvm)rc
 *.md
-process.json
 app.json
-.travis.yml
+eslint.config.mjs
+docker-compose*
+fly.toml
+jsconfig.json
+npm-debug.log
+process.json
+package-lock.json
+vitest.config.ts
+vercel.json
 
-#git but keep the git commit hash
+# git but keep the git commit hash
 .git/logs
-.git/objects
 .git/index
 .git/info
+.git/hooks
+
+# rsshub auxiliary files
+lib/routes/**/radar.js

@@ -1,0 +1,3 @@
+<img src="{{ banner }}" alt="">
+{{@ authorsBio }}
+{{@ content}}

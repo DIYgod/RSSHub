@@ -1,0 +1,3 @@
+<figure>
+<img src="{{ url }}">
+</figure>

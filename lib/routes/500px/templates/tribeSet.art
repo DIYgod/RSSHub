@@ -1,0 +1,6 @@
+{{ if item.description }}<p>{{ item.description }}</p>{{ /if }}
+{{ if item.photos }}
+    {{ each item.photos p }}
+    <img src="{{ p.url.baseUrl }}!p5">
+    {{ /each }}
+{{ /if }}

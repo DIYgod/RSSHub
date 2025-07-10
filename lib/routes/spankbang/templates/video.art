@@ -1,0 +1,7 @@
+{{ if preview }}
+    <video controls preload="metadata"
+        {{ if cover }} poster="{{ cover }}" {{ /if }}
+    >
+        <source src="{{ preview }}" type="video/mp4">
+    </video>
+{{ /if }}

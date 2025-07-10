@@ -1,0 +1,7 @@
+<img src="{{ icon }}">
+<br>
+原价：¥{{ originalPrice }} -> 现价：¥{{ price }}
+<br>
+平台：{{ kind === 1 ? 'macOS' : 'iOS' }}
+<br/>
+{{@ description }}

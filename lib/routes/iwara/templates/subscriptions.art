@@ -1,0 +1,1 @@
+<h3>{{ type }}</h3><br><img src="{{ imageUrl }}"><br>

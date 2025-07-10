@@ -1,0 +1,25 @@
+<table>
+  <tbody>
+    <tr>
+      <th>留言人</th>
+      <th>留言内容</th>
+      <th>留言时间</th>
+    </tr>
+    {{ if message }}
+      {{ set object = message }}
+      <tr>
+        <td>{{ object.author }}</td>
+        <td>{{ object.content }}</td>
+        <td>{{ object.date }}</td>
+      </tr>
+    {{ /if }}
+    {{ if reply }}
+      {{ set object = reply }}
+      <tr style="color: #0069ae;">
+        <td>{{ object.author }}</td>
+        <td>{{ object.content }}</td>
+        <td>{{ object.date }}</td>
+      </tr>
+    {{ /if }}
+  </tbody>
+</table>

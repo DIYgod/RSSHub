@@ -1,0 +1,14 @@
+{{if (media.kind =='image') }}
+<figure>
+    <img src="{{ media.src }}" alt="{{ media.description }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
+    {{if media.caption}}
+    <figcaption>
+        <div class="caption">{{@ media.caption }}</div>
+        <div class="credit">{{@ media.credit }}</div>
+    </figcaption>
+    {{/if}}
+</figure>
+{{/if}}
+{{if (media.kind =='video') }}
+{{include './video_media.art' media.video}}
+{{/if}}

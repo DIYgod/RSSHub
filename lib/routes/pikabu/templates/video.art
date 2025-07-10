@@ -1,0 +1,8 @@
+{{ if videoId }}
+    <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ videoId }}" frameborder="0" allowfullscreen></iframe>
+{{ else if webm || mp4 }}
+    <video controls preload="metadata" poster="{{ preview }}" width="{{ width }}">
+        {{ if webm }}<source src="{{ webm }}" type="video/webm">{{ /if }}
+        {{ if mp4 }}<source src="{{ mp4 }}" type="video/mp4">{{ /if }}
+    </video>
+{{ /if }}

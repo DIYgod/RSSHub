@@ -1,40 +1,140 @@
-name: '[docker] CI for releases'
+name: 'Docker Release'
 
 on:
   push:
     branches:
       - master
     paths:
+      - '.github/workflows/docker-release.yml'
       - 'lib/**'
-      - '.github/workflows/**'
+      - '!lib/**/*.test.ts'
       - 'Dockerfile'
-      - 'package.json'
+  workflow_dispatch: {}
 
 jobs:
+  check-env:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      check-docker: ${{ steps.check-docker.outputs.defined }}
+    steps:
+      - id: check-docker
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        if: ${{ env.DOCKER_USERNAME != '' }}
+        run: echo "defined=true" >> $GITHUB_OUTPUT
   release:
     runs-on: ubuntu-latest
+    needs: check-env
+    if: needs.check-env.outputs.check-docker == 'true'
+    timeout-minutes: 60
+    permissions:
+      packages: write
+      id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3.9.1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build dockerfile (with push)
+      - name: Log in to the Container registry
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata (ordinary version)
+        id: meta-ordinary
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
+        with:
+          images: |
+            ${{ secrets.DOCKER_USERNAME }}/rsshub
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable=true
+            type=raw,value={{date 'YYYY-MM-DD'}},enable=true
+            type=sha,format=long,prefix=,enable=true
+          flavor: latest=false
+
+      - name: Build and push Docker image (ordinary version)
+        id: build-and-push
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta-ordinary.outputs.tags }}
+          labels: ${{ steps.meta-ordinary.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha,scope=docker-release
+          cache-to: type=gha,mode=max,scope=docker-release
+
+      - name: Sign the published Docker image
+        if: ${{ github.event_name != 'pull_request' }}
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        run: |
-          docker buildx build \
-          --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-          --output "type=image,push=true" \
-          --file ./Dockerfile . \
-          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/rsshub:latest \
-          --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/rsshub:$(date +%Y)-$(date +%m)-$(date +%d)
+          COSIGN_EXPERIMENTAL: 'true'
+        run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
+
+      - name: Extract Docker metadata (Chromium-bundled version)
+        id: meta-chromium-bundled
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
+        with:
+          images: |
+            ${{ secrets.DOCKER_USERNAME }}/rsshub
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=chromium-bundled,enable=true
+            type=raw,value=chromium-bundled-{{date 'YYYY-MM-DD'}},enable=true
+            type=sha,format=long,prefix=chromium-bundled-,enable=true
+          flavor: latest=false
+
+      - name: Build and push Docker image (Chromium-bundled version)
+        id: build-and-push-chromium
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: .
+          build-args: PUPPETEER_SKIP_DOWNLOAD=0
+          push: true
+          tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
+          labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: |
+            type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
+          cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
+
+      - name: Sign the published Docker image
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          COSIGN_EXPERIMENTAL: 'true'
+        run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
+
+  description:
+    runs-on: ubuntu-latest
+    needs: check-env
+    if: needs.check-env.outputs.check-docker == 'true'
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ secrets.DOCKER_USERNAME }}/rsshub

@@ -1,0 +1,4 @@
+<img src="{{item.image}}"><br><br>
+<strong>达成率:</strong> {{item.finish_per}}%<br>
+<strong>已筹金额:</strong> {{item.curr_money}}元<br>
+<strong>支持人数:</strong> {{item.buy_amount}}<br>

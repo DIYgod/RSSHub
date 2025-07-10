@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        请确保 [文档](https://docs.rsshub.app) 和 [issue](https://github.com/DIYgod/RSSHub/issues) 中没有相关内容，并按照模版提供信息，
+        请确保 [文档](https://docs.rsshub.app) 和 [Issue](https://github.com/DIYgod/RSSHub/issues) 中没有相关内容及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)，并按照模版提供信息，
         否则 issue 将被立即关闭。
 
   - type: textarea
@@ -35,7 +35,7 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: 这不是重复的功能请求
+      label: 这不是重复的功能请求和 RSS 提案
       options:
-        - label: 我已经搜索了[现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保这项功能尚未被请求。
+        - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保这项功能尚未被请求及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)。
           required: true
