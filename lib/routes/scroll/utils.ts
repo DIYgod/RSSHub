@@ -31,6 +31,27 @@ export function extractArticleLinks($: any, selector?: string) {
         .filter((item) => item.title && item.link);
 }
 
+// Helper function to map article data to a consistent format
+function mapArticle(article: any) {
+    return {
+        title: article.title,
+        link: article.permalink,
+        description: article.summary || '',
+        itunes_item_image: article.cover?.large || '',
+        image: article.cover?.large || '',
+        author:
+            article.authors?.length > 0
+                ? article.authors.map((author: any) => ({
+                      name: author?.name,
+                      url: `${rootUrl}/author/${author?.id}`,
+                      avatar: author?.headshot || '',
+                      ...(author?.bio_short ? { bio: author.bio_short } : {}),
+                  }))
+                : '',
+        pubDate: article.published ? parseDate(article.published) : undefined,
+    };
+}
+
 export async function extractFeedArticleLinks(feedPath: string) {
     const feedUrl = `${rootUrl}/feed/${feedPath}/page/1`;
     const response = await ofetch(feedUrl);
@@ -41,25 +62,7 @@ export async function extractFeedArticleLinks(feedPath: string) {
 
     const allArticles = response.articles.flatMap((section: any) => section.blocks?.filter((block: any) => block.type === 'row-stories').flatMap((block: any) => block.articles || []) || []);
 
-    return allArticles
-        .map((article: any) => ({
-            title: article.title,
-            link: article.permalink,
-            description: article.summary || '',
-            itunes_item_image: article.cover?.large || '',
-            image: article.cover?.large || '',
-            author:
-                article.authors?.length > 0
-                    ? article.authors.map((author: any) => ({
-                          name: author.name,
-                          url: `${rootUrl}/author/${author.id}`,
-                          avatar: author?.headshot || '',
-                          ...(author.bio_short ? { bio: author.bio_short } : {}),
-                      }))
-                    : '',
-            pubDate: article.published ? parseDate(article.published) : undefined,
-        }))
-        .filter((item: any) => item.title && item.link);
+    return allArticles.map((article) => mapArticle(article)).filter((item: any) => item.title && item.link);
 }
 
 export async function extractTrendingArticles() {
@@ -70,32 +73,17 @@ export async function extractTrendingArticles() {
         return [];
     }
 
-    // Find the trending block which has title: "Trending"
-    const trendingBlock = response.articles.flatMap((section: any) => section.blocks || []).find((block: any) => block.title === 'Trending' && block.type === 'list-collection-stories');
+    // Filter for trending blocks which have title: "Trending"
+    const trendingBlocks = response.articles.flatMap((section: any) => section.blocks || []).filter((block: any) => block.title === 'Trending' && block.type === 'list-collection-stories');
 
-    if (!trendingBlock || !trendingBlock.articles) {
+    if (!trendingBlocks.length) {
         return [];
     }
 
-    return trendingBlock.articles
-        .map((article: any) => ({
-            title: article.title,
-            link: article.permalink,
-            description: article.summary || '',
-            itunes_item_image: article.cover?.large || '',
-            image: article.cover?.large || '',
-            author:
-                article.authors?.length > 0
-                    ? article.authors.map((author: any) => ({
-                          name: author.name,
-                          url: `${rootUrl}/author/${author.id}`,
-                          avatar: author?.headshot || '',
-                          ...(author.bio_short ? { bio: author.bio_short } : {}),
-                      }))
-                    : '',
-            pubDate: article.published ? parseDate(article.published) : undefined,
-        }))
-        .filter((item: any) => item.title && item.link);
+    // Combine articles from all trending blocks
+    const trendingArticles = trendingBlocks.flatMap((block: any) => block.articles || []);
+
+    return trendingArticles.map((article) => mapArticle(article)).filter((item: any) => item.title && item.link);
 }
 
 export function fetchArticleContent(item: any): Promise<DataItem> {
