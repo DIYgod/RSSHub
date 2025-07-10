@@ -38598,6 +38598,307 @@
       }
     ]
   },
+  "wdfxw.net": {
+    "_name": "WDFXW文档分享网",
+    "www": [
+      {
+        "title": "免费区",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/"
+        ],
+        "target": "/wdfxw/bookfree"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree.html"
+        ],
+        "target": "/wdfxw/bookfree"
+      },
+      {
+        "title": "行业标准",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00002.html"
+        ],
+        "target": "/wdfxw/bookfree/00002"
+      },
+      {
+        "title": "国家标准GB",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00001.html"
+        ],
+        "target": "/wdfxw/bookfree/00001"
+      },
+      {
+        "title": "国外标准",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00003.html"
+        ],
+        "target": "/wdfxw/bookfree/00003"
+      },
+      {
+        "title": "监理资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00004.html"
+        ],
+        "target": "/wdfxw/bookfree/00004"
+      },
+      {
+        "title": "施工组织设计",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00005.html"
+        ],
+        "target": "/wdfxw/bookfree/00005"
+      },
+      {
+        "title": "土木工程毕业设计论文",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00006.html"
+        ],
+        "target": "/wdfxw/bookfree/00006"
+      },
+      {
+        "title": "机械类毕业设计论文",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00007.html"
+        ],
+        "target": "/wdfxw/bookfree/00007"
+      },
+      {
+        "title": "小学课件教学资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00008.html"
+        ],
+        "target": "/wdfxw/bookfree/00008"
+      },
+      {
+        "title": "初中课件教学资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00009.html"
+        ],
+        "target": "/wdfxw/bookfree/00009"
+      },
+      {
+        "title": "高中课件教学资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00010.html"
+        ],
+        "target": "/wdfxw/bookfree/00010"
+      },
+      {
+        "title": "工作计划个人总结",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00011.html"
+        ],
+        "target": "/wdfxw/bookfree/00011"
+      },
+      {
+        "title": "中学小学教案导学案与教学设计",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00012.html"
+        ],
+        "target": "/wdfxw/bookfree/00012"
+      },
+      {
+        "title": "作文大全",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00013.html"
+        ],
+        "target": "/wdfxw/bookfree/00013"
+      },
+      {
+        "title": "幼儿教育",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00014.html"
+        ],
+        "target": "/wdfxw/bookfree/00014"
+      },
+      {
+        "title": "论文",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00015.html"
+        ],
+        "target": "/wdfxw/bookfree/00015"
+      },
+      {
+        "title": "财务管理",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00016.html"
+        ],
+        "target": "/wdfxw/bookfree/00016"
+      },
+      {
+        "title": "管理信息化",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00017.html"
+        ],
+        "target": "/wdfxw/bookfree/00017"
+      },
+      {
+        "title": "行业分类",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00018.html"
+        ],
+        "target": "/wdfxw/bookfree/00018"
+      },
+      {
+        "title": "合同样本",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00019.html"
+        ],
+        "target": "/wdfxw/bookfree/00019"
+      },
+      {
+        "title": "品质管理",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00020.html"
+        ],
+        "target": "/wdfxw/bookfree/00020"
+      },
+      {
+        "title": "企业管理",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00021.html"
+        ],
+        "target": "/wdfxw/bookfree/00021"
+      },
+      {
+        "title": "人力资源",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00022.html"
+        ],
+        "target": "/wdfxw/bookfree/00022"
+      },
+      {
+        "title": "生产管理",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00023.html"
+        ],
+        "target": "/wdfxw/bookfree/00023"
+      },
+      {
+        "title": "市场营销",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00024.html"
+        ],
+        "target": "/wdfxw/bookfree/00024"
+      },
+      {
+        "title": "制度表格",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00025.html"
+        ],
+        "target": "/wdfxw/bookfree/00025"
+      },
+      {
+        "title": "行业资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00026.html"
+        ],
+        "target": "/wdfxw/bookfree/00026"
+      },
+      {
+        "title": "国家标准",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00027.html"
+        ],
+        "target": "/wdfxw/bookfree/00027"
+      },
+      {
+        "title": "软件教程",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00028.html"
+        ],
+        "target": "/wdfxw/bookfree/00028"
+      },
+      {
+        "title": "标准汇编",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00029.html"
+        ],
+        "target": "/wdfxw/bookfree/00029"
+      },
+      {
+        "title": "其他",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00030.html"
+        ],
+        "target": "/wdfxw/bookfree/00030"
+      },
+      {
+        "title": "职业资格考试",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00031.html"
+        ],
+        "target": "/wdfxw/bookfree/00031"
+      },
+      {
+        "title": "股票证券行业研究报告(研报）",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00032.html"
+        ],
+        "target": "/wdfxw/bookfree/00032"
+      },
+      {
+        "title": "基金申请",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00033.html"
+        ],
+        "target": "/wdfxw/bookfree/00033"
+      },
+      {
+        "title": "教师资格证考试资料",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00034.html"
+        ],
+        "target": "/wdfxw/bookfree/00034"
+      },
+      {
+        "title": "专利说明书",
+        "docs": "https://docs.rsshub.app/routes/reading",
+        "source": [
+          "/bookfree-00035.html"
+        ],
+        "target": "/wdfxw/bookfree/00035"
+      }
+    ]
+  },
   "web.dev": {
     "_name": "web.dev",
     ".": [
