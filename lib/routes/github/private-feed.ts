@@ -5,18 +5,22 @@ import { config } from '@/config';
 
 const typeMapping: Record<string, string> = {
     push: 'PushEvent',
-    issues: 'IssuesEvent',
-    pullrequest: 'PullRequestEvent',
+    pr: 'PullRequestEvent',
+    prcomm: 'PullRequestReviewCommentEvent',
+    issuecomm: 'IssueCommentEvent',
     star: 'WatchEvent',
     fork: 'ForkEvent',
     create: 'CreateEvent',
+    delete: 'DeleteEvent',
     release: 'ReleaseEvent',
+    public: 'PublicEvent',
+    member: 'MemberEvent',
 };
 
 export const route: Route = {
     path: '/privatefeed/:user/:types?',
     categories: ['programming'],
-    example: '/github/privatefeed/yihong0618/star,release',
+    example: '/github/privatefeed/yihong0618/star,release,pr',
     parameters: {
         user: 'GitHub username',
         types: {
@@ -32,16 +36,32 @@ export const route: Route = {
                     value: 'create',
                 },
                 {
+                    label: 'Delete events',
+                    value: 'delete',
+                },
+                {
                     label: 'Fork events',
                     value: 'fork',
                 },
                 {
-                    label: 'Issues events',
-                    value: 'issues',
+                    label: 'Issue comment events',
+                    value: 'issuecomm',
+                },
+                {
+                    label: 'Member events',
+                    value: 'member',
                 },
                 {
                     label: 'Pull request events',
-                    value: 'pullrequest',
+                    value: 'pr',
+                },
+                {
+                    label: 'Pull request review comment events',
+                    value: 'prcomm',
+                },
+                {
+                    label: 'Public events',
+                    value: 'public',
                 },
                 {
                     label: 'Push events',
@@ -118,7 +138,7 @@ async function handler(ctx) {
 
             let title = '';
             let description = '';
-            let link = `https://github.com/${actor.login}`;
+            let link = '';
 
             switch (type) {
                 case 'PushEvent':
@@ -129,15 +149,20 @@ async function handler(ctx) {
                         description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
                     }
                     break;
-                case 'IssuesEvent':
-                    title = `${actor.login} ${payload.action} an issue in ${repo.name}`;
-                    description = `Issue: ${payload.issue?.title || 'Unknown'}`;
-                    link = payload.issue?.html_url || `https://github.com/${repo.name}`;
-                    break;
                 case 'PullRequestEvent':
                     title = `${actor.login} ${payload.action} a pull request in ${repo.name}`;
                     description = `PR: ${payload.pull_request?.title || 'Unknown'}`;
                     link = payload.pull_request?.html_url || `https://github.com/${repo.name}`;
+                    break;
+                case 'PullRequestReviewCommentEvent':
+                    title = `${actor.login} commented on a pull request review in ${repo.name}`;
+                    description = `Comment: ${payload.comment?.body?.slice(0, 100) || 'No comment'}...`;
+                    link = payload.comment?.html_url || `https://github.com/${repo.name}`;
+                    break;
+                case 'IssueCommentEvent':
+                    title = `${actor.login} commented on an issue in ${repo.name}`;
+                    description = `Comment: ${payload.comment?.body?.slice(0, 100) || 'No comment'}...`;
+                    link = payload.comment?.html_url || `https://github.com/${repo.name}`;
                     break;
                 case 'WatchEvent':
                     title = `${actor.login} starred ${repo.name}`;
@@ -154,10 +179,25 @@ async function handler(ctx) {
                     description = `Created ${payload.ref_type}: ${payload.ref || repo.name}`;
                     link = `https://github.com/${repo.name}`;
                     break;
+                case 'DeleteEvent':
+                    title = `${actor.login} deleted ${payload.ref_type} in ${repo.name}`;
+                    description = `Deleted ${payload.ref_type}: ${payload.ref}`;
+                    link = `https://github.com/${repo.name}`;
+                    break;
                 case 'ReleaseEvent':
                     title = `${actor.login} released ${payload.release?.name || payload.release?.tag_name} in ${repo.name}`;
                     description = payload.release?.body || `Released ${payload.release?.tag_name}`;
                     link = payload.release?.html_url || `https://github.com/${repo.name}`;
+                    break;
+                case 'PublicEvent':
+                    title = `${actor.login} made ${repo.name} public`;
+                    description = `Repository ${repo.name} was made public`;
+                    link = `https://github.com/${repo.name}`;
+                    break;
+                case 'MemberEvent':
+                    title = `${actor.login} ${payload.action} as a member of ${repo.name}`;
+                    description = `Member ${payload.action} in repository ${repo.name}`;
+                    link = `https://github.com/${repo.name}`;
                     break;
                 default:
                     title = `${actor.login} performed ${type} in ${repo?.name || 'unknown repository'}`;
