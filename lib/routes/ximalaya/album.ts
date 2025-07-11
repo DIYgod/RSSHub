@@ -89,8 +89,6 @@ async function handler(ctx) {
 
     const albumData = await getAlbumData(id);
 
-    // const { albumPageMainInfo, currentCategory, anchorInfo } = albumData?.store?.AlbumDetailPage || {};
-
     const isPaid = albumData.isPaid;
 
     const author = albumData.anchorName;
@@ -144,7 +142,6 @@ async function handler(ctx) {
             });
         })
     );
-    // console.log(playList)
 
     const token = config.ximalaya.token;
     if (isPaid && token) {
