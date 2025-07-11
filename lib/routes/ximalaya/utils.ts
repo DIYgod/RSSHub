@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+/*
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
     const a = [
@@ -119,6 +120,7 @@ const getUrl = (r) => {
     const url = `https://audiopay.cos.xmcdn.com/download/${r.apiVersion}/${getPath(r.seed, r.fileId)}?${paramsArray.join('&')}`;
     return url;
 };
+*/
 
 const getRandom16 = (len) =>
     crypto
@@ -139,28 +141,28 @@ const decryptUrl = (encryptedUrl) => {
     const a = [204, 53, 135, 197, 39, 73, 58, 160, 79, 24, 12, 83, 180, 250, 101, 60, 206, 30, 10, 227, 36, 95, 161, 16, 135, 150, 235, 116, 242, 116, 165, 171];
 
     const padding = '='.repeat((4 - (encryptedUrl.length % 4)) % 4);
-    const encrypted_data = Buffer.from(encryptedUrl.replace('_', '/').replace('-', '+') + padding, 'base64');
-    if (encrypted_data.length < 16) {
+    const encryptedData = Buffer.from(encryptedUrl.replace('_', '/').replace('-', '+') + padding, 'base64');
+    if (encryptedData.length < 16) {
         return encryptedUrl;
     }
-    const data = encrypted_data.slice(0, -16);
-    const iv = encrypted_data.slice(-16);
+    const data = encryptedData.subarray(0, -16);
+    const iv = encryptedData.subarray(-16);
     const decryptedData = new Uint8Array(data);
     for (let i = 0; i < decryptedData.length; i++) {
         decryptedData[i] = o[decryptedData[i]];
     }
     for (let i = 0; i < decryptedData.length; i += 16) {
-        const block = decryptedData.slice(i, i + 16);
+        const block = decryptedData.subarray(i, i + 16);
         for (const [j, element] of block.entries()) {
             decryptedData[i + j] = element ^ iv[j];
         }
     }
     for (let i = 0; i < decryptedData.length; i += 32) {
-        const block = decryptedData.slice(i, i + 32);
+        const block = decryptedData.subarray(i, i + 32);
         for (const [j, element] of block.entries()) {
             decryptedData[i + j] = element ^ a[j];
         }
     }
     return Buffer.from(decryptedData).toString('utf8');
 };
-export { getUrl, getRandom16, decryptUrl };
+export { /* getUrl, */ getRandom16, decryptUrl };
