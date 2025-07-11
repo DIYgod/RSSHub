@@ -2,7 +2,7 @@ import { Data, Route, ViewType } from '@/types';
 import { fetchCollection } from './utils';
 
 export const route: Route = {
-    path: '/report',
+    path: '/reports',
     view: ViewType.Articles,
     categories: ['new-media'],
     example: '/newslaundry/reports',
