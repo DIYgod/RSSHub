@@ -104,6 +104,8 @@ async function handler(ctx) {
             throw new Error($('.error-p span').text().trim() || 'Profile not found');
         }
 
+        const username = $('.profile-info .username').text().trim();
+
         const items = $('.posts-video .posts__video-item')
             .toArray()
             .map((item) => {
@@ -112,6 +114,7 @@ async function handler(ctx) {
                 const img = $item.find('img');
                 return {
                     title: img.attr('alt') || '',
+                    author: username,
                     renderData: {
                         poster: img.attr('src'),
                         source: $item.find('.popup-open').data('source'),
@@ -134,6 +137,7 @@ async function handler(ctx) {
         image: string;
         items: {
             title: string;
+            author: string;
             renderData: {
                 poster: string;
                 source: string;
