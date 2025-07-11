@@ -114,7 +114,7 @@ async function handler(ctx) {
                 const img = $item.find('img');
                 return {
                     title: img.attr('alt') || '',
-                    author: username || '',
+                    author: username,
                     renderData: {
                         poster: img.attr('src'),
                         source: $item.find('.popup-open').data('source'),
