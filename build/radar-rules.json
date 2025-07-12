@@ -14992,6 +14992,14 @@
         "target": "/github/notifications"
       },
       {
+        "title": "User's Feed",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:user"
+        ],
+        "target": "/github/feed/:user"
+      },
+      {
         "title": "Repo Pull Requests",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
