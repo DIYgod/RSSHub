@@ -3,7 +3,7 @@ import getHlcg from './hlcg';
 export const route: Route = {
     path: '/:category',
     categories: ['new-media'],
-    example: '18hlw.com/hlcg/',
+    example: '18hlw.com/feed/71966',
     parameters: { category: '分类名' },
     features: {
         requireConfig: false,
@@ -18,7 +18,7 @@ export const route: Route = {
             source: ['18hlw.com/:category'],
         },
     ],
-    name: 'hlw',
+    name: 'heiliao',
     maintainers: ['zy97'],
     handler,
 };
