@@ -5,7 +5,6 @@ import { DataItem } from '@/types';
 import cache from '@/utils/cache';
 
 export const rootUrl = 'https://scroll.in';
-
 // Helper function to map article data to a consistent format
 function mapArticle(article: any) {
     return {
