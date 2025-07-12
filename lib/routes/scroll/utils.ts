@@ -65,23 +65,24 @@ export function fetchArticleContent(item: any): Promise<DataItem> {
         try {
             const articleResponse = await ofetch(item.link);
             const $article = load(articleResponse);
+            const category = $article('.article-tags-list a.tag-menu')
+                .toArray()
+                .map((tag) => $article(tag).text().trim());
 
             // Remove elements that shouldn't be in the content
             $article('.below-article-share-block').nextAll().remove();
             $article('.below-article-share-block').remove();
             $article('header').remove(); // Remove all header tags
+            $article('i.mail-us-section').remove(); // Remove mail us section
+            $article('ul.article-tags-list').remove();
 
             // Get content after header removal
             const content = $article('.story-element').html() || $article('article .content').html() || $article('.article-content').html() || item.description;
 
-            const tags = $article('.article-tags-list a.tag-menu')
-                .toArray()
-                .map((tag) => $article(tag).text().trim());
-
             return {
                 ...item,
                 description: content,
-                category: tags,
+                category,
             } as DataItem;
         } catch {
             return item as DataItem;
