@@ -26733,6 +26733,20 @@
       }
     ]
   },
+  "nankai.edu.cn": {
+    "_name": "南开大学",
+    "yzb": [
+      {
+        "title": "研究生招生网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/:type/list.htm"
+        ],
+        "target": "/nankai/yzb/:type?"
+      }
+    ]
+  },
   "nasa.govundefined": {
     "_name": "NASA",
     "apod": [

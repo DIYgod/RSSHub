@@ -5211,6 +5211,9 @@
   "/mysql/release/:version?": [
     "nczitzk"
   ],
+  "/nankai/yzb/:type?": [
+    "sddzhyc"
+  ],
   "/nasa/apod-cn": [
     "nczitzk",
     "williamgateszhao"
