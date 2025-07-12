@@ -104,7 +104,7 @@ export const route: Route = {
 };
 
 function formatEventItem(event: any) {
-    const { type, actor, repo, payload, created_at } = event;
+    const { id, type, actor, repo, payload, created_at } = event;
 
     let title = '';
     let description = '';
@@ -126,12 +126,12 @@ function formatEventItem(event: any) {
             break;
         case 'PullRequestReviewCommentEvent':
             title = `${actor.login} commented on a pull request review in ${repo.name}`;
-            description = `Comment: ${payload.comment?.body?.slice(0, 100) || 'No comment'}...`;
+            description = `Comment: ${payload.comment?.body || 'No comment'}`;
             link = payload.comment?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'IssueCommentEvent':
             title = `${actor.login} commented on an issue in ${repo.name}`;
-            description = `Comment: ${payload.comment?.body?.slice(0, 100) || 'No comment'}...`;
+            description = `Comment: ${payload.comment?.body || 'No comment'}`;
             link = payload.comment?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'WatchEvent':
@@ -182,6 +182,7 @@ function formatEventItem(event: any) {
         pubDate: parseDate(created_at),
         author: actor.login,
         category: [type],
+        guid: id,
     };
 }
 
