@@ -31,7 +31,7 @@ export async function fetchCollection(collectionSlug: string, customUrl?: string
     } as Data;
 }
 
-export function processStory(story: any): DataItem {
+function processStory(story: any): DataItem {
     const articleUrl = story.url;
     const pubDate = story['published-at'] ? parseDate(story['published-at']) : null;
 
@@ -66,6 +66,12 @@ export function processStory(story: any): DataItem {
                                 // Skip if unable to decode
                                 return null;
                             }
+                        } else if (element.type === 'youtube-video' && element.url) {
+                            return {
+                                type: 'youtube-video',
+                                url: element.url,
+                                embedUrl: element['embed-url'] || '',
+                            };
                         }
                         return null;
                     })

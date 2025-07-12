@@ -19,5 +19,10 @@
     </figure>
   {{else if $value.type === 'jsembed'}}
     {{@ $value.content}}
+  {{else if $value.type === 'youtube-video'}}
+    <figure>
+      <iframe width="560" height="315" src="{{$value.embedUrl}}" frameborder="0" allowfullscreen></iframe>
+      <figcaption><a href="{{$value.url}}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></figcaption>
+    </figure>
   {{/if}}
 {{/each}}
