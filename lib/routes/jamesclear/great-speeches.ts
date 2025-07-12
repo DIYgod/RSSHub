@@ -21,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: 'Great Speeches',
-    maintainers: [],
+    maintainers: ['Rjnishant530'],
     handler,
 };
 
