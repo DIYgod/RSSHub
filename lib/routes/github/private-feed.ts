@@ -215,9 +215,7 @@ async function handler(ctx) {
         });
     }
 
-    const items = response.data
-        .filter((event) => filteredEventTypes.length === 0 || filteredEventTypes.includes(event.type))
-        .map((event) => formatEventItem(event));
+    const items = response.data.filter((event) => filteredEventTypes.length === 0 || filteredEventTypes.includes(event.type)).map((event) => formatEventItem(event));
 
     const typeFilter = types === 'all' ? 'All Events' : `Events: ${types}`;
     const feedType = isAuthenticated ? 'Private Feed' : 'Public Feed';
