@@ -18,9 +18,9 @@ const typeMapping: Record<string, string> = {
 };
 
 export const route: Route = {
-    path: '/privatefeed/:user/:types?',
+    path: '/feed/:user/:types?',
     categories: ['programming'],
-    example: '/github/privatefeed/yihong0618/star,release,pr',
+    example: '/github/feed/yihong0618/star,release,pr',
     parameters: {
         user: 'GitHub username',
         types: {
@@ -95,10 +95,10 @@ export const route: Route = {
     radar: [
         {
             source: ['github.com/:user'],
-            target: '/privatefeed/:user',
+            target: '/feed/:user',
         },
     ],
-    name: 'User\'s Feed',
+    name: "User's Feed",
     maintainers: ['RtYkk'],
     handler,
 };
@@ -189,9 +189,10 @@ async function handler(ctx) {
     const user = ctx.req.param('user');
     const types = ctx.req.param('types') || 'all';
 
-    // Setup headers with optional authentication
+    const isAuthenticated = config.github && config.github.access_token;
+
     const headers: Record<string, string> = {};
-    if (config.github && config.github.access_token) {
+    if (isAuthenticated) {
         headers.Authorization = `token ${config.github.access_token}`;
     }
 
@@ -200,7 +201,7 @@ async function handler(ctx) {
         url: `https://api.github.com/users/${user}/received_events`,
         headers,
         searchParams: {
-            per_page: 30,
+            per_page: 100,
         },
     });
 
@@ -218,7 +219,6 @@ async function handler(ctx) {
         .map((event) => formatEventItem(event));
 
     const typeFilter = types === 'all' ? 'All Events' : `Events: ${types}`;
-    const isAuthenticated = config.github && config.github.access_token;
     const feedType = isAuthenticated ? 'Private Feed' : 'Public Feed';
 
     return {
