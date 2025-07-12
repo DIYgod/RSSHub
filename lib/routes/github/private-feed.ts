@@ -111,14 +111,14 @@ function formatEventItem(event: any) {
     let link = '';
 
     switch (type) {
-        case 'PushEvent':
+        case 'PushEvent': {
             title = `${actor.login} pushed to ${repo.name}`;
-            description = `Pushed ${payload.commits?.length || 0} commit(s) to ${repo.name}`;
-            link = `https://github.com/${repo.name}`;
-            if (payload.commits && payload.commits.length > 0) {
-                description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
-            }
+            const branch = payload.ref ? payload.ref.replace('refs/heads/', '') : 'unknown';
+            description = `Pushed ${payload.size || 0} commit(s) to ${branch} in ${repo.name}`;
+            link = payload.commits.at(-1).url.replace('api.github.com/repos/', 'github.com/').replace('/commits/', '/commit/');
+            description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
             break;
+        }
         case 'PullRequestEvent':
             title = `${actor.login} ${payload.action} a pull request in ${repo.name}`;
             description = `PR: ${payload.pull_request?.title || 'Unknown'}`;
