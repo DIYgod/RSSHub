@@ -26,5 +26,5 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    return await fetchCollection('reports');
+    return await fetchCollection('reports', undefined, true);
 }
