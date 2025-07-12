@@ -47,9 +47,6 @@ export async function handler(ctx) {
                 let time = dateMatch ? dateMatch[1].trim() : '';
                 time = time.replace(/\s+IST$/, '');
                 const pubDate = timezone(parseDate(time), +5.5);
-                if (!pubDate) {
-                    logger.error(`Failed to parse date for ${item.link}`);
-                }
                 // Get author information
                 const authorMeta = $('meta[name="author"]').attr('content');
                 const author = authorMeta || 'DNA Web Team';
