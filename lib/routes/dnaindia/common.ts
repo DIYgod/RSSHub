@@ -20,7 +20,7 @@ export async function handler(ctx) {
     const { data: response } = await got(link);
     const $ = load(response);
 
-    const listItems = $('div.col-lg-6 div.list-news')
+    const listItems = $('div.list-news')
         .toArray()
         .map((item) => {
             item = $(item);
