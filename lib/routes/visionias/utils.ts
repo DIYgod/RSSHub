@@ -37,7 +37,7 @@ export async function extractNews(item, selector) {
                     ?.nextAll('li')
                     .toArray()
                     .map((tag) => $$(tag).text());
-                const description = art(path.join(__dirname, `templates/description.art`), {
+                const description = art(path.join(__dirname, 'templates/description.art'), {
                     heading: title,
                     articleContent: htmlContent,
                 });
