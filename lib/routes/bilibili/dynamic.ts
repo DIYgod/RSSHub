@@ -296,7 +296,8 @@ async function handler(ctx) {
                     link = `https://t.bilibili.com/${item.id_str}`;
                 }
 
-                let description = getDes(data) || '';
+                const originalDescription = getDes(data) || '';
+                let description = originalDescription;
                 const title = getTitle(data);
                 const category: string[] = [];
                 // emoji
@@ -388,7 +389,7 @@ async function handler(ctx) {
                     .join('<br>');
 
                 return {
-                    title: title || description,
+                    title: title || originalDescription,
                     description: descriptions,
                     pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                     link,
