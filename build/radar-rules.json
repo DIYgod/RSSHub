@@ -4704,6 +4704,14 @@
           "/"
         ],
         "target": "/aliyun/database_month"
+      },
+      {
+        "title": "数据库内核月报",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/monthly/"
+        ],
+        "target": "/taobao/mysql/monthly"
       }
     ]
   },

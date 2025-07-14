@@ -7427,6 +7427,9 @@
   "/tangshufang/:category?": [
     "nczitzk"
   ],
+  "/taobao/mysql/monthly": [
+    "nczitzk"
+  ],
   "/taobao/zhongchou/:type?": [
     "xyqfer",
     "Fatpandac"
