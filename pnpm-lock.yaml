@@ -51,8 +51,8 @@ importers:
         specifier: 1.15.0
         version: 1.15.0(hono@4.8.5)
       '@hono/zod-openapi':
-        specifier: 0.19.9
-        version: 0.19.9(hono@4.8.5)(zod@3.25.76)
+        specifier: 0.19.10
+        version: 0.19.10(hono@4.8.5)(zod@3.25.76)
       '@notionhq/client':
         specifier: 4.0.1
         version: 4.0.1
@@ -1458,18 +1458,18 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@0.19.9':
-    resolution: {integrity: sha512-TonPfh8xUdsdzWNMiKOYSG4Wk2DkZIShHZoXkdOSjPmqpnobXpvSQU3w3XmB7N2t12I2NnnoGSHyMj+BXk+1bw==}
+  '@hono/zod-openapi@0.19.10':
+    resolution: {integrity: sha512-dpoS6DenvoJyvxtQ7Kd633FRZ/Qf74+4+o9s+zZI8pEqnbjdF/DtxIib08WDpCaWabMEJOL5TXpMgNEZvb7hpA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
-      zod: 3.*
+      zod: '>=3.0.0'
 
-  '@hono/zod-validator@0.7.0':
-    resolution: {integrity: sha512-qe2ZE6sHFE98dcUrbYMtS3bAV8hqcCOflykvZga2S7XhmNSZzT+dIz4OuMILsjLHkJw9JMn912/dB7dQOmuPvg==}
+  '@hono/zod-validator@0.7.1':
+    resolution: {integrity: sha512-8+vJT1RvezAx5sN7hiZ5Mis0RMuFL77nBEcqQQgT9ufoLkxr+7ll461WlBJQcGoQSY6EGMClVae19v3s/7bbgQ==}
     peerDependencies:
       hono: '>=3.9.0'
-      zod: ^3.25.0
+      zod: ^3.25.0 || ^4.0.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -7217,15 +7217,15 @@ snapshots:
     dependencies:
       hono: 4.8.5
 
-  '@hono/zod-openapi@0.19.9(hono@4.8.5)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.8.5)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.0(hono@4.8.5)(zod@3.25.76)
+      '@hono/zod-validator': 0.7.1(hono@4.8.5)(zod@3.25.76)
       hono: 4.8.5
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.0(hono@4.8.5)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.1(hono@4.8.5)(zod@3.25.76)':
     dependencies:
       hono: 4.8.5
       zod: 3.25.76
