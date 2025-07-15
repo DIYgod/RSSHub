@@ -37,6 +37,7 @@ async function handler(ctx) {
     return {
         title: $('.Pa2dE').text() + ' - Google Chrome Extension',
         link: `https://chrome.google.com/webstore/detail/${id}`,
+        image: $('.rBxtY').attr('src'),
         item: [
             {
                 title: version,
