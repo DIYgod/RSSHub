@@ -1,6 +1,7 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/chrome/extension/:id',
@@ -28,25 +29,23 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got<string>({
-        method: 'get',
-        url: `https://chrome.google.com/webstore/detail/${id}?hl=en`,
-    });
-    const $ = load(response.data);
+    const response = await ofetch(`https://chrome.google.com/webstore/detail/${id}?hl=en`);
+    const $ = load(response);
 
-    const version = 'v' + $('.pDlpAd').text();
+    const version = 'v' + $('.nBZElf').text();
 
     return {
         title: $('.Pa2dE').text() + ' - Google Chrome Extension',
         link: `https://chrome.google.com/webstore/detail/${id}`,
+        image: $('.rBxtY').attr('src'),
         item: [
             {
                 title: version,
-                description: $('.uORbKe').html(),
+                description: $('.JJ3H1e').html(),
                 link: `https://chrome.google.com/webstore/detail/${id}`,
-                pubDate: new Date($('.kBFnc').text().replace('Updated', '')).toUTCString(),
+                pubDate: parseDate($('.uBIrad div').last().text()),
                 guid: version,
-                author: $('.yNyGQd').text(),
+                author: $('.cJI8ee').text(),
             },
         ],
     };
