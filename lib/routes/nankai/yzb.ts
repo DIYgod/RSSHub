@@ -36,50 +36,59 @@ export const route: Route = {
         const baseUrl = 'https://yzb.nankai.edu.cn';
         const { data: response } = await got(`${baseUrl}/${type}/list.htm`);
         const $ = load(response);
+
+        // 先转换为数组，再使用原生JavaScript的map
         const dateList = $('#wp_news_w9')
             .find('span.col_news_date')
             .toArray()
             .map((item) => $(item).text());
+
         const list = $('#wp_news_w9')
             .find('a[title]')
-            // 使用“toArray()”方法将选择的所有 DOM 元素以数组的形式返回。
             .toArray()
-            // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
-            .map((a, index) => {
-                a = $(a);
-                let linkStr = a.attr('href');
-                // 若链接不是以http开头，则加上前缀
-                if (a.attr('href').startsWith('http://')) {
-                    // 改为https访问
-                    linkStr.replace('http://', 'https://');
-                } else {
-                    linkStr = `${baseUrl}${a.attr('href')}`;
-                }
+            .map((element, index) => {
+                const $a = $(element);
+                let linkStr = $a.attr('href') || '';
+
+                // 使用三元表达式处理链接
+                linkStr = linkStr.startsWith('http://') ? linkStr.replace('http://', 'https://') : `${baseUrl}${linkStr}`;
+
                 return {
-                    title: a.text(),
+                    title: $a.text(),
                     link: linkStr,
-                    pubDate: timezone(parseDate(dateList[index]), +8), // 添加发布日期查询
+                    pubDate: timezone(parseDate(dateList[index]), +8),
                 };
             });
+
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link.toString(), async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
                     item.description = $('.read').first().html();
-                    // 上面每个列表项的每个属性都在此重用，
-                    // 并增加了一个新属性“description”
+
+                    // 提取PDF链接，先转换为数组再使用map
+                    const pdfLinks = $('div[pdfsrc$=".pdf"]')
+                        .toArray()
+                        .map((el) => {
+                            const pdfUrl = $(el).attr('pdfsrc');
+                            return `<a href="${new URL(pdfUrl, baseUrl).href}">PDF附点击阅读</a>`;
+                        })
+                        .join('<br>');
+
+                    if (pdfLinks) {
+                        item.description += `<h4>相关附件：</h4>${pdfLinks}`;
+                    }
+
                     return item;
                 })
             )
         );
+
         return {
-            // 源标题
             title: `南开大学研究生招生网-${$('.column-title').text()}`,
-            // 源链接
             link: `${baseUrl}/${type}/list.htm`,
-            // 源文章
-            item: items,
+            item: items as any[],
         };
     },
 };
