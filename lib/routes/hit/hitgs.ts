@@ -40,13 +40,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: parseDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
                     text: description,
                 },
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: parseDate(upDatedStr),
                 language,
             };
 
