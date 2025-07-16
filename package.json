@@ -163,7 +163,7 @@
         "@types/node": "24.0.14",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
-        "@types/title": "3.4.3",
+        "@types/title": "4.0.0",
         "@types/uuid": "10.0.0",
         "@typescript-eslint/eslint-plugin": "8.37.0",
         "@typescript-eslint/parser": "8.37.0",
