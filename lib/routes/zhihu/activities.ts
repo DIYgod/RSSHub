@@ -103,6 +103,9 @@ async function handler(ctx) {
                                 src="${contentItem.playlist[1].url}"></video></p>`;
 
                                 break;
+                            case 'link_card':
+                                link = `<p><a href="${contentItem.url.split('?')[0]}" target="_blank"></a></p>`;
+                                break;
 
                             default:
                                 throw new Error(`Unknown type: ${contentItem.type}`);
