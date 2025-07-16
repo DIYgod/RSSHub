@@ -97,11 +97,9 @@ export const route: Route = {
                                 const $el = $(el);
 
                                 const pdfSrc = $el.attr('pdfsrc');
-
-                                const sudyfileAttr = $(el).attr('sudyfile-attr');
-                                const fileNameMatch = sudyfileAttr ? sudyfileAttr.match(/'title':'([^']+)'/) : null;
-                                const fileName = fileNameMatch?.[1] || '未命名文件.pdf';
-
+                                const sudyfileAttr = ($(el).attr('sudyfile-attr') || '{}').replaceAll("'", '"');
+                                const sudyfileAttrJson = JSON.parse(sudyfileAttr);
+                                const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
                                 if (pdfSrc) {
                                     let pdfUrl = pdfSrc;
                                     if (!pdfUrl.startsWith('http')) {
