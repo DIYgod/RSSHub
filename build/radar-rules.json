@@ -21056,6 +21056,43 @@
       }
     ]
   },
+  "jamesclear.com": {
+    "_name": "James Clear",
+    ".": [
+      {
+        "title": "Book Summaries",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/book-summaries"
+        ],
+        "target": "/jamesclear/book-summaries"
+      },
+      {
+        "title": "Great Speeches",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/great-speeches"
+        ],
+        "target": "/jamesclear/great-speeches"
+      },
+      {
+        "title": "Quotes",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/quotes"
+        ],
+        "target": "/jamesclear/quotes"
+      },
+      {
+        "title": "3-2-1 Newsletter",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/3-2-1"
+        ],
+        "target": "/jamesclear/3-2-1"
+      }
+    ]
+  },
   "jandan.net": {
     "_name": "煎蛋",
     "i": [
