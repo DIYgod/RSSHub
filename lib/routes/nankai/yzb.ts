@@ -72,7 +72,10 @@ export const route: Route = {
                         .toArray()
                         .map((el) => {
                             const pdfUrl = $(el).attr('pdfsrc');
-                            return `<a href="${new URL(pdfUrl, baseUrl).href}">PDF附点击阅读</a>`;
+                            const sudyfileAttr = $(el).attr('sudyfile-attr');
+                            const fileNameMatch = sudyfileAttr ? sudyfileAttr.match(/'title':'([^']+)'/) : null;
+                            const fileName = fileNameMatch?.[1] || '未命名文件.pdf';
+                            return `<a href="${new URL(pdfUrl, baseUrl).href}">${fileName}</a>`;
                         })
                         .join('<br>');
 
