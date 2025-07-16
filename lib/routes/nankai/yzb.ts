@@ -72,7 +72,7 @@ export const route: Route = {
                         .toArray()
                         .map((el) => {
                             const pdfUrl = $(el).attr('pdfsrc') || '';
-                            const sudyfileAttr = ($(el).attr('sudyfile-attr') || '{}').replaceAll('\'', '"');
+                            const sudyfileAttr = ($(el).attr('sudyfile-attr') || '{}').replaceAll("'", '"');
                             const sudyfileAttrJson = JSON.parse(sudyfileAttr);
                             const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
                             return `<a href="${new URL(pdfUrl, baseUrl).href}">${fileName}</a>`;
