@@ -15,7 +15,7 @@ export function processItem(item: any): DataItem {
         title: item.title.rendered,
         link: item.link,
         description: item.content.rendered,
-        pubDate: parseDate(item.date),
+        pubDate: parseDate(item.date_gmt),
         author: 'James Clear',
         guid: item.guid.rendered,
     };
