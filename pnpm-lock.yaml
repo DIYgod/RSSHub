@@ -373,8 +373,8 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
       '@types/title':
-        specifier: 3.4.3
-        version: 3.4.3
+        specifier: 4.0.0
+        version: 4.0.0
       '@types/uuid':
         specifier: 10.0.0
         version: 10.0.0
@@ -2383,8 +2383,9 @@ packages:
   '@types/tedious@4.0.14':
     resolution: {integrity: sha512-KHPsfX/FoVbUGbyYvk1q9MMQHLPeRZhRJZdO45Q4YjvFkv4hMNghCWTvy7rdKessBsmtz4euWCWAB6/tVpI1Iw==}
 
-  '@types/title@3.4.3':
-    resolution: {integrity: sha512-mjupLOb4kwUuoUFokkacy/VMRVBH2qtqZ5AX7K7iha6+iKIkX80n/Y4EoNVEVRmer8dYJU/ry+fppUaDFVQh7Q==}
+  '@types/title@4.0.0':
+    resolution: {integrity: sha512-+/DoT3en4uDoeAq55IHtwLVWq51kCJVIjQFswW7kfw36p/mTa7gyf7vqAuoGdYmDcY7Mg7tgv6rfrnU7jNQ7BA==}
+    deprecated: This is a stub types definition. title provides its own type definitions, so you do not need this installed.
 
   '@types/tough-cookie@4.0.5':
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
@@ -8193,7 +8194,9 @@ snapshots:
     dependencies:
       '@types/node': 24.0.14
 
-  '@types/title@3.4.3': {}
+  '@types/title@4.0.0':
+    dependencies:
+      title: 4.0.1
 
   '@types/tough-cookie@4.0.5': {}
 
