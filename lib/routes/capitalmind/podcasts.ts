@@ -24,13 +24,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const articles = await fetchArticles('podcasts');
-    const items = articles.map((item) => ({
-        ...item,
-        enclosure_url: item.image,
-        enclosure_type: 'image/jpeg',
-        itunes_item_image: item.image,
-    }));
+    const items = await fetchArticles('podcasts');
 
     return {
         title: 'Capitalmind Podcasts',
