@@ -48,7 +48,9 @@ export const route: Route = {
                 const $tr = $(tr);
                 const cells = $tr.find('td');
 
-                if (cells.length < 5) {return null;}
+                if (cells.length < 5) {
+                    return null;
+                }
 
                 const title = cells.eq(1).text().trim();
                 const publisher = cells.eq(2).text().trim();
@@ -58,7 +60,7 @@ export const route: Route = {
                 const onclick = $tr.attr('onclick');
                 let link = '';
                 if (onclick) {
-                    const match = onclick.match(/window\.location\.href='([^']+)'/);
+                    const match = onclick.match(/window\.location\.href='([^']+)';/);
                     if (match) {
                         link = match[1];
                         if (!link.startsWith('http')) {
