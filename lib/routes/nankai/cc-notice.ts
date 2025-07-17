@@ -92,12 +92,11 @@ export const route: Route = {
 
                               description = description || item.title;
                               item.description = description;
-                              return item;
                           } catch {
                               // 如果获取详细内容失败，返回基本信息
                               item.description = item.title + ' (获取详细内容失败)';
-                              return item;
                           }
+                          return item;
                       })
                     : null
             )
