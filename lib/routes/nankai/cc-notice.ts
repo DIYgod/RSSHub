@@ -86,8 +86,8 @@ export const route: Route = {
                         const { data: response } = await got(item.link);
                         const $ = load(response);
 
-                        // 尝试多个可能的内容选择器
-                        let description = $('.wp_articlecontent').html() || $('.body-news-detail .wp_articlecontent').html() || $('.body-news-detail').html();
+                        // 优化内容选择器逻辑，避免重复选择
+                        let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
 
                         description = description ? description.replaceAll(/<img[^>]*style="display:none"[^>]*>/gi, '') : item.title;
                         item.description = description;
