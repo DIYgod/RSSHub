@@ -43,9 +43,9 @@ export const route: Route = {
                 const $dateMonth = $item.find('.d .d-m');
 
                 // 构建完整的日期
-                const day = $dateDay.text().trim();
+                const day = $dateDay.text().trim(); // 格式：04
                 const monthYear = $dateMonth.text().trim(); // 格式：2025/06
-                const fullDate = `${monthYear}/${day.padStart(2, '0')}`; // 2025/06/27
+                const fullDate = `${monthYear}/${day}`; // 2025/06/04
 
                 let linkStr = $link.attr('href');
                 // 处理相对链接
