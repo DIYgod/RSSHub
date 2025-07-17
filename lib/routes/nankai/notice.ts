@@ -55,16 +55,20 @@ export const route: Route = {
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
                     try {
-                        const { data: detailResponse } = await got(item.link);
-                        const $detail = load(detailResponse);
+                        // 判断link如果是https://xb.nankai.edu.cn/的则为校内访问的
+                        if (item.link.includes('xb.nankai.edu.cn')) {
+                            item.description = '该通知可能需要校内访问权限';
+                        } else {
+                            const { data: detailResponse } = await got(item.link);
+                            const $detail = load(detailResponse);
 
-                        // 提取正文内容
-                        const content = $detail('.wp_articlecontent').html() || '';
-
-                        item.description = content;
+                            // 提取正文内容
+                            const content = $detail('.wp_articlecontent').html() || '';
+                            item.description = content;
+                        }
                     } catch {
-                        // 处理内网通知无法访问的情况
-                        item.description = '该通知可能需要校内访问权限';
+                        // 如果提取正文内容失败，则返回默认内容
+                        item.description = '正文内容获取失败';
                     }
                     return item;
                 })
