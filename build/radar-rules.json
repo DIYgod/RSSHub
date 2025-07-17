@@ -26780,6 +26780,17 @@
   },
   "nankai.edu.cn": {
     "_name": "南开大学",
+    "cc": [
+      {
+        "title": "计算机学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/:type/list.htm"
+        ],
+        "target": "/nankai/cc/:type?"
+      }
+    ],
     "yzb": [
       {
         "title": "研究生招生网",

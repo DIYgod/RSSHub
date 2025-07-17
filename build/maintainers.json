@@ -5223,6 +5223,9 @@
   "/mysql/release/:version?": [
     "nczitzk"
   ],
+  "/nankai/cc/:type?": [
+    "vicguo0724"
+  ],
   "/nankai/yzb/:type?": [
     "sddzhyc"
   ],
