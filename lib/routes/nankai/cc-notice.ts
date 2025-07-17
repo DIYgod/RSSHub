@@ -90,7 +90,7 @@ export const route: Route = {
                               // 优化内容选择器逻辑，避免重复选择
                               let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
 
-                              description = description ? description.replaceAll(/<img[^>]*style="display:none"[^>]*>/gi, '') : item.title;
+                              description = description || item.title;
                               item.description = description;
                               return item;
                           } catch {
