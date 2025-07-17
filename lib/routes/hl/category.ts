@@ -24,7 +24,7 @@ export const route: Route = {
 };
 async function handler(ctx) {
     let category = ctx.req.param('category');
-    const categories = ['hlcg', 'jrrs', 'jqrm'];
+    const categories = ['hlcg', 'jrrs', 'jqrm', 'lsdg'];
     if (!categories.includes(category)) {
         category = 'hlcg';
     }
