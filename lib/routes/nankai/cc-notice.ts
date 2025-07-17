@@ -81,23 +81,25 @@ export const route: Route = {
         // 获取每篇文章的详细内容
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const { data: response } = await got(item.link);
-                        const $ = load(response);
+                item
+                    ? cache.tryGet(item.link, async () => {
+                          try {
+                              const { data: response } = await got(item.link);
+                              const $ = load(response);
 
-                        // 优化内容选择器逻辑，避免重复选择
-                        let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
+                              // 优化内容选择器逻辑，避免重复选择
+                              let description = $('.wp_articlecontent').html() || $('.body-news-detail').html();
 
-                        description = description ? description.replaceAll(/<img[^>]*style="display:none"[^>]*>/gi, '') : item.title;
-                        item.description = description;
-                        return item;
-                    } catch {
-                        // 如果获取详细内容失败，返回基本信息
-                        item.description = item.title + ' (获取详细内容失败)';
-                        return item;
-                    }
-                })
+                              description = description ? description.replaceAll(/<img[^>]*style="display:none"[^>]*>/gi, '') : item.title;
+                              item.description = description;
+                              return item;
+                          } catch {
+                              // 如果获取详细内容失败，返回基本信息
+                              item.description = item.title + ' (获取详细内容失败)';
+                              return item;
+                          }
+                      })
+                    : null
             )
         );
 
