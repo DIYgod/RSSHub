@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '通知公告',
-    maintainers: ['yourname'],
+    maintainers: ['vicguo0724'],
     handler: async () => {
         const baseUrl = 'https://www.nankai.edu.cn';
         const listUrl = `${baseUrl}/157/list.htm`;
