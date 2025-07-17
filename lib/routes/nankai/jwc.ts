@@ -114,12 +114,10 @@ export const route: Route = {
                         } else {
                             item.description = '无法获取内容详情';
                         }
-
-                        return item;
                     } catch {
                         item.description = '获取内容失败';
-                        return item;
                     }
+                    return item;
                 })
             )
         );
