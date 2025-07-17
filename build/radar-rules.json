@@ -22118,6 +22118,20 @@
       }
     ]
   },
+  "kiro.dev": {
+    "_name": "Kiro",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/",
+          "/blog/"
+        ],
+        "target": "/kiro/blog"
+      }
+    ]
+  },
   "kisskiss.tv": {
     "_name": "KISS",
     "www": [
