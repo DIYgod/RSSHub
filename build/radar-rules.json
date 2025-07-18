@@ -22207,6 +22207,19 @@
       }
     ]
   },
+  "kovidgoyal.net": {
+    "_name": "Kovid's software projects",
+    "sw": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/kitty/changelog/"
+        ],
+        "target": "/kovidgoyal/kitty/changelog"
+      }
+    ]
+  },
   "kpmg.com": {
     "_name": "KPMG",
     ".": [

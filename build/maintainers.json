@@ -4572,6 +4572,9 @@
   "/koreaherald/:category{.+}?": [
     "quiniapiezoelectricity"
   ],
+  "/kovidgoyal/kitty/changelog": [
+    "xbot"
+  ],
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],
