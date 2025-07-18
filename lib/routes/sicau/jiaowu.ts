@@ -76,7 +76,7 @@ export const route: Route = {
         }
 
         return {
-            title: '教学通知 - 川农教务处',
+            title: '教学通知 - 四川农业大学教务处',
             link: 'https://jiaowu.sicau.edu.cn/web/web/web/gwmore.asp',
             language: Language.Chinese,
             item: items,
