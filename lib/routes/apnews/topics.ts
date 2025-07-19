@@ -1,7 +1,9 @@
+import { routePath } from 'hono/route';
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { asyncPoolAll, fetchArticle, removeDuplicateByKey } from './utils';
+import { fetchArticle, removeDuplicateByKey } from './utils';
+import pMap from 'p-map';
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
@@ -36,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
+    const useNav = routePath(ctx) === '/apnews/nav/:nav{.*}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
@@ -50,7 +52,7 @@ async function handler(ctx) {
         }))
         .filter((e) => typeof e.link === 'string');
 
-    const items = ctx.req.query('fulltext') === 'true' ? await asyncPoolAll(10, list, (item) => fetchArticle(item)) : list;
+    const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
     return {
         title: $('title').text(),

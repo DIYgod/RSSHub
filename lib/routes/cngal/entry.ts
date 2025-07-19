@@ -25,14 +25,14 @@ export const route: Route = {
         },
     ],
     name: '制作者 / 游戏新闻',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
 };
 
 async function handler(ctx) {
     const entryId = ctx.req.param('id');
 
-    const response = await got(`https://www.cngal.org/api/entries/GetEntryView/${entryId}`);
+    const response = await got(`https://api.cngal.org/api/entries/GetEntryView/${entryId}`);
 
     const data = response.data;
 

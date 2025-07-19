@@ -19,7 +19,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/information/:channel?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hellobtc/information/latest',
     parameters: { channel: '类型，可填 `latest` 和 `application` 及最新和应用，默认为最新' },
     features: {
@@ -43,11 +43,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $(channelSelector[channel])
         .find('div.new_item')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2').text(),
             link: $(item).find('a').attr('href'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

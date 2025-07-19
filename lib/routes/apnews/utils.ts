@@ -2,7 +2,6 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import asyncPool from 'tiny-async-pool';
 
 export function removeDuplicateByKey(items, key: string) {
     return [...new Map(items.map((x) => [x[key], x])).values()];
@@ -45,7 +44,7 @@ export function fetchArticle(item) {
                 description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
                 category: [...(section ? [section] : []), ...(ldjson.keywords ?? [])],
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
-                author: ldjson.author,
+                author: ldjson.author?.map((e) => e.mainEntity),
             };
         } else {
             // Live
@@ -64,11 +63,4 @@ export function fetchArticle(item) {
             };
         }
     });
-}
-export async function asyncPoolAll<IN, OUT>(poolLimit: number, array: readonly IN[], iteratorFn: (generator: IN) => Promise<OUT>) {
-    const results: Awaited<OUT[]> = [];
-    for await (const result of asyncPool(poolLimit, array, iteratorFn)) {
-        results.push(result);
-    }
-    return results;
 }

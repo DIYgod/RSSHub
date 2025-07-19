@@ -6,7 +6,7 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/people/activities/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
@@ -102,6 +102,9 @@ async function handler(ctx) {
                                 height="${contentItem.playlist[1].height}"
                                 src="${contentItem.playlist[1].url}"></video></p>`;
 
+                                break;
+                            case 'link_card':
+                                link = `<p><a href="${contentItem.url.split('?')[0]}" target="_blank"></a></p>`;
                                 break;
 
                             default:

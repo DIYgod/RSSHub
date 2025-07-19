@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/today',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Notifications,
     example: '/yyets/today',
     parameters: {},
@@ -47,17 +47,13 @@ async function handler() {
     return {
         title: '人人影视-今日播出',
         link: 'https://yysub.net',
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('a').first().text(),
-                        link: item.find('a').attr('href'),
-                        guid: item.find('a').first().text(),
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('a').first().text(),
+                link: item.find('a').attr('href'),
+                guid: item.find('a').first().text(),
+            };
+        }),
     };
 }

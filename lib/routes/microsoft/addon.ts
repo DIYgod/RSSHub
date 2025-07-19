@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/edge/addon/:crxid',
@@ -27,21 +27,19 @@ export const route: Route = {
 async function handler(ctx) {
     const crxid = ctx.req.param('crxid');
 
-    const page_url = `https://microsoftedge.microsoft.com/addons/detail/${crxid}`;
+    const pageUrl = `https://microsoftedge.microsoft.com/addons/detail/${crxid}`;
 
-    const { data } = await got({
-        method: 'get',
-        url: `https://microsoftedge.microsoft.com/addons/getproductdetailsbycrxid/${crxid}?hl=en`,
+    const data = await ofetch(`https://microsoftedge.microsoft.com/addons/getproductdetailsbycrxid/${crxid}?hl=en`, {
         headers: {
-            Referer: page_url,
+            Referer: pageUrl,
         },
     });
 
     return {
         title: `${data.name} - Microsoft Edge Addons`,
         description: data.shortDescription,
-        image: `https:${data.thumbnail}`,
-        link: page_url,
+        image: `https:${data.logoUrl}`,
+        link: pageUrl,
         item: [
             {
                 title: 'v' + data.version,
@@ -49,7 +47,7 @@ async function handler(ctx) {
                 description: data.description,
                 pubDate: new Date(data.lastUpdateDate * 1000),
                 guid: `edge::${crxid}::${data.version}`,
-                link: page_url,
+                link: pageUrl,
             },
         ],
     };

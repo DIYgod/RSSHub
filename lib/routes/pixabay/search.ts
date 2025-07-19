@@ -8,7 +8,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/search/:q/:order?',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/pixabay/search/cat',
     parameters: {

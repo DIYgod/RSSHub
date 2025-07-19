@@ -17,7 +17,7 @@ const titles = {
 
 export const route: Route = {
     path: '/news/:caty?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/chaping/news/15',
     parameters: { caty: '分类，默认为全部资讯' },
     features: {

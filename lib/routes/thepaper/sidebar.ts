@@ -17,7 +17,7 @@ export const route: Route = {
         },
     ],
     name: '侧边栏',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepaper/sidebar',
     parameters: { sec: '侧边栏 id，可选 `hotNews` 即 澎湃热榜、`financialInformationNews` 即 澎湃财讯、`morningEveningNews` 即 早晚报，默认为 `hotNews`' },
     maintainers: ['bigfei'],

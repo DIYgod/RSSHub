@@ -35,7 +35,7 @@ export const route: Route = {
         const { market, name, id } = ctx.req.param();
         let truncatedId = id;
         if (truncatedId.startsWith('sr-')) {
-            truncatedId = truncatedId.substring(3);
+            truncatedId = truncatedId.slice(3);
         }
 
         const pageData = await ofetch(`https://www.msn.com/${market}/channel/source/${name}/${id}`);
@@ -54,7 +54,7 @@ export const route: Route = {
                 const parsedArticleUrl = URL.parse(articleUrl);
                 let articleId = parsedArticleUrl?.pathname.split('/').pop();
                 if (articleId?.startsWith('ar-')) {
-                    articleId = articleId.substring(3);
+                    articleId = articleId.slice(3);
                     const fetchedArticleContentHtml = (await cache.tryGet(articleId, async () => {
                         const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
                         return articleData.body;

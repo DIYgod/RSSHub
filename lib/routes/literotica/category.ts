@@ -30,7 +30,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('.b-slb-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             const a = item.find('h3 a');
@@ -41,8 +42,7 @@ async function handler(ctx) {
                 author: item.find('.b-user-info-name').text(),
                 pubDate: parseDate(item.find('.b-slib-date').text(), 'MM/DD/YY'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

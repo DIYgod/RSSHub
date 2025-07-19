@@ -159,7 +159,7 @@ export default async function handler(ctx: Context) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = text || new Date(message.date * 1000).toLocaleString();
+            const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
             item.push({
                 title,
                 description,

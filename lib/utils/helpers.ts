@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { stringifyQuery } from 'ufo';
 
@@ -39,4 +39,23 @@ function isPureObject(o: any) {
 export function getSearchParamsString(searchParams: any) {
     const searchParamsString = isPureObject(searchParams) ? stringifyQuery(searchParams) : null;
     return searchParamsString ?? new URLSearchParams(searchParams).toString();
+}
+
+/**
+ * parse duration string to seconds
+ * @param {string} timeStr - duration string like "01:01:01" / "01:01" / "59"
+ * @returns {number}       - total seconds
+ */
+export function parseDuration(timeStr: string) {
+    const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
+    return clean
+        .split(':')
+        .reverse()
+        .reduce((total, part, idx) => {
+            const n = Number(part);
+            if (Number.isNaN(n)) {
+                throw new TypeError(`Invalid segment: ${part}`);
+            }
+            return total + n * Math.pow(60, idx);
+        }, 0);
 }

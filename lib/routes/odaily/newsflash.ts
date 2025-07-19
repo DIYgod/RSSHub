@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily/newsflash',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/bookmarks/:slug',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/bookmarks/urfp0d9i',
     parameters: { slug: '用户 slug，可在个人主页URL中找到' },
     features: {

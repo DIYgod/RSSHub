@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/status',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/pingwest/status',
     parameters: {},
     features: {

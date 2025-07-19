@@ -10,7 +10,7 @@ import { getGeoLink, getMediaLink } from './tglib/channel';
 export const route: Route = {
     path: '/stories/:username/:story?',
     categories: ['social-media'],
-    example: '/stories/telegram',
+    example: '/stories/sandboxuser1',
     parameters: { username: 'entity name', story: 'story' },
     features: {
         requireConfig: [

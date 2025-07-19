@@ -70,14 +70,14 @@ const getNews = async (category) => {
                             break;
 
                         case 'PHO':
-                            description = data.photo_album_list.reduce((description, { photo_url, photo_name, photo_brief }) => {
+                            description = '';
+                            for (const { photo_url, photo_name, photo_brief } of data.photo_album_list) {
                                 description += `
                                     <img src=${photo_url} /><br>
                                     <strong>${photo_name}</strong><br>
                                     ${photo_brief}<br>
                                 `;
-                                return description;
-                            }, '');
+                            }
                             author = data.source;
                             break;
 

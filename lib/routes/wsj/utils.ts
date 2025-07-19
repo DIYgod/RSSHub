@@ -1,5 +1,4 @@
 import cache from '@/utils/cache';
-import asyncPool from 'tiny-async-pool';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -111,11 +110,4 @@ const parseArticle = (item) =>
         };
     });
 
-const asyncPoolAll = async (...args) => {
-    const results = [];
-    for await (const result of asyncPool(...args)) {
-        results.push(result);
-    }
-    return results;
-};
-export { asyncPoolAll, parseArticle };
+export { parseArticle };

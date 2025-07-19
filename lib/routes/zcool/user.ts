@@ -9,7 +9,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/user/:uid',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/zcool/user/baiyong',
     parameters: { uid: '个性域名前缀或者用户ID' },
@@ -40,7 +40,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     let pageUrl = `https://www.zcool.com.cn/u/${uid}`;
-    if (isNaN(uid)) {
+    if (Number.isNaN(uid)) {
         if (!isValidHost(uid)) {
             throw new InvalidParameterError('Invalid uid');
         }

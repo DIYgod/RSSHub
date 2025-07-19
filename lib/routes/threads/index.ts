@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/threads/zuck',
     parameters: {

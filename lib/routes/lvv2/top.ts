@@ -60,11 +60,11 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('#top-content-news > div')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('div.md > a').text(),
             link: new URL($(item).find('div.md > a').attr('href'), rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

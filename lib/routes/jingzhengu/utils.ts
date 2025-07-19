@@ -3,7 +3,7 @@ import md5 from '@/utils/md5';
 function link(str: string, ...args: string[]): string {
     let result = args.map((arg) => arg + str).join('');
     if (result.search('-')) {
-        result = result.substring(0, result.length - 1);
+        result = result.slice(0, Math.max(0, result.length - 1));
     }
     return result;
 }
@@ -26,8 +26,8 @@ export function sign(payload: Map<string, any>) {
         .sort()
         .map((key) => key + '=' + map.get(key))
         .join('');
-    const linkedString = link('--'.substring(0, 1), '#CEAIWER', '892F', 'KB97', 'JKB6', 'HJ7OC7C8', 'GJZG');
-    const lastSeparatorIndex = linkedString.lastIndexOf('--'.substring(0, 1)); // 32
+    const linkedString = link('--'.slice(0, 1), '#CEAIWER', '892F', 'KB97', 'JKB6', 'HJ7OC7C8', 'GJZG');
+    const lastSeparatorIndex = linkedString.lastIndexOf('--'.slice(0, 1)); // 32
     const replacedString = replaceCharAt(linkedString, lastSeparatorIndex, ''); // #CEAIWER-892F-KB97-JKB6-HJ7OC7C8GJZG
     const finalString = (sortedString + replacedString).toLowerCase();
 

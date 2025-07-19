@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies (pnpm)
         run: pnpm i
       - name: Run postinstall script for dependencies
-        run: pnpm rb
+        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
       - name: Build routes
         run: pnpm build
       - name: Test all and generate coverage
@@ -81,7 +81,7 @@ jobs:
         run: pnpm i
         env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Run postinstall script for dependencies
-        run: pnpm rb
+        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
         env: ${{ fromJSON(matrix.chromium.environment) }}
       - name: Build routes
         run: pnpm build
@@ -115,7 +115,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 23, 22, 20 ]
+        node-version: [ 24, 22, 20 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

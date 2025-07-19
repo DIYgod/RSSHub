@@ -5,7 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/list/:region/:listId',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/yahoo/news/list/hk/09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454',
     parameters: { region: '`hk`, `tw`', listId: '見下表' },
     features: {
@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     const author = items[0].author;
     const atIndex = author.indexOf('@'); // fing '@'
-    const source = atIndex === -1 ? author : author.substring(atIndex + 1).trim();
+    const source = atIndex === -1 ? author : author.slice(atIndex + 1).trim();
     // console.log(source);
 
     return {

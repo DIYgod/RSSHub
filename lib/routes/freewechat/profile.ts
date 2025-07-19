@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { fixArticleContent } from '@/utils/wechat-mp';
+import { config } from '@/config';
 const baseUrl = 'https://freewechat.com';
 
 export const route: Route = {
@@ -33,7 +34,11 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const url = `${baseUrl}/profile/${id}`;
-    const { data: response } = await got(url);
+    const { data: response } = await got(url, {
+        headers: {
+            'User-Agent': config.trueUA,
+        },
+    });
     const $ = load(response);
     const author = $('h2').text().trim();
 
@@ -58,6 +63,7 @@ async function handler(ctx) {
                 const response = await got(item.link, {
                     headers: {
                         Referer: url,
+                        'User-Agent': config.trueUA,
                     },
                 });
                 const $ = load(response.data);
