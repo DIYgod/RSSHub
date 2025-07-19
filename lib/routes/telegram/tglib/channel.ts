@@ -38,8 +38,8 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
         return getGeoLink(m.geo);
     }
     if (m instanceof Api.MessageMediaPoll) {
-        return `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question}</h4>
-        <div><ul>${m.poll.answers.map((a) => `<li>${a.text}</li>`).join('')}</ul></div>`;
+        return `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
+        <div><ul>${m.poll.answers.map((a) => `<li>${a.text.text}</li>`).join('')}</ul></div>`;
     }
     if (m instanceof Api.MessageMediaWebPage) {
         return ''; // a link without a document attach, usually is in the message text, so we can skip here
