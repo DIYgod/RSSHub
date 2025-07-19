@@ -1,6 +1,6 @@
 import { Api, TelegramClient } from 'telegram';
 import { UserAuthParams } from 'telegram/client/auth';
-import { StringSession } from 'telegram/sessions';
+import { StringSession } from 'telegram/sessions/index.js';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';

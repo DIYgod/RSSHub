@@ -2,9 +2,9 @@
 import { DataItem } from '@/types';
 import { Context } from 'hono';
 import { Api } from 'telegram';
-import { HTMLParser } from 'telegram/extensions/html';
+import { HTMLParser } from 'telegram/extensions/html.js';
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
-import { getDisplayName } from 'telegram/Utils';
+import { getDisplayName } from 'telegram/Utils.js';
 
 export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;

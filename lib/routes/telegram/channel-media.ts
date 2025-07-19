@@ -3,12 +3,12 @@ import { Route } from '@/types';
 import { Context } from 'hono';
 import { stream } from 'hono/streaming';
 import { Api, TelegramClient } from 'telegram';
-import { IterDownloadFunction } from 'telegram/client/downloads';
-import { getAppropriatedPartSize } from 'telegram/Utils';
+import { IterDownloadFunction } from 'telegram/client/downloads.js';
+import { getAppropriatedPartSize } from 'telegram/Utils.js';
 import { config } from '@/config';
 import cacheModule from '@/utils/cache/index';
 import { getClient, getDocument, getFilename, unwrapMedia } from './tglib/client';
-import { returnBigInt as bigInt } from 'telegram/Helpers';
+import { returnBigInt as bigInt } from 'telegram/Helpers.js';
 
 /**
  * https://core.telegram.org/api/files#stripped-thumbnails
