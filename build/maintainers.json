@@ -6963,7 +6963,7 @@
   "/sicau/dky/:category?": [
     "nczitzk"
   ],
-  "/sicau/jiaowu/jxtz": [
+  "/sicau/jiaowu/jxtz/:detail?": [
     "hualiong"
   ],
   "/sicau/jk/:gid/:typeId/:sortType/:token": [
