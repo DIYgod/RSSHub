@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id'],
+            source: ['www.pixiv.net/users/:id', 'www.pixiv.net/en/users/:id'],
         },
     ],
     name: 'User Activity',
