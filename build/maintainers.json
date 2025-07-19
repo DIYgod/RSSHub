@@ -583,6 +583,9 @@
     "EkkoG",
     "nczitzk"
   ],
+  "/apple/design": [
+    "jean-jacket"
+  ],
   "/apple/exchange_repair/:country?": [
     "metowolf",
     "HenryQW",
@@ -6963,7 +6966,7 @@
   "/sicau/dky/:category?": [
     "nczitzk"
   ],
-  "/sicau/jiaowu/jxtz": [
+  "/sicau/jiaowu/jxtz/:detail?": [
     "hualiong"
   ],
   "/sicau/jk/:gid/:typeId/:sortType/:token": [
