@@ -30823,7 +30823,8 @@
         "title": "User Bookmark",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/users/:id/bookmarks/artworks"
+          "/users/:id/bookmarks/artworks",
+          "/en/users/:id/bookmarks/artworks"
         ],
         "target": "/pixiv/user/bookmarks/:id"
       },
@@ -30848,7 +30849,9 @@
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/users/:id/novels",
-          "/users/:id"
+          "/users/:id",
+          "/en/users/:id/novels",
+          "/en/users/:id"
         ],
         "target": "/pixiv/user/novels/:id"
       },
@@ -30857,7 +30860,9 @@
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/users/:id/novels",
-          "/users/:id"
+          "/users/:id",
+          "/en/users/:id/novels",
+          "/en/users/:id"
         ],
         "target": "/pixiv/user/novels/:id/true"
       },
@@ -30865,7 +30870,8 @@
         "title": "User Activity",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
-          "/users/:id"
+          "/users/:id",
+          "/en/users/:id"
         ],
         "target": "/pixiv/user/:id"
       }
