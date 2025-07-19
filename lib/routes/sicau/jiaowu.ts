@@ -4,13 +4,21 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { Language } from '@/routes/kurogames/wutheringwaves/constants';
 
 const $get = async (url: string, encoding = 'gb2312') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
+const $trim = (str: string) => {
+    let s = str.trim();
+    s = s.startsWith('&nbsp;&nbsp;') ? s.slice(12) : s;
+    s = s.endsWith('<br>') ? s.slice(0, Math.max(0, s.length - 4)) : s;
+    return s.trim();
+};
 
 export const route: Route = {
-    path: '/jiaowu/jxtz',
+    path: '/jiaowu/jxtz/:detail?',
     categories: ['university'],
-    example: '/sicau/jiaowu/jxtz',
+    example: '/sicau/jiaowu/jxtz/detail',
+    parameters: { detail: '是否抓取全文，该值只要不为空就抓取全文返回，否则只返回标题' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,51 +35,51 @@ export const route: Route = {
     ],
     name: '教务处',
     maintainers: ['hualiong'],
+    description: `
+::: tip
+抓取全文返回会导致更长的响应时间，可以尝试使用 \`/sicau/jiaowu/jxtz\` 路径，这将只返回标题，然后再在应用内抓取全文内容。
+:::
+`,
     url: 'jiaowu.sicau.edu.cn/',
-    handler: async () => {
+    handler: async (ctx) => {
         const baseUrl = 'https://jiaowu.sicau.edu.cn/web/web/web';
+        const { detail = null } = ctx.req.param();
 
-        const response = await $get(`${baseUrl}/index.asp`);
+        const response = await $get(`${baseUrl}/gwmore.asp`);
         const $ = load(response);
 
-        const list = $('ul.notice1:nth-child(1) a')
+        let items = $('tbody > .text-c:nth-child(-n+10)')
             .toArray()
             .map((item) => {
-                const a = $(item);
-                const href = a.attr('href')!;
+                const children = $(item).children();
+                const a = children.eq(2).find('a');
                 return {
-                    link: `${baseUrl}/${href.slice(href.lastIndexOf('/') + 1)}`,
+                    category: [children.eq(1).text()],
+                    link: `${baseUrl}/${a.attr('href')!}`,
+                    title: a.children().first().text(),
+                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), +8),
+                    author: children.eq(4).text(),
+                    description: '请在应用内抓取全文内容',
                 } as DataItem;
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await $get(item.link!);
-                    const $ = load(response);
-
-                    item.title = $('body > .page-title-2').text();
-
-                    const date = $('body > p.page-title-3').text();
-                    item.pubDate = timezone(parseDate(date.match(/(\d{4}(?:-\d{1,2}){2})/)![0], 'YYYY-M-D'), +8);
-
-                    const str = $('.text1[valign="bottom"]').text();
-                    const match = str.match(/起草：(.+?)\[(.+?)]/)!;
-                    item.author = match[1];
-                    item.category = [match[2]];
-
-                    item.description = $('.text1[width="95%"]').html()!;
-
-                    return item;
-                })
-            )
-        );
+        if (detail) {
+            items = await Promise.all(
+                items.map((item) =>
+                    cache.tryGet(item.link!, async () => {
+                        const $ = load(await $get(item.link!));
+                        item.description = $trim($('.text1[width="95%"] b').html()!);
+                        return item;
+                    })
+                )
+            );
+        }
 
         return {
-            title: '教学通知 - 川农教务处',
-            link: 'https://jiaowu.sicau.edu.cn/web/web/web/index.asp',
-            language: 'zh-cn',
-            item: items as DataItem[],
+            title: '教学通知 - 四川农业大学教务处',
+            link: 'https://jiaowu.sicau.edu.cn/web/web/web/gwmore.asp',
+            language: Language.Chinese,
+            item: items,
         };
     },
 };
