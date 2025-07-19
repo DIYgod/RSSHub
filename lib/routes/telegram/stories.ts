@@ -103,7 +103,6 @@ export default async function handler(ctx: Context) {
         }
         const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
         const pubDate = new Date(story.date * 1000).toUTCString();
-        // eslint-disable-next-line no-await-in-loop
         const media = await unwrapMedia(story.media);
         if (!media) { // cannot load the story
             continue;
