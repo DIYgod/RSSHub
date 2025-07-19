@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 export const route: Route = {
     categories: ['design'],
-    example: '/design',
+    example: '/apple/design',
     handler,
     maintainers: ['jean-jacket'],
     name: 'Design updates',
