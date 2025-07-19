@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
 import { Data, DataItem, Route } from '@/types';

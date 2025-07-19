@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { DataItem } from '@/types';
 import { Context } from 'hono';
 import { Api } from 'telegram';
@@ -7,6 +8,25 @@ import { getDisplayName } from 'telegram/Utils';
 
 export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
+}
+
+export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
+    const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({peer: message.peerId, msgId: message.id}));
+    let results: Api.PollResults;
+    if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
+        results = resultsUpdateResponse.updates[0].results as Api.PollResults;
+    }
+    const txt = `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
+        <div><ul>${m.poll.answers.map((a) => {
+            let answerTxt = a.text.text;
+            const result = results.results?.find((r) => r.option.buffer === a.option.buffer);
+            if (result && results.totalVoters) {
+                answerTxt = `<strong>${Math.round(result.voters / results.totalVoters * 100)}%</strong>: ${answerTxt}`;
+            }
+            return `<li>${answerTxt}</li>`;
+        }).join('')}</ul></div>
+    `;
+    return txt;
 }
 
 export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
@@ -36,10 +56,6 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
     }
     if ((m instanceof Api.MessageMediaGeo || m instanceof Api.MessageMediaGeoLive) && m.geo instanceof Api.GeoPoint) {
         return getGeoLink(m.geo);
-    }
-    if (m instanceof Api.MessageMediaPoll) {
-        return `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
-        <div><ul>${m.poll.answers.map((a) => `<li>${a.text.text}</li>`).join('')}</ul></div>`;
     }
     if (m instanceof Api.MessageMediaWebPage) {
         return ''; // a link without a document attach, usually is in the message text, so we can skip here
@@ -108,18 +124,19 @@ export default async function handler(ctx: Context) {
         let text = message.text; // must not be HTML
 
         if (message.fwdFrom?.fromId) {
-            // eslint-disable-next-line no-await-in-loop
             const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
             text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
         }
-        // eslint-disable-next-line no-await-in-loop
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) { // if successfully loaded the story
-            // eslint-disable-next-line no-await-in-loop
             const storyFrom = await client.getEntity(message.media.peer);
             text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
         }
         if (media) {
+            if (media instanceof Api.MessageMediaPoll) {
+                attachments.push(await getPollResults(client, message, media));
+                continue;
+            }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
             const src = `${new URL(ctx.req.url).origin}/telegram/channel/${username}/${message.id}`;
