@@ -64,11 +64,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.arti_title').text() + $$('h2.arti_title').text();
-                const description: string | undefined =
-                    item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.wp_articlecontent').html(),
-                    });
+                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                    description: $$('div.wp_articlecontent').html(),
+                });
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
                 const upDatedStr: string | undefined = pubDateStr;
 
