@@ -18423,12 +18423,77 @@
     "_name": "哈尔滨工业大学",
     "hitgs": [
       {
-        "title": "研究生院通知公告",
+        "title": "研究生院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/*"
+          "/",
+          "/:id/list.htm"
         ],
-        "target": "/hit/hitgs"
+        "target": "/hitparams=>{const id=params.id;return`/hit/hitgs${id?`/${id}`:\"\"}`}"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/list.htm"
+        ],
+        "target": "/hit/hitgs/tzgg"
+      },
+      {
+        "title": "综合新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zhxw/list.htm"
+        ],
+        "target": "/hit/hitgs/zhxw"
+      },
+      {
+        "title": "高水平课程与学术交流",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gspkcyxsjl/list.htm"
+        ],
+        "target": "/hit/hitgs/gspkcyxsjl"
+      },
+      {
+        "title": "国家政策",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/gjzc/list.htm"
+        ],
+        "target": "/hit/hitgs/gjzc"
+      },
+      {
+        "title": "规章制度",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/17546/list.htm"
+        ],
+        "target": "/hit/hitgs/17546"
+      },
+      {
+        "title": "办事流程",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/17547/list.htm"
+        ],
+        "target": "/hit/hitgs/17547"
+      },
+      {
+        "title": "常见问题",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/17548/list.htm"
+        ],
+        "target": "/hit/hitgs/17548"
+      },
+      {
+        "title": "常见下载",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/17549/list.htm"
+        ],
+        "target": "/hit/hitgs/17549"
       }
     ],
     "jwc": [
