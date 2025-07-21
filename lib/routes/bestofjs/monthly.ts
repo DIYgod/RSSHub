@@ -8,7 +8,7 @@ const BASEURL = 'https://bestofjs.org/rankings/monthly';
 export const route: Route = {
     path: '/rankings/monthly',
     categories: ['programming'],
-    example: '/rankings/monthly',
+    example: '/bestofjs/rankings/monthly',
     view: ViewType.Notifications,
     features: {
         requireConfig: false,
