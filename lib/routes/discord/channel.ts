@@ -6,6 +6,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { getLocaleFromHeader, MessageFormatter } from './markdown-parser';
 
 export const route: Route = {
     path: '/channel/:channelId',
@@ -49,15 +50,44 @@ async function handler(ctx) {
     const guildInfo = await getGuild(guildId, authorization);
     const { name: guildName, icon: guidIcon } = guildInfo;
 
-    const messages = messagesRaw.map((message) => ({
-        title: message.content.split('\n')[0],
-        description: art(path.join(__dirname, 'templates/message.art'), { message, guildInfo }),
-        author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
-        pubDate: parseDate(message.timestamp),
-        updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,
-        category: `#${channelName}`,
-        link: `${baseUrl}/channels/${guildId}/${channelId}/${message.id}`,
-    }));
+    const mentionUserMap = new Map(messagesRaw.flatMap((msg) => msg.mentions.map((mention) => [mention.id, mention])));
+    const mentionRoleMap = new Map(guildInfo.roles.map((role) => [role.id, role]));
+    const mentionChannelMap = new Map(messagesRaw.flatMap((msg) => msg.mention_channels?.map((chl) => [chl.id, chl]) ?? []));
+
+    const mdFormatter = new MessageFormatter(mentionUserMap, mentionRoleMap, mentionChannelMap, getLocaleFromHeader(ctx.req.header('Accept-Language') ?? ''));
+
+    const messages = messagesRaw.map((message) => {
+        let title = message.content.split('\n')[0].trim();
+        if (title.length === 0) {
+            title = message.embeds
+                ?.filter((em) => em.title !== undefined && em.title.length > 0)
+                .map((em) => em.title)
+                .join(' / ');
+        }
+
+        title = mdFormatter.parse(title);
+
+        message.content = mdFormatter.parse(message.content);
+
+        for (const embed of message.embeds) {
+            if (embed.title !== undefined) {
+                embed.title = mdFormatter.parse(embed.title);
+            }
+            if (embed.description !== undefined) {
+                embed.description = mdFormatter.parse(embed.description);
+            }
+        }
+
+        return {
+            title,
+            description: art(path.join(__dirname, 'templates/message.art'), { message, guildInfo }),
+            author: `${message.author.global_name ?? message.author.username}(${message.author.username})`,
+            pubDate: parseDate(message.timestamp),
+            updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,
+            category: `#${channelName}`,
+            link: `${baseUrl}/channels/${guildId}/${channelId}/${message.id}`,
+        };
+    });
 
     return {
         title: `#${channelName} - ${guildName} - Discord`,
