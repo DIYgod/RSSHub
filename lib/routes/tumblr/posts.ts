@@ -2,6 +2,8 @@ import { Data, Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import type { Context } from 'hono';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/posts/:blog/:routeParams?',
@@ -48,6 +50,10 @@ Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance 
 };
 
 async function handler(ctx: Context): Promise<Data> {
+    if (!config.tumblr || !config.tumblr.clientId) {
+        throw new ConfigNotFoundError('Tumblr RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+    }
+
     const blogIdentifier = ctx.req.param('blog');
 
     // Parse route parameters
