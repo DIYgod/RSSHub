@@ -11,12 +11,7 @@ export const route: Route = {
         blog: 'Blog identifier (see `https://www.tumblr.com/docs/en/api/v2#blog-identifiers`)',
         routeParams: 'Extra parameters, see the table below',
     },
-    radar: [
-        {
-            source: ['www.tumblr.com/:blog'],
-            target: '/posts/:blog.tumblr.com',
-        },
-    ],
+    radar: [],
     features: {
         requireConfig: [
             {
