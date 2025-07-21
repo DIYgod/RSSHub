@@ -13,16 +13,16 @@ const ACTIVITY_FIELDS = 'activities(author(name),category(id),id,issue(descripti
 const ISSUE_FIELDS = 'summary';
 
 export const route: Route = {
-    path: '/comments/:issueId',
+    path: '/youtrack/comments/:issueId',
     categories: ['programming'],
-    example: '/youtrack/comments/IJPL-174543',
+    example: '/jetbrains/youtrack/comments/IJPL-174543',
     parameters: {
         issueId: 'Issue ID (e.g., IJPL-174543)',
     },
     radar: [
         {
             source: ['youtrack.jetbrains.com/issue/:issueId'],
-            target: '/comments/:issueId',
+            target: '/youtrack/comments/:issueId',
         },
     ],
     name: 'YouTrack Issue Comments',
