@@ -4,6 +4,7 @@ import utils from './utils';
 import type { Context } from 'hono';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { fallback, queryToInteger } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/posts/:blog/:routeParams?',
@@ -37,13 +38,7 @@ export const route: Route = {
     },
     name: 'Posts',
     maintainers: ['Rakambda'],
-    description: `:::tip Parameter
-| Name       | Description                                                                         | Default |
-| ---------- | ----------------------------------------------------------------------------------- | ------- |
-| limit      | Number of posts to return                                                           | 20      |
-:::
-
-::: tip
+    description: `::: tip
 Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance [https://biketouring-nearby.tumblr.com](https://biketouring-nearby.tumblr.com/rss).
 :::`,
     handler,
@@ -55,9 +50,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const blogIdentifier = ctx.req.param('blog');
-
-    // Parse route parameters
-    const { limit } = utils.parseRouteParams(ctx.req.param('routeParams'));
+    const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
 
     const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
         searchParams: {

@@ -1,6 +1,5 @@
 import { parseDate } from '@/utils/parse-date';
 import { DataItem } from '@/types';
-import { fallback, queryToInteger } from '@/utils/readable-social';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -35,13 +34,6 @@ const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () 
 const generateAuthParams: () => { apiKey?: string } = () => ({
     apiKey: config.tumblr.clientId,
 });
-
-const parseRouteParams: (routeParams: string) => { limit: number } = (routeParams) => {
-    const parsed = new URLSearchParams(routeParams);
-
-    const limit = fallback(undefined, queryToInteger(parsed.get('limit')), 20);
-    return { limit };
-};
 
 const processPost: (post: any) => DataItem = (post) => {
     let description = '';
@@ -114,4 +106,4 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
     };
 }
 
-export default { processPost, generateAuthParams, generateAuthHeaders, parseRouteParams };
+export default { processPost, generateAuthParams, generateAuthHeaders };
