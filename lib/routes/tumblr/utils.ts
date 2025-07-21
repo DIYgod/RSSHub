@@ -37,14 +37,42 @@ const ProcessPost: (post: any) => DataItem = (post) => {
     };
 };
 
-const parseRouteParams: (routeParams: string) => { limit: number } = (routeParams) => {
-    const parsed = new URLSearchParams(routeParams);
-    const limit = fallback(undefined, queryToInteger(parsed.get('limit')), 20);
-
-    return { limit };
+const getAccessToken: () => Promise<string | null> = async () => {
+    let accessToken: string | null = await cache.get('tumblr:accessToken', false);
+    if (!accessToken) {
+        try {
+            const newAccessToken = await tokenRefresher();
+            if (newAccessToken) {
+                accessToken = newAccessToken;
+            }
+        } catch (error) {
+            // Return the `accessToken=null` value to indicate that the token is not available. Calls will only use the `apiKey` as a fallback to maybe hit non "dashborad only" blogs.
+            logger.error('Failed to refresh Tumblr token, using only client id as fallback', error);
+        }
+    }
+    return accessToken;
 };
 
-const apiKey: string | undefined = config.tumblr.clientId;
+const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () => {
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+        return {};
+    }
+    return {
+        Authorization: `Bearer ${accessToken}`,
+    };
+};
+
+const generateAuthParams: () => { apiKey?: string } = () => ({
+    apiKey: config.tumblr.clientId,
+});
+
+const parseRouteParams: (routeParams: string) => { limit: number } = (routeParams) => {
+    const parsed = new URLSearchParams(routeParams);
+
+    const limit = fallback(undefined, queryToInteger(parsed.get('limit')), 20);
+    return { limit };
+};
 
 let tokenRefresher: () => Promise<string | null> = () => Promise.resolve(null);
 if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && config.tumblr.refreshToken) {
@@ -83,35 +111,5 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
         return accessToken;
     };
 }
-
-const getAccessToken: () => Promise<string | null> = async () => {
-    let accessToken: string | null = await cache.get('tumblr:accessToken', false);
-    if (!accessToken) {
-        try {
-            const newAccessToken = await tokenRefresher();
-            if (newAccessToken) {
-                accessToken = newAccessToken;
-            }
-        } catch (error) {
-            // Return the `accessToken=null` value to indicate that the token is not available. Calls will only use the `apiKey` as a fallback to maybe hit non "dashborad only" blogs.
-            logger.error('Failed to refresh Tumblr token, using only client id as fallback', error);
-        }
-    }
-    return accessToken;
-};
-
-const generateAuthParams: () => { apiKey?: string } = () => ({
-    apiKey,
-});
-
-const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () => {
-    const accessToken = await getAccessToken();
-    if (!accessToken) {
-        return {};
-    }
-    return {
-        Authorization: `Bearer ${accessToken}`,
-    };
-};
 
 export default { ProcessPost, generateAuthParams, generateAuthHeaders, parseRouteParams };
