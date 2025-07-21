@@ -6,37 +6,6 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import got from '@/utils/got';
 
-const ProcessPost: (post: any) => DataItem = (post) => {
-    let description = '';
-
-    switch (post.type) {
-        case 'text':
-            description = post.body;
-            break;
-        case 'photo':
-            for (const photo of post.photos ?? []) {
-                description += `<img src="${photo.original_size.url}"/><br/>`;
-            }
-            break;
-        case 'link':
-            description = post.url;
-            break;
-        case 'audio':
-            description = post.embed;
-            break;
-        default:
-            break;
-    }
-
-    return {
-        id: post.id_string,
-        title: post.summary ?? `New post from ${post.blog_name}`,
-        link: post.post_url,
-        pubDate: parseDate(post.timestamp * 1000),
-        description,
-    };
-};
-
 const getAccessToken: () => Promise<string | null> = async () => {
     let accessToken: string | null = await cache.get('tumblr:accessToken', false);
     if (!accessToken) {
@@ -72,6 +41,37 @@ const parseRouteParams: (routeParams: string) => { limit: number } = (routeParam
 
     const limit = fallback(undefined, queryToInteger(parsed.get('limit')), 20);
     return { limit };
+};
+
+const processPost: (post: any) => DataItem = (post) => {
+    let description = '';
+
+    switch (post.type) {
+        case 'text':
+            description = post.body;
+            break;
+        case 'photo':
+            for (const photo of post.photos ?? []) {
+                description += `<img src="${photo.original_size.url}"/><br/>`;
+            }
+            break;
+        case 'link':
+            description = post.url;
+            break;
+        case 'audio':
+            description = post.embed;
+            break;
+        default:
+            break;
+    }
+
+    return {
+        id: post.id_string,
+        title: post.summary ?? `New post from ${post.blog_name}`,
+        link: post.post_url,
+        pubDate: parseDate(post.timestamp * 1000),
+        description,
+    };
 };
 
 let tokenRefresher: () => Promise<string | null> = () => Promise.resolve(null);
@@ -114,4 +114,4 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
     };
 }
 
-export default { ProcessPost, generateAuthParams, generateAuthHeaders, parseRouteParams };
+export default { ProcessPost: processPost, generateAuthParams, generateAuthHeaders, parseRouteParams };
