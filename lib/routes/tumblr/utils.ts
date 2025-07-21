@@ -114,4 +114,4 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
     };
 }
 
-export default { ProcessPost: processPost, generateAuthParams, generateAuthHeaders, parseRouteParams };
+export default { processPost, generateAuthParams, generateAuthHeaders, parseRouteParams };

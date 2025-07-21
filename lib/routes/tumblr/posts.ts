@@ -68,7 +68,7 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     const blog = response.data.response.blog;
-    const posts = response.data.response.posts.map((post: any) => utils.ProcessPost(post));
+    const posts = response.data.response.posts.map((post: any) => utils.processPost(post));
 
     return {
         title: `Tumblr - ${blogIdentifier} - Posts`,
