@@ -23,8 +23,8 @@ Example:
 };
 
 async function handler(ctx) {
-    const category_id = ctx.req.param('category_id');
-    const { data } = await got(`${host}/wp-json/wp/v2/posts?categories=${category_id}`);
+    const categoryId = ctx.req.param('category_id');
+    const { data } = await got(`${host}/wp-json/wp/v2/posts?categories=${categoryId}`);
     const items = data.map((item) => {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
