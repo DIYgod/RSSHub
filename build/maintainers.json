@@ -7131,6 +7131,9 @@
   "/sorrycc/": [
     "KarasuShin"
   ],
+  "/sotwe/user/:id": [
+    "TonyRL"
+  ],
   "/soundofhope/:channel/:id": [
     "Fatpandac"
   ],

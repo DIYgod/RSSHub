@@ -34263,6 +34263,19 @@
       }
     ]
   },
+  "sotwe.com": {
+    "_name": "X (Twitter)",
+    "www": [
+      {
+        "title": "User timeline - Sotwe",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id"
+        ],
+        "target": "/sotwe/user/:id"
+      }
+    ]
+  },
   "soundofhope.org": {
     "_name": "希望之声",
     ".": [
