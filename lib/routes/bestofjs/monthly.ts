@@ -47,9 +47,9 @@ export const route: Route = {
             };
         });
         return {
-            title: `Best of JS Monthly Rankings`,
+            title: 'Best of JS Monthly Rankings',
             link: BASEURL,
-            description: `Monthly rankings of the most popular JavaScript projects on Best of JS`,
+            description: 'Monthly rankings of the most popular JavaScript projects on Best of JS',
             item: items,
             language: 'en',
         };
