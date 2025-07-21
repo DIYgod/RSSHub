@@ -7835,6 +7835,9 @@
   "/ttv/:category?": [
     "dzx-dzx"
   ],
+  "/tumblr/posts/:blog": [
+    "Rakambda"
+  ],
   "/tvb/news/:category?/:language?": [
     "nczitzk"
   ],
