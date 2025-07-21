@@ -106,9 +106,9 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
         await cache.set('tumblr:accessToken', accessToken, (expiresIn ?? 2520) - 30);
         // Store the new refresh token associated with the one that was provided first.
         // We may be able to restore the new token if the app is restarted. This will avoid reusing the old token and have a failing request.
-        // Keep it for a month (not clear how long the refresh token lasts).
+        // Keep it for a year (not clear how long the refresh token lasts).
         const cacheEntry = { startToken: config.tumblr.refreshToken, currentToken: newRefreshToken };
-        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 2_628_000);
+        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 31_536_000);
 
         return accessToken;
     };
