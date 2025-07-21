@@ -1,0 +1,117 @@
+import { parseDate } from '@/utils/parse-date';
+import { DataItem } from '@/types';
+import { fallback, queryToInteger } from '@/utils/readable-social';
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import got from '@/utils/got';
+
+const ProcessPost: (post: any) => DataItem = (post) => {
+    let description = '';
+
+    switch (post.type) {
+        case 'text':
+            description = post.body;
+            break;
+        case 'photo':
+            for (const photo of post.photos ?? []) {
+                description += `<img src="${photo.original_size.url}"/><br/>`;
+            }
+            break;
+        case 'link':
+            description = post.url;
+            break;
+        case 'audio':
+            description = post.embed;
+            break;
+        default:
+            break;
+    }
+
+    return {
+        id: post.id_string,
+        title: post.summary ?? `New post from ${post.blog_name}`,
+        link: post.post_url,
+        pubDate: parseDate(post.timestamp * 1000),
+        description,
+    };
+};
+
+const parseRouteParams: (routeParams: string) => { limit: number } = (routeParams) => {
+    const parsed = new URLSearchParams(routeParams);
+    const limit = fallback(undefined, queryToInteger(parsed.get('limit')), 20);
+
+    return { limit };
+};
+
+const apiKey: string | undefined = config.tumblr.clientId;
+
+let tokenRefresher: () => Promise<string | null> = () => Promise.resolve(null);
+if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && config.tumblr.refreshToken) {
+    tokenRefresher = async (): Promise<string | null> => {
+        let refreshToken = config.tumblr.refreshToken;
+
+        // Restore already refreshed tokens
+        const previousRefreshTokenSerialized = await cache.get('tumblr:refreshToken', false);
+        if (previousRefreshTokenSerialized) {
+            const previousRefreshToken = JSON.parse(previousRefreshTokenSerialized);
+            if (previousRefreshToken.startToken === refreshToken) {
+                refreshToken = previousRefreshToken.currentToken;
+            }
+        }
+        const response = await got.post('https://api.tumblr.com/v2/oauth2/token', {
+            form: {
+                grant_type: 'refresh_token',
+                client_id: config.tumblr.clientId,
+                client_secret: config.tumblr.clientSecret,
+                refresh_token: refreshToken,
+            },
+        });
+        if (!response.data?.access_token || !response.data?.refresh_token) {
+            return null;
+        }
+        const accessToken = response.data.access_token;
+        const newRefreshToken = response.data.refresh_token;
+        const expiresIn = response.data.expires_in;
+
+        // Access tokens expire after 42 minutes, remove 30 seconds to renew the token before it expires (to avoid making a request right when it ends).
+        await cache.set('tumblr:accessToken', accessToken, (expiresIn ?? 2520) - 30);
+        // key the new refresh token associated with the one that was provided first. We may be able to restore the new token if the app restarted. THis will avoid reusing the old token and have a failing request.
+        const cacheEntry = { startToken: config.tumblr.refreshToken, currentToken: newRefreshToken };
+        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 604800); // 1 week as we want to restore it after potential restarts.
+
+        return accessToken;
+    };
+}
+
+const getAccessToken: () => Promise<string | null> = async () => {
+    let accessToken: string | null = await cache.get('tumblr:accessToken', false);
+    if (!accessToken) {
+        try {
+            const newAccessToken = await tokenRefresher();
+            if (newAccessToken) {
+                accessToken = newAccessToken;
+            }
+        } catch (error) {
+            // Return the `accessToken=null` value to indicate that the token is not available. Calls will only use the `apiKey` as a fallback to maybe hit non "dashborad only" blogs.
+            logger.error('Failed to refresh Tumblr token, using only client id as fallback', error);
+        }
+    }
+    return accessToken;
+};
+
+const generateAuthParams: () => { apiKey?: string } = () => ({
+    apiKey,
+});
+
+const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () => {
+    const accessToken = await getAccessToken();
+    if (!accessToken) {
+        return {};
+    }
+    return {
+        Authorization: `Bearer ${accessToken}`,
+    };
+};
+
+export default { ProcessPost, generateAuthParams, generateAuthHeaders, parseRouteParams };

@@ -359,6 +359,11 @@ export type Config = {
     tsdm39: {
         cookie: string;
     };
+    tumblr: {
+        clientId?: string;
+        clientSecret?: string;
+        refreshToken?: string;
+    };
     twitter: {
         username?: string[];
         password?: string[];
@@ -824,6 +829,11 @@ const calculateValue = () => {
         },
         tsdm39: {
             cookie: envs.TSDM39_COOKIES,
+        },
+        tumblr: {
+            clientId: envs.TUMBLR_CLIENT_ID,
+            clientSecret: envs.TUMBLR_CLIENT_SECRET,
+            refreshToken: envs.TUMBLR_REFRESH_TOKEN,
         },
         twitter: {
             username: envs.TWITTER_USERNAME?.split(','),

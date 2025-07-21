@@ -1,0 +1,81 @@
+import { Data, Route } from '@/types';
+import got from '@/utils/got';
+import utils from './utils';
+import type { Context } from 'hono';
+
+export const route: Route = {
+    path: '/posts/:blog/:routeParams?',
+    categories: ['blog'],
+    example: '/tumblr/posts/biketouring-nearby',
+    parameters: {
+        blog: 'Blog identifier (see `https://www.tumblr.com/docs/en/api/v2#blog-identifiers`)',
+        routeParams: 'Extra parameters, see the table below',
+    },
+    radar: [
+        {
+            source: ['www.tumblr.com/:blog'],
+            target: '/posts/:blog.tumblr.com',
+        },
+    ],
+    features: {
+        requireConfig: [
+            {
+                name: 'TUMBLR_CLIENT_ID',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TUMBLR_CLIENT_SECRET',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TUMBLR_REFRESH_TOKEN',
+                description: 'Please see above for details.',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Posts',
+    maintainers: ['rakambda'],
+    description: `:::tip Parameter
+| Name       | Description                                                                         | Default |
+| ---------- | ----------------------------------------------------------------------------------- | ------- |
+| limit      | Number of posts to return                                                           | 20      |
+:::
+
+::: tip
+Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance [https://biketouring-nearby.tumblr.com](https://biketouring-nearby.tumblr.com/rss).
+:::`,
+    handler,
+};
+
+async function handler(ctx: Context): Promise<Data> {
+    const blogIdentifier = ctx.req.param('blog');
+
+    // Parse route parameters
+    const { limit } = utils.parseRouteParams(ctx.req.param('routeParams'));
+
+    const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
+        searchParams: {
+            ...utils.generateAuthParams(),
+            limit,
+        },
+        headers: await utils.generateAuthHeaders(),
+    });
+
+    const blog = response.data.response.blog;
+    const posts = response.data.response.posts.map((post: any) => utils.ProcessPost(post));
+
+    return {
+        title: `Tumblr - ${blogIdentifier} - Posts`,
+        author: blog?.name,
+        link: blog?.url ?? `https://${blogIdentifier}/`,
+        item: posts,
+        allowEmpty: true,
+        image: blog?.avatar?.slice(-1)?.url,
+        description: blog?.description,
+    };
+}
