@@ -61,10 +61,10 @@ async function handler() {
                 const authorName = $article('.crayons-article__header__meta .fw-bold').first().text().trim();
                 const authorUrl = $article('.crayons-article__header__meta .fw-bold').first().attr('href');
                 const authorAvatar = $article('.crayons-article__header__meta .radius-full').attr('src');
-
                 // Extract publication date
                 const dateElement = $article('time[datetime]').first();
-                const pubDate = parseDate(dateElement.attr('datetime') || new Date().toDateString());
+                const dateString = dateElement.attr('datetime') || undefined;
+                const pubDate = dateString ? parseDate(dateString) : undefined;
                 // Extract tags
                 const tags = $article('.spec__tags .crayons-tag')
                     .toArray()
