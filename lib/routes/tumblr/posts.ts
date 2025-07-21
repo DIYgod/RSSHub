@@ -7,12 +7,11 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { fallback, queryToInteger } from '@/utils/readable-social';
 
 export const route: Route = {
-    path: '/posts/:blog/:routeParams?',
+    path: '/posts/:blog',
     categories: ['blog'],
     example: '/tumblr/posts/biketouring-nearby',
     parameters: {
         blog: 'Blog identifier (see `https://www.tumblr.com/docs/en/api/v2#blog-identifiers`)',
-        routeParams: 'Extra parameters, see the table below',
     },
     radar: [],
     features: {
