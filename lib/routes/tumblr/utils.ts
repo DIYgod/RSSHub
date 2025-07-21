@@ -104,9 +104,11 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
 
         // Access tokens expire after 42 minutes, remove 30 seconds to renew the token before it expires (to avoid making a request right when it ends).
         await cache.set('tumblr:accessToken', accessToken, (expiresIn ?? 2520) - 30);
-        // key the new refresh token associated with the one that was provided first. We may be able to restore the new token if the app restarted. THis will avoid reusing the old token and have a failing request.
+        // Store the new refresh token associated with the one that was provided first.
+        // We may be able to restore the new token if the app is restarted. This will avoid reusing the old token and have a failing request.
+        // Keep it for a month (not clear how long the refresh token lasts).
         const cacheEntry = { startToken: config.tumblr.refreshToken, currentToken: newRefreshToken };
-        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 604800); // 1 week as we want to restore it after potential restarts.
+        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 2_628_000);
 
         return accessToken;
     };
