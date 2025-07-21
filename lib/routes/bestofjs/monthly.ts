@@ -60,17 +60,15 @@ const getLastSixMonths = (): string[] => {
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1; // 0-based to 1-based
-    const months: string[] = [];
-    for (let i = 1; i <= 6; i++) {
+    return Array.from({ length: 6 }, (_, i) => {
+        let month = currentMonth - (i + 1);
         let year = currentYear;
-        let month = currentMonth - i;
         if (month <= 0) {
             month += 12;
             year -= 1;
         }
-        months.push(`${year}-${month}`);
-    }
-    return months;
+        return `${year}-${month}`;
+    });
 };
 
 const getMonthlyRankings = (year: string, month: string): Promise<string[]> => {
