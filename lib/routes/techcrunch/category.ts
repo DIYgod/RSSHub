@@ -7,11 +7,11 @@ import path from 'node:path';
 
 const host = 'https://techcrunch.com';
 export const route: Route = {
-    path: '/category/:category_id',
+    path: '/category/:categoryId',
     categories: ['new-media'],
     example: '/techcrunch/category/577047203',
     parameters: {
-        category_id: '分类id',
+        categoryId: '分类id',
     },
     name: 'Category',
     maintainers: ['MilliumOrion'],
@@ -23,7 +23,7 @@ Example:
 };
 
 async function handler(ctx) {
-    const categoryId = ctx.req.param('category_id');
+    const categoryId = ctx.req.param('categoryId');
     const { data } = await got(`${host}/wp-json/wp/v2/posts?categories=${categoryId}`);
     const items = data.map((item) => {
         const head = item.yoast_head_json;
