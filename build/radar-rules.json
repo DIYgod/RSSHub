@@ -21321,6 +21321,19 @@
       }
     ]
   },
+  "jetbrains.com": {
+    "_name": "JetBrains",
+    "youtrack": [
+      {
+        "title": "YouTrack Issue Comments",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/issue/:issueId"
+        ],
+        "target": "/jetbrains/youtrack/comments/:issueId"
+      }
+    ]
+  },
   "jianshu.com": {
     "_name": "简书",
     "www": [

@@ -4296,6 +4296,9 @@
   "/jd/price/:id": [
     "nczitzk"
   ],
+  "/jetbrains/youtrack/comments/:issueId": [
+    "NekoAria"
+  ],
   "/jewishmuseum/exhibitions": [
     "chazeon"
   ],
