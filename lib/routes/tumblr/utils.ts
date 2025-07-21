@@ -62,6 +62,7 @@ const processPost: (post: any) => DataItem = (post) => {
         title: post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,
         pubDate: parseDate(post.timestamp * 1000),
+        category: post.tags,
         description,
     };
 };
