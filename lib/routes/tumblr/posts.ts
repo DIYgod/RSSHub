@@ -34,7 +34,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Posts',
-    maintainers: ['rakambda'],
+    maintainers: ['Rakambda'],
     description: `:::tip Parameter
 | Name       | Description                                                                         | Default |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
