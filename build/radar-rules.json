@@ -12286,6 +12286,27 @@
       }
     ]
   },
+  "dev.to": {
+    "_name": "DEV Community",
+    ".": [
+      {
+        "title": "Trending Guides",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/dev.to/guides"
+      },
+      {
+        "title": "Top Posts",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/top/:period"
+        ],
+        "target": "/dev.to/top/:period"
+      }
+    ]
+  },
   "devolverdigital.com": {
     "_name": "DevolverDigital",
     ".": [
