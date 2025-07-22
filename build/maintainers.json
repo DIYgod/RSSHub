@@ -7508,6 +7508,9 @@
   "/tass/:category?": [
     "TonyRL"
   ],
+  "/techcrunch/category/:categoryId": [
+    "MilliumOrion"
+  ],
   "/techcrunch/news": [
     "EthanWng97"
   ],
