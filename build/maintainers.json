@@ -2847,6 +2847,9 @@
   ],
   "/gamme/:domain/:category?": [],
   "/gamme/:domain/tag/:tag": [],
+  "/gaoyu/blog": [
+    "nczitzk"
+  ],
   "/gcores/articles": [
     "nczitzk"
   ],

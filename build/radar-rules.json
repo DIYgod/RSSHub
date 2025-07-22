@@ -14399,6 +14399,19 @@
       }
     ]
   },
+  "gaoyu.me": {
+    "_name": "Yu Gao",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog"
+        ],
+        "target": "/gaoyu/blog"
+      }
+    ]
+  },
   "gcores.com": {
     "_name": "机核网",
     "www": [
