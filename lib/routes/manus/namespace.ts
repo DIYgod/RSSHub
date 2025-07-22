@@ -2,6 +2,6 @@ import { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'Manus',
-    url: 'https://manus.im',
+    url: 'manus.im',
     lang: 'en',
 };
