@@ -118,7 +118,6 @@ export function getLocaleFromHeader(header: string): Intl.Locale | undefined {
         .reduce((prev, curr) => (curr.weight > prev.weight ? curr : prev)).language;
 }
 
-// TODO: add support for list
 export class MessageFormatter {
     formatter: NodeFormatter = {
         text: (node) => node.content,
