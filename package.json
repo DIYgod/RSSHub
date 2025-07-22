@@ -172,7 +172,7 @@
         "discord-api-types": "0.38.16",
         "domhandler": "5.0.3",
         "eslint": "9.31.0",
-        "eslint-config-prettier": "10.1.5",
+        "eslint-config-prettier": "10.1.8",
         "eslint-nibble": "8.1.0",
         "eslint-plugin-n": "17.21.0",
         "eslint-plugin-prettier": "5.5.1",
