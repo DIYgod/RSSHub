@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'Top Posts',
-    maintainers: ['Rjnishant530'],
+    maintainers: ['dwemerx', 'Rjnishant530'],
     handler,
     url: 'dev.to/top',
 };
