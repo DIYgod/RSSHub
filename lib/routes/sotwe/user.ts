@@ -64,7 +64,7 @@ async function handler(ctx) {
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
             });
             const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
             logger.http(`Requesting ${apiUrl}`);
