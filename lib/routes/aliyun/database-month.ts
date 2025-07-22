@@ -61,6 +61,6 @@ async function handler() {
     return {
         title: $('title').text(),
         link: url,
-        item: result.reverse(),
+        item: result.toReversed(),
     };
 }

@@ -62,7 +62,7 @@ async function handler(ctx) {
         danmakuList.push({ p: $(item).attr('p'), text: $(item).text() });
     });
 
-    danmakuList = danmakuList.reverse().slice(0, limit);
+    danmakuList = danmakuList.toReversed().slice(0, limit);
 
     return {
         title: `${videoName} 的 弹幕动态`,

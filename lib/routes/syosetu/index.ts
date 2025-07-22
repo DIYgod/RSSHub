@@ -72,7 +72,7 @@ async function handler(ctx: Context): Promise<Data> {
 
             const item = await fetchChapterContent(chapterUrl, chapterNumber);
             return item;
-        }).reverse()
+        }).toReversed()
     );
 
     return {
