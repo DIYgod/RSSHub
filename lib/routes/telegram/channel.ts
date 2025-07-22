@@ -752,6 +752,6 @@ async function handler(ctx) {
                 };
             })
             .filter(Boolean)
-            .reverse(),
+            .toReversed(),
     };
 }

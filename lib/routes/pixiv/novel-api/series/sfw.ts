@@ -57,7 +57,7 @@ export async function getSFWSeriesNovels(seriesId: string, limit: number = 10): 
                     category: novelContent.tags,
                 };
             })
-            .reverse()
+            .toReversed()
     );
 
     return {

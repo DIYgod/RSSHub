@@ -61,7 +61,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.data.repository.stargazers.edges.reverse();
+    const data = response.data.data.repository.stargazers.edges.toReversed();
 
     return {
         allowEmpty: true,
