@@ -84,8 +84,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.9.11
-        version: 0.9.11(hono@4.8.5)
+        specifier: 0.9.12
+        version: 0.9.12(hono@4.8.5)
       '@sentry/node':
         specifier: 9.40.0
         version: 9.40.0
@@ -2166,12 +2166,12 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/core@0.3.9':
-    resolution: {integrity: sha512-y+IdzpbsEef5Zr3cLoTPQpZ2iay32r0fEJnY4Q8+YtgRJjqWeEdOJMD5EcU6OnlUbtJyhCpdAwlHZLxschrmyA==}
+  '@scalar/core@0.3.10':
+    resolution: {integrity: sha512-WKLaZk5zj65CbS0Ox0BMZ1GX9gFrVdwgV/cdRjT2Av8H5CizOSirXk4PwdsU8V8Q4gAltVy9cnt6yKc2ZnRY+w==}
     engines: {node: '>=20'}
 
-  '@scalar/hono-api-reference@0.9.11':
-    resolution: {integrity: sha512-9/2Zf856W+QUxYRHN3dTz3op7RNmz1glqEs3nPuiLvg0HWwrwfsUbnFCAQuW0uOAtJQPk/K4vlfNNNBiQzUUDw==}
+  '@scalar/hono-api-reference@0.9.12':
+    resolution: {integrity: sha512-ygbQsh+5QaRyAx851utApy12FW+wSRLuOBTpL2U5RVzDjvN6vMBZs119mqH1BmY6ltVn8k7DvS2Ooyx0ttah/A==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4.0.0
@@ -2180,8 +2180,8 @@ packages:
     resolution: {integrity: sha512-hkLIgDIQxSgZNYCqNkty2p/V8hjeMf711uT8IKIjNw8oaT/cjT1HC/3V0FVhJ6x2eaufir+WXt5Zqv/iVk5pyQ==}
     engines: {node: '>=20'}
 
-  '@scalar/types@0.2.9':
-    resolution: {integrity: sha512-rRnu60g5PSahdsCYSR9kFZG5f9rtYBpAsWDih2y67V6enVNpsfP8l4VAgNCXYbQuYjmI+W+mA1llMRdaVp0gNA==}
+  '@scalar/types@0.2.10':
+    resolution: {integrity: sha512-ZlOzYoYzzGRnMr6RufAnjksv94MyL4s4HElg9mdo9gQXPch24lNiE0pE0k6vxdB+ncgbGWZ1T6qCC/lJXMLL1Q==}
     engines: {node: '>=20'}
 
   '@sec-ant/readable-stream@0.4.1':
@@ -7923,20 +7923,20 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/core@0.3.9':
+  '@scalar/core@0.3.10':
     dependencies:
-      '@scalar/types': 0.2.9
+      '@scalar/types': 0.2.10
 
-  '@scalar/hono-api-reference@0.9.11(hono@4.8.5)':
+  '@scalar/hono-api-reference@0.9.12(hono@4.8.5)':
     dependencies:
-      '@scalar/core': 0.3.9
+      '@scalar/core': 0.3.10
       hono: 4.8.5
 
   '@scalar/openapi-types@0.3.6':
     dependencies:
       zod: 3.24.1
 
-  '@scalar/types@0.2.9':
+  '@scalar/types@0.2.10':
     dependencies:
       '@scalar/openapi-types': 0.3.6
       nanoid: 5.1.5
