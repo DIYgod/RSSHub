@@ -39,11 +39,29 @@ const handler = async (ctx) => {
                 try {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    // 选择类名为“comment-body”的第一个元素
-                    item.description = $('.read').first().html() || '无法获取正文内容，请手动访问';
+
+                    if (item.link.includes('news.upc.edu.cn')) {
+                        item.description = $('.v_news_content').html();
+                        item.author = $('.nr-zz h2').html();
+                    } else if (item.link.includes('app.upc.edu.cn')) {
+                        const scriptContent = $('body script').first().html();
+                        let dataObj = null;
+                        if (scriptContent) {
+                            const match = scriptContent.match(/data\s*:\s*function\s*\(\)\s*{\s*return\s*{[^}]*data\s*:\s*({[\s\S]*?})/);
+                            if (match && match[1]) {
+                                const dataStr = match[1];
+                                dataObj = JSON.parse(dataStr);
+                            }
+                        }
+                        item.description = dataObj.content;
+                        item.author = dataObj.author;
+                    } else {
+                        // 选择类名为“comment-body”的第一个元素
+                        item.description = $('.read').first().html() || '无法获取正文内容，请手动访问';
+                        item.author = $('.arti_publisher').html();
+                    }
                 } catch {
                     item.description = '正文内容获取失败';
-                    return item;
                 }
                 return item;
             })
