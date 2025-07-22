@@ -17540,7 +17540,7 @@
           "/" ],
         target:"/unusualwhales/news" } ] },
   "upc.edu.cn":{ _name:"中国石油大学（华东）",
-    jwc:[ { title:"教务处通知公告",
+    jwc:[ { title:"教务处",
         docs:"https://docs.rsshub.app/routes/university",
         source:[ "/",
           "/:type/list.htm" ],
