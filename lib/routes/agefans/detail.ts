@@ -44,7 +44,7 @@ async function handler(ctx) {
                 link: a.attr('href').replace('http://', 'https://'),
             };
         })
-        .reverse();
+        .toReversed();
 
     return {
         title: `AGE动漫 - ${ldJson.name}`,

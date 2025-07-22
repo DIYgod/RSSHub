@@ -47,7 +47,7 @@ async function handler(ctx) {
                 link: `${rootUrl}${a.attr('href')}`,
             };
         })
-        .reverse();
+        .toReversed();
     return {
         title: `NT动漫 - ${dmtitle}`,
         link: `${rootUrl}/video/${id}.html`,

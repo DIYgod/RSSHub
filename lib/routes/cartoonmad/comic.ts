@@ -83,7 +83,7 @@ async function handler(ctx) {
                 pages: item.next('font').text().match(/\d+/)[0],
             };
         })
-        .reverse();
+        .toReversed();
 
     const chapters = await getChapters(id, list, cache.tryGet);
 

@@ -97,7 +97,7 @@ async function handler(ctx) {
 
     const monitors = {};
 
-    const items = rss.items.reverse().map((item) => {
+    const items = rss.items.toReversed().map((item) => {
         const titleMatch = item.title.match(titleRegex);
         if (!titleMatch) {
             throw new InvalidParameterError('Unexpected title, please open an issue.');

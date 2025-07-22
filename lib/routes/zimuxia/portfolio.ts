@@ -69,7 +69,7 @@ async function handler(ctx) {
                 guid: `${currentUrl}#${title}`,
             };
         })
-        .reverse();
+        .toReversed();
 
     return {
         title: `${$('.content-page-title').text()} - FIX字幕侠`,

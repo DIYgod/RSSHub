@@ -50,7 +50,7 @@ export function parseDuration(timeStr: string) {
     const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
     return clean
         .split(':')
-        .reverse()
+        .toReversed()
         .reduce((total, part, idx) => {
             const n = Number(part);
             if (Number.isNaN(n)) {

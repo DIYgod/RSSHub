@@ -48,6 +48,6 @@ async function handler(ctx) {
                     link: item.find('.cept-tt').attr('href'),
                 };
             })
-            .reverse(),
+            .toReversed(),
     };
 }
