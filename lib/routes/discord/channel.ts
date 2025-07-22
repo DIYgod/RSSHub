@@ -60,7 +60,7 @@ async function handler(ctx) {
         let title = message.content.split('\n')[0].trim();
         if (title.length === 0) {
             title = message.embeds
-                ?.filter((em) => em.title !== undefined && em.title.length > 0)
+                .filter((em) => em.title !== undefined && em.title.length > 0)
                 .map((em) => em.title)
                 .join(' / ');
         }
