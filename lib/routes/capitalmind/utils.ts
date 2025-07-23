@@ -2,6 +2,7 @@
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
+import { DataItem } from '@/types';
 
 export const baseUrl = 'https://www.capitalmind.in';
 
@@ -15,7 +16,7 @@ export async function fetchArticles(path) {
         .map(async (element) => {
             const $element = $(element);
             const link = baseUrl + $element.attr('href');
-            return await cache.tryGet(link, async () => {
+            return await cache.tryGet(link + 'sdcsd', async () => {
                 const title = $element.find('h3').text().trim();
                 const author = $element
                     .find(String.raw`div.text-[16px]`)
@@ -55,6 +56,31 @@ export async function fetchArticles(path) {
                 // Remove footer
                 $content.find('footer').remove();
 
+                // Process Libsyn podcast iframe (assuming only one)
+                let podcastData: { mediaUrl?: string; itunes_duration?: number } = {};
+
+                const $iframe = $content.find('iframe[src*="libsyn.com/embed/episode/id/"]');
+                if ($iframe.length) {
+                    const src = $iframe.attr('src');
+                    if (src) {
+                        const idMatch = src.match(/\/id\/(\d+)\//);
+                        if (idMatch && idMatch[1]) {
+                            const episodeId = idMatch[1];
+                            try {
+                                const episodeData = await ofetch(`https://html5-player.libsyn.com/api/episode/id/${episodeId}`);
+                                if (episodeData && episodeData._item && episodeData._item._primary_content) {
+                                    podcastData = {
+                                        mediaUrl: episodeData._item._primary_content._download_url,
+                                        itunes_duration: episodeData._item._primary_content._itunes_duration,
+                                    };
+                                }
+                            } catch {
+                                logger.info(`Failed to fetch podcast data for episode ID ${episodeId}`);
+                            }
+                        }
+                    }
+                }
+
                 // Convert relative image URLs to absolute URLs only in figure tags
                 // and remove srcset attribute
                 $content.find('figure img').each((_, img) => {
@@ -76,17 +102,19 @@ export async function fetchArticles(path) {
                         }
                     }
                 });
-
                 return {
                     title,
                     link,
                     author,
                     description: $content.html() || `<p><img src="${decodedImageUrl}" alt="${title}"></p><p>Author: ${author}</p>`,
                     guid: link,
-                    image: decodedImageUrl,
+                    itunes_item_image: decodedImageUrl,
                     category: tags,
                     pubDate,
-                };
+                    enclosure_url: podcastData?.mediaUrl || null,
+                    itunes_duration: podcastData?.itunes_duration || null,
+                    enclosure_type: podcastData?.mediaUrl ? 'audio/mpeg' : null,
+                } as DataItem;
             });
         });
 
