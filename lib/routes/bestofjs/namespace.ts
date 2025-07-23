@@ -7,4 +7,5 @@ export const namespace: Namespace = {
 :::tip
 Best of JS Monthly Rankings
 :::`,
+    lang: 'en',
 };
