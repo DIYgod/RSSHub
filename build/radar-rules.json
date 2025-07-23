@@ -23600,6 +23600,19 @@
       }
     ]
   },
+  "manus.im": {
+    "_name": "Manus",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/manus/blog"
+      }
+    ]
+  },
   "manyvids.com": {
     "_name": "ManyVids",
     "www": [
