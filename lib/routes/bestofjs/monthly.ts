@@ -4,6 +4,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
 const BASEURL = 'https://bestofjs.org/rankings/monthly';
+const CACHE_CONTENT_EXPIRE = 30 * 24 * 60 * 60;
 
 export const route: Route = {
     path: '/rankings/monthly',
@@ -28,24 +29,31 @@ export const route: Route = {
     maintainers: ['ztkuaikuai'],
     url: 'bestofjs.org/rankings/monthly',
     handler: async () => {
-        const targetMonths = getLastSixMonths();
-        const allNeededMonthlyRankings = await Promise.all(
-            targetMonths.map((data) => {
-                const [year, month] = data.split('-');
-                return getMonthlyRankings(year, month);
-            })
+        const curMonth = getCurMonth();
+        const items = await cache.tryGet(
+            curMonth,
+            async () => {
+                const targetMonths = getLastSixMonths();
+                const allNeededMonthlyRankings = await Promise.all(
+                    targetMonths.map((data) => {
+                        const [year, month] = data.split('-');
+                        return getMonthlyRankings(year, month);
+                    })
+                );
+                return allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
+                    const [year, month] = targetMonths[i].split('-');
+                    const description = oneMonthlyRankings.join('<br />');
+                    return {
+                        title: `Best of JS Monthly Rankings - ${year}/${month}`,
+                        description,
+                        link: `${BASEURL}/${year}/${month}`,
+                        guid: `${BASEURL}/${year}/${month}`,
+                        author: 'Best of JS',
+                    };
+                });
+            },
+            CACHE_CONTENT_EXPIRE
         );
-        const items = allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
-            const [year, month] = targetMonths[i].split('-');
-            const description = oneMonthlyRankings.join('<br />');
-            return {
-                title: `Best of JS Monthly Rankings - ${year}/${month}`,
-                description,
-                link: `${BASEURL}/${year}/${month}`,
-                guid: `${BASEURL}/${year}/${month}`,
-                author: 'Best of JS',
-            };
-        });
         return {
             title: 'Best of JS Monthly Rankings',
             link: BASEURL,
@@ -55,6 +63,13 @@ export const route: Route = {
         };
     },
 };
+
+const getCurMonth = (): string => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    return `${currentYear}-${currentMonth}`
+}
 
 const getLastSixMonths = (): string[] => {
     const now = new Date();
@@ -122,6 +137,6 @@ const getMonthlyRankings = (year: string, month: string): Promise<string[]> => {
                     `.trim();
                 });
         },
-        30 * 24 * 60 * 60
+        CACHE_CONTENT_EXPIRE
     );
 };
