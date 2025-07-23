@@ -56,7 +56,7 @@ export async function fetchArticles(path) {
                 $content.find('footer').remove();
 
                 // Process Libsyn podcast iframe (assuming only one)
-                let podcastData: { mediaUrl?: string; itunes_duration?: number } = {};
+                let podcastData: { mediaUrl?: string; itunes_duration?: number; image?: string } = {};
 
                 const $iframe = $content.find('iframe[src*="libsyn.com/embed/episode/id/"]');
                 if ($iframe.length) {
@@ -70,6 +70,7 @@ export async function fetchArticles(path) {
                                 if (episodeData && episodeData._item && episodeData._item._primary_content) {
                                     podcastData = {
                                         mediaUrl: episodeData._item._primary_content._download_url,
+                                        image: `https://assets.libsyn.com/item/${episodeId}`,
                                         itunes_duration: episodeData._item._primary_content.duration,
                                     };
                                 }
@@ -107,7 +108,7 @@ export async function fetchArticles(path) {
                     author,
                     description: $content.html() || `<p><img src="${decodedImageUrl}" alt="${title}"></p><p>Author: ${author}</p>`,
                     guid: link,
-                    itunes_item_image: decodedImageUrl,
+                    itunes_item_image: podcastData?.image || decodedImageUrl,
                     category: tags,
                     pubDate,
                     enclosure_url: podcastData?.mediaUrl || null,
