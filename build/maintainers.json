@@ -5413,6 +5413,9 @@
   "/newsmarket/:category?": [
     "nczitzk"
   ],
+  "/newswav/": [
+    "TonyRL"
+  ],
   "/newyorker/:category": [
     "EthanWng97",
     "pseudoyu"

@@ -27856,6 +27856,20 @@
       }
     ]
   },
+  "newswav.com": {
+    "_name": "Newswav",
+    ".": [
+      {
+        "title": "Latest",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/latest",
+          "/"
+        ],
+        "target": "/newswav/"
+      }
+    ]
+  },
   "newyorker.com": {
     "_name": "New Yorker",
     ".": [
