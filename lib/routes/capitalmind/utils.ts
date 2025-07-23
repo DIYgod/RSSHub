@@ -1,4 +1,3 @@
-
 import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
@@ -16,7 +15,7 @@ export async function fetchArticles(path) {
         .map(async (element) => {
             const $element = $(element);
             const link = baseUrl + $element.attr('href');
-            return await cache.tryGet(link + 'sdcsd', async () => {
+            return await cache.tryGet(link, async () => {
                 const title = $element.find('h3').text().trim();
                 const author = $element
                     .find(String.raw`div.text-[16px]`)
