@@ -70,7 +70,7 @@ export async function fetchArticles(path) {
                                 if (episodeData && episodeData._item && episodeData._item._primary_content) {
                                     podcastData = {
                                         mediaUrl: episodeData._item._primary_content._download_url,
-                                        itunes_duration: episodeData._item._primary_content._itunes_duration,
+                                        itunes_duration: episodeData._item._primary_content.duration,
                                     };
                                 }
                             } catch {
