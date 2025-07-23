@@ -7558,6 +7558,27 @@
       }
     ]
   },
+  "capitalmind.in": {
+    "_name": "Capitalmind",
+    ".": [
+      {
+        "title": "Insights",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/insights"
+        ],
+        "target": "/capitalmind/insights"
+      },
+      {
+        "title": "Podcasts",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/podcasts"
+        ],
+        "target": "/capitalmind/podcasts"
+      }
+    ]
+  },
   "cara.app": {
     "_name": "Cara",
     ".": [
