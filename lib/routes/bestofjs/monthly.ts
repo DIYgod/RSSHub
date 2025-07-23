@@ -1,7 +1,9 @@
+import path from 'node:path';
+import { load } from 'cheerio';
 import { Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
-import { load } from 'cheerio';
+import { art } from '@/utils/render';
 
 const BASEURL = 'https://bestofjs.org/rankings/monthly';
 const CACHE_CONTENT_EXPIRE = 30 * 24 * 60 * 60;
@@ -42,7 +44,7 @@ export const route: Route = {
                 );
                 return allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
                     const [year, month] = targetMonths[i].split('-');
-                    const description = oneMonthlyRankings.join('<br />');
+                    const description = art(path.join(__dirname, 'templates/description.art'), { items: oneMonthlyRankings });
                     return {
                         title: `Best of JS Monthly Rankings - ${year}/${month}`,
                         description,
@@ -68,8 +70,8 @@ const getCurMonth = (): string => {
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1;
-    return `${currentYear}-${currentMonth}`
-}
+    return `${currentYear}-${currentMonth}`;
+};
 
 const getLastSixMonths = (): string[] => {
     const now = new Date();
@@ -86,7 +88,18 @@ const getLastSixMonths = (): string[] => {
     });
 };
 
-const getMonthlyRankings = (year: string, month: string): Promise<string[]> => {
+interface RankingItem {
+    logo: string;
+    projectName: string;
+    githubLink: string;
+    homepageLink: string;
+    description: string;
+    tags: string[];
+    starCount: string;
+    additionalInfo: string;
+}
+
+const getMonthlyRankings = (year: string, month: string): Promise<RankingItem[]> => {
     const targetUrl = `${BASEURL}/${year}/${month}`;
     return cache.tryGet(
         targetUrl,
@@ -95,7 +108,7 @@ const getMonthlyRankings = (year: string, month: string): Promise<string[]> => {
             const $ = load(response);
             return $('table.w-full tbody tr[data-testid="project-card"]')
                 .toArray()
-                .map((el, i) => {
+                .map((el) => {
                     const $tr = $(el);
                     // Project logo
                     const logo =
@@ -125,16 +138,16 @@ const getMonthlyRankings = (year: string, month: string): Promise<string[]> => {
                         .slice(1)
                         .map((el) => $(el).text().trim())
                         .join('; ');
-                    return `
-                        <p>Rank ${i + 1}</p>
-                        ${logo ? `<img src="https://bestofjs.org${logo}" alt="${projectName}" height="32" width="32" />` : ''}
-                        <p>${description}</p>
-                        <p><strong>Stars:</strong> ${starCount}</p>
-                        <p><strong>Additional Info:</strong> ${additionalInfo}</p>
-                        ${githubLink ? `<p><strong>GitHub:</strong> <a href="${githubLink}">${githubLink}</a></p>` : ''}
-                        ${homepageLink ? `<p><strong>Homepage:</strong> <a href="${homepageLink}">${homepageLink}</a></p>` : ''}
-                        ${tags.length ? `<p><strong>Tags:</strong> ${tags.map((tag) => `<a href="/projects?tags=${tag.toLowerCase()}">${tag}</a>`).join(' ')}</p>` : ''}
-                    `.trim();
+                    return {
+                        logo,
+                        projectName,
+                        githubLink,
+                        homepageLink,
+                        description,
+                        tags,
+                        starCount,
+                        additionalInfo,
+                    };
                 });
         },
         CACHE_CONTENT_EXPIRE
