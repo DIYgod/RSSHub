@@ -1,11 +1,10 @@
-import { Route, DataItem, Data, ViewType, Language } from '@/types';
+import { Route, DataItem, Data, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { Context } from 'hono';
 
 export const route: Route = {
-    path: '/blog/:lang?',
+    path: '/blog',
     categories: ['programming'],
     example: '/manus/blog',
     url: 'manus.im',
@@ -31,15 +30,10 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-async function handler(ctx: Context) {
+async function handler() {
     const rootUrl = 'https://manus.im/blog';
-    const lang: Language = (ctx.req.param('lang') ?? 'en') as Language;
 
-    const response = await ofetch(rootUrl, {
-        headers: {
-            'Accept-Language': lang,
-        },
-    });
+    const response = await ofetch(rootUrl);
     const $ = load(response);
 
     const list: DataItem[] = $('div.mt-10.px-6 > a')
@@ -58,11 +52,7 @@ async function handler(ctx: Context) {
     const items: DataItem[] = await Promise.all(
         list.map((item) =>
             cache.tryGet(String(item.link), async () => {
-                const response = await ofetch(String(item.link), {
-                    headers: {
-                        'Accept-Language': lang,
-                    },
-                });
+                const response = await ofetch(String(item.link));
                 const $ = load(response);
                 const description: string = $('div.relative:nth-child(3)').html() ?? '';
                 const pubDateText: string = $('div.gap-3:nth-child(1) > span:nth-child(2)').text().trim();
@@ -82,6 +72,6 @@ async function handler(ctx: Context) {
         title: 'Manus',
         link: rootUrl,
         item: items,
-        language: lang,
+        language: 'en',
     } satisfies Data;
 }
