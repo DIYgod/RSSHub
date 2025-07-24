@@ -17,7 +17,6 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-
     const limit = Number.parseInt(ctx.req.query('limit') || '10');
 
     const items = await fetchArticles(limit);
@@ -29,10 +28,9 @@ async function handler(ctx: Context) {
     };
 }
 
-
 export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
     const page = await ofetch('https://blog.railway.com/rss.xml', {
-        responseType: 'text'
+        responseType: 'text',
     });
 
     const $ = load(page, { xml: true });
@@ -56,13 +54,12 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
                         title,
                         link,
                         pubDate: parseDate(pubDate),
-                        description: content
+                        description: content,
                     } as DataItem;
                 }) as Promise<DataItem>;
             })
     );
 };
-
 
 export const fetchArticleDetails = async (url: string) => {
     const page = await ofetch(url);
@@ -71,6 +68,6 @@ export const fetchArticleDetails = async (url: string) => {
     const $article = $('article > section ');
 
     return {
-        content: $article.html() ?? undefined
+        content: $article.html() ?? undefined,
     };
 };
