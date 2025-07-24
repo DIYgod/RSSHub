@@ -84,7 +84,7 @@ const parseItem = (item, tryGet) =>
 
         const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
         const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
-        const body = $('.caas-body');
+        const body = $('.atoms');
 
         body.find('noscript').remove();
         // remove padding

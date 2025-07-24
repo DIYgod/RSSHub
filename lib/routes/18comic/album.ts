@@ -89,7 +89,7 @@ async function handler(ctx) {
                 })
             )
         );
-        results = results.reverse();
+        results = results.toReversed();
     }
 
     return {
