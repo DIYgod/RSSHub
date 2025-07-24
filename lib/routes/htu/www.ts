@@ -1,4 +1,6 @@
 import { Data, DataItem, Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
@@ -60,7 +62,7 @@ export const route: Route = {
                 const title = element.find('div.wz div.news_title').first().text().trim();
                 const link = new URL(element.find('div.wz a').first().attr('href') ?? '', ROOT_URL).href;
                 const description = element.find('div.wz div.news_text').first().text().trim();
-                const pubDate = new Date(element.find('div.wz div.news_time').first().text().trim() + ' GMT+8').toUTCString();
+                const pubDate = timezone(parseDate(element.find('div.wz div.news_time').first().text().trim()), +8);
                 const image = new URL(element.find('div.imgs img').first().attr('src') ?? '', ROOT_URL).href;
 
                 return {
