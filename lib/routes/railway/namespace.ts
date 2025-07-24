@@ -1,8 +1,8 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'thzt',
-    url: 'thzt.github.io',
+    name: 'Railway Blog',
+    url: 'blog.railway.com',
     description: '',
-    lang: 'zh-CN',
+    lang: 'en',
 };
