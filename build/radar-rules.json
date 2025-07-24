@@ -32245,6 +32245,19 @@
       }
     ]
   },
+  "rockthejvm.com": {
+    "_name": "Rock the JVM",
+    ".": [
+      {
+        "title": "Article",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/articles"
+        ],
+        "target": "/rockthejvm/articles"
+      }
+    ]
+  },
   "rodong.rep.kp": {
     "_name": "Rodong Sinmun 劳动新闻",
     ".": [
