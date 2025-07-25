@@ -6,10 +6,13 @@ import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
 
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { DataItem } from '@/types';
 const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
+const itemCategoryRegex = /c(\d+)=(\d+)/;
 
-const ProcessItems = async (ctx, currentUrl, title) => {
+const ProcessItems = async (ctx, currentUrl, title, excludeTags = new Set()) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
     const url = new URL(currentUrl, `https://${domain}`);
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(url.hostname)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
@@ -29,6 +32,20 @@ const ProcessItems = async (ctx, currentUrl, title) => {
         cookie && cookieJar.setCookie(cookie, rootUrl);
     }
 
+    const results = [] as DataItem[];
+    const batchSize = excludeTags.size > 0 ? 5 : limit;
+    const subject = await processPages(rootUrl, url, 1, cookieJar, batchSize, limit, excludeTags, results);
+
+    return {
+        title: subject === '' ? title : `${subject} - ${title}`,
+        link: url.href,
+        item: results,
+    };
+};
+
+const processPages = async (rootUrl, url, page, cookieJar, batchSize, limit, excludeTags, results) => {
+    url.searchParams.set('page', String(page));
+
     const response = await got({
         method: 'get',
         url: url.href,
@@ -42,8 +59,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     $('.tags, .tag-can-play, .over18-modal').remove();
 
-    let items = $('div.item')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+    const items = $('div.item')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -54,8 +70,33 @@ const ProcessItems = async (ctx, currentUrl, title) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    if (items.length === 0) {
+        return null;
+    }
+
+    await processSinglePage(cookieJar, items, 0, limit, batchSize, excludeTags, results);
+
+    if ($('a.pagination-next').length !== 0 && results.length < limit) {
+        await processPages(rootUrl, url, page + 1, cookieJar, batchSize, limit, excludeTags, results);
+    }
+
+    if (page !== 1) {
+        return null;
+    }
+
+    const htmlTitle = $('title').text();
+    return htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
+};
+
+const processSinglePage = async (cookieJar, items, index, limit, batchSize, excludeTags, results) => {
+    if (index >= items.length) {
+        return;
+    }
+
+    let batch = items.slice(index, index + batchSize);
+
+    batch = await Promise.all(
+        batch.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -80,25 +121,51 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                     content(this).attr('src', content(this).parent().attr('href'));
                 });
 
-                item.category = content('.panel-block .value a')
-                    .toArray()
-                    .map((v) => content(v).text());
+                const itemCategories = content('.panel-block .value a').toArray();
+                const categoryIds: string[] = [];
+                const category: string[] = [];
+                for (const item_category of itemCategories) {
+                    if ('href' in item_category.attribs) {
+                        const match = item_category.attribs.href.match(itemCategoryRegex);
+                        if (match !== null) {
+                            categoryIds.push(match[2]);
+                        }
+                    }
+                    category.push(content(item_category).text());
+                }
+                item.category = category;
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
                 item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
+
+                item._extra = {
+                    category_ids: categoryIds,
+                };
 
                 return item;
             })
         )
     );
+    for (const item of batch) {
+        if (results.length >= limit) {
+            break;
+        }
+        let shouldExclude = false;
+        if (excludeTags.size > 0 && 'category_ids' in item._extra) {
+            for (const categoryId of item._extra.category_ids) {
+                if (excludeTags.has(categoryId)) {
+                    shouldExclude = true;
+                    break;
+                }
+            }
+        }
+        if (!shouldExclude) {
+            results.push(item);
+        }
+    }
 
-    const htmlTitle = $('title').text();
-    const subject = htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
-
-    return {
-        title: subject === '' ? title : `${subject} - ${title}`,
-        link: url.href,
-        item: items,
-    };
+    if (results.length < limit) {
+        await processSinglePage(cookieJar, items, index + batchSize, limit, batchSize, excludeTags, results);
+    }
 };
 
 export default { ProcessItems };
