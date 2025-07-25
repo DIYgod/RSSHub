@@ -11,7 +11,7 @@ export const route: Route = {
     categories: ['blog'],
     example: '/railway/blog',
     url: 'blog.railway.com',
-    name: 'Railway Blog',
+    name: 'Blog',
     maintainers: ['jihuayu'],
     handler,
 };
