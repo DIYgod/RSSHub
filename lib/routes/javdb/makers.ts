@@ -22,8 +22,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/makers/:id'],
+            target: '/makers/:id',
         },
     ],
     name: '片商',

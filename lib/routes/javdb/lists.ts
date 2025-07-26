@@ -5,8 +5,8 @@ export const route: Route = {
     path: '/lists/:id/:filter?/:sort?',
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/lists/:id'],
+            target: '/lists/:id',
         },
     ],
     name: 'Unknown',

@@ -22,8 +22,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/actors/:id'],
+            target: '/actors/:id',
         },
     ],
     name: '演員',

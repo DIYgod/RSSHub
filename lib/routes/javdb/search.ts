@@ -22,8 +22,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/search'],
+            target: (params, url) => `/search/${new URL(url).searchParams.get('q')}`,
         },
     ],
     name: '搜索',
