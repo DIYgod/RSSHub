@@ -23,8 +23,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/tags'],
+            target: (params, url) => `/tags/${new URL(url).search}`,
         },
     ],
     name: '分類',

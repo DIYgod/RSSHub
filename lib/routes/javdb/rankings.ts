@@ -22,8 +22,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['javdb.com/'],
-            target: '',
+            source: ['javdb.com/rankings/movies'],
+            target: (params, url) => {
+                const searchParams = new URL(url).searchParams;
+                return `/rankings/${searchParams.get('t')}/${searchParams.get('p')}`;
+            },
         },
     ],
     name: '排行榜',
