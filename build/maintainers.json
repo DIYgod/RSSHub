@@ -2511,6 +2511,9 @@
     "KTachibanaM",
     "AiraNadih"
   ],
+  "/expats/czech-news/:category?": [
+    "nczitzk"
+  ],
   "/f-droid/apprelease/:app": [
     "garywill"
   ],

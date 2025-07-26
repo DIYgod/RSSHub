@@ -13370,6 +13370,115 @@
       }
     ]
   },
+  "expats.cz": {
+    "_name": "Expats.cz",
+    "www": [
+      {
+        "title": "Czech News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/:category"
+        ],
+        "target": "/expatsparams=>{const category=params.category;return`/expats/czech-news${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "Daily News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/daily-news"
+        ],
+        "target": "/expats/expats/czech-news/daily-news"
+      },
+      {
+        "title": "Prague Guide",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/prague-guide"
+        ],
+        "target": "/expats/expats/czech-news/prague-guide"
+      },
+      {
+        "title": "Culture & Events",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/culture-events"
+        ],
+        "target": "/expats/expats/czech-news/culture-events"
+      },
+      {
+        "title": "Food & Drink",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/food-drink"
+        ],
+        "target": "/expats/expats/czech-news/food-drink"
+      },
+      {
+        "title": "Expat Life",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/expat-life"
+        ],
+        "target": "/expats/expats/czech-news/expat-life"
+      },
+      {
+        "title": "Housing",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/housing"
+        ],
+        "target": "/expats/expats/czech-news/housing"
+      },
+      {
+        "title": "Education",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/education"
+        ],
+        "target": "/expats/expats/czech-news/education"
+      },
+      {
+        "title": "Health",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/health"
+        ],
+        "target": "/expats/expats/czech-news/health"
+      },
+      {
+        "title": "Work",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/work"
+        ],
+        "target": "/expats/expats/czech-news/work"
+      },
+      {
+        "title": "Travel",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/travel"
+        ],
+        "target": "/expats/expats/czech-news/travel"
+      },
+      {
+        "title": "Economy",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/economy"
+        ],
+        "target": "/expats/expats/czech-news/economy"
+      },
+      {
+        "title": "Language",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/czech-news/language"
+        ],
+        "target": "/expats/expats/czech-news/language"
+      }
+    ]
+  },
   "f-droid.org": {
     "_name": "F-Droid",
     ".": [
