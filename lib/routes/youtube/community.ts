@@ -33,15 +33,29 @@ async function handler(ctx) {
             .match(/ytInitialData = ({.*?});/)?.[1] ?? '{}'
     );
 
-    const channelMetadata = ytInitialData.metadata.channelMetadataRenderer;
-    const username = channelMetadata.title;
-    const communityTab = ytInitialData.contents.twoColumnBrowseResultsRenderer.tabs.find(
-        (tab) => tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/posts') || tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/community')
+    const ytInitialData = JSON.parse(
+        $('script')
+            .text()
+            .match(/ytInitialData = ({.*?});/)?.[1] ?? '{}'
     );
-    const list = communityTab.tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents;
 
-    if (list[0].messageRenderer) {
-        throw new Error(list[0].messageRenderer.text.runs[0].text);
+    let channelMetadata, username, communityTab, list;
+
+    try {
+        channelMetadata = ytInitialData.metadata.channelMetadataRenderer;
+        username = channelMetadata.title;
+        communityTab = ytInitialData.contents.twoColumnBrowseResultsRenderer.tabs.find(
+            (tab) =>
+                tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/posts') ||
+                tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/community')
+        );
+        list = communityTab.tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents;
+
+        if (list[0].messageRenderer) {
+            throw new Error(list[0].messageRenderer.text.runs[0].text);
+        }
+    } catch (err) {
+        throw new Error('Failed to parse YouTube community tab: structure may have changed');
     }
 
     const items = list
