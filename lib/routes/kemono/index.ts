@@ -29,19 +29,19 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['kemono.su/'],
+            source: ['kemono.cr/'],
             target: '/kemono',
         },
         {
-            source: ['kemono.su/:source/user/:id'],
+            source: ['kemono.cr/:source/user/:id'],
             target: '/kemono/:source/:id',
         },
         {
-            source: ['kemono.su/:source/user/:id/announcements'],
+            source: ['kemono.cr/:source/user/:id/announcements'],
             target: '/kemono/:source/:id/announcements',
         },
         {
-            source: ['kemono.su/:source/user/:id/fancards'],
+            source: ['kemono.cr/:source/user/:id/fancards'],
             target: '/kemono/:source/:id/fancards',
         },
     ],
@@ -275,7 +275,7 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
                 description,
                 author: authorName,
                 pubDate: parseDate(post.published),
-                guid: `${KEMONO_API_URL}/${post.service}/user/${post.user}/post/${post.id}`,
+                guid: `kemono:${post.service}:${post.user}:post:${post.id}`,
                 link: `${KEMONO_ROOT_URL}/${post.service}/user/${post.user}/post/${post.id}`,
                 ...generateEnclosureInfo(description),
             };
@@ -299,7 +299,7 @@ async function handler(ctx) {
 
         const authorName = isPostsMode || isDiscordMode || !userId ? '' : await fetchUserProfile(source, userId);
 
-        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `https://img.kemono.su/icons/${source}/${userId}`;
+        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `https://img.kemono.cr/icons/${source}/${userId}`;
 
         let items: any[];
         let title: string;
