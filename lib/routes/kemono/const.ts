@@ -1,4 +1,4 @@
-const KEMONO_ROOT_URL = 'https://kemono.su';
+const KEMONO_ROOT_URL = 'https://kemono.cr';
 const KEMONO_API_URL = `${KEMONO_ROOT_URL}/api/v1`;
 const MIME_TYPE_MAP = {
     m4a: 'audio/mp4',
