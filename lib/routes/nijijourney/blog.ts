@@ -1,7 +1,7 @@
 import { Route, DataItem } from '@/types';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
-import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/blog',
@@ -12,7 +12,7 @@ export const route: Route = {
     handler,
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -59,60 +59,119 @@ async function safeBrowserClose(browser: any, page: any) {
     }
 }
 
-const fetchArticleContent = (item: DataItem, sharedBrowser: any): Promise<DataItem> =>
-    cache.tryGet(item.link!, async () => {
-        let page;
-        try {
-            page = await sharedBrowser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
-            });
-            await page.goto(item.link!, { waitUntil: 'domcontentloaded', timeout: 15000 });
-            await page.waitForSelector('div, article, main', { timeout: 5000 }).catch(() => {});
-            const html = await page.content();
-            const $ = load(html);
-            let fullContent = $('div > div > section:nth-child(3)').html()?.trim();
-            if (!fullContent) {
-                fullContent = $('article').html()?.trim();
+const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<DataItem> => {
+    let page;
+    try {
+        page = await sharedBrowser.newPage();
+
+        await page.setViewport({ width: 1280, height: 720 });
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            const resourceType = request.resourceType();
+            if (resourceType === 'document' || resourceType === 'script' || resourceType === 'xhr') {
+                request.continue();
+            } else {
+                request.abort();
             }
-            if (!fullContent) {
-                fullContent = $('[class*="content"]').html()?.trim();
-            }
-            if (!fullContent) {
-                fullContent = $('main').html()?.trim();
-            }
-            return {
-                ...item,
-                description: fullContent || item.description,
-            };
-        } catch {
-            return item;
-        } finally {
-            if (page && !page.isClosed()) {
-                await page.close().catch(() => {});
+        });
+
+        let retries = 3;
+        let waitTime = 2000;
+        let pageContent = '';
+
+        while (retries > 0) {
+            try {
+                // eslint-disable-next-line no-await-in-loop
+                await page.goto(item.link!, {
+                    waitUntil: 'networkidle0',
+                    timeout: 30000,
+                });
+                // eslint-disable-next-line no-await-in-loop
+                pageContent = await page.content();
+                break;
+            } catch (error) {
+                retries--;
+                if (retries === 0) {
+                    throw error;
+                }
+                // eslint-disable-next-line no-await-in-loop
+                await new Promise((resolve) => setTimeout(resolve, waitTime));
+                waitTime *= 2;
             }
         }
-    });
+
+        const $ = load(pageContent);
+
+        const candidateSelectors = [
+            '#__next > div.min-h-screen.flex.flex-col > div > div.space-y-8.pb-8.flex-1 > section:nth-child(3)',
+            'article',
+            'section.max-w-prose',
+            'div.max-w-prose',
+            'main section',
+            'main div[class*="prose"]',
+            'div[class*="space-y-4"]',
+            'section:last-of-type',
+            'body > div:last-child section',
+        ];
+
+        let fullContent = '';
+
+        for (const selector of candidateSelectors) {
+            const elements = $(selector);
+            if (elements.length > 0) {
+                const content = elements.html()?.trim() || '';
+                if (content.length > 200) {
+                    fullContent = content;
+                    break;
+                }
+            }
+        }
+
+        if (!fullContent) {
+            const fallbackContent = $('body').text().trim();
+            if (fallbackContent.length > 500) {
+                fullContent = fallbackContent.slice(0, 2000) + '...';
+            }
+        }
+
+        return {
+            ...item,
+            description: fullContent || item.description || 'Content extraction failed',
+        };
+    } catch (error) {
+        logger.error(`Error fetching article content for ${item.link}: ${error}`);
+        return {
+            ...item,
+            description: item.description || 'Content extraction failed due to error',
+        };
+    } finally {
+        if (page && !page.isClosed()) {
+            await page.close().catch(() => {});
+        }
+    }
+};
 
 async function handler() {
     const baseUrl = 'https://nijijourney.com';
     const blogUrl = `${baseUrl}/blog`;
     let browser;
     let page;
+
     try {
         browser = await puppeteer();
         page = await browser.newPage();
         await page.setRequestInterception(true);
+
         page.on('request', (request) => {
             request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
         });
-        await page.goto(blogUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
-        await page.waitForFunction(() => document.body && document.body.children.length > 2, { timeout: 15000 }).catch(() => {});
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        await page.goto(blogUrl, { waitUntil: 'networkidle0', timeout: 30000 });
         const html = await page.content();
         const $ = load(html);
+
         let articles = $('section a');
+
         if (articles.length === 0) {
             articles = $('a[href*="/blog/"]');
         }
@@ -126,6 +185,7 @@ async function handler() {
                 return !!(href && text && (href.includes('blog') || href.startsWith('/')) && text.length > 5);
             });
         }
+
         if (articles.length === 0) {
             return {
                 title: 'Nijijourney Blog',
@@ -140,6 +200,7 @@ async function handler() {
                 ],
             };
         }
+
         const preliminaryItems = articles
             .toArray()
             .slice(0, 10)
@@ -148,9 +209,11 @@ async function handler() {
                 const href = $item.attr('href');
                 const title = $item.find('h1, h2, h3').text().trim() || $item.text().trim();
                 const description = $item.find('p').text().trim() || '';
+
                 if (!href || !title || title.length < 3) {
                     return null;
                 }
+
                 const link = href.startsWith('http') ? href : baseUrl + href;
                 return {
                     title,
@@ -160,6 +223,7 @@ async function handler() {
                 } as DataItem;
             })
             .filter((item): item is DataItem => item !== null);
+
         if (preliminaryItems.length === 0) {
             return {
                 title: 'Nijijourney Blog',
@@ -174,7 +238,14 @@ async function handler() {
                 ],
             };
         }
+
+        if (page && !page.isClosed()) {
+            await page.close();
+            page = null;
+        }
+
         const items = await Promise.all(preliminaryItems.map((item) => fetchArticleContent(item, browser)));
+
         return {
             title: 'Nijijourney Blog',
             link: blogUrl,
