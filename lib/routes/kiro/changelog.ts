@@ -68,7 +68,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     title,
                     description,
                     pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                    author: authors,
                     content: {
                         html: description,
                         text: description,
