@@ -9,10 +9,10 @@ import { config } from '@/config';
 const qingtingId = config.qingting.id ?? '';
 
 export const route: Route = {
-    path: '/podcast/:id/:pageSize?',
+    path: '/podcast/:id',
     categories: ['multimedia'],
-    example: '/qingting/podcast/293411/30',
-    parameters: { id: '专辑id, 可在专辑页 URL 中找到', pageSize: '每页返回的节目数量，默认为30' },
+    example: '/qingting/podcast/293411',
+    parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
     features: {
         supportPodcast: true,
         requireConfig: [
@@ -42,7 +42,7 @@ function getMediaUrl(channelId: string, mediaId: string) {
 
 async function handler(ctx) {
     const channelId = ctx.req.param('id');
-    const pageSize = Number(ctx.req.param('pageSize')) || 30;
+    const pageSize = Number(ctx.req.query('limit')) || 30;
 
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${channelId}`;
     const response = await ofetch(channelUrl, {
