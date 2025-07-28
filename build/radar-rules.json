@@ -31864,7 +31864,7 @@
         "source": [
           "/channels/:id"
         ],
-        "target": "/qingting/podcast/:id/:pageSize?"
+        "target": "/qingting/podcast/:id"
       }
     ]
   },

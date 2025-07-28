@@ -14720,7 +14720,7 @@
     ".":[ { title:"播客",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/channels/:id" ],
-        target:"/qingting/podcast/:id/:pageSize?" } ] },
+        target:"/qingting/podcast/:id" } ] },
   "qipamaijia.com":{ _name:"奇葩买家秀",
     ".":[ { title:"频道",
         docs:"https://docs.rsshub.app/routes/picture",

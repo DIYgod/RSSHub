@@ -6378,7 +6378,7 @@
     "nczitzk",
     "pseudoyu"
   ],
-  "/qingting/podcast/:id/:pageSize?": [
+  "/qingting/podcast/:id": [
     "RookieZoe",
     "huyyi",
     "pseudoyu"
