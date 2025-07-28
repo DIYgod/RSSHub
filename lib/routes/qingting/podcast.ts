@@ -9,10 +9,10 @@ import { config } from '@/config';
 const qingtingId = config.qingting.id ?? '';
 
 export const route: Route = {
-    path: '/podcast/:id',
+    path: '/podcast/:id/:pageSize?',
     categories: ['multimedia'],
-    example: '/qingting/podcast/293411',
-    parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
+    example: '/qingting/podcast/293411/30',
+    parameters: { id: '专辑id, 可在专辑页 URL 中找到', pageSize: '每页返回的节目数量，默认为50' },
     features: {
         supportPodcast: true,
         requireConfig: [
@@ -42,6 +42,7 @@ function getMediaUrl(channelId: string, mediaId: string) {
 
 async function handler(ctx) {
     const channelId = ctx.req.param('id');
+    const pageSize = Number(ctx.req.param('pageSize')) || 30;
 
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${channelId}`;
     const response = await ofetch(channelUrl, {
@@ -54,7 +55,7 @@ async function handler(ctx) {
     const channel_img = response.data.thumbs['400_thumb'];
     const authors = response.data.podcasters.map((author) => author.nick_name).join(',');
     const desc = response.data.description;
-    const programUrl = `https://i.qingting.fm/capi/channel/${channelId}/programs/${response.data.v}?curpage=1&pagesize=10&order=asc`;
+    const programUrl = `https://i.qingting.fm/capi/channel/${channelId}/programs/${response.data.v}?curpage=1&pagesize=${pageSize}&order=asc`;
 
     const {
         data: { programs },
