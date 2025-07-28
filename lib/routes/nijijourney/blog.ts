@@ -21,41 +21,15 @@ export const route: Route = {
 };
 
 async function safeBrowserClose(browser: any, page: any) {
-    const errors: string[] = [];
-    if (page) {
-        try {
-            if (!page.isClosed()) {
-                await page.close();
-            }
-        } catch (error) {
-            errors.push(`Page close error: ${error}`);
+    try {
+        if (page && !page.isClosed()) {
+            await page.close();
         }
-    }
-    if (browser) {
-        try {
-            const pages = await browser.pages();
-            const closePromises = pages.map(async (p) => {
-                try {
-                    if (!p.isClosed()) {
-                        await p.close();
-                    }
-                } catch (error) {
-                    errors.push(`Individual page close error: ${error}`);
-                }
-            });
-            await Promise.all(closePromises);
+        if (browser) {
             await browser.close();
-        } catch (error) {
-            errors.push(`Browser close error: ${error}`);
-            try {
-                const process = browser.process();
-                if (process && !process.killed) {
-                    process.kill('SIGKILL');
-                }
-            } catch (killError) {
-                errors.push(`Process kill error: ${killError}`);
-            }
         }
+    } catch (error) {
+        logger.error(`Error closing browser or page: ${error}`);
     }
 }
 
@@ -65,10 +39,20 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
         page = await sharedBrowser.newPage();
 
         await page.setViewport({ width: 1280, height: 720 });
+
+        await page.setExtraHTTPHeaders({
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Cache-Control': 'no-cache',
+            Referer: 'https://nijijourney.com/blog',
+        });
+
         await page.setRequestInterception(true);
         page.on('request', (request) => {
             const resourceType = request.resourceType();
-            if (resourceType === 'document' || resourceType === 'script' || resourceType === 'xhr') {
+            // 允许必要的资源类型
+            if (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(resourceType)) {
                 request.continue();
             } else {
                 request.abort();
@@ -83,9 +67,17 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
             try {
                 // eslint-disable-next-line no-await-in-loop
                 await page.goto(item.link!, {
-                    waitUntil: 'networkidle0',
-                    timeout: 30000,
+                    waitUntil: 'domcontentloaded',
+                    timeout: 20000,
                 });
+
+                try {
+                    // eslint-disable-next-line no-await-in-loop
+                    await page.waitForSelector('body', { timeout: 3000 });
+                } catch {
+                    // if loading error, continue
+                }
+
                 // eslint-disable-next-line no-await-in-loop
                 pageContent = await page.content();
                 break;
@@ -160,13 +152,47 @@ async function handler() {
     try {
         browser = await puppeteer();
         page = await browser.newPage();
+
+        if (!page) {
+            throw new Error('Failed to create new page');
+        }
+
+        await page.setViewport({ width: 1280, height: 720 });
+
+        await page.setExtraHTTPHeaders({
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
+        });
+
         await page.setRequestInterception(true);
 
         page.on('request', (request) => {
-            request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            const resourceType = request.resourceType();
+            if (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(resourceType)) {
+                request.continue();
+            } else {
+                request.abort();
+            }
         });
 
-        await page.goto(blogUrl, { waitUntil: 'networkidle0', timeout: 30000 });
+        await page.goto(blogUrl, {
+            waitUntil: 'domcontentloaded',
+            timeout: 30000,
+        });
+
+        try {
+            await page.waitForSelector('a', { timeout: 5000 });
+        } catch {
+            // if waiting error, continue
+        }
         const html = await page.content();
         const $ = load(html);
 
