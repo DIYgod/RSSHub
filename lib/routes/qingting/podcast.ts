@@ -12,7 +12,7 @@ export const route: Route = {
     path: '/podcast/:id/:pageSize?',
     categories: ['multimedia'],
     example: '/qingting/podcast/293411/30',
-    parameters: { id: '专辑id, 可在专辑页 URL 中找到', pageSize: '每页返回的节目数量，默认为50' },
+    parameters: { id: '专辑id, 可在专辑页 URL 中找到', pageSize: '每页返回的节目数量，默认为30' },
     features: {
         supportPodcast: true,
         requireConfig: [
