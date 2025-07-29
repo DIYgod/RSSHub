@@ -59,38 +59,30 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
             }
         });
 
-        let retries = 3;
-        let waitTime = 2000;
-        let pageContent = '';
-
-        while (retries > 0) {
+        const loadPageWithRetry = async (attempt = 0): Promise<string> => {
             try {
-                // eslint-disable-next-line no-await-in-loop
                 await page.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
                     timeout: 20000,
                 });
 
-                try {
-                    // eslint-disable-next-line no-await-in-loop
-                    await page.waitForSelector('body', { timeout: 3000 });
-                } catch {
+                await page.waitForSelector('body', { timeout: 3000 }).catch(() => {
                     // if loading error, continue
-                }
+                });
 
-                // eslint-disable-next-line no-await-in-loop
-                pageContent = await page.content();
-                break;
+                return page.content();
             } catch (error) {
-                retries--;
-                if (retries === 0) {
+                if (attempt >= 2) {
                     throw error;
                 }
-                // eslint-disable-next-line no-await-in-loop
-                await new Promise((resolve) => setTimeout(resolve, waitTime));
-                waitTime *= 2;
+
+                const delay = 2000 * Math.pow(2, attempt);
+                await new Promise((resolve) => setTimeout(resolve, delay));
+                return loadPageWithRetry(attempt + 1);
             }
-        }
+        };
+
+        const pageContent = await loadPageWithRetry();
 
         const $ = load(pageContent);
 
@@ -152,10 +144,6 @@ async function handler() {
     try {
         browser = await puppeteer();
         page = await browser.newPage();
-
-        if (!page) {
-            throw new Error('Failed to create new page');
-        }
 
         await page.setViewport({ width: 1280, height: 720 });
 
