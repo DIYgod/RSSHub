@@ -29,7 +29,7 @@ async function handler() {
         const response = await ofetch(currentUrl);
         const $ = load(response);
 
-        let items = $('[class="min-h-[90vh]"] .grid a')
+        let items = $('[class="min-h-[90vh] mt-4"] .grid a')
             .toArray()
             .map((element) => {
                 const $element = $(element);
