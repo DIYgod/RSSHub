@@ -138,8 +138,8 @@ importers:
         specifier: 4.0.4
         version: 4.0.4
       googleapis:
-        specifier: 154.0.0
-        version: 154.0.0
+        specifier: 154.1.0
+        version: 154.1.0
       hono:
         specifier: 4.8.10
         version: 4.8.10
@@ -3785,8 +3785,8 @@ packages:
   globrex@0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
-  google-auth-library@10.1.0:
-    resolution: {integrity: sha512-GspVjZj1RbyRWpQ9FbAXMKjFGzZwDKnUHi66JJ+tcjcu5/xYAP1pdlWotCuIkMwjfVsxxDvsGZXGLzRt72D0sQ==}
+  google-auth-library@10.2.0:
+    resolution: {integrity: sha512-gy/0hRx8+Ye0HlUm3GrfpR4lbmJQ6bJ7F44DmN7GtMxxzWSojLzx0Bhv/hj7Wlj7a2On0FcT8jrz8Y1c1nxCyg==}
     engines: {node: '>=18'}
 
   google-logging-utils@1.1.1:
@@ -3797,8 +3797,8 @@ packages:
     resolution: {integrity: sha512-66if47It7y+Sab3HMkwEXx1kCq9qUC9px8ZXoj1CMrmLmUw81GpbnsNlXnlyZyGbGPGcj+tDD9XsZ23m7GLaJQ==}
     engines: {node: '>=18.0.0'}
 
-  googleapis@154.0.0:
-    resolution: {integrity: sha512-P5N9366ORj7O3vPPdZRH0Bw+CEa177XUxq0lOw4w/2o8CViyp24Vc6SdQYMwijEq1WmFgmlf4jDOQMzhnDgBNQ==}
+  googleapis@154.1.0:
+    resolution: {integrity: sha512-lsgKftflkjR+PNdKDjy5e4zZUQO3BMaNLO0Q91uvr9YCy3aOqtEwkDtfhcBguFtFLsqj+XjdfDu2on6rtHNvYg==}
     engines: {node: '>=18'}
 
   got@14.4.7:
@@ -9794,7 +9794,7 @@ snapshots:
 
   globrex@0.1.2: {}
 
-  google-auth-library@10.1.0:
+  google-auth-library@10.2.0:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
@@ -9812,15 +9812,15 @@ snapshots:
     dependencies:
       extend: 3.0.2
       gaxios: 7.1.1
-      google-auth-library: 10.1.0
+      google-auth-library: 10.2.0
       qs: 6.14.0
       url-template: 2.0.8
     transitivePeerDependencies:
       - supports-color
 
-  googleapis@154.0.0:
+  googleapis@154.1.0:
     dependencies:
-      google-auth-library: 10.1.0
+      google-auth-library: 10.2.0
       googleapis-common: 8.0.0
     transitivePeerDependencies:
       - supports-color
