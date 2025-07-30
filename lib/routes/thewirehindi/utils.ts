@@ -7,16 +7,22 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 export function mapPostToItem(post): DataItem {
+    const featuredMedia = post._embedded?.['wp:featuredmedia']?.find((v) => v.id === post.featured_media);
+    const image = featuredMedia?.source_url;
+    const altText = featuredMedia?.alt_text || featuredMedia?.title?.rendered || 'Featured Image';
     return {
         title: post.title.rendered,
         description: art(path.join(__dirname, 'templates/description.art'), {
             excerpt: post.excerpt.rendered,
             content: post.content.rendered,
+            image,
+            altText,
         }),
         link: post.link,
         pubDate: parseDate(post.date_gmt),
         updated: parseDate(post.modified_gmt),
-        itunes_item_image: post._embedded?.['wp:featuredmedia']?.find((v) => v.id === post.featured_media)?.source_url,
+        itunes_item_image: image,
+        image,
         author:
             post._embedded?.author
                 ?.map((v) => ({
