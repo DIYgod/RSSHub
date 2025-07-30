@@ -7,40 +7,39 @@ import { parseDate } from '@/utils/parse-date';
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 
-const parseContentToHtml = (content: any[]): string => {
-    const escapeHtml = (text: string): string => text?.replace(/&/g, '&amp;')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')?.replace(/'/g, '&quot;')?.replace(/'/g, '&#039;') ?? text;
+const escapeHtml = (text: string): string => text?.replace(/&/g, '&amp;')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')?.replace(/'/g, '&quot;')?.replace(/'/g, '&#039;') ?? text;
 
-    const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
+const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
 
-    const parseImageNode = (node: any): string => {
-        const titleAttr = node.title ? ` title="${escapeHtml(node.title)}"` : '';
-        const altAttr = node.alt ? ` alt="${escapeHtml(node.alt)}"` : '';
-        const styleAttr = node.size ? ` style="width:${node.size.width}px;height:${node.size.height}px;"` : '';
-        return `<img src="${escapeHtml(node.url)}"${titleAttr}${altAttr}${styleAttr}>`;
-    };
+const parseImageNode = (node: any): string => {
+    const titleAttr = node.title ? ` title="${escapeHtml(node.title)}"` : '';
+    const altAttr = node.alt ? ` alt="${escapeHtml(node.alt)}"` : '';
+    const styleAttr = node.size ? ` style="width:${node.size.width}px;height:${node.size.height}px;"` : '';
+    return `<img src="${escapeHtml(node.url)}"${titleAttr}${altAttr}${styleAttr}>`;
+};
 
-    const parseListItemNode = (listItem: any): string => `<li>${parseContentToHtml(listItem.children)}</li>`;
+const parseListItemNode = (listItem: any): string => `<li>${parseContentToHtml(listItem.children)}</li>`;
 
-    const parseListNode = (node: any): string => {
-        const tag = node.ordered ? 'ol' : 'ul';
-        const startAttr = node.ordered && node.start !== 1 ? ` start="${node.start}"` : '';
-        const listItemsHtml = node.children.map((item: any) => parseListItemNode(item)).join('');
-        return `<${tag}${startAttr}>${listItemsHtml}</${tag}>`;
-    };
+const parseListNode = (node: any): string => {
+    const tag = node.ordered ? 'ol' : 'ul';
+    const startAttr = node.ordered && node.start !== 1 ? ` start="${node.start}"` : '';
+    const listItemsHtml = node.children.map((item: any) => parseListItemNode(item)).join('');
+    return `<${tag}${startAttr}>${listItemsHtml}</${tag}>`;
+};
 
-    const parseParagraphChildren = (children: any[]): string =>
-        children
-            .map((child: any) => {
-                if (child.text !== undefined) {
-                    return escapeHtml(child.text);
-                } else if (child.type === 'image') {
-                    return parseImageNode(child);
-                }
-                return '';
-            })
-            .join('');
+const parseParagraphChildren = (children: any[]): string =>
+    children
+        .map((child: any) => {
+            if (child.text !== undefined) {
+                return escapeHtml(child.text);
+            } else if (child.type === 'image') {
+                return parseImageNode(child);
+            }
+            return '';
+        })
+        .join('');
 
-    return (
+const parseContentToHtml = (content: any[]): string => (
         content
             ?.map((node: any) => {
                 switch (node.type) {
@@ -62,7 +61,6 @@ const parseContentToHtml = (content: any[]): string => {
             })
             .join('') ?? ''
     );
-};
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
