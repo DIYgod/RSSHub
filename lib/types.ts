@@ -109,6 +109,7 @@ export type Language =
     | 'zh-TW'
     | 'zh-HK'
     | 'hr'
+    | 'hi'
     | 'cs'
     | 'ar-DZ'
     | 'ar-SA'
