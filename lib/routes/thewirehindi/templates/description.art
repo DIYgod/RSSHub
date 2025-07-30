@@ -1,0 +1,5 @@
+{{ excerpt }}
+{{ if content }}
+
+{{ content }}
+{{ /if }}
