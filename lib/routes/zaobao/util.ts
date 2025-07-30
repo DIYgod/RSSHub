@@ -38,7 +38,7 @@ const parseList = async (
     let data = $('.card-listing .card');
     if (data.length === 0) {
         // for HK version
-        data = $('.clearfix').find('.list-block');
+        data = $('[data-testid="article-list"] article a');
     }
 
     const title = $('meta[property="og:title"]').attr('content');
