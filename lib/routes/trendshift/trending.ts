@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: 'Trending Repositories',
-    maintainers: ['assistant'],
+    maintainers: ['Rjnishant530'],
     handler,
     url: 'trendshift.io/',
 };
