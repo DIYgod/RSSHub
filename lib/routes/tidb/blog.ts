@@ -39,28 +39,27 @@ const parseParagraphChildren = (children: any[]): string =>
         })
         .join('');
 
-const parseContentToHtml = (content: any[]): string => (
-        content
-            ?.map((node: any) => {
-                switch (node.type) {
-                    case 'paragraph':
-                        return `<p>${parseParagraphChildren(node.children)}</p>`;
-                    case 'image':
-                        return parseImageNode(node);
-                    case 'heading':
-                        return `<h${node.depth}>${parseTextChildren(node.children)}</h${node.depth ?? ''}>`;
-                    case 'code':
-                        return `<pre><code${node.lang ? ` class="language-${node.lang}"` : ''}>${parseTextChildren(node.children)}</code></pre>`;
-                    case 'list':
-                        return parseListNode(node);
-                    case 'blockquote':
-                        return `<blockquote>${parseContentToHtml(node.children)}</blockquote>`;
-                    default:
-                        return '';
-                }
-            })
-            .join('') ?? ''
-    );
+const parseContentToHtml = (content: any[]): string =>
+    content
+        ?.map((node: any) => {
+            switch (node.type) {
+                case 'paragraph':
+                    return `<p>${parseParagraphChildren(node.children)}</p>`;
+                case 'image':
+                    return parseImageNode(node);
+                case 'heading':
+                    return `<h${node.depth}>${parseTextChildren(node.children)}</h${node.depth ?? ''}>`;
+                case 'code':
+                    return `<pre><code${node.lang ? ` class="language-${node.lang}"` : ''}>${parseTextChildren(node.children)}</code></pre>`;
+                case 'list':
+                    return parseListNode(node);
+                case 'blockquote':
+                    return `<blockquote>${parseContentToHtml(node.children)}</blockquote>`;
+                default:
+                    return '';
+            }
+        })
+        .join('') ?? '';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
@@ -163,7 +162,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     title,
                     description,
                     pubDate: pubDate ? parseDate(pubDate) : undefined,
-                    link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                    link: new URL(linkUrl, baseUrl).href,
                     category: categories,
                     author: authors,
                     guid,
