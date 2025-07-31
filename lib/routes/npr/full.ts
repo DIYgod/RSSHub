@@ -36,7 +36,7 @@ const getArticleDetail = (link) =>
 
         // Prepend audio to the article if available
         const primaryaudio = $('#headlineaudio');
-        const audio = primaryaudio.length > 0 ? $('#headlineaudio').html() + '<p></p>' : '';
+        const audio = primaryaudio.length > 0 ? $('#headlineaudio').html() + '<br>' : '';
 
         // replace video
         const regex = /\?storyId=(\d+)&amp;mediaId=(\d+)/;
