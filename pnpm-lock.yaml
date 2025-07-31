@@ -48,8 +48,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
-        specifier: 1.17.1
-        version: 1.17.1(hono@4.8.10)
+        specifier: 1.18.0
+        version: 1.18.0(hono@4.8.10)
       '@hono/zod-openapi':
         specifier: 0.19.10
         version: 0.19.10(hono@4.8.10)(zod@3.25.76)
@@ -1443,8 +1443,8 @@ packages:
     resolution: {integrity: sha512-Ul5l+lHEcw3L5+k8POx6r74mxEYKG5kOb6Xpy2gCRW6zweT6TEhAf8vhxGgjhqrd/VO/Dirhsb+1hNpD1ue9hw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/node-server@1.17.1':
-    resolution: {integrity: sha512-SY79W/C+2b1MyAzmIcV32Q47vO1b5XwLRwj8S9N6Jr5n1QCkIfAIH6umOSgqWZ4/v67hg6qq8Ha5vZonVidGsg==}
+  '@hono/node-server@1.18.0':
+    resolution: {integrity: sha512-CJ0H3/ouk/JWnyiuYOJLdpuWhO2D2BTNigHaFixnW3CrwZb+E+4s/KoFkcikHXcVmXoxaLJx1nlGa3JChEFtFA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -7166,7 +7166,7 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
-  '@hono/node-server@1.17.1(hono@4.8.10)':
+  '@hono/node-server@1.18.0(hono@4.8.10)':
     dependencies:
       hono: 4.8.10
 
