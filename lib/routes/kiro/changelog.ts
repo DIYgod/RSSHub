@@ -108,7 +108,7 @@ export const route: Route = {
     example: '/kiro/changelog',
     parameters: undefined,
     description: undefined,
-    categories: ['programming'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
