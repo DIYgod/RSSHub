@@ -22371,6 +22371,15 @@
           "/blog/"
         ],
         "target": "/kiro/blog"
+      },
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/",
+          "/changelog/"
+        ],
+        "target": "/kiro/changelog"
       }
     ]
   },

@@ -4576,6 +4576,9 @@
   "/kiro/blog": [
     "nczitzk"
   ],
+  "/kiro/changelog": [
+    "nczitzk"
+  ],
   "/kisskiss/blog/:category?": [
     "keocheung"
   ],
