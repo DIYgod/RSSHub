@@ -4,6 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getCookies, setCookies } from '@/utils/puppeteer-utils';
 import logger from '@/utils/logger';
 let cookie;
+import ofetch from '@/utils/ofetch';
 
 const baseUrl = 'https://www.cw.com.tw';
 
@@ -89,20 +90,12 @@ const parseItems = (list, browser, tryGet) =>
     Promise.all(
         list.map((item) =>
             tryGet(item.link, async () => {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                const response = await ofetch(item.link, {
+                    headers: {
+                        Cookie: await getCookie(browser, tryGet),
+                        'User-Agent': browser.userAgent(),
+                    },
                 });
-                await setCookies(page, cookie, 'cw.com.tw');
-                logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
-                    waitUntil: 'domcontentloaded',
-                });
-                await page.waitForSelector('.article__head .container');
-
-                const response = await page.evaluate(() => document.documentElement.innerHTML);
-                await page.close();
                 const $ = load(response);
 
                 const meta = JSON.parse($('head script[type="application/ld+json"]').eq(0).text());
