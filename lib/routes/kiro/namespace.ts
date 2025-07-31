@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'Kiro',
     url: 'kiro.dev',
-    categories: ['program-update'],
+    categories: ['programming'],
     description: 'The AI IDE for prototype to production',
     lang: 'en',
 };
