@@ -1,0 +1,9 @@
+{{@ excerpt }}
+<br><br>
+{{ if image }}
+<img src="{{ image }}" alt="{{ altText }}" style="max-width: 100%; height: auto;">
+<br><br>
+{{ /if }}
+{{ if content }}
+{{@ content }}
+{{ /if }}
