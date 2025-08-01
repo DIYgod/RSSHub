@@ -55,6 +55,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // Doesn't hit the cache? We need to let others know!
     await cacheModule.globalCache.set(controlKey, '1', config.cache.requestTimeout);
 
+    // let routers control cache
+    ctx.set('cacheKey', key);
+    ctx.set('cacheControlKey', controlKey);
+
     try {
         await next();
     } catch (error) {
