@@ -93,7 +93,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const description: string | undefined = item.summary;
         const pubDate: number | string = item.publishedAt;
         const linkUrl: string | undefined = item.slug ? `blog/${item.slug}` : undefined;
-        const categories: string[] = [...new Set([item.category?.name, ...(item.tags?.map((c) => c.name) as string[])].filter(Boolean))];
+        const categories: string[] = [...new Set([item.category?.name, ...(item.tags ?? []).map((c) => c.name)].filter(Boolean))];
         const authors: DataItem['author'] = item.author?.username
             ? [
                   {
@@ -145,7 +145,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
                 const pubDate: number | string = detailResponse.publishedAt;
                 const linkUrl: string | undefined = `blog/${detailResponse.slug}`;
-                const categories: string[] = [...new Set([detailResponse.category?.name, ...(detailResponse.tags?.map((c) => c.name) as string[])].filter(Boolean))];
+                const categories: string[] = [...new Set([detailResponse.category?.name, ...(detailResponse.tags ?? []).map((c) => c.name)].filter(Boolean))];
                 const authors: DataItem['author'] = detailResponse.author?.username
                     ? [
                           {
