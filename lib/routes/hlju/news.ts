@@ -148,7 +148,7 @@ async function handler(ctx) {
                     let pubDate = item.pubDate;
                     if (!pubDate) {
                         const timeText = $detail('body').text();
-                        const dateMatch = timeText.match(/(\d{4})[年\-\/](\d{1,2})[月\-\/](\d{1,2})[日\s]/);
+                        const dateMatch = timeText.match(/(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})[日\s]/);
                         if (dateMatch) {
                             pubDate = parseDate(`${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`);
                         }
