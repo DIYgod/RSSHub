@@ -17,11 +17,9 @@ export const route: Route = {
                 { value: 'rwfc', label: '人物风采' },
                 { value: 'xwdt', label: '新闻动态' },
                 { value: 'jxky', label: '教学科研' },
-                { value: 'mtjj', label: '媒体聚焦' },
                 { value: 'xyjw', label: '学院经纬' },
                 { value: 'jlhz', label: '交流合作' },
                 { value: 'cxcy', label: '创新创业' },
-                { value: 'ztrd', label: '专题热点' },
             ],
         },
     },
@@ -55,11 +53,9 @@ async function handler(ctx) {
         rwfc: '人物风采',
         xwdt: '新闻动态',
         jxky: '教学科研',
-        mtjj: '媒体聚焦',
         xyjw: '学院经纬',
         jlhz: '交流合作',
         cxcy: '创新创业',
-        ztrd: '专题热点',
     };
 
     const categoryName = categoryMap[category] || '黑大要闻';
@@ -82,7 +78,9 @@ async function handler(ctx) {
         const link = item.attr('href');
         const title = item.text().trim();
 
-        if (!title || !link || title.length < 5) {return;}
+        if (!title || !link || title.length < 5) {
+            return;
+        }
 
         // 查找日期信息 - 在同一行或附近
         const parent = item.parent();
