@@ -3,7 +3,7 @@ services:
         # two ways to enable puppeteer:
         # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
         # * (consumes more disk space and memory) leave everything unchanged
-        image: diygod/rsshub
+        image: diygod/rsshub # or ghcr.io/diygod/rsshub
         restart: always
         ports:
             - "1200:1200"
