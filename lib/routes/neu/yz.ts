@@ -35,7 +35,7 @@ const parsePage = async (items, type) => {
                 pubDate: Date | null;
                 author: string;
             } = {
-                title: title,
+                title,
                 link: url,
                 description: '',
                 pubDate: (() => {
@@ -51,19 +51,19 @@ const parsePage = async (items, type) => {
                         <a href="${url}">点击进入下载地址传送门～</a>
                     `;
                 return resultItem;
-            }else{
-                return cache.tryGet(url, async () => {
+            } else {
+                return await cache.tryGet(url, async () => {
                     const result = await got(url);
                     const $ = load(result.data);
                     const description = cleanEntryContent($);
                     resultItem.description = description;
-                    if(type !== DOWNLOAD_ID){
+                    if (type !== DOWNLOAD_ID) {
                         const dateText = $('.arti_update').text().match(/(\d{4}-\d{2}-\d{2})/);
                         const date = dateText ? dateText[1] : '';
                         const authorText = $('.arti_publisher').text().match(/[:：]?\s*(.+)/);
                         const author = authorText ? authorText[1].trim() : '';
                         resultItem.pubDate = timezone(parseDate(date), +8);
-                        resultItem.author = author;                        
+                        resultItem.author = author;
                     }
                     return resultItem;
                 })
@@ -88,7 +88,7 @@ const handler = async (ctx) => {
     return {
         title: `${title}-东北大学研究生招生信息网`,
         description: title,
-        link: "http://yz.neu.edu.cn",
+        link: BASE_URL,
         item: results,
     };
 };
@@ -96,14 +96,14 @@ const handler = async (ctx) => {
 const cleanEntryContent = ($) => {
     const entry = $('.entry');
     if (!entry || entry.length === 0) {
-        return { description: '' };
+        return '';
     }
     entry.find('span').removeAttr('style').removeAttr('class');
     entry.find('div').each((_, el) => {
         const html = $(el).html();
         $(el).replaceWith(html);
     });
-    entry.find('p').removeAttr('style').removeAttr('class');    
+    entry.find('p').removeAttr('style').removeAttr('class');
     entry.find('a').removeAttr('style').removeAttr('class');
     entry.find('td').removeAttr('bgcolor');
     entry.find('img').each((_, el) => {
@@ -124,8 +124,10 @@ const cleanEntryContent = ($) => {
         const src = div.attr('sudy-wp-src');
         if (src) {
             const videoUrl = BASE_URL + src;
-            const width = div.attr('style')?.match(/width:\s*(\d+)px/)?.[1] || '600';
-            const height = div.attr('style')?.match(/height:\s*(\d+)px/)?.[1] || '400';
+            const widthMatch = div.attr('style')?.match(/width:\s*(\d+)px/);
+            const width = widthMatch && widthMatch[1] ? widthMatch[1] : '600';
+            const heightMatch = div.attr('style')?.match(/height:\s*(\d+)px/);
+            const height = heightMatch && heightMatch[1] ? heightMatch[1] : '400';
             const videoTag = `
                 <video controls width="${width}" height="${height}" style="max-width: 100%;margin-left: auto;margin-right: auto;">
                     <source src="${videoUrl}" type="video/mp4">
