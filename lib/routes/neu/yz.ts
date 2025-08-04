@@ -21,76 +21,61 @@ const idMp = {
     phd2: PhD2_ID,
 };
 
-const parseGeneralPage = async(items) => {
+const parsePage = async (items, type) => {
     const results = await Promise.all(
         items.map(async (item) => {
             const $ = load(item);
             const aTag = $('span.Article_Title > a');
             const title = aTag.attr('title');
             const url = BASE_URL + aTag.attr('href');
-            const data = await cache.tryGet(url, async () => {
-                const result = await got(url);
-                const $ = load(result.data);
-                const dateText = $('.arti_update').text().match(/(\d{4}-\d{2}-\d{2})/);
-                const date = dateText ? dateText[1] : '';
-                const authorText = $('.arti_publisher').text().match(/[:：]?\s*(.+)/);
-                const author = authorText ? authorText[1].trim() : '';
-                const { description } = cleanEntryContent($);
-                return { description, date, author};
-            });
-            const description = data.description;
-            const pubDate = timezone(parseDate(data.date), +8);
-            const author = data.author;
-            return {
-                title,
+            const resultItem: {
+                title: string;
+                link: string;
+                description: string;
+                pubDate: Date | null;
+                author: string;
+            } = {
+                title: title,
                 link: url,
-                description,
-                pubDate,
-                author,
-            };
+                description: '',
+                pubDate: (() => {
+                    const sTag = $('span.Article_PublishDate');
+                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), +8) : null;
+                    return pubDate;
+                })(),
+                author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
+            }
+            if (type === DOWNLOAD_ID && /\.(pdf|docx?|xlsx?|zip|rar|7z)$/i.test(url)) {
+                resultItem.description = `
+                        <p>${title}</p><br/>
+                        <a href="${url}">点击进入下载地址传送门～</a>
+                    `;
+                return resultItem;
+            }else{
+                return cache.tryGet(url, async () => {
+                    const result = await got(url);
+                    const $ = load(result.data);
+                    const description = cleanEntryContent($);
+                    resultItem.description = description;
+                    if(type !== DOWNLOAD_ID){
+                        const dateText = $('.arti_update').text().match(/(\d{4}-\d{2}-\d{2})/);
+                        const date = dateText ? dateText[1] : '';
+                        const authorText = $('.arti_publisher').text().match(/[:：]?\s*(.+)/);
+                        const author = authorText ? authorText[1].trim() : '';
+                        resultItem.pubDate = timezone(parseDate(date), +8);
+                        resultItem.author = author;                        
+                    }
+                    return resultItem;
+                })
+            }
         })
     );
     return results;
-};
+}
 
-const parseDownloadPage = async(items) => {
-    const results = await Promise.all(
-        items.map(async (item) => {
-            const $ = load(item);
-            const aTag = $('span.Article_Title > a');
-            const title = aTag.attr('title');
-            const url = BASE_URL + aTag.attr('href');
-            const isFile = /\.(pdf|docx?|xlsx?|zip|rar|7z)$/i.test(url);
-            const sTag = $('span.Article_PublishDate');
-            const pubDate = timezone(parseDate(sTag.text()), +8);
-            let description: string;
-            if (isFile) {
-                description = `
-                    <p>${title}</p><br/>
-                    <a href="${url}">点击进入下载地址传送门～</a>
-                `;
-            } else {
-                const data = await cache.tryGet(url, async () => {
-                const result = await got(url);
-                const $ = load(result.data);
-                return cleanEntryContent($);
-                });
-                description = data.description;
-            }
-            return {
-                title,
-                link: url,
-                description,
-                pubDate,
-                author: DOWNLOAD_AUTHOR,
-            };
-    }));
-    return results;
-};
-
-const handler = async(ctx) => {
+const handler = async (ctx) => {
     let type = ctx.req.param('type');
-    if (idMp[type] !== undefined) {
+    if (idMp[type]) {
         type = idMp[type];
     }
     const newsUrl = `${BASE_URL}/${type}/list.htm`;
@@ -99,8 +84,7 @@ const handler = async(ctx) => {
     const $ = load(data);
     const title = $('title').text();
     const items = $('div.col_news_list ul.wp_article_list li').toArray();
-    const parseFn = type === DOWNLOAD_ID ? parseDownloadPage : parseGeneralPage;
-    const results = await parseFn(items);
+    const results = await parsePage(items, type);
     return {
         title: `${title}-东北大学研究生招生信息网`,
         description: title,
@@ -114,15 +98,14 @@ const cleanEntryContent = ($) => {
     if (!entry || entry.length === 0) {
         return { description: '' };
     }
-    entry.find('span').each((_, el) => {
-        const text = $(el).text();
-        $(el).replaceWith(text);
-    });
+    entry.find('span').removeAttr('style').removeAttr('class');
     entry.find('div').each((_, el) => {
         const html = $(el).html();
         $(el).replaceWith(html);
     });
-    entry.find('p').removeAttr('style').removeAttr('class');
+    entry.find('p').removeAttr('style').removeAttr('class');    
+    entry.find('a').removeAttr('style').removeAttr('class');
+    entry.find('td').removeAttr('bgcolor');
     entry.find('img').each((_, el) => {
         const src = $(el).attr('src');
         const alt = $(el).attr('alt') || '';
@@ -152,7 +135,7 @@ const cleanEntryContent = ($) => {
             div.replaceWith(videoTag);
         }
     });
-    return { description: entry.html() };
+    return entry.html();
 };
 
 export const route: Route = {
@@ -168,14 +151,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar:[
+    radar: [
         {
-            source:['yz.neu.edu.cn/:type/list.htm', ],
+            source: ['yz.neu.edu.cn/:type/list.htm',],
             target: '/yz/:type',
         },
     ],
     name: '研究生招生信息网',
-    url:'yz.neu.edu.cn',
+    url: 'yz.neu.edu.cn',
     maintainers: ['paintstar'],
     handler,
     description: `
@@ -187,4 +170,3 @@ export const route: Route = {
 | 博士简章                   | phd2        |
 | 下载中心                   | download    |`,
 };
-
