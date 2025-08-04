@@ -44,7 +44,7 @@ const parsePage = async (items, type) => {
                     return pubDate;
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
-            }
+            };
             if (type === DOWNLOAD_ID && /\.(pdf|docx?|xlsx?|zip|rar|7z)$/i.test(url)) {
                 resultItem.description = `
                         <p>${title}</p><br/>
@@ -66,12 +66,12 @@ const parsePage = async (items, type) => {
                         resultItem.author = author;
                     }
                     return resultItem;
-                })
+                });
             }
         })
     );
     return results;
-}
+};
 
 const handler = async (ctx) => {
     let type = ctx.req.param('type');
