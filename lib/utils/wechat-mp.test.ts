@@ -286,12 +286,12 @@ describe('wechat-mp', () => {
             '<div><p>test</p></div>' +
             '<script>const test = "test"</script>';
         const expectedHtmlSection =
-            expectedCodeSection + '<p>test</p>' + '<div><p>test</p></div>' + '<div><div>test</div></div>' + '<div><div><p>test</p></div></div>' + '<div><div><p>test</p></div></div>' + '<p>test</p>' + '<div><p>test</p></div>';
+            `${expectedCodeSection}<p>test</p><div><p>test</p></div><div><div>test</div></div><div><div><p>test</p></div></div><div><div><p>test</p></div></div><p>test</p><div><p>test</p></div>`;
         let $ = load(divHeader + htmlSection + divFooter);
         expect(fixArticleContent(htmlSection)).toBe(expectedHtmlSection);
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);
 
-        const htmlImg = '<img alt="test" data-src="http://rsshub.test/test.jpg" src="http://rsshub.test/test.jpg">' + '<img alt="test" data-src="http://rsshub.test/test.jpg">' + '<img alt="test" src="http://rsshub.test/test.jpg">';
+        const htmlImg = `<img alt="test" data-src="http://rsshub.test/test.jpg" src="http://rsshub.test/test.jpg"><img alt="test" data-src="http://rsshub.test/test.jpg"><img alt="test" src="http://rsshub.test/test.jpg">`;
         const expectedHtmlImg = Array.from({ length: 3 + 1 }).join('<img alt="test" src="http://rsshub.test/test.jpg">');
         $ = load(divHeader + htmlImg + divFooter);
         expect(fixArticleContent(htmlImg)).toBe(expectedHtmlImg);
@@ -312,13 +312,12 @@ describe('wechat-mp', () => {
         const shortUrlWithQueryAndHash = shortUrl + '?foo=bar#baz';
         expect(normalizeUrl(shortUrlWithQueryAndHash)).toBe(shortUrl);
 
-        const longUrlShortened = mpArticleRoot + '?__biz=MzA4MjQxNjQzMA==' + '&mid=2768628484' + '&idx=1' + '&sn=93dcc54ce807f7793739ee2fd2377056';
-        const longUrl = longUrlShortened + '&chksm=bf774d458800c453c94cae866093680e6cac6a1f02cab7e82683f82f35f7f487e2daa1dcde20' + '&scene=75' + '#wechat_redirect';
+        const longUrlShortened = `${mpArticleRoot}?__biz=MzA4MjQxNjQzMA==&mid=2768628484&idx=1&sn=93dcc54ce807f7793739ee2fd2377056`;
+        const longUrl = `${longUrlShortened}&chksm=bf774d458800c453c94cae866093680e6cac6a1f02cab7e82683f82f35f7f487e2daa1dcde20&scene=75#wechat_redirect`;
         expect(normalizeUrl(longUrl)).toBe(longUrlShortened);
 
-        const temporaryUrlShortened =
-            mpArticleRoot + '?src=11' + '&timestamp=1620536401' + '&ver=3057' + '&signature=vCDI8FQcumnNGv4ScvFP-swQRlirdQSqTfjS8m-oFzgHMkqlNM3ljzjSevcjXLC-z-n0RzzMkNt-lwKMUaskfaqFFrpYZNq4ZCKkFFGj8L*KvH780aEUBJFvWTGmMGLC';
-        const temporaryUrl = temporaryUrlShortened + '&new=1#foo';
+        const temporaryUrlShortened = `${mpArticleRoot}?src=11&timestamp=1620536401&ver=3057&signature=vCDI8FQcumnNGv4ScvFP-swQRlirdQSqTfjS8m-oFzgHMkqlNM3ljzjSevcjXLC-z-n0RzzMkNt-lwKMUaskfaqFFrpYZNq4ZCKkFFGj8L*KvH780aEUBJFvWTGmMGLC`;
+        const temporaryUrl = `${temporaryUrlShortened}&new=1#foo`;
         expect(normalizeUrl(temporaryUrl)).toBe(temporaryUrlShortened);
 
         const somethingElse = mpRoot + '/something/else?__biz=foo&mid=bar&idx=baz&sn=qux';
