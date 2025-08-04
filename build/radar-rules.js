@@ -5312,7 +5312,7 @@
         source:[ "/:name" ],
         target:"/curius/links/:name" } ] },
   "cursor.com":{ _name:"Cursor",
-    www:[ { title:"Changelog",
+    ".":[ { title:"Changelog",
         docs:"https://docs.rsshub.app/routes/program-update",
         source:[ "/changelog" ],
         target:"/cursor/changelog" } ] },
