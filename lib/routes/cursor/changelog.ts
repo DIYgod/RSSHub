@@ -1,4 +1,4 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import { type Data, type DataItem, type Route, ViewType, type Language } from '@/types';
 
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -10,7 +10,7 @@ import { type Context } from 'hono';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://www.cursor.com';
+    const baseUrl: string = 'https://cursor.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;
 
     const response = await ofetch(targetUrl, {
@@ -19,24 +19,34 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const items: DataItem[] = $('article.relative')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el): DataItem => {
             const $el: Cheerio<Element> = $(el);
 
-            const version: string = $el.find('div.items-center p').first().text();
+            let version: string = '';
+            let pubDateStr: string | undefined;
 
-            const title: string = `[${version}] ${$el
-                .find(String.raw`h2 a.hover\:underline`)
-                .contents()
-                .first()
-                .text()}`;
-            const pubDateStr: string | undefined = $el.find('div.inline-flex p').first().text().trim();
-            const linkUrl: string | undefined = $el.find(String.raw`h2 a.hover\:underline`).attr('href');
-            const guid: string = `cursor-changelog-${version}`;
+            $el.find('div').each((_, div) => {
+                const text = $(div).text().trim();
+                const dateVersionMatch = text.match(/^(\w+\s+\d{1,2},\s+\d{4})(\d+\.\d+)$/);
+                if (dateVersionMatch) {
+                    pubDateStr = dateVersionMatch[1];
+                    version = dateVersionMatch[2];
+                    return false; // Stop after finding first match
+                }
+            });
+
+            const linkEl = $el.find('a[href^="/changelog/"]').first();
+            const titleText = linkEl.length ? linkEl.text().trim() : $el.find('h2').first().text().trim();
+
+            const title: string = version ? `[${version}] ${titleText}` : titleText;
+
+            const linkUrl: string | undefined = linkEl.attr('href');
+            const guid: string = `cursor-changelog-${version || 'unknown'}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const $h2El = $el.find('h2').first();
@@ -64,8 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             };
 
             return processedItem;
-        })
-        .filter((_): _ is DataItem => true);
+        });
 
     return {
         title: $('title').text(),
@@ -81,7 +90,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 export const route: Route = {
     path: '/changelog',
     name: 'Changelog',
-    url: 'www.cursor.com',
+    url: 'cursor.com',
     maintainers: ['p3psi-boo', 'nczitzk'],
     handler,
     example: '/cursor/changelog',
@@ -99,7 +108,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.cursor.com/changelog'],
+            source: ['cursor.com/changelog'],
             target: '/changelog',
         },
     ],
