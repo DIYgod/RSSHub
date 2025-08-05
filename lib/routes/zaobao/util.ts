@@ -35,10 +35,10 @@ const parseList = async (
 }> => {
     const response = await got_ins.get(baseUrl + sectionUrl);
     const $ = load(response.data);
-    let data = $('.card-listing .card');
+    let data = $('.card-listing .card .content-header a');
     if (data.length === 0) {
         // for HK version
-        data = $('[data-testid="article-list"] article a');
+        data = $('[data-testid="article-list"] article a.article-link');
     }
 
     const title = $('meta[property="og:title"]').attr('content');
