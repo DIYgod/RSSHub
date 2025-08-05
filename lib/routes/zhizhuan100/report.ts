@@ -21,11 +21,7 @@ export const route: Route = {
 async function handler() {
     const urlData = await ofetch('https://www.zhizhuan100.com.cn/analysis');
 
-    const bodyJsUrl = urlData
-        ? ([...new JSDOM(urlData).window.document.querySelectorAll('script[src]')]
-              .find((s) => s.getAttribute('src')?.includes('Body.js'))
-              ?.getAttribute('src') ?? null)
-        : null;
+    const bodyJsUrl = urlData ? ([...new JSDOM(urlData).window.document.querySelectorAll('script[src]')].find((s) => s.getAttribute('src')?.includes('Body.js'))?.getAttribute('src') ?? null) : null;
 
     const responseData = await ofetch(bodyJsUrl?.toString() ?? '', {
         headers: {
@@ -37,7 +33,7 @@ async function handler() {
     });
 
     // 解析HTML内容
-    const decodedData = responseData.replaceAll(/\\u([0-9a-fA-F]{4})/g, (match, code) => String.fromCharCode(Number.parseInt(code, 16)));
+    const decodedData = responseData.replaceAll(/\\u([0-9a-fA-F]{4})/g, (match, code) => String.fromCodePoint(Number.parseInt(code, 16)));
     // 从document.write()中提取HTML内容
     const htmlMatch = decodedData.match(/document\.write\('(.*)'\);/s);
     if (!htmlMatch) {
