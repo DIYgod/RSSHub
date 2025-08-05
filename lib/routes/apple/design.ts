@@ -47,7 +47,7 @@ async function handler() {
         });
 
     return {
-        item: items,
+        item: items.splice(0, 50),
         link: LINK,
         title: 'Apple design updates',
     };
