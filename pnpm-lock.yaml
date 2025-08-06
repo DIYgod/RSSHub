@@ -457,8 +457,8 @@ importers:
         specifier: 7.1.4
         version: 7.1.4
       tsdown:
-        specifier: 0.13.2
-        version: 0.13.2(typescript@5.8.3)
+        specifier: 0.13.3
+        version: 0.13.3(typescript@5.8.3)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -5210,8 +5210,8 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rolldown-plugin-dts@0.15.1:
-    resolution: {integrity: sha512-X/oIfoqsEWb46aWXvdgKSN/TcF3Z50Mikk30KZcceVBgypEl9Tscvt3+o6pZzyJxZV3m+Kc+ftlHBBVQUGpXtw==}
+  rolldown-plugin-dts@0.15.3:
+    resolution: {integrity: sha512-qILn8tXV828UpzgSN7R3KeCl1lfc2eRhPJDGO78C6PztEQH51gBTG3tyQDIVIAYY58afhOsWW/zTYpfewTGCdg==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
       '@typescript/native-preview': '>=7.0.0-dev.20250601.1'
@@ -5661,8 +5661,8 @@ packages:
       typescript:
         optional: true
 
-  tsdown@0.13.2:
-    resolution: {integrity: sha512-sXZKvkqxxKMBL6I/AzXJnC+/9i6bLO8an+Jg4JSJDkEc99e3Y5bACQMTQyE1IXJE+7F6IRZ1P8AJQu31eQqv8A==}
+  tsdown@0.13.3:
+    resolution: {integrity: sha512-3ujweLJB70DdWXX3v7xnzrFhzW1F/6/99XhGeKzh1UCmZ+ttFmF7Czha7VaunA5Dq/u+z4aNz3n4GH748uivYg==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -11387,7 +11387,7 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rolldown-plugin-dts@0.15.1(rolldown@1.0.0-beta.31)(typescript@5.8.3):
+  rolldown-plugin-dts@0.15.3(rolldown@1.0.0-beta.31)(typescript@5.8.3):
     dependencies:
       '@babel/generator': 7.28.0
       '@babel/parser': 7.28.0
@@ -11875,7 +11875,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.3
 
-  tsdown@0.13.2(typescript@5.8.3):
+  tsdown@0.13.3(typescript@5.8.3):
     dependencies:
       ansis: 4.1.0
       cac: 6.7.14
@@ -11885,7 +11885,7 @@ snapshots:
       empathic: 2.0.0
       hookable: 5.5.3
       rolldown: 1.0.0-beta.31
-      rolldown-plugin-dts: 0.15.1(rolldown@1.0.0-beta.31)(typescript@5.8.3)
+      rolldown-plugin-dts: 0.15.3(rolldown@1.0.0-beta.31)(typescript@5.8.3)
       semver: 7.7.2
       tinyexec: 1.0.1
       tinyglobby: 0.2.14
