@@ -3719,6 +3719,9 @@
   "/hkushop/vinyl/:cat?": [
     "gideonsenku"
   ],
+  "/hlju/news/:category?": [
+    "LCMs-YoRHa"
+  ],
   "/hljucm/yjsy/:category?": [
     "nczitzk"
   ],
