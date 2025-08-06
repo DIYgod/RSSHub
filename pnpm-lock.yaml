@@ -352,8 +352,8 @@ importers:
         specifier: 10.5.13
         version: 10.5.13
       '@types/lint-staged':
-        specifier: 13.3.0
-        version: 13.3.0
+        specifier: 14.0.0
+        version: 14.0.0
       '@types/mailparser':
         specifier: 3.4.6
         version: 3.4.6
@@ -2301,8 +2301,9 @@ packages:
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
-  '@types/lint-staged@13.3.0':
-    resolution: {integrity: sha512-WxGjVP+rA4OJlEdbZdT9MS9PFKQ7kVPhLn26gC+2tnBWBEFEj/KW+IbFfz6sxdxY5U6V7BvyF+3BzCGsAMHhNg==}
+  '@types/lint-staged@14.0.0':
+    resolution: {integrity: sha512-N8jBZIy9SWiPqO40VQdWiu7lXwzjDALPkHYDU9Z1UMPYmoFUSPLGMVXhuWNQR7dJrCFiphQ79goJPgr0rXC0Wg==}
+    deprecated: This is a stub types definition. lint-staged provides its own type definitions, so you do not need this installed.
 
   '@types/mailparser@3.4.6':
     resolution: {integrity: sha512-wVV3cnIKzxTffaPH8iRnddX1zahbYB1ZEoAxyhoBo3TBCBuK6nZ8M8JYO/RhsCuuBVOw/DEN/t/ENbruwlxn6Q==}
@@ -8084,7 +8085,11 @@ snapshots:
 
   '@types/linkify-it@5.0.0': {}
 
-  '@types/lint-staged@13.3.0': {}
+  '@types/lint-staged@14.0.0':
+    dependencies:
+      lint-staged: 16.1.4
+    transitivePeerDependencies:
+      - supports-color
 
   '@types/mailparser@3.4.6':
     dependencies:
