@@ -38,7 +38,7 @@ export const route: Route = {
         },
     ],
     name: '新闻网',
-    maintainers: ['nczitzk'],
+    maintainers: ['LCMs-YoRHa'],
     handler,
 };
 
