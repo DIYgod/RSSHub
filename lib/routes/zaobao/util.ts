@@ -111,6 +111,8 @@ const parseList = async (
                 if (articleBodyNode.length === 0) {
                     // for HK version
                     $1('.read-on-app-cover').remove();
+                    $1('astro-island').remove();
+                    $1('.further-reading').remove();
                     articleBodyNode = $1('.article-body');
                 }
 
