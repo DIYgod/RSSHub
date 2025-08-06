@@ -178,7 +178,7 @@
         "eslint-plugin-prettier": "5.5.3",
         "eslint-plugin-unicorn": "60.0.0",
         "eslint-plugin-yml": "1.18.0",
-        "fs-extra": "11.3.0",
+        "fs-extra": "11.3.1",
         "globals": "16.3.0",
         "got": "14.4.7",
         "husky": "9.1.7",
