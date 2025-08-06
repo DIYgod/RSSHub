@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
+import md5 from '@/utils/md5';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -37,6 +38,7 @@ async function handler() {
 
                     return {
                         description,
+                        guid: md5(`${title}${description}${date}`),
                         link,
                         pubDate: parseDate(date),
                         title,
