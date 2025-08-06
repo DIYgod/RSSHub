@@ -351,9 +351,6 @@ importers:
       '@types/jsrsasign':
         specifier: 10.5.13
         version: 10.5.13
-      '@types/lint-staged':
-        specifier: 13.3.0
-        version: 13.3.0
       '@types/mailparser':
         specifier: 3.4.6
         version: 3.4.6
@@ -2300,9 +2297,6 @@ packages:
 
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
-
-  '@types/lint-staged@13.3.0':
-    resolution: {integrity: sha512-WxGjVP+rA4OJlEdbZdT9MS9PFKQ7kVPhLn26gC+2tnBWBEFEj/KW+IbFfz6sxdxY5U6V7BvyF+3BzCGsAMHhNg==}
 
   '@types/mailparser@3.4.6':
     resolution: {integrity: sha512-wVV3cnIKzxTffaPH8iRnddX1zahbYB1ZEoAxyhoBo3TBCBuK6nZ8M8JYO/RhsCuuBVOw/DEN/t/ENbruwlxn6Q==}
@@ -8083,8 +8077,6 @@ snapshots:
   '@types/jsrsasign@10.5.13': {}
 
   '@types/linkify-it@5.0.0': {}
-
-  '@types/lint-staged@13.3.0': {}
 
   '@types/mailparser@3.4.6':
     dependencies:
