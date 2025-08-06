@@ -12,6 +12,20 @@
       }
     ]
   },
+  "121.com.cn": {
+    "_name": "深圳台风网",
+    "tf": [
+      {
+        "title": "深圳天气直播",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/",
+          "/web/weatherLive"
+        ],
+        "target": "/121/weatherLive"
+      }
+    ]
+  },
   "163.com": {
     "_name": "网易公开课",
     "ds": [
