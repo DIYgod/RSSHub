@@ -106,6 +106,7 @@ const parseList = async (
                 $1('#video-freemium-player').remove();
                 $1('script').remove();
                 $1('.bff-google-ad').remove();
+                $1('.bff-recommend-article').remove();
 
                 let articleBodyNode = $1('.articleBody');
                 if (articleBodyNode.length === 0) {
