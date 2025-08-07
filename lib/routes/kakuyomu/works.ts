@@ -58,8 +58,10 @@ async function handler(ctx: Context): Promise<Data> {
                     const description = $('.widget-episodeBody').html();
                     return {
                         title: item.title,
+                        link: episodeUrl,
                         description,
                         pubDate: parseDate(item.publishedAt),
+                        guid: item.id,
                     };
                 });
             })
