@@ -10815,10 +10815,17 @@
         "title": "Posts",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/:source/user/:id",
           "/"
         ],
         "target": "/coomer/:source?/:id?"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:source/user/:id"
+        ],
+        "target": "/coomer/:source/:id"
       }
     ]
   },
@@ -22333,7 +22340,7 @@
         "source": [
           "/"
         ],
-        "target": "/kemono/kemono"
+        "target": "/kemono/:source?/:id?/:type?"
       },
       {
         "title": "Posts",
@@ -22341,7 +22348,7 @@
         "source": [
           "/:source/user/:id"
         ],
-        "target": "/kemono/kemono/:source/:id"
+        "target": "/kemono/:source/:id"
       },
       {
         "title": "Posts",
@@ -22349,7 +22356,7 @@
         "source": [
           "/:source/user/:id/announcements"
         ],
-        "target": "/kemono/kemono/:source/:id/announcements"
+        "target": "/kemono/:source/:id/announcements"
       },
       {
         "title": "Posts",
@@ -22357,7 +22364,7 @@
         "source": [
           "/:source/user/:id/fancards"
         ],
-        "target": "/kemono/kemono/:source/:id/fancards"
+        "target": "/kemono/:source/:id/fancards"
       }
     ]
   },
