@@ -35,10 +35,10 @@ const parseList = async (
 }> => {
     const response = await got_ins.get(baseUrl + sectionUrl);
     const $ = load(response.data);
-    let data = $('.card-listing .card');
+    let data = $('.card-listing .card .content-header a');
     if (data.length === 0) {
         // for HK version
-        data = $('[data-testid="article-list"] article a');
+        data = $('[data-testid="article-list"] article a.article-link');
     }
 
     const title = $('meta[property="og:title"]').attr('content');
@@ -47,7 +47,7 @@ const parseList = async (
         data.toArray().map((item) => {
             const $item = $(item);
             // addBack: for HK version
-            let link = $item.find('a').addBack('a')[0].attribs.href;
+            let link = $item.attr('href');
 
             if (link[0] !== '/') {
                 // https://www.zaobao.com/interactive-graphics
@@ -88,7 +88,7 @@ const parseList = async (
                     // HK
                     title = $1('h1.article-title').text();
                     const jsonText = $1("head script[type='application/ld+json']")
-                        .eq(1)
+                        .eq(0)
                         .text()
                         .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
                     time = new Date(JSON.parse(jsonText)?.datePublished);
@@ -106,11 +106,14 @@ const parseList = async (
                 $1('#video-freemium-player').remove();
                 $1('script').remove();
                 $1('.bff-google-ad').remove();
+                $1('.bff-recommend-article').remove();
 
                 let articleBodyNode = $1('.articleBody');
                 if (articleBodyNode.length === 0) {
                     // for HK version
-                    orderContent($1('.article-body'));
+                    $1('.read-on-app-cover').remove();
+                    $1('astro-island').remove();
+                    $1('.further-reading').remove();
                     articleBodyNode = $1('.article-body');
                 }
 
