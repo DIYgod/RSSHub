@@ -4,10 +4,10 @@ import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 
 export const route: Route = {
-    path: '/analytic/',
+    path: '/analytic',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/zhizhuan100/analytic/',
+    example: '/zhizhuan100/analytic',
     radar: [
         {
             source: ['www.zhizhuan100.com.cn/analysis'],
