@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -26,21 +26,15 @@ const parsePage = async (items, type) => {
         items.map(async (item) => {
             const $ = load(item);
             const aTag = $('span.Article_Title > a');
-            const title = aTag.attr('title');
+            const title = aTag.attr('title') ?? "";
             const url = BASE_URL + aTag.attr('href');
-            const resultItem: {
-                title: string;
-                link: string;
-                description: string;
-                pubDate: Date | null;
-                author: string;
-            } = {
+            const resultItem: DataItem = {
                 title,
                 link: url,
                 description: '',
                 pubDate: (() => {
                     const sTag = $('span.Article_PublishDate');
-                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), +8) : null;
+                    const pubDate = sTag.text() ? timezone(parseDate(sTag.text()), +8) : undefined;
                     return pubDate;
                 })(),
                 author: type === DOWNLOAD_ID ? DOWNLOAD_AUTHOR : '',
