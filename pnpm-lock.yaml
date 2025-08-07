@@ -287,6 +287,9 @@ importers:
       xxhash-wasm:
         specifier: 1.1.0
         version: 1.1.0
+      youtube-caption-extractor:
+        specifier: 1.8.2
+        version: 1.8.2
       youtubei.js:
         specifier: 15.0.1
         version: 15.0.1
@@ -5446,6 +5449,9 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
+  striptags@3.2.0:
+    resolution: {integrity: sha512-g45ZOGzHDMe2bdYMdIvdAfCQkCTDMGBazSw1ypMowwGIee7ZQ5dU0rBJ8Jqgl+jAKIv4dbeE1jscZq9wid1Tkw==}
+
   superagent@10.2.3:
     resolution: {integrity: sha512-y/hkYGeXAj7wUMjxRbB21g/l6aAEituGXM9Rwl4o20+SX3e8YOSV6BxFXl+dL3Uk0mjSL3kCbNkwURm8/gEDig==}
     engines: {node: '>=14.18.0'}
@@ -6105,6 +6111,10 @@ packages:
   yoctocolors-cjs@2.1.2:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
+
+  youtube-caption-extractor@1.8.2:
+    resolution: {integrity: sha512-4VNDP5rIjBmTF4Us2aPiu5c795Yf/yLqXtEQ3U33PPJsoutKrmeIyx/8NBYH0Qlzk+tEmaftQ7/6a6TgfYNtVA==}
+    engines: {node: '>=14.0.0'}
 
   youtubei.js@15.0.1:
     resolution: {integrity: sha512-2slapqJS5NuXKHvcACEknyVz0AjH/TrXaOhDM0q2twQKa54kCmfj+7B/2nGfd20uzAe29zW1ejk2qOc4ABuGkg==}
@@ -11649,6 +11659,8 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
+  striptags@3.2.0: {}
+
   superagent@10.2.3:
     dependencies:
       component-emitter: 1.3.1
@@ -12306,6 +12318,11 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yoctocolors-cjs@2.1.2: {}
+
+  youtube-caption-extractor@1.8.2:
+    dependencies:
+      he: 1.2.0
+      striptags: 3.2.0
 
   youtubei.js@15.0.1:
     dependencies:
