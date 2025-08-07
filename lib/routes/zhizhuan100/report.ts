@@ -23,14 +23,7 @@ async function handler() {
 
     const $ = cheerio.load(urlData);
 
-    let bodyJsUrl: string | undefined;
-    $('script[src]').each((_, element) => {
-        const src = $(element).attr('src');
-        if (src?.includes('Body.js')) {
-            bodyJsUrl = src;
-            return false;
-        }
-    });
+    const bodyJsUrl: string | undefined = $('script[src*="Body.js"]').attr('src');
 
     if (!bodyJsUrl) {
         throw new Error('无法找到 Body.js 脚本文件');
