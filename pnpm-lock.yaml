@@ -288,7 +288,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtube-caption-extractor:
-        specifier: ^1.8.2
+        specifier: 1.8.2
         version: 1.8.2
       youtubei.js:
         specifier: 15.0.1
