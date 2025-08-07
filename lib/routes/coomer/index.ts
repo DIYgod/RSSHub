@@ -22,7 +22,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['coomer.st/:source/user/:id', 'coomer.st/'],
+            source: ['coomer.st/'],
+            target: '',
+        },
+        {
+            source: ['coomer.st/:source/user/:id'],
+            target: '/:source/:id',
         },
     ],
     name: 'Posts',
