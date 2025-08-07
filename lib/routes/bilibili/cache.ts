@@ -204,6 +204,26 @@ const getCidFromId = (aid, pid, bvid) => {
     });
 };
 
+const getVideoSubtitle = async (bvid) => {
+    if (!bvid) {
+        return [];
+    }
+
+    const cid = await getCidFromId(undefined, 1, bvid);
+    const cookie = await getCookie();
+    return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
+            headers: {
+                Referer: `https://www.bilibili.com/video/${bvid}`,
+                Cookie: cookie,
+            },
+        });
+
+        const subtitles = response?.data?.data?.subtitle?.subtitles || [];
+        return subtitles;
+    });
+};
+
 const getAidFromBvid = async (bvid) => {
     const key = `bili-cid-from-bvid-${bvid}`;
     let aid = await cache.get(key);
@@ -285,4 +305,5 @@ export default {
     getAidFromBvid,
     getArticleDataFromCvid,
     getRenderData,
+    getVideoSubtitle,
 };
