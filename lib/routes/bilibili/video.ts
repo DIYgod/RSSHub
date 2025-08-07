@@ -84,8 +84,8 @@ async function handler(ctx: Context) {
                                       mime_type: 'text/html',
                                   },
                                   ...subtitles.map((subtitle) => ({
-                                      url: `https:${subtitle.subtitle_url}`,
-                                      mime_type: 'text/plain',
+                                      url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
+                                      mime_type: 'text/srt',
                                       title: `字幕 - ${subtitle.lan_doc}`,
                                   })),
                               ]
