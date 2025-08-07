@@ -69,6 +69,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title,
+        link: url,
         description: catchphrase,
         item: items,
     };
