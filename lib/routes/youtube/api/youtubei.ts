@@ -7,14 +7,16 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 const innertubePromise = Innertube.create();
 
+function pad(n: number, width: number = 2) {
+    return String(n).padStart(width, '0');
+}
+
 function toSrtTime(seconds: number): string {
     const totalMs = Math.floor(seconds * 1000);
     const hours = Math.floor(totalMs / 3_600_000);
     const minutes = Math.floor((totalMs % 3_600_000) / 60000);
     const secs = Math.floor((totalMs % 60000) / 1000);
     const millis = totalMs % 1000;
-
-    const pad = (n: number, width: number = 2) => String(n).padStart(width, '0');
     return `${pad(hours)}:${pad(minutes)}:${pad(secs)},${pad(millis, 3)}`;
 }
 
