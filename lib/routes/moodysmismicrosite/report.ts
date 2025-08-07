@@ -43,7 +43,7 @@ export const route: Route = {
 | 7 | ESG |
 | 8 | 其他 |
     `,
-    maintainers: ['FYLSen'],
+    maintainers: ['Cedaric'],
     handler,
 };
 
