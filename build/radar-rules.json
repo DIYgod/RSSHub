@@ -37268,6 +37268,27 @@
       }
     ]
   },
+  "thewirehindi.com": {
+    "_name": "The Wire Hindi",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/*"
+        ],
+        "target": "/thewirehindi/category/:category"
+      },
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/thewirehindi/"
+      }
+    ]
+  },
   "thoughtworks.com": {
     "_name": "ThoughtWorks",
     "www": [
