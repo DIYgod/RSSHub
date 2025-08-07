@@ -81,7 +81,7 @@ async function handler() {
         .filter((item) => item.title); // 过滤掉没有标题的项目
 
     return {
-        title: `智篆商业-消费报告`,
+        title: '智篆商业-消费报告',
         link: 'https://www.zhizhuan100.com.cn/analysis',
         allowEmpty: true,
         item: items,
