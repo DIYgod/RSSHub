@@ -27929,6 +27929,16 @@
         ],
         "target": "/neu/news/:type"
       }
+    ],
+    "yz": [
+      {
+        "title": "研究生招生信息网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/neu/yz/:type"
+      }
     ]
   },
   "news.cn": {
