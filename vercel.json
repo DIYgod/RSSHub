@@ -1,5 +1,5 @@
 {
-    "framework": null,
+    "framework": "hono",
     "github": { "silent": true },
     "routes": [{ "src": "/.*", "dest": "/api/vercel.ts" }]
 }
