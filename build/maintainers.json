@@ -5193,6 +5193,9 @@
   "/modelscope/datasets": [
     "TonyRL"
   ],
+  "/modelscope/learn": [
+    "TonyRL"
+  ],
   "/modelscope/models": [
     "TonyRL"
   ],

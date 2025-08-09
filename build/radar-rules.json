@@ -26796,6 +26796,16 @@
         ],
         "target": "/modelscope/studios"
       }
+    ],
+    "www": [
+      {
+        "title": "研习社",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/learn"
+        ],
+        "target": "/modelscope/learn"
+      }
     ]
   },
   "modian.com": {
