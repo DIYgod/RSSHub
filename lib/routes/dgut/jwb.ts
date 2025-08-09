@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from 'tough-cookie';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/jwb/:type?',
@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['jwb.dgut.edu.cn/tzgg/'],
-            target: '',
+            target:''
         },
     ],
     name: '东莞理工学院教务部通知公告',
@@ -32,7 +32,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { type = 'jwtz' } = ctx.req.param();
+    
+    const {type = 'jwtz'}= ctx.req.param();
     const url = `https://jwb.dgut.edu.cn/tzgg/${type}.htm`;
     const baseurl = 'https://jwb.dgut.edu.cn/';
 
@@ -41,15 +42,16 @@ async function handler(ctx) {
     const list = $('ul.ul-new4 > li')
         .toArray()
         .map((item) => {
-            const $li = $(item);
-            const $a = $li.find('a.con');
+                const $li = $(item);
+                const $a = $li.find('a.con')
             return {
-                title: $a.find('.tit').text().trim(),
-                date: `${$a.find('.year').text().trim()}-${$a.find('.day').text().trim()}`,
-                link: `${baseurl}${$a.attr('href')}`,
-            };
-        });
+            title: $a.find('.tit').text().trim(), 
+            pubDate: parseDate(`${$a.find('.year').text().trim()}-${$a.find('.day').text().trim()}`),
+            link: `${baseurl}${$a.attr('href')}`,
 
+            };
+        })
+    
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
@@ -60,9 +62,10 @@ async function handler(ctx) {
                     ...item,
                     description: $('div.v_news_content').first().html(),
                 };
-            })
-        )
-    );
+                
+                })
+            )
+        );
 
     return {
         title: $('title').text(),
@@ -70,4 +73,6 @@ async function handler(ctx) {
         allowEmpty: true,
         item: items,
     };
-}
+};
+
+
