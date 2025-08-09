@@ -26,7 +26,7 @@ const parsePage = async (items, type) => {
         items.map(async (item) => {
             const $ = load(item);
             const aTag = $('span.Article_Title > a');
-            const title = aTag.attr('title') ?? "";
+            const title = aTag.attr('title') ?? '';
             const url = BASE_URL + aTag.attr('href');
             const resultItem: DataItem = {
                 title,
@@ -52,9 +52,13 @@ const parsePage = async (items, type) => {
                     const description = cleanEntryContent($);
                     resultItem.description = description;
                     if (type !== DOWNLOAD_ID) {
-                        const dateText = $('.arti_update').text().match(/(\d{4}-\d{2}-\d{2})/);
+                        const dateText = $('.arti_update')
+                            .text()
+                            .match(/(\d{4}-\d{2}-\d{2})/);
                         const date = dateText ? dateText[1] : '';
-                        const authorText = $('.arti_publisher').text().match(/[:：]?\s*(.+)/);
+                        const authorText = $('.arti_publisher')
+                            .text()
+                            .match(/[:：]?\s*(.+)/);
                         const author = authorText ? authorText[1].trim() : '';
                         resultItem.pubDate = timezone(parseDate(date), +8);
                         resultItem.author = author;
@@ -149,7 +153,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['yz.neu.edu.cn/:type/list.htm',],
+            source: ['yz.neu.edu.cn/:type/list.htm'],
             target: '/yz/:type',
         },
     ],
