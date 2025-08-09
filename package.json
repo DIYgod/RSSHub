@@ -186,7 +186,7 @@
         "lint-staged": "16.1.4",
         "magic-string": "0.30.17",
         "mockdate": "3.0.5",
-        "msw": "2.4.3",
+        "msw": "2.10.4",
         "node-network-devtools": "1.0.28",
         "prettier": "3.6.2",
         "remark-parse": "11.0.0",
