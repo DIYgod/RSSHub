@@ -142,6 +142,7 @@ export const route: Route = {
     `,
     maintainers: ['Alex222222222222'],
     handler: handleSisRequest,
+    url: 'www.sis.zju.edu.cn',
 };
 
 /**
