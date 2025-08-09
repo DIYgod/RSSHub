@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import { parseDate } from 'tough-cookie';
 
 export const route: Route = {
-    path: '/tzgg/:type?',
+    path: '/jwb/:type?',
     categories: ['university'],
     example: '/tzgg/jwtz.htm',
     parameters: { type: '那种通知,默认为教务通知' },
@@ -21,10 +21,10 @@ export const route: Route = {
     radar: [
         {
             source: ['jwb.dgut.edu.cn/tzgg/'],
-            target:'/tzgg/:type?'
+            target:''
         },
     ],
-    name: '东莞理工学院教务部',
+    name: '东莞理工学院教务部通知公告',
     description: `| 教学动态 | 教务通知 | 教研通知 | 实践通知 | 产业学院 |  通识教育  |"杨振宁"班|招生信息 |采购公告 |
                   | ------- | -------  | ---------| --------| --------| ----------|---------|------- |--------|
                   | jxdt    | jwtz     | jytz     |   sjtz  |   cyxy  |   tsjy    | yznb    |  zsxx  | cggg   |`,
