@@ -246,7 +246,7 @@ unicorn.configs.recommended,
         'yml/no-empty-mapping-value': 'off',
     },
 }, {
-        files: ['.puppeteerrc.cjs', 'api/vercel.ts'],
+        files: ['.puppeteerrc.cjs'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
         },
