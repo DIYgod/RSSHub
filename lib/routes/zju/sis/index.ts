@@ -11,21 +11,20 @@ const base = 'http://www.sis.zju.edu.cn/sischinese/';
  * Used to generate URLs and titles for different news categories
  */
 const categoryMap = new Map([
-    [0, { id: '', title: '浙江大学外国语学院-全部通知' }],
-    [1, { id: '12614/list.htm', title: '浙江大学外国语学院-重要公告' }],
-    [2, { id: '12616/list.htm', title: '浙江大学外国语学院-最新通知' }],
-    [3, { id: '12617/list.htm', title: '浙江大学外国语学院-教育教学' }],
-    [4, { id: '12618/list.htm', title: '浙江大学外国语学院-科学研究' }],
-    [5, { id: '12619/list.htm', title: '浙江大学外国语学院-新闻动态' }],
-    [6, { id: '12620/list.htm', title: '浙江大学外国语学院-联系我们' }],
-    [7, { id: '12554/list.htm', title: '浙江大学外国语学院-党政管理' }],
-    [8, { id: '12563/list.htm', title: '浙江大学外国语学院-组织人事' }],
-    [9, { id: '12572/list.htm', title: '浙江大学外国语学院-科学研究' }],
-    [10, { id: '12577/list.htm', title: '浙江大学外国语学院-本科教育' }],
-    [11, { id: '12541/list.htm', title: '浙江大学外国语学院-研究生教育' }],
-    [12, { id: '12542/list.htm', title: '浙江大学外国语学院-学生思政' }],
-    [13, { id: 'xyll/list.htm', title: '浙江大学外国语学院-校友联络' }],
-    [14, { id: '12609/list.htm', title: '浙江大学外国语学院-对外交流' }],
+    [0, { id: '12614/list.htm', title: '浙江大学外国语学院-重要公告' }],
+    [1, { id: '12616/list.htm', title: '浙江大学外国语学院-最新通知' }],
+    [2, { id: '12617/list.htm', title: '浙江大学外国语学院-教育教学' }],
+    [3, { id: '12618/list.htm', title: '浙江大学外国语学院-科学研究' }],
+    [4, { id: '12619/list.htm', title: '浙江大学外国语学院-新闻动态' }],
+    [5, { id: '12620/list.htm', title: '浙江大学外国语学院-联系我们' }],
+    [6, { id: '12554/list.htm', title: '浙江大学外国语学院-党政管理' }],
+    [7, { id: '12563/list.htm', title: '浙江大学外国语学院-组织人事' }],
+    [8, { id: '12572/list.htm', title: '浙江大学外国语学院-科学研究' }],
+    [9, { id: '12577/list.htm', title: '浙江大学外国语学院-本科教育' }],
+    [10, { id: '12541/list.htm', title: '浙江大学外国语学院-研究生教育' }],
+    [11, { id: '12542/list.htm', title: '浙江大学外国语学院-学生思政' }],
+    [12, { id: 'xyll/list.htm', title: '浙江大学外国语学院-校友联络' }],
+    [13, { id: '12609/list.htm', title: '浙江大学外国语学院-对外交流' }],
 ]);
 
 /**
@@ -33,15 +32,10 @@ const categoryMap = new Map([
  * @param categoryId - The category ID to fetch news from
  * @returns Promise<DataItem[]> - Array of news items with basic information
  */
-async function fetchNewsItemsByCategory(categoryId: number): Promise<DataItem[]> {
-    const categoryInfo = categoryMap.get(categoryId);
-    if (!categoryInfo) {
-        throw new Error(`Invalid category ID: ${categoryId}`);
-    }
-
+async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]> {
     const response = await got({
         method: 'get',
-        url: `${base}${categoryInfo.id}`,
+        url: `${base}${categoryId}`,
     });
 
     const $ = load(response.data);
@@ -130,9 +124,9 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '外国语学院',
-    description: `| 全部通知 | 重要公告 | 最新通知 | 教育教学 | 科学研究 | 新闻动态 | 联系我们 | 党政管理 | 组织人事 | 科学研究 | 本科教育 | 研究生教育 | 学生思政 | 校友联络 | 对外交流 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            | 9            | 10       | 11       | 12       | 13       | 14       |
+    description: `| 重要公告 | 最新通知 | 教育教学 | 科学研究 | 新闻动态 | 联系我们 | 党政管理 | 组织人事 | 科学研究 | 本科教育 | 研究生教育 | 学生思政 | 校友联络 | 对外交流 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9       | 10       | 11       | 12       | 13       |
 `,
     maintainers: ['Alex222222222222'],
     handler: handleSisRequest,
@@ -156,22 +150,11 @@ async function handleSisRequest(ctx: { req: { param: (arg0: string) => string } 
 
     const categoryUrl = `${base}${categoryInfo.id}`;
 
-    // Determine which categories to fetch
-    let categoriesToFetch: number[] = [];
-    if (requestedType === 0) {
-        // Type 0 means "all notifications" - fetch from all categories except itself
-        categoriesToFetch = [...categoryMap.keys()].filter((key) => key !== 0);
-    } else {
-        // Fetch from the specific requested category
-        categoriesToFetch.push(requestedType);
-    }
-
     // Fetch news items from all relevant categories
-    const allNewsItems = await Promise.all(categoriesToFetch.map((categoryId) => fetchNewsItemsByCategory(categoryId)));
-    const flattenedItems = allNewsItems.flat();
+    const allNewsItems = await fetchNewsItemsByCategory(categoryInfo.id);
 
     // Enrich each news item with detailed content
-    const enrichedItems = await Promise.all(flattenedItems.map((item) => enrichNewsItemWithDetails(item, categoryUrl)));
+    const enrichedItems = await Promise.all(allNewsItems.map((item) => enrichNewsItemWithDetails(item, categoryUrl)));
 
     return {
         title: categoryInfo.title,
