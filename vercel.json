@@ -1,5 +1,9 @@
 {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
-    "github": { "silent": true },
-    "routes": [{ "src": "/.*", "dest": "/api/vercel.ts" }]
+    "buildCommand": "pnpm run build:vercel",
+    "outputDirectory": "dist",
+    "github": {
+        "silent": true
+    }
 }
