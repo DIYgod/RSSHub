@@ -51,11 +51,12 @@ async function fetchNewsItemsByCategory(categoryId: number): Promise<DataItem[]>
     for (const item of newsItems) {
         const element = $(item);
         const href = element.find('a').attr('href');
+        const title = element.find('a').attr('title');
 
         // Only process items that have valid links
-        if (href) {
+        if (href && title) {
             results.push({
-                title: element.find('a').text(),
+                title,
                 pubDate: parseDate(element.find('.news_meta').text()),
                 link: new URL(href, base).href,
             });
@@ -104,13 +105,6 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
             author = author.replace('发布者：', '').trim();
             if (author) {
                 item.author = author;
-            }
-
-            // Extract the full title from the article page
-            // (the title from the list page may be truncated)
-            const fullTitle = $('.arti_title').text();
-            if (fullTitle) {
-                item.title = fullTitle;
             }
 
             return item;
