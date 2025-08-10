@@ -2,8 +2,8 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'dgut',
-    url: 'dgut.edu.cn',
+    url: 'www.dgut.edu.cn',
     zh: {
-        name: '东莞理工学院',
+        name: '东莞理工学院教务部',
     },
 };
