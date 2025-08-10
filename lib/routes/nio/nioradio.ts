@@ -9,7 +9,7 @@ export const route: Route = {
     description: `
 # 如何获取电台 ID？
 打开蔚来 APP 后，点击“此地”→NIO Radio，找到自己想要转换为播客的专辑，分享后获取链接，找到\`container_id=\`后方的数字即可。
-以下是常见的电台 ID：
+常见电台 ID：
 | 电台名称          | 电台 ID |
 | :------------ | :---- |
 | 资讯充电站（早间版）    | 5     |
@@ -59,7 +59,7 @@ export const route: Route = {
         const items = podcasts.map((podcast) => ({
             title: podcast.audioName,
             link: `https://app.nio.com/app/radio/share/?item_type=1&item_id=${String(podcast.audioId).slice(1)}&container_id=${albumid}&wv=lg`,
-            pubDate: parseDate(podcast.updateTime),
+            pubDate: parseDate(podcast.onlineTime),
             description: podcast.albumDesc,
             author: podcastHost,
             itunes_item_image: podcast.albumPic,
