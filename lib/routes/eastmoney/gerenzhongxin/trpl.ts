@@ -35,7 +35,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const url = `https://i.eastmoney.com/api/guba/myreply?pageindex=1&uid=${uid}&checkauth=true`;
 
@@ -51,7 +51,7 @@ async function handler(ctx) {
         return {
             title: `${nickname} 发布了评论: ${descriptionContent}`,
             description: descriptionContent,
-            pubDate: timezone(parseDate(item.post_publish_time), 8),
+            pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`,
             guid,
             author: nickname,

@@ -34,7 +34,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const uid = ctx.req.param('uid');
 
     const url = `https://i.eastmoney.com/api/guba/postCenterList?uid=${uid}&pagenum=1&pagesize=10&type=1&filterType=2&onlyYt=0`;
