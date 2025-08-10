@@ -40,24 +40,22 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
 
     const $ = load(response.data);
     const newsItems = $('.news_list').find('li');
-    const results: DataItem[] = [];
 
-    for (const item of newsItems) {
+    return newsItems.toArray().map((item) => {
         const element = $(item);
         const href = element.find('a').attr('href');
-        const title = element.find('a').attr('title');
-
-        // Only process items that have valid links
-        if (href && title) {
-            results.push({
-                title,
-                pubDate: parseDate(element.find('.news_meta').text()),
-                link: new URL(href, base).href,
-            });
+        let title = element.find('a').attr('title');
+        if (!title) {
+            // If the title is not found, try to extract it from the link text
+            title = element.find('a').text().trim();
         }
-    }
 
-    return results;
+        return {
+            title,
+            pubDate: parseDate(element.find('.news_meta').text()),
+            link: href ? new URL(href, base).href : undefined,
+        };
+    });
 }
 
 /**
@@ -67,8 +65,7 @@ async function fetchNewsItemsByCategory(categoryId: string): Promise<DataItem[]>
  * @returns Promise<DataItem> - The enriched news item with description, author, and full title
  */
 async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Promise<DataItem> {
-    // If the item doesn't have a link (which shouldn't happen based on fetchNewsItemsByCategory implementation),
-    // return the item as-is
+    // If the item doesn't have a link, return the item as-is
     if (!item.link) {
         return item;
     }
