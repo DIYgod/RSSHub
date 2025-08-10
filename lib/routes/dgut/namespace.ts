@@ -4,6 +4,6 @@ export const namespace: Namespace = {
     name: 'dgut',
     url: 'www.dgut.edu.cn',
     zh: {
-        name: '东莞理工学院教务部',
+        name: '东莞理工学院',
     },
 };
