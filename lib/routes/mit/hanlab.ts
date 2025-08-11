@@ -24,7 +24,7 @@ export const route: Route = {
     name: 'HAN Lab Blog',
     maintainers: ['johan456789'],
     handler,
-    description: `MIT HAN Lab pioneers research in efficient AI, advancing algorithms and hardware to make generative models faster, smarter, and more accessible.`,
+    description: 'MIT HAN Lab pioneers research in efficient AI, advancing algorithms and hardware to make generative models faster, smarter, and more accessible.',
 };
 
 async function handler() {
