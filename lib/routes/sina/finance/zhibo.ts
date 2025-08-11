@@ -23,8 +23,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'zhibo.sina.com.cn',
-    description:
-        '对接新浪财经直播接口（zhibo）。默认频道 152（财经）。支持使用 `?limit=` 控制条目数量（接口单页最多 10 条）。\n\n别名路径：`/sina/finance/zhibo/:zhibo_id?` 与 `/sina/zhibo/:zhibo_id?` 均可使用。',
+    description: '对接新浪财经直播接口（zhibo）。默认频道 152（财经）。支持使用 `?limit=` 控制条目数量（接口单页最多 10 条）。\n\n别名路径：`/sina/finance/zhibo/:zhibo_id?` 与 `/sina/zhibo/:zhibo_id?` 均可使用。',
 };
 
 interface ZhiboFeedItem {
@@ -37,24 +36,37 @@ interface ZhiboFeedItem {
 
 async function handler(ctx) {
     const zhiboId = ctx.req.param('zhibo_id') ?? '152';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     const apiUrl = `${ROOT_URL}/api/zhibo/feed`;
 
-    const { data: res } = await got(apiUrl, {
-        searchParams: {
-            zhibo_id: zhiboId,
-            pagesize: 10,
-            tag: 0,
-            dire: 'f',
-            dpc: 1,
-            page: 1,
-        },
-    });
+    const pageSize = 10; // 接口单页上限
+    const maxPages = Math.max(1, Math.ceil(limit / pageSize));
 
-    const list: ZhiboFeedItem[] = res?.result?.data?.feed?.list ?? [];
+    const collected: ZhiboFeedItem[] = [];
+    const pageNumbers = Array.from({ length: maxPages }, (_, i) => i + 1);
+    const pages = await Promise.all(
+        pageNumbers.map((page) =>
+            got(apiUrl, {
+                searchParams: {
+                    zhibo_id: zhiboId,
+                    pagesize: pageSize,
+                    tag: 0,
+                    dire: 'f',
+                    dpc: 1,
+                    page,
+                },
+            }).then((res) => ({ page, list: (res.data?.result?.data?.feed?.list as ZhiboFeedItem[]) ?? [] }))
+        )
+    );
+    for (const p of pages
+        .sort((a, b) => a.page - b.page)) {
+            if (collected.length < limit && p.list.length) {
+                collected.push(...p.list);
+            }
+        }
 
-    const items = list.slice(0, limit).map((it) => {
+    const items = collected.slice(0, limit).map((it) => {
         const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
         const title = plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
 
@@ -75,5 +87,3 @@ async function handler(ctx) {
         item: items,
     };
 }
-
-
