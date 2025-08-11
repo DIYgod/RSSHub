@@ -12,10 +12,6 @@ const ids = {
         url: 'content/recommend',
         title: '推荐',
     },
-    immediately: {
-        url: 'immediately',
-        title: '7×24直播',
-    },
     hkstock: {
         url: 'content/hkstock',
         title: '港股',
@@ -142,40 +138,38 @@ async function handler(ctx) {
         };
     });
 
-    if (id !== 'immediately') {
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            headers: {
-                                Referer: 'https://www.zhitongcaijing.com/',
-                                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                            },
-                        });
+    items = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                try {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            Referer: 'https://www.zhitongcaijing.com/',
+                            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                        },
+                    });
 
-                        const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                        content('#subscribe-vip-box').remove();
-                        content('#news-content').remove();
+                    content('#subscribe-vip-box').remove();
+                    content('#news-content').remove();
 
-                        item.description = art(path.join(__dirname, 'templates/description.art'), {
-                            digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
-                            description: content('.news-body-content').html(),
-                        });
-                    } catch {
-                        // 详情页暂不可达（如 503）时，退化为列表摘要，保证路由可用
-                    }
-                    return item;
-                })
-            )
-        );
-    }
+                    item.description = art(path.join(__dirname, 'templates/description.art'), {
+                        digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
+                        description: content('.news-body-content').html(),
+                    });
+                } catch {
+                    // 详情页暂不可达（如 503）时，退化为列表摘要，保证路由可用
+                }
+                return item;
+            })
+        )
+    );
 
     return {
-        title: `智通财经 - ${ids[id].title}`,
+        title: `智通财经 - 7×24 - ${ids[id].title}`,
         link: currentUrl,
         item: items,
     };

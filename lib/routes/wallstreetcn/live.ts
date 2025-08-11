@@ -34,7 +34,7 @@ export const route: Route = {
             target: '/live/:category?',
         },
     ],
-    name: '实时快讯',
+    name: '快讯',
     maintainers: ['nczitzk'],
     handler,
     description: `| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
@@ -71,7 +71,7 @@ async function handler(ctx) {
         }));
 
     return {
-        title: `华尔街见闻 - 实时快讯 - ${titles[category]}`,
+        title: `华尔街见闻 - 快讯 - ${titles[category]}`,
         link: currentUrl,
         item: items,
     };
