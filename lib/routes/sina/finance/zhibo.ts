@@ -150,6 +150,7 @@ async function handler(ctx) {
     return {
         title: `新浪财经直播 - ${CHANNELS[zhiboId] ?? zhiboId}`,
         link: 'https://finance.sina.com.cn/7x24/',
+        description: 'feedId:177629882355355648+userId:117254850907621376',
         item: items,
     };
 }
