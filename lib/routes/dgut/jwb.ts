@@ -58,7 +58,7 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('div.v_news_content').first().html(),
+                    description: $('div.v_news_content').first().html() || undefined,
                 };
             })
         )
