@@ -68,7 +68,7 @@ const ids = {
 
 export const route: Route = {
     path: '/:id?/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/zhitongcaijing',
     parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', category: '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部' },
@@ -128,21 +128,28 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                try {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            Referer: 'https://www.zhitongcaijing.com/',
+                            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                        },
+                    });
 
-                const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                content('#subscribe-vip-box').remove();
-                content('#news-content').remove();
+                    content('#subscribe-vip-box').remove();
+                    content('#news-content').remove();
 
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
-                    description: content('.news-body-content').html(),
-                });
-
+                    item.description = art(path.join(__dirname, 'templates/description.art'), {
+                        digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
+                        description: content('.news-body-content').html(),
+                    });
+                } catch {
+                    // 详情页暂不可达（如 503）时，退化为列表摘要，保证路由可用
+                }
                 return item;
             })
         )
