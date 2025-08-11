@@ -49,6 +49,7 @@ interface ZhiboFeedItem {
     rich_text: string;
     create_time: string; // 'YYYY-MM-DD HH:mm:ss'
     creator?: string;
+    docurl?: string;
 }
 
 async function handler(ctx) {
@@ -93,10 +94,12 @@ async function handler(ctx) {
 
     let items = collected.slice(0, limit).map((it) => {
         const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
-        const title = plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
+        // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
+        const bracketMatch = plain.match(/^【([^】]+)】/);
+        const title = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
 
-        // 7x24 单条详情页：观察到格式为 /7x24/sina-finance-zhibo-<id>
-        const link = `https://finance.sina.com.cn/7x24/sina-finance-zhibo-${it.id}`;
+        // 使用接口返回的 docurl 作为详情链接；缺失时退回频道页
+        const link = it.docurl ? it.docurl.replace(/^http:\/\//, 'https://') : 'https://finance.sina.com.cn/7x24/';
 
         return {
             title,
