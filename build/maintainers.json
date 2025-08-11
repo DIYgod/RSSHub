@@ -2098,6 +2098,9 @@
   "/digitalcameraworld/news": [
     "EthanWng97"
   ],
+  "/digitalpolicyalert/activity-tracker/:filters?": [
+    "nczitzk"
+  ],
   "/dingshao/share/:shortId": [
     "TonyRL"
   ],

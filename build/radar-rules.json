@@ -12891,6 +12891,19 @@
       }
     ]
   },
+  "digitalpolicyalert.org": {
+    "_name": "Digital Policy Alert",
+    ".": [
+      {
+        "title": "Activity Tracker",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/digitalpolicyalert(_,url)=>{const urlObj=new URL(url);const filters=createSearchParams(urlObj.searchParams.toString()).toString();return`/digitalpolicyalert/activity-tracker${filters?`/${filters}`:\"\"}`}"
+      }
+    ]
+  },
   "dingshao.cn": {
     "_name": "盯梢",
     "www": [
