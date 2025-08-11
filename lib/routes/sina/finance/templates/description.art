@@ -1,0 +1,8 @@
+{{ if rich_text }}
+{{@ rich_text }}
+{{ /if }}
+{{ if images }}
+{{ each images image }}
+<img src="{{ image }}" referrerpolicy="no-referrer" />
+{{ /each }}
+{{ /if }}
