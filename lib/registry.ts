@@ -53,7 +53,7 @@ export type NamespacesType = Record<
 
 let namespaces: NamespacesType = {};
 
-switch (process.env.NODE_ENV) {
+switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
     case 'production':
         namespaces = (await import('../assets/build/routes.js')).default;
         break;
@@ -251,7 +251,7 @@ if (config.debugInfo) {
 app.use(
     '/*',
     serveStatic({
-        root: './lib/assets',
+        root: path.join(__dirname, 'assets'),
         rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
     })
 );
