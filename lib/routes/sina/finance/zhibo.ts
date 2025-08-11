@@ -92,55 +92,6 @@ async function handler(ctx) {
         }
     }
 
-    let items = collected.slice(0, limit).map((it) => {
-        const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
-        // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
-        const bracketMatch = plain.match(/^【([^】]+)】/);
-        const title = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
-
-        // 使用接口返回的 docurl 作为详情链接；缺失时退回频道页
-        const link = it.docurl ? it.docurl.replace(/^http:\/\//, 'https://') : 'https://finance.sina.com.cn/7x24/';
-
-        return {
-            title,
-            link,
-            description: it.rich_text,
-            author: it.creator,
-            pubDate: parseDate(it.create_time),
-            guid: `sina-finance-zhibo-${it.id}`,
-        };
-    });
-
-    // 对含“一图看懂”的项，尝试抓取 og:image 并补充图片
-    items = await Promise.all(
-        items.map(async (item) => {
-            try {
-                if (!item.description || /<img\s/i.test(item.description)) {
-                    return item;
-                }
-                const text = `${item.title ?? ''}${item.description ?? ''}`;
-                if (!/一图看懂/.test(text)) {
-                    return item;
-                }
-                if (!item.link) {
-                    return item;
-                }
-
-                const resp = await got(item.link);
-                const $ = load(resp.data);
-                const ogImage = $('meta[property="og:image"]').attr('content');
-                const twitterImage = $('meta[name="twitter:image"], meta[name="twitter:image:src"]').attr('content');
-                const img = ogImage || twitterImage;
-                if (img) {
-                    item.description = `${item.description}<br/><img src="${img}" referrerpolicy="no-referrer" />`;
-                }
-            } catch {
-                // ignore network/parse errors per item
-            }
-            return item;
-        })
-    );
-
     const CHANNELS: Record<string, string> = {
         '151': '政经',
         '152': '财经',
@@ -150,10 +101,125 @@ async function handler(ctx) {
         '242': '行业',
     };
 
+    let items = collected.slice(0, limit).map((it) => {
+        const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
+        // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
+        const bracketMatch = plain.match(/^【([^】]+)】/);
+        const baseTitle = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
+
+        // 样式检测：加粗、下划线、删除线（来自 rich_text 内联或标签）
+        let hasBold = false;
+        let hasUnderline = false;
+        let hasStrike = false;
+        try {
+            const $rt = load(`<div id="rt">${it.rich_text ?? ''}</div>`);
+            const container = $rt('#rt');
+            hasBold =
+                container.find('strong, b').length > 0 ||
+                container
+                    .find('span[style]')
+                    .toArray()
+                    .some((el) => /font-weight\s*:\s*(bold|[6-9]00)/i.test($rt(el).attr('style') || ''));
+            hasUnderline =
+                container.find('u').length > 0 ||
+                container
+                    .find('span[style]')
+                    .toArray()
+                    .some((el) => /text-decoration[^;]*:\s*underline/i.test($rt(el).attr('style') || ''));
+            hasStrike =
+                container.find('del, s').length > 0 ||
+                container
+                    .find('span[style]')
+                    .toArray()
+                    .some((el) => /line-through/i.test($rt(el).attr('style') || ''));
+        } catch {
+            // ignore
+        }
+        const styleLabels: string[] = [];
+        if (hasBold) {
+            styleLabels.push('粗体');
+        }
+        if (hasUnderline) {
+            styleLabels.push('划线');
+        }
+        if (hasStrike) {
+            styleLabels.push('删除线');
+        }
+        const title = styleLabels.length ? `${baseTitle}（${styleLabels.join('、')}）` : baseTitle;
+
+        // 使用接口返回的 docurl 作为详情链接；缺失时退回频道页
+        const link = it.docurl ? it.docurl.replace(/^http:\/\//, 'https://') : 'https://finance.sina.com.cn/7x24/';
+
+        const bracketLabel = bracketMatch ? bracketMatch[1] : undefined;
+        const categories: string[] = [];
+        if (CHANNELS[zhiboId]) {
+            categories.push(CHANNELS[zhiboId]);
+        }
+        if (bracketLabel) {
+            categories.push(bracketLabel);
+        }
+        if (tag && tag !== '0') {
+            categories.push(`tag:${tag}`);
+        }
+
+        // 正文：去掉标题前缀的 plain 文本
+        const bodyPlain = bracketMatch ? plain.replace(/^【[^】]+】/, '').trim() : plain;
+        const via = `via 新浪财经直播 - ${CHANNELS[zhiboId] ?? ''}${it.creator ? ` (author: ${it.creator})` : ''}`.trim();
+        const description = `${bodyPlain}${bodyPlain ? '<br/><br/>' : ''}${via}`;
+
+        return {
+            title,
+            link,
+            description,
+            author: it.creator,
+            pubDate: parseDate(it.create_time),
+            guid: `sina-finance-zhibo-${it.id}`,
+            category: categories,
+        };
+    });
+
+    // 先将富文本内的样式化 <span> 规范化为 <strong>/<u>/<del> 等基础标签，提升阅读器兼容性
+    items = items.map((item) => {
+        try {
+            if (!item.description) {
+                return item;
+            }
+            const $ = load(`<div id="rssroot">${item.description}</div>`);
+            const container = $('#rssroot');
+            container.find('span[style]').each((_, el) => {
+                const node = $(el);
+                const style = (node.attr('style') || '').toLowerCase();
+                const needsBold = /font-weight\s*:\s*(bold|[6-9]00)/.test(style);
+                const needsUnderline = /text-decoration[^;]*:\s*underline/.test(style);
+                const needsStrike = /text-decoration[^;]*:\s*line-through/.test(style) || /text-decoration-line\s*:\s*line-through/.test(style);
+                if (needsBold) {
+                    node.wrapInner('<strong></strong>');
+                }
+                if (needsUnderline) {
+                    node.wrapInner('<u></u>');
+                }
+                if (needsStrike) {
+                    node.wrapInner('<del></del>');
+                }
+                node.removeAttr('style');
+                // 去掉外层 span，只保留内部规范标签
+                const html = node.html() ?? '';
+                node.replaceWith(html);
+            });
+            item.description = container.html() ?? item.description;
+        } catch {
+            // ignore
+        }
+        return item;
+    });
+
+    // 取消无图时的详情页封面抓取与追加
+
     return {
         title: `新浪财经 - 7×24直播${CHANNELS[zhiboId] ? ` - ${CHANNELS[zhiboId]}` : ''}`,
         link: 'https://finance.sina.com.cn/7x24/',
         description: 'feedId:177629882355355648+userId:117254850907621376',
+        image: 'https://finance.sina.com.cn/favicon.ico',
         item: items,
     };
 }
