@@ -7,15 +7,14 @@ import path from 'node:path';
 
 const baseUrl = 'https://www.gelonghui.com';
 
-// 移除内容中如“格隆汇8月11日｜”这类日期前缀，保留正文
+// 移除如“格隆汇8月11日｜”这类日期前缀，保留正文（容忍前导空白与多种分隔符）
 const stripGelonghuiDatePrefix = (text: string | undefined): string => {
     if (!text) {
         return '';
     }
-    // 匹配：开头为“格隆汇”，随后是 M月D日，可选空格与分隔符（|｜丨），再可选空格
-    // 示例：格隆汇8月11日｜、格隆汇8月1日丨、格隆汇12月31日 | 等
-    const prefixPattern = /^格隆汇\d{1,2}月\d{1,2}日\s*[|｜丨]?\s*/u;
-    return text.replace(prefixPattern, '');
+    // 允许开头空白（含不换行空格），“格隆汇”后月日数字可带空格，分隔符可为 |｜丨:：-–—，后可跟空白
+    const prefixPattern = /^[\s\u00A0]*格隆汇\s*\d{1,2}\s*月\s*\d{1,2}\s*日\s*(?:[|｜丨:：\-–—]\s*)?/u;
+    return text.replace(prefixPattern, '').trimStart();
 };
 
 export const route: Route = {
@@ -50,9 +49,11 @@ async function handler() {
     } = await got(apiUrl);
 
     const items = result.map((i) => {
-        const sanitized = { ...i, content: stripGelonghuiDatePrefix(i.content) };
+        const sanitizedContent = stripGelonghuiDatePrefix(i.content);
+        const sanitizedTitle = stripGelonghuiDatePrefix(i.title || i.content);
+        const sanitized = { ...i, content: sanitizedContent };
         return {
-            title: i.title || i.content,
+            title: sanitizedTitle,
             description: art(path.join(__dirname, 'templates/live.art'), {
                 i: sanitized,
             }),
