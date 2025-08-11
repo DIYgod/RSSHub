@@ -101,7 +101,7 @@ async function handler(ctx) {
         '242': '行业',
     };
 
-    const items = collected.slice(0, limit).map((it) => {
+    let items = collected.slice(0, limit).map((it) => {
         const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
         // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
         const bracketMatch = plain.match(/^【([^】]+)】/);
@@ -162,11 +162,48 @@ async function handler(ctx) {
             categories.push(`tag:${tag}`);
         }
 
-        // 处理富文本：先规范化样式标签，再去掉标题部分，最后加上署名
+        // 正文：保留原始富文本，但需要去掉标题部分
         let processedRichText = it.rich_text ?? '';
+        if (bracketMatch) {
+            // 尝试从HTML中移除标题部分
+            try {
+                const $temp = load(`<div>${processedRichText}</div>`);
+                const text = $temp.text();
+                if (text.startsWith(`【${bracketMatch[1]}】`)) {
+                    const titleLength = `【${bracketMatch[1]}】`.length;
+                    const remainingText = text.slice(titleLength).trim();
+                    if (remainingText) {
+                        // 找到标题在HTML中的位置并移除
+                        const titleRegex = new RegExp(`^.*?【${bracketMatch[1].replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}】`, 'i');
+                        processedRichText = processedRichText.replace(titleRegex, '').trim();
+                    }
+                }
+            } catch {
+                // fallback: 保持原始富文本
+            }
+        }
+
+        const via = `via 新浪财经直播 - ${CHANNELS[zhiboId] ?? ''}${it.creator ? ` (author: ${it.creator})` : ''}`.trim();
+        const description = `${processedRichText}${processedRichText ? '<br/><br/>' : ''}${via}`;
+
+        return {
+            title,
+            link,
+            description,
+            author: it.creator,
+            pubDate: parseDate(it.create_time),
+            guid: `sina-finance-zhibo-${it.id}`,
+            category: categories,
+        };
+    });
+
+    // 先将富文本内的样式化 <span> 规范化为 <strong>/<u>/<del> 等基础标签，提升阅读器兼容性
+    items = items.map((item) => {
         try {
-            // 将样式化 <span> 规范化为 <strong>/<u>/<del> 等基础标签
-            const $ = load(`<div id="rssroot">${processedRichText}</div>`);
+            if (!item.description) {
+                return item;
+            }
+            const $ = load(`<div id="rssroot">${item.description}</div>`);
             const container = $('#rssroot');
             container.find('span[style]').each((_, el) => {
                 const node = $(el);
@@ -188,44 +225,11 @@ async function handler(ctx) {
                 const html = node.html() ?? '';
                 node.replaceWith(html);
             });
-            processedRichText = container.html() ?? processedRichText;
+            item.description = container.html() ?? item.description;
         } catch {
-            // ignore style processing errors
+            // ignore
         }
-
-        // 去掉标题部分（如果有【...】开头）
-        let bodyContent = processedRichText;
-        if (bracketMatch) {
-            // 尝试从 HTML 中移除标题部分
-            try {
-                const $ = load(`<div>${processedRichText}</div>`);
-                const text = $.text();
-                if (text.startsWith(`【${bracketMatch[1]}】`)) {
-                    const titleLength = `【${bracketMatch[1]}】`.length;
-                    const remainingText = text.slice(titleLength).trim();
-                    if (remainingText) {
-                        bodyContent = remainingText;
-                    }
-                }
-            } catch {
-                // fallback to plain text processing
-                const bodyPlain = plain.replace(/^【[^】]+】/, '').trim();
-                bodyContent = bodyPlain;
-            }
-        }
-
-        const via = `via 新浪财经直播 - ${CHANNELS[zhiboId] ?? ''}${it.creator ? ` (author: ${it.creator})` : ''}`.trim();
-        const description = `${bodyContent}${bodyContent ? '<br/><br/>' : ''}${via}`;
-
-        return {
-            title,
-            link,
-            description,
-            author: it.creator,
-            pubDate: parseDate(it.create_time),
-            guid: `sina-finance-zhibo-${it.id}`,
-            category: categories,
-        };
+        return item;
     });
 
     // 取消无图时的详情页封面抓取与追加
