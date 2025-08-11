@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 
 import got from '@/utils/got';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const ROOT_URL = 'https://zhibo.sina.com.cn';
@@ -79,27 +80,63 @@ async function handler(ctx) {
             }).then((res) => ({ page, list: (res.data?.result?.data?.feed?.list as ZhiboFeedItem[]) ?? [] }))
         )
     );
-    for (const p of pages
-        .sort((a, b) => a.page - b.page)) {
-            if (collected.length < limit && p.list.length) {
-                collected.push(...p.list);
-            }
+    pages.sort((a, b) => a.page - b.page);
+    for (const p of pages) {
+        if (collected.length >= limit) {
+            break;
         }
+        if (p.list.length) {
+            const remain = limit - collected.length;
+            collected.push(...p.list.slice(0, remain));
+        }
+    }
 
-    const items = collected.slice(0, limit).map((it) => {
+    let items = collected.slice(0, limit).map((it) => {
         const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
         const title = plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
 
+        // 7x24 单条详情页：观察到格式为 /7x24/sina-finance-zhibo-<id>
+        const link = `https://finance.sina.com.cn/7x24/sina-finance-zhibo-${it.id}`;
+
         return {
             title,
-            // 接口项没有稳定的详情页，这里指向 7x24 页面以便用户查看更多
-            link: 'https://finance.sina.com.cn/7x24/',
+            link,
             description: it.rich_text,
             author: it.creator,
             pubDate: parseDate(it.create_time),
             guid: `sina-finance-zhibo-${it.id}`,
         };
     });
+
+    // 对含“一图看懂”的项，尝试抓取 og:image 并补充图片
+    items = await Promise.all(
+        items.map(async (item) => {
+            try {
+                if (!item.description || /<img\s/i.test(item.description)) {
+                    return item;
+                }
+                const text = `${item.title ?? ''}${item.description ?? ''}`;
+                if (!/一图看懂/.test(text)) {
+                    return item;
+                }
+                if (!item.link) {
+                    return item;
+                }
+
+                const resp = await got(item.link);
+                const $ = load(resp.data);
+                const ogImage = $('meta[property="og:image"]').attr('content');
+                const twitterImage = $('meta[name="twitter:image"], meta[name="twitter:image:src"]').attr('content');
+                const img = ogImage || twitterImage;
+                if (img) {
+                    item.description = `${item.description}<br/><img src="${img}" referrerpolicy="no-referrer" />`;
+                }
+            } catch {
+                // ignore network/parse errors per item
+            }
+            return item;
+        })
+    );
 
     const CHANNELS: Record<string, string> = {
         '151': '政经',
