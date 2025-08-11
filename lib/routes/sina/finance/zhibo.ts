@@ -27,7 +27,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '财经直播',
+    name: '7×24直播',
     maintainers: ['nczitzk'],
     handler,
     url: 'zhibo.sina.com.cn',
@@ -151,7 +151,7 @@ async function handler(ctx) {
     };
 
     return {
-        title: `新浪财经直播 - ${CHANNELS[zhiboId] ?? zhiboId}`,
+        title: `新浪财经 - 7×24直播${CHANNELS[zhiboId] ? ` - ${CHANNELS[zhiboId]}` : ''}`,
         link: 'https://finance.sina.com.cn/7x24/',
         description: 'feedId:177629882355355648+userId:117254850907621376',
         item: items,
