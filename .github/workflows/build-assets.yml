@@ -93,6 +93,7 @@ jobs:
         run: |
           rm -rf ./rsshub-vercel/src
           rm -rf ./rsshub-vercel/patches
+          rm -rf ./rsshub-vercel/pnpm-lock.yaml
           mkdir -p ./rsshub-vercel/src
           mkdir -p ./rsshub-vercel/patches
           cp -r ./dist/* ./rsshub-vercel/src
