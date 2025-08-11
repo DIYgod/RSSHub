@@ -16,22 +16,22 @@ overrides:
 
 patchedDependencies:
   '@bbob/core@4.2.0':
-    hash: 2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4
+    hash: v4tqyuhmd7ie4kskej63wpyoyy
     path: patches/@bbob__core@4.2.0.patch
   '@bbob/parser@4.2.0':
-    hash: 58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6
+    hash: 3jkidu2qub3svpiz24dcdrhuey
     path: patches/@bbob__parser@4.2.0.patch
   '@bbob/plugin-helper@4.2.0':
-    hash: d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca
+    hash: 35vhlnm6zfsrye6wm5mvcuoqkq
     path: patches/@bbob__plugin-helper@4.2.0.patch
   '@bbob/preset-html5@4.2.0':
-    hash: 2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b
+    hash: 45t5oyykiv4ibbpruba4shbkca
     path: patches/@bbob__preset-html5@4.2.0.patch
   '@bbob/preset@4.2.0':
-    hash: 6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed
+    hash: hzdlptpstii55wqx3v2binf4i4
     path: patches/@bbob__preset@4.2.0.patch
   eslint-nibble@8.1.0:
-    hash: f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2
+    hash: w5z6jxwjps4t4gxnmmngw67gmm
     path: patches/eslint-nibble@8.1.0.patch
 
 importers:
@@ -43,10 +43,10 @@ importers:
         version: 4.2.0
       '@bbob/plugin-helper':
         specifier: 4.2.0
-        version: 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+        version: 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/preset-html5':
         specifier: 4.2.0
-        version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
+        version: 4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)
       '@hono/node-server':
         specifier: 1.18.1
         version: 1.18.1(hono@4.9.0)
@@ -404,7 +404,7 @@ importers:
         version: 10.1.8(eslint@9.32.0(jiti@2.5.1))
       eslint-nibble:
         specifier: 8.1.0
-        version: 8.1.0(patch_hash=f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2)(eslint@9.32.0(jiti@2.5.1))
+        version: 8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.32.0(jiti@2.5.1))
       eslint-plugin-n:
         specifier: 17.21.3
         version: 17.21.3(eslint@9.32.0(jiti@2.5.1))(typescript@5.9.2)
@@ -1988,11 +1988,13 @@ packages:
     resolution: {integrity: sha512-oTDZVfqIAjLB2I1yTiLyyhfPPO6dky33sTblxTCpe+ZT55WizN3KDoBKJ4yXG8shI6I4bRShVu29Xg0yAjyQYw==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-arm64-musl@1.0.0-beta.31':
     resolution: {integrity: sha512-duJ3IkEBj9Xe9NYW1n8Y3483VXHGi8zQ0ZsLbK8464EJUXLF7CXM8Ry+jkkUw+ZvA+Zu1E/+C6p2Y6T9el0C9g==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-linux-arm64-ohos@1.0.0-beta.31':
     resolution: {integrity: sha512-qdbmU5QSZ0uoLZBYMxiHsMQmizqtzFGTVPU5oyU1n0jU0Mo+mkSzqZuL8VBnjHOHzhVxZsoAGH9JjiRzCnoGVA==}
@@ -2003,11 +2005,13 @@ packages:
     resolution: {integrity: sha512-H7+r34TSV8udB2gAsebFM/YuEeNCkPGEAGJ1JE7SgI9XML6FflqcdKfrRSneQFsPaom/gCEc1g0WW5MZ0O3blw==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-x64-musl@1.0.0-beta.31':
     resolution: {integrity: sha512-zRm2YmzFVqbsmUsyyZnHfJrOlQUcWS/FJ5ZWL8Q1kZh5PnLBrTVZNpakIWwAxpN5gNEi9MmFd5YHocVJp8ps1Q==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.31':
     resolution: {integrity: sha512-fM1eUIuHLsNJXRlWOuIIex1oBJ89I0skFWo5r/D3KSJ5gD9MBd3g4Hp+v1JGohvyFE+7ylnwRxSUyMEeYpA69A==}
@@ -2075,56 +2079,67 @@ packages:
     resolution: {integrity: sha512-n0edDmSHlXFhrlmTK7XBuwKlG5MbS7yleS1cQ9nn4kIeW+dJH+ExqNgQ0RrFRew8Y+0V/x6C5IjsHrJmiHtkxQ==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.44.1':
     resolution: {integrity: sha512-8WVUPy3FtAsKSpyk21kV52HCxB+me6YkbkFHATzC2Yd3yuqHwy2lbFL4alJOLXKljoRw08Zk8/xEj89cLQ/4Nw==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.44.1':
     resolution: {integrity: sha512-yuktAOaeOgorWDeFJggjuCkMGeITfqvPgkIXhDqsfKX8J3jGyxdDZgBV/2kj/2DyPaLiX6bPdjJDTu9RB8lUPQ==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.44.1':
     resolution: {integrity: sha512-W+GBM4ifET1Plw8pdVaecwUgxmiH23CfAUj32u8knq0JPFyK4weRy6H7ooxYFD19YxBulL0Ktsflg5XS7+7u9g==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loongarch64-gnu@4.44.1':
     resolution: {integrity: sha512-1zqnUEMWp9WrGVuVak6jWTl4fEtrVKfZY7CvcBmUUpxAJ7WcSowPSAWIKa/0o5mBL/Ij50SIf9tuirGx63Ovew==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-powerpc64le-gnu@4.44.1':
     resolution: {integrity: sha512-Rl3JKaRu0LHIx7ExBAAnf0JcOQetQffaw34T8vLlg9b1IhzcBgaIdnvEbbsZq9uZp3uAH+JkHd20Nwn0h9zPjA==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.44.1':
     resolution: {integrity: sha512-j5akelU3snyL6K3N/iX7otLBIl347fGwmd95U5gS/7z6T4ftK288jKq3A5lcFKcx7wwzb5rgNvAg3ZbV4BqUSw==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.44.1':
     resolution: {integrity: sha512-ppn5llVGgrZw7yxbIm8TTvtj1EoPgYUAbfw0uDjIOzzoqlZlZrLJ/KuiE7uf5EpTpCTrNt1EdtzF0naMm0wGYg==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.44.1':
     resolution: {integrity: sha512-Hu6hEdix0oxtUma99jSP7xbvjkUM/ycke/AQQ4EC5g7jNRLLIwjcNwaUy95ZKBJJwg1ZowsclNnjYqzN4zwkAw==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.44.1':
     resolution: {integrity: sha512-EtnsrmZGomz9WxK1bR5079zee3+7a+AdFlghyd6VbAjgRJDbTANJ9dcPIPAi76uG05micpEL+gPGmAKYTschQw==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.44.1':
     resolution: {integrity: sha512-iAS4p+J1az6Usn0f8xhgL4PaU878KEtutP4hqw52I4IO6AGoyOkHCxcc4bqufv1tQLdDWFx8lR9YlwxKuv3/3g==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.44.1':
     resolution: {integrity: sha512-NtSJVKcXwcqozOl+FwI41OH3OApDyLk3kqTJgx8+gp6On9ZEt5mYhIsKNPGuaZr3p9T6NWPKGU/03Vw4CNU9qg==}
@@ -6848,36 +6863,36 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bbob/core@4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)':
+  '@bbob/core@4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)':
     dependencies:
-      '@bbob/parser': 4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+      '@bbob/parser': 4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
   '@bbob/html@4.2.0':
     dependencies:
-      '@bbob/core': 4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+      '@bbob/core': 4.2.0(patch_hash=v4tqyuhmd7ie4kskej63wpyoyy)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
-  '@bbob/parser@4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)':
+  '@bbob/parser@4.2.0(patch_hash=3jkidu2qub3svpiz24dcdrhuey)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
-  '@bbob/plugin-helper@4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)':
+  '@bbob/plugin-helper@4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)':
     dependencies:
       '@bbob/types': 4.2.0
 
-  '@bbob/preset-html5@4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)':
+  '@bbob/preset-html5@4.2.0(patch_hash=45t5oyykiv4ibbpruba4shbkca)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/preset': 4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
+      '@bbob/preset': 4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)
       '@bbob/types': 4.2.0
 
-  '@bbob/preset@4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)':
+  '@bbob/preset@4.2.0(patch_hash=hzdlptpstii55wqx3v2binf4i4)':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+      '@bbob/plugin-helper': 4.2.0(patch_hash=35vhlnm6zfsrye6wm5mvcuoqkq)
       '@bbob/types': 4.2.0
 
   '@bbob/types@4.2.0': {}
@@ -9267,7 +9282,7 @@ snapshots:
       strip-ansi: 5.2.0
       text-table: 0.2.0
 
-  eslint-nibble@8.1.0(patch_hash=f2c2e23268d13afd2713af0c6365da74db40201a6ebf507c732879e7c860c7d2)(eslint@9.32.0(jiti@2.5.1)):
+  eslint-nibble@8.1.0(patch_hash=w5z6jxwjps4t4gxnmmngw67gmm)(eslint@9.32.0(jiti@2.5.1)):
     dependencies:
       '@ianvs/eslint-stats': 2.0.0
       chalk: 4.1.2
