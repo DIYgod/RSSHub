@@ -12,6 +12,10 @@ const ids = {
         url: 'content/recommend',
         title: '推荐',
     },
+    immediately: {
+        url: 'immediately',
+        title: '7×24直播',
+    },
     hkstock: {
         url: 'content/hkstock',
         title: '港股',
@@ -116,44 +120,59 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.data.slice(0, limit).map((item) => ({
-        title: item.title,
-        link: `${rootUrl}${item.url}`,
-        description: item.digest,
-        author: item.author_info.author_name,
-        pubDate: parseDate((item.create_time ?? Number.parseInt(item.original_time)) * 1000),
-        category: [...(item.keywords?.split(',') ?? []), item.category_name ?? item.type_tag],
-    }));
+    const list = response.data?.data?.slice(0, limit) ?? [];
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                        headers: {
-                            Referer: 'https://www.zhitongcaijing.com/',
-                            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                        },
-                    });
+    let items = list.map((item) => {
+        const title = item.title ?? item.content ?? item.digest ?? '';
+        const linkPath = item.url ?? item.link ?? '';
+        const link = linkPath ? `${rootUrl}${linkPath}` : `${rootUrl}/immediately.html`;
+        const description = item.digest ?? item.content ?? '';
+        const author = item.author_info?.author_name ?? item.author ?? '智通财经';
+        const timestamp = item.create_time ?? Number.parseInt(item.original_time ?? '') ?? item.time ?? item.publish_time ?? item.ctime;
+        const pubDate = timestamp ? parseDate(Number(timestamp) * (String(timestamp).length === 10 ? 1000 : 1)) : undefined;
+        const category = [...((typeof item.keywords === 'string' ? item.keywords.split(',') : (Array.isArray(item.keywords) ? item.keywords : [])) ?? []), item.category_name ?? item.type_tag].filter(Boolean);
 
-                    const content = load(detailResponse.data);
+        return {
+            title,
+            link,
+            description,
+            author,
+            pubDate,
+            category,
+        };
+    });
 
-                    content('#subscribe-vip-box').remove();
-                    content('#news-content').remove();
+    if (id !== 'immediately') {
+        items = await Promise.all(
+            items.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    try {
+                        const detailResponse = await got({
+                            method: 'get',
+                            url: item.link,
+                            headers: {
+                                Referer: 'https://www.zhitongcaijing.com/',
+                                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                            },
+                        });
 
-                    item.description = art(path.join(__dirname, 'templates/description.art'), {
-                        digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
-                        description: content('.news-body-content').html(),
-                    });
-                } catch {
-                    // 详情页暂不可达（如 503）时，退化为列表摘要，保证路由可用
-                }
-                return item;
-            })
-        )
-    );
+                        const content = load(detailResponse.data);
+
+                        content('#subscribe-vip-box').remove();
+                        content('#news-content').remove();
+
+                        item.description = art(path.join(__dirname, 'templates/description.art'), {
+                            digest: content('.digetst-box').html() || content('.telegram-origin-contentn').html(),
+                            description: content('.news-body-content').html(),
+                        });
+                    } catch {
+                        // 详情页暂不可达（如 503）时，退化为列表摘要，保证路由可用
+                    }
+                    return item;
+                })
+            )
+        );
+    }
 
     return {
         title: `智通财经 - ${ids[id].title}`,

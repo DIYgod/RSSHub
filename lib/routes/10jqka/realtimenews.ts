@@ -55,12 +55,12 @@ export const handler = async (ctx) => {
             };
         }) ?? [];
 
-    const title = $('title').text();
+    const pageTitle = $('title').text();
     const image = $('h1 a img').prop('src');
 
     return {
-        title,
-        description: title.split(/_/).pop(),
+        title: `同花顺财经 - 7×24直播${tag ? ` - ${tag}` : ''}`,
+        description: pageTitle.split(/_/).pop(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
@@ -80,7 +80,7 @@ export const route: Route = {
     parameters: { tag: '标签，默认为全部' },
     description: `::: tip
   若订阅 [7×24小时要闻直播](https://news.10jqka.com.cn/realtimenews.html) 的 \`公告\` 标签。将 \`公告\` 作为标签参数填入，此时路由为 [\`/10jqka/realtimenews/公告\`](https://rsshub.app/10jqka/realtimenews/公告)。
-  
+
   若订阅 [7×24小时要闻直播](https://news.10jqka.com.cn/realtimenews.html) 的 \`公告\` 和 \`A股\` 标签。将 \`公告,A股\` 作为标签参数填入，此时路由为 [\`/10jqka/realtimenews/公告,A股\`](https://rsshub.app/10jqka/realtimenews/公告,A股)。
 :::
 
