@@ -43,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     items = response.results.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string | undefined = item.latest_event.description;
+        const description: string | undefined = item.latest_event?.description ?? undefined;
         const pubDate: number | string = item.latest_event?.date;
         const linkUrl: string | undefined = item.slug ? `change/${item.slug}` : undefined;
         const categories: string[] = [
