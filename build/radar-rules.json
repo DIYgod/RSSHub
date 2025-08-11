@@ -27102,6 +27102,19 @@
       }
     ]
   },
+  "mit.edu": {
+    "_name": "Massachusetts Institute of Technology",
+    "hanlab": [
+      {
+        "title": "HAN Lab Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog"
+        ],
+        "target": "/mit/hanlab/blog"
+      }
+    ]
+  },
   "miui.com": {
     "_name": "MIUI",
     "web.vip": [
