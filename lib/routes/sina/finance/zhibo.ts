@@ -133,7 +133,7 @@ async function handler(ctx) {
 
         // 提取图片和多媒体内容
         const images: string[] = [];
-        if (it.multimedia) {
+        if (it.multimedia && typeof it.multimedia === 'string') {
             // 解析multimedia字段中的图片
             const imgMatches = it.multimedia.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
             if (imgMatches) {
@@ -147,12 +147,14 @@ async function handler(ctx) {
         }
 
         // 从rich_text中提取图片
-        const richTextImgMatches = it.rich_text?.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
-        if (richTextImgMatches) {
-            for (const imgTag of richTextImgMatches) {
-                const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
-                if (srcMatch && !images.includes(srcMatch[1])) {
-                    images.push(srcMatch[1]);
+        if (it.rich_text && typeof it.rich_text === 'string') {
+            const richTextImgMatches = it.rich_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
+            if (richTextImgMatches) {
+                for (const imgTag of richTextImgMatches) {
+                    const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
+                    if (srcMatch && !images.includes(srcMatch[1])) {
+                        images.push(srcMatch[1]);
+                    }
                 }
             }
         }
