@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/jwb/:type?',
     categories: ['university'],
-    example: '/jwb/jwtz',
+    example: '/dgut/jwb/jwtz',
     parameters: { type: '哪种通知，默认为教务通知' },
     features: {
         requireConfig: false,
