@@ -118,7 +118,14 @@ async function handler(ctx) {
             const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
             // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
             const bracketMatch = plain.match(/^【([^】]+)】/);
-            const titleText = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
+            let titleText;
+            if (bracketMatch) {
+                titleText = `【${bracketMatch[1]}】`;
+            } else if (plain.length > 0) {
+                titleText = plain.length > 80 ? `${plain.slice(0, 80)}…` : plain;
+            } else {
+                titleText = `直播快讯 #${it.id}`;
+            }
             // 标题加粗 + 下划线（与同花顺风格一致）
             const title = bracketMatch ? `<strong><u>${titleText}</u></strong>` : titleText;
 
@@ -199,12 +206,6 @@ async function handler(ctx) {
                 }
             }
 
-            // 构造富文本描述：将【标题】加粗+下划线
-            let richTextHtml: string | undefined;
-            if (typeof it.rich_text === 'string') {
-                richTextHtml = it.rich_text.replace(/^【([^】]+)】/, (_m, g1) => `<strong><u>【${g1}】</u></strong>`);
-            }
-
             // 构建分类信息：标签 + 股票关键词
             const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
             const uniqueCategories = [...new Set(categories)].filter(Boolean);
@@ -213,7 +214,6 @@ async function handler(ctx) {
                 title,
                 link: detailLink,
                 description: art(path.join(__dirname, 'templates/description.art'), {
-                    rich_text_html: richTextHtml,
                     rich_text: it.rich_text,
                     images,
                 }),
@@ -221,6 +221,7 @@ async function handler(ctx) {
                 pubDate: parseDate(it.create_time),
                 guid: `sina-finance-zhibo-${it.id}`,
                 category: uniqueCategories,
+                image: images[0], // 添加条目图片
             };
         })
     );
