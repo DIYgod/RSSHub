@@ -31,7 +31,9 @@ export default async function test({ github, context, core }, baseUrl, routes, n
             successCount++;
             detail = jsBeautify.html(body.replaceAll(/\s+(\n|$)/g, '\n'), { indent_size: 2 });
         } else {
-            failCount++;
+            if (body && !body.includes('ConfigNotFoundError')) {
+                failCount++;
+            }
             detail = `HTTPError: Response code ${res.status} (${res.statusText})`;
             const errInfoList = body && body.match(/(?<=<p class="message">)(.+?)(?=<\/p>)/gs);
             if (errInfoList) {
@@ -75,6 +77,31 @@ ${detail.slice(0, 65300 - routeFeedback.length)}
 
     if (process.env.PULL_REQUEST) {
         const resultLabel = failCount === links.length || successCount <= failCount ? routeTestFailed : readyToReview;
+
+        if (resultLabel === routeTestFailed) {
+            const { data: issue } = await github.rest.issues
+                .get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: number,
+                })
+                .catch((error) => {
+                    core.warning(error);
+                });
+            if (issue.labels.some((l) => l.name === readyToReview)) {
+                await github.rest.issues
+                    .removeLabel({
+                        issue_number: number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        name: readyToReview,
+                    })
+                    .catch((error) => {
+                        core.warning(error);
+                    });
+            }
+        }
+
         await github.rest.issues
             .addLabels({
                 issue_number: number,

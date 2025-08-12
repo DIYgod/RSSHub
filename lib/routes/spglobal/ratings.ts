@@ -38,7 +38,7 @@ export const route: Route = {
 | ru | Русский |
 | ar | العربية |
     `,
-    maintainers: ['FYLSen'],
+    maintainers: ['Cedaric'],
     handler,
 };
 

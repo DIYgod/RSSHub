@@ -34,7 +34,7 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
+        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
         with:
           images: rsshub
           flavor: latest=true
@@ -54,7 +54,7 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
+        uses: actions-cool/issues-helper@50068f49b7b2b3857270ead65e2d02e4459b022c # v3.6.2
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -22,7 +22,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['coomer.su/:source/user/:id', 'coomer.su/'],
+            source: ['coomer.st/'],
+            target: '',
+        },
+        {
+            source: ['coomer.st/:source/user/:id'],
+            target: '/:source/:id',
         },
     ],
     name: 'Posts',
@@ -46,7 +51,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const isPosts = source === 'posts';
 
-    const rootUrl = 'https://coomer.su';
+    const rootUrl = 'https://coomer.st';
     const apiUrl = `${rootUrl}/api/v1`;
     const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}`;
 
@@ -63,7 +68,7 @@ async function handler(ctx) {
 
     const author = isPosts ? '' : await getAuthor(currentUrl, headers);
     const title = isPosts ? 'Coomer Posts' : `Posts of ${author} from ${source} | Coomer`;
-    const image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.coomer.su/icons/${source}/${id}`;
+    const image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.coomer.st/icons/${source}/${id}`;
     const items = responseData
         .filter((i) => i.content || i.attachments)
         .slice(0, limit)
@@ -132,7 +137,7 @@ async function handler(ctx) {
                 description: desc,
                 author,
                 pubDate: parseDate(i.published),
-                guid: `${apiUrl}/${i.service}/user/${i.user}/post/${i.id}`,
+                guid: `coomer:${i.service}:${i.user}:post:${i.id}`,
                 link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
                 ...enclosureInfo,
             };

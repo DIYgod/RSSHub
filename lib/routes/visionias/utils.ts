@@ -37,7 +37,7 @@ export async function extractNews(item, selector) {
                     ?.nextAll('li')
                     .toArray()
                     .map((tag) => $$(tag).text());
-                const description = art(path.join(__dirname, `templates/description.art`), {
+                const description = art(path.join(__dirname, 'templates/description.art'), {
                     heading: title,
                     articleContent: htmlContent,
                 });
@@ -71,13 +71,13 @@ export async function extractNews(item, selector) {
                 const mainDiv = $$(element);
                 const title = mainDiv.find('a > div > h2').text().trim();
                 const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
-                const description = art(path.join(__dirname, `templates/description-sub.art`), {
+                const description = art(path.join(__dirname, 'templates/description-sub.art'), {
                     heading: title,
                     articleContent: htmlContent,
                 });
                 return { description };
             });
-            const description = art(path.join(__dirname, `templates/description.art`), {
+            const description = art(path.join(__dirname, 'templates/description.art'), {
                 heading,
                 subItems: items,
             });
