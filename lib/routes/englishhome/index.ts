@@ -34,7 +34,7 @@ async function handler() {
 
     const items = data.map((post) => ({
         title: post.title?.rendered,
-        description: `<![CDATA[${post.content?.rendered ?? post.excerpt?.rendered ?? ''}]]>`,
+        description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
         link: post.link,
         pubDate: parseDate(post.date_gmt ?? post.date),
         author: post._embedded?.author?.[0]?.name,
