@@ -21,10 +21,10 @@ export const route: Route = {
             source: ['englishhome.org/'],
         },
     ],
-    name: '英語之家',
+    name: '首頁',
     maintainers: ['johan456789'],
     handler,
-    description: '英語之家 - The Home of English',
+    description: '英語之家 - The Home of English 首頁',
 };
 
 async function handler() {
