@@ -1,9 +1,9 @@
 import { Route, ViewType } from '@/types';
 
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+import { load } from 'cheerio';
 import path from 'node:path';
 
 const ROOT_URL = 'https://zhibo.sina.com.cn';
@@ -113,125 +113,119 @@ async function handler(ctx) {
 
     filteredData = filteredData.slice(0, limit);
 
-    const items = filteredData.map((it) => {
-        const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
-        // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
-        const bracketMatch = plain.match(/^【([^】]+)】/);
-        const title = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
+    const items = await Promise.all(
+        filteredData.map(async (it) => {
+            const plain = it.rich_text?.replace(/<[^>]+>/g, '').trim() ?? '';
+            // 优先使用「【…】」内的文字作为标题，避免把正文混入标题
+            const bracketMatch = plain.match(/^【([^】]+)】/);
+            const titleText = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
+            // 标题加粗 + 下划线（与同花顺风格一致）
+            const title = bracketMatch ? `<strong><u>${titleText}</u></strong>` : titleText;
 
-        // 解析ext字段获取完整信息
-        let detailLink = 'https://finance.sina.com.cn/7x24/';
+            // 解析ext字段获取完整信息
+            let detailLink = 'https://finance.sina.com.cn/7x24/';
+            let stockInfo: Array<{ market: string; symbol: string; key: string }> = [];
 
-        if (it.ext) {
-            try {
-                const extData = JSON.parse(it.ext);
-                if (extData.docurl) {
-                    detailLink = extData.docurl.replace(/^http:\/\//, 'https://');
+            if (it.ext) {
+                try {
+                    const extData = JSON.parse(it.ext);
+                    if (extData.docurl) {
+                        detailLink = extData.docurl.replace(/^http:\/\//, 'https://');
+                    }
+                    if (extData.stocks && Array.isArray(extData.stocks)) {
+                        stockInfo = extData.stocks;
+                    }
+                } catch {
+                    // 解析失败时使用默认链接
                 }
-            } catch {
-                // 解析失败时使用默认链接
             }
-        }
 
-        // 如果没有ext中的docurl，使用直接的docurl字段
-        if (detailLink === 'https://finance.sina.com.cn/7x24/' && it.docurl) {
-            detailLink = it.docurl.replace(/^http:\/\//, 'https://');
-        }
+            // 如果没有ext中的docurl，使用直接的docurl字段
+            if (detailLink === 'https://finance.sina.com.cn/7x24/' && it.docurl) {
+                detailLink = it.docurl.replace(/^http:\/\//, 'https://');
+            }
 
-        // 提取图片和多媒体内容
-        const images: string[] = [];
-        if (it.multimedia && typeof it.multimedia === 'string') {
-            // 解析multimedia字段中的图片
-            const imgMatches = it.multimedia.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
-            if (imgMatches) {
-                for (const imgTag of imgMatches) {
-                    const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
-                    if (srcMatch) {
-                        images.push(srcMatch[1]);
+            // 提取图片和多媒体内容
+            const images: string[] = [];
+            if (it.multimedia && typeof it.multimedia === 'string') {
+                // 解析multimedia字段中的图片
+                const imgMatches = it.multimedia.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
+                if (imgMatches) {
+                    for (const imgTag of imgMatches) {
+                        const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
+                        if (srcMatch) {
+                            images.push(srcMatch[1]);
+                        }
                     }
                 }
             }
-        }
 
-        // 从rich_text中提取图片
-        if (it.rich_text && typeof it.rich_text === 'string') {
-            const richTextImgMatches = it.rich_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
-            if (richTextImgMatches) {
-                for (const imgTag of richTextImgMatches) {
-                    const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
-                    if (srcMatch && !images.includes(srcMatch[1])) {
-                        images.push(srcMatch[1]);
+            // 从rich_text中提取图片
+            if (it.rich_text && typeof it.rich_text === 'string') {
+                const richTextImgMatches = it.rich_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi);
+                if (richTextImgMatches) {
+                    for (const imgTag of richTextImgMatches) {
+                        const srcMatch = imgTag.match(/src=["']([^"']+)["']/);
+                        if (srcMatch && !images.includes(srcMatch[1])) {
+                            images.push(srcMatch[1]);
+                        }
                     }
                 }
             }
-        }
 
-        // 获取主图片（如果有的话）
-        const mainImage = images.length > 0 ? images[0] : undefined;
+            // 若目前仍无图片，兜底抓取详情页图片（参考同花顺做法）
+            if (images.length === 0 && detailLink) {
+                try {
+                    const detailResp = await got(detailLink);
+                    const $ = load(detailResp.data);
+                    const ogImage = $('meta[property="og:image"]').attr('content');
+                    const twitterImage = $('meta[name="twitter:image"], meta[name="twitter:image:src"]').attr('content');
+                    const pageImages = new Set<string>();
+                    if (ogImage) {
+                        pageImages.add(ogImage);
+                    }
+                    if (twitterImage) {
+                        pageImages.add(twitterImage);
+                    }
+                    $('#article img[src], #artibody img[src]').each((_, el) => {
+                        const src = $(el).attr('src');
+                        if (src) {
+                            pageImages.add(src);
+                        }
+                    });
+                    images.push(...pageImages);
+                } catch {
+                    // 详情页不可达时忽略
+                }
+            }
 
-        // 格式化标题：【】内容保持加粗效果
-        const formattedTitle = title.replace(/【([^】]+)】/, '<strong>【$1】</strong>');
+            // 构造富文本描述：将【标题】加粗+下划线
+            let richTextHtml: string | undefined;
+            if (typeof it.rich_text === 'string') {
+                richTextHtml = it.rich_text.replace(/^【([^】]+)】/, (_m, g1) => `<strong><u>【${g1}】</u></strong>`);
+            }
 
-        return {
-            title: formattedTitle,
-            link: detailLink,
-            description: art(path.join(__dirname, 'templates/description.art'), {
-                rich_text: it.rich_text,
-                images,
-            }),
-            content: {
-                html: art(path.join(__dirname, 'templates/description.art'), {
+            // 构建分类信息：标签 + 股票关键词
+            const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
+            const uniqueCategories = [...new Set(categories)].filter(Boolean);
+
+            return {
+                title,
+                link: detailLink,
+                description: art(path.join(__dirname, 'templates/description.art'), {
+                    rich_text_html: richTextHtml,
                     rich_text: it.rich_text,
                     images,
                 }),
-                text: plain,
-            },
-            author: it.creator?.replace('@staff.sina.com', '') ?? '新浪财经',
-            pubDate: parseDate(it.create_time),
-            guid: `sina-finance-zhibo-${it.id}`,
-            category: it.tag?.map((t) => t.name) || [],
-            image: mainImage,
-            banner: mainImage,
-        };
-    });
-
-    // 对于特定类型的内容（如分析报告），尝试从详情页获取图片
-    const enhancedItems = await Promise.all(
-        items.map(async (item) => {
-            try {
-                // 如果没有图片且内容看起来像分析报告，尝试获取详情页图片
-                if (
-                    !item.image &&
-                    (item.title?.includes('分析') || item.title?.includes('一图看懂') || item.title?.includes('涨停') || item.title?.includes('解读')) &&
-                    item.link &&
-                    item.link !== 'https://finance.sina.com.cn/7x24/'
-                ) {
-                    const resp = await got(item.link);
-                    const $ = load(resp.data);
-
-                    // 尝试多种方式获取图片
-                    const ogImage = $('meta[property="og:image"]').attr('content');
-                    const twitterImage = $('meta[name="twitter:image"], meta[name="twitter:image:src"]').attr('content');
-                    const articleImage = $('.article img, .content img, #artibody img').first().attr('src');
-
-                    const foundImage = ogImage || twitterImage || articleImage;
-                    if (foundImage) {
-                        item.image = foundImage;
-                        item.banner = foundImage;
-                        // 更新description以包含图片
-                        item.description = art(path.join(__dirname, 'templates/description.art'), {
-                            rich_text: item.description?.replace(/<[^>]+>/g, '') || '',
-                            images: [foundImage],
-                        });
-                        item.content.html = item.description;
-                    }
-                }
-            } catch {
-                // 忽略获取详情页失败的情况
-            }
-            return item;
+                author: it.creator?.replace('@staff.sina.com', '') ?? '新浪财经',
+                pubDate: parseDate(it.create_time),
+                guid: `sina-finance-zhibo-${it.id}`,
+                category: uniqueCategories,
+            };
         })
     );
+
+    // 图片和多媒体内容已在上面通过模板处理，无需额外处理
 
     const CHANNELS: Record<string, string> = {
         '151': '政经',
@@ -249,9 +243,8 @@ async function handler(ctx) {
         title: `新浪财经 - 7×24直播 - ${channelTitle}${tagSuffix}`,
         link: 'https://finance.sina.com.cn/7x24/',
         description: `新浪财经7×24小时财经直播 - ${channelTitle}频道${tagSuffix}`,
-        item: enhancedItems,
+        item: items,
         author: '新浪财经',
         image: 'https://www.sinaimg.cn/dy/deco/2012/0613/yocc20120613img/logo.png',
-        allowEmpty: true,
     };
 }

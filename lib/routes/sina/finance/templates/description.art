@@ -1,4 +1,6 @@
-{{ if rich_text }}
+{{ if rich_text_html }}
+{{@ rich_text_html }}
+{{ else if rich_text }}
 {{@ rich_text }}
 {{ /if }}
 {{ if images }}
