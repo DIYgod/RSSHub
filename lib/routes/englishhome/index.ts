@@ -1,0 +1,61 @@
+import { Route } from '@/types';
+import got from '@/utils/got';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+
+export const route: Route = {
+    path: '/',
+    categories: ['blog'],
+    example: '/englishhome',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['englishhome.org/'],
+        },
+    ],
+    name: '英語之家',
+    maintainers: ['johan456789'],
+    handler,
+    description: '英語之家 - The Home of English',
+};
+
+async function handler() {
+    const rootUrl = 'https://englishhome.org';
+    const currentUrl = `${rootUrl}/`;
+
+    const response = await got(currentUrl);
+    const $ = load(response.data);
+
+    const items = $('#content article')
+        .toArray()
+        .map((item) => {
+            const el = $(item);
+            const titleEl = el.find('.entry-header > h2.entry-title a');
+            const title = titleEl.text().trim();
+            const link = new URL(titleEl.attr('href') ?? '', rootUrl).href;
+            const description = el.find('div.entry-content').html() ?? '';
+            const dateText = el.find('.entry-header time.published').text().trim();
+            const pubDate = parseDate(dateText);
+
+            return {
+                title,
+                link,
+                description,
+                pubDate,
+            };
+        });
+
+    return {
+        title: '英語之家 - The Home of English',
+        link: currentUrl,
+        item: items,
+    };
+}
