@@ -13723,6 +13723,19 @@
       }
     ]
   },
+  "englishhome.org": {
+    "_name": "英語之家",
+    ".": [
+      {
+        "title": "首頁",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/englishhome/"
+      }
+    ]
+  },
   "enterprisecraftsmanship.com": {
     "_name": "Enterprise Craftsmanship",
     ".": [
