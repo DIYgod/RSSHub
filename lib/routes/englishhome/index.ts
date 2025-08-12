@@ -1,6 +1,5 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import { Route, type Data } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,33 +28,28 @@ export const route: Route = {
 
 async function handler() {
     const rootUrl = 'https://englishhome.org';
-    const currentUrl = `${rootUrl}/`;
+    const apiUrl = `${rootUrl}/wp-json/wp/v2/posts?per_page=20&_embed=author,wp:term`;
 
-    const response = await got(currentUrl);
-    const $ = load(response.data);
+    const data = await ofetch<any[]>(apiUrl);
 
-    const items = $('#content article')
-        .toArray()
-        .map((item) => {
-            const el = $(item);
-            const titleEl = el.find('.entry-header > h2.entry-title a');
-            const title = titleEl.text().trim();
-            const link = new URL(titleEl.attr('href') ?? '', rootUrl).href;
-            const description = el.find('div.entry-content').html() ?? '';
-            const datetimeAttr = el.find('.entry-header time.published').attr('datetime')?.trim();
-            const pubDate = parseDate(datetimeAttr ?? '');
-
-            return {
-                title,
-                link,
-                description,
-                pubDate,
-            };
-        });
+    const items = data.map((post) => ({
+        title: post.title?.rendered,
+        description: `<![CDATA[${post.content?.rendered ?? post.excerpt?.rendered ?? ''}]]>`,
+        link: post.link,
+        pubDate: parseDate(post.date_gmt ?? post.date),
+        author: post._embedded?.author?.[0]?.name,
+        category: Array.isArray(post._embedded?.['wp:term'])
+            ? post._embedded['wp:term']
+                  .flat()
+                  .map((term: any) => term?.name)
+                  .filter(Boolean)
+            : undefined,
+    }));
 
     return {
         title: '英語之家 - The Home of English',
-        link: currentUrl,
+        link: rootUrl,
+        language: 'zh-TW',
         item: items,
-    };
+    } as Data;
 }
