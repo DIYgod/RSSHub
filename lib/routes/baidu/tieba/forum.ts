@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { config } from '@/config';
 
 export const route: Route = {
     path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
@@ -13,7 +14,12 @@ export const route: Route = {
     example: '/baidu/tieba/forum/good/女图',
     parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TIEBA_COOKIE',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -37,6 +43,7 @@ async function handler(ctx) {
     const { data } = await got(`https://tieba.baidu.com/f`, {
         headers: {
             Referer: 'https://tieba.baidu.com/',
+            Cookie: config.tieba.cookie,
         },
         searchParams: params,
     });

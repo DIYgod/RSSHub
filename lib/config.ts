@@ -422,6 +422,9 @@ export type Config = {
     smzdm: {
         cookie?: string;
     };
+    tieba: {
+        cookie?: string;
+    };
 };
 
 const value: Config | Record<string, any> = {};
@@ -887,6 +890,9 @@ const calculateValue = () => {
         },
         smzdm: {
             cookie: envs.SMZDM_COOKIE,
+        },
+        tieba: {
+            cookie: envs.TIEBA_COOKIE,
         },
     };
 
