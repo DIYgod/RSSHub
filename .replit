@@ -1,8 +1,14 @@
+
 modules = ["nodejs-20", "nix", "bash"]
-run = "npm run dev"
+run = "npm start"
 
 [nix]
 channel = "stable-25_05"
 
 [deployment]
-run = ["sh", "-c", "npm run dev"]
+build = "npm run build"
+run = "npm start"
+
+[[ports]]
+localPort = 1200
+externalPort = 80
