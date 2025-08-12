@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/jwb/:type?',
     categories: ['university'],
     example: '/jwb/jwtz',
-    parameters: { type: '那种通知,默认为教务通知' },
+    parameters: { type: '哪种通知，默认为教务通知' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
