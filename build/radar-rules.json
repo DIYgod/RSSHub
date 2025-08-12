@@ -12812,6 +12812,19 @@
       }
     ]
   },
+  "dgut.edu.cn": {
+    "_name": "东莞理工学院",
+    "jwb": [
+      {
+        "title": "教务部通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/"
+        ],
+        "target": "/dgut/jwb/:type?"
+      }
+    ]
+  },
   "dhu.edu.cn": {
     "_name": "东华大学",
     "news": [
