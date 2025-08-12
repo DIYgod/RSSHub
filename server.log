@@ -1,0 +1,3 @@
+
+> rsshub@1.0.0 dev /app
+> cross-env NODE_ENV=dev tsx watch --inspect --clear-screen=false lib/index.ts
