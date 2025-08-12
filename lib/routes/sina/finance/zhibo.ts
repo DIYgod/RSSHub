@@ -1,6 +1,7 @@
 import { Route, ViewType } from '@/types';
 
 import got from '@/utils/got';
+import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
@@ -120,16 +121,12 @@ async function handler(ctx) {
 
         // 解析ext字段获取完整信息
         let detailLink = 'https://finance.sina.com.cn/7x24/';
-        let stockInfo: Array<{ market: string; symbol: string; key: string }> = [];
 
         if (it.ext) {
             try {
                 const extData = JSON.parse(it.ext);
                 if (extData.docurl) {
                     detailLink = extData.docurl.replace(/^http:\/\//, 'https://');
-                }
-                if (extData.stocks && Array.isArray(extData.stocks)) {
-                    stockInfo = extData.stocks;
                 }
             } catch {
                 // 解析失败时使用默认链接
@@ -169,26 +166,72 @@ async function handler(ctx) {
             }
         }
 
-        // 构建分类信息：标签 + 股票关键词
-        const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
-        const uniqueCategories = [...new Set(categories)].filter(Boolean);
+        // 获取主图片（如果有的话）
+        const mainImage = images.length > 0 ? images[0] : undefined;
+
+        // 格式化标题：【】内容保持加粗效果
+        const formattedTitle = title.replace(/【([^】]+)】/, '<strong>【$1】</strong>');
 
         return {
-            title,
+            title: formattedTitle,
             link: detailLink,
             description: art(path.join(__dirname, 'templates/description.art'), {
                 rich_text: it.rich_text,
                 images,
-                stockInfo,
             }),
+            content: {
+                html: art(path.join(__dirname, 'templates/description.art'), {
+                    rich_text: it.rich_text,
+                    images,
+                }),
+                text: plain,
+            },
             author: it.creator?.replace('@staff.sina.com', '') ?? '新浪财经',
             pubDate: parseDate(it.create_time),
             guid: `sina-finance-zhibo-${it.id}`,
-            category: uniqueCategories,
+            category: it.tag?.map((t) => t.name) || [],
+            image: mainImage,
+            banner: mainImage,
         };
     });
 
-    // 图片和多媒体内容已在上面通过模板处理，无需额外处理
+    // 对于特定类型的内容（如分析报告），尝试从详情页获取图片
+    const enhancedItems = await Promise.all(
+        items.map(async (item) => {
+            try {
+                // 如果没有图片且内容看起来像分析报告，尝试获取详情页图片
+                if (
+                    !item.image &&
+                    (item.title?.includes('分析') || item.title?.includes('一图看懂') || item.title?.includes('涨停') || item.title?.includes('解读')) &&
+                    item.link &&
+                    item.link !== 'https://finance.sina.com.cn/7x24/'
+                ) {
+                    const resp = await got(item.link);
+                    const $ = load(resp.data);
+
+                    // 尝试多种方式获取图片
+                    const ogImage = $('meta[property="og:image"]').attr('content');
+                    const twitterImage = $('meta[name="twitter:image"], meta[name="twitter:image:src"]').attr('content');
+                    const articleImage = $('.article img, .content img, #artibody img').first().attr('src');
+
+                    const foundImage = ogImage || twitterImage || articleImage;
+                    if (foundImage) {
+                        item.image = foundImage;
+                        item.banner = foundImage;
+                        // 更新description以包含图片
+                        item.description = art(path.join(__dirname, 'templates/description.art'), {
+                            rich_text: item.description?.replace(/<[^>]+>/g, '') || '',
+                            images: [foundImage],
+                        });
+                        item.content.html = item.description;
+                    }
+                }
+            } catch {
+                // 忽略获取详情页失败的情况
+            }
+            return item;
+        })
+    );
 
     const CHANNELS: Record<string, string> = {
         '151': '政经',
@@ -206,7 +249,9 @@ async function handler(ctx) {
         title: `新浪财经 - 7×24直播 - ${channelTitle}${tagSuffix}`,
         link: 'https://finance.sina.com.cn/7x24/',
         description: `新浪财经7×24小时财经直播 - ${channelTitle}频道${tagSuffix}`,
-        item: items,
+        item: enhancedItems,
         author: '新浪财经',
+        image: 'https://www.sinaimg.cn/dy/deco/2012/0613/yocc20120613img/logo.png',
+        allowEmpty: true,
     };
 }
