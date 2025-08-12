@@ -6772,6 +6772,9 @@
   "/scoop/apps/:query?": [
     "nczitzk"
   ],
+  "/scpta/news/:category": [
+    "Yeye-0426"
+  ],
   "/sctv/programme/:id?/:limit?/:isFull?": [
     "nczitzk"
   ],
