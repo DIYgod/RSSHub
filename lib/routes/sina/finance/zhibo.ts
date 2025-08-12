@@ -118,17 +118,27 @@ async function handler(ctx) {
         const bracketMatch = plain.match(/^【([^】]+)】/);
         const title = bracketMatch ? `【${bracketMatch[1]}】` : plain.length > 0 ? (plain.length > 80 ? `${plain.slice(0, 80)}…` : plain) : `直播快讯 #${it.id}`;
 
-        // 解析ext字段获取docurl
+        // 解析ext字段获取完整信息
         let detailLink = 'https://finance.sina.com.cn/7x24/';
+        let stockInfo: Array<{ market: string; symbol: string; key: string }> = [];
+
         if (it.ext) {
             try {
                 const extData = JSON.parse(it.ext);
                 if (extData.docurl) {
                     detailLink = extData.docurl.replace(/^http:\/\//, 'https://');
                 }
+                if (extData.stocks && Array.isArray(extData.stocks)) {
+                    stockInfo = extData.stocks;
+                }
             } catch {
                 // 解析失败时使用默认链接
             }
+        }
+
+        // 如果没有ext中的docurl，使用直接的docurl字段
+        if (detailLink === 'https://finance.sina.com.cn/7x24/' && it.docurl) {
+            detailLink = it.docurl.replace(/^http:\/\//, 'https://');
         }
 
         // 提取图片和多媒体内容
@@ -159,17 +169,22 @@ async function handler(ctx) {
             }
         }
 
+        // 构建分类信息：标签 + 股票关键词
+        const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
+        const uniqueCategories = [...new Set(categories)].filter(Boolean);
+
         return {
             title,
             link: detailLink,
             description: art(path.join(__dirname, 'templates/description.art'), {
                 rich_text: it.rich_text,
                 images,
+                stockInfo,
             }),
-            author: it.creator ?? '新浪财经',
+            author: it.creator?.replace('@staff.sina.com', '') ?? '新浪财经',
             pubDate: parseDate(it.create_time),
             guid: `sina-finance-zhibo-${it.id}`,
-            category: it.tag?.map((t) => t.name) || [],
+            category: uniqueCategories,
         };
     });
 

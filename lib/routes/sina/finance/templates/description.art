@@ -6,3 +6,14 @@
 <img src="{{ image }}" referrerpolicy="no-referrer" />
 {{ /each }}
 {{ /if }}
+{{ if stockInfo && stockInfo.length > 0 }}
+<br/>
+<div style="margin-top: 10px; padding: 8px; background-color: #f5f5f5; border-radius: 4px;">
+<strong>📈 相关股票：</strong>
+{{ each stockInfo stock }}
+<span style="display: inline-block; margin: 2px 4px; padding: 2px 6px; background-color: #e3f2fd; border-radius: 3px; font-size: 12px;">
+{{ stock.key }}({{ stock.symbol }})
+</span>
+{{ /each }}
+</div>
+{{ /if }}
