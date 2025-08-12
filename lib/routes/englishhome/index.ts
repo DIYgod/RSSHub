@@ -42,8 +42,8 @@ async function handler() {
             const title = titleEl.text().trim();
             const link = new URL(titleEl.attr('href') ?? '', rootUrl).href;
             const description = el.find('div.entry-content').html() ?? '';
-            const dateText = el.find('.entry-header time.published').text().trim();
-            const pubDate = parseDate(dateText);
+            const datetimeAttr = el.find('.entry-header time.published').attr('datetime')?.trim();
+            const pubDate = parseDate(datetimeAttr ?? '');
 
             return {
                 title,
