@@ -59,7 +59,7 @@ export const route: Route = {
             description: podcast.albumDesc,
             author: podcast.host.join(', '),
             itunes_item_image: podcast.albumPic,
-            itunes_duration: podcast.duration,
+            itunes_duration: podcast.duration / 1000,
             enclosure_url: podcast.aacPlayUrl192,
             enclosure_length: podcast.aacFileSize192,
             enclosure_type: 'audio/x-m4a',
