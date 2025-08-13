@@ -2,9 +2,7 @@ import { Route, ViewType } from '@/types';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import { load } from 'cheerio';
-import path from 'node:path';
 
 const ROOT_URL = 'https://zhibo.sina.com.cn';
 
@@ -126,8 +124,8 @@ async function handler(ctx) {
             } else {
                 titleText = `直播快讯 #${it.id}`;
             }
-            // 标题加粗 + 下划线（与同花顺风格一致）
-            const title = bracketMatch ? `<strong><u>${titleText}</u></strong>` : titleText;
+            // 标题保持纯文本，提高RSS阅读器兼容性（参考同花顺格式）
+            const title = titleText;
 
             // 解析ext字段获取完整信息
             let detailLink = 'https://finance.sina.com.cn/7x24/';
@@ -206,6 +204,12 @@ async function handler(ctx) {
                 }
             }
 
+            // 生成简洁描述（类似同花顺的digest）
+            const description = plain.length > 150 ? `${plain.slice(0, 150)}...<br>` : `${plain}<br>`;
+
+            // 生成完整HTML内容
+            const contentHtml = `${it.rich_text || ''}<br>${images.map((img) => `<img src="${img}" referrerpolicy="no-referrer" />`).join('<br>')}<br>`;
+
             // 构建分类信息：标签 + 股票关键词
             const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
             const uniqueCategories = [...new Set(categories)].filter(Boolean);
@@ -213,15 +217,17 @@ async function handler(ctx) {
             return {
                 title,
                 link: detailLink,
-                description: art(path.join(__dirname, 'templates/description.art'), {
-                    rich_text: it.rich_text,
-                    images,
-                }),
+                description,
                 author: it.creator?.replace('@staff.sina.com', '') ?? '新浪财经',
                 pubDate: parseDate(it.create_time),
                 guid: `sina-finance-zhibo-${it.id}`,
                 category: uniqueCategories,
-                image: images[0], // 添加条目图片
+                image: images[0], // 主图片
+                banner: images[0], // 横幅图片（与主图相同）
+                content: {
+                    html: contentHtml,
+                    text: plain,
+                },
             };
         })
     );
