@@ -118,14 +118,12 @@ async function handler(ctx) {
             const bracketMatch = plain.match(/^【([^】]+)】/);
             let titleText;
             if (bracketMatch) {
-                // 同花顺风格：标题为纯文本，不保留书名号
-                titleText = bracketMatch[1];
+                titleText = `【${bracketMatch[1]}】`;
             } else if (plain.length > 0) {
                 titleText = plain.length > 80 ? `${plain.slice(0, 80)}…` : plain;
             } else {
                 titleText = `直播快讯 #${it.id}`;
             }
-            // 标题保持纯文本，提高RSS阅读器兼容性（参考同花顺格式）
             const title = titleText;
 
             // 解析ext字段获取完整信息
