@@ -124,7 +124,8 @@ async function handler(ctx) {
             } else {
                 titleText = `直播快讯 #${it.id}`;
             }
-            const title = titleText;
+            // 为标题添加格式化效果以改善在RSS阅读器中的显示
+            const title = bracketMatch ? `***【${bracketMatch[1]}】***` : titleText;
 
             // 解析ext字段获取完整信息
             let detailLink = 'https://finance.sina.com.cn/7x24/';
@@ -203,8 +204,8 @@ async function handler(ctx) {
                 }
             }
 
-            // 生成完整描述（不限制字符长度）
-            const description = `${plain}<br>`;
+            // 生成完整描述，为有【】的内容添加强调效果
+            const description = bracketMatch ? `<strong><em>【${bracketMatch[1]}】</em></strong><br>${plain.replace(/^【[^】]+】/, '').trim()}<br>` : `${plain}<br>`;
 
             // 生成完整HTML内容
             const contentHtml = `${it.rich_text || ''}<br>${images.map((img) => `<img src="${img}" referrerpolicy="no-referrer" />`).join('<br>')}<br>`;
