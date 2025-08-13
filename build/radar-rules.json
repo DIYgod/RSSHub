@@ -31963,11 +31963,12 @@
   },
   "pornhub.com": {
     "_name": "PornHub",
-    ".": [
+    "www": [
       {
         "title": "Model",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
+          "/model/:username",
           "/model/:username/*"
         ],
         "target": "/pornhub/model/:username"
@@ -31976,6 +31977,7 @@
         "title": "Pornstar",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
+          "/pornstar/:username",
           "/pornstar/:username/*"
         ],
         "target": "/pornhub/pornstar/:username"
@@ -31984,9 +31986,329 @@
         "title": "Users",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
+          "/users/:username",
           "/users/:username/*"
         ],
         "target": "/pornhub/users/:username"
+      }
+    ],
+    "de": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/de"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/de"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/de"
+      }
+    ],
+    "fr": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/fr"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/fr"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/fr"
+      }
+    ],
+    "es": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/es"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/es"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/es"
+      }
+    ],
+    "it": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/it"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/it"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/it"
+      }
+    ],
+    "pt": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/pt"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/pt"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/pt"
+      }
+    ],
+    "pl": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/pl"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/pl"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/pl"
+      }
+    ],
+    "rt": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/rt"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/rt"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/rt"
+      }
+    ],
+    "jp": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/jp"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/jp"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/jp"
+      }
+    ],
+    "nl": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/nl"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/nl"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/nl"
+      }
+    ],
+    "cz": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/cz"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/cz"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/cz"
+      }
+    ],
+    "cn": [
+      {
+        "title": "Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/model/:username",
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username/cn"
+      },
+      {
+        "title": "Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/pornstar/:username",
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username/cn"
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/users/:username",
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username/cn"
       }
     ]
   },
