@@ -118,14 +118,18 @@ async function handler(ctx) {
             const bracketMatch = plain.match(/^【([^】]+)】/);
             let titleText;
             if (bracketMatch) {
-                titleText = `【${bracketMatch[1]}】`;
+                // 同花顺风格：标题为纯文本，不保留书名号
+                titleText = bracketMatch[1];
             } else if (plain.length > 0) {
                 titleText = plain.length > 80 ? `${plain.slice(0, 80)}…` : plain;
             } else {
                 titleText = `直播快讯 #${it.id}`;
             }
-            // 保持标题纯文本，与同花顺实现方式一致
+            // 标题保持纯文本，提高RSS阅读器兼容性（参考同花顺格式）
             const title = titleText;
+            // 去除正文中的【…】前缀，避免标题重复出现在正文
+            const plainBody = plain.replace(/^【[^】]+】\s*/, '');
+            const richBodyHtml = typeof it.rich_text === 'string' ? it.rich_text.replace(/^【[^】]+】\s*/, '') : '';
 
             // 解析ext字段获取完整信息
             let detailLink = 'https://finance.sina.com.cn/7x24/';
@@ -204,11 +208,11 @@ async function handler(ctx) {
                 }
             }
 
-            // 生成完整描述，保持简洁（与同花顺方式一致）
-            const description = `${plain}<br>`;
+            // 生成完整描述（不限制字符长度），不包含【…】前缀
+            const description = `${plainBody}<br>`;
 
-            // 生成完整HTML内容
-            const contentHtml = `${it.rich_text || ''}<br>${images.map((img) => `<img src="${img}" referrerpolicy="no-referrer" />`).join('<br>')}<br>`;
+            // 生成完整HTML内容，不包含【…】前缀
+            const contentHtml = `${richBodyHtml}<br>${images.map((img) => `<img src="${img}" referrerpolicy="no-referrer" />`).join('<br>')}<br>`;
 
             // 构建分类信息：标签 + 股票关键词
             const categories = [...(it.tag?.map((t) => t.name) || []), ...stockInfo.map((s) => s.key)];
@@ -226,7 +230,7 @@ async function handler(ctx) {
                 banner: images[0], // 横幅图片（与主图相同）
                 content: {
                     html: contentHtml,
-                    text: plain,
+                    text: plainBody,
                 },
             };
         })
