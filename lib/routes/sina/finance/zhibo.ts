@@ -124,8 +124,8 @@ async function handler(ctx) {
             } else {
                 titleText = `直播快讯 #${it.id}`;
             }
-            // 标题保持纯文本，提高RSS阅读器兼容性（参考同花顺格式）
-            const title = titleText;
+            // 标题添加HTML格式化，支持加粗下划线（参考格隆汇RSS格式）
+            const title = `<strong><u>${titleText}</u></strong>`;
 
             // 解析ext字段获取完整信息
             let detailLink = 'https://finance.sina.com.cn/7x24/';
@@ -252,6 +252,6 @@ async function handler(ctx) {
         description: `新浪财经7×24小时财经直播 - ${channelTitle}频道${tagSuffix}`,
         item: items,
         author: '新浪财经',
-        image: 'https://finance.sina.com.cn/favicon.ico',
+        image: 'https://www.sinaimg.cn/dy/deco/2012/0613/yocc20120613img/logo.png',
     };
 }
