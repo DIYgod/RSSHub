@@ -94,7 +94,7 @@ function buildApiUrl(source: string, userId?: string, contentType?: string): str
     }
 
     const basePath = `${KEMONO_API_URL}/${source}/user/${userId}`;
-    return contentType ? `${basePath}/${contentType}` : basePath;
+    return contentType ? `${basePath}/${contentType}` : `${basePath}/posts`;
 }
 
 function buildFrontendUrl(source: string, userId?: string, contentType?: string): string {
