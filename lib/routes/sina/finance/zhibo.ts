@@ -204,8 +204,8 @@ async function handler(ctx) {
                 }
             }
 
-            // 生成简洁描述（类似同花顺的digest）
-            const description = plain.length > 150 ? `${plain.slice(0, 150)}...<br>` : `${plain}<br>`;
+            // 生成完整描述（不限制字符长度）
+            const description = `${plain}<br>`;
 
             // 生成完整HTML内容
             const contentHtml = `${it.rich_text || ''}<br>${images.map((img) => `<img src="${img}" referrerpolicy="no-referrer" />`).join('<br>')}<br>`;
@@ -252,6 +252,6 @@ async function handler(ctx) {
         description: `新浪财经7×24小时财经直播 - ${channelTitle}频道${tagSuffix}`,
         item: items,
         author: '新浪财经',
-        image: 'https://www.sinaimg.cn/dy/deco/2012/0613/yocc20120613img/logo.png',
+        image: 'https://finance.sina.com.cn/favicon.ico',
     };
 }
