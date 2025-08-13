@@ -46,9 +46,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const pubDate: number | string = item.date_gmt;
         const linkUrl: string | undefined = item.link;
 
-        const terminologies = item._embedded['wp:term'];
+        const terminologies = item._embedded?.['wp:term'];
 
-        const categories: string[] = terminologies.flat().map((c) => c.name);
+        const categories: string[] = terminologies.flat().map((c) => c.name) ?? [];
         const authors: DataItem['author'] = item._embedded.author.map((author) => ({
             name: author.name,
             url: author.link,
