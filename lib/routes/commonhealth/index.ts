@@ -15,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: true,
-        antiCrawler: true,
+        antiCrawler: false,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -42,51 +42,59 @@ async function handler(ctx) {
         const type = request.resourceType();
         ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
     });
+    await page.setViewport({ width: 1920, height: 1080 });
     await page.goto(currentUrl, {
         waitUntil: 'domcontentloaded',
     });
-    await page.waitForSelector('div.news-container');
-    await page.waitForSelector('div.news-container a', { timeout: 15000 });
+    await page.waitForSelector('div.news-container a');
     const listHtml = await page.content();
     await page.close();
 
     const $ = load(listHtml);
 
-    // Prefer specific caption blocks; fallback to generic links if needed
-    let items = $('div.news-container div.card-caption')
+    // Debug: Check what we have in the HTML
+    // eslint-disable-next-line no-console
+    console.log('=== DEBUG: Checking selectors ===');
+    // eslint-disable-next-line no-console
+    console.log('div.news-container found:', $('div.news-container').length);
+    // eslint-disable-next-line no-console
+    console.log('div.news-container > div.col found:', $('div.news-container > div.col').length);
+    // eslint-disable-next-line no-console
+    console.log('div.news-container > div.col div.card-caption found:', $('div.news-container > div.col div.card-caption').length);
+
+    // Select each column card as an item using the exact selectors provided
+    let items = $('div.news-container > div.col div.card-caption')
         .toArray()
-        .map((caption) => {
+        .map((caption, index) => {
             const $caption = $(caption);
-            const a = $caption.find('a[href]').first();
-            const href = a.attr('href');
+            const $a = $caption.find('a[href]').first();
+            const href = $a.attr('href');
             const link = href ? new URL(href, rootUrl).href : undefined;
 
-            const title = $caption.find('div.caption_title').text().trim() || $caption.find('h3').text().trim() || a.text().trim();
-            const description = $caption.find('p').text().trim();
-            const dateText = $caption.find('div.caption_date').text().trim() || $caption.closest('div.col').find('div.caption_date').first().text().trim();
+            const title = $a.find('div.caption_title').text().trim();
+            const description = $a.find('p').first().text().trim();
+            const dateText = $caption.find('div.caption_date').first().text().trim();
             const pubDate = dateText ? timezone(parseDate(dateText), +8) : undefined;
+
+            // eslint-disable-next-line no-console
+            console.log(`Item ${index}:`, {
+                hasAnchor: $a.length > 0,
+                href,
+                title,
+                description,
+                dateText,
+            });
 
             return { title, link, description, pubDate };
         })
         .filter((i) => i.title && i.link);
 
-    if (items.length === 0) {
-        items = $('div.news-container a[href]')
-            .toArray()
-            .map((anchor) => {
-                const $a = $(anchor);
-                const href = $a.attr('href');
-                const link = href ? new URL(href, rootUrl).href : undefined;
-                const title = $a.text().trim();
-                return { title, link, description: '', pubDate: undefined } as {
-                    title: string;
-                    link: string | undefined;
-                    description: string;
-                    pubDate: Date | undefined;
-                };
-            })
-            .filter((i) => i.title && i.link);
-    }
+    // eslint-disable-next-line no-console
+    console.log('Final items count:', items.length);
+    // eslint-disable-next-line no-console
+    console.log('Items after filter:', items);
+
+    // Do not fall back to generic links to avoid picking up tags
 
     // Deduplicate by link and cap by limit
     const seen = new Set<string>();
@@ -105,28 +113,38 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
+                let detailHtml = '';
                 const detailPage = await browser.newPage();
-                await detailPage.setRequestInterception(true);
-                detailPage.on('request', (request) => {
-                    const type = request.resourceType();
-                    ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
-                });
-                await detailPage.goto(item.link!, {
-                    waitUntil: 'domcontentloaded',
-                });
-                await detailPage.waitForSelector('.article-content');
-                const detailHtml = await detailPage.content();
-                await detailPage.close();
 
-                const content = load(detailHtml);
+                try {
+                    await detailPage.setRequestInterception(true);
+                    detailPage.on('request', (request) => {
+                        const type = request.resourceType();
+                        ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
+                    });
+                    await detailPage.goto(item.link!, {
+                        waitUntil: 'networkidle2',
+                    });
 
-                const articleContent = content('.article-content').html();
-                if (articleContent) {
-                    item.description = articleContent;
+                    // Try primary selector first, fallback to alternative
+                    await detailPage.waitForSelector('.article-content, .articleArea', { timeout: 15000 });
+                    detailHtml = await detailPage.content();
+                } catch {
+                    // ignore - we'll keep the basic item info
+                } finally {
+                    await detailPage.close();
                 }
-                const publishedTime = content('meta[property="article:published_time"]').attr('content');
-                if (publishedTime) {
-                    item.pubDate = timezone(parseDate(publishedTime), +8);
+
+                if (detailHtml) {
+                    const content = load(detailHtml);
+                    const articleHTML = content('.article-content').html() || content('.articleArea').html();
+                    if (articleHTML) {
+                        item.description = articleHTML;
+                    }
+                    const publishedTime = content('meta[property="article:published_time"]').attr('content');
+                    if (publishedTime) {
+                        item.pubDate = timezone(parseDate(publishedTime), +8);
+                    }
                 }
 
                 return item;
