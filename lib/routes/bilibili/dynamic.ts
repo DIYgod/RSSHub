@@ -390,7 +390,7 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
-                const subtitles = config.bilibili.includeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
 
                 return {
                     title: title || originalDescription,

@@ -102,7 +102,7 @@ export type Config = {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
         dmImgInter?: string;
-        includeSubtitles?: boolean;
+        excludeSubtitles?: boolean;
     };
     bitbucket: {
         username?: string;
@@ -574,7 +574,7 @@ const calculateValue = () => {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
             dmImgInter: envs.BILIBILI_DM_IMG_INTER,
-            includeSubtitles: toBoolean(envs.BILIBILI_INCLUDE_SUBTITLES, false),
+            excludeSubtitles: toBoolean(envs.BILIBILI_EXCLUDE_SUBTITLES, false),
         },
         bitbucket: {
             username: envs.BITBUCKET_USERNAME,

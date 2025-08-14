@@ -70,7 +70,7 @@ async function handler(ctx: Context) {
             data.data.list.vlist &&
             (await Promise.all(
                 data.data.list.vlist.map(async (item) => {
-                    const subtitles = config.bilibili.includeSubtitles ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                    const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                     return {
                         title: item.title,
                         description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
