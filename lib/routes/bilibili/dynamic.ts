@@ -8,6 +8,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import { parseDuration } from '@/utils/helpers';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -289,6 +290,7 @@ async function handler(ctx) {
 
                 const data = item.modules;
                 const origin = item?.orig?.modules;
+                const bvid = data?.module_dynamic?.major?.archive?.bvid;
 
                 // link
                 let link = '';
@@ -388,6 +390,8 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
+                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+
                 return {
                     title: title || originalDescription,
                     description: descriptions,
@@ -403,6 +407,7 @@ async function handler(ctx) {
                                       mime_type: 'text/html',
                                       duration_in_seconds: data.module_dynamic?.major?.archive?.duration_text ? parseDuration(data.module_dynamic.major.archive.duration_text) : undefined,
                                   },
+                                  ...subtitles,
                               ]
                             : undefined,
                 };
