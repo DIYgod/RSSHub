@@ -128,7 +128,6 @@ async function handler(ctx) {
 
                 content('#gad_setn_innity_oop_1x1').remove();
 
-                // item.title = content('meta[property="og:title"]').attr('content');
                 item.title = content('h1').text();
                 item.author = head?.author?.name || content('meta[name="author"]').attr('content');
                 item.category = [content('meta[property="article:section"]').attr('content'), ...content('meta[name="news_keywords"]').attr('content').split(',')];
