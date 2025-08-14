@@ -41231,6 +41231,60 @@
       }
     ]
   },
+  "xwenming.com": {
+    "_name": "未知文明",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/",
+          "/index.php/category/:category"
+        ],
+        "target": "/xwenming/:category"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/xwenming/"
+      },
+      {
+        "title": "科技前沿",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/index.php/category/news"
+        ],
+        "target": "/xwenming/news"
+      },
+      {
+        "title": "疑难杂症",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/index.php/category/solve"
+        ],
+        "target": "/xwenming/solve"
+      },
+      {
+        "title": "通知专栏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/index.php/category/notice"
+        ],
+        "target": "/xwenming/notice"
+      },
+      {
+        "title": "未分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/index.php/category/uncategorized"
+        ],
+        "target": "/xwenming/uncategorized"
+      }
+    ]
+  },
   "xys.org": {
     "_name": "新语丝",
     ".": [
