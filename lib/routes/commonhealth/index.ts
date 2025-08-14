@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    name: '分類',
+    name: '最新內容',
     url: 'commonhealth.com.tw',
     maintainers: ['johan456789'],
     example: '/commonhealth',
@@ -56,36 +56,44 @@ async function handler(ctx) {
     // eslint-disable-next-line no-console
     console.log('=== DEBUG: Checking selectors ===');
     // eslint-disable-next-line no-console
-    console.log('div.news-container found:', $('div.news-container').length);
-    // eslint-disable-next-line no-console
-    console.log('div.news-container > div.col found:', $('div.news-container > div.col').length);
-    // eslint-disable-next-line no-console
-    console.log('div.news-container > div.col div.card-caption found:', $('div.news-container > div.col div.card-caption').length);
+    console.log(`'div.card-news' found:`, $('div.card-news').length);
 
     // Select each column card as an item using the exact selectors provided
-    let items = $('div.news-container > div.col div.card-caption')
+    let items = $('div.card-news')
         .toArray()
-        .map((caption, index) => {
-            const $caption = $(caption);
-            const $a = $caption.find('a[href]').first();
-            const href = $a.attr('href');
+        .map((item, index) => {
+            const $item = $(item);
+            const $imageAnchor = $item.find('a.card-pic').first();
+            const image = $imageAnchor.find('img').attr('src');
+
+            const $caption = $item.find('div.card-caption');
+            const $textAnchor = $caption.find('a[href]').first();
+
+            const href = $textAnchor.attr('href') || $imageAnchor.attr('href');
             const link = href ? new URL(href, rootUrl).href : undefined;
 
-            const title = $a.find('div.caption_title').text().trim();
-            const description = $a.find('p').first().text().trim();
+            const title = $textAnchor.find('div.caption_title').text().trim();
+            const description = $textAnchor.find('p').first().text().trim();
             const dateText = $caption.find('div.caption_date').first().text().trim();
             const pubDate = dateText ? timezone(parseDate(dateText), +8) : undefined;
 
             // eslint-disable-next-line no-console
             console.log(`Item ${index}:`, {
-                hasAnchor: $a.length > 0,
+                hasAnchor: $textAnchor.length > 0 || $imageAnchor.length > 0,
                 href,
                 title,
                 description,
                 dateText,
+                image,
             });
 
-            return { title, link, description, pubDate };
+            return {
+                title,
+                link,
+                description,
+                pubDate,
+                media: image ? { thumbnail: { url: image } } : undefined,
+            };
         })
         .filter((i) => i.title && i.link);
 
@@ -93,8 +101,6 @@ async function handler(ctx) {
     console.log('Final items count:', items.length);
     // eslint-disable-next-line no-console
     console.log('Items after filter:', items);
-
-    // Do not fall back to generic links to avoid picking up tags
 
     // Deduplicate by link and cap by limit
     const seen = new Set<string>();
@@ -155,7 +161,7 @@ async function handler(ctx) {
     await browser.close();
 
     return {
-        title: `康健 - ${$('h1.title').text()}`,
+        title: '康健',
         link: currentUrl,
         item: items,
     };
