@@ -58,7 +58,7 @@ async function fetchPage() {
         title: item.post_title || item.title || 'No Title',
         link: item.post_url || item.link || '',
         description: item.post_excerpt || item.excerpt || '',
-        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : (item.date ? new Date(item.date).toUTCString() : ''),
+        pubDate: item.post_date ? new Date(item.post_date).toUTCString() : item.date ? new Date(item.date).toUTCString() : '',
         category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/gi, '') : '', // Clean HTML if category_link exists
         image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
     }));
