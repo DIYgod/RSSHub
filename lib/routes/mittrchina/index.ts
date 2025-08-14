@@ -80,10 +80,10 @@ async function handler(ctx) {
                           type: article.address.split('.').pop(),
                       },
                   })
-                : (type === 'breaking'
+                : type === 'breaking'
                   ? article.content
-                  : article.summary),
-        pubDate: article.start_time ? parseDate(article.start_time, 'X') : (article.push_time ? parseDate(article.push_time, 'X') : undefined),
+                  : article.summary,
+        pubDate: article.start_time ? parseDate(article.start_time, 'X') : article.push_time ? parseDate(article.push_time, 'X') : undefined,
         id: article.id,
         link: `https://www.mittrchina.com/news/detail/${article.id}`,
     }));

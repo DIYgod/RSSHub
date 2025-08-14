@@ -42,7 +42,7 @@ async function handler(ctx: Context) {
     const { id = 'bbs4', type = 'home', keyword } = ctx.req.param();
 
     const rootUrl = 'https://www.cool18.com/' + id + '/index.php';
-    const params = type === 'home' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`);
+    const params = type === 'home' ? '' : type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&keywords=${keyword}&submit=查询`;
 
     const currentUrl = rootUrl + params;
 

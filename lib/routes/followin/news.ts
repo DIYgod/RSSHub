@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
     return {
-        title: `${lang === 'en' ? 'News' : (lang === 'vi' ? 'Bản tin' : '快讯')} - Followin`,
+        title: `${lang === 'en' ? 'News' : lang === 'vi' ? 'Bản tin' : '快讯'} - Followin`,
         link: `${baseUrl}/${lang}/news`,
         image: favicon,
         language: lang,

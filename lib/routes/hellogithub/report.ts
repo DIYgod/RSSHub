@@ -25,7 +25,7 @@ export const route: Route = {
 async function handler(ctx) {
     let type = ctx.req.param('type') ?? 'tiobe';
 
-    type = type === 'webserver' ? 'netcraft' : (type === 'db' ? 'db-engines' : type);
+    type = type === 'webserver' ? 'netcraft' : type === 'db' ? 'db-engines' : type;
 
     const rootUrl = 'https://hellogithub.com';
     const currentUrl = `${rootUrl}/report/${type}`;

@@ -58,7 +58,7 @@ async function handler(ctx) {
     return {
         title: `${board === 'all' ? '全部看板' : boardInfo.title} | Meteor 學生社群`,
         description: board === 'all' ? null : boardInfo.feedDescription,
-        image: board === 'all' ? null : (boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl),
+        image: board === 'all' ? null : boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
         link: `${board === 'all' ? `${baseUrl}/board/all` : boardInfo.link}/new`,
         item: items,
     };
