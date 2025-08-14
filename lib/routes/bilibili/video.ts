@@ -4,6 +4,7 @@ import logger from '@/utils/logger';
 import type { Context } from 'hono';
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
@@ -69,7 +70,7 @@ async function handler(ctx: Context) {
             data.data.list.vlist &&
             (await Promise.all(
                 data.data.list.vlist.map(async (item) => {
-                    const subtitles = await cache.getVideoSubtitle(item.bvid);
+                    const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                     return {
                         title: item.title,
                         description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
@@ -83,11 +84,7 @@ async function handler(ctx: Context) {
                                       url: getVideoUrl(item.bvid),
                                       mime_type: 'text/html',
                                   },
-                                  ...subtitles.map((subtitle) => ({
-                                      url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
-                                      mime_type: 'text/srt',
-                                      title: `字幕 - ${subtitle.lan_doc}`,
-                                  })),
+                                  ...subtitles,
                               ]
                             : undefined,
                     };

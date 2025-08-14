@@ -271,6 +271,15 @@ const getVideoSubtitle = async (
     });
 };
 
+const getVideoSubtitleAttachment = async (bvid: string) => {
+    const subtitles = await getVideoSubtitle(bvid);
+    return subtitles.map((subtitle) => ({
+        url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
+        mime_type: 'text/srt',
+        title: `字幕 - ${subtitle.lan_doc}`,
+    }));
+};
+
 const getAidFromBvid = async (bvid) => {
     const key = `bili-cid-from-bvid-${bvid}`;
     let aid = await cache.get(key);
@@ -353,4 +362,5 @@ export default {
     getArticleDataFromCvid,
     getRenderData,
     getVideoSubtitle,
+    getVideoSubtitleAttachment,
 };
