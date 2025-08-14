@@ -119,13 +119,12 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const head = (() => {
-                    try {
-                        return JSON.parse(content('script[type="application/ld+json"]').first().text());
-                    } catch {
-                        return {};
-                    }
-                })();
+                let head = {};
+                try {
+                    head = JSON.parse(content('script[type="application/ld+json"]').first().text());
+                } catch {
+                    head = {};
+                }
 
                 content('#gad_setn_innity_oop_1x1').remove();
 
