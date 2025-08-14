@@ -1,9 +1,9 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/',
@@ -35,28 +35,23 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.commonhealth.com.tw';
     const currentUrl = rootUrl;
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        const type = request.resourceType();
-        ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
-    });
-    await page.setViewport({ width: 1920, height: 1080 });
-    await page.goto(currentUrl, {
-        waitUntil: 'domcontentloaded',
+    const { page, browser } = await getPuppeteerPage(currentUrl, {
+        onBeforeLoad: async (page) => {
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                const type = request.resourceType();
+                ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
+            });
+            await page.setViewport({ width: 1920, height: 1080 });
+        },
     });
     await page.waitForSelector('div.news-container a');
     const listHtml = await page.content();
-    await page.close();
 
     const $ = load(listHtml);
 
-    // Debug: Check what we have in the HTML
-    // eslint-disable-next-line no-console
-    console.log('=== DEBUG: Checking selectors ===');
-    // eslint-disable-next-line no-console
-    console.log(`'div.card-news' found:`, $('div.card-news').length);
+    logger.debug('=== DEBUG: Checking selectors ===');
+    logger.debug(`'div.card-news' found: ${$('div.card-news').length}`);
 
     // Select each column card as an item using the exact selectors provided
     let items = $('div.card-news')
@@ -77,8 +72,7 @@ async function handler(ctx) {
             const dateText = $caption.find('div.caption_date').first().text().trim();
             const pubDate = dateText ? timezone(parseDate(dateText), +8) : undefined;
 
-            // eslint-disable-next-line no-console
-            console.log(`Item ${index}:`, {
+            logger.debug(`Item ${index}:`, {
                 hasAnchor: $textAnchor.length > 0 || $imageAnchor.length > 0,
                 href,
                 title,
@@ -97,10 +91,8 @@ async function handler(ctx) {
         })
         .filter((i) => i.title && i.link);
 
-    // eslint-disable-next-line no-console
-    console.log('Final items count:', items.length);
-    // eslint-disable-next-line no-console
-    console.log('Items after filter:', items);
+    logger.debug(`Final items count: ${items.length}`);
+    logger.debug('Items after filter:', items);
 
     // Deduplicate by link and cap by limit
     const seen = new Set<string>();
@@ -116,53 +108,12 @@ async function handler(ctx) {
     });
     items = items.slice(0, limit);
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                let detailHtml = '';
-                const detailPage = await browser.newPage();
-
-                try {
-                    await detailPage.setRequestInterception(true);
-                    detailPage.on('request', (request) => {
-                        const type = request.resourceType();
-                        ['document', 'script', 'fetch', 'xhr'].includes(type) ? request.continue() : request.abort();
-                    });
-                    await detailPage.goto(item.link!, {
-                        waitUntil: 'networkidle2',
-                    });
-
-                    // Try primary selector first, fallback to alternative
-                    await detailPage.waitForSelector('.article-content, .articleArea', { timeout: 15000 });
-                    detailHtml = await detailPage.content();
-                } catch {
-                    // ignore - we'll keep the basic item info
-                } finally {
-                    await detailPage.close();
-                }
-
-                if (detailHtml) {
-                    const content = load(detailHtml);
-                    const articleHTML = content('.article-content').html() || content('.articleArea').html();
-                    if (articleHTML) {
-                        item.description = articleHTML;
-                    }
-                    const publishedTime = content('meta[property="article:published_time"]').attr('content');
-                    if (publishedTime) {
-                        item.pubDate = timezone(parseDate(publishedTime), +8);
-                    }
-                }
-
-                return item;
-            })
-        )
-    );
-
     await browser.close();
 
     return {
         title: '康健',
         link: currentUrl,
+        language: 'zh-TW' as const,
         item: items,
     };
 }
