@@ -61,7 +61,7 @@ export const getVideos = (id, part, cache) =>
         return res;
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
-export const formatDescription = (description) => description.replaceAll(/\r\n|\r|\n/g, '<br>');
+export const formatDescription = (description) => description?.replaceAll(/\r\n|\r|\n/g, '<br>');
 export const renderDescription = (embed, videoId, img, description) =>
     art(path.join(__dirname, 'templates/description.art'), {
         embed,

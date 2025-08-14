@@ -51,6 +51,13 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
     return getDataByChannelId({ channelId, embed, filterShorts });
 };
 
+const getSubtitlesByVideoId = (videoId: string) =>
+    cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
+        const subtitles = await getSubtitles({ videoID: videoId });
+        const srt = convertToSrt(subtitles);
+        return srt;
+    });
+
 export const getDataByChannelId = async ({ channelId, embed }: { channelId: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
     const innertube = await innertubePromise;
     const channel = await innertube.getChannel(channelId);
@@ -66,17 +73,16 @@ export const getDataByChannelId = async ({ channelId, embed }: { channelId: stri
             videos.videos
                 .filter((video) => 'video_id' in video)
                 .map(async (video) => {
-                    const subtitles = await getSubtitles({ videoID: video.video_id });
-                    const srt = convertToSrt(subtitles);
+                    const srt = await getSubtitlesByVideoId(video.video_id);
                     const dataUrl = `data:text/plain;charset=utf-8,${encodeURIComponent(srt)}`;
 
-                    const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : ('thumbnails' in video ? video.thumbnails?.[0]?.url : undefined);
+                    const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : 'thumbnails' in video ? video.thumbnails?.[0]?.url : undefined;
 
                     return {
                         title: video.title.text || `YouTube Video ${video.video_id}`,
                         description: 'description_snippet' in video ? utils.renderDescription(embed, video.video_id, img, utils.formatDescription(video.description_snippet?.toHTML())) : null,
                         link: `https://www.youtube.com/watch?v=${video.video_id}`,
-                        author: typeof video.author === 'string' ? video.author : (video.author.name === 'N/A' ? undefined : video.author.name),
+                        author: typeof video.author === 'string' ? video.author : video.author.name === 'N/A' ? undefined : video.author.name,
                         image: img,
                         pubDate: 'published' in video && video.published?.text ? parseRelativeDate(video.published.text) : undefined,
                         attachments: [
