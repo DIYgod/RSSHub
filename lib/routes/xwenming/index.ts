@@ -48,12 +48,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const terminologies = item._embedded?.['wp:term'];
 
-        const categories: string[] = terminologies.flat().map((c) => c.name) ?? [];
-        const authors: DataItem['author'] = item._embedded.author.map((author) => ({
-            name: author.name,
-            url: author.link,
-            avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
-        }));
+        const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
+        const authors: DataItem['author'] =
+            item._embedded?.author.map((author) => ({
+                name: author.name,
+                url: author.link,
+                avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
+            })) ?? [];
         const guid: string = item.guid?.rendered ?? item.guid;
         const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
         const updated: number | string = item.modified_gmt ?? pubDate;
