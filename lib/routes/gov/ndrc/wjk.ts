@@ -51,15 +51,23 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    // const year = ctx.req.param('year') || '';
-    // const type = ctx.req.param('type') || '';
+    const year = ctx.req.param('year') || '';
+    const type = ctx.req.param('type') || '';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const rootUrl = 'https://www.ndrc.gov.cn';
     const currentUrl = `${rootUrl}/xxgk/wjk/`;
 
-    // 暂时先不使用查询参数，直接访问主页面
-    const searchUrl = currentUrl;
+    // 构建查询参数
+    const searchParams = new URLSearchParams();
+    if (year) {
+        searchParams.append('year', year === '2017' ? '2017以前' : year);
+    }
+    if (type) {
+        searchParams.append('type', type);
+    }
+
+    const searchUrl = searchParams.toString() ? `${currentUrl}?${searchParams}` : currentUrl;
 
     const response = await got({
         method: 'get',
