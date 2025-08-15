@@ -3055,6 +3055,9 @@
   "/gitpod/changelog": [
     "TonyRL"
   ],
+  "/gitstar-ranking/:category?": [
+    "nczitzk"
+  ],
   "/globallawreview/": [
     "nczitzk"
   ],
