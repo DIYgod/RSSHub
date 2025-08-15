@@ -48,7 +48,7 @@ async function handler() {
     });
 
     const items = response.items.list.map((item) => {
-        const description = art(path.join(__dirname, 'templates', 'description.art'), {
+        const description = art(path.join(__dirname, 'templates/description.art'), {
             image: item.image,
             preface: item.preface,
         });
