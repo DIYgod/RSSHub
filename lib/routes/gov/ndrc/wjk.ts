@@ -74,9 +74,19 @@ async function handler(ctx) {
         url: searchUrl,
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            Connection: 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
         },
         timeout: {
-            request: 30000, // 30秒超时
+            request: 60000, // 增加到60秒超时
+        },
+        retry: {
+            limit: 3,
+            methods: ['GET'],
+            statusCodes: [408, 413, 429, 500, 502, 503, 504, 521, 522, 524],
         },
     });
 
