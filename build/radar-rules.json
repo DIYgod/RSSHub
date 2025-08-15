@@ -11206,6 +11206,19 @@
       }
     ]
   },
+  "commonhealth.com.tw": {
+    "_name": "康健",
+    "www": [
+      {
+        "title": "最新內容",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/commonhealth/"
+      }
+    ]
+  },
   "consumer.org.hk": {
     "_name": "消费者委员会",
     ".": [
