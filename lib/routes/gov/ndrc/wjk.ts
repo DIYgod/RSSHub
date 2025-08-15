@@ -67,13 +67,16 @@ async function handler(ctx) {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         },
+        timeout: {
+            request: 30000, // 30秒超时
+        },
     });
 
     const $ = load(response.data);
 
     // 根据国家发改委网站的实际结构查找文件列表
     // 参考其他ndrc路由，使用 ul.u-list li a 结构
-    const list = $('ul.u-list li a')
+    let list = $('ul.u-list li a')
         .slice(0, limit)
         .toArray()
         .map((item) => {
@@ -82,10 +85,18 @@ async function handler(ctx) {
             const link = item.attr('href');
             const title = item.attr('title') || item.text().trim();
 
-            if (!link || !title || title.length < 3) {return null;}
+            if (!link || !title || title.length < 3) {
+                return null;
+            }
 
             // 处理相对链接，使用new URL来确保正确性
-            const fullLink = new URL(link, currentUrl).href;
+            let fullLink;
+            try {
+                fullLink = new URL(link, currentUrl).href;
+            } catch {
+                // 如果URL构造失败，尝试简单拼接
+                fullLink = link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? '' : '/'}${link}`;
+            }
 
             // 尝试获取发布时间 - 通常在链接的兄弟元素中
             const dateText = item.next().text().trim() || item.parent().find('span').last().text().trim();
@@ -97,6 +108,35 @@ async function handler(ctx) {
             };
         })
         .filter(Boolean);
+
+    // 如果没有找到内容，尝试其他可能的选择器
+    if (list.length === 0) {
+        list = $('li a, .list-item a, table tr a')
+            .slice(0, limit)
+            .toArray()
+            .map((item) => {
+                item = $(item);
+                const link = item.attr('href');
+                const title = item.text().trim();
+
+                if (!link || !title || title.length < 5) {
+                    return null;
+                }
+
+                let fullLink;
+                try {
+                    fullLink = new URL(link, currentUrl).href;
+                } catch {
+                    fullLink = link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? '' : '/'}${link}`;
+                }
+
+                return {
+                    title: title.replaceAll(/\s+/g, ' '),
+                    link: fullLink,
+                };
+            })
+            .filter(Boolean);
+    }
 
     // 获取详细内容，参考其他ndrc路由的模式
     const items = await Promise.all(
