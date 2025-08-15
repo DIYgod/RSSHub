@@ -26936,6 +26936,16 @@
         ],
         "target": "/mihoyo/sr"
       }
+    ],
+    "zzz": [
+      {
+        "title": "绝区零",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/mihoyo/zzz"
+      }
     ]
   },
   "hoyoverse.com": {

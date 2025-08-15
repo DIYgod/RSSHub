@@ -5108,6 +5108,9 @@
   "/mihoyo/ys/:location?/:category?": [
     "nczitzk"
   ],
+  "/mihoyo/zzz/:location?/:category?": [
+    "Yeye-0426"
+  ],
   "/mindmeister/:category?/:language?": [
     "TonyRL"
   ],
