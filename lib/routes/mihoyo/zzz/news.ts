@@ -100,7 +100,7 @@ async function handler(ctx) {
 
     return {
         title: `${categories[location][category].title}-${categories[location].title}`,
-        link: apiUrl,
+        link: `${categories[location].link}?category=${categories[location][category].id}`,
         item: items,
     };
 }
