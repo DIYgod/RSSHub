@@ -5,6 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import sanitizeHtml from 'sanitize-html';
 import cache from '@/utils/cache';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/transform/html/:url/:routeParams',
@@ -44,6 +45,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 | \`itemPubDateAttr\` | The attributes of \`pubDate\` element as pubDate                                                              | \`string\`      | Element html             |
 | \`itemContent\`     | The HTML elements as \`description\` in \`item\` using CSS selector ( in \`itemLink\` page for full content ) | \`string\`      |                          |
 | \`encoding\`        | The encoding of the HTML content                                                                              | \`string\`      | utf-8                    |
+| \`usePuppeteer\`    | Whether to use Puppeteer to retrieve the page                                                                 | \`string\`      | false                    |
 
   Parameters parsing in the above example:
 
@@ -62,17 +64,33 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
             throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
         }
         const url = ctx.req.param('url');
-        const response = await got({
-            method: 'get',
-            url,
-            responseType: 'arrayBuffer',
-        });
-
         const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+        const usePuppeteer = routeParams.get('usePuppeteer') || 'false';
         const encoding = routeParams.get('encoding') || 'utf-8';
         const decoder = new TextDecoder(encoding);
 
-        const $ = load(decoder.decode(response.data));
+        let html: string;
+        if (usePuppeteer === 'true') {
+            const { page, destory } = await getPuppeteerPage(url, {
+                gotoConfig: {
+                    waitUntil: 'networkidle0',
+                },
+            });
+            try {
+                html = await page.content();
+            } finally {
+                await destory();
+            }
+        } else {
+            const response = await got({
+                method: 'get',
+                url: decodeURIComponent(url),
+                responseType: 'arrayBuffer',
+            });
+            html = decoder.decode(response.data);
+        }
+        const $ = load(html);
+
         const rssTitle = routeParams.get('title') || $('title').text();
         const item = routeParams.get('item') || 'html';
         let items: DataItem[] = $(item)
