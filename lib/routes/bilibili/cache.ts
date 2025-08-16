@@ -147,11 +147,11 @@ const getUsernameAndFaceFromUID = async (uid) => {
         if (nameResponse.data.name) {
             name = nameResponse.data.name;
             face = nameResponse.data.face;
+            cache.set(nameKey, nameResponse.data.name);
+            cache.set(faceKey, nameResponse.data.face);
         } else {
             logger.error(`Error when visiting /x/space/wbi/acc/info: ${JSON.stringify(nameResponse)}`);
         }
-        cache.set(nameKey, name);
-        cache.set(faceKey, face);
     }
     return [name, face];
 };
