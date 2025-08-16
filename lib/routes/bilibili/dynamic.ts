@@ -272,8 +272,8 @@ async function handler(ctx) {
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
     const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
-    const author = usernameAndFace[0] ?? items[0]?.modules?.module_author?.name;
-    const face = usernameAndFace[1] ?? items[0]?.modules?.module_author?.face;
+    const author = usernameAndFace[0] || items[0]?.modules?.module_author?.name;
+    const face = usernameAndFace[1] || items[0]?.modules?.module_author?.face;
     cache.set(`bili-username-from-uid-${uid}`, author);
     cache.set(`bili-userface-from-uid-${uid}`, face);
 
