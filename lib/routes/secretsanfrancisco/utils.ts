@@ -1,10 +1,14 @@
 function absolutize(url: string | undefined, baseUrl: string) {
-    if (!url) {return '';}
+    if (!url) {
+        return '';
+    }
     try {
         return new URL(url, baseUrl).href;
     } catch {
         // 兜底处理 protocol-relative //xx
-        if (url.startsWith('//')) {return `https:${url}`;}
+        if (url.startsWith('//')) {
+            return `https:${url}`;
+        }
         return url;
     }
 }
@@ -20,10 +24,14 @@ function normalizeLazyImages($: CheerioAPI, $root: ReturnType<CheerioAPI>, baseU
         let nsSrc = '';
         const $figure = $img.closest('figure');
         const $nsImg = ($figure.length ? $figure : $img.parent()).find('noscript img').first();
-        if ($nsImg.length) {nsSrc = $nsImg.attr('src') || '';}
+        if ($nsImg.length) {
+            nsSrc = $nsImg.attr('src') || '';
+        }
 
         const real = lazySrc || nsSrc || $img.attr('src');
-        if (real) {$img.attr('src', absolutize(real, baseUrl));}
+        if (real) {
+            $img.attr('src', absolutize(real, baseUrl));
+        }
 
         // 还原 srcset（如有）
         const lazySrcset = $img.attr('data-lazy-srcset') || $img.attr('data-srcset');
