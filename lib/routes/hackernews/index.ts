@@ -79,7 +79,6 @@ async function handler(ctx) {
             item.upvotes = thing.next().find('.score').text().split(' point')[0];
 
             item.currentComment = thing.find('.comment').text();
-            item.guid = type === 'sources' ? item.guid : `${item.guid}${item.comments === 'discuss' ? '' : `-${item.comments}`}`;
 
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
