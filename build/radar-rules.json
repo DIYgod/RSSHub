@@ -7538,6 +7538,19 @@
       }
     ]
   },
+  "bookwalker.com.tw": {
+    "_name": "BOOKWALKER電子書",
+    "www": [
+      {
+        "title": "搜尋",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/search"
+        ],
+        "target": "/bookwalker/bookwalker/search"
+      }
+    ]
+  },
   "booru.org": {
     "_name": "Booru",
     "mmda": [
