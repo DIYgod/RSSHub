@@ -76,13 +76,14 @@ async function handler(ctx): Promise<Data> {
 
     // Build query using fixed category IDs
     let categoriesQuery: { include?: number; exclude?: number[] } | undefined;
-    if (sectionParam && Object.hasOwn(SECTION_CATEGORY_IDS, sectionParam)) {
-        categoriesQuery = { include: SECTION_CATEGORY_IDS[sectionParam] };
-    } else if (sectionParam === 'more') {
-        categoriesQuery = { exclude: Object.values(SECTION_CATEGORY_IDS) };
-    } else if (sectionParam && sectionParam !== '') {
-        // Only throw error if section is provided but invalid (not empty)
-        throw new InvalidParameterError(`Invalid section: ${sectionParam}. Valid sections are: ${Object.keys(SECTION_LABELS).join(', ')}`);
+    if (sectionParam) {
+        if (Object.hasOwn(SECTION_CATEGORY_IDS, sectionParam)) {
+            categoriesQuery = { include: SECTION_CATEGORY_IDS[sectionParam] };
+        } else if (sectionParam === 'more') {
+            categoriesQuery = { exclude: Object.values(SECTION_CATEGORY_IDS) };
+        } else {
+            throw new InvalidParameterError(`Invalid section: ${sectionParam}. Valid sections are: ${Object.keys(SECTION_LABELS).join(', ')}`);
+        }
     }
     // If sectionParam is empty/undefined, categoriesQuery remains undefined = all posts
 
