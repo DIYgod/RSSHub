@@ -94,7 +94,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${categories[location].link}/${item.iInfoId}`,
-        pubDate: parseDate(item.dtStartTime),
+        pubDate: parseDate(item.dtStartTime + '+0800'), // 添加时区信息，源时间是GMT+8
         category: item.sCategoryName,
     }));
 
