@@ -10,7 +10,7 @@ import { type Context } from 'hono';
 import iconv from 'iconv-lite';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const { category = 'gvod/zx' } = ctx.req.param();
+    const { category = 'dy' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
 
     const baseUrl: string = 'https://www.6v520.com';
@@ -268,7 +268,7 @@ export const route: Route = {
         },
     },
     description: `:::tip
-订阅 [分类](https://www.6v520.com/)，其源网址为 \`https://www.6v520.com/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`//\`](https://rsshub.app//)。
+订阅 [最新电影](https://www.6v520.com/dy/)，其源网址为 \`https://www.6v520.com/dy/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/6v520/dy\`](https://rsshub.app/6v520/dy)。
 
 :::
 
@@ -327,7 +327,7 @@ export const route: Route = {
             target: '/:category',
         },
         {
-            title: '2025最新电影',
+            title: '最新电影',
             source: ['www.6v520.com/dy/'],
             target: '/dy',
         },
