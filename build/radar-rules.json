@@ -34859,7 +34859,8 @@
         "title": "国际部港澳台办公室",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/"
+          "/cd/tzgg.htm",
+          "/cd/xwsd.htm"
         ],
         "target": "/shu/global"
       }
@@ -34898,6 +34899,16 @@
           "/"
         ],
         "target": "/shu/xykd"
+      }
+    ],
+    "xxgk": [
+      {
+        "title": "信息公开网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/shu/xxgk"
       }
     ]
   },
