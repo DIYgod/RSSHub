@@ -6,7 +6,8 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const noticeType = {
-    tzgg: { title: '上海大学国际部港澳台-通知公告', url: 'https://global.shu.edu.cn/cd/tzgg/3.htm' },
+    tzgg: { title: '上海大学国际部港澳台-通知公告', url: 'https://global.shu.edu.cn/cd/tzgg.htm' },
+    xwsd: { title: '上海大学国际部港澳台-新闻速递', url: 'https://global.shu.edu.cn/cd/xwsd.htm' },
 };
 
 export const route: Route = {
@@ -24,7 +25,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['global.shu.edu.cn/'],
+            source: ['global.shu.edu.cn/cd/tzgg.htm', 'global.shu.edu.cn/cd/xwsd.htm'],
             target: '/global',
         },
     ],
@@ -32,9 +33,9 @@ export const route: Route = {
     maintainers: ['GhhG123'],
     handler,
     url: 'global.shu.edu.cn/',
-    description: `| 通知公告 |
-| -------- |
-| tzgg     |`,
+    description: `| 通知公告 | 新闻速递 |
+| -------- | -------- |
+| tzgg     | xwsd     |`,
 };
 
 async function handler(ctx) {
