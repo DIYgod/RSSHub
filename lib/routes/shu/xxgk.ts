@@ -90,7 +90,7 @@ async function handler(ctx) {
                 }); // 获取详情页内容
                 const content = load(detailResponse.data); // 使用cheerio解析内容
 
-                item.description = content('#vsb_content .v_news_content').html() || item.description;
+                item.description = content('.v_news_content').html() || item.description;
 
                 return item; // 返回完整的item
             })
