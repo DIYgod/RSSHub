@@ -39,7 +39,6 @@ async function handler(ctx: Context) {
     const dmImgList = utils.getDmImgList();
     const dmImgInter = utils.getDmImgInter();
     const renderData = await cache.getRenderData(uid);
-    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     const params = utils.addWbiVerifyInfo(
         utils.addRenderData(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), renderData),
@@ -56,6 +55,10 @@ async function handler(ctx: Context) {
         logger.error(JSON.stringify(data.data));
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
     }
+
+    const usernameAndFace = await cache.getUsernameAndFaceFromUID(uid);
+    const name = usernameAndFace[0] || data.data.list.vlist[0]?.author;
+    const face = usernameAndFace[1];
 
     return {
         title: `${name} 的 bilibili 空间`,

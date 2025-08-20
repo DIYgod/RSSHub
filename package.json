@@ -139,7 +139,7 @@
         "zod": "3.25.76"
     },
     "devDependencies": {
-        "@babel/preset-env": "7.28.0",
+        "@babel/preset-env": "7.28.3",
         "@babel/preset-typescript": "7.27.1",
         "@bbob/types": "4.2.0",
         "@eslint/eslintrc": "3.3.1",
@@ -161,7 +161,7 @@
         "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "24.2.1",
+        "@types/node": "24.3.0",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
         "@types/title": "4.0.0",
@@ -170,7 +170,7 @@
         "@typescript-eslint/parser": "8.39.1",
         "@vercel/nft": "0.30.0",
         "@vitest/coverage-v8": "2.1.9",
-        "discord-api-types": "0.38.19",
+        "discord-api-types": "0.38.20",
         "domhandler": "5.0.3",
         "eslint": "9.33.0",
         "eslint-config-prettier": "10.1.8",
