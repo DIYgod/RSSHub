@@ -36,7 +36,7 @@ const SECTION_CATEGORY_IDS: Record<string, number> = {
 export const route: Route = {
     path: '/blog/:section?',
     categories: ['blog'],
-    example: '/hrt/blog',
+    example: '/hudsonrivertrading/blog',
     parameters: {
         section: {
             description: 'Optional section filter',
@@ -56,18 +56,17 @@ export const route: Route = {
             source: ['www.hudsonrivertrading.com/hrtbeat/'],
         },
     ],
-    name: 'HRT Tech Blog',
+    name: 'Tech Blog',
     maintainers: ['johan456789'],
     handler,
-    description:
-        'HRT (Hudson River Trading) Tech Blog\n\n' +
-        '| Route | Section |\n' +
-        '| ----- | ------- |\n' +
-        '| /hrt/blog | All Posts |\n' +
-        Object.entries(SECTION_LABELS)
-            .map(([key, label]) => `| /hrt/blog/${key} | ${label} |`)
-            .join('\n') +
-        '\n\n',
+    description: `HRT (Hudson River Trading) Tech Blog
+
+| Route | Section |
+| ----- | ------- |
+| /hudsonrivertrading/blog | All Posts |
+${Object.entries(SECTION_LABELS)
+    .map(([key, label]) => `| /hudsonrivertrading/blog/${key} | ${label} |`)
+    .join('\n')}`,
 };
 
 async function handler(ctx): Promise<Data> {
