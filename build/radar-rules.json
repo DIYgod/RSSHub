@@ -20315,6 +20315,19 @@
       }
     ]
   },
+  "hudsonrivertrading.com": {
+    "_name": "Hudson River Trading",
+    "www": [
+      {
+        "title": "Tech Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/hrtbeat/"
+        ],
+        "target": "/hudsonrivertrading/blog/:section?"
+      }
+    ]
+  },
   "huggingface.co": {
     "_name": "Huggingface",
     ".": [

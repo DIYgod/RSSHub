@@ -3879,6 +3879,9 @@
   "/hubu/zhxy/:category{.+}?": [
     "nczitzk"
   ],
+  "/hudsonrivertrading/blog/:section?": [
+    "johan456789"
+  ],
   "/huggingface/blog-community/:sort?": [
     "yuguorui"
   ],
