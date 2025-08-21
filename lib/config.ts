@@ -188,6 +188,9 @@ export type Config = {
     hefeng: {
         key?: string;
     };
+    hipda: {
+        cookie?: string;
+    };
     infzm: {
         cookie?: string;
     };
@@ -659,6 +662,9 @@ const calculateValue = () => {
         },
         hefeng: {
             key: envs.HEFENG_KEY,
+        },
+        hipda: {
+            cookie: envs.HIPDA_COOKIE,
         },
         infzm: {
             cookie: envs.INFZM_COOKIE,
