@@ -66,7 +66,7 @@ export async function handler(ctx) {
 
     const items = posts
         .toArray()
-        .map((_, post) => {
+        .map((post) => {
             const $post = $(post);
             const subjectNew = $post.find('.subject.new');
 
