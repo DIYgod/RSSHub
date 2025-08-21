@@ -2979,6 +2979,60 @@
       }
     ]
   },
+  "aa1.cn": {
+    "_name": "夏柔",
+    "60s": [
+      {
+        "title": "每日新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/",
+          "/category/:category"
+        ],
+        "target": "/aa1/60s/:category"
+      },
+      {
+        "title": "全部",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/aa1/60s"
+      },
+      {
+        "title": "新闻词文章数据",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/freenewsdata"
+        ],
+        "target": "/aa1/60s/freenewsdata"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/new"
+        ],
+        "target": "/aa1/60s/new"
+      },
+      {
+        "title": "本平台同款自动发文章插件",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/1"
+        ],
+        "target": "/aa1/60s/1"
+      },
+      {
+        "title": "每天60秒读懂世界",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/news"
+        ],
+        "target": "/aa1/60s/news"
+      }
+    ]
+  },
   "aamacau.com": {
     "_name": "論盡媒體 AllAboutMacau Media",
     ".": [
