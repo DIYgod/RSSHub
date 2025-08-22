@@ -76,7 +76,6 @@ async function handler(ctx) {
             pubDate: parseDate(item.publishedAt),
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
-            comments: `https://huggingface.co/papers/${item.paper.id}`,
         }))
         .sort((a, b) => b.upvotes - a.upvotes);
 
