@@ -2477,6 +2477,12 @@
   "/elasticsearch-cn/:params?": [
     "nczitzk"
   ],
+  "/elecfans/article/:atype": [
+    "tian051011"
+  ],
+  "/elecfans/soft/:atype": [
+    "tian051011"
+  ],
   "/eleduck/jobs": [
     "sfyumi"
   ],

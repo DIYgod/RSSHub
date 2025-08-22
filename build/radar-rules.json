@@ -13985,6 +13985,27 @@
       }
     ]
   },
+  "elecfans.com": {
+    "_name": "电子发烧友",
+    "www": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/elecfans/article/:atype"
+      },
+      {
+        "title": "资料",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/elecfans/soft/:atype"
+      }
+    ]
+  },
   "eleduck.com": {
     "_name": "电鸭社区",
     ".": [
