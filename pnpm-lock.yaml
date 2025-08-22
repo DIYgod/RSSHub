@@ -436,8 +436,8 @@ importers:
         specifier: 16.1.5
         version: 16.1.5
       magic-string:
-        specifier: 0.30.17
-        version: 0.30.17
+        specifier: 0.30.18
+        version: 0.30.18
       mockdate:
         specifier: 3.0.5
         version: 3.0.5
@@ -4391,8 +4391,8 @@ packages:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
 
-  magic-string@0.30.17:
-    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+  magic-string@0.30.18:
+    resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
 
   magicast@0.3.5:
     resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
@@ -8322,7 +8322,7 @@ snapshots:
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
       istanbul-reports: 3.1.7
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       magicast: 0.3.5
       std-env: 3.9.0
       test-exclude: 7.0.1
@@ -8342,7 +8342,7 @@ snapshots:
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
-      magic-string: 0.30.17
+      magic-string: 0.30.18
     optionalDependencies:
       msw: 2.4.3(typescript@5.9.2)
       vite: 5.4.19(@types/node@24.3.0)
@@ -8359,7 +8359,7 @@ snapshots:
   '@vitest/snapshot@2.1.9':
     dependencies:
       '@vitest/pretty-format': 2.1.9
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       pathe: 1.1.2
 
   '@vitest/spy@2.1.9':
@@ -10450,7 +10450,7 @@ snapshots:
 
   lz-string@1.5.0: {}
 
-  magic-string@0.30.17:
+  magic-string@0.30.18:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -12121,7 +12121,7 @@ snapshots:
       chai: 5.2.1
       debug: 4.4.1
       expect-type: 1.2.2
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       pathe: 1.1.2
       std-env: 3.9.0
       tinybench: 2.9.0
