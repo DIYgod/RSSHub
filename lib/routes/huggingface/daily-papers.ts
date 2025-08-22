@@ -57,7 +57,7 @@ async function handler(ctx) {
             url = `https://huggingface.co/papers/week/${new Date().getFullYear()}-W52`;
             break;
         case 'month':
-            url = 'https://huggingface.co/papers/month/' + new Date().toISOString().slice(0, 7);
+            url = `https://huggingface.co/papers/month/${new Date().toISOString().slice(0, 7)}`;
             break;
         default:
             throw new Error(`Invalid cycle: ${cycle}`);
@@ -72,7 +72,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.title,
             link: `https://arxiv.org/abs/${item.paper.id}`,
-            description: item.paper.summary.replaceAll('\n', ' ') + `\n Upvotes: ${item.paper.upvotes}`,
+            description: item.paper.summary.replaceAll('\n', ' '),
             pubDate: parseDate(item.publishedAt),
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
