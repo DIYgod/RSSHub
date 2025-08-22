@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 export const route: Route = {
     path: '/soft/:atype',
     categories: ['programming'],
-    example: '/soft/special',
+    example: '/elecfans/soft/special',
     parameters: { atype: '需获取文章的类别' },
     features: {
         requireConfig: false,
