@@ -1,15 +1,14 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { normalizeLazyImages } from './utils';
-import parser from '@/utils/rss-parser';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import path from 'node:path';
 
 export const route: Route = {
-    path: '/:section?',
+    path: '/:category?',
     categories: ['programming'],
     example: '/secretsanfrancisco/top-news',
-    parameters: { section: 'section name, can be found in url' },
+    parameters: { category: 'category name, can be found in url' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,44 +17,73 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Section',
+    name: 'Category',
     maintainers: ['EthanWng97'],
     handler,
 };
 
 async function handler(ctx) {
-    const baseUrl = 'https://secretsanfrancisco.com/';
-    const section = ctx.req.param('section');
-    const url = section ? `${baseUrl}${section}/feed` : `${baseUrl}feed`;
+    const baseUrl = 'https://secretsanfrancisco.com';
+    const categoryApiPath = '/wp-json/wp/v2/categories';
+    const postApiPath = '/wp-json/wp/v2/posts';
 
-    const feed = await parser.parseURL(url);
+    // get category number
+    const categorySlug = ctx.req.param('category') || '';
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
+    let categoryId;
+    let categoryResponse;
+    if (categorySlug) {
+        categoryResponse = await got(`${baseUrl}${categoryApiPath}`, {
+            searchParams: {
+                slug: categorySlug,
+            },
+        });
+        if (!categoryResponse.body || categoryResponse.body.length === 0) {
+            throw new Error(`Category "${categorySlug}" not found`);
+        }
+        categoryId = categoryResponse.data[0].id;
+    }
 
-                $('.layout-sidebar, .single__footer-share-container').remove();
+    // get posts
+    const postsUrl = `${baseUrl}${postApiPath}`;
+    const postsResponse = await got(postsUrl, {
+        searchParams: {
+            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10,
+            _embed: '',
+            ...(categoryId && { categories: categoryId }),
+        },
+    });
 
-                const $content = $('section.article__content');
-                normalizeLazyImages($, $content, baseUrl);
+    const items = postsResponse.data
+        .filter((item) => item.language === 'en')
+        .map((item) => {
+            const featuredMedia = item._embedded?.['wp:featuredmedia']?.find((v) => v.id === item.featured_media);
+            const image = featuredMedia?.source_url;
+            const altText = featuredMedia?.alt_text || featuredMedia?.title?.rendered || 'Featured Image';
 
-                const single = {
-                    title: item.title,
-                    description: $content.html(),
-                    pubDate: item.pubDate,
-                    link: item.link,
-                    author: item.creator,
-                };
+            const single = {
+                title: item.title.rendered,
+                description: art(path.join(__dirname, 'templates/description.art'), {
+                    content: item.content.rendered,
+                    image,
+                    altText,
+                }),
+                link: item.link,
+                pubDate: parseDate(item.date_gmt),
+                updated: parseDate(item.modified_gmt),
+                image,
+                author: item._embedded.author[0].name,
+                category: [...new Set(item._embedded['wp:term'].flatMap((i) => i.map((j) => j.name)))],
+            };
+            return single;
+        });
 
-                return single;
-            })
-        )
-    );
+    const categoryName = categoryResponse?.data?.[0]?.name;
+    const categoryLink = categoryResponse?.data?.[0]?.link;
+
     return {
-        title: section ? `Secret San Francisco - ${section}` : `Secret San Francisco`,
-        link: url,
+        title: categoryName ? `Secret San Francisco - ${categoryName}` : 'Secret San Francisco',
+        link: categoryLink || `${baseUrl}/${categorySlug}`,
         item: items,
     };
 }
