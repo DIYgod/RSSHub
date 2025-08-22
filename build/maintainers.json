@@ -3892,8 +3892,9 @@
     "cesaryuan",
     "zcf0508"
   ],
-  "/huggingface/daily-papers": [
-    "zeyugao"
+  "/huggingface/daily-papers/:cycle?/:voteFliter?": [
+    "zeyugao",
+    "ovo-tim"
   ],
   "/hunanpea/rsks/:guid": [
     "TonyRL"

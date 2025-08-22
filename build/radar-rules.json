@@ -20362,10 +20362,9 @@
         "title": "Daily Papers",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
-          "/papers",
-          "/"
+          "/papers/:cycle"
         ],
-        "target": "/huggingface/daily-papers"
+        "target": "/huggingface/daily-papers/:cycle"
       }
     ]
   },
