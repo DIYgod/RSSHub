@@ -25,7 +25,7 @@ export const route: Route = {
     ],
     maintainers: ['tian051011'],
     handler: async (ctx) => {
-        const { atype = 'special' } = ctx.req.param();
+        const { atype } = ctx.req.param();
         const response = await ofetch(`https://www.elecfans.com/article/${atype}/`);
         const $ = load(response);
         const list = $('#mainContent li')
