@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
@@ -31,14 +31,16 @@ const getUser = (url, cache) =>
     cache.tryGet(
         url,
         async () => {
-            const browser = await puppeteer();
+            const { page, destory } = await getPuppeteerPage(url, {
+                onBeforeLoad: async (page) => {
+                    await page.setRequestInterception(true);
+                    page.on('request', (request) => {
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+                    });
+                },
+            });
             try {
-                const page = await browser.newPage();
-                await page.setRequestInterception(true);
                 let collect = '';
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
-                });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url, {
                     waitUntil: 'domcontentloaded',
@@ -69,7 +71,7 @@ const getUser = (url, cache) =>
 
                 return { userPageData, notes, collect };
             } finally {
-                await browser.close();
+                await destory();
             }
         },
         config.cache.routeExpire,
