@@ -99,7 +99,7 @@ export async function handler(ctx) {
                 pubDate: parseDate(new Date().toISOString()),
             };
         })
-        .filter(Boolean);
+        .filter((item): item is NonNullable<typeof item> => item !== null);
 
     const forumNames = {
         '2': 'Discovery',
