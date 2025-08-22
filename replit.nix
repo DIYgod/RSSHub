@@ -1,0 +1,34 @@
+{ pkgs }: {
+  deps = [
+    pkgs.nodejs-20_x
+    pkgs.chromium
+    pkgs.nss
+    pkgs.nspr
+    pkgs.atk
+    pkgs.at-spi2-atk
+    pkgs.glib
+    pkgs.gtk3
+    pkgs.gdk-pixbuf
+    pkgs.cairo
+    pkgs.dbus
+    pkgs.dbus-glib
+    pkgs.expat
+    pkgs.fontconfig
+    pkgs.freetype
+    pkgs.gconf
+    pkgs.libdrm
+    pkgs.libX11
+    pkgs.libXScrnSaver
+    pkgs.libXcomposite
+    pkgs.libXcursor
+    pkgs.libXdamage
+    pkgs.libXext
+    pkgs.libXfixes
+    pkgs.libXi
+    pkgs.libXrandr
+    pkgs.libXrender
+    pkgs.libXtst
+    pkgs.libxcb
+    pkgs.pango
+  ];
+}
