@@ -49,10 +49,10 @@ importers:
         version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
         specifier: 1.19.0
-        version: 1.19.0(hono@4.9.2)
+        version: 1.19.0(hono@4.9.4)
       '@hono/zod-openapi':
         specifier: 0.19.10
-        version: 0.19.10(hono@4.9.2)(zod@3.25.76)
+        version: 0.19.10(hono@4.9.4)(zod@3.25.76)
       '@notionhq/client':
         specifier: 4.0.2
         version: 4.0.2
@@ -85,7 +85,7 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.9.13
-        version: 0.9.13(hono@4.9.2)
+        version: 0.9.13(hono@4.9.4)
       '@sentry/node':
         specifier: 10.5.0
         version: 10.5.0
@@ -138,11 +138,11 @@ importers:
         specifier: 4.0.4
         version: 4.0.4
       googleapis:
-        specifier: 156.0.0
-        version: 156.0.0
+        specifier: 157.0.0
+        version: 157.0.0
       hono:
-        specifier: 4.9.2
-        version: 4.9.2
+        specifier: 4.9.4
+        version: 4.9.4
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -153,8 +153,8 @@ importers:
         specifier: 7.0.6
         version: 7.0.6
       iconv-lite:
-        specifier: 0.6.3
-        version: 0.6.3
+        specifier: 0.7.0
+        version: 0.7.0
       imapflow:
         specifier: 1.0.188
         version: 1.0.188
@@ -288,8 +288,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtube-caption-extractor:
-        specifier: 1.8.2
-        version: 1.8.2
+        specifier: 1.9.0
+        version: 1.9.0
       youtubei.js:
         specifier: 15.0.1
         version: 15.0.1
@@ -391,8 +391,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@24.3.0)(jsdom@26.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.9.2)))
       discord-api-types:
-        specifier: 0.38.20
-        version: 0.38.20
+        specifier: 0.38.21
+        version: 0.38.21
       domhandler:
         specifier: 5.0.3
         version: 5.0.3
@@ -436,8 +436,8 @@ importers:
         specifier: 16.1.5
         version: 16.1.5
       magic-string:
-        specifier: 0.30.17
-        version: 0.30.17
+        specifier: 0.30.18
+        version: 0.30.18
       mockdate:
         specifier: 3.0.5
         version: 3.0.5
@@ -445,8 +445,8 @@ importers:
         specifier: 2.4.3
         version: 2.4.3(typescript@5.9.2)
       node-network-devtools:
-        specifier: 1.0.28
-        version: 1.0.28(undici@6.21.3)(utf-8-validate@5.0.10)
+        specifier: 1.0.29
+        version: 1.0.29(undici@6.21.3)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.6.2
         version: 3.6.2
@@ -3178,8 +3178,8 @@ packages:
     resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
-  discord-api-types@0.38.20:
-    resolution: {integrity: sha512-wJSmFFi8eoFL/jIosUQLoXeCv7YK+l7joKmFCsnkx7HWSFt5xScNQdhvILLxC0oU6J5bK0ppR7GZ1d4NJScSNQ==}
+  discord-api-types@0.38.21:
+    resolution: {integrity: sha512-E6KtXUNjZVIYP1GMjmeRdAC1xRql9xtSahRwJYpP74/hJ6Q2i2oTp6ZbFG/FUN0WqtdW2igHDsJyF2u9hV8pHQ==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -3781,8 +3781,8 @@ packages:
     resolution: {integrity: sha512-66if47It7y+Sab3HMkwEXx1kCq9qUC9px8ZXoj1CMrmLmUw81GpbnsNlXnlyZyGbGPGcj+tDD9XsZ23m7GLaJQ==}
     engines: {node: '>=18.0.0'}
 
-  googleapis@156.0.0:
-    resolution: {integrity: sha512-Th401jKVdtrIaAc/b5iv8dfNVN2O7EgU/32Zvb2zxK3hiRrBU8hNbF7wMmOAEsvqnEKssq6XlXMaCBKazrvakw==}
+  googleapis@157.0.0:
+    resolution: {integrity: sha512-0q6V93amJANRu1BRkeG6eftrAxweM7ZLbgRshmRg2zLSPpPLaRiDFCckHpEOFspXGglfw8l+hZql7NgWPwAwfQ==}
     engines: {node: '>=18'}
 
   got@14.4.7:
@@ -3837,8 +3837,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.9.2:
-    resolution: {integrity: sha512-UG2jXGS/gkLH42l/1uROnwXpkjvvxkl3kpopL3LBo27NuaDPI6xHNfuUSilIHcrBkPfl4y0z6y2ByI455TjNRw==}
+  hono@4.9.4:
+    resolution: {integrity: sha512-61hl6MF6ojTl/8QSRu5ran6GXt+6zsngIUN95KzF5v5UjiX/xnrLR358BNRawwIRO49JwUqJqQe3Rb2v559R8Q==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -3920,6 +3920,10 @@ packages:
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+
+  iconv-lite@0.7.0:
+    resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
     engines: {node: '>=0.10.0'}
 
   ieee754@1.2.1:
@@ -4387,8 +4391,8 @@ packages:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
 
-  magic-string@0.30.17:
-    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+  magic-string@0.30.18:
+    resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
 
   magicast@0.3.5:
     resolution: {integrity: sha512-L0WhttDl+2BOsybvEOLK7fW3UA0OQ0IQ2d6Zl2x/a6vVRs3bAY0ECOSHHeL5jD+SbOpOCUEi0y1DgHEn9Qn1AQ==}
@@ -4684,8 +4688,8 @@ packages:
     resolution: {integrity: sha512-vv8fJuOUCCvSPjDjBLlMqYMHob4aGjkmrkaE42/mZr0VT+ZAU10jRF8oTnX9+pgU9/vYJ8P7YT3Vd6ajkmzSCw==}
     engines: {node: '>=0.12'}
 
-  node-network-devtools@1.0.28:
-    resolution: {integrity: sha512-MeD23TdlSmT5utg7bwhEDXQp8Np4BIO+2M7fwzJUyJTLDy2gBIiB5kr6/3XMbU6wGN586xqRLha0StxtuZFb+g==}
+  node-network-devtools@1.0.29:
+    resolution: {integrity: sha512-Cz5aqlga55yZjJ1nAUYdjwh3njGUNJmUPrbCGBKuEQ+w/yQqXeGwRQCH3IBlzWuHC19Y1/kNlg6tzgqSubimRA==}
     peerDependencies:
       undici: ^6
 
@@ -6108,8 +6112,8 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
-  youtube-caption-extractor@1.8.2:
-    resolution: {integrity: sha512-4VNDP5rIjBmTF4Us2aPiu5c795Yf/yLqXtEQ3U33PPJsoutKrmeIyx/8NBYH0Qlzk+tEmaftQ7/6a6TgfYNtVA==}
+  youtube-caption-extractor@1.9.0:
+    resolution: {integrity: sha512-wNYkgvGLimOwgyQZJS5UXzqsCYJF5Y+cUPRCxbUjl4RugYwrGEBIPnZjVla+nHXm7AaIrJKccizn6iE3ZNlsjA==}
     engines: {node: '>=14.0.0'}
 
   youtubei.js@15.0.1:
@@ -7151,21 +7155,21 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@hono/node-server@1.19.0(hono@4.9.2)':
+  '@hono/node-server@1.19.0(hono@4.9.4)':
     dependencies:
-      hono: 4.9.2
+      hono: 4.9.4
 
-  '@hono/zod-openapi@0.19.10(hono@4.9.2)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.9.4)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.2(hono@4.9.2)(zod@3.25.76)
-      hono: 4.9.2
+      '@hono/zod-validator': 0.7.2(hono@4.9.4)(zod@3.25.76)
+      hono: 4.9.4
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.2(hono@4.9.2)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.2(hono@4.9.4)(zod@3.25.76)':
     dependencies:
-      hono: 4.9.2
+      hono: 4.9.4
       zod: 3.25.76
 
   '@humanfs/core@0.19.1': {}
@@ -7911,10 +7915,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.2.11
 
-  '@scalar/hono-api-reference@0.9.13(hono@4.9.2)':
+  '@scalar/hono-api-reference@0.9.13(hono@4.9.4)':
     dependencies:
       '@scalar/core': 0.3.11
-      hono: 4.9.2
+      hono: 4.9.4
 
   '@scalar/openapi-types@0.3.7':
     dependencies:
@@ -8318,7 +8322,7 @@ snapshots:
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
       istanbul-reports: 3.1.7
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       magicast: 0.3.5
       std-env: 3.9.0
       test-exclude: 7.0.1
@@ -8338,7 +8342,7 @@ snapshots:
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
-      magic-string: 0.30.17
+      magic-string: 0.30.18
     optionalDependencies:
       msw: 2.4.3(typescript@5.9.2)
       vite: 5.4.19(@types/node@24.3.0)
@@ -8355,7 +8359,7 @@ snapshots:
   '@vitest/snapshot@2.1.9':
     dependencies:
       '@vitest/pretty-format': 2.1.9
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       pathe: 1.1.2
 
   '@vitest/spy@2.1.9':
@@ -9005,7 +9009,7 @@ snapshots:
 
   directory-import@3.3.2: {}
 
-  discord-api-types@0.38.20: {}
+  discord-api-types@0.38.21: {}
 
   doctrine@3.0.0:
     dependencies:
@@ -9789,7 +9793,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis@156.0.0:
+  googleapis@157.0.0:
     dependencies:
       google-auth-library: 10.2.1
       googleapis-common: 8.0.0
@@ -9846,7 +9850,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.9.2: {}
+  hono@4.9.4: {}
 
   hookable@5.5.3: {}
 
@@ -9953,6 +9957,10 @@ snapshots:
       safer-buffer: '@nolyfill/safer-buffer@1.0.44'
 
   iconv-lite@0.6.3:
+    dependencies:
+      safer-buffer: '@nolyfill/safer-buffer@1.0.44'
+
+  iconv-lite@0.7.0:
     dependencies:
       safer-buffer: '@nolyfill/safer-buffer@1.0.44'
 
@@ -10442,7 +10450,7 @@ snapshots:
 
   lz-string@1.5.0: {}
 
-  magic-string@0.30.17:
+  magic-string@0.30.18:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -10798,7 +10806,7 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.28(undici@6.21.3)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.29(undici@6.21.3)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.0.9
       iconv-lite: 0.6.3
@@ -12113,7 +12121,7 @@ snapshots:
       chai: 5.2.1
       debug: 4.4.1
       expect-type: 1.2.2
-      magic-string: 0.30.17
+      magic-string: 0.30.18
       pathe: 1.1.2
       std-env: 3.9.0
       tinybench: 2.9.0
@@ -12314,10 +12322,13 @@ snapshots:
 
   yoctocolors-cjs@2.1.2: {}
 
-  youtube-caption-extractor@1.8.2:
+  youtube-caption-extractor@1.9.0:
     dependencies:
+      debug: 4.4.1
       he: 1.2.0
       striptags: 3.2.0
+    transitivePeerDependencies:
+      - supports-color
 
   youtubei.js@15.0.1:
     dependencies:
