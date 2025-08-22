@@ -9,6 +9,7 @@ import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import { parseDuration } from '@/utils/helpers';
 import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -266,7 +267,7 @@ async function handler(ctx) {
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
-            throw new Error('遇到源站风控校验，请稍后再试');
+            throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
