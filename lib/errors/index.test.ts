@@ -55,6 +55,14 @@ describe('invalid-parameter-error', () => {
     }, 20000);
 });
 
+describe('captcha-error', () => {
+    it(`captcha-error`, async () => {
+        const response = await request.get('/test/captcha-error');
+        expect(response.status).toBe(503);
+        expect(response.text).toMatch('CaptchaError: Test captcha error');
+    }, 20000);
+});
+
 describe('route throws an error', () => {
     it('route path error should have path mounted', async () => {
         await request.get('/test/error');

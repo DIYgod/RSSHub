@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import { fetchArticle } from '@/utils/wechat-mp';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import CaptchaError from '@/errors/types/captcha';
 
 let cacheIndex = 0;
 
@@ -31,6 +32,9 @@ async function handler(ctx) {
     }
     if (ctx.req.param('id') === 'invalid-parameter-error') {
         throw new InvalidParameterError('Test invalid parameter error');
+    }
+    if (ctx.req.param('id') === 'captcha-error') {
+        throw new CaptchaError('Test captcha error');
     }
     if (ctx.req.param('id') === 'redirect') {
         ctx.set('redirect', '/test/1');
