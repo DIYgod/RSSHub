@@ -1,5 +1,8 @@
 {{ if image }}
-<img src="{{ image }}" alt="{{ altText }}" style="max-width: 100%; height: auto;">
+  <figure>
+    <img src="{{ image }}" alt="{{ altText }}">
+    <figcaption>{{ caption }}</figcaption>
+  </figure>
 {{ /if }}
 {{ if content }}
 {{@ content }}

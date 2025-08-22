@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:category?',
@@ -59,7 +60,11 @@ async function handler(ctx) {
         .map((item) => {
             const featuredMedia = item._embedded?.['wp:featuredmedia']?.find((v) => v.id === item.featured_media);
             const image = featuredMedia?.source_url;
-            const altText = featuredMedia?.alt_text || featuredMedia?.title?.rendered || 'Featured Image';
+            const altText = featuredMedia?.alt_text || featuredMedia?.title?.rendered;
+            let caption;
+            if (featuredMedia?.caption?.rendered) {
+                caption = load(featuredMedia?.caption?.rendered);
+            }
 
             const single = {
                 title: item.title.rendered,
@@ -67,6 +72,7 @@ async function handler(ctx) {
                     content: item.content.rendered,
                     image,
                     altText,
+                    caption: caption?.text() || '',
                 }),
                 link: item.link,
                 pubDate: parseDate(item.date_gmt),
