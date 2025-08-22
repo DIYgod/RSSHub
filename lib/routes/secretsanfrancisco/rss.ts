@@ -4,10 +4,11 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { load } from 'cheerio';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['programming'],
+    categories: ['new-media'],
     example: '/secretsanfrancisco/top-news',
     parameters: { category: 'category name, can be found in url' },
     features: {
@@ -18,6 +19,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['secretsanfrancisco.com/:category'],
+            target: '/:category',
+        },
+    ],
     name: 'Category',
     maintainers: ['EthanWng97'],
     handler,
@@ -34,15 +41,16 @@ async function handler(ctx) {
     let categoryId;
     let categoryResponse;
     if (categorySlug) {
-        categoryResponse = await got(`${baseUrl}${categoryApiPath}`, {
-            searchParams: {
-                slug: categorySlug,
-            },
+        categoryResponse = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
+            const { data } = await got(`${baseUrl}${categoryApiPath}`, {
+                searchParams: { slug: categorySlug },
+            });
+            return data;
         });
-        if (!categoryResponse.body || categoryResponse.body.length === 0) {
+        if (!categoryResponse || categoryResponse.length === 0) {
             throw new Error(`Category "${categorySlug}" not found`);
         }
-        categoryId = categoryResponse.data[0].id;
+        categoryId = categoryResponse[0].id;
     }
 
     // get posts
@@ -79,13 +87,12 @@ async function handler(ctx) {
                 updated: parseDate(item.modified_gmt),
                 image,
                 author: item._embedded.author[0].name,
-                category: [...new Set(item._embedded['wp:term'].flatMap((i) => i.map((j) => j.name)))],
             };
             return single;
         });
 
-    const categoryName = categoryResponse?.data?.[0]?.name;
-    const categoryLink = categoryResponse?.data?.[0]?.link;
+    const categoryName = categoryResponse?.[0]?.name;
+    const categoryLink = categoryResponse?.[0]?.link;
 
     return {
         title: categoryName ? `Secret San Francisco - ${categoryName}` : 'Secret San Francisco',
