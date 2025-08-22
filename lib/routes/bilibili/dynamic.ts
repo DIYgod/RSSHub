@@ -8,6 +8,8 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import { parseDuration } from '@/utils/helpers';
+import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -265,16 +267,21 @@ async function handler(ctx) {
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
-            throw new Error('遇到源站风控校验，请稍后再试');
+            throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
-    const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
-    const author = usernameAndFace[0] ?? items[0]?.modules?.module_author?.name;
-    const face = usernameAndFace[1] ?? items[0]?.modules?.module_author?.face;
-    cache.set(`bili-username-from-uid-${uid}`, author);
-    cache.set(`bili-userface-from-uid-${uid}`, face);
+    let author = items[0]?.modules?.module_author?.name;
+    let face = items[0]?.modules?.module_author?.face;
+    if (!face || !author) {
+        const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
+        author = usernameAndFace[0] || items[0]?.modules?.module_author?.name;
+        face = usernameAndFace[1] || items[0]?.modules?.module_author?.face;
+    } else {
+        cache.set(`bili-username-from-uid-${uid}`, author);
+        cache.set(`bili-userface-from-uid-${uid}`, face);
+    }
 
     const rssItems = await Promise.all(
         items
@@ -289,6 +296,7 @@ async function handler(ctx) {
 
                 const data = item.modules;
                 const origin = item?.orig?.modules;
+                const bvid = data?.module_dynamic?.major?.archive?.bvid;
 
                 // link
                 let link = '';
@@ -388,6 +396,8 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
+                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+
                 return {
                     title: title || originalDescription,
                     description: descriptions,
@@ -403,6 +413,7 @@ async function handler(ctx) {
                                       mime_type: 'text/html',
                                       duration_in_seconds: data.module_dynamic?.major?.archive?.duration_text ? parseDuration(data.module_dynamic.major.archive.duration_text) : undefined,
                                   },
+                                  ...subtitles,
                               ]
                             : undefined,
                 };

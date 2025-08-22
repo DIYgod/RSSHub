@@ -146,7 +146,7 @@ unicorn.configs.recommended,
         'unicorn/no-hex-escape': 'warn',
         'unicorn/no-null': 'off',
         'unicorn/no-object-as-default-parameter': 'warn',
-        'unicorn/no-nested-ternary': 'warn',
+        'unicorn/no-nested-ternary': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-useless-switch-case': 'off',
 
@@ -246,7 +246,7 @@ unicorn.configs.recommended,
         'yml/no-empty-mapping-value': 'off',
     },
 }, {
-        files: ['.puppeteerrc.cjs', 'api/vercel.ts'],
+        files: ['.puppeteerrc.cjs'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
         },
