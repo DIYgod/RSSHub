@@ -5,6 +5,7 @@ import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import CaptchaError from '@/errors/types/captcha';
 
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
@@ -45,7 +46,11 @@ const getUser = (url, cache) =>
                 await page.goto(url, {
                     waitUntil: 'domcontentloaded',
                 });
-                await page.waitForSelector('div.reds-tab-item:nth-child(2)');
+                await page.waitForSelector('div.reds-tab-item:nth-child(2), #red-captcha');
+
+                if (await page.$('#red-captcha')) {
+                    throw new CaptchaError('小红书风控校验，请稍后再试');
+                }
 
                 const initialState = await page.evaluate(() => (window as any).__INITIAL_STATE__);
 
