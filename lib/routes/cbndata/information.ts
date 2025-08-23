@@ -213,33 +213,33 @@ export const route: Route = {
                 const urlObj: URL = new URL(url);
                 const id: string | undefined = urlObj.searchParams.get('tag_id') ?? undefined;
 
-                return `/cbndata/information${id ? `/${id}` : ''}`;
+                return `/information${id ? `/${id}` : ''}`;
             },
         },
         {
             title: '全部',
             source: ['www.cbndata.com/information'],
-            target: '/cbndata/information/all',
+            target: '/information/all',
         },
         {
             title: '美妆个护',
             source: ['www.cbndata.com/information'],
-            target: '/cbndata/information/1',
+            target: '/information/1',
         },
         {
             title: '服饰鞋包',
             source: ['www.cbndata.com/information'],
-            target: '/cbndata/information/2559',
+            target: '/information/2559',
         },
         {
             title: '宠物',
             source: ['www.cbndata.com/information'],
-            target: '/cbndata/information/2419',
+            target: '/information/2419',
         },
         {
             title: '营销',
             source: ['www.cbndata.com/information'],
-            target: '/cbndata/information/2484',
+            target: '/information/2484',
         },
     ],
     view: ViewType.Articles,
