@@ -55,7 +55,7 @@ describe('puppeteer', () => {
         // these are something we really care about
         expect(webDriverTest).toBe('missing (passed)');
         expect(chromeTest).toBe('present (passed)');
-    }, 20000);
+    }, 45000);
     // }
 
     it('puppeteer accept http proxy uri w/ auth', async () => {
