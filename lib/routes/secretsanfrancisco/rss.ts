@@ -38,20 +38,22 @@ async function handler(ctx) {
     // get category number
     const categorySlug = ctx.req.param('category') || '';
 
-    let categoryId;
-    let categoryResponse;
+    let category;
     if (categorySlug) {
-        categoryResponse = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
+        category = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
             const { data } = await got(`${baseUrl}${categoryApiPath}`, {
                 searchParams: { slug: categorySlug },
             });
-            return data;
+            if (!data || data.length === 0) {
+                throw new Error(`Category "${categorySlug}" not found`);
+            }
+            return data[0];
         });
-        if (!categoryResponse || categoryResponse.length === 0) {
-            throw new Error(`Category "${categorySlug}" not found`);
-        }
-        categoryId = categoryResponse[0].id;
     }
+
+    const categoryId = category?.id;
+    const categoryName = category?.name;
+    const categoryLink = category?.link;
 
     // get posts
     const postsUrl = `${baseUrl}${postApiPath}`;
@@ -90,9 +92,6 @@ async function handler(ctx) {
             };
             return single;
         });
-
-    const categoryName = categoryResponse?.[0]?.name;
-    const categoryLink = categoryResponse?.[0]?.link;
 
     return {
         title: categoryName ? `Secret San Francisco - ${categoryName}` : 'Secret San Francisco',
