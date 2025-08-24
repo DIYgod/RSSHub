@@ -20,12 +20,12 @@ export const route: Route = {
     parameters: { id: 'Channel ID' },
     radar: [
         {
-            source: ['ganjingworld.com/channel/:id'],
+            source: ['ganjingworld.com'],
             target: '/channel/:id',
         },
     ],
     url: 'www.ganjingworld.com',
-    name: 'Channels',
+    name: 'Videos in a channel on Ganjing World',
     maintainers: [],
     handler,
 };
