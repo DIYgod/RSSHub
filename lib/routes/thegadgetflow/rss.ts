@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['thegadgetflow.com/:category'],
+            source: ['thegadgetflow.com/categories/:category'],
             target: '/:category',
         },
     ],
