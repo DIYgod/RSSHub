@@ -99,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     });
                 const pubDate: number | string = data.date;
                 const linkUrl: string | undefined = data.id ? `information/${data.id}` : undefined;
-                const categories: string[] = [...new Set((data.tags?.map((c) => c.name) as string[]).filter(Boolean))];
+                const categories: string[] = [...new Set(((data.tags?.map((c) => c.name) ?? []) as string[]).filter(Boolean))];
                 const authors: DataItem['author'] = [
                     {
                         name: data.author,
