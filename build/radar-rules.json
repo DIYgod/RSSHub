@@ -34280,6 +34280,19 @@
       }
     ]
   },
+  "secretsanfrancisco.com": {
+    "_name": "Secret San francisco",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/secretsanfrancisco/:category"
+      }
+    ]
+  },
   "seekingalpha.com": {
     "_name": "Seeking Alpha",
     ".": [
