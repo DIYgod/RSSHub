@@ -38444,6 +38444,19 @@
       }
     ]
   },
+  "thegadgetflow.com": {
+    "_name": "Gadget Flow",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/categories/:category"
+        ],
+        "target": "/thegadgetflow/:category"
+      }
+    ]
+  },
   "thegradient.pub": {
     "_name": "The Gradient",
     ".": [

@@ -7712,6 +7712,9 @@
   "/thecover/channel/:id?": [
     "yuxinliu-alex"
   ],
+  "/thegadgetflow/:category?": [
+    "EthanWng97"
+  ],
   "/thegradient/posts": [
     "liyaozhong"
   ],
