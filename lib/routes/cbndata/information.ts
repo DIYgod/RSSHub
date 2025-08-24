@@ -44,7 +44,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 : undefined,
         });
         const pubDate: number | string = item.date;
-        const linkUrl: string | undefined = `information/${item.id}`;
+        const linkUrl: string | undefined = item.id ? `information/${item.id}` : undefined;
         const categories: string[] = item.tags;
         const guid: string = `cbndata-information-${item.id}`;
         const updated: number | string = pubDate;
@@ -87,6 +87,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const data = JSON.parse(dataStr)?.data;
 
+                if (!data) {
+                    return item;
+                }
+
                 const title: string = data.title;
                 const description: string | undefined =
                     item.description +
@@ -94,7 +98,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         description: data.content,
                     });
                 const pubDate: number | string = data.date;
-                const linkUrl: string | undefined = `information/${data.id}`;
+                const linkUrl: string | undefined = data.id ? `information/${data.id}` : undefined;
                 const categories: string[] = [...new Set((data.tags?.map((c) => c.name) as string[]).filter(Boolean))];
                 const authors: DataItem['author'] = [
                     {
