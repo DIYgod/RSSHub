@@ -1332,6 +1332,9 @@
   "/cbirc/:category?": [
     "JkCheung"
   ],
+  "/cbndata/information/:id?": [
+    "nczitzk"
+  ],
   "/cbnweek/": [
     "nczitzk"
   ],
