@@ -149,12 +149,26 @@ const orderContent = (parent) => {
         .toArray()
         .sort((a, b) => {
             const index = Buffer.from(base32.parse('GM======')).toString(); // substring(3)
-            a = Buffer.from(base32.parse(parent.find(a).data('s').slice(index))).toString();
-            b = Buffer.from(base32.parse(parent.find(b).data('s').slice(index))).toString();
+            a = Buffer.from(
+                base32.parse(
+                    parent
+                        .find((element) => a(element))
+                        .data('s')
+                        .slice(index)
+                )
+            ).toString();
+            b = Buffer.from(
+                base32.parse(
+                    parent
+                        .find((element) => b(element))
+                        .data('s')
+                        .slice(index)
+                )
+            ).toString();
             return a - b;
         })
         .entries()) {
-        parent.find(e).attr('s', i);
+        parent.find((element) => e(element)).attr('s', i);
         parent.append(e);
     }
 };
