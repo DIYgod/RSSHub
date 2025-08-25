@@ -9539,6 +9539,35 @@
       }
     ]
   },
+  "ccg.org.cn": {
+    "_name": "全球化智库",
+    "www": [
+      {
+        "title": "动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category"
+        ],
+        "target": "/ccg/:category"
+      },
+      {
+        "title": "新闻动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/ccg/news"
+      },
+      {
+        "title": "媒体报道",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/mtbd"
+        ],
+        "target": "/ccg/mtbd"
+      }
+    ]
+  },
   "91wllm.com": {
     "_name": "华中师范大学",
     "ccnu": [

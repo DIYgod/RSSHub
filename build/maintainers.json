@@ -1362,6 +1362,9 @@
   "/ccfa/:type?": [
     "nczitzk"
   ],
+  "/ccg/:category?": [
+    "nczitzk"
+  ],
   "/ccnu/career": [
     "jackyu1996"
   ],
