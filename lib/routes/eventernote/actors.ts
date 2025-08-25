@@ -29,7 +29,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.eventernote.com/actors/:name/:id/events'],
+            source: ['www.eventernote.com/actors/:name/:id', 'www.eventernote.com/actors/:name/:id/events'],
         },
     ],
     name: '声优活动及演唱会',
