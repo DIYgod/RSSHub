@@ -14138,6 +14138,19 @@
       }
     ]
   },
+  "engineering.fyi": {
+    "_name": "Engineering.fyi",
+    ".": [
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/engineering/tag/:tag"
+      }
+    ]
+  },
   "englishhome.org": {
     "_name": "英語之家",
     ".": [
