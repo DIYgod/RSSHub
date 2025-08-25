@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -22,7 +21,7 @@ export const route: Route = {
         },
     ],
     name: 'Tag',
-    maintainers: ['suhangj'],
+    maintainers: ['suhang-only'],
     handler,
     description: `| JSON    | Javascript     | Java | Apache | AWS | SQL | React | Golang    |
 | ---- | ---------- | ---- | ------ | --- | --- | ----- | ------ |
@@ -44,7 +43,6 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 description: description.text(),
-                pubDate: parseDate(String(new Date())),
                 author: author.text(),
             };
         });
