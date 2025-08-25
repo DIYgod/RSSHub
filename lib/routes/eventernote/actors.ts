@@ -1,4 +1,5 @@
-import { Route, ViewType } from '@/types';
+import { type DataItem, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -28,7 +29,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.eventernote.com/actors/:name/:id/events'],
+            source: ['www.eventernote.com/actors/:name/:id', 'www.eventernote.com/actors/:name/:id/events'],
         },
     ],
     name: '声优活动及演唱会',
@@ -36,13 +37,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { name, id } = ctx.req.param();
 
     const title = `${name}のイベント・ライブ情報一覧`;
     const link = `https://www.eventernote.com/actors/${name}/${id}/events`;
 
-    const events = [];
+    const events: DataItem[] = [];
     for (let page = 1; page <= maxPages; page++) {
         const pageLink = link + `?limit=${pageCount}&page=${page}`;
         // eslint-disable-next-line no-await-in-loop
@@ -69,9 +70,9 @@ async function handler(ctx) {
 
             // extract event date
             const dateMatches = $('div.date > p', event).text().match(dateStringRegex);
-            const eventYear = dateMatches.groups.year;
-            const eventMonth = dateMatches.groups.month;
-            const eventDay = dateMatches.groups.day;
+            const eventYear = dateMatches?.groups?.year;
+            const eventMonth = dateMatches?.groups?.month;
+            const eventDay = dateMatches?.groups?.day;
 
             // extract event time
             const timeString = $('div.event > div.place > span.s', event).text();
@@ -111,15 +112,13 @@ async function handler(ctx) {
                 link,
             });
         }
-
-        page += 1;
     }
 
     return {
         title,
         link,
         description: title,
-        language: 'ja',
+        language: 'ja' as const,
         allowEmpty: true,
         item: events,
     };
