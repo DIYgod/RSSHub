@@ -14289,6 +14289,7 @@
         "title": "声优活动及演唱会",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
+          "/actors/:name/:id",
           "/actors/:name/:id/events"
         ],
         "target": "/eventernote/actors/:name/:id"
