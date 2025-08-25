@@ -174,7 +174,7 @@
         "domhandler": "5.0.3",
         "eslint": "9.34.0",
         "eslint-config-prettier": "10.1.8",
-        "eslint-nibble": "8.1.0",
+        "eslint-nibble": "9.0.0",
         "eslint-plugin-n": "17.21.3",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-unicorn": "60.0.0",
@@ -238,8 +238,7 @@
             "@bbob/parser@4.2.0": "patches/@bbob__parser@4.2.0.patch",
             "@bbob/plugin-helper@4.2.0": "patches/@bbob__plugin-helper@4.2.0.patch",
             "@bbob/preset-html5@4.2.0": "patches/@bbob__preset-html5@4.2.0.patch",
-            "@bbob/preset@4.2.0": "patches/@bbob__preset@4.2.0.patch",
-            "eslint-nibble@8.1.0": "patches/eslint-nibble@8.1.0.patch"
+            "@bbob/preset@4.2.0": "patches/@bbob__preset@4.2.0.patch"
         }
     }
 }
