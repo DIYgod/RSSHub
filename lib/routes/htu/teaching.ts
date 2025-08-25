@@ -41,60 +41,88 @@ export const route: Route = {
     ],
     maintainers: ['HackHTU'],
     handler: async (ctx) => {
-        const category = ctx.req.param('category');
+        const { category = '3257' } = ctx.req.param();
         const ROOT_URL = 'https://www.htu.edu.cn/';
-
-        if (!category) {
-            throw new Error('分类参数不能为空');
-        }
+        const HEADERS = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+        };
+        const TIMEOUT = 10000;
 
         const link = `${ROOT_URL}teaching/${category}/list.htm`;
-        const response = await ofetch(link);
+        const response = await ofetch(link, {
+            headers: HEADERS,
+            timeout: TIMEOUT,
+        });
         const $ = load(response);
 
-        const lists = $('ul.news_list li.news')
+        const lists: DataItem[] = $('ul.news_list li.news')
             .toArray()
             .map((item) => {
                 const element = $(item);
 
-                const title = element.find('.news_title').first().text().trim();
-                const link = new URL(element.find('.news_title a').first().attr('href') ?? '', ROOT_URL).href;
-                const pubDate = timezone(parseDate(element.find('.news_meta').first().text().trim()), +8);
+                const titleRaw = element.find('.news_title').first().text().trim();
+                const title = titleRaw || '';
+
+                const href = element.find('.news_title a').first().attr('href');
+                const link = href ? new URL(href, ROOT_URL).href : undefined;
+
+                const timeRaw = element.find('.news_meta').first().text().trim();
+                const pubDate = timeRaw ? timezone(parseDate(timeRaw), +8) : undefined;
 
                 return {
                     title,
                     link,
                     pubDate,
-                } as DataItem;
+                };
             });
 
-        const items = await Promise.all(
+        const items: DataItem[] = await Promise.all(
             lists.map((item) => {
-                if (!item.link || item.link.includes('files')) {
-                    return item;
-                }
-                if (new URL(item.link).origin !== new URL(ROOT_URL).origin) {
+                const link = item.link;
+
+                // Filter out items without a link or those that link to files
+                if (!link || link.includes('files')) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async () => {
-                    const respone = await ofetch(item.link!);
-                    const $ = load(respone);
+                // Ensure the link is from the same origin, filter out external links
+                if (new URL(link).origin !== new URL(ROOT_URL).origin) {
+                    return item;
+                }
 
-                    const text = $('div.read').first().text();
-                    if (text) {
-                        item.description = text;
+                return cache.tryGet(link, async () => {
+                    try {
+                        const respone = await ofetch(link, { timeout: TIMEOUT });
+                        const $ = load(respone);
+
+                        const text = $('div.read').first().text();
+                        if (text) {
+                            item.description = text;
+                        }
+
+                        // Try to get image from the article content if not already present
+                        if (!item.image) {
+                            const img = $('div.read img').first().attr('src');
+                            if (img) {
+                                item.image = new URL(img, ROOT_URL).href;
+                            }
+                        }
+                        return item;
+                    } catch {
+                        return item;
                     }
-                    return item;
                 });
             })
         );
 
-        return {
-            title: `河南师范大学教务处 - ${$('title').text()}`,
+        const data: Data = {
+            title: `河南师范大学 - ${$('title').text()}`,
             link,
             item: items,
             language: 'zh-CN',
-        } as Data;
+        };
+
+        return data;
     },
 };
