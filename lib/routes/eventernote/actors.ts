@@ -111,8 +111,6 @@ async function handler(ctx) {
                 link,
             });
         }
-
-        page += 1;
     }
 
     return {
