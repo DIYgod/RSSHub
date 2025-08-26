@@ -53,5 +53,6 @@ async function handler() {
         link: feed.link ?? 'https://www.bnext.com.tw',
         description: feed.description ?? '',
         item: items,
+        allowEmpty: true, // the official feed clears all items every day at 00:00 UTC+8
     };
 }
