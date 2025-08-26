@@ -1,5 +1,5 @@
 <ul>
-  {{each items as item index}}
+  {{each items item index}}
     <li>
       <p><strong>Rank {{index + 1}}</strong></p>
       {{if item.logo}}
@@ -25,7 +25,7 @@
       {{/if}}
       {{if item.tags && item.tags.length}}
         <p><strong>Tags:</strong>
-          {{each item.tags as tag tIndex}}
+          {{each item.tags tag tIndex}}
             <a href="/projects?tags={{tag.toLowerCase()}}">{{tag}}</a>{{if tIndex < item.tags.length - 1}}, {{/if}}
           {{/each}}
         </p>
