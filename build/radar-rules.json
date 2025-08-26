@@ -7136,6 +7136,19 @@
       }
     ]
   },
+  "bestofjs.org": {
+    "_name": "Best of JS",
+    ".": [
+      {
+        "title": "Monthly Rankings",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/rankings/monthly/:year/:month"
+        ],
+        "target": "/bestofjs/rankings/monthly"
+      }
+    ]
+  },
   "bfl.ai": {
     "_name": "BFL AI",
     ".": [
