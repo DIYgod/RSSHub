@@ -6,6 +6,7 @@ export const REQUIRE_CONFIG: NonNullable<Route['features']>['requireConfig'] = [
         description: '值为 Cookie 头中 ff14risingstones 值',
     },
     {
+        // https://github.com/StarHeartHunt/ff14risingstone_sign_task/issues/17
         name: 'SDO_UA',
         description: '值为与在网页端获取 Cookie 时相匹配的 User-Agent 值',
     },
