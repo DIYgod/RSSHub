@@ -162,6 +162,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                         guild_address: detail?.guild_address ?? '',
                         create_time: detail?.create_time ?? '',
                         foot_pic: detail?.foot_pic ?? '',
+                        detail_mask: dynamic.from_info.detail_mask,
                     });
                     break;
 
