@@ -1,4 +1,4 @@
-{{ detail_mask }}
+{{@ detail_mask }}
 
 <div>
   {{ if weekday_time && weekend_time }}

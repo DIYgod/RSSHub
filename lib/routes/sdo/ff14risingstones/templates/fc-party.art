@@ -13,7 +13,7 @@
 <p>部队标签：{{ labelInfo.map(i => i.name).join('，') }}</p>
 
 <div>
-{{ detail_mask }}
+{{@ detail_mask }}
 </div>
 
 {{ if foot_pic }}

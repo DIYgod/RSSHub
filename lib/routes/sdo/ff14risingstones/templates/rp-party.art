@@ -11,5 +11,5 @@
 <p>简介：{{ profile }}</p>
 
 <div>
-{{ detail_mask }}
+{{@ detail_mask }}
 </div>
