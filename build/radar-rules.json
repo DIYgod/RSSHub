@@ -38269,7 +38269,7 @@
     "_name": "TechPowerUp",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Latest Content",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
@@ -38280,7 +38280,8 @@
         "title": "Reviews",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/"
+          "/review/search",
+          "/review"
         ],
         "target": "/techpowerup/review/:keyword?"
       }
