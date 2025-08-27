@@ -3,6 +3,9 @@ import type { DateTimeFormat, UserPost } from './other';
 import type { DutiesParty, NoviceNetworkParty, FreeCompanyParty, OtherParty, RolePlayParty } from './party';
 
 interface BaseUserDynamic {
+    character_name: string;
+    area_name: string;
+    group_name: string;
     created_at: DateTimeFormat;
     from: DynamicSource;
     from_id: string;

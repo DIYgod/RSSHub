@@ -50,6 +50,7 @@ export async function generatePostFeeds(posts: UserPost[]) {
                 pubDate: timezone(parseDate(post.created_at), +8),
                 updated: detail?.updated_at ? timezone(parseDate(detail.updated_at), +8) : undefined,
                 guid: `sdo/ff14risingstones/posts:${post.posts_id}`,
+                author: `${post.character_name}@${post.group_name}`,
             } as DataItem;
         })
     );
@@ -58,7 +59,7 @@ export async function generatePostFeeds(posts: UserPost[]) {
 export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
     return await Promise.all(
         dynamics.map(async (dynamic) => {
-            let title = dynamic.mask_content;
+            let title = `${dynamic.character_name}@${dynamic.group_name} ${dynamic.mask_content}`;
             let link: string | undefined;
             let description: string | undefined;
             let detail: PostDetail | DutiesPartyDetail | FreeCompanyPartyDetail | NoviceNetworkParty | null = null;
@@ -207,6 +208,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                 link,
                 pubDate: timezone(parseDate(dynamic.created_at), +8),
                 guid: `sdo/ff14risingstones/dynamics:${dynamic.id}`,
+                author: `${dynamic.character_name}@${dynamic.group_name}`,
                 description,
             } as DataItem;
         })

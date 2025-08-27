@@ -30,6 +30,8 @@ export interface UserPost {
     part_name: string;
     title: string;
     character_name: string;
+    group_name: string;
+    area_name: string;
 }
 
 export interface PostDetail {
