@@ -168,7 +168,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     if (!dynamic.from_info) {
                         break;
                     }
-                    title += `[RP] ${dynamic.from_info.rp_name}`;
+                    title += dynamic.from_info.rp_name;
                     link = `${INDEX_URL}#/recruit/roleplay/detail/${dynamic.from_info.id}`;
                     description = art(path.join(__dirname, 'templates/rp-party.art'), {
                         cover_pic: dynamic.from_info.cover_pic,
