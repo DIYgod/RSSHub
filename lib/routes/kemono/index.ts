@@ -197,6 +197,7 @@ async function processDiscordMessages(channels: any[], limit: number) {
 
                 return channelResponse.data
                     .filter((message: DiscordMessage) => message.content || message.attachments)
+                    .sort((a, b) => b.id.localeCompare(a.id))
                     .slice(0, limit)
                     .map((message: DiscordMessage) => ({
                         title: message.content || 'Discord Message',
