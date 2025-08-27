@@ -1,4 +1,4 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import md5 from '@/utils/md5';
@@ -48,7 +48,7 @@ const parseReviews = async ($, item) => {
     if (nextPages.length) {
         const pages = await Promise.all(
             nextPages.map(async (url) => {
-                const { data: response } = await got(url, {
+                const response = await ofetch(url, {
                     headers,
                 });
                 const $ = load(response);
