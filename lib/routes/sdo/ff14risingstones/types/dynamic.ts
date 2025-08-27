@@ -16,32 +16,32 @@ export interface GeneralDynamic extends BaseUserDynamic {
 
 export interface PostDynamic extends BaseUserDynamic {
     from: DynamicSource.Post | DynamicSource.Strat;
-    from_info: UserPost;
+    from_info?: UserPost;
 }
 
 export interface NoviceNetworkRecruitDynamic extends BaseUserDynamic {
     from: DynamicSource.NoviceNetwork;
-    from_info: Omit<NoviceNetworkParty, 'styleInfo' | 'weekday_time' | 'weekend_time'>;
+    from_info?: Omit<NoviceNetworkParty, 'styleInfo' | 'weekday_time' | 'weekend_time'>;
 }
 
 export interface DutiesRecruitDynamic extends BaseUserDynamic {
     from: DynamicSource.Duty;
-    from_info: DutiesParty;
+    from_info?: DutiesParty;
 }
 
 export interface FreeCompanyRecruitDynamic extends BaseUserDynamic {
     from: DynamicSource.FreeCompany;
-    from_info: FreeCompanyParty;
+    from_info?: FreeCompanyParty;
 }
 
 export interface RolePlayRecruitDynamic extends BaseUserDynamic {
     from: DynamicSource.RolePlay;
-    from_info: RolePlayParty;
+    from_info?: RolePlayParty;
 }
 
 export interface OtherRecruitDynamic extends BaseUserDynamic {
     from: DynamicSource.Other;
-    from_info: OtherParty;
+    from_info?: OtherParty;
 }
 
 export type UserDynamic = GeneralDynamic | PostDynamic | NoviceNetworkRecruitDynamic | FreeCompanyRecruitDynamic | RolePlayRecruitDynamic | DutiesRecruitDynamic | OtherRecruitDynamic;

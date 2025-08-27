@@ -66,6 +66,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
             switch (dynamic.from) {
                 case DynamicSource.Post:
                 case DynamicSource.Strat:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += dynamic.from_info.title;
                     link = `${INDEX_URL}#/post/detail/${dynamic.from_info.posts_id}`;
                     detail = await getPostsDetail(dynamic.from_info.posts_id);
@@ -73,6 +76,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     break;
 
                 case DynamicSource.NoviceNetwork:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += `[找${dynamic.from_info.identity === NoviceNetworkIdentity.Mentor ? '豆芽' : '导师'}] ${dynamic.from_info.title}`;
                     link = `${INDEX_URL}#/recruit/beginner?id=${dynamic.from_info.id}`;
                     detail = await getNoviceNetworkRecruitDetail(dynamic.from_info.id);
@@ -86,6 +92,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     break;
 
                 case DynamicSource.Duty:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += `[${dynamic.from_info.fb_type}] ${dynamic.from_info.fb_name}`;
                     link = `${INDEX_URL}#/recruit/party?id=${dynamic.from_info.id}`;
                     detail = await getDutiesRecruitDetail(dynamic.from_info.id);
@@ -100,16 +109,16 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                         team_position: dynamic.from_info.team_position
                             ? {
                                   A: Object.keys(dynamic.from_info.team_position.A)
-                                      .filter((i) => dynamic.from_info.team_position!.A[i] !== '0')
-                                      .map((i) => `${i}: ${JOB[dynamic.from_info.team_position!.A[i]]}`)
+                                      .filter((i) => dynamic.from_info!.team_position!.A[i] !== '0')
+                                      .map((i) => `${i}: ${JOB[dynamic.from_info!.team_position!.A[i]]}`)
                                       .join('，'),
                                   B: Object.keys(dynamic.from_info.team_position.B)
-                                      .filter((i) => dynamic.from_info.team_position!.B[i] !== '0')
-                                      .map((i) => `${i}: ${JOB[dynamic.from_info.team_position!.B[i]]}`)
+                                      .filter((i) => dynamic.from_info!.team_position!.B[i] !== '0')
+                                      .map((i) => `${i}: ${JOB[dynamic.from_info!.team_position!.B[i]]}`)
                                       .join('，'),
                                   C: Object.keys(dynamic.from_info.team_position.C)
-                                      .filter((i) => dynamic.from_info.team_position!.C[i] !== '0')
-                                      .map((i) => `${i}: ${JOB[dynamic.from_info.team_position!.C[i]]}`)
+                                      .filter((i) => dynamic.from_info!.team_position!.C[i] !== '0')
+                                      .map((i) => `${i}: ${JOB[dynamic.from_info!.team_position!.C[i]]}`)
                                       .join('，'),
                               }
                             : null,
@@ -131,6 +140,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     break;
 
                 case DynamicSource.FreeCompany:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += `[部队招待] ${dynamic.from_info.guild_name} <${dynamic.from_info.guild_tag}>`;
                     link = `${INDEX_URL}#/recruit/guild/detail/${dynamic.from_info.id}`;
                     detail = await getFreeCompanyRecruitDetail(dynamic.from_info.id);
@@ -152,6 +164,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     break;
 
                 case DynamicSource.RolePlay:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += `[RP] ${dynamic.from_info.rp_name}`;
                     link = `${INDEX_URL}#/recruit/roleplay/detail/${dynamic.from_info.id}`;
                     description = art(path.join(__dirname, 'templates/rp-party.art'), {
@@ -177,6 +192,9 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                     });
                     break;
                 case DynamicSource.Other:
+                    if (!dynamic.from_info) {
+                        break;
+                    }
                     title += `[${dynamic.from_info.category_name}] ${dynamic.from_info.title}`;
                     link = `${INDEX_URL}#/recruit/others?id=${dynamic.from_info.id}`;
                     description = dynamic.from_info.detail_mask;
