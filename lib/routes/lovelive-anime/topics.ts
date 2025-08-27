@@ -109,12 +109,11 @@ async function handler(ctx) {
                 const pubDate = timezone(parseDate(item.find('a > p.date').text(), 'YYYY/MM/DD'), +9);
                 const title = item.find('a > p.title').text();
                 const category = item.find('a > p.category').text();
-                const imglink = `${rootUrl}/${
-                    item
-                        .find('a > img')
-                        .attr('style')
-                        .match(/background-image:url\((.*)\)/)[1]
-                }`;
+                const relativeImgLink = item
+                    .find('a > img')
+                    .attr('style')
+                    .match(/background-image:url\((.*)\)/)[1];
+                const imglink = new URL(relativeImgLink, baseUrl).href;
 
                 return {
                     link,
