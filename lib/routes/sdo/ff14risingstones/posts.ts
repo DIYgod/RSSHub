@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/ff14risingstones/posts/:pid?/:type?',
     example: '/sdo/ff14risingstones/posts/all/hot',
     name: '帖子',
+    categories: ['bbs'],
     maintainers: ['KarasuShin'],
     features: {
         requireConfig: REQUIRE_CONFIG,
@@ -71,7 +72,7 @@ async function handler(ctx: Context) {
     });
 
     return {
-        title: `${POST_TYPE[type] ?? ''}帖文${postPart ? ` - ${postPart}` : ''}`,
+        title: `石之家 - ${POST_TYPE[type] ?? ''}帖文${postPart ? ` - ${postPart}` : ''}`,
         link: `${INDEX_URL}#/post`,
         image: LOGO_URL,
         item: await generatePostFeeds(posts),

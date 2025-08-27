@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ff14risingstones/user-resently/:uid',
-    categories: ['game'],
+    categories: ['bbs'],
     example: '/sdo/ff14risingstones/user-resently/10008214',
     name: '游戏近况',
     maintainers: ['KarasuShin'],
@@ -26,7 +26,7 @@ async function handler(ctx: Context) {
     const [resently, userInfo] = await Promise.all([getResently(uid), getUserInfo(uid)]);
 
     return {
-        title: `${userInfo.character_name}@${userInfo.group_name} 的游戏近况`,
+        title: `石之家 - ${userInfo.character_name}@${userInfo.group_name} 的游戏近况`,
         link: `${INDEX_URL}#/me/info?uuid=${uid}`,
         image: userInfo.avatar,
         item: resently.map((i) => ({

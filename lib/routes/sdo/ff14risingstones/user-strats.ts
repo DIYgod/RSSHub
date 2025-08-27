@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/ff14risingstones/user-strats/:uid',
     example: '/sdo/ff14risingstones/user-strats/10001226',
     name: '用户攻略',
+    categories: ['bbs'],
     maintainers: ['KarasuShin'],
     features: {
         requireConfig: REQUIRE_CONFIG,
@@ -23,7 +24,7 @@ async function handler(ctx: Context) {
     const [posts, userInfo] = await Promise.all([getUserPosts(uid, 2), getUserInfo(uid)]);
 
     return {
-        title: `${userInfo.character_name}@${userInfo.group_name} 发布的攻略`,
+        title: `石之家 - ${userInfo.character_name}@${userInfo.group_name} 发布的攻略`,
         link: `${INDEX_URL}#/me/posts?uuid=${uid}`,
         image: userInfo.avatar,
         item: await generatePostFeeds(posts),

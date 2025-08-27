@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/ff14risingstones/timeline',
     example: '/sdo/ff14risingstones/timeline',
     name: '时间线',
+    categories: ['bbs'],
     maintainers: ['KarasuShin'],
     features: {
         requireConfig: REQUIRE_CONFIG,
@@ -22,7 +23,7 @@ async function handler(ctx: Context) {
     const dynamics = await getFollowDynamicList(limit);
 
     return {
-        title: '时间线',
+        title: '石之家 - 时间线',
         link: `${INDEX_URL}#/dynamic`,
         image: LOGO_URL,
         item: await generateDynamicFeeds(dynamics),

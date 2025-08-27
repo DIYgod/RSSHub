@@ -8,6 +8,7 @@ export const route: Route = {
     path: '/ff14risingstones/strats/:pid?/:type?',
     example: '/sdo/ff14risingstones/strats/1,2/refine',
     name: '攻略',
+    categories: ['bbs'],
     maintainers: ['KarasuShin'],
     features: {
         requireConfig: REQUIRE_CONFIG,
@@ -66,7 +67,7 @@ async function handler(ctx: Context) {
     });
 
     return {
-        title: `${POST_TYPE[type] ?? ''}攻略${stratPart ? ` - ${stratPart}` : ''}`,
+        title: `石之家 - ${POST_TYPE[type] ?? ''}攻略${stratPart ? ` - ${stratPart}` : ''}`,
         link: `${INDEX_URL}#/strat`,
         image: LOGO_URL,
         item: await generatePostFeeds(posts),
