@@ -121,8 +121,8 @@ async function handler(ctx) {
 
     const items = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link, async () => {
+        async (item) => {
+            item.description = await cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link);
                 let component = '';
                 const urlReg = /window\.lazySizesConfig/g;
@@ -164,9 +164,10 @@ async function handler(ctx) {
                 }
                 item.pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD HH:mm:ss'), +8);
                 component = component.replaceAll(/\b(data-src)\b/g, 'src');
-                item.description = component;
-                return item;
-            }),
+                return component;
+            });
+            return item;
+        },
         { concurrency: 5 }
     );
 
