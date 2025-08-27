@@ -46,6 +46,10 @@ export const route: Route = {
             source: ['kemono.cr/:source/user/:id/fancards'],
             target: '/:source/:id/fancards',
         },
+        {
+            source: ['kemono.cr/discord/server/:id'],
+            target: '/discord/:id',
+        },
     ],
     name: 'Posts',
     maintainers: ['nczitzk', 'AiraNadih'],
