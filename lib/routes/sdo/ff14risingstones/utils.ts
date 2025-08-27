@@ -160,6 +160,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                         weekday_time: dynamic.from_info.weekday_time,
                         weekend_time: dynamic.from_info.weekend_time,
                         guild_address: detail?.guild_address ?? '',
+                        create_time: detail?.create_time ?? '',
                         foot_pic: detail?.foot_pic ?? '',
                     });
                     break;
