@@ -98,6 +98,7 @@ export interface FreeCompanyParty extends BaseParty {
 
 export interface FreeCompanyPartyDetail extends FreeCompanyParty {
     updated_at: DateTimeFormat | null;
+    create_time: DateTimeFormat | null;
     guild_address: string | null;
     foot_pic: string | null;
 }
