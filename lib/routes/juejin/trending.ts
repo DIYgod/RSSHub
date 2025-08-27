@@ -6,7 +6,76 @@ export const route: Route = {
     path: '/trending/:category/:type',
     categories: ['programming'],
     example: '/juejin/trending/ios/monthly',
-    parameters: { category: '分类名', type: '类型' },
+    parameters: {
+        category: {
+            description: '分类名',
+            options: [
+                {
+                    value: 'android',
+                    label: 'Android',
+                },
+                {
+                    value: 'frontend',
+                    label: '前端',
+                },
+                {
+                    value: 'ios',
+                    label: 'iOS',
+                },
+                {
+                    value: 'backend',
+                    label: '后端',
+                },
+                {
+                    value: 'design',
+                    label: '设计',
+                },
+                {
+                    value: 'product',
+                    label: '产品',
+                },
+                {
+                    value: 'freebie',
+                    label: '工具资源',
+                },
+                {
+                    value: 'article',
+                    label: '阅读',
+                },
+                {
+                    value: 'ai',
+                    label: '人工智能',
+                },
+                {
+                    value: 'devops',
+                    label: '运维',
+                },
+                {
+                    value: 'all',
+                    label: '全部',
+                },
+            ],
+            default: 'all',
+        },
+        type: {
+            description: '类型',
+            options: [
+                {
+                    value: 'weekly',
+                    label: '本周最热',
+                },
+                {
+                    value: 'monthly',
+                    label: '本月最热',
+                },
+                {
+                    value: 'historical',
+                    label: '历史最热',
+                },
+            ],
+            default: 'weekly',
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,25 +87,6 @@ export const route: Route = {
     name: '热门',
     maintainers: ['moaix'],
     handler,
-    description: `| category | 标签     |
-| -------- | -------- |
-| android  | Android  |
-| frontend | 前端     |
-| ios      | iOS      |
-| backend  | 后端     |
-| design   | 设计     |
-| product  | 产品     |
-| freebie  | 工具资源 |
-| article  | 阅读     |
-| ai       | 人工智能 |
-| devops   | 运维     |
-| all      | 全部     |
-
-| type       | 类型     |
-| ---------- | -------- |
-| weekly     | 本周最热 |
-| monthly    | 本月最热 |
-| historical | 历史最热 |`,
 };
 
 async function handler(ctx) {
