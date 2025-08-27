@@ -267,6 +267,7 @@ async function handler(ctx) {
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
+            cache.set('bili-cookie', '');
             throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
