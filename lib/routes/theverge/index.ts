@@ -46,7 +46,9 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
-    if (!b || !b.__typename) {return '';}
+    if (!b || !b.__typename) {
+        return '';
+    }
 
     try {
         switch (b.__typename) {
