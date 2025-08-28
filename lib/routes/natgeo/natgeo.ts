@@ -23,7 +23,7 @@ async function loadContent(link) {
         description = $('#content-album').html() + description;
     }
     return {
-        title: $('title').text(),
+        title: $('h1.content-title').text().trim(),
         pubDate: parseDate(dtStr),
         description,
         category: $('.content-tag a')
