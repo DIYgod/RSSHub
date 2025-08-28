@@ -16,14 +16,14 @@ async function loadContent(link) {
         .replaceAll(/&nbsp;/gi, ' ')
         .trim();
 
-    $('.splide__arrows, .slide-control').remove();
+    $('.splide__arrows, .slide-control, [class^="ad-"], style').remove();
 
     let description = ($('article').eq(0).html() ?? '') + ($('article').eq(1).html() ?? '');
     if (/photo|gallery/.test(link)) {
         description = $('#content-album').html() + description;
     }
     return {
-        title: $('title').text(),
+        title: $('h1.content-title').text().trim(),
         pubDate: parseDate(dtStr),
         description,
         category: $('.content-tag a')
