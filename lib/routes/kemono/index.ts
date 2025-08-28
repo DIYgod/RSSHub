@@ -46,6 +46,10 @@ export const route: Route = {
             source: ['kemono.cr/:source/user/:id/fancards'],
             target: '/:source/:id/fancards',
         },
+        {
+            source: ['kemono.cr/discord/server/:id'],
+            target: '/discord/:id',
+        },
     ],
     name: 'Posts',
     maintainers: ['nczitzk', 'AiraNadih'],
@@ -197,6 +201,7 @@ async function processDiscordMessages(channels: any[], limit: number) {
 
                 return channelResponse.data
                     .filter((message: DiscordMessage) => message.content || message.attachments)
+                    .sort((a, b) => b.id.localeCompare(a.id))
                     .slice(0, limit)
                     .map((message: DiscordMessage) => ({
                         title: message.content || 'Discord Message',
