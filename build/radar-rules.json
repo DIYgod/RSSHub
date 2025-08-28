@@ -23375,6 +23375,14 @@
           "/:source/user/:id/fancards"
         ],
         "target": "/kemono/:source/:id/fancards"
+      },
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/discord/server/:id"
+        ],
+        "target": "/kemono/discord/:id"
       }
     ]
   },
