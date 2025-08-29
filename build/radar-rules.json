@@ -39425,6 +39425,19 @@
       }
     ]
   },
+  "trendforce.com": {
+    "_name": "TrendForce",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/"
+        ],
+        "target": "/trendforce/news"
+      }
+    ]
+  },
   "tribalfootball.com": {
     "_name": "Tribal Football",
     ".": [
