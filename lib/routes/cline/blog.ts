@@ -66,7 +66,7 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
                     link: fullLink,
                     pubDate,
                     author,
-                    description: imgSrc ? `<img src="${imgSrc}" alt="${title}" /><p>${summary}</p>` : `<p>${summary}</p>`,
+                    description: (imgSrc ? `<img src="${imgSrc}" alt="${title}" />` : '') + `<p>${summary}</p>`,
                 });
             }
         });
