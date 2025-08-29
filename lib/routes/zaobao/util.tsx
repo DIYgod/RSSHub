@@ -7,7 +7,7 @@ import { base32 } from 'rfc4648';
 import Zaobao from './zaobao';
 
 const baseUrl = 'https://www.zaobao.com';
-export const logo = 'https://dss0.zbstatic5.com/web2/_astro/apple-touch-icon-57x57.zXViMIi5.png';
+export const logo = 'https://www.zaobao.com.sg/favicon.ico';
 
 /**
  * 通用解析页面类似 https://www.zaobao.com/realtime/china 的网站
@@ -26,13 +26,14 @@ export const parseList = async (
         link: string;
     }[];
 }> => {
-    const response = await ofetch(baseUrl + sectionUrl);
-    const $ = load(response);
+    const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
+    const $ = load(pageResponse._data);
     let data = $('.card-listing .card .content-header a');
     if (data.length === 0) {
         // for HK version
         data = $('[data-testid="article-list"] article div div a.article-link');
     }
+    const host = new URL(pageResponse.url).host;
 
     const title = $('meta[property="og:title"]').attr('content');
 
@@ -42,43 +43,56 @@ export const parseList = async (
             const link = baseUrl + $item.attr('href');
 
             return cache.tryGet(link, async () => {
-                const article = await ofetch(link);
-                const $1 = load(article);
+                const response = await ofetch.raw(host + $item.attr('href'));
+                let $1 = load(response._data);
 
-                let title, pubDate, category;
-                if ($1('#seo-article-page').text() === '') {
-                    // HK
+                let title, pubDate, category, images;
+                const jsonText = $1('head script[type="application/ld+json"]')
+                    .text()
+                    .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                const ldJson = JSON.parse(jsonText);
+
+                const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
+                if (isSingapore) {
+                    const hydrationData = JSON.parse(
+                        JSON.parse(
+                            `"${
+                                $1('script:contains("__staticRouterHydrationData")')
+                                    .text()
+                                    .match(/__staticRouterHydrationData = JSON.parse\("(.*)"\);/)?.[1]
+                            }"`
+                        )
+                    );
+                    const article = hydrationData.loaderData['0-0'].context.payload.article;
+                    title = article.headline;
+                    pubDate = parseDate(article.create_time, 'X');
+                    category = article.tags.map((t) => t.name);
+                    $1 = load(article.body_cn, null, false);
+                    images = article.images;
+                } else {
                     title = $1('h1.article-title').text();
-                    const jsonText = $1('head script[type="application/ld+json"]')
-                        .text()
-                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
-                    const ldJson = JSON.parse(jsonText);
                     pubDate = parseDate(ldJson.datePublished);
                     category = ldJson.keywords.split(',');
-                } else {
-                    // SG
-                    const jsonText = $1('#seo-article-page')
-                        .text()
-                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
-                    const json = JSON.parse(jsonText);
-                    title = json['@graph'][0]?.headline;
-                    pubDate = parseDate(json['@graph'][0]?.datePublished);
                 }
 
                 // $1('.overlay-microtransaction').remove();
                 // $1('#video-freemium-player').remove();
-                // $1('.bff-google-ad, .bff-recommend-article').remove();
-                $1('img[alt="expend icon"]').remove();
+                $1('.bff-google-ad, .bff-recommend-article').remove(); // SG
+                $1('button.cursor-pointer').remove(); // SG
+                $1('.bff-inline-image-expand-icon').remove(); // SG
+                $1('img[alt="expend icon"]').remove(); // HK
 
-                let articleBodyNode = $1('.articleBody');
-                if (articleBodyNode.length === 0) {
+                let articleBodyNode;
+                if (isSingapore) {
+                    articleBodyNode = $1;
+                } else {
                     // for HK version
                     $1('astro-island, .further-reading, .read-on-app-cover').remove();
                     articleBodyNode = $1('.article-body');
                 }
 
                 const articleBody = articleBodyNode.html();
-                const imageDataArray = processImageData($1);
+                const imageDataArray = processImageData(isSingapore, images, $1);
 
                 // use JSX as template
                 const dom = <Zaobao imageDataArray={imageDataArray} articleBody={articleBody}></Zaobao>;
@@ -137,47 +151,34 @@ export interface ImageData {
     title?: string;
 }
 
-const processImageData = ($1) => {
-    const imageDataArray: ImageData[] = [];
-
-    // const imageSelectors = [
-    //     '.inline-figure-img', // for SG version
-    //     '.body-content .loadme picture img', // Unused?
-    //     '.inline-figure-gallery', // for SG version
-    //     '#carousel-article', // for HK version, HK version of multi images use same selector as single image, so g is needed for all pages
-    // ];
-
-    // for (const selector of imageSelectors) {
-    //     if ($1(selector).length) {
-    //         let html = $1(selector === '#carousel-article' ? '#carousel-article .carousel-inner' : selector).html();
-
-    //         if (html) {
-    //             html = html.replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public').replaceAll('s3/files', 's3fs-public');
-
-    //             imageDataArray.push({
-    //                 type: selector === '.body-content .loadme picture img' ? 'data' : 'normalHTML',
-    //                 html,
-    //                 ...(selector === '.body-content .loadme picture img' && {
-    //                     src: $1('.body-content .loadme picture source').attr('data-srcset'),
-    //                     title: $1(selector).attr('title'),
-    //                 }),
-    //             });
-    //         }
-    //     }
-    // }
-
-    const img = $1('[data-testid="article-banner"] img');
-    if (img.length) {
-        imageDataArray.push({
+const processImageData = (isSg, images, $1) => {
+    if (isSg && images) {
+        return images.map((img) => ({
             type: 'data',
-            html: img.prop('outerHTML'),
-            src: img
-                .attr('src')
+            html: '',
+            src: img.url
                 .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
-                .replaceAll('s3/files', 's3fs-public'),
-            title: img.attr('title'),
-        });
+                .replaceAll('s3/files', 's3fs-public')
+                .split('?')[0],
+            title: img.caption,
+        })) as ImageData[];
     }
 
-    return imageDataArray;
+    const hkImg = $1('[data-testid="article-banner"] img');
+    if (hkImg.length) {
+        return [
+            {
+                type: 'data',
+                html: hkImg.prop('outerHTML'),
+                src: hkImg
+                    .attr('src')
+                    .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
+                    .replaceAll('s3/files', 's3fs-public')
+                    .split('?')[0],
+                title: hkImg.attr('title'),
+            },
+        ] as ImageData[];
+    }
+
+    return [];
 };
