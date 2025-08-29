@@ -34,7 +34,7 @@ export const parseList = async (
         // for HK version
         data = $('[data-testid="article-list"] article div div a.article-link');
     }
-    const host = new URL(pageResponse.url).host;
+    const origin = new URL(pageResponse.url).origin;
 
     const title = $('meta[property="og:title"]').attr('content');
 
@@ -44,7 +44,7 @@ export const parseList = async (
             const link = baseUrl + $item.attr('href');
 
             return cache.tryGet(link, async () => {
-                const response = await ofetch.raw(host + $item.attr('href'));
+                const response = await ofetch.raw(origin + $item.attr('href'));
                 let $1 = load(response._data);
 
                 let title, pubDate, category, images;
@@ -72,7 +72,6 @@ export const parseList = async (
                     images = article.images;
                 } else {
                     title = ldJson.headline;
-                    title = $1('h1.article-title').text();
                     pubDate = parseDate(ldJson.datePublished);
                     category = ldJson.keywords.split(',');
                 }
