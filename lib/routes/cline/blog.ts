@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { Route, DataItem } from '@/types';
@@ -7,45 +7,49 @@ const rootUrl = 'https://cline.bot';
 const blogUrl = `${rootUrl}/blog`;
 
 // Extract article information from DOM
-function extractArticlesFromDOM($) {
-    return $('article')
+function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
+    return $('article.group')
         .toArray()
         .map((article) => {
             const element = $(article);
-            const title = element.find('h2').first().text().trim();
-            const linkEl = element.find('a').first();
-            const link = linkEl.attr('href');
+
+            const title = element.find('h2').text().trim();
+            const link = element.find('a').first().attr('href');
             const fullLink = link ? (link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? link : `/${link}`}`) : '';
 
-            const metaEl = element.find('.text-xs.text-slate-500');
-            const author = metaEl.find('span').first().text().trim();
-            const dateStr = metaEl.find('span').eq(2).text().trim();
-            const pubDate = dateStr ? parseDate(dateStr) : undefined;
+            // Extract date and author with single regex
+            const metaText = element.find('.text-sm.text-slate-500').text().trim();
+            const metaMatch = metaText.match(/^([^•]+)\s*•\s*([A-Za-z]+\s+\d{1,2},?\s+\d{4})/);
+            const author = metaMatch ? metaMatch[1].trim() : 'Cline Team';
+            const pubDate = metaMatch ? parseDate(metaMatch[2]) : undefined;
 
-            const summary = element.find('.text-slate-600').text().trim();
+            const summary = element.find('p.text-slate-600').text().trim();
             const imgSrc = element.find('img').attr('src') || '';
 
-            return {
-                title,
-                link: fullLink,
-                pubDate,
-                author,
-                description: `<img src="${imgSrc}" /><p>${summary}</p>`,
-            };
+            return title && link
+                ? {
+                      title,
+                      link: fullLink,
+                      pubDate,
+                      author,
+                      description: imgSrc ? `<img src="${imgSrc}" alt="${title}" /><p>${summary}</p>` : `<p>${summary}</p>`,
+                  }
+                : null;
         })
-        .filter((item) => item.title && item.link);
+        .filter(Boolean) as DataItem[];
 }
 
 async function handler() {
-    // Get blog homepage
+    // Use the archive page which has all articles
+    const archiveUrl = `${rootUrl}/blog/archive`;
+
     const response = await got({
         method: 'get',
-        url: blogUrl,
+        url: archiveUrl,
     });
 
     const $ = load(response.data);
-
-    const articles: DataItem[] = extractArticlesFromDOM($);
+    const articles = extractArticlesFromDOM($);
 
     if (articles.length === 0) {
         throw new Error('No articles found.');
@@ -56,6 +60,7 @@ async function handler() {
         link: blogUrl,
         item: articles,
         description: 'Cline Official Blog - AI Coding Assistant',
+        language: 'en' as const,
     };
 }
 
@@ -72,6 +77,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['cline.bot/blog/archive', 'cline.bot/blog'],
+            target: '/blog',
+        },
+    ],
     name: 'Blog',
     maintainers: ['yeshan333'],
     description: 'Cline Official Blog articles',
