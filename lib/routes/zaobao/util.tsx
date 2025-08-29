@@ -22,8 +22,9 @@ export const parseList = async (
     resultList: {
         title: string;
         description: string;
-        pubDate: string;
+        pubDate: Date;
         link: string;
+        category: string[];
     }[];
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
@@ -70,6 +71,7 @@ export const parseList = async (
                     $1 = load(article.body_cn, null, false);
                     images = article.images;
                 } else {
+                    title = ldJson.headline;
                     title = $1('h1.article-title').text();
                     pubDate = parseDate(ldJson.datePublished);
                     category = ldJson.keywords.split(',');
