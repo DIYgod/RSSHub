@@ -128,7 +128,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cline.bot/blog'],
+            source: ['cline.bot/blog/archive', 'cline.bot/blog'],
             target: '/blog',
         },
         {
