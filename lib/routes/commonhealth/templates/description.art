@@ -1,0 +1,2 @@
+<img src="{{ image }}" alt="article image">
+<p>{{ preface }}</p>

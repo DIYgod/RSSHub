@@ -4,13 +4,11 @@ import utils from './utils';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 
-const disableConfigCookie = false;
-
-const getCookie = () => {
-    if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
+const getCookie = (disableConfig = false) => {
+    if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
         // Update b_lsid in cookies
         for (const key of Object.keys(config.bilibili.cookies)) {
             const cookie = config.bilibili.cookies[key];
@@ -24,25 +22,26 @@ const getCookie = () => {
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        const browser = await puppeteer({
-            stealth: true,
+        let waitForRequest: Promise<string> = new Promise((resolve) => {
+            resolve('');
         });
-        const page = await browser.newPage();
-        const waitForRequest = new Promise<string>((resolve) => {
-            page.on('requestfinished', async (request) => {
-                if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
-                    const cookies = await page.cookies();
-                    let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-
-                    cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                    resolve(cookieString);
-                }
-            });
+        const { destory } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
+            onBeforeLoad: (page) => {
+                waitForRequest = new Promise<string>((resolve) => {
+                    page.on('requestfinished', async (request) => {
+                        if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
+                            const cookies = await page.cookies();
+                            let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                            resolve(cookieString);
+                        }
+                    });
+                });
+            },
         });
-        await page.goto('https://space.bilibili.com/1/dynamic');
         const cookieString = await waitForRequest;
         logger.debug(`Got bilibili cookie: ${cookieString}`);
-        await browser.close();
+        await destory();
         return cookieString;
     });
 };
@@ -148,11 +147,11 @@ const getUsernameAndFaceFromUID = async (uid) => {
         if (nameResponse.data.name) {
             name = nameResponse.data.name;
             face = nameResponse.data.face;
+            cache.set(nameKey, nameResponse.data.name);
+            cache.set(faceKey, nameResponse.data.face);
         } else {
             logger.error(`Error when visiting /x/space/wbi/acc/info: ${JSON.stringify(nameResponse)}`);
         }
-        cache.set(nameKey, name);
-        cache.set(faceKey, face);
     }
     return [name, face];
 };
@@ -203,6 +202,82 @@ const getCidFromId = (aid, pid, bvid) => {
         });
         return data.data.pages[pid - 1].cid;
     });
+};
+
+interface SubtitleEntry {
+    from: number;
+    to: number;
+    sid: number;
+    content: string;
+    music: number;
+}
+
+function secondsToSrtTime(seconds: number): string {
+    const date = new Date(seconds * 1000);
+    const hh = String(date.getUTCHours()).padStart(2, '0');
+    const mm = String(date.getUTCMinutes()).padStart(2, '0');
+    const ss = String(date.getUTCSeconds()).padStart(2, '0');
+    const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
+    return `${hh}:${mm}:${ss},${ms}`;
+}
+
+function convertJsonToSrt(body: SubtitleEntry[]): string {
+    return body
+        .map((item, index) => {
+            const start = secondsToSrtTime(item.from);
+            const end = secondsToSrtTime(item.to);
+            return `${index + 1}\n${start} --> ${end}\n${item.content}\n`;
+        })
+        .join('\n');
+}
+
+const getVideoSubtitle = async (
+    bvid: string
+): Promise<
+    Array<{
+        content: string;
+        lan_doc: string;
+    }>
+> => {
+    if (!bvid) {
+        return [];
+    }
+
+    const cid = await getCidFromId(undefined, 1, bvid);
+    const cookie = await getCookie();
+    return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
+            headers: {
+                Referer: `https://www.bilibili.com/video/${bvid}`,
+                Cookie: cookie,
+            },
+        });
+
+        const subtitles = response?.data?.data?.subtitle?.subtitles || [];
+
+        return await Promise.all(
+            subtitles.map(async (subtitle) => {
+                const url = `https:${subtitle.subtitle_url}`;
+                const subtitleData = await cache.tryGet(url, async () => {
+                    const subtitleResponse = await got(url);
+                    return convertJsonToSrt(subtitleResponse?.data?.body || []);
+                });
+                return {
+                    content: subtitleData,
+                    lan_doc: subtitle.lan_doc,
+                };
+            })
+        );
+    });
+};
+
+const getVideoSubtitleAttachment = async (bvid: string) => {
+    const subtitles = await getVideoSubtitle(bvid);
+    return subtitles.map((subtitle) => ({
+        url: `data:text/plain;charset=utf-8,${subtitle.content}`,
+        mime_type: 'text/srt',
+        title: `字幕 - ${subtitle.lan_doc}`,
+    }));
 };
 
 const getAidFromBvid = async (bvid) => {
@@ -286,4 +361,6 @@ export default {
     getAidFromBvid,
     getArticleDataFromCvid,
     getRenderData,
+    getVideoSubtitle,
+    getVideoSubtitleAttachment,
 };

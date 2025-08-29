@@ -9,7 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Pictures,
     example: '/pixiv/user/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id'],
+            source: ['www.pixiv.net/users/:id', 'www.pixiv.net/en/users/:id'],
         },
     ],
     name: 'User Activity',

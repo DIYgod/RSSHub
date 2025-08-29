@@ -26,7 +26,7 @@ async function handler() {
     const html = await cache.tryGet(
         targetUrl,
         async () => {
-            const browser = await puppeteer({ stealth: true });
+            const browser = await puppeteer();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {

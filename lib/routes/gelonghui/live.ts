@@ -9,7 +9,7 @@ const baseUrl = 'https://www.gelonghui.com';
 
 export const route: Route = {
     path: '/live',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/gelonghui/live',
     parameters: {},

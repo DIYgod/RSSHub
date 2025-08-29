@@ -1,0 +1,36 @@
+diff --git a/es/index.js b/es/index.js
+index 0a57e06d66aee0c7beff10aa10e761d022b7429e..7a852c7f42b7bc839ed849932d3dfc7cb4662f31 100644
+--- a/es/index.js
++++ b/es/index.js
+@@ -1,4 +1,4 @@
+ export { TagNode } from '@bbob/plugin-helper';
+-export { default } from './parse';
+-export * from './parse';
+-export * from './lexer';
++export { default } from './parse.js';
++export * from './parse.js';
++export * from './lexer.js';
+diff --git a/es/lexer.js b/es/lexer.js
+index 902594965355f31212cd7cedad6697829e144684..2ea20da6e1bd2a307b180d0b538884239c29b0b1 100644
+--- a/es/lexer.js
++++ b/es/lexer.js
+@@ -1,6 +1,6 @@
+ /* eslint-disable no-plusplus,no-param-reassign */ import { OPEN_BRAKET, CLOSE_BRAKET, QUOTEMARK, BACKSLASH, SLASH, SPACE, TAB, EQ, N } from '@bbob/plugin-helper';
+-import { Token, TYPE_ATTR_NAME, TYPE_ATTR_VALUE, TYPE_NEW_LINE, TYPE_SPACE, TYPE_TAG, TYPE_WORD } from './Token';
+-import { createCharGrabber, trimChar, unquote } from './utils';
++import { Token, TYPE_ATTR_NAME, TYPE_ATTR_VALUE, TYPE_NEW_LINE, TYPE_SPACE, TYPE_TAG, TYPE_WORD } from './Token.js';
++import { createCharGrabber, trimChar, unquote } from './utils.js';
+ // for cases <!-- -->
+ const EM = '!';
+ export function createTokenOfType(type, value, r = 0, cl = 0, p = 0, e = 0) {
+diff --git a/es/parse.js b/es/parse.js
+index f08044bf6033d209d79c3eae3db532d95e8c860c..81d170263a11a4896b67a3b3d310e9d5673db4c4 100644
+--- a/es/parse.js
++++ b/es/parse.js
+@@ -1,5 +1,5 @@
+ import { CLOSE_BRAKET, OPEN_BRAKET, TagNode, isTagNode } from "@bbob/plugin-helper";
+-import { createLexer } from "./lexer";
++import { createLexer } from "./lexer.js";
+ class NodeList {
+     last() {
+         if (Array.isArray(this.n) && this.n.length > 0 && typeof this.n[this.n.length - 1] !== "undefined") {

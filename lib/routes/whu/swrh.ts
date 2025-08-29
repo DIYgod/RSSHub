@@ -94,7 +94,7 @@ async function handler(ctx) {
                               const response = await got(item.link);
                               const $ = load(response.data);
 
-                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : ($('.prompt').length ? $('.prompt').html() : item.title);
+                              return $('.v_news_content').length ? $('.v_news_content').html().trim() : $('.prompt').length ? $('.prompt').html() : item.title;
                           } catch {
                               return item.title;
                           }

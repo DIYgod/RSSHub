@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
 // and lib/routes/rsshub/routes.ts
-type Category =
+export type Category =
     | 'popular'
     | 'social-media'
     | 'new-media'
@@ -98,71 +98,89 @@ export type Data = {
     ttl?: number;
 };
 
-type Language =
+export type Language =
     | 'af'
-    | 'sq'
-    | 'eu'
+    | 'ar-DZ'
+    | 'ar-IQ'
+    | 'ar-KW'
+    | 'ar-MA'
+    | 'ar-SA'
+    | 'ar-TN'
     | 'be'
     | 'bg'
     | 'ca'
-    | 'zh-CN'
-    | 'zh-TW'
-    | 'zh-HK'
-    | 'hr'
     | 'cs'
-    | 'ar-DZ'
-    | 'ar-SA'
-    | 'ar-MA'
-    | 'ar-IQ'
-    | 'ar-KW'
-    | 'ar-TN'
     | 'da'
-    | 'nl'
-    | 'nl-be'
-    | 'nl-nl'
+    | 'de'
+    | 'de-at'
+    | 'de-ch'
+    | 'de-de'
+    | 'de-li'
+    | 'de-lu'
+    | 'el'
     | 'en'
     | 'en-au'
     | 'en-bz'
     | 'en-ca'
+    | 'en-gb'
     | 'en-ie'
     | 'en-jm'
     | 'en-nz'
     | 'en-ph'
-    | 'en-za'
     | 'en-tt'
-    | 'en-gb'
     | 'en-us'
+    | 'en-za'
     | 'en-zw'
+    | 'es'
+    | 'es-ar'
+    | 'es-bo'
+    | 'es-cl'
+    | 'es-co'
+    | 'es-cr'
+    | 'es-do'
+    | 'es-ec'
+    | 'es-es'
+    | 'es-gt'
+    | 'es-hn'
+    | 'es-mx'
+    | 'es-ni'
+    | 'es-pa'
+    | 'es-pe'
+    | 'es-pr'
+    | 'es-py'
+    | 'es-sv'
+    | 'es-uy'
+    | 'es-ve'
     | 'et'
-    | 'fo'
+    | 'eu'
     | 'fi'
+    | 'fo'
     | 'fr'
     | 'fr-be'
     | 'fr-ca'
+    | 'fr-ch'
     | 'fr-fr'
     | 'fr-lu'
     | 'fr-mc'
-    | 'fr-ch'
-    | 'gl'
-    | 'gd'
-    | 'de'
-    | 'de-at'
-    | 'de-de'
-    | 'de-li'
-    | 'de-lu'
-    | 'de-ch'
-    | 'el'
-    | 'haw'
-    | 'hu'
-    | 'is'
-    | 'in'
     | 'ga'
+    | 'gd'
+    | 'gl'
+    | 'haw'
+    | 'hi'
+    | 'hr'
+    | 'hu'
+    | 'in'
+    | 'is'
     | 'it'
-    | 'it-it'
     | 'it-ch'
+    | 'it-it'
     | 'ja'
     | 'ko'
     | 'mk'
+    | 'ne'
+    | 'nl'
+    | 'nl-be'
+    | 'nl-nl'
     | 'no'
     | 'pl'
     | 'pt'
@@ -174,35 +192,18 @@ type Language =
     | 'ru'
     | 'ru-mo'
     | 'ru-ru'
-    | 'sr'
     | 'sk'
     | 'sl'
-    | 'es'
-    | 'es-ar'
-    | 'es-bo'
-    | 'es-cl'
-    | 'es-co'
-    | 'es-cr'
-    | 'es-do'
-    | 'es-ec'
-    | 'es-sv'
-    | 'es-gt'
-    | 'es-hn'
-    | 'es-mx'
-    | 'es-ni'
-    | 'es-pa'
-    | 'es-py'
-    | 'es-pe'
-    | 'es-pr'
-    | 'es-es'
-    | 'es-uy'
-    | 'es-ve'
+    | 'sq'
+    | 'sr'
     | 'sv'
     | 'sv-fi'
     | 'sv-se'
     | 'tr'
     | 'uk'
-    | 'ne'
+    | 'zh-CN'
+    | 'zh-HK'
+    | 'zh-TW'
     | 'other';
 
 // namespace
@@ -346,6 +347,9 @@ interface RouteItem {
 
         /** Set to `true` if the feed supports Sci-Hub */
         supportScihub?: boolean;
+
+        /** Set to `true` if this feed is not safe for work */
+        nsfw?: boolean;
     };
 
     /**
@@ -359,13 +363,11 @@ interface RouteItem {
     view?: ViewType;
 }
 
-interface Route extends RouteItem {
+export interface Route extends RouteItem {
     ja?: RouteItem;
     zh?: RouteItem;
     'zh-TW'?: RouteItem;
 }
-
-export type { Route };
 
 // radar
 export type RadarItem = {
@@ -412,3 +414,50 @@ export type RadarDomain = {
 } & {
     [subdomain: string]: RadarItem[];
 };
+
+export interface APIRoute {
+    /**
+     * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
+     */
+    path: string;
+
+    /**
+     * The GitHub handle of the people responsible for maintaining this route
+     */
+    maintainers: string[];
+
+    /**
+     * The handler function of the route
+     */
+    handler: (ctx: Context) =>
+        | Promise<{
+              code: number;
+              message?: string;
+              data?: any;
+          }>
+        | {
+              code: number;
+              message?: string;
+              data?: any;
+          };
+
+    /**
+     * The description of the route parameters
+     */
+    parameters?: Record<
+        string,
+        {
+            description: string;
+            default?: string;
+            options?: {
+                value: string;
+                label: string;
+            }[];
+        }
+    >;
+
+    /**
+     * Hints and additional explanations for users using this route, it will be appended after the route component, supports markdown
+     */
+    description?: string;
+}

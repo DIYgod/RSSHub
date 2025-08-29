@@ -7,7 +7,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/monthly-games',
-    categories: ['game', 'popular'],
+    categories: ['game'],
     view: ViewType.Notifications,
     example: '/ps/monthly-games',
     parameters: {},

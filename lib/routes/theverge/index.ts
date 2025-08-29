@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/:hub?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/theverge',
     parameters: { hub: 'Hub, see below, All Posts by default' },
     features: {

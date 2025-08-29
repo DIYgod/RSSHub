@@ -39,7 +39,7 @@ async function handler(ctx) {
     const route = category === '' ? '' : `/${category}${subCategory === '' ? '' : `/${subCategory}`}`;
 
     const rootUrl = `https://${type === '' ? 'www' : 'list'}.oilchem.net`;
-    const currentUrl = `${rootUrl}${type === '' ? '/1/' : (type === 'list' ? route : `/${routes[`/${type}${route}`]}`)}`;
+    const currentUrl = `${rootUrl}${type === '' ? '/1/' : type === 'list' ? route : `/${routes[`/${type}${route}`]}`}`;
 
     const response = await got({
         method: 'get',

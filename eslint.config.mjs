@@ -146,7 +146,7 @@ unicorn.configs.recommended,
         'unicorn/no-hex-escape': 'warn',
         'unicorn/no-null': 'off',
         'unicorn/no-object-as-default-parameter': 'warn',
-        'unicorn/no-nested-ternary': 'warn',
+        'unicorn/no-nested-ternary': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-useless-switch-case': 'off',
 
@@ -225,12 +225,7 @@ unicorn.configs.recommended,
 
         // https://github.com/eslint-community/eslint-plugin-n
         // node specific rules
-        'n/no-extraneous-require': ['error', {
-            allowModules: [
-                'puppeteer-extra-plugin-user-preferences',
-                'puppeteer-extra-plugin-user-data-dir',
-            ],
-        }],
+        'n/no-extraneous-require': 'error',
 
         'n/no-deprecated-api': 'warn',
         'n/no-missing-import': 'off',
@@ -251,7 +246,7 @@ unicorn.configs.recommended,
         'yml/no-empty-mapping-value': 'off',
     },
 }, {
-        files: ['.puppeteerrc.cjs', 'api/vercel.ts'],
+        files: ['.puppeteerrc.cjs'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
         },

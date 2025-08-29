@@ -114,4 +114,12 @@ describe('template', () => {
         expect(response.status).toBe(301);
         expect(response.headers.get('location')).toBe('/test/1');
     });
+
+    it(`api`, async () => {
+        const response = await app.request('/api/test');
+        expect(response.status).toBe(200);
+        expect(await response.json()).toEqual({
+            code: 0,
+        });
+    });
 });

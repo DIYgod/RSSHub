@@ -43,7 +43,7 @@ async function handler(ctx) {
 
             return {
                 title,
-                videoLink,
+                link: videoLink,
                 description: `<img src="${imageSrc}">`,
             };
         });
@@ -79,7 +79,9 @@ export const route: Route = {
 | \`sort\`            | 搜索结果排序，默认 \`最新上市\`   | \`最新上市\` / \`最新上傳\` / \`本日排行\` / \`本週排行\` / \`本月排行\` / \`觀看次數\` / \`讚好比例\` / \`他們在看\` |
 | \`year\`, \`month\` | 筛选发布时间，默认为 \`全部时间\` | 例如：\`year=2025&month=5\`                                                                                           |
 
-**Tips**: 如果你不确定标签或类型的具体名字，可以直接去原网址选好筛选条件后，把网址中的参数复制过来使用。例如： \`https://hanime1.me/search?query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`，\`/search?\`后面的部分就是参数了,最后得到类似这样的路由 \`https://rsshub.app/hanime1/search/query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`
+::: tip
+如果你不确定标签或类型的具体名字，可以直接去原网址选好筛选条件后，把网址中的参数复制过来使用。例如： \`https://hanime1.me/search?query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`，\`/search?\`后面的部分就是参数了,最后得到**类似**这样的路由 \`https://rsshub.app/hanime1/search/query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`
+:::
 `,
         },
     },

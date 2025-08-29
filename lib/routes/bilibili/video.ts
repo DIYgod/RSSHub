@@ -1,12 +1,14 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
+import logger from '@/utils/logger';
+import type { Context } from 'hono';
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
-import logger from '@/utils/logger';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/user/video/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
@@ -29,7 +31,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const uid = ctx.req.param('uid');
     const embed = !ctx.req.param('embed');
     const cookie = await cache.getCookie();
@@ -37,7 +39,6 @@ async function handler(ctx) {
     const dmImgList = utils.getDmImgList();
     const dmImgInter = utils.getDmImgInter();
     const renderData = await cache.getRenderData(uid);
-    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     const params = utils.addWbiVerifyInfo(
         utils.addRenderData(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), renderData),
@@ -55,32 +56,42 @@ async function handler(ctx) {
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
     }
 
+    const usernameAndFace = await cache.getUsernameAndFaceFromUID(uid);
+    const name = usernameAndFace[0] || data.data.list.vlist[0]?.author;
+    const face = usernameAndFace[1];
+
     return {
         title: `${name} 的 bilibili 空间`,
         link: `https://space.bilibili.com/${uid}`,
         description: `${name} 的 bilibili 空间`,
-        image: face,
-        logo: face,
-        icon: face,
+        image: face ?? undefined,
+        logo: face ?? undefined,
+        icon: face ?? undefined,
         item:
             data.data &&
             data.data.list &&
             data.data.list.vlist &&
-            data.data.list.vlist.map((item) => ({
-                title: item.title,
-                description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
-                pubDate: new Date(item.created * 1000).toUTCString(),
-                link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-                author: name,
-                comments: item.comment,
-                attachments: item.bvid
-                    ? [
-                          {
-                              url: getVideoUrl(item.bvid),
-                              mime_type: 'text/html',
-                          },
-                      ]
-                    : undefined,
-            })),
+            (await Promise.all(
+                data.data.list.vlist.map(async (item) => {
+                    const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                    return {
+                        title: item.title,
+                        description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
+                        pubDate: new Date(item.created * 1000).toUTCString(),
+                        link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
+                        author: name,
+                        comments: item.comment,
+                        attachments: item.bvid
+                            ? [
+                                  {
+                                      url: getVideoUrl(item.bvid),
+                                      mime_type: 'text/html',
+                                  },
+                                  ...subtitles,
+                              ]
+                            : undefined,
+                    };
+                })
+            )),
     };
 }

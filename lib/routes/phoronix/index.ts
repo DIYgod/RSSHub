@@ -114,7 +114,7 @@ const tryFetch = async (category, topic) => {
 
 export const route: Route = {
     path: '/:category?/:topic?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/phoronix/linux/KDE',
     parameters: {
         category: 'Category',

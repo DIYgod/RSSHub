@@ -69,7 +69,7 @@ export async function handler(ctx) {
                 ? ''
                 : firstResponse
                       .match(/'([\w./=?]+)'/g)
-                      .reverse()
+                      .toReversed()
                       .join('')
                       .replaceAll("'", ''),
             rootUrl
