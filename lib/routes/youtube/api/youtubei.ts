@@ -74,7 +74,7 @@ export const getDataByChannelId = async ({ channelId, embed }: { channelId: stri
                 .filter((video) => 'video_id' in video)
                 .map(async (video) => {
                     const srt = await getSubtitlesByVideoId(video.video_id);
-                    const dataUrl = `data:text/plain;charset=utf-8,${encodeURIComponent(srt)}`;
+                    const dataUrl = `data:text/plain;charset=utf-8,${srt}`;
 
                     const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : 'thumbnails' in video ? video.thumbnails?.[0]?.url : undefined;
 
