@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date'; // 日期解析工具，将字�
 export const route: Route = {
     path: '/mem/gk/zfxxgkpt/fdzdgknr', // 路由路径
     categories: ['government'], // 分类标签
-    example: 'https://rsshub.app/gov/mem/gk/zfxxgkpt/fdzdgknr', // 使用用例
+    example: '/gov/mem/gk/zfxxgkpt/fdzdgknr', // 使用用例
     parameters: {}, // 参数说明
     features: {
         // 功能特性配置
