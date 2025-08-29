@@ -71,6 +71,14 @@ const renderBlock = (b) => {
             return b.children.map((c) => renderBlock(c)).join('');
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        case 'ImageSliderBlockType':
+            return `<div>
+            ${b.images
+                .map((img) => `<figure>
+                    <img src="${img.image.originalUrl}" alt="${img.alt}">
+                    <figcaption>${img.caption.html}</figcaption>
+                </figure>`)
+                .join('')}</div>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
