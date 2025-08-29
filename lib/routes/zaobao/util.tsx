@@ -1,8 +1,7 @@
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 import { renderToString } from 'hono/jsx/dom/server';
 import { base32 } from 'rfc4648';
 import Zaobao from './zaobao';
@@ -40,39 +39,7 @@ export const parseList = async (
     const resultList = await Promise.all(
         data.toArray().map((item) => {
             const $item = $(item);
-            // addBack: for HK version
-            let link = $item.attr('href');
-
-            if (link[0] !== '/') {
-                // console.log('enter non-relative link');
-                // https://www.zaobao.com/interactive-graphics
-                const title = $item.find('a').text();
-                let dateNodes = $item.find('.meta-published-date');
-                if (dateNodes.length === 0) {
-                    dateNodes = $item.find('.datestamp');
-                }
-                let dateString;
-                let pubDate;
-                if (dateNodes.length !== 0) {
-                    dateString = dateNodes.text().trim();
-                    const dateParts = dateString.split('/');
-                    dateParts.reverse();
-                    dateString = dateParts.join('-');
-                    pubDate = parseRelativeDate(dateString);
-                    // if conversion was no success, pubDate === dateString
-                    // zaobao seems always UTC+8
-                    pubDate = pubDate === dateString ? undefined : timezone(pubDate, +8);
-                }
-
-                return {
-                    title,
-                    description: title,
-                    pubDate,
-                    link,
-                };
-            }
-
-            link = baseUrl + link;
+            const link = baseUrl + $item.attr('href');
 
             return cache.tryGet(link, async () => {
                 const article = await ofetch(link);
