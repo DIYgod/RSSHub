@@ -46,41 +46,33 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
-    if (!b || !b.__typename) {
-        return '';
-    }
-
-    try {
-        switch (b.__typename) {
-            case 'CoreEmbedBlockType':
-                return b.embedHtml;
-            case 'CoreGalleryBlockType':
-                return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
-            case 'CoreHeadingBlockType':
-                return `<h${b.level}>${b.contents.html}</h${b.level}>`;
-            case 'CoreHTMLBlockType':
-                return b.markup;
-            case 'CoreImageBlockType':
-                return `<figure><img src="${b.thumbnail.url.split('?')[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
-            case 'CoreListBlockType':
-                return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
-            case 'CoreParagraphBlockType':
-                return (b.tempContents ?? []).map((c) => c?.html ?? '').join('');
-            case 'CorePullquoteBlockType':
-                return `<blockquote>${b.contents.html}</blockquote>`;
-            case 'CoreQuoteBlockType':
-                return `<blockquote>${b.children.map((child) => renderBlock(child)).join('')}</blockquote>`;
-            case 'CoreSeparatorBlockType':
-                return '<hr>';
-            case 'HighlightBlockType':
-                return b.children.map((c) => renderBlock(c)).join('');
-            case 'MethodologyAccordionBlockType':
-                return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
-            default:
-                throw new Error(`Unsupported block type: ${b.__typename}`);
-        }
-    } catch {
-        return '';
+    switch (b.__typename) {
+        case 'CoreEmbedBlockType':
+            return b.embedHtml;
+        case 'CoreGalleryBlockType':
+            return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
+        case 'CoreHeadingBlockType':
+            return `<h${b.level}>${b.contents.html}</h${b.level}>`;
+        case 'CoreHTMLBlockType':
+            return b.markup;
+        case 'CoreImageBlockType':
+            return `<figure><img src="${b.thumbnail.url.split('?')[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
+        case 'CoreListBlockType':
+            return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
+        case 'CoreParagraphBlockType':
+            return (b.tempContents ?? []).map((c) => c?.html ?? '').join('');
+        case 'CorePullquoteBlockType':
+            return `<blockquote>${b.contents.html}</blockquote>`;
+        case 'CoreQuoteBlockType':
+            return `<blockquote>${b.children.map((child) => renderBlock(child)).join('')}</blockquote>`;
+        case 'CoreSeparatorBlockType':
+            return '<hr>';
+        case 'HighlightBlockType':
+            return b.children.map((c) => renderBlock(c)).join('');
+        case 'MethodologyAccordionBlockType':
+            return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        default:
+            throw new Error(`Unsupported block type: ${b.__typename}`);
     }
 };
 
