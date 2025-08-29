@@ -17,13 +17,11 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
             const link = element.find('a').first().attr('href');
             const fullLink = link ? (link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? link : `/${link}`}`) : '';
 
-            // Extract date and author
+            // Extract date and author with single regex
             const metaText = element.find('.text-sm.text-slate-500').text().trim();
-            const dateMatch = metaText.match(/(?:\w+\s*•\s*)?([A-Za-z]+\s+\d{1,2},?\s+\d{4})/);
-            const pubDate = dateMatch ? parseDate(dateMatch[1]) : undefined;
-
-            const authorMatch = metaText.match(/^([^•]+)•/);
-            const author = authorMatch ? authorMatch[1].trim() : 'Cline Team';
+            const metaMatch = metaText.match(/^([^•]+)\s*•\s*([A-Za-z]+\s+\d{1,2},?\s+\d{4})/);
+            const author = metaMatch ? metaMatch[1].trim() : 'Cline Team';
+            const pubDate = metaMatch ? parseDate(metaMatch[2]) : undefined;
 
             const summary = element.find('p.text-slate-600').text().trim();
             const imgSrc = element.find('img').attr('src') || '';
