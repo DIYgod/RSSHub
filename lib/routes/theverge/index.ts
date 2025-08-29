@@ -74,10 +74,12 @@ const renderBlock = (b) => {
         case 'ImageSliderBlockType':
             return `<div>
             ${b.images
-                .map((img) => `<figure>
+                .map(
+                    (img) => `<figure>
                     <img src="${img.image.originalUrl}" alt="${img.alt}">
                     <figcaption>${img.caption.html}</figcaption>
-                </figure>`)
+                </figure>`
+                )
                 .join('')}</div>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
