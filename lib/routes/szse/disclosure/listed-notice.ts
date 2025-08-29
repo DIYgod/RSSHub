@@ -10,7 +10,9 @@ import { type Context } from 'hono';
 function isValidDate(dateString: string): boolean {
     // 正则表达式检查格式：YYYY-MM-DD
     const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-    if (!regex.test(dateString)) {return false;}
+    if (!regex.test(dateString)) {
+        return false;
+    }
 
     // 解析日期并验证有效性（避免像 2025-02-30 这样的无效日期）
     const [year, month, day] = dateString.split('-').map(Number);
@@ -23,7 +25,7 @@ function isValidDate(dateString: string): boolean {
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
-    const query: string = ctx.req.param('quary') ?? '';
+    const query: string = ctx.req.param('query') ?? '';
     const queries: Record<string, string> = {
         stock: '',
         beginDate: '',
@@ -120,7 +122,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/disclosure/listed/notice/:quary?',
+    path: '/disclosure/listed/notice/:query?',
     name: '上市公司公告',
     url: 'www.szse.cn',
     maintainers: ['nczitzk'],
