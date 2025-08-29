@@ -13,7 +13,7 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
         .map((article) => {
             const element = $(article);
 
-            const title = element.find('h2, h3').text().trim();
+            const title = element.find('h2').text().trim();
             const link = element.find('a').first().attr('href');
             const fullLink = link ? (link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? link : `/${link}`}`) : '';
 
