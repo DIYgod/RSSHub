@@ -11206,6 +11206,20 @@
       }
     ]
   },
+  "cline.bot": {
+    "_name": "cline",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog/archive",
+          "/blog"
+        ],
+        "target": "/cline/blog"
+      }
+    ]
+  },
   "cls.cn": {
     "_name": "财联社",
     ".": [
