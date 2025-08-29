@@ -1,18 +1,14 @@
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { renderToString } from 'hono/jsx/dom/server';
 import { base32 } from 'rfc4648';
 import Zaobao from './zaobao';
 
 const baseUrl = 'https://www.zaobao.com';
-const got_ins = got.extend({
-    headers: {
-        Referer: baseUrl,
-    },
-});
+export const logo = 'https://dss0.zbstatic5.com/web2/_astro/apple-touch-icon-57x57.zXViMIi5.png';
 
 /**
  * 通用解析页面类似 https://www.zaobao.com/realtime/china 的网站
@@ -20,7 +16,7 @@ const got_ins = got.extend({
  * @param {string} sectionUrl 形如 /realtime/china 的字符串
  * @returns 新闻标题以及新闻列表
  */
-const parseList = async (
+export const parseList = async (
     sectionUrl: string
 ): Promise<{
     title: string;
@@ -31,109 +27,105 @@ const parseList = async (
         link: string;
     }[];
 }> => {
-    const response = await got_ins.get(baseUrl + sectionUrl);
-    const $ = load(response.data);
+    const response = await ofetch(baseUrl + sectionUrl);
+    const $ = load(response);
     let data = $('.card-listing .card .content-header a');
     if (data.length === 0) {
         // for HK version
-        data = $('[data-testid="article-list"] article a.article-link');
+        data = $('[data-testid="article-list"] article div div a.article-link');
     }
 
     const title = $('meta[property="og:title"]').attr('content');
 
     const resultList = await Promise.all(
-        data
-            .toArray()
-            .filter((item, index, self) => index === self.findIndex((i) => i.attribs?.href === item.attribs?.href))
-            .map((item) => {
-                const $item = $(item);
-                // addBack: for HK version
-                let link = $item.attr('href');
+        data.toArray().map((item) => {
+            const $item = $(item);
+            // addBack: for HK version
+            let link = $item.attr('href');
 
-                if (link[0] !== '/') {
-                    // https://www.zaobao.com/interactive-graphics
-                    const title = $item.find('a').text();
-                    let dateNodes = $item.find('.meta-published-date');
-                    if (dateNodes.length === 0) {
-                        dateNodes = $item.find('.datestamp');
-                    }
-                    let dateString;
-                    let pubDate;
-                    if (dateNodes.length !== 0) {
-                        dateString = dateNodes.text().trim();
-                        const dateParts = dateString.split('/');
-                        dateParts.reverse();
-                        dateString = dateParts.join('-');
-                        pubDate = parseRelativeDate(dateString);
-                        // if conversion was no success, pubDate === dateString
-                        // zaobao seems always UTC+8
-                        pubDate = pubDate === dateString ? undefined : timezone(pubDate, +8);
-                    }
-
-                    return {
-                        title,
-                        description: title,
-                        pubDate,
-                        link,
-                    };
+            if (link[0] !== '/') {
+                // console.log('enter non-relative link');
+                // https://www.zaobao.com/interactive-graphics
+                const title = $item.find('a').text();
+                let dateNodes = $item.find('.meta-published-date');
+                if (dateNodes.length === 0) {
+                    dateNodes = $item.find('.datestamp');
+                }
+                let dateString;
+                let pubDate;
+                if (dateNodes.length !== 0) {
+                    dateString = dateNodes.text().trim();
+                    const dateParts = dateString.split('/');
+                    dateParts.reverse();
+                    dateString = dateParts.join('-');
+                    pubDate = parseRelativeDate(dateString);
+                    // if conversion was no success, pubDate === dateString
+                    // zaobao seems always UTC+8
+                    pubDate = pubDate === dateString ? undefined : timezone(pubDate, +8);
                 }
 
-                link = baseUrl + link;
+                return {
+                    title,
+                    description: title,
+                    pubDate,
+                    link,
+                };
+            }
 
-                return cache.tryGet(link, async () => {
-                    const article = await got_ins.get(link);
-                    const $1 = load(article.data);
+            link = baseUrl + link;
 
-                    let title, time;
-                    if ($1('#seo-article-page').text() === '') {
-                        // HK
-                        title = $1('h1.article-title').text();
-                        const jsonText = $1("head script[type='application/ld+json']")
-                            .eq(0)
-                            .text()
-                            .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
-                        time = new Date(JSON.parse(jsonText)?.datePublished);
-                    } else {
-                        // SG
-                        const jsonText = $1('#seo-article-page')
-                            .text()
-                            .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
-                        const json = JSON.parse(jsonText);
-                        title = json['@graph'][0]?.headline;
-                        time = new Date(json['@graph'][0]?.datePublished);
-                    }
+            return cache.tryGet(link, async () => {
+                const article = await ofetch(link);
+                const $1 = load(article);
 
-                    $1('.overlay-microtransaction').remove();
-                    $1('#video-freemium-player').remove();
-                    $1('script').remove();
-                    $1('.bff-google-ad').remove();
-                    $1('.bff-recommend-article').remove();
+                let title, pubDate, category;
+                if ($1('#seo-article-page').text() === '') {
+                    // HK
+                    title = $1('h1.article-title').text();
+                    const jsonText = $1('head script[type="application/ld+json"]')
+                        .text()
+                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    const ldJson = JSON.parse(jsonText);
+                    pubDate = parseDate(ldJson.datePublished);
+                    category = ldJson.keywords.split(',');
+                } else {
+                    // SG
+                    const jsonText = $1('#seo-article-page')
+                        .text()
+                        .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                    const json = JSON.parse(jsonText);
+                    title = json['@graph'][0]?.headline;
+                    pubDate = parseDate(json['@graph'][0]?.datePublished);
+                }
 
-                    let articleBodyNode = $1('.articleBody');
-                    if (articleBodyNode.length === 0) {
-                        // for HK version
-                        $1('.read-on-app-cover').remove();
-                        $1('astro-island').remove();
-                        $1('.further-reading').remove();
-                        articleBodyNode = $1('.article-body');
-                    }
+                // $1('.overlay-microtransaction').remove();
+                // $1('#video-freemium-player').remove();
+                // $1('.bff-google-ad, .bff-recommend-article').remove();
+                $1('img[alt="expend icon"]').remove();
 
-                    const articleBody = articleBodyNode.html();
-                    const imageDataArray = processImageData($1);
+                let articleBodyNode = $1('.articleBody');
+                if (articleBodyNode.length === 0) {
+                    // for HK version
+                    $1('astro-island, .further-reading, .read-on-app-cover').remove();
+                    articleBodyNode = $1('.article-body');
+                }
 
-                    // use JSX as template
-                    const dom = <Zaobao imageDataArray={imageDataArray} articleBody={articleBody}></Zaobao>;
-                    const description = renderToString(dom);
+                const articleBody = articleBodyNode.html();
+                const imageDataArray = processImageData($1);
 
-                    return {
-                        // <- for HK version  -> for SG version
-                        title,
-                        description,
-                        pubDate: time,
-                        link,
-                    };
-                });
-            })
+                // use JSX as template
+                const dom = <Zaobao imageDataArray={imageDataArray} articleBody={articleBody}></Zaobao>;
+                const description = renderToString(dom);
+
+                return {
+                    title,
+                    description,
+                    pubDate,
+                    link,
+                    category,
+                };
+            });
+        })
     );
     return {
         title,
@@ -141,7 +133,7 @@ const parseList = async (
     };
 };
 
-const orderContent = (parent) => {
+export const orderContent = (parent) => {
     for (const [i, e] of parent
         .children()
         .toArray()
@@ -181,33 +173,44 @@ export interface ImageData {
 const processImageData = ($1) => {
     const imageDataArray: ImageData[] = [];
 
-    const imageSelectors = [
-        '.inline-figure-img', // for SG version
-        '.body-content .loadme picture img', // Unused?
-        '.inline-figure-gallery', // for SG version
-        '#carousel-article', // for HK version, HK version of multi images use same selector as single image, so g is needed for all pages
-    ];
+    // const imageSelectors = [
+    //     '.inline-figure-img', // for SG version
+    //     '.body-content .loadme picture img', // Unused?
+    //     '.inline-figure-gallery', // for SG version
+    //     '#carousel-article', // for HK version, HK version of multi images use same selector as single image, so g is needed for all pages
+    // ];
 
-    for (const selector of imageSelectors) {
-        if ($1(selector).length) {
-            let html = $1(selector === '#carousel-article' ? '#carousel-article .carousel-inner' : selector).html();
+    // for (const selector of imageSelectors) {
+    //     if ($1(selector).length) {
+    //         let html = $1(selector === '#carousel-article' ? '#carousel-article .carousel-inner' : selector).html();
 
-            if (html) {
-                html = html.replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public').replaceAll('s3/files', 's3fs-public');
+    //         if (html) {
+    //             html = html.replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public').replaceAll('s3/files', 's3fs-public');
 
-                imageDataArray.push({
-                    type: selector === '.body-content .loadme picture img' ? 'data' : 'normalHTML',
-                    html,
-                    ...(selector === '.body-content .loadme picture img' && {
-                        src: $1('.body-content .loadme picture source').attr('data-srcset'),
-                        title: $1(selector).attr('title'),
-                    }),
-                });
-            }
-        }
+    //             imageDataArray.push({
+    //                 type: selector === '.body-content .loadme picture img' ? 'data' : 'normalHTML',
+    //                 html,
+    //                 ...(selector === '.body-content .loadme picture img' && {
+    //                     src: $1('.body-content .loadme picture source').attr('data-srcset'),
+    //                     title: $1(selector).attr('title'),
+    //                 }),
+    //             });
+    //         }
+    //     }
+    // }
+
+    const img = $1('[data-testid="article-banner"] img');
+    if (img.length) {
+        imageDataArray.push({
+            type: 'data',
+            html: img.prop('outerHTML'),
+            src: img
+                .attr('src')
+                .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
+                .replaceAll('s3/files', 's3fs-public'),
+            title: img.attr('title'),
+        });
     }
 
     return imageDataArray;
 };
-
-export { parseList, orderContent };
