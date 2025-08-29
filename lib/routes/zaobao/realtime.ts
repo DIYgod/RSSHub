@@ -48,7 +48,7 @@ async function handler(ctx) {
             break;
     }
 
-    const { resultList } = await parseList(ctx, sectionLink);
+    const { resultList } = await parseList(sectionLink);
 
     return {
         title: `《联合早报》-${name}-即时`,

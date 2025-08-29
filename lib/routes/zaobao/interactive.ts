@@ -11,10 +11,10 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const sectionLink = '/interactive-graphics';
 
-    const { resultList } = await parseList(ctx, sectionLink);
+    const { resultList } = await parseList(sectionLink);
 
     return {
         title: '《联合早报》互动新闻',

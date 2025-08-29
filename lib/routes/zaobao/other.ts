@@ -18,7 +18,7 @@ async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'china';
     const sectionLink = `/${type}/${section}`;
 
-    const { title, resultList } = await parseList(ctx, sectionLink);
+    const { title, resultList } = await parseList(sectionLink);
 
     return {
         title: `《联合早报》${title}`,

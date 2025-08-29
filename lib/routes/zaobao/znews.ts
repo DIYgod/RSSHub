@@ -60,7 +60,7 @@ async function handler(ctx) {
             sectionLink = '/news/china';
     }
 
-    const { resultList } = await parseList(ctx, sectionLink);
+    const { resultList } = await parseList(sectionLink);
 
     return {
         title: `《联合早报》-${info}-新闻`,

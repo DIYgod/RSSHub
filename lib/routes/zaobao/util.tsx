@@ -17,12 +17,10 @@ const got_ins = got.extend({
 /**
  * 通用解析页面类似 https://www.zaobao.com/realtime/china 的网站
  *
- * @param {*} ctx RSSHub 的 ctx 参数，用来设置缓存
  * @param {string} sectionUrl 形如 /realtime/china 的字符串
  * @returns 新闻标题以及新闻列表
  */
 const parseList = async (
-    ctx,
     sectionUrl: string
 ): Promise<{
     title: string;
