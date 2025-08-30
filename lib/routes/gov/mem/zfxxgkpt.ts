@@ -26,14 +26,14 @@ export const route: Route = {
     name: '应急管理部法定主动公开内容',
     maintainers: ['skeaven'],
     handler,
-    description: `无参数`,
+    description: `应急管理部法定主动公开内容,包含通知、公告、督办、政策解读等，可供应急相关工作人员及时获取政策信息`,
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = 'https://www.mem.gov.cn';
-    const currentUrl = new URL(`gk/zfxxgkpt/fdzdgknr`, rootUrl).href;
+    const currentUrl = new URL(`gk/zfxxgkpt/fdzdgknr/`, rootUrl).href;
 
     const { data: fdzdgknrResponse } = await got(currentUrl);
     const fdzdgknr$ = load(fdzdgknrResponse);
@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     let items = $('div.scy_main_V2_list')
         .find('tr')
-        .slice(0, limit)
+        .slice(1, limit)
         .toArray()
         .map((item) => {
             const aLabel = $(item).find('a[href]');
@@ -70,23 +70,19 @@ async function handler(ctx) {
                     return item;
                 }
 
-                try {
-                    const { data: detailResponse } = await got(item.link);
-                    const content = load(detailResponse);
+                const { data: detailResponse } = await got(item.link);
+                const content = load(detailResponse);
 
-                    const description = content('#content').html();
-                    const author = content('td.td_lable:contains("所属机构")').next('td').text().trim();
-                    const category = content('td.td_lable:contains("主题分类")').next('td').text().trim();
+                const description = content('#content').html();
+                const author = content('td.td_lable:contains("所属机构")').next('td').text().trim();
+                const category = content('td.td_lable:contains("主题分类")').next('td').text().trim();
 
-                    return {
-                        ...item,
-                        description,
-                        author: author || '未知机构',
-                        category: category || '未知分类',
-                    };
-                } catch {
-                    return item;
-                }
+                return {
+                    ...item,
+                    description,
+                    author: author || '未知机构',
+                    category: category || '未知分类',
+                };
             })
         )
     );
