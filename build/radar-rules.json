@@ -17609,6 +17609,14 @@
           "/gk/sgcc/:category"
         ],
         "target": "/gov/mem/gk/sgcc/:category"
+      },
+      {
+        "title": "法定主动公开内容",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/gk/zfxxgkpt/fdzdgknr"
+        ],
+        "target": "/gov/mem/gk/zfxxgkpt/fdzdgknr"
       }
     ]
   },
