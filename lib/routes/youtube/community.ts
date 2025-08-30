@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -12,7 +12,7 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/youtube/community/@JFlaMusic',
     parameters: { handle: 'YouTube handles or channel id' },
-    name: 'Community',
+    name: 'Community Posts',
     maintainers: ['TonyRL'],
     handler,
 };
@@ -25,7 +25,7 @@ async function handler(ctx) {
         urlPath = `channel/${handle}`;
     }
 
-    const { data: response } = await got(`https://www.youtube.com/${urlPath}/community`);
+    const response = await ofetch(`https://www.youtube.com/${urlPath}/posts`);
     const $ = load(response);
     const ytInitialData = JSON.parse(
         $('script')
@@ -62,7 +62,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `${username} - Community - YouTube`,
+        title: `${username} - Community Posts- YouTube`,
         link: channelMetadata.channelUrl,
         description: channelMetadata.description,
         item: items,
