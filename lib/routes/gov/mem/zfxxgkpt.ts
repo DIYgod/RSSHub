@@ -23,7 +23,7 @@ export const route: Route = {
             target: '/mem/gk/zfxxgkpt/fdzdgknr',
         },
     ],
-    name: '应急管理部法定主动公开内容',
+    name: '法定主动公开内容',
     maintainers: ['skeaven'],
     handler,
     description: `应急管理部法定主动公开内容,包含通知、公告、督办、政策解读等，可供应急相关工作人员及时获取政策信息`,
