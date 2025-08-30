@@ -2540,6 +2540,9 @@
   "/europechinese/latest": [
     "emdoe"
   ],
+  "/eventbrite/:region/:eventType?/:includePromoted?": [
+    "elibroftw"
+  ],
   "/eventernote/actors/:name/:id": [
     "KTachibanaM"
   ],

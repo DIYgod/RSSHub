@@ -14322,6 +14322,32 @@
       }
     ]
   },
+  "eventbrite.com": {
+    "_name": "Eventbrite",
+    ".": [
+      {
+        "title": "Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/d/:region/:eventType"
+        ],
+        "target": "/eventbrite/:region/:eventType"
+      }
+    ]
+  },
+  "eventbrite.ca": {
+    "_name": "Eventbrite",
+    ".": [
+      {
+        "title": "Events",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/d/:region/:eventType"
+        ],
+        "target": "/eventbrite/:region/:eventType"
+      }
+    ]
+  },
   "eventernote.com": {
     "_name": "Eventernote",
     "www": [
