@@ -60,7 +60,7 @@ const renderBlock = (b) => {
         case 'CoreListBlockType':
             return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
         case 'CoreParagraphBlockType':
-            return b.contents.html;
+            return (b.tempContents ?? []).map((c) => c?.html ?? '').join('');
         case 'CorePullquoteBlockType':
             return `<blockquote>${b.contents.html}</blockquote>`;
         case 'CoreQuoteBlockType':
@@ -71,13 +71,23 @@ const renderBlock = (b) => {
             return b.children.map((c) => renderBlock(c)).join('');
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        case 'ImageSliderBlockType':
+            return `<div>
+            ${b.images
+                .map(
+                    (img) => `<figure>
+                    <img src="${img.image.originalUrl}" alt="${img.alt}">
+                    <figcaption>${img.caption.html}</figcaption>
+                </figure>`
+                )
+                .join('')}</div>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
 };
 
 async function handler(ctx) {
-    const link = ctx.req.param('hub') ? `https://www.theverge.com/${ctx.req.param('hub')}/rss/index.xml` : 'https://www.theverge.com/rss/index.xml';
+    const link = ctx.req.param('hub') ? `https://www.theverge.com/rss/${ctx.req.param('hub')}/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
     const feed = await parser.parseURL(link);
 
