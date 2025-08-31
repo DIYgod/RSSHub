@@ -29312,6 +29312,14 @@
     "_name": "Niconico",
     "www": [
       {
+        "title": "Mylist",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/user/:user/mylist/:id"
+        ],
+        "target": "/nicovideo/mylist/:id"
+      },
+      {
         "title": "User Videos",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
