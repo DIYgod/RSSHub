@@ -1,7 +1,7 @@
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import pMap from 'p-map';
 
 export const route: Route = {
@@ -20,18 +20,20 @@ export const route: Route = {
     url: 'www.anthropic.com/news',
 };
 
-async function handler() {
+async function handler(ctx) {
     const link = 'https://www.anthropic.com/news';
     const response = await ofetch(link);
     const $ = load(response);
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
-    const list = $('.contentFadeUp a')
+    const list: DataItem[] = $('.contentFadeUp a')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const title = e.find('h3[class^="PostCard_post-heading__"]').text().trim();
-            const href = e.attr('href');
-            const pubDate = e.find('div[class^="PostList_post-date__"]').text().trim();
+        .slice(0, limit)
+        .map((el) => {
+            const $el = $(el);
+            const title = $el.find('h3').text().trim();
+            const href = $el.attr('href') ?? '';
+            const pubDate = $el.find('p.detail-m.agate').text().trim() || $el.find('div[class^="PostList_post-date__"]').text().trim(); // legacy selector used roughly before Jan 2025
             const fullLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
                 title,
@@ -43,8 +45,8 @@ async function handler() {
     const out = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 $('div[class^="PostDetail_b-social-share"]').remove();
@@ -61,7 +63,7 @@ async function handler() {
                     }
                 });
 
-                item.description = content.html();
+                item.description = content.html() ?? undefined;
 
                 return item;
             }),
