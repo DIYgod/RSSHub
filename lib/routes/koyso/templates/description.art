@@ -11,7 +11,3 @@
     {{ /if }}
   {{ /each }}
 {{ /if }}
-
-{{ if description }}
-  {{@ description }}
-{{ /if }}
