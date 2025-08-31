@@ -20,14 +20,15 @@ export const route: Route = {
     url: 'www.anthropic.com/news',
 };
 
-async function handler() {
+async function handler(ctx) {
     const link = 'https://www.anthropic.com/news';
     const response = await ofetch(link);
     const $ = load(response);
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const list: DataItem[] = $('.contentFadeUp a')
         .toArray()
-        .slice(0, 20)
+        .slice(0, limit)
         .map((el) => {
             const $el = $(el);
             const title = $el.find('h3').text().trim();
