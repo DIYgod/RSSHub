@@ -274,7 +274,7 @@ const getVideoSubtitle = async (
 const getVideoSubtitleAttachment = async (bvid: string) => {
     const subtitles = await getVideoSubtitle(bvid);
     return subtitles.map((subtitle) => ({
-        url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
+        url: `data:text/plain;charset=utf-8,${subtitle.content}`,
         mime_type: 'text/srt',
         title: `字幕 - ${subtitle.lan_doc}`,
     }));

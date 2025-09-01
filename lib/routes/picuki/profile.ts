@@ -6,8 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-import { puppeteerGet } from './utils';
-import puppeteer from '@/utils/puppeteer';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import NotFoundError from '@/errors/types/not-found';
 
 export const route: Route = {
@@ -87,9 +86,18 @@ async function handler(ctx) {
             });
         } catch (error) {
             if (error.status === 403) {
-                const browser = await puppeteer();
-                response = await puppeteerGet(profileUrl, browser);
-                await browser.close();
+                const { page, destory } = await getPuppeteerPage(profileUrl, {
+                    onBeforeLoad: async (page) => {
+                        const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+                        await page.setRequestInterception(true);
+                        page.on('request', (request) => {
+                            expectResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
+                        });
+                    },
+                });
+                await page.waitForSelector('.content');
+                response = await page.content();
+                await destory();
             } else {
                 throw new NotFoundError(error.message);
             }
