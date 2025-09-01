@@ -52,6 +52,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                                 const Tag = `media:${key}`;
                                 return <Tag {...value} />;
                             })}
+                        {item.reposts_count !== undefined && <reposts_count>{item.reposts_count}</reposts_count>}
+                        {item.comments_count !== undefined && <comments_count>{item.comments_count}</comments_count>}
+                        {item.attitudes_count !== undefined && <attitudes_count>{item.attitudes_count}</attitudes_count>}
                     </item>
                 ))}
             </channel>

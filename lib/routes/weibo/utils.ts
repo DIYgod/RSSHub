@@ -32,6 +32,7 @@ const weiboUtils = {
             showRetweetTextInTitle: fallback(params.showRetweetTextInTitle, queryToBoolean(routeParams.showRetweetTextInTitle), true),
             addLinkForPics: fallback(params.addLinkForPics, queryToBoolean(routeParams.addLinkForPics), false),
             showTimestampInDescription: fallback(params.showTimestampInDescription, queryToBoolean(routeParams.showTimestampInDescription), false),
+            showStats: fallback(params.showStats, queryToBoolean(routeParams.showStats), true),
 
             widthOfPics: fallback(params.widthOfPics, queryToInteger(routeParams.widthOfPics), -1),
             heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.heightOfPics), -1),
@@ -54,6 +55,7 @@ const weiboUtils = {
             showRetweetTextInTitle,
             addLinkForPics,
             showTimestampInDescription,
+            showStats,
 
             widthOfPics,
             heightOfPics,
@@ -165,7 +167,7 @@ const weiboUtils = {
                     html += ` height="${item.large.geo.height || heightOfPics}"`;
                     style += `height: ${item.large.geo.height || heightOfPics}px;`;
                 }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
+                html += ` style="${style}" src="${item.large.url}">`;
 
                 if (addLinkForPics) {
                     html += '</a>';
@@ -174,6 +176,7 @@ const weiboUtils = {
                 htmlNewLineUnreplaced += '<img src="" />';
             }
         }
+
 
         // 处理转发的微博
         if (status.retweeted_status) {
@@ -193,6 +196,7 @@ const weiboUtils = {
             retweetedParams.showAuthorInDesc = true;
             retweetedParams.showAuthorAvatarInDesc = false;
             retweetedParams.showAtBeforeAuthor = true;
+            retweetedParams.showStats = false; // 转发的微博不显示统计信息
             retweeted += weiboUtils.formatExtended(ctx, status.retweeted_status, undefined, retweetedParams, picsPrefixes).description;
 
             html += retweeted;
@@ -247,7 +251,16 @@ const weiboUtils = {
         ];
         const pubDate = status.created_at;
 
-        return { description: html, title, link, guid, author, pubDate, category };
+        // Add Weibo statistics if showStats is enabled and this is not a retweeted status
+        const result = { description: html, title, link, guid, author, pubDate, category };
+
+        if (showStats) {
+            result.reposts_count = status.reposts_count || 0;
+            result.comments_count = status.comments_count || 0;
+            result.attitudes_count = status.attitudes_count || 0;
+        }
+
+        return result;
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;

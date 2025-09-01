@@ -75,6 +75,11 @@ export type DataItem = {
             content_html?: string;
         }[];
     };
+
+    // Weibo-specific statistics
+    reposts_count?: number;
+    comments_count?: number;
+    attitudes_count?: number;
 };
 
 export type Data = {
