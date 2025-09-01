@@ -31,7 +31,7 @@ jobs:
 
       - name: Find similar issues with AI (MCP)
         id: inference
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@v2
         with:
           prompt-file: ./.github/prompts/similar_issues.prompt.yml
           input: |
