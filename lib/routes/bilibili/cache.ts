@@ -6,6 +6,17 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+const subtitleLimiter = new RateLimiterMemory({
+    points: 5,
+    duration: 1,
+    execEvenly: true,
+});
+
+const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
+    maxQueueSize: 4800,
+});
 
 const getCookie = (disableConfig = false) => {
     if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
@@ -246,6 +257,7 @@ const getVideoSubtitle = async (
     const cid = await getCidFromId(undefined, 1, bvid);
     const cookie = await getCookie();
     return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        await subtitleLimiterQueue.removeTokens(1);
         const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
             headers: {
                 Referer: `https://www.bilibili.com/video/${bvid}`,
