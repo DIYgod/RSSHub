@@ -99,7 +99,7 @@ async function getUserFeeds(url: string, category: string) {
                 title: noteCard.displayTitle,
                 link: new URL(noteCard.noteId || id, url).toString(),
                 guid: noteCard.displayTitle,
-                description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
+                description: `<img src ="${noteCard.cover.infoList.pop().url} width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
             }))

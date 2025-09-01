@@ -126,26 +126,48 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: string[] = [];
+    const imgUrls: {
+        url: string;
+        width?: number;
+        height?: number;
+    }[] = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
     }
     // 动态图片
     if (major.opus?.pics?.length) {
-        imgUrls.push(...major.opus.pics.map((e) => e.url));
+        imgUrls.push(
+            ...major.opus.pics.map((e) => ({
+                url: e.url,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 专栏封面
     if (major.article?.covers?.length) {
-        imgUrls.push(...major.article.covers);
+        imgUrls.push(
+            ...major.article.covers.map((e) => ({
+                url: e,
+            }))
+        );
     }
     // 相簿
     if (major.draw?.items?.length) {
-        imgUrls.push(...major.draw.items.map((e) => e.src));
+        imgUrls.push(
+            ...major.draw.items.map((e) => ({
+                url: e.src,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 正在直播的动态
     if (major.live_rcmd?.content) {
-        imgUrls.push(JSON.parse(major.live_rcmd.content)?.live_play_info?.cover);
+        imgUrls.push({
+            url: JSON.parse(major.live_rcmd.content)?.live_play_info?.cover,
+        });
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
@@ -153,7 +175,7 @@ const getImgs = (data?: Modules) => {
     }
     return imgUrls
         .filter(Boolean)
-        .map((url) => `<img src="${url}">`)
+        .map((img) => `<img src="${img.url}" ${img.width ? `width="${img.width}"` : ''} ${img.height ? `height="${img.height}"` : ''}>`)
         .join('');
 };
 

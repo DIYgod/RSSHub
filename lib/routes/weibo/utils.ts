@@ -36,7 +36,7 @@ const weiboUtils = {
             widthOfPics: fallback(params.widthOfPics, queryToInteger(routeParams.widthOfPics), -1),
             heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.heightOfPics), -1),
             sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.sizeOfAuthorAvatar), 48),
-            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), true),
+            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
             showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
             preferMobileLink: fallback(params.preferMobileLink, queryToBoolean(routeParams.preferMobileLink), false),
         };
@@ -157,13 +157,13 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (widthOfPics >= 0) {
-                    html += ` width="${widthOfPics}"`;
-                    style += `width: ${widthOfPics}px;`;
+                if (item.large.geo.width || widthOfPics >= 0) {
+                    html += ` width="${item.large.geo.width || widthOfPics}"`;
+                    style += `width: ${item.large.geo.width || widthOfPics}px;`;
                 }
-                if (heightOfPics >= 0) {
-                    html += ` height="${heightOfPics}"`;
-                    style += `height: ${heightOfPics}px;`;
+                if (item.large.geo.height || heightOfPics >= 0) {
+                    html += ` height="${item.large.geo.height || heightOfPics}"`;
+                    style += `height: ${item.large.geo.height || heightOfPics}px;`;
                 }
                 html += ` style="${style}"` + ' src="' + item.large.url + '">';
 
