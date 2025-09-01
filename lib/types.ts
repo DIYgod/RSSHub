@@ -76,10 +76,12 @@ export type DataItem = {
         }[];
     };
 
-    // Weibo-specific statistics
-    reposts_count?: number;
-    comments_count?: number;
-    attitudes_count?: number;
+    // Weibo-specific statistics - nested structure
+    stats?: {
+        reposts_count?: number;
+        comments_count?: number;
+        attitudes_count?: number;
+    };
 };
 
 export type Data = {

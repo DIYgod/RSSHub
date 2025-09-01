@@ -254,9 +254,11 @@ const weiboUtils = {
         const result = { description: html, title, link, guid, author, pubDate, category };
 
         if (showStats) {
-            result.reposts_count = status.reposts_count || 0;
-            result.comments_count = status.comments_count || 0;
-            result.attitudes_count = status.attitudes_count || 0;
+            result.stats = {
+                reposts_count: status.reposts_count || 0,
+                comments_count: status.comments_count || 0,
+                attitudes_count: status.attitudes_count || 0,
+            };
         }
 
         return result;
