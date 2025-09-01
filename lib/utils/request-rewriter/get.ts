@@ -3,6 +3,7 @@ import https from 'node:https';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 import proxy from '@/utils/proxy';
+import { generateHeaders } from '@/utils/rand-user-agent';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
 
@@ -40,6 +41,9 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         options.headers = options.headers || {};
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
+        // Generate headers using header-generator for realistic browser headers
+        const generatedHeaders = generateHeaders({ browser: 'chrome', os: 'mac os', device: 'desktop' });
+
         // ua
         if (!headersLowerCaseKeys.has('user-agent')) {
             options.headers['user-agent'] = config.ua;
@@ -48,6 +52,31 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         // Accept
         if (!headersLowerCaseKeys.has('accept')) {
             options.headers.accept = '*/*';
+        }
+
+        // sec-ch-ua headers (Chrome Client Hints)
+        if (!headersLowerCaseKeys.has('sec-ch-ua') && generatedHeaders['sec-ch-ua']) {
+            options.headers['sec-ch-ua'] = generatedHeaders['sec-ch-ua'];
+        }
+        if (!headersLowerCaseKeys.has('sec-ch-ua-mobile') && generatedHeaders['sec-ch-ua-mobile']) {
+            options.headers['sec-ch-ua-mobile'] = generatedHeaders['sec-ch-ua-mobile'];
+        }
+        if (!headersLowerCaseKeys.has('sec-ch-ua-platform') && generatedHeaders['sec-ch-ua-platform']) {
+            options.headers['sec-ch-ua-platform'] = generatedHeaders['sec-ch-ua-platform'];
+        }
+
+        // sec-fetch headers (Fetch Metadata)
+        if (!headersLowerCaseKeys.has('sec-fetch-site') && generatedHeaders['sec-fetch-site']) {
+            options.headers['sec-fetch-site'] = generatedHeaders['sec-fetch-site'];
+        }
+        if (!headersLowerCaseKeys.has('sec-fetch-mode') && generatedHeaders['sec-fetch-mode']) {
+            options.headers['sec-fetch-mode'] = generatedHeaders['sec-fetch-mode'];
+        }
+        if (!headersLowerCaseKeys.has('sec-fetch-user') && generatedHeaders['sec-fetch-user']) {
+            options.headers['sec-fetch-user'] = generatedHeaders['sec-fetch-user'];
+        }
+        if (!headersLowerCaseKeys.has('sec-fetch-dest') && generatedHeaders['sec-fetch-dest']) {
+            options.headers['sec-fetch-dest'] = generatedHeaders['sec-fetch-dest'];
         }
 
         // referer

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
-import randUserAgent from '@/utils/rand-user-agent';
+import randUserAgent, { generateHeaders } from '@/utils/rand-user-agent';
 
 const mobileUa = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
@@ -33,5 +33,23 @@ describe('rand-user-agent', () => {
             },
         });
         expect(response['user-agent']).toBe(mobileUa);
+    });
+
+    it('generateHeaders should include sec-ch and sec-fetch headers', () => {
+        const headers = generateHeaders({ browser: 'chrome', os: 'mac os', device: 'desktop' });
+
+        // Required headers should be present
+        expect(headers['user-agent']).toBeDefined();
+        expect(headers['sec-ch-ua']).toBeDefined();
+        expect(headers['sec-ch-ua-mobile']).toBeDefined();
+        expect(headers['sec-ch-ua-platform']).toBeDefined();
+        expect(headers['sec-fetch-site']).toBeDefined();
+        expect(headers['sec-fetch-mode']).toBeDefined();
+        expect(headers['sec-fetch-user']).toBeDefined();
+        expect(headers['sec-fetch-dest']).toBeDefined();
+
+        // Verify expected values
+        expect(headers['sec-ch-ua-platform']).toBe('"macOS"');
+        expect(headers['sec-ch-ua-mobile']).toBe('?0');
     });
 });
