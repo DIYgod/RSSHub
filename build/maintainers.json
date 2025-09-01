@@ -4675,6 +4675,9 @@
   "/kovidgoyal/kitty/changelog": [
     "xbot"
   ],
+  "/koyso/:category?/:sort?": [
+    "nczitzk"
+  ],
   "/kpmg/insights/:lang?": [
     "LogicJake"
   ],

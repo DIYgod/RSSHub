@@ -23599,6 +23599,147 @@
       }
     ]
   },
+  "koyso.to": {
+    "_name": "Koyso",
+    ".": [
+      {
+        "title": "游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"category\")??void 0;const sort=urlObj.searchParams.get(\"sort\")??void 0;return`/koyso${category?`/${category}`:\"0\"}${sort?`/${sort}`:\"\"}`}"
+      },
+      {
+        "title": "全部游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/0"
+      },
+      {
+        "title": "动作游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/3"
+      },
+      {
+        "title": "冒险游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/5"
+      },
+      {
+        "title": "绅士游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/7"
+      },
+      {
+        "title": "射击游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/1"
+      },
+      {
+        "title": "休闲游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/2"
+      },
+      {
+        "title": "体育竞速",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/4"
+      },
+      {
+        "title": "模拟经营",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/6"
+      },
+      {
+        "title": "角色扮演",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/8"
+      },
+      {
+        "title": "策略游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/9"
+      },
+      {
+        "title": "格斗游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/10"
+      },
+      {
+        "title": "恐怖游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/11"
+      },
+      {
+        "title": "即时战略",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/12"
+      },
+      {
+        "title": "卡牌游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/13"
+      },
+      {
+        "title": "独立游戏",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/14"
+      },
+      {
+        "title": "局域网联机",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/koyso/15"
+      }
+    ]
+  },
   "kpmg.com": {
     "_name": "KPMG",
     ".": [
