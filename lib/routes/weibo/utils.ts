@@ -177,7 +177,6 @@ const weiboUtils = {
             }
         }
 
-
         // 处理转发的微博
         if (status.retweeted_status) {
             html += readable
