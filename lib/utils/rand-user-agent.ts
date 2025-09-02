@@ -1,6 +1,27 @@
 import { HeaderGenerator, PRESETS } from 'header-generator';
 
 /**
+ * Checks if a generated user agent is valid (doesn't contain unwanted strings)
+ *
+ * @param {string} userAgent The user agent string to validate
+ * @param {string} browser The browser type (used to determine which filters to apply)
+ * @returns {boolean} True if the user agent is valid, false if it contains unwanted strings
+ */
+const isValidUserAgent = (userAgent: string, browser: string): boolean => {
+    browser = browser.toLowerCase();
+
+    if (browser === 'chrome') {
+        return !(userAgent.includes('Chrome-Lighthouse') || userAgent.includes('Gener8') || userAgent.includes('HeadlessChrome') || userAgent.includes('SMTBot') || userAgent.includes('Electron') || userAgent.includes('Code'));
+    }
+
+    if (browser === 'safari') {
+        return !userAgent.includes('Applebot');
+    }
+
+    return true;
+};
+
+/**
  * A handy function to help generate a legit useragent with realistic headers.
  *
  * @param {Object} randUserAgent
@@ -23,47 +44,45 @@ const _randUserAgent = ({ browser = 'chrome', os = 'mac os', device = 'desktop' 
         preset = PRESETS.MODERN_MOBILE;
     } else if (browser === 'chrome') {
         switch (os) {
-        case 'mac os':
-        case 'macos':
-            preset = PRESETS.MODERN_MACOS_CHROME;
+            case 'mac os':
+            case 'macos':
+                preset = PRESETS.MODERN_MACOS_CHROME;
 
-        break;
+                break;
 
-        case 'windows':
-            preset = PRESETS.MODERN_WINDOWS_CHROME;
+            case 'windows':
+                preset = PRESETS.MODERN_WINDOWS_CHROME;
 
-        break;
+                break;
 
-        case 'linux':
-            preset = PRESETS.MODERN_LINUX_CHROME;
+            case 'linux':
+                preset = PRESETS.MODERN_LINUX_CHROME;
 
-        break;
+                break;
 
-        default:
-            preset = PRESETS.MODERN_DESKTOP;
-
+            default:
+                preset = PRESETS.MODERN_DESKTOP;
         }
     } else if (browser === 'firefox') {
         switch (os) {
-        case 'mac os':
-        case 'macos':
-            preset = PRESETS.MODERN_MACOS_FIREFOX;
+            case 'mac os':
+            case 'macos':
+                preset = PRESETS.MODERN_MACOS_FIREFOX;
 
-        break;
+                break;
 
-        case 'windows':
-            preset = PRESETS.MODERN_WINDOWS_FIREFOX;
+            case 'windows':
+                preset = PRESETS.MODERN_WINDOWS_FIREFOX;
 
-        break;
+                break;
 
-        case 'linux':
-            preset = PRESETS.MODERN_LINUX_FIREFOX;
+            case 'linux':
+                preset = PRESETS.MODERN_LINUX_FIREFOX;
 
-        break;
+                break;
 
-        default:
-            preset = PRESETS.MODERN_DESKTOP;
-
+            default:
+                preset = PRESETS.MODERN_DESKTOP;
         }
     }
 
@@ -71,22 +90,12 @@ const _randUserAgent = ({ browser = 'chrome', os = 'mac os', device = 'desktop' 
     let headers = generator.getHeaders();
     let UA = headers['user-agent'];
 
-    // Apply the same filtering logic as before for unwanted UAs
-    if (browser === 'chrome') {
-        let attempts = 0;
-        while ((UA.includes('Chrome-Lighthouse') || UA.includes('Gener8') || UA.includes('HeadlessChrome') || UA.includes('SMTBot') || UA.includes('Electron') || UA.includes('Code')) && attempts < 10) {
-            headers = generator.getHeaders();
-            UA = headers['user-agent'];
-            attempts++;
-        }
-    }
-    if (browser === 'safari') {
-        let attempts = 0;
-        while (UA.includes('Applebot') && attempts < 10) {
-            headers = generator.getHeaders();
-            UA = headers['user-agent'];
-            attempts++;
-        }
+    // Apply filtering logic for unwanted UAs
+    let attempts = 0;
+    while (!isValidUserAgent(UA, browser) && attempts < 10) {
+        headers = generator.getHeaders();
+        UA = headers['user-agent'];
+        attempts++;
     }
 
     return UA;
@@ -112,47 +121,45 @@ export const generateHeaders = ({ browser = 'chrome', os = 'mac os', device = 'd
         preset = PRESETS.MODERN_MOBILE;
     } else if (browser === 'chrome') {
         switch (os) {
-        case 'mac os':
-        case 'macos':
-            preset = PRESETS.MODERN_MACOS_CHROME;
+            case 'mac os':
+            case 'macos':
+                preset = PRESETS.MODERN_MACOS_CHROME;
 
-        break;
+                break;
 
-        case 'windows':
-            preset = PRESETS.MODERN_WINDOWS_CHROME;
+            case 'windows':
+                preset = PRESETS.MODERN_WINDOWS_CHROME;
 
-        break;
+                break;
 
-        case 'linux':
-            preset = PRESETS.MODERN_LINUX_CHROME;
+            case 'linux':
+                preset = PRESETS.MODERN_LINUX_CHROME;
 
-        break;
+                break;
 
-        default:
-            preset = PRESETS.MODERN_DESKTOP;
-
+            default:
+                preset = PRESETS.MODERN_DESKTOP;
         }
     } else if (browser === 'firefox') {
         switch (os) {
-        case 'mac os':
-        case 'macos':
-            preset = PRESETS.MODERN_MACOS_FIREFOX;
+            case 'mac os':
+            case 'macos':
+                preset = PRESETS.MODERN_MACOS_FIREFOX;
 
-        break;
+                break;
 
-        case 'windows':
-            preset = PRESETS.MODERN_WINDOWS_FIREFOX;
+            case 'windows':
+                preset = PRESETS.MODERN_WINDOWS_FIREFOX;
 
-        break;
+                break;
 
-        case 'linux':
-            preset = PRESETS.MODERN_LINUX_FIREFOX;
+            case 'linux':
+                preset = PRESETS.MODERN_LINUX_FIREFOX;
 
-        break;
+                break;
 
-        default:
-            preset = PRESETS.MODERN_DESKTOP;
-
+            default:
+                preset = PRESETS.MODERN_DESKTOP;
         }
     }
 
@@ -160,27 +167,10 @@ export const generateHeaders = ({ browser = 'chrome', os = 'mac os', device = 'd
     let headers = generator.getHeaders();
 
     // Apply filtering logic for unwanted UAs
-    if (browser === 'chrome') {
-        let attempts = 0;
-        while (
-            (headers['user-agent'].includes('Chrome-Lighthouse') ||
-                headers['user-agent'].includes('Gener8') ||
-                headers['user-agent'].includes('HeadlessChrome') ||
-                headers['user-agent'].includes('SMTBot') ||
-                headers['user-agent'].includes('Electron') ||
-                headers['user-agent'].includes('Code')) &&
-            attempts < 10
-        ) {
-            headers = generator.getHeaders();
-            attempts++;
-        }
-    }
-    if (browser === 'safari') {
-        let attempts = 0;
-        while (headers['user-agent'].includes('Applebot') && attempts < 10) {
-            headers = generator.getHeaders();
-            attempts++;
-        }
+    let attempts = 0;
+    while (!isValidUserAgent(headers['user-agent'], browser) && attempts < 10) {
+        headers = generator.getHeaders();
+        attempts++;
     }
 
     return headers;
