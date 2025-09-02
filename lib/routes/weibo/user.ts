@@ -57,6 +57,7 @@ async function handler(ctx) {
     let displayComments = '0';
     let showRetweeted = '1';
     let showBloggerIcons = '0';
+    let showStats = '1';
     if (ctx.req.param('routeParams')) {
         if (ctx.req.param('routeParams') === '1' || ctx.req.param('routeParams') === '0') {
             displayVideo = ctx.req.param('routeParams');
@@ -67,6 +68,7 @@ async function handler(ctx) {
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
             showRetweeted = fallback(undefined, queryToBoolean(routeParams.showRetweeted), false) ? '1' : '0';
             showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
+            showStats = fallback(undefined, queryToBoolean(routeParams.showStats), true) ? '1' : '0';
         }
     }
     const containerData = await cache.tryGet(
@@ -159,7 +161,9 @@ async function handler(ctx) {
                     }
                 }
 
-                const formatExtended = weiboUtils.formatExtended(ctx, item.mblog, uid);
+                const formatExtended = weiboUtils.formatExtended(ctx, item.mblog, uid, {
+                    showStats: showStats === '1',
+                });
                 let description = formatExtended.description;
 
                 // 视频的处理
