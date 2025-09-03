@@ -16,7 +16,7 @@ messages:
       Title: {{issue_title}}
       Body:
       {{issue_body}}
-model: openai/gpt-4.1
+model: openai/gpt-4.1-mini
 responseFormat: json_schema
 jsonSchema: |-
   {
