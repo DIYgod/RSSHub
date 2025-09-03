@@ -78,10 +78,14 @@ const getUserId = (user: string): Promise<string> =>
             throw new NotFoundError('User ID not found');
         })
         .then((result): string => {
-            if (!result || typeof result !== 'string') {
-                throw new TypeError('Invalid user ID type');
+            if (result) {
+                if (typeof result === 'string') {
+                    return result;
+                } else if (typeof result === 'number') {
+                    return result.toString();
+                }
             }
-            return result;
+            throw new TypeError('Invalid user ID type');
         });
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
