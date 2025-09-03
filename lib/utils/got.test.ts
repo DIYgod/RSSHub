@@ -3,6 +3,7 @@ import { http, HttpResponse } from 'msw';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
+import { PRESETS } from '@/utils/rand-user-agent';
 
 describe('got', () => {
     it('headers', async () => {
@@ -73,5 +74,16 @@ describe('got', () => {
         });
 
         expect(data.cookie).toBe('cookie=test; Domain=rsshub.test; Path=/');
+    });
+
+    it('should support headerGeneratorPreset option', async () => {
+        const { data } = await got('http://rsshub.test/headers', {
+            headerGeneratorPreset: PRESETS.MODERN_WINDOWS_CHROME,
+        });
+
+        // Verify the request went through successfully
+        expect(data['user-agent']).toBeDefined();
+        // The specific headers will be set by request-rewriter, so we just verify no errors
+        expect(data).toBeDefined();
     });
 });

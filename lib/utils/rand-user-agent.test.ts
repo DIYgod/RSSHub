@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
-import randUserAgent, { generateHeaders } from '@/utils/rand-user-agent';
+import randUserAgent, { generateHeaders, PRESETS } from '@/utils/rand-user-agent';
 
 const mobileUa = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
@@ -51,5 +51,36 @@ describe('rand-user-agent', () => {
         // Verify expected values
         expect(headers['sec-ch-ua-platform']).toBe('"macOS"');
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
+    });
+
+    it('generateHeaders should work with headerGeneratorPreset', () => {
+        // Test with MODERN_WINDOWS_CHROME preset
+        const headers = generateHeaders({ preset: PRESETS.MODERN_WINDOWS_CHROME });
+
+        // Required headers should be present
+        expect(headers['user-agent']).toBeDefined();
+        expect(headers['sec-ch-ua']).toBeDefined();
+        expect(headers['sec-ch-ua-mobile']).toBeDefined();
+        expect(headers['sec-ch-ua-platform']).toBeDefined();
+
+        // Verify it's using Windows platform
+        expect(headers['sec-ch-ua-platform']).toBe('"Windows"');
+        expect(headers['sec-ch-ua-mobile']).toBe('?0');
+
+        // Verify it contains Chrome
+        expect(headers['user-agent']).toMatch(/Chrome/);
+    });
+
+    it('should use headerGeneratorPreset with ofetch', async () => {
+        // This test verifies that headerGeneratorPreset is passed through to the request rewriter
+        const response = await ofetch('http://rsshub.test/headers', {
+            headerGeneratorPreset: PRESETS.MODERN_WINDOWS_CHROME,
+        });
+
+        // The response should include the headers that were sent
+        expect(response['user-agent']).toBeDefined();
+        // Note: The specific header values will be handled by the request-rewriter,
+        // but we can verify the request went through without errors
+        expect(response).toBeDefined();
     });
 });

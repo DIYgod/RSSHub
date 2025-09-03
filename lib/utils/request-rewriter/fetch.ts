@@ -26,14 +26,15 @@ export const useCustomHeader = (headers: Headers) => {
         });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorPreset?: any }) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
     // Generate headers using header-generator for realistic browser headers
-    const generatedHeaders = generateHeaders({ browser: 'chrome', os: 'mac os', device: 'desktop' });
+    // Use the provided preset or default to chrome/mac os/desktop
+    const generatedHeaders = generateHeaders(init?.headerGeneratorPreset ? { preset: init.headerGeneratorPreset } : { browser: 'chrome', os: 'mac os', device: 'desktop' });
 
     // ua
     if (!request.headers.get('user-agent')) {

@@ -7,10 +7,14 @@ import { generateHeaders } from '@/utils/rand-user-agent';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
 
+interface ExtendedRequestOptions extends http.RequestOptions {
+    headerGeneratorPreset?: any;
+}
+
 const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
     function (this: any, ...args: Parameters<typeof origin>) {
         let url: URL | null;
-        let options: http.RequestOptions = {};
+        let options: ExtendedRequestOptions = {};
         let callback: ((res: http.IncomingMessage) => void) | undefined;
         if (typeof args[0] === 'string' || args[0] instanceof URL) {
             url = new URL(args[0]);
@@ -42,7 +46,8 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
         // Generate headers using header-generator for realistic browser headers
-        const generatedHeaders = generateHeaders({ browser: 'chrome', os: 'mac os', device: 'desktop' });
+        // Use the provided preset or default to chrome/mac os/desktop
+        const generatedHeaders = generateHeaders(options.headerGeneratorPreset ? { preset: options.headerGeneratorPreset } : { browser: 'chrome', os: 'mac os', device: 'desktop' });
 
         // ua
         if (!headersLowerCaseKeys.has('user-agent')) {
@@ -100,7 +105,11 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             }
         }
 
-        return Reflect.apply(origin, this, [url, options, callback]) as ReturnType<typeof origin>;
+        // Remove the headerGeneratorPreset before passing to the original function
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { headerGeneratorPreset, ...cleanOptions } = options;
+
+        return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
     };
 
 export default getWrappedGet;
