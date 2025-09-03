@@ -1,9 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import randUserAgent from '@/utils/rand-user-agent';
-
-const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });
+import { PRESETS } from '@/utils/rand-user-agent';
 
 export const route: Route = {
     path: '/snb/:id',
@@ -33,9 +31,7 @@ async function handler(ctx) {
     const url = 'https://xueqiu.com/p/' + id;
 
     const response = await got(url, {
-        headers: {
-            'User-Agent': UA,
-        },
+        headerGeneratorPreset: PRESETS.MODERN_ANDROID,
     });
 
     const data = response.data;
