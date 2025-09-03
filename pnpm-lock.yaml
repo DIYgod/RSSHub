@@ -45,11 +45,11 @@ importers:
         specifier: 4.2.0
         version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
-        specifier: 1.19.0
-        version: 1.19.0(hono@4.9.4)
+        specifier: 1.19.1
+        version: 1.19.1(hono@4.9.5)
       '@hono/zod-openapi':
         specifier: 0.19.10
-        version: 0.19.10(hono@4.9.4)(zod@3.25.76)
+        version: 0.19.10(hono@4.9.5)(zod@3.25.76)
       '@notionhq/client':
         specifier: 4.0.2
         version: 4.0.2
@@ -82,10 +82,10 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.9.16
-        version: 0.9.16(hono@4.9.4)
+        version: 0.9.16(hono@4.9.5)
       '@sentry/node':
-        specifier: 10.7.0
-        version: 10.7.0
+        specifier: 10.8.0
+        version: 10.8.0
       '@tonyrl/rand-user-agent':
         specifier: 2.0.83
         version: 2.0.83
@@ -138,8 +138,8 @@ importers:
         specifier: 159.0.0
         version: 159.0.0
       hono:
-        specifier: 4.9.4
-        version: 4.9.4
+        specifier: 4.9.5
+        version: 4.9.5
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -285,8 +285,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtube-caption-extractor:
-        specifier: 1.9.0
-        version: 1.9.0
+        specifier: 1.9.1
+        version: 1.9.1
       youtubei.js:
         specifier: 15.0.1
         version: 15.0.1
@@ -313,8 +313,8 @@ importers:
         specifier: 3.1.0
         version: 3.1.0
       '@stylistic/eslint-plugin':
-        specifier: 5.2.3
-        version: 5.2.3(eslint@9.34.0(jiti@2.5.1))
+        specifier: 5.3.1
+        version: 5.3.1(eslint@9.34.0(jiti@2.5.1))
       '@types/aes-js':
         specifier: 3.1.4
         version: 3.1.4
@@ -388,8 +388,8 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@24.3.0)(jsdom@26.1.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.9.2)))
       discord-api-types:
-        specifier: 0.38.21
-        version: 0.38.21
+        specifier: 0.38.22
+        version: 0.38.22
       domhandler:
         specifier: 5.0.3
         version: 5.0.3
@@ -421,8 +421,8 @@ importers:
         specifier: 16.3.0
         version: 16.3.0
       got:
-        specifier: 14.4.7
-        version: 14.4.7
+        specifier: 14.4.8
+        version: 14.4.8
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -430,8 +430,8 @@ importers:
         specifier: 1.15.4
         version: 1.15.4
       lint-staged:
-        specifier: 16.1.5
-        version: 16.1.5
+        specifier: 16.1.6
+        version: 16.1.6
       magic-string:
         specifier: 0.30.18
         version: 0.30.18
@@ -1086,14 +1086,14 @@ packages:
   '@dabh/diagnostics@2.0.3':
     resolution: {integrity: sha512-hrlQOIi7hAfzsMqlGSFyVucrx38O+j6wiGOf//H2ecvIEqYN4ADBSS2iLMh5UFyDunCNniUIPk/q3riFv45xRA==}
 
-  '@emnapi/core@1.4.5':
-    resolution: {integrity: sha512-XsLw1dEOpkSX/WucdqUhPWP7hDxSvZiY+fsUC14h+FtQ2Ifni4znbBt8punRX+Uj2JG/uDb8nEHVKvrVlvdZ5Q==}
+  '@emnapi/core@1.5.0':
+    resolution: {integrity: sha512-sbP8GzB1WDzacS8fgNPpHlp6C9VZe+SJP3F90W9rLemaQj2PzIuTEl1qDOYQf58YIpyjViI24y9aPWCjEzY2cg==}
 
-  '@emnapi/runtime@1.4.5':
-    resolution: {integrity: sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg==}
+  '@emnapi/runtime@1.5.0':
+    resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
-  '@emnapi/wasi-threads@1.0.4':
-    resolution: {integrity: sha512-PJR+bOmMOPH8AtcTGAyYNiuJ3/Fcoj2XN/gBEWzDIKh254XO+mM9XoXHk5GNEhodxeMznbg7BlRojVbKN+gC6g==}
+  '@emnapi/wasi-threads@1.1.0':
+    resolution: {integrity: sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==}
 
   '@epic-web/invariant@1.0.0':
     resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
@@ -1438,8 +1438,8 @@ packages:
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@hono/node-server@1.19.0':
-    resolution: {integrity: sha512-1k8/8OHf5VIymJEcJyVksFpT+AQ5euY0VA5hUkCnlKpD4mr8FSbvXaHblxeTTEr90OaqWzAkQaqD80qHZQKxBA==}
+  '@hono/node-server@1.19.1':
+    resolution: {integrity: sha512-h44e5s+ByUriaRIbeS/C74O8v90m0A95luyYQGMF7KEn96KkYMXO7bZAwombzTpjQTU4e0TkU8U1WBIXlwuwtA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -2299,12 +2299,12 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@sentry/core@10.7.0':
-    resolution: {integrity: sha512-y1Ni71O6TqeSi2Ug78StkVLHnybHZVYhnbYtj2w4g89XnQcqo4GUeR8dQRQBJpCX98UrHw22OAE8BXtKb03yXw==}
+  '@sentry/core@10.8.0':
+    resolution: {integrity: sha512-scYzM/UOItu4PjEq6CpHLdArpXjIS0laHYxE4YjkIbYIH6VMcXGQbD/FSBClsnCr1wXRnlXfXBzj0hrQAFyw+Q==}
     engines: {node: '>=18'}
 
-  '@sentry/node-core@10.7.0':
-    resolution: {integrity: sha512-iafuG3Fp0pleuk1WaL4UW7wpT6C86pMEQBZ7ARZ7UHc9ujRi/dewKFi0Stu0SxJm6PZ706VZ8Igz9xpvQ0aEEg==}
+  '@sentry/node-core@10.8.0':
+    resolution: {integrity: sha512-KCFy5Otq6KTXge8hBKMgU13EDRFkO4gNwSyZGXub8a7KHYFtoUgpRkborR59SWxeJmC6aEYTyh0PyOoWZJbHUQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -2315,12 +2315,12 @@ packages:
       '@opentelemetry/sdk-trace-base': ^1.30.1 || ^2.0.0
       '@opentelemetry/semantic-conventions': ^1.34.0
 
-  '@sentry/node@10.7.0':
-    resolution: {integrity: sha512-VtUFyf8avWUqN5RRTTmcU8aGdyNUGHzz/f+3n86BR5gBL3lziKOajyc0VClfc80VLsih+PWQ/5FrIHl+S1S1YQ==}
+  '@sentry/node@10.8.0':
+    resolution: {integrity: sha512-1TtCjxzn4SxoGw+ulLK+jF/v9NaZfP0yCclQIqfvWNDjMf2F+SbZL1UnXx4L184FGlNpRQnJBDrBe88gxnMX0A==}
     engines: {node: '>=18'}
 
-  '@sentry/opentelemetry@10.7.0':
-    resolution: {integrity: sha512-8SrRZyERDfCYYett6dklGe+qWMDZSytKPIZpS0nDb0IqZGC02ZVIhRISbBTy4Gctowu/gMK9XaOXfBNN0pI1sg==}
+  '@sentry/opentelemetry@10.8.0':
+    resolution: {integrity: sha512-62R/RPwTYVaiZ5lVcxcjHCAGwgCyfn8Q3kaQld8/LPm8FRizZeUJmmtrI80KaYCvPJhSB/Pvfma4X3w+aN5Q3A==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -2333,8 +2333,8 @@ packages:
     resolution: {integrity: sha512-d9xRovfKNz1SKieM0qJdO+PQonjnnIfSNWfHYnBSJ9hkjm0ZPw6HlxscDXYstp3z+7V2GOFHc+J0CYrYTjqCJw==}
     engines: {node: '>=18'}
 
-  '@stylistic/eslint-plugin@5.2.3':
-    resolution: {integrity: sha512-oY7GVkJGVMI5benlBDCaRrSC1qPasafyv5dOBLLv5MTilMGnErKhO6ziEfodDDIZbo5QxPUNW360VudJOFODMw==}
+  '@stylistic/eslint-plugin@5.3.1':
+    resolution: {integrity: sha512-Ykums1VYonM0TgkD0VteVq9mrlO2FhF48MDJnPyv3MktIB2ydtuhlO0AfWm7xnW1kyf5bjOqA6xc7JjviuVTxg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -2548,10 +2548,6 @@ packages:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/types@8.39.1':
-    resolution: {integrity: sha512-7sPDKQQp+S11laqTrhHqeAbsCfMkwJMrV7oTDvtDds4mEofJYir414bYKUEb8YPUm9QL3U+8f6L6YExSoAGdQw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@typescript-eslint/types@8.41.0':
     resolution: {integrity: sha512-9EwxsWdVqh42afLbHP90n2VdHaWU/oWgbH2P0CfcNfdKL7CuKpwMQGjwev56vWu9cSKU7FWSu6r9zck6CVfnag==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -2673,8 +2669,8 @@ packages:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
 
-  ansi-regex@6.1.0:
-    resolution: {integrity: sha512-7HSX4QQb4CspciLpVFwyRe79O3xsIZDDLER21kERQ71oaPodF8jL725AgJMFAYbooIqolJoRLuM81SpeUkpkvA==}
+  ansi-regex@6.2.0:
+    resolution: {integrity: sha512-TKY5pyBkHyADOPYlRT9Lx6F544mPl0vS5Ew7BJ45hA08Q+t3GjbueLliBWN3sMICk6+y7HdyxSzC4bWS8baBdg==}
     engines: {node: '>=12'}
 
   ansi-styles@3.2.1:
@@ -2922,6 +2918,10 @@ packages:
 
   chalk@5.5.0:
     resolution: {integrity: sha512-1tm8DTaJhPBG3bIkVeZt1iZM9GfSX2lzOeDVZH9R9ffRHpmHvxZ/QhgQH/aDTkswQVt+YHdXAdS/In/30OjCbg==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  chalk@5.6.0:
+    resolution: {integrity: sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   chance@1.1.13:
@@ -3255,8 +3255,8 @@ packages:
     resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
     engines: {node: '>=18.17.0'}
 
-  discord-api-types@0.38.21:
-    resolution: {integrity: sha512-E6KtXUNjZVIYP1GMjmeRdAC1xRql9xtSahRwJYpP74/hJ6Q2i2oTp6ZbFG/FUN0WqtdW2igHDsJyF2u9hV8pHQ==}
+  discord-api-types@0.38.22:
+    resolution: {integrity: sha512-2gnYrgXN3yTlv2cKBISI/A8btZwsSZLwKpIQXeI1cS8a7W7wP3sFVQOm3mPuuinTD8jJCKGPGNH399zE7Un1kA==}
 
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
@@ -3337,8 +3337,8 @@ packages:
   ellipsize@0.1.0:
     resolution: {integrity: sha512-5gxbEjcb/Z2n6TTmXZx9wVi3N/DOzE7RXY3Xg9dakDuhX/izwumB9rGjeWUV6dTA0D0+juvo+JonZgNR9sgA5A==}
 
-  emoji-regex@10.4.0:
-    resolution: {integrity: sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==}
+  emoji-regex@10.5.0:
+    resolution: {integrity: sha512-lb49vf1Xzfx080OKA0o6l8DQQpV+6Vg95zyCJX9VB/BqKYlhG7N4wgROUUHRA+ZPUefLnteQOad7z1kT2bV7bg==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3777,8 +3777,8 @@ packages:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  get-east-asian-width@1.3.0:
-    resolution: {integrity: sha512-vpeMIQKxczTD/0s2CdEWHcb0eeJe6TFjxb+J5xgX7hScxqrGuyjmv4c1D4A/gelKfyox0gJJwIHF+fLjeaM8kQ==}
+  get-east-asian-width@1.3.1:
+    resolution: {integrity: sha512-R1QfovbPsKmosqTnPoRFiJ7CF9MLRgb53ChvMZm+r4p76/+8yKDy17qLL2PKInORy2RkZZekuK0efYgmzTkXyQ==}
     engines: {node: '>=18'}
 
   get-stream@5.2.0:
@@ -3854,8 +3854,8 @@ packages:
     resolution: {integrity: sha512-halby2+lQwHNxUDk70aQNXP1BlBwdwr7svTJZvDi7vKwrWbVMKhVrZ86h8p3zRcWbO4qAgLQ4ODAf8TgD3DhGQ==}
     engines: {node: '>=18'}
 
-  got@14.4.7:
-    resolution: {integrity: sha512-DI8zV1231tqiGzOiOzQWDhsBmncFW7oQDH6Zgy6pDPrqJuVZMtoSgPLLsBZQj8Jg4JFfwoOsDA8NGtLQLnIx2g==}
+  got@14.4.8:
+    resolution: {integrity: sha512-vxwU4HuR0BIl+zcT1LYrgBjM+IJjNElOjCzs0aPgHorQyr/V6H6Y73Sn3r3FOlUffvWD+Q5jtRuGWaXkU8Jbhg==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.11:
@@ -3902,8 +3902,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.9.4:
-    resolution: {integrity: sha512-61hl6MF6ojTl/8QSRu5ran6GXt+6zsngIUN95KzF5v5UjiX/xnrLR358BNRawwIRO49JwUqJqQe3Rb2v559R8Q==}
+  hono@4.9.5:
+    resolution: {integrity: sha512-aLAVl5/67ifNnoFVxnhR89dpmSLsgwBprw/PT671ASwUpJqmd7Ne8KPTQo37DbRZfgpHaHeZ4bPVUvbOkeedMw==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -4099,8 +4099,8 @@ packages:
     resolution: {integrity: sha512-O4L094N2/dZ7xqVdrXhh9r1KODPJpFms8B5sGdJLPy664AgvXsreZUyCQQNItZRDlYug4xStLjNp/sz3HvBowQ==}
     engines: {node: '>=12'}
 
-  is-fullwidth-code-point@5.0.0:
-    resolution: {integrity: sha512-OVa3u9kkBbw7b8Xw5F9P+D/T9X+Z4+JruYVNapTjPYZYUznQ5YfWeFkOj606XYYW8yugTfC8Pj0hYqvi4ryAhA==}
+  is-fullwidth-code-point@5.1.0:
+    resolution: {integrity: sha512-5XHYaSyiqADb4RnZ1Bdad6cPp8Toise4TzEjcOYDHZkTCbKgiUl7WTUCpNWHuxmDt91wnsZBc9xinNzopv3JMQ==}
     engines: {node: '>=18'}
 
   is-glob@4.0.3:
@@ -4339,13 +4339,13 @@ packages:
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
 
-  lint-staged@16.1.5:
-    resolution: {integrity: sha512-uAeQQwByI6dfV7wpt/gVqg+jAPaSp8WwOA8kKC/dv1qw14oGpnpAisY65ibGHUGDUv0rYaZ8CAJZ/1U8hUvC2A==}
+  lint-staged@16.1.6:
+    resolution: {integrity: sha512-U4kuulU3CKIytlkLlaHcGgKscNfJPNTiDF2avIUGFCv7K95/DCYQ7Ra62ydeRWmgQGg9zJYw2dzdbztwJlqrow==}
     engines: {node: '>=20.17'}
     hasBin: true
 
-  listr2@9.0.1:
-    resolution: {integrity: sha512-SL0JY3DaxylDuo/MecFeiC+7pedM0zia33zl0vcjgwcq1q1FWWF1To9EIauPbl8GbMCU0R2e0uJ8bZunhYKD2g==}
+  listr2@9.0.3:
+    resolution: {integrity: sha512-0aeh5HHHgmq1KRdMMDHfhMWQmIT/m7nRDTlxlFqni2Sp0had9baqsjJRvDGdlvgd6NmPE0nPloOipiQJGFtTHQ==}
     engines: {node: '>=20.0.0'}
 
   locate-path@6.0.0:
@@ -6126,8 +6126,8 @@ packages:
     resolution: {integrity: sha512-U/PBtDf35ff0D8X8D0jfdzHYEPFxAI7jJlxZXwCSez5M3190m+QobIfh+sWDWSHMCWWJN2AWamkegn6vr6YBTw==}
     engines: {node: '>=18'}
 
-  youtube-caption-extractor@1.9.0:
-    resolution: {integrity: sha512-wNYkgvGLimOwgyQZJS5UXzqsCYJF5Y+cUPRCxbUjl4RugYwrGEBIPnZjVla+nHXm7AaIrJKccizn6iE3ZNlsjA==}
+  youtube-caption-extractor@1.9.1:
+    resolution: {integrity: sha512-KK1OparV3kpIIRkMgLRsQPE73Tu0hYy0CDKcWkF8O3eikyib0IqVjoDNDiGt0KhGbg0/jhh+VUOCcWn/G6nvAw==}
     engines: {node: '>=14.0.0'}
 
   youtubei.js@15.0.1:
@@ -6939,18 +6939,18 @@ snapshots:
       enabled: 2.0.0
       kuler: 2.0.0
 
-  '@emnapi/core@1.4.5':
+  '@emnapi/core@1.5.0':
     dependencies:
-      '@emnapi/wasi-threads': 1.0.4
+      '@emnapi/wasi-threads': 1.1.0
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/runtime@1.4.5':
+  '@emnapi/runtime@1.5.0':
     dependencies:
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/wasi-threads@1.0.4':
+  '@emnapi/wasi-threads@1.1.0':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -7169,21 +7169,21 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@hono/node-server@1.19.0(hono@4.9.4)':
+  '@hono/node-server@1.19.1(hono@4.9.5)':
     dependencies:
-      hono: 4.9.4
+      hono: 4.9.5
 
-  '@hono/zod-openapi@0.19.10(hono@4.9.4)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.9.5)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.2(hono@4.9.4)(zod@3.25.76)
-      hono: 4.9.4
+      '@hono/zod-validator': 0.7.2(hono@4.9.5)(zod@3.25.76)
+      hono: 4.9.5
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.2(hono@4.9.4)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.2(hono@4.9.5)(zod@3.25.76)':
     dependencies:
-      hono: 4.9.4
+      hono: 4.9.5
       zod: 3.25.76
 
   '@humanfs/core@0.19.1': {}
@@ -7441,8 +7441,8 @@ snapshots:
 
   '@napi-rs/wasm-runtime@1.0.3':
     dependencies:
-      '@emnapi/core': 1.4.5
-      '@emnapi/runtime': 1.4.5
+      '@emnapi/core': 1.5.0
+      '@emnapi/runtime': 1.5.0
       '@tybys/wasm-util': 0.10.0
     optional: true
 
@@ -8043,10 +8043,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.2.13
 
-  '@scalar/hono-api-reference@0.9.16(hono@4.9.4)':
+  '@scalar/hono-api-reference@0.9.16(hono@4.9.5)':
     dependencies:
       '@scalar/core': 0.3.14
-      hono: 4.9.4
+      hono: 4.9.5
 
   '@scalar/openapi-types@0.3.7':
     dependencies:
@@ -8065,9 +8065,9 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@sentry/core@10.7.0': {}
+  '@sentry/core@10.8.0': {}
 
-  '@sentry/node-core@10.7.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)':
+  '@sentry/node-core@10.8.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/context-async-hooks': 2.0.1(@opentelemetry/api@1.9.0)
@@ -8076,11 +8076,11 @@ snapshots:
       '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.36.0
-      '@sentry/core': 10.7.0
-      '@sentry/opentelemetry': 10.7.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
+      '@sentry/core': 10.8.0
+      '@sentry/opentelemetry': 10.8.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
       import-in-the-middle: 1.14.2
 
-  '@sentry/node@10.7.0':
+  '@sentry/node@10.8.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/context-async-hooks': 2.0.1(@opentelemetry/api@1.9.0)
@@ -8112,29 +8112,29 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.36.0
       '@prisma/instrumentation': 6.14.0(@opentelemetry/api@1.9.0)
-      '@sentry/core': 10.7.0
-      '@sentry/node-core': 10.7.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
-      '@sentry/opentelemetry': 10.7.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
+      '@sentry/core': 10.8.0
+      '@sentry/node-core': 10.8.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
+      '@sentry/opentelemetry': 10.8.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)
       import-in-the-middle: 1.14.2
       minimatch: 9.0.5
     transitivePeerDependencies:
       - supports-color
 
-  '@sentry/opentelemetry@10.7.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)':
+  '@sentry/opentelemetry@10.8.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.36.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/context-async-hooks': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.36.0
-      '@sentry/core': 10.7.0
+      '@sentry/core': 10.8.0
 
   '@sindresorhus/is@7.0.2': {}
 
-  '@stylistic/eslint-plugin@5.2.3(eslint@9.34.0(jiti@2.5.1))':
+  '@stylistic/eslint-plugin@5.3.1(eslint@9.34.0(jiti@2.5.1))':
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.34.0(jiti@2.5.1))
-      '@typescript-eslint/types': 8.39.1
+      '@typescript-eslint/types': 8.41.0
       eslint: 9.34.0(jiti@2.5.1)
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
@@ -8384,8 +8384,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/types@8.39.1': {}
-
   '@typescript-eslint/types@8.41.0': {}
 
   '@typescript-eslint/typescript-estree@8.41.0(typescript@5.9.2)':
@@ -8539,7 +8537,7 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.1.0: {}
+  ansi-regex@6.2.0: {}
 
   ansi-styles@3.2.1:
     dependencies:
@@ -8782,6 +8780,8 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.5.0: {}
+
+  chalk@5.6.0: {}
 
   chance@1.1.13: {}
 
@@ -9100,7 +9100,7 @@ snapshots:
 
   directory-import@3.3.2: {}
 
-  discord-api-types@0.38.21: {}
+  discord-api-types@0.38.22: {}
 
   doctrine@3.0.0:
     dependencies:
@@ -9189,7 +9189,7 @@ snapshots:
 
   ellipsize@0.1.0: {}
 
-  emoji-regex@10.4.0: {}
+  emoji-regex@10.5.0: {}
 
   emoji-regex@8.0.0: {}
 
@@ -9624,7 +9624,7 @@ snapshots:
       camelcase-keys: 9.1.3
       decamelize-keys: 2.0.1
       form-data: 4.0.4
-      got: 14.4.7
+      got: 14.4.8
       he: 1.2.0
       hmacsha1: 1.0.0
       oauth-1.0a: 2.2.6
@@ -9784,7 +9784,7 @@ snapshots:
 
   get-caller-file@2.0.5: {}
 
-  get-east-asian-width@1.3.0: {}
+  get-east-asian-width@1.3.1: {}
 
   get-stream@5.2.0:
     dependencies:
@@ -9882,7 +9882,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  got@14.4.7:
+  got@14.4.8:
     dependencies:
       '@sindresorhus/is': 7.0.2
       '@szmarczak/http-timer': 5.0.1
@@ -9928,7 +9928,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.9.4: {}
+  hono@4.9.5: {}
 
   hookable@5.5.3: {}
 
@@ -10161,9 +10161,9 @@ snapshots:
 
   is-fullwidth-code-point@4.0.0: {}
 
-  is-fullwidth-code-point@5.0.0:
+  is-fullwidth-code-point@5.1.0:
     dependencies:
-      get-east-asian-width: 1.3.0
+      get-east-asian-width: 1.3.1
 
   is-glob@4.0.3:
     dependencies:
@@ -10402,13 +10402,13 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  lint-staged@16.1.5:
+  lint-staged@16.1.6:
     dependencies:
-      chalk: 5.5.0
+      chalk: 5.6.0
       commander: 14.0.0
       debug: 4.4.1
       lilconfig: 3.1.3
-      listr2: 9.0.1
+      listr2: 9.0.3
       micromatch: 4.0.8
       nano-spawn: 1.0.2
       pidtree: 0.6.0
@@ -10417,7 +10417,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  listr2@9.0.1:
+  listr2@9.0.3:
     dependencies:
       cli-truncate: 4.0.0
       colorette: 2.0.20
@@ -11548,7 +11548,7 @@ snapshots:
   slice-ansi@7.1.0:
     dependencies:
       ansi-styles: 6.2.1
-      is-fullwidth-code-point: 5.0.0
+      is-fullwidth-code-point: 5.1.0
 
   slide@1.1.6: {}
 
@@ -11652,8 +11652,8 @@ snapshots:
 
   string-width@7.2.0:
     dependencies:
-      emoji-regex: 10.4.0
-      get-east-asian-width: 1.3.0
+      emoji-regex: 10.5.0
+      get-east-asian-width: 1.3.1
       strip-ansi: 7.1.0
 
   string_decoder@1.3.0:
@@ -11670,7 +11670,7 @@ snapshots:
 
   strip-ansi@7.1.0:
     dependencies:
-      ansi-regex: 6.1.0
+      ansi-regex: 6.2.0
 
   strip-final-newline@3.0.0: {}
 
@@ -12330,13 +12330,10 @@ snapshots:
 
   yoctocolors-cjs@2.1.3: {}
 
-  youtube-caption-extractor@1.9.0:
+  youtube-caption-extractor@1.9.1:
     dependencies:
-      debug: 4.4.1
       he: 1.2.0
       striptags: 3.2.0
-    transitivePeerDependencies:
-      - supports-color
 
   youtubei.js@15.0.1:
     dependencies:
