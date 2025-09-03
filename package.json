@@ -85,7 +85,7 @@
         "fanfou-sdk": "6.0.0",
         "form-data": "4.0.4",
         "googleapis": "159.0.0",
-        "header-generator": "^2.1.70",
+        "header-generator": "2.1.70",
         "hono": "4.9.4",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "6.0.8",
@@ -200,7 +200,7 @@
         "vitest": "2.1.9",
         "yaml-eslint-parser": "1.3.0"
     },
-    "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b",
+    "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67",
     "engines": {
         "node": ">=22"
     },

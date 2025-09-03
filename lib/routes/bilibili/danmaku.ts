@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     let danmakuText = danmakuResponse.body;
 
-    danmakuText = await ((danmakuText[0] & 0x0f) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
+    danmakuText = await ((danmakuText[0] & 0x0F) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
 
     let danmakuList = [];
     const $ = load(danmakuText, { xmlMode: true });
