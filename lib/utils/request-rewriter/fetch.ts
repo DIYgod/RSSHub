@@ -33,8 +33,8 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
     // Generate headers using header-generator for realistic browser headers
-    // Use the provided preset or default to chrome/mac os/desktop
-    const generatedHeaders = generateHeaders(init?.headerGeneratorPreset ? { preset: init.headerGeneratorPreset } : { browser: 'chrome', os: 'mac os', device: 'desktop' });
+    // Use the provided preset or default to MODERN_MACOS_CHROME
+    const generatedHeaders = generateHeaders(init?.headerGeneratorPreset);
 
     // ua
     if (!request.headers.get('user-agent')) {

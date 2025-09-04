@@ -20,7 +20,7 @@ describe('rand-user-agent', () => {
     });
 
     it('generateHeaders should include sec-ch and sec-fetch headers', () => {
-        const headers = generateHeaders({ browser: 'chrome', os: 'mac os', device: 'desktop' });
+        const headers = generateHeaders(PRESETS.MODERN_MACOS_CHROME);
 
         // Required headers should be present
         expect(headers['user-agent']).toBeDefined();
@@ -39,7 +39,7 @@ describe('rand-user-agent', () => {
 
     it('generateHeaders should work with headerGeneratorPreset', () => {
         // Test with MODERN_WINDOWS_CHROME preset
-        const headers = generateHeaders({ preset: PRESETS.MODERN_WINDOWS_CHROME });
+        const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
 
         // Required headers should be present
         expect(headers['user-agent']).toBeDefined();
@@ -52,6 +52,21 @@ describe('rand-user-agent', () => {
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
 
         // Verify it contains Chrome
+        expect(headers['user-agent']).toMatch(/Chrome/);
+    });
+
+    it('generateHeaders should use default preset when no preset is provided', () => {
+        const headers = generateHeaders();
+
+        // Required headers should be present
+        expect(headers['user-agent']).toBeDefined();
+        expect(headers['sec-ch-ua']).toBeDefined();
+        expect(headers['sec-ch-ua-mobile']).toBeDefined();
+        expect(headers['sec-ch-ua-platform']).toBeDefined();
+
+        // Should default to macOS Chrome
+        expect(headers['sec-ch-ua-platform']).toBe('"macOS"');
+        expect(headers['sec-ch-ua-mobile']).toBe('?0');
         expect(headers['user-agent']).toMatch(/Chrome/);
     });
 

@@ -46,8 +46,8 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
         // Generate headers using header-generator for realistic browser headers
-        // Use the provided preset or default to chrome/mac os/desktop
-        const generatedHeaders = generateHeaders(options.headerGeneratorPreset ? { preset: options.headerGeneratorPreset } : { browser: 'chrome', os: 'mac os', device: 'desktop' });
+        // Use the provided preset or default to MODERN_MACOS_CHROME
+        const generatedHeaders = generateHeaders(options.headerGeneratorPreset);
 
         // ua
         if (!headersLowerCaseKeys.has('user-agent')) {

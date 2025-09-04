@@ -1,4 +1,5 @@
 import { HeaderGenerator, PRESETS } from 'header-generator';
+import type { HeaderGeneratorOptions } from 'header-generator';
 
 // Re-export PRESETS for convenience
 export { PRESETS } from 'header-generator';
@@ -27,79 +28,20 @@ const isValidUserAgent = (userAgent: string, browser: string): boolean => {
 /**
  * Generate full headers including sec-ch-* and sec-fetch-* headers
  *
- * @param {Object} options Browser options or preset
- * @param {any} options.preset Direct header-generator preset to use (takes precedence over browser/os/device)
- * @param {string} options.browser Name of a browser, case-insensitive. `chrome`, `edge`, `firefox`, `mobile safari`(ios only) or `safari`.
- * @param {string} options.os Name of an OS, case-insensitive. `android`, `ios`, `mac os`, `linux` or `windows`.
- * @param {string} options.device Name of a device, case-insensitive. `desktop`, `mobile` or `tablet`.
+ * @param {HeaderGeneratorOptions} preset Preset from header-generator package (defaults to PRESETS.MODERN_MACOS_CHROME)
  * @returns Headers object with user-agent and additional headers
  */
-export const generateHeaders = ({ preset, browser = 'chrome', os = 'mac os', device = 'desktop' }: { preset?: any; browser?: string; os?: string; device?: string } = {}) => {
-    let finalPreset = preset;
-
-    // If no preset is provided, map parameters to header-generator presets
-    if (!finalPreset) {
-        device = device.toLowerCase();
-        browser = browser.toLowerCase();
-        os = os.toLowerCase();
-
-        finalPreset = PRESETS.MODERN_MACOS_CHROME; // Default preset as requested
-
-        if (device === 'mobile' && os === 'android') {
-            finalPreset = PRESETS.MODERN_ANDROID;
-        } else if (device === 'mobile') {
-            finalPreset = PRESETS.MODERN_MOBILE;
-        } else if (browser === 'chrome') {
-            switch (os) {
-                case 'mac os':
-                case 'macos':
-                    finalPreset = PRESETS.MODERN_MACOS_CHROME;
-
-                    break;
-
-                case 'windows':
-                    finalPreset = PRESETS.MODERN_WINDOWS_CHROME;
-
-                    break;
-
-                case 'linux':
-                    finalPreset = PRESETS.MODERN_LINUX_CHROME;
-
-                    break;
-
-                default:
-                    finalPreset = PRESETS.MODERN_MACOS_CHROME;
-            }
-        } else if (browser === 'firefox') {
-            switch (os) {
-                case 'mac os':
-                case 'macos':
-                    finalPreset = PRESETS.MODERN_MACOS_FIREFOX;
-
-                    break;
-
-                case 'windows':
-                    finalPreset = PRESETS.MODERN_WINDOWS_FIREFOX;
-
-                    break;
-
-                case 'linux':
-                    finalPreset = PRESETS.MODERN_LINUX_FIREFOX;
-
-                    break;
-
-                default:
-                    finalPreset = PRESETS.MODERN_MACOS_CHROME;
-            }
-        }
-    }
-
-    const generator = new HeaderGenerator(finalPreset);
+export const generateHeaders = (preset: HeaderGeneratorOptions = PRESETS.MODERN_MACOS_CHROME) => {
+    const generator = new HeaderGenerator(preset);
     let headers = generator.getHeaders();
 
     // Apply filtering logic for unwanted UAs
+    // For preset-based approach, we'll use a generic browser detection from the user agent
+    const userAgent = headers['user-agent'];
+    const detectedBrowser = userAgent.includes('Firefox') ? 'firefox' : 'chrome';
+    
     let attempts = 0;
-    while (!isValidUserAgent(headers['user-agent'], browser || 'chrome') && attempts < 10) {
+    while (!isValidUserAgent(headers['user-agent'], detectedBrowser) && attempts < 10) {
         headers = generator.getHeaders();
         attempts++;
     }
