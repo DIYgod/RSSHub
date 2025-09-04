@@ -78,6 +78,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5.0.0
+      - uses: actions/labeler@f1a63e87db0c6baf19c5713083f8d00d789ca184 # v6.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
