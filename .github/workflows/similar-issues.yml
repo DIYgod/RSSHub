@@ -42,6 +42,7 @@ jobs:
           # Inference token can use GITHUB_TOKEN. MCP specifically requires a PAT.
           token: ${{ secrets.GITHUB_TOKEN }}
           github-mcp-token: ${{ secrets.USER_PAT }}
+          max-tokens: 8000
 
       - name: Prepare comment body
         id: prepare
