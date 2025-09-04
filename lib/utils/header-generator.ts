@@ -1,7 +1,5 @@
-import { HeaderGenerator, PRESETS } from 'header-generator';
-import type { HeaderGeneratorOptions } from 'header-generator';
+import { HeaderGenerator, PRESETS, type HeaderGeneratorOptions } from 'header-generator';
 
-// Re-export PRESETS for convenience
 export { PRESETS } from 'header-generator';
 
 /**
@@ -28,10 +26,10 @@ const isValidUserAgent = (userAgent: string, browser: string): boolean => {
 /**
  * Generate full headers including sec-ch-* and sec-fetch-* headers
  *
- * @param {HeaderGeneratorOptions} preset Preset from header-generator package (defaults to PRESETS.MODERN_MACOS_CHROME)
+ * @param {Partial<HeaderGeneratorOptions>} preset Preset from header-generator package (defaults to PRESETS.MODERN_MACOS_CHROME)
  * @returns Headers object with user-agent and additional headers
  */
-export const generateHeaders = (preset: HeaderGeneratorOptions = PRESETS.MODERN_MACOS_CHROME) => {
+export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESETS.MODERN_MACOS_CHROME) => {
     const generator = new HeaderGenerator(preset);
     let headers = generator.getHeaders();
 
@@ -39,7 +37,7 @@ export const generateHeaders = (preset: HeaderGeneratorOptions = PRESETS.MODERN_
     // For preset-based approach, we'll use a generic browser detection from the user agent
     const userAgent = headers['user-agent'];
     const detectedBrowser = userAgent.includes('Firefox') ? 'firefox' : 'chrome';
-    
+
     let attempts = 0;
     while (!isValidUserAgent(headers['user-agent'], detectedBrowser) && attempts < 10) {
         headers = generator.getHeaders();
