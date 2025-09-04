@@ -56,7 +56,7 @@
         "@bbob/preset-html5": "4.2.0",
         "@hono/node-server": "1.19.1",
         "@hono/zod-openapi": "0.19.10",
-        "@notionhq/client": "4.0.2",
+        "@notionhq/client": "5.0.0",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.203.0",
         "@opentelemetry/exporter-trace-otlp-http": "0.203.0",
