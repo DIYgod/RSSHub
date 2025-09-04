@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
-import { generateHeaders, PRESETS } from '@/utils/rand-user-agent';
+import { generateHeaders, PRESETS } from '@/utils/header-generator';
 
 describe('rand-user-agent', () => {
     it('should has default random ua', async () => {

@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import { PRESETS } from '@/utils/rand-user-agent';
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/:category?',

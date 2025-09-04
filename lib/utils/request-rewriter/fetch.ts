@@ -4,7 +4,7 @@ import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import { useRegisterRequest } from 'node-network-devtools';
-import { generateHeaders } from '@/utils/rand-user-agent';
+import { generateHeaders } from '@/utils/header-generator';
 
 const limiter = new RateLimiterMemory({
     points: 10,

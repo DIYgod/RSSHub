@@ -3,7 +3,7 @@ import https from 'node:https';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 import proxy from '@/utils/proxy';
-import { generateHeaders } from '@/utils/rand-user-agent';
+import { generateHeaders } from '@/utils/header-generator';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
 

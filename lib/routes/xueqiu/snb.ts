@@ -1,7 +1,7 @@
 import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { PRESETS } from '@/utils/rand-user-agent';
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/snb/:id',

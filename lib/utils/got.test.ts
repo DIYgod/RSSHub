@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
-import { PRESETS } from '@/utils/rand-user-agent';
+import { PRESETS } from '@/utils/header-generator';
 
 describe('got', () => {
     it('headers', async () => {

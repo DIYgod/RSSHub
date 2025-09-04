@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { PRESETS } from '@/utils/rand-user-agent';
+import { PRESETS } from '@/utils/header-generator';
 
 const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;

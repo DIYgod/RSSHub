@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { PRESETS, generateHeaders } from '@/utils/rand-user-agent';
+import { PRESETS, generateHeaders } from '@/utils/header-generator';
 import { generate_a_bogus } from './a-bogus';
 import { Feed } from './types';
 import RejectError from '@/errors/types/reject';
