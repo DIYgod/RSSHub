@@ -157,11 +157,11 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (item.large.geo.width || widthOfPics >= 0) {
+                if (item.large?.geo?.width || widthOfPics >= 0) {
                     html += ` width="${item.large.geo.width || widthOfPics}"`;
                     style += `width: ${item.large.geo.width || widthOfPics}px;`;
                 }
-                if (item.large.geo.height || heightOfPics >= 0) {
+                if (item.large?.geo?.height || heightOfPics >= 0) {
                     html += ` height="${item.large.geo.height || heightOfPics}"`;
                     style += `height: ${item.large.geo.height || heightOfPics}px;`;
                 }
