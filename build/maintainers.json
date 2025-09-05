@@ -1785,6 +1785,9 @@
   "/coolapk/user/:uid/dynamic": [
     "xizeyoupan"
   ],
+  "/coolbuy/": [
+    "nczitzk"
+  ],
   "/coolpc/news": [
     "david90103"
   ],
