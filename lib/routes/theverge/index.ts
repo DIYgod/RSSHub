@@ -6,6 +6,10 @@ import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
+const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
+
+const shouldKeep = (b: any) => !excludeTypes.has(String(b.__typename).trim());
+
 export const route: Route = {
     path: '/:hub?',
     categories: ['new-media'],
@@ -46,6 +50,7 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
+    if (!shouldKeep(b)) {return '';}
     switch (b.__typename) {
         case 'CoreEmbedBlockType':
             return b.embedHtml;
@@ -107,9 +112,9 @@ async function handler(ctx) {
                 });
 
                 description += node.blocks
-                    .filter((b) => b.__typename !== 'NewsletterBlockType' && b.__typename !== 'RelatedPostsBlockType' && b.__typename !== 'ProductBlockType' && b.__typename !== 'TableOfContentsBlockType')
+                    .filter(shouldKeep)
                     .map((b) => renderBlock(b))
-                    .join('<br><br>');
+                    .join('<br>');
 
                 if (node.__typename === 'StreamResourceType') {
                     description += node.posts.edges
