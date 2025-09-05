@@ -41,11 +41,11 @@ const handler = async () => {
 };
 
 export const route: Route = {
-    path: '/filmguide',
+    path: '/film-guide',
     name: 'Film Guide',
     url: 'coolidge.org/film-guide',
     maintainers: ['johan456789'],
-    example: '/coolidge/filmguide',
+    example: '/coolidge/film-guide',
     categories: ['traditional-media'],
     features: {
         requireConfig: false,
