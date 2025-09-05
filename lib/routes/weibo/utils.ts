@@ -165,7 +165,7 @@ const weiboUtils = {
                     html += ` height="${item.large.geo.height || heightOfPics}"`;
                     style += `height: ${item.large.geo.height || heightOfPics}px;`;
                 }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
+                html += ` style="${style}"` + ' src="' + item.large?.url + '">';
 
                 if (addLinkForPics) {
                     html += '</a>';
