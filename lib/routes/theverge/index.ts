@@ -50,7 +50,9 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
-    if (!shouldKeep(b)) {return '';}
+    if (!shouldKeep(b)) {
+        return '';
+    }
     switch (b.__typename) {
         case 'CoreEmbedBlockType':
             return b.embedHtml;
@@ -112,7 +114,7 @@ async function handler(ctx) {
                 });
 
                 description += node.blocks
-                    .filter(shouldKeep)
+                    .filter((b) => shouldKeep(b))
                     .map((b) => renderBlock(b))
                     .join('<br>');
 
