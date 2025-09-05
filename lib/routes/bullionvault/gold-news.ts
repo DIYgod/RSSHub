@@ -21,7 +21,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     let items: DataItem[] = [];
 
-    items = $('section#block-views-latest-articles-block div.media, section#block-system-main table.views-table tr')
+    items = $('section#block-bootstrap-views-block-latest-articles-block div.media, div.gold-news-content table tr')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -66,8 +66,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link);
                     const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('header h1').text();
-                    const description: string | undefined = $$('div[property="content:encoded"]').html() ?? '';
+                    const title: string = $$('article.article h1').text();
+                    const description: string | undefined = $$('div.content').html() ?? '';
                     const pubDateStr: string | undefined = $$('div.submitted').text().split(/,/).pop();
                     const categories: string[] = $$('meta[name="news_keywords"]').attr('content')?.split(/,/) ?? [];
                     const authorEls: Element[] = $$('div.view-author-bio').toArray();
