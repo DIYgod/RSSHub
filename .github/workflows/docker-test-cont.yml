@@ -35,7 +35,7 @@ jobs:
 
       - name: Fetch affected routes
         id: fetch-route
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
@@ -89,7 +89,7 @@ jobs:
         if: (env.TEST_CONTINUE)
         id: generate-feedback
         timeout-minutes: 10
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
           TEST_BASEURL: http://localhost:1200
           TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
