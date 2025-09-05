@@ -65,8 +65,6 @@ const parseDynamic = async (item) => {
     const itemUrl = `${v2_api_url}/v6${item.url.replace('/feed/', '/feed/detail?id=')}`;
     let description, title;
     const type = Number.parseInt(item.type);
-    // console.log(type, itemUrl);
-
     switch (type) {
         case 0:
         case 5:
