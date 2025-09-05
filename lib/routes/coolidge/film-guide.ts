@@ -46,7 +46,7 @@ export const route: Route = {
     url: 'coolidge.org/film-guide',
     maintainers: ['johan456789'],
     example: '/coolidge/film-guide',
-    categories: ['traditional-media'],
+    categories: ['blog'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,

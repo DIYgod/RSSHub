@@ -51,7 +51,7 @@ export const route: Route = {
     url: 'coolidge.org/about-us/news-media',
     maintainers: ['johan456789'],
     example: '/coolidge/news',
-    categories: ['traditional-media'],
+    categories: ['blog'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
