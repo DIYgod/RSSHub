@@ -20,7 +20,7 @@ const handler = async () => {
     const absoluteCover = cover ? new URL(cover, link).href : undefined;
     const absoluteItemLink = itemLink ? new URL(itemLink, link).href : undefined;
 
-    const rendered = art(path.join(__dirname, 'templates/film_guide.art'), {
+    const rendered = art(path.join(__dirname, 'templates/description.art'), {
         image: absoluteCover,
         intro: description,
     });
