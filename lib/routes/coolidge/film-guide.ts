@@ -58,5 +58,3 @@ export const route: Route = {
     },
     handler,
 };
-
-
