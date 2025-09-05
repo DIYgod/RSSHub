@@ -31,7 +31,7 @@ async function handler(ctx) {
     const url = 'https://xueqiu.com/p/' + id;
 
     const response = await got(url, {
-        headerGeneratorPreset: PRESETS.MODERN_ANDROID,
+        headerGeneratorOptions: PRESETS.MODERN_ANDROID,
     });
 
     const data = response.data;

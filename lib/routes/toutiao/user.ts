@@ -41,7 +41,7 @@ async function handler(ctx) {
             const userAgent = headers['user-agent'];
 
             const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
-                headerGeneratorPreset: PRESETS.MODERN_WINDOWS_CHROME,
+                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
             });
 
             return data.data;

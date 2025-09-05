@@ -5,6 +5,7 @@ import proxy from '@/utils/proxy';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import { useRegisterRequest } from 'node-network-devtools';
 import { generateHeaders } from '@/utils/header-generator';
+import type { HeaderGeneratorOptions } from 'header-generator';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -26,7 +27,7 @@ export const useCustomHeader = (headers: Headers) => {
         });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorPreset?: any }) => {
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions> }) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
@@ -34,7 +35,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
     // Generate headers using header-generator for realistic browser headers
     // Use the provided preset or default to MODERN_MACOS_CHROME
-    const generatedHeaders = generateHeaders(init?.headerGeneratorPreset);
+    const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
     // ua
     if (!request.headers.get('user-agent')) {

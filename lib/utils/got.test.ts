@@ -76,9 +76,9 @@ describe('got', () => {
         expect(data.cookie).toBe('cookie=test; Domain=rsshub.test; Path=/');
     });
 
-    it('should support headerGeneratorPreset option', async () => {
+    it('should support headerGeneratorOptions', async () => {
         const { data } = await got('http://rsshub.test/headers', {
-            headerGeneratorPreset: PRESETS.MODERN_WINDOWS_CHROME,
+            headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
         });
 
         // Verify the request went through successfully

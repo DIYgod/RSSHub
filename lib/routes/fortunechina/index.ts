@@ -60,7 +60,7 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, {
-                    headerGeneratorPreset: PRESETS.MODERN_MOBILE,
+                    headerGeneratorOptions: PRESETS.MODERN_MOBILE,
                 });
 
                 const content = load(detailResponse);

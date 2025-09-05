@@ -14,7 +14,7 @@ const parseArticle = (item) =>
         const response = await got({
             url,
             method: 'get',
-            headerGeneratorPreset: PRESETS.MODERN_ANDROID,
+            headerGeneratorOptions: PRESETS.MODERN_ANDROID,
         });
         const html = response.data;
         const $ = load(html);

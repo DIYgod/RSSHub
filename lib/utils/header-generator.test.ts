@@ -37,7 +37,7 @@ describe('rand-user-agent', () => {
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
     });
 
-    it('generateHeaders should work with headerGeneratorPreset', () => {
+    it('generateHeaders should work with headerGeneratorOptions', () => {
         // Test with MODERN_WINDOWS_CHROME preset
         const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
 
@@ -70,10 +70,10 @@ describe('rand-user-agent', () => {
         expect(headers['user-agent']).toMatch(/Chrome/);
     });
 
-    it('should use headerGeneratorPreset with ofetch', async () => {
-        // This test verifies that headerGeneratorPreset is passed through to the request rewriter
+    it('should use headerGeneratorOptions with ofetch', async () => {
+        // This test verifies that headerGeneratorOptions is passed through to the request rewriter
         const response = await ofetch('http://rsshub.test/headers', {
-            headerGeneratorPreset: PRESETS.MODERN_WINDOWS_CHROME,
+            headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
         });
 
         // The response should include the headers that were sent

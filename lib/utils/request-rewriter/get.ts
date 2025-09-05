@@ -4,11 +4,12 @@ import logger from '@/utils/logger';
 import { config } from '@/config';
 import proxy from '@/utils/proxy';
 import { generateHeaders } from '@/utils/header-generator';
+import type { HeaderGeneratorOptions } from 'header-generator';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
 
 interface ExtendedRequestOptions extends http.RequestOptions {
-    headerGeneratorPreset?: any;
+    headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
 }
 
 const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
@@ -47,7 +48,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
 
         // Generate headers using header-generator for realistic browser headers
         // Use the provided preset or default to MODERN_MACOS_CHROME
-        const generatedHeaders = generateHeaders(options.headerGeneratorPreset);
+        const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
 
         // ua
         if (!headersLowerCaseKeys.has('user-agent')) {
@@ -105,9 +106,9 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             }
         }
 
-        // Remove the headerGeneratorPreset before passing to the original function
+        // Remove the headerGeneratorOptions before passing to the original function
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { headerGeneratorPreset, ...cleanOptions } = options;
+        const { headerGeneratorOptions, ...cleanOptions } = options;
 
         return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
     };

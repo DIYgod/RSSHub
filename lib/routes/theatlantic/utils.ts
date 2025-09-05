@@ -12,7 +12,7 @@ const getArticleDetails = async (items) => {
             cache.tryGet(item.link, async () => {
                 const url = item.link;
                 const html = await ofetch(url, {
-                    headerGeneratorPreset: PRESETS.MODERN_ANDROID,
+                    headerGeneratorOptions: PRESETS.MODERN_ANDROID,
                 });
                 const $ = load(html);
                 let data = JSON.parse($('script#__NEXT_DATA__').text());
