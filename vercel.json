@@ -11,7 +11,13 @@
       "src": "/(.*)",
       "dest": "api/index.js"
     }
-  ]
+  ],
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs22.x"
+    }
+  }
 }
 
 
