@@ -30,6 +30,9 @@ patchedDependencies:
   '@bbob/preset@4.2.0':
     hash: 6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed
     path: patches/@bbob__preset@4.2.0.patch
+  header-generator@2.1.72:
+    hash: 12247e67949717d9153608e46af31b9f78247bf9bcbd2910ac1313a5eed788e3
+    path: patches/header-generator@2.1.72.patch
 
 importers:
 
@@ -138,8 +141,8 @@ importers:
         specifier: 159.0.0
         version: 159.0.0
       header-generator:
-        specifier: 2.1.70
-        version: 2.1.70
+        specifier: 2.1.72
+        version: 2.1.72(patch_hash=12247e67949717d9153608e46af31b9f78247bf9bcbd2910ac1313a5eed788e3)
       hono:
         specifier: 4.9.4
         version: 4.9.4
@@ -2862,6 +2865,11 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
+  browserslist@4.25.4:
+    resolution: {integrity: sha512-4jYpcjabC606xJ3kw2QwGEZKX0Aw7sgQdZCvIK9dhVSPh76BKo+C+btT1RRofH7B+8iNpEbgGNVWiLki5q93yg==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+
   buffer-crc32@0.2.13:
     resolution: {integrity: sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==}
 
@@ -2915,6 +2923,9 @@ packages:
 
   caniuse-lite@1.0.30001735:
     resolution: {integrity: sha512-EV/laoX7Wq2J9TQlyIXRxTJqIw4sxfXS4OYgudGxBYRuTv0q7AM6yMEpU/Vo1I94thg9U6EZ2NfZx9GJq83u7w==}
+
+  caniuse-lite@1.0.30001739:
+    resolution: {integrity: sha512-y+j60d6ulelrNSwpPyrHdl+9mJnQzHBr08xm48Qno0nSk4h3Qojh+ziv2qE6rXf4k3tadF4o1J/1tAbVm1NtnA==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -3348,6 +3359,9 @@ packages:
 
   electron-to-chromium@1.5.202:
     resolution: {integrity: sha512-NxbYjRmiHcHXV1Ws3fWUW+SLb62isauajk45LUJ/HgIOkUA7jLZu/X2Iif+X9FBNK8QkF9Zb4Q2mcwXCcY30mg==}
+
+  electron-to-chromium@1.5.214:
+    resolution: {integrity: sha512-TpvUNdha+X3ybfU78NoQatKvQEm1oq3lf2QbnmCEdw+Bd9RuIAY+hJTvq1avzHM0f7EJfnH3vbCnbzKzisc/9Q==}
 
   ellipsize@0.1.0:
     resolution: {integrity: sha512-5gxbEjcb/Z2n6TTmXZx9wVi3N/DOzE7RXY3Xg9dakDuhX/izwumB9rGjeWUV6dTA0D0+juvo+JonZgNR9sgA5A==}
@@ -3784,8 +3798,8 @@ packages:
     resolution: {integrity: sha512-UcO3kefx6dCcZkgcTGgVOTFb7b1LlQ02hY1omMjjrrBzkajRMCFgYOjs7J71WqnuG1k2b+9ppGL7FsOfhZMQKQ==}
     engines: {node: '>=18'}
 
-  generative-bayesian-network@2.1.70:
-    resolution: {integrity: sha512-nP0CNiVs/QS5ppMsGiEYN3dgAe3UTT1mpDth0wTh9uEyEO4e7y1Yr5PGDcTJsU0Lm3YM21yNzhuPbUg7etKHbQ==}
+  generative-bayesian-network@2.1.72:
+    resolution: {integrity: sha512-d8Mcbb6OK2CF74qdkiuTk08Je1uQjuO8z3aWPt86zY1NFg2orc9FlpkVa4N27IY4nU8SZ6dwT7LGph4m6KV8rA==}
 
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -3911,8 +3925,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  header-generator@2.1.70:
-    resolution: {integrity: sha512-s2/jN4hIr/pDRZhXA1D2T72eO4f8Gi1mwYEIFLbU+OR7cjo+Tayrw4RlTN3dXPahrU/MBdjk9gv//MwxLoCpGQ==}
+  header-generator@2.1.72:
+    resolution: {integrity: sha512-/WZ7qAelkKEvUTnipdiSkOIEjw4uAWF9oJ5ZHXMop8BtfLGRsPjCipc8xszqYQL8dDX8/vJ7E1CQdpIvbDTHCA==}
     engines: {node: '>=16.0.0'}
 
   headers-polyfill@4.0.3:
@@ -8747,6 +8761,13 @@ snapshots:
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.25.2)
 
+  browserslist@4.25.4:
+    dependencies:
+      caniuse-lite: 1.0.30001739
+      electron-to-chromium: 1.5.214
+      node-releases: 2.0.19
+      update-browserslist-db: 1.1.3(browserslist@4.25.4)
+
   buffer-crc32@0.2.13: {}
 
   buffer-equal-constant-time@1.0.1: {}
@@ -8801,6 +8822,8 @@ snapshots:
   camelcase@8.0.0: {}
 
   caniuse-lite@1.0.30001735: {}
+
+  caniuse-lite@1.0.30001739: {}
 
   caseless@0.12.0: {}
 
@@ -9232,6 +9255,8 @@ snapshots:
       semver: 7.7.2
 
   electron-to-chromium@1.5.202: {}
+
+  electron-to-chromium@1.5.214: {}
 
   ellipsize@0.1.0: {}
 
@@ -9826,7 +9851,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  generative-bayesian-network@2.1.70:
+  generative-bayesian-network@2.1.72:
     dependencies:
       adm-zip: 0.5.16
       tslib: 2.8.1
@@ -9973,10 +9998,10 @@ snapshots:
 
   he@1.2.0: {}
 
-  header-generator@2.1.70:
+  header-generator@2.1.72(patch_hash=12247e67949717d9153608e46af31b9f78247bf9bcbd2910ac1313a5eed788e3):
     dependencies:
-      browserslist: 4.25.2
-      generative-bayesian-network: 2.1.70
+      browserslist: 4.25.4
+      generative-bayesian-network: 2.1.72
       ow: 0.28.2
       tslib: 2.8.1
 
@@ -12090,6 +12115,12 @@ snapshots:
   update-browserslist-db@1.1.3(browserslist@4.25.2):
     dependencies:
       browserslist: 4.25.2
+      escalade: 3.2.0
+      picocolors: 1.1.1
+
+  update-browserslist-db@1.1.3(browserslist@4.25.4):
+    dependencies:
+      browserslist: 4.25.4
       escalade: 3.2.0
       picocolors: 1.1.1
 

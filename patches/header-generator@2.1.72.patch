@@ -1,0 +1,36 @@
+diff --git a/presets.d.ts b/presets.d.ts
+index 7167ec82309aeafce687a6f885dc50fda5dfc866..2325ebf0c9a4e7eb5c0ad9e830e1264d0c65f153 100644
+--- a/presets.d.ts
++++ b/presets.d.ts
+@@ -41,6 +41,10 @@ export declare const MODERN_MACOS_CHROME: {
+     browserListQuery: string;
+     operatingSystems: "macos"[];
+ };
++export declare const MODERN_IOS: {
++    browserListQuery: string;
++    operatingSystems: "IOS"[];
++};
+ export declare const MODERN_ANDROID: {
+     operatingSystems: "android"[];
+     devices: "mobile"[];
+diff --git a/presets.js b/presets.js
+index edcf068b778f45c853c4c9ac1c979b0f914a7532..ce158f32756709fe5764543b28d724296128b722 100644
+--- a/presets.js
++++ b/presets.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.MODERN_ANDROID = exports.MODERN_MACOS_CHROME = exports.MODERN_MACOS_FIREFOX = exports.MODERN_MACOS = exports.MODERN_WINDOWS_CHROME = exports.MODERN_WINDOWS_FIREFOX = exports.MODERN_WINDOWS = exports.MODERN_LINUX_CHROME = exports.MODERN_LINUX_FIREFOX = exports.MODERN_LINUX = exports.MODERN_MOBILE = exports.MODERN_DESKTOP = void 0;
++exports.MODERN_IOS = exports.MODERN_ANDROID = exports.MODERN_MACOS_CHROME = exports.MODERN_MACOS_FIREFOX = exports.MODERN_MACOS = exports.MODERN_WINDOWS_CHROME = exports.MODERN_WINDOWS_FIREFOX = exports.MODERN_WINDOWS = exports.MODERN_LINUX_CHROME = exports.MODERN_LINUX_FIREFOX = exports.MODERN_LINUX = exports.MODERN_MOBILE = exports.MODERN_DESKTOP = void 0;
+ exports.MODERN_DESKTOP = {
+     browserListQuery: 'last 5 versions',
+ };
+@@ -48,4 +48,8 @@ exports.MODERN_ANDROID = {
+     ...exports.MODERN_MOBILE,
+     operatingSystems: ['android'],
+ };
++exports.MODERN_IOS = {
++    ...exports.MODERN_MOBILE,
++    operatingSystems: ['ios'],
++};
+ //# sourceMappingURL=presets.js.map

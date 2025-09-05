@@ -36,7 +36,14 @@ export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESET
     // Apply filtering logic for unwanted UAs
     // For preset-based approach, we'll use a generic browser detection from the user agent
     const userAgent = headers['user-agent'];
-    const detectedBrowser = userAgent.includes('Firefox') ? 'firefox' : 'chrome';
+    let detectedBrowser: string;
+    if (userAgent.includes('Firefox')) {
+        detectedBrowser = 'firefox';
+    } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+        detectedBrowser = 'safari';
+    } else {
+        detectedBrowser = 'chrome';
+    }
 
     let attempts = 0;
     while (!isValidUserAgent(headers['user-agent'], detectedBrowser) && attempts < 10) {
