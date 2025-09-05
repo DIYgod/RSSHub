@@ -24,6 +24,7 @@ const get_app_token = () => {
 };
 
 const base_url = 'https://api.coolapk.com';
+const v2_api_url = 'https://api2.coolapk.com';
 
 const getHeaders = () => ({
     'X-Requested-With': 'XMLHttpRequest',
@@ -58,10 +59,10 @@ const parseTuwenFromRaw = (raw) =>
 
 const parseDynamic = async (item) => {
     const pubDate = parseDate(item.dateline, 'X');
-    if (item.entityType === 'sponsorCard' || item.shareUrl === undefined) {
+    if (item.entityType === 'sponsorCard' || !item.url) {
         return;
     }
-    const itemUrl = item.shareUrl.split('?')[0];
+    const itemUrl = `${v2_api_url}/v6${item.url.replace('/feed/', '/feed/detail?id=')}`;
     let description, title;
     const type = Number.parseInt(item.type);
     switch (type) {
@@ -135,8 +136,8 @@ const parseDynamic = async (item) => {
         title,
         description,
         pubDate,
-        link: item.shareUrl,
-        guid: itemUrl,
+        link: `https://www.coolapk.com${item.url}`,
+        // guid: itemUrl,
         author: item.username,
     };
 };
