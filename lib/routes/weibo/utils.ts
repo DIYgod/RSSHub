@@ -157,15 +157,23 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (item.large.geo.width || widthOfPics >= 0) {
-                    html += ` width="${item.large.geo.width || widthOfPics}"`;
-                    style += `width: ${item.large.geo.width || widthOfPics}px;`;
+                if (item.large) {
+                    const { geo, url } = item.large;
+
+                    if (geo?.width || widthOfPics >= 0) {
+                        const width = geo?.width || widthOfPics;
+                        html += ` width="${width}"`;
+                        style += `width: ${width}px;`;
+                    }
+
+                    if (geo?.height || heightOfPics >= 0) {
+                        const height = geo?.height || heightOfPics;
+                        html += ` height="${height}"`;
+                        style += `height: ${height}px;`;
+                    }
+
+                    html += ` style="${style}" src="${url}">`;
                 }
-                if (item.large.geo.height || heightOfPics >= 0) {
-                    html += ` height="${item.large.geo.height || heightOfPics}"`;
-                    style += `height: ${item.large.geo.height || heightOfPics}px;`;
-                }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
 
                 if (addLinkForPics) {
                     html += '</a>';
