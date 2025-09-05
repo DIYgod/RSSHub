@@ -1,0 +1,2 @@
+<p><img src="{{ image }}"></p>
+<p>{{ intro }}</p>
