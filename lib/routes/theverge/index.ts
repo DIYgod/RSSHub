@@ -116,7 +116,7 @@ async function handler(ctx) {
                 description += node.blocks
                     .filter((b) => shouldKeep(b))
                     .map((b) => renderBlock(b))
-                    .join('<br>');
+                    .join('<br><br>');
 
                 if (node.__typename === 'StreamResourceType') {
                     description += node.posts.edges
