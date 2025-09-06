@@ -79,7 +79,7 @@ const renderBlock = (b) => {
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
         case 'ImageSliderBlockType':
-            return `<div>
+            return `
             ${b.images
                 .map(
                     (img) => `<figure>
@@ -87,7 +87,7 @@ const renderBlock = (b) => {
                     <figcaption>${img.caption.html}</figcaption>
                 </figure>`
                 )
-                .join('')}</div>`;
+                .join('')}`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
