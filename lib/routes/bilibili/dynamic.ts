@@ -135,6 +135,12 @@ const getImgs = (data?: Modules) => {
     if (!major) {
         return '';
     }
+    // 投稿视频
+    if (major.archive?.cover) {
+        imgUrls.push({
+            url: major.archive.cover,
+        });
+    }
     // 动态图片
     if (major.opus?.pics?.length) {
         imgUrls.push(
