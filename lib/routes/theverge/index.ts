@@ -6,6 +6,10 @@ import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
+const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
+
+const shouldKeep = (b: any) => !excludeTypes.has(String(b.__typename).trim());
+
 export const route: Route = {
     path: '/:hub?',
     categories: ['new-media'],
@@ -46,6 +50,9 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
+    if (!shouldKeep(b)) {
+        return '';
+    }
     switch (b.__typename) {
         case 'CoreEmbedBlockType':
             return b.embedHtml;
@@ -60,7 +67,7 @@ const renderBlock = (b) => {
         case 'CoreListBlockType':
             return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
         case 'CoreParagraphBlockType':
-            return b.contents.html;
+            return (b.tempContents ?? []).map((c) => c?.html ?? '').join('');
         case 'CorePullquoteBlockType':
             return `<blockquote>${b.contents.html}</blockquote>`;
         case 'CoreQuoteBlockType':
@@ -71,13 +78,23 @@ const renderBlock = (b) => {
             return b.children.map((c) => renderBlock(c)).join('');
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        case 'ImageSliderBlockType':
+            return `
+            ${b.images
+                .map(
+                    (img) => `<figure>
+                    <img src="${img.image.originalUrl}" alt="${img.alt}">
+                    <figcaption>${img.caption.html}</figcaption>
+                </figure>`
+                )
+                .join('')}`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
 };
 
 async function handler(ctx) {
-    const link = ctx.req.param('hub') ? `https://www.theverge.com/${ctx.req.param('hub')}/rss/index.xml` : 'https://www.theverge.com/rss/index.xml';
+    const link = ctx.req.param('hub') ? `https://www.theverge.com/rss/${ctx.req.param('hub')}/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
     const feed = await parser.parseURL(link);
 
@@ -97,7 +114,7 @@ async function handler(ctx) {
                 });
 
                 description += node.blocks
-                    .filter((b) => b.__typename !== 'NewsletterBlockType' && b.__typename !== 'RelatedPostsBlockType' && b.__typename !== 'ProductBlockType' && b.__typename !== 'TableOfContentsBlockType')
+                    .filter((b) => shouldKeep(b))
                     .map((b) => renderBlock(b))
                     .join('<br><br>');
 

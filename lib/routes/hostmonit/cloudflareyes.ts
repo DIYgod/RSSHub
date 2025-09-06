@@ -62,7 +62,7 @@ async function handler(ctx) {
     const items = response.info.slice(0, limit).map((item) => {
         const ip = item.ip;
         const latency = item.latency === undefined ? undefined : `${item.latency}ms`;
-        const line = item.line === undefined ? undefined : (Object.hasOwn(lines, item.line) ? lines[item.line] : item.line);
+        const line = item.line === undefined ? undefined : Object.hasOwn(lines, item.line) ? lines[item.line] : item.line;
         const loss = item.loss === undefined ? undefined : `${item.loss}%`;
         const node = item.node;
         const speed = item.speed === undefined ? undefined : `${item.speed} KB/s`;

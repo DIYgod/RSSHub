@@ -1,0 +1,46 @@
+messages:
+  - role: system
+    content: |-
+      You are a GitHub assistant with access to GitHub Model Context Protocol (MCP)
+      tools in read-only mode. Your task is to search this repository's issues to find
+      previously filed issues similar to the provided issue title and body. Use the
+      GitHub tools via MCP to perform the search and retrieve real issue data (do not
+      fabricate results). Consider semantic similarity across title and body. Exclude
+      the current issue. Return up to 3 of the most similar past issues. If none are
+      reasonably similar, return an empty list. Output must follow the response schema
+      exactly and include only data you actually retrieved from GitHub tools.
+      The current GitHub repository is: "{{repository}}".
+  - role: user
+    content: |-
+      Find similar issues for this new issue:
+      Title: {{issue_title}}
+      Body:
+      {{issue_body}}
+model: openai/gpt-4.1-mini
+responseFormat: json_schema
+jsonSchema: |-
+  {
+    "name": "similar_issues_result",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": { "type": "integer" },
+              "title": { "type": "string" },
+              "url": { "type": "string" },
+              "similarity_score": { "type": "number", "minimum": 0, "maximum": 1 }
+            },
+            "required": ["number", "title", "url", "similarity_score"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["matches"],
+      "additionalProperties": false
+    }
+  }

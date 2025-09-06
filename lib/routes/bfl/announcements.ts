@@ -54,7 +54,7 @@ async function handler(): Promise<Data> {
             const $timeElement = $anchor.find('time');
             const datetimeAttr = $timeElement.attr('datetime');
             const timeText = $timeElement.text().trim();
-            const pubDate = datetimeAttr ? parseDate(datetimeAttr) : (timeText ? parseDate(timeText) : undefined);
+            const pubDate = datetimeAttr ? parseDate(datetimeAttr) : timeText ? parseDate(timeText) : undefined;
 
             const summaryDescription = $anchor.find('p[class*="line-clamp-3"]').html()?.trim() || '';
             const author = 'Black Forest Labs';

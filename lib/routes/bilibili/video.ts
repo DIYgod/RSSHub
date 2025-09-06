@@ -4,6 +4,7 @@ import logger from '@/utils/logger';
 import type { Context } from 'hono';
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',
@@ -38,7 +39,6 @@ async function handler(ctx: Context) {
     const dmImgList = utils.getDmImgList();
     const dmImgInter = utils.getDmImgInter();
     const renderData = await cache.getRenderData(uid);
-    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     const params = utils.addWbiVerifyInfo(
         utils.addRenderData(utils.addDmVerifyInfoWithInter(`mid=${uid}&ps=30&tid=0&pn=1&keyword=&order=pubdate&platform=web&web_location=1550101&order_avoided=true`, dmImgList, dmImgInter), renderData),
@@ -56,6 +56,10 @@ async function handler(ctx: Context) {
         throw new Error(`Got error code ${data.code} while fetching: ${data.message}`);
     }
 
+    const usernameAndFace = await cache.getUsernameAndFaceFromUID(uid);
+    const name = usernameAndFace[0] || data.data.list.vlist[0]?.author;
+    const face = usernameAndFace[1];
+
     return {
         title: `${name} 的 bilibili 空间`,
         link: `https://space.bilibili.com/${uid}`,
@@ -69,7 +73,7 @@ async function handler(ctx: Context) {
             data.data.list.vlist &&
             (await Promise.all(
                 data.data.list.vlist.map(async (item) => {
-                    const subtitles = await cache.getVideoSubtitle(item.bvid);
+                    const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                     return {
                         title: item.title,
                         description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
@@ -83,11 +87,7 @@ async function handler(ctx: Context) {
                                       url: getVideoUrl(item.bvid),
                                       mime_type: 'text/html',
                                   },
-                                  ...subtitles.map((subtitle) => ({
-                                      url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
-                                      mime_type: 'text/srt',
-                                      title: `字幕 - ${subtitle.lan_doc}`,
-                                  })),
+                                  ...subtitles,
                               ]
                             : undefined,
                     };

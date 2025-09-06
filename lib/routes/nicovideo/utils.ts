@@ -1,4 +1,4 @@
-import { Essential, UserInfo, VideoItem } from './types';
+import { Essential, Mylist, UserInfo, VideoItem } from './types';
 
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
@@ -30,5 +30,31 @@ export const getUserVideosById = (id: string) =>
         config.cache.routeExpire,
         false
     ) as Promise<VideoItem[]>;
+
+export const getMylist = (id: string): Promise<Mylist> =>
+    cache.tryGet<Mylist>(
+        `nicovideo:mylist:${id}`,
+        async () => {
+            const { data } = await ofetch(`https://nvapi.nicovideo.jp/v2/mylists/${id}`, {
+                headers: {
+                    'X-Frontend-Id': '6',
+                },
+                query: {
+                    sortKey: 'addedAt',
+                    sortOrder: 'desc',
+                    /**
+                     * @remarks
+                     * Up to 500 items can be registered in a single mylist.
+                     * @see https://qa.nicovideo.jp/faq/show/648?site_domain=default
+                     */
+                    pageSize: 500,
+                    page: 1,
+                },
+            });
+            return data.mylist;
+        },
+        config.cache.routeExpire,
+        false
+    );
 
 export const renderVideo = (video: Essential, embed: boolean) => art(path.join(__dirname, 'templates/video.art'), { video, embed });

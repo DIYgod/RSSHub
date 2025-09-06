@@ -69,7 +69,7 @@ export const route: Route = {
                     author: itemDetail.byline,
                     pubDate: item.date,
                     // for videos and shortstops, no need to extract full text below
-                    description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : (itemType === 'Shortstop' ? itemDetail.headline : ''),
+                    description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : itemType === 'Shortstop' ? itemDetail.headline : '',
                 };
             });
 

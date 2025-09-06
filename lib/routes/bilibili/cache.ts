@@ -6,6 +6,17 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+const subtitleLimiter = new RateLimiterMemory({
+    points: 5,
+    duration: 1,
+    execEvenly: true,
+});
+
+const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
+    maxQueueSize: 4800,
+});
 
 const getCookie = (disableConfig = false) => {
     if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
@@ -147,11 +158,11 @@ const getUsernameAndFaceFromUID = async (uid) => {
         if (nameResponse.data.name) {
             name = nameResponse.data.name;
             face = nameResponse.data.face;
+            cache.set(nameKey, nameResponse.data.name);
+            cache.set(faceKey, nameResponse.data.face);
         } else {
             logger.error(`Error when visiting /x/space/wbi/acc/info: ${JSON.stringify(nameResponse)}`);
         }
-        cache.set(nameKey, name);
-        cache.set(faceKey, face);
     }
     return [name, face];
 };
@@ -246,6 +257,7 @@ const getVideoSubtitle = async (
     const cid = await getCidFromId(undefined, 1, bvid);
     const cookie = await getCookie();
     return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        await subtitleLimiterQueue.removeTokens(1);
         const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
             headers: {
                 Referer: `https://www.bilibili.com/video/${bvid}`,
@@ -269,6 +281,15 @@ const getVideoSubtitle = async (
             })
         );
     });
+};
+
+const getVideoSubtitleAttachment = async (bvid: string) => {
+    const subtitles = await getVideoSubtitle(bvid);
+    return subtitles.map((subtitle) => ({
+        url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
+        mime_type: 'text/srt',
+        title: `字幕 - ${subtitle.lan_doc}`,
+    }));
 };
 
 const getAidFromBvid = async (bvid) => {
@@ -353,4 +374,5 @@ export default {
     getArticleDataFromCvid,
     getRenderData,
     getVideoSubtitle,
+    getVideoSubtitleAttachment,
 };
