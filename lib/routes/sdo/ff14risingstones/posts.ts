@@ -15,7 +15,7 @@ export const route: Route = {
     },
     parameters: {
         pid: {
-            description: '分区id，默认显示所有分区，可通过,拼接多个分区 id 进行筛选',
+            description: '分区id，默认显示所有分区，可通过 `,` 拼接多个分区 id 进行筛选',
             default: 'all',
             options: [
                 {
