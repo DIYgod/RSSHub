@@ -53,7 +53,30 @@ async function handler(ctx) {
 
                 const $ = load(detailResponse);
 
-                item.description = ($(`div[data-testid="newsStoryMedia"]`).html() ?? '') + ($('article > main').html() ?? '');
+                const rcState = $('script:contains("window._rcState_ = ")')
+                    .text()
+                    .match(/window\._rcState_ = (.*);/)?.[1];
+
+                if (rcState) {
+                    const rcStateJson = JSON.parse(rcState);
+                    const news = Object.values(rcStateJson?.pages?.pages ?? {})[0] as any;
+
+                    const headerImg = news?.data?.newsStory?.headerMultimediaItem?.picture;
+                    const headerImgUrl = headerImg?.pattern ? headerImg?.pattern.replace('{width}', '635').replace('{ratio}', '16x9') : '';
+                    const header = `<figure><picture><img src="${headerImgUrl}" alt="${headerImg?.alt ?? ''}"></picture><figcaption>${headerImg?.legend ?? ''}</figcaption></figure>`;
+                    const primer = news?.data?.newsStory?.primer?.replaceAll(String.raw`\n`, '') ?? '';
+                    const body = news?.data?.newsStory?.body?.html?.replaceAll(String.raw`\n`, '') ?? '';
+                    let bodyWithImg = body;
+                    for (const [index, attachment] of (news?.data?.newsStory?.body?.attachments ?? []).entries()) {
+                        const placeholder = `<!--body:attachment:${index}-->`;
+                        const picture = attachment?.picture;
+                        const imageUrl = picture?.pattern ? picture?.pattern.replace('{width}', '635').replace('{ratio}', attachment?.dimensionRatio ?? '16x9') : '';
+                        bodyWithImg = bodyWithImg.replace(placeholder, `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
+                    }
+                    item.description = header + primer + bodyWithImg;
+                } else {
+                    item.description = '';
+                }
 
                 return item;
             })
