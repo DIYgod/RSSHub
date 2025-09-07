@@ -75,7 +75,7 @@ async function handler(ctx) {
                     }
                     item.description = header + primer + bodyWithImg;
                 } else {
-                    item.description = '';
+                    item.description = ($(`div[data-testid="newsStoryMedia"]`).html() ?? '') + ($('article > main').html() ?? '');
                 }
 
                 return item;
