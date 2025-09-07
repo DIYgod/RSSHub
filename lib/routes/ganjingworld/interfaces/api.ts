@@ -1,8 +1,8 @@
 // interfaces/api.ts
-export interface Channel {
-    icon: string;
-    id: string;
-    name: string;
+export interface ApiResponse {
+    data: {
+        list: ListItem[];
+    };
 }
 
 export interface ListItem {
@@ -13,10 +13,19 @@ export interface ListItem {
     channel: Channel;
     poster_url: string;
     text: string;
+    media: Media[];
+}
+export interface Channel {
+    icon: string;
+    id: string;
+    name: string;
 }
 
-export interface ApiResponse {
-    data: {
-        list: ListItem[];
-    };
+export interface Media {
+    type: string;
+    id: string;
+    url: string;
+    width: number;
+    height: number;
+    ratio: number;
 }
