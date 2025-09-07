@@ -11,7 +11,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export function checkConfig() {
-    if (!config.sdo.ff14risingstones || !!config.sdo.ua) {
+    if (!config.sdo.ff14risingstones || !config.sdo.ua) {
         throw new ConfigNotFoundError('ff14risingstones RSS is disabled due to the lack of relevant config');
     }
 }
