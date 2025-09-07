@@ -98,8 +98,8 @@ async function getUserFeeds(url: string, category: string) {
             n.map(({ id, noteCard }) => ({
                 title: noteCard.displayTitle,
                 link: new URL(noteCard.noteId || id, url).toString(),
-                guid: new URL(noteCard.noteId || id, url).toString() || noteCard.displayTitle,
-                description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
+                guid: noteCard.displayTitle,
+                description: `<img src ="${noteCard.cover.infoList.pop().url} width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
                 author: noteCard.user.nickname,
                 upvotes: noteCard.interactInfo.likedCount,
             }))
