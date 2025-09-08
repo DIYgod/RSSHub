@@ -3,7 +3,6 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 
@@ -127,8 +126,8 @@ export const route: Route = {
     url: 'www.szse.cn',
     maintainers: ['nczitzk'],
     handler,
-    example: '/szse/disclosure/listed/notice/stock=000001&beginDate=2025-08-01&endDate=2025-08-31',
-    parameters: { query: '筛选条件：stock指定股票代码，beginDate公告起始日期，endDate公告结束日期，具体使用见示例' },
+    example: '/szse/disclosure/listed/notice',
+    parameters: { query: 'Filter options. can filte by "stock","beginDate","endDate". example:"stock=000001&beginDate=2025-07-01&endDate=2025-08-30"' },
     description: undefined,
     categories: ['finance'],
     features: {
