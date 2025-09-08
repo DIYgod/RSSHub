@@ -63,7 +63,7 @@ export const route: Route = {
 ::: tip
   When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
   There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
-  
+
   Support for announcements and fancards:
   - Use \`/:source/:id/announcements\` to get announcements
   - Use \`/:source/:id/fancards\` to get fancards
@@ -201,7 +201,7 @@ async function processDiscordMessages(channels: any[], limit: number) {
 
                 return channelResponse.data
                     .filter((message: DiscordMessage) => message.content || message.attachments)
-                    .sort((a, b) => b.id.localeCompare(a.id))
+                    .toSorted((a, b) => b.id.localeCompare(a.id))
                     .slice(0, limit)
                     .map((message: DiscordMessage) => ({
                         title: message.content || 'Discord Message',

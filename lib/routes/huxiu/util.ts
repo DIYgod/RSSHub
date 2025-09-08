@@ -257,7 +257,7 @@ const generateSignature = () => {
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
-    const r = [appSecret, timestamp, nonce].sort();
+    const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,
         timestamp,
