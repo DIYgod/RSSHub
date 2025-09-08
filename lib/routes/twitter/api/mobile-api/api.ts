@@ -280,7 +280,7 @@ const getUserTweets = async (id, params = {}) => {
             return !idSet.has(id_str) && idSet.add(id_str) && tweet;
         }) // deduplicate
         .filter(Boolean) // remove null
-        .sort((a, b) => (b.id_str || b.conversation_id_str) - (a.id_str || a.conversation_id_str)) // desc
+        .toSorted((a, b) => (b.id_str || b.conversation_id_str) - (a.id_str || a.conversation_id_str)) // desc
         .slice(0, 20);
     cache.set(cacheKey, JSON.stringify(tweets));
     return tweets;

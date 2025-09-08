@@ -132,7 +132,7 @@ async function handler(ctx) {
                     if (enclosureMatches) {
                         const enclosureMatch = enclosureMatches
                             .map((e) => e.match(new RegExp(enclosurePattern)))
-                            .sort((a, b) => Number.parseInt(a[2], 10) - Number.parseInt(b[2], 10))
+                            .toSorted((a, b) => Number.parseInt(a[2], 10) - Number.parseInt(b[2], 10))
                             .pop();
 
                         item.enclosure_url = enclosureMatch[3];

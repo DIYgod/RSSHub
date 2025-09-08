@@ -136,10 +136,7 @@ async function handler(ctx) {
 
                 item.author = content('meta[name="author"]').attr('content');
                 item.title = item.title ?? content('meta[name="twitter:title"]').attr('content');
-                item.description = content('#contentDiv')
-                    .html()
-                    ?.replace(/&nbsp;/g, '')
-                    .replaceAll('<p></p>', '');
+                item.description = content('#contentDiv').html()?.replaceAll('&nbsp;', '').replaceAll('<p></p>', '');
 
                 return item;
             })

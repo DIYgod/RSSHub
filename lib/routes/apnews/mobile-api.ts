@@ -81,7 +81,7 @@ async function handler(ctx) {
             }
         })
         .filter(Boolean)
-        .sort((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;

@@ -77,7 +77,7 @@ export const route: Route = {
                 displayErrors: true,
             });
             const md = markdownit('commonmark');
-            const items = context.an.exports.sort((a, b) => a.updatedAt - b.updatedAt);
+            const items = context.an.exports.toSorted((a, b) => a.updatedAt - b.updatedAt);
             const groups = new Map(items.map((it) => [it.name, it]));
             const pkgs = [...groups.values()].map((item) => {
                 const $ = load(md.render(item.readme));

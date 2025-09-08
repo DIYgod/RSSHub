@@ -49,7 +49,7 @@ async function handler(ctx) {
         }))
     );
 
-    items = items.sort((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
+    items = items.toSorted((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
 
     items = await Promise.all(
         items.map((item) =>

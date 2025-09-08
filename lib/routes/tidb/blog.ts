@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 
-const escapeHtml = (text: string): string => text?.replace(/&/g, '&amp;')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')?.replace(/'/g, '&quot;')?.replace(/'/g, '&#039;') ?? text;
+const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll("'", '&quot;')?.replaceAll("'", '&#039;') ?? text;
 
 const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
 

@@ -155,7 +155,7 @@ const sortRoutes = (
         }
     >
 ) =>
-    Object.entries(routes).sort(([pathA], [pathB]) => {
+    Object.entries(routes).toSorted(([pathA], [pathB]) => {
         const segmentsA = pathA.split('/');
         const segmentsB = pathB.split('/');
         const lenA = segmentsA.length;

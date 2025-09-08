@@ -56,7 +56,7 @@ async function handler(ctx) {
                 date: $el.children().first().find('small').children().remove().end().text().slice(3),
             };
         });
-    const finalLatestReplies = [...latestReplies, ...latestSubReplies].sort((a, b) => (a.id < b.id ? 1 : -1));
+    const finalLatestReplies = [...latestReplies, ...latestSubReplies].toSorted((a, b) => (a.id < b.id ? 1 : -1));
 
     const postTopic = {
         title,

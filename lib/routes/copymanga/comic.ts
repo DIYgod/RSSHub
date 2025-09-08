@@ -82,7 +82,7 @@ async function handler(ctx) {
                     ordered,
                     // index,
                 }))
-                .sort((a, b) => b.ordered - a.ordered);
+                .toSorted((a, b) => b.ordered - a.ordered);
 
             return chapters;
         },

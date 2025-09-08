@@ -16,6 +16,6 @@ export const getToken = () =>
 export const sign = (requestPath: string, payload: Record<string, any> = {}, timestamp: number, token: string) => {
     payload.timestamp = timestamp;
     payload.token = token;
-    const sortedParams = Object.keys(payload).sort();
+    const sortedParams = Object.keys(payload).toSorted();
     return md5(md5(requestPath) + md5(sortedParams + md5(token) + timestamp));
 };

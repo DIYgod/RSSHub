@@ -12,7 +12,7 @@ const renderItems = (items) =>
         switch (productType) {
             case 'carousel_container': {
                 const images = item.carousel_media.map((i) => ({
-                    ...i.image_versions2.candidates.sort((a, b) => b.width - a.width)[0],
+                    ...i.image_versions2.candidates.toSorted((a, b) => b.width - a.width)[0],
                     alt: item.accessibility_caption,
                 }));
                 description = art(path.join(__dirname, 'templates/images.art'), {
@@ -25,12 +25,12 @@ const renderItems = (items) =>
             case 'igtv':
                 description = art(path.join(__dirname, 'templates/video.art'), {
                     summary,
-                    image: item.image_versions2.candidates.sort((a, b) => b.width - a.width)[0],
+                    image: item.image_versions2.candidates.toSorted((a, b) => b.width - a.width)[0],
                     video: item.video_versions[0],
                 });
                 break;
             case 'feed': {
-                const images = [{ ...item.image_versions2.candidates.sort((a, b) => b.width - a.width)[0], alt: item.accessibility_caption }];
+                const images = [{ ...item.image_versions2.candidates.toSorted((a, b) => b.width - a.width)[0], alt: item.accessibility_caption }];
                 description = art(path.join(__dirname, 'templates/images.art'), {
                     summary,
                     images,

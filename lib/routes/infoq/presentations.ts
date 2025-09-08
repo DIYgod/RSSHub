@@ -90,7 +90,7 @@ export const handler = async (ctx) => {
                 const script = $$('script[type="text/javascript"]').text();
                 const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1] ?? undefined;
                 const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1] ?? undefined;
-                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replace(/\\/g, '') ?? undefined;
+                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replaceAll('\\', '') ?? undefined;
 
                 if (videoSrc) {
                     $$('div.player').replaceWith(

@@ -48,7 +48,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
             };
         })
-        .sort((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
 
     const items = await Promise.all(

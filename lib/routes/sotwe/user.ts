@@ -41,7 +41,7 @@ const renderMedia = (mediaEntities) =>
                 case 'photo':
                     return `<img src="${e.mediaURL}">`;
                 case 'video': {
-                    const video = e.videoInfo.variants.filter((v) => v.type === 'video/mp4').sort((a, b) => b.bitrate - a.bitrate)[0];
+                    const video = e.videoInfo.variants.filter((v) => v.type === 'video/mp4').toSorted((a, b) => b.bitrate - a.bitrate)[0];
                     return `<video controls preload="metadata" poster="${e.mediaURL}"><source src="${video.url}" type="video/mp4"></video>`;
                 }
                 default:

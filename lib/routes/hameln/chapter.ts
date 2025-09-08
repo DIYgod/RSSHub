@@ -49,7 +49,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
             };
         })
-        .sort((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
+        .toSorted((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
         .slice(0, limit);
 
     const item_list = await Promise.all(

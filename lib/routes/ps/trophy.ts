@@ -87,7 +87,7 @@ async function handler(ctx) {
     for (const item of items) {
         result = [...result, ...item];
     }
-    result = result.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    result = result.toSorted((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
     return {
         title: `${id} 的 PSN 奖杯`,

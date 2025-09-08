@@ -26,7 +26,7 @@ const generateNonce = (length: number): string => {
 export const getSignedHeaders = () => {
     const nonce = generateNonce(6);
     const timestamp = Date.now().toString();
-    const signature = sha1([salt, timestamp, nonce].sort().join(''));
+    const signature = sha1([salt, timestamp, nonce].toSorted().join(''));
     return {
         nonce,
         timestamp,

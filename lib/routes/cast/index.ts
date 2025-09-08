@@ -94,7 +94,7 @@ async function handler(ctx) {
     } else {
         const buildUnitScript = $('script[parseType="bulidstatic"]');
         const queryUrl = `${baseUrl}${buildUnitScript.attr('url')}`;
-        const queryData = JSON.parse(buildUnitScript.attr('querydata')?.replace(/'/g, '"') ?? '{}');
+        const queryData = JSON.parse(buildUnitScript.attr('querydata')?.replaceAll("'", '"') ?? '{}');
         queryData.paramJson = `{"pageNo":1,"pageSize":${limit}}`;
 
         const { data } = await got.get<{ data: { html: string } }>(queryUrl, {

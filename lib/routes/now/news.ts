@@ -100,7 +100,7 @@ async function handler(ctx) {
                           link: `https://news.now.com/home/${category}/player?newsId=${item.newsId}`,
                           pubDate: parseDate(item.publishDate, 'x'),
                           category: [...item.sportTypes.map((t) => t.sportTypeNameChi), ...item.players.map((p) => p.playerFullNameChi), ...item.teams.map((t) => t.teamCodeChi)],
-                          image: item.newsPhotos?.filter((p) => p.sizeType === '3')?.[0]?.imageUrl,
+                          image: item.newsPhotos?.find((p) => p.sizeType === '3')?.imageUrl,
                           newsId: item.newsId,
                       };
                   })

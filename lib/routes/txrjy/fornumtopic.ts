@@ -71,12 +71,12 @@ async function handler(ctx) {
                                 .remove()
                                 .end()
                                 .html()
-                                ?.replace(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                                ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
                                 .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2'),
                             pattl: content(item)
                                 .find('div.pattl')
                                 .html()
-                                ?.replace(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                                ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
                                 .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2'),
                             author: content(item).find('a.xw1').text().trim(),
                         })

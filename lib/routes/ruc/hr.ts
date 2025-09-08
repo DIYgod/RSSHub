@@ -34,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'tzgg';
+    const category = ctx.req.param('category')?.replaceAll('-', '/') ?? 'tzgg';
 
     const rootUrl = 'http://hr.ruc.edu.cn';
     const currentUrl = `${rootUrl}/${category}/index.htm`;

@@ -26,7 +26,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     while ((match = updateRegex.exec(response)) !== null && items.length < limit) {
         const headerLine: string | undefined = match[2].trim();
-        const description: string | undefined = match[4].trim()?.replace(/(\s[+-])/g, '<br>$1');
+        const description: string | undefined = match[4].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
         let version: string = 'N/A';
         let pubDateStr: string | undefined = undefined;
