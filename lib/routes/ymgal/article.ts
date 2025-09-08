@@ -29,8 +29,8 @@ export const route: Route = {
     maintainers: ['SunBK201'],
     handler,
     description: `| 全部文章 | 资讯 | 专栏   |
-  | -------- | ---- | ------ |
-  | all      | news | column |`,
+| -------- | ---- | ------ |
+| all      | news | column |`,
 };
 
 async function handler(ctx) {
@@ -42,7 +42,7 @@ async function handler(ctx) {
         await Promise.all(
             Object.values(types).map(async (type) => {
                 const response = await got(`${host}/co/topic/list${type}`);
-                data.push(response.data.data);
+                data.push(...response.data.data);
             })
         );
         data = data.sort((a, b) => b.publishTime - a.publishTime).slice(0, 10);

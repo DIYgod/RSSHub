@@ -26,7 +26,7 @@ export const route: Route = {
     maintainers: ['emdoe', 'nczitzk'],
     handler,
     description: `| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
-  | ------------ | -------- | -------- | -------- |`,
+| ------------ | -------- | -------- | -------- |`,
 };
 
 async function handler(ctx) {

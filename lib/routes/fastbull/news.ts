@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -10,8 +8,9 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/news', '/'],
+    path: '/news',
     categories: ['finance'],
+    view: ViewType.Articles,
     example: '/fastbull/news',
     parameters: {},
     features: {
@@ -24,18 +23,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['fastbull.cn/news', 'fastbull.cn/'],
+            source: ['fastbull.com/cn/news', 'fastbull.com/cn'],
         },
     ],
-    name: '新闻',
+    name: 'News',
     maintainers: ['nczitzk'],
     handler,
-    url: 'fastbull.cn/news',
+    url: 'fastbull.com/news',
 };
 
 async function handler() {
-    const rootUrl = 'https://www.fastbull.cn';
-    const currentUrl = `${rootUrl}/news`;
+    const rootUrl = 'https://www.fastbull.com';
+    const currentUrl = `${rootUrl}/cn/news`;
 
     const response = await got({
         method: 'get',

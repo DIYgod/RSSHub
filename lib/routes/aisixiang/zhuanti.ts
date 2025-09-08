@@ -23,9 +23,9 @@ export const route: Route = {
     name: '专题',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

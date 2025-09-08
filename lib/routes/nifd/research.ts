@@ -47,13 +47,13 @@ async function handler(ctx) {
     const response = await got.get(url);
     const $ = load(response.data);
     const list = $('div.qr-main-item')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2').text(),
             link: rootUrl + $(item).find('a').attr('href'),
             author: $(item).find('p > span:nth-child(2)').text(),
             pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
@@ -61,6 +61,22 @@ async function handler(ctx) {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.qrd-content').html();
+
+                const $enclosureEl = content('div.report-bottom a').first();
+                const enclosureUrl = $enclosureEl.attr('href');
+
+                if (enclosureUrl) {
+                    const enclosureItem = {
+                        enclosure_url: new URL(enclosureUrl, rootUrl).href,
+                        enclosure_type: `application/${enclosureUrl.split(/\./).pop() ?? 'pdf'}`,
+                        enclosure_title: $enclosureEl.prev().text(),
+                    };
+
+                    item = {
+                        ...item,
+                        ...enclosureItem,
+                    };
+                }
 
                 return item;
             })

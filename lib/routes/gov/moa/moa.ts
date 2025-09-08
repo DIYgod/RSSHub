@@ -8,13 +8,13 @@ const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
 
 export const route: Route = {
-    path: '/moa/:suburl{.+}',
+    path: '/moa/suburl/:suburl{.+}',
     categories: ['government'],
-    example: '/gov/moa/gk/zcjd/',
+    example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
             source: ['moa.gov.cn/'],
-            target: '/moa/:suburl',
+            target: '/moa/suburl/:suburl',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },
@@ -82,7 +82,8 @@ async function dealChannel(suburl, selectors) {
     const channelTitle = channelTitleText ?? $(channelTitleSelector).text();
 
     const pageInfos = $(listSelector)
-        .map((i, e) => {
+        .toArray()
+        .map((e) => {
             const element = $(e);
             const titleElement = element.find(titleSelector);
 
@@ -99,8 +100,7 @@ async function dealChannel(suburl, selectors) {
                 // 如果是公示文章或者站外文章的话只能用这个保底了
                 pubDate: parseRelativeDate(dateraw),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         pageInfos.map(async (item) => {

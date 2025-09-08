@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://chaping.cn';
@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const newflashAPI = `${host}/api/official/information/newsflash?page=1&limit=21`;
-    const response = await got(newflashAPI).json();
+    const response = await ofetch(newflashAPI);
     const data = response.data;
 
     return {

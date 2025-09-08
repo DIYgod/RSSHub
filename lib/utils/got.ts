@@ -1,5 +1,6 @@
 import { destr } from 'destr';
 import ofetch from '@/utils/ofetch';
+import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = (request, options?: any) => {
@@ -27,18 +28,15 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.json;
         }
         if (options?.form && !options.body) {
-            const body = new FormData();
-            for (const key in options.form) {
-                body.append(key, options.form[key]);
-            }
-            options.body = body;
+            options.body = new URLSearchParams(options.form as Record<string, string>).toString();
             if (!options.headers) {
                 options.headers = {};
             }
+            options.headers['content-type'] = 'application/x-www-form-urlencoded';
             delete options.form;
         }
         if (options?.searchParams) {
-            request += '?' + new URLSearchParams(options.searchParams).toString();
+            request += '?' + getSearchParamsString(options.searchParams);
             delete options.searchParams;
         }
 

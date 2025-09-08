@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -30,19 +28,19 @@ export const route: Route = {
     handler,
     description: `Country
 
-  | United States | Canada | United Kingdom |
-  | ------------- | ------ | -------------- |
-  | us            | ca     | gb             |
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
   gender
 
-  | male | female |
-  | ---- | ------ |
-  | mens | womens |
+| male | female |
+| ---- | ------ |
+| mens | womens |
 
-  :::tip
+::: tip
   Parameter \`country\` can be found within the url of \`Arcteryx\` website.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

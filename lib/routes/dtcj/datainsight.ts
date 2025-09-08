@@ -28,8 +28,8 @@ export const route: Route = {
     handler,
     url: 'dtcj.com/dtcj/datainsight',
     description: `| 城数 | NEXT 情报局 | 专业精选 |
-  | ---- | ----------- | -------- |
-  | 3    | 1           | 4        |`,
+| ---- | ----------- | -------- |
+| 3    | 1           | 4        |`,
 };
 
 async function handler(ctx) {
@@ -47,15 +47,15 @@ async function handler(ctx) {
 
     const list = $('.info-2_P1UM a')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: `${rootUrl}${item.attr('href')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

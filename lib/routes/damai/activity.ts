@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -15,13 +13,13 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     name: '票务更新',
-    maintainers: ['hoilc'],
+    maintainers: ['hoilc', 'Konano'],
     handler,
     description: `城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)`,
 };
@@ -55,6 +53,7 @@ async function handler(ctx) {
     return {
         title: `大麦网票务 - ${city || '全国'} - ${category || '全部分类'}${subcategory ? ' - ' + subcategory : ''}${keyword ? ' - ' + keyword : ''}`,
         link: 'https://search.damai.cn/search.htm',
+        allowEmpty: true,
         item: list.map((item) => ({
             title: item.nameNoHtml,
             author: item.actors ? load(item.actors, null, false).text() : '大麦网',

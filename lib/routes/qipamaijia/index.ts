@@ -16,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -43,12 +44,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('#highlight').text();
     const items = $('div.col_l > div.block')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('div.content').text(),
             link: $(item).find('a').attr('href'),
             description: $(item).find('div.content').html() + $(item).find('div.thumb').html(),
-        }))
-        .get();
+        }));
 
     return {
         title: `奇葩买家秀 - ${title}`,

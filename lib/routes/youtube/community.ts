@@ -1,8 +1,6 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -14,7 +12,7 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/youtube/community/@JFlaMusic',
     parameters: { handle: 'YouTube handles or channel id' },
-    name: 'Community',
+    name: 'Community Posts',
     maintainers: ['TonyRL'],
     handler,
 };
@@ -27,7 +25,7 @@ async function handler(ctx) {
         urlPath = `channel/${handle}`;
     }
 
-    const { data: response } = await got(`https://www.youtube.com/${urlPath}/community`);
+    const response = await ofetch(`https://www.youtube.com/${urlPath}/posts`);
     const $ = load(response);
     const ytInitialData = JSON.parse(
         $('script')
@@ -37,7 +35,9 @@ async function handler(ctx) {
 
     const channelMetadata = ytInitialData.metadata.channelMetadataRenderer;
     const username = channelMetadata.title;
-    const communityTab = ytInitialData.contents.twoColumnBrowseResultsRenderer.tabs.find((tab) => tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/community'));
+    const communityTab = ytInitialData.contents.twoColumnBrowseResultsRenderer.tabs.find(
+        (tab) => tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/posts') || tab.tabRenderer.endpoint.commandMetadata.webCommandMetadata.url.endsWith('/community')
+    );
     const list = communityTab.tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents;
 
     if (list[0].messageRenderer) {
@@ -47,11 +47,11 @@ async function handler(ctx) {
     const items = list
         .filter((i) => i.backstagePostThreadRenderer)
         .map((item) => {
-            const post = item.backstagePostThreadRenderer.post.backstagePostRenderer;
+            const post = item.backstagePostThreadRenderer.post.backstagePostRenderer || item.backstagePostThreadRenderer.post.sharedPostRenderer.originalPost.backstagePostRenderer;
             const media = post.backstageAttachment?.postMultiImageRenderer?.images.map((i) => i.backstageImageRenderer.image.thumbnails.pop()) ?? [post.backstageAttachment?.backstageImageRenderer?.image.thumbnails.pop()];
             return {
-                title: post.contentText.runs[0].text,
-                description: art(path.join(__dirname, 'templates', 'community.art'), {
+                title: post.contentText.runs?.[0].text ?? '',
+                description: art(path.join(__dirname, 'templates/community.art'), {
                     runs: post.contentText.runs,
                     media,
                 }),
@@ -62,7 +62,7 @@ async function handler(ctx) {
         });
 
     return {
-        title: `${username} - Community - YouTube`,
+        title: `${username} - Community Posts- YouTube`,
         link: channelMetadata.channelUrl,
         description: channelMetadata.description,
         item: items,

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -8,6 +8,7 @@ const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 export const route: Route = {
     path: '/live/:login',
     categories: ['live'],
+    view: ViewType.Notifications,
     example: '/twitch/live/riotgames',
     parameters: { login: 'Twitch username' },
     features: {

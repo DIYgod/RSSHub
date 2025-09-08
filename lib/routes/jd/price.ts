@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -22,9 +20,9 @@ export const route: Route = {
     name: '商品价格',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   如商品 \`https://item.jd.com/526835.html\` 中的 id 为 \`526835\`，所以路由为 [\`/jd/price/526835\`](https://rsshub.app/jd/price/526835)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

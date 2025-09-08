@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -39,12 +37,12 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| Newest | Trending | Most popular |  Name | Number of styles |
-  | :----: | :------: | :----------: | :---: | :--------------: |
-  |  date  | trending |  popularity  | alpha |       style      |
+| :----: | :------: | :----------: | :---: | :--------------: |
+|  date  | trending |  popularity  | alpha |       style      |
 
-  :::warning
+::: warning
   This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

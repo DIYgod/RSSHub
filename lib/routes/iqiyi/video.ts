@@ -58,22 +58,18 @@ async function handler(ctx) {
             return {
                 title: $('title').text(),
                 link,
-                item:
-                    list &&
-                    list
-                        .map((index, item) => ({
-                            title: $(item).attr('title'),
-                            // description: `<img src="${$(item).find('.li-pic img').attr('src')}">`,
-                            pubDate: parseDate($(item).find('.li-sub span.sub-date').text(), 'YYYY-MM-DD'),
-                            link: $(item).find('.li-dec a').attr('href'),
-                        }))
-                        .get(),
+                item: list.toArray().map((item) => ({
+                    title: $(item).attr('title'),
+                    // description: `<img src="${$(item).find('.li-pic img').attr('src')}">`,
+                    pubDate: parseDate($(item).find('.li-sub span.sub-date').text(), 'YYYY-MM-DD'),
+                    link: $(item).find('.li-dec a').attr('href'),
+                })),
             };
         },
         config.cache.routeExpire,
         false
     );
-    browser.close();
+    await browser.close();
 
     return data;
 }

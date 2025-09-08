@@ -1,7 +1,8 @@
 import CryptoJS from 'crypto-js';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
+import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import { PostData } from './types';
 
 const APP_SIGN_KEY = '4bTogwpz7RzNO2VTFtW7zcfRkAE97ox6ZSgcQi7FgYdqrHqKB7aGqEZ4o7yssa2aEXoV3bQwh12FFgVNlpyYk2Yjm9d2EZGeGu3';
 const phoneBaseUrl = 'https://3g.dxy.cn';
@@ -39,8 +40,8 @@ const getPost = (item, tryGet) =>
             noncestr: generateNonce(8, 'number'),
         };
 
-        const { data: post } = await got('https://www.dxy.cn/bbs/newweb/post/detail', {
-            searchParams: {
+        const post = await ofetch<PostData>('https://www.dxy.cn/bbs/newweb/post/detail', {
+            query: {
                 ...postParams,
                 sign: sign(postParams),
             },
@@ -49,16 +50,24 @@ const getPost = (item, tryGet) =>
             throw new Error(post.message);
         }
 
-        const $ = load(post.data.body, null, false);
+        const $ = cheerio.load(post.data.body, null, false);
 
         $('img').each((_, img) => {
             img = $(img);
-            img.removeAttr('data-osrc');
-            img.removeAttr('data-hsrc');
+            if (img.data('hsrc')) {
+                img.attr('src', img.data('hsrc'));
+                img.removeAttr('data-hsrc');
+            }
+            if (img.data('osrc')) {
+                img.attr('src', img.data('osrc'));
+                img.removeAttr('data-osrc');
+            }
         });
 
         item.description = $.html();
-        item.updated = parseDate(post.data.lastEditTime, 'x');
+        item.pubDate = parseDate(post.data.createTime, 'x');
+        item.updated = post.data.lastEditTime ? parseDate(post.data.lastEditTime, 'x') : item.pubDate;
+        item.category = [...new Set([...item.category, ...post.data.tagInfos.map((tag) => tag.tagName)])];
 
         return item;
     });

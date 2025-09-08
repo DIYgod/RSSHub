@@ -36,8 +36,9 @@ describe('got', () => {
                 test: 'rsshub',
             },
         });
-        expect(response.body).toBe('{"test":"rsshub"}');
+        expect(response.body).toContain('"test":"rsshub"');
         expect(response.data.test).toBe('rsshub');
+        expect(response.data.req.headers['content-type']).toBe('application/x-www-form-urlencoded');
     });
 
     it('json-post', async () => {

@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Aljazeera 半岛电视台',
+    name: 'Aljazeera',
     url: 'aljazeera.com',
+    lang: 'en',
 };

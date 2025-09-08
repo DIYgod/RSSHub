@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -39,8 +37,8 @@ export const route: Route = {
     handler,
     url: 'zh.myfigurecollection.net/browse',
     description: `| 每日圖片 | 每週圖片 | 每月圖片 |
-  | -------- | -------- | -------- |
-  | potd     | potw     | potm     |`,
+| -------- | -------- | -------- |
+| potd     | potw     | potm     |`,
 };
 
 async function handler(ctx) {

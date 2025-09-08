@@ -1,15 +1,13 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/comic/:id/:chapterCnt?',
@@ -25,7 +23,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '漫画更新',
-    maintainers: ['btdwv', 'marvolo666', 'yan12125'],
+    maintainers: ['btdwv', 'marvolo666'],
     handler,
 };
 
@@ -34,9 +32,9 @@ async function handler(ctx) {
     // 用于控制返回的章节数量
     const chapterCnt = Number(ctx.req.param('chapterCnt') || 10);
     // 直接调用拷贝漫画的接口
-    const host = 'copymanga.site';
+    const host = 'www.mangacopy.com';
     const baseUrl = `https://${host}`;
-    const apiBaseUrl = `https://api.${host}`;
+    const apiBaseUrl = `https://${host}`;
     const strBaseUrl = `${apiBaseUrl}/api/v3/comic/${id}/group/default/chapters`;
     const iReqLimit = 500;
     // 获取漫画列表
@@ -50,11 +48,11 @@ async function handler(ctx) {
             do {
                 bHasNextPage = false;
                 // eslint-disable-next-line no-await-in-loop
-                const { data } = await got(strBaseUrl, {
+                const data = await ofetch(strBaseUrl, {
                     headers: {
-                        platform: 1,
+                        platform: '',
                     },
-                    searchParams: {
+                    query: {
                         limit: iReqLimit,
                         offset: iReqOffSet,
                     },
@@ -76,6 +74,7 @@ async function handler(ctx) {
             chapters = chapters
                 .map(({ comic_path_word, uuid, name, size, datetime_created, ordered /* , index*/ }) => ({
                     link: `${baseUrl}/comic/${comic_path_word}/chapter/${uuid}`,
+                    guid: `https://copymanga.site/comic/${comic_path_word}/chapter/${uuid}`,
                     uuid,
                     title: name,
                     size,
@@ -93,7 +92,7 @@ async function handler(ctx) {
 
     // 获取漫画标题、介绍
     const { bookTitle, bookIntro } = await cache.tryGet(`${baseUrl}/comic/${id}`, async () => {
-        const { data } = await got(`${baseUrl}/comic/${id}`);
+        const data = await ofetch(`${baseUrl}/comic/${id}`);
         const $ = load(data);
         return {
             bookTitle: $('.comicParticulars-title-right > ul > li > h6').text(),
@@ -102,11 +101,9 @@ async function handler(ctx) {
     });
 
     const genResult = async (chapter) => {
-        const {
-            data: { code, results },
-        } = await got(`${apiBaseUrl}/api/v3/comic/${id}/chapter/${chapter.uuid}`, {
+        const { code, results } = await ofetch(`${apiBaseUrl}/api/v3/comic/${id}/chapter/${chapter.uuid}`, {
             headers: {
-                webp: 1,
+                webp: '1',
             },
         });
 
@@ -117,6 +114,7 @@ async function handler(ctx) {
 
         return {
             link: chapter.link,
+            guid: chapter.guid,
             title: chapter.title,
             description: art(path.join(__dirname, './templates/comic.art'), {
                 size: chapter.size,
@@ -126,15 +124,7 @@ async function handler(ctx) {
         };
     };
 
-    const asyncPoolAll = async (...args) => {
-        const results = [];
-        for await (const result of asyncPool(...args)) {
-            results.push(result);
-        }
-        return results;
-    };
-
-    const result = await asyncPoolAll(3, chapterArray.slice(0, chapterCnt), (chapter) => cache.tryGet(chapter.link, () => genResult(chapter)));
+    const result = await pMap(chapterArray.slice(0, chapterCnt), (chapter) => cache.tryGet(chapter.link, () => genResult(chapter)), { concurrency: 3 });
     const items = [...result, ...chapterArray.slice(chapterCnt)];
 
     return {

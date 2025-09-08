@@ -22,11 +22,11 @@ export const route: Route = {
     name: '通用',
     maintainers: ['TonyRL'],
     handler,
-    description: `:::tip
+    description: `::: tip
   路径处填写对应页面 URL 中 \`https://www.bjsk.org.cn/\` 和 \`.html\` 之间的字段。下面是一个例子。
 
   若订阅 [社科资讯 > 社科要闻](https://www.bjsk.org.cn/newslist-1394-1474-0.html) 则将对应页面 URL \`https://www.bjsk.org.cn/newslist-1394-1474-0.html\` 中 \`https://www.bjsk.org.cn/\` 和 \`.html\` 之间的字段 \`newslist-1394-1474-0\` 作为路径填入。此时路由为 [\`/bjsk/newslist-1394-1474-0\`](https://rsshub.app/bjsk/newslist-1394-1474-0)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

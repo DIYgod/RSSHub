@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { defaultDomain, renderDescription } from './utils';
@@ -6,6 +6,7 @@ import { defaultDomain, renderDescription } from './utils';
 export const route: Route = {
     path: '/search/:keyword',
     categories: ['multimedia'],
+    view: ViewType.Videos,
     example: '/pornhub/search/stepsister',
     parameters: { keyword: 'keyword' },
     features: {

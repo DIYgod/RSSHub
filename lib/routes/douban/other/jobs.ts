@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 社会招聘 | 校园招聘 | 实习生招聘 |
-  | :------: | :------: | :--------: |
-  |  social  |  campus  |   intern   |`,
+| :------: | :------: | :--------: |
+|  social  |  campus  |   intern   |`,
 };
 
 async function handler(ctx) {
@@ -39,13 +39,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.mod.position');
 
-    const items = list
-        .map((_, item) => ({
-            title: $(item).find('h3').text(),
-            link: `${url}#${$(item).find('h3').attr('id')}`,
-            description: $(item).find('div.bd').html(),
-        }))
-        .get();
+    const items = list.toArray().map((item) => ({
+        title: $(item).find('h3').text(),
+        link: `${url}#${$(item).find('h3').attr('id')}`,
+        description: $(item).find('div.bd').html(),
+    }));
 
     return {
         title: `豆瓣${titleMap[type]}`,

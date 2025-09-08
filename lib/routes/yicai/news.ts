@@ -27,32 +27,32 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| Id                       | 名称       |
-  | ------------------------ | ---------- |
-  | gushi                    | A 股       |
-  | kechuangban              | 科创板     |
-  | hongguan                 | 大政       |
-  | jinrong                  | 金融       |
-  | quanqiushichang          | 海外市场   |
-  | gongsi                   | 产经       |
-  | shijie                   | 全球       |
-  | kechuang                 | 科技       |
-  | quyu                     | 区域       |
-  | comment                  | 评论       |
-  | dafengwenhua             | 商业人文   |
-  | books                    | 阅读周刊   |
-  | loushi                   | 地产       |
-  | automobile               | 汽车       |
-  | china\_financial\_herald | 对话陆家嘴 |
-  | fashion                  | 时尚       |
-  | ad                       | 商业资讯   |
-  | info                     | 资讯       |
-  | jzfxb                    | 价值风向标 |
-  | shuducaijing             | 数读财经   |
-  | shujujiepan              | 数据解盘   |
-  | shudushenghuo            | 数读生活   |
-  | cbndata                  | CBNData    |
-  | dtcj                     | DT 财经    |
-  | xfsz                     | 消费数知   |`,
+| ------------------------ | ---------- |
+| gushi                    | A 股       |
+| kechuangban              | 科创板     |
+| hongguan                 | 大政       |
+| jinrong                  | 金融       |
+| quanqiushichang          | 海外市场   |
+| gongsi                   | 产经       |
+| shijie                   | 全球       |
+| kechuang                 | 科技       |
+| quyu                     | 区域       |
+| comment                  | 评论       |
+| dafengwenhua             | 商业人文   |
+| books                    | 阅读周刊   |
+| loushi                   | 地产       |
+| automobile               | 汽车       |
+| china\_financial\_herald | 对话陆家嘴 |
+| fashion                  | 时尚       |
+| ad                       | 商业资讯   |
+| info                     | 资讯       |
+| jzfxb                    | 价值风向标 |
+| shuducaijing             | 数读财经   |
+| shujujiepan              | 数据解盘   |
+| shudushenghuo            | 数读生活   |
+| cbndata                  | CBNData    |
+| dtcj                     | DT 财经    |
+| xfsz                     | 消费数知   |`,
 };
 
 async function handler(ctx) {

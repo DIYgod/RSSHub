@@ -33,8 +33,8 @@ export const route: Route = {
     name: '就业服务平台',
     maintainers: ['Derekmini'],
     description: `| 通知公告 | 热点新闻 |
-    | :------: | :------: |
-    |   tzgg   |   rdxw   |`,
+| :------: | :------: |
+|   tzgg   |   rdxw   |`,
     handler,
 };
 
@@ -50,7 +50,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('li.list_item.i1')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             let link = $(item).find('a').attr('href');
             if (link.includes('HrbeuJY')) {
                 link = `${rootUrl}${link}`;
@@ -60,8 +61,7 @@ async function handler(ctx) {
                 pubDate: parseDate($(item).find('.Article_PublishDate').text()),
                 link,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

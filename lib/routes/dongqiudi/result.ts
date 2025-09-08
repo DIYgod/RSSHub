@@ -42,6 +42,6 @@ async function handler(ctx) {
     return {
         title: `${teamName} 比赛结果`,
         link,
-        item: out.slice(-10, out.length),
+        item: out.slice(-10),
     };
 }

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -42,12 +40,13 @@ async function handler(ctx) {
             const result = $('#main');
             return result
                 .find('.vrwrap')
-                .map((i, el) => {
+                .toArray()
+                .map((el) => {
                     const element = $(el);
                     const imgs = element
                         .find('img')
-                        .map((j, el2) => $(el2).attr('src'))
-                        .toArray();
+                        .toArray()
+                        .map((el2) => $(el2).attr('src'));
                     const link = element.find('h3 a').first().attr('href');
                     const title = element.find('h3').first().text();
                     const description = element.find('.text-layout').first().text() || element.find('.space-txt').first().text() || element.find('[class^="translate"]').first().text();
@@ -61,7 +60,6 @@ async function handler(ctx) {
                         pubDate,
                     };
                 })
-                .toArray()
                 .filter((e) => e?.link);
         },
         config.cache.routeExpire,

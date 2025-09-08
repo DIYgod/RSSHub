@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -30,38 +28,38 @@ export const route: Route = {
         },
     ],
     name: 'Journal',
-    maintainers: ['Derekmini', 'TonyRL'],
+    maintainers: ['Derekmini', 'TonyRL', 'xiahaoyun'],
     handler,
 };
 
 async function handler(ctx) {
-    const host = 'https://www.springer.com';
+    const host = 'https://link.springer.com';
     const journal = ctx.req.param('journal');
-    const jrnlUrl = `${host}/journal/${journal}`;
+    const jrnlUrl = `${host}/journal/${journal}/volumes-and-issues`;
 
     const response = await got(jrnlUrl, {
         cookieJar,
     });
     const $ = load(response.data);
-    const jrnlName = $('h1#journalTitle').text().trim();
-    const issueUrl = $('p.c-card__title.u-mb-16.u-flex-grow').find('a').attr('href');
+    const jrnlName = $('span.app-journal-masthead__title').text().trim();
+    const issueUrl = `${host}${$('li.c-list-group__item:first-of-type').find('a').attr('href')}`;
 
     const response2 = await got(issueUrl, {
         cookieJar,
     });
     const $2 = load(response2.data);
-    const issue = $2('.app-volumes-and-issues__info').find('h1').text();
-    const list = $2('article.c-card')
-        .map((_, item) => {
-            const title = $(item).find('.c-card__title').text().trim();
-            const link = $(item).find('a').attr('href');
+    const issue = $2('h2.app-journal-latest-issue__heading').text();
+    const list = $2('ol.u-list-reset > li')
+        .toArray()
+        .map((item) => {
+            const title = $(item).find('h3.app-card-open__heading').find('a').text().trim();
+            const link = $(item).find('h3.app-card-open__heading').find('a').attr('href');
             const doi = link.replace('https://link.springer.com/article/', '');
             const img = $(item).find('img').attr('src');
             const authors = $(item)
-                .find('.c-author-list')
                 .find('li')
-                .map((_, item) => $(item).text().trim())
-                .get()
+                .toArray()
+                .map((item) => $(item).text().trim())
                 .join('; ');
             return {
                 title,
@@ -71,8 +69,7 @@ async function handler(ctx) {
                 img,
                 authors,
             };
-        })
-        .get();
+        });
 
     const renderDesc = (item) =>
         art(path.join(__dirname, 'templates/description.art'), {
@@ -85,8 +82,7 @@ async function handler(ctx) {
                     cookieJar,
                 });
                 const $3 = load(response3.data);
-                $3('.c-article__sub-heading').remove();
-                item.abstract = $3('div#Abs1-content').text();
+                item.abstract = $3('div#Abs1-content > p:first-of-type').text();
                 item.description = renderDesc(item);
                 return item;
             })

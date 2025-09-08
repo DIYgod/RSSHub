@@ -25,7 +25,7 @@ export const route: Route = {
     name: '抖音短视频',
     maintainers: ['lessmoe'],
     handler,
-    description: `:::warning
+    description: `::: warning
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
 :::`,
 };

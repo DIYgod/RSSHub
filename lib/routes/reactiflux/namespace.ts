@@ -4,4 +4,5 @@ export const namespace: Namespace = {
     name: 'Reactiflux',
     url: 'reactiflux.com',
     categories: ['programming'],
+    lang: 'en',
 };

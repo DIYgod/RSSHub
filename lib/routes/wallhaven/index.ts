@@ -28,11 +28,11 @@ export const route: Route = {
     maintainers: ['nczitzk', 'Fatpandac'],
     handler,
     url: 'wallhaven.cc/',
-    description: `:::tip
+    description: `::: tip
   Subscribe pages starting with \`https://wallhaven.cc/search\`, fill the text after \`?\` as \`filter\` in the route. The following is an example:
 
   The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -45,14 +45,14 @@ async function handler(ctx) {
 
     let items = $('li > figure.thumb')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 24)
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('img.lazyload').attr('data-src').split('/').pop(),
             description: $(item)
                 .html()
                 .match(/<img.*?>/)[0],
             link: $(item).find('a.preview').attr('href'),
-        }))
-        .get();
+        }));
     if (needDetails) {
         items = await Promise.all(
             items.map((item) =>

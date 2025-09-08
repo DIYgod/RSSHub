@@ -24,8 +24,8 @@ export const route: Route = {
     maintainers: ['kxxt'],
     handler,
     description: `| 规章制度 | 专业建设 | 实践教学 | 支部风采 | 服务指南 | 教务要闻 | 工作通知 | 教务简报 | 常用下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | gzzd     | zyjs     | sjjx     | zbfc     | fwzn     | jwyw     | gztz     | jwjb     | cyxz     |`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| gzzd     | zyjs     | sjjx     | zbfc     | fwzn     | jwyw     | gztz     | jwjb     | cyxz     |`,
 };
 
 async function handler(ctx) {

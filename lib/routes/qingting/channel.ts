@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,18 +18,18 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '专辑',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${ctx.req.param('id')}`;
-    let response = await got(channelUrl);
-    const title = response.data.data.title;
-    const programUrl = `https://i.qingting.fm/capi/channel/${ctx.req.param('id')}/programs/${response.data.data.v}?curpage=1&pagesize=10&order=asc`;
-    response = await got(programUrl);
+    let response = await ofetch(channelUrl);
+    const title = response.data.title;
+    const programUrl = `https://i.qingting.fm/capi/channel/${ctx.req.param('id')}/programs/${response.data.v}?curpage=1&order=asc`;
+    response = await ofetch(programUrl);
 
-    const items = response.data.data.programs.map((item) => ({
+    const items = response.data.programs.map((item) => ({
         title: item.title,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}/programs/${item.id}/`,
         pubDate: timezone(parseDate(item.update_time), +8),
@@ -41,8 +41,8 @@ async function handler(ctx) {
         item: await Promise.all(
             items.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    response = await got(item.link);
-                    const data = JSON.parse(response.data.match(/},"program":(.*?),"plist":/)[1]);
+                    response = await ofetch(item.link);
+                    const data = JSON.parse(response.match(/},"program":(.*?),"plist":/)[1]);
                     item.description = data.richtext;
                     return item;
                 })

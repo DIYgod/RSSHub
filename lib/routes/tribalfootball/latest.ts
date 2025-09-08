@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -29,7 +27,8 @@ async function handler() {
     const rss = await got(rssUrl);
     const $ = load(rss.data, { xmlMode: true });
     const items = $('rss > channel > item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             const $item = $(item);
             let link = $item.find('link').text();
             link = new URL(link);
@@ -41,11 +40,10 @@ async function handler() {
                 link,
                 guid: $item.find('guid').text(),
                 pubDate: parseDate($item.find('pubDate').text()),
-                author: $item.find('dc\\:creator').text(),
+                author: $item.find(String.raw`dc\:creator`).text(),
                 _header_image: $item.find('enclosure').attr('url'),
             };
-        })
-        .get();
+        });
 
     await Promise.all(
         items.map((item) =>

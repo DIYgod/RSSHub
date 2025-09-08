@@ -1,29 +1,7 @@
 import type { FC } from 'hono/jsx';
 
+import { Layout } from '@/views/layout';
 import { gitHash, gitDate } from '@/utils/git-hash';
-
-const Layout: FC = (props) => (
-    <html>
-        <head>
-            <title>Welcome to RSSHub!</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <style>
-                {`
-                details::-webkit-scrollbar {
-                    width: 0.25rem;
-                }
-                details::-webkit-scrollbar-thumb {
-                    border-radius: 0.125rem;
-                    background-color: #e4e4e7;
-                }
-                details::-webkit-scrollbar-thumb:hover {
-                    background-color: #a1a1aa;
-                }`}
-            </style>
-        </head>
-        <body className="antialiased text-zinc-700">{props.children}</body>
-    </html>
-);
 
 const Index: FC<{
     requestPath: string;
@@ -33,13 +11,13 @@ const Index: FC<{
 }> = ({ requestPath, message, errorRoute, nodeVersion }) => (
     <Layout>
         <div
-            className="pointer-events-none absolute w-full h-screen"
+            className="pointer-events-none absolute w-full min-h-screen"
             style={{
                 backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMicgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyBmaWxsPSdub25lJyBzdHJva2U9J3JnYigxNSAyMyA0MiAvIDAuMDQpJz48cGF0aCBkPSdNMCAuNUgzMS41VjMyJy8+PC9zdmc+')`,
                 maskImage: 'linear-gradient(transparent, black, transparent)',
             }}
         ></div>
-        <div className="w-full h-screen flex items-center justify-center flex-col space-y-4">
+        <div className="w-full grow shrink-0 py-8 flex items-center justify-center flex-col space-y-4">
             <img className="grayscale" src="/logo.png" alt="RSSHub" width="100" loading="lazy" />
             <h1 className="text-4xl font-bold">Looks like something went wrong</h1>
             <div className="text-left w-[800px] space-y-6 !mt-10">
@@ -48,7 +26,7 @@ const Index: FC<{
                     <p className="message">
                         Error Message:
                         <br />
-                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details">{message}</code>
+                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details whitespace-pre-line">{message}</code>
                     </p>
                     <p className="message">
                         Route: <code className="ml-2 bg-zinc-100">{errorRoute}</code>
@@ -103,7 +81,7 @@ const Index: FC<{
                             Telegram channel
                         </a>{' '}
                         and{' '}
-                        <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         to get community support and news.
@@ -118,7 +96,7 @@ const Index: FC<{
                             Telegram 频道
                         </a>
                         和{' '}
-                        <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                        <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
                             Twitter
                         </a>{' '}
                         获取社区支持和新闻。
@@ -126,7 +104,7 @@ const Index: FC<{
                 </div>
             </div>
         </div>
-        <div className="absolute bottom-10 text-center w-full text-sm font-medium space-y-2">
+        <div className="mt-4 pb-8 text-center w-full text-sm font-medium space-y-2">
             <p className="space-x-4">
                 <a target="_blank" href="https://github.com/DIYgod/RSSHub">
                     <img className="inline" src="https://icons.ly/github/_/fff" alt="github" width="20" height="20" />
@@ -137,8 +115,8 @@ const Index: FC<{
                 <a target="_blank" href="https://t.me/awesomeRSSHub">
                     <img className="inline" src="https://icons.ly/telegram" alt="telegram channel" width="20" height="20" />
                 </a>
-                <a target="_blank" href="https://twitter.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
-                    <img className="inline" src="https://icons.ly/twitter" alt="github" width="20" height="20" />
+                <a target="_blank" href="https://x.com/intent/follow?screen_name=_RSSHub" className="text-[#F5712C]">
+                    <img className="inline" src="https://icons.ly/x" alt="X" width="20" height="20" />
                 </a>
             </p>
             <p className="!mt-6">

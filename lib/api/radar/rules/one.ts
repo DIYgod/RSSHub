@@ -1,13 +1,10 @@
 import { namespaces } from '@/registry';
 import { parse } from 'tldts';
-import { RadarItem } from '@/types';
+import { RadarDomain } from '@/types';
 import { z, createRoute, RouteHandler } from '@hono/zod-openapi';
 
 const radar: {
-    [domain: string]: {
-        _name: string;
-        [subdomain: string]: RadarItem[] | string;
-    };
+    [domain: string]: RadarDomain;
 } = {};
 
 for (const namespace in namespaces) {
@@ -23,7 +20,7 @@ for (const namespace in namespaces) {
                     if (!radar[domain]) {
                         radar[domain] = {
                             _name: namespaces[namespace].name,
-                        };
+                        } as RadarDomain;
                     }
                     if (!radar[domain][subdomain]) {
                         radar[domain][subdomain] = [];

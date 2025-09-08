@@ -8,8 +8,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |`,
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |`,
 };
 
 async function handler(ctx) {

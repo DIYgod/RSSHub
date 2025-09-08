@@ -1,6 +1,9 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
+import { getHeaders } from './utils';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const getTrueHour = (rank_type, rank_id, hour) => {
     const rank_two_hour = ['11', '17', '28', '29'];
@@ -13,13 +16,198 @@ const getTrueHour = (rank_type, rank_id, hour) => {
     }
 };
 
+const typeOptions = [
+    {
+        value: 'pinlei',
+        label: '好价品类榜',
+    },
+    {
+        value: 'dianshang',
+        label: '好价电商榜',
+    },
+    {
+        value: 'haitao',
+        label: '海淘 TOP 榜',
+    },
+    {
+        value: 'haowen',
+        label: '好文排行榜',
+    },
+    {
+        value: 'haowu',
+        label: '好物排行榜',
+    },
+];
+const idOptions = [
+    {
+        label: '好价品类榜-全部',
+        value: '11',
+    },
+    {
+        label: '好价品类榜-食品生鲜',
+        value: '12',
+    },
+    {
+        label: '好价品类榜-电脑数码',
+        value: '13',
+    },
+    {
+        label: '好价品类榜-运动户外',
+        value: '14',
+    },
+    {
+        label: '好价品类榜-家用电器',
+        value: '15',
+    },
+    {
+        label: '好价品类榜-白菜',
+        value: '17',
+    },
+    {
+        label: '好价品类榜-服饰鞋包',
+        value: '74',
+    },
+    {
+        label: '好价品类榜-日用百货',
+        value: '75',
+    },
+    {
+        label: '好价电商榜-券活动',
+        value: '24',
+    },
+    {
+        label: '好价电商榜-京东',
+        value: '23',
+    },
+    {
+        label: '好价电商榜-天猫',
+        value: '25',
+    },
+    {
+        label: '好价电商榜-亚马逊中国',
+        value: '26',
+    },
+    {
+        label: '好价电商榜-国美在线',
+        value: '27',
+    },
+    {
+        label: '好价电商榜-苏宁易购',
+        value: '28',
+    },
+    {
+        label: '好价电商榜-网易',
+        value: '29',
+    },
+    {
+        label: '好价电商榜-西集网',
+        value: '30',
+    },
+    {
+        label: '好价电商榜-美国亚马逊',
+        value: '31',
+    },
+    {
+        label: '好价电商榜-日本亚马逊',
+        value: '32',
+    },
+    {
+        label: '好价电商榜-ebay',
+        value: '33',
+    },
+    {
+        label: '海淘 TOP 榜-全部',
+        value: '39',
+    },
+    {
+        label: '海淘 TOP 榜-海外直邮',
+        value: '34',
+    },
+    {
+        label: '海淘 TOP 榜-美国榜',
+        value: '35',
+    },
+    {
+        label: '海淘 TOP 榜-欧洲榜',
+        value: '36',
+    },
+    {
+        label: '海淘 TOP 榜-澳新榜',
+        value: '37',
+    },
+    {
+        label: '海淘 TOP 榜-亚洲榜',
+        value: '38',
+    },
+    {
+        label: '海淘 TOP 榜-晒物榜',
+        value: 'hsw',
+    },
+    {
+        label: '好文排行榜-原创',
+        value: 'yc',
+    },
+    {
+        label: '好文排行榜-资讯',
+        value: 'zx',
+    },
+    {
+        label: '好物排行榜-新晋榜',
+        value: 'hwall',
+    },
+    {
+        label: '好物排行榜-消费众测',
+        value: 'zc',
+    },
+    {
+        label: '好物排行榜-新锐品牌',
+        value: 'nb',
+    },
+    {
+        label: '好物排行榜-好物榜单',
+        value: 'hw',
+    },
+];
+
 export const route: Route = {
     path: '/ranking/:rank_type/:rank_id/:hour',
     categories: ['shopping'],
+    view: ViewType.Notifications,
     example: '/smzdm/ranking/pinlei/11/3',
-    parameters: { rank_type: '榜单类型', rank_id: '榜单ID', hour: '时间跨度' },
+    parameters: {
+        rank_type: {
+            description: '榜单类型',
+            options: typeOptions,
+        },
+        rank_id: {
+            description: '榜单ID',
+            options: idOptions,
+        },
+        hour: {
+            description: '时间跨度',
+            options: [
+                {
+                    value: '3',
+                    label: '3 小时',
+                },
+                {
+                    value: '12',
+                    label: '12 小时',
+                },
+                {
+                    value: '24',
+                    label: '24 小时',
+                },
+            ],
+        },
+    },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'SMZDM_COOKIE',
+                description: '什么值得买登录后的 Cookie 值',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -29,52 +217,13 @@ export const route: Route = {
     name: '排行榜',
     maintainers: ['DIYgod'],
     handler,
-    description: `-   榜单类型
-
-  | 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
-  | ---------- | ---------- | ----------- | ---------- | ---------- |
-  | pinlei     | dianshang  | haitao      | haowen     | haowu      |
-
-  -   榜单 ID
-
-  好价品类榜
-
-  | 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
-  | ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |
-  | 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |
-
-  好价电商榜
-
-  | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
-  | ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
-  | 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
-
-  海淘 TOP 榜
-
-  | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
-  | ---- | -------- | ------ | ------ | ------ | ------ | ------ |
-  | 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
-
-  好文排行榜
-
-  | 原创 | 资讯 |
-  | ---- | ---- |
-  | yc   | zx   |
-
-  好物排行榜
-
-  | 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
-  | ------ | -------- | -------- | -------- |
-  | hwall  | zc       | nb       | hw       |
-
-  -   时间跨度
-
-  | 3 小时 | 12 小时 | 24 小时 |
-  | ------ | ------- | ------- |
-  | 3      | 12      | 24      |`,
 };
 
 async function handler(ctx) {
+    if (!config.smzdm.cookie) {
+        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
+    }
+
     const { rank_type, rank_id, hour } = ctx.req.param();
 
     // When the hour is 3, some special rank_id require a special hour num
@@ -82,7 +231,8 @@ async function handler(ctx) {
 
     const response = await got(`https://www.smzdm.com/top/json_more`, {
         headers: {
-            Referer: 'https://www.smzdm.com/top/',
+            Referer: 'https://www.smzdm.com/top',
+            ...getHeaders(),
         },
         searchParams: {
             rank_type,
@@ -105,7 +255,7 @@ async function handler(ctx) {
     const list = [...list1, ...list2];
 
     return {
-        title: `${rank_type}榜-${rank_id}-${hour}小时`,
+        title: `什么值得买${typeOptions.find((item) => item.value === rank_type)?.label}-${idOptions.find((item) => item.value === rank_id)?.label}-${hour}小时`,
         link: 'https://www.smzdm.com/top/',
         allowEmpty: true,
         item: list.map((item) => ({

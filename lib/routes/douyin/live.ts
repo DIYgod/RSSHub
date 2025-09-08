@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rid = ctx.req.param('rid');
-    if (isNaN(rid)) {
+    if (Number.isNaN(rid)) {
         throw new InvalidParameterError('Invalid room ID. Room ID should be a number.');
     }
 
@@ -46,7 +46,7 @@ async function handler(ctx) {
             await page.setRequestInterception(true);
 
             page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -58,7 +58,7 @@ async function handler(ctx) {
             await page.goto(pageUrl, {
                 waitUntil: 'networkidle2',
             });
-            browser.close();
+            await browser.close();
 
             return roomInfo;
         },

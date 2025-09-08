@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import path from 'node:path';
@@ -24,15 +22,15 @@ export const route: Route = {
     maintainers: ['honue'],
     handler,
     description: `| 额外参数 | 含义                   | 接受的值 | 默认值 |
-  | -------- | ---------------------- | -------- | ------ |
-  | playable | 仅看有可播放片源的影片 | 0/1      | 0      |
-  | score    | 筛选评分               | 0-10     | 0      |
+| -------- | ---------------------- | -------- | ------ |
+| playable | 仅看有可播放片源的影片 | 0/1      | 0      |
+| score    | 筛选评分               | 0-10     | 0      |
 
   用例：\`/douban/recommended/tv/playable=0&score=8\`
 
-  :::tip
+::: tip
   整合了 /douban/list/ 路由，省去每月手动更新 id 参数，因为当月推荐剧集片单中，会有还未播出 / 开评分剧集、海外平台播出剧集，请自行考虑是否使用额外参数。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

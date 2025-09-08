@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/paper/:type/:magazine',
@@ -57,31 +57,26 @@ async function handler(ctx) {
             };
         });
 
-    const asyncPoolAll = async (...args) => {
-        const results = [];
-        for await (const result of asyncPool(...args)) {
-            results.push(result);
-        }
-        return results;
-    };
+    const item = await pMap(
+        newsItem,
+        (element) =>
+            cache.tryGet(element.link, async () => {
+                const response = await got(element.link);
+                const $ = load(response.data);
 
-    const item = await asyncPoolAll(2, newsItem, (element) =>
-        cache.tryGet(element.link, async () => {
-            const response = await got(element.link);
-            const $ = load(response.data);
+                const description = $('.maga-content');
+                element.doi = description.find('.itsmblue').eq(1).text().trim();
 
-            const description = $('.maga-content');
-            element.doi = description.find('.itsmblue').eq(1).text().trim();
+                description.find('.itgaryfirst').remove();
+                description.find('span').eq(0).remove();
+                element.author = description.find('span').eq(0).text().trim();
+                description.find('span').eq(0).remove();
 
-            description.find('.itgaryfirst').remove();
-            description.find('span').eq(0).remove();
-            element.author = description.find('span').eq(0).text().trim();
-            description.find('span').eq(0).remove();
+                element.description = description.html();
 
-            element.description = description.html();
-
-            return element;
-        })
+                return element;
+            }),
+        { concurrency: 2 }
     );
 
     return {

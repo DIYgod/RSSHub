@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['junfengP', 'Seiry', 'Xm798'],
     handler,
     description: `| 通知公告 | 新闻动态 | 学术信息 | 师生风采 |
-  | -------- | -------- | -------- | -------- |
-  | tzgg     | xwdt     | xsxx     | ssfc     |`,
+| -------- | -------- | -------- | -------- |
+| tzgg     | xwdt     | xsxx     | ssfc     |`,
 };
 
 async function handler(ctx) {
@@ -50,15 +50,15 @@ async function handler(ctx) {
 
     const list = $('#wp_news_w6 ul li')
         .slice(0, 10)
-        .map(function () {
+        .toArray()
+        .map((element) => {
             const info = {
-                title: $(this).find('a').text(),
-                link: $(this).find('a').attr('href'),
-                date: $(this).find('span').text(),
+                title: $(element).find('a').text(),
+                link: $(element).find('a').attr('href'),
+                date: $(element).find('span').text(),
             };
             return info;
-        })
-        .get();
+        });
 
     const out = await Promise.all(
         list.map(async (info) => {

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
@@ -85,7 +83,7 @@ async function handler(ctx) {
                 pages: item.next('font').text().match(/\d+/)[0],
             };
         })
-        .reverse();
+        .toReversed();
 
     const chapters = await getChapters(id, list, cache.tryGet);
 

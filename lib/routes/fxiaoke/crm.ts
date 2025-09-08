@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['akynazh'],
     handler,
     description: `| 全部文章 | 文章干货 | CRM 知识 | 纷享动态        | 签约喜报  |
-  | -------- | -------- | -------- | --------------- | --------- |
-  | news     | blog     | articles | about-influence | customers |`,
+| -------- | -------- | -------- | --------------- | --------- |
+| news     | blog     | articles | about-influence | customers |`,
 };
 
 async function handler(ctx) {

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -32,9 +30,9 @@ export const route: Route = {
     name: '社区',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   更多社区参见 [社区](https://bbs.hupu.com)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

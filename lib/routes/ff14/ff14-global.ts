@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,18 +21,18 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'FINAL FANTASY XIV (The Lodestone)',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
     description: `Region
 
-  | North Ameria | Europe | France | Germany | Japan |
-  | ------------ | ------ | ------ | ------- | ----- |
-  | na           | eu     | fr     | de      | jp    |
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
 
   Category
 
-  | all | topics | notices | maintenance | updates | status | developers |
-  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
+| all | topics | notices | maintenance | updates | status | developers |
+| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
 };
 
 async function handler(ctx) {

@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,6 +10,7 @@ import path from 'node:path';
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
     categories: ['social-media'],
+    view: ViewType.Videos,
     example: '/vimeo/category/documentary/staffpicks',
     parameters: {
         category: 'Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ',
@@ -63,7 +62,7 @@ async function handler(ctx) {
     const vimeojs = response.data.data;
 
     const feedlink = `https://vimeo.com/categories/${category}/videos/sort:latest`;
-    const feedlinkstaffpicks = '?staffpicked=ture';
+    const feedlinkstaffpicks = '?staffpicked=true';
     const feedDescription = await cache.tryGet(feedlink + (staffpicks ? feedlinkstaffpicks : ''), async () => {
         const response = await got({
             url: feedlink + (staffpicks ? feedlinkstaffpicks : ''),

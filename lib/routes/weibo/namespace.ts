@@ -1,9 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '微博绿洲',
+    name: '微博',
     url: 'weibo.com',
-    description: `:::warning
+    description: `::: warning
 微博会针对请求的来源地区返回不同的结果。\
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 \`locallimit.us.sinaimg.cn\` 而非 \`f.video.weibocdn.com\`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
 :::
@@ -30,6 +30,8 @@ export const namespace: Namespace = {
 | showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 \`[表情名]\`                  | 0/1/true/false | true                                |
 | showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
 | preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
+| showRetweeted              | 是否显示转发的微博                                                 | 0/1/true/false | true                               |
+| showBloggerIcons           | 是否显示评论中博主的标志，只在显示热门评论时有效                                           | 0/1/true/false | false                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -38,4 +40,5 @@ export const namespace: Namespace = {
 的效果为
 
 <img loading="lazy" src="/img/readable-weibo.png" alt="微博小秘书的可读微博 RSS" />`,
+    lang: 'zh-CN',
 };

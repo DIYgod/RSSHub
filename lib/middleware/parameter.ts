@@ -1,5 +1,6 @@
 import * as entities from 'entities';
-import { load, type CheerioAPI, type Element } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
+import type { Element } from 'domhandler';
 import { simplecc } from 'simplecc-wasm';
 import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
@@ -32,7 +33,7 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl
     }
 };
 
-const summarizeArticle = async (articleText: string) => {
+const getAiCompletion = async (prompt: string, text: string) => {
     const apiUrl = `${config.openai.endpoint}/chat/completions`;
     const response = await ofetch(apiUrl, {
         method: 'POST',
@@ -40,8 +41,8 @@ const summarizeArticle = async (articleText: string) => {
             model: config.openai.model,
             max_tokens: config.openai.maxTokens,
             messages: [
-                { role: 'system', content: config.openai.prompt },
-                { role: 'user', content: articleText },
+                { role: 'system', content: prompt },
+                { role: 'user', content: text },
             ],
             temperature: config.openai.temperature,
         },
@@ -327,23 +328,53 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         if (ctx.req.query('chatgpt') && config.openai.apiKey) {
             data.item = await Promise.all(
                 data.item.map(async (item) => {
-                    if (item.description) {
-                        try {
-                            const summary = await cache.tryGet(`openai:${item.link}`, async () => {
-                                const text = convert(item.description!);
-                                if (text.length < 300) {
-                                    return '';
-                                }
-                                const summary_md = await summarizeArticle(text);
-                                return md.render(summary_md);
+                    try {
+                        // handle description
+                        if (config.openai.inputOption === 'description' && item.description) {
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
                             });
-                            // 将总结结果添加到文章数据中
-                            if (summary !== '') {
-                                item.description = summary + '<hr/><br/>' + item.description;
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
                             }
-                        } catch {
-                            // when openai failed, return default description and not write cache
                         }
+                        // handle title
+                        else if (config.openai.inputOption === 'title' && item.title) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                return await getAiCompletion(config.openai.promptTitle, title);
+                            });
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
+                            }
+                        }
+                        // handle both
+                        else if (config.openai.inputOption === 'both' && item.title && item.description) {
+                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                                const title = convert(item.title!);
+                                return await getAiCompletion(config.openai.promptTitle, title);
+                            });
+                            // replace the title
+                            if (title !== '') {
+                                item.title = title + '';
+                            }
+
+                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                                const description = convert(item.description!);
+                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                return md.render(descriptionMd);
+                            });
+                            // add it to the description
+                            if (description !== '') {
+                                item.description = description + '<hr/><br/>' + item.description;
+                            }
+                        }
+                    } catch {
+                        // when openai failed, return default content and not write cache
                     }
                     return item;
                 })
@@ -370,12 +401,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         if (ctx.req.query('brief')) {
             const num = /[1-9]\d{2,}/;
             if (num.test(ctx.req.query('brief')!)) {
-                const brief = Number.parseInt(ctx.req.query('brief')!);
+                const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
                     let text;
                     if (item.description) {
                         text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
-                        item.description = text.length > brief ? `<p>${text.substring(0, brief)}…</p>` : `<p>${text}</p>`;
+                        item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                     }
                 }
             } else {

@@ -1,9 +1,10 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { config } from '@/config';
 
 const host = 'https://www.sehuatang.net/';
 
@@ -39,21 +40,39 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
-    name: 'Unknown',
+    name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,
+    features: {
+        nsfw: true,
+    },
     description: `**原创 BT 电影**
 
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+| 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
+| -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
+| gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
 
   **色花图片**
 
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
+| 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
 };
+
+const getSafeId = () =>
+    cache.tryGet(
+        'sehuatang:safeid',
+        async () => {
+            const response = await ofetch(host);
+            const $ = load(response);
+            const safeId = $('script:contains("safeid")')
+                .text()
+                .match(/safeid\s*=\s*'(.+)';/)?.[1];
+            return safeId;
+        },
+        config.cache.routeExpire,
+        false
+    );
 
 async function handler(ctx) {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
@@ -62,15 +81,13 @@ async function handler(ctx) {
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
     const headers = {
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        Cookie: '_safe=vqd37pjm4p5uodq339yzk6b7jdt6oich',
+        Cookie: `_safe=${await getSafeId()};`,
     };
 
-    const response = await got(link, {
+    const response = await ofetch(link, {
         headers,
     });
-    const $ = load(response.data);
+    const $ = load(response);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
@@ -89,12 +106,12 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const response = await got(info.link, {
+                const response = await ofetch(info.link, {
                     headers,
                 });
 
-                const $ = load(response.data);
-                const postMessage = $("td[id^='postmessage']").slice(0, 1);
+                const $ = load(response);
+                const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
                 const images = $(postMessage).find('img');
                 for (const image of images) {
                     const file = $(image).attr('file');

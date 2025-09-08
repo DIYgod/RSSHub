@@ -21,8 +21,8 @@ export const route: Route = {
     maintainers: ['ret-1'],
     handler,
     description: `| 采购信息 | 成交公示 | 政府采购意向公开 |
-  | -------- | -------- | ---------------- |
-  | cgxx     | cjgs     | zfcgyxgk         |`,
+| -------- | -------- | ---------------- |
+| cgxx     | cjgs     | zfcgyxgk         |`,
 };
 
 async function handler(ctx) {
@@ -43,17 +43,15 @@ async function handler(ctx) {
         return {
             title: '政府采购意向公开',
             link: url,
-            item: list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('a').attr('title'),
-                        description: item.find('a').first().text(),
-                        link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                        pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), +8),
-                    };
-                })
-                .get(),
+            item: list.toArray().map((item) => {
+                item = $(item);
+                return {
+                    title: item.find('a').attr('title'),
+                    description: item.find('a').first().text(),
+                    link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
+                    pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), +8),
+                };
+            }),
         };
     } else {
         const title_dict = {
@@ -77,18 +75,16 @@ async function handler(ctx) {
                 const $ = load(data);
                 const list = $('dd[cid]');
 
-                return list
-                    .map((index, item) => {
-                        item = $(item);
-                        return {
-                            title: item.find('a').attr('title'),
-                            description: item.find('a').first().text(),
-                            link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
-                            pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), +8),
-                            category: category_dict[c],
-                        };
-                    })
-                    .get();
+                return list.toArray().map((item) => {
+                    item = $(item);
+                    return {
+                        title: item.find('a').attr('title'),
+                        description: item.find('a').first().text(),
+                        link: 'https://zbb.nju.edu.cn' + item.find('a').attr('href'),
+                        pubDate: timezone(parseDate(item.find('span').first().text(), 'YYYY-MM-DD'), +8),
+                        category: category_dict[c],
+                    };
+                });
             })
         );
 

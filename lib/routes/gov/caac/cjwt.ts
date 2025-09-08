@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
@@ -32,7 +30,7 @@ export const route: Route = {
     handler,
     url: 'caac.gov.cn/HDJL/',
     description: `| 机票 | 托运 | 无人机 | 体检 | 行政审批 | 投诉 |
-  | ---- | ---- | ------ | ---- | -------- | ---- |`,
+| ---- | ---- | ------ | ---- | -------- | ---- |`,
 };
 
 async function handler(ctx) {

@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
@@ -20,17 +18,28 @@ const toSize = (raw) => {
 const allowDomain = new Set(['javbus.com', 'javbus.org', 'javsee.icu', 'javsee.one']);
 
 export const route: Route = {
-    path: '*',
+    path: '/:path{.+}?',
     radar: [
         {
-            source: ['www.seejav.pw/'],
-            target: '',
+            source: ['www.javbus.com/:path*'],
+            target: '/:path',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Works',
+    maintainers: ['MegrezZhu', 'CoderTonyChan', 'nczitzk', 'Felix2yu'],
+    categories: ['multimedia'],
+    view: ViewType.Videos,
     handler,
-    url: 'www.seejav.pw/',
+    url: 'www.javbus.com',
+    example: '/javbus/star/rwt',
+    parameters: {
+        path: {
+            description: 'Any path of list page on javbus',
+        },
+    },
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

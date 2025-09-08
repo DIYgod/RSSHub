@@ -31,9 +31,9 @@ export const route: Route = {
 
   访问 “邱毅看平潭” 专题，会跳转到 \`https://www.52hrtt.com/global/n/w/symposium/F1626082387819\`。其中 \`F1626082387819\` 即为 **专题 id** 对应的地区代码。
 
-  :::tip
+::: tip
   更多的专题可以点击 [这里](https://www.52hrtt.com/global/n/w/symposium)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

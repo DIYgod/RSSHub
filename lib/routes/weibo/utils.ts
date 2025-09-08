@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
@@ -36,7 +36,7 @@ const weiboUtils = {
             widthOfPics: fallback(params.widthOfPics, queryToInteger(routeParams.widthOfPics), -1),
             heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.heightOfPics), -1),
             sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.sizeOfAuthorAvatar), 48),
-            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), true),
+            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
             showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
             preferMobileLink: fallback(params.preferMobileLink, queryToBoolean(routeParams.preferMobileLink), false),
         };
@@ -74,6 +74,10 @@ const weiboUtils = {
         if (!showLinkIconInDescription) {
             htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
         }
+
+        // 提取 话题作为 category
+        const category: string[] = htmlNewLineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
+
         // 去掉乱七八糟的图标  // 不需要，上述的替换应该已经把所有的图标都替换掉了，且这条 regex 会破坏上述替换不发生时的输出
         // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
         // 将行内图标的高度设置为一行，改善阅读体验。但有些阅读器删除了 style 属性，无法生效  // 不需要，微博已经作此设置
@@ -128,8 +132,8 @@ const weiboUtils = {
         }
 
         // drop live photo
-        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephotos').length : 0;
-        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephotos');
+        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephoto').length : 0;
+        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephoto');
 
         // 添加微博配图
         if (pics) {
@@ -153,22 +157,26 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (widthOfPics >= 0) {
-                    html += ` width="${widthOfPics}"`;
-                    style += `width: ${widthOfPics}px;`;
+                if (item.large) {
+                    const { geo, url } = item.large;
+
+                    if (geo?.width || widthOfPics >= 0) {
+                        const width = geo?.width || widthOfPics;
+                        html += ` width="${width}"`;
+                        style += `width: ${width}px;`;
+                    }
+
+                    if (geo?.height || heightOfPics >= 0) {
+                        const height = geo?.height || heightOfPics;
+                        html += ` height="${height}"`;
+                        style += `height: ${height}px;`;
+                    }
+
+                    html += ` style="${style}" src="${url}">`;
                 }
-                if (heightOfPics >= 0) {
-                    html += ` height="${heightOfPics}"`;
-                    style += `height: ${heightOfPics}px;`;
-                }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
 
                 if (addLinkForPics) {
                     html += '</a>';
-                }
-
-                if (!readable) {
-                    html += '<br><br>';
                 }
 
                 htmlNewLineUnreplaced += '<img src="" />';
@@ -238,10 +246,16 @@ const weiboUtils = {
         const guid = uid ? `https://weibo.com/${uid}/${bid}` : `https://m.weibo.cn/status/${bid}`;
         const link = preferMobileLink ? `https://m.weibo.cn/status/${bid}` : guid;
 
-        const author = status.user?.screen_name;
+        const author = [
+            {
+                name: status.user?.screen_name,
+                url: `https://weibo.com/${uid}`,
+                avatar: status.user?.avatar_hd,
+            },
+        ];
         const pubDate = status.created_at;
 
-        return { description: html, title, link, guid, author, pubDate };
+        return { description: html, title, link, guid, author, pubDate, category };
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;
@@ -257,7 +271,7 @@ const weiboUtils = {
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;
-        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephotos' && pic.videoSrc);
+        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephoto' && pic.videoSrc);
         let video = '<br clear="both" /><div style="clear: both"></div>';
         let anyVideo = false;
         if (livePhotos) {
@@ -393,7 +407,7 @@ const weiboUtils = {
         }
         return itemDesc;
     },
-    formatComments: async (ctx, itemDesc, status) => {
+    formatComments: async (ctx, itemDesc, status, showBloggerIcons) => {
         if (status && status.comments_count && status.id && status.mid) {
             const id = status.id;
             const mid = status.mid;
@@ -415,18 +429,46 @@ const weiboUtils = {
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
-                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
+                    let name = comment.user.screen_name;
+                    if (showBloggerIcons === '1' && comment.blogger_icons) {
+                        name += comment.blogger_icons[0].name;
+                    }
+                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${name}</a>: ${comment.text}`;
+                    // 带有图片的评论直接输出图片
+                    if ('pic' in comment) {
+                        itemDesc += `<br><img src="${comment.pic.url}">`;
+                    }
                     if (comment.comments) {
                         itemDesc += '<blockquote style="border-left:0.2em solid #80808080; margin-left: 0.3em; padding-left: 0.5em; margin-bottom: 0.5em; margin-top: 0.25em">';
                         for (const com of comment.comments) {
+                            // 评论的带有图片的评论直接输出图片
+                            const pattern = /<a\s+href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"[^>]*><span class='url-icon'><img[^>]*><\/span><span class="surl-text">(查看图片|评论配图|查看动图)<\/span><\/a>/g;
+                            const matches = com.text.match(pattern);
+                            if (matches) {
+                                for (const match of matches) {
+                                    const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
+                                    if (hrefMatch) {
+                                        // 获取并解码 href 中的图片 URL
+                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                        com.text = com.text.replaceAll(match, imgTag);
+                                    }
+                                }
+                            }
                             itemDesc += '<div style="font-size: 0.9em">';
-                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
+                            let name = com.user.screen_name;
+                            if (showBloggerIcons === '1' && com.blogger_icons) {
+                                name += com.blogger_icons[0].name;
+                            }
+                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${name}</a>: ${com.text}`;
                             itemDesc += '</div>';
                         }
                         itemDesc += '</blockquote>';
                     }
                     itemDesc += '</p>';
                 }
+
                 itemDesc += '</div>';
             }
         }

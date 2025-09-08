@@ -69,6 +69,7 @@ async function handler(ctx) {
     return {
         title: '中央气象台全国气象预警',
         link: 'http://www.nmc.cn/publish/alarm.html',
+        allowEmpty: true,
         item: items,
     };
 }

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -69,15 +67,15 @@ export const route: Route = {
     handler,
     description: `分类
 
-  | 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
-  | ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
-  | focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+| 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
+| ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+| focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
 
   语言
 
-  | 繁 | 简 |
-  | -- | -- |
-  | tc | sc |`,
+| 繁 | 简 |
+| -- | -- |
+| tc | sc |`,
 };
 
 async function handler(ctx) {
@@ -85,6 +83,7 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'tc';
 
     const rootUrl = 'https://inews-api.tvb.com';
+    const linkRootUrl = 'https://news.tvb.com';
     const apiUrl = `${rootUrl}/news/entry/category`;
     const currentUrl = `${rootUrl}/${language}/${category}`;
 
@@ -96,12 +95,13 @@ async function handler(ctx) {
             lang: language,
             page: 1,
             limit: ctx.req.query('limit') ?? 50,
+            country: 'HK',
         },
     });
 
     const items = response.data.content.map((item) => ({
         title: item.title,
-        link: `${rootUrl}/${language}/${category}/${item.id}`,
+        link: `${linkRootUrl}/${language}/${category}/${item.id}`,
         pubDate: parseDate(item.publish_datetime),
         category: [...item.category.map((c) => c.title), ...item.tags],
         description: art(path.join(__dirname, 'templates/description.art'), {

@@ -67,8 +67,8 @@ const decrypt = (encrypted, secrets) =>
 const token2Key = (token) => {
     const t = CryptoJS.SHA512(token).toString();
     return {
-        key: t.substring(0, 64),
-        iv: t.substring(30, 62), // t.substr(30, 32)
+        key: t.slice(0, 64),
+        iv: t.slice(30, 62), // t.substr(30, 32)
     };
 };
 
@@ -82,4 +82,4 @@ const getRealKey = (imgKey, token = DEFAULT_TOKEN) => {
     };
 };
 
-export { getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };
+export { apiHost, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };

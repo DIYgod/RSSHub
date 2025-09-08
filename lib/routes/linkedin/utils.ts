@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
 import { Job } from './models';
+import dayjs from 'dayjs';
 
 /**
  * Constants
  */
+const BASE_URL = 'https://www.linkedin.com';
+
 const KEYWORDS_QUERY_KEY = 'keywords';
 
 const JOB_TYPES_QUERY_KEY = 'f_JT';
@@ -40,6 +43,10 @@ const EXP_LEVELS = {
  *   as search param in url
  */
 function parseParamsToSearchParams(params, map) {
+    if (!params) {
+        return '';
+    } // Handle undefined params
+
     const validParamValues = params.split('-').filter((v) => v in map);
     return validParamValues.join(',');
 }
@@ -54,6 +61,10 @@ function parseParamsToSearchParams(params, map) {
  * @returns param value strings separated by ','
  */
 function parseParamsToString(params, map) {
+    if (!params) {
+        return '';
+    } // Handle undefined params
+
     const validParamValues = params
         .split('-')
         .filter((v) => v in map)
@@ -77,17 +88,17 @@ function parseJobSearch(data) {
 
     // Parse data
     const jobs = $('li')
-        .map((i, elem) => {
+        .toArray()
+        .map((elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.base-card__full-link').attr('href').split('?')[0];
-            const title = elemHtml.find('h3.base-search-card__title').text().trim();
-            const company = elemHtml.find('h4.base-search-card__subtitle').text().trim();
-            const location = elemHtml.find('span.job-search-card__location').text().trim();
-            const pubDate = elemHtml.find('time').attr('datetime');
+            const link = elemHtml.find('a.base-card__full-link, a.base-card--link')?.attr('href')?.split('?')[0];
+            const title = elemHtml.find('h3.base-search-card__title')?.text()?.trim();
+            const company = elemHtml.find('h4.base-search-card__subtitle')?.text()?.trim();
+            const location = elemHtml.find('span.job-search-card__location')?.text()?.trim();
+            const pubDate = elemHtml.find('time')?.attr('datetime');
 
             return new Job(title, link, company, location, pubDate);
-        })
-        .toArray();
+        });
     return jobs;
 }
 
@@ -108,4 +119,82 @@ function parseJobDetail(data) {
     return job;
 }
 
-export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };
+const parseRouteParam = (searchParam: string | null): string => {
+    if (!searchParam || typeof searchParam !== 'string') {
+        return 'all';
+    }
+    return encodeURIComponent(searchParam.split(',').join('-'));
+};
+
+/**
+ * Parse company profile page for posts
+ * Example page: https://www.linkedin.com/company/google/
+ *
+ * @param {Cheerio} $ HTML string of company profile page
+ * @returns {Array<JSON>} Array of company posts
+ */
+function parseCompanyPosts($) {
+    const posts = $('ul.updates__list > li')
+        .toArray() // Convert the Cheerio object to a plain array
+        .map((elem) => {
+            const elemHtml = $(elem);
+            const link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+            const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
+            const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
+
+            return { link, text, date };
+        });
+
+    return posts;
+}
+
+/**
+ * Parse company profile page for its name
+ * Example page: https://www.linkedin.com/company/google/
+ *
+ * @param {Cheerio} $ HTML string of company profile page
+ * @returns {String} Company name
+ */
+function parseCompanyName($) {
+    return $('h1.top-card-layout__title').text().trim();
+}
+
+/**
+ * Parse relative date shorthand string into a Date object
+ *
+ * @param {String} shorthand The shorthand string representing the date
+ * @returns {Date|null} The parsed date or null if the format is invalid
+ */
+function parseRelativeShorthandDate(shorthand) {
+    const match = shorthand.match(/^(\d+)([wdmyh])$/);
+    if (!match) {
+        return null;
+    }
+
+    const [, amount, unit] = match;
+    const unitMap = {
+        w: 'week',
+        d: 'day',
+        m: 'month',
+        y: 'year',
+        h: 'hour',
+    };
+
+    return dayjs().subtract(Number.parseInt(amount), unitMap[unit]);
+}
+
+export {
+    parseCompanyPosts,
+    parseCompanyName,
+    parseParamsToSearchParams,
+    parseParamsToString,
+    parseJobDetail,
+    parseJobSearch,
+    parseRouteParam,
+    BASE_URL,
+    JOB_TYPES,
+    JOB_TYPES_QUERY_KEY,
+    EXP_LEVELS,
+    EXP_LEVELS_QUERY_KEY,
+    KEYWORDS_QUERY_KEY,
+};

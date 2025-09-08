@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import app from '@/app';
 import { config } from '@/config';
 
@@ -28,5 +28,36 @@ describe('registry', () => {
     it('/favicon.ico', async () => {
         const response = await app.request('/favicon.ico');
         expect(response.status).toBe(200);
+    });
+
+    // healthz
+    it('/healthz', async () => {
+        const response = await app.request('/healthz');
+        expect(response.status).toBe(200);
+        expect(response.headers.get('cache-control')).toBe('no-cache');
+        expect(await response.text()).toBe('ok');
+    });
+
+    it('namespaces respects DISABLE_NSFW=true', async () => {
+        vi.resetModules();
+        vi.stubEnv('DISABLE_NSFW', 'true');
+
+        const { namespaces } = await import('./registry');
+
+        // All routes in all namespaces should not have nsfw features
+        for (const ns of Object.values(namespaces)) {
+            for (const route of Object.values(ns.routes)) {
+                expect(route.features?.nsfw).not.toBe(true);
+            }
+        }
+        expect(namespaces['2048']).toBeUndefined();
+    });
+
+    it('namespaces includes NSFW routes when DISABLE_NSFW=false', async () => {
+        vi.resetModules();
+        vi.stubEnv('DISABLE_NSFW', 'false');
+
+        const { namespaces } = await import('./registry');
+        expect(namespaces['2048']).toBeDefined();
     });
 });

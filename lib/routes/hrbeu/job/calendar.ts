@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 const rootUrl = 'http://job.hrbeu.edu.cn';
@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'job.hrbeu.edu.cn/*',
     description: `| 通知公告 | 热点新闻 |
-  | :------: | :------: |
-  |   tzgg   |   rdxw   |
+| :------: | :------: |
+|   tzgg   |   rdxw   |
 
 #### 大型招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-da-xing-zhao-pin-hui}
 
@@ -44,11 +44,11 @@ async function handler() {
     month < 10 ? (strmMonth = '0' + month) : (strmMonth = month);
     const day = date.getDate();
 
-    const response = await got('http://job.hrbeu.edu.cn/HrbeuJY/Web/Employ/QueryCalendar', {
-        searchParams: {
+    const response = await ofetch('http://job.hrbeu.edu.cn/HrbeuJY/Web/Employ/QueryCalendar', {
+        query: {
             yearMonth: year + '-' + strmMonth,
         },
-    }).json();
+    });
 
     let link = '';
     for (let i = 0, l = response.length; i < l; i++) {
@@ -58,17 +58,19 @@ async function handler() {
         }
     }
 
-    const todayResponse = await got(`${rootUrl}${link}`);
+    const todayResponse = await ofetch(`${rootUrl}${link}`, {
+        parseResponse: (txt) => txt,
+    });
 
-    const $ = load(todayResponse.data);
+    const $ = load(todayResponse);
 
     const list = $('li.clearfix')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('span.news_tit.news_tit_s').find('a').attr('title'),
             description: '点击标题，登录查看招聘详情',
             link: $(item).find('span.news_tit.news_tit_s').find('a').attr('href'),
-        }))
-        .get();
+        }));
 
     return {
         title: '今日招聘会',

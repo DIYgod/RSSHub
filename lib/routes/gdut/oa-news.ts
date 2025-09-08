@@ -1,12 +1,11 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import wait from '@/utils/wait';
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import asyncPool from 'tiny-async-pool';
+import pMap from 'p-map';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {
@@ -81,7 +80,7 @@ export const route: Route = {
         },
     ],
     name: 'Unknown',
-    maintainers: ['Jim Kirisame'],
+    maintainers: ['jim-kirisame'],
     handler,
     url: 'oas.gdut.edu.cn/seeyon',
 };
@@ -115,112 +114,109 @@ async function handler(ctx) {
     }
 
     // 构造文章数组
-    const articles = [];
-    for (const item of resp.data.list) {
-        articles.push({
-            title: item.title,
-            guid: item.id,
-            link: site + '/newsData.do?method=newsView&newsId=' + item.id,
-            pubDate: timezone(parseDate(item.publishDate1), +8),
-            author: item.publishUserDepart,
-            category: item.typeName,
-        });
-    }
+    const articles = resp.data.list.map((item) => ({
+        title: item.title,
+        guid: item.id,
+        link: site + '/newsData.do?method=newsView&newsId=' + item.id,
+        pubDate: timezone(parseDate(item.publishDate1), +8),
+        author: item.publishUserDepart,
+        category: item.typeName,
+    }));
 
-    // 获取实际的文章内容
-    for await (const data of asyncPool(2, articles, async (data) => {
-        const link = data.link;
-        data.description = await cache.tryGet(link, async () => {
-            // 获取数据
-            const response = await got(link, {
-                cookieJar,
-            });
+    const results = await pMap(
+        articles,
+        async (data) => {
+            const link = data.link;
+            data.description = await cache.tryGet(link, async () => {
+                // 获取数据
+                const response = await got(link, {
+                    cookieJar,
+                });
 
-            const $ = load(response.data);
-            const node = $('#content');
-            // 清理样式
-            node.find('*')
-                .filter(function () {
-                    return this.type === 'comment' || this.tagName === 'meta' || this.tagName === 'style';
-                })
-                .remove();
-            node.find('*')
-                .contents()
-                .filter(function () {
-                    return this.type === 'comment' || this.tagName === 'meta' || this.tagName === 'style';
-                })
-                .remove();
-            node.find('*').each(function () {
-                if (this.attribs.style !== undefined) {
-                    const newSty = this.attribs.style
-                        .split(';')
-                        .filter((s) => {
-                            const styBlocklist = ['color:rgb(0,0,0)', 'color:black', 'background:rgb(255,255,255)', 'background:white', 'text-align:left', 'text-align:justify', 'font-style:normal', 'font-weight:normal'];
-                            const styPrefixBlocklist = [
-                                'font-family',
-                                'font-size',
-                                'background',
-                                'text-autospace',
-                                'text-transform',
-                                'letter-spacing',
-                                'line-height',
-                                'padding',
-                                'margin',
-                                'text-justify',
-                                'word-break',
-                                'vertical-align',
-                                'mso-',
-                                '-ms-',
-                            ];
-                            const sty = s.trim();
-                            if (styBlocklist.includes(sty.replaceAll(/\s+/g, ''))) {
-                                return false;
-                            }
-                            for (const prefix of styPrefixBlocklist) {
-                                if (sty.startsWith(prefix)) {
+                const $ = load(response.data);
+                const node = $('#content');
+                // 清理样式
+                node.find('*')
+                    .filter(function () {
+                        return this.type === 'comment' || this.tagName === 'meta' || this.tagName === 'style';
+                    })
+                    .remove();
+                node.find('*')
+                    .contents()
+                    .filter(function () {
+                        return this.type === 'comment' || this.tagName === 'meta' || this.tagName === 'style';
+                    })
+                    .remove();
+                node.find('*').each(function () {
+                    if (this.attribs.style !== undefined) {
+                        const newSty = this.attribs.style
+                            .split(';')
+                            .filter((s) => {
+                                const styBlocklist = ['color:rgb(0,0,0)', 'color:black', 'background:rgb(255,255,255)', 'background:white', 'text-align:left', 'text-align:justify', 'font-style:normal', 'font-weight:normal'];
+                                const styPrefixBlocklist = [
+                                    'font-family',
+                                    'font-size',
+                                    'background',
+                                    'text-autospace',
+                                    'text-transform',
+                                    'letter-spacing',
+                                    'line-height',
+                                    'padding',
+                                    'margin',
+                                    'text-justify',
+                                    'word-break',
+                                    'vertical-align',
+                                    'mso-',
+                                    '-ms-',
+                                ];
+                                const sty = s.trim();
+                                if (styBlocklist.includes(sty.replaceAll(/\s+/g, ''))) {
                                     return false;
                                 }
-                            }
-                            return true;
-                        })
-                        .join(';');
-                    if (newSty) {
-                        this.attribs.style = newSty;
-                    } else {
-                        delete this.attribs.style;
+                                for (const prefix of styPrefixBlocklist) {
+                                    if (sty.startsWith(prefix)) {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            })
+                            .join(';');
+                        if (newSty) {
+                            this.attribs.style = newSty;
+                        } else {
+                            delete this.attribs.style;
+                        }
                     }
-                }
-                if (this.attribs.class && this.attribs.class.trim().startsWith('Mso')) {
-                    delete this.attribs.class;
-                }
-                if (this.attribs.lang) {
-                    delete this.attribs.lang;
-                }
-                if (this.tagName === 'font' || this.tagName === 'o:p') {
-                    $(this).replaceWith(this.childNodes);
-                }
-                if (this.tagName === 'span' && !this.attribs.style) {
-                    $(this).replaceWith(this.childNodes);
-                }
-            });
-            node.find('span').each(function () {
-                if (this.childNodes.length === 0) {
-                    $(this).remove();
-                }
-            });
+                    if (this.attribs.class && this.attribs.class.trim().startsWith('Mso')) {
+                        delete this.attribs.class;
+                    }
+                    if (this.attribs.lang) {
+                        delete this.attribs.lang;
+                    }
+                    if (this.tagName === 'font' || this.tagName === 'o:p') {
+                        $(this).replaceWith(this.childNodes);
+                    }
+                    if (this.tagName === 'span' && !this.attribs.style) {
+                        $(this).replaceWith(this.childNodes);
+                    }
+                });
+                node.find('span').each(function () {
+                    if (this.childNodes.length === 0) {
+                        $(this).remove();
+                    }
+                });
 
-            // 防止太快被Ban
-            await wait(500);
-            return node.html();
-        });
-    })) {
-        data;
-    }
+                return node.html();
+            });
+            return data;
+        },
+        { concurrency: 2 }
+    );
 
     return {
         title: `广东工业大学新闻通知网 - ` + type.name,
         link: site,
         description: `广东工业大学新闻通知网`,
-        item: articles,
+        item: results,
     };
 }

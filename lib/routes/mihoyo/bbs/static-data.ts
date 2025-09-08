@@ -97,6 +97,13 @@ const DATA_MAP = {
     zzz: {
         title: '绝区零',
         gids: 8,
+        default_forum: 'tongren',
+        forums: {
+            tongren: {
+                title: '同人',
+                forum_id: 59,
+            },
+        },
     },
     dby: {
         title: '大别野',

@@ -15,7 +15,7 @@
     <% const video = $('script').text().match(/initPlayer\('(.*?)','(.*?)'\)/); %>
     <% const videoUrl = video[1]; %>
     <% const poster = video[2]; %>
-    <video controls preload="none" poster="{{ poster }}" src="{{ videoUrl }}"></video>
+    <video controls preload="metadata" poster="{{ poster }}" src="{{ videoUrl }}"></video>
     <br>
 {{ /if }}
 

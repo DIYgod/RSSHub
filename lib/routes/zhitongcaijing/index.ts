@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -71,6 +69,7 @@ const ids = {
 export const route: Route = {
     path: '/:id?/:category?',
     categories: ['finance'],
+    view: ViewType.Articles,
     example: '/zhitongcaijing',
     parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', category: '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部' },
     features: {
@@ -85,21 +84,21 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| id           | 栏目 |
-  | ------------ | ---- |
-  | recommend    | 推荐 |
-  | hkstock      | 港股 |
-  | meigu        | 美股 |
-  | agu          | 沪深 |
-  | ct           | 创投 |
-  | esg          | ESG  |
-  | aqs          | 券商 |
-  | ajj          | 基金 |
-  | focus        | 要闻 |
-  | announcement | 公告 |
-  | research     | 研究 |
-  | shares       | 新股 |
-  | bazaar       | 市场 |
-  | company      | 公司 |`,
+| ------------ | ---- |
+| recommend    | 推荐 |
+| hkstock      | 港股 |
+| meigu        | 美股 |
+| agu          | 沪深 |
+| ct           | 创投 |
+| esg          | ESG  |
+| aqs          | 券商 |
+| ajj          | 基金 |
+| focus        | 要闻 |
+| announcement | 公告 |
+| research     | 研究 |
+| shares       | 新股 |
+| bazaar       | 市场 |
+| company      | 公司 |`,
 };
 
 async function handler(ctx) {

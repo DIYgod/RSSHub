@@ -1,8 +1,5 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { art } from '@/utils/render';
 import got from '@/utils/got';

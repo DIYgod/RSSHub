@@ -27,9 +27,9 @@ export const route: Route = {
     name: '关注',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

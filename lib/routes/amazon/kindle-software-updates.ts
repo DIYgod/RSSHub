@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -39,19 +37,19 @@ async function handler() {
 
     const $ = load(data);
     const list = $('.a-row.cs-help-landing-section.help-display-cond')
-        .map(function () {
+        .toArray()
+        .map((item) => {
             const data = {};
-            data.title = $(this).find('.sectiontitle').text();
-            data.link = $(this).find('a').eq(0).attr('href');
-            data.version = $(this).find('li').first().text();
+            data.title = $(item).find('.sectiontitle').text();
+            data.link = $(item).find('a').eq(0).attr('href');
+            data.version = $(item).find('li').first().text();
             data.website = `${url}?nodeId=${nodeIdValue}`;
-            data.description = $(this)
+            data.description = $(item)
                 .find('.a-column.a-span8')
                 .html()
                 .replaceAll(/[\t\n]/g, '');
             return data;
-        })
-        .get();
+        });
     return {
         title: 'Kindle E-Reader Software Updates',
         link: `${url}?nodeId=${nodeIdValue}`,

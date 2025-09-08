@@ -19,17 +19,18 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'AV',
     maintainers: ['TonyRL'],
     handler,
-    description: `:::warning
+    description: `::: warning
 目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 :::
 
-  | 全部文章 | AV 新聞 | AV 導覽 |
-  | -------- | ------- | ------- |
-  | 78       | 3       | 5       |`,
+| 全部文章 | AV 新聞 | AV 導覽 |
+| -------- | ------- | ------- |
+| 78       | 3       | 5       |`,
 };
 
 async function handler(ctx) {

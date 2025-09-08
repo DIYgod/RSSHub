@@ -1,4 +1,4 @@
-const baseUrl = 'https://api.twitter.com';
+const baseUrl = 'https://api.x.com';
 
 const consumerKey = '3nVuSoBZnx6U4vzUxf5w';
 const consumerSecret = 'Bcs59EFbbsdF6Sl9Ng71smgStWEGwXXKSjYvPVt7qys';

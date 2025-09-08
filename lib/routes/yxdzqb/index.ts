@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -40,8 +38,8 @@ export const route: Route = {
     handler,
     url: 'yxdzqb.com/',
     description: `| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
-  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-  | discount       | popular            | popular\_cn            | low            | low\_cn                |`,
+| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
+| discount       | popular            | popular\_cn            | low            | low\_cn                |`,
 };
 
 async function handler(ctx) {
@@ -54,27 +52,25 @@ async function handler(ctx) {
     const title = $('.btn-primary b').text() || $('.btn-danger b').text() || $('.btn-info b').text();
     const list = $('tr.bg-none');
 
-    const out = list
-        .map((index, item) => {
-            item = $(item);
+    const out = list.toArray().map((item) => {
+        item = $(item);
 
-            const title = item.find('div table:nth-child(1) tr td:nth-child(1)').text();
-            const description = art(path.join(__dirname, 'templates/description.art'), {
-                src: item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src'),
-                description: item.find('div.collapse').html(),
-            });
-            const link = item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
-            const guid = link + item.find('div.cell_price span:nth-child(2)').text();
+        const title = item.find('div table:nth-child(1) tr td:nth-child(1)').text();
+        const description = art(path.join(__dirname, 'templates/description.art'), {
+            src: item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src'),
+            description: item.find('div.collapse').html(),
+        });
+        const link = item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
+        const guid = link + item.find('div.cell_price span:nth-child(2)').text();
 
-            const single = {
-                title,
-                description,
-                link,
-                guid,
-            };
-            return single;
-        })
-        .get();
+        const single = {
+            title,
+            description,
+            link,
+            guid,
+        };
+        return single;
+    });
 
     return {
         title: `${title}-游戏打折情报`,

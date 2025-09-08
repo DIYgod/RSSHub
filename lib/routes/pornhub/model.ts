@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { Route, ViewType, Data } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
-import { headers, parseItems } from './utils';
+import { headers, parseItems, getRadarDomin } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
-    path: '/:language?/model/:username/:sort?',
+    path: '/model/:username/:language?/:sort?',
     categories: ['multimedia'],
+    view: ViewType.Videos,
     example: '/pornhub/model/stacy-starando',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', sort: 'sorting method, see below' },
     features: {
@@ -17,19 +18,15 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
-    radar: [
-        {
-            source: ['pornhub.com/model/:username/*'],
-            target: '/model/:username',
-        },
-    ],
-    name: 'Verified amateur / Model',
+    radar: getRadarDomin('/model/:username'),
+    name: 'Model',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { language = 'www', username, sort = '' } = ctx.req.param();
     const link = `https://${language}.pornhub.com/model/${username}/videos${sort ? `?o=${sort}` : ''}`;
     if (!isValidHost(language)) {
@@ -43,12 +40,10 @@ async function handler(ctx) {
         .map((e) => parseItems($(e)));
 
     return {
-        title: $('title').first().text(),
+        title: $('h1').first().text(),
         description: $('section.aboutMeSection').text().trim(),
         link,
-        image: $('#coverPictureDefault').attr('src'),
-        logo: $('#getAvatar').attr('src'),
-        icon: $('#getAvatar').attr('src'),
+        image: $('#getAvatar').attr('src'),
         language: $('html').attr('lang'),
         item: items,
     };

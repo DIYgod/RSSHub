@@ -28,6 +28,7 @@ interface Generalspec {
     render_spec: Renderspec;
     size_spec: Containersize;
 }
+/* eslint-disable-next-line @typescript-eslint/no-empty-object-type */
 interface AVATARLAYER {}
 interface Webcssstyle {
     borderRadius: string;
@@ -186,7 +187,15 @@ interface Richtextnode {
     type: string;
     jump_url?: string;
     emoji?: Emoji;
+    pics?: Pic2[];
 }
+interface Pic2 {
+    height: number;
+    size: number;
+    src: string;
+    width: number;
+}
+
 interface Desc {
     rich_text_nodes: Richtextnode[];
     text: string;

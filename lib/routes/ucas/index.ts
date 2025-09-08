@@ -37,8 +37,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
-  | :------: | :----: | :----------: | :----------: | :----------: |
-  |   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |`,
+| :------: | :----: | :----------: | :----------: | :----------: |
+|   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |`,
 };
 
 async function handler(ctx) {
@@ -47,7 +47,7 @@ async function handler(ctx) {
     const response = await got.get(url);
 
     const $ = load(response.data);
-    const list = $('#col1_content > div.list > ul > li').get();
+    const list = $('#col1_content > div.list > ul > li').toArray();
 
     const items = await Promise.all(
         list.map(async (item) => {

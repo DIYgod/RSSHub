@@ -39,7 +39,7 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const list = $('.lg\\:text-2xl')
+    const list = $(String.raw`.lg\:text-2xl`)
         .toArray()
         .map((item) => {
             item = $(item).parent();

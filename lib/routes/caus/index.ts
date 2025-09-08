@@ -46,8 +46,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 全部 | 要闻 | 商业 | 快讯 | 财富 | 生活 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 0    | 1    | 2    | 3    | 8    | 6    |`,
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 2    | 3    | 8    | 6    |`,
 };
 
 async function handler(ctx) {

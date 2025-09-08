@@ -28,7 +28,7 @@ export const route: Route = {
     handler,
     url: 'aliresearch.com/cn/information',
     description: `| 新闻 | 观点 | 案例 |
-  | ---- | ---- | ---- |`,
+| ---- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

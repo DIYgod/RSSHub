@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['miles170'],
     handler,
     description: `| 新聞 | AI       | Cloud | DevOps | 資安     |
-  | ---- | -------- | ----- | ------ | -------- |
-  | news | big-data | cloud | devops | security |`,
+| ---- | -------- | ----- | ------ | -------- |
+| news | big-data | cloud | devops | security |`,
 };
 
 async function handler(ctx) {
@@ -39,7 +39,7 @@ async function handler(ctx) {
     const name = $('a.active-trail').text();
     const items = await Promise.all(
         $('.title a')
-            .get()
+            .toArray()
             .map((item) => {
                 const link = baseUrl + $(item).attr('href');
                 return cache.tryGet(link, async () => {

@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id/bookmarks/artworks'],
+            source: ['www.pixiv.net/users/:id/bookmarks/artworks', 'www.pixiv.net/en/users/:id/bookmarks/artworks'],
         },
     ],
     name: 'User Bookmark',
@@ -58,7 +58,7 @@ async function handler(ctx) {
                 title: illust.title,
                 author: illust.user.name,
                 pubDate: parseDate(illust.create_date),
-                description: `<p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p>${images.join('')}`,
+                description: `${illust.caption}<br><p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p>${images.join('')}`,
                 link: `https://www.pixiv.net/artworks/${illust.id}`,
             };
         }),

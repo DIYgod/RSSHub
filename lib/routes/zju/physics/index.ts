@@ -40,8 +40,8 @@ export const route: Route = {
     maintainers: ['Caicailiushui'],
     handler,
     description: `| 本院动态 | 科研进展 | 研究生教育最新消息 |
-  | -------- | -------- | ------------------ |
-  | 1        | 2        | 3                  |`,
+| -------- | -------- | ------------------ |
+| 1        | 2        | 3                  |`,
 };
 
 async function handler(ctx) {
@@ -54,7 +54,8 @@ async function handler(ctx) {
 
     const $ = load(res.data);
     const items = $('#arthd li')
-        .map((index, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('a').attr('title'),
@@ -63,8 +64,7 @@ async function handler(ctx) {
                 link: `http://physics.zju.edu.cn/${item.find('a').attr('href')}`,
                 // link: `http://10.14.122.238/${item.find('a').attr('href')}`,
             };
-        })
-        .get();
+        });
 
     return {
         title: map.get(type).title,

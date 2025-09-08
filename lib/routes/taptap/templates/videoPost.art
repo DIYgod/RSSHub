@@ -1,3 +1,2 @@
-{{ if intro }}{{@ intro }}{{ /if }}
 <p>Preview</p>
 <p><img src="{{@ previewUrl }}" /></p>

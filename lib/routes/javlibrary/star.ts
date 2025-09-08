@@ -14,19 +14,20 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Videos by star',
     maintainers: ['nczitzk'],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
 
-  :::tip
+::: tip
   See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
 
   See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

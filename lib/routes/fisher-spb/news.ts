@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -58,15 +56,15 @@ async function handler() {
     };
 
     const items = $('.news-message')
-        .map((_, elem) => ({
+        .toArray()
+        .map((elem) => ({
             pubDate: parseDate($('.news-message-date', elem).text().trim(), 'DD.MM.YYYY HH:mm'),
             title: $('.news-message-location', elem).text().trim(),
             description: descBuilder(elem).html(),
             author: $('.news-message-user', elem).text().trim(),
             guid: $(elem).attr('id'),
             link: rootUrl + $('.news-message-comments-number > a', elem).attr('href'),
-        }))
-        .get();
+        }));
 
     return {
         title: $('head > title').text().trim(),

@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,7 +20,7 @@ const formatDate = (date, format) => dayjs(date).format(format);
 const addFilters = (url, filters) => {
     const keys = Object.keys(filters);
     const filterStr = keys.map((k) => `/${k}/${filters[k]}`).join('');
-    const newUrl = url.replaceAll(new RegExp(`(/${keys.join('/\\w+|/')}/\\w+)`, 'g'), '');
+    const newUrl = url.replaceAll(new RegExp(`(/${keys.join(String.raw`/\w+|/`)}/\\w+)`, 'g'), '');
     return `${newUrl}${/=/.test(newUrl) ? '' : '/='}${filterStr}`;
 };
 

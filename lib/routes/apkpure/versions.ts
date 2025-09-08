@@ -39,7 +39,7 @@ async function handler(ctx) {
     });
 
     const r = await page.evaluate(() => document.documentElement.innerHTML);
-    browser.close();
+    await browser.close();
 
     const $ = load(r);
     const img = new URL($('.ver-top img').attr('src'));

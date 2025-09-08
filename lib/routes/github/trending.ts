@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import { config } from '@/config';
 import got from '@/utils/got';
@@ -13,10 +11,32 @@ export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
     categories: ['programming'],
     example: '/github/trending/daily/javascript/en',
+    view: ViewType.Notifications,
     parameters: {
-        since: "time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`",
-        language: "the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`",
-        spoken_language: "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL",
+        since: {
+            description: 'time range',
+            options: [
+                {
+                    value: 'daily',
+                    label: 'Today',
+                },
+                {
+                    value: 'weekly',
+                    label: 'This week',
+                },
+                {
+                    value: 'monthly',
+                    label: 'This month',
+                },
+            ],
+        },
+        language: {
+            description: "the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`",
+            default: 'any',
+        },
+        spoken_language: {
+            description: "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL",
+        },
     },
     features: {
         requireConfig: [

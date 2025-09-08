@@ -108,4 +108,18 @@ describe('template', () => {
         expect(parsed.items[0].enclosure?.length).toBe('3661');
         expect(parsed.items[0].itunes.duration).toBe('10:10:10');
     });
+
+    it(`redirect`, async () => {
+        const response = await app.request('/test/redirect');
+        expect(response.status).toBe(301);
+        expect(response.headers.get('location')).toBe('/test/1');
+    });
+
+    it(`api`, async () => {
+        const response = await app.request('/api/test');
+        expect(response.status).toBe(200);
+        expect(await response.json()).toEqual({
+            code: 0,
+        });
+    });
 });

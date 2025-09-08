@@ -194,7 +194,7 @@ const fetchData = async (url: string, rootUrl: string): Promise<object> => {
     const $ = load(response);
 
     const title = $('title').first().text();
-    const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
+    const image = new URL($('link[rel="icon"]').last().attr('href') ?? 'wp-content/uploads/site_logo.png', rootUrl).href;
 
     return {
         title,
@@ -239,7 +239,7 @@ const getFilterByKeyAndKeyword = async (key: string, keyword: string, rootUrl: s
 const getFilterKeyForSearchParams = (key: string, isApi: boolean = false): string | undefined => {
     const keys = isApi ? filterApiKeys : filterKeys;
 
-    return Object.hasOwn(keys, key) ? keys[key] ?? key : undefined;
+    return Object.hasOwn(keys, key) ? (keys[key] ?? key) : undefined;
 };
 
 /**

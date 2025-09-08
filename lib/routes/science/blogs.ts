@@ -52,8 +52,8 @@ async function handler(ctx) {
 
             const response = await page.content();
 
-            page.close();
-            browser.close();
+            await page.close();
+            await browser.close();
             return response;
         },
         config.cache.routeExpire,
@@ -68,9 +68,15 @@ async function handler(ctx) {
             return {
                 title: item.find('title').text().trim(),
                 link: item.find('link').text().trim(),
-                author: item.find('dc\\:creator').text().trim(),
+                author: item
+                    .find(String.raw`dc\:creator`)
+                    .text()
+                    .trim(),
                 pubDate: parseDate(item.find('pubDate').text().trim()),
-                description: item.find('content\\:encoded').text().trim(),
+                description: item
+                    .find(String.raw`content\:encoded`)
+                    .text()
+                    .trim(),
             };
         });
 

@@ -19,11 +19,12 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '教务处',
+    url: 'jwc.xidian.edu.cn',
     maintainers: ['ShadowySpirits'],
     handler,
     description: `| 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
-  | :------: | :------: | :------: | :------: | :------: |
-  |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |`,
+| :------: | :------: | :------: | :------: | :------: |
+|   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |`,
 };
 
 async function handler(ctx) {

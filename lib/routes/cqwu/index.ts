@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 通知公告 | 学术活动公告 |
-  | -------- | ------------ |
-  | notify   | academiceve  |`,
+| -------- | ------------ |
+| notify   | academiceve  |`,
 };
 
 async function handler(ctx) {

@@ -2,7 +2,8 @@ import type { Context } from 'hono';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
 // and lib/routes/rsshub/routes.ts
-type Category =
+export type Category =
+    | 'popular'
     | 'social-media'
     | 'new-media'
     | 'traditional-media'
@@ -34,7 +35,13 @@ export type DataItem = {
     pubDate?: number | string | Date;
     link?: string;
     category?: string[];
-    author?: string | { name: string }[];
+    author?:
+        | string
+        | {
+              name: string;
+              url?: string;
+              avatar?: string;
+          }[];
     doi?: string;
     guid?: string;
     id?: string;
@@ -45,7 +52,7 @@ export type DataItem = {
     image?: string;
     banner?: string;
     updated?: number | string | Date;
-    language?: string;
+    language?: Language;
     enclosure_url?: string;
     enclosure_type?: string;
     enclosure_title?: string;
@@ -53,6 +60,13 @@ export type DataItem = {
     itunes_duration?: number | string;
     itunes_item_image?: string;
     media?: Record<string, Record<string, string>>;
+    attachments?: {
+        url: string;
+        mime_type: string;
+        title?: string;
+        size_in_bytes?: number;
+        duration_in_seconds?: number;
+    }[];
 
     _extra?: Record<string, any> & {
         links?: {
@@ -71,17 +85,126 @@ export type Data = {
     allowEmpty?: boolean;
     image?: string;
     author?: string;
-    language?: string;
+    language?: Language;
     feedLink?: string;
     lastBuildDate?: string;
     itunes_author?: string;
     itunes_category?: string;
     itunes_explicit?: string | boolean;
     id?: string;
-
+    icon?: string;
+    logo?: string;
     atomlink?: string;
     ttl?: number;
 };
+
+export type Language =
+    | 'af'
+    | 'ar-DZ'
+    | 'ar-IQ'
+    | 'ar-KW'
+    | 'ar-MA'
+    | 'ar-SA'
+    | 'ar-TN'
+    | 'be'
+    | 'bg'
+    | 'ca'
+    | 'cs'
+    | 'da'
+    | 'de'
+    | 'de-at'
+    | 'de-ch'
+    | 'de-de'
+    | 'de-li'
+    | 'de-lu'
+    | 'el'
+    | 'en'
+    | 'en-au'
+    | 'en-bz'
+    | 'en-ca'
+    | 'en-gb'
+    | 'en-ie'
+    | 'en-jm'
+    | 'en-nz'
+    | 'en-ph'
+    | 'en-tt'
+    | 'en-us'
+    | 'en-za'
+    | 'en-zw'
+    | 'es'
+    | 'es-ar'
+    | 'es-bo'
+    | 'es-cl'
+    | 'es-co'
+    | 'es-cr'
+    | 'es-do'
+    | 'es-ec'
+    | 'es-es'
+    | 'es-gt'
+    | 'es-hn'
+    | 'es-mx'
+    | 'es-ni'
+    | 'es-pa'
+    | 'es-pe'
+    | 'es-pr'
+    | 'es-py'
+    | 'es-sv'
+    | 'es-uy'
+    | 'es-ve'
+    | 'et'
+    | 'eu'
+    | 'fi'
+    | 'fo'
+    | 'fr'
+    | 'fr-be'
+    | 'fr-ca'
+    | 'fr-ch'
+    | 'fr-fr'
+    | 'fr-lu'
+    | 'fr-mc'
+    | 'ga'
+    | 'gd'
+    | 'gl'
+    | 'haw'
+    | 'hi'
+    | 'hr'
+    | 'hu'
+    | 'in'
+    | 'is'
+    | 'it'
+    | 'it-ch'
+    | 'it-it'
+    | 'ja'
+    | 'ko'
+    | 'mk'
+    | 'ne'
+    | 'nl'
+    | 'nl-be'
+    | 'nl-nl'
+    | 'no'
+    | 'pl'
+    | 'pt'
+    | 'pt-br'
+    | 'pt-pt'
+    | 'ro'
+    | 'ro-mo'
+    | 'ro-ro'
+    | 'ru'
+    | 'ru-mo'
+    | 'ru-ru'
+    | 'sk'
+    | 'sl'
+    | 'sq'
+    | 'sr'
+    | 'sv'
+    | 'sv-fi'
+    | 'sv-se'
+    | 'tr'
+    | 'uk'
+    | 'zh-CN'
+    | 'zh-HK'
+    | 'zh-TW'
+    | 'other';
 
 // namespace
 interface NamespaceItem {
@@ -105,6 +228,11 @@ interface NamespaceItem {
      * Hints and additional explanations for users using this namespace, it will be inserted into the documentation
      */
     description?: string;
+
+    /**
+     * Main Language of the namespace
+     */
+    lang?: Language;
 }
 
 interface Namespace extends NamespaceItem {
@@ -117,6 +245,15 @@ interface Namespace extends NamespaceItem {
 }
 
 export type { Namespace };
+
+export enum ViewType {
+    Articles = 0,
+    SocialMedia = 1,
+    Pictures = 2,
+    Videos = 3,
+    Audios = 4,
+    Notifications = 5,
+}
 
 // route
 interface RouteItem {
@@ -144,7 +281,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data> | Data;
+    handler: (ctx: Context) => Promise<Data | null> | Data | null;
 
     /**
      * An example URL of the route
@@ -154,7 +291,18 @@ interface RouteItem {
     /**
      * The description of the route parameters
      */
-    parameters?: Record<string, string>;
+    parameters?: Record<
+        string,
+        | string
+        | {
+              description: string;
+              default?: string;
+              options?: {
+                  value: string;
+                  label: string;
+              }[];
+          }
+    >;
 
     /**
      * Hints and additional explanations for users using this route, it will be appended after the route component, supports markdown
@@ -199,21 +347,27 @@ interface RouteItem {
 
         /** Set to `true` if the feed supports Sci-Hub */
         supportScihub?: boolean;
+
+        /** Set to `true` if this feed is not safe for work */
+        nsfw?: boolean;
     };
 
     /**
      * The [RSSHub-Radar](https://github.com/DIYgod/RSSHub-Radar) rule of the route
      */
     radar?: RadarItem[];
+
+    /**
+     * The [Follow](https://github.com/RSSNext/follow) default view of the route, default to `ViewType.Articles`
+     */
+    view?: ViewType;
 }
 
-interface Route extends RouteItem {
-    ja?: NamespaceItem;
-    zh?: NamespaceItem;
-    'zh-TW'?: NamespaceItem;
+export interface Route extends RouteItem {
+    ja?: RouteItem;
+    zh?: RouteItem;
+    'zh-TW'?: RouteItem;
 }
-
-export type { Route };
 
 // radar
 export type RadarItem = {
@@ -241,6 +395,7 @@ export type RadarItem = {
      *
      * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19
      * @see https://github.com/DIYgod/RSSHub-Radar/commit/5a97647f900bb2bca792787a322b2b1ca512e40b#diff-f84e3c1e16af314bc4ed7c706d7189844663cde9b5142463dc5c0db34c2e8d54L10
+     * @see https://github.com/DIYgod/RSSHub-Radar/issues/692
      */
     target?:
         | string
@@ -253,3 +408,56 @@ export type RadarItem = {
               document: Document
           ) => string);
 };
+
+export type RadarDomain = {
+    _name: string;
+} & {
+    [subdomain: string]: RadarItem[];
+};
+
+export interface APIRoute {
+    /**
+     * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
+     */
+    path: string;
+
+    /**
+     * The GitHub handle of the people responsible for maintaining this route
+     */
+    maintainers: string[];
+
+    /**
+     * The handler function of the route
+     */
+    handler: (ctx: Context) =>
+        | Promise<{
+              code: number;
+              message?: string;
+              data?: any;
+          }>
+        | {
+              code: number;
+              message?: string;
+              data?: any;
+          };
+
+    /**
+     * The description of the route parameters
+     */
+    parameters?: Record<
+        string,
+        {
+            description: string;
+            default?: string;
+            options?: {
+                value: string;
+                label: string;
+            }[];
+        }
+    >;
+
+    /**
+     * Hints and additional explanations for users using this route, it will be appended after the route component, supports markdown
+     */
+    description?: string;
+}

@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 // Token used to retrieve public information.
 async function getPublicToken() {
@@ -10,16 +10,16 @@ async function getPublicToken() {
 
     const { clientId, clientSecret } = config.spotify;
 
-    const tokenResponse = await got
-        .post('https://accounts.spotify.com/api/token', {
-            headers: {
-                Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
-            },
-            form: {
-                grant_type: 'client_credentials',
-            },
-        })
-        .json();
+    const tokenResponse = await ofetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            grant_type: 'client_credentials',
+        }).toString(),
+    });
     return tokenResponse.access_token;
 }
 
@@ -32,17 +32,17 @@ async function getPrivateToken() {
 
     const { clientId, clientSecret, refreshToken } = config.spotify;
 
-    const tokenResponse = await got
-        .post('https://accounts.spotify.com/api/token', {
-            headers: {
-                Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
-            },
-            form: {
-                grant_type: 'refresh_token',
-                refresh_token: refreshToken,
-            },
-        })
-        .json();
+    const tokenResponse = await ofetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+        }).toString(),
+    });
     return tokenResponse.access_token;
 }
 

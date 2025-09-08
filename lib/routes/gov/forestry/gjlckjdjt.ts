@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,13 +24,13 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 分类     | id   |
-  | -------- | ---- |
-  | 经济林   | jjl  |
-  | 林木良种 | lmlz |
-  | 林下经济 | lxjj |
-  | 生态修复 | stxf |
-  | 用材林   | ycl  |
-  | 其他     | qt   |`,
+| -------- | ---- |
+| 经济林   | jjl  |
+| 林木良种 | lmlz |
+| 林下经济 | lxjj |
+| 生态修复 | stxf |
+| 用材林   | ycl  |
+| 其他     | qt   |`,
 };
 
 async function handler(ctx) {

@@ -2,37 +2,39 @@ import { HOST } from './const';
 import { getAccessToken, post, sortBy, uniqBy } from './utils';
 
 async function fetchActivityList(
-    params = {
-        pageNo: '1',
-        pageSize: '30',
-        cityCode: '',
-        activityIds: '',
-        coupon: '',
-        keyword: '',
-        organizerId: '',
-        performerId: '',
-        showStyle: '',
-        showTime: '',
-        showType: '',
-        siteId: '',
-        sortType: '',
-        themeId: '',
-        timeRange: '',
-        tourId: '',
-        type: '',
-        tag: '',
-    }
+    params: Partial<{
+        pageNo: string;
+        pageSize: string;
+        cityCode: string;
+        activityIds: string;
+        coupon: string;
+        keyword: string;
+        organizerId: string;
+        performerId: string;
+        showStyle: string;
+        showTime: string;
+        showType: string;
+        siteId: string;
+        sortType: string;
+        themeId: string;
+        timeRange: string;
+        tourId: string;
+        type: string;
+        tag: string;
+    }>
 ) {
+    params.pageNo = params.pageNo || '1';
+    params.pageSize = params.pageSize || '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/activity/list', accessToken, params);
     return resp.result.result.map((item) => formatActivity(item));
 }
 
-const image = (src) => (src ? `<img src="${src}" />` : '');
-const time = (time) => (time ? `<p>演出时间：${time}</p>` : '');
-const address = (cityName, siteName) => (cityName || siteName ? `<p>地址：${[cityName, siteName].join(' - ')}</p>` : '');
-const performers = (name) => (name ? `<p>艺人：${name}</p>` : '');
-const price = (price) => (price ? `<p>票价：${price}</p>` : '');
+const image = (src: string) => (src ? `<img src="${src}" />` : '');
+const time = (time: string) => (time ? `<p>演出时间：${time}</p>` : '');
+const address = (cityName: string, siteName: string) => (cityName || siteName ? `<p>地址：${[cityName, siteName].join(' - ')}</p>` : '');
+const performers = (name: string) => (name ? `<p>艺人：${name}</p>` : '');
+const price = (price: string) => (price ? `<p>票价：${price}</p>` : '');
 
 function formatActivity(item) {
     return {
@@ -43,13 +45,15 @@ function formatActivity(item) {
 }
 
 async function fetchPerformerList(
-    params = {
-        pageNo: '1',
-        pageSize: '30',
-        searchKeyword: '',
-        styleId: '',
-    }
+    params: Partial<{
+        pageNo: string;
+        pageSize: string;
+        searchKeyword: string;
+        styleId: string;
+    }>
 ) {
+    params.pageNo = params.pageNo || '1';
+    params.pageSize = params.pageSize || '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/performer/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -59,15 +63,11 @@ async function fetchPerformerList(
     }));
 }
 
-async function fetchPerformerInfo(
-    params = {
-        performerId: '',
-    }
-) {
+async function fetchPerformerInfo(params: { performerId: string }) {
     const accessToken = await getAccessToken();
     const resp = await post('/web/performer/info', accessToken, params);
     return {
-        id: params.id,
+        id: params.performerId,
         name: resp.result.name,
         content: resp.result.content,
         avatar: resp.result.avatar,
@@ -77,15 +77,11 @@ async function fetchPerformerInfo(
     };
 }
 
-async function fetchBrandInfo(
-    params = {
-        brandId: '',
-    }
-) {
+async function fetchBrandInfo(params: { brandId: string }) {
     const accessToken = await getAccessToken();
     const resp = await post('/web/brand/info', accessToken, params);
     return {
-        id: params.id,
+        id: params.brandId,
         name: resp.result.name,
         content: resp.result.content,
         avatar: resp.result.avatar,
@@ -94,13 +90,45 @@ async function fetchBrandInfo(
     };
 }
 
-async function fetchBrandList(
-    params = {
-        pageNo: '1',
-        pageSize: '30',
-        searchKeyword: '',
-    }
+async function fetchSiteList(
+    params: Partial<{
+        pageNo: string;
+        pageSize: string;
+        searchKeyword: string;
+    }>
 ) {
+    params.pageNo = params.pageNo || '1';
+    params.pageSize = params.pageSize || '30';
+    const accessToken = await getAccessToken();
+    const resp = await post('/web/site/list', accessToken, params);
+    return resp.result.result.map((item) => ({
+        title: `${item.cityName} - ${item.name}`,
+        link: `${HOST}/venue/${item.id}`,
+        description: `id: ${item.id}`,
+    }));
+}
+
+async function fetchSiteInfo(params: { siteId: string }) {
+    const accessToken = await getAccessToken();
+    const resp = await post('/web/site/info', accessToken, params);
+    return {
+        id: params.siteId,
+        name: `${resp.result.cityName} - ${resp.result.name}`,
+        address: resp.result.address,
+        avatar: resp.result.avatar,
+        poster: resp.result.poster,
+    };
+}
+
+async function fetchBrandList(
+    params: Partial<{
+        pageNo: string;
+        pageSize: string;
+        searchKeyword: string;
+    }>
+) {
+    params.pageNo = params.pageNo || '1';
+    params.pageSize = params.pageSize || '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/brand/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -131,7 +159,7 @@ async function fetchCityList(keyword = '') {
 // so we need to fetch all city items and then extract styles from them
 async function fetchStyleList(keyword = '') {
     const resp = await fetchParams();
-    let styles = resp.result.flatMap((item) => item.styles);
+    let styles = resp.result.flatMap((item) => item.styles) as Array<{ key: string; showName: string }>;
     styles = uniqBy(styles, 'key');
     styles = sortBy(styles, 'key');
     return styles
@@ -143,16 +171,16 @@ async function fetchStyleList(keyword = '') {
         }));
 }
 
-async function fetchDictionary(cityCode, showStyle) {
+async function fetchDictionary(cityCode: string, showStyle: string) {
     const resp = await fetchParams();
-    const target = resp.result.find((item) => item.cityCode === cityCode);
+    const target = resp.result.find((item) => String(item.cityCode) === cityCode);
     if (!target) {
         return {};
     }
     return {
         cityName: target.cityName,
-        showName: target.styles.find((item) => item.key === showStyle)?.showName,
+        showName: target.styles.find((item) => String(item.key) === showStyle)?.showName,
     };
 }
 
-export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };
+export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchSiteList, fetchSiteInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };

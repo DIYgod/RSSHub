@@ -9,10 +9,12 @@ export const route: Route = {
     parameters: { user_id: 'user id' },
     name: 'BBS Home Page',
     maintainers: ['tensor-tech'],
-    radar: {
-        source: ['bbs.deepin.org/user/:user_id'],
-        target: '/homepage/:user_id',
-    },
+    radar: [
+        {
+            source: ['bbs.deepin.org/user/:user_id'],
+            target: '/homepage/:user_id',
+        },
+    ],
     handler,
 };
 

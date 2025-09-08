@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -11,6 +9,7 @@ import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 export const route: Route = {
     path: '/tribe/set/:id',
     categories: ['picture'],
+    view: ViewType.Pictures,
     example: '/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001',
     parameters: { id: '部落 ID' },
     name: '部落影集',

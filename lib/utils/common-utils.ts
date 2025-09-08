@@ -1,6 +1,6 @@
 import { parseDate } from '@/utils/parse-date';
 import title from 'title';
-import os from 'os';
+import os from 'node:os';
 
 // convert a string into title case
 const toTitleCase = (str: string) => title(str);
@@ -39,6 +39,7 @@ const getLocalhostAddress = () => {
         .filter((iface) => iface?.family === 'IPv4' && !iface.internal)
         .map((iface) => iface?.address)
         .filter(Boolean);
+    address.push('[::]');
     return address;
 };
 

@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '005.tv',
     categories: ['anime'],
     description: '',
+    lang: 'zh-CN',
 };

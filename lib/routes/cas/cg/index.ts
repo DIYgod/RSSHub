@@ -27,8 +27,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 工作动态 | 科技成果转移转化亮点工作 |
-  | -------- | ------------------------ |
-  | zh       | cgzhld                   |`,
+| -------- | ------------------------ |
+| zh       | cgzhld                   |`,
 };
 
 async function handler(ctx) {
@@ -45,15 +45,15 @@ async function handler(ctx) {
     const list = $('#content li')
         .not('.gl_line')
         .slice(0, 15)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a');
             return {
                 title: a.text(),
                 link: `${rootUrl}/cg/${caty}${a.attr('href').replace('.', '')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

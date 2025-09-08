@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,15 +27,17 @@ const cleanUpHTML = (data) => {
     $('em.vote__bar, div.vote__btn, div.vote__time').remove();
     $('p img').each((_, e) => {
         e = $(e);
-        e.parent().replaceWith(
-            art(path.join(__dirname, 'templates/description.art'), {
-                image: {
-                    src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
-                    width: e.prop('data-w'),
-                    height: e.prop('data-h'),
-                },
-            })
-        );
+        if ((e.prop('src') ?? e.prop('_src')) !== undefined) {
+            e.parent().replaceWith(
+                art(path.join(__dirname, 'templates/description.art'), {
+                    image: {
+                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
+                        width: e.prop('data-w'),
+                        height: e.prop('data-h'),
+                    },
+                })
+            );
+        }
     });
     $('p, span').each((_, e) => {
         e = $(e);
@@ -188,7 +187,7 @@ const fetchItem = async (item) => {
     const { data: detailResponse } = await got(item.link);
 
     const state = parseInitialState(detailResponse);
-    const data = state.briefStoreModule?.brief_detail.brief ?? state.articleDetail?.articleDetail ?? undefined;
+    const data = state?.briefStoreModule?.brief_detail.brief ?? state?.articleDetail?.articleDetail ?? undefined;
 
     if (!data) {
         return item;
@@ -376,7 +375,7 @@ const processItems = async (items, limit, tryGet) => {
                 }),
                 author: item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author,
                 guid,
-                pubDate: item.publish_time ?? item.dateline ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
+                pubDate: (item.publish_time ?? item.dateline) ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
                 upvotes: Number.parseInt(upvotes, 10),
                 downvotes: Number.parseInt(downvotes, 10),
                 comments: Number.parseInt(comments, 10),

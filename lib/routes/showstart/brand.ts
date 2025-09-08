@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import { Data, Route } from '@/types';
 import { TITLE, HOST } from './const';
 import { fetchBrandInfo } from './service';
+import type { Context } from 'hono';
 
 export const route: Route = {
     path: '/brand/:id',
@@ -20,15 +21,15 @@ export const route: Route = {
             source: ['www.showstart.com/host/:id'],
         },
     ],
-    name: '厂牌 - 演出更新',
+    name: '按厂牌 - 演出更新',
     maintainers: ['lchtao26'],
     handler,
-    description: `:::tip
-厂牌 ID 查询: \`/showstart/search/brand/:keyword\`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)
+    description: `::: tip
+厂牌 ID 查询: \`/showstart/search/brand/:keyword\`，如: [https://rsshub.app/showstart/search/brand/声场](https://rsshub.app/showstart/search/brand/声场)
 :::`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const brand = await fetchBrandInfo({
         brandId: id,

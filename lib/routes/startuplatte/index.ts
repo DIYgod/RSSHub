@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 首頁 | 大師智慧 | 深度分析 | 新知介紹 |
-  | ---- | -------- | -------- | -------- |
-  |      | quote    | analysis | trend    |`,
+| ---- | -------- | -------- | -------- |
+|      | quote    | analysis | trend    |`,
 };
 
 async function handler(ctx) {
@@ -44,15 +44,15 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('.post-header h2 a')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
                 title: item.text(),
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

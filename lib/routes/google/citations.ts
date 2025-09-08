@@ -15,7 +15,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Author Citations',
+    name: 'Scholar Author Citations',
     maintainers: ['KellyHwong', 'const7'],
     handler,
     description: `The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ\` to \`mlmE4JMAAAAJ\`.
@@ -40,7 +40,7 @@ async function handler(ctx) {
     const name = $('#gsc_prf_in').text();
     const description = `Google Scholar Citation Monitor: ${name}; Profile: ${profile}; HomePage: ${homePage}`;
 
-    const list = $('#gsc_a_b .gsc_a_tr').get();
+    const list = $('#gsc_a_b .gsc_a_tr').toArray();
 
     const out = list.map((item) => {
         const $ = load(item);

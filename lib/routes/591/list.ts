@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import path from 'node:path';
 
@@ -124,9 +122,9 @@ export const route: Route = {
     name: 'Rental house',
     maintainers: ['Yukaii'],
     handler,
-    description: `:::tip
+    description: `::: tip
   Copy the URL of the 591 filter housing page and remove the front part \`https://rent.591.com.tw/?\`, you will get the query parameters.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

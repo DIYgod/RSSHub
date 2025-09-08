@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -6,6 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/index',
     categories: ['new-media'],
+    view: ViewType.Articles,
     example: '/sspai/index',
     parameters: {},
     features: {
@@ -35,13 +36,18 @@ async function handler() {
     });
     const items = await Promise.all(
         resp.data.data.map((item) => {
-            const link = `https://sspai.com/api/v1/${item.slug ? `member/article/single/info/get?slug=${item.slug}` : `article/info/get?id=${item.id}`}&view=second`;
+            const link = `https://sspai.com/api/v1/${item.slug ? `member/article/single/info/get?slug=${item.slug}` : `article/info/get?id=${item.id}`}&view=second&support_webp=true`;
             let description = '';
 
             const key = `sspai: ${item.id}`;
             return cache.tryGet(key, async () => {
                 const response = await got({ method: 'get', url: link });
-                description = response.data.data.body;
+                const articleData = response.data.data;
+                const banner = articleData.promote_image;
+                if (banner) {
+                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                description += articleData.body;
 
                 return {
                     title: item.title.trim(),
@@ -55,9 +61,9 @@ async function handler() {
     );
 
     return {
-        title: '少数派 -- 首页',
+        title: '少数派',
         link: 'https://sspai.com',
-        description: '少数派 -- 首页',
+        description: '少数派首页',
         item: items,
     };
 }

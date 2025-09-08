@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/839studio',
-    name: 'Unknown',
+    name: '澎湃美数课作品集',
     maintainers: ['umm233'],
     handler,
 };
@@ -25,17 +25,13 @@ async function handler() {
     return {
         title: '澎湃美数课作品集',
         link: 'http://projects.thepaper.cn/thepaper-cases/839studio/',
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('.imgup a').first().text(),
-                        description: `描述：${item.find('.imgdown p').text()}`,
-                        link: item.find('.imgup a').attr('href'),
-                    };
-                })
-                .get(),
+        item: list.toArray().map((item) => {
+            item = $(item);
+            return {
+                title: item.find('.imgup a').first().text(),
+                description: `描述：${item.find('.imgdown p').text()}`,
+                link: item.find('.imgup a').attr('href'),
+            };
+        }),
     };
 }

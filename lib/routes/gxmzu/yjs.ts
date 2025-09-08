@@ -31,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const out = await getNoticeList(ctx, url, host, 'a', '.timestyle55267', {
         title: '.titlestyle55269',
-        content: '#vsb_content',
+        content: '#vsb_newscontent',
         date: '.timestyle55269',
     });
 

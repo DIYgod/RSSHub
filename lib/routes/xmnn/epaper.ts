@@ -28,8 +28,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
-  | -------- | -------- | -------- | -------- |
-  | xmrb     | xmwb     | hxcb     | csjb     |`,
+| -------- | -------- | -------- | -------- |
+| xmrb     | xmwb     | hxcb     | csjb     |`,
 };
 
 async function handler(ctx) {

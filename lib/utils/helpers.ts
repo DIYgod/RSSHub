@@ -1,5 +1,6 @@
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { stringifyQuery } from 'ufo';
 
 export const getRouteNameFromPath = (path: string) => {
     const p = path.split('/').filter(Boolean);
@@ -30,3 +31,31 @@ export const getCurrentPath = (metaUrl: string) => {
     const __filename = path.join(fileURLToPath(metaUrl));
     return path.dirname(__filename);
 };
+
+function isPureObject(o: any) {
+    return Object.prototype.toString.call(o) === '[object Object]';
+}
+
+export function getSearchParamsString(searchParams: any) {
+    const searchParamsString = isPureObject(searchParams) ? stringifyQuery(searchParams) : null;
+    return searchParamsString ?? new URLSearchParams(searchParams).toString();
+}
+
+/**
+ * parse duration string to seconds
+ * @param {string} timeStr - duration string like "01:01:01" / "01:01" / "59"
+ * @returns {number}       - total seconds
+ */
+export function parseDuration(timeStr: string) {
+    const clean = timeStr.trim().replaceAll(/[^\d:]/g, '');
+    return clean
+        .split(':')
+        .toReversed()
+        .reduce((total, part, idx) => {
+            const n = Number(part);
+            if (Number.isNaN(n)) {
+                throw new TypeError(`Invalid segment: ${part}`);
+            }
+            return total + n * Math.pow(60, idx);
+        }, 0);
+}

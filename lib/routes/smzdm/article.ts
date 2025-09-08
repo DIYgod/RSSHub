@@ -4,6 +4,9 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { config } from '@/config';
+import { getHeaders } from './utils';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/article/:uid',
@@ -11,7 +14,12 @@ export const route: Route = {
     example: '/smzdm/article/6902738986',
     parameters: { uid: '用户 id，网址上直接可以看到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'SMZDM_COOKIE',
+                description: '什么值得买登录后的 Cookie 值',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -29,9 +37,15 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    if (!config.smzdm.cookie) {
+        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
+    }
+
     const link = `https://zhiyou.smzdm.com/member/${ctx.req.param('uid')}/article/`;
 
-    const response = await got(link);
+    const response = await got(link, {
+        headers: getHeaders(),
+    });
     const $ = load(response.data);
     const title = $('.info-stuff-nickname a').text();
 
@@ -49,7 +63,9 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
+                const response = await got(item.link, {
+                    headers: getHeaders(),
+                });
                 const $ = load(response.data);
                 item.description = $('.m-contant article').html();
                 item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);

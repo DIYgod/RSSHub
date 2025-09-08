@@ -24,8 +24,8 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| 类型 | 教务动态 | 公告在线 | 选课通知 |
-  | ---- | -------- | -------- | -------- |
-  |      | jwdt     | ggzx     | xktz     |`,
+| ---- | -------- | -------- | -------- |
+|      | jwdt     | ggzx     | xktz     |`,
 };
 
 async function handler(ctx) {
@@ -36,11 +36,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('div.mainWrap.cleafix > div > div.right.fr > div.local.fl > h3').text();
     const list = $('div.list > ul > li')
-        .map((_index, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href'), rootURL).href,
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

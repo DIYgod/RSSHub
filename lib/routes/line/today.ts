@@ -18,9 +18,9 @@ export const route: Route = {
     url: 'today.line.me/',
     description: `Edition
 
-  | Taiwan | Thailand | Hong Kong |
-  | ------ | -------- | --------- |
-  | tw     | th       | hk        |`,
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |`,
 };
 
 async function handler(ctx) {
@@ -40,7 +40,7 @@ async function handler(ctx) {
             url: tabUrl,
         });
 
-        const listing = moduleResponse.data.modules.filter((item) => item.source === 'CATEGORY_MOST_VIEW').pop().listings[0];
+        const listing = moduleResponse.data.modules.findLast((item) => item.source === 'CATEGORY_MOST_VIEW').listings[0];
 
         title = moduleResponse.data.name;
         moduleUrl =

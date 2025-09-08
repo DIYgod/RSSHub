@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const apiUrl = 'https://api.github.com';
@@ -10,7 +10,6 @@ export const route: Route = {
     path: '/notifications',
     categories: ['programming'],
     example: '/github/notifications',
-    parameters: {},
     features: {
         requireConfig: [
             {
@@ -18,11 +17,6 @@ export const route: Route = {
                 description: '',
             },
         ],
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
     },
     radar: [
         {
@@ -45,10 +39,10 @@ async function handler(ctx) {
         'X-GitHub-Api-Version': '2022-11-28',
     };
 
-    const response = await got(`${apiUrl}/notifications`, {
+    const response = await ofetch.raw(`${apiUrl}/notifications`, {
         headers,
     });
-    const notifications = response.data;
+    const notifications = response._data;
 
     const items = notifications.map((item) => {
         let originUrl = item.subject.url ? item.subject.url.replace('https://api.github.com/repos/', 'https://github.com/') : 'https://github.com/notifications';
@@ -68,11 +62,11 @@ async function handler(ctx) {
         title: 'Github Notifications',
         item: notifications,
         rateLimit: {
-            limit: Number.parseInt(response.headers['X-RateLimit-Limit']),
-            remaining: Number.parseInt(response.headers['X-RateLimit-Remaining']),
-            reset: parseDate(Number.parseInt(response.headers['X-RateLimit-Reset']) * 1000),
-            resoure: response.headers['X-RateLimit-Resource'],
-            used: Number.parseInt(response.headers['X-RateLimit-Used']),
+            limit: Number.parseInt(response.headers['x-ratelimit-limit']),
+            remaining: Number.parseInt(response.headers['x-ratelimit-remaining']),
+            reset: parseDate(Number.parseInt(response.headers['x-ratelimit-reset']), 'X'),
+            resoure: response.headers['x-ratelimit-resource'],
+            used: Number.parseInt(response.headers['x-ratelimit-used']),
         },
     });
 

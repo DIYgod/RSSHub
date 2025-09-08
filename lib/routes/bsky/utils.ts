@@ -28,14 +28,14 @@ const getProfile = (did, tryGet) =>
     });
 
 // https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getAuthorFeed.json
-const getAuthorFeed = (did, tryGet) =>
+const getAuthorFeed = (did, filter, tryGet) =>
     tryGet(
-        `bsky:authorFeed:${did}`,
+        `bsky:authorFeed:${did}:${filter}`,
         async () => {
             const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed', {
                 searchParams: {
                     actor: did,
-                    filter: 'posts_and_author_threads',
+                    filter,
                     limit: 30,
                 },
             });
@@ -45,4 +45,37 @@ const getAuthorFeed = (did, tryGet) =>
         false
     );
 
-export { resolveHandle, getProfile, getAuthorFeed };
+// https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeed.json
+const getFeed = (uri, tryGet) =>
+    tryGet(
+        `bsky:feed:${uri}`,
+        async () => {
+            const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeed', {
+                searchParams: {
+                    feed: uri,
+                    limit: 30,
+                },
+            });
+            return data;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+// https://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/getFeedGenerator.json
+const getFeedGenerator = (uri, tryGet) =>
+    tryGet(
+        `bsky:feedGenerator:${uri}`,
+        async () => {
+            const { data } = await got('https://public.api.bsky.app/xrpc/app.bsky.feed.getFeedGenerator', {
+                searchParams: {
+                    feed: uri,
+                },
+            });
+            return data;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+export { resolveHandle, getProfile, getFeed, getAuthorFeed, getFeedGenerator };

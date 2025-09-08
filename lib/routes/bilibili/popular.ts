@@ -3,10 +3,12 @@ import got from '@/utils/got';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/popular/all',
+    path: '/popular/all/:embed?',
     categories: ['social-media'],
     example: '/bilibili/popular/all',
-    parameters: {},
+    parameters: {
+        embed: '默认为开启内嵌视频, 任意值为关闭',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/web-interface/popular`,
@@ -39,7 +41,7 @@ async function handler(ctx) {
             list &&
             list.map((item) => ({
                 title: item.title,
-                description: `${item.desc}${disableEmbed ? '' : `<br><br>${utils.iframe(item.aid)}`}<br><img src="${item.pic}">`,
+                description: utils.renderUGCDescription(embed, item.pic, item.desc, item.aid, undefined, item.bvid),
                 pubDate: new Date(item.pubdate * 1000).toUTCString(),
                 link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,

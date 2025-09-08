@@ -1,3 +1,9 @@
+{{ if reply }}
+    <blockquote>
+        <p>{{ reply.text }}</p>
+    </blockquote>
+{{ /if }}
+
 {{ if text }}
     <p>{{ text.replace(/\n/g, '<br>') }}</p>
 {{ /if }}

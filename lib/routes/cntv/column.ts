@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -29,21 +27,21 @@ export const route: Route = {
     maintainers: ['WhoIsSure', 'Fatpandac'],
     handler,
     url: 'navi.cctv.com/',
-    description: `:::tip
+    description: `::: tip
 栏目 ID 查找示例:
 打开栏目具体某一期页面，F12 控制台输入\`column_id\`得到栏目 ID。
 :::
 
   栏目
 
-  | 新闻联播             | 新闻周刊             | 天下足球             |
-  | -------------------- | -------------------- | -------------------- |
-  | TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |`,
+| 新闻联播             | 新闻周刊             | 天下足球             |
+| -------------------- | -------------------- | -------------------- |
+| TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('column');
-    const limit = isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
+    const limit = Number.isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
 
     const response = await got({
         method: 'get',

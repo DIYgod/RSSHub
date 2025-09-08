@@ -1,3 +1,7 @@
+{{ if message.type === 7 }}
+    {{ message.author.global_name ?? message.author.username }} joined {{ guildInfo.name }}.<br>
+{{ /if }}
+
 {{ if message.content }}
     {{@ message.content.replace(/\n/g, '<br>') }}<br>
 {{ /if }}
@@ -5,6 +9,17 @@
 {{ if message.attachments }}
     {{ each message.attachments a }}
         <img src="{{ a.proxy_url }}"><br>
+    {{ /each }}
+{{ /if }}
+
+{{ if message.sticker_items }}
+    {{ each message.sticker_items sticker }}
+        {{ if sticker.format_type < 3 }}
+            <img src="https://cdn.discordapp.com/stickers/{{ sticker.id }}.png"
+        {{ else if sticker.format_type === 4 }}
+            <img src="https://media.discordapp.net/stickers/{{ sticker.id }}.gif"
+        {{ /if }}
+            alt="{{ sticker.name }}"><br>
     {{ /each }}
 {{ /if }}
 

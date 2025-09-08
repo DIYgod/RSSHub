@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.uber.com/blog/pittsburgh/engineering'],
+            source: ['www.uber.com/:language/blog/engineering', 'www.uber.com/:language/blog'],
             target: '/blog',
         },
     ],
@@ -38,7 +38,7 @@ async function handler(ctx) {
     }
 
     let pages = await Promise.all(
-        [...Array(maxPage).keys()].map((pageIdx) =>
+        [...Array.from({ length: maxPage }).keys()].map((pageIdx) =>
             got(`${apiURL}/wp-json/blog/v1/data`, {
                 searchParams: {
                     page: pageIdx + 1,

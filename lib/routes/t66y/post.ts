@@ -46,11 +46,11 @@ export const route: Route = {
     name: '帖子跟踪',
     maintainers: ['cnzgray'],
     handler,
-    description: `:::tip
+    description: `::: tip
   帖子 id 查找办法:
 
   打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

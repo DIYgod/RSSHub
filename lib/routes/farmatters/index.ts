@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -42,7 +40,6 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'farmatters.com/news',
-    url: 'farmatters.com/exclusive',
 };
 
 async function handler(ctx) {

@@ -40,7 +40,7 @@ async function handler(ctx) {
                 title: item.find('title').text(),
                 link: item.find('guid').text(),
                 author: item
-                    .find('dc\\:creator')
+                    .find(String.raw`dc\:creator`)
                     .html()
                     .match(/CDATA\[(.*?)]/)[1],
                 category: item

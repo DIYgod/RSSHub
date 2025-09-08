@@ -5,16 +5,21 @@ import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/user/video-all/:uid/:disableEmbed?',
+    path: '/user/video-all/:uid/:embed?',
     name: '用户所有视频',
     maintainers: [],
     handler,
+    example: '/bilibili/user/video-all/2267573',
+    parameters: {
+        uid: '用户 id, 可在 UP 主主页中找到',
+        embed: '默认为开启内嵌视频, 任意值为关闭',
+    },
     categories: ['social-media'],
 };
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const cookie = await cache.getCookie();
     const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
@@ -74,7 +79,7 @@ async function handler(ctx) {
         icon: face,
         item: vlist.map((item) => ({
             title: item.title,
-            description: `${item.description}${disableEmbed ? '' : `<br><br>${utils.iframe(item.aid)}`}<br><img src="${item.pic}">`,
+            description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
             pubDate: parseDate(item.created, 'X'),
             link: item.created > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
             author: name,

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -6,6 +6,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/ani/new_anime',
     categories: ['anime'],
+    view: ViewType.Videos,
     example: '/gamer/ani/new_anime',
     parameters: {},
     features: {
@@ -23,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '動畫瘋 - 最後更新',
-    maintainers: [],
+    maintainers: ['maple3142', 'pseudoyu'],
     handler,
     url: 'ani.gamer.com.tw/',
 };

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -51,7 +49,7 @@ async function handler(ctx) {
 
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.pn,
-        link: item.fp ?? item.pq ?? item.pu,
+        link: item.pu ?? item.pq ?? item.fp,
         description: item.pa,
         author: item.zn,
         pubDate: parseRelativeDate(item.lu.replace(/\.\d+/, '')),
@@ -60,7 +58,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const matches = item.link.match(/\/(?:fp|pq|pu)\/([\w-]+)\/(\d+)/);
+                const matches = item.link.match(/\/(?:pl|pq|fp)\/([\w-]+)\/(\d+)/);
 
                 const { data } = await got(`https://${matches[1]}.zhubai.love/api/posts/${matches[2]}`);
 

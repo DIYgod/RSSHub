@@ -20,13 +20,13 @@ export const route: Route = {
     name: '人事处',
     maintainers: ['mocusez', 'light0926'],
     handler,
-    description: `:::warning
+    description: `::: warning
   有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
-  :::
+:::
 
-  | 通知公告 | 工作动态 |
-  | :------: | :------: |
-  |   tzgg   |   gzdt   |`,
+| 通知公告 | 工作动态 |
+| :------: | :------: |
+|   tzgg   |   gzdt   |`,
 };
 
 async function handler(ctx) {
@@ -49,7 +49,8 @@ async function handler(ctx) {
 
     // 这个列表指通知公告详情列表
     const list = $('.vsb-space.n_right .list .cleafix')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             // 工作动态栏目里有一些是外链，这里做个判断
             const a = item.find('.list_wen a').eq(0).attr('href');
@@ -60,8 +61,7 @@ async function handler(ctx) {
                 title,
                 link,
             };
-        })
-        .get();
+        });
     return {
         // 源标题
         title: '西安理工大学人事处-' + dic_title[category],

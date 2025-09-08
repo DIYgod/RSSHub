@@ -27,15 +27,15 @@ export const route: Route = {
     name: '首頁',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   在首页将分类参数选择确定后跳转到的分类页面 URL 中，\`/l/\` 后的字段即为分类参数。
 
   如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 \`/l/\` 后的字段为 \`CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`。最终获得路由为 [\`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
-  :::
+:::
 
-  :::warning
+::: warning
   由于 mox.moe 对非登录用户屏蔽了部分漫画详情内容的获取，且极易触发反爬机制，导致访问ip被重定向至google.com，因此在未配置\`MOX_COOKIE\`参数的情况下路由只会返回漫画标题和封面，不会对详情内容进行抓取。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

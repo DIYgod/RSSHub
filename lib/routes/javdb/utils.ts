@@ -33,6 +33,9 @@ const ProcessItems = async (ctx, currentUrl, title) => {
         method: 'get',
         url: url.href,
         cookieJar,
+        headers: {
+            'User-Agent': config.trueUA,
+        },
     });
 
     const $ = load(response.data);
@@ -58,6 +61,9 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                     method: 'get',
                     url: item.link,
                     cookieJar,
+                    headers: {
+                        'User-Agent': config.trueUA,
+                    },
                 });
 
                 const content = load(detailResponse.data);

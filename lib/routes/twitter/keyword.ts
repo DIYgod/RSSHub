@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import api from './api';
 import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
     categories: ['social-media'],
+    view: ViewType.SocialMedia,
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
@@ -18,7 +19,11 @@ export const route: Route = {
                 description: 'Please see above for details.',
             },
             {
-                name: 'TWITTER_COOKIE',
+                name: 'TWITTER_AUTH_TOKEN',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
                 description: 'Please see above for details.',
             },
         ],
@@ -29,11 +34,11 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Keyword',
-    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'pseudoyu'],
     handler,
     radar: [
         {
-            source: ['twitter.com/search'],
+            source: ['x.com/search'],
         },
     ],
 };
@@ -45,7 +50,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter Keyword - ${keyword}`,
-        link: `https://twitter.com/search?q=${encodeURIComponent(keyword)}`,
+        link: `https://x.com/search?q=${encodeURIComponent(keyword)}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),

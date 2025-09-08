@@ -29,8 +29,8 @@ export const route: Route = {
     handler,
     url: 'world.kbs.co.kr/',
     description: `| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
-  | ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
-  | k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |`,
+| ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+| k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |`,
 };
 
 async function handler(ctx) {
@@ -50,7 +50,8 @@ async function handler(ctx) {
     $('.comp_pagination').remove();
 
     const list = $('.comp_contents_1x article')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             const a = item.find('h2 a');
@@ -69,8 +70,7 @@ async function handler(ctx) {
                     +9
                 ),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

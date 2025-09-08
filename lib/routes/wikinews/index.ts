@@ -37,10 +37,10 @@ async function handler() {
         .map((item) => {
             item = $(item);
             return {
-                title: item.find('news\\:title').text(),
-                pubDate: parseDate(item.find('news\\:publication_date').text()),
+                title: item.find(String.raw`news\:title`).text(),
+                pubDate: parseDate(item.find(String.raw`news\:publication_date`).text()),
                 category: item
-                    .find('news\\:keywords')
+                    .find(String.raw`news\:keywords`)
                     .text()
                     .split(',')
                     .map((item) => item.trim()),

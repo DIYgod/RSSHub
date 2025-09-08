@@ -18,7 +18,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.bast.net.cn';
-    const currentUrl = `${rootUrl}/${isNaN(colPath) ? colPath : `col/col${colPath}`}/`;
+    const currentUrl = `${rootUrl}/${Number.isNaN(colPath) ? colPath : `col/col${colPath}`}/`;
 
     const response = await got({
         method: 'get',

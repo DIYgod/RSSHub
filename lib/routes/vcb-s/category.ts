@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -35,8 +33,8 @@ export const route: Route = {
     handler,
     url: 'vcb-s.com/',
     description: `| 作品项目 | 科普系列 | 计划与日志 |
-  | -------- | -------- | ---------- |
-  | works    | kb       | planlog    |`,
+| -------- | -------- | ---------- |
+| works    | kb       | planlog    |`,
 };
 
 async function handler(ctx) {

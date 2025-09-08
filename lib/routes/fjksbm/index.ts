@@ -27,15 +27,15 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规 |
-  | --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |
-  | 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |`,
+| --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |
+| 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |`,
 };
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '0';
 
     const id = Number.parseInt(category);
-    const isNumber = !isNaN(id);
+    const isNumber = !Number.isNaN(id);
 
     const rootUrl = 'https://fjksbm.com';
     const currentUrl = `${rootUrl}/portal${isNumber ? '' : `/${category}`}`;

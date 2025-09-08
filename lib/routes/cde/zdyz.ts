@@ -55,8 +55,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `|    发布通告   |   征求意见  |
-  | :-----------: | :---------: |
-  | domesticGuide | opinionList |`,
+| :-----------: | :---------: |
+| domesticGuide | opinionList |`,
 };
 
 async function handler(ctx) {

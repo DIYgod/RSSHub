@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -22,8 +20,8 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://www.metacritic.com';
-    const rootApiUrl = 'https://internal-prod.apigee.fandom.net';
-    const apiUrl = new URL('v1/xapi/finder/metacritic/web', rootApiUrl).href;
+    const rootApiUrl = 'https://backend.metacritic.com';
+    const apiUrl = new URL('finder/metacritic/web', rootApiUrl).href;
 
     const currentUrlObject = new URL(`/browse/${type}/all/all/all-time/${sort}/${filter ? `?${filter}` : ''}`, rootUrl);
     const currentUrlParams = currentUrlObject.searchParams;
@@ -42,6 +40,8 @@ async function handler(ctx) {
 
     const genres = currentUrlParams.getAll('genre').join(',').toLowerCase();
     const releaseTypes = currentUrlParams.getAll('releaseType').join(',');
+    const releaseYearMin = currentUrlParams.get('releaseYearMin');
+    const releaseYearMax = currentUrlParams.get('releaseYearMax');
 
     if (genres) {
         searchParams.genres = genres;
@@ -51,12 +51,20 @@ async function handler(ctx) {
         searchParams.releaseType = releaseTypes;
     }
 
+    if (releaseYearMin) {
+        searchParams.releaseYearMin = releaseYearMin;
+    }
+
+    if (releaseYearMax) {
+        searchParams.releaseYearMax = releaseYearMax;
+    }
+
     const platforms = currentUrlParams.getAll('platform');
     const networks = currentUrlParams.getAll('network');
 
     if (platforms.length || networks.length) {
         const labels = {};
-        const labelPattern = '{label:"([^"]+)",value:(\\d+),href:a,meta:{mcDisplayWeight';
+        const labelPattern = String.raw`{label:"([^"]+)",value:(\d+),href:a,meta:{mcDisplayWeight`;
 
         for (const m of currentResponse.match(new RegExp(labelPattern, 'g'))) {
             const matches = m.match(new RegExp(labelPattern));
@@ -104,7 +112,7 @@ async function handler(ctx) {
             description: item.description,
             score: item.criticScoreSummary?.score ?? undefined,
         }),
-        category: item.genres.map((c) => c.name),
+        category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
         pubDate: parseDate(item.releaseDate),
         upvotes: item.criticScoreSummary?.positiveCount ? Number.parseInt(item.criticScoreSummary?.positiveCount, 10) : 0,

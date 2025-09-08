@@ -1,7 +1,9 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { client, decodeMedia, getClient, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
-import { returnBigInt as bigInt } from 'telegram/Helpers';
-import { HTMLParser } from 'telegram/extensions/html';
+import { returnBigInt } from 'telegram/Helpers.js';
+import { HTMLParser } from 'telegram/extensions/html.js';
+import { DataItem } from '@/types';
+import type { Api } from 'telegram';
 
 function parseRange(range, length) {
     if (!range) {
@@ -17,7 +19,7 @@ function parseRange(range, length) {
         const range = seg
             .split('-', 2)
             .filter((v) => !!v)
-            .map(bigInt);
+            .map((elem) => returnBigInt(elem));
         if (range.length < 2) {
             if (seg.startsWith('-')) {
                 range.unshift(0);
@@ -111,20 +113,25 @@ async function getMedia(ctx) {
 }
 
 export default async function handler(ctx) {
+    const { username } = ctx.req.param();
     const client = await getClient();
 
-    const item = [];
-    const chat = await client.getInputEntity(ctx.req.param('username'));
+    const item: DataItem[] = [];
+    const chat = (await client.getInputEntity(username)) as Api.InputPeerChannel;
     const channelInfo = await client.getEntity(chat);
 
-    let attachments = [];
+    if (channelInfo.className !== 'Channel') {
+        throw new Error(`${username} is not a channel`);
+    }
+
+    let attachments: string[] = [];
     const messages = await client.getMessages(chat, { limit: 50 });
 
     for (const message of messages) {
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            attachments.push(getMediaLink(ctx, chat, ctx.req.param('username'), message));
+            attachments.push(getMediaLink(ctx, chat, username, message));
         }
         if (message.text !== '') {
             let description = attachments.join('\n');
@@ -134,14 +141,14 @@ export default async function handler(ctx) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text ? message.text.substring(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+            const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
 
             item.push({
                 title,
                 description,
                 pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/s/${channelInfo.username}/${message.id}`,
-                author: `${channelInfo.title} (@${channelInfo.username})`,
+                link: `https://t.me/s/${username}/${message.id}`,
+                author: `${channelInfo.title} (@${username})`,
             });
         }
     }
@@ -149,10 +156,10 @@ export default async function handler(ctx) {
     return {
         title: channelInfo.title,
         language: null,
-        link: `https://t.me/${channelInfo.username}`,
+        link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
-        description: `@${channelInfo.username} on Telegram`,
+        description: `@${username} on Telegram`,
     };
 }
 

@@ -23,7 +23,6 @@ const encodeCFEmail = (email) => {
  * The alogrithm is well-explained in https://andrewlock.net/simple-obfuscation-of-email-addresses-using-javascript/
  */
 export {
-    // eslint-disable-next-line lines-around-comment
     /**
      * Returns decoded email address using CloudFlare's email address obfuscation.
      * @param {String} encoded - encoded email, (`cfemail` attribute in `__cf_email__` tag)

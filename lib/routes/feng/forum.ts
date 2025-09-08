@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, getForumMeta, getThreads, getThread } from './utils';
@@ -30,8 +28,8 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     description: `| 最新回复 | 最新发布 | 热门 | 精华    |
-  | -------- | -------- | ---- | ------- |
-  | newest   | all      | hot  | essence |`,
+| -------- | -------- | ---- | ------- |
+| newest   | all      | hot  | essence |`,
 };
 
 async function handler(ctx) {

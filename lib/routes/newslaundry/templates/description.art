@@ -1,0 +1,28 @@
+{{if subheadline}}
+<p><strong>{{subheadline}}</strong></p>
+{{/if}}
+
+{{if heroImage}}
+<figure>
+  <img src="{{heroImage}}" alt="{{heroAlt}}">
+  <figcaption>{{heroCaption}}{{if heroAttribution}} ({{heroAttribution}}){{/if}}</figcaption>
+</figure>
+{{/if}}
+
+{{each elements}}
+  {{if $value.type === 'text'}}
+    {{@ $value.text}}
+  {{else if $value.type === 'image'}}
+    <figure>
+      <img src="{{$value.url}}" alt="{{$value.alt}}">
+      <figcaption>{{$value.title}}</figcaption>
+    </figure>
+  {{else if $value.type === 'jsembed'}}
+    {{@ $value.content}}
+  {{else if $value.type === 'youtube-video'}}
+    <figure>
+      <iframe width="560" height="315" src="{{$value.embedUrl}}" frameborder="0" allowfullscreen></iframe>
+      <figcaption><a href="{{$value.url}}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></figcaption>
+    </figure>
+  {{/if}}
+{{/each}}

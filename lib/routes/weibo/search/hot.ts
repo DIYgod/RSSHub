@@ -1,6 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import { Route, ViewType } from '@/types';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -17,8 +15,17 @@ let fullpic = 'false';
 export const route: Route = {
     path: '/search/hot/:fulltext?',
     categories: ['social-media'],
+    view: ViewType.SocialMedia,
     example: '/weibo/search/hot',
-    parameters: { fulltext: 'N' },
+    parameters: {
+        fulltext: {
+            description: `
+-   使用\`/weibo/search/hot\`可以获取热搜条目列表；
+-   使用\`/weibo/search/hot/fulltext\`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+-   使用\`/weibo/search/hot/fulltext?pic=true\`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）
+-   使用\`/weibo/search/hot/fulltext?pic=true&fullpic=true\`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）`,
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -36,10 +43,6 @@ export const route: Route = {
     maintainers: ['xyqfer', 'shinemoon'],
     handler,
     url: 's.weibo.com/top/summary',
-    description: `-   使用\`/weibo/search/hot\`可以获取热搜条目列表；
--   使用\`/weibo/search/hot/fulltext\`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
--   使用\`/weibo/search/hot/fulltext?pic=true\`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）
--   使用\`/weibo/search/hot/fulltext?pic=true&fullpic=true\`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）`,
 };
 
 async function handler(ctx) {
@@ -137,7 +140,7 @@ function seekContent(clist) {
         if (curitem.card_type === 9) {
             const tbpic = curitem.mblog.thumbnail_pic ?? '';
             const index = tbpic.lastIndexOf('/');
-            const thumbfolder = tbpic.substring(0, index + 1);
+            const thumbfolder = tbpic.slice(0, index + 1);
 
             const curcontent = load(curitem.mblog.text);
             if (wpic === 'true') {

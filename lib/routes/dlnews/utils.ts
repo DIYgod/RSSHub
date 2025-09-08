@@ -1,8 +1,8 @@
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.dlnews.com';
-const getData = async (url) => (await got.get(url).json()).content_elements;
+const getData = async (url) => (await ofetch(url)).content_elements;
 
 const getList = (data) =>
     data.map((value) => {

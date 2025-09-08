@@ -37,15 +37,15 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'The Office of Academic Affairs',
-    maintainers: ['AmosChenYQ', 'SuperPung'],
+    maintainers: ['AlanZeng423', 'AmosChenYQ', 'SuperPung'],
     handler,
     description: `| News | Notification |
-  | :--: | :----------: |
-  | news | notification |`,
+| :--: | :----------: |
+| news | notification |`,
 };
 
 async function handler(ctx) {
-    const type = ctx.params && ctx.req.param('type');
+    const type = ctx.req.param('type');
     let path, subtitle;
 
     switch (type) {
@@ -89,7 +89,8 @@ async function handler(ctx) {
     } else {
         const $ = load(response.data);
         const list = $('.notice_l > ul > li > dl > dt')
-            .map((_index, item) => {
+            .toArray()
+            .map((item) => {
                 const href = $('a', item).attr('href');
                 const type = pageType(href);
                 return {
@@ -98,8 +99,7 @@ async function handler(ctx) {
                     pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), +8),
                     type,
                 };
-            })
-            .get();
+            });
 
         const items = await Promise.all(
             list.map((item) => {
