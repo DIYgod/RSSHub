@@ -276,8 +276,8 @@ importers:
         specifier: 6.21.3
         version: 6.21.3
       uuid:
-        specifier: 11.1.0
-        version: 11.1.0
+        specifier: 12.0.0
+        version: 12.0.0
       winston:
         specifier: 3.17.0
         version: 3.17.0
@@ -5887,8 +5887,8 @@ packages:
     resolution: {integrity: sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==}
     engines: {node: '>= 4'}
 
-  uuid@11.1.0:
-    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+  uuid@12.0.0:
+    resolution: {integrity: sha512-USe1zesMYh4fjCA8ZH5+X5WIVD0J4V1Jksm1bFTVBX2F/cwSXt0RO5w/3UXbdLKmZX65MiWV+hwhSS8p6oBTGA==}
     hasBin: true
 
   uuid@3.4.0:
@@ -12113,7 +12113,7 @@ snapshots:
 
   utility-types@3.11.0: {}
 
-  uuid@11.1.0: {}
+  uuid@12.0.0: {}
 
   uuid@3.4.0: {}
 
