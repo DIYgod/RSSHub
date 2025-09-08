@@ -225,8 +225,8 @@ importers:
         specifier: 7.2.0
         version: 7.2.0
       re2js:
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.2.0
+        version: 1.2.0
       rebrowser-puppeteer:
         specifier: 24.8.1
         version: 24.8.1(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
@@ -5118,8 +5118,8 @@ packages:
   rate-limiter-flexible@7.2.0:
     resolution: {integrity: sha512-hrf0vIS/WOBegnHg+uPXxsXhuQYlNGfZiCmK5Wgudb12xlZUhpv9yD23yp/EW6BKQosshqnIQRQV+r3jyfIGQg==}
 
-  re2js@1.1.0:
-    resolution: {integrity: sha512-ovDCIb2ZQR7Do3NzH2XEuXOzqd1q8srvkeaOVMf+EZNt1Z4JoUVvNKCR9qf8EbqoPhvLknkoyiiBzoQtmuzIbQ==}
+  re2js@1.2.0:
+    resolution: {integrity: sha512-IoeSIsrlUnaCBHCez7SAJvTB6Z6zb45aFgXs0q2owmnJZTXstbGhXqq4Ix+TV4jgtR5KcYa0NePNb5tF7V/SLg==}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -11294,7 +11294,7 @@ snapshots:
 
   rate-limiter-flexible@7.2.0: {}
 
-  re2js@1.1.0: {}
+  re2js@1.2.0: {}
 
   readable-stream@3.6.2:
     dependencies:
