@@ -115,7 +115,7 @@ function getItems(list) {
                 const { data: descrptionResponse } = await got(item.link);
                 const $descrption = load(descrptionResponse);
                 const desc = $descrption('#main > div.content > div.search_height > div.search_con:has(p)').html();
-                item.description = desc?.replace(/(\r|\n)+/g, '<br />');
+                item.description = desc?.replaceAll(/(\r|\n)+/g, '<br />');
                 item.author = $descrption('#main > div.content > div.search_height > span.search_con').text().split('发布者:').at(-1) || '教务部';
                 return item;
             })
