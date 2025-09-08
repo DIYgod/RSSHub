@@ -80,7 +80,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         // sort items
         if (ctx.req.query('sorted') !== 'false') {
-            data.item = data.item.sort((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+            data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
         const handleItem = (item: DataItem) => {

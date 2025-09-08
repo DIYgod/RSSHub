@@ -119,7 +119,7 @@ export const orderContent = (parent) => {
     for (const [i, e] of parent
         .children()
         .toArray()
-        .sort((a, b) => {
+        .toSorted((a, b) => {
             const index = Buffer.from(base32.parse('GM======')).toString(); // substring(3)
             a = Buffer.from(
                 base32.parse(
