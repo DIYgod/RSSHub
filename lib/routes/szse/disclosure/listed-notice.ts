@@ -3,14 +3,52 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
+
+function isValidDate(dateString: string): boolean {
+    // 正则表达式检查格式：YYYY-MM-DD
+    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    if (!regex.test(dateString)) {
+        return false;
+    }
+
+    // 解析日期并验证有效性（避免像 2025-02-30 这样的无效日期）
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // 月份从 0 开始
+
+    // 检查解析后的日期是否与输入一致
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
-
+    const query: string = ctx.req.param('query') ?? '';
+    const queries: Record<string, string> = {
+        stock: '',
+        beginDate: '',
+        endDate: '',
+    };
+    if (query) {
+        for (const pair of query.split('&')) {
+            const [key, value] = pair.split('=');
+            if (key) {
+                queries[key] = value;
+            }
+        }
+    }
+    if (queries.beginDate && !isValidDate(queries.beginDate)) {
+        throw new Error('Invalid beginDate format. Expected YYYY-MM-DD');
+    }
+    if (queries.endDate) {
+        if (!isValidDate(queries.endDate)) {
+            throw new Error('Invalid endDate format. Expected YYYY-MM-DD');
+        }
+    } else if (queries.beginDate) {
+        // 如果只提供了开始日期，则将结束日期设置为开始日期
+        queries.endDate = queries.beginDate;
+    }
     const baseUrl: string = 'https://www.szse.cn';
     const staticBaseUrl: string = 'https://disc.static.szse.cn';
     const apiUrl: string = new URL('api/disc/announcement/annList', baseUrl).href;
@@ -19,11 +57,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh-CN';
-
     const response = await ofetch(apiUrl, {
         method: 'POST',
         body: {
-            seDate: ['', ''],
+            stock: queries.stock ? [queries.stock] : [],
+            seDate: [queries.beginDate, queries.endDate],
             channelCode: ['listedNotice_disc'],
             pageSize: limit,
             pageNum: 1,
@@ -83,13 +121,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/disclosure/listed/notice',
+    path: '/disclosure/listed/notice/:query?',
     name: '上市公司公告',
     url: 'www.szse.cn',
     maintainers: ['nczitzk'],
     handler,
     example: '/szse/disclosure/listed/notice',
-    parameters: undefined,
+    parameters: { query: 'Filter options. can filte by "stock","beginDate","endDate". example:"stock=000001&beginDate=2025-07-01&endDate=2025-08-30"' },
     description: undefined,
     categories: ['finance'],
     features: {
