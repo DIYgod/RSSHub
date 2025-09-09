@@ -185,7 +185,7 @@
         "husky": "9.1.7",
         "js-beautify": "1.15.4",
         "lint-staged": "16.1.6",
-        "magic-string": "0.30.18",
+        "magic-string": "0.30.19",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.29",
