@@ -28423,6 +28423,17 @@
   },
   "nankai.edu.cn": {
     "_name": "南开大学",
+    "ai": [
+      {
+        "title": "人工智能学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/xwzx/:type.htm"
+        ],
+        "target": "/nankai/ai/:type?"
+      }
+    ],
     "cc": [
       {
         "title": "计算机学院",

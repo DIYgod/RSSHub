@@ -5357,6 +5357,9 @@
   "/mysql/release/:version?": [
     "nczitzk"
   ],
+  "/nankai/ai/:type?": [
+    "LMark"
+  ],
   "/nankai/cc/:type?": [
     "vicguo0724"
   ],
