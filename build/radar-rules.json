@@ -17819,6 +17819,43 @@
       }
     ]
   },
+  "mot.gov.cn": {
+    "_name": "深圳市罗湖区人民政府",
+    "www": [
+      {
+        "title": "中华人民共和国交通运输部",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category"
+        ],
+        "target": "/govparams=>{const category=params.category;return`/mot${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "交通要闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/jiaotongyaowen/"
+        ],
+        "target": "/gov/mot/jiaotongyaowen"
+      },
+      {
+        "title": "时政要闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/shizhengyaowen/"
+        ],
+        "target": "/gov/mot/shizhengyaowen"
+      },
+      {
+        "title": "重要会议",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zhongyaohuiyi/"
+        ],
+        "target": "/gov/mot/zhongyaohuiyi"
+      }
+    ]
+  },
   "ndrc.gov.cn": {
     "_name": "深圳市罗湖区人民政府",
     ".": [
