@@ -54,7 +54,7 @@ export const route: Route = {
         const categoryName = categoryMap[type] || '最新动态';
 
         // 解析新闻列表
-        const list = $('.page-list-news table tr')
+        const list = $('.gage-list-news table tr')
             .slice(1) // 跳过表头
             .toArray()
             .map((tr) => {
