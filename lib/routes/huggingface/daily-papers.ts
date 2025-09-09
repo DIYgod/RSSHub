@@ -77,7 +77,7 @@ async function handler(ctx) {
             author: item.paper.authors.map((author) => author.name).join(', '),
             upvotes: item.paper.upvotes,
         }))
-        .sort((a, b) => b.upvotes - a.upvotes);
+        .toSorted((a, b) => b.upvotes - a.upvotes);
 
     return {
         title: 'Huggingface Daily Papers',

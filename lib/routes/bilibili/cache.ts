@@ -211,7 +211,7 @@ const getCidFromId = (aid, pid, bvid) => {
         const { data } = await got(`https://api.bilibili.com/x/web-interface/view?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
             referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
         });
-        return data.data.pages[pid - 1].cid;
+        return data?.data?.pages[pid - 1]?.cid;
     });
 };
 
@@ -255,6 +255,10 @@ const getVideoSubtitle = async (
     }
 
     const cid = await getCidFromId(undefined, 1, bvid);
+    if (!cid) {
+        return [];
+    }
+
     const cookie = await getCookie();
     return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
         await subtitleLimiterQueue.removeTokens(1);

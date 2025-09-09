@@ -84,7 +84,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         query: {
             once_id: onceId,
             v: '1.0.0',
-            hints: hints.sort(() => Math.random() - 0.5).join(','),
+            hints: hints.toSorted(() => Math.random() - 0.5).join(','),
         },
     });
 

@@ -23,7 +23,7 @@ export function sign(payload: Map<string, any>) {
     }
 
     const sortedString = lowerCaseKeys
-        .sort()
+        .toSorted()
         .map((key) => key + '=' + map.get(key))
         .join('');
     const linkedString = link('--'.slice(0, 1), '#CEAIWER', '892F', 'KB97', 'JKB6', 'HJ7OC7C8', 'GJZG');

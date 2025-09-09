@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         chapters.chapters
-            .sort((a, b) => b.idx - a.idx)
+            .toSorted((a, b) => b.idx - a.idx)
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 3)
             .map(async (c) => {
                 let pages;
