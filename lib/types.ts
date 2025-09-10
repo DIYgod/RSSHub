@@ -281,7 +281,7 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data | null> | Data | null;
+    handler: (ctx: Context) => Promise<Data | null | Response> | Data | null | Response;
 
     /**
      * An example URL of the route
