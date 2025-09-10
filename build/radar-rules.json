@@ -22655,6 +22655,179 @@
       }
     ]
   },
+  "jbma.net": {
+    "_name": "Japan Bullion Market Association",
+    ".": [
+      {
+        "title": "Precious Metals Report",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:type/:name"
+        ],
+        "target": "/jbmaparams=>{const type=params.type;const name=params.name;if(type===\"report\"||type===\"cat_report\"||type===\"tag_report\"){return`/${type}${name?`/${name}`:\"\"}`}return`/${type}`}"
+      },
+      {
+        "title": "Metals Forcus",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/metals-forcus"
+        ],
+        "target": "/jbma/report/cat_report/metals-forcus"
+      },
+      {
+        "title": "WPIC",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/wpic"
+        ],
+        "target": "/jbma/report/cat_report/wpic"
+      },
+      {
+        "title": "Incrementum",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/incrementum"
+        ],
+        "target": "/jbma/report/cat_report/incrementum"
+      },
+      {
+        "title": "東京金融取引所",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/tfx"
+        ],
+        "target": "/jbma/report/cat_report/tfx"
+      },
+      {
+        "title": "池水執筆・出演",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/ikemizu"
+        ],
+        "target": "/jbma/report/cat_report/ikemizu"
+      },
+      {
+        "title": "note",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/note"
+        ],
+        "target": "/jbma/report/cat_report/note"
+      },
+      {
+        "title": "その他",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/cat_report/other"
+        ],
+        "target": "/jbma/report/cat_report/other"
+      },
+      {
+        "title": "In Gold We Trust",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/in-gold-we-trust"
+        ],
+        "target": "/jbma/report/tag_report/in-gold-we-trust"
+      },
+      {
+        "title": "Precious Metals Weeklyレポート",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/precious-metals-weekly-report"
+        ],
+        "target": "/jbma/report/tag_report/precious-metals-weekly-report"
+      },
+      {
+        "title": "ひろこのマーケットラウンジ",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/market-lounge"
+        ],
+        "target": "/jbma/report/tag_report/market-lounge"
+      },
+      {
+        "title": "その他",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/other"
+        ],
+        "target": "/jbma/report/tag_report/other"
+      },
+      {
+        "title": "四半期レポート",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/quarterly-report"
+        ],
+        "target": "/jbma/report/tag_report/quarterly-report"
+      },
+      {
+        "title": "プラチナ展望",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/tenbo"
+        ],
+        "target": "/jbma/report/tag_report/tenbo"
+      },
+      {
+        "title": "Gold Compass",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/gold-compass"
+        ],
+        "target": "/jbma/report/tag_report/gold-compass"
+      },
+      {
+        "title": "豆知識",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/mamechishiki"
+        ],
+        "target": "/jbma/report/tag_report/mamechishiki"
+      },
+      {
+        "title": "プラチナ投資のエッセンス",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/essence"
+        ],
+        "target": "/jbma/report/tag_report/essence"
+      },
+      {
+        "title": "三菱UFJ信託銀行",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/mufg"
+        ],
+        "target": "/jbma/report/tag_report/mufg"
+      },
+      {
+        "title": "石福金属興業",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/ishifuku"
+        ],
+        "target": "/jbma/report/tag_report/ishifuku"
+      },
+      {
+        "title": "OANDA 証券",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/oanda"
+        ],
+        "target": "/jbma/report/tag_report/oanda"
+      },
+      {
+        "title": "レポート",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag_report/report"
+        ],
+        "target": "/jbma/report/tag_report/report"
+      }
+    ]
+  },
   "jetbrains.com": {
     "_name": "JetBrains",
     "youtrack": [
