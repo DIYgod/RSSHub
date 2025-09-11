@@ -42084,19 +42084,6 @@
       }
     ]
   },
-  "xinhuanet.com": {
-    "_name": "新华网",
-    "app": [
-      {
-        "title": "客户端",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/"
-        ],
-        "target": "/xinhuanet/app"
-      }
-    ]
-  },
   "xjtu.edu.cn": {
     "_name": "西安交通大学",
     "ee": [
