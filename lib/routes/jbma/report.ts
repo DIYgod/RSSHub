@@ -8,7 +8,7 @@ import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
 
@@ -52,46 +52,93 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'ja';
 
-    const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
-        const title: string = item.title?.rendered ?? item.title;
-        const description: string | undefined = item.content?.rendered ?? undefined;
-        const pubDate: number | string = item.date_gmt;
-        const linkUrl: string | undefined = item.link;
+    const items: DataItem[] = await Promise.all(
+        response.slice(0, limit).map(async (item): Promise<DataItem> => {
+            const title: string = item.title?.rendered ?? item.title;
+            const description: string | undefined = item.content?.rendered ?? undefined;
+            const pubDate: number | string = item.date_gmt;
 
-        const terminologies = item._embedded?.['wp:term'];
+            const terminologies = item._embedded?.['wp:term'];
 
-        const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
-        const authors: DataItem['author'] =
-            item._embedded?.author?.map((author) => ({
-                name: author.name,
-                url: author.link,
-                avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
-            })) ?? [];
-        const guid: string = item.guid?.rendered ?? item.guid;
-        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
-        const updated: number | string = item.modified_gmt ?? pubDate;
+            const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
+            const authors: DataItem['author'] =
+                item._embedded?.author?.map((author) => ({
+                    name: author.name,
+                    url: author.link,
+                    avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
+                })) ?? [];
+            const guid: string = item.guid?.rendered ?? item.guid;
+            const updated: number | string = item.modified_gmt ?? pubDate;
 
-        const processedItem: DataItem = {
-            title,
-            description,
-            pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: linkUrl ?? guid,
-            category: categories,
-            author: authors,
-            guid,
-            id: guid,
-            content: {
-                html: description,
-                text: description,
-            },
-            image,
-            banner: image,
-            updated: updated ? parseDate(updated) : undefined,
-            language,
-        };
+            let image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
+            let enclosureUrl: string | undefined = undefined;
+            let enclosureType: string | undefined = undefined;
+            let enclosureTitle: string | undefined = undefined;
+            let enclosureLength: number | undefined = undefined;
 
-        return processedItem;
-    });
+            let linkUrl: string | undefined = item.link;
+
+            const regExp: RegExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}\/?(?:[a-zA-Z0-9-]+\/)*\\?p=\\d+$`);
+
+            if (linkUrl && regExp.test(linkUrl)) {
+                const attachmentUrl = item._links?.['wp:attachment']?.[0]?.href;
+
+                if (attachmentUrl) {
+                    const mediaResponse = await ofetch(attachmentUrl);
+
+                    if (mediaResponse?.[0]?.source_url) {
+                        const media = mediaResponse[0];
+
+                        if (media.source_url) {
+                            enclosureUrl = media.source_url;
+                            enclosureType = media.mime_type;
+                            enclosureTitle = media.title?.rendered ?? media.title;
+                            enclosureLength = Number(media.media_details?.filesize);
+                            linkUrl = enclosureUrl;
+                        }
+                        if (!image && media.media_details?.sizes?.full?.source_url) {
+                            image = media.media_details.sizes.full.source_url;
+                        }
+                    }
+                }
+            }
+
+            if (!linkUrl || regExp.test(linkUrl)) {
+                linkUrl = new URL(`report/${item.slug}`, baseUrl).href;
+            }
+
+            let processedItem: DataItem = {
+                title,
+                description,
+                pubDate: pubDate ? parseDate(pubDate) : undefined,
+                link: linkUrl ?? guid,
+                category: categories,
+                author: authors,
+                guid,
+                id: guid,
+                content: {
+                    html: description,
+                    text: description,
+                },
+                image,
+                banner: image,
+                updated: updated ? parseDate(updated) : undefined,
+                language,
+            };
+
+            if (enclosureUrl) {
+                processedItem = {
+                    ...processedItem,
+                    enclosure_url: enclosureUrl,
+                    enclosure_type: enclosureType,
+                    enclosure_title: enclosureTitle || title,
+                    enclosure_length: enclosureLength,
+                };
+            }
+
+            return processedItem;
+        })
+    );
 
     return {
         title: $('title').text(),
