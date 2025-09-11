@@ -25,11 +25,11 @@ export const route: Route = {
     radar: [
         {
         source: ['jwc.cqu.edu.cn/:path'],
-        target: '/cqu/jwc/:path',
+        target: '/jwc/:path',
         }
     ],
-    name: '重庆大学本科教学信息网',
-    maintainers: ['TonyRL'],
+    name: '重庆大学本科教学信息网通知',
+    maintainers: ['AhsokaTano26'],
     handler,
 };
 
