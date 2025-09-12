@@ -48,7 +48,7 @@ const WeatherForecast = ({ item }: { item: WeatherForecastItem }) => (
         <br />
         相对湿度：{item.humidity}%
         <br />
-        空气质量指数：{item.aqi} ({item.aqiCategory})\
+        空气质量指数：{item.aqi} ({item.aqiCategory})
         <br />
         大气压强：{item.pressure}百帕
         <br />
