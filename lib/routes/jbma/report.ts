@@ -1,4 +1,4 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import { type Data, type Route, ViewType } from '@/types';
 
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -52,93 +52,116 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'ja';
 
-    const items: DataItem[] = await Promise.all(
-        response.slice(0, limit).map(async (item): Promise<DataItem> => {
-            const title: string = item.title?.rendered ?? item.title;
-            const description: string | undefined = item.content?.rendered ?? undefined;
-            const pubDate: number | string = item.date_gmt;
+    const postIds: number[] = [];
+    const regExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}\/?(?:[a-zA-Z0-9-]+\/)*\\?p=\\d+$`);
 
-            const terminologies = item._embedded?.['wp:term'];
+    for (const item of response.slice(0, limit)) {
+        const linkUrl: string | undefined = item.link;
+        if (linkUrl && regExp.test(linkUrl)) {
+            postIds.push(item.id);
+        }
+    }
 
-            const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
-            const authors: DataItem['author'] =
-                item._embedded?.author?.map((author) => ({
-                    name: author.name,
-                    url: author.link,
-                    avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
-                })) ?? [];
-            const guid: string = item.guid?.rendered ?? item.guid;
-            const updated: number | string = item.modified_gmt ?? pubDate;
+    const mediaMap: Map<number, any> = new Map();
+    if (postIds.length > 0) {
+        const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
+        const mediaResponse = await ofetch(mediaApiUrl, {
+            query: {
+                parent: postIds.join(','),
+                per_page: 100,
+            },
+        });
 
-            let image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
-            let enclosureUrl: string | undefined = undefined;
-            let enclosureType: string | undefined = undefined;
-            let enclosureTitle: string | undefined = undefined;
-            let enclosureLength: number | undefined = undefined;
-
-            let linkUrl: string | undefined = item.link;
-
-            const regExp: RegExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}\/?(?:[a-zA-Z0-9-]+\/)*\\?p=\\d+$`);
-
-            if (linkUrl && regExp.test(linkUrl)) {
-                const attachmentUrl = item._links?.['wp:attachment']?.[0]?.href;
-
-                if (attachmentUrl) {
-                    const mediaResponse = await ofetch(attachmentUrl);
-
-                    if (mediaResponse?.[0]?.source_url) {
-                        const media = mediaResponse[0];
-
-                        if (media.source_url) {
-                            enclosureUrl = media.source_url;
-                            enclosureType = media.mime_type;
-                            enclosureTitle = media.title?.rendered ?? media.title;
-                            enclosureLength = Number(media.media_details?.filesize);
-                            linkUrl = enclosureUrl;
-                        }
-                        if (!image && media.media_details?.sizes?.full?.source_url) {
-                            image = media.media_details.sizes.full.source_url;
-                        }
-                    }
+        for (const media of mediaResponse) {
+            if (media.parent) {
+                const existing = mediaMap.get(media.parent);
+                if (existing) {
+                    existing.push(media);
+                } else {
+                    mediaMap.set(media.parent, [media]);
                 }
             }
+        }
+    }
 
-            if (!linkUrl || regExp.test(linkUrl)) {
-                linkUrl = new URL(`report/${item.slug}`, baseUrl).href;
+    const items = response.slice(0, limit).map((item) => {
+        const title = item.title?.rendered ?? item.title;
+        const description = item.content?.rendered ?? undefined;
+        const pubDate = item.date_gmt;
+
+        const terminologies = item._embedded?.['wp:term'];
+
+        const categories = terminologies?.flat().map((c) => c.name) ?? [];
+        const authors =
+            item._embedded?.author?.map((author) => ({
+                name: author.name,
+                url: author.link,
+                avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
+            })) ?? [];
+        const guid = item.guid?.rendered ?? item.guid;
+        const updated = item.modified_gmt ?? pubDate;
+
+        let image = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
+        let enclosureUrl: string | undefined;
+        let enclosureType: string | undefined;
+        let enclosureTitle: string | undefined;
+        let enclosureLength: number | undefined;
+
+        let linkUrl = item.link;
+
+        if (linkUrl && regExp.test(linkUrl)) {
+            const mediaItems = mediaMap.get(item.id);
+
+            if (mediaItems && mediaItems.length > 0) {
+                const media = mediaItems[0];
+                if (media.source_url) {
+                    enclosureUrl = media.source_url;
+                    enclosureType = media.mime_type;
+                    enclosureTitle = media.title?.rendered ?? media.title;
+                    enclosureLength = Number(media.media_details?.filesize);
+                    linkUrl = enclosureUrl;
+                }
+                if (!image && media.media_details?.sizes?.full?.source_url) {
+                    image = media.media_details.sizes.full.source_url;
+                }
             }
+        }
 
-            let processedItem: DataItem = {
-                title,
-                description,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
-                link: linkUrl ?? guid,
-                category: categories,
-                author: authors,
-                guid,
-                id: guid,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                image,
-                banner: image,
-                updated: updated ? parseDate(updated) : undefined,
-                language,
+        if (!linkUrl || regExp.test(linkUrl)) {
+            linkUrl = new URL(`report/${item.slug}`, baseUrl).href;
+        }
+
+        let processedItem = {
+            title,
+            description,
+            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            link: linkUrl ?? guid,
+            category: categories,
+            author: authors,
+            guid,
+            id: guid,
+            content: {
+                html: description,
+                text: description,
+            },
+            image,
+            banner: image,
+            updated: updated ? parseDate(updated) : undefined,
+            language,
+        };
+
+        if (enclosureUrl) {
+            processedItem = {
+                ...processedItem,
+                enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
+                enclosure_title: enclosureTitle || title,
+                enclosure_length: enclosureLength,
             };
+        }
 
-            if (enclosureUrl) {
-                processedItem = {
-                    ...processedItem,
-                    enclosure_url: enclosureUrl,
-                    enclosure_type: enclosureType,
-                    enclosure_title: enclosureTitle || title,
-                    enclosure_length: enclosureLength,
-                };
-            }
-
-            return processedItem;
-        })
-    );
+        return processedItem;
+    });
 
     return {
         title: $('title').text(),
