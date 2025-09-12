@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import { namespace } from './namespace';
 import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
@@ -45,7 +46,8 @@ async function handler(ctx: Context) {
             let image: string | undefined;
             if (link) {
                 const posterApiUrl = `${link}/poster/std/125`;
-                const posterData = await ofetch(posterApiUrl, { responseType: 'json' });
+                const cacheKey = `letterboxd:poster:${posterApiUrl}`;
+                const posterData = await cache.tryGet<Record<string, any>>(cacheKey, async () => ofetch(posterApiUrl, { responseType: 'json' }));
                 image = posterData.url2x || posterData.url;
             }
 
