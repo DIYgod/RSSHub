@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
             if (link) {
                 const posterApiUrl = `${link}/poster/std/125`;
                 const cacheKey = `letterboxd:poster:${posterApiUrl}`;
-                const posterData = await cache.tryGet<Record<string, any>>(cacheKey, async () => ofetch(posterApiUrl, { responseType: 'json' }));
+                const posterData = await cache.tryGet<Record<string, any>>(cacheKey, () => ofetch(posterApiUrl, { responseType: 'json' }));
                 image = posterData.url2x || posterData.url;
             }
 
