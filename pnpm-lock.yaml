@@ -46,10 +46,10 @@ importers:
         version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
         specifier: 1.19.2
-        version: 1.19.2(hono@4.9.6)
+        version: 1.19.2(hono@4.9.7)
       '@hono/zod-openapi':
         specifier: 0.19.10
-        version: 0.19.10(hono@4.9.6)(zod@3.25.76)
+        version: 0.19.10(hono@4.9.7)(zod@3.25.76)
       '@notionhq/client':
         specifier: 5.0.0
         version: 5.0.0
@@ -82,7 +82,7 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.9.18
-        version: 0.9.18(hono@4.9.6)
+        version: 0.9.18(hono@4.9.7)
       '@sentry/node':
         specifier: 10.11.0
         version: 10.11.0
@@ -138,8 +138,8 @@ importers:
         specifier: 159.0.0
         version: 159.0.0
       hono:
-        specifier: 4.9.6
-        version: 4.9.6
+        specifier: 4.9.7
+        version: 4.9.7
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-3rDakgJZ77+RiQUuSK69t1F0m8BQKA8Vh5DCS5V0DWvNY67zob2JhhQrhCO0AKLGINTRSFd1tBaHcJTkhefoSw==}
     engines: {node: '>=18'}
 
-  '@napi-rs/wasm-runtime@1.0.3':
-    resolution: {integrity: sha512-rZxtMsLwjdXkMUGC3WwsPwLNVqVqnTJT6MNIB6e+5fhMcSCPP0AOsNWuMQ5mdCq6HNjs/ZeWAEchpqeprqBD2Q==}
+  '@napi-rs/wasm-runtime@1.0.4':
+    resolution: {integrity: sha512-+ZEtJPp8EF8h4kN6rLQECRor00H7jtDgBVtttIUoxuDkXLiQMaSBqju3LV/IEsMvqVG5pviUvR4jYhIA1xNm8w==}
 
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
@@ -2401,8 +2401,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@tybys/wasm-util@0.10.0':
-    resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
+  '@tybys/wasm-util@0.10.1':
+    resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
 
   '@types/aes-js@3.1.4':
     resolution: {integrity: sha512-v3D66IptpUqh+pHKVNRxY8yvp2ESSZXe0rTzsGdzUhEwag7ljVfgCllkWv2YgiYXDhWFBrEywll4A5JToyTNFA==}
@@ -3975,8 +3975,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.9.6:
-    resolution: {integrity: sha512-doVjXhSFvYZ7y0dNokjwwSahcrAfdz+/BCLvAMa/vHLzjj8+CFyV5xteThGUsKdkaasgN+gF2mUxao+SGLpUeA==}
+  hono@4.9.7:
+    resolution: {integrity: sha512-t4Te6ERzIaC48W3x4hJmBwgNlLhmiEdEE5ViYb02ffw4ignHNHa5IBtPjmbKstmtKa8X6C35iWwK4HaqvrzG9w==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -7276,21 +7276,21 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@hono/node-server@1.19.2(hono@4.9.6)':
+  '@hono/node-server@1.19.2(hono@4.9.7)':
     dependencies:
-      hono: 4.9.6
+      hono: 4.9.7
 
-  '@hono/zod-openapi@0.19.10(hono@4.9.6)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.9.7)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.2(hono@4.9.6)(zod@3.25.76)
-      hono: 4.9.6
+      '@hono/zod-validator': 0.7.2(hono@4.9.7)(zod@3.25.76)
+      hono: 4.9.7
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.2(hono@4.9.6)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.2(hono@4.9.7)(zod@3.25.76)':
     dependencies:
-      hono: 4.9.6
+      hono: 4.9.7
       zod: 3.25.76
 
   '@humanfs/core@0.19.1': {}
@@ -7549,11 +7549,11 @@ snapshots:
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
 
-  '@napi-rs/wasm-runtime@1.0.3':
+  '@napi-rs/wasm-runtime@1.0.4':
     dependencies:
       '@emnapi/core': 1.5.0
       '@emnapi/runtime': 1.5.0
-      '@tybys/wasm-util': 0.10.0
+      '@tybys/wasm-util': 0.10.1
     optional: true
 
   '@noble/hashes@1.8.0': {}
@@ -8074,7 +8074,7 @@ snapshots:
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.37':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.0.3
+      '@napi-rs/wasm-runtime': 1.0.4
     optional: true
 
   '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.37':
@@ -8175,10 +8175,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.2.15
 
-  '@scalar/hono-api-reference@0.9.18(hono@4.9.6)':
+  '@scalar/hono-api-reference@0.9.18(hono@4.9.7)':
     dependencies:
       '@scalar/core': 0.3.16
-      hono: 4.9.6
+      hono: 4.9.7
 
   '@scalar/openapi-types@0.3.7':
     dependencies:
@@ -8281,7 +8281,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@tybys/wasm-util@0.10.0':
+  '@tybys/wasm-util@0.10.1':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -10079,7 +10079,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.9.6: {}
+  hono@4.9.7: {}
 
   hookable@5.5.3: {}
 
