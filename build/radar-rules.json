@@ -23431,6 +23431,14 @@
     "_name": "掘金",
     ".": [
       {
+        "title": "AI 编程",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/books"
+        ],
+        "target": "/juejin/aicoding/:tag?/:sort?"
+      },
+      {
         "title": "小册",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
