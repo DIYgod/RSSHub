@@ -40153,8 +40153,7 @@
         "title": "Engineering",
         "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
-          "/:language/blog/engineering",
-          "/:language/blog"
+          "/:language/blog/engineering"
         ],
         "target": "/uber/blog"
       }

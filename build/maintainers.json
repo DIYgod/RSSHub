@@ -8126,7 +8126,7 @@
   "/u9a9/search/:keyword/:preview?": [
     "TonyRL"
   ],
-  "/uber/blog/:maxPage?": [
+  "/uber/blog/:compat?": [
     "hulb"
   ],
   "/ucas/ai": [
