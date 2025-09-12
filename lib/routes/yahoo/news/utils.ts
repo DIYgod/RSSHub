@@ -86,7 +86,7 @@ const parseItem = (item, tryGet) =>
         const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
         const body = $('.atoms');
 
-        body.find('noscript').remove();
+        body.find('noscript, .text-gandalf, [id^="sda-inbody-"]').remove();
         // remove padding
         body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
             const $ele = $(ele);
