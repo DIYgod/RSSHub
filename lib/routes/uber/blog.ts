@@ -33,7 +33,7 @@ export const route: Route = {
     description:
         "The English blog on any of Uber's regional sites (e.g., www.uber.com/en-JP/blog) is the same engineering blog provided by this route, so language selection is not supported. This route is not for the public news blog on specific regional sites (e.g., www.uber.com/ja-JP/blog).",
     zh: {
-        description: 'uber的任何区域站点的英文blog，例如www.uber.com/en-JP/blog，都是相同的内容（正是本路由提供的engineering blog，因此本路由不提供语言选择；本路由不是uber在特定区域站点的公开新闻blog（例如www.uber.com/ja-JP/blog)',
+        description: 'uber的任何区域站点的英文blog（例如www.uber.com/en-JP/blog）都是相同的内容，正是本路由提供的engineering blog，因此本路由不提供语言选择；本路由不是uber在特定区域站点的公开新闻blog（例如www.uber.com/ja-JP/blog)',
     },
 };
 
@@ -62,10 +62,10 @@ async function handler() {
                     });
                     const detail = load(detailResponse);
 
-                    const scriptText = detail('script#__REDUX_STATE__').text();
+                    const scriptText = detail('script#__REDUX_STATE__').text().trim();
                     // The json in the script element is over-encoded
                     // It needs to be decoded this way before it can be parsed by JSON.parse
-                    const jsonText = decodeURIComponent(scriptText).replaceAll(/\\u([0-9a-fA-F]{4})/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)));
+                    const jsonText = decodeURIComponent(JSON.parse(`"${scriptText}"`));
                     // Traverse the JSON to find the content node, which is more robust against format changes.
                     const contentHtml = findNode(JSON.parse(jsonText), { idKey: 'id', idValue: 'BlogArticleContent', siblingKey: 'props', childKey: 'content' }).replaceAll(String.raw`\n`, '');
 
