@@ -1,4 +1,4 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import { type Data, type Route, ViewType } from '@/types';
 
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -8,7 +8,7 @@ import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
 
@@ -52,26 +52,86 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'ja';
 
-    const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
-        const title: string = item.title?.rendered ?? item.title;
-        const description: string | undefined = item.content?.rendered ?? undefined;
-        const pubDate: number | string = item.date_gmt;
+    const postIds: number[] = [];
+    const regExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\\?p=\\d+$`);
+
+    for (const item of response.slice(0, limit)) {
         const linkUrl: string | undefined = item.link;
+        if (linkUrl && regExp.test(linkUrl)) {
+            postIds.push(item.id);
+        }
+    }
+
+    const mediaMap: Map<number, any> = new Map();
+    if (postIds.length > 0) {
+        const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
+        const mediaResponse = await ofetch(mediaApiUrl, {
+            query: {
+                parent: postIds.join(','),
+                per_page: 100,
+            },
+        });
+
+        for (const media of mediaResponse) {
+            if (media.parent) {
+                const existing = mediaMap.get(media.parent);
+                if (existing) {
+                    existing.push(media);
+                } else {
+                    mediaMap.set(media.parent, [media]);
+                }
+            }
+        }
+    }
+
+    const items = response.slice(0, limit).map((item) => {
+        const title = item.title?.rendered ?? item.title;
+        const description = item.content?.rendered ?? undefined;
+        const pubDate = item.date_gmt;
 
         const terminologies = item._embedded?.['wp:term'];
 
-        const categories: string[] = terminologies?.flat().map((c) => c.name) ?? [];
-        const authors: DataItem['author'] =
+        const categories = terminologies?.flat().map((c) => c.name) ?? [];
+        const authors =
             item._embedded?.author?.map((author) => ({
                 name: author.name,
                 url: author.link,
                 avatar: author.avatar_urls?.['96'] ?? author.avatar_urls?.['48'] ?? author.avatar_urls?.['24'] ?? undefined,
             })) ?? [];
-        const guid: string = item.guid?.rendered ?? item.guid;
-        const image: string | undefined = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
-        const updated: number | string = item.modified_gmt ?? pubDate;
+        const guid = item.guid?.rendered ?? item.guid;
+        const updated = item.modified_gmt ?? pubDate;
 
-        const processedItem: DataItem = {
+        let image = item._embedded?.['wp:featuredmedia']?.[0].source_url ?? undefined;
+        let enclosureUrl: string | undefined;
+        let enclosureType: string | undefined;
+        let enclosureTitle: string | undefined;
+        let enclosureLength: number | undefined;
+
+        let linkUrl = item.link;
+
+        if (linkUrl && regExp.test(linkUrl)) {
+            const mediaItems = mediaMap.get(item.id);
+
+            if (mediaItems && mediaItems.length > 0) {
+                const media = mediaItems[0];
+                if (media.source_url) {
+                    enclosureUrl = media.source_url;
+                    enclosureType = media.mime_type;
+                    enclosureTitle = media.title?.rendered ?? media.title;
+                    enclosureLength = Number(media.media_details?.filesize);
+                    linkUrl = enclosureUrl;
+                }
+                if (!image && media.media_details?.sizes?.full?.source_url) {
+                    image = media.media_details.sizes.full.source_url;
+                }
+            }
+        }
+
+        if (!linkUrl || regExp.test(linkUrl)) {
+            linkUrl = new URL(`report/${item.slug}`, baseUrl).href;
+        }
+
+        let processedItem = {
             title,
             description,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
@@ -89,6 +149,16 @@ export const handler = async (ctx: Context): Promise<Data> => {
             updated: updated ? parseDate(updated) : undefined,
             language,
         };
+
+        if (enclosureUrl) {
+            processedItem = {
+                ...processedItem,
+                enclosure_url: enclosureUrl,
+                enclosure_type: enclosureType,
+                enclosure_title: enclosureTitle || title,
+                enclosure_length: enclosureLength,
+            };
+        }
 
         return processedItem;
     });
