@@ -63,5 +63,6 @@ async function handler(ctx: Context) {
         title: $('title').text() || `${username}'s Watchlist • Letterboxd`,
         link: currentUrl,
         item: items,
+        allowEmpty: true
     };
 }
