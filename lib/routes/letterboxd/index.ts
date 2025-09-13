@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['letterboxd.com/:username/watchlist/'],
         },
     ],
-    name: 'User watchlist',
+    name: 'User Watchlist',
     maintainers: ['johan456789'],
     handler,
     url: 'letterboxd.com',
