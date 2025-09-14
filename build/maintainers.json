@@ -6771,6 +6771,9 @@
   "/samd/news/:typeId": [
     "hualiong"
   ],
+  "/samrdprc/:id{.+}?": [
+    "nczitzk"
+  ],
   "/samrdprc/news/:type1/:type2": [
     "a180285"
   ],
