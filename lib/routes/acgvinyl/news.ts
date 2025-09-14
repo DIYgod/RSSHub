@@ -5,10 +5,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/news/:limit?',
+    path: '/news',
     categories: ['anime'],
-    example: '/news/20',
-    parameters: { limit: 'the number of posts for a request' },
+    example: '/news',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -26,7 +25,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['williamgateszhao'],
     handler,
-    url: 'http://www.acgvinyl.com/col.jsp?id=103',
+    url: 'www.acgvinyl.com/col.jsp?id=103',
     zh: {
         name: '黑胶新闻',
     },
@@ -35,28 +34,26 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'http://www.acgvinyl.com';
 
-    const list = await cache.tryGet(rootUrl, async () => {
-        const newsIndexResponse = await ofetch(`${rootUrl}/col.jsp?id=103`);
-        const $ = load(newsIndexResponse);
-        const newsIndexJsonText = $('script:contains("window.__INITIAL_STATE__")').text().replaceAll('window.__INITIAL_STATE__=', '');
-        const newsIndexJson = JSON.parse(newsIndexJsonText);
+    const newsIndexResponse = await ofetch(`${rootUrl}/col.jsp?id=103`);
+    const $ = load(newsIndexResponse);
+    const newsIndexJsonText = $('script:contains("window.__INITIAL_STATE__")').text().replaceAll('window.__INITIAL_STATE__=', '');
+    const newsIndexJson = JSON.parse(newsIndexJsonText);
 
-        const newsListResponse = await ofetch(`${rootUrl}/rajax/news_h.jsp?cmd=getWafNotCk_getList`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-            },
-            body: [
-                `page=1`,
-                `pageSize=${ctx.req.param('limit') ?? 20}`,
-                `fromMid=${newsIndexJson.modules.module366.id}`,
-                `idList=[${newsIndexJson.modules.module366.prop3}]`,
-                `sortKey=${newsIndexJson.modules.module366.blob0.sortKey}`,
-                `sortType=${newsIndexJson.modules.module366.blob0.sortType}`,
-            ].join('&'),
-        });
-        return JSON.parse(newsListResponse);
+    const newsListResponse = await ofetch(`${rootUrl}/rajax/news_h.jsp?cmd=getWafNotCk_getList`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            page: '1',
+            pageSize: String(ctx.req.query('limit') ?? 20),
+            fromMid: newsIndexJson.modules.module366.id,
+            idList: `[${newsIndexJson.modules.module366.prop3}]`,
+            sortKey: newsIndexJson.modules.module366.blob0.sortKey,
+            sortType: newsIndexJson.modules.module366.blob0.sortType,
+        }).toString(),
     });
+    const list = JSON.parse(newsListResponse);
 
     if (!list?.success || !Array.isArray(list?.list)) {
         return null;
@@ -74,7 +71,7 @@ async function handler(ctx) {
                 return {
                     title: item.title,
                     link: `${rootUrl}${item.url}`,
-                    pubDate: parseDate(item.dateStr),
+                    pubDate: parseDate(item.date),
                     description: detail.html(),
                 };
             })
