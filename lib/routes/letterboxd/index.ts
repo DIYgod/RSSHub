@@ -32,15 +32,12 @@ async function handler(ctx: Context) {
     const html = await ofetch(currentUrl);
     const $ = load(html);
 
-    let wrappers = $('ul.grid.-p125.-scaled128 li.griditem div.react-component[data-component-class*="LazyPoster"]').toArray();
-    if (!wrappers.length) {
-        wrappers = $('ul.grid li.griditem div.react-component[data-component-class*="LazyPoster"]').toArray();
-    }
+    const wrappers = $('div.react-component[data-component-class*="LazyPoster"]').toArray();
 
     const items = await Promise.all(
         wrappers.map(async (el) => {
             const wrapper = $(el);
-            const linkPath = wrapper.attr('data-item-link') || wrapper.attr('data-target-link') || '';
+            const linkPath = (wrapper.attr('data-item-link') || wrapper.attr('data-target-link') || '').replace(/\/$/, '');
             const link = linkPath ? new URL(linkPath, baseUrl).href : undefined;
             const title = (wrapper.attr('data-item-full-display-name') || wrapper.attr('data-item-name') || '') as string;
             let image: string | undefined;
