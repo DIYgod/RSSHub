@@ -3233,6 +3233,19 @@
       }
     ]
   },
+  "acgvinyl.com": {
+    "_name": "ACG Vinyl - 黑胶",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/acgvinyl/news"
+      }
+    ]
+  },
   "acs.org": {
     "_name": "ACS Publications",
     "pubs": [
