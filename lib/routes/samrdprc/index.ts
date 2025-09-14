@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.show_tit').text();
                 const description: string | undefined = $$('div.TRS_Editor div.TRS_Editor').html() ?? undefined;
-                const pubDateStr: string | undefined = $$('div.show_tit2').text().split(/\：/).pop()?.trim();
+                const pubDateStr: string | undefined = $$('div.show_tit2').text().split(/：/).pop()?.trim();
                 const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [];
                 const upDatedStr: string | undefined = pubDateStr;
 
