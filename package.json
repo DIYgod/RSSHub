@@ -192,7 +192,7 @@
         "prettier": "3.6.2",
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
-        "tsdown": "0.15.0",
+        "tsdown": "0.15.1",
         "typescript": "5.9.2",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
