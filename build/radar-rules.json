@@ -28639,6 +28639,17 @@
         "target": "/nankai/cc/:type?"
       }
     ],
+    "graduate": [
+      {
+        "title": "研究生院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/:type/list.htm"
+        ],
+        "target": "/nankai/graduate/:type?"
+      }
+    ],
     "jwc": [
       {
         "title": "教务处通知公告",
