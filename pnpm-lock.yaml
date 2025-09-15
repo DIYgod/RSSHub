@@ -454,8 +454,8 @@ importers:
         specifier: 7.1.4
         version: 7.1.4
       tsdown:
-        specifier: 0.15.0
-        version: 0.15.0(typescript@5.9.2)
+        specifier: 0.15.1
+        version: 0.15.1(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -5330,15 +5330,18 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rolldown-plugin-dts@0.16.2:
-    resolution: {integrity: sha512-WV1J5OqhWL8O8Nd5VAVQghmNcjyQvcGI5w51VszjO9k73avbXpz9X86KLYcKTWXXH6L0f+93JzZxiiSrcYhDLw==}
+  rolldown-plugin-dts@0.16.5:
+    resolution: {integrity: sha512-bOAfJ7Tc11xK/Uou7KWYha25/Sy80G0DZkhX8WMYx6l8PUalR+bvVzQNuEqXafpKEisZfUHQrkhS2gZG76Xntw==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
+      '@ts-macro/tsc': ^0.3.6
       '@typescript/native-preview': '>=7.0.0-dev.20250601.1'
       rolldown: ^1.0.0-beta.9
       typescript: ^5.0.0
       vue-tsc: ~3.0.3
     peerDependenciesMeta:
+      '@ts-macro/tsc':
+        optional: true
       '@typescript/native-preview':
         optional: true
       typescript:
@@ -5764,8 +5767,8 @@ packages:
       typescript:
         optional: true
 
-  tsdown@0.15.0:
-    resolution: {integrity: sha512-xbz8tvdlB2wspocZWcJQhZNDLJC+sKV+sTIpiRgfUiQCUxLFGnUZUPc9KoKp3nfMeXQqTyMi6FM9/SasSj+csQ==}
+  tsdown@0.15.1:
+    resolution: {integrity: sha512-USTr2wS5OIyohR8Sp09rp5mXVwOX4YvVRqarS9I9jIhF+PqgtVSMXG4vBrHGY1OficNcLT5Z75pSoxd2uU+BYg==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -6326,7 +6329,7 @@ snapshots:
       '@babel/core': 7.28.3
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-plugin-utils': 7.27.1
-      debug: 4.4.1
+      debug: 4.4.3
       lodash.debounce: 4.0.8
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -6943,7 +6946,7 @@ snapshots:
       '@babel/parser': 7.28.4
       '@babel/template': 7.27.2
       '@babel/types': 7.28.4
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -7249,7 +7252,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.1
+      debug: 4.4.3
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -7312,7 +7315,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.4.1
+      debug: 4.4.3
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -8036,7 +8039,7 @@ snapshots:
 
   '@puppeteer/browsers@2.10.3':
     dependencies:
-      debug: 4.4.1
+      debug: 4.4.3
       extract-zip: 2.0.1
       progress: 2.0.3
       proxy-agent: 6.5.0
@@ -8499,7 +8502,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.43.0(typescript@5.9.2)
       '@typescript-eslint/types': 8.43.0
-      debug: 4.4.1
+      debug: 4.4.3
       typescript: 5.9.2
     transitivePeerDependencies:
       - supports-color
@@ -8518,7 +8521,7 @@ snapshots:
       '@typescript-eslint/types': 8.43.0
       '@typescript-eslint/typescript-estree': 8.43.0(typescript@5.9.2)
       '@typescript-eslint/utils': 8.43.0(eslint@9.35.0(jiti@2.5.1))(typescript@5.9.2)
-      debug: 4.4.1
+      debug: 4.4.3
       eslint: 9.35.0(jiti@2.5.1)
       ts-api-utils: 2.1.0(typescript@5.9.2)
       typescript: 5.9.2
@@ -9629,7 +9632,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.1
+      debug: 4.4.3
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -9773,7 +9776,7 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.4.1
+      debug: 4.4.3
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -9969,7 +9972,7 @@ snapshots:
     dependencies:
       basic-ftp: 5.0.5
       data-uri-to-buffer: 6.0.2
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -10162,7 +10165,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -10866,7 +10869,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.1
+      debug: 4.4.3
       decode-named-character-reference: 1.2.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -11371,7 +11374,7 @@ snapshots:
   proxy-agent@6.5.0:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.1
+      debug: 4.4.3
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
       lru-cache: 7.18.3
@@ -11557,7 +11560,7 @@ snapshots:
 
   require-in-the-middle@7.5.2:
     dependencies:
-      debug: 4.4.1
+      debug: 4.4.3
       module-details-from-path: 1.0.4
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -11598,16 +11601,17 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rolldown-plugin-dts@0.16.2(rolldown@1.0.0-beta.37)(typescript@5.9.2):
+  rolldown-plugin-dts@0.16.5(rolldown@1.0.0-beta.37)(typescript@5.9.2):
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.4
       '@babel/types': 7.28.4
       ast-kit: 2.1.2
       birpc: 2.5.0
-      debug: 4.4.1
+      debug: 4.4.3
       dts-resolver: 2.1.2
       get-tsconfig: 4.10.1
+      magic-string: 0.30.19
       rolldown: 1.0.0-beta.37
     optionalDependencies:
       typescript: 5.9.2
@@ -11867,7 +11871,7 @@ snapshots:
     dependencies:
       component-emitter: 1.3.1
       cookiejar: 2.1.4
-      debug: 4.4.1
+      debug: 4.4.3
       fast-safe-stringify: 2.1.1
       form-data: 4.0.4
       formidable: 3.5.4
@@ -12073,17 +12077,17 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.2
 
-  tsdown@0.15.0(typescript@5.9.2):
+  tsdown@0.15.1(typescript@5.9.2):
     dependencies:
       ansis: 4.1.0
       cac: 6.7.14
       chokidar: 4.0.3
-      debug: 4.4.1
+      debug: 4.4.3
       diff: 8.0.2
       empathic: 2.0.0
       hookable: 5.5.3
       rolldown: 1.0.0-beta.37
-      rolldown-plugin-dts: 0.16.2(rolldown@1.0.0-beta.37)(typescript@5.9.2)
+      rolldown-plugin-dts: 0.16.5(rolldown@1.0.0-beta.37)(typescript@5.9.2)
       semver: 7.7.2
       tinyexec: 1.0.1
       tinyglobby: 0.2.15
@@ -12092,6 +12096,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.2
     transitivePeerDependencies:
+      - '@ts-macro/tsc'
       - '@typescript/native-preview'
       - oxc-resolver
       - supports-color
@@ -12271,7 +12276,7 @@ snapshots:
   vite-node@2.1.9(@types/node@24.3.1):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.1
+      debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
       vite: 5.4.19(@types/node@24.3.1)
