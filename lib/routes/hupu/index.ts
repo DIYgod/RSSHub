@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { Route, Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import { type HupuApiResponse, type HomePostItem, type NewsDataItem, isHomePostItem } from './types';
 
 const categories = {
     nba: {
@@ -22,7 +23,7 @@ const categories = {
         title: '首页',
         data: 'res',
     },
-};
+} as const;
 
 export const route: Route = {
     path: ['/dept/:category?', '/:category?'],
@@ -50,8 +51,12 @@ export const route: Route = {
             target: '/:category',
         },
     ],
-    handler: async (ctx) => {
-        const category = ctx.req.param('category') || '';
+    handler: async (ctx): Promise<Data> => {
+        const c = ctx.req.param('category') || '';
+        if (!(c in categories)) {
+            throw new Error('Invalid category. Valid options are: ' + Object.keys(categories).filter(Boolean).join(', '));
+        }
+        const category = c as keyof typeof categories;
 
         const rootUrl = 'https://m.hupu.com';
         const currentUrl = `${rootUrl}/${category}`;
@@ -61,19 +66,54 @@ export const route: Route = {
             url: currentUrl,
         });
 
-        const data = JSON.parse(response.data.match(/"props":(.*),"page":"\//)[1]);
+        const scriptMatch = response.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+        if (!scriptMatch || !scriptMatch[1]) {
+            throw new Error(`Failed to find __NEXT_DATA__ script tag in page: ${currentUrl}`);
+        }
 
-        let items = data.pageProps[categories[category].data].map((item) => ({
-            title: item.title,
-            pubDate: timezone(parseDate(item.publishTime), +8),
-            link: (item.link || item.url).replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
-        }));
+        const fullJsonString = scriptMatch[1];
+        let fullData;
+
+        try {
+            fullData = JSON.parse(fullJsonString);
+        } catch (error) {
+            throw new Error(`Failed to parse full JSON data: ${error instanceof Error ? error.message : String(error)}`);
+        }
+
+        const data: HupuApiResponse = fullData;
+        const { pageProps } = data.props;
+
+        const dataKey = categories[category].data;
+        if (!(dataKey in pageProps)) {
+            throw new Error(`Expected '${dataKey}' property not found in pageProps for category: ${category || 'home'}`);
+        }
+
+        const rawDataArray: (HomePostItem | NewsDataItem)[] = (() => {
+            const data = (pageProps as any)[dataKey];
+            return Array.isArray(data) ? data : [];
+        })();
+
+        let items: DataItem[] = rawDataArray.map((item) =>
+            isHomePostItem(item)
+                ? ({
+                      title: item.title,
+                      link: item.url.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
+                      guid: item.tid,
+                      category: item.label ? [item.label] : undefined,
+                  } satisfies DataItem)
+                : ({
+                      title: item.title,
+                      pubDate: timezone(parseDate(item.publishTime), +8),
+                      link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
+                      guid: item.tid,
+                  } satisfies DataItem)
+        );
 
         items = await Promise.all(
             items
-                .filter((item) => !/subject/.test(item.link))
+                .filter((item) => item.link && !/subject/.test(item.link))
                 .map((item) =>
-                    cache.tryGet(item.link, async () => {
+                    cache.tryGet(item.link!, async () => {
                         try {
                             const detailResponse = await got({
                                 method: 'get',
@@ -82,10 +122,11 @@ export const route: Route = {
 
                             const content = load(detailResponse.data);
 
-                            item.author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
-                            item.category = content('.basketballTobbs_tag > a, .tag-player-team')
+                            const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
+                            const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                                 .toArray()
-                                .map((c) => content(c).text());
+                                .map((c) => content(c).text())
+                                .filter(Boolean);
 
                             content('.basketballTobbs_tag').remove();
                             content('.hupu-img').each(function () {
@@ -94,12 +135,18 @@ export const route: Route = {
                                     .html(`<img src="${content(this).attr('data-origin')}">`);
                             });
 
-                            item.description = content('#bbs-thread-content, .bbs-content-font').html();
+                            const description = content('#bbs-thread-content, .bbs-content-font').html();
+
+                            return {
+                                ...item,
+                                author: author || undefined,
+                                category: categories.length > 0 ? categories : item.category,
+                                description: description || undefined,
+                            };
                         } catch {
                             // no-empty
+                            return item;
                         }
-
-                        return item;
                     })
                 )
         );
@@ -108,6 +155,6 @@ export const route: Route = {
             title: `虎扑 - ${categories[category].title}`,
             link: currentUrl,
             item: items,
-        };
+        } as Data;
     },
 };
