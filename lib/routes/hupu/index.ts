@@ -30,7 +30,7 @@ export const route: Route = {
     name: '手机虎扑网',
     url: 'm.hupu.com',
     maintainers: ['nczitzk', 'hyoban'],
-    example: 'hupu/nba',
+    example: '/hupu/nba',
     parameters: {
         category: {
             description: '分类，可选值：nba、cba、soccer，默认为空（首页）',
