@@ -24,20 +24,11 @@ function isValidDate(dateString: string): boolean {
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
-    const query: string = ctx.req.param('query') ?? '';
     const queries: Record<string, string> = {
-        stock: '',
-        beginDate: '',
-        endDate: '',
+        stock: ctx.req.param('stock') ?? '',
+        beginDate: ctx.req.query('beginDate') ?? '',
+        endDate: ctx.req.query('endDate') ?? '',
     };
-    if (query) {
-        for (const pair of query.split('&')) {
-            const [key, value] = pair.split('=');
-            if (key) {
-                queries[key] = value;
-            }
-        }
-    }
     if (queries.beginDate && !isValidDate(queries.beginDate)) {
         throw new Error('Invalid beginDate format. Expected YYYY-MM-DD');
     }
@@ -121,13 +112,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/disclosure/listed/notice/:query?',
+    path: ['/disclosure/listed/notice/:query?', '/disclosure/listed/notice/stock/:stock/:query?'],
     name: '上市公司公告',
     url: 'www.szse.cn',
     maintainers: ['nczitzk'],
     handler,
     example: '/szse/disclosure/listed/notice',
-    parameters: { query: 'Filter options. can filte by "stock","beginDate","endDate". example:"stock=000001&beginDate=2025-07-01&endDate=2025-08-30"' },
+    parameters: { query: 'Filter options. can filter by "beginDate","endDate". example:"?beginDate=2025-07-01&endDate=2025-08-30"', stock: 'Stock identifier. 6 digital numbers' },
     description: undefined,
     categories: ['finance'],
     features: {
