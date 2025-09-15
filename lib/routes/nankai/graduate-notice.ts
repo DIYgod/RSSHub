@@ -52,6 +52,7 @@ export const route: Route = {
 
         // 解析新闻列表
         const list = $('.newslist li')
+            .not('#wp_paging_w6 li')
             .toArray()
             .map((li) => {
                 const $li = $(li);
@@ -59,7 +60,7 @@ export const route: Route = {
                 const $link = $titleDiv.find('a');
                 const $timeDiv = $li.find('.time');
 
-                const title = $link.text().trim();
+                const title = $link.attr('title');
                 let link = $link.attr('href') || '';
 
                 // 处理相对链接
@@ -67,7 +68,7 @@ export const route: Route = {
 
                 // 提取日期
                 const dateStr = $timeDiv.text().trim();
-                const pubDate = dateStr ? timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8) : timezone(parseDate(new Date()), +8);
+                const pubDate = timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8);
 
                 return {
                     title,
@@ -82,72 +83,70 @@ export const route: Route = {
         // 获取每篇文章的详细内容
         const items = await Promise.all(
             list.map((item) =>
-                item
-                    ? cache.tryGet(item.link, async () => {
-                          try {
-                              const { data: response } = await got(item.link);
-                              const $ = load(response);
+                cache.tryGet(item.link, async () => {
+                    try {
+                        const { data: response } = await got(item.link);
+                        const $ = load(response);
 
-                              // 尝试多种内容选择器
-                              const $description = $('.wp_articlecontent') || $('.article-content') || $('.content') || $('.main-content');
+                        // 尝试多种内容选择器
+                        const $description = $('.wp_articlecontent');
 
-                              // 处理相对链接，转换为绝对链接
-                              if ($description.length > 0) {
-                                  // 处理链接
-                                  $description.find('a').each((i, el) => {
-                                      const $el = $(el);
-                                      const href = $el.attr('href');
-                                      if (href && !href.startsWith('http')) {
-                                          if (href.startsWith('/')) {
-                                              $el.attr('href', `${baseUrl}${href}`);
-                                          } else {
-                                              $el.attr('href', `${baseUrl}/${href}`);
-                                          }
-                                      }
-                                  });
+                        // 处理相对链接，转换为绝对链接
+                        if ($description.length > 0) {
+                            // 处理链接
+                            $description.find('a').each((i, el) => {
+                                const $el = $(el);
+                                const href = $el.attr('href');
+                                if (href && !href.startsWith('http')) {
+                                    if (href.startsWith('/')) {
+                                        $el.attr('href', `${baseUrl}${href}`);
+                                    } else {
+                                        $el.attr('href', `${baseUrl}/${href}`);
+                                    }
+                                }
+                            });
 
-                                  // 处理图片
-                                  $description.find('img').each((i, el) => {
-                                      const $el = $(el);
-                                      let src = $el.attr('src');
+                            // 处理图片
+                            $description.find('img').each((i, el) => {
+                                const $el = $(el);
+                                let src = $el.attr('src');
 
-                                      if (src && !src.startsWith('http')) {
-                                          src = src.startsWith('/') ? `${baseUrl}${src}` : `${baseUrl}/${src}`;
-                                          $el.attr('src', src);
-                                      }
-                                  });
+                                if (src && !src.startsWith('http')) {
+                                    src = src.startsWith('/') ? `${baseUrl}${src}` : `${baseUrl}/${src}`;
+                                    $el.attr('src', src);
+                                }
+                            });
 
-                                  // 处理PDF播放器div，提取PDF链接
-                                  $description.find('.wp_pdf_player').each((i, el) => {
-                                      const $el = $(el);
-                                      const pdfSrc = $el.attr('pdfsrc');
-                                      const sudyfileAttr = ($el.attr('sudyfile-attr') || '{}').replaceAll("'", '"');
+                            // 处理PDF播放器div，提取PDF链接
+                            $description.find('.wp_pdf_player').each((i, el) => {
+                                const $el = $(el);
+                                const pdfSrc = $el.attr('pdfsrc');
+                                const sudyfileAttr = ($el.attr('sudyfile-attr') || '{}').replaceAll("'", '"');
 
-                                      try {
-                                          const sudyfileAttrJson = JSON.parse(sudyfileAttr);
-                                          const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
-                                          if (pdfSrc) {
-                                              let pdfUrl = pdfSrc;
-                                              if (!pdfUrl.startsWith('http')) {
-                                                  pdfUrl = `${baseUrl}${pdfUrl}`;
-                                              }
-                                              // 替换PDF播放器为下载链接
-                                              $el.replaceWith(`<p><a href="${pdfUrl}" target="_blank">📄 ${fileName}</a></p>`);
-                                          }
-                                      } catch {
-                                          // 如果解析失败，保留原始内容
-                                      }
-                                  });
-                              }
+                                try {
+                                    const sudyfileAttrJson = JSON.parse(sudyfileAttr);
+                                    const fileName = sudyfileAttrJson.title || '未命名文件.pdf';
+                                    if (pdfSrc) {
+                                        let pdfUrl = pdfSrc;
+                                        if (!pdfUrl.startsWith('http')) {
+                                            pdfUrl = `${baseUrl}${pdfUrl}`;
+                                        }
+                                        // 替换PDF播放器为下载链接
+                                        $el.replaceWith(`<p><a href="${pdfUrl}" target="_blank">📄 ${fileName}</a></p>`);
+                                    }
+                                } catch {
+                                    // 如果解析失败，保留原始内容
+                                }
+                            });
+                        }
 
-                              item.description = $description.html() || item.title;
-                          } catch {
-                              // 如果获取详细内容失败，返回基本信息
-                              item.description = item.title + ' (获取详细内容失败)';
-                          }
-                          return item;
-                      })
-                    : null
+                        item.description = $description.html() || item.title;
+                    } catch {
+                        // 如果获取详细内容失败，返回基本信息
+                        item.description = item.title + ' (获取详细内容失败)';
+                    }
+                    return item;
+                })
             )
         );
 
