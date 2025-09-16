@@ -415,8 +415,8 @@ importers:
         specifier: 1.18.0
         version: 1.18.0(eslint@9.35.0(jiti@2.5.1))
       fs-extra:
-        specifier: 11.3.1
-        version: 11.3.1
+        specifier: 11.3.2
+        version: 11.3.2
       globals:
         specifier: 16.4.0
         version: 16.4.0
@@ -3846,8 +3846,8 @@ packages:
   forwarded-parse@2.1.2:
     resolution: {integrity: sha512-alTFZZQDKMporBH77856pXgzhEzaUVmLCDk+egLgIgHst3Tpndzz8MnKe+GzRJRfvVdn69HhpW7cmXzvtLvJAw==}
 
-  fs-extra@11.3.1:
-    resolution: {integrity: sha512-eXvGGwZ5CL17ZSwHWd3bbgk7UUpF6IFHtP57NYYakPvHOs8GDgDe5KJI36jIJzDkJ6eJjuzRA8eBQb6SkKue0g==}
+  fs-extra@11.3.2:
+    resolution: {integrity: sha512-Xr9F6z6up6Ws+NjzMCZc6WXg2YFRlrLP9NQDO3VQrWrfiojdhS56TzueT88ze0uBdCTwEIhQ3ptnmKeWGFAe0A==}
     engines: {node: '>=14.14'}
 
   fs.realpath@1.0.0:
@@ -9966,7 +9966,7 @@ snapshots:
 
   forwarded-parse@2.1.2: {}
 
-  fs-extra@11.3.1:
+  fs-extra@11.3.2:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.2.0
