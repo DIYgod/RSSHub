@@ -14,7 +14,7 @@ const getNews = async (category) => {
         headers: {
             Referer: `http://news.cctv.com/${category}`,
         },
-        headerGeneratorOptions: PRESETS.MODERN_MOBILE,
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
     const data = JSON.parse(response.data.slice(category.length + 1, -1));
@@ -56,7 +56,7 @@ const getNews = async (category) => {
                     const { data } = await got({
                         method: 'get',
                         url: api,
-                        headerGeneratorOptions: PRESETS.MODERN_MOBILE,
+                        headerGeneratorOptions: PRESETS.MODERN_IOS,
                     });
 
                     switch (type) {
