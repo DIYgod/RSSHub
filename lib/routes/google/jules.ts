@@ -29,7 +29,7 @@ async function handler() {
     const items = $('main article')
         .toArray()
         .map((el) => {
-            let article = $(el);
+            const article = $(el);
             const h2 = article.find('h2').first();
             const id = h2.attr('id') || article.attr('id');
             const title = h2.text().trim();
