@@ -73,9 +73,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                const infoJson = content('script[type="application/ld+json"]')
-                    .toArray()
-                    .find((e) => content(e).text().indexOf('"@type":"BlogPosting"') > 0);
+                const infoJson = content('script[type="application/ld+json"]:contains("@type":"BlogPosting")');
                 const info = JSON.parse(content(infoJson).text());
                 item.author = info.author.name;
                 item.pubDate = info.datePublished;
