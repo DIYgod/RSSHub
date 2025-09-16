@@ -4804,6 +4804,9 @@
   "/lens/profile/:handle": [
     "DIYgod"
   ],
+  "/letterboxd/:username/watchlist": [
+    "johan456789"
+  ],
   "/lfsyd/home": [
     "auto-bot-ty"
   ],

@@ -24370,6 +24370,19 @@
       }
     ]
   },
+  "letterboxd.com": {
+    "_name": "Letterboxd",
+    ".": [
+      {
+        "title": "User Watchlist",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username/watchlist/"
+        ],
+        "target": "/letterboxd/:username/watchlist"
+      }
+    ]
+  },
   "iyingdi.com": {
     "_name": "旅法师营地",
     "www": [
