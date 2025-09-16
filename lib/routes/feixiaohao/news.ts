@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
 import { Context } from 'hono';
+import vm from 'node:vm';
+
+import { Route, ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/news/:tab?',
@@ -45,6 +47,13 @@ export const route: Route = {
     handler,
 };
 
+const DEFAULT_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    Referer: 'https://www.feixiaohao.com/',
+};
+
 async function handler(ctx: Context) {
     const tab = ctx.req.param('tab') ?? '0';
     const baseUrl = 'https://www.feixiaohao.com';
@@ -65,12 +74,7 @@ async function handler(ctx: Context) {
     // 获取新闻列表页面
     const url = `${baseUrl}/news?tab=${tab}`;
     const response = await ofetch(url, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-            Referer: 'https://www.feixiaohao.com/',
-        },
+        headers: DEFAULT_HEADERS,
     });
 
     const $ = load(response);
@@ -93,11 +97,12 @@ async function handler(ctx: Context) {
 
                     // 处理函数包装的格式，如 (function(a,b,c){return {...}})("","",...)
                     if (jsonStr.startsWith('(function(')) {
-                        // 执行JavaScript代码来获取数据
+                        // 使用vm模块在隔离环境中安全执行JavaScript代码
                         try {
-                            // 使用Function构造函数代替eval，更安全的方式执行JavaScript代码
-                            // eslint-disable-next-line no-new-func
-                            data = new Function(`return ${jsonStr}`)();
+                            // 创建一个新的上下文，隔离执行环境
+                            const context = vm.createContext({});
+                            // 在隔离环境中执行代码，设置超时防止无限循环
+                            data = vm.runInContext(jsonStr, context, { timeout: 1000 });
                         } catch {
                             continue;
                         }
@@ -171,7 +176,7 @@ async function handler(ctx: Context) {
                 try {
                     const articleResponse = await ofetch(item.link, {
                         headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                            ...DEFAULT_HEADERS,
                             Referer: baseUrl,
                         },
                     });
