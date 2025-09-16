@@ -4,10 +4,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/library/:page?',
+    path: '/library',
     categories: ['university'],
     example: '/xyu/library',
-    parameters: { page: '页码，默认为 1' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -16,22 +15,21 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '新余学院图书馆通知公告',
-    maintainers: [],
+    name: '图书馆通知公告',
+    maintainers: ['JinMokai'],
     handler,
     url: 'lib.xyc.edu.cn/index/tzgg.htm',
     radar: [
         {
-            source: ['lib.xyc.edu.cn/index/tzgg.htm', 'lib.xyc.edu.cn/index/tzgg/:page.htm'],
+            source: ['lib.xyc.edu.cn/index/tzgg.htm'],
             target: '/library',
         },
     ],
 };
 
-async function handler(ctx) {
-    const page = ctx.req.param('page') ?? '1';
+async function handler() {
     const baseUrl = 'https://lib.xyc.edu.cn';
-    const url = page && page > 1 ? `${baseUrl}/index/tzgg/${page}.htm` : `${baseUrl}/index/tzgg.htm`;
+    const url = `${baseUrl}/index/tzgg.htm`;
 
     const response = await ofetch(url);
     const $ = load(response);
@@ -46,7 +44,7 @@ async function handler(ctx) {
             const link = relativeUrl ? new URL(relativeUrl, baseUrl).href : '';
             // 提取日期
             const dateText = $item.find('.date').text().trim() || $item.text().match(/\d{4}-\d{2}-\d{2}/)?.[0] || '';
-            const pubDate = dateText ? parseDate(dateText, 'YYYY-MM-DD') : new Date();
+            const pubDate = parseDate(dateText, 'YYYY-MM-DD');
 
             return {
                 title,

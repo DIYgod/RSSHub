@@ -6,12 +6,9 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/index/tzgg/:page?',
+    path: '/index/tzgg',
     categories: ['university'],
     example: '/xyu/index/tzgg',
-    parameters: {
-        page: '页码，可选，默认为第1页',
-    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,18 +19,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.xyc.edu.cn/index/tzgg.htm', 'www.xyc.edu.cn/index/tzgg/:page.htm'],
+            source: ['www.xyc.edu.cn/index/tzgg.htm'],
         },
     ],
     name: '官网通知公告',
+    maintainers: ['JinMokai'],
     handler,
     url: 'www.xyc.edu.cn/index/tzgg.htm',
 };
 
-async function handler(ctx) {
-    const page = ctx.req.param('page') || '';
+async function handler() {
     const baseUrl = 'https://www.xyc.edu.cn';
-    const url = page && page > 1 ? `${baseUrl}/index/tzgg/${page}.htm` : `${baseUrl}/index/tzgg.htm`;
+    const url = `${baseUrl}/index/tzgg.htm`;
 
     const response = await ofetch(url).catch(() => null);
     if (!response) {
@@ -68,8 +65,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(dateText, 'YYYY-MM-DD'), +8),
             };
         })
-        .filter(Boolean)
-        .slice(0, 20);
+        .filter(Boolean);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -84,7 +80,7 @@ async function handler(ctx) {
                     }
 
                     const $$ = load(detailResponse);
-                    const content = $$('.v_news_content, .content, .article-content').html() || $$('body').html();
+                    const content = $$('.v_news_content, .content, .article-content').html();
 
                     if (content) {
                         const $content = load(content);
