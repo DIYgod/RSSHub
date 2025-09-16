@@ -175,7 +175,7 @@
         "eslint": "9.35.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-nibble": "9.0.0",
-        "eslint-plugin-n": "17.22.0",
+        "eslint-plugin-n": "17.23.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-unicorn": "61.0.2",
         "eslint-plugin-yml": "1.18.0",
