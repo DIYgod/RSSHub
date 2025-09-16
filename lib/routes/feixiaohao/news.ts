@@ -54,123 +54,108 @@ const DEFAULT_HEADERS = {
     Referer: 'https://www.feixiaohao.com/',
 };
 
-async function handler(ctx: Context) {
-    const tab = ctx.req.param('tab') ?? '0';
-    const baseUrl = 'https://www.feixiaohao.com';
+const CATEGORY_MAP = {
+    '0': '头条',
+    '1': '新闻',
+    '2': '政策',
+    '4': '技术',
+    '5': '区块链',
+    '6': '研究',
+    '7': '教程',
+};
 
-    // 分类映射
-    const categoryMap = {
-        '0': '头条',
-        '1': '新闻',
-        '2': '政策',
-        '4': '技术',
-        '5': '区块链',
-        '6': '研究',
-        '7': '教程',
-    };
-
-    const categoryName = categoryMap[tab] || '头条';
-
-    // 获取新闻列表页面
-    const url = `${baseUrl}/news?tab=${tab}`;
-    const response = await ofetch(url, {
-        headers: DEFAULT_HEADERS,
-    });
-
-    const $ = load(response);
-
-    // 解析新闻列表
+function extractNewsDataFromScript(scriptContent: string): any[] {
     const items: any[] = [];
 
-    // 从页面中提取JSON数据（非小号使用Nuxt.js，数据在window.__NUXT__中）
-    const scriptTags = $('script').toArray();
+    if (!scriptContent?.includes('window.__NUXT__')) {
+        return items;
+    }
 
-    for (const script of scriptTags) {
-        const scriptContent = $(script).html();
-        if (scriptContent && scriptContent.includes('window.__NUXT__')) {
+    try {
+        const jsonMatch = scriptContent.match(/window\.__NUXT__\s*=\s*(.+);?\s*$/);
+        if (!jsonMatch) {
+            return items;
+        }
+
+        const jsonStr = jsonMatch[1];
+        let data: any;
+
+        if (jsonStr.startsWith('(function(')) {
             try {
-                // 提取JSON数据 - 非小号使用函数包装的格式
-                const jsonMatch = scriptContent.match(/window\.__NUXT__\s*=\s*(.+);?\s*$/);
-                if (jsonMatch) {
-                    const jsonStr = jsonMatch[1];
-                    let data: any;
-
-                    // 处理函数包装的格式，如 (function(a,b,c){return {...}})("","",...)
-                    if (jsonStr.startsWith('(function(')) {
-                        // 使用vm模块在隔离环境中安全执行JavaScript代码
-                        try {
-                            // 创建一个新的上下文，隔离执行环境
-                            const context = vm.createContext({});
-                            // 在隔离环境中执行代码，设置超时防止无限循环
-                            data = vm.runInContext(jsonStr, context, { timeout: 1000 });
-                        } catch {
-                            continue;
-                        }
-                    } else {
-                        // 尝试直接解析JSON
-                        try {
-                            data = JSON.parse(jsonStr);
-                        } catch {
-                            continue;
-                        }
-                    }
-
-                    // 根据tab参数选择不同的数据源
-                    const newsData: any[] = tab === '0' ? [...(data?.data?.[0]?.bannerList || []), ...(data?.data?.[0]?.data_hot || [])] : data?.data?.[0]?.data_hot || [];
-
-                    for (const item of newsData.slice(0, 20)) {
-                        if (item.title && item.id) {
-                            items.push({
-                                title: item.title,
-                                link: `${baseUrl}/news/${item.id}`,
-                                description: item.summary || item.content || item.title,
-                                author: item.author || item.username || '非小号',
-                                pubDate: parseDate(item.issuetime * 1000),
-                                category: [categoryName],
-                            });
-                        }
-                    }
-                    break;
-                }
+                const context = vm.createContext({});
+                data = vm.runInContext(jsonStr, context, { timeout: 1000 });
             } catch {
-                // 忽略解析错误，继续尝试其他脚本
+                return items;
             }
+        } else {
+            try {
+                data = JSON.parse(jsonStr);
+            } catch {
+                return items;
+            }
+        }
+
+        return data?.data?.[0] || {};
+    } catch {
+        return items;
+    }
+}
+
+function parseNewsItems(newsData: any, tab: string, categoryName: string, baseUrl: string): any[] {
+    const items: any[] = [];
+    const dataSource = tab === '0' ? [...(newsData.bannerList || []), ...(newsData.data_hot || [])] : newsData.data_hot || [];
+
+    for (const item of dataSource.slice(0, 20)) {
+        if (item.title && item.id) {
+            items.push({
+                title: item.title,
+                link: `${baseUrl}/news/${item.id}`,
+                description: item.summary || item.content || item.title,
+                author: item.author || item.username || '非小号',
+                pubDate: parseDate(item.issuetime * 1000),
+                category: [categoryName],
+            });
         }
     }
 
-    // 如果仍然没有找到数据，尝试从HTML中提取（备用方案）
-    if (items.length === 0) {
-        $('.data_hot .item, .bannerList .item, .hotNews .item').each((_, element) => {
-            const $item = $(element);
-            const title = $item.find('.title, h3, .summary').text().trim() || $item.find('a').attr('title') || $item.text().trim().split('\n')[0];
+    return items;
+}
 
-            const link = $item.find('a').attr('href');
-            const summary = $item.find('.summary, .content').text().trim();
-            const author = $item.find('.author, .username').text().trim();
-            const timeText = $item.find('.time, .issuetime').text().trim();
+function parseHtmlFallback($: any, categoryName: string, baseUrl: string): any[] {
+    const items: any[] = [];
 
-            if (title && link) {
-                let fullLink = link;
-                if (link.startsWith('/')) {
-                    fullLink = baseUrl + link;
-                } else if (!link.startsWith('http')) {
-                    fullLink = `${baseUrl}/news/${link}`;
-                }
+    $('.data_hot .item, .bannerList .item, .hotNews .item').each((_, element) => {
+        const $item = $(element);
+        const title = $item.find('.title, h3, .summary').text().trim() || $item.find('a').attr('title') || $item.text().trim().split('\n')[0];
+        const link = $item.find('a').attr('href');
+        const summary = $item.find('.summary, .content').text().trim();
+        const author = $item.find('.author, .username').text().trim();
+        const timeText = $item.find('.time, .issuetime').text().trim();
 
-                items.push({
-                    title,
-                    link: fullLink,
-                    description: summary || title,
-                    author: author || '非小号',
-                    pubDate: timeText ? parseDate(timeText) : new Date(),
-                    category: [categoryName],
-                });
+        if (title && link) {
+            let fullLink = link;
+            if (link.startsWith('/')) {
+                fullLink = baseUrl + link;
+            } else if (!link.startsWith('http')) {
+                fullLink = `${baseUrl}/news/${link}`;
             }
-        });
-    }
 
-    // 获取文章详情
-    const processedItems = await Promise.all(
+            items.push({
+                title,
+                link: fullLink,
+                description: summary || title,
+                author: author || '非小号',
+                pubDate: timeText ? parseDate(timeText) : new Date(),
+                category: [categoryName],
+            });
+        }
+    });
+
+    return items;
+}
+
+function enrichItemsWithContent(items: any[], baseUrl: string): Promise<any[]> {
+    return Promise.all(
         items.slice(0, 15).map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
@@ -194,6 +179,41 @@ async function handler(ctx: Context) {
             })
         )
     );
+}
+
+async function handler(ctx: Context) {
+    const tab = ctx.req.param('tab') ?? '0';
+    const baseUrl = 'https://www.feixiaohao.com';
+    const categoryName = CATEGORY_MAP[tab] || '头条';
+    const url = `${baseUrl}/news?tab=${tab}`;
+
+    // 获取新闻列表页面
+    const response = await ofetch(url, { headers: DEFAULT_HEADERS });
+    const $ = load(response);
+
+    let items: any[] = [];
+
+    // 从页面中提取JSON数据
+    const scriptTags = $('script').toArray();
+    for (const script of scriptTags) {
+        const scriptContent = $(script).html();
+        if (scriptContent) {
+            const newsData = extractNewsDataFromScript(scriptContent);
+
+            if (newsData && Object.keys(newsData).length > 0) {
+                items = parseNewsItems(newsData, tab, categoryName, baseUrl);
+                break;
+            }
+        }
+    }
+
+    // 如果没有找到数据，使用HTML解析作为备用方案
+    if (items.length === 0) {
+        items = parseHtmlFallback($, categoryName, baseUrl);
+    }
+
+    // 获取文章详情
+    const processedItems = await enrichItemsWithContent(items, baseUrl);
 
     return {
         title: `非小号 - ${categoryName}新闻`,
