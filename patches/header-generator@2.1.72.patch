@@ -1,20 +1,29 @@
 diff --git a/presets.d.ts b/presets.d.ts
-index 7167ec82309aeafce687a6f885dc50fda5dfc866..2325ebf0c9a4e7eb5c0ad9e830e1264d0c65f153 100644
+index 7167ec82309aeafce687a6f885dc50fda5dfc866..febeaf428d16ce58d20027df18df73c342b23f26 100644
 --- a/presets.d.ts
 +++ b/presets.d.ts
-@@ -41,6 +41,10 @@ export declare const MODERN_MACOS_CHROME: {
+@@ -46,4 +46,9 @@ export declare const MODERN_ANDROID: {
+     devices: "mobile"[];
      browserListQuery: string;
-     operatingSystems: "macos"[];
  };
 +export declare const MODERN_IOS: {
++    operatingSystems: "ios"[];
++    devices: "mobile"[];
 +    browserListQuery: string;
-+    operatingSystems: "IOS"[];
 +};
- export declare const MODERN_ANDROID: {
-     operatingSystems: "android"[];
-     devices: "mobile"[];
+ //# sourceMappingURL=presets.d.ts.map
+\ No newline at end of file
+diff --git a/presets.d.ts.map b/presets.d.ts.map
+index 1ebe6ae0fc77f0beb7631416b52122400c1b031f..af05c944f5891abbb1940d80c9e27304fd046e7f 100644
+--- a/presets.d.ts.map
++++ b/presets.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"presets.d.ts","sourceRoot":"","sources":["../src/presets.ts"],"names":[],"mappings":"AAEA,eAAO,MAAM,cAAc;;CAEgB,CAAC;AAE5C,eAAO,MAAM,aAAa;;;CAGiB,CAAC;AAE5C,eAAO,MAAM,YAAY;;;CAGkB,CAAC;AAE5C,eAAO,MAAM,oBAAoB;;;CAGU,CAAC;AAE5C,eAAO,MAAM,mBAAmB;;;CAGW,CAAC;AAE5C,eAAO,MAAM,cAAc;;;CAGgB,CAAC;AAE5C,eAAO,MAAM,sBAAsB;;;CAGQ,CAAC;AAE5C,eAAO,MAAM,qBAAqB;;;CAGS,CAAC;AAE5C,eAAO,MAAM,YAAY;;;CAGkB,CAAC;AAE5C,eAAO,MAAM,oBAAoB;;;CAGU,CAAC;AAE5C,eAAO,MAAM,mBAAmB;;;CAGW,CAAC;AAE5C,eAAO,MAAM,cAAc;;;;CAGgB,CAAC"}
+\ No newline at end of file
++{"version":3,"file":"presets.d.ts","sourceRoot":"","sources":["../src/presets.ts"],"names":[],"mappings":"AAEA,eAAO,MAAM,cAAc;;CAEgB,CAAC;AAE5C,eAAO,MAAM,aAAa;;;CAGiB,CAAC;AAE5C,eAAO,MAAM,YAAY;;;CAGkB,CAAC;AAE5C,eAAO,MAAM,oBAAoB;;;CAGU,CAAC;AAE5C,eAAO,MAAM,mBAAmB;;;CAGW,CAAC;AAE5C,eAAO,MAAM,cAAc;;;CAGgB,CAAC;AAE5C,eAAO,MAAM,sBAAsB;;;CAGQ,CAAC;AAE5C,eAAO,MAAM,qBAAqB;;;CAGS,CAAC;AAE5C,eAAO,MAAM,YAAY;;;CAGkB,CAAC;AAE5C,eAAO,MAAM,oBAAoB;;;CAGU,CAAC;AAE5C,eAAO,MAAM,mBAAmB;;;CAGW,CAAC;AAE5C,eAAO,MAAM,cAAc;;;;CAGgB,CAAC;AAE5C,eAAO,MAAM,UAAU;;;;CAGoB,CAAC"}
+\ No newline at end of file
 diff --git a/presets.js b/presets.js
-index edcf068b778f45c853c4c9ac1c979b0f914a7532..ce158f32756709fe5764543b28d724296128b722 100644
+index edcf068b778f45c853c4c9ac1c979b0f914a7532..a073e2dae12a486f28f1f85d1fd195335110fa4e 100644
 --- a/presets.js
 +++ b/presets.js
 @@ -1,6 +1,6 @@
