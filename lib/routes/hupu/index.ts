@@ -135,9 +135,8 @@ export const route: Route = {
 
                             content('.basketballTobbs_tag').remove();
                             content('.hupu-img').each(function () {
-                                content(this)
-                                    .parent()
-                                    .html(`<img src="${content(this).attr('src')}">`);
+                                const imgSrc = content(this).attr('data-gif') || content(this).attr('data-origin') || content(this).attr('src');
+                                content(this).parent().html(`<img src="${imgSrc}">`);
                             });
 
                             const description = content('#bbs-thread-content, .bbs-content-font').html() || undefined;
