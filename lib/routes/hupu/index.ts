@@ -137,7 +137,7 @@ export const route: Route = {
                             content('.hupu-img').each(function () {
                                 content(this)
                                     .parent()
-                                    .html(`<img src="${content(this).attr('data-origin')}">`);
+                                    .html(`<img src="${content(this).attr('src')}">`);
                             });
 
                             const description = content('#bbs-thread-content, .bbs-content-font').html() || undefined;
