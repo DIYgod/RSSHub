@@ -95,9 +95,9 @@ async function handler(ctx: Context) {
                     if (jsonStr.startsWith('(function(')) {
                         // 执行JavaScript代码来获取数据
                         try {
-                            // 使用eval来执行JavaScript代码（在这种情况下是安全的，因为是从可信源获取）
-                            // eslint-disable-next-line no-eval
-                            data = eval(jsonStr);
+                            // 使用Function构造函数代替eval，更安全的方式执行JavaScript代码
+                            // eslint-disable-next-line no-new-func
+                            data = new Function(`return ${jsonStr}`)();
                         } catch {
                             continue;
                         }
