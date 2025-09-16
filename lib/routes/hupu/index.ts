@@ -139,7 +139,28 @@ export const route: Route = {
                                 content(this).parent().html(`<img src="${imgSrc}">`);
                             });
 
-                            const description = content('#bbs-thread-content, .bbs-content-font').html() || undefined;
+                            // 分别获取内容元素
+                            const descriptionParts: string[] = [];
+
+                            // 获取主要内容
+                            const mainContent = content('#bbs-thread-content, .bbs-content-font').html();
+                            if (mainContent) {
+                                descriptionParts.push(mainContent);
+                            }
+
+                            // 单独处理视频部分
+                            const videoWrapper = content('.header-video-wrapper');
+                            if (videoWrapper.length > 0) {
+                                const videoElement = videoWrapper.find('video');
+                                if (videoElement.length > 0) {
+                                    const videoHtml = videoElement.prop('outerHTML');
+                                    if (videoHtml) {
+                                        descriptionParts.push(videoHtml);
+                                    }
+                                }
+                            }
+
+                            const description = descriptionParts.length > 0 ? descriptionParts.join('') : undefined;
 
                             return {
                                 ...item,
