@@ -25,3 +25,13 @@ jobs:
           exempt-issue-labels: 'dependencies,wait for upstream'
           exempt-pr-labels: 'dependencies,wait for upstream'
           any-of-issue-labels: 'more data required'
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5.0.1
+        with:
+          github-token: ${{ github.token }}
+          process-only: 'prs'
+          pr-inactive-days: '30'
+          pr-comment: >
+            This pull request has been automatically locked since there has not been any recent activity after it was closed. Please open a new issue for related bugs.

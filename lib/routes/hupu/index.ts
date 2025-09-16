@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { Route, Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import { type HupuApiResponse, type HomePostItem, type NewsDataItem, isHomePostItem } from './types';
 
 const categories = {
     nba: {
@@ -18,85 +19,142 @@ const categories = {
         title: '足球',
         data: 'news',
     },
-};
+    '': {
+        title: '首页',
+        data: 'res',
+    },
+} as const;
 
 export const route: Route = {
     path: ['/dept/:category?', '/:category?'],
+    name: '手机虎扑网',
+    url: 'm.hupu.com',
+    maintainers: ['nczitzk', 'hyoban'],
+    example: '/hupu/nba',
+    parameters: {
+        category: {
+            description: '分类，可选值：nba、cba、soccer，默认为空（首页）',
+            default: '',
+            options: Object.entries(categories).map(([key, value]) => ({
+                label: value.title,
+                value: key,
+            })),
+        },
+    },
+    description: `::: tip
+电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [\`/hupu/all/all-gg\`](https://rsshub.app/hupu/all/all-gg)。
+:::`,
+    categories: ['bbs'],
     radar: [
         {
             source: ['m.hupu.com/:category', 'm.hupu.com/'],
             target: '/:category',
         },
     ],
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| NBA | CBA | 足球   |
-| --- | --- | ------ |
-| nba | cba | soccer |
+    handler: async (ctx): Promise<Data> => {
+        const c = ctx.req.param('category') || '';
+        if (!(c in categories)) {
+            throw new Error('Invalid category. Valid options are: ' + Object.keys(categories).filter(Boolean).join(', '));
+        }
+        const category = c as keyof typeof categories;
 
-::: tip
-  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [\`/hupu/all/all-gg\`](https://rsshub.app/hupu/all/all-gg)。
-:::`,
+        const rootUrl = 'https://m.hupu.com';
+        const currentUrl = `${rootUrl}/${category}`;
+
+        const response = await got({
+            method: 'get',
+            url: currentUrl,
+        });
+
+        const scriptMatch = response.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
+        if (!scriptMatch || !scriptMatch[1]) {
+            throw new Error(`Failed to find __NEXT_DATA__ script tag in page: ${currentUrl}`);
+        }
+
+        const fullJsonString = scriptMatch[1];
+        let fullData;
+
+        try {
+            fullData = JSON.parse(fullJsonString);
+        } catch (error) {
+            throw new Error(`Failed to parse full JSON data: ${error instanceof Error ? error.message : String(error)}`);
+        }
+
+        const data: HupuApiResponse = fullData;
+        const { pageProps } = data.props;
+
+        const dataKey = categories[category].data;
+        if (!(dataKey in pageProps)) {
+            throw new Error(`Expected '${dataKey}' property not found in pageProps for category: ${category || 'home'}`);
+        }
+
+        const rawDataArray: (HomePostItem | NewsDataItem)[] = (() => {
+            const data = (pageProps as any)[dataKey];
+            return Array.isArray(data) ? data : [];
+        })();
+
+        let items: DataItem[] = rawDataArray.map((item) =>
+            isHomePostItem(item)
+                ? ({
+                      title: item.title,
+                      link: item.url.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
+                      guid: item.tid,
+                      category: item.label ? [item.label] : undefined,
+                  } satisfies DataItem)
+                : ({
+                      title: item.title,
+                      pubDate: timezone(parseDate(item.publishTime), +8),
+                      link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
+                      guid: item.tid,
+                  } satisfies DataItem)
+        );
+
+        items = await Promise.all(
+            items
+                .filter((item) => item.link && !/subject/.test(item.link))
+                .map((item) =>
+                    cache.tryGet(item.link!, async () => {
+                        try {
+                            const detailResponse = await got({
+                                method: 'get',
+                                url: item.link,
+                            });
+
+                            const content = load(detailResponse.data);
+
+                            const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
+                            const categories = content('.basketballTobbs_tag > a, .tag-player-team')
+                                .toArray()
+                                .map((c) => content(c).text())
+                                .filter(Boolean);
+
+                            content('.basketballTobbs_tag').remove();
+                            content('.hupu-img').each(function () {
+                                content(this)
+                                    .parent()
+                                    .html(`<img src="${content(this).attr('data-origin')}">`);
+                            });
+
+                            const description = content('#bbs-thread-content, .bbs-content-font').html();
+
+                            return {
+                                ...item,
+                                author: author || undefined,
+                                category: categories.length > 0 ? categories : item.category,
+                                description: description || undefined,
+                            };
+                        } catch {
+                            // no-empty
+                            return item;
+                        }
+                    })
+                )
+        );
+
+        return {
+            title: `虎扑 - ${categories[category].title}`,
+            link: currentUrl,
+            item: items,
+        } as Data;
+    },
 };
-
-async function handler(ctx) {
-    const category = ctx.req.param('category') ?? 'soccer';
-
-    const rootUrl = 'https://m.hupu.com';
-    const currentUrl = `${rootUrl}/${category}`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    const data = JSON.parse(response.data.match(/"props":(.*),"page":"\//)[1]);
-
-    let items = data.pageProps[categories[category].data].map((item) => ({
-        title: item.title,
-        pubDate: timezone(parseDate(item.publishTime), +8),
-        link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
-    }));
-
-    items = await Promise.all(
-        items
-            .filter((item) => !/subject/.test(item.link))
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                        });
-
-                        const content = load(detailResponse.data);
-
-                        item.author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
-                        item.category = content('.basketballTobbs_tag > a, .tag-player-team')
-                            .toArray()
-                            .map((c) => content(c).text());
-
-                        content('.basketballTobbs_tag').remove();
-                        content('.hupu-img').each(function () {
-                            content(this)
-                                .parent()
-                                .html(`<img src="${content(this).attr('data-origin')}">`);
-                        });
-
-                        item.description = content('#bbs-thread-content, .bbs-content-font').html();
-                    } catch {
-                        // no-empty
-                    }
-
-                    return item;
-                })
-            )
-    );
-
-    return {
-        title: `虎扑 - ${categories[category].title}`,
-        link: currentUrl,
-        item: items,
-    };
-}

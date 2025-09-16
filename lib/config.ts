@@ -187,6 +187,7 @@ export type Config = {
     };
     hefeng: {
         key?: string;
+        apiHost?: string;
     };
     infzm: {
         cookie?: string;
@@ -324,6 +325,10 @@ export type Config = {
     };
     scihub: {
         host?: string;
+    };
+    sdo: {
+        ff14risingstones?: string;
+        ua?: string;
     };
     sis001: {
         baseUrl?: string;
@@ -659,6 +664,7 @@ const calculateValue = () => {
         },
         hefeng: {
             key: envs.HEFENG_KEY,
+            apiHost: envs.HEFENG_API_HOST,
         },
         infzm: {
             cookie: envs.INFZM_COOKIE,
@@ -796,6 +802,10 @@ const calculateValue = () => {
         },
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
+        },
+        sdo: {
+            ff14risingstones: envs.SDO_FF14RISINGSTONES,
+            ua: envs.SDO_UA,
         },
         sis001: {
             baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',

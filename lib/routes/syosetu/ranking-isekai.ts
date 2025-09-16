@@ -70,7 +70,7 @@ export async function handleIsekaiRanking(type: string, limit: number): Promise<
     }
 
     const items = uniqueNovels
-        .sort((a, b) => (b[pointField] || 0) - (a[pointField] || 0))
+        .toSorted((a, b) => (b[pointField] || 0) - (a[pointField] || 0))
         .map((novel, index) => ({
             title: `#${index + 1} ${novel.title}`,
             link: `https://ncode.syosetu.com/${String(novel.ncode).toLowerCase()}`,

@@ -141,6 +141,7 @@ unicorn.configs.recommended,
 
         'unicorn/no-array-callback-reference': 'warn',
         'unicorn/no-array-reduce': 'warn',
+        'unicorn/no-array-sort': 'warn',
         'unicorn/no-await-expression-member': 'off',
         'unicorn/no-empty-file': 'warn',
         'unicorn/no-hex-escape': 'warn',
@@ -235,6 +236,11 @@ unicorn.configs.recommended,
 
         'n/no-unpublished-require': ['error', {
             allowModules: ['tosource'],
+        }],
+
+        "n/no-unsupported-features/node-builtins": ["error", {
+            "version": ">=22.16.0",
+            "ignores": []
         }],
 
         'prettier/prettier': 'off',
