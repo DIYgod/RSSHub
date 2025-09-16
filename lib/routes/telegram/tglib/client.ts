@@ -33,12 +33,15 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
                 : undefined,
     });
 
-    await client.start(Object.assign(authParams ?? {}, {
-        onError: (err: Error) => { throw new Error('Cannot start TG: ' + err); },
-    }) as any);
+    await client.start(
+        Object.assign(authParams ?? {}, {
+            onError: (err: Error) => {
+                throw new Error('Cannot start TG: ' + err);
+            },
+        }) as any
+    );
     return client;
 }
-
 
 export function getFilename(x: Api.TypeMessageMedia) {
     if (x instanceof Api.MessageMediaDocument) {
@@ -61,10 +64,12 @@ export function getDocument(m: Api.TypeMessageMedia) {
 }
 
 export async function getStory(entity: Api.TypeEntityLike, id: number) {
-    const result = await (await getClient()).invoke(
+    const result = await (
+        await getClient()
+    ).invoke(
         new Api.stories.GetStoriesByID({
             id: [id],
-            peer: entity
+            peer: entity,
         })
     );
     return result.stories[0] as Api.StoryItem;
