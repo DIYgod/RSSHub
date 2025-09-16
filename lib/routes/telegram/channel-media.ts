@@ -64,7 +64,7 @@ function sortThumb(thumb: Api.TypePhotoSize) {
     return 0;
 }
 
-function chooseLargestThumb(thumbs:  Api.TypePhotoSize[]) {
+function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
     thumbs = [...thumbs].sort((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
@@ -95,7 +95,7 @@ export async function* streamDocument(client: TelegramClient, obj: Api.Document,
         requestSize: 512 * 1024, // MAX_CHUNK_SIZE
         dcId: obj.dcId,
         offset: undefined,
-        limit: undefined
+        limit: undefined,
     };
     if (offset) {
         iterFileParams.offset = offset;
@@ -150,7 +150,9 @@ function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
             aborted = true;
         });
         for await (const chunk of bodyIter) {
-            if (aborted) { break; }
+            if (aborted) {
+                break;
+            }
             // console.log(`writing ${chunk.length / 1024}kB`);
             await stream.write(chunk);
         }
@@ -169,7 +171,7 @@ export const route: Route = {
                 name: 'TELEGRAM_SESSION',
                 optional: false,
                 description: 'Telegram API Authentication',
-            }
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -191,7 +193,7 @@ export const route: Route = {
 export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {
     if (media instanceof Api.MessageMediaPhoto) {
         const buf = await client.downloadMedia(media);
-        return new Response(buf, {headers: {'Content-Type': 'image/jpeg'}});
+        return new Response(buf, { headers: { 'Content-Type': 'image/jpeg' } });
     }
 
     const doc = getDocument(media);
@@ -212,9 +214,7 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
 
         if (range.length === 0) {
             ctx.header('Content-Length', doc.size.toString());
-            if (!doc.mimeType.startsWith('video/') &&
-                !doc.mimeType.startsWith('audio/') &&
-                !doc.mimeType.startsWith('image/')) {
+            if (!doc.mimeType.startsWith('video/') && !doc.mimeType.startsWith('audio/') && !doc.mimeType.startsWith('image/')) {
                 ctx.header('Content-Disposition', `attachment; filename="${encodeURIComponent(getFilename(media))}"`);
             }
             return streamResponse(ctx, streamDocument(client, doc));
@@ -222,7 +222,7 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
             const [offset, limit] = range[0];
             // console.log(`Range: ${rangeHeader}`);
             ctx.status(206); // partial content
-            ctx.header('Content-Length', (limit.subtract(offset).add(1)).toString());
+            ctx.header('Content-Length', limit.subtract(offset).add(1).toString());
             ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
             return streamResponse(ctx, streamDocument(client, doc, '', offset, limit));
         }

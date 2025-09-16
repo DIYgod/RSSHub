@@ -3,7 +3,7 @@ import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
 import { Data, DataItem, Route } from '@/types';
 import { Context } from 'hono';
-import { Api} from 'telegram';
+import { Api } from 'telegram';
 import { getClient, getStory, unwrapMedia } from './tglib/client';
 import { getGeoLink, getMediaLink } from './tglib/channel';
 
@@ -83,7 +83,7 @@ function getMediaAreas(mediaAreas?: Api.TypeMediaArea[]) {
 
 export default async function handler(ctx: Context) {
     const c = await getClient();
-    const {username, story} = ctx.req.param();
+    const { username, story } = ctx.req.param();
     if (!username) {
         throw new NotFoundError();
     }
@@ -94,17 +94,19 @@ export default async function handler(ctx: Context) {
         return await handleMedia(storyItem.media, c, ctx);
     }
 
-    const storiesRes = await c.invoke(new Api.stories.GetPeerStories({peer}));
+    const storiesRes = await c.invoke(new Api.stories.GetPeerStories({ peer }));
 
     const item: DataItem[] = [];
     for (const story of storiesRes.stories.stories) {
-        if (!(story instanceof Api.StoryItem)) { // story is deleted (archived) or skipped
+        if (!(story instanceof Api.StoryItem)) {
+            // story is deleted (archived) or skipped
             continue;
         }
         const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
         const pubDate = new Date(story.date * 1000).toUTCString();
         const media = await unwrapMedia(story.media);
-        if (!media) { // cannot load the story
+        if (!media) {
+            // cannot load the story
             continue;
         }
 

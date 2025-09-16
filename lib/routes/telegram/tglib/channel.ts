@@ -11,20 +11,22 @@ export function getGeoLink(geo: Api.GeoPoint) {
 }
 
 export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
-    const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({peer: message.peerId, msgId: message.id}));
+    const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({ peer: message.peerId, msgId: message.id }));
     let results: Api.PollResults;
     if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
         results = resultsUpdateResponse.updates[0].results as Api.PollResults;
     }
     const txt = `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
-        <div><ul>${m.poll.answers.map((a) => {
-            let answerTxt = a.text.text;
-            const result = results.results?.find((r) => r.option.buffer === a.option.buffer);
-            if (result && results.totalVoters) {
-                answerTxt = `<strong>${Math.round(result.voters / results.totalVoters * 100)}%</strong>: ${answerTxt}`;
-            }
-            return `<li>${answerTxt}</li>`;
-        }).join('')}</ul></div>
+        <div><ul>${m.poll.answers
+            .map((a) => {
+                let answerTxt = a.text.text;
+                const result = results.results?.find((r) => r.option.buffer === a.option.buffer);
+                if (result && results.totalVoters) {
+                    answerTxt = `<strong>${Math.round((result.voters / results.totalVoters) * 100)}%</strong>: ${answerTxt}`;
+                }
+                return `<li>${answerTxt}</li>`;
+            })
+            .join('')}</ul></div>
     `;
     return txt;
 }
@@ -37,7 +39,7 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
         return `<img src="${src}" alt=""/>`;
     }
     if (doc && mime.startsWith('video/')) {
-        const vid = (doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 }) as {w: number, h: number};
+        const vid = (doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 }) as { w: number; h: number };
         return `<video controls preload="metadata" poster="${src}?thumb" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
     }
     if (doc && mime.startsWith('audio/')) {
@@ -128,7 +130,8 @@ export default async function handler(ctx: Context) {
             text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
         }
         const media = await unwrapMedia(message.media, message.peerId);
-        if (message.media instanceof Api.MessageMediaStory && media) { // if successfully loaded the story
+        if (message.media instanceof Api.MessageMediaStory && media) {
+            // if successfully loaded the story
             const storyFrom = await client.getEntity(message.media.peer);
             text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
         }
@@ -178,4 +181,4 @@ export default async function handler(ctx: Context) {
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `@${username} on Telegram`,
     };
-};
+}
