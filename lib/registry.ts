@@ -198,7 +198,11 @@ for (const namespace in namespaces) {
                         routeData.handler = route.handler;
                     }
                 }
-                ctx.set('data', await routeData.handler(ctx));
+                const response = await routeData.handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
             }
         };
         subApp.get(path, wrappedHandler);
