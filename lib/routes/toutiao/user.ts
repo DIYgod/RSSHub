@@ -36,8 +36,7 @@ async function handler(ctx) {
         async () => {
             const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
 
-            // Generate headers to get the user agent for a-bogus generation
-            const headers = generateHeaders({ preset: PRESETS.MODERN_WINDOWS_CHROME });
+            const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
             const userAgent = headers['user-agent'];
 
             const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
