@@ -2,10 +2,11 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog/:lang?',
-    categories: ['programming', 'blog'],
+    categories: ['blog'],
     example: '/qwenlm/blog/zh',
     parameters: { lang: 'Blog language' },
     features: {
@@ -38,9 +39,18 @@ export const route: Route = {
             .map((item) => {
                 item = $(item);
 
+                const dateString = item
+                    .find('.entry-footer span')
+                    .attr('title')
+                    .trim()
+                    .replace(/\+0800$/, '');
+                // const pubDate = timezone(parseDate(dateString, 'YYYY-MM-DD HH:mm:ss ZZ'), +8);
+                const pubDate = parseDate(dateString);
+
                 return {
                     title: item.find('header.entry-header h2').text().trim(),
                     link: item.find('.entry-link').attr('href'),
+                    pubDate,
                 };
             });
 
