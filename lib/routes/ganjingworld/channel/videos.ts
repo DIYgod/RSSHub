@@ -1,32 +1,34 @@
+// RSSHub route for fetching videos from Ganjing World.
+// Returns a list of videos in a channel.
+// Source: https://www.ganjingworld.com
+
 import { Route } from '@/types';
-// import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch'; // Unified request library used
-// import cache from '@/utils/cache';
-// import { parseDate } from 'tough-cookie';
-import { ApiResponse } from './interfaces/api';
+import ofetch from '@/utils/ofetch';
+import { ApiResponse } from '../interfaces/api';
 
 export const route: Route = {
-    path: '/channel/:id',
+    path: '/channel/videos/:id',
     categories: ['social-media'],
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     example: 'www.ganjingworld.com/channel/1h4uri06g634IY6ND9UrE3BuJ1a80c',
-    parameters: { id: 'Channel ID' },
+    parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
             source: ['ganjingworld.com'],
-            target: '/channel/:id',
+            target: '/:lang?/channel/:id*',
         },
     ],
     url: 'www.ganjingworld.com',
     name: 'Videos in a channel on Ganjing World',
-    maintainers: [],
+    maintainers: ['yixiangli2001'],
+
     handler,
 };
 
@@ -39,12 +41,18 @@ async function handler(ctx) {
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
         const pubDate = new Date(item.time_scheduled);
+        const video_url = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
+        const poster_url = item.poster_url || '';
+        if (video_url) {
+            item.description = `<video controls src="${video_url}" style="max-width: 100%;"></video><br/>`;
+        }
+        const description = poster_url ? `<p><img src="${poster_url}" alt="${item.title}" referrerpolicy="no-referrer" /></p><p>${item.description || ''}</p>` : `<p>${item.description || ''}</p>`;
 
         return {
             title: item.title,
             link: `https://www.ganjingworld.com/video/${item.id}`,
             pubDate,
-            description: item.description || '',
+            description: description || '',
         };
     });
 

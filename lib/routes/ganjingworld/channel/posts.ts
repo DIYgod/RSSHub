@@ -1,5 +1,8 @@
+// RSSHub route for fetching posts from Ganjing World.
+// Returns a list of posts in a channel.
+// Source: https://www.ganjingworld.com
 import { Route } from '@/types';
-import { ApiResponse } from './interfaces/api';
+import { ApiResponse } from '../interfaces/api';
 
 import ofetch from '@/utils/ofetch';
 import sanitizeHtml from 'sanitize-html';
@@ -19,23 +22,24 @@ export const route: Route = {
     categories: ['social-media'],
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     example: 'www.ganjingworld.com/channel/1fcahpcut9t3gz4zIvYSJR7qd1cs0c?tab=posts',
-    parameters: { id: 'Channel ID' },
+    parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
             source: ['ganjingworld.com'],
-            target: '/channel/:id?tab=posts',
+            target: '/:lang?/channel/:id?tab=posts*',
         },
     ],
     url: 'www.ganjingworld.com',
     name: 'posts in a channel on Ganjing World',
-    maintainers: [],
+    maintainers: ['yixiangli2001'],
+
     handler,
 };
 
@@ -43,7 +47,6 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const url = `https://www.ganjingworld.com/channel/${id}?tab=posts`;
     const apiUrl = `https://gw.ganjingworld.com/v1.0c/social-content/get-owner-posts?owner_id=${id}&start_key=&page_size=48&post_image=true&query=basic,post,owner,comment,view,like,is_liked,share%20Request%20Method `;
-    // const apiUrl = `https://gw.ganjingworld.com/v1.1/content/get-by-channel?channel_id=1fcahpcut9t3gz4zIvYSJR7qd1cs0c&content_type=News`;
 
     const parsed: ApiResponse = await ofetch<ApiResponse>(apiUrl);
     if (parsed.data.list.length === 0) {

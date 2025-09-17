@@ -1,5 +1,8 @@
+// RSSHub route for fetching shorts from Ganjing World.
+// Returns a list of shorts in a channel.
+// Source: https://www.ganjingworld.com
 import { Route } from '@/types';
-import { ApiResponse } from './interfaces/api';
+import { ApiResponse } from '../interfaces/api';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -7,23 +10,23 @@ export const route: Route = {
     categories: ['social-media'],
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     example: 'www.ganjingworld.com/channel/1fq5chh3ajo67UNu14uAvfzOp1a80c?tab=shorts',
-    parameters: { id: 'Channel ID' },
+    parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
             source: ['ganjingworld.com'],
-            target: '/channel/:id?tab=shorts',
+            target: '/:lang?/channel/:id?tab=shorts*',
         },
     ],
     url: 'www.ganjingworld.com',
     name: 'Shorts in a channel on Ganjing World',
-    maintainers: [],
+    maintainers: ['yixiangli2001'],
     handler,
 };
 
@@ -39,12 +42,18 @@ async function handler(ctx) {
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
         const pubDate = new Date(item.time_scheduled);
+        const video_url = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
+        const poster_url = item.poster_url || '';
+        if (video_url) {
+            item.description = `<video controls src="${video_url}" style="max-width: 100%;"></video><br/>`;
+        }
+        const description = poster_url ? `<p><img src="${poster_url}" alt="${item.title}" referrerpolicy="no-referrer" /></p><p>${item.description || ''}</p>` : `<p>${item.description || ''}</p>`;
 
         return {
             title: item.title,
             link: `https://www.ganjingworld.com/video/${item.id}`,
             pubDate,
-            description: item.description || '',
+            description: description || '',
         };
     });
 

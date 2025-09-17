@@ -12,6 +12,7 @@ export interface ListItem {
     time_scheduled: number;
     channel: Channel;
     poster_url: string;
+    video_url: string;
     text: string;
     media: Media[];
 }
