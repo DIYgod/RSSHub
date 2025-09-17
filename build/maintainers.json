@@ -7729,7 +7729,7 @@
   "/telegram/blog": [
     "fengkx"
   ],
-  "/telegram/channel/:entityName/:messageId": [
+  "/telegram/media/:entityName/:messageId": [
     "synchrone"
   ],
   "/telegram/channel/:username/:routeParams?": [
