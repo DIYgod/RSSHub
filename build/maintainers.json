@@ -3165,6 +3165,9 @@
   "/google/fonts/:sort?": [
     "Fatpandac"
   ],
+  "/google/jules/changelog": [
+    "johan456789"
+  ],
   "/google/news/:category/:locale": [
     "zoenglinghou",
     "pseudoyu"
