@@ -33409,7 +33409,7 @@
     "_name": "Product Hunt",
     "www": [
       {
-        "title": "Today Popular",
+        "title": "Top Products Launching Today",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"

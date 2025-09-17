@@ -15471,7 +15471,7 @@
         source:[ "/news" ],
         target:"/priconne-redive/news/zh-tw" } ] },
   "producthunt.com":{ _name:"Product Hunt",
-    www:[ { title:"Today Popular",
+    www:[ { title:"Top Products Launching Today",
         docs:"https://docs.rsshub.app/routes/other",
         source:[ "/" ],
         target:"/producthunt/today" } ] },
