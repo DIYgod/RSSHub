@@ -7,7 +7,6 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
-import type { Context } from 'hono';
 
 const baseUrl = `https://${namespace.url}`;
 
@@ -50,7 +49,7 @@ export const route: Route = {
     url: namespace.url,
 };
 
-async function handler(ctx: Context): Promise<Data> {
+async function handler(): Promise<Data> {
     const currentUrl = `${baseUrl}/Article/C000003/new`;
     const html = await ofetch(currentUrl);
     const $ = load(html);
@@ -58,7 +57,7 @@ async function handler(ctx: Context): Promise<Data> {
     const language: string = $('html').attr('lang') || 'zh-TW';
     const articleNodes = $('div.kf-diagramtext-list > div.kf-diagramtext-col').toArray();
 
-    let items: DataItem[] = (articleNodes
+    const items: DataItem[] = (articleNodes
         .map((colEl) => {
             const node = $(colEl);
             const anchor = node.find('a[href*="/Article/C000003/detail"]').first();
