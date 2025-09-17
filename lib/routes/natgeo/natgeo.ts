@@ -66,6 +66,7 @@ async function handler(ctx) {
 
     const urlList = $('.article-link-content h4')
         .toArray()
+        .filter((i) => $(i).closest('.article-link-right').length === 0) // 移除右側熱門精選
         .map((i) => ({
             link: $(i).find('a[href]').first().attr('href'),
         }))
