@@ -43,7 +43,7 @@ async function handler() {
         const item = $(element);
         const href = item.attr('href') || '';
         const dateText = item.find('i').text().trim();
-        const pubDate = parseDate(dateText).toUTCString();
+        const pubDate = dateText ? parseDate(dateText) : undefined;
         return {
             title: item.find('h5').text().trim(),
             link: href.startsWith('http') ? href : new URL(href, BASE_URL).href,
