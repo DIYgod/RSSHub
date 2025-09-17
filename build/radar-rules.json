@@ -3438,6 +3438,17 @@
         ],
         "target": "/njuferret/blog"
       }
+    ],
+    "qwenlm": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog/",
+          "/:lang/blog/"
+        ],
+        "target": "/qwenlm/qwenlm/blog/:lang"
+      }
     ]
   },
   "agri.cn": {
