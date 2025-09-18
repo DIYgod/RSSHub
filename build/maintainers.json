@@ -7538,9 +7538,7 @@
   "/supchina/podcasts": [
     "nczitzk"
   ],
-  "/surfshark/blog/:category{.+}?": [
-    "nczitzk"
-  ],
+  "/surfshark/blog/:category{.+}?": [],
   "/sustainabilitymag/articles": [
     "mintyfrankie"
   ],
