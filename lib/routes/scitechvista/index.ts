@@ -28,7 +28,7 @@ function parseRocDate(rocDate: string | undefined): Date | undefined {
 
 export const route: Route = {
     path: '/',
-    categories: ['new-media'],
+    categories: ['government'],
     example: '/scitechvista',
     features: {
         requireConfig: false,
