@@ -37,7 +37,7 @@ export const route: Route = {
         },
     ],
     url: 'www.ganjingworld.com',
-    name: 'posts in a channel on Ganjing World',
+    name: 'posts in a channel',
     maintainers: ['yixiangli2001'],
 
     handler,

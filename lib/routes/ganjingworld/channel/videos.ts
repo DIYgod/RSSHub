@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     url: 'www.ganjingworld.com',
-    name: 'Videos in a channel on Ganjing World',
+    name: 'Videos in a channel',
     maintainers: ['yixiangli2001'],
 
     handler,
@@ -41,18 +41,17 @@ async function handler(ctx) {
     const title = parsed.data.list[0].channel.name;
     const items = parsed.data.list.map((item) => {
         const pubDate = new Date(item.time_scheduled);
-        const video_url = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
-        const poster_url = item.poster_url || '';
-        if (video_url) {
-            item.description = `<video controls src="${video_url}" style="max-width: 100%;"></video><br/>`;
+        const videoUrl = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
+        const posterUrl = item.poster_url || '';
+        if (videoUrl) {
+            item.description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>`;
         }
-        const description = poster_url ? `<p><img src="${poster_url}" alt="${item.title}" referrerpolicy="no-referrer" /></p><p>${item.description || ''}</p>` : `<p>${item.description || ''}</p>`;
 
         return {
             title: item.title,
             link: `https://www.ganjingworld.com/video/${item.id}`,
             pubDate,
-            description: description || '',
+            description: item.description,
         };
     });
 
