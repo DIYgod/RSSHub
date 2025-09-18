@@ -72,7 +72,7 @@ async function handler(ctx) {
                 title: item.title,
                 link: `https://www.ganjingworld.com/news/${item.id}`,
                 pubDate,
-                description: textWithMedia || '',
+                description: textWithMedia,
             };
         })
     );
