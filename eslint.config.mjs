@@ -238,6 +238,11 @@ unicorn.configs.recommended,
             allowModules: ['tosource'],
         }],
 
+        "n/no-unsupported-features/node-builtins": ["error", {
+            "version": ">=22.16.0",
+            "ignores": []
+        }],
+
         'prettier/prettier': 'off',
 
         'yml/quotes': ['error', {

@@ -135,12 +135,6 @@ const getImgs = (data?: Modules) => {
     if (!major) {
         return '';
     }
-    // 投稿视频
-    if (major.archive?.cover) {
-        imgUrls.push({
-            url: major.archive.cover,
-        });
-    }
     // 动态图片
     if (major.opus?.pics?.length) {
         imgUrls.push(
@@ -177,7 +171,9 @@ const getImgs = (data?: Modules) => {
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
-        imgUrls.push(major[type].cover);
+        imgUrls.push({
+            url: major[type]?.cover,
+        });
     }
     return imgUrls
         .filter(Boolean)

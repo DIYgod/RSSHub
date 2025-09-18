@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Please ensure you have read [documentation](https://docs.rsshub.app/), and provide all the information required by this template, otherwise the issue will be closed immediately.
-        Due to the anti-crawling policy implemented by certain websites, some RSS routes provided by the demo will return status code 403. This is not an issue caused by RSSHub and please do not report it.
+        Due to the anti-crawling policy implemented by certain websites, some RSS routes provided by the demo will return status code 403 or fetch failed. This is not an issue caused by RSSHub and please do not report it.
 
   - type: textarea
     id: routes
@@ -58,8 +58,8 @@ body:
       label: Deployment information
       multiple: false
       options:
-        - RSSHub demo (https://rsshub.app)
         - Self-hosted
+        - RSSHub demo (https://rsshub.app)
     validations:
       required: true
 
@@ -67,7 +67,7 @@ body:
     id: deploy-info
     attributes:
       label: Deployment information (for self-hosted)
-      description: Please provide your OS, node version and docker version(if applicable)
+      description: Please provide your OS, node version, docker version and environment variables (if applicable)
       placeholder: 'OS: Linux, Node: v10.15.3, Docker: v19.03.13'
 
   - type: textarea
