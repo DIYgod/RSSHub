@@ -16,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: 'www.ganjingworld.com/channel/1fq5chh3ajo67UNu14uAvfzOp1a80c?tab=shorts',
+    example: '/ganjingworld/channel/shorts/1fq5chh3ajo67UNu14uAvfzOp1a80c?tab=shorts',
     parameters: { id: 'Channel ID, can be found in channel url' },
     radar: [
         {
