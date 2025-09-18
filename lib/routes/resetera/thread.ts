@@ -43,45 +43,38 @@ const handler: Route['handler'] = async (ctx) => {
     const { id } = ctx.req.param(); // 例如 1076160
     const threadRoot = `${BASE}/threads/${id}/`;
 
-    // 1) 先抓首页，解析“最后一页”（多策略更稳）
+    // 1) 先抓首页，解析“最后一页”（通用方式：扫描分页链接）
     const firstHtml = await ofetch<string>(threadRoot);
     const $ = load(firstHtml);
 
     let lastPage = 1;
-
-    // 策略1：直接找“最后一页”链接
-    const lastHref = $('a.pageNav-jump--last').attr('href') || $('a.pageNav-last').attr('href') || $('link[rel="last"]').attr('href') || '';
-
-    if (lastHref) {
-        const m = lastHref.match(/page-(\d+)/);
+    $('a[href*="page-"]').each((_, a) => {
+        const h = $(a).attr('href') || '';
+        const m = h.match(/page-(\d+)/);
         if (m) {
-            lastPage = Number(m[1]);
+            lastPage = Math.max(lastPage, Number(m[1]));
         }
-    } else {
-        // 策略2：从所有分页链接取最大 page-XX
-        $('a[href*="page-"]').each((_, a) => {
-            const h = $(a).attr('href') || '';
-            const m = h.match(/page-(\d+)/);
-            if (m) {
-                lastPage = Math.max(lastPage, Number(m[1]));
-            }
-        });
-        // 策略3：兜底，从 "Page X of N" 文本推断
-        if (lastPage === 1) {
-            const txt = $('nav.pageNav').text() || '';
-            const m = txt.match(/of\s+(\d+)/i);
-            if (m) {
-                lastPage = Number(m[1]);
-            }
-        }
-    }
+    });
 
     // 最新页的 URL（供 feed.link / 回退链接使用）
     const targetUrl = lastPage === 1 ? threadRoot : `${threadRoot}page-${lastPage}`;
 
     // 2) 抓取倒数第 1、2 页并合并
     const pages = lastPage > 1 ? [lastPage - 1, lastPage] : [1];
-    const htmlList = await Promise.all(pages.map((p) => ofetch<string>(p === 1 ? threadRoot : `${threadRoot}page-${p}`)));
+    // 复用首页，避免重复请求第一页
+    const htmlMap = new Map<number, string>();
+    htmlMap.set(1, firstHtml);
+
+    const htmlList = await Promise.all(
+        pages.map(async (p) => {
+            if (p === 1) {
+                return htmlMap.get(1)!;
+            }
+            const html = await ofetch<string>(`${threadRoot}page-${p}`);
+            htmlMap.set(p, html);
+            return html;
+        })
+    );
 
     // 3) 解析两页的帖子
     const seen = new Set<string>();
@@ -192,10 +185,10 @@ const handler: Route['handler'] = async (ctx) => {
 
 export const route: Route = {
     path: '/thread/:id',
-    name: 'Thread 最新回帖（仅含文字与图片）',
+    name: 'Thread latest image posts (images only)',
     url: 'resetera.com',
     example: '/resetera/thread/1076160',
-    parameters: { id: 'ResetEra 主题的数字 ID（URL 末尾的那串）' },
+    parameters: { id: 'Numeric thread ID at the end of the URL' },
     maintainers: ['ZEN-GUO'],
     categories: ['bbs'],
     radar: [
