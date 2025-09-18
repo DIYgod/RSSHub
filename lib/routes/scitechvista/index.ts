@@ -57,7 +57,7 @@ async function handler(): Promise<Data> {
     const language: string = $('html').attr('lang') || 'zh-TW';
     const articleNodes = $('div.kf-diagramtext-list > div.kf-diagramtext-col').toArray();
 
-    const items: DataItem[] = (articleNodes
+    const items: DataItem[] = articleNodes
         .map((colEl) => {
             const node = $(colEl);
             const anchor = node.find('a[href*="/Article/C000003/detail"]').first();
@@ -88,7 +88,7 @@ async function handler(): Promise<Data> {
                 image,
             } as DataItem;
         })
-        .filter(Boolean)) as DataItem[];
+        .filter(Boolean) as DataItem[];
 
     return {
         title: `${namespace.name} - 最新文章`,
