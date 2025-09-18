@@ -80,7 +80,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: parseDate(pubDateStr),
                 link: linkUrl,
                 category: categories,
                 author: authors,
@@ -90,7 +90,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: parseDate(upDatedStr),
                 language,
             };
 
