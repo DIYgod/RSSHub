@@ -49,7 +49,7 @@ const handler = async (ctx) => {
         .map((el) => $(el))
         .filter((a) => {
             const href = (a.attr('href') || '').trim();
-            if (!href || href === '#' || href.startsWith('javascript:') || href.startsWith('mailto:')) {
+            if (!href || href === '#' || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('data:') || href.startsWith('vbscript:')) {
                 return false;
             }
             // 明确放行详情与外链
