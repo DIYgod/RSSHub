@@ -6851,6 +6851,9 @@
   "/scientificamerican/podcast/:id?": [
     "nczitzk"
   ],
+  "/scitechvista/": [
+    "johan456789"
+  ],
   "/scmp/coronavirus": [
     "DIYgod"
   ],
@@ -7538,7 +7541,9 @@
   "/supchina/podcasts": [
     "nczitzk"
   ],
-  "/surfshark/blog/:category{.+}?": [],
+  "/surfshark/blog/:category{.+}?": [
+    "nczitzk"
+  ],
   "/sustainabilitymag/articles": [
     "mintyfrankie"
   ],
