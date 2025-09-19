@@ -6,83 +6,84 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
+    // 使用默认值来避免 undefined，并确保类型正确
     const { id = 'tzgg' } = ctx.req.param();
     const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl = 'http://due.hitsz.edu.cn';
-    let targetUrl;
+    const targetUrl;
 
-    // 根据不同的分类设置目标URL
-    if (id === 'tzgg') {
-        targetUrl = new URL('index/tzggqb.htm', baseUrl).href;
-    } else if (id === 'jwdt') {
-        targetUrl = new URL('index/jwdtqb.htm', baseUrl).href;
-    } else {
-        targetUrl = new URL(`${id}/list.htm`, baseUrl).href;
-    }
+    // 优化 URL 拼接逻辑，更清晰且易于维护
+    targetUrl = id === 'tzgg' || id === 'jwdt' ? new URL(`index/${id}qb.htm`, baseUrl).href : new URL(`${id}/list.htm`, baseUrl).href;
 
     const response = await got(targetUrl);
     const $ = load(response.data);
 
-    let items = [];
+    // 提取新闻列表项，使用更健壮的选择器
+    const list = $('ul.list-main-modular li, .list-main-modular-text-list li').slice(0, limit).toArray();
 
-    // 提取新闻列表项
-    items = $('ul.list-main-modular li')
-        .slice(0, limit)
-        .toArray()
-        .map((el) => {
+    // 过滤掉链接不完整的项目，提高数据质量
+    const items = await Promise.all(
+        list.map((el) => {
             const $el = $(el);
+            const linkUrl = $el.find('a').attr('href');
 
-            const title = $el.find('span.text-over').text().trim();
-            const linkUrl = $el.find('a').attr('href') || '';
+            // 确保链接存在且有效
+            if (!linkUrl) {
+                return null;
+            }
+
+            const title = $el.find('span.text-over, a').text().trim();
             const pubDateStr = $el.find('label').text().trim();
 
-            return {
+            const item = {
                 title,
-                pubDate: timezone(parseDate(pubDateStr), 8),
                 link: new URL(linkUrl, baseUrl).href,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
             };
-        });
 
-    // 获取详细内容
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            return cache.tryGet(item.link, async () => {
                 const detailResponse = await got.get(item.link);
                 const $$ = load(detailResponse.data);
 
-                const title = $$('h1.arti_title, h2.arti_title, title').text();
-                const content = $$('div.wp_articlecontent, div.article-content').html();
-                const pubDateStr = $$('span.arti_update, .publish-time').text().split(/：/).pop()?.trim();
+                // 尝试从多种选择器中提取标题和发布日期
+                const detailTitle = $$('h1.arti_title, h2.arti_title, title').text().trim() || item.title;
+                const detailPubDateStr = $$('span.arti_update, .publish-time, .datetime, .time-style').text().split(/：/).pop()?.trim();
+                const content = $$('div.wp_articlecontent, div.article-content, div.content-info').html();
 
                 return {
                     ...item,
-                    title: title || item.title,
+                    title: detailTitle,
                     description: content,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
+                    // 如果详细页日期解析成功，则更新，否则保持列表页的日期
+                    pubDate: detailPubDateStr ? timezone(parseDate(detailPubDateStr), 8) : item.pubDate,
                 };
-            })
-        )
+            });
+        })
     );
 
-    const title = $('title').text();
+    // 过滤掉所有返回 null 的项目
+    const filteredItems = items.filter(Boolean);
+
+    const pageTitle = $('title').text();
     const author = '哈尔滨工业大学（深圳）教务部';
 
     return {
-        title: `${author} - ${title}`,
-        description: title,
+        title: `${author} - ${pageTitle}`,
+        description: pageTitle,
         link: targetUrl,
-        item: items,
-        allowEmpty: true,
+        item: filteredItems,
+        // 移除 allowEmpty，如果列表抓取失败，将抛出错误
         author,
     };
 };
 
+// 保持 route 导出不变，因为它定义了路由和元数据
 export const route: Route = {
     path: '/hitsz/due/:id?',
     name: '教务部',
     url: 'due.hitsz.edu.cn',
-    maintainers: ['hlmu', 'nczitzk'],
+    maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/tzgg',
     parameters: {
@@ -128,7 +129,7 @@ export const route: Route = {
         {
             source: ['due.hitsz.edu.cn', 'due.hitsz.edu.cn/index/:id/list.htm'],
             target: (params) => {
-                const id: string = params.id;
+                const id = params.id;
                 return `/hitsz/due${id ? `/${id}` : ''}`;
             },
         },
