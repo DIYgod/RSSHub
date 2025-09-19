@@ -219,8 +219,8 @@ importers:
         specifier: 2.5.9
         version: 2.5.9
       query-string:
-        specifier: 9.3.0
-        version: 9.3.0
+        specifier: 9.3.1
+        version: 9.3.1
       rate-limiter-flexible:
         specifier: 7.3.1
         version: 7.3.1
@@ -5164,8 +5164,8 @@ packages:
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
-  query-string@9.3.0:
-    resolution: {integrity: sha512-IQHOQ9aauHAApwAaUYifpEyLHv6fpVGVkMOnwPzcDScLjbLj8tLsILn6unSW79NafOw1llh8oK7Gd0VwmXBFmA==}
+  query-string@9.3.1:
+    resolution: {integrity: sha512-5fBfMOcDi5SA9qj5jZhWAcTtDfKF5WFdd2uD9nVNlbxVv1baq65aALy6qofpNEGELHvisjjasxQp7BlM9gvMzw==}
     engines: {node: '>=18'}
 
   querystringify@2.2.0:
@@ -9810,7 +9810,7 @@ snapshots:
       he: 1.2.0
       hmacsha1: 1.0.0
       oauth-1.0a: 2.2.6
-      query-string: 9.3.0
+      query-string: 9.3.1
 
   fast-deep-equal@3.1.3: {}
 
@@ -11431,7 +11431,7 @@ snapshots:
 
   quansync@0.2.11: {}
 
-  query-string@9.3.0:
+  query-string@9.3.1:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
