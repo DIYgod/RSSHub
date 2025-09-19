@@ -20,6 +20,7 @@ const handler = async (ctx) => {
         announcements: '公告',
         media: '媒体聚焦',
     };
+    const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
 
     const link = `${BASE_URL}${pathMap[category] ?? pathMap.news}`;
 
@@ -38,7 +39,6 @@ const handler = async (ctx) => {
             const href = a.attr('href') || '';
             const li = a.closest('li');
             const contextText = ((li && li.text()) || a.text()).trim();
-            const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
             const dateText = a.find('i').text().trim() || (li && li.find('i').text().trim()) || (li && li.find('time').text().trim()) || (contextText.match(datePattern)?.[0] ?? '');
             const pubDate: Date | undefined = dateText ? parseDate(dateText) : undefined;
             const title = a.find('h5').text().trim() || a.attr('title')?.trim() || a.text().trim() || contextText.replace(datePattern, '').trim();
@@ -111,7 +111,6 @@ const handler = async (ctx) => {
                     .filter(Boolean);
 
                 // 过滤包含"发布时间"的项与日期字符串
-                const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
                 const authors = metaTexts.filter((t) => !t.includes('发布时间')).filter((t) => !datePattern.test(t));
 
                 // 如果列表页没有解析到 pubDate，则尝试从 meta 文本中回填
