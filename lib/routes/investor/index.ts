@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     items = await Promise.all(
         items.map((item) => {
-            if (!item.link) {
+            if (!item.link || item.link.endsWith('.pdf')) {
                 return item;
             }
 
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('div.text_content_detail_title h1').text();
+                const title: string = $$('div.text_content_detail_title h1').text() ?? item.title;
                 const description: string | undefined = $$('div.trs_editor_view').html() ?? undefined;
                 const pubDateStr: string | undefined = $$('div.base_info_left span')
                     .toArray()
