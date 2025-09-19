@@ -15839,13 +15839,37 @@
     ],
     "xwxy": [
       {
-        "title": "新闻学院-学院新闻",
+        "title": "新闻学院-新闻中心",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/xwzx/xyxw",
           "/"
         ],
-        "target": "/gdufs/xwxy-news"
+        "target": "/gdufs/xwxy/news"
+      },
+      {
+        "title": "新闻学院-新闻中心",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/tzgg/tz"
+        ],
+        "target": "/gdufs/xwxy/notices"
+      },
+      {
+        "title": "新闻学院-新闻中心",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/tzgg/gg"
+        ],
+        "target": "/gdufs/xwxy/announcements"
+      },
+      {
+        "title": "新闻学院-新闻中心",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xwzx/mtjj"
+        ],
+        "target": "/gdufs/xwxy/media"
       }
     ]
   },
