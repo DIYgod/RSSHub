@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
 
 // Simple MediaWiki template parser for {{Current events}} template
 function parseCurrentEventsTemplate(wikitext: string): string | null {
@@ -176,7 +177,7 @@ async function fetchWikiRaw(pageName: string): Promise<string> {
             action: 'raw',
         },
         headers: {
-            'User-Agent': 'RSSHub/1.0 (+https://github.com/DIYgod/RSSHub)',
+            'User-Agent': config.trueUA,
         },
     });
 
