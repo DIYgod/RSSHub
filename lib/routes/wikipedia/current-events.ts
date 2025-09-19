@@ -223,7 +223,7 @@ async function handler() {
         const cacheKey = `wikipedia:current-events:${pageName}`;
 
         try {
-            const wikitext = await cache.tryGet(cacheKey, async () => await fetchWikiRaw(pageName), 60 * 60 * 6); // Cache for 6 hours
+            const wikitext = await cache.tryGet(cacheKey, async () => await fetchWikiRaw(pageName), config.cache.contentExpire);
 
             // Parse the Current events template content
             const content = parseCurrentEventsTemplate(wikitext);
