@@ -74,7 +74,7 @@ const handler = async (ctx) => {
                 if (!isInternal) {
                     return {
                         ...item,
-                        description: `${item.title}（外部链接，前往源页面查看全文）`,
+                        description: '',
                         author: '',
                     };
                 }
