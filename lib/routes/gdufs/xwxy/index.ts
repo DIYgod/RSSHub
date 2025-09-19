@@ -133,7 +133,7 @@ const handler = async (ctx) => {
                 return {
                     ...item,
                     description: content,
-                    author: authors.join(' '),
+                    author: authors.join(', '),
                     pubDate: item.pubDate || pubDateRecovered,
                 };
             })
