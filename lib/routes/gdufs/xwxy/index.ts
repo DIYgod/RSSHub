@@ -84,16 +84,8 @@ const handler = async (ctx) => {
                     throw new Error('No article body');
                 }
                 const $$ = load(articleResponse.body);
-                // 多模板回退选择器
-                const selectors = ['#vsb_content .v_news_content', '#vsb_content', '#vsb_content_2', '.v_news_content'];
-                let $content = $$(selectors[0]);
-                for (const sel of selectors) {
-                    const candidate = $$(sel);
-                    if (candidate && candidate.html() && candidate.html()!.trim().length > 0) {
-                        $content = candidate;
-                        break;
-                    }
-                }
+                // 使用 .v_news_content 选择器
+                const $content = $$('.v_news_content');
 
                 // 绝对化 img/src 与 a/href
                 $content.find('img, a').each((_, el) => {
