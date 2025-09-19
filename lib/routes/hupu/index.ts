@@ -125,9 +125,21 @@ export const route: Route = {
                             const author = content('.bbs-user-info-name, .bbs-user-wrapper-content-name-span').text();
                             const pubDateString = content('.second-line-user-info span:not([class])').text();
                             // Possible formats: 10:21, 45分钟前, 09-15 19:57
-                            const pubDate = [item.pubDate, timezone(parseDate(pubDateString), +8), timezone(parseRelativeDate(pubDateString), +8), timezone(parseRelativeDate(`Today ${pubDateString}`), +8)].find(
-                                (d) => d instanceof Date && !Number.isNaN(d.getTime())
-                            );
+                            const currentYear = new Date().getFullYear();
+                            const currentDate = new Date();
+                            const monthDayTimePattern = /^(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+                            const timeOnlyPattern = /^(\d{1,2}):(\d{2})$/;
+                            let processedDateString = pubDateString;
+
+                            if (monthDayTimePattern.test(pubDateString)) {
+                                processedDateString = `${currentYear}-${pubDateString}`;
+                            } else if (timeOnlyPattern.test(pubDateString)) {
+                                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                                const day = String(currentDate.getDate()).padStart(2, '0');
+                                processedDateString = `${currentYear}-${month}-${day} ${pubDateString}`;
+                            }
+
+                            const pubDate = [item.pubDate, timezone(parseDate(processedDateString), +8), timezone(parseRelativeDate(pubDateString), +8)].find((d) => d instanceof Date && !Number.isNaN(d.getTime()));
                             const categories = content('.basketballTobbs_tag > a, .tag-player-team')
                                 .toArray()
                                 .map((c) => content(c).text())
