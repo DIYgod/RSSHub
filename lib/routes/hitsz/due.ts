@@ -11,10 +11,9 @@ export const handler = async (ctx) => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl = 'http://due.hitsz.edu.cn';
-    const targetUrl;
 
     // 优化 URL 拼接逻辑，更清晰且易于维护
-    targetUrl = id === 'tzgg' || id === 'jwdt' ? new URL(`index/${id}qb.htm`, baseUrl).href : new URL(`${id}/list.htm`, baseUrl).href;
+    const targetUrl = id === 'tzgg' || id === 'jwdt' ? new URL(`index/${id}qb.htm`, baseUrl).href : new URL(`${id}/list.htm`, baseUrl).href;
 
     const response = await got(targetUrl);
     const $ = load(response.data);
@@ -80,7 +79,7 @@ export const handler = async (ctx) => {
 
 // 保持 route 导出不变，因为它定义了路由和元数据
 export const route: Route = {
-    path: '/hitsz/due/:id?',
+    path: '/due/:id?',
     name: '教务部',
     url: 'due.hitsz.edu.cn',
     maintainers: ['guohuiyuan'],
