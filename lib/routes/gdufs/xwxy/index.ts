@@ -28,50 +28,13 @@ const handler = async (ctx) => {
         throw new Error('No response body');
     }
     const $ = load(response.body);
-    // 列表选择器：优先正文区域
-    let list = $('section.TextList ul li a[href]');
-    if (list.length === 0) {
-        list = $('div.flex-center a.clearfix');
-    }
-    if (list.length === 0) {
-        list = $('div.flex-center a[href]');
-    }
-    if (list.length === 0) {
-        list = $('ul li a[href]');
-    }
-    if (list.length === 0) {
-        list = $('a[href]');
-    }
-
-    // 仅保留指向详情页、外部媒体或内部附件的链接
-    const anchors = list
-        .toArray()
-        .map((el) => $(el))
-        .filter((a) => {
-            const href = (a.attr('href') || '').trim();
-            if (!href || href === '#' || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('data:') || href.startsWith('vbscript:')) {
-                return false;
-            }
-            // 明确放行详情与外链
-            if (href.includes('/info/') || href.startsWith('http')) {
-                return true;
-            }
-            // 放行常见内部附件与资源路径
-            const assetLike = href.startsWith('_upload/') || href.startsWith('/_upload/') || /\.(pdf|docx?|xlsx?|pptx?|zip|rar|jpg|jpeg|png|gif|mp4|htm|html)([#?].*)?$/i.test(href);
-            if (assetLike) {
-                return true;
-            }
-            // 回退：解析为绝对 URL 后按主机名判断为本站
-            try {
-                const u = new URL(href, link);
-                return u.hostname.endsWith('gdufs.edu.cn');
-            } catch {
-                return false;
-            }
-        });
+    // 直接选择新闻列表项中的链接
+    const anchors = $('li[id^="line_u14_"] a');
 
     const items = anchors
-        .map((a) => {
+        .toArray()
+        .map((el) => {
+            const a = $(el);
             const href = a.attr('href') || '';
             const li = a.closest('li');
             const contextText = ((li && li.text()) || a.text()).trim();
