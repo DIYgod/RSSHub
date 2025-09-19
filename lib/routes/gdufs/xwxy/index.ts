@@ -41,7 +41,7 @@ const handler = async (ctx) => {
             const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
             const dateText = a.find('i').text().trim() || (li && li.find('i').text().trim()) || (li && li.find('time').text().trim()) || (contextText.match(datePattern)?.[0] ?? '');
             const pubDate: Date | undefined = dateText ? parseDate(dateText) : undefined;
-            const title = a.find('p').text().trim() || a.find('h5').text().trim() || a.attr('title')?.trim() || a.text().trim() || contextText.replace(datePattern, '').trim();
+            const title = a.find('h5').text().trim() || a.attr('title')?.trim() || a.text().trim() || contextText.replace(datePattern, '').trim();
             // 过滤无效链接
             if (!href) {
                 return null;
