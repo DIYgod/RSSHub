@@ -14,25 +14,29 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
     return templateMatch[1].trim();
 }
 
-// Wiki markup to HTML converter with proper list handling
-function wikiToHtml(wikitext: string): string {
-    let html = wikitext;
-
+function convertWikiLinks(html: string): string {
     // Convert wiki links [[Link|Text]] or [[Link]]
     html = html.replaceAll(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '<a href="https://en.wikipedia.org/wiki/$1">$2</a>');
     html = html.replaceAll(/\[\[([^\]]+)\]\]/g, '<a href="https://en.wikipedia.org/wiki/$1">$1</a>');
+    return html;
+}
 
+function convertExternalLinks(html: string): string {
     // Convert external links [URL Text] or [URL]
     html = html.replaceAll(/\[([^\s\]]+)\s+([^\]]+)\]/g, '<a href="$1">$2</a>');
     html = html.replaceAll(/\[([^\s\]]+)\]/g, '<a href="$1">$1</a>');
+    return html;
+}
 
+function convertTextFormatting(html: string): string {
     // Convert bold '''text'''
     html = html.replaceAll(/'''([^']+)'''/g, '<strong>$1</strong>');
-
     // Convert italic ''text''
     html = html.replaceAll(/''([^']+)''/g, '<em>$1</em>');
+    return html;
+}
 
-    // Split into lines for hierarchical processing
+function processLines(html: string): string {
     const lines = html.split('\n');
     const processedLines: string[] = [];
 
@@ -60,18 +64,15 @@ function wikiToHtml(wikitext: string): string {
         }
     }
 
-    // Join lines back and wrap in paragraphs
-    html = processedLines.join('\n');
+    return processedLines.join('\n');
+}
 
+function wrapListItems(html: string): string {
     // Convert consecutive <li> elements into proper <ul> structures
-    html = html.replaceAll(
-        /(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs,
-        (match) =>
-            // Simple list wrapping - this could be improved for nested lists
-            `<ul>\n${match}\n</ul>`
-    );
+    return html.replaceAll(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, (match) => `<ul>\n${match}\n</ul>`);
+}
 
-    // Handle nested lists properly by processing line by line again
+function processNestedLists(html: string): string {
     const finalLines = html.split('\n');
     const result: string[] = [];
     let currentDepth = 0;
@@ -121,8 +122,10 @@ function wikiToHtml(wikitext: string): string {
         currentDepth--;
     }
 
-    html = result.join('\n');
+    return result.join('\n');
+}
 
+function wrapInParagraphsAndCleanup(html: string): string {
     // Wrap in paragraphs and clean up
     if (!html.startsWith('<p>')) {
         html = '<p>' + html;
@@ -136,6 +139,22 @@ function wikiToHtml(wikitext: string): string {
     html = html.replaceAll(/<p>\s*<\/p>/g, '');
     html = html.replaceAll(/<p>\s*<ul>/g, '<ul>');
     html = html.replaceAll(/<\/ul>\s*<\/p>/g, '</ul>');
+
+    return html;
+}
+
+// Wiki markup to HTML converter with proper list handling
+function wikiToHtml(wikitext: string): string {
+    let html = wikitext;
+
+    // Apply transformations in order
+    html = convertWikiLinks(html);
+    html = convertExternalLinks(html);
+    html = convertTextFormatting(html);
+    html = processLines(html);
+    html = wrapListItems(html);
+    html = processNestedLists(html);
+    html = wrapInParagraphsAndCleanup(html);
 
     return html;
 }
