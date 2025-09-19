@@ -20634,6 +20634,19 @@
       }
     ]
   },
+  "huijin-inv.cn": {
+    "_name": "中央汇金投资有限责任公司",
+    "www": [
+      {
+        "title": "资讯中心",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/huijin-inv/news"
+      }
+    ]
+  },
   "hunanpea.com": {
     "_name": "湖南人事考试网",
     "rsks": [
