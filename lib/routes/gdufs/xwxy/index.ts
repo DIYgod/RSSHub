@@ -62,96 +62,88 @@ const handler = async (ctx) => {
     const enhancedItems = await Promise.all(
         limitedItems.map((item) =>
             cache.tryGet(item.link, async () => {
+                // 外部链接直接返回基础信息，避免因跨域/不同模板导致解析失败
+                let isInternal = false;
                 try {
-                    // 外部链接直接返回基础信息，避免因跨域/不同模板导致解析失败
-                    let isInternal = false;
-                    try {
-                        const u = new URL(item.link);
-                        isInternal = u.hostname.endsWith('gdufs.edu.cn');
-                    } catch {
-                        // ignore
-                    }
-
-                    if (!isInternal) {
-                        return {
-                            ...item,
-                            description: `${item.title}（外部链接，前往源页面查看全文）`,
-                            author: '',
-                        };
-                    }
-
-                    const articleResponse = await got(item.link);
-                    if (!articleResponse.body) {
-                        throw new Error('No article body');
-                    }
-                    const $$ = load(articleResponse.body);
-                    // 多模板回退选择器
-                    const selectors = ['#vsb_content .v_news_content', '#vsb_content', '#vsb_content_2', '.v_news_content'];
-                    let $content = $$(selectors[0]);
-                    for (const sel of selectors) {
-                        const candidate = $$(sel);
-                        if (candidate && candidate.html() && candidate.html()!.trim().length > 0) {
-                            $content = candidate;
-                            break;
-                        }
-                    }
-
-                    // 绝对化 img/src 与 a/href
-                    $content.find('img, a').each((_, el) => {
-                        const $el = $$(el);
-                        const attrs = ['src', 'href'];
-                        for (const attr of attrs) {
-                            const v = $el.attr(attr);
-                            if (v && !v.startsWith('http')) {
-                                try {
-                                    $el.attr(attr, new URL(v, item.link).href);
-                                } catch {
-                                    // ignore malformed url
-                                }
-                            }
-                        }
-                    });
-
-                    const content = $content.html() || '';
-                    // 提取作者/编辑等信息，并去除“发布时间”和日期
-                    const metaTexts = $$('.show01 p i')
-                        .toArray()
-                        .map((el) => $$(el).text().trim())
-                        .filter(Boolean);
-
-                    // 过滤包含“发布时间”的项与日期字符串
-                    const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
-                    const authors = metaTexts.filter((t) => !t.includes('发布时间')).filter((t) => !datePattern.test(t));
-
-                    // 如果列表页没有解析到 pubDate，则尝试从 meta 文本中回填
-                    let pubDateRecovered: string | number | Date | undefined;
-                    if (!item.pubDate) {
-                        const dateTextInMeta = metaTexts.find((t) => datePattern.test(t));
-                        if (dateTextInMeta) {
-                            const matched = dateTextInMeta.match(datePattern)?.[0];
-                            if (matched) {
-                                try {
-                                    pubDateRecovered = parseDate(matched);
-                                } catch {
-                                    // ignore parse error
-                                }
-                            }
-                        }
-                    }
-
-                    return {
-                        ...item,
-                        description: content,
-                        author: authors.join(' '),
-                        pubDate: item.pubDate || pubDateRecovered,
-                    };
+                    const u = new URL(item.link);
+                    isInternal = u.hostname.endsWith('gdufs.edu.cn');
                 } catch {
+                    // ignore malformed URL
+                }
+
+                if (!isInternal) {
                     return {
                         ...item,
-                        description: '无法获取内容',
+                        description: `${item.title}（外部链接，前往源页面查看全文）`,
                         author: '',
                     };
                 }
+
+                const articleResponse = await got(item.link);
+                if (!articleResponse.body) {
+                    throw new Error('No article body');
+                }
+                const $$ = load(articleResponse.body);
+                // 多模板回退选择器
+                const selectors = ['#vsb_content .v_news_content', '#vsb_content', '#vsb_content_2', '.v_news_content'];
+                let $content = $$(selectors[0]);
+                for (const sel of selectors) {
+                    const candidate = $$(sel);
+                    if (candidate && candidate.html() && candidate.html()!.trim().length > 0) {
+                        $content = candidate;
+                        break;
+                    }
+                }
+
+                // 绝对化 img/src 与 a/href
+                $content.find('img, a').each((_, el) => {
+                    const $el = $$(el);
+                    const attrs = ['src', 'href'];
+                    for (const attr of attrs) {
+                        const v = $el.attr(attr);
+                        if (v && !v.startsWith('http')) {
+                            try {
+                                $el.attr(attr, new URL(v, item.link).href);
+                            } catch {
+                                // ignore malformed url
+                            }
+                        }
+                    }
+                });
+
+                const content = $content.html() || '';
+                // 提取作者/编辑等信息，并去除"发布时间"和日期
+                const metaTexts = $$('.show01 p i')
+                    .toArray()
+                    .map((el) => $$(el).text().trim())
+                    .filter(Boolean);
+
+                // 过滤包含"发布时间"的项与日期字符串
+                const datePattern = /\d{4}[-/.]\d{1,2}[-/.]\d{1,2}/;
+                const authors = metaTexts.filter((t) => !t.includes('发布时间')).filter((t) => !datePattern.test(t));
+
+                // 如果列表页没有解析到 pubDate，则尝试从 meta 文本中回填
+                let pubDateRecovered: string | number | Date | undefined;
+                if (!item.pubDate) {
+                    const dateTextInMeta = metaTexts.find((t) => datePattern.test(t));
+                    if (dateTextInMeta) {
+                        const matched = dateTextInMeta.match(datePattern)?.[0];
+                        if (matched) {
+                            try {
+                                pubDateRecovered = parseDate(matched);
+                            } catch {
+                                // ignore parse error
+                            }
+                        }
+                    }
+                }
+
+                return {
+                    ...item,
+                    description: content,
+                    author: authors.join(' '),
+                    pubDate: item.pubDate || pubDateRecovered,
+                };
             })
         )
     );
