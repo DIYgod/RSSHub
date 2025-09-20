@@ -4,8 +4,22 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
+function getCurrentEventsDatePath(date: Date): string {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate(); // Not zero-padded
+
+    return `Portal:Current_events/${year}_${month}_${day}`;
+}
+
 // Simple MediaWiki template parser for {{Current events}} template
 function parseCurrentEventsTemplate(wikitext: string): string | null {
+    if (!wikitext || typeof wikitext !== 'string') {
+        return null;
+    }
+
     // Look for {{Current events|content=...}} template
     const templateMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content\s*=\s*([\s\S]*?)\}\}/);
     if (!templateMatch) {
@@ -126,20 +140,24 @@ function processNestedLists(html: string): string {
     return result.join('\n');
 }
 
-function wrapInParagraphsAndCleanup(html: string): string {
-    // Wrap in paragraphs and clean up
-    if (!html.startsWith('<p>')) {
-        html = '<p>' + html;
-    }
-    if (!html.endsWith('</p>')) {
-        html = html + '</p>';
-    }
+function stripComments(html: string): string {
+    // Remove HTML comments
+    return html.replaceAll(/<!--[\s\S]*?-->/g, '');
+}
 
+function wrapInParagraphsAndCleanup(html: string): string {
     // Clean up multiple paragraph tags and empty paragraphs
     html = html.replaceAll(/<\/p>\s*<p>/g, '</p>\n<p>');
-    html = html.replaceAll(/<p>\s*<\/p>/g, '');
     html = html.replaceAll(/<p>\s*<ul>/g, '<ul>');
     html = html.replaceAll(/<\/ul>\s*<\/p>/g, '</ul>');
+
+    // Remove any empty paragraphs (be aggressive about it)
+    html = html.replaceAll(/<p>[\s\n\r]*<\/p>/g, '');
+    html = html.replaceAll(/<p>\s*<\/p>/g, '');
+    html = html.replaceAll('<p></p>', '');
+
+    // Final cleanup - remove trailing empty paragraphs that might have been added
+    html = html.replaceAll(/<p>\s*$/g, '').replaceAll(/\s*<\/p>$/g, '');
 
     return html;
 }
@@ -156,39 +174,101 @@ function wikiToHtml(wikitext: string): string {
     html = wrapListItems(html);
     html = processNestedLists(html);
     html = wrapInParagraphsAndCleanup(html);
+    html = stripComments(html);
 
     return html;
 }
 
-function getCurrentEventsDatePath(date: Date): string {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<string, string>> {
+    const url = 'https://en.wikipedia.org/w/api.php';
+    const titles = pageNames.join('|');
+    const results: Record<string, string> = {};
 
-    const year = date.getFullYear();
-    const month = months[date.getMonth()];
-    const day = date.getDate(); // Not zero-padded
+    let continueParams: Record<string, string> = {};
 
-    return `Portal:Current_events/${year}_${month}_${day}`;
-}
+    let hasMore = true;
+    while (hasMore) {
+        const searchParams = {
+            action: 'query',
+            format: 'json',
+            titles,
+            prop: 'revisions',
+            rvprop: 'content',
+            rvslots: 'main',
+            ...continueParams,
+        };
 
-async function fetchWikiRaw(pageName: string): Promise<string> {
-    const url = `https://en.wikipedia.org/wiki/${pageName}`;
-    const response = await got(url, {
-        searchParams: {
-            action: 'raw',
-        },
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+        // eslint-disable-next-line no-await-in-loop
+        const response = await got(url, {
+            searchParams,
+            headers: {
+                'User-Agent': config.trueUA,
+            },
+        });
 
-    return response.body;
+        const data = JSON.parse(response.body);
+
+        if (data.query && data.query.pages) {
+            for (const page of Object.values(data.query.pages)) {
+                if (page.revisions && page.revisions[0] && page.revisions[0].slots && page.revisions[0].slots.main) {
+                    const wikitext = page.revisions[0].slots.main['*'];
+
+                    // Parse the Current events template content
+                    const content = parseCurrentEventsTemplate(wikitext);
+
+                    if (content) {
+                        // Convert wiki markup to HTML
+                        const html = wikiToHtml(content);
+
+                        // Use the page title as the key
+                        const pageTitle = page.title;
+                        // Convert back to the format we expect: "Portal:Current_events/2025_September_18"
+                        const normalizedTitle = pageTitle.replace(/Portal:Current events\/(\d{4}) (\w+) (\d+)/, 'Portal:Current_events/$1_$2_$3');
+                        results[normalizedTitle] = html;
+                    }
+                }
+            }
+        }
+
+        // Check for continuation
+        if (data.continue) {
+            continueParams = data.continue;
+        } else {
+            hasMore = false;
+        }
+    }
+
+    return results;
 }
 
 export const route: Route = {
-    path: '/current-events',
+    path: '/current-events/:includeToday?',
     categories: ['new-media'],
     example: '/wikipedia/current-events',
-    parameters: {},
+    parameters: {
+        includeToday: {
+            description: 'Include current day events (may be incomplete early in the day)',
+            default: 'auto',
+            options: [
+                {
+                    label: 'Auto (include after 18:00 UTC)',
+                    value: 'auto',
+                },
+                {
+                    label: 'Always include current day',
+                    value: 'always',
+                },
+                {
+                    label: 'Never include current day',
+                    value: 'never',
+                },
+                {
+                    label: 'Include after specific UTC hour (0-23)',
+                    value: '0-23',
+                },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -209,53 +289,91 @@ export const route: Route = {
     description: 'Wikipedia Portal: Current events - Latest news and events from the past 7 days',
 };
 
-async function handler() {
-    // Create array of dates for the past 7 days
+async function handler(ctx) {
+    const includeToday = ctx.req.param('includeToday') ?? 'auto';
+
+    // Determine if we should include today's events
+    const dates = determineDates(includeToday);
+
+    // Create array of page names for batch request
+    const pageNames = dates.map((date) => getCurrentEventsDatePath(date));
+    const cacheKey = 'wikipedia:current-events:batch:' + pageNames.join('|');
+
+    try {
+        // Single batch request for all pages
+        const contentMap = await cache.tryGet(cacheKey, async () => await fetchMultipleWikiContent(pageNames), config.cache.contentExpire);
+
+        // Build RSS items from the fetched content
+        const items = dates
+            .map((date) => {
+                const pageName = getCurrentEventsDatePath(date);
+                const html = contentMap[pageName];
+
+                if (html) {
+                    const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+                    return {
+                        title: `Current events: ${dateStr}`,
+                        link: `https://en.wikipedia.org/wiki/${pageName}`,
+                        description: html,
+                        pubDate: parseDate(date.toISOString()),
+                        guid: `wikipedia-current-events-${dateStr}`,
+                    };
+                }
+                return null;
+            })
+            .filter((item) => item !== null);
+
+        return {
+            title: 'Wikipedia: Portal: Current events',
+            link: 'https://en.wikipedia.org/wiki/Portal:Current_events',
+            description: 'Current events from Wikipedia - Latest news and events',
+            item: items,
+        };
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        throw new Error(`Failed to fetch Wikipedia current events: ${message}`);
+    }
+}
+function determineDates(includeToday: any) {
+    const now = new Date();
+    const currentHourUTC = now.getUTCHours();
+
+    let shouldIncludeToday = false;
+
+    switch (includeToday) {
+        case 'always':
+            shouldIncludeToday = true;
+
+            break;
+
+        case 'never':
+            shouldIncludeToday = false;
+
+            break;
+
+        case 'auto':
+            // Include after 18:00 UTC (6 PM)
+            shouldIncludeToday = currentHourUTC >= 18;
+
+            break;
+
+        default:
+            if (/^\d+$/.test(includeToday)) {
+                // Include after specific hour (0-23)
+                const targetHour = Number.parseInt(includeToday, 10);
+                if (targetHour >= 0 && targetHour <= 23) {
+                    shouldIncludeToday = currentHourUTC >= targetHour;
+                }
+            }
+    }
+
+    // Create array of dates for the past 7 days, optionally including today
+    const startOffset = shouldIncludeToday ? 0 : 1;
     const dates = Array.from({ length: 7 }, (_, i) => {
         const date = new Date();
-        date.setDate(date.getDate() - (i + 1));
+        date.setDate(date.getDate() - (i + startOffset));
         return date;
     });
-
-    // Fetch all pages in parallel to avoid await-in-loop
-    const fetchPromises = dates.map(async (date) => {
-        const pageName = getCurrentEventsDatePath(date);
-        const cacheKey = `wikipedia:current-events:${pageName}`;
-
-        try {
-            const wikitext = await cache.tryGet(cacheKey, async () => await fetchWikiRaw(pageName), config.cache.contentExpire);
-
-            // Parse the Current events template content
-            const content = parseCurrentEventsTemplate(wikitext);
-
-            if (content) {
-                // Convert wiki markup to HTML
-                const html = wikiToHtml(content);
-
-                const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
-
-                return {
-                    title: `Current events: ${dateStr}`,
-                    link: `https://en.wikipedia.org/wiki/${pageName}`,
-                    description: html,
-                    pubDate: parseDate(date.toISOString()),
-                    guid: `wikipedia-current-events-${dateStr}`,
-                };
-            }
-        } catch {
-            // Continue with other dates even if one fails
-            return null;
-        }
-        return null;
-    });
-
-    const results = await Promise.all(fetchPromises);
-    const items = results.filter((item) => item !== null);
-
-    return {
-        title: 'Wikipedia: Portal: Current events',
-        link: 'https://en.wikipedia.org/wiki/Portal:Current_events',
-        description: 'Current events from Wikipedia - Latest news and events',
-        item: items,
-    };
+    return dates;
 }
