@@ -57,7 +57,7 @@ async function handler(ctx): Promise<Data> {
             const guid = `${targetUrl}#${md5(description)}`;
 
             const item: DataItem = {
-                title,
+                title: description,
                 description,
                 pubDate,
                 guid,
