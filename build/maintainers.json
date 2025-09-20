@@ -4221,7 +4221,7 @@
   "/instructables/projects/:category?": [
     "wolfg1969"
   ],
-  "/investor/:category{.+}?": [
+  "/investor/:id{.+}?": [
     "nczitzk"
   ],
   "/iplaysoft/category/:slug": [
