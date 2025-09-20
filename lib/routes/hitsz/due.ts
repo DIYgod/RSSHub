@@ -42,9 +42,7 @@ export const handler = async (ctx) => {
 
         if (currentNumericalPageId !== null) {
             for (let i = 0; i < fetchPageCount - 1; i++) {
-                if (currentNumericalPageId <= 0) {
-                    break;
-                }
+                if (currentNumericalPageId <= 0) {break;}
                 pageUrls.push(new URL(`${baseListPath}/${currentNumericalPageId}.htm`, baseUrl).href);
                 currentNumericalPageId--;
             }
@@ -60,9 +58,7 @@ export const handler = async (ctx) => {
     const detailPromises = [];
 
     for (const response of pageResponses) {
-        if (!response) {
-            continue;
-        } // 忽略失败的请求
+        if (!response) {continue;} // 忽略失败的请求
 
         const $ = load(response.data);
         const listItemsOnPage = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
@@ -70,9 +66,7 @@ export const handler = async (ctx) => {
         for (const el of listItemsOnPage) {
             const $el = $(el);
             const linkUrl = $el.find('a').attr('href');
-            if (!linkUrl) {
-                continue;
-            }
+            if (!linkUrl) {continue;}
 
             const title = $el.find('span.text-over, a').text().trim();
             const pubDateStr = $el.find('label').text().trim();
@@ -132,7 +126,7 @@ export const route: Route = {
     path: '/due/:id?',
     name: '教务部',
     url: 'due.hitsz.edu.cn',
-    maintainers: ['hlmu', 'nczitzk'],
+    maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/tzgg',
     parameters: {
