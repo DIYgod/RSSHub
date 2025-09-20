@@ -6,30 +6,72 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
-    // 使用默认值来避免 undefined，并确保类型正确
     const { id = 'tzgg' } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const fetchPageCount = Number.parseInt(ctx.req.query('fetch_page_count') ?? '5', 10);
+    const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl = 'http://due.hitsz.edu.cn';
 
-    // 优化 URL 拼接逻辑，更清晰且易于维护
-    const targetUrl = id === 'tzgg' || id === 'jwdt' ? new URL(`index/${id}qb.htm`, baseUrl).href : new URL(`${id}/list.htm`, baseUrl).href;
+    // 根据 id 构建基础路径
+    const baseListPath = id === 'tzgg' || id === 'jwdt' ? `index/${id}qb` : id;
 
-    const response = await got(targetUrl);
-    const $ = load(response.data);
+    // --- 步骤 1: 获取所有需要抓取的页面URL ---
+    const pageUrls = [];
+    // 第一页 URL
+    pageUrls.push(new URL(`${baseListPath}.htm`, baseUrl).href);
 
-    // 提取新闻列表项，使用更健壮的选择器
-    const list = $('ul.list-main-modular li, .list-main-modular-text-list li').slice(0, limit).toArray();
+    // 获取后续页面的 URL
+    try {
+        const firstPageResponse = await got(pageUrls[0]);
+        const $ = load(firstPageResponse.data);
+        let currentNumericalPageId = null;
 
-    // 过滤掉链接不完整的项目，提高数据质量
-    const items = await Promise.all(
-        list.map((el) => {
+        $(' .fenye a, .pages a').each((_, el) => {
+            const href = $(el).attr('href');
+            if (href) {
+                const match = href.match(/\/(\d+)\.htm$/);
+                if (match && match[1]) {
+                    const pageNum = Number.parseInt(match[1], 10);
+                    if (!Number.isNaN(pageNum)) {
+                        currentNumericalPageId = pageNum;
+                        return false;
+                    }
+                }
+            }
+        });
+
+        if (currentNumericalPageId !== null) {
+            for (let i = 0; i < fetchPageCount - 1; i++) {
+                if (currentNumericalPageId <= 0) {
+                    break;
+                }
+                pageUrls.push(new URL(`${baseListPath}/${currentNumericalPageId}.htm`, baseUrl).href);
+                currentNumericalPageId--;
+            }
+        }
+    } catch {
+        // 无法获取第一页的翻页信息，只处理第一页
+    }
+
+    // --- 步骤 2: 并发抓取所有页面的列表 ---
+    const pagePromises = pageUrls.map((url) => got(url).catch(() => null));
+    const pageResponses = await Promise.all(pagePromises);
+
+    const detailPromises = [];
+
+    for (const response of pageResponses) {
+        if (!response) {
+            continue;
+        } // 忽略失败的请求
+
+        const $ = load(response.data);
+        const listItemsOnPage = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
+
+        for (const el of listItemsOnPage) {
             const $el = $(el);
             const linkUrl = $el.find('a').attr('href');
-
-            // 确保链接存在且有效
             if (!linkUrl) {
-                return null;
+                continue;
             }
 
             const title = $el.find('span.text-over, a').text().trim();
@@ -41,48 +83,56 @@ export const handler = async (ctx) => {
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
             };
 
-            return cache.tryGet(item.link, async () => {
-                const detailResponse = await got.get(item.link);
-                const $$ = load(detailResponse.data);
+            // 将所有详情页抓取任务放入一个数组
+            detailPromises.push(
+                cache.tryGet(item.link, async () => {
+                    const detailResponse = await got.get(item.link);
+                    const $$ = load(detailResponse.data);
+                    const detailTitle = $$('h1.arti_title, h2.arti_title, title').text().trim() || item.title;
+                    const detailPubDateStr = $$('span.arti_update, .publish-time, .datetime, .time-style').text().split(/：/).pop()?.trim();
+                    const content = $$('div.wp_articlecontent, div.article-content, div.content-info').html();
+                    return {
+                        ...item,
+                        title: detailTitle,
+                        description: content,
+                        pubDate: detailPubDateStr ? timezone(parseDate(detailPubDateStr), 8) : item.pubDate,
+                    };
+                })
+            );
+        }
+    }
 
-                // 尝试从多种选择器中提取标题和发布日期
-                const detailTitle = $$('h1.arti_title, h2.arti_title, title').text().trim() || item.title;
-                const detailPubDateStr = $$('span.arti_update, .publish-time, .datetime, .time-style').text().split(/：/).pop()?.trim();
-                const content = $$('div.wp_articlecontent, div.article-content, div.content-info').html();
+    // --- 步骤 3: 并发抓取所有文章的详细内容 ---
+    const allResolvedItems = (await Promise.all(detailPromises)).filter(Boolean);
 
-                return {
-                    ...item,
-                    title: detailTitle,
-                    description: content,
-                    // 如果详细页日期解析成功，则更新，否则保持列表页的日期
-                    pubDate: detailPubDateStr ? timezone(parseDate(detailPubDateStr), 8) : item.pubDate,
-                };
-            });
-        })
-    );
+    // --- 步骤 4: 对所有收集到的项目进行排序和截取 ---
+    allResolvedItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    const filteredItems = allResolvedItems.slice(0, finalLimit);
 
-    // 过滤掉所有返回 null 的项目
-    const filteredItems = items.filter(Boolean);
+    // 考虑到页面标题可能无法获取，做一下容错
+    const pageTitle = (await got(pageUrls[0])).data
+        ? load((await got(pageUrls[0])).data)('title')
+              .text()
+              .trim()
+        : '';
 
-    const pageTitle = $('title').text();
     const author = '哈尔滨工业大学（深圳）教务部';
 
     return {
         title: `${author} - ${pageTitle}`,
         description: pageTitle,
-        link: targetUrl,
+        link: pageUrls[0],
         item: filteredItems,
-        // 移除 allowEmpty，如果列表抓取失败，将抛出错误
         author,
     };
 };
 
-// 保持 route 导出不变，因为它定义了路由和元数据
+// 保持 route 定义不变，它是正确的
 export const route: Route = {
     path: '/due/:id?',
     name: '教务部',
     url: 'due.hitsz.edu.cn',
-    maintainers: ['guohuiyuan'],
+    maintainers: ['hlmu', 'nczitzk'],
     handler,
     example: '/hitsz/due/tzgg',
     parameters: {
