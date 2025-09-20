@@ -1,19 +1,17 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
-    const { id = 'tzgg' } = ctx.req.param();
     const fetchPageCount = Number.parseInt(ctx.req.query('fetch_page_count') ?? '5', 10);
-    const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
+    const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 根据 id 构建基础路径
-    const baseListPath = id === 'tzgg' ? `index/${id}qb` : id;
+    const baseListPath = `index/tzggqb`;
 
     // --- 步骤 1: 获取所有需要抓取的页面URL ---
     const pageUrls = [];
@@ -24,30 +22,25 @@ export const handler = async (ctx) => {
     try {
         const firstPageResponse = await got(pageUrls[0]);
         const $ = load(firstPageResponse.data);
-        let currentNumericalPageId = null;
 
-        $(' .fenye a, .pages a').each((_, el) => {
+        // 解析页面上的翻页链接
+        const pageLinks = new Set();
+
+        // 查找所有分页链接
+        $('.p_no a, .p_next a, .p_last a').each((_, el) => {
             const href = $(el).attr('href');
             if (href) {
-                const match = href.match(/\/(\d+)\.htm$/);
-                if (match && match[1]) {
-                    const pageNum = Number.parseInt(match[1], 10);
-                    if (!Number.isNaN(pageNum)) {
-                        currentNumericalPageId = pageNum;
-                        return false;
-                    }
-                }
+                // 确保相对路径正确转换为完整URL
+                const fullHref = href.startsWith('http') ? href : `index/${href}`;
+                const fullUrl = new URL(fullHref, baseUrl).href;
+                pageLinks.add(fullUrl);
             }
         });
 
-        if (currentNumericalPageId !== null) {
-            for (let i = 0; i < fetchPageCount - 1; i++) {
-                if (currentNumericalPageId <= 0) {
-                    break;
-                }
-                pageUrls.push(new URL(`${baseListPath}/${currentNumericalPageId}.htm`, baseUrl).href);
-                currentNumericalPageId--;
-            }
+        // 添加找到的页面链接
+        const additionalUrls = [...pageLinks];
+        for (let i = 0; i < Math.min(fetchPageCount - 1, additionalUrls.length); i++) {
+            pageUrls.push(additionalUrls[i]);
         }
     } catch {
         // 无法获取第一页的翻页信息，只处理第一页
@@ -82,24 +75,10 @@ export const handler = async (ctx) => {
                 title,
                 link: new URL(linkUrl, baseUrl).href,
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
+                description: title, // 使用标题作为描述
             };
 
-            // 将所有详情页抓取任务放入一个数组
-            detailPromises.push(
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await got.get(item.link);
-                    const $$ = load(detailResponse.data);
-                    const detailTitle = $$('h1.arti_title, h2.arti_title, title').text().trim() || item.title;
-                    const detailPubDateStr = $$('span.arti_update, .publish-time, .datetime, .time-style').text().split(/：/).pop()?.trim();
-                    const content = $$('div.wp_articlecontent, div.article-content, div.content-info').html();
-                    return {
-                        ...item,
-                        title: detailTitle,
-                        description: content,
-                        pubDate: detailPubDateStr ? timezone(parseDate(detailPubDateStr), 8) : item.pubDate,
-                    };
-                })
-            );
+            detailPromises.push(Promise.resolve(item));
         }
     }
 
