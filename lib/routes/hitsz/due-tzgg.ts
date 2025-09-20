@@ -130,7 +130,7 @@ export const route: Route = {
 订阅 [通知公告](http://due.hitsz.edu.cn/index/tzggqb.htm)，其源网址为 \`http://due.hitsz.edu.cn/index/tzggqb.htm\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/hitsz/due/tzgg\`](https://rsshub.app/hitsz/due/tzgg)。
 :::
 
-如需获取教务学务所有栏目的新闻汇总，请使用 [\`/hitsz/jwxw\`](https://rsshub.app/hitsz/jwxw) 路由。
+如需获取教务学务和学位管理所有栏目的新闻汇总，请使用 [\`/hitsz/due/general\`](https://rsshub.app/hitsz/due/general) 路由。
 
 <details>
   <summary>更多栏目</summary>

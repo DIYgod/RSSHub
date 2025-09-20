@@ -8,21 +8,40 @@ export const handler = async (ctx) => {
     const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
     const baseUrl = 'http://due.hitsz.edu.cn';
 
-    // 所有需要抓取的栏目
-    const categories = [
-        'jwxw/jwgl', // 教务管理
-        'jwxw/kwgl', // 考务管理
-        'jwxw/zcgl', // 注册管理
-        'jwxw/xkgl', // 选课管理
-        'jwxw/cjgl', // 成绩管理
-        'jwxw/xjgl_b_', // 学籍管理（本）
-        'jwxw/xjgl_y_', // 学籍管理（研）
-        'jwxw/jxxxh', // 教学信息化
-        'jwxw/jzxj', // 奖助学金
-        'xwgl/bksxw', // 本科生新闻
-        'xwgl/ssxwpy/ktyzj', // 硕士学位培养
-        'xwgl/bsxwpy/qqhj1', // 博士学位培养
-    ];
+    // 按类型分组（可直接用于 handler 中的逻辑判断）
+    const categoryGroups = {
+        // 教务核心业务（传统教务管理相关）
+        teaching: [
+            'jwxw/jwgl', // 教务管理
+            'jwxw/kwgl', // 考务管理
+            'jwxw/zcgl', // 注册管理
+            'jwxw/xkgl', // 选课管理
+            'jwxw/cjgl', // 成绩管理
+        ],
+
+        // 学籍相关（学生档案与身份管理）
+        studentStatus: [
+            'jwxw/xjgl_b_', // 学籍管理（本）
+            'jwxw/xjgl_y_', // 学籍管理（研）
+        ],
+
+        // 教学支持（辅助教学的资源与服务）
+        teachingSupport: [
+            'jwxw/jxxxh', // 教学信息化
+            'jwxw/jzxj', // 奖助学金
+        ],
+
+        // 学生培养（不同学段的培养动态）
+        education: [
+            'xwgl/bksxw', // 本科生新闻
+            'xwgl/ssxwpy/ktyzj', // 硕士学位培养
+            'xwgl/bsxwpy/qqhj1', // 博士学位培养
+        ],
+    };
+    const type = ctx.req.query('type') || 'all';
+
+    // 根据类型选择对应栏目组
+    const categories = type === 'all' ? Object.values(categoryGroups).flat() : categoryGroups[type];
 
     // 并发抓取所有栏目的第一页
     const pagePromises = categories.map((category) => {
@@ -90,7 +109,17 @@ export const route: Route = {
     maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/general',
-    description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总，包括：
+    description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总。
+
+## 栏目分组说明
+支持按业务类型筛选，使用 \`type\` 参数指定分组：
+- \`type=teaching\` - 教务核心业务：教务管理、考务管理、注册管理、选课管理、成绩管理
+- \`type=studentStatus\` - 学籍相关：本科生学籍管理、研究生学籍管理  
+- \`type=teachingSupport\` - 教学支持：教学信息化、奖助学金
+- \`type=education\` - 学生培养：本科生新闻、硕士学位培养、博士学位培养
+- \`type=all\` 或省略 - 所有栏目（默认）
+
+## 包含栏目：
 - [教务管理](http://due.hitsz.edu.cn/jwxw/jwgl.htm)
 - [考务管理](http://due.hitsz.edu.cn/jwxw/kwgl.htm)
 - [注册管理](http://due.hitsz.edu.cn/jwxw/zcgl.htm)
