@@ -1,5 +1,4 @@
 import { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -56,27 +55,10 @@ export const handler = async (ctx) => {
                 link: new URL(linkUrl, baseUrl).href,
                 pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
                 category,
+                description: title, // 使用标题作为描述
             };
 
-            articlePromises.push(
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const detailResponse = await got.get(item.link);
-                        const $$ = load(detailResponse.data);
-                        const detailTitle = $$('h1.arti_title, h2.arti_title, title').text().trim() || item.title;
-                        const detailPubDateStr = $$('span.arti_update, .publish-time, .datetime, .time-style').text().split(/：/).pop()?.trim();
-                        const content = $$('div.wp_articlecontent, div.article-content, div.content-info').html();
-                        return {
-                            ...item,
-                            title: detailTitle,
-                            description: content,
-                            pubDate: detailPubDateStr ? timezone(parseDate(detailPubDateStr), 8) : item.pubDate,
-                        };
-                    } catch {
-                        return item;
-                    }
-                })
-            );
+            articlePromises.push(Promise.resolve(item));
         }
     }
 
