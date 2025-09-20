@@ -10,20 +10,23 @@ export const handler = async (ctx) => {
 
     // 所有需要抓取的栏目
     const categories = [
-        'jwgl', // 教务管理
-        'kwgl', // 考务管理
-        'zcgl', // 注册管理
-        'xkgl', // 选课管理
-        'cjgl', // 成绩管理
-        'xjgl_b_', // 学籍管理（本）
-        'xjgl_y_', // 学籍管理（研）
-        'jxxxh', // 教学信息化
-        'jzxj', // 奖助学金
+        'jwxw/jwgl', // 教务管理
+        'jwxw/kwgl', // 考务管理
+        'jwxw/zcgl', // 注册管理
+        'jwxw/xkgl', // 选课管理
+        'jwxw/cjgl', // 成绩管理
+        'jwxw/xjgl_b_', // 学籍管理（本）
+        'jwxw/xjgl_y_', // 学籍管理（研）
+        'jwxw/jxxxh', // 教学信息化
+        'jwxw/jzxj', // 奖助学金
+        'xwgl/bksxw', // 本科生新闻
+        'xwgl/ssxwpy/ktyzj', // 硕士学位培养
+        'xwgl/bsxwpy/qqhj1', // 博士学位培养
     ];
 
     // 并发抓取所有栏目的第一页
     const pagePromises = categories.map((category) => {
-        const pageUrl = new URL(`jwxw/${category}.htm`, baseUrl).href;
+        const pageUrl = new URL(`${category}.htm`, baseUrl).href;
         return got(pageUrl).catch(() => null);
     });
 
@@ -38,7 +41,7 @@ export const handler = async (ctx) => {
 
         const category = categories[i];
         const $ = load(response.data);
-        const listItemsOnPage = $('ul.box-main-list li').toArray();
+        const listItemsOnPage = $('ul.box-main-list li, .list-main li, .list-main-modular li').toArray();
 
         for (const el of listItemsOnPage) {
             const $el = $(el);
@@ -72,8 +75,8 @@ export const handler = async (ctx) => {
         .slice(0, finalLimit);
 
     return {
-        title: '哈尔滨工业大学（深圳）教务部-教务学务-所有栏目新闻汇总',
-        description: '哈尔滨工业大学（深圳）教务部中教务学务所有栏目的最新新闻汇总',
+        title: '哈尔滨工业大学（深圳）教务部-教务学务与学位管理-所有栏目新闻汇总',
+        description: '哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总，包括教务管理、考务管理、注册管理、选课管理、成绩管理、学籍管理、教学信息化、奖助学金、本科生新闻、硕士学位培养、博士学位培养等',
         link: 'http://due.hitsz.edu.cn/jwxw/jwgl.htm',
         item: filteredItems,
         author: '哈尔滨工业大学（深圳）教务部',
@@ -81,13 +84,13 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/due/jwxw',
-    name: '教务部教务学务所有栏目',
+    path: '/due/general',
+    name: '教务部教务学务与学位管理所有栏目',
     url: 'due.hitsz.edu.cn',
     maintainers: ['guohuiyuan'],
     handler,
-    example: '/hitsz/due/jwxw',
-    description: `哈尔滨工业大学（深圳）教务部中教务学务所有栏目的最新新闻汇总，包括：
+    example: '/hitsz/due/general',
+    description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总，包括：
 - [教务管理](http://due.hitsz.edu.cn/jwxw/jwgl.htm)
 - [考务管理](http://due.hitsz.edu.cn/jwxw/kwgl.htm)
 - [注册管理](http://due.hitsz.edu.cn/jwxw/zcgl.htm)
@@ -96,7 +99,10 @@ export const route: Route = {
 - [学籍管理（本）](http://due.hitsz.edu.cn/jwxw/xjgl_b_.htm)
 - [学籍管理（研）](http://due.hitsz.edu.cn/jwxw/xjgl_y_.htm)
 - [教学信息化](http://due.hitsz.edu.cn/jwxw/jxxxh.htm)
-- [奖助学金](http://due.hitsz.edu.cn/jwxw/jzxj.htm)`,
+- [奖助学金](http://due.hitsz.edu.cn/jwxw/jzxj.htm)
+- [本科生新闻](http://due.hitsz.edu.cn/xwgl/bksxw.htm)
+- [硕士学位培养](http://due.hitsz.edu.cn/xwgl/ssxwpy/ktyzj.htm)
+- [博士学位培养](http://due.hitsz.edu.cn/xwgl/bsxwpy/qqhj1.htm)`,
     categories: ['university'],
     features: {
         requireConfig: false,
@@ -110,7 +116,7 @@ export const route: Route = {
     radar: [
         {
             source: ['due.hitsz.edu.cn/jwxw/jwgl.htm'],
-            target: '/hitsz/jwxw',
+            target: '/hitsz/due/general',
         },
     ],
 };
