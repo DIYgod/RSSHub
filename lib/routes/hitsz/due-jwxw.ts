@@ -81,12 +81,12 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/jwxw',
+    path: '/due/jwxw',
     name: '教务部教务学务所有栏目',
     url: 'due.hitsz.edu.cn',
     maintainers: ['guohuiyuan'],
     handler,
-    example: '/hitsz/jwxw',
+    example: '/hitsz/due/jwxw',
     description: `哈尔滨工业大学（深圳）教务部中教务学务所有栏目的最新新闻汇总，包括：
 - [教务管理](http://due.hitsz.edu.cn/jwxw/jwgl.htm)
 - [考务管理](http://due.hitsz.edu.cn/jwxw/kwgl.htm)

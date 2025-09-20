@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 根据 id 构建基础路径
-    const baseListPath = id === 'tzgg' || id === 'jwdt' ? `index/${id}qb` : id;
+    const baseListPath = id === 'tzgg' ? `index/${id}qb` : id;
 
     // --- 步骤 1: 获取所有需要抓取的页面URL ---
     const pageUrls = [];
@@ -130,7 +130,7 @@ export const handler = async (ctx) => {
 
 // 保持 route 定义不变，它是正确的
 export const route: Route = {
-    path: '/due/:id?',
+    path: '/due/tzgg',
     name: '教务部',
     url: 'due.hitsz.edu.cn',
     maintainers: ['guohuiyuan'],
@@ -143,10 +143,6 @@ export const route: Route = {
                 {
                     label: '通知公告',
                     value: 'tzgg',
-                },
-                {
-                    label: '教务动态',
-                    value: 'jwdt',
                 },
             ],
         },
@@ -163,7 +159,6 @@ export const route: Route = {
 | 栏目 | ID |
 | - | - |
 | [通知公告](http://due.hitsz.edu.cn/index/tzggqb.htm) | [tzgg](https://rsshub.app/hitsz/due/tzgg) |
-| [教务动态](http://due.hitsz.edu.cn/index/jwdtqb.htm) | [jwdt](https://rsshub.app/hitsz/due/jwdt) |
 
 </details>
 `,
@@ -189,11 +184,6 @@ export const route: Route = {
             title: '通知公告',
             source: ['due.hitsz.edu.cn/index/tzggqb.htm'],
             target: '/hitsz/due/tzgg',
-        },
-        {
-            title: '教务动态',
-            source: ['due.hitsz.edu.cn/index/jwdtqb.htm'],
-            target: '/hitsz/due/jwdt',
         },
     ],
 };
