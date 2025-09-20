@@ -13,7 +13,15 @@ export const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 根据 id 构建基础路径
-    const baseListPath = id === 'tzgg' || id === 'jwdt' ? `index/${id}qb` : id;
+    let baseListPath;
+    if (id === 'tzgg' || id === 'jwdt') {
+        baseListPath = `index/${id}qb`;
+    } else if (id === 'jwgl_tzgg' || id === 'jwgl_bszn' || id === 'jwgl_glgd' || id === 'jwgl_xgxz') {
+        // 教务管理相关栏目
+        baseListPath = `jwxw/jwgl/${id.replace('jwgl_', '')}1`;
+    } else {
+        baseListPath = id;
+    }
 
     // --- 步骤 1: 获取所有需要抓取的页面URL ---
     const pageUrls = [];
@@ -42,7 +50,9 @@ export const handler = async (ctx) => {
 
         if (currentNumericalPageId !== null) {
             for (let i = 0; i < fetchPageCount - 1; i++) {
-                if (currentNumericalPageId <= 0) {break;}
+                if (currentNumericalPageId <= 0) {
+                    break;
+                }
                 pageUrls.push(new URL(`${baseListPath}/${currentNumericalPageId}.htm`, baseUrl).href);
                 currentNumericalPageId--;
             }
@@ -58,15 +68,20 @@ export const handler = async (ctx) => {
     const detailPromises = [];
 
     for (const response of pageResponses) {
-        if (!response) {continue;} // 忽略失败的请求
+        if (!response) {
+            continue;
+        } // 忽略失败的请求
 
         const $ = load(response.data);
-        const listItemsOnPage = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
+        // 根据页面类型使用不同的选择器
+        const listItemsOnPage = id.startsWith('jwgl_') ? $('ul.list-main li').toArray() : $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
 
         for (const el of listItemsOnPage) {
             const $el = $(el);
             const linkUrl = $el.find('a').attr('href');
-            if (!linkUrl) {continue;}
+            if (!linkUrl) {
+                continue;
+            }
 
             const title = $el.find('span.text-over, a').text().trim();
             const pubDateStr = $el.find('label').text().trim();
@@ -141,6 +156,22 @@ export const route: Route = {
                     label: '教务动态',
                     value: 'jwdt',
                 },
+                {
+                    label: '教务管理-通知公告',
+                    value: 'jwgl_tzgg',
+                },
+                {
+                    label: '教务管理-办事指南',
+                    value: 'jwgl_bszn',
+                },
+                {
+                    label: '教务管理-管理规定',
+                    value: 'jwgl_glgd',
+                },
+                {
+                    label: '教务管理-相关下载',
+                    value: 'jwgl_xgxz',
+                },
             ],
         },
     },
@@ -155,6 +186,10 @@ export const route: Route = {
 | - | - |
 | [通知公告](http://due.hitsz.edu.cn/index/tzggqb.htm) | [tzgg](https://rsshub.app/hitsz/due/tzgg) |
 | [教务动态](http://due.hitsz.edu.cn/index/jwdtqb.htm) | [jwdt](https://rsshub.app/hitsz/due/jwdt) |
+| [教务管理-通知公告](http://due.hitsz.edu.cn/jwxw/jwgl/tzgg1.htm) | [jwgl_tzgg](https://rsshub.app/hitsz/due/jwgl_tzgg) |
+| [教务管理-办事指南](http://due.hitsz.edu.cn/jwxw/jwgl/bszn1.htm) | [jwgl_bszn](https://rsshub.app/hitsz/due/jwgl_bszn) |
+| [教务管理-管理规定](http://due.hitsz.edu.cn/jwxw/jwgl/glgd1.htm) | [jwgl_glgd](https://rsshub.app/hitsz/due/jwgl_glgd) |
+| [教务管理-相关下载](http://due.hitsz.edu.cn/jwxw/jwgl/xgxz1.htm) | [jwgl_xgxz](https://rsshub.app/hitsz/due/jwgl_xgxz) |
 
 </details>
 `,
@@ -185,6 +220,26 @@ export const route: Route = {
             title: '教务动态',
             source: ['due.hitsz.edu.cn/index/jwdtqb.htm'],
             target: '/hitsz/due/jwdt',
+        },
+        {
+            title: '教务管理-通知公告',
+            source: ['due.hitsz.edu.cn/jwxw/jwgl/tzgg1.htm'],
+            target: '/hitsz/due/jwgl_tzgg',
+        },
+        {
+            title: '教务管理-办事指南',
+            source: ['due.hitsz.edu.cn/jwxw/jwgl/bszn1.htm'],
+            target: '/hitsz/due/jwgl_bszn',
+        },
+        {
+            title: '教务管理-管理规定',
+            source: ['due.hitsz.edu.cn/jwxw/jwgl/glgd1.htm'],
+            target: '/hitsz/due/jwgl_glgd',
+        },
+        {
+            title: '教务管理-相关下载',
+            source: ['due.hitsz.edu.cn/jwxw/jwgl/xgxz1.htm'],
+            target: '/hitsz/due/jwgl_xgxz',
         },
     ],
 };
