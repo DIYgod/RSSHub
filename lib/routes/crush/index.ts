@@ -12,7 +12,7 @@ export const route: Route = {
     name: '匿名投稿頁面',
     url: 'www.crush.ninja',
     maintainers: ['Tsuyumi25'],
-    example: '/crushninja/pages/141719909033861',
+    example: '/crush/pages/141719909033861',
     parameters: {
         id: {
             description: '頁面 ID 或代稱，例如 `141719909033861` 或 `awkward87poland`',
