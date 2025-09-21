@@ -19851,16 +19851,6 @@
         "target": "/hit/hitgs/17549"
       }
     ],
-    "jwc": [
-      {
-        "title": "教务处通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/*"
-        ],
-        "target": "/hit/jwc"
-      }
-    ],
     "today": [
       {
         "title": "今日哈工大",
