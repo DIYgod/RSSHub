@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 async function getNoticeList(ctx, url, host, titleSelector, dateSelector, contentSelector) {
-    const response = await ofetch(url, { rejectUnauthorized: false }).catch(() => null);
+    const response = await ofetch(url, { rejectUnauthorized: false });
     if (!response) {
         return [];
     }
@@ -32,7 +32,7 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
                         description: '该通知无法直接预览，请点击原文链接↑查看',
                     };
                 }
-                const response = await ofetch(item.link, { rejectUnauthorized: false }).catch(() => null);
+                const response = await ofetch(item.link, { rejectUnauthorized: false });
                 if (!response || (response.status >= 300 && response.status < 400)) {
                     item.description = '该通知无法直接预览，请点击原文链接↑查看';
                 } else {

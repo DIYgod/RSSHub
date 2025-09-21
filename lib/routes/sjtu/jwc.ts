@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 const urlRoot = 'https://jwc.sjtu.edu.cn';
 
 async function getFullArticle(link) {
-    const response = await got(link).catch(() => null);
+    const response = await got(link);
     if (!response) {
         return null;
     }

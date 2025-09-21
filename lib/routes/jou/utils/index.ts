@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleClass, timeStyleClass2) {
-    const response = await ofetch(url).catch(() => null);
+    const response = await ofetch(url);
     if (!response) {
         return [];
     }
@@ -29,7 +29,7 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link).catch(() => null);
+                const response = await ofetch(item.link);
                 if (!response || (response.status >= 300 && response.status < 400)) {
                     // 响应为空或状态码表明发生了重定向
                     return {

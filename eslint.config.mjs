@@ -101,6 +101,9 @@ unicorn.configs.recommended,
         }, {
             selector: "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
             message: "Please use .toArray() before .map().",
+        }, {
+            selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.value=null]',
+            message: "Usage of .catch(() => null) is not allowed. Please handle the error appropriately."
         }],
 
         'no-unneeded-ternary': 'error',
