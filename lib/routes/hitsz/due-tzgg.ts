@@ -18,10 +18,15 @@ export const handler = async (ctx) => {
     // 第一页 URL
     pageUrls.push(new URL(`${baseListPath}.htm`, baseUrl).href);
 
-    let firstPageResponse; // 新增：存储第一页响应，避免后续重复请求
+    // 1. 修复：显式初始化变量为 null，指定类型（避免隐式 undefined）
+    let firstPageResponse: Awaited<ReturnType<typeof got>> | null = null;
     // 获取后续页面的 URL
     try {
-        firstPageResponse = await got(pageUrls[0]); // 修改：将响应存入变量，用于后续复用
+        firstPageResponse = await got(pageUrls[0]);
+        // 2. 修复：首次访问 data 前增加空值检查（核心防错逻辑）
+        if (!firstPageResponse) {
+            throw new Error('Failed to get valid response for first page');
+        }
         const $ = load(firstPageResponse.data);
 
         // 解析页面上的翻页链接
@@ -44,7 +49,7 @@ export const handler = async (ctx) => {
             pageUrls.push(additionalUrls[i]);
         }
     } catch {
-        // 无法获取第一页的翻页信息，只处理第一页
+        // 捕获错误时，firstPageResponse 保持为 null（无需额外赋值）
     }
 
     // --- 步骤 2: 并发抓取所有页面的列表 ---
@@ -67,7 +72,9 @@ export const handler = async (ctx) => {
             .map((el) => {
                 const $el = $(el);
                 const linkUrl = $el.find('a').attr('href');
-                if (!linkUrl) {return null;} // 过滤无链接项
+                if (!linkUrl) {
+                    return null;
+                } // 过滤无链接项
 
                 const title = $el.find('span.text-over, a').text().trim();
                 const pubDateStr = $el.find('label').text().trim();
@@ -93,7 +100,8 @@ export const handler = async (ctx) => {
 
     // 考虑到页面标题可能无法获取，做一下容错
     // 修改：复用 firstPageResponse，避免重复请求（性能优化）
-    const pageTitle = firstPageResponse ? load(firstPageResponse.data)('title').text().trim() : '';
+    // 保留原空值检查，补充默认标题（更友好）
+    const pageTitle = firstPageResponse ? load(firstPageResponse.data)('title').text().trim() : '哈尔滨工业大学（深圳）教务部通知公告';
 
     const author = '哈尔滨工业大学（深圳）教务部';
 
