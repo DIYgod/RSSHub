@@ -42149,6 +42149,19 @@
       }
     ]
   },
+  "wikipedia.org": {
+    "_name": "Wikipedia",
+    "en": [
+      {
+        "title": "Current Events",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/wiki/Portal:Current_events"
+        ],
+        "target": "/wikipedia/wikipedia/current-events"
+      }
+    ]
+  },
   "windsurf.com": {
     "_name": "Windsurf",
     ".": [
