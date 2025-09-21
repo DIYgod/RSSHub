@@ -38,10 +38,14 @@ export const handler = async (ctx) => {
             'xwgl/bsxwpy/qqhj1', // 博士学位培养
         ],
     };
-    const type = ctx.req.query('type') || 'all';
+
+    // 修改：将 query 参数改为 path 参数（PR评论要求：Use path parameter instead of search query）
+    const { type = 'all' } = ctx.req.param(); // 从路径参数获取，默认值 'all'
+    const validTypes = Object.keys(categoryGroups);
+    const validType = validTypes.includes(type) ? type : 'all'; // 容错：无效类型默认走 all
 
     // 根据类型选择对应栏目组
-    const categories = type === 'all' ? Object.values(categoryGroups).flat() : categoryGroups[type];
+    const categories = validType === 'all' ? Object.values(categoryGroups).flat() : categoryGroups[validType];
 
     // 并发抓取所有栏目的第一页
     const pagePromises = categories.map((category) => {
@@ -62,26 +66,27 @@ export const handler = async (ctx) => {
         const $ = load(response.data);
         const listItemsOnPage = $('ul.box-main-list li, .list-main li, .list-main-modular li').toArray();
 
-        for (const el of listItemsOnPage) {
-            const $el = $(el);
-            const linkUrl = $el.find('a').attr('href');
-            if (!linkUrl) {
-                continue;
-            }
+        // 修改：将 for 循环 push 改为 map 生成数组（PR评论要求：Use map instead of push）
+        const categoryItems = listItemsOnPage
+            .map((el) => {
+                const $el = $(el);
+                const linkUrl = $el.find('a').attr('href');
+                if (!linkUrl) {return null;} // 过滤无链接项
 
-            const title = $el.find('span.text-over, a').text().trim();
-            const pubDateStr = $el.find('label').text().trim();
+                const title = $el.find('span.text-over, a').text().trim();
+                const pubDateStr = $el.find('label').text().trim();
 
-            const item = {
-                title,
-                link: new URL(linkUrl, baseUrl).href,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
-                category,
-                description: title, // 使用标题作为描述
-            };
+                return {
+                    title,
+                    link: new URL(linkUrl, baseUrl).href,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
+                    category,
+                    description: title, // 使用标题作为描述
+                };
+            })
+            .filter(Boolean); // 过滤 null 项
 
-            articlePromises.push(Promise.resolve(item));
-        }
+        articlePromises.push(...categoryItems); // 展开数组添加到承诺列表
     }
 
     // 获取所有文章详情
@@ -103,23 +108,25 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/due/general',
+    // 修改：path 增加可选参数 :type?（适配路径参数逻辑）
+    path: '/due/general/:type?',
     name: '教务部教务学务与学位管理所有栏目',
     url: 'due.hitsz.edu.cn',
     maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/general',
+    // 修改：Markdown 二级标题##降级为四级标题####（PR评论要求：Do not use level 2 heading）
     description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总。
 
-## 栏目分组说明
-支持按业务类型筛选，使用 \`type\` 参数指定分组：
+#### 栏目分组说明
+支持按业务类型筛选，使用路径参数指定分组：
 - \`type=teaching\` - 教务核心业务：教务管理、考务管理、注册管理、选课管理、成绩管理
-- \`type=studentStatus\` - 学籍相关：本科生学籍管理、研究生学籍管理  
+- \`type=studentStatus\` - 学籍相关：本科生学籍管理、研究生学籍管理
 - \`type=teachingSupport\` - 教学支持：教学信息化、奖助学金
 - \`type=education\` - 学生培养：本科生新闻、硕士学位培养、博士学位培养
 - \`type=all\` 或省略 - 所有栏目（默认）
 
-## 包含栏目：
+#### 包含栏目：
 - [教务管理](http://due.hitsz.edu.cn/jwxw/jwgl.htm)
 - [考务管理](http://due.hitsz.edu.cn/jwxw/kwgl.htm)
 - [注册管理](http://due.hitsz.edu.cn/jwxw/zcgl.htm)

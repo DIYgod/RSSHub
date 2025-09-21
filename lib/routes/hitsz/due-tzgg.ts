@@ -18,9 +18,10 @@ export const handler = async (ctx) => {
     // 第一页 URL
     pageUrls.push(new URL(`${baseListPath}.htm`, baseUrl).href);
 
+    let firstPageResponse; // 新增：存储第一页响应，避免后续重复请求
     // 获取后续页面的 URL
     try {
-        const firstPageResponse = await got(pageUrls[0]);
+        firstPageResponse = await got(pageUrls[0]); // 修改：将响应存入变量，用于后续复用
         const $ = load(firstPageResponse.data);
 
         // 解析页面上的翻页链接
@@ -61,25 +62,26 @@ export const handler = async (ctx) => {
         // 使用原来的选择器
         const listItemsOnPage = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
 
-        for (const el of listItemsOnPage) {
-            const $el = $(el);
-            const linkUrl = $el.find('a').attr('href');
-            if (!linkUrl) {
-                continue;
-            }
+        // 修改：将 for 循环 push 改为 map 生成数组（PR评论要求：Use map instead of push）
+        const pageItems = listItemsOnPage
+            .map((el) => {
+                const $el = $(el);
+                const linkUrl = $el.find('a').attr('href');
+                if (!linkUrl) {return null;} // 过滤无链接项
 
-            const title = $el.find('span.text-over, a').text().trim();
-            const pubDateStr = $el.find('label').text().trim();
+                const title = $el.find('span.text-over, a').text().trim();
+                const pubDateStr = $el.find('label').text().trim();
 
-            const item = {
-                title,
-                link: new URL(linkUrl, baseUrl).href,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
-                description: title, // 使用标题作为描述
-            };
+                return {
+                    title,
+                    link: new URL(linkUrl, baseUrl).href,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : null,
+                    description: title, // 使用标题作为描述
+                };
+            })
+            .filter(Boolean); // 过滤 null 项
 
-            detailPromises.push(Promise.resolve(item));
-        }
+        detailPromises.push(...pageItems); // 展开数组添加到承诺列表
     }
 
     // --- 步骤 3: 并发抓取所有文章的详细内容 ---
@@ -90,11 +92,8 @@ export const handler = async (ctx) => {
     const filteredItems = allResolvedItems.slice(0, finalLimit);
 
     // 考虑到页面标题可能无法获取，做一下容错
-    const pageTitle = (await got(pageUrls[0])).data
-        ? load((await got(pageUrls[0])).data)('title')
-              .text()
-              .trim()
-        : '';
+    // 修改：复用 firstPageResponse，避免重复请求（性能优化）
+    const pageTitle = firstPageResponse ? load(firstPageResponse.data)('title').text().trim() : '';
 
     const author = '哈尔滨工业大学（深圳）教务部';
 
@@ -107,7 +106,7 @@ export const handler = async (ctx) => {
     };
 };
 
-// 保持 route 定义不变，它是正确的
+// 保持 route 定义不变，它是正确的（仅修改参数相关问题）
 export const route: Route = {
     path: '/due/tzgg',
     name: '教务部',
@@ -115,25 +114,15 @@ export const route: Route = {
     maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/tzgg',
-    parameters: {
-        category: {
-            description: '分类，默认为 `tzgg`，即通知公告，可在对应分类页 URL 中找到',
-            options: [
-                {
-                    label: '通知公告',
-                    value: 'tzgg',
-                },
-            ],
-        },
-    },
+    // 修改：删除无效的 category 参数（PR评论指出：path无参数占位符，参数定义无效）
+    parameters: {},
     description: `:::tip
 订阅 [通知公告](http://due.hitsz.edu.cn/index/tzggqb.htm)，其源网址为 \`http://due.hitsz.edu.cn/index/tzggqb.htm\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/hitsz/due/tzgg\`](https://rsshub.app/hitsz/due/tzgg)。
 :::
-
 如需获取教务学务和学位管理所有栏目的新闻汇总，请使用 [\`/hitsz/due/general\`](https://rsshub.app/hitsz/due/general) 路由。
 
 <details>
-  <summary>更多栏目</summary>
+<summary>更多栏目</summary>
 
 | 栏目 | ID |
 | - | - |
