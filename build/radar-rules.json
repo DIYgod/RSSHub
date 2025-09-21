@@ -12119,6 +12119,19 @@
       }
     ]
   },
+  "crush.ninja": {
+    "_name": "CrushNinja",
+    "www": [
+      {
+        "title": "匿名投稿頁面",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:locale/pages/:id"
+        ],
+        "target": "/crush/pages/:id"
+      }
+    ]
+  },
   "cryptoslate.com": {
     "_name": "CryptoSlate",
     ".": [
