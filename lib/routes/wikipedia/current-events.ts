@@ -4,6 +4,36 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
+/* The different ways to query Wikipedia's Current Events
+
+User-facing pages. Can call them with ?action=render to only get the html of the content
+  1. portal: `https://en.wikipedia.org/wiki/Portal:Current_events`
+  2. single day: `https://en.wikipedia.org/w/index.php?title=Portal:Current_events/2025_September_20`
+  3. section that is included in the portal, 7 most recent days: `https://en.wikipedia.org/wiki/Portal:Current_events/Inclusion`
+
+API at `https://en.wikipedia.org/w/api.php`. Can target:
+  4. multiple pages, result in wikitext, may have continuation with:
+     `action=query&format=json&prop=revisions&rvprop=content&rvslots=main&titles=${page1|page2|...}`,
+  5. a single page, result in html with:
+     `action=parse&format=json&page=${page}` (with page being a page link) or
+     `https://en.wikipedia.org/w/api.php?action=parse&format=json&contentmodel=wikitext&text={{wikitext}}` (wikitext is a wikitext expression)
+  6. multiple pages, result in html, will have continuation for more than 1 page with (note rvparse is obsolete):
+     `action=query&format=json&rvprop=content&rvparse=true${page1|page2|...}`
+
+Notes:
+  7. combining 5. and 3. as `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=Portal:Current_events/Inclusion`
+     seems good but doesn't let exclude the most recent day if too early
+  8. combining 5. and 4. as `https://en.wikipedia.org/w/api.php?action=parse&format=json&contentmodel=wikitext&text={{Portal:Current events/Inclusion|2025|09|20}}`
+     variant that fix the above
+
+  - the rendered html still need some processing:
+    - for inclusion pages, split in separate days
+    - extract the significant div of each day
+    - strip css and possibly class/id
+  - if the result is in wikitext, it needs to be converted to html
+
+4. is the fastest and current implementation. */
+
 function getCurrentEventsDatePath(date: Date): string {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -51,7 +81,7 @@ function convertTextFormatting(html: string): string {
     return html;
 }
 
-function processLines(html: string): string {
+function processListsAndLines(html: string): string {
     const lines = html.split('\n');
     const processedLines: string[] = [];
 
@@ -79,7 +109,11 @@ function processLines(html: string): string {
         }
     }
 
-    return processedLines.join('\n');
+    let results = processedLines.join('\n');
+
+    // Process lists
+    results = wrapListItems(results);
+    return processNestedLists(results);
 }
 
 function wrapListItems(html: string): string {
@@ -137,7 +171,7 @@ function processNestedLists(html: string): string {
         currentDepth--;
     }
 
-    return result.join('\n');
+    return result.join('');
 }
 
 function stripComments(html: string): string {
@@ -170,9 +204,7 @@ function wikiToHtml(wikitext: string): string {
     html = convertWikiLinks(html);
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);
-    html = processLines(html);
-    html = wrapListItems(html);
-    html = processNestedLists(html);
+    html = processListsAndLines(html);
     html = wrapInParagraphsAndCleanup(html);
     html = stripComments(html);
 
