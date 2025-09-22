@@ -25,19 +25,19 @@ export const handler = async (ctx) => {
     // 获取后续页面的 URL
     try {
         firstPageResponse = await got(pageUrls[0]);
-        $firstPage = load(firstPageResponse.data); // 仅加载一次
         // 2. 修复：首次访问 data 前增加空值检查（核心防错逻辑）
         if (!firstPageResponse) {
             throw new Error('Failed to get valid response for first page');
         }
+        $firstPage = load(firstPageResponse.data); // 仅加载一次
 
         // 解析页面上的翻页链接
         const pageLinks = new Set();
 
         // 查找所有分页链接
         $firstPage('.p_no a, .p_next a, .p_last a').each((_, el) => {
-            // 复用$firstPage
-            const href = $firstPage!(el).attr('href');
+            // 复用$firstPage - 使用可选链操作符避免null检查问题
+            const href = $firstPage?.(el).attr('href');
             if (href) {
                 // 确保相对路径正确转换为完整URL
                 const fullHref = href.startsWith('http') ? href : `index/${href}`;
