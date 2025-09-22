@@ -4,7 +4,6 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import randUserAgent from '@/utils/rand-user-agent';
 import { art } from '@/utils/render';
 import path from 'node:path';
 
@@ -90,9 +89,7 @@ async function handler(ctx) {
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
 
-    const ua = randUserAgent({ browser: 'chrome', os: 'windows', device: 'desktop' });
     const browserHeaders = {
-        'User-Agent': ua,
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         Referer: 'https://www.reuters.com/',

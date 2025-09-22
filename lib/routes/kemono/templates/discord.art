@@ -4,7 +4,7 @@
 
 {{ if i.attachments }}
     {{ each i.attachments a }}
-        <img src="{{ a.path }}">
+        <img src="https://img.kemono.cr/thumbnail/data{{ a.path }}">
     {{ /each }}
 {{ /if }}
 

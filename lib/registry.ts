@@ -14,16 +14,34 @@ import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
 
+function isSafeRoutes(routes: RoutesType): boolean {
+    return Object.values(routes).every((route: Route) => !route.features?.nsfw);
+}
+
+function safeNamespaces(namespaces: NamespacesType): NamespacesType {
+    const safe: NamespacesType = {};
+
+    for (const [key, value] of Object.entries(namespaces)) {
+        if (value.routes === null || value.routes === undefined || isSafeRoutes(value.routes)) {
+            safe[key] = value;
+        }
+    }
+    return safe;
+}
+
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
-let namespaces: Record<
+
+type RoutesType = Record<
+    string,
+    Route & {
+        location: string;
+    }
+>;
+
+export type NamespacesType = Record<
     string,
     Namespace & {
-        routes: Record<
-            string,
-            Route & {
-                location: string;
-            }
-        >;
+        routes: RoutesType;
         apiRoutes: Record<
             string,
             APIRoute & {
@@ -31,21 +49,31 @@ let namespaces: Record<
             }
         >;
     }
-> = {};
+>;
 
-switch (process.env.NODE_ENV) {
+let namespaces: NamespacesType = {};
+
+switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
     case 'production':
         namespaces = (await import('../assets/build/routes.js')).default;
         break;
     case 'test':
         // @ts-expect-error
         namespaces = await import('../assets/build/routes.json');
+        if (namespaces.default) {
+            // @ts-ignore
+            namespaces = namespaces.default;
+        }
         break;
     default:
         modules = directoryImport({
             targetDirectoryPath: path.join(__dirname, './routes'),
             importPattern: /\.ts$/,
         }) as typeof modules;
+}
+
+if (config.feature.disable_nsfw) {
+    namespaces = safeNamespaces(namespaces);
 }
 
 if (Object.keys(modules).length) {
@@ -127,7 +155,7 @@ const sortRoutes = (
         }
     >
 ) =>
-    Object.entries(routes).sort(([pathA], [pathB]) => {
+    Object.entries(routes).toSorted(([pathA], [pathB]) => {
         const segmentsA = pathA.split('/');
         const segmentsB = pathB.split('/');
         const lenA = segmentsA.length;
@@ -170,7 +198,11 @@ for (const namespace in namespaces) {
                         routeData.handler = route.handler;
                     }
                 }
-                ctx.set('data', await routeData.handler(ctx));
+                const response = await routeData.handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
             }
         };
         subApp.get(path, wrappedHandler);
@@ -223,7 +255,7 @@ if (config.debugInfo) {
 app.use(
     '/*',
     serveStatic({
-        root: './lib/assets',
+        root: path.join(__dirname, 'assets'),
         rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
     })
 );

@@ -76,6 +76,7 @@ export type Config = {
         allow_user_hotlink_template: boolean;
         filter_regex_engine: string;
         allow_user_supply_unsafe_domain: boolean;
+        disable_nsfw: boolean;
     };
     suffix?: string;
     titleLengthLimit: number;
@@ -101,6 +102,7 @@ export type Config = {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
         dmImgInter?: string;
+        excludeSubtitles?: boolean;
     };
     bitbucket: {
         username?: string;
@@ -185,6 +187,7 @@ export type Config = {
     };
     hefeng: {
         key?: string;
+        apiHost?: string;
     };
     infzm: {
         cookie?: string;
@@ -218,6 +221,9 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    lofter: {
+        cookies?: string;
     };
     lorientlejour: {
         token?: string;
@@ -320,6 +326,10 @@ export type Config = {
     scihub: {
         host?: string;
     };
+    sdo: {
+        ff14risingstones?: string;
+        ua?: string;
+    };
     sis001: {
         baseUrl?: string;
     };
@@ -354,6 +364,11 @@ export type Config = {
     };
     tsdm39: {
         cookie: string;
+    };
+    tumblr: {
+        clientId?: string;
+        clientSecret?: string;
+        refreshToken?: string;
     };
     twitter: {
         username?: string[];
@@ -538,6 +553,7 @@ const calculateValue = () => {
             allow_user_hotlink_template: toBoolean(envs.ALLOW_USER_HOTLINK_TEMPLATE, false),
             filter_regex_engine: envs.FILTER_REGEX_ENGINE || 're2',
             allow_user_supply_unsafe_domain: toBoolean(envs.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN, false),
+            disable_nsfw: toBoolean(envs.DISABLE_NSFW, false),
         },
         suffix: envs.SUFFIX,
         titleLengthLimit: toInt(envs.TITLE_LENGTH_LIMIT, 150),
@@ -563,6 +579,7 @@ const calculateValue = () => {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
             dmImgInter: envs.BILIBILI_DM_IMG_INTER,
+            excludeSubtitles: toBoolean(envs.BILIBILI_EXCLUDE_SUBTITLES, false),
         },
         bitbucket: {
             username: envs.BITBUCKET_USERNAME,
@@ -647,6 +664,7 @@ const calculateValue = () => {
         },
         hefeng: {
             key: envs.HEFENG_KEY,
+            apiHost: envs.HEFENG_API_HOST,
         },
         infzm: {
             cookie: envs.INFZM_COOKIE,
@@ -680,6 +698,9 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        lofter: {
+            cookies: envs.LOFTER_COOKIE,
         },
         lorientlejour: {
             token: envs.LORIENTLEJOUR_TOKEN,
@@ -782,6 +803,10 @@ const calculateValue = () => {
         scihub: {
             host: envs.SCIHUB_HOST || 'https://sci-hub.se/',
         },
+        sdo: {
+            ff14risingstones: envs.SDO_FF14RISINGSTONES,
+            ua: envs.SDO_UA,
+        },
         sis001: {
             baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',
         },
@@ -816,6 +841,11 @@ const calculateValue = () => {
         },
         tsdm39: {
             cookie: envs.TSDM39_COOKIES,
+        },
+        tumblr: {
+            clientId: envs.TUMBLR_CLIENT_ID,
+            clientSecret: envs.TUMBLR_CLIENT_SECRET,
+            refreshToken: envs.TUMBLR_REFRESH_TOKEN,
         },
         twitter: {
             username: envs.TWITTER_USERNAME?.split(','),

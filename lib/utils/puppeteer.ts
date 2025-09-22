@@ -1,34 +1,29 @@
 import { config } from '@/config';
-import puppeteer, { Browser, Page } from 'puppeteer';
+import puppeteer, { Browser, Page } from 'rebrowser-puppeteer';
 import logger from './logger';
 import proxy from './proxy';
 import { anonymizeProxy } from 'proxy-chain';
 
-import { type PuppeteerExtra, addExtra } from 'puppeteer-extra';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-
 /**
  * @deprecated use getPage instead
- * @param {Object} extraOptions
- * @param {boolean} extraOptions.stealth - Use puppeteer-extra-plugin-stealth
  * @returns Puppeteer browser
  */
-const outPuppeteer = async (
-    extraOptions: {
-        stealth?: boolean;
-    } = {}
-) => {
+const outPuppeteer = async () => {
     const options = {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-blink-features=AutomationControlled',
+            '--window-position=0,0',
+            '--ignore-certificate-errors',
+            '--ignore-certificate-errors-spki-list',
+            `--user-agent=${config.ua}`,
+        ],
         headless: true,
         ignoreHTTPSErrors: true,
     };
 
-    let insidePuppeteer: PuppeteerExtra | typeof puppeteer = puppeteer;
-    if (extraOptions.stealth) {
-        insidePuppeteer = addExtra(puppeteer);
-        insidePuppeteer.use(StealthPlugin());
-    }
+    const insidePuppeteer: typeof puppeteer = puppeteer;
 
     const currentProxy = proxy.getCurrentProxy();
     if (currentProxy && proxy.proxyObj.url_regex === '.*') {
@@ -79,14 +74,20 @@ export const getPuppeteerPage = async (
     } = {}
 ) => {
     const options = {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-blink-features=AutomationControlled',
+            '--window-position=0,0',
+            '--ignore-certificate-errors',
+            '--ignore-certificate-errors-spki-list',
+            `--user-agent=${config.ua}`,
+        ],
         headless: true,
         ignoreHTTPSErrors: true,
     };
 
-    let insidePuppeteer: PuppeteerExtra | typeof puppeteer = puppeteer;
-    insidePuppeteer = addExtra(puppeteer);
-    insidePuppeteer.use(StealthPlugin());
+    const insidePuppeteer: typeof puppeteer = puppeteer;
 
     let allowProxy = false;
     const proxyRegex = new RegExp(proxy.proxyObj.url_regex);

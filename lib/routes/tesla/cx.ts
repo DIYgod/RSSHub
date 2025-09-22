@@ -132,7 +132,7 @@ async function handler(ctx) {
             pageSize: limit,
             pageNumber: 0,
             benefitCategoryId: categoryObject?.id ?? undefined,
-            category: categoryObject ? undefined : (category === '充电免停' ? 2 : undefined),
+            category: categoryObject ? undefined : category === '充电免停' ? 2 : undefined,
             city,
         },
     });
@@ -147,7 +147,7 @@ async function handler(ctx) {
                       alt: item.venueName ?? item.title,
                   }
                 : undefined,
-            description: item.description?.replace(/\["|"]/g, '') ?? undefined,
+            description: item.description?.replaceAll(/\["|"]/g, '') ?? undefined,
             data: item.parkingLocationId
                 ? {
                       title: item.venueName ?? item.title,

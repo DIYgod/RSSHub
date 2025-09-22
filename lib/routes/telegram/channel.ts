@@ -148,6 +148,11 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
 };
 
 async function handler(ctx) {
+    const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
+    if (!useWeb) {
+        return tglibchannel(ctx);
+    }
+
     const username = ctx.req.param('username');
     let routeParams = ctx.req.param('routeParams');
     let showLinkPreview = true;
@@ -219,10 +224,6 @@ async function handler(ctx) {
         : $('.tgme_widget_message_wrap:not(.tgme_widget_message_wrap:has(.service_message,.tme_no_messages_found))'); // also exclude service messages
 
     if (list.length === 0 && $('.tgme_channel_history').length === 0) {
-        if (config.telegram.session) {
-            return tglibchannel(ctx);
-        }
-
         throw new Error(`Unable to fetch message feed from this channel. Please check this URL to see if you can view the message preview: ${resourceUrl}`);
     }
 
@@ -515,7 +516,7 @@ async function handler(ctx) {
                         const mapBackground = locationObj.find('.tgme_widget_message_location').css('background-image');
                         const mapBackgroundUrl = mapBackground && mapBackground.match(/url\('(.*)'\)/);
                         const mapBackgroundUrlSrc = mapBackgroundUrl && mapBackgroundUrl[1];
-                        const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : (showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0]);
+                        const mapImgHtml = mapBackgroundUrlSrc ? `<img src="${mapBackgroundUrlSrc}">` : showMediaTagAsEmoji ? mediaTagDict[LOCATION][1] : mediaTagDict[LOCATION][0];
                         return locationLink ? `<a href="${locationLink}">${mapImgHtml}</a>` : mapImgHtml;
                     } else {
                         return '';
@@ -752,6 +753,6 @@ async function handler(ctx) {
                 };
             })
             .filter(Boolean)
-            .reverse(),
+            .toReversed(),
     };
 }

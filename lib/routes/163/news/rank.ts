@@ -135,7 +135,7 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response.data, 'gbk'));
 
     const list = $('div.tabContents')
-        .eq(timeRange[time].index + (category === 'whole' ? (type === 'click' ? -1 : 2) : (type === 'click' ? 0 : 2)))
+        .eq(timeRange[time].index + (category === 'whole' ? (type === 'click' ? -1 : 2) : type === 'click' ? 0 : 2))
         .find('table tbody tr td a')
         .toArray()
         .map((item) => {

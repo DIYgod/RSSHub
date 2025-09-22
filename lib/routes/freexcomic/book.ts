@@ -30,7 +30,7 @@ const handler = async (ctx) => {
 
     const list = $('#detail-list-select > li > a')
         .toArray()
-        .reverse()
+        .toReversed()
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
@@ -81,4 +81,7 @@ export const route: Route = {
     maintainers: ['junfengP'],
     handler,
     url: 'www.jjmhw.cc',
+    features: {
+        nsfw: true,
+    },
 };

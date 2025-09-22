@@ -7,7 +7,7 @@ export const handler = async (ctx): Promise<Data> => {
     const { id, name } = await fetchCategory(slug);
 
     const rootUrl = 'https://www.landiannews.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&categories=${id}`;
+    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed=author,wp:term&categories=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
 

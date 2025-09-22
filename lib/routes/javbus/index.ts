@@ -37,6 +37,9 @@ export const route: Route = {
             description: 'Any path of list page on javbus',
         },
     },
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
@@ -155,7 +158,7 @@ async function handler(ctx) {
                         });
 
                     if (magnets) {
-                        item.enclosure_url = magnets.sort((a, b) => b.score - a.score)[0].link;
+                        item.enclosure_url = magnets.toSorted((a, b) => b.score - a.score)[0].link;
                         item.enclosure_type = 'application/x-bittorrent';
                     }
                 } catch {

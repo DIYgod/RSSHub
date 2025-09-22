@@ -112,7 +112,7 @@ async function handler(ctx) {
             description: item.description,
             score: item.criticScoreSummary?.score ?? undefined,
         }),
-        category: item.genres.map((c) => c.name),
+        category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
         pubDate: parseDate(item.releaseDate),
         upvotes: item.criticScoreSummary?.positiveCount ? Number.parseInt(item.criticScoreSummary?.positiveCount, 10) : 0,

@@ -1,7 +1,6 @@
 import crypto from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import ofetch from '@/utils/ofetch';
-import { v4 as uuidv4 } from 'uuid';
 import { SearchResponse, ItemDetail, ShopItemDetail } from './types';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -14,6 +13,7 @@ const rootShopProductURL = 'https://jp.mercari.com/shops/product/';
 const searchURL = `${rootURL}v2/entities:search`;
 const itemInfoURL = `${rootURL}items/get`;
 const shopItemInfoURL = `${rootURL}v1/marketplaces/shops/products/`;
+const uuidv4 = () => crypto.randomUUID();
 
 const MercariStatus = {
     default: '',

@@ -12,7 +12,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@5bef64f19d7facfb25b37b414482c7164d639639 # v9.1.0
+      - uses: actions/stale@3a9db7e6a41a89f618792c92c0e97cc736e1b13f # v10.0.0
         with:
           # Don't stale issues
           days-before-issue-stale: -1
@@ -25,3 +25,13 @@ jobs:
           exempt-issue-labels: 'dependencies,wait for upstream'
           exempt-pr-labels: 'dependencies,wait for upstream'
           any-of-issue-labels: 'more data required'
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5.0.1
+        with:
+          github-token: ${{ github.token }}
+          process-only: 'prs'
+          pr-inactive-days: '30'
+          pr-comment: >
+            This pull request has been automatically locked since there has not been any recent activity after it was closed. Please open a new issue for related bugs.

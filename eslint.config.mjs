@@ -101,6 +101,9 @@ unicorn.configs.recommended,
         }, {
             selector: "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
             message: "Please use .toArray() before .map().",
+        }, {
+            selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.value=null]',
+            message: "Usage of .catch(() => null) is not allowed. Please handle the error appropriately."
         }],
 
         'no-unneeded-ternary': 'error',
@@ -141,12 +144,13 @@ unicorn.configs.recommended,
 
         'unicorn/no-array-callback-reference': 'warn',
         'unicorn/no-array-reduce': 'warn',
+        'unicorn/no-array-sort': 'warn',
         'unicorn/no-await-expression-member': 'off',
         'unicorn/no-empty-file': 'warn',
         'unicorn/no-hex-escape': 'warn',
         'unicorn/no-null': 'off',
         'unicorn/no-object-as-default-parameter': 'warn',
-        'unicorn/no-nested-ternary': 'warn',
+        'unicorn/no-nested-ternary': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-useless-switch-case': 'off',
 
@@ -225,12 +229,7 @@ unicorn.configs.recommended,
 
         // https://github.com/eslint-community/eslint-plugin-n
         // node specific rules
-        'n/no-extraneous-require': ['error', {
-            allowModules: [
-                'puppeteer-extra-plugin-user-preferences',
-                'puppeteer-extra-plugin-user-data-dir',
-            ],
-        }],
+        'n/no-extraneous-require': 'error',
 
         'n/no-deprecated-api': 'warn',
         'n/no-missing-import': 'off',
@@ -242,6 +241,11 @@ unicorn.configs.recommended,
             allowModules: ['tosource'],
         }],
 
+        "n/no-unsupported-features/node-builtins": ["error", {
+            "version": ">=22.16.0",
+            "ignores": []
+        }],
+
         'prettier/prettier': 'off',
 
         'yml/quotes': ['error', {
@@ -251,7 +255,7 @@ unicorn.configs.recommended,
         'yml/no-empty-mapping-value': 'off',
     },
 }, {
-        files: ['.puppeteerrc.cjs', 'api/vercel.ts'],
+        files: ['.puppeteerrc.cjs'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
         },
