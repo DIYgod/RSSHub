@@ -50,7 +50,7 @@ async function handler() {
                 description += articleData.body;
 
                 if (articleData.body_extends) {
-                    description += articleData.body_extends.map((item) => `<h2>${item.title}</h2>${item.body}`).join('');
+                    description += articleData.body_extends.map((bodyExtendsItem) => `<h2>${bodyExtendsItem.title}</h2>${bodyExtendsItem.body}`).join('');
                 }
 
                 return {
