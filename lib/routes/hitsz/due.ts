@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import logger from '@/utils/logger'; // 仅新增日志引入
 
 export const handler = async (ctx) => {
     const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -48,30 +49,39 @@ export const handler = async (ctx) => {
     const categories = validType === 'all' ? Object.values(categoryGroups).flat() : categoryGroups[validType];
 
     // 并发抓取所有栏目的第一页
-    const pagePromises = categories.map((category) => {
+    // 修复 ESLint：替换 .catch(() => null) 为带日志的try/catch
+    const pagePromises = categories.map(async (category) => {
         const pageUrl = new URL(`${category}.htm`, baseUrl).href;
-        return got(pageUrl).catch(() => null);
+        try {
+            return await got(pageUrl);
+        } catch (error) {
+            logger.error(`获取栏目 ${category} 失败: ${error.message}`);
+            return null;
+        }
     });
-
     const pageResponses = await Promise.all(pagePromises);
 
     // 提取所有文章链接
     const articlePromises = [];
-    for (const [i, response] of pageResponses.entries()) {
+
+    // 修复：用flatMap替代for循环+push（同步逻辑优化）
+    const categoryItems = pageResponses.flatMap((response, i) => {
         if (!response) {
-            continue;
+            return [];
         }
 
         const category = categories[i];
         const $ = load(response.data);
         const listItemsOnPage = $('ul.box-main-list li, .list-main li, .list-main-modular li').toArray();
 
-        // 修改：将 for 循环 push 改为 map 生成数组（PR评论要求：Use map instead of push）
-        const categoryItems = listItemsOnPage
+        // 原map逻辑不变
+        return listItemsOnPage
             .map((el) => {
                 const $el = $(el);
                 const linkUrl = $el.find('a').attr('href');
-                if (!linkUrl) {return null;} // 过滤无链接项
+                if (!linkUrl) {
+                    return null;
+                } // 过滤无链接项
 
                 const title = $el.find('span.text-over, a').text().trim();
                 const pubDateStr = $el.find('label').text().trim();
@@ -85,9 +95,8 @@ export const handler = async (ctx) => {
                 };
             })
             .filter(Boolean); // 过滤 null 项
-
-        articlePromises.push(...categoryItems); // 展开数组添加到承诺列表
-    }
+    });
+    articlePromises.push(...categoryItems); // 保持原push逻辑
 
     // 获取所有文章详情
     const allResolvedItems = (await Promise.all(articlePromises)).filter(Boolean);
@@ -115,6 +124,21 @@ export const route: Route = {
     maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/general',
+    // 新增：补充 parameters 声明（修复PR评论的参数缺失问题）
+    parameters: {
+        type: {
+            description: '栏目类型筛选，默认all（所有栏目）',
+            required: false,
+            options: [
+                { value: 'all', label: '所有栏目' },
+                { value: 'teaching', label: '教务核心业务' },
+                { value: 'studentStatus', label: '学籍相关' },
+                { value: 'teachingSupport', label: '教学支持' },
+                { value: 'education', label: '学生培养' },
+            ],
+            default: 'all',
+        },
+    },
     // 修改：Markdown 二级标题##降级为四级标题####（PR评论要求：Do not use level 2 heading）
     description: `哈尔滨工业大学（深圳）教务部中教务学务和学位管理所有栏目的最新新闻汇总。
 

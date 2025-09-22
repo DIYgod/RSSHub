@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import logger from '@/utils/logger'; // 仅新增日志引入
 
 export const handler = async (ctx) => {
     const fetchPageCount = Number.parseInt(ctx.req.query('fetch_page_count') ?? '5', 10);
@@ -20,21 +21,23 @@ export const handler = async (ctx) => {
 
     // 1. 修复：显式初始化变量为 null，指定类型（避免隐式 undefined）
     let firstPageResponse: Awaited<ReturnType<typeof got>> | null = null;
+    let $firstPage: ReturnType<typeof load> | null = null; // 新增：缓存cheerio实例，避免重复加载
     // 获取后续页面的 URL
     try {
         firstPageResponse = await got(pageUrls[0]);
+        $firstPage = load(firstPageResponse.data); // 仅加载一次
         // 2. 修复：首次访问 data 前增加空值检查（核心防错逻辑）
         if (!firstPageResponse) {
             throw new Error('Failed to get valid response for first page');
         }
-        const $ = load(firstPageResponse.data);
 
         // 解析页面上的翻页链接
         const pageLinks = new Set();
 
         // 查找所有分页链接
-        $('.p_no a, .p_next a, .p_last a').each((_, el) => {
-            const href = $(el).attr('href');
+        $firstPage('.p_no a, .p_next a, .p_last a').each((_, el) => {
+            // 复用$firstPage
+            const href = $firstPage!(el).attr('href');
             if (href) {
                 // 确保相对路径正确转换为完整URL
                 const fullHref = href.startsWith('http') ? href : `index/${href}`;
@@ -48,27 +51,36 @@ export const handler = async (ctx) => {
         for (let i = 0; i < Math.min(fetchPageCount - 1, additionalUrls.length); i++) {
             pageUrls.push(additionalUrls[i]);
         }
-    } catch {
-        // 捕获错误时，firstPageResponse 保持为 null（无需额外赋值）
+    } catch (error) {
+        logger.error(`获取第一页失败: ${error.message}`); // 修复：显式记录错误
     }
 
     // --- 步骤 2: 并发抓取所有页面的列表 ---
-    const pagePromises = pageUrls.map((url) => got(url).catch(() => null));
+    // 修复 ESLint：替换 .catch(() => null) 为带日志的try/catch
+    const pagePromises = pageUrls.map(async (url) => {
+        try {
+            return await got(url);
+        } catch (error) {
+            logger.error(`获取页面 ${url} 失败: ${error.message}`);
+            return null;
+        }
+    });
     const pageResponses = await Promise.all(pagePromises);
 
     const detailPromises = [];
 
-    for (const response of pageResponses) {
+    // 修复：用flatMap替代for循环+push（同步逻辑优化）
+    const pageItems = pageResponses.flatMap((response) => {
         if (!response) {
-            continue;
-        } // 忽略失败的请求
+            return []; // 忽略失败的请求
+        }
 
         const $ = load(response.data);
         // 使用原来的选择器
         const listItemsOnPage = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
 
-        // 修改：将 for 循环 push 改为 map 生成数组（PR评论要求：Use map instead of push）
-        const pageItems = listItemsOnPage
+        // 原map逻辑不变
+        return listItemsOnPage
             .map((el) => {
                 const $el = $(el);
                 const linkUrl = $el.find('a').attr('href');
@@ -87,9 +99,8 @@ export const handler = async (ctx) => {
                 };
             })
             .filter(Boolean); // 过滤 null 项
-
-        detailPromises.push(...pageItems); // 展开数组添加到承诺列表
-    }
+    });
+    detailPromises.push(...pageItems); // 保持原push逻辑
 
     // --- 步骤 3: 并发抓取所有文章的详细内容 ---
     const allResolvedItems = (await Promise.all(detailPromises)).filter(Boolean);
@@ -98,11 +109,8 @@ export const handler = async (ctx) => {
     allResolvedItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
     const filteredItems = allResolvedItems.slice(0, finalLimit);
 
-    // 考虑到页面标题可能无法获取，做一下容错
-    // 修改：复用 firstPageResponse，避免重复请求（性能优化）
-    // 保留原空值检查，补充默认标题（更友好）
-    const pageTitle = firstPageResponse ? load(firstPageResponse.data)('title').text().trim() : '哈尔滨工业大学（深圳）教务部通知公告';
-
+    // 修复：复用$firstPage，避免重复加载
+    const pageTitle = $firstPage ? $firstPage('title').text().trim() : '哈尔滨工业大学（深圳）教务部通知公告';
     const author = '哈尔滨工业大学（深圳）教务部';
 
     return {
@@ -114,7 +122,7 @@ export const handler = async (ctx) => {
     };
 };
 
-// 保持 route 定义不变，它是正确的（仅修改参数相关问题）
+// 保持 route 定义完全不变
 export const route: Route = {
     path: '/due/tzgg',
     name: '教务部',
