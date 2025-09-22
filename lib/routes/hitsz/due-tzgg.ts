@@ -19,27 +19,29 @@ export const handler = async (ctx) => {
     // 第一页 URL
     pageUrls.push(new URL(`${baseListPath}.htm`, baseUrl).href);
 
-    // 1. 修复：显式初始化变量为 null，指定类型（避免隐式 undefined）
+    // 修复：将变量声明移至外部，但初始化逻辑不变
     let firstPageResponse: Awaited<ReturnType<typeof got>> | null = null;
-    let $firstPage: ReturnType<typeof load> | null = null; // 新增：缓存cheerio实例，避免重复加载
+    let $firstPage: ReturnType<typeof load> | null = null;
+
     // 获取后续页面的 URL
     try {
         firstPageResponse = await got(pageUrls[0]);
-        // 2. 修复：首次访问 data 前增加空值检查（核心防错逻辑）
-        if (!firstPageResponse) {
-            throw new Error('Failed to get valid response for first page');
+        // 修复：仅在获取到有效响应时才加载 Cheerio
+        if (firstPageResponse) {
+            $firstPage = load(firstPageResponse.data); // 仅加载一次
         }
-        $firstPage = load(firstPageResponse.data); // 仅加载一次
+    } catch (error) {
+        logger.error(`获取第一页失败: ${error.message}`);
+    }
 
+    // 核心修改：使用一个 if 块包裹所有对 $firstPage 的操作，确保其非空
+    if ($firstPage) {
         // 解析页面上的翻页链接
         const pageLinks = new Set();
-
         // 查找所有分页链接
         $firstPage('.p_no a, .p_next a, .p_last a').each((_, el) => {
-            // 修复：使用正确的null检查语法
-            const href = $firstPage ? $firstPage(el).attr('href') : null;
+            const href = $firstPage(el).attr('href'); // 此处 $firstPage 保证非空
             if (href) {
-                // 确保相对路径正确转换为完整URL
                 const fullHref = href.startsWith('http') ? href : `index/${href}`;
                 const fullUrl = new URL(fullHref, baseUrl).href;
                 pageLinks.add(fullUrl);
@@ -51,12 +53,9 @@ export const handler = async (ctx) => {
         for (let i = 0; i < Math.min(fetchPageCount - 1, additionalUrls.length); i++) {
             pageUrls.push(additionalUrls[i]);
         }
-    } catch (error) {
-        logger.error(`获取第一页失败: ${error.message}`); // 修复：显式记录错误
     }
 
     // --- 步骤 2: 并发抓取所有页面的列表 ---
-    // 修复 ESLint：替换 .catch(() => null) 为带日志的try/catch
     const pagePromises = pageUrls.map(async (url) => {
         try {
             return await got(url);
@@ -109,8 +108,13 @@ export const handler = async (ctx) => {
     allResolvedItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
     const filteredItems = allResolvedItems.slice(0, finalLimit);
 
-    // 修复：复用$firstPage，避免重复加载
-    const pageTitle = $firstPage ? $firstPage('title').text().trim() : '哈尔滨工业大学（深圳）教务部通知公告';
+    // 核心修改：pageTitle 声明移到 if 块外面，确保它始终被赋值
+    let pageTitle = '哈尔滨工业大学（深圳）教务部通知公告';
+    // 修复：安全地使用 $firstPage
+    if ($firstPage) {
+        pageTitle = $firstPage('title').text().trim();
+    }
+
     const author = '哈尔滨工业大学（深圳）教务部';
 
     return {
@@ -130,7 +134,6 @@ export const route: Route = {
     maintainers: ['guohuiyuan'],
     handler,
     example: '/hitsz/due/tzgg',
-    // 修改：删除无效的 category 参数（PR评论指出：path无参数占位符，参数定义无效）
     parameters: {},
     description: `:::tip
 订阅 [通知公告](http://due.hitsz.edu.cn/index/tzggqb.htm)，其源网址为 \`http://due.hitsz.edu.cn/index/tzggqb.htm\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/hitsz/due/tzgg\`](https://rsshub.app/hitsz/due/tzgg)。
