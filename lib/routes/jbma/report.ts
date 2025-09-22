@@ -309,8 +309,7 @@ To subscribe to [Metals Forcus](https://jbma.net/cat_report/metals-forcus/), whe
 <details>
   <summary>More filters</summary>
 
-| Name                                                                                          | ID                                                                                                                  |
-` +
+| Name                                                                                          | ID                                                                                                                  |` +
         filterTable +
         `
 </details>
@@ -463,8 +462,7 @@ To subscribe to [Metals Forcus](https://jbma.net/cat_report/metals-forcus/), whe
 <details>
   <summary>更多分类</summary>
 
-| 名称                                                                                          | ID                                                                                                                  |
-` +
+| 名称                                                                                          | ID                                                                                                                  |` +
             filterTable +
             `
 </details>

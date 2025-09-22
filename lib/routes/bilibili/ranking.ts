@@ -214,26 +214,28 @@ async function handler(ctx) {
     return {
         title: `bilibili 排行榜-${ridChinese}`,
         link,
-        item: list.map(async (item) => {
-            const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
-            return {
-                title: item.title,
-                description: utils.renderUGCDescription(embed, item.pic, item.description || item.title, item.aid, undefined, item.bvid),
-                pubDate: item.create && new Date(item.create).toUTCString(),
-                author: item.author,
-                link: !item.create || (new Date(item.create).getTime() / 1000 > utils.bvidTime && item.bvid) ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-                image: item.pic,
-                attachments: item.bvid
-                    ? [
-                          {
-                              url: getVideoUrl(item.bvid),
-                              mime_type: 'text/html',
-                              duration_in_seconds: parseDuration(item.duration),
-                          },
-                          ...subtitles,
-                      ]
-                    : undefined,
-            };
-        }),
+        item: await Promise.all(
+            list.map(async (item) => {
+                const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                return {
+                    title: item.title,
+                    description: utils.renderUGCDescription(embed, item.pic, item.description || item.title, item.aid, undefined, item.bvid),
+                    pubDate: item.create && new Date(item.create).toUTCString(),
+                    author: item.author,
+                    link: !item.create || (new Date(item.create).getTime() / 1000 > utils.bvidTime && item.bvid) ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
+                    image: item.pic,
+                    attachments: item.bvid
+                        ? [
+                              {
+                                  url: getVideoUrl(item.bvid),
+                                  mime_type: 'text/html',
+                                  duration_in_seconds: parseDuration(item.duration),
+                              },
+                              ...subtitles,
+                          ]
+                        : undefined,
+                };
+            })
+        ),
     };
 }

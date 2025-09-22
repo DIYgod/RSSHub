@@ -161,9 +161,9 @@ function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
 }
 
 export const route: Route = {
-    path: '/channel/:entityName/:messageId',
+    path: '/media/:entityName/:messageId',
     categories: ['social-media'],
-    example: '/channel/telegram/1233',
+    example: '/telegram/media/telegram/1233',
     parameters: { entityName: 'entity name', messageId: 'message id' },
     features: {
         requireConfig: [
