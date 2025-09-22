@@ -36,8 +36,8 @@ export const handler = async (ctx) => {
 
         // 查找所有分页链接
         $firstPage('.p_no a, .p_next a, .p_last a').each((_, el) => {
-            // 复用$firstPage - 使用可选链操作符避免null检查问题
-            const href = $firstPage?.(el).attr('href');
+            // 修复：使用正确的null检查语法
+            const href = $firstPage ? $firstPage(el).attr('href') : null;
             if (href) {
                 // 确保相对路径正确转换为完整URL
                 const fullHref = href.startsWith('http') ? href : `index/${href}`;
