@@ -113,7 +113,7 @@
         "pac-proxy-agent": "7.2.0",
         "proxy-chain": "2.5.9",
         "query-string": "9.3.1",
-        "rate-limiter-flexible": "7.3.1",
+        "rate-limiter-flexible": "7.3.2",
         "re2js": "1.2.0",
         "rebrowser-puppeteer": "24.8.1",
         "rfc4648": "1.5.4",
