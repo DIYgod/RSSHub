@@ -82,7 +82,7 @@ const parseItem = (item, tryGet) =>
         const { data: response } = await got(item.link);
         const $ = load(response);
 
-        const ldJson = JSON.parse($('script[type="application/ld+json"]').eq(1).text());
+        const ldJson = JSON.parse($('script[type="application/ld+json"]').toArray().find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data);
         const author = ldJson.author.name;
         const body = $('.atoms');
 
