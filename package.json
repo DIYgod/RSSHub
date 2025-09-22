@@ -190,14 +190,14 @@
         "prettier": "3.6.2",
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
-        "tsdown": "0.15.2",
+        "tsdown": "0.15.4",
         "typescript": "5.9.2",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
         "vitest": "2.1.9",
         "yaml-eslint-parser": "1.3.0"
     },
-    "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b",
+    "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
     "engines": {
         "node": ">=22"
     },
