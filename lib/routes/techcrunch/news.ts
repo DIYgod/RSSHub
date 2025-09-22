@@ -35,6 +35,7 @@ async function handler() {
     const items = data.map((item) => {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
+        $('.wp-block-techcrunch-inline-cta').remove();
         return {
             title: item.title.rendered,
             description: art(path.join(__dirname, 'templates/description.art'), {
