@@ -66,10 +66,8 @@ export const handler = async (ctx) => {
     });
     const pageResponses = await Promise.all(pagePromises);
 
-    const detailPromises = [];
-
     // 修复：用flatMap替代for循环+push（同步逻辑优化）
-    const pageItems = pageResponses.flatMap((response) => {
+    const detailPromises = pageResponses.flatMap((response) => {
         if (!response) {
             return []; // 忽略失败的请求
         }
@@ -99,10 +97,9 @@ export const handler = async (ctx) => {
             })
             .filter(Boolean); // 过滤 null 项
     });
-    detailPromises.push(...pageItems); // 保持原push逻辑
 
-    // --- 步骤 3: 并发抓取所有文章的详细内容 ---
-    const allResolvedItems = (await Promise.all(detailPromises)).filter(Boolean);
+    // --- 步骤 3: 获取所有文章的详细内容 ---
+    const allResolvedItems = detailPromises.filter(Boolean);
 
     // --- 步骤 4: 对所有收集到的项目进行排序和截取 ---
     allResolvedItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());

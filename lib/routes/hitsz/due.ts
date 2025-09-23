@@ -62,10 +62,8 @@ export const handler = async (ctx) => {
     const pageResponses = await Promise.all(pagePromises);
 
     // 提取所有文章链接
-    const articlePromises = [];
-
     // 修复：用flatMap替代for循环+push（同步逻辑优化）
-    const categoryItems = pageResponses.flatMap((response, i) => {
+    const articlePromises = pageResponses.flatMap((response, i) => {
         if (!response) {
             return [];
         }
@@ -96,10 +94,9 @@ export const handler = async (ctx) => {
             })
             .filter(Boolean); // 过滤 null 项
     });
-    articlePromises.push(...categoryItems); // 保持原push逻辑
 
     // 获取所有文章详情
-    const allResolvedItems = (await Promise.all(articlePromises)).filter(Boolean);
+    const allResolvedItems = articlePromises.filter(Boolean);
 
     // 排序和截取
     const filteredItems = allResolvedItems
