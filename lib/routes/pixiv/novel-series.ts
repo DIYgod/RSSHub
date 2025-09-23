@@ -2,6 +2,10 @@ import { Data, Route } from '@/types';
 import { config } from '@/config';
 import { getNSFWSeriesNovels } from './novel-api/series/nsfw';
 import { getSFWSeriesNovels } from './novel-api/series/sfw';
+import { SeriesDetail } from './novel-api/series/types';
+import got from '@/utils/got';
+
+const baseUrl = 'https://www.pixiv.net';
 
 export const route: Route = {
     path: '/novel/series/:id',
@@ -44,9 +48,18 @@ async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
     const { limit } = ctx.req.query();
 
-    if (hasPixivAuth()) {
-        return await getNSFWSeriesNovels(id, limit);
-    }
+    // Get series info and check content rating
+    const seriesInfoResponse = await got(`${baseUrl}/ajax/novel/series/${id}`);
+    const seriesInfo: SeriesDetail = seriesInfoResponse.data;
 
-    return await getSFWSeriesNovels(id, limit);
+    // xRestrict: 0=All ages, 1=R18, 2=R18G
+    if (seriesInfo.body.xRestrict > 0) {
+        return await getNSFWSeriesNovels(id, limit);
+    } else {
+        // All-ages: prefer NSFW handler if authenticated
+        if (hasPixivAuth()) {
+            return await getNSFWSeriesNovels(id, limit);
+        }
+        return await getSFWSeriesNovels(id, limit);
+    }
 }
