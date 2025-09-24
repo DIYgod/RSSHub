@@ -65,7 +65,7 @@ export const route: Route = {
             source: [
                 'baselang.com/blog', 'baselang.com/blog/:category',
             ],
-            target: '/baselang/blog/:category',
+            target: '/blog/:category',
         },
     ],
     name: 'Blog',
@@ -91,7 +91,6 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const apiUrl = `${API_BASE}/posts?${searchParams.join('&')}`;
-    logger.debug(`BaseLang: fetching '${apiUrl}'`);
 
     const data = await ofetch<WordpressPost[]>(apiUrl);
     logger.debug(`BaseLang: fetched ${data.length} posts`);
