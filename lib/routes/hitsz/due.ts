@@ -6,7 +6,6 @@ import timezone from '@/utils/timezone';
 import logger from '@/utils/logger'; // 仅新增日志引入
 
 export const handler = async (ctx) => {
-    const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 按类型分组（可直接用于 handler 中的逻辑判断）
@@ -99,10 +98,7 @@ export const handler = async (ctx) => {
     const allResolvedItems = articlePromises.filter(Boolean);
 
     // 排序和截取
-    const filteredItems = allResolvedItems
-        .filter((item) => !item.title.includes('统一身份认证平台'))
-        .toSorted((a, b) => (b.pubDate?.getTime() || 0) - (a.pubDate?.getTime() || 0))
-        .slice(0, finalLimit);
+    const filteredItems = allResolvedItems.filter((item) => !item.title.includes('统一身份认证平台'));
 
     return {
         title: '哈尔滨工业大学（深圳）教务部-教务学务与学位管理-所有栏目新闻汇总',

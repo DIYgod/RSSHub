@@ -5,10 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import logger from '@/utils/logger'; // 仅新增日志引入
 
-export const handler = async (ctx) => {
-    const fetchPageCount = Number.parseInt(ctx.req.query('fetch_page_count') ?? '5', 10);
-    const finalLimit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
-
+export const handler = async () => {
     const baseUrl = 'http://due.hitsz.edu.cn';
 
     // 根据 id 构建基础路径
@@ -50,7 +47,7 @@ export const handler = async (ctx) => {
 
         // 添加找到的页面链接
         const additionalUrls = [...pageLinks];
-        for (let i = 0; i < Math.min(fetchPageCount - 1, additionalUrls.length); i++) {
+        for (let i = 0; i < Math.min(4, additionalUrls.length); i++) {
             pageUrls.push(additionalUrls[i]);
         }
     }
@@ -101,10 +98,6 @@ export const handler = async (ctx) => {
     // --- 步骤 3: 获取所有文章的详细内容 ---
     const allResolvedItems = detailPromises.filter(Boolean);
 
-    // --- 步骤 4: 对所有收集到的项目进行排序和截取 ---
-    allResolvedItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
-    const filteredItems = allResolvedItems.slice(0, finalLimit);
-
     // 核心修改：pageTitle 声明移到 if 块外面，确保它始终被赋值
     let pageTitle = '哈尔滨工业大学（深圳）教务部通知公告';
     // 修复：安全地使用 $firstPage
@@ -118,7 +111,7 @@ export const handler = async (ctx) => {
         title: `${author} - ${pageTitle}`,
         description: pageTitle,
         link: pageUrls[0],
-        item: filteredItems,
+        item: allResolvedItems,
         author,
     };
 };
@@ -159,10 +152,7 @@ export const route: Route = {
     radar: [
         {
             source: ['due.hitsz.edu.cn', 'due.hitsz.edu.cn/index/:id/list.htm'],
-            target: (params) => {
-                const id = params.id;
-                return `/hitsz/due${id ? `/${id}` : ''}`;
-            },
+            target: '/hitsz/due/:id',
         },
         {
             title: '通知公告',
