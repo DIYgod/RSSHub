@@ -42,22 +42,21 @@ async function handler() {
             .map(async (item) => {
                 item = $(item);
                 const linkElem = item.find('.link-button');
-                const storyUrl = 'https://daily.zhihu.com' + linkElem.attr('href');
+                const storyUrl = 'https://daily.zhihu.com/api/7' + linkElem.attr('href');
 
                 // Fetch full story content
-                const storyResponse = await cache.tryGet(storyUrl, async () => {
+                const storyJson = await cache.tryGet(storyUrl, async () => {
                     const response = await ofetch(storyUrl);
                     return response;
                 });
 
-                const $story = load(storyResponse);
-                const storyTitle = $story('.DailyHeader-title').text();
-                const storyContent = $story('.DailyRichText').html();
+                const storyTitle = item.find('.title').text();
+                const storyContent = storyJson.body;
 
                 return {
                     title: storyTitle,
                     description: storyContent,
-                    link: storyUrl,
+                    link: 'https://daily.zhihu.com' + linkElem.attr('href'),
                 };
             })
     );
