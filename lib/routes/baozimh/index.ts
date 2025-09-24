@@ -38,8 +38,8 @@ async function handler(ctx) {
     const response = await got(url);
     const $ = load(response.data);
     const comicTitle = $('div > div.pure-u-1-1.pure-u-sm-2-3.pure-u-md-3-4 > div > h1').text();
-    const list = $('#layout > div.comics-detail > div:nth-child(3) > div > div.pure-g')
-        .first() // 最新章节
+    const list = $('#chapter-items')
+        .first()
         .children()
         .toArray()
         .map((item) => {
@@ -52,8 +52,26 @@ async function handler(ctx) {
             };
         });
 
+    // more chapters
+    const otherList = $('#chapters_other_list')
+        .first()
+        .children()
+        .toArray()
+        .map((item) => {
+            const title = $(item).find('span').text();
+            const link = rootUrl + $(item).find('a').attr('href');
+
+            return {
+                title,
+                link,
+            };
+        });
+
+    const combinedList = [...list, ...otherList];
+    combinedList.reverse();
+
     const items = await Promise.all(
-        list.map((item) =>
+        combinedList.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
