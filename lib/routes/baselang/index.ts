@@ -93,37 +93,32 @@ async function handler(ctx: Context): Promise<Data> {
     const apiUrl = `${API_BASE}/posts?${searchParams.join('&')}`;
     logger.debug(`BaseLang: fetching '${apiUrl}'`);
 
-    try {
-        const data = await ofetch<WordpressPost[]>(apiUrl);
-        logger.debug(`BaseLang: fetched ${data.length} posts`);
+    const data = await ofetch<WordpressPost[]>(apiUrl);
+    logger.debug(`BaseLang: fetched ${data.length} posts`);
 
-        const items = data.map((post) => ({
-            title: post.title?.rendered,
-            description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
-            link: post.link,
-            pubDate: parseDate(post.date_gmt ?? post.date),
-            author: post._embedded?.author?.[0]?.name,
-            category: Array.isArray(post._embedded?.['wp:term'])
-                ? post._embedded['wp:term']
-                      .flat()
-                      .map((term: any) => term?.name)
-                      .filter(Boolean)
-                : undefined,
-        }));
+    const items = data.map((post) => ({
+        title: post.title?.rendered,
+        description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
+        link: post.link,
+        pubDate: parseDate(post.date_gmt ?? post.date),
+        author: post._embedded?.author?.[0]?.name,
+        category: Array.isArray(post._embedded?.['wp:term'])
+            ? post._embedded['wp:term']
+                    .flat()
+                    .map((term: any) => term?.name)
+                    .filter(Boolean)
+            : undefined,
+    }));
 
-        const titleSuffix = categoryParam ? ` - ${categoryParam}` : '';
-        const link = categoryParam ? `${ROOT_URL}/blog/${categoryParam}/` : `${ROOT_URL}/blog/`;
+    const titleSuffix = categoryParam ? ` - ${categoryParam}` : '';
+    const link = categoryParam ? `${ROOT_URL}/blog/${categoryParam}/` : `${ROOT_URL}/blog/`;
 
-        return {
-            title: `BaseLang Blog${titleSuffix}`,
-            link,
-            language: 'en',
-            item: items,
-        } as Data;
-    } catch (err: any) {
-        logger.error(`BaseLang: API request failed: ${err?.message || err}`);
-        throw err;
-    }
+    return {
+        title: `BaseLang Blog${titleSuffix}`,
+        link,
+        language: 'en',
+        item: items,
+    } as Data;
 }
 
 
