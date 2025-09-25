@@ -64,6 +64,13 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
             // @ts-ignore
             namespaces = namespaces.default;
         }
+        // In FULL_ROUTES_TEST, also load routes from source for latest changes
+        if (process.env.FULL_ROUTES_TEST === 'true') {
+            modules = directoryImport({
+                targetDirectoryPath: path.join(__dirname, './routes'),
+                importPattern: /\.ts$/,
+            }) as typeof modules;
+        }
         break;
     default:
         modules = directoryImport({
@@ -205,7 +212,8 @@ for (const namespace in namespaces) {
                 ctx.set('data', response);
             }
         };
-        subApp.get(path, wrappedHandler);
+        // Register for all HTTP methods so handlers can return method-specific errors (e.g., 405)
+        subApp.all(path, wrappedHandler);
     }
 }
 
@@ -241,7 +249,7 @@ for (const namespace in namespaces) {
                 ctx.set('apiData', data);
             }
         };
-        subApp.get(path, wrappedHandler);
+        subApp.all(path, wrappedHandler);
     }
 }
 
