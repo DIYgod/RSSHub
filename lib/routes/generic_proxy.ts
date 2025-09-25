@@ -1,11 +1,12 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
+import { config } from '@/config';
 
-const ENV = process.env || {};
+const ENV: Record<string, string | undefined> = (globalThis as any)?.process?.env ?? {};
 
-const DEFAULT_TIMEOUT_MS = Number(ENV.GENERIC_PROXY_TIMEOUT ?? 10000);
+const DEFAULT_TIMEOUT_MS = Number(ENV.GENERIC_PROXY_TIMEOUT ?? config.requestTimeout ?? 10000);
 const DEFAULT_MAX_RESPONSE_SIZE = Number(ENV.GENERIC_PROXY_MAX_SIZE ?? 10 * 1024 * 1024);
-const DEFAULT_UA = ENV.GENERIC_PROXY_UA ?? 'RSSHub (Generic Proxy)';
+const DEFAULT_UA = ENV.GENERIC_PROXY_UA ?? config.ua ?? 'RSSHub (Generic Proxy)';
 
 async function handler(ctx) {
     if ((ctx.req.method || '').toUpperCase() !== 'GET') {
@@ -58,11 +59,11 @@ async function handler(ctx) {
         }
 
         if (!(status >= 200 && status < 300)) {
-            const body = (resp as any).rawBody ?? (resp as any).body ?? Buffer.alloc(0);
+            const body = (resp as any).rawBody ?? (resp as any).body ?? (globalThis as any).Buffer?.alloc(0);
             return new Response(body, { status, headers: outHeaders });
         }
 
-        const body: Buffer = (resp as any).rawBody ?? (resp as any).body ?? Buffer.alloc(0);
+        const body: any = (resp as any).rawBody ?? (resp as any).body ?? (globalThis as any).Buffer?.alloc(0);
         if (body.length > DEFAULT_MAX_RESPONSE_SIZE) {
             return ctx.text('Response too large', 413);
         }
@@ -81,6 +82,9 @@ export const route: Route = {
     categories: ['other'],
     example: '/generic_proxy/https%3A%2F%2Fremote-server.com%2Frss.xml',
     view: ViewType.Notifications,
+    parameters: {
+        url: 'URL-encoded абсолютный http/https URL, например: `https%3A%2F%2Fremote-server.com%2Frss.xml`',
+    },
     features: {
         requireConfig: [],
         requirePuppeteer: false,
