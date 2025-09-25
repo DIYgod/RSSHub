@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/zju/cse/:category?',
+    path: '/cse/:category?',
     categories: ['university'],
     example: '/zju/cse/bksjy',
     parameters: {
@@ -35,14 +35,14 @@ async function handler(ctx) {
     const baseUrl = 'http://www.cse.zju.edu.cn/';
 
     const categoryMap = {
-        'bksjy': { title: '本科生教育', tag: '39322' },
-        'yjsjy': { title: '研究生教育', tag: '39333' },
-        'kyxs':  { title: '科研学术', tag: '39312' },
-        'rsgz':  { title: '人事工作', tag: '39306' },
-        'xssz':  { title: '学生思政', tag: '39342' },
-        'dwjl':  { title: '对外交流', tag: '39353' },
-        'jyzd':  { title: '就业指导', tag: '39351' },
-    };
+        bksjy: { title: '本科生教育', tag: '39322' },
+        yjsjy: { title: '研究生教育', tag: '39333' },
+        kyxs: { title: '科研学术', tag: '39312' },
+        rsgz: { title: '人事工作', tag: '39306' },
+        xssz: { title: '学生思政', tag: '39342' },
+        dwjl: { title: '对外交流', tag: '39353' },
+        jyzd: { title: '就业指导', tag: '39351' },
+    } as const;
 
     const rootUrl = ['bksjy', 'yjsjy', 'kyxs', 'rsgz', 'xssz', 'dwjl', 'jyzd'].includes(category) ? `${baseUrl}/${categoryMap[category].tag}/list.htm` : `${baseUrl}/39283/list.htm`;
 
@@ -60,9 +60,14 @@ async function handler(ctx) {
                 return null; // 过滤无效链接
             }
 
+            const resolved = new URL(href, baseUrl).href;
+            if (/^https?:\/\/mp\.weixin\.qq\.com(\/|$)/.test(resolved)) {
+                return null; // 过滤掉微信外链
+            }
+
             return {
                 title,
-                link: new URL(href, baseUrl).href,
+                link: resolved,
             };
         })
         .filter((item): item is { title: string; link: string } => item !== null);
@@ -93,9 +98,8 @@ async function handler(ctx) {
         )
     );
 
-
     return {
-        title: `浙江大学控制学院通知 - ${categoryMap[category].title || '简讯专栏'}`, // 使用对象查找配合默认值
+        title: `浙江大学控制学院通知 - ${categoryMap[category]?.title || '简讯专栏'}`, // 使用对象查找配合默认值
         link: rootUrl,
         item: items,
     };
