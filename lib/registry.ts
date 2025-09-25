@@ -83,12 +83,17 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
         }
         break;
     default:
-        modules = directoryImport({
-            targetDirectoryPath: path.join(__dirname, './routes'),
-            // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
-            importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
-        }) as typeof modules;
-        pruneTestModules(modules);
+        try {
+            // Prefer prebuilt routes when available (build/test stages)
+            namespaces = (await import('../assets/build/routes.js')).default;
+        } catch {
+            modules = directoryImport({
+                targetDirectoryPath: path.join(__dirname, './routes'),
+                // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
+                importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
+            }) as typeof modules;
+            pruneTestModules(modules);
+        }
 }
 
 if (config.feature.disable_nsfw) {
