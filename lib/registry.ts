@@ -97,6 +97,11 @@ if (config.feature.disable_nsfw) {
 
 if (Object.keys(modules).length) {
     for (const module in modules) {
+        const relativePath = module.split(/[/\\]/).slice(2).join('/');
+        const lowerRel = relativePath.toLowerCase();
+        if (lowerRel.endsWith('.test.ts') || lowerRel.endsWith('.spec.ts')) {
+            continue;
+        }
         const content = modules[module] as
             | {
                   route: Route;
@@ -128,13 +133,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.route.path) {
                     namespaces[namespace].routes[path] = {
                         ...content.route,
-                        location: module.split(/[/\\]/).slice(2).join('/'),
+                        location: relativePath,
                     };
                 }
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
-                    location: module.split(/[/\\]/).slice(2).join('/'),
+                    location: relativePath,
                 };
             }
         } else if ('apiRoute' in content) {
@@ -149,13 +154,13 @@ if (Object.keys(modules).length) {
                 for (const path of content.apiRoute.path) {
                     namespaces[namespace].apiRoutes[path] = {
                         ...content.apiRoute,
-                        location: module.split(/[/\\]/).slice(2).join('/'),
+                        location: relativePath,
                     };
                 }
             } else {
                 namespaces[namespace].apiRoutes[content.apiRoute.path] = {
                     ...content.apiRoute,
-                    location: module.split(/[/\\]/).slice(2).join('/'),
+                    location: relativePath,
                 };
             }
         }
