@@ -7031,6 +7031,20 @@
       }
     ]
   },
+  "baselang.com": {
+    "_name": "BaseLang",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog",
+          "/blog/:category"
+        ],
+        "target": "/baselang/blog/:category"
+      }
+    ]
+  },
   "bbcnewslabs.co.uk": {
     "_name": "BBC News Labs",
     ".": [
