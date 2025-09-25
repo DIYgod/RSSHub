@@ -13,6 +13,7 @@ import metrics from '@/routes/metrics';
 import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
+const isBuildRoutesScript = process.env.BUILD_ROUTES_SCRIPT === 'true';
 
 function isSafeRoutes(routes: RoutesType): boolean {
     return Object.values(routes).every((route: Route) => !route.features?.nsfw);
@@ -83,16 +84,25 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
         }
         break;
     default:
-        try {
-            // Prefer prebuilt routes when available (build/test stages)
-            namespaces = (await import('../assets/build/routes.js')).default;
-        } catch {
-            modules = directoryImport({
-                targetDirectoryPath: path.join(__dirname, './routes'),
-                // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
-                importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
-            }) as typeof modules;
-            pruneTestModules(modules);
+        if (isBuildRoutesScript) {
+            try {
+                namespaces = (await import('../assets/build/routes.js')).default;
+            } catch {
+                // During initial build, assets may not exist; leave namespaces empty to avoid importing tests
+                namespaces = {} as NamespacesType;
+            }
+        } else {
+            try {
+                // Prefer prebuilt routes when available (build/test stages)
+                namespaces = (await import('../assets/build/routes.js')).default;
+            } catch {
+                modules = directoryImport({
+                    targetDirectoryPath: path.join(__dirname, './routes'),
+                    // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
+                    importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
+                }) as typeof modules;
+                pruneTestModules(modules);
+            }
         }
 }
 

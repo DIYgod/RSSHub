@@ -1,6 +1,7 @@
 // Ensure registry loads from prebuilt assets instead of scanning source tests during build
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.FULL_ROUTES_TEST = 'false';
+process.env.BUILD_ROUTES_SCRIPT = 'true';
 const { namespaces } = await import('../../lib/registry');
 import { RadarItem } from '../../lib/types';
 import { parse } from 'tldts';
