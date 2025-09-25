@@ -28,11 +28,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const key = 'zhihu:daily';
-    const response = await cache.tryGet(key, async () => {
-        const response = await ofetch('https://daily.zhihu.com/');
-        return response;
-    });
+    const response = await ofetch('https://daily.zhihu.com/');
 
     const $ = load(response);
 
