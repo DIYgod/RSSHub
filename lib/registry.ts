@@ -31,6 +31,15 @@ function safeNamespaces(namespaces: NamespacesType): NamespacesType {
 
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
 
+function pruneTestModules(obj: typeof modules) {
+    for (const key of Object.keys(obj)) {
+        const lower = key.toLowerCase();
+        if (lower.endsWith('.test.ts') || lower.endsWith('.spec.ts') || lower.includes('/__tests__/')) {
+            delete (obj as any)[key];
+        }
+    }
+}
+
 type RoutesType = Record<
     string,
     Route & {
@@ -64,12 +73,20 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
             // @ts-ignore
             namespaces = namespaces.default;
         }
+        if (process.env.FULL_ROUTES_TEST === 'true') {
+            modules = directoryImport({
+                targetDirectoryPath: path.join(__dirname, './routes'),
+                importPattern: /\.ts$/,
+            }) as typeof modules;
+            pruneTestModules(modules);
+        }
         break;
     default:
         modules = directoryImport({
             targetDirectoryPath: path.join(__dirname, './routes'),
             importPattern: /\.ts$/,
         }) as typeof modules;
+        pruneTestModules(modules);
 }
 
 if (config.feature.disable_nsfw) {
@@ -205,7 +222,7 @@ for (const namespace in namespaces) {
                 ctx.set('data', response);
             }
         };
-        subApp.get(path, wrappedHandler);
+        subApp.all(path, wrappedHandler);
     }
 }
 
@@ -241,7 +258,7 @@ for (const namespace in namespaces) {
                 ctx.set('apiData', data);
             }
         };
-        subApp.get(path, wrappedHandler);
+        subApp.all(path, wrappedHandler);
     }
 }
 
