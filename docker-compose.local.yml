@@ -1,0 +1,35 @@
+services:
+  rsshub:
+    build: .
+    container_name: rsshub
+    restart: unless-stopped
+    ports:
+      - '1200:1200'
+    environment:
+      NODE_ENV: production
+      # Uncomment to enable Redis cache in the same compose stack
+      # CACHE_TYPE: redis
+      # REDIS_URL: "redis://redis:6379/"
+      # Uncomment if you want to use external Chrome via browserless
+      # PUPPETEER_WS_ENDPOINT: "ws://browserless:3000"
+    depends_on:
+      # - redis
+      # - browserless
+      []
+
+  # Optional: standalone Redis for caching
+  # redis:
+  #   image: redis:alpine
+  #   restart: unless-stopped
+  #   volumes:
+  #     - redis-data:/data
+
+  # Optional: browserless for puppeteer (saves local disk compared to bundled Chromium)
+  # browserless:
+  #   image: browserless/chrome
+  #   restart: unless-stopped
+
+volumes:
+  redis-data:
+
+
