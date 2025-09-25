@@ -56,14 +56,12 @@ async function handler(ctx) {
             const a = item.find('a');
             const title = a.text();
             const href = a.attr('href');
-            if (!href) {
-                return null; // 过滤无效链接
+            // 过滤无效链接与包含 http/https 的绝对链接
+            if (!href || /https?:\/\//i.test(href)) {
+                return null;
             }
 
             const resolved = new URL(href, baseUrl).href;
-            if (/^https?:\/\/mp\.weixin\.qq\.com(\/|$)/.test(resolved)) {
-                return null; // 过滤掉微信外链
-            }
 
             return {
                 title,
