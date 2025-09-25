@@ -804,6 +804,9 @@
   "/barronschina/:id?": [
     "nczitzk"
   ],
+  "/baselang/blog/:category?": [
+    "johan456789"
+  ],
   "/bast*": [],
   "/bbc/:site?/:channel?": [
     "HenryQW",
