@@ -46,13 +46,13 @@ async function handler() {
                     return response;
                 });
 
-                const storyTitle = item.find('.title').text();
+                const storyTitle = storyJson.title;
                 const storyContent = storyJson.body;
 
                 return {
                     title: storyTitle,
                     description: storyContent,
-                    link: 'https://daily.zhihu.com' + linkElem.attr('href'),
+                    link: storyJson.url,
                 };
             })
     );
