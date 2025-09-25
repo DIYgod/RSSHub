@@ -14,7 +14,7 @@ export const route: Route = {
         },
     ],
     name: "What's New",
-    maintainers: ['miles170'],
+    maintainers: ['TonyRL'],
     handler,
     url: 'naturalism.org',
 };
