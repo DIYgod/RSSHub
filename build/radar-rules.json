@@ -29139,6 +29139,19 @@
       }
     ]
   },
+  "naturalism.org": {
+    "_name": "Naturalism.org",
+    ".": [
+      {
+        "title": "What's New",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/naturalism/"
+      }
+    ]
+  },
   "nature.com": {
     "_name": "Nature Journal",
     ".": [
