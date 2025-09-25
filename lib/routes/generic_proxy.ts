@@ -83,7 +83,7 @@ export const route: Route = {
     example: '/generic_proxy/https%3A%2F%2Fremote-server.com%2Frss.xml',
     view: ViewType.Notifications,
     parameters: {
-        url: 'URL-encoded абсолютный http/https URL, например: `https%3A%2F%2Fremote-server.com%2Frss.xml`',
+        url: 'URL-encoded absolute http/https URL, e.g. `https%3A%2F%2Fremote-server.com%2Frss.xml`',
     },
     features: {
         requireConfig: [],
@@ -96,7 +96,7 @@ export const route: Route = {
     name: 'Generic File Proxy',
     maintainers: ['synchrone'],
     handler,
-    description: `Proxy arbitrary http/https file. URL must be URL-encoded.`,
+    description: `Proxies arbitrary http/https resources. The target URL must be URL-encoded.`,
 };
 
 export default handler;
