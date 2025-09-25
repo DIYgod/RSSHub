@@ -2,7 +2,13 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 process.env.FULL_ROUTES_TEST = 'false';
 process.env.BUILD_ROUTES_SCRIPT = 'true';
-const { namespaces } = await import('../../lib/registry');
+let namespaces: any = {};
+try {
+    const mod = await import('../../lib/registry');
+    namespaces = (mod as any).namespaces || {};
+} catch {
+    namespaces = {};
+}
 import { RadarItem } from '../../lib/types';
 import { parse } from 'tldts';
 import fs from 'node:fs';
