@@ -76,7 +76,8 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
         if (process.env.FULL_ROUTES_TEST === 'true') {
             modules = directoryImport({
                 targetDirectoryPath: path.join(__dirname, './routes'),
-                importPattern: /\.ts$/,
+                // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
+                importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
             }) as typeof modules;
             pruneTestModules(modules);
         }
@@ -84,7 +85,8 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
     default:
         modules = directoryImport({
             targetDirectoryPath: path.join(__dirname, './routes'),
-            importPattern: /\.ts$/,
+            // exclude *.test.ts and *.spec.ts to avoid importing tests at build time
+            importPattern: /^(?!.*\.(test|spec)\.ts$).*\.ts$/,
         }) as typeof modules;
         pruneTestModules(modules);
 }
