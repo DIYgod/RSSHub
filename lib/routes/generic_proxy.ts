@@ -96,5 +96,3 @@ export const route: Route = {
 };
 
 export default handler;
-
-

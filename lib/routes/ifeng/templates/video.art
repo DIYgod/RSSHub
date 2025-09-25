@@ -1,5 +1,0 @@
-{{ if videoInfo.mobileUrl }}
-<video controls poster="{{ videoInfo.bigPosterUrl }}" preload="metadata">
-    <source src="{{ videoInfo.mobileUrl }}" type="video/mp4">
-</video>
-{{ /if }}
