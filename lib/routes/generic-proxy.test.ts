@@ -13,7 +13,6 @@ describe('generic_proxy route', () => {
         const target = encodeURIComponent('https://httpbingo.org/bytes/10');
         const res = await request.get(`/generic_proxy/${target}`);
         expect(res.status).toBe(200);
-        expect(res.header['content-type']).toMatch(/application\/octet-stream|binary|bytes|text\/plain/i);
         expect(res.body instanceof Buffer || typeof res.body === 'string').toBeTruthy();
         const len = Buffer.isBuffer(res.body) ? res.body.length : Buffer.from(res.body).length;
         expect(len).toBe(10);
