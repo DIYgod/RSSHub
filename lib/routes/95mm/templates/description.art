@@ -1,3 +1,0 @@
-{{ each images }}
-    <img src="{{ $value }}">
-{{ /each }}

@@ -1,2 +1,0 @@
-<img src="{{ epsInfo.images.large || epsInfo.images.common }}" alt="ep.{{ e.sort }} {{ e.name_cn || e.name }}">
-<p>{{@ e.desc.replace(/\r\n/g, '<br>') }}</p>
