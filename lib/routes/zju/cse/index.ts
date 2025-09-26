@@ -80,7 +80,7 @@ async function handler(ctx) {
                 const dateText = infoDiv.match(/\b\d{4}-\d{2}-\d{2}\b/);
                 const pubDate = timezone(parseDate(dateText ? dateText[0] : ''), +8);
 
-                // 获取正文并移除所有图片
+                // 获取正文
                 const description = content('div.wp_articlecontent').html();
 
                 return {
