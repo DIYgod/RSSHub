@@ -6,7 +6,7 @@ import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { topic } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl = 'https://cursor.com';
     const path = topic ? `/blog/topic/${topic}` : '/blog';
