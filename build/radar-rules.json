@@ -14301,6 +14301,19 @@
       }
     ]
   },
+  "eeo.com.cn": {
+    "_name": "经济观察网",
+    "www": [
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/kuaixun/"
+        ],
+        "target": "/eeo/kuaixun"
+      }
+    ]
+  },
   "egsea.com": {
     "_name": "e 公司",
     ".": [
