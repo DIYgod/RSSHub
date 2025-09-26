@@ -20,7 +20,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $ = load(html);
 
     const main = $('#main').last(); // there are two main tags before hydration
-    const items = main.find('article')
+    const items = main
+        .find('article')
         .slice(0, limit)
         .toArray()
         .map((el) => {
