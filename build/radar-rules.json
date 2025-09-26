@@ -12370,6 +12370,15 @@
     "_name": "Cursor",
     ".": [
       {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blog",
+          "/blog/topic/:topic"
+        ],
+        "target": "/cursor/blog/:topic"
+      },
+      {
         "title": "Changelog",
         "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [

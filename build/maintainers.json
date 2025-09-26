@@ -1925,6 +1925,9 @@
   "/curius/links/:name": [
     "Ovler-Young"
   ],
+  "/cursor/blog/:topic?": [
+    "johan456789"
+  ],
   "/cursor/changelog": [
     "p3psi-boo",
     "nczitzk"
