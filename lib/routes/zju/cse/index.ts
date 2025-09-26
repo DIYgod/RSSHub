@@ -25,9 +25,9 @@ export const route: Route = {
     handler,
     description: `栏目类型
 
-| 简讯专栏 | 本科生教育 | 研究生教育 | 科研学术 | 人事工作 | 学生思政 | 对外交流 | 就业指导
-| ------ | ------- | ------- | ------ | ------ | ------ | ------ | ------
-|   -    |  bksjy  |  yjsjy  |  kyxs  |  rsgz  |  xssz  |  dwjl  |  jyzd `,
+| 简讯专栏 | 本科生教育 | 研究生教育 | 科研学术 | 人事工作 | 学生思政 | 对外交流 | 就业指导 |
+| ------ | ------- | ------- | ------ | ------ | ------ | ------ | ------ |
+|   -    |  bksjy  |  yjsjy  |  kyxs  |  rsgz  |  xssz  |  dwjl  |  jyzd  |`,
 };
 
 async function handler(ctx) {
@@ -44,7 +44,7 @@ async function handler(ctx) {
         jyzd: { title: '就业指导', tag: '39351' },
     } as const;
 
-    const rootUrl = ['bksjy', 'yjsjy', 'kyxs', 'rsgz', 'xssz', 'dwjl', 'jyzd'].includes(category) ? `${baseUrl}/${categoryMap[category].tag}/list.htm` : `${baseUrl}/39283/list.htm`;
+    const rootUrl = Object.keys(categoryMap).includes(category) ? `${baseUrl}/${categoryMap[category].tag}/list.htm` : `${baseUrl}/39283/list.htm`;
 
     const response = await got(rootUrl);
     const $ = load(response.data);
@@ -80,10 +80,8 @@ async function handler(ctx) {
                 const dateText = infoDiv.match(/\b\d{4}-\d{2}-\d{2}\b/);
                 const pubDate = timezone(parseDate(dateText ? dateText[0] : ''), +8);
 
-                // 克隆正文并移除所有图片
-                const article = content('div.wp_articlecontent').clone();
-                article.find('img').remove();
-                const description = article.html() ?? '';
+                // 获取正文并移除所有图片
+                const description = content('div.wp_articlecontent').html();
 
                 return {
                     title: item.title,
