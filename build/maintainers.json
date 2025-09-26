@@ -9250,6 +9250,9 @@
   "/zju/career/:type": [
     "Caicailiushui"
   ],
+  "/zju/cse/:category?": [
+    "Rabbits-sys"
+  ],
   "/zju/cst/custom/:id": [
     "zwithz"
   ],
