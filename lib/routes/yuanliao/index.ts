@@ -139,7 +139,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [问题反馈](https://yuanliao.info/t/bug-report)，其源网址为 \`https://yuanliao.info/t/bug-report\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/yuanliao/bug-report\`](https://rsshub.app/yuanliao/bug-report)。
 :::
 

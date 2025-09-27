@@ -160,7 +160,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Gold Price News](https://www.bullionvault.com/gold-news/gold-price-news)，where the URL is \`https://www.bullionvault.com/gold-news/gold-price-news\`, extract the part \`https://www.bullionvault.com/gold-news/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/bullionvault/gold-news/gold-price-news\`](https://rsshub.app/bullionvault/gold-news/gold-price-news).
 :::
 

@@ -123,7 +123,7 @@ export const route: Route = {
             description: 'Category ID, can be found in URL',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI) (<https://papers.cool/arxiv/cs.AI>), extract \`arxiv/cs.AI\` from the URL as the \`category\` parameter. The resulting route will be [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI).
 :::
 
@@ -1212,9 +1212,8 @@ To subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.A
                 description: '分类 id，可在对应分类页 URL 中找到',
             },
         },
-        description: `:::tip
+        description: `::: tip
 订阅 [人工智能 (cs.AI)](https://papers.cool/arxiv/cs.AI)（<https://papers.cool/arxiv/cs.AI>），请从 URL 中提取 \`arxiv/cs.AI\` 作为 \`category\` 参数，得到的路由将是 [\`/papers/category/arxiv/cs.AI\`](https://rsshub.app/papers/category/arxiv/cs.AI)。
-:::
-`,
+:::`,
     },
 };

@@ -96,10 +96,9 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Latest](https://musify.club/en), where the source URL is \`https://musify.club/en\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/musify/en\`](https://rsshub.app/musify/en).
-:::
-`,
+:::`,
     categories: ['multimedia'],
     features: {
         requireConfig: false,

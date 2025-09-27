@@ -174,7 +174,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [通知公告](https://hitgs.hit.edu.cn/tzgg/list.htm)，其源网址为 \`https://hitgs.hit.edu.cn/tzgg/list.htm\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/hit/hitgs/tzgg\`](https://rsshub.app/hit/hitgs/tzgg)。
 :::
 

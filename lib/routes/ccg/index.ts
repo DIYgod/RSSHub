@@ -142,7 +142,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [新闻动态](http://www.ccg.org.cn/news)，其源网址为 \`http://www.ccg.org.cn/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/ccg/news\`](https://rsshub.app/ccg/news)。
 :::
 

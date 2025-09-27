@@ -238,9 +238,8 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [资讯](https://dbaplus.cn/news-9-1.html)，其源网址为 \`https://dbaplus.cn/news-9-1.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/dbaplus/news/9\`](https://rsshub.app/dbaplus/news/9)。
-
 :::
 
 <details>

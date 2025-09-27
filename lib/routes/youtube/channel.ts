@@ -21,7 +21,7 @@ export const route: Route = {
     name: 'Channel with id',
     maintainers: ['DIYgod', 'pseudoyu'],
     handler,
-    description: `:::tip Parameter
+    description: `::: tip Parameter
 | Name       | Description                                                                         | Default |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
 | embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |

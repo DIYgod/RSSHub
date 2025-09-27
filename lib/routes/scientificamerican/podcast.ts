@@ -205,7 +205,7 @@ export const route: Route = {
     parameters: {
         id: 'ID, see below',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，where the URL is \`https://www.scientificamerican.com/podcast/science-quickly/\`, extract the part \`https://www.scientificamerican.com/podcast/\` to the end, which is \`science-quickly\`, and use it as the parameter to fill in. Therefore, the route will be [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly).
 :::
 
@@ -255,7 +255,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
         parameters: {
             id: 'ID，见下表',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，网址为 \`https://www.scientificamerican.com/podcast/science-quickly/\`，请截取 \`https://www.scientificamerican.com/podcast/\` 到末尾 \`/\` 的部分 \`science-quickly\` 作为 \`id\` 参数填入，此时目标路由为 [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly)。
 :::
 

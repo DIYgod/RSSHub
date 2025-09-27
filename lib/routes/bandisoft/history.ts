@@ -214,7 +214,7 @@ export const route: Route = {
             options: languageOptions,
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/history/), where the source URL is \`https://www.bandisoft.com/bandizip/history/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/bandisoft/history/bandizip\`](https://rsshub.app/bandisoft/history/bandizip).
 :::
 
@@ -289,7 +289,7 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
                 options: languageOptions,
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Bandizip 更新记录](https://cn.bandisoft.com/bandizip/history/)，网址为 \`https://cn.bandisoft.com/bandizip/history/\`，请截取 \`cn\` 作为 \`category\` 参数填入，此时目标路由为 [\`/bandisoft/:language?/:id?\`](https://rsshub.app/bandisoft/:language?/:id?)。
 :::
 

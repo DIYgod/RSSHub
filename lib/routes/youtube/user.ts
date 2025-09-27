@@ -12,7 +12,7 @@ export const route: Route = {
         username: 'YouTuber handle with @',
         routeParams: 'Extra parameters, see the table below',
     },
-    description: `:::tip Parameter
+    description: `::: tip Parameter
 | Name       | Description                                                                         | Default |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
 | embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |

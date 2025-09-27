@@ -209,7 +209,7 @@ export const route: Route = {
             description: 'ID，默认为空，可在对应分类页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [天下大势](https://info.10000link.com/newslists.aspx?chid=My01)，网址为 \`https://info.10000link.com/newslists.aspx?chid=My01\`，请截取 \`https://info.10000link.com/\` 到末尾 \`.aspx\` 的部分 \`newslists\` 作为 \`category\` 参数填入，而 \`My01\` 作为 \`id\` 参数填入，此时目标路由为 [\`/10000link/info/newslists/My01\`](https://rsshub.app/10000link/info/newslists/My01)。
 :::
 

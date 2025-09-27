@@ -185,7 +185,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为热点，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [热点](https://m.21jingji.com/#/)，请将 \`热点\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/热点\`](https://rsshub.app/21caijing/channel/热点)。
 
 若订阅 [投资通 - 盘前情报](https://m.21jingji.com/#/channel/investment)，请将 \`投资通/盘前情报\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/投资通/盘前情报\`](https://rsshub.app/21caijing/channel/投资通/盘前情报)。

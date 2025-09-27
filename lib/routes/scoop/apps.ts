@@ -158,11 +158,9 @@ export const route: Route = {
             description: 'Query, `s=2&d=1&n=true&dm=true&o=true` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Apps](https://scoop.sh/#/apps?s=2&d=1&n=true&dm=true&o=true), where the source URL is \`https://scoop.sh/#/apps?s=2&d=1&n=true&dm=true&o=true\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/scoop/apps/s=2&d=1&n=true&dm=true&o=true\`](https://rsshub.app/scoop/apps/s=2&d=1&n=true&dm=true&o=true).
-
-:::
-`,
+:::`,
     categories: ['program-update'],
     features: {
         requireConfig: false,

@@ -364,7 +364,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [橙](https://asiafruitchina.net/categories?gspx=chengzi)，网址为 \`https://asiafruitchina.net/categories?gspx=chengzi\`，请截取 \`https://asiafruitchina.net/categories?gspx=\` 到末尾的部分 \`chengzi\` 作为 \`category\` 参数填入，此时目标路由为 [\`/asiafruitchina/categories/chengzi\`](https://rsshub.app/asiafruitchina/categories/chengzi)。
 :::
 

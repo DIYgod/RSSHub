@@ -154,7 +154,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [中华人民共和国农业农村部国际合作司工作动态](https://www.gjs.moa.gov.cn/gzdt/)，网址为 \`https://www.gjs.moa.gov.cn/gzdt/\`，请截取 \`https://www.gjs.moa.gov.cn/\` 到末尾 \`/\` 的部分 \`gzdt\` 作为 \`category\` 参数填入，此时目标路由为 [\`/gov/moa/gjs/gzdt\`](https://rsshub.app/gov/moa/gjs/gzdt)。
 :::
 

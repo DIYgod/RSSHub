@@ -129,7 +129,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [AGI](https://www.tmtpost.com/column/6916385)，网址为 \`https://www.tmtpost.com/column/6916385\`，请截取 \`https://www.tmtpost.com/column\` 到末尾的部分 \`6916385\` 作为 \`id\` 参数填入，此时目标路由为 [\`/tmtpost/column/6916385\`](https://rsshub.app/tmtpost/column/6916385)。
 :::
 

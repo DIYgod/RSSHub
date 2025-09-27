@@ -174,7 +174,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [今日谈](http://www.banyuetan.org/byt/jinritan/)，其源网址为 \`http://www.banyuetan.org/byt/jinritan/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/banyuetan/jinritan\`](https://rsshub.app/banyuetan/jinritan)。
 :::
 

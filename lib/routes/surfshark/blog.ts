@@ -217,7 +217,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Cybersecurity](https://surfshark.com/blog/cybersecurity), where the source URL is \`https://surfshark.com/blog/cybersecurity\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/surfshark/blog/cybersecurity\`](https://rsshub.app/surfshark/blog/cybersecurity).
 :::
 
