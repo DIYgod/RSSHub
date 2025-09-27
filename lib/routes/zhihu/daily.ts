@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/daily',
@@ -53,6 +54,7 @@ async function handler() {
                     title: storyTitle,
                     description: storyContent,
                     link: storyJson.url,
+                    pubDate: parseDate(storyJson.publish_time, 'X'),
                 };
             })
     );
