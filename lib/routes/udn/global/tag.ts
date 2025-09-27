@@ -46,7 +46,7 @@ async function handler(ctx) {
         title: item.art_title,
         // author: item.art_author_name,
         // pubDate: timezone(parseDate(item.art_time), +8),
-        link: `${rootUrl}/${item.link}`,
+        link: `${rootUrl}${item.link}`,
     }));
 
     items = await Promise.all(
