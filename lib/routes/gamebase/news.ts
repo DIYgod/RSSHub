@@ -125,7 +125,7 @@ export const route: Route = {
         type: '類型，見下表，預設為 newslist',
         category: '分類，預設為 `all`，即全部，可在對應分類頁 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若訂閱 [手機遊戲新聞](https://news.gamebase.com.tw/news/newslist?type=mobile)，網址為 \`https://news.gamebase.com.tw/news/newslist?type=mobile\`，請截取 \`https://news.gamebase.com.tw/news/\` 到末尾的部分 \`newslist\` 作為 \`type\` 參數填入，\`mobile\` 作為 \`category\` 參數填入，此時目標路由為 [\`/gamebase/news/newslist/mobile\`](https://rsshub.app/gamebase/news/newslist/mobile)。
 :::
 
@@ -167,7 +167,7 @@ export const route: Route = {
             type: '类型，见下表，默认为 newslist',
             category: '分类，默认为 `all`，即全部，可在对应分类页 URL 中找到',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [手机游戏新闻](https://news.gamebase.com.tw/news/newslist?type=mobile)，网址为 \`https://news.gamebase.com.tw/news/newslist?type=mobile\`，请截取 \`https://news.gamebase.com.tw/news/\` 到末尾的部分 \`newslist\` 作为 \`type\` 参数填入，\`mobile\` 作为 \`category\` 参数填入，此时目标路由为 [\`/gamebase/news/newslist/mobile\`](https://rsshub.app/gamebase/news/newslist/mobile)。
 :::
 

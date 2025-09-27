@@ -105,7 +105,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Repositories](https://gitstar-ranking.com/repositories), where the source URL is \`https://gitstar-ranking.com/repositories\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/gitstar-ranking/repositories\`](https://rsshub.app/gitstar-ranking/repositories).
 :::
 
