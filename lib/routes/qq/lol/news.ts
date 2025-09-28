@@ -157,7 +157,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `23`，即综合，见下表',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [英雄联盟首页新闻列表 - 公告](https://lol.qq.com/news/index.shtml)，网址为 \`https://lol.qq.com/news/index.shtml\`，请选择 \`24\` 作为 \`category\` 参数填入，此时目标路由为 [\`/qq/lol/news/24\`](https://rsshub.app/qq/lol/news/24)。
 :::
 

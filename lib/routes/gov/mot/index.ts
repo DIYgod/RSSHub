@@ -137,10 +137,9 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [重要会议](https://www.mot.gov.cn/zhongyaohuiyi/)，网址为 \`https://www.mot.gov.cn/zhongyaohuiyi/\`，请截取 \`https://www.mot.gov.cn/\` 到末尾 \`/\` 的部分 \`zhongyaohuiyi\` 作为 \`category\` 参数填入，此时目标路由为 [\`/gov/mot/zhongyaohuiyi\`](https://rsshub.app/gov/mot/zhongyaohuiyi)。
-:::
-`,
+:::`,
     categories: ['government'],
     features: {
         requireConfig: false,

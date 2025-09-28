@@ -83,7 +83,7 @@ export const route: Route = {
     parameters: {
         type: '分类，默认为 `1`，即宏观经济，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [宏观经济](https://www.lhratings.com/research.html?type=1)，网址为 \`https://www.lhratings.com/research.html?type=1\`，请截取 \`https://www.lhratings.com/research.html?type=\` 到末尾的部分 \`1\` 作为 \`type\` 参数填入，此时目标路由为 [\`/lhratings/research/1\`](https://rsshub.app/lhratings/research/1)。
 :::
 
