@@ -1,43 +1,11 @@
-import { getSubtitles } from 'youtube-caption-extractor';
+import { Data } from '@/types';
 import cache from '@/utils/cache';
+import { parseRelativeDate } from '@/utils/parse-date';
 import { Innertube } from 'youtubei.js';
 import utils, { getVideoUrl } from '../utils';
-import { Data } from '@/types';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { getSrtAttachmentBatch } from './subtitles';
 
 const innertubePromise = Innertube.create();
-
-function pad(n: number, width: number = 2) {
-    return String(n).padStart(width, '0');
-}
-
-function toSrtTime(seconds: number): string {
-    const totalMs = Math.floor(seconds * 1000);
-    const hours = Math.floor(totalMs / 3_600_000);
-    const minutes = Math.floor((totalMs % 3_600_000) / 60000);
-    const secs = Math.floor((totalMs % 60000) / 1000);
-    const millis = totalMs % 1000;
-    return `${pad(hours)}:${pad(minutes)}:${pad(secs)},${pad(millis, 3)}`;
-}
-
-type Subtitle = {
-    start: string;
-    dur: string;
-    text: string;
-};
-
-function convertToSrt(segments: Subtitle[]): string {
-    return segments
-        .map((seg, index) => {
-            const start = Number.parseFloat(seg.start);
-            const end = start + Number.parseFloat(seg.dur);
-            return `${index + 1}
-${toSrtTime(start)} --> ${toSrtTime(end)}
-${seg.text}
-`;
-        })
-        .join('\n');
-}
 
 export const getChannelIdByUsername = (username: string) =>
     cache.tryGet(`youtube:getChannelIdByUsername:${username}`, async () => {
@@ -51,17 +19,11 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
     return getDataByChannelId({ channelId, embed, filterShorts });
 };
 
-const getSubtitlesByVideoId = (videoId: string) =>
-    cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
-        const subtitles = await getSubtitles({ videoID: videoId });
-        const srt = convertToSrt(subtitles);
-        return srt;
-    });
-
 export const getDataByChannelId = async ({ channelId, embed }: { channelId: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
     const innertube = await innertubePromise;
     const channel = await innertube.getChannel(channelId);
     const videos = await channel.getVideos();
+    const videoSubtitles = await getSrtAttachmentBatch(videos.videos.filter((video) => 'video_id' in video).map((video) => video.video_id));
 
     return {
         title: `${channel.metadata.title || channelId} - YouTube`,
@@ -72,10 +34,8 @@ export const getDataByChannelId = async ({ channelId, embed }: { channelId: stri
         item: await Promise.all(
             videos.videos
                 .filter((video) => 'video_id' in video)
-                .map(async (video) => {
-                    const srt = await getSubtitlesByVideoId(video.video_id);
-                    const dataUrl = `data:text/plain;charset=utf-8,${encodeURIComponent(srt)}`;
-
+                .map((video) => {
+                    const srtAttachments = videoSubtitles[video.video_id] || [];
                     const img = 'best_thumbnail' in video ? video.best_thumbnail?.url : 'thumbnails' in video ? video.thumbnails?.[0]?.url : undefined;
 
                     return {
@@ -91,11 +51,7 @@ export const getDataByChannelId = async ({ channelId, embed }: { channelId: stri
                                 mime_type: 'text/html',
                                 duration_in_seconds: video.duration && 'seconds' in video.duration ? video.duration.seconds : undefined,
                             },
-                            {
-                                url: dataUrl,
-                                mime_type: 'text/srt',
-                                title: 'Subtitles',
-                            },
+                            ...srtAttachments,
                         ],
                     };
                 })
