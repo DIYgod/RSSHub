@@ -54,7 +54,7 @@ export const route: Route = {
         const items = eventListEl.map((item, index): DataItem => {
             const el = $(item);
             const a = el.find('.event-card-details a.event-card-link').first();
-            const fallbackTitle = a.attr('aria-label') || a.text() || a.toString();
+            const fallbackTitle = a.attr('aria-label') || a.text() || a.html();
 
             const eventData = eventsData[index];
             if (eventData === undefined) {
