@@ -114,7 +114,7 @@ export default [
                     message: 'Usage of .catch(() => null) is not allowed. Please handle the error appropriately.',
                 },
                 {
-                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.name=undefined]',
+                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.type="Identifier"][body.name="undefined"]',
                     message: 'Usage of .catch(() => undefined) is not allowed. Please handle the error appropriately.',
                 },
                 {
