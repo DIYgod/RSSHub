@@ -40832,7 +40832,7 @@
         "title": "轉角國際 - 首頁",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/global_vision/index/:category",
+          "/global_vision/index",
           "/"
         ],
         "target": "/udn/global/:category?"

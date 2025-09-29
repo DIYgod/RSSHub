@@ -18825,7 +18825,7 @@
         target:"/udn/news/breakingnews/:id" } ],
     global:[ { title:"轉角國際 - 首頁",
         docs:"https://docs.rsshub.app/routes/traditional-media",
-        source:[ "/global_vision/index/:category",
+        source:[ "/global_vision/index",
           "/" ],
         target:"/udn/global/:category?" },
       { title:"轉角國際 - 標籤",
