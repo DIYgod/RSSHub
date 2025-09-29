@@ -1,4 +1,4 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import { type Data, type DataItem, type Route } from '@/types';
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -9,7 +9,7 @@ import { load } from 'cheerio';
 import path from 'node:path';
 import type { Context } from 'hono';
 import { JSONPath } from 'jsonpath-plus';
- 
+
 const baseUrl = 'https://www.gq.com.tw';
 
 const categoryTitleMap: Record<string, string> = {
@@ -164,7 +164,7 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
                 image: imgSrc || undefined,
             } as DataItem;
         })
-        .get()
+        .toArray()
         .filter(Boolean) as DataItem[];
 
     logger.info(`[gq/tw] parsed ${items.length} items from list page ${url}`);
@@ -173,57 +173,46 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
 }
 
 function extractPreloadedStateObject($: ReturnType<typeof load>): any | null {
-    try {
-        const stateScriptText = $('script').filter((_, el) => $(el).text().includes('__PRELOADED_STATE__')).text();
-        if (!stateScriptText) {
-            logger.info('[gq/tw] __PRELOADED_STATE__ script not found');
-            return null;
-        }
-
-        const assignIndex = stateScriptText.indexOf('window.__PRELOADED_STATE__');
-        const braceStart = stateScriptText.indexOf('{', assignIndex);
-        const braceEnd = stateScriptText.lastIndexOf('}');
-        if (braceStart === -1 || braceEnd === -1 || braceEnd <= braceStart) {
-            return null;
-        }
-
-        const jsonText = stateScriptText.slice(braceStart, braceEnd + 1);
-        return JSON.parse(jsonText);
-    } catch (e) {
-        logger.warn(`[gq/tw] failed to extract __PRELOADED_STATE__: ${(e as Error).message}`);
+    const stateScriptText = $('script').filter((_, el) => $(el).text().includes('__PRELOADED_STATE__')).text();
+    if (!stateScriptText) {
+        logger.info('[gq/tw] __PRELOADED_STATE__ script not found');
         return null;
     }
+
+    const assignIndex = stateScriptText.indexOf('window.__PRELOADED_STATE__');
+    const braceStart = stateScriptText.indexOf('{', assignIndex);
+    const braceEnd = stateScriptText.lastIndexOf('}');
+    if (braceStart === -1 || braceEnd === -1 || braceEnd <= braceStart) {
+        return null;
+    }
+
+    const jsonText = stateScriptText.slice(braceStart, braceEnd + 1);
+    return JSON.parse(jsonText);
 }
 interface UrlMeta {
     pubDate?: string;
     description?: string;
 }
 
-function buildUrlMetaMap(state: any, baseUrl: string): Map<string, UrlMeta> {
-    try {
-        if (!state) {
-            return new Map<string, UrlMeta>();
-        }
-        const items = JSONPath({
-            path: '$.transformed.bundle.containers[*].items[*]',
-            json: state,
-        }) as any[];
+function buildUrlMetaMap(stateObj: any, baseUrl: string): Map<string, UrlMeta> {
+    if (!stateObj) return new Map<string, UrlMeta>();
 
-        const entries: Array<[string, UrlMeta]> = items
-            .filter((node: any) => node && node.url)
-            .map((node: any) => {
-                const urlPath = String(node.url).replace(/\\u002F/g, "/");
-                const absoluteUrl = new URL(urlPath, baseUrl).toString();
-                const meta: UrlMeta = {
-                    pubDate: node.pubDate ? String(node.pubDate) : undefined,
-                    description: node.dangerousDek ? String(node.dangerousDek) : undefined,
-                };
-                return [absoluteUrl, meta];
-            });
+    const items = JSONPath({
+        path: '$.transformed.bundle.containers[*].items[*]',
+        json: stateObj,
+    }) as any[];
 
-        return new Map<string, UrlMeta>(entries);
-    } catch (e) {
-        logger.warn(`[gq/tw] failed to build URL meta map: ${(e as Error).message}`);
-        return new Map<string, UrlMeta>();
-    }
+    const entries: Array<[string, UrlMeta]> = items
+        .filter((node: any) => node && node.url)
+        .map((node: any) => {
+            const urlPath = String(node.url).replaceAll('\\u002F', "/");
+            const absoluteUrl = new URL(urlPath, baseUrl).toString();
+            const meta: UrlMeta = {
+                pubDate: node.pubDate ? String(node.pubDate) : undefined,
+                description: node.dangerousDek ? String(node.dangerousDek) : undefined,
+            };
+            return [absoluteUrl, meta];
+        });
+
+    return new Map<string, UrlMeta>(entries);
 }
