@@ -121,7 +121,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `Industry/Comment`，即行业评论，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [行业评论](https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/)，网址为 \`https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/\`，请截取 \`https://www.chinaratings.com.cn/CreditResearch/\` 到末尾 \`/\` 的部分 \`Industry/Comment\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinaratings/CreditResearch/Industry/Comment\`](https://rsshub.app/chinaratings/CreditResearch/Industry/Comment)。
 :::
 `,

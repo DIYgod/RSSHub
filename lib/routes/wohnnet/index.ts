@@ -18,12 +18,12 @@ Only returns the first page of search results, allowing you to keep track of
 newly added apartments. If you're looking for an apartment, make sure to also
 look through the other pages on the website.
 
-:::tip
+::: tip
 Note that the parameter \`&sortierung=neueste-zuerst\` for chronological order
 is automatically appended.
 :::
 
-:::tip
+::: tip
 To get your query URL, go to https://www.wohnnet.at/immobilien/suche, apply
 all desired filters (but at least a category and a region!) and click the
 "… Treffer anzeigen" link. From the resulting URL, cut off the

@@ -67,7 +67,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [文章 - 文章](https://www.gcores.com/categories/1?tab=articles)，网址为 \`https://www.gcores.com/categories/1?tab=articles\`，请截取 \`https://www.gcores.com/categories/\` 到末尾的部分 \`1\` 作为 \`id\` 参数填入，截取 \`articles\` 作为 \`tab\` 参数填入，此时目标路由为 [\`/gcores/categories/1/articles\`](https://rsshub.app/gcores/categories/1/articles)。
 :::
 

@@ -82,8 +82,12 @@ const parseItem = (item, tryGet) =>
         const { data: response } = await got(item.link);
         const $ = load(response);
 
-        const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
-        const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
+        const ldJson = JSON.parse(
+            $('script[type="application/ld+json"]')
+                .toArray()
+                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data
+        );
+        const author = ldJson.author.name;
         const body = $('.atoms');
 
         body.find('noscript, .text-gandalf, [id^="sda-inbody-"]').remove();

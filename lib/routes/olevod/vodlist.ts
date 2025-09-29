@@ -15,6 +15,9 @@ export const route: Route = {
     name: '最新视频',
     maintainers: ['fang63625'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

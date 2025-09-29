@@ -164,7 +164,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Daily News](https://www.expats.cz/czech-news/daily-news), where the source URL is \`https://www.expats.cz/czech-news/daily-news\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/expats/czech-news/daily-news\`](https://rsshub.app/expats/czech-news/daily-news).
 :::
 

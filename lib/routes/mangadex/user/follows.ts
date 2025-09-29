@@ -84,6 +84,7 @@ It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for bett
                 optional: true,
             },
         ],
+        nsfw: true,
     },
     handler,
 };

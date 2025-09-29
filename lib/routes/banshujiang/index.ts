@@ -377,7 +377,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [人工智能](https://banshujiang.cn//category/other/人工智能)，其源网址为 \`https://banshujiang.cn//category/other/人工智能\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/banshujiang/category/other/人工智能\`](https://rsshub.app/banshujiang/other/人工智能)。
 :::
 

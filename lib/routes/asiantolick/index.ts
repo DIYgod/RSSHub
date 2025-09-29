@@ -19,6 +19,9 @@ export const route: Route = {
     maintainers: [],
     handler,
     url: 'asiantolick.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

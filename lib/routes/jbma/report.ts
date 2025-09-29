@@ -302,15 +302,14 @@ export const route: Route = {
         },
     },
     description:
-        `:::tip
+        `::: tip
 To subscribe to [Metals Forcus](https://jbma.net/cat_report/metals-forcus/), where the source URL is \`https://jbma.net/cat_report/metals-forcus/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/jbma/report/cat_report/metals-forcus\`](https://rsshub.app/jbma/report/cat_report/metals-forcus).
 :::
 
 <details>
   <summary>More filters</summary>
 
-| Name                                                                                          | ID                                                                                                                  |
-` +
+| Name                                                                                          | ID                                                                                                                  |` +
         filterTable +
         `
 </details>
@@ -456,15 +455,14 @@ To subscribe to [Metals Forcus](https://jbma.net/cat_report/metals-forcus/), whe
             },
         },
         description:
-            `:::tip
+            `::: tip
 若订阅 [Metals Forcus](https://jbma.net/cat_report/metals-forcus/)，网址为 \`https://jbma.net/cat_report/metals-forcus/\`，请截取 \`https://jbma.net/\` 到末尾 \`/\` 的部分 \`cat_report/metals-forcus\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/jbma/report/cat_report/metals-forcus\`](https://rsshub.app/jbma/report/cat_report/metals-forcus)。
 :::
 
 <details>
   <summary>更多分类</summary>
 
-| 名称                                                                                          | ID                                                                                                                  |
-` +
+| 名称                                                                                          | ID                                                                                                                  |` +
             filterTable +
             `
 </details>

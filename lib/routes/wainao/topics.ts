@@ -138,7 +138,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [人物](https://www.wainao.me/topics/people)，网址为 \`https://www.wainao.me/topics/people\`，请截取 \`https://www.wainao.me/topics/\` 到末尾的部分 \`people\` 作为 \`id\` 参数填入，此时目标路由为 [\`/wainao/topics/people\`](https://rsshub.app/wainao/topics/people)。
 :::
 
