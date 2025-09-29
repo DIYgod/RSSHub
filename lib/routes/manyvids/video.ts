@@ -17,6 +17,9 @@ export const route: Route = {
     example: '/manyvids/profile/vids/1001213004',
     maintainers: ['TonyRL'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 const getProfileById = (uid: string) => cache.tryGet(`manyvids:profile:${uid}`, () => ofetch(`https://www.manyvids.com/bff/profile/profiles/${uid}`)) as Promise<UserProfile>;

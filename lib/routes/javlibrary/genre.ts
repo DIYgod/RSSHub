@@ -14,6 +14,9 @@ export const route: Route = {
 ::: tip
   See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
 :::`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

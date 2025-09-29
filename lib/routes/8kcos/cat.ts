@@ -16,6 +16,9 @@ export const route: Route = {
     maintainers: [],
     handler,
     url: '8kcosplay.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

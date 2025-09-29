@@ -16,6 +16,9 @@ export const route: Route = {
     name: 'User Article',
     maintainers: ['TonyRL'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

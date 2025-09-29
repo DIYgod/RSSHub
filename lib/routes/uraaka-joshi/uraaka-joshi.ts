@@ -15,6 +15,9 @@ export const route: Route = {
     maintainers: ['SettingDust', 'Halcao'],
     handler,
     url: 'uraaka-joshi.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

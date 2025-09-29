@@ -22,6 +22,7 @@ export const route: Route = {
                 description: 'The value of the session_id cookie after logging in to Patreon, required to access paid posts',
             },
         ],
+        nsfw: true,
     },
     radar: [
         {

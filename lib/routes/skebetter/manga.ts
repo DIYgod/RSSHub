@@ -15,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Manga',
     maintainers: ['SnowAgar25'],

@@ -14,6 +14,9 @@ export const route: Route = {
     maintainers: ['zhenhappy'],
     handler,
     url: 'ahhhhfs.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

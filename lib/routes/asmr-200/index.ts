@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     parameters: {
         order: '排序字段，默认按照资源的收录日期来排序，详见下表',
