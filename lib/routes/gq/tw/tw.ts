@@ -127,7 +127,8 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
     const urlMetaMap = buildUrlMetaMap(extractPreloadedStateObject($), baseUrl);
 
     const items = wrappers
-        .map((_, el) => {
+        .toArray()
+        .map((el) => {
             const $el = $(el);
 
             const linkEl = $el.find('div[class^="SummaryItemContent"] a').first();
@@ -164,7 +165,6 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
                 image: imgSrc || undefined,
             } as DataItem;
         })
-        .toArray()
         .filter(Boolean) as DataItem[];
 
     logger.info(`[gq/tw] parsed ${items.length} items from list page ${url}`);
@@ -195,7 +195,9 @@ interface UrlMeta {
 }
 
 function buildUrlMetaMap(stateObj: any, baseUrl: string): Map<string, UrlMeta> {
-    if (!stateObj) return new Map<string, UrlMeta>();
+    if (!stateObj) {
+        return new Map<string, UrlMeta>();
+    }
 
     const items = JSONPath({
         path: '$.transformed.bundle.containers[*].items[*]',
@@ -205,7 +207,7 @@ function buildUrlMetaMap(stateObj: any, baseUrl: string): Map<string, UrlMeta> {
     const entries: Array<[string, UrlMeta]> = items
         .filter((node: any) => node && node.url)
         .map((node: any) => {
-            const urlPath = String(node.url).replaceAll('\\u002F', "/");
+            const urlPath = String(node.url).replaceAll(String.raw`\u002F`, "/");
             const absoluteUrl = new URL(urlPath, baseUrl).toString();
             const meta: UrlMeta = {
                 pubDate: node.pubDate ? String(node.pubDate) : undefined,
