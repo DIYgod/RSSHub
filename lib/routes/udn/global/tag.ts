@@ -3,6 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/global/tag/:tag?',
@@ -42,11 +43,10 @@ async function handler(ctx) {
     });
 
     let items = response.data.articles.map((item) => ({
-        title: item.TITLE,
-        author: item.AUTHOR,
-        pubDate: parseDate(item.TIMESTAMP * 1000),
-        category: item.TAG.map((t) => t.tag),
-        link: `${rootUrl}/global_vision/story/${item.CATE_ID}/${item.ART_ID}`,
+        title: item.art_title,
+        // author: item.art_author_name,
+        // pubDate: timezone(parseDate(item.art_time), +8),
+        link: `${rootUrl}${item.link}`,
     }));
 
     items = await Promise.all(
@@ -59,11 +59,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('#story_art_title, #story_bady_info, #story_also').remove();
-                content('.social_bar, .photo_pop, .only_mobile, .area').remove();
+                item.author = content('.article-content__authors-name').first().text().trim();
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
 
-                item.author = content('#story_author_name').text();
-                item.description = content('#tags').prev().html();
+                const mainImage = content('.article-content__focus').html();
+                const articleBodyHtml = content('.article-content__editor').find('p, figure, h2, .video-container').html();
+
+                item.description = mainImage + articleBodyHtml;
+                item.category = content('meta[name="news_keywords"]').attr('content').split(',');
 
                 return item;
             })
