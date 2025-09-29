@@ -124,8 +124,7 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
     const containers = $('div[class^="SummaryCollectionGridItems"]');
     const wrappers = containers.find('div[class^="SummaryItemWrapper"]');
 
-    const preloadedState = extractPreloadedState($);
-    const urlMetaMap = buildUrlMetaMap(preloadedState, baseUrl);
+    const urlMetaMap = buildUrlMetaMap(extractPreloadedStateObject($), baseUrl);
 
     const items = wrappers
         .map((_, el) => {
@@ -173,7 +172,7 @@ async function parseWebpage(url: string): Promise<DataItem[]> {
     return items;
 }
 
-function extractPreloadedState($: ReturnType<typeof load>): any | null {
+function extractPreloadedStateObject($: ReturnType<typeof load>): any | null {
     try {
         const stateScriptText = $('script').filter((_, el) => $(el).text().includes('__PRELOADED_STATE__')).text();
         if (!stateScriptText) {
