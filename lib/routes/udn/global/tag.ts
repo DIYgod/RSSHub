@@ -63,7 +63,11 @@ async function handler(ctx) {
                 item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
 
                 const mainImage = content('.article-content__focus').html();
-                const articleBodyHtml = content('.article-content__editor').find('p, figure, h2, .video-container').html();
+                const articleBodyHtml = content('.article-content__editor')
+                    .find('p, figure, h2, .video-container')
+                    .toArray()
+                    .map((e) => content.html(e))
+                    .join('');
 
                 item.description = mainImage + articleBodyHtml;
                 item.category = content('meta[name="news_keywords"]').attr('content').split(',');
