@@ -78,7 +78,7 @@ export const handler = async (ctx) => {
                     return null;
                 } // 过滤无链接项
 
-                const title = $el.find('span.text-over, a').text().trim();
+                const title = $el.find('span').text().trim();
                 const pubDateStr = $el.find('label').text().trim();
 
                 return {
