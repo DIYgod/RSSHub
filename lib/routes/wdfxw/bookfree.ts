@@ -280,7 +280,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [行业标准](https://www.wdfxw.net/bookfree-00002.html)，其源网址为 \`https://www.wdfxw.net/bookfree-00002.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/wdfxw/bookfree/00002\`](https://rsshub.app/wdfxw/bookfree/00002)。
 :::
 

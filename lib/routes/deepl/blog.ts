@@ -224,9 +224,8 @@ export const route: Route = {
             options: languageOptions,
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \`https://www.deepl.com/en/blog\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/deepl/blog/en\`](https://rsshub.app/deepl/blog/en).
-
 :::
 
 <details>
@@ -386,7 +385,7 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
                 options: languageOptions,
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [博客](https://www.deepl.com/zh/blog)，网址为 \`https://www.deepl.com/zh/blog\`，请截取 \`https://www.deepl.com/\` 到末尾 \`/blog\` 的部分 \`zh\` 作为 \`lang\` 参数填入，此时目标路由为 [\`/deepl/blog/zh\`](https://rsshub.app/deepl/blog/zh)。
 
 :::

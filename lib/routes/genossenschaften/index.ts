@@ -21,15 +21,14 @@ Only returns the first page of search results, allowing you to keep track of
 newly added apartments. If you're looking for an apartment, make sure to also
 look through the other pages on the website.
 
-:::tip
+::: tip
 To get your query URL, go to https://genossenschaften.immo and apply all
 desired filters. If you want to filter by (all districts of a) federal state
 (e.g. \`/immobilien/regionen/wien/\`), please open the district selector and
 de- and re-select any district, so that the region in the URL gets replaced
 with a number of \`district\` parameters. Once you've set up all desired
 filters, copy the part of the URL after the \`?\`.
-:::
-`,
+:::`,
     example:
         PATH_PREFIX +
         'district=wien-1-innere-stadt&district=wien-2-leopoldstadt&district=wien-3-landstrasse&district=wien-4-wieden&district=wien-5-margareten&district=wien-6-mariahilf&district=wien-7-neubau&district=wien-8-josefstadt&district=wien-9-alsergrund&district=wien-10-favoriten&district=wien-11-simmering&district=wien-12-meidling&district=wien-13-hietzing&district=wien-14-penzing&district=wien-15-rudolfsheim-fuenfhaus&district=wien-16-ottakring&district=wien-17-hernals&district=wien-18-waehring&district=wien-19-doebling&district=wien-20-brigittenau&district=wien-21-floridsdorf&district=wien-22-donaustadt&district=wien-23-liesing' +

@@ -188,7 +188,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [美妆个护](https://www.cbndata.com/information?tag_id=1)，其源网址为 \`https://www.cbndata.com/information?tag_id=1\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/cbndata/information/1\`](https://rsshub.app/cbndata/information/1)。
 :::
 

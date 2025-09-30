@@ -132,7 +132,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [每天60秒读懂世界](https://60s.aa1.cn/category/news)，其源网址为 \`https://60s.aa1.cn/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/aa1/60s/news\`](https://rsshub.app/aa1/60s/news) 或 [\`/aa1/60s/每天60秒读懂世界\`](https://rsshub.app/aa1/60s/每天60秒读懂世界)。
 :::
 

@@ -106,7 +106,7 @@ export const route: Route = {
             description: 'Filter, all by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Activity Tracker - International trade](https://digitalpolicyalert.org/activity-tracker?policy=1), where the source URL is \`https://digitalpolicyalert.org/activity-tracker?policy=1\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/digitalpolicyalert/activity-tracker/policy=1\`](https://rsshub.app/digitalpolicyalert/activity-tracker/policy=1).
 :::
 `,
