@@ -51,13 +51,14 @@ async function handler(ctx) {
 
                 const content = $('#main-content');
 
-                // Remove meaningless information (heading, sidebar, quote carousel and footer)
+                // Remove meaningless information (heading, sidebar, quote carousel, footer and codeblock controls)
                 $(`
                     [class^="PostDetail_post-heading"],
                     [class^="ArticleDetail_sidebar-container"],
                     [class^="QuoteCarousel_carousel-controls"],
                     [class^="PostDetail_b-social-share"],
-                    [class^="LandingPageSection_root"]
+                    [class^="LandingPageSection_root"],
+                    [class^="CodeBlock_controls"]
                 `).remove();
 
                 content.find('img').each((_, e) => {
