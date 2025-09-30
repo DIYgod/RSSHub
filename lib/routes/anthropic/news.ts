@@ -15,7 +15,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['etShaw-zh'],
+    maintainers: ['goestav', 'etShaw-zh'],
     handler,
     url: 'www.anthropic.com/news',
 };
@@ -49,9 +49,18 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                $('div[class^="PostDetail_b-social-share"]').remove();
+                const content = $('#main-content');
 
-                const content = $('div[class*="PostDetail_post-detail__"]');
+                // Remove heading data
+                $('[class^="PostDetail_post-heading"]').remove();
+
+                // Remove quote carousel data
+                $('[class^="QuoteCarousel_carousel-controls"]').remove();
+
+                // Remove footer data
+                $('[class^="PostDetail_b-social-share"]').remove();
+                $('[class^="LandingPageSection_root"]').remove();
+
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
