@@ -155,7 +155,7 @@
         "@types/html-to-text": "9.0.4",
         "@types/imapflow": "1.0.189",
         "@types/js-beautify": "1.14.3",
-        "@types/jsdom": "21.1.7",
+        "@types/jsdom": "27.0.0",
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.13",
         "@types/mailparser": "3.4.6",
