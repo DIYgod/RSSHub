@@ -3,7 +3,6 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import logger from '@/utils/logger'; // 仅新增日志引入
 
 export const handler = async (ctx) => {
     const baseUrl = 'http://due.hitsz.edu.cn';
@@ -53,8 +52,7 @@ export const handler = async (ctx) => {
         const pageUrl = new URL(`${category}.htm`, baseUrl).href;
         try {
             return await got(pageUrl);
-        } catch (error) {
-            logger.error(`获取栏目 ${category} 失败: ${error.message}`);
+        } catch {
             return null;
         }
     });
@@ -121,7 +119,6 @@ export const route: Route = {
     parameters: {
         type: {
             description: '栏目类型筛选，默认all（所有栏目）',
-            required: false,
             options: [
                 { value: 'all', label: '所有栏目' },
                 { value: 'teaching', label: '教务核心业务' },

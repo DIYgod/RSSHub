@@ -3,11 +3,10 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import logger from '@/utils/logger';
 
 export const handler = async () => {
     const baseUrl = 'http://due.hitsz.edu.cn';
-    const baseListPath = `index/tzggqb`;
+    const baseListPath = 'index/tzggqb';
 
     // 只抓取第一页
     const firstPageUrl = new URL(`${baseListPath}.htm`, baseUrl).href;
@@ -15,8 +14,7 @@ export const handler = async () => {
     let response;
     try {
         response = await got(firstPageUrl);
-    } catch (error) {
-        logger.error(`获取第一页失败: ${error.message}`);
+    } catch {
         // 返回空结果
         return {
             title: '哈尔滨工业大学（深圳）教务部通知公告',
@@ -34,7 +32,7 @@ export const handler = async () => {
     const author = '哈尔滨工业大学（深圳）教务部';
 
     // 解析第一页的文章列表
-    const listItems = $('ul.list-main-modular li, .list-main-modular-text-list li').toArray();
+    const listItems = $('ul.list-main-modular li').toArray();
 
     const items = listItems
         .map((el) => {
