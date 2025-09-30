@@ -74,6 +74,9 @@ const nsfwRoutes = [
     'yande',
     'zaimanhua',
     'zodgame',
+    '4kup',
+    'misskon',
+    '4khd',
 ];
 
 // 检查是否是 NSFW 路由文件
