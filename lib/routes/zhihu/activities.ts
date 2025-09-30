@@ -11,7 +11,13 @@ export const route: Route = {
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -32,7 +38,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     // second: get real data from zhihu
-    const apiPath = `/api/v3/moments/${id}/activities?limit=7&desktop=true`;
+    const apiPath = `/api/v3/moments/${id}/activities?limit=5&desktop=true&ws_qiangzhisafe=0`;
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/people/${id}`, apiPath);
 
@@ -40,7 +46,7 @@ async function handler(ctx) {
         headers: {
             ...header,
             ...signedHeader,
-            Referer: `https://www.zhihu.com/people/${id}/activities`,
+            Referer: `https://www.zhihu.com/people/${id}`,
             // Authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20', // hard-coded in js
         },
     });
