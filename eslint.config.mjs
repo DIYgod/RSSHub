@@ -110,16 +110,20 @@ export default [
                     message: 'Please use .toArray() before .map().',
                 },
                 {
-                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.value=null]',
+                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0][body.value=null]',
                     message: 'Usage of .catch(() => null) is not allowed. Please handle the error appropriately.',
                 },
                 {
-                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1][body.type="Identifier"][body.name="undefined"]',
+                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0][body.type="Identifier"][body.name="undefined"]',
                     message: 'Usage of .catch(() => undefined) is not allowed. Please handle the error appropriately.',
                 },
                 {
-                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length<=1] > ArrayExpression[elements.length<=1]',
-                    message: "Usage of .catch(() => []]) is not allowed. Please handle the error appropriately."
+                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]',
+                    message: "Usage of .catch(() => []) is not allowed. Please handle the error appropriately."
+                },
+                {
+                    selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]',
+                    message: "Usage of .catch(() => {}) is not allowed. Please handle the error appropriately."
                 }
             ],
 
