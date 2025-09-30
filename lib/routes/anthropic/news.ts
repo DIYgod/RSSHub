@@ -15,7 +15,7 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    maintainers: ['goestav', 'etShaw-zh'],
+    maintainers: ['etShaw-zh', 'goestav'],
     handler,
     url: 'www.anthropic.com/news',
 };
