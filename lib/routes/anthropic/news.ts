@@ -51,15 +51,14 @@ async function handler(ctx) {
 
                 const content = $('#main-content');
 
-                // Remove heading data
-                $('[class^="PostDetail_post-heading"]').remove();
-
-                // Remove quote carousel data
-                $('[class^="QuoteCarousel_carousel-controls"]').remove();
-
-                // Remove footer data
-                $('[class^="PostDetail_b-social-share"]').remove();
-                $('[class^="LandingPageSection_root"]').remove();
+                // Remove meaningless information (heading, sidebar, quote carousel and footer)
+                $(`
+                    [class^="PostDetail_post-heading"],
+                    [class^="ArticleDetail_sidebar-container"],
+                    [class^="QuoteCarousel_carousel-controls"],
+                    [class^="PostDetail_b-social-share"],
+                    [class^="LandingPageSection_root"]
+                `).remove();
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);
