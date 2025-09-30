@@ -9,7 +9,7 @@ on:
       - 'lib/**'
 
 permissions:
-  id-token: write
+  id-token: write # Required for OIDC
 
 jobs:
   build:
@@ -31,6 +31,10 @@ jobs:
         run: pnpm i
       - name: Run postinstall script for dependencies
         run: pnpm rb
+      - name: Install npm
+        # TODO: OIDC requires npm >=11.5.1.
+        # Until Node.js v24 is LTS (with npm 11 as the default), we need to bump.
+        run: npm install -g npm@latest
       - name: Release
         run: |
           git config --local user.email "action@github.com"
@@ -38,5 +42,3 @@ jobs:
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
         run: pnpm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
