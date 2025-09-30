@@ -37,6 +37,7 @@ refresh_token after Pixiv login, required for accessing R18 novels
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

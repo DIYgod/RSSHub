@@ -18,6 +18,9 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'netflav.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

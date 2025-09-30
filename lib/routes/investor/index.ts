@@ -35,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
@@ -227,7 +227,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [最新动态](https://www.investor.org.cn/home/zxdt/)，其源网址为 \`https://www.investor.org.cn/home/zxdt/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/investor/home/zxdt\`](https://rsshub.app/investor/home/zxdt)。
 :::
 

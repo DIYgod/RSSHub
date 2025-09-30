@@ -222,7 +222,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [精彩推荐](https://language.chinadaily.com.cn/thelatest)，网址为 \`https://language.chinadaily.com.cn/thelatest\`，请截取 \`https://language.chinadaily.com.cn/\` 到末尾的部分 \`thelatest\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinadaily/language/thelatest\`](https://rsshub.app/chinadaily/language/thelatest)。
 :::
 

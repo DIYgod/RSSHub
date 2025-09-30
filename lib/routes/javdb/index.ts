@@ -31,6 +31,9 @@ export const route: Route = {
 | 全部 | 可下载 | 含字幕 | 含短評 |
 | ---- | ------ | ------ | ------ |
 | 0    | 1      | 2      | 3      |`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

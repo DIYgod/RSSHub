@@ -20,6 +20,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'shuiguopai.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
