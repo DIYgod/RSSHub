@@ -148,6 +148,7 @@ To subscribe to [Movie HD 1080p](https://0xxx.ws?category=Movie-HD-1080p), where
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nfsw: true,
     },
     radar: [
         {
