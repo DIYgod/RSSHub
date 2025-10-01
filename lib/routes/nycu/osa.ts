@@ -1,4 +1,5 @@
 import { Data, Route } from '@/types';
+import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
 import { ofetch } from 'ofetch';
@@ -7,7 +8,7 @@ function ROCDate(dateStr: string | Date): Date {
     const date = new Date(dateStr);
     date.setFullYear(date.getFullYear() + 1911);
 
-    return date;
+    return timezone(date, 8);
 }
 
 const data: Record<string, { module: string; name: string }> = {

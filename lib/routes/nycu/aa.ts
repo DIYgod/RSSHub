@@ -1,4 +1,5 @@
 import { Data, Route } from '@/types';
+import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
 import { ofetch } from 'ofetch';
@@ -7,7 +8,7 @@ function ROCDate(dateStr: string | Date): Date {
     const date = new Date(dateStr);
     date.setFullYear(date.getFullYear() + 1911);
 
-    return date;
+    return timezone(date, 8);
 }
 
 async function handler(ctx: Context): Promise<Data> {
@@ -35,7 +36,7 @@ async function handler(ctx: Context): Promise<Data> {
         .map((e) => ({
             title: $('a', e).attr('title')?.trim() || '',
             link: $('a', e).attr('href') || '',
-            pubDate: ROCDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim() || ''),
+            pubDate: ROCDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
             category: [$('div p:nth-child(2)', e).text().replace('分類：', '')],
             author: $('div p:nth-child(3)', e).text().replace('發布單位：', ''),
         }));

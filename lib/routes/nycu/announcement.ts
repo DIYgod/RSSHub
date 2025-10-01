@@ -1,4 +1,5 @@
 import { Data, DataItem, Route } from '@/types';
+import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
 import { ofetch } from 'ofetch';
@@ -29,10 +30,12 @@ async function handler(ctx: Context): Promise<Data> {
         const titleElem = $('a', rows[i]);
         const dateElem = $('td', rows[i + 1]);
 
+        const date = dateElem.text().split('-')[0]?.trim();
+
         item.push({
             title: titleElem.attr('title')?.trim() || '',
             link: titleElem.attr('href') || '',
-            pubDate: new Date(dateElem.text().split('-')[0]?.trim() || ''),
+            pubDate: date ? timezone(date, 8) : undefined,
         });
     }
 

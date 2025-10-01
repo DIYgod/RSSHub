@@ -1,4 +1,5 @@
 import { Data, Route } from '@/types';
+import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
 import { ofetch } from 'ofetch';
@@ -16,7 +17,7 @@ async function handler(ctx: Context): Promise<Data> {
         .map((e) => ({
             title: $('header a', e).text().trim(),
             link: $('a', e).attr('href'),
-            pubDate: new Date($('time', e).attr('datetime') || ''),
+            pubDate: $('time', e).attr('datetime') ? timezone($('time', e).attr('datetime') || '', 8) : undefined,
         }));
 
     return {
