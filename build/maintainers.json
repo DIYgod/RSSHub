@@ -81,6 +81,9 @@
   "/0x80/blog": [
     "xnum"
   ],
+  "/0xxx/:filter?": [
+    "nczitzk"
+  ],
   "/10000link/info/:category?/:id?": [
     "nczitzk"
   ],

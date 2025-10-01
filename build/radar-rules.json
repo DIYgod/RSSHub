@@ -153,6 +153,19 @@
       }
     ]
   },
+  "0xxx.ws": {
+    "_name": "0xxx.ws",
+    ".": [
+      {
+        "title": "Source",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/0xxx(_,url)=>{const urlObj=new URL(url);const params=urlObj.searchParams;params.delete(\"next\");const filter=urlObj.searchParams.toString();return`/0xxx${filter?`/${filter}`:\"\"}`}"
+      }
+    ]
+  },
   "10000link.com": {
     "_name": "10000万联网",
     "info": [
