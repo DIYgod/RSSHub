@@ -191,7 +191,7 @@
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
         "tsdown": "0.15.6",
-        "typescript": "5.9.2",
+        "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
         "vitest": "2.1.9",
