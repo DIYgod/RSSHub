@@ -32,7 +32,7 @@ async function handler() {
     const baseUrl = 'https://www.xyc.edu.cn';
     const url = `${baseUrl}/index/tzgg.htm`;
 
-    const response = await ofetch(url).catch(() => null);
+    const response = await ofetch(url);
     if (!response) {
         return {
             title: '新余学院 - 通知公告',
@@ -69,9 +69,12 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item?.link || '', async () => {
+                if (!item) {
+                    return '';
+                }
                 try {
-                    const detailResponse = await ofetch(item.link).catch(() => null);
+                    const detailResponse = await ofetch(item?.link);
                     if (!detailResponse) {
                         return {
                             ...item,
