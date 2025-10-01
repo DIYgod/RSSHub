@@ -8897,6 +8897,12 @@
   "/xys/new": [
     "wenzhenl"
   ],
+  "/xyu/library": [
+    "JinMokai"
+  ],
+  "/xyu/index/tzgg": [
+    "JinMokai"
+  ],
   "/xyzrank/:category?": [],
   "/yahoo/news/:region/:category?": [
     "KeiLongW",

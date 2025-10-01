@@ -42973,6 +42973,29 @@
       }
     ]
   },
+  "xyc.edu.cn": {
+    "_name": "新余学院",
+    "lib": [
+      {
+        "title": "图书馆通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/xyu/library"
+      }
+    ],
+    "www": [
+      {
+        "title": "官网通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/xyu/index/tzgg"
+      }
+    ]
+  },
   "xyzrank.com": {
     "_name": "中文播客榜",
     ".": [
