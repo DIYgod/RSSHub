@@ -5935,6 +5935,18 @@
     "noname1776",
     "camera-2018"
   ],
+  "/nycu/aa/:id?": [
+    "simbafs"
+  ],
+  "/nycu/announcement/:type": [
+    "simbafs"
+  ],
+  "/nycu/cs/:category?": [
+    "simbafs"
+  ],
+  "/nycu/osa/:id?": [
+    "simbafs"
+  ],
   "/nymity/censorbib": [
     "xtexChooser"
   ],
