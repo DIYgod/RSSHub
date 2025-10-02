@@ -79,7 +79,10 @@ async function handler(ctx) {
 
             return cache.tryGet(link, async () => {
                 const author = moment.author.user.name;
-                const topicId = moment.topic.id_str;
+                const topicId = moment.topic?.id_str;
+                if (!topicId) {
+                    return '';
+                }
                 // raw_text sometimes is "" so || is better than ??
                 const title = moment.topic.title || moment.topic.summary.split(' ')[0];
                 let description = moment.topic.summary || '';
