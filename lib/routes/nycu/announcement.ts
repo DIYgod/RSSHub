@@ -1,4 +1,4 @@
-import { Data, DataItem, Route } from '@/types';
+import { Data, Route } from '@/types';
 import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
@@ -20,21 +20,17 @@ async function handler(ctx: Context): Promise<Data> {
                 .map((a) => [new URLSearchParams(($(a).attr('href') || '').replace('index.php', '')).get('SuperType'), $(a).text().replaceAll(/\s+/g, '')])
         )[type] || '未知分類';
 
-    const rows = $('.category-style tr').toArray().slice(1);
-    const item: DataItem[] = [];
+    const item = $('.category-style tr style2')
+        .toArray()
+        .map((titleEle) => {
+            const date = $(titleEle).parent().next().find('td').text().split('-')[0]?.trim();
 
-    for (let i = 0; i < rows.length; i += 3) {
-        const titleElem = $('a', rows[i]);
-        const dateElem = $('td', rows[i + 1]);
-
-        const date = dateElem.text().split('-')[0]?.trim();
-
-        item.push({
-            title: titleElem.attr('title')?.trim() || '',
-            link: titleElem.attr('href') || '',
-            pubDate: date ? timezone(date, 8) : undefined,
+            return {
+                title: $(titleEle).attr('title')?.trim() || '',
+                link: $(titleEle).find('a').attr('href') || '',
+                pubDate: date ? timezone(date, 8) : undefined,
+            };
         });
-    }
 
     return {
         title: `陽明交大交大校園公告 - ${typeName}`,
