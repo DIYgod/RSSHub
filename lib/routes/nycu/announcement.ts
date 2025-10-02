@@ -63,6 +63,6 @@ export const route: Route = {
 | 校外訊息 |  10   |`,
     path: '/announcement/:type',
     parameters: { type: '類型，見下表' },
-    example: '/announcement/5',
+    example: '/nycu/announcement/5',
     handler,
 };
