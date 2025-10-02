@@ -49,6 +49,6 @@ export const route: Route = {
 | 資訊人院刊 | NYC CCS MAGAZINE | NYC CCS MAGAZINE |`,
     path: '/cs/:category?',
     parameters: { category: 'categories, see below' },
-    example: '/cs/all',
+    example: '/nycu/cs/all',
     handler,
 };
