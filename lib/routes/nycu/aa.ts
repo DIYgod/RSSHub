@@ -67,6 +67,6 @@ export const route: Route = {
 | 雙語教育與學習推動辦公室 | 2638 |`,
     path: '/aa/:id?',
     parameters: { id: 'id, see below' },
-    example: '/aa/2652',
+    example: '/nycu/aa/2652',
     handler,
 };
