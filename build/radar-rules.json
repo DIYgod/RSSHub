@@ -20084,6 +20084,36 @@
       }
     ]
   },
+  "hitsz.edu.cn": {
+    "_name": "哈尔滨工业大学（深圳）",
+    "due": [
+      {
+        "title": "教务部",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/index/:id/list.htm"
+        ],
+        "target": "/hitsz/hitsz/due/:id"
+      },
+      {
+        "title": "通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzggqb.htm"
+        ],
+        "target": "/hitsz/hitsz/due/tzgg"
+      },
+      {
+        "title": "教务部教务学务与学位管理所有栏目",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jwxw/jwgl.htm"
+        ],
+        "target": "/hitsz/hitsz/due/general"
+      }
+    ]
+  },
   "hitwh.edu.cn": {
     "_name": "哈尔滨工业大学（威海）",
     ".": [
