@@ -2,7 +2,7 @@ import { Data, DataItem, Route } from '@/types';
 import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') ?? '5';
