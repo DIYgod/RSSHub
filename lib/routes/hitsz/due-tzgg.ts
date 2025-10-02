@@ -42,7 +42,7 @@ export const handler = async () => {
                 return null;
             }
 
-            const title = $el.find('span.text-over, a').text().trim();
+            const title = $el.find('span').text().trim();
             const pubDateStr = $el.find('label').text().trim();
 
             return {
