@@ -102,6 +102,6 @@ export const route: Route = {
 |       榮譽榜       |     榮譽事蹟     | 2660 |`,
     path: '/osa/:id?',
     parameters: { id: 'id, see below' },
-    example: '/osa/2844',
+    example: '/nycu/osa/2844',
     handler,
 };
