@@ -8,20 +8,17 @@ async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') ?? '5';
     const url = `https://infonews.nycu.edu.tw/index.php?SuperType=${type}&action=more&pagekey=1&categoryid=all`;
 
-    const typeName =
-        {
-            5: '行政公告',
-            6: '演講課程',
-            7: '藝文體育',
-            9: '校園徵才',
-            8: '其他活動',
-            3: '電子公文',
-            10: '校外訊息',
-        }[type] || '未知分類';
-
     const $ = await ofetch<CheerioAPI>(url, {
         parseResponse: load,
     });
+
+    const typeName =
+        Object.fromEntries(
+            $('#masterMenu1 #option li a')
+                .toArray()
+                .slice(1, -1)
+                .map((a) => [new URLSearchParams(($(a).attr('href') || '').replace('index.php', '')).get('SuperType'), $(a).text().replaceAll(/\s+/g, '')])
+        )[type] || '未知分類';
 
     const rows = $('.category-style tr').toArray().slice(1);
     const item: DataItem[] = [];
