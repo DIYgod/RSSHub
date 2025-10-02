@@ -2,7 +2,7 @@ import { Data, Route } from '@/types';
 import timezone from '@/utils/timezone';
 import { CheerioAPI, load } from 'cheerio';
 import { Context } from 'hono';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 function ROCDate(dateStr: string | Date): Date {
     const date = new Date(dateStr);
