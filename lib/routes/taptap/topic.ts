@@ -78,20 +78,27 @@ async function handler(ctx) {
             const link = moment.sharing.url;
 
             return cache.tryGet(link, async () => {
+                const isRepost = !moment.topic?.id_str;
                 const author = moment.author.user.name;
-                const topicId = moment.topic.id_str;
+                const topicId = isRepost ? moment.reposted_moment.topic.id_str : moment.topic.id_str;
                 // raw_text sometimes is "" so || is better than ??
-                const title = moment.topic.title || moment.topic.summary.split(' ')[0];
-                let description = moment.topic.summary || '';
-                if (moment.topic.pin_video) {
-                    description += videoPost(moment.topic.pin_video);
-                    if (moment.topic.footer_images?.images) {
-                        description += imagePost(moment.topic.footer_images.images);
+                const title = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.title || moment.topic.summary.split(' ')[0];
+                let description = isRepost ? moment.repost.contents.raw_text || '' : moment.topic.summary || '';
+                if (isRepost) {
+                    description += (moment.reposted_moment.topic.title || '') + ((await topicPost(appId, topicId, lang)) || '');
+                    if (moment.reposted_moment.topic.footer_images) {
+                        description += imagePost(moment.reposted_moment.topic.footer_images);
                     }
                 } else {
-                    description = await topicPost(appId, topicId, lang);
+                    if (moment.topic.pin_video) {
+                        description += videoPost(moment.topic.pin_video);
+                        if (moment.topic.footer_images?.images) {
+                            description += imagePost(moment.topic.footer_images.images);
+                        }
+                    } else {
+                        description = await topicPost(appId, topicId, lang);
+                    }
                 }
-
                 return {
                     title,
                     description,
