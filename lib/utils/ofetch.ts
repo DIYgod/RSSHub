@@ -24,7 +24,7 @@ const rofetch = createFetch().create({
         }
     },
     onRequestError({ request, error }) {
-        logger.error(`Request ${request} fail: ${error}`);
+        logger.error(`Request ${request} fail: ${error.cause} ${error}`);
     },
     headers: {
         'user-agent': config.ua,
