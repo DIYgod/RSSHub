@@ -8,7 +8,7 @@ import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'trending' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '5', 10);
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl: string = 'https://indianexpress.com';
@@ -75,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const author: string | undefined = $('meta[property="og:site_name"]').attr('content') || $('meta[property="og:title"]').attr('content');
 
     return {
-        title: `${author ? `${author} - ` : ''}${sectionObj.name ?? id}`,
+        title: `${author ? `${author} - ` : ''}${sectionObj?.name ?? id}`,
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
