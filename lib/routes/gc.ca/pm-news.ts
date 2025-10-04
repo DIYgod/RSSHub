@@ -7,7 +7,7 @@ import type { Context } from 'hono';
 export const route: Route = {
     path: '/pm/:language?',
     categories: ['government'],
-    example: '/gc-ca/pm/en',
+    example: '/gc.ca/pm/en',
     parameters: { language: 'Language (en or fr)' },
     features: {
         requireConfig: false,
@@ -33,6 +33,9 @@ export const route: Route = {
         const response = await ofetch(ajaxURL, {
             method: 'post',
             body: new URLSearchParams({ view_name: 'news', view_display_id: 'page_1', view_args: '', page: '0' }).toString(),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
         });
 
         const replaceItem = response.find((item: any) => item.method === 'replaceWith');
