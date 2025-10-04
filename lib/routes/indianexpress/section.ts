@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl: string = 'https://indianexpress.com';
-    const apiUrl = new URL(`${apiSlug}/articles`, baseUrl).href;
+    const apiUrl = new URL(`${apiSlug}/article`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/ie_section`, baseUrl).href;
 
     const searchResponse = await ofetch(apiSearchUrl, {
