@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
-import ofetch from '@/utils/ofetch';
+import puppeteer from '@/utils/puppeteer';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -65,16 +65,23 @@ const getCookie = async (username, password, cache) => {
     return userTokenCookie;
 };
 
-const oFetch = (url, ...options) =>
-    ofetch(url, {
-        ...options,
-        headers: {
-            host: 'nhentai.net',
-        },
+const puppeteerGet = async (url) => {
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+    });
+    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    await browser.close();
+    return html;
+};
 
 const getSimple = async (url) => {
-    const data = await oFetch(url);
+    const data = await puppeteerGet(url);
     const $ = load(data);
 
     return $('.gallery a.cover')
@@ -103,6 +110,7 @@ const parseSimpleDetail = ($ele) => {
     const highResoThumbSrc = thumbSrc
         .replace('thumb', '1')
         .replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net')
+        .replace(/\.(jpg|png|gif)\.webp$/, '.$1')
         .replace('.webp.webp', '.webp');
     return {
         title: $ele.children('.caption').text(),
@@ -113,17 +121,25 @@ const parseSimpleDetail = ($ele) => {
 
 const getTorrent = async (simple, cookie) => {
     const { link } = simple;
-    const response = await oFetch(link + 'download', { followRedirect: false, responseType: 'buffer', headers: { Cookie: cookie } });
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setCookie(...cookie.split(';').map((c) => {
+        const [name, value] = c.trim().split('=');
+        return { name, value, domain: 'nhentai.net' };
+    }));
+    const response = await page.goto(link + 'download', { waitUntil: 'networkidle2' });
+    const buffer = await response.buffer();
+    await browser.close();
     return {
         ...simple,
-        enclosure_url: response,
+        enclosure_url: buffer,
         enclosure_type: 'application/x-bittorrent',
     };
 };
 
 const getDetail = async (simple) => {
     const { link } = simple;
-    const data = await oFetch(link);
+    const data = await puppeteerGet(link);
     const $ = load(data);
 
     const galleryImgs = $('.gallerythumb img')
