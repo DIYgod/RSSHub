@@ -22329,6 +22329,19 @@
       }
     ]
   },
+  "indianexpress.com": {
+    "_name": "The Indian Express",
+    ".": [
+      {
+        "title": "Section",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/section/:id"
+        ],
+        "target": "/indianexpress/section/:id"
+      }
+    ]
+  },
   "indiansinkuwait.com": {
     "_name": "Indians in Kuwait",
     ".": [

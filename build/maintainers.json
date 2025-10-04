@@ -4177,6 +4177,9 @@
   "/imop/tianshu": [
     "zhkgo"
   ],
+  "/indianexpress/section/:id{.+}?": [
+    "nczitzk"
+  ],
   "/indiansinkuwait/latest": [
     "TonyRL"
   ],
