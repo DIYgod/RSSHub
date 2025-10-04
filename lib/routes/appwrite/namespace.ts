@@ -7,7 +7,7 @@ export const namespace: Namespace = {
 :::tip
 Appwrite Blog:
 
--   Blog: \`https://appwrite.io/releases.atom\`
+-   Blog: \`https://appwrite.io/blog\`
 :::`,
 
     zh: {

@@ -6,12 +6,12 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['blog', 'reading'],
-    example: '/blog',
+    categories: ['blog'],
+    example: '/appwrite/blog',
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -22,8 +22,8 @@ export const route: Route = {
             source: ['appwrite.io/blog'],
         },
     ],
-    name: 'Appwrite Blog',
-    maintainers: ['Island'],
+    name: 'Blog',
+    maintainers: ['renkunx'],
     handler: async () => {
         // 导入 puppeteer 工具类并初始化浏览器实例
         const browser = await puppeteer();
@@ -49,7 +49,7 @@ export const route: Route = {
         // 获取页面的 HTML 内容
         const response = await page.content();
         // 关闭标签页
-        page.close();
+        await page.close();
 
         const $ = load(response);
 
@@ -64,18 +64,18 @@ export const route: Route = {
                     title: item.find('h4.text-label').text().trim(),
                     link: $link.attr('href'),
                     pubDate: parseDate(item.find('span').first().text().trim()), // 需要日期解析函数
-                    author: $authorBlock.find('h4.text-primary').text().trim(),
-                    category: null, // 这个HTML中没有分类信息，需要从其他位置获取或留空
-                    // 额外字段
-                    avatar: $authorBlock.find('img').attr('src'),
-                    description: item.find('h4.text-label').text().trim(), // 或者从其他元素获取描述
-                    // 如果有图片
+                    author: [
+                        {
+                            name: $authorBlock.find('h4.text-primary').text().trim(),
+                            avatar: $authorBlock.find('img').attr('src'),
+                        },
+                    ],
                     image: item.find('img[loading="lazy"]').attr('src'),
                 };
             });
 
         // 不要忘记关闭浏览器实例
-        browser.close();
+        await browser.close();
 
         return {
             // 源标题
