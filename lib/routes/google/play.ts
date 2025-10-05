@@ -3,6 +3,8 @@ import type { Context } from 'hono';
 import puppeteer from '@/utils/puppeteer';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import { Browser } from 'rebrowser-puppeteer';
+import { load } from 'cheerio';
 
 export const route: Route = {
     name: 'Play Store Update',
@@ -37,6 +39,7 @@ export const route: Route = {
     handler,
 };
 
+// check more language codes on https://support.google.com/googleplay/android-developer/table/4419860?hl=en
 const keywords = {
     // find aria-label of the button next to the "About this app"
     aboutThisAppButton: {
@@ -62,70 +65,94 @@ const keywords = {
         'en-us': 'Version',
         'zh-cn': '版本',
     },
+    offeredBy: {
+        'en-us': 'Offered by',
+        'zh-cn': '提供方',
+    },
 };
 
 async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const lang = ctx.req.param('lang') ?? 'en-us';
-
-    const browser = await puppeteer();
-    const page = await browser.newPage();
-
     const baseurl = 'https://play.google.com/store/apps';
     const link = `${baseurl}/details?id=${id}&hl=${lang}`;
 
-    logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
+    let browser: Browser | undefined;
+    let htmlContent = '';
+    try {
+        browser = await puppeteer();
+        const page = await browser.newPage();
+        page.setRequestInterception(true);
+        page.on('request', (req) => {
+            if (['image', 'font', 'stylesheet'].includes(req.resourceType())) {
+                req.abort();
+            } else {
+                req.continue();
+            }
+        });
 
-    const appNameXpath = `::-p-xpath(//span[@itemprop='name'])`;
-    const appNameHandler = await page.$(appNameXpath);
-    const appName = (await page.evaluate((elem) => elem?.textContent, appNameHandler)) as string;
+        logger.http(`Requesting ${link}`);
+        await page.goto(link, {
+            waitUntil: 'domcontentloaded',
+        });
 
-    const appImageXpath = `::-p-xpath(//img[@itemprop='image'])`;
-    const appImageHandler = await page.$(appImageXpath);
-    const appImage = (await page.evaluate((elem) => (elem as HTMLImageElement).src, appImageHandler)) as string;
+        // click "about this app" arrow button
+        const aboutThisAppButtonXpath = `::-p-xpath(//button[@aria-label='${keywords.aboutThisAppButton[lang]}'])`;
+        await page.click(aboutThisAppButtonXpath);
 
-    const updatedOnXpath = `::-p-xpath(//div[text()="${keywords.updatedOn[lang]}"]/following-sibling::*[1])`;
-    const updatedOnHandler = await page.$(updatedOnXpath);
-    const updatedOn = (await page.evaluate((elem) => elem?.textContent, updatedOnHandler)) as string;
-    const updatedDate = parseDate(updatedOn, ...keywords.updatedOnFormat[lang]);
+        // waiting for a dialog containing  <div class="xxxx">Version</div>
+        const versionXpath = `::-p-xpath(//div[text()="${keywords.version[lang]}"]/following-sibling::*[1])`;
+        await page.waitForSelector(versionXpath);
 
-    // some apps don't have a "What's new" section
-    const whatsNewXpath = `::-p-xpath(//div[@itemprop='description'])`;
-    const whatsNewHandler = await page.$(whatsNewXpath);
-    const whatsNewContent = (await page.evaluate((elem) => elem?.innerHTML, whatsNewHandler)) as string;
+        htmlContent = await page.content();
+        const $ = load(htmlContent);
 
-    const feedContent = `
-        <h2>${keywords.whatsNew[lang]}</h2>
-        <p>${whatsNewContent ?? 'No release notes'}</p>
-    `;
+        const appName = $('span[itemprop=name]').first().text();
+        const appImage = $('img[itemprop=image]').first().attr('src');
 
-    // click "about this app" button
-    const aboutThisAppButtonXpath = `::-p-xpath(//button[@aria-label='${keywords.aboutThisAppButton[lang]}'])`;
-    await page.click(aboutThisAppButtonXpath);
+        let updatedOnStr: string | undefined;
+        let version: string | undefined;
+        let offeredBy: string | undefined;
 
-    const versionXpath = `::-p-xpath(//div[text()="${keywords.version[lang]}"]/following-sibling::*[1])`;
-    const versionHandler = await page.waitForSelector(versionXpath);
-    const version = (await page.evaluate((elem) => elem?.textContent, versionHandler)) as string;
+        $('div').each(function () {
+            if ($(this).text().trim() === keywords.updatedOn[lang]) {
+                updatedOnStr = $(this).next().text().trim();
+            } else if ($(this).text().trim() === keywords.version[lang]) {
+                version = $(this).next().text().trim();
+            } else if ($(this).text().trim() === keywords.offeredBy[lang]) {
+                offeredBy = $(this).next().text().trim();
+            }
+        });
 
-    page.close();
-    browser.close();
+        if (!updatedOnStr || !version || !offeredBy) {
+            throw new Error('Failed to parse the page');
+        }
 
-    return {
-        title: appName + ' - Google Play',
-        link,
-        image: appImage,
-        item: [
-            {
-                title: version,
-                description: feedContent,
-                link,
-                pubDate: updatedDate,
-                guid: version,
-                author: 'Google Play',
-            },
-        ],
-    };
+        const updatedDate = parseDate(updatedOnStr, ...keywords.updatedOnFormat[lang]);
+
+        const whatsNew = $('div[itemprop=description]').html();
+
+        const feedContent = `
+            <h2>${keywords.whatsNew[lang]}</h2>
+            <p>${whatsNew ?? 'No release notes'}</p>
+        `;
+
+        return {
+            title: appName + ' - Google Play',
+            link,
+            image: appImage,
+            item: [
+                {
+                    title: version,
+                    description: feedContent,
+                    link,
+                    pubDate: updatedDate,
+                    guid: version,
+                    author: offeredBy,
+                },
+            ],
+        };
+    } finally {
+        await browser?.close();
+    }
 }
