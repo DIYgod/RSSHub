@@ -143,11 +143,11 @@ async function handler(ctx: Context) {
             image: appImage,
             item: [
                 {
-                    title: version,
+                    title: formatVersion(version, updatedDate),
                     description: feedContent,
                     link,
                     pubDate: updatedDate,
-                    guid: version,
+                    guid: formatGuid(version, updatedDate),
                     author: offeredBy,
                 },
             ],
@@ -155,4 +155,15 @@ async function handler(ctx: Context) {
     } finally {
         await browser?.close();
     }
+}
+
+function formatVersion(version: string, updatedDate: Date) {
+    // some apps show version as "Varies with device"
+    // https://play.google.com/store/apps/details?id=com.adobe.reader&hl=en-us
+    const isVersion = /^\d/.test(version);
+    return isVersion ? version : updatedDate.toISOString().slice(0, 10);
+}
+
+function formatGuid(version: string, updatedDate: Date) {
+    return updatedDate.getTime().toString() + '-' + version;
 }
