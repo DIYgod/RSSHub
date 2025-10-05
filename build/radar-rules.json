@@ -10851,6 +10851,20 @@
       }
     ]
   },
+  "chinatimes.com": {
+    "_name": "中時新聞網",
+    "www": [
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category/",
+          "/"
+        ],
+        "target": "/chinatimes/:category?"
+      }
+    ]
+  },
   "chinaventure.com.cn": {
     "_name": "投中网",
     ".": [
