@@ -141,7 +141,7 @@ jobs:
       pull-requests: write
       contents: write
     steps:
-      - uses: fastify/github-action-merge-dependabot@e820d631adb1d8ab16c3b93e5afe713450884a4a # v3.11.1
+      - uses: fastify/github-action-merge-dependabot@1b2ed42db8f9d81a46bac83adedfc03eb5149dff # v3.11.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           target: patch
