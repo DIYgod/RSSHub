@@ -46,10 +46,10 @@ importers:
         version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
       '@hono/node-server':
         specifier: 1.19.5
-        version: 1.19.5(hono@4.9.9)
+        version: 1.19.5(hono@4.9.10)
       '@hono/zod-openapi':
         specifier: 0.19.10
-        version: 0.19.10(hono@4.9.9)(zod@3.25.76)
+        version: 0.19.10(hono@4.9.10)(zod@3.25.76)
       '@notionhq/client':
         specifier: 5.1.0
         version: 5.1.0
@@ -82,7 +82,7 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.9.20
-        version: 0.9.20(hono@4.9.9)
+        version: 0.9.20(hono@4.9.10)
       '@sentry/node':
         specifier: 10.17.0
         version: 10.17.0
@@ -138,8 +138,8 @@ importers:
         specifier: 161.0.0
         version: 161.0.0
       hono:
-        specifier: 4.9.9
-        version: 4.9.9
+        specifier: 4.9.10
+        version: 4.9.10
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-3rDakgJZ77+RiQUuSK69t1F0m8BQKA8Vh5DCS5V0DWvNY67zob2JhhQrhCO0AKLGINTRSFd1tBaHcJTkhefoSw==}
     engines: {node: '>=18'}
 
-  '@napi-rs/wasm-runtime@1.0.5':
-    resolution: {integrity: sha512-TBr9Cf9onSAS2LQ2+QHx6XcC6h9+RIzJgbqG3++9TUZSH204AwEy5jg3BTQ0VATsyoGj4ee49tN/y6rvaOOtcg==}
+  '@napi-rs/wasm-runtime@1.0.6':
+    resolution: {integrity: sha512-DXj75ewm11LIWUk198QSKUTxjyRjsBwk09MuMk5DGK+GDUtyPhhEHOGP/Xwwj3DjQXXkivoBirmOnKrLfc0+9g==}
 
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
@@ -3971,8 +3971,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.9.9:
-    resolution: {integrity: sha512-Hxw4wT6zjJGZJdkJzAx9PyBdf7ZpxaTSA0NfxqjLghwMrLBX8p33hJBzoETRakF3UJu6OdNQBZAlNSkGqKFukw==}
+  hono@4.9.10:
+    resolution: {integrity: sha512-AlI15ijFyKTXR7eHo7QK7OR4RoKIedZvBuRjO8iy4zrxvlY5oFCdiRG/V/lFJHCNXJ0k72ATgnyzx8Yqa5arug==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -7258,21 +7258,21 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@hono/node-server@1.19.5(hono@4.9.9)':
+  '@hono/node-server@1.19.5(hono@4.9.10)':
     dependencies:
-      hono: 4.9.9
+      hono: 4.9.10
 
-  '@hono/zod-openapi@0.19.10(hono@4.9.9)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.9.10)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.2(hono@4.9.9)(zod@3.25.76)
-      hono: 4.9.9
+      '@hono/zod-validator': 0.7.2(hono@4.9.10)(zod@3.25.76)
+      hono: 4.9.10
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.2(hono@4.9.9)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.2(hono@4.9.10)(zod@3.25.76)':
     dependencies:
-      hono: 4.9.9
+      hono: 4.9.10
       zod: 3.25.76
 
   '@humanfs/core@0.19.1': {}
@@ -7531,7 +7531,7 @@ snapshots:
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
 
-  '@napi-rs/wasm-runtime@1.0.5':
+  '@napi-rs/wasm-runtime@1.0.6':
     dependencies:
       '@emnapi/core': 1.5.0
       '@emnapi/runtime': 1.5.0
@@ -8036,7 +8036,7 @@ snapshots:
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.41':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.0.5
+      '@napi-rs/wasm-runtime': 1.0.6
     optional: true
 
   '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.41':
@@ -8137,10 +8137,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.3.0
 
-  '@scalar/hono-api-reference@0.9.20(hono@4.9.9)':
+  '@scalar/hono-api-reference@0.9.20(hono@4.9.10)':
     dependencies:
       '@scalar/core': 0.3.18
-      hono: 4.9.9
+      hono: 4.9.10
 
   '@scalar/openapi-types@0.4.0':
     dependencies:
@@ -10056,7 +10056,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.9.9: {}
+  hono@4.9.10: {}
 
   hookable@5.5.3: {}
 
