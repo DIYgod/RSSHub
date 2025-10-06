@@ -4982,12 +4982,6 @@
     "axojhf",
     "zhaoweizhong"
   ],
-  "/lovelive-anime/schedules/:serie?/:category?": [
-    "axojhf"
-  ],
-  "/lovelive-anime/topics/:abbr/:category?/:option?": [
-    "axojhf"
-  ],
   "/lrepacks/:category?": [
     "nczitzk"
   ],
