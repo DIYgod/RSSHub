@@ -145,7 +145,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 6.0.8
-        version: 6.0.8(tough-cookie@5.1.2)(undici@6.21.3)
+        version: 6.0.8(tough-cookie@5.1.2)(undici@6.22.0)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -273,8 +273,8 @@ importers:
         specifier: 1.6.1
         version: 1.6.1
       undici:
-        specifier: 6.21.3
-        version: 6.21.3
+        specifier: 6.22.0
+        version: 6.22.0
       uuid:
         specifier: 13.0.0
         version: 13.0.0
@@ -437,7 +437,7 @@ importers:
         version: 2.4.3(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.29
-        version: 1.0.29(undici@6.21.3)(utf-8-validate@5.0.10)
+        version: 1.0.29(undici@6.22.0)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.6.2
         version: 3.6.2
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-3rDakgJZ77+RiQUuSK69t1F0m8BQKA8Vh5DCS5V0DWvNY67zob2JhhQrhCO0AKLGINTRSFd1tBaHcJTkhefoSw==}
     engines: {node: '>=18'}
 
-  '@napi-rs/wasm-runtime@1.0.5':
-    resolution: {integrity: sha512-TBr9Cf9onSAS2LQ2+QHx6XcC6h9+RIzJgbqG3++9TUZSH204AwEy5jg3BTQ0VATsyoGj4ee49tN/y6rvaOOtcg==}
+  '@napi-rs/wasm-runtime@1.0.6':
+    resolution: {integrity: sha512-DXj75ewm11LIWUk198QSKUTxjyRjsBwk09MuMk5DGK+GDUtyPhhEHOGP/Xwwj3DjQXXkivoBirmOnKrLfc0+9g==}
 
   '@noble/hashes@1.8.0':
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
@@ -5835,12 +5835,12 @@ packages:
   undici-types@7.13.0:
     resolution: {integrity: sha512-Ov2Rr9Sx+fRgagJ5AX0qvItZG/JKKoBRAVITs1zk7IqZGTJUwgUr7qoYBpWwakpWilTZFM98rG/AFRocu10iIQ==}
 
-  undici@6.21.3:
-    resolution: {integrity: sha512-gBLkYIlEnSp8pFbT64yFgGE6UIB9tAkhukC23PmMDCe5Nd+cRqKxSjw5y54MK2AZMgZfJWMaNE4nYUHgi1XEOw==}
+  undici@6.22.0:
+    resolution: {integrity: sha512-hU/10obOIu62MGYjdskASR3CUAiYaFTtC9Pa6vHyf//mAipSvSQg6od2CnJswq7fvzNS3zJhxoRkgNVaHurWKw==}
     engines: {node: '>=18.17'}
 
-  undici@7.13.0:
-    resolution: {integrity: sha512-l+zSMssRqrzDcb3fjMkjjLGmuiiK2pMIcV++mJaAc9vhjSGpvM7h43QgP+OAMb1GImHmbPyG2tBXeuyG5iY4gA==}
+  undici@7.16.0:
+    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -7531,7 +7531,7 @@ snapshots:
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
 
-  '@napi-rs/wasm-runtime@1.0.5':
+  '@napi-rs/wasm-runtime@1.0.6':
     dependencies:
       '@emnapi/core': 1.5.0
       '@emnapi/runtime': 1.5.0
@@ -8036,7 +8036,7 @@ snapshots:
 
   '@rolldown/binding-wasm32-wasi@1.0.0-beta.41':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.0.5
+      '@napi-rs/wasm-runtime': 1.0.6
     optional: true
 
   '@rolldown/binding-win32-arm64-msvc@1.0.0-beta.41':
@@ -8939,7 +8939,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.13.0
+      undici: 7.16.0
       whatwg-mimetype: 4.0.0
 
   chokidar@4.0.3:
@@ -10116,12 +10116,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@6.0.8(tough-cookie@5.1.2)(undici@6.21.3):
+  http-cookie-agent@6.0.8(tough-cookie@5.1.2)(undici@6.22.0):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 5.1.2
     optionalDependencies:
-      undici: 6.21.3
+      undici: 6.22.0
 
   http-proxy-agent@7.0.2:
     dependencies:
@@ -10957,13 +10957,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.29(undici@6.21.3)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.29(undici@6.22.0)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.0.9
       iconv-lite: 0.6.3
       inspector: 0.5.0
       open: 8.4.2
-      undici: 6.21.3
+      undici: 6.22.0
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -12100,9 +12100,9 @@ snapshots:
 
   undici-types@7.13.0: {}
 
-  undici@6.21.3: {}
+  undici@6.22.0: {}
 
-  undici@7.13.0: {}
+  undici@7.16.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -12461,7 +12461,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 2.8.0
       jintr: 3.3.1
-      undici: 6.21.3
+      undici: 6.22.0
 
   zod@3.25.76: {}
 
