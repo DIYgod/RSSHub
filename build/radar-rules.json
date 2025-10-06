@@ -33196,6 +33196,163 @@
       }
     ]
   },
+  "pixelstech.net": {
+    "_name": "PixelsTech",
+    "www": [
+      {
+        "title": "Feed",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/:topic"
+        ],
+        "target": "/pixelstech/feed/:topic"
+      },
+      {
+        "title": "All",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/"
+        ],
+        "target": "/pixelstech/feed"
+      },
+      {
+        "title": "AI",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/ai"
+        ],
+        "target": "/pixelstech/feed/ai"
+      },
+      {
+        "title": "Alibaba",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/alibaba"
+        ],
+        "target": "/pixelstech/feed/alibaba"
+      },
+      {
+        "title": "Apple",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/apple"
+        ],
+        "target": "/pixelstech/feed/apple"
+      },
+      {
+        "title": "Database",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/database"
+        ],
+        "target": "/pixelstech/feed/database"
+      },
+      {
+        "title": "Go",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/go"
+        ],
+        "target": "/pixelstech/feed/go"
+      },
+      {
+        "title": "Huawei",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/huawei"
+        ],
+        "target": "/pixelstech/feed/huawei"
+      },
+      {
+        "title": "Java",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/java"
+        ],
+        "target": "/pixelstech/feed/java"
+      },
+      {
+        "title": "JavaScript",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/javascript"
+        ],
+        "target": "/pixelstech/feed/javascript"
+      },
+      {
+        "title": "Linux",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/linux"
+        ],
+        "target": "/pixelstech/feed/linux"
+      },
+      {
+        "title": "LLM",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/llm"
+        ],
+        "target": "/pixelstech/feed/llm"
+      },
+      {
+        "title": "Nvidia",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/nvidia"
+        ],
+        "target": "/pixelstech/feed/nvidia"
+      },
+      {
+        "title": "Python",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/python"
+        ],
+        "target": "/pixelstech/feed/python"
+      },
+      {
+        "title": "Rust",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/rust"
+        ],
+        "target": "/pixelstech/feed/rust"
+      },
+      {
+        "title": "Tesla",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/tesla"
+        ],
+        "target": "/pixelstech/feed/tesla"
+      },
+      {
+        "title": "Web",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/web"
+        ],
+        "target": "/pixelstech/feed/web"
+      },
+      {
+        "title": "Web3",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/web3"
+        ],
+        "target": "/pixelstech/feed/web3"
+      },
+      {
+        "title": "Zig",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/feed/zig"
+        ],
+        "target": "/pixelstech/feed/zig"
+      }
+    ]
+  },
   "pixiv.net": {
     "_name": "pixiv",
     "www": [

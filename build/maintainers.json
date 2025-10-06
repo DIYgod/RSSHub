@@ -6292,6 +6292,9 @@
   "/pixabay/search/:q/:order?": [
     "TonyRL"
   ],
+  "/pixelstech/feed/:topic?": [
+    "nczitzk"
+  ],
   "/pixiv/user/bookmarks/:id": [
     "EYHN"
   ],
