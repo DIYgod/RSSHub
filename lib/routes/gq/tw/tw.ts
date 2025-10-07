@@ -1,6 +1,5 @@
 import { type Data, type DataItem, type Route } from '@/types';
 import { art } from '@/utils/render';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
@@ -105,7 +104,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const listUrl = `${baseUrl}/${category}${subcategory ? '/' + subcategory : ''}`;
-    const items = await cache.tryGet(listUrl, () => parseWebpage(listUrl));
+    const items = await parseWebpage(listUrl);
     logger.info(`[gq/tw] fetched ${items.length} items from ${listUrl}`);
 
     const categoryTitle = categoryTitleMap[category];
