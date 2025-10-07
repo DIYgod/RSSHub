@@ -95,11 +95,13 @@ function processListsAndLines(html: string): string {
         }
 
         // Check for bullet points and convert to proper nesting
-        const bulletMatch = trimmedLine.match(/^(\*+)\s*(.+)$/);
+        const bulletMatch = trimmedLine.match(/^(\*+)\s*(.*)$/);
         if (bulletMatch) {
             const depth = bulletMatch[1].length;
             const content = bulletMatch[2];
-
+            if (!content) {
+                continue; // Skip empty bullets like "*"
+            }
             // Create proper nested list structure
             const indent = '  '.repeat(depth - 1);
             processedLines.push(`${indent}<li>${content}</li>`);
