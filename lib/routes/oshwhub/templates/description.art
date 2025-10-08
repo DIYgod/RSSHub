@@ -12,16 +12,57 @@
   {{ /each }}
 {{ /if }}
 
-{{ if categories }}
-  <h2>标签</h2>
-  {{ each categories category }}
-    <span>{{ category }}</span> /
-  {{ /each }}
-{{ /if }}
-
-{{ if intro }}
-  <h2>简介</h2>
-  <p>{{ intro }}</p>
+{{ if title || origin || tags || license || pubDate || upDated || intro }}
+  <table>
+    <tbody>
+      {{ if title }}
+        <tr>
+          <th>名称</th>
+          <td>{{ title }}</td>
+        </tr>
+      {{ /if }}
+      {{ if origin }}
+        <tr>
+          <th>版本</th>
+          <td>{{ origin }}</td>
+        </tr>
+      {{ /if }}
+      {{ if tags }}
+        <tr>
+          <th>标签</th>
+          <td>
+            {{ each tags tag }}
+              {{ if $index !== 0 }}/ {{ /if }}{{ tag }}
+            {{ /each }}
+          </td>
+        </tr>
+      {{ /if }}
+      {{ if license }}
+        <tr>
+          <th>开源协议</th>
+          <td>{{ license }}</td>
+        </tr>
+      {{ /if }}
+      {{ if pubDate }}
+        <tr>
+          <th>创建时间</th>
+          <td>{{ pubDate }}</td>
+        </tr>
+      {{ /if }}
+      {{ if upDated }}
+        <tr>
+          <th>更新时间</th>
+          <td>{{ upDated }}</td>
+        </tr>
+      {{ /if }}
+      {{ if intro }}
+        <tr>
+          <th>简介</th>
+          <td>{{ intro }}</td>
+        </tr>
+      {{ /if }}
+    </tbody>
+  </table>
 {{ /if }}
 
 {{ if description }}

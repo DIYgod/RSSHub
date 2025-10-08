@@ -163,19 +163,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(new URL(item.guid.replace('oshwhub-', 'api/project/'), baseUrl).href);
+                const projectId = item.guid.replace(/^oshwhub-/, '');
+                const detailUrl = new URL(`api/project/${projectId}`, baseUrl).href;
+                const detailResponse = await ofetch(detailUrl);
 
                 const result = detailResponse.result;
                 const title: string = result.name;
                 const pubDateStr: string | undefined = result.oshwhub_publish_at;
                 const linkUrl: string | undefined = result.path;
-                const categories: string[] = [
-                    ...new Set(
-                        [...(item.category ?? []), originOptions.find((opt) => opt.value === result.origin)?.label ?? undefined, ...findNamesByUuids(projectTagsData, result.project_tags ?? []), result.license].filter(
-                            Boolean
-                        ) as string[]
-                    ),
-                ];
+
+                const origin: string | undefined = originOptions.find((opt) => opt.value === result.origin)?.label ?? undefined;
+                const tags: string[] = findNamesByUuids(projectTagsData, result.project_tags ?? []);
+
+                const categories: string[] = [...new Set([...(item.category ?? []), origin ?? undefined, ...tags, result.license].filter(Boolean) as string[])];
                 const authors: DataItem['author'] = [
                     ...new Map(
                         [result.owner, result.creator, ...result.members].map((author) => {
@@ -203,8 +203,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               },
                           ]
                         : undefined,
-                    categories,
+                    title,
+                    origin,
+                    tags,
+                    license: result.license,
                     intro: result.introduction,
+                    pubDate: pubDateStr,
+                    upDated: upDatedStr,
                     description: result.content ? md.render(result.content) : undefined,
                     documents: result.version_documents,
                     boms: result.boms ? JSON.parse(result.boms) : undefined,
@@ -274,7 +279,7 @@ export const route: Route = {
     path: '/explore/:type?/:origin?/:projectTag{.+}?',
     name: '开源广场',
     url: 'oshwhub.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['tylinux', 'nczitzk'],
     handler,
     example: '/oshwhub/explore',
     parameters: {
