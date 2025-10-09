@@ -1,5 +1,6 @@
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDuration } from '@/utils/helpers';
 import logger from '@/utils/logger';
 import type { Context } from 'hono';
 import cache from './cache';
@@ -86,6 +87,7 @@ async function handler(ctx: Context) {
                                   {
                                       url: getVideoUrl(item.bvid),
                                       mime_type: 'text/html',
+                                      duration_in_seconds: parseDuration(item.length),
                                   },
                                   ...subtitles,
                               ]
