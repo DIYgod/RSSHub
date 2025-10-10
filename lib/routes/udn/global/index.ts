@@ -44,7 +44,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const categories_conf = {
+    const categoriesConf = {
         hot: {
             articleSelector: '.carousel__list .carousel__item',
             titleExtractor: (e) => e.attr('title').trim(),
@@ -72,11 +72,11 @@ async function handler(ctx) {
 
     let items;
     if (category) {
-        const conf = categories_conf[category];
+        const conf = categoriesConf[category];
         items = getItems(conf);
     } else {
-        const defaultItems = getItems(categories_conf.default);
-        const hotItems = getItems(categories_conf.hot);
+        const defaultItems = getItems(categoriesConf.default);
+        const hotItems = getItems(categoriesConf.hot);
 
         const combinedItems = [...hotItems, ...defaultItems];
         items = [...new Map(combinedItems.map((item) => [item.link, item])).values()];
