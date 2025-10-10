@@ -153,8 +153,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0
       imapflow:
-        specifier: 1.0.198
-        version: 1.0.198
+        specifier: 1.0.199
+        version: 1.0.199
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -4090,8 +4090,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.198:
-    resolution: {integrity: sha512-cJ2+P5LPbfuosJvXlEQFN9kh7yDQXiiq1y2YeNPhu15JGd9Utz1knaAuF8WMy1HFpQ5zXCSNgmUw6RIMvAyPsA==}
+  imapflow@1.0.199:
+    resolution: {integrity: sha512-MIRgVg+LrBmPo8I1iAmSFrrft2RjrFQvsShr9MTzcX5vU6ztHOaQbz4obm1j+Y6nwhhI1npKfVzZkZ7cGyxzxg==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4809,8 +4809,8 @@ packages:
     resolution: {integrity: sha512-9O00Vh89/Ld2EcVCqJ/etd7u20UhME0f/NToPfArwPEe1Don1zy4mAIz6ariRr7mJ2RDxtaDzN0WJVdVXPtZaw==}
     engines: {node: '>=6.0.0'}
 
-  nodemailer@7.0.6:
-    resolution: {integrity: sha512-F44uVzgwo49xboqbFgBGkRaiMgtoBrBEWCVincJPK9+S9Adkzt/wXCLKbf7dxucmxfTI5gHGB+bEmdyzN6QKjw==}
+  nodemailer@7.0.9:
+    resolution: {integrity: sha512-9/Qm0qXIByEP8lEV2qOqcAW7bRpL8CR9jcTwk3NBnHJNmP9fIJ86g2fgmIXqHY+nj55ZEMwWqYAT2QTDpRUYiQ==}
     engines: {node: '>=6.0.0'}
 
   nopt@7.2.1:
@@ -5036,8 +5036,8 @@ packages:
   pino-std-serializers@7.0.0:
     resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
 
-  pino@9.12.0:
-    resolution: {integrity: sha512-0Gd0OezGvqtqMwgYxpL7P0pSHHzTJ0Lx992h+mNlMtRVfNnqweWmf0JmRWk5gJzHalyd2mxTzKjhiNbGS2Ztfw==}
+  pino@10.0.0:
+    resolution: {integrity: sha512-eI9pKwWEix40kfvSzqEP6ldqOoBIN7dwD/o91TY5z8vQI12sAffpR/pOqAD1IVVwIVHDpHjkq0joBPdJD0rafA==}
     hasBin: true
 
   pluralize@8.0.0:
@@ -5410,8 +5410,8 @@ packages:
   slide@1.1.6:
     resolution: {integrity: sha512-NwrtjCg+lZoqhFU8fOwl4ay2ei8PaqCBOUV3/ektPY9trO1yQ1oXEfmHAhKArUVUr/hOHvy5f6AdP17dCM0zMw==}
 
-  slow-redact@0.3.0:
-    resolution: {integrity: sha512-cf723wn9JeRIYP9tdtd86GuqoR5937u64Io+CYjlm2i7jvu7g0H+Cp0l0ShAf/4ZL+ISUTVT+8Qzz7RZmp9FjA==}
+  slow-redact@0.3.1:
+    resolution: {integrity: sha512-NvFvl1GuLZNW4U046Tfi8b26zXo8aBzgCAS2f7yVJR/fArN93mOqSA99cB9uITm92ajSz01bsu1K7SCVVjIMpQ==}
 
   smart-buffer@4.2.0:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
@@ -8343,7 +8343,7 @@ snapshots:
 
   '@types/imapflow@1.0.189':
     dependencies:
-      imapflow: 1.0.198
+      imapflow: 1.0.199
 
   '@types/js-beautify@1.14.3': {}
 
@@ -10221,7 +10221,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.198:
+  imapflow@1.0.199:
     dependencies:
       encoding-japanese: 2.2.0
       iconv-lite: 0.7.0
@@ -10229,8 +10229,8 @@ snapshots:
       libmime: 5.3.7
       libqp: 2.1.1
       mailsplit: 5.4.6
-      nodemailer: 7.0.6
-      pino: 9.12.0
+      nodemailer: 7.0.9
+      pino: 10.0.0
       socks: 2.8.7
 
   import-fresh@3.3.1:
@@ -11017,7 +11017,7 @@ snapshots:
 
   nodemailer@7.0.4: {}
 
-  nodemailer@7.0.6: {}
+  nodemailer@7.0.9: {}
 
   nopt@7.2.1:
     dependencies:
@@ -11246,7 +11246,7 @@ snapshots:
 
   pino-std-serializers@7.0.0: {}
 
-  pino@9.12.0:
+  pino@10.0.0:
     dependencies:
       atomic-sleep: 1.0.0
       on-exit-leak-free: 2.1.2
@@ -11256,7 +11256,7 @@ snapshots:
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.5.0
-      slow-redact: 0.3.0
+      slow-redact: 0.3.1
       sonic-boom: 4.2.0
       thread-stream: 3.1.0
 
@@ -11709,7 +11709,7 @@ snapshots:
 
   slide@1.1.6: {}
 
-  slow-redact@0.3.0: {}
+  slow-redact@0.3.1: {}
 
   smart-buffer@4.2.0: {}
 
