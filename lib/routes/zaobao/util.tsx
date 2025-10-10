@@ -73,7 +73,7 @@ export const parseList = async (
                 } else {
                     title = ldJson.headline;
                     pubDate = parseDate(ldJson.datePublished);
-                    category = ldJson.keywords.split(',');
+                    category = ldJson.keywords?.split(',');
                 }
 
                 // $1('.overlay-microtransaction').remove();
