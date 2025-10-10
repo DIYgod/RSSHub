@@ -114,9 +114,15 @@ function formatEventItem(event: any) {
         case 'PushEvent': {
             title = `${actor.login} pushed to ${repo.name}`;
             const branch = payload.ref ? payload.ref.replace('refs/heads/', '') : 'unknown';
-            description = `Pushed ${payload.size || 0} commit(s) to ${branch} in ${repo.name}`;
-            link = payload.commits.at(-1).url.replace('api.github.com/repos/', 'github.com/').replace('/commits/', '/commit/');
-            description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
+            const commitCount = payload.size ? `${payload.size} commit(s) ` : '';
+            description = `Pushed ${commitCount}to ${branch} in ${repo.name}`;
+
+            if (payload.commits) {
+                link = payload.commits.at(-1).url.replace('api.github.com/repos/', 'github.com/').replace('/commits/', '/commit/');
+                description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
+            } else {
+                link = `https://github.com/${repo.name}/commit/${payload.head}`;
+            }
             break;
         }
         case 'PullRequestEvent':
