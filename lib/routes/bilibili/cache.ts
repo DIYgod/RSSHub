@@ -276,7 +276,7 @@ const getVideoSubtitle = async (
         const cookie = await getCookie();
         response = await getSubtitleData(cookie);
 
-        if (response?.data?.data?.subtitle?.permission === '0') {
+        if (response?.data?.data?.permission === '0') {
             const newCookie = await getCookie(true);
             response = await getSubtitleData(newCookie);
         }
