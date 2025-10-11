@@ -272,15 +272,8 @@ const getVideoSubtitle = async (
             return response;
         };
 
-        let response;
         const cookie = await getCookie();
-        response = await getSubtitleData(cookie);
-
-        if (response?.data?.data?.permission === '0') {
-            const newCookie = await getCookie(true);
-            response = await getSubtitleData(newCookie);
-        }
-
+        const response = await getSubtitleData(cookie);
         const subtitles = response?.data?.data?.subtitle?.subtitles || [];
 
         return await Promise.all(
