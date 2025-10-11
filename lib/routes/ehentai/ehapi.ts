@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 import path from 'node:path';
 import { config } from '@/config';
 
-const headers = {};
+const headers: any = {};
 const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
 const from_ex = has_cookie && config.ehentai.igneous;
 if (has_cookie) {
@@ -77,20 +77,39 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         const pubDate = rawDate ? timezone(rawDate, 0) : rawDate;
         let el_a;
         let el_img;
+        let category;
+        let tags;
+
         // match layout
         if ('mpl'.includes(layout)) {
             // Minimal, Minimal+, Compact
             el_a = el.find('td[class^="gl3"] a');
             el_img = el.find('td[class^=gl2] div.glthumb div img');
+            category = el.find('td.gl1c.glcat .cn').text();
+            tags = el
+                .find('td.gl3c.glname div.gt')
+                .toArray()
+                .map((tag) => $(tag).attr('title'));
         } else if (layout === 'e') {
             // Extended
             el_a = el.find('td[class^="gl1"] a');
             el_img = el_a.find('img');
+            category = el.find('div.gl3e .cn').text();
+            tags = el
+                .find('table div[title]')
+                .toArray()
+                .map((tag) => $(tag).attr('title'));
         } else if (layout === 't') {
             // Thumbnail
             el_a = el.find('div[class^="gl3t"] a');
             el_img = el_a.find('img');
+            category = el.find('div.gl5t .cs').text();
+            tags = el
+                .find('div.gl6t .gt')
+                .toArray()
+                .map((tag) => $(tag).attr('title'));
         }
+
         const link = el_a.attr('href');
         let thumbnail = el_img.data('src') ?? el_img.attr('src');
         if (config.ehentai.img_proxy && thumbnail) {
@@ -100,9 +119,18 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         if (embed_thumb && thumbnail) {
             thumbnail = await ehgot_thumb(cache, thumbnail);
         }
-        const description = `<img src='${thumbnail}' alt='thumbnail'>`;
+        let description = `<img src='${thumbnail}' alt='thumbnail'>`;
+        if (tags) {
+            description += `<br><b>Tags:</b> ${tags.join(', ')}`;
+        }
         if (title && link) {
-            const item = { title, description, pubDate, link };
+            const item: any = {
+                title,
+                description,
+                pubDate,
+                link,
+                category,
+            };
             if (get_bittorrent) {
                 const el_down = el.find('div.gldown');
                 const bittorrent_page_url = el_down.find('a').attr('href');
@@ -128,13 +156,13 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
     }
 
-    const item_Promises = [];
+    const item_Promises: any[] = [];
     galleries.children().each((index, element) => {
         item_Promises.push(parseElement(cache, element));
     });
     const items_with_null = await Promise.all(item_Promises);
 
-    const items = [];
+    const items: any[] = [];
     for (const item of items_with_null) {
         if (item) {
             items.push(item);
@@ -208,4 +236,22 @@ function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = fal
     return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
 }
 
-export default { getFavoritesItems, getSearchItems, getTagItems, has_cookie, from_ex };
+function getWatchedItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {
+    const url = `watched?${params || ''}`;
+    return page ? gatherItemsByPage(cache, `${url}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, url, get_bittorrent, embed_thumb);
+}
+
+function getPopularItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {
+    const url = `popular?${params || ''}`;
+    return page ? gatherItemsByPage(cache, `${url}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, url, get_bittorrent, embed_thumb);
+}
+
+async function getToplistItems(cache, tl) {
+    const url = `toplist.php?tl=${tl}`;
+    // toplist is e-hentai only
+    const response = await got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
+    const items = await parsePage(cache, response.data);
+    return updateBittorrent_url(cache, items);
+}
+
+export default { getFavoritesItems, getSearchItems, getTagItems, getWatchedItems, getPopularItems, getToplistItems, has_cookie, from_ex };
