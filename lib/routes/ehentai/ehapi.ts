@@ -119,11 +119,11 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         if (highlight && tags_selector) {
             const highlighted_tags = el.find(`${tags_selector}[style]`);
             if (highlighted_tags.length > 0) {
-                const style = 'div.gt{float:left;font-weight:bold;padding:1px 4px;margin:0 2px 5px 2px;position:relative;border-radius:5px;border-width:1px;border-style:solid;}';
-                let highlighted_tags_html = `<style>${style}</style><div style="clear:both;"></div>`;
+                let highlighted_tags_html = '<p>';
                 highlighted_tags.each((_, tag) => {
-                    highlighted_tags_html += $.html(tag);
+                    highlighted_tags_html += `<code>${$(tag).text()}</code>&nbsp;&nbsp;`;
                 });
+                highlighted_tags_html += '</p>';
                 description += highlighted_tags_html;
             }
         }
