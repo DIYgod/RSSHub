@@ -5,20 +5,15 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import { URLSearchParams } from 'node:url';
 
 export const route: Route = {
-    path: '/watched/:params?/:page?/:routeParams?',
+    path: '/watched/:params?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/watched',
+    example: '/ehentai/watched/f_cats=1021/0/bittorrent=true&embed_thumb=false',
     parameters: {
         params: 'Search parameters. You can copy the content after `https://e-hentai.org/watched?`',
-        page: 'Page number',
-        routeParams: 'Additional parameters, e.g. bittorrent=true',
+        routeParams: 'Additional parameters, see the table above',
     },
     features: {
-        requireConfig: [
-            { name: 'EH_IPB_MEMBER_ID', description: 'E-Hentai cookie' },
-            { name: 'EH_IPB_PASS_HASH', description: 'E-Hentai cookie' },
-            { name: 'EH_SK', description: 'E-Hentai cookie' },
-        ],
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: true,
@@ -27,7 +22,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Watched',
-    maintainers: ['yindaheng98', 'syrinka'],
+    maintainers: ['yindaheng98', 'syrinka', 'onlyexile'],
     handler,
 };
 
@@ -36,19 +31,20 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('Ehentai watched RSS is disabled due to the lack of cookie config');
     }
 
-    const page = ctx.req.param('page');
     let params = ctx.req.param('params');
-    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') === 'true';
-    const embed_thumb = routeParams.get('embed_thumb') === 'true';
+    let routeParams = ctx.req.param('routeParams');
 
-    let items;
-    if (page) {
-        params = params.replace(/&*next=[^&]$/, '').replace(/next=[^&]&/, '');
-        items = await EhAPI.getWatchedItems(cache, params, page, bittorrent, embed_thumb);
-    } else {
-        items = await EhAPI.getWatchedItems(cache, params, undefined, bittorrent, embed_thumb);
+    if (params && !routeParams && (params.includes('bittorrent=') || params.includes('embed_thumb=') || params.includes('highlight='))) {
+        routeParams = params;
+        params = '';
     }
+
+    const routeParamsParsed = new URLSearchParams(routeParams);
+    const bittorrent = routeParamsParsed.get('bittorrent') === 'true';
+    const embed_thumb = routeParamsParsed.get('embed_thumb') === 'true';
+    const highlight = routeParamsParsed.get('highlight') !== 'false';
+
+    const items = await EhAPI.getWatchedItems(cache, params, bittorrent, embed_thumb, highlight);
 
     let title = params;
     const match = /f_search=([^&]+)/.exec(title);

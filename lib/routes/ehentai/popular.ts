@@ -3,39 +3,51 @@ import cache from '@/utils/cache';
 import EhAPI from './ehapi';
 
 export const route: Route = {
-    path: '/popular/:routeParams?',
+    path: '/popular/:params?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/popular',
+    example: '/ehentai/popular/f_sft=on&f_sfu=on&f_sfl=on/bittorrent=true&embed_thumb=false',
     parameters: {
-        routeParams: `same as EHentai search parameters`,
+        params: 'Filter parameters. You can copy the content after `https://e-hentai.org/popular?',
+        routeParams: 'Additional parameters, see the table above. E.g. `bittorrent=true&embed_thumb=false`',
     },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: true,
-        supportBT: false,
+        supportBT: true,
         supportPodcast: false,
         supportScihub: false,
         nsfw: true,
     },
     name: 'Popular',
-    maintainers: ['syrinka'],
+    maintainers: ['yindaheng98', 'syrinka', 'onlyexile'],
     handler,
 };
 
 async function handler(ctx) {
-    const routeParams = ctx.req.param('routeParams') ?? '';
-    const items = await EhAPI.getPopularItems(cache, routeParams, ctx.req.query('page'));
+    let params = ctx.req.param('params') ?? '';
+    let routeParams = ctx.req.param('routeParams');
+
+    if (params && !routeParams && (params.includes('bittorrent=') || params.includes('embed_thumb=') || params.includes('highlight='))) {
+        routeParams = params;
+        params = '';
+    }
+
+    const routeParamsParsed = new URLSearchParams(routeParams);
+    const bittorrent = routeParamsParsed.get('bittorrent') === 'true';
+    const embed_thumb = routeParamsParsed.get('embed_thumb') === 'true';
+    const highlight = routeParamsParsed.get('highlight') !== 'false';
+    const items = await EhAPI.getPopularItems(cache, params, bittorrent, embed_thumb, highlight);
 
     return EhAPI.from_ex
         ? {
               title: `ExHentai Popular`,
-              link: `https://exhentai.org/popular`,
+              link: `https://exhentai.org/popular${params || ''}`,
               item: items,
           }
         : {
               title: `E-Hentai Popular`,
-              link: `https://e-hentai.org/popular`,
+              link: `https://e-hentai.org/popular${params || ''}`,
               item: items,
           };
 }

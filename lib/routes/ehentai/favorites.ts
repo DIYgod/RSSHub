@@ -34,10 +34,11 @@ async function handler(ctx) {
     const favcat = ctx.req.param('favcat') ? Number.parseInt(ctx.req.param('favcat')) : 0;
     const page = ctx.req.param('page');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') || false;
-    const embed_thumb = routeParams.get('embed_thumb') || false;
+    const bittorrent = routeParams.get('bittorrent') === 'true';
+    const embed_thumb = routeParams.get('embed_thumb') === 'true';
+    const highlight = routeParams.get('highlight') !== 'false';
     const inline_set = ctx.req.param('order') === 'posted' ? 'fs_p' : 'fs_f';
-    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb);
+    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb, highlight);
 
     return EhAPI.from_ex
         ? {

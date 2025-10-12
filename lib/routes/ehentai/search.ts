@@ -25,15 +25,16 @@ async function handler(ctx) {
     const page = ctx.req.param('page');
     let params = ctx.req.param('params');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') || false;
-    const embed_thumb = routeParams.get('embed_thumb') || false;
+    const bittorrent = routeParams.get('bittorrent') === 'true';
+    const embed_thumb = routeParams.get('embed_thumb') === 'true';
+    const highlight = routeParams.get('highlight') !== 'false';
     let items;
     if (page) {
         // 如果定义了page，就要覆盖params
         params = params.replace(/&*next=[^&]$/, '').replace(/next=[^&]&/, '');
-        items = await EhAPI.getSearchItems(cache, params, page, bittorrent, embed_thumb);
+        items = await EhAPI.getSearchItems(cache, params, page, bittorrent, embed_thumb, highlight);
     } else {
-        items = await EhAPI.getSearchItems(cache, params, undefined, bittorrent, embed_thumb);
+        items = await EhAPI.getSearchItems(cache, params, undefined, bittorrent, embed_thumb, highlight);
     }
     let title = params;
     const match = /f_search=([^&]+)/.exec(title);
