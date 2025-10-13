@@ -44,7 +44,7 @@ async function handler(ctx) {
         const tokenResponse = await got.post('https://www.artstation.com/api/v2/csrf_protection/token.json', {
             headers,
         });
-        return tokenResponse.headers['set-cookie'][0].split(';')[0].split('=')[1];
+        return tokenResponse.data.public_csrf_token;
     });
 
     const { data: userData } = await got(`https://www.artstation.com/users/${handle}/quick.json`, {
