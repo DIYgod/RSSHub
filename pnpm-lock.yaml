@@ -288,8 +288,8 @@ importers:
         specifier: 1.9.1
         version: 1.9.1
       youtubei.js:
-        specifier: 15.1.1
-        version: 15.1.1
+        specifier: 16.0.0
+        version: 16.0.0
       zod:
         specifier: 3.25.76
         version: 3.25.76
@@ -1048,8 +1048,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@bufbuild/protobuf@2.8.0':
-    resolution: {integrity: sha512-r1/0w5C9dkbcdjyxY8ZHsC5AOWg4Pnzhm2zu7LO4UHSounp2tMm6Y+oioV9zlGbLveE7YaWRDUk48WLxRDgoqg==}
+  '@bufbuild/protobuf@2.9.0':
+    resolution: {integrity: sha512-rnJenoStJ8nvmt9Gzye8nkYd6V22xUAnu4086ER7h1zJ508vStko4pMvDeQ446ilDTFpV5wnoc5YS7XvMwwMqA==}
 
   '@bundled-es-modules/cookie@2.0.1':
     resolution: {integrity: sha512-8o+5fRPLNbjbdGRRmJj3h6Hh1AQJf2dk3qQ/5ZFb+PXkRNiSoMGGUKlsgLfrxneb72axVJyIYji64E2+nNfYyw==}
@@ -4152,9 +4152,6 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
-  jintr@3.3.1:
-    resolution: {integrity: sha512-nnOzyhf0SLpbWuZ270Omwbj5LcXUkTcZkVnK8/veJXtSZOiATM5gMZMdmzN75FmTyj+NVgrGaPdH12zIJ24oIA==}
-
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
@@ -4447,6 +4444,10 @@ packages:
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
+
+  meriyah@6.1.4:
+    resolution: {integrity: sha512-Sz8FzjzI0kN13GK/6MVEsVzMZEPvOhnmmI1lU5+/1cGOiK3QUahntrNNtdVeihrO7t9JpoH75iMNXg6R6uWflQ==}
+    engines: {node: '>=18.0.0'}
 
   methods@1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
@@ -6098,8 +6099,8 @@ packages:
     resolution: {integrity: sha512-KK1OparV3kpIIRkMgLRsQPE73Tu0hYy0CDKcWkF8O3eikyib0IqVjoDNDiGt0KhGbg0/jhh+VUOCcWn/G6nvAw==}
     engines: {node: '>=14.0.0'}
 
-  youtubei.js@15.1.1:
-    resolution: {integrity: sha512-fuEDj9Ky6cAQg93BrRVCbr+GTYNZQAIFZrx/a3oDRuGc3Mf5bS0dQfoYwwgjtSV7sgAKQEEdGtzRdBzOc8g72Q==}
+  youtubei.js@16.0.0:
+    resolution: {integrity: sha512-aMx+ulnrxzsgVsxTr7gbBVnIjti2NQUlMwCoo1/MzICCJS3iMLOPUFdo7bSpwskL6ljzQ/LxmmB4WQC3FtkBlA==}
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
@@ -6891,7 +6892,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@bufbuild/protobuf@2.8.0': {}
+  '@bufbuild/protobuf@2.9.0': {}
 
   '@bundled-es-modules/cookie@2.0.1':
     dependencies:
@@ -10180,10 +10181,6 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
-  jintr@3.3.1:
-    dependencies:
-      acorn: 8.15.0
-
   jiti@2.6.1: {}
 
   js-beautify@1.15.4:
@@ -10512,6 +10509,8 @@ snapshots:
   merge-stream@2.0.0: {}
 
   merge2@1.4.1: {}
+
+  meriyah@6.1.4: {}
 
   methods@1.1.2: {}
 
@@ -12286,11 +12285,10 @@ snapshots:
       he: 1.2.0
       striptags: 3.2.0
 
-  youtubei.js@15.1.1:
+  youtubei.js@16.0.0:
     dependencies:
-      '@bufbuild/protobuf': 2.8.0
-      jintr: 3.3.1
-      undici: 6.22.0
+      '@bufbuild/protobuf': 2.9.0
+      meriyah: 6.1.4
 
   zod@3.25.76: {}
 
