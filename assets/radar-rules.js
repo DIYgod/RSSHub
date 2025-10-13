@@ -171,23 +171,6 @@
         ],
         grs: [{ title: '研究生院通知', docs: 'https://docs.rsshub.app/routes/university#yun-nan-da-xue', source: '/*', target: '' }],
     },
-    'japanpost.jp': {
-        _name: '日本郵便',
-        'trackings.post': [
-            {
-                title: '郵便・荷物の追跡',
-                docs: 'https://docs.rsshub.app/routes/other#ri-ben-you-bian-you-bian-zhui-ji-サービス',
-                source: '/services/srv/search/direct',
-                target: (params, url) => {
-                    const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
-                    const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
-                        return `/japanpost/track/${reqCode}/${locale}`;
-                    }
-                },
-            },
-        ],
-    },
     // 'biquge5200.com': { www: [{ title: 'biquge5200.com', docs: 'https://docs.rsshub.app/routes/reading#bi-qu-ge-biquge5200-com', source: '/:id', target: '/novel/biquge/:id' }] },
     // 'biquge.info': { www: [{ title: 'biquge.info', docs: 'https://docs.rsshub.app/routes/reading#bi-qu-ge-biquge-info', source: '/:id', target: '/novel/biqugeinfo/:id' }] },
     'matters.news': {

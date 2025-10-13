@@ -807,6 +807,6 @@ You can find all the possible values of `request.resourceType()` [here](https://
 
 In the code above, you'll see that `waitUntil: 'domcontentloaded'` is used in the page.goto() function. This is a Puppeteer option that tells it when to consider a navigation successful. You can find all the possible values and their meanings [here](https://pptr.dev/api/puppeteer.page.goto/#remarks).
 
-It's worth noting that `domcontentloaded `waits for a shorter time than the default value `load`, and `networkidle0` may not be suitable for websites that keep sending background telemetry or fetching data.
+It's worth noting that `domcontentloaded`waits for a shorter time than the default value `load`, and `networkidle0` may not be suitable for websites that keep sending background telemetry or fetching data.
 
 Additionally, it's important to avoid waiting for a specific timeout and instead wait for a selector to appear. Waiting for a timeout is inaccurate, as it depends on the load of the Puppeteer instance.

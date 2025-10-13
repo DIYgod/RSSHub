@@ -34,13 +34,5 @@ vscode:
     - deepscan.vscode-deepscan
     - rangav.vscode-thunder-client
     - sonarsource.sonarlint-vscode
+    - unifiedjs.vscode-mdx
     # - ZihanLi.at-helper not available on Open VSX
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: false
-    pullRequestsFromForks: false
-    addCheck: false
-    addComment: false

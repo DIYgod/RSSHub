@@ -119,7 +119,7 @@ The source field is *optional* and should specifies the URL path. Leave it blank
 
 The source should be an array of strings. For example, if the source for `GitHub Repo Issues` is `/:user/:repo`, it means that when you visit `https://github.com/DIYgod/RSSHub`, which matches the `github.com/:user/:repo` pattern, the parameters for this URL will be: `{user: 'DIYgod', repo: 'RSSHub'}`. The browser extension uses these parameters to create an RSSHub subscription address based on the `target` field.
 
-:::caution
+:::warning
 
 If the value you want to extract is in the URL search parameters or URL hash, use target as a function instead of the `source` field. Also, remember that the `source` field only matches the URL path and not any other parts of the URL.
 
@@ -199,7 +199,7 @@ Both the above examples will return the same RSSHub subscription address as the 
 
 ### Update the Documentation
 
-As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support browser extension` badge. If the rule is also compatible with RSSBud, adding `rssbud="1"` will show a `Support RSSBud` badge.
+As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support Radar` badge.
 
 ## Debugging Radar Rules
 

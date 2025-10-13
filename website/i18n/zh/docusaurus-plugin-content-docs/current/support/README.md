@@ -16,7 +16,7 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。但是随着�
 -   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助
 -   通过 [Open Collective](https://opencollective.com/RSSHub) 赞助
 -   通过 [爱发电](https://afdian.net/@diygod) 赞助
--   给我们发邮件联系赞助事宜: <i@diygod.me>
+-   给我们发邮件联系赞助事宜: [i@diygod.me](mailto:i@diygod.me)
 
 ## 一次性赞助
 

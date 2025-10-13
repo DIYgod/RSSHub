@@ -29,7 +29,7 @@ The above code snippet from [Create Your Own RSSHub Route](/joinus/new-rss/start
 
 The object returned from the previous statement will be reused, and an extra `description` property will be added to it. The returned cache for each `item.link` will be `{ title, link, pubDate, author, category, description }`. The next time the same path is requested, this processed cache will be used instead of making a request to the server and recomputing the data.
 
-:::caution
+:::warning
 
 Any assignments to variables that are declared outside of the `tryGet()` function will not be processed under a cache-hit scenario. For example, the following code will not work as expected:
 

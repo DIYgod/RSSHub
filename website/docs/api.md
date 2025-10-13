@@ -1,6 +1,6 @@
 # API
 
-:::caution
+:::warning
 
 The API is under active development and is subject to change. All suggestions are welcome!
 
@@ -16,7 +16,7 @@ This API **will not** return any routes under `lib/protected_router.js`.
 
 :::
 
-Eg: <https://rsshub.app/api/routes/github>
+Eg: [https://rsshub.app/api/routes/github](https://rsshub.app/api/routes/github)
 
 Route: `/api/routes/:name?`
 

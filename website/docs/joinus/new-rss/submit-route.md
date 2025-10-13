@@ -10,15 +10,15 @@ Once you have finished your route, you can submit a pull request (hereafter refe
 
 ````md
 <!--
-如有疑问，请参考 https://github.com/DIYgod/RSSHub/discussions/8002
-Reference: https://docs.rsshub.app/joinus/new-rss/submit-route
+If you have any difficulties in filling out this form, please refer to https://docs.rsshub.app/joinus/new-rss/submit-route
+如果你在填写此表单时遇到任何困难，请参考 https://docs.rsshub.app/zh/joinus/new-rss/submit-route
 -->
 
-## 该 PR 相关 Issue / Involved Issue
+## Involved Issue / 该 PR 相关 Issue
 
 Close #
 
-## 完整路由地址 / Example for the Proposed Route(s)
+## Example for the Proposed Route(s) / 路由地址示例
 
 <!--
 请在 `routes` 区域填写以 / 开头的完整路由地址，否则你的 PR 将会被无条件关闭。
@@ -38,24 +38,22 @@ If your changes are not related to route, please fill in `routes` section with `
 ```routes
 ```
 
-## 新 RSS 路由检查表 / New RSS Route Checklist
+## New RSS Route Checklist / 新 RSS 路由检查表
 
-- [ ] 新的路由 New Route
-  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/advanced/script-standard) Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard)
-- [ ] 文档说明 Documentation
-  - [ ] 中文文档 CN
-  - [ ] 英文文档 EN
-- [ ] 全文获取 full article
-  - [ ] 使用缓存 Use cache
-- [ ] 反爬/频率限制 anti-bot or rate limit?
-  - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] [日期和时间](https://docs.rsshub.app/joinus/advanced/pub-date) [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date)
-  - [ ] 可以解析 Parsed
-  - [ ] 时区正确 Correct time zone
-- [ ] 添加了新的包 New package added
+- [ ] New Route / 新的路由
+  - [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
+- [ ] Documentation / 文档说明
+- [ ] Full text / 全文获取
+  - [ ] Use cache / 使用缓存
+- [ ] Anti-bot or rate limit / 反爬/频率限制
+  - [ ] If yes, do your code reflect this sign? / 如果有, 是否有对应的措施?
+- [ ] [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date) / [日期和时间](https://docs.rsshub.app/zh/joinus/advanced/pub-date)
+  - [ ] Parsed / 可以解析
+  - [ ] Correct time zone / 时区正确
+- [ ] New package added / 添加了新的包
 - [ ] `Puppeteer`
 
-## 说明 / Note
+## Note / 说明
 ````
 
 ### Involved Issue
@@ -64,7 +62,7 @@ You can fill in the issue number that this PR is related to here. If there's no 
 
 ### Example for the Proposed Route(s)
 
-Here you can add the route(s) you're proposing to add, along with all required and optional parameters. If you want to add multiple routes, add each one in a new line. For example:
+Here you can add the route(s) you're proposing to **add or change**, along with all required and optional parameters. If you want to add multiple routes, add each one in a new line. For example:
 
 ````md
 ```routes

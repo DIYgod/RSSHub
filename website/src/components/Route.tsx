@@ -1,7 +1,7 @@
-import React from 'react';
 import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 import Translate from '@docusaurus/Translate';
+import Link from '@docusaurus/Link';
 
 export default function Route({
   author = 'DIYgod',
@@ -13,9 +13,9 @@ export default function Route({
   supportPodcast = null,
   supportScihub = null,
   radar = null,
-  rssbud = null,
-  selfhost = null,
+  configRequired = null,
   puppeteer = null,
+  notOperational = null,
   children = null,
 }: {
   author?: string;
@@ -27,9 +27,9 @@ export default function Route({
   supportPodcast?: boolean;
   supportScihub?: boolean;
   radar?: boolean;
-  rssbud?: boolean;
-  selfhost?: boolean;
+  configRequired?: boolean;
   puppeteer?: boolean;
+  notOperational?: boolean;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
     const demoUrl = 'https://rsshub.app' + example;
@@ -43,46 +43,47 @@ export default function Route({
     };
 
     return (
-        <div className="routeBlock" id={path}>
+        <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
             <p className="badges">
+                {notOperational && (
+                    <Link to={`https://github.com/search?q=${encodeURIComponent('repo:DIYgod/RSSHub')}+${encodeURIComponent(`"${path}"`)}&type=issues`}>
+                        <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
+                    </Link>
+                )}
+                {anticrawler && (
+                    <Link to="/faq">
+                        <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
+                    </Link>
+                )}
                 {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
                 {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
                 {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
-                {anticrawler && (
-                    <a target="_blank" href="/faq.html">
-                        <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
-                    </a>
-                )}
-                {selfhost && (
-                    <a target="_blank" href="/install/">
-                        <Badge type="warn"><Translate id="badge.selfhost" /></Badge>
-                    </a>
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {configRequired && (
+                    <Link to="/install/config#route-specific-configurations">
+                        <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
+                    </Link>
                 )}
                 {radar && (
-                    <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar">
+                    <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
-                    </a>
-                )}
-                {rssbud && (
-                    <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
-                    </a>
+                    </Link>
                 )}
             </p>
             <p className="author">
                 <Translate id="route.author" />
                 {author.split(' ').map((uid) => (
-                    <a href={`https://github.com/${uid}`} target="_blank" key={uid}>
+                    <Link to={`https://github.com/${uid}`} key={uid}>
                         @{uid}{' '}
-                    </a>
+                    </Link>
                 ))}
             </p>
             <p className="example">
                 <span><Translate id="route.example" /></span>
-                <a href={demoUrl} target="_blank">
+                <Link to={demoUrl}>
                     {demoUrl}
-                </a>
+                </Link>
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>

@@ -16,7 +16,7 @@ Recurring donors will be rewarded via express issue response, or even have your 
 -   Become a Sponser on [Patreon](https://www.patreon.com/DIYgod)
 -   Become a Sponser on [Open Collective](https://opencollective.com/rsshub)
 -   Become a Sponser on [爱发电](https://afdian.net/@diygod)
--   Contact us directly: i@diygod.me
+-   Contact us directly: [i@diygod.me](mailto:i@diygod.me)
 
 ## One-time Donation
 

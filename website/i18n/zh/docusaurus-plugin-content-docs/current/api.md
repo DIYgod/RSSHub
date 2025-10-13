@@ -1,6 +1,6 @@
 # API
 
-:::caution
+:::warning
 
 API 仍处于开发状态中，并可能会有改动。欢迎提供建议！
 
@@ -16,13 +16,13 @@ RSSHub 提供下列 API:
 
 :::
 
-举例: <https://rsshub.app/api/routes/bilibili>
+举例: [https://rsshub.app/api/routes/bilibili](https://rsshub.app/api/routes/bilibili)
 
 路由: `/api/routes/:name?`
 
 参数:
 
--   `name`, 路由一级名称，对应 <https://github.com/DIYgod/RSSHub/tree/master/lib/routes> 中的文件夹名称。可选，**缺省则返回所有可用路由**.
+-   `name`, 路由一级名称，对应 [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的文件夹名称。可选，**缺省则返回所有可用路由**.
 
 成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果，格式如下:
 

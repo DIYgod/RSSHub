@@ -17,7 +17,7 @@ module.exports = {
         '.': [
             {
                 title: '仓库 Issues',
-                docs: 'https://docs.rsshub.app/programming#github',
+                docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },
@@ -109,7 +109,7 @@ module.exports = {
 
 ### `docs`
 
-文档链接也是*必填*字段。在这种情况下，`GitHub 仓库 Issues` 的文档链接将是 `https://docs.rsshub.app/programming#github`。请注意，URL hash 应位于二级标题 (`##`) 处，而不是三级标题 (`###`) `https://docs.rsshub.app/programming#github-cang-ku-issues`。
+文档链接也是*必填*字段。在这种情况下，`GitHub 仓库 Issues` 的文档链接将是 `https://docs.rsshub.app/routes/programming#github`。请注意，URL hash 应位于二级标题 (`##`) 处，而不是三级标题 (`###`) `https://docs.rsshub.app/routes/programming#github-cang-ku-issues`。
 
 ### `source`
 
@@ -117,7 +117,7 @@ source 是*可选*字段，应指定 URL 路径。如果不想匹配任何 URL �
 
 source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 source 是 `/:user/:repo`，则意味着当您访问 `https://github.com/DIYgod/RSSHub` 时将匹配 `/:user/:repo`，此时返回的结果 params 将是：`{user: 'DIYgod', repo: 'RSSHub'}`。浏览器扩展程序使用这些参数根据 target 字段建立 RSSHub 订阅地址。
 
-:::caution
+:::warning
 
 如果要提取的值在 URL 参数或 URL hash 中，请使用 target 函数而不是 source 字段。 此外，请记住，source 字段仅匹配 URL 路径，而不匹配 URL 的任何其他部分。
 
@@ -195,7 +195,7 @@ module.exports = {
 
 ### 补充文档
 
-[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持浏览器扩展”的徽章。如果规则还与 RSSBud 兼容，则添加 rssbud="1" 将显示“支持 RSSBud”的徽章。
+[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持 Radar”的徽章。
 
 ## 调试 Radar 规则
 

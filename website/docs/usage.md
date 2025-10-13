@@ -6,9 +6,9 @@ To subscribe to a Twitter user's timeline, first look at the route document of [
 
 `/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 
-The demo instance will generate an RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
+The demo instance will generate an RSS feed at `https://rsshub.app/twitter/user/DIYgod`, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
-You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install).
+You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install) or any [public instance](/instances).
 
 RSSHub supports additional parameters such as content filtering and full-text extraction, refer to [Parameters](/parameter) for details.
 
@@ -64,7 +64,7 @@ RSSHub.request('/youtube/user/JFlaMusic')
     });
 ```
 
-For supported configs please refer to the [Configuration Section](/install#configuration-3).
+For supported configs please refer to the [Configuration Section](/install/config).
 
 A short example for disabling caching can be written as:
 
@@ -73,3 +73,23 @@ A short example for disabling caching can be written as:
     CACHE_TYPE: null,
 }
 ```
+
+## Radar
+
+In addition to the two functions of generating RSS and obtaining data, RSSHub also provides a Radar function, which is used to map website addresses to RSSHub addresses.
+
+### Configuration file
+
+Radar has two types of configuration files, one is a full-featured [js file](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.js), and the other is a simplified [json file]((https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.json)).
+
+### Usage
+
+You need to use supported browser extensions, mobile apps, RSS readers, or other tools to use the Radar feature. Please refer to the documentation of the corresponding tool for specific usage instructions.
+
+- Browser extension: [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)
+
+- iOS app: [RSSBud](https://github.com/Cay-Zhang/RSSBud)
+
+- Android app: [RSSAid](https://github.com/LeetaoGoooo/RSSAid)
+
+- RSS Reader: Coming soon

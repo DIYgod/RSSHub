@@ -29,7 +29,7 @@ sidebar_position: 3
 
 上一个语句返回的对象将被重复使用，并且会添加一个额外的 `description` 属性。每个 `item.link` 的返回缓存将是`{ title, link, pubDate, author, category, description }`。下一次请求相同路由时，将直接返回处理过后的缓存而不是向服务器发出请求并重新计算数据。
 
-:::caution
+:::warning
 
 在 `tryGet()` 函数之外声明的变量的任何赋值都不会在缓存命中的情况下被处理。例如，以下代码将无法按预期工作：
 
