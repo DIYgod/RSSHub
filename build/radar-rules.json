@@ -34917,6 +34917,19 @@
       }
     ]
   },
+  "resetera.com": {
+    "_name": "ResetEra",
+    ".": [
+      {
+        "title": "Thread latest posts (text & images)",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/threads/:slug.:id/"
+        ],
+        "target": "/resetera/thread/:id"
+      }
+    ]
+  },
   "reuters.com": {
     "_name": "Reuters",
     ".": [
