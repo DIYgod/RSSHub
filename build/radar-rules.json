@@ -31252,6 +31252,659 @@
       }
     ]
   },
+  "oshwhub.com": {
+    "_name": "oshwhub 立创开源硬件平台",
+    ".": [
+      {
+        "title": "开源广场",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore"
+        ],
+        "target": "/oshwhub/explore"
+      },
+      {
+        "title": "嵌入式 - 51单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3b0f18b7516447f4b98a3830b1f3b665"
+        ],
+        "target": "/oshwhub/explore/new/all/3b0f18b7516447f4b98a3830b1f3b665"
+      },
+      {
+        "title": "嵌入式 - STM单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=ccf89e646cd446a3b83b2f52b0199b62"
+        ],
+        "target": "/oshwhub/explore/new/all/ccf89e646cd446a3b83b2f52b0199b62"
+      },
+      {
+        "title": "嵌入式 - AVR单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3f6426c635ff442291209a3384a84102"
+        ],
+        "target": "/oshwhub/explore/new/all/3f6426c635ff442291209a3384a84102"
+      },
+      {
+        "title": "嵌入式 - MM单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=cc3d1169f18c416c8757901ea6df6223"
+        ],
+        "target": "/oshwhub/explore/new/all/cc3d1169f18c416c8757901ea6df6223"
+      },
+      {
+        "title": "嵌入式 - HK单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b97db05d4ca84ec586b573ac8a30f903"
+        ],
+        "target": "/oshwhub/explore/new/all/b97db05d4ca84ec586b573ac8a30f903"
+      },
+      {
+        "title": "嵌入式 - GD单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b20331637f5145acacdcba7b4b425f86"
+        ],
+        "target": "/oshwhub/explore/new/all/b20331637f5145acacdcba7b4b425f86"
+      },
+      {
+        "title": "嵌入式 - Arduino",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=656035358f114d88a6d7ae9f2f008004"
+        ],
+        "target": "/oshwhub/explore/new/all/656035358f114d88a6d7ae9f2f008004"
+      },
+      {
+        "title": "嵌入式 - Linux",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=a970fe2004094a908bccfcd3a19d8119"
+        ],
+        "target": "/oshwhub/explore/new/all/a970fe2004094a908bccfcd3a19d8119"
+      },
+      {
+        "title": "嵌入式 - RA单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=10f420434b2e499a9d55a053a1b68532"
+        ],
+        "target": "/oshwhub/explore/new/all/10f420434b2e499a9d55a053a1b68532"
+      },
+      {
+        "title": "嵌入式 - FPGA",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b9dc4e4d3185457fb0b036697c60c304"
+        ],
+        "target": "/oshwhub/explore/new/all/b9dc4e4d3185457fb0b036697c60c304"
+      },
+      {
+        "title": "嵌入式 - 创客教育套件",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=7a7e2ffe306f45d49aceeccf643164f1"
+        ],
+        "target": "/oshwhub/explore/new/all/7a7e2ffe306f45d49aceeccf643164f1"
+      },
+      {
+        "title": "嵌入式 - DSP",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=7afd043f0472485f8a0bdd03b7f2b430"
+        ],
+        "target": "/oshwhub/explore/new/all/7afd043f0472485f8a0bdd03b7f2b430"
+      },
+      {
+        "title": "嵌入式 - ESP8266/32",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=6f6eefa0fcb54ab4b75469c64646d9e9"
+        ],
+        "target": "/oshwhub/explore/new/all/6f6eefa0fcb54ab4b75469c64646d9e9"
+      },
+      {
+        "title": "嵌入式 - Hi3861",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=08da4fffef66412c98862b56bc6de8e0"
+        ],
+        "target": "/oshwhub/explore/new/all/08da4fffef66412c98862b56bc6de8e0"
+      },
+      {
+        "title": "嵌入式 - CH单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=46713082ee6e4e5d83ab50b2dde261f9"
+        ],
+        "target": "/oshwhub/explore/new/all/46713082ee6e4e5d83ab50b2dde261f9"
+      },
+      {
+        "title": "嵌入式 - CW32单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=68b1cd8ff95c4a77ada1feac74a15cd7"
+        ],
+        "target": "/oshwhub/explore/new/all/68b1cd8ff95c4a77ada1feac74a15cd7"
+      },
+      {
+        "title": "嵌入式 - N32单片机",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=a8174b755bb840c284354adda36bea97"
+        ],
+        "target": "/oshwhub/explore/new/all/a8174b755bb840c284354adda36bea97"
+      },
+      {
+        "title": "嵌入式 - 全志系列",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=02c3807273ea47c4aaa6708b897a1608"
+        ],
+        "target": "/oshwhub/explore/new/all/02c3807273ea47c4aaa6708b897a1608"
+      },
+      {
+        "title": "嵌入式 - AIR32",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=91c29b363a024e73afe4fb2adc3d6336"
+        ],
+        "target": "/oshwhub/explore/new/all/91c29b363a024e73afe4fb2adc3d6336"
+      },
+      {
+        "title": "嵌入式 - 树莓派",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=68fb2b4eacf244b6b99e208bd0c0453c"
+        ],
+        "target": "/oshwhub/explore/new/all/68fb2b4eacf244b6b99e208bd0c0453c"
+      },
+      {
+        "title": "嵌入式 - RISC-V",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=5bf7f884bccf4507acc36a729d8b5078"
+        ],
+        "target": "/oshwhub/explore/new/all/5bf7f884bccf4507acc36a729d8b5078"
+      },
+      {
+        "title": "嵌入式 - 玄铁",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e0a360d42a954a29bb6a3e5eee0395fd"
+        ],
+        "target": "/oshwhub/explore/new/all/e0a360d42a954a29bb6a3e5eee0395fd"
+      },
+      {
+        "title": "嵌入式 - Canaan(嘉楠)",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3dec6606d3ca4b898eb86a78fd4c40ea"
+        ],
+        "target": "/oshwhub/explore/new/all/3dec6606d3ca4b898eb86a78fd4c40ea"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 立创泰山派",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=26b12f4862cc4aa8a7a6ff653d9de9ed"
+        ],
+        "target": "/oshwhub/explore/new/all/26b12f4862cc4aa8a7a6ff653d9de9ed"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 立创梁山派",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=51f92f98f8c3465ebc12e014b654a15c"
+        ],
+        "target": "/oshwhub/explore/new/all/51f92f98f8c3465ebc12e014b654a15c"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 仿真器/编程器",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=1b87c2546ea3444e9817a1faf8f76ff2"
+        ],
+        "target": "/oshwhub/explore/new/all/1b87c2546ea3444e9817a1faf8f76ff2"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 电赛TI开发板",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=d4b25b821c8d4f7cb1bd871853400521"
+        ],
+        "target": "/oshwhub/explore/new/all/d4b25b821c8d4f7cb1bd871853400521"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 电源/能源",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e804983891e743439072af4e05aba50d"
+        ],
+        "target": "/oshwhub/explore/new/all/e804983891e743439072af4e05aba50d"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 信号/通信",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b13a722e49ae40f4ae15c7448c0e807b"
+        ],
+        "target": "/oshwhub/explore/new/all/b13a722e49ae40f4ae15c7448c0e807b"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 测量/仪器",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b1fb4acdb7354d81b3ed3c18050d0580"
+        ],
+        "target": "/oshwhub/explore/new/all/b1fb4acdb7354d81b3ed3c18050d0580"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 课设/毕设",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=7711ced2a349485d85a6cae11c91cc5d"
+        ],
+        "target": "/oshwhub/explore/new/all/7711ced2a349485d85a6cae11c91cc5d"
+      },
+      {
+        "title": "DIY设计/硬件设计 - DIY设计",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=d3cacd30fc1a4dbea35aba2f00c755e3"
+        ],
+        "target": "/oshwhub/explore/new/all/d3cacd30fc1a4dbea35aba2f00c755e3"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 声光设计",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=fbca6abc8a114614a5598bf7c33fb72e"
+        ],
+        "target": "/oshwhub/explore/new/all/fbca6abc8a114614a5598bf7c33fb72e"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 555定时器",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e53cdda17f4840158e9f9a82354f923d"
+        ],
+        "target": "/oshwhub/explore/new/all/e53cdda17f4840158e9f9a82354f923d"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 方案验证板",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=90637fd096424071a21927e5cdc436de"
+        ],
+        "target": "/oshwhub/explore/new/all/90637fd096424071a21927e5cdc436de"
+      },
+      {
+        "title": "DIY设计/硬件设计 - 面板设计",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=8e9b3ad4569943b19f701cf06d3be169"
+        ],
+        "target": "/oshwhub/explore/new/all/8e9b3ad4569943b19f701cf06d3be169"
+      },
+      {
+        "title": "物联网/智能硬件 - 蓝牙/蓝牙mesh",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=252438513ded4c87b8bac438d006a0b8"
+        ],
+        "target": "/oshwhub/explore/new/all/252438513ded4c87b8bac438d006a0b8"
+      },
+      {
+        "title": "物联网/智能硬件 - WiFi/以太网",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=f2beb30a80134f3e9595b51148f55cf8"
+        ],
+        "target": "/oshwhub/explore/new/all/f2beb30a80134f3e9595b51148f55cf8"
+      },
+      {
+        "title": "物联网/智能硬件 - 射频/2.4G",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=72cccbeca286458a9fb31fbbff8cd57f"
+        ],
+        "target": "/oshwhub/explore/new/all/72cccbeca286458a9fb31fbbff8cd57f"
+      },
+      {
+        "title": "物联网/智能硬件 - GSM/GPRS",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e2f58f5ada1b46aaa30899996e1bffee"
+        ],
+        "target": "/oshwhub/explore/new/all/e2f58f5ada1b46aaa30899996e1bffee"
+      },
+      {
+        "title": "物联网/智能硬件 - 无线定位",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3c3111e1320c48dd8e60e46201140402"
+        ],
+        "target": "/oshwhub/explore/new/all/3c3111e1320c48dd8e60e46201140402"
+      },
+      {
+        "title": "物联网/智能硬件 - 4G/5G技术",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3e9823af89424add8e16c8d86dbe6365"
+        ],
+        "target": "/oshwhub/explore/new/all/3e9823af89424add8e16c8d86dbe6365"
+      },
+      {
+        "title": "物联网/智能硬件 - 智能家居",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=f1f6fe3058c4476486baa2d51469c116"
+        ],
+        "target": "/oshwhub/explore/new/all/f1f6fe3058c4476486baa2d51469c116"
+      },
+      {
+        "title": "电子模块 - 电源模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=2613794836ff4fa2954e4cca5749584a"
+        ],
+        "target": "/oshwhub/explore/new/all/2613794836ff4fa2954e4cca5749584a"
+      },
+      {
+        "title": "电子模块 - 显示模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=00aa2be7c4d44b5ea060419ca57a94e0"
+        ],
+        "target": "/oshwhub/explore/new/all/00aa2be7c4d44b5ea060419ca57a94e0"
+      },
+      {
+        "title": "电子模块 - 通信模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=a99c667254ab41f788ffbcb3e78e152b"
+        ],
+        "target": "/oshwhub/explore/new/all/a99c667254ab41f788ffbcb3e78e152b"
+      },
+      {
+        "title": "电子模块 - 传感器模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b643637f21ea4464aeb312f29ca0131e"
+        ],
+        "target": "/oshwhub/explore/new/all/b643637f21ea4464aeb312f29ca0131e"
+      },
+      {
+        "title": "电子模块 - 电机驱动模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=7676fdaf039847e3808481a4437e004b"
+        ],
+        "target": "/oshwhub/explore/new/all/7676fdaf039847e3808481a4437e004b"
+      },
+      {
+        "title": "电子模块 - 其他模块",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=22a10af7cd434f1d8c28588b030963c5"
+        ],
+        "target": "/oshwhub/explore/new/all/22a10af7cd434f1d8c28588b030963c5"
+      },
+      {
+        "title": "电子应用 - 汽车电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=cc45e77e32764600a9edd9c6bec9a932"
+        ],
+        "target": "/oshwhub/explore/new/all/cc45e77e32764600a9edd9c6bec9a932"
+      },
+      {
+        "title": "电子应用 - 消费电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e5831c441f25423d88a7311a9b276871"
+        ],
+        "target": "/oshwhub/explore/new/all/e5831c441f25423d88a7311a9b276871"
+      },
+      {
+        "title": "电子应用 - 工业电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=ba95313da8b24bbfbcf00182447f6063"
+        ],
+        "target": "/oshwhub/explore/new/all/ba95313da8b24bbfbcf00182447f6063"
+      },
+      {
+        "title": "电子应用 - 家用电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=7bee905a7730453c803339f2a1dc77cf"
+        ],
+        "target": "/oshwhub/explore/new/all/7bee905a7730453c803339f2a1dc77cf"
+      },
+      {
+        "title": "电子应用 - 医疗电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b3e25776aa9d438980f140b7577b1af7"
+        ],
+        "target": "/oshwhub/explore/new/all/b3e25776aa9d438980f140b7577b1af7"
+      },
+      {
+        "title": "电子应用 - 工业4.0",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=2d6d5c8697cc4061a66e6fb06e30f587"
+        ],
+        "target": "/oshwhub/explore/new/all/2d6d5c8697cc4061a66e6fb06e30f587"
+      },
+      {
+        "title": "电子应用 - 开源复刻",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=935421b496b44f178a554fbdaa568e0a"
+        ],
+        "target": "/oshwhub/explore/new/all/935421b496b44f178a554fbdaa568e0a"
+      },
+      {
+        "title": "电子应用 - 电子竞赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=08a877289c3f4f34b2ca8905996e07ed"
+        ],
+        "target": "/oshwhub/explore/new/all/08a877289c3f4f34b2ca8905996e07ed"
+      },
+      {
+        "title": "电子应用 - AI视觉",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e2d486a270aa46f790318c714cc77d02"
+        ],
+        "target": "/oshwhub/explore/new/all/e2d486a270aa46f790318c714cc77d02"
+      },
+      {
+        "title": "电工电子 - 电路分析",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=827cd3b7542646d682f9588973647e96"
+        ],
+        "target": "/oshwhub/explore/new/all/827cd3b7542646d682f9588973647e96"
+      },
+      {
+        "title": "电工电子 - 电力电子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=a08b61928be54154bb1a346f7630e4ba"
+        ],
+        "target": "/oshwhub/explore/new/all/a08b61928be54154bb1a346f7630e4ba"
+      },
+      {
+        "title": "电工电子 - 模拟电路",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=858b54c552714ef586fd28705d79e1ec"
+        ],
+        "target": "/oshwhub/explore/new/all/858b54c552714ef586fd28705d79e1ec"
+      },
+      {
+        "title": "电工电子 - 数字电路",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=027f0293ca4e4c0e982c3b11f13b64b6"
+        ],
+        "target": "/oshwhub/explore/new/all/027f0293ca4e4c0e982c3b11f13b64b6"
+      },
+      {
+        "title": "电工电子 - 高频电路",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=8938b321c55a41b092da9443fcfba334"
+        ],
+        "target": "/oshwhub/explore/new/all/8938b321c55a41b092da9443fcfba334"
+      },
+      {
+        "title": "电工电子 - 仿真电路",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b29c5f43ff8c4f39930174732044842c"
+        ],
+        "target": "/oshwhub/explore/new/all/b29c5f43ff8c4f39930174732044842c"
+      },
+      {
+        "title": "电子竞赛/活动 - 星火计划2025",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=9d75d82c34d74d8eb385281a6ebc7fe9"
+        ],
+        "target": "/oshwhub/explore/new/all/9d75d82c34d74d8eb385281a6ebc7fe9"
+      },
+      {
+        "title": "电子竞赛/活动 - 彩色丝印",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=4776bafa72df43879ea082ae1345d5bb"
+        ],
+        "target": "/oshwhub/explore/new/all/4776bafa72df43879ea082ae1345d5bb"
+      },
+      {
+        "title": "电子竞赛/活动 - 立创大赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=f7eefe9c39ff49dabbea446863af30e3"
+        ],
+        "target": "/oshwhub/explore/new/all/f7eefe9c39ff49dabbea446863af30e3"
+      },
+      {
+        "title": "电子竞赛/活动 - 互联网+",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=10d9b29096d347629eea7fe3a78eb290"
+        ],
+        "target": "/oshwhub/explore/new/all/10d9b29096d347629eea7fe3a78eb290"
+      },
+      {
+        "title": "电子竞赛/活动 - 创新杯/创青春",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=e6920b7defbf47f78e811379ab06b3a2"
+        ],
+        "target": "/oshwhub/explore/new/all/e6920b7defbf47f78e811379ab06b3a2"
+      },
+      {
+        "title": "电子竞赛/活动 - FPGA大赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=3348af772eb54f769e345c1c6312c3a9"
+        ],
+        "target": "/oshwhub/explore/new/all/3348af772eb54f769e345c1c6312c3a9"
+      },
+      {
+        "title": "电子竞赛/活动 - 其他比赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=06ed1c7532594f59916f7ce037a6f3ff"
+        ],
+        "target": "/oshwhub/explore/new/all/06ed1c7532594f59916f7ce037a6f3ff"
+      },
+      {
+        "title": "电子竞赛/活动 - 星火计划2024",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=5f4e56750b0445a7a024b01cc8fa7122"
+        ],
+        "target": "/oshwhub/explore/new/all/5f4e56750b0445a7a024b01cc8fa7122"
+      },
+      {
+        "title": "电子竞赛/活动 - 星火计划2023",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=15637284a6f545128f80a11443cdf1a0"
+        ],
+        "target": "/oshwhub/explore/new/all/15637284a6f545128f80a11443cdf1a0"
+      },
+      {
+        "title": "电子设计大赛 - 校内选拔赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b9b469bc5f9f43fbbca7ea1b42ad261f"
+        ],
+        "target": "/oshwhub/explore/new/all/b9b469bc5f9f43fbbca7ea1b42ad261f"
+      },
+      {
+        "title": "电子设计大赛 - 省赛/区赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=9ba4444f3c4e4c0ca6de5c5473cde4a8"
+        ],
+        "target": "/oshwhub/explore/new/all/9ba4444f3c4e4c0ca6de5c5473cde4a8"
+      },
+      {
+        "title": "电子设计大赛 - 2013年电赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=9b0656c41291403db63ecdd67d8caf07"
+        ],
+        "target": "/oshwhub/explore/new/all/9b0656c41291403db63ecdd67d8caf07"
+      },
+      {
+        "title": "电子设计大赛 - 2015年电赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=fe146745542a4dde99883058b5325863"
+        ],
+        "target": "/oshwhub/explore/new/all/fe146745542a4dde99883058b5325863"
+      },
+      {
+        "title": "电子设计大赛 - 2019年电赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b3894c65a5ca47f19bab8867da884f04"
+        ],
+        "target": "/oshwhub/explore/new/all/b3894c65a5ca47f19bab8867da884f04"
+      },
+      {
+        "title": "电子设计大赛 - 2021年电赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=6ccb9fbbd3294c6ba93570c8d35e5310"
+        ],
+        "target": "/oshwhub/explore/new/all/6ccb9fbbd3294c6ba93570c8d35e5310"
+      },
+      {
+        "title": "电子设计大赛 - 2023年电赛",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/explore?tag=b1e24499fcdb47c7896baf96b0e40aaa"
+        ],
+        "target": "/oshwhub/explore/new/all/b1e24499fcdb47c7896baf96b0e40aaa"
+      }
+    ]
+  },
   "ppy.sh": {
     "_name": "osu!",
     "osu": [
