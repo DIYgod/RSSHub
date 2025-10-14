@@ -136,7 +136,7 @@ async function handler(ctx) {
             // Match 感谢|謝.*?cn.letters@nytimes.com。
             const ending = /&#x611F;(&#x8C22|&#x8B1D);.*?cn\.letters@nytimes\.com&#x3002;/g;
 
-            single.description = result.description?.replace(ending, '');
+            single.description = result.description?.replaceAll(ending, '');
 
             if (hasEnVersion) {
                 single.title = result.title;

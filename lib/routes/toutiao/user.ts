@@ -57,12 +57,12 @@ async function handler(ctx) {
         switch (item.cell_type) {
             case 0:
             case 49: {
-                const video = item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0];
+                const video = item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0];
                 return {
                     title: item.title,
                     description: art(path.join(__dirname, 'templates/video.art'), {
                         poster: item.video.origin_cover.url_list[0],
-                        url: item.video.play_addr_list.sort((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0],
+                        url: item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0],
                     }),
                     link: `https://www.toutiao.com/video/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),

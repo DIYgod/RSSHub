@@ -73,7 +73,7 @@ export const parseList = async (
                 } else {
                     title = ldJson.headline;
                     pubDate = parseDate(ldJson.datePublished);
-                    category = ldJson.keywords.split(',');
+                    category = ldJson.keywords?.split(',');
                 }
 
                 // $1('.overlay-microtransaction').remove();
@@ -119,7 +119,7 @@ export const orderContent = (parent) => {
     for (const [i, e] of parent
         .children()
         .toArray()
-        .sort((a, b) => {
+        .toSorted((a, b) => {
             const index = Buffer.from(base32.parse('GM======')).toString(); // substring(3)
             a = Buffer.from(
                 base32.parse(

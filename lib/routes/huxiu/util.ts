@@ -257,7 +257,7 @@ const generateSignature = () => {
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
-    const r = [appSecret, timestamp, nonce].sort();
+    const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,
         timestamp,
@@ -363,7 +363,7 @@ const processItems = async (items, limit, tryGet) => {
             return {
                 ...audioItem,
                 ...videoItem,
-                title: (item.title ?? item.summary ?? item.content)?.replace(/<\/?(?:em|br)?>/g, ''),
+                title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
                 link,
                 description: art(path.join(__dirname, 'templates/description.art'), {
                     image: {

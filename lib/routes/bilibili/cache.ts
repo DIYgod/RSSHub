@@ -6,6 +6,17 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+const subtitleLimiter = new RateLimiterMemory({
+    points: 5,
+    duration: 1,
+    execEvenly: true,
+});
+
+const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
+    maxQueueSize: 4800,
+});
 
 const getCookie = (disableConfig = false) => {
     if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
@@ -18,7 +29,7 @@ const getCookie = (disableConfig = false) => {
             }
         }
 
-        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
+        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
@@ -200,7 +211,7 @@ const getCidFromId = (aid, pid, bvid) => {
         const { data } = await got(`https://api.bilibili.com/x/web-interface/view?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
             referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
         });
-        return data.data.pages[pid - 1].cid;
+        return data?.data?.pages[pid - 1]?.cid;
     });
 };
 
@@ -244,15 +255,25 @@ const getVideoSubtitle = async (
     }
 
     const cid = await getCidFromId(undefined, 1, bvid);
-    const cookie = await getCookie();
-    return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
-        const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
-            headers: {
-                Referer: `https://www.bilibili.com/video/${bvid}`,
-                Cookie: cookie,
-            },
-        });
+    if (!cid) {
+        return [];
+    }
 
+    return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        await subtitleLimiterQueue.removeTokens(1);
+
+        const getSubtitleData = async (cookie: string) => {
+            const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
+                headers: {
+                    Referer: `https://www.bilibili.com/video/${bvid}`,
+                    Cookie: cookie,
+                },
+            });
+            return response;
+        };
+
+        const cookie = await getCookie();
+        const response = await getSubtitleData(cookie);
         const subtitles = response?.data?.data?.subtitle?.subtitles || [];
 
         return await Promise.all(
@@ -274,7 +295,7 @@ const getVideoSubtitle = async (
 const getVideoSubtitleAttachment = async (bvid: string) => {
     const subtitles = await getVideoSubtitle(bvid);
     return subtitles.map((subtitle) => ({
-        url: `data:text/plain;charset=utf-8,${subtitle.content}`,
+        url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
         mime_type: 'text/srt',
         title: `字幕 - ${subtitle.lan_doc}`,
     }));

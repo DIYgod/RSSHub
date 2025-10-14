@@ -1,0 +1,89 @@
+name: Similar Issues via AI MCP
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  find-similar:
+    permissions:
+      contents: read
+      issues: write
+      models: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Prepare prompt variables
+        id: prepare_input
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const issue = context.payload.issue || {};
+            const title = issue.title || '';
+            const body = issue.body || '';
+            const indent = '      ';
+            // Indent subsequent lines so YAML block scalar indentation remains valid
+            const bodyIndented = body.replace(/\n/g, '\n' + indent);
+            core.setOutput('issue_title_json', JSON.stringify(title));
+            core.setOutput('issue_body_indented_json', JSON.stringify(bodyIndented));
+
+      - name: Find similar issues with AI (MCP)
+        id: inference
+        uses: actions/ai-inference@a1c11829223a786afe3b5663db904a3aa1eac3a2 # v2.0.1
+        with:
+          prompt-file: ./.github/prompts/similar_issues.prompt.yml
+          input: |
+            issue_title: ${{ steps.prepare_input.outputs.issue_title_json }}
+            issue_body: ${{ steps.prepare_input.outputs.issue_body_indented_json }}
+            repository: ${{ github.repository }}
+          enable-github-mcp: true
+          # Inference token can use GITHUB_TOKEN. MCP specifically requires a PAT.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          github-mcp-token: ${{ secrets.USER_PAT }}
+          max-tokens: 8000
+
+      - name: Prepare comment body
+        id: prepare
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        env:
+          AI_RESPONSE: ${{ steps.inference.outputs.response }}
+        with:
+          script: |
+            let data;
+            try {
+              data = JSON.parse(process.env.AI_RESPONSE || '{}');
+            } catch (e) {
+              core.setOutput('has_matches', 'false');
+              return;
+            }
+            const matches = Array.isArray(data.matches) ? data.matches : [];
+            if (!matches.length) {
+              core.setOutput('has_matches', 'false');
+              return;
+            }
+            const lines = [];
+            lines.push('I found similar issues that might help:');
+            for (const m of matches.slice(0, 3)) {
+              const num = m.number != null ? `#${m.number}` : '';
+              const title = m.title || 'Untitled';
+              const url = m.url || '';
+              const score = typeof m.similarity_score === 'number' ? ` (similarity: ${m.similarity_score.toFixed(2)})` : '';
+              lines.push(`- ${url}${score}`.trim());
+            }
+            core.setOutput('has_matches', 'true');
+            core.setOutput('comment_body', lines.join('\n'));
+
+      - name: Comment similar issues
+        if: steps.prepare.outputs.has_matches == 'true'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            const body = ${{ toJson(steps.prepare.outputs.comment_body) }};
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body
+            });

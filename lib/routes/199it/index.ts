@@ -219,7 +219,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [研究报告](https://www.199it.com/archives/category/report)，网址为 \`https://www.199it.com/archives/category/report\`，请截取 \`https://www.199it.com/archives/category/report\` 到末尾的部分 \`archives/category/report\` 作为 \`category\` 参数填入，此时目标路由为 [\`/199it/archives/category/report\`](https://rsshub.app/199it/archives/category/report)。
 :::
 

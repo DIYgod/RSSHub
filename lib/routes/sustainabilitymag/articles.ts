@@ -31,7 +31,7 @@ export const route: Route = {
 const findLargestImgKey = (images) =>
     Object.keys(images)
         .filter((key) => key.startsWith('inline_free_') || key.startsWith('hero_landscape_'))
-        .sort((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
+        .toSorted((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
 
 const renderFigure = (url, caption) => `<figure><img src="${url}" alt="${caption}" /><figcaption>${caption}</figcaption></figure>`;
 

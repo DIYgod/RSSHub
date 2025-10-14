@@ -172,9 +172,8 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [要闻](https://www.stcn.com/article/list/yw.html)，网址为 \`https://www.stcn.com/article/list/yw.html\`，请截取 \`https://www.stcn.com/article/list/\` 到末尾 \`.html\` 的部分 \`yw\` 作为 \`id\` 参数填入，此时目标路由为 [\`/stcn/article/list/yw\`](https://rsshub.app/stcn/article/list/yw)。
-
 :::
 
 | 要闻 | 股市 | 公司    | 基金 | 金融    | 评论    |
