@@ -85,7 +85,7 @@
         "fanfou-sdk": "6.0.0",
         "form-data": "4.0.4",
         "googleapis": "159.0.0",
-        "header-generator": "2.1.72",
+        "header-generator": "2.1.75",
         "hono": "4.9.4",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "6.0.8",
@@ -239,8 +239,7 @@
             "@bbob/parser@4.2.0": "patches/@bbob__parser@4.2.0.patch",
             "@bbob/plugin-helper@4.2.0": "patches/@bbob__plugin-helper@4.2.0.patch",
             "@bbob/preset-html5@4.2.0": "patches/@bbob__preset-html5@4.2.0.patch",
-            "@bbob/preset@4.2.0": "patches/@bbob__preset@4.2.0.patch",
-            "header-generator@2.1.72": "patches/header-generator@2.1.72.patch"
+            "@bbob/preset@4.2.0": "patches/@bbob__preset@4.2.0.patch"
         }
     }
 }
