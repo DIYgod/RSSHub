@@ -12,7 +12,7 @@ const categoryMap = {
 export const route: Route = {
     path: '/toplist/:category?/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/toplist/yesterday/0/bittorrent=true&embed_thumb=false',
+    example: '/ehentai/toplist/yesterday/0/bittorrent=true&embed_thumb=false&my_tags=true',
     parameters: {
         category: `Category, see table below. Defaults to 'yesterday'`,
         page: 'Page number',
@@ -28,7 +28,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Toplist',
-    maintainers: ['yindaheng98', 'syrinka', 'onlyexile'],
+    maintainers: ['yindaheng98', 'syrinka', 'rosystain'],
     handler,
     description: `
 | Yesterday | Past Month | Past Year | All Time  |
@@ -43,7 +43,7 @@ async function handler(ctx) {
     let routeParams = ctx.req.param('routeParams');
 
     // Case 3: /toplist/0/bittorrent=true -> category='0', page='bittorrent=true', routeParams=undefined
-    if (page && !routeParams && (page.includes('bittorrent=') || page.includes('embed_thumb=') || page.includes('highlight='))) {
+    if (page && !routeParams && (page.includes('bittorrent=') || page.includes('embed_thumb=') || page.includes('my_tags='))) {
         routeParams = page;
         page = category;
         category = 'yesterday';
@@ -56,7 +56,7 @@ async function handler(ctx) {
             // Case 1
             page = category;
             category = 'yesterday';
-        } else if (category.includes('bittorrent=') || category.includes('embed_thumb=') || category.includes('highlight=')) {
+        } else if (category.includes('bittorrent=') || category.includes('embed_thumb=') || category.includes('my_tags=')) {
             // Case 2
             routeParams = category;
             category = 'yesterday';
@@ -69,9 +69,9 @@ async function handler(ctx) {
     const routeParamsParsed = new URLSearchParams(routeParams);
     const bittorrent = routeParamsParsed.get('bittorrent') === 'true';
     const embed_thumb = routeParamsParsed.get('embed_thumb') === 'true';
-    const highlight = routeParamsParsed.get('highlight') !== 'false';
+    const my_tags = routeParamsParsed.get('my_tags') === 'true';
 
-    const items = await EhAPI.getToplistItems(cache, tl, page, bittorrent, embed_thumb, highlight);
+    const items = await EhAPI.getToplistItems(cache, tl, page, bittorrent, embed_thumb, my_tags);
 
     const title = Object.keys(categoryMap).find((key) => categoryMap[key] === tl) || 'yesterday';
 

@@ -5,7 +5,7 @@ import EhAPI from './ehapi';
 export const route: Route = {
     path: '/popular/:params?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/popular/f_sft=on&f_sfu=on&f_sfl=on/bittorrent=true&embed_thumb=false',
+    example: '/ehentai/popular/f_sft=on&f_sfu=on&f_sfl=on/bittorrent=true&embed_thumb=false&my_tags=true',
     parameters: {
         params: 'Filter parameters. You can copy the content after `https://e-hentai.org/popular?',
         routeParams: 'Additional parameters, see the table above. E.g. `bittorrent=true&embed_thumb=false`',
@@ -20,7 +20,7 @@ export const route: Route = {
         nsfw: true,
     },
     name: 'Popular',
-    maintainers: ['yindaheng98', 'syrinka', 'onlyexile'],
+    maintainers: ['yindaheng98', 'syrinka', 'rosystain'],
     handler,
 };
 
@@ -28,7 +28,7 @@ async function handler(ctx) {
     let params = ctx.req.param('params') ?? '';
     let routeParams = ctx.req.param('routeParams');
 
-    if (params && !routeParams && (params.includes('bittorrent=') || params.includes('embed_thumb=') || params.includes('highlight='))) {
+    if (params && !routeParams && (params.includes('bittorrent=') || params.includes('embed_thumb=') || params.includes('my_tags='))) {
         routeParams = params;
         params = '';
     }
@@ -36,8 +36,8 @@ async function handler(ctx) {
     const routeParamsParsed = new URLSearchParams(routeParams);
     const bittorrent = routeParamsParsed.get('bittorrent') === 'true';
     const embed_thumb = routeParamsParsed.get('embed_thumb') === 'true';
-    const highlight = routeParamsParsed.get('highlight') !== 'false';
-    const items = await EhAPI.getPopularItems(cache, params, bittorrent, embed_thumb, highlight);
+    const my_tags = routeParamsParsed.get('my_tags') === 'true';
+    const items = await EhAPI.getPopularItems(cache, params, bittorrent, embed_thumb, my_tags);
 
     return EhAPI.from_ex
         ? {

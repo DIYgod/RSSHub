@@ -40,7 +40,7 @@ function ehgot_thumb(cache, thumb_url) {
     });
 }
 
-async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false, highlight = false) {
+async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -116,7 +116,7 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
             thumbnail = await ehgot_thumb(cache, thumbnail);
         }
         let description = `<img src='${thumbnail}' alt='thumbnail'>`;
-        if (highlight && tags_selector) {
+        if (my_tags && tags_selector) {
             const highlighted_tags = el.find(`${tags_selector}[style]`);
             if (highlighted_tags.length > 0) {
                 let highlighted_tags_html = '<p>';
@@ -216,48 +216,48 @@ function updateBittorrent_url(cache, items) {
     return items;
 }
 
-async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb = false, highlight = false) {
+async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const response = await ehgot(url);
-    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, highlight);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, my_tags);
     return updateBittorrent_url(cache, items);
 }
 
-async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false, highlight = false) {
+async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
     if (page) {
-        return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb, highlight);
+        return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb, my_tags);
     } else {
-        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, highlight);
+        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, my_tags);
         return updateBittorrent_url(cache, items);
     }
 }
 
-function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false, highlight = false) {
-    return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb, highlight) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb, highlight);
+function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false, my_tags = false) {
+    return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb, my_tags) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb, my_tags);
 }
 
-function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = false, highlight = false) {
-    return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb, highlight) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb, highlight);
+function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = false, my_tags = false) {
+    return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb, my_tags) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb, my_tags);
 }
 
-function getWatchedItems(cache, params, get_bittorrent = false, embed_thumb = false, highlight = false) {
+function getWatchedItems(cache, params, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const url = `watched?${params || ''}`;
-    return gatherItemsByPage(cache, url, get_bittorrent, embed_thumb, highlight);
+    return gatherItemsByPage(cache, url, get_bittorrent, embed_thumb, my_tags);
 }
 
-function getPopularItems(cache, params, get_bittorrent = false, embed_thumb = false, highlight = false) {
+function getPopularItems(cache, params, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const url = `popular?${params || ''}`;
-    return gatherItemsByPage(cache, url, get_bittorrent, embed_thumb, highlight);
+    return gatherItemsByPage(cache, url, get_bittorrent, embed_thumb, my_tags);
 }
 
-async function getToplistItems(cache, tl, page, get_bittorrent = false, embed_thumb = false, highlight = false) {
+async function getToplistItems(cache, tl, page, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     let url = `toplist.php?tl=${tl}`;
     if (page) {
         url = `${url}&p=${page}`;
     }
     // toplist is e-hentai only
     const response = await got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
-    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, highlight);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb, my_tags);
     return updateBittorrent_url(cache, items);
 }
 
