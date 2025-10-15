@@ -2,9 +2,10 @@
 import fs from 'fs-extra';
 import path from 'node:path';
 import { nodeFileTrace } from '@vercel/nft';
+const __dirname = import.meta.dirname;
 // !!! if any new dependencies are added, update the Dockerfile !!!
 
-const projectRoot = path.resolve(process.env.PROJECT_ROOT || path.join(path.dirname(new URL(import.meta.url).pathname), '../..'));
+const projectRoot = path.resolve(process.env.PROJECT_ROOT || path.join(__dirname, '../..'));
 const resultFolder = path.join(projectRoot, 'app-minimal'); // no need to resolve, ProjectRoot is always absolute
 const files = ['dist/index.js', 'node_modules/cross-env/dist/bin/cross-env.js', 'node_modules/.bin/cross-env'].map((file) => path.join(projectRoot, file));
 
