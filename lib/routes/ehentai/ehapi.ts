@@ -78,7 +78,7 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         let el_a;
         let el_img;
         let category;
-        let tags_selector;
+        let tags_selector = '';
 
         // match layout
         if ('mpl'.includes(layout)) {
