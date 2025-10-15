@@ -55,34 +55,21 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             options.headers['user-agent'] = config.ua;
         }
 
-        // Accept
-        if (!headersLowerCaseKeys.has('accept')) {
-            options.headers.accept = '*/*';
-        }
-
-        // sec-ch-ua headers (Chrome Client Hints)
-        if (!headersLowerCaseKeys.has('sec-ch-ua') && generatedHeaders['sec-ch-ua']) {
-            options.headers['sec-ch-ua'] = generatedHeaders['sec-ch-ua'];
-        }
-        if (!headersLowerCaseKeys.has('sec-ch-ua-mobile') && generatedHeaders['sec-ch-ua-mobile']) {
-            options.headers['sec-ch-ua-mobile'] = generatedHeaders['sec-ch-ua-mobile'];
-        }
-        if (!headersLowerCaseKeys.has('sec-ch-ua-platform') && generatedHeaders['sec-ch-ua-platform']) {
-            options.headers['sec-ch-ua-platform'] = generatedHeaders['sec-ch-ua-platform'];
-        }
-
-        // sec-fetch headers (Fetch Metadata)
-        if (!headersLowerCaseKeys.has('sec-fetch-site') && generatedHeaders['sec-fetch-site']) {
-            options.headers['sec-fetch-site'] = generatedHeaders['sec-fetch-site'];
-        }
-        if (!headersLowerCaseKeys.has('sec-fetch-mode') && generatedHeaders['sec-fetch-mode']) {
-            options.headers['sec-fetch-mode'] = generatedHeaders['sec-fetch-mode'];
-        }
-        if (!headersLowerCaseKeys.has('sec-fetch-user') && generatedHeaders['sec-fetch-user']) {
-            options.headers['sec-fetch-user'] = generatedHeaders['sec-fetch-user'];
-        }
-        if (!headersLowerCaseKeys.has('sec-fetch-dest') && generatedHeaders['sec-fetch-dest']) {
-            options.headers['sec-fetch-dest'] = generatedHeaders['sec-fetch-dest'];
+        for (const header of [
+            'accept',
+            // sec-ch-ua (chrome client hints)
+            'sec-ch-ua',
+            'sec-ch-ua-mobile',
+            'sec-ch-ua-platform',
+            // sec-fetch (fetch metadata)
+            'sec-fetch-site',
+            'sec-fetch-mode',
+            'sec-fetch-user',
+            'sec-fetch-dest',
+        ]) {
+            if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
+                options.headers[header] = generatedHeaders[header];
+            }
         }
 
         // referer

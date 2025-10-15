@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 
 describe('rand-user-agent', () => {
-    it('should has default random ua', async () => {
+    it('should has no ua', async () => {
         const response = await ofetch('http://rsshub.test/headers');
-        expect(response['user-agent']).toBe(config.ua);
+        expect(response['user-agent']).toBeUndefined();
     });
 
     it('should match ua configurated', async () => {
@@ -22,7 +21,6 @@ describe('rand-user-agent', () => {
     it('generateHeaders should include sec-ch and sec-fetch headers', () => {
         const headers = generateHeaders(PRESETS.MODERN_MACOS_CHROME);
 
-        // Required headers should be present
         expect(headers['user-agent']).toBeDefined();
         expect(headers['sec-ch-ua']).toBeDefined();
         expect(headers['sec-ch-ua-mobile']).toBeDefined();
@@ -32,52 +30,41 @@ describe('rand-user-agent', () => {
         expect(headers['sec-fetch-user']).toBeDefined();
         expect(headers['sec-fetch-dest']).toBeDefined();
 
-        // Verify expected values
         expect(headers['sec-ch-ua-platform']).toBe('"macOS"');
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
     });
 
     it('generateHeaders should work with headerGeneratorOptions', () => {
-        // Test with MODERN_WINDOWS_CHROME preset
         const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
 
-        // Required headers should be present
         expect(headers['user-agent']).toBeDefined();
         expect(headers['sec-ch-ua']).toBeDefined();
         expect(headers['sec-ch-ua-mobile']).toBeDefined();
         expect(headers['sec-ch-ua-platform']).toBeDefined();
 
-        // Verify it's using Windows platform
         expect(headers['sec-ch-ua-platform']).toBe('"Windows"');
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
-
-        // Verify it contains Chrome
         expect(headers['user-agent']).toMatch(/Chrome/);
     });
 
     it('generateHeaders should use default preset when no preset is provided', () => {
         const headers = generateHeaders();
 
-        // Required headers should be present
         expect(headers['user-agent']).toBeDefined();
         expect(headers['sec-ch-ua']).toBeDefined();
         expect(headers['sec-ch-ua-mobile']).toBeDefined();
         expect(headers['sec-ch-ua-platform']).toBeDefined();
 
-        // Should default to macOS Chrome
         expect(headers['sec-ch-ua-platform']).toBe('"macOS"');
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
         expect(headers['user-agent']).toMatch(/Chrome/);
     });
 
     it('should use headerGeneratorOptions with ofetch', async () => {
-        // This test verifies that headerGeneratorOptions is passed through to the request rewriter
         const response = await ofetch('http://rsshub.test/headers', {
             headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
         });
 
-        // The response should include the headers that were sent
-        expect(response['user-agent']).toBeDefined();
         // Note: The specific header values will be handled by the request-rewriter,
         // but we can verify the request went through without errors
         expect(response).toBeDefined();

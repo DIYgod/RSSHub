@@ -38,38 +38,25 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
     // ua
-    if (!request.headers.get('user-agent')) {
+    if (!request.headers.has('user-agent')) {
         request.headers.set('user-agent', config.ua);
     }
 
-    // accept
-    if (!request.headers.get('accept')) {
-        request.headers.set('accept', '*/*');
-    }
-
-    // sec-ch-ua headers (Chrome Client Hints)
-    if (!request.headers.get('sec-ch-ua') && generatedHeaders['sec-ch-ua']) {
-        request.headers.set('sec-ch-ua', generatedHeaders['sec-ch-ua']);
-    }
-    if (!request.headers.get('sec-ch-ua-mobile') && generatedHeaders['sec-ch-ua-mobile']) {
-        request.headers.set('sec-ch-ua-mobile', generatedHeaders['sec-ch-ua-mobile']);
-    }
-    if (!request.headers.get('sec-ch-ua-platform') && generatedHeaders['sec-ch-ua-platform']) {
-        request.headers.set('sec-ch-ua-platform', generatedHeaders['sec-ch-ua-platform']);
-    }
-
-    // sec-fetch headers (Fetch Metadata)
-    if (!request.headers.get('sec-fetch-site') && generatedHeaders['sec-fetch-site']) {
-        request.headers.set('sec-fetch-site', generatedHeaders['sec-fetch-site']);
-    }
-    if (!request.headers.get('sec-fetch-mode') && generatedHeaders['sec-fetch-mode']) {
-        request.headers.set('sec-fetch-mode', generatedHeaders['sec-fetch-mode']);
-    }
-    if (!request.headers.get('sec-fetch-user') && generatedHeaders['sec-fetch-user']) {
-        request.headers.set('sec-fetch-user', generatedHeaders['sec-fetch-user']);
-    }
-    if (!request.headers.get('sec-fetch-dest') && generatedHeaders['sec-fetch-dest']) {
-        request.headers.set('sec-fetch-dest', generatedHeaders['sec-fetch-dest']);
+    for (const header of [
+        'accept',
+        // sec-ch-ua (chrome client hints)
+        'sec-ch-ua',
+        'sec-ch-ua-mobile',
+        'sec-ch-ua-platform',
+        // sec-fetch (fetch metadata)
+        'sec-fetch-site',
+        'sec-fetch-mode',
+        'sec-fetch-user',
+        'sec-fetch-dest',
+    ]) {
+        if (!request.headers.has(header) && generatedHeaders[header]) {
+            request.headers.set(header, generatedHeaders[header]);
+        }
     }
 
     // referer

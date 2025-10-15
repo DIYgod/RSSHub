@@ -24,8 +24,15 @@ describe('request-rewriter', () => {
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
         expect(headers.get('user-agent')).toBe(config.ua);
-        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
+        expect(headers.get('sec-ch-ua')).toBeDefined();
+        expect(headers.get('sec-ch-ua-mobile')).toBeDefined();
+        expect(headers.get('sec-ch-ua-platform')).toBeDefined();
+        expect(headers.get('sec-fetch-site')).toBeDefined();
+        expect(headers.get('sec-fetch-mode')).toBeDefined();
+        expect(headers.get('sec-fetch-user')).toBeDefined();
+        expect(headers.get('sec-fetch-dest')).toBeDefined();
 
         // proxy
         const options = fetchSpy.mock.lastCall?.[1];
@@ -64,8 +71,15 @@ describe('request-rewriter', () => {
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
         expect(headers.get('user-agent')).toBe(config.ua);
-        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
+        expect(headers.get('sec-ch-ua')).toBeDefined();
+        expect(headers.get('sec-ch-ua-mobile')).toBeDefined();
+        expect(headers.get('sec-ch-ua-platform')).toBeDefined();
+        expect(headers.get('sec-fetch-site')).toBeDefined();
+        expect(headers.get('sec-fetch-mode')).toBeDefined();
+        expect(headers.get('sec-fetch-user')).toBeDefined();
+        expect(headers.get('sec-fetch-dest')).toBeDefined();
 
         // proxy
         const options = fetchSpy.mock.lastCall?.[1];
@@ -110,7 +124,7 @@ describe('request-rewriter', () => {
         const options = httpSpy.mock.lastCall?.[1];
         const headers = options?.headers;
         expect(headers?.['user-agent']).toBe(config.ua);
-        expect(headers?.accept).toBe('*/*');
+        expect(headers?.accept).toBeDefined();
         expect(headers?.referer).toBe('http://rsshub.test');
 
         // proxy
