@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const ORIGIN = 'https://miyuki.jp';
 const NEWS_LINK = `${ORIGIN}/s/y10/news/list`;
@@ -37,7 +38,7 @@ async function handler() {
                 return {
                     title: `${category} - ${$item.find('a').text()}`,
                     link,
-                    pubDate: parseDate($item.find('p span').first().text()),
+                    pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
                     category: [category],
                     description: await cache.tryGet(link, async () => {
                         const $detail = load(await ofetch(link));
