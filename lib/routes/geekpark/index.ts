@@ -149,7 +149,7 @@ export const route: Route = {
 | [心科技](https://www.geekpark.net/column/307)                | [307](https://rsshub.app/geekpark/307) |
 | [行业资讯](https://www.geekpark.net/column/2)                | [2](https://rsshub.app/geekpark/2)     |
   `,
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
 
     features: {
         requireConfig: false,

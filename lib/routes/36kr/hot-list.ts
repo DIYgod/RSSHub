@@ -27,7 +27,7 @@ const categories = {
 
 export const route: Route = {
     path: '/hot-list/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/36kr/hot-list',
     parameters: { category: '分类，默认为24小时热榜' },
     features: {
@@ -52,6 +52,15 @@ export const route: Route = {
 | 24          | renqi      | zonghe     | shoucang   |`,
 };
 
+const getProperty = (object, key) => {
+    let result = object;
+    const keys = key.split('.');
+    for (const k of keys) {
+        result = result && result[k];
+    }
+    return result;
+};
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '24';
 
@@ -66,7 +75,6 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const getProperty = (object, key) => key.split('.').reduce((o, k) => o && o[k], object);
     const data = getProperty(JSON.parse(response.data.match(/window.initialState=({.*})/)[1]), categories[category].key);
 
     let items = data

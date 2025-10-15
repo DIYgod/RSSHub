@@ -1,12 +1,12 @@
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { config } from '@/config';
 export const route: Route = {
     path: '/people/:userid/status/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/douban/people/75118396/status',
     parameters: { userid: '整数型用户 id', routeParams: '额外参数；见下' },

@@ -1,5 +1,5 @@
 <div class="quoted" style="background:rgba(220,220,220,0.3);">
-    <a style="text-decoration: none;" href="https://bbs.saraba1st.com/2b/{{ author.link }}">{{ author.name }}</a>
+    <a style="text-decoration: none;" href="{{ host }}/2b/{{ author.link }}">{{ author.name }}</a>
     <span style="text-decoration: none;color:#aaa;">{{ author.postinfo }}</span>
 </div>
 <div class="content" style="margin-bottom:20px!important;">{{@ msg }}</div>

@@ -26,7 +26,7 @@ export const route: Route = {
     name: '高瓴人工智能学院',
     maintainers: ['yinhanyan'],
     handler: async (ctx) => {
-        const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'newslist/notice';
+        const category = ctx.req.param('category')?.replaceAll('-', '/') ?? 'newslist/notice';
         const baseURL = `http://ai.ruc.edu.cn/${category}/`;
         const indexUrl = baseURL + 'index.htm';
         const response = await ofetch(indexUrl);
@@ -58,8 +58,8 @@ export const route: Route = {
                         item.description = frame
                             .children()
                             .slice(3)
-                            .map((i, el) => $.html(el))
-                            .get()
+                            .toArray()
+                            .map((el) => $.html(el))
                             .join('');
                     } catch {
                         item.description = '';

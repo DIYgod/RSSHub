@@ -20,10 +20,11 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id/bookmarks/artworks'],
+            source: ['www.pixiv.net/users/:id/bookmarks/artworks', 'www.pixiv.net/en/users/:id/bookmarks/artworks'],
         },
     ],
     name: 'User Bookmark',

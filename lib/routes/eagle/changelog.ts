@@ -66,36 +66,32 @@ async function handler(ctx) {
         description: `Eagle ${changelog}`,
 
         // 遍历此前获取的数据
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    // 对获取的日期进行格式化处理
-                    function getDate() {
-                        const str = item.find('.date').text();
-                        let date = '';
-                        if (language === 'cn' || language === 'tw') {
-                            const patt = /\d+/g;
-                            let result;
-                            while ((result = patt.exec(str)) !== null) {
-                                date += result + '-';
-                            }
-                            date = date.replaceAll(/-$/g, '');
-                        } else if (language === 'en') {
-                            date = str.replaceAll('RELEASED', '');
-                        }
-                        return date;
+        item: list.toArray().map((item) => {
+            item = $(item);
+            // 对获取的日期进行格式化处理
+            function getDate() {
+                const str = item.find('.date').text();
+                let date = '';
+                if (language === 'cn' || language === 'tw') {
+                    const patt = /\d+/g;
+                    let result;
+                    while ((result = patt.exec(str)) !== null) {
+                        date += result + '-';
                     }
+                    date = date.replaceAll(/-$/g, '');
+                } else if (language === 'en') {
+                    date = str.replaceAll('RELEASED', '');
+                }
+                return date;
+            }
 
-                    return {
-                        title: item.find('.ver').text(),
-                        description: item.find('.logs').html(),
-                        link: `https://${language}.eagle.cool/changelog`,
-                        pubDate: parseDate(getDate()),
-                        guid: item.find('.ver').text(),
-                    };
-                })
-                .get(),
+            return {
+                title: item.find('.ver').text(),
+                description: item.find('.logs').html(),
+                link: `https://${language}.eagle.cool/changelog`,
+                pubDate: parseDate(getDate()),
+                guid: item.find('.ver').text(),
+            };
+        }),
     };
 }

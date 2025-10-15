@@ -4,7 +4,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -115,9 +116,8 @@ export const route: Route = {
             description: '分类 ID，可在对应分类页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [政务信息](http://load.grainoil.com.cn/newsListHome/1430.jspx)，网址为 \`http://load.grainoil.com.cn/newsListHome/1430.jspx\`，请截取 \`https://load.grainoil.com.cn/\` 到末尾 \`.jspx\` 的部分 \`newsListHome/1430\` 作为 \`category\` 和 \`id\`参数填入，此时目标路由为 [\`/grainoil/newsListHome/1430\`](https://rsshub.app/grainoil/newsListHome/1430)。
-
 :::
 
 <details>

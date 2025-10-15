@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/aeon/category/philosophy',
     parameters: {
         category: {

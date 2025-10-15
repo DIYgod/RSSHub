@@ -50,7 +50,7 @@ const handler: Route['handler'] = async (ctx) => {
                 link: absoluteLink,
             };
         })
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);
 
     const fetchDataItem = (item: { title: string; date: string; link: string }) =>

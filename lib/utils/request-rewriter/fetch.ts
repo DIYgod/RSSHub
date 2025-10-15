@@ -60,7 +60,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     config.enableRemoteDebugging && useCustomHeader(request.headers);
 
     // proxy
-    if (!init?.dispatcher && proxy.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
+    if (!init?.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
         const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
         let urlHandler;
         try {
@@ -70,13 +70,51 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
-            options.dispatcher = proxy.dispatcher;
-            logger.debug(`Proxying request: ${request.url}`);
+            const currentProxy = proxy.getCurrentProxy();
+            if (currentProxy) {
+                const dispatcher = proxy.getDispatcherForProxy(currentProxy);
+                if (dispatcher) {
+                    options.dispatcher = dispatcher;
+                    logger.debug(`Proxying request via ${currentProxy.uri}: ${request.url}`);
+                }
+            }
         }
     }
 
     await limiterQueue.removeTokens(1);
-    return undici.fetch(request, options);
+
+    const maxRetries = proxy.multiProxy?.allProxies.length || 1;
+
+    const attemptRequest = async (attempt: number): Promise<Response> => {
+        try {
+            return await undici.fetch(request, options);
+        } catch (error) {
+            if (options.dispatcher && proxy.multiProxy && attempt < maxRetries - 1) {
+                const currentProxy = proxy.getCurrentProxy();
+                if (currentProxy) {
+                    logger.warn(`Request failed with proxy ${currentProxy.uri}, trying next proxy: ${error}`);
+                    proxy.markProxyFailed(currentProxy.uri);
+
+                    const nextProxy = proxy.getCurrentProxy();
+                    if (nextProxy && nextProxy.uri !== currentProxy.uri) {
+                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy);
+                        if (nextDispatcher) {
+                            options.dispatcher = nextDispatcher;
+                        }
+                        logger.debug(`Retrying request with proxy ${nextProxy.uri}: ${request.url}`);
+                        return attemptRequest(attempt + 1);
+                    } else {
+                        logger.warn('No more proxies available, trying without proxy');
+                        delete options.dispatcher;
+                        return attemptRequest(attempt + 1);
+                    }
+                }
+            }
+            throw error;
+        }
+    };
+
+    return attemptRequest(0);
 };
 
 export default wrappedFetch;

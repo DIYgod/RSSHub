@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:topic?/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hbr/topic/Leadership/Popular',
     parameters: {
         topic: 'Topic, can be found in URL, Leadership by default',
@@ -58,7 +58,8 @@ async function handler(ctx) {
 
     const list = $(`stream-content[data-stream-name="${type}"]`)
         .find('.stream-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             return {
@@ -67,8 +68,7 @@ async function handler(ctx) {
                 category: item.attr('data-topic'),
                 link: `${rootUrl}${item.attr('data-url')}`,
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

@@ -1,10 +1,9 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
 import { parseToken } from '@/routes/xueqiu/cookies';
+import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -15,7 +14,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -38,7 +37,6 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') || 10;
-    const source = type === '11' ? '买卖' : '';
     const typename = {
         10: '全部',
         0: '原发布',
@@ -50,53 +48,118 @@ async function handler(ctx) {
 
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
-    const res2 = await got({
-        method: 'get',
-        url: `${rootUrl}/v4/statuses/user_timeline.json`,
-        searchParams: queryString.stringify({
-            user_id: id,
-            type,
-            source,
-        }),
-        headers: {
-            Cookie: token,
+
+    const browser = await puppeteer();
+    try {
+        const mainPage = await browser.newPage();
+
+        await mainPage.setExtraHTTPHeaders({
+            Cookie: token as string,
             Referer: link,
-        },
-    });
-    const data = res2.data.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
+        });
 
-    const items = await Promise.all(
-        data.map((item) =>
-            cache.tryGet(item.target, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: rootUrl + item.target,
-                    headers: {
-                        Referer: link,
-                        Cookie: token,
-                    },
-                });
+        await mainPage.goto(link, {
+            waitUntil: 'domcontentloaded',
+        });
+        await mainPage.waitForFunction(() => document.readyState === 'complete');
 
-                const data = JSON.parse(detailResponse.data.match(/SNOWMAN_STATUS = (.*?});/)[1]);
-                item.text = data.text;
+        const apiUrl = `${rootUrl}/v4/statuses/user_timeline.json?user_id=${id}&type=${type}`;
+        const response = await mainPage.evaluate(async (url) => {
+            const response = await fetch(url);
+            return response.json();
+        }, apiUrl);
 
-                const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
-                const description = item.description + retweetedStatus;
+        if (!response?.statuses) {
+            throw new Error('获取用户动态数据失败');
+        }
 
-                return {
-                    title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
-                    description: item.text ? item.text + retweetedStatus : description,
-                    pubDate: parseDate(item.created_at),
-                    link: rootUrl + item.target,
-                };
-            })
-        )
-    );
+        const data = response.statuses.filter((s) => s.mark !== 1);
 
-    return {
-        title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
-        link,
-        description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
-        item: items,
-    };
+        if (!data.length) {
+            throw new Error('未找到有效的动态数据');
+        }
+
+        const items = await Promise.all(
+            data.map((item) =>
+                cache.tryGet(item.target, async () => {
+                    const detailUrl = rootUrl + item.target;
+                    try {
+                        await mainPage.goto(detailUrl, {
+                            waitUntil: 'domcontentloaded',
+                        });
+                        await mainPage.waitForFunction(() => document.readyState === 'complete');
+
+                        const content = await mainPage.evaluate(() => {
+                            const articleContent = document.querySelector('.article__bd')?.innerHTML || '';
+                            const statusMatch = document.documentElement.innerHTML.match(/SNOWMAN_STATUS = (.*?});/);
+                            return {
+                                articleContent,
+                                statusData: statusMatch ? statusMatch[1] : null,
+                            };
+                        });
+
+                        if (content.statusData) {
+                            const data = JSON.parse(content.statusData);
+                            item.text = data.text;
+                        }
+
+                        const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
+                        const description = content.articleContent || item.description + retweetedStatus;
+
+                        return {
+                            title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
+                            description: item.text ? item.text + retweetedStatus : description,
+                            pubDate: parseDate(item.created_at),
+                            link: rootUrl + item.target,
+                        };
+                    } catch (error: unknown) {
+                        if (error instanceof Error && !error.message?.includes('ERR_ABORTED')) {
+                            throw error;
+                        }
+                        const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
+                        const description = item.description + retweetedStatus;
+
+                        return {
+                            title: item.title || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
+                            description: item.description,
+                            pubDate: parseDate(item.created_at),
+                            link: rootUrl + item.target,
+                        };
+                    }
+                })
+            )
+        );
+
+        const extractProfileImage = (user: any): string | undefined => {
+            if (!user?.profile_image_url || !user?.photo_domain) {
+                return undefined;
+            }
+
+            const imageUrls = user.profile_image_url.split(',').filter(Boolean);
+            if (imageUrls.length === 0) {
+                return undefined;
+            }
+
+            // Priority order for image sizes
+            const sizePriority = ['!180x180.png', '!50x50.png', '!30x30.png'];
+
+            const selectedImageUrl = sizePriority.map((size) => imageUrls.find((url) => url.includes(size))).find(Boolean) || imageUrls[0];
+
+            const baseDomain = user.photo_domain.startsWith('//') ? `https:${user.photo_domain}` : user.photo_domain;
+
+            return `${baseDomain}${selectedImageUrl}`;
+        };
+
+        const profileImage = extractProfileImage(data[0].user);
+
+        return {
+            title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
+            link,
+            description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
+            image: profileImage,
+            item: items,
+        };
+    } finally {
+        await browser.close();
+    }
 }

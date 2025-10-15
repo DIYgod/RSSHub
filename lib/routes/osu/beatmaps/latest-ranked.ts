@@ -34,7 +34,7 @@ This actual parameters should be passed as \`routeParams\` in URL Query String f
 
     /osu/latest-ranked/modeInTitle=true&includeMode=osu
 
-:::tip
+::: tip
 You could make use of \`difficultyLimit\` paramters to create a "high difficulty/low difficulty only" only feed.
 
 For example, if you only wants to play low star rating beatmap like 1 or 2 star, you could subscribe to:
@@ -49,8 +49,7 @@ with star rating higher than a certain threshold.
     /osu/latest-ranked/difficultyLimit=L6
 
 Now all beatmapsets that don't provided at least one beatmap with star rating higher than \`6.00\` will be filtered.
-:::
-`;
+:::`;
 
 export const route: Route = {
     path: '/latest-ranked/:routeParams?',
@@ -233,9 +232,9 @@ async function handler(ctx): Promise<Data> {
     if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
-                upperLimit = Number.parseFloat(dfLimit.substring(1));
+                upperLimit = Number.parseFloat(dfLimit.slice(1));
             } else if (dfLimit.startsWith('L')) {
-                lowerLimit = Number.parseFloat(dfLimit.substring(1));
+                lowerLimit = Number.parseFloat(dfLimit.slice(1));
             }
         }
 

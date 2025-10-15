@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
@@ -10,8 +10,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:site?/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    name: '首页头条',
+    maintainers: ['nczitzk', 'pseudoyu'],
+    example: '/people',
     handler,
 };
 
@@ -28,16 +29,15 @@ async function handler(ctx) {
     const rootUrl = `http://${site}.people.com.cn`;
     const currentUrl = new URL(`GB/${category}`, rootUrl).href;
 
-    const { data: response } = await got(currentUrl, {
-        responseType: 'buffer',
+    const response = await ofetch(currentUrl, {
+        responseType: 'arrayBuffer',
     });
 
-    // not seen Content-Type in response headers
     // try to parse charset from meta tag
-    let decodedResponse = iconv.decode(response, 'utf-8');
+    let decodedResponse = iconv.decode(Buffer.from(response), 'utf-8');
     const parsedCharset = decodedResponse.match(/<meta.*?charset=["']?([^"'>]+)["']?/i);
     const encoding = parsedCharset ? parsedCharset[1].toLowerCase() : 'utf-8';
-    decodedResponse = encoding === 'utf-8' ? decodedResponse : iconv.decode(response, encoding);
+    decodedResponse = encoding === 'utf-8' ? decodedResponse : iconv.decode(Buffer.from(response), encoding);
     const $ = load(decodedResponse);
 
     $('em').remove();
@@ -66,19 +66,19 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    const { data: detailResponse } = await got(item.link, {
-                        responseType: 'buffer',
+                    const detailResponse = await ofetch(item.link, {
+                        responseType: 'arrayBuffer',
                     });
 
-                    const data = iconv.decode(detailResponse, encoding);
+                    const data = iconv.decode(Buffer.from(detailResponse), encoding);
                     const content = load(data);
 
                     content('.paper_num, #rwb_tjyd').remove();
 
                     item.description = content('#rwb_zw').html();
-                    item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)[1], 'YYYY年MM月DD日 HH:mm'), +8);
+                    item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), +8);
                 } catch (error) {
-                    item.description = error;
+                    item.description = String(error);
                 }
 
                 return item;

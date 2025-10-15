@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/douban/group/648102',
     parameters: {
@@ -59,7 +59,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('.olt tr:not(.th)').slice(0, 30).get();
+    const list = $('.olt tr:not(.th)').slice(0, 30).toArray();
 
     const items = await Promise.all(
         list.map((item) => {

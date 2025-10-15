@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/html_clip/:user/:tag',
     example: '/inoreader/html_clip/1005137674/user-favorites',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     name: 'HTML Clip',
     maintainers: ['EthanWng97'],
@@ -32,25 +32,23 @@ async function handler(ctx) {
     return {
         title: $('.header_text').text().trim(),
         link: currentUrl,
-        item: entries
-            .map((idx, item) => {
-                const content = $(item).clone();
-                const header = $(item).prev();
-                const pubDate = $('div.article_author .au1', header)
-                    .contents()
-                    .filter((_, e) => e.nodeType === 3)
-                    .text()
-                    .replace(/posted (on|at) /, '')
-                    .replace(/UTC.*/, '');
-                return {
-                    title: $('a.title_link', header).text().trim(),
-                    link: $('a.title_link', header).attr('href'),
-                    author: $('div.article_author span span', header).text().trim() + ' via ' + $('div.article_author a.feed_link', header).text().trim(),
-                    pubDate: parseDate(pubDate, ['MMM DD YYYY HH:mm:ss', 'HH:mm:ss']),
-                    description: $(content).html(),
-                };
-            })
-            .get(),
+        item: entries.toArray().map((item) => {
+            const content = $(item).clone();
+            const header = $(item).prev();
+            const pubDate = $('div.article_author .au1', header)
+                .contents()
+                .filter((_, e) => e.nodeType === 3)
+                .text()
+                .replace(/posted (on|at) /, '')
+                .replace(/UTC.*/, '');
+            return {
+                title: $('a.title_link', header).text().trim(),
+                link: $('a.title_link', header).attr('href'),
+                author: $('div.article_author span span', header).text().trim() + ' via ' + $('div.article_author a.feed_link', header).text().trim(),
+                pubDate: parseDate(pubDate, ['MMM DD YYYY HH:mm:ss', 'HH:mm:ss']),
+                description: $(content).html(),
+            };
+        }),
         allowEmpty: true,
     };
 }

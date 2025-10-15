@@ -1,6 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import ofetch from '@/utils/ofetch';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +42,7 @@ function getMediaUrl(channelId: string, mediaId: string) {
 
 async function handler(ctx) {
     const channelId = ctx.req.param('id');
+    const pageSize = Number(ctx.req.query('limit')) || 30;
 
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${channelId}`;
     const response = await ofetch(channelUrl, {
@@ -54,7 +55,7 @@ async function handler(ctx) {
     const channel_img = response.data.thumbs['400_thumb'];
     const authors = response.data.podcasters.map((author) => author.nick_name).join(',');
     const desc = response.data.description;
-    const programUrl = `https://i.qingting.fm/capi/channel/${channelId}/programs/${response.data.v}?curpage=1&pagesize=10&order=asc`;
+    const programUrl = `https://i.qingting.fm/capi/channel/${channelId}/programs/${response.data.v}?curpage=1&pagesize=${pageSize}&order=asc`;
 
     const {
         data: { programs },

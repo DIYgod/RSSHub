@@ -68,30 +68,28 @@ async function handler(ctx) {
     return {
         title: baseTitle + (category === '791' ? '' : ':' + map[category]),
         link,
-        item: list
-            .map((_, item) => {
-                item = $(item);
+        item: list.toArray().map((item) => {
+            item = $(item);
 
-                if (category === 'xsbgw') {
-                    const itemXsTitle = item.find('.xs_title .btt a');
-                    return {
-                        title: itemXsTitle.text(),
-                        author: item.find('.xs_bgr').text(),
-                        category: '学术报告',
-                        pubDate: parseDate(item.find('.xs_date').text()),
-                        link: new URL(itemXsTitle.attr('href'), baseUrl).href,
-                    };
-                }
-
-                const itemTitle = item.find('.news_title');
+            if (category === 'xsbgw') {
+                const itemXsTitle = item.find('.xs_title .btt a');
                 return {
-                    title: [itemTitle.find('.zdtb img').length > 0 ? '[顶]' : '', itemTitle.find('.btt').text()].join(' '),
-                    author: item.find('.news_org').text(),
-                    category: itemTitle.find('.wjj').text(),
-                    pubDate: parseDate(item.find('.news_date').text()),
-                    link: new URL(itemTitle.find('.btt a').attr('href'), baseUrl).href,
+                    title: itemXsTitle.text(),
+                    author: item.find('.xs_bgr').text(),
+                    category: '学术报告',
+                    pubDate: parseDate(item.find('.xs_date').text()),
+                    link: new URL(itemXsTitle.attr('href'), baseUrl).href,
                 };
-            })
-            .get(),
+            }
+
+            const itemTitle = item.find('.news_title');
+            return {
+                title: [itemTitle.find('.zdtb img').length > 0 ? '[顶]' : '', itemTitle.find('.btt').text()].join(' '),
+                author: item.find('.news_org').text(),
+                category: itemTitle.find('.wjj').text(),
+                pubDate: parseDate(item.find('.news_date').text()),
+                link: new URL(itemTitle.find('.btt a').attr('href'), baseUrl).href,
+            };
+        }),
     };
 }

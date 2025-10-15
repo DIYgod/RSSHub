@@ -6,7 +6,7 @@ import util from './utils';
 import iconv from 'iconv-lite';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
-const host = 'https://www.flyert.com';
+const host = 'https://www.flyert.com.cn';
 
 export const route: Route = {
     path: '/creditcard/:bank',
@@ -23,7 +23,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['flyert.com/'],
+            source: ['flyert.com.cn/'],
         },
     ],
     name: '信用卡',
@@ -123,13 +123,13 @@ async function handler(ctx) {
 
     const $ = load(gbk2utf8(response.data));
 
-    const list = $("[id*='normalthread']").get();
+    const list = $("[id*='normalthread']").toArray();
 
     const result = await util.ProcessFeed(list, cache);
 
     return {
         title: `飞客茶馆信用卡 - ${bankname}`,
-        link: 'https://www.flyert.com/',
+        link: 'https://www.flyert.com.cn/',
         description: `飞客茶馆信用卡 - ${bankname}`,
         item: result,
     };

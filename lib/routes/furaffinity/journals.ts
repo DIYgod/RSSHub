@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/journals/:username',
     name: 'Journals',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/journals/fender',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: { username: 'Username, can find in userpage' },
@@ -16,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

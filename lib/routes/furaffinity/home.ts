@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/home/:category/:mode?',
     name: 'Home',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/home/nsfw',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {
@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

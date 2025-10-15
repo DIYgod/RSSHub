@@ -14,6 +14,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
     await next();
 
+    const apiData = ctx.get('apiData');
+    if (apiData) {
+        return ctx.json(apiData);
+    }
+
     const data: Data = ctx.get('data');
     const outputType = ctx.req.query('format') || 'rss';
 

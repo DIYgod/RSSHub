@@ -9,7 +9,7 @@ const baseUrl = 'https://www.dora-world.com';
 
 export const route: Route = {
     path: '/article/:topic/:topicId?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dora-world/article/contents',
     parameters: {
@@ -82,7 +82,7 @@ async function getContent(nextBuildId: string, contentId: string) {
     const description =
         content
             .html()
-            ?.replace(rubyRegex, '$1（$2）')
-            ?.replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
+            ?.replaceAll(rubyRegex, '$1（$2）')
+            ?.replaceAll(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
     return description;
 }

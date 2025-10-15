@@ -5,7 +5,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 import path from 'node:path';
 
@@ -109,30 +110,29 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
 
                     const mediaEls: Element[] = $$('div.pics').first().find('img').toArray();
-                    const medias: Record<string, Record<string, string>> = mediaEls.reduce((acc: Record<string, Record<string, string>>, mediaEl) => {
+                    const medias: Record<string, Record<string, string>> = {};
+                    let imageCount = 1;
+                    for (const mediaEl of mediaEls) {
                         const $$mediaEl: Cheerio<Element> = $$(mediaEl);
                         const url: string | undefined = $$mediaEl.attr('src') ? new URL($$mediaEl.attr('src') as string, baseUrl).href : undefined;
 
                         if (!url) {
-                            return acc;
+                            continue;
                         }
 
                         const medium: string = 'image';
-                        const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                        const key: string = `${medium}${count}`;
+                        const key: string = `${medium}${imageCount++}`;
 
-                        acc[key] = {
+                        medias[key] = {
                             url,
                             medium,
                             title: $$mediaEl.attr('alt') || title,
                             description: $$mediaEl.attr('alt') || title,
                             thumbnail: url,
                         };
+                    }
 
-                        return acc;
-                    }, {});
-
-                    if (medias) {
+                    if (Object.keys(medias).length > 0) {
                         processedItem = {
                             ...processedItem,
                             media: medias,
@@ -171,10 +171,9 @@ export const route: Route = {
     parameters: {
         filter: 'Filter',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [All male photo albums](https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order)，where the URL is \`https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order\`, extract the part \`https://kpopping.com/kpics/\` to the end, which is \`gender-male/category-all/idol-any/group-any/order\`, and use it as the parameter to fill in. Therefore, the route will be [\`/kpopping/kpics/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/kpics/gender-male/category-all/idol-any/group-any/order).
-:::
-`,
+:::`,
     categories: ['picture'],
     features: {
         requireConfig: false,
@@ -207,7 +206,7 @@ If you subscribe to [All male photo albums](https://kpopping.com/kpics/gender-ma
         parameters: {
             filter: '筛选，可在对应分类页 URL 中找到',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [All male photo albums](https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order)，网址为 \`https://kpopping.com/kpics/gender-male/category-all/idol-any/group-any/order\`，请截取 \`https://kpopping.com/kpics/\` 到末尾的部分 \`gender-male/category-all/idol-any/group-any/order\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/kpopping/kpics/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/kpics/gender-male/category-all/idol-any/group-any/order)。
 :::
 `,

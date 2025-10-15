@@ -1,0 +1,9 @@
+diff --git a/es/index.js b/es/index.js
+index 15a762cc5dc6ed026fccd76d3d655370da689929..53024b46da00d822a283ba6a51aa0800fe2fd59b 100644
+--- a/es/index.js
++++ b/es/index.js
+@@ -1,2 +1,2 @@
+-export { default } from "./preset";
+-export * from "./preset";
++export { default } from "./preset.js";
++export * from "./preset.js";

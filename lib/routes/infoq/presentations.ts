@@ -90,7 +90,7 @@ export const handler = async (ctx) => {
                 const script = $$('script[type="text/javascript"]').text();
                 const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1] ?? undefined;
                 const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1] ?? undefined;
-                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replace(/\\/g, '') ?? undefined;
+                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replaceAll('\\', '') ?? undefined;
 
                 if (videoSrc) {
                     $$('div.player').replaceWith(
@@ -177,7 +177,7 @@ export const route: Route = {
   If you subscribe to [InfoQ Live Jan 2024](https://www.infoq.com/infoq-live-jan-2024/presentations/)，where the URL is \`https://www.infoq.com/infoq-live-jan-2024/presentations/\`, extract the part \`https://www.infoq.com/\` to the end, which is \`/presentations/\`, and use it as the parameter to fill in. Therefore, the route will be [\`/infoq/presentations/infoq-live-jan-2024\`](https://rsshub.app/infoq/presentations/infoq-live-jan-2024).
 :::
     `,
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
 
     features: {
         requireConfig: false,

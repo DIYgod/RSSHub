@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 const host = 'https://www.magnumphotos.com';
 export const route: Route = {
     path: '/magazine',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/magnumphotos/magazine',
     parameters: {},

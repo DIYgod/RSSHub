@@ -36,7 +36,7 @@ async function handler(ctx: Context): Promise<Data> {
     const handleOrId = ctx.req.param('uid');
     const host = 'https://api.follow.is';
 
-    const handle = isBizId(handleOrId || '') ? handleOrId : (handleOrId.startsWith('@') ? handleOrId.slice(1) : handleOrId);
+    const handle = isBizId(handleOrId || '') ? handleOrId : handleOrId.startsWith('@') ? handleOrId.slice(1) : handleOrId;
 
     const searchParams = new URLSearchParams({ handle });
 

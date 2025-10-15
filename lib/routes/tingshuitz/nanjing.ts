@@ -39,20 +39,18 @@ async function handler() {
     return {
         title: $('head title').text(),
         link: url,
-        item: list
-            .map((index, item) => {
-                const $item = $(item);
-                const title = $item.find('a span').text();
-                const link = $item.find('a').attr('href');
-                const listTime = $item.find('.list-time').text();
-                const pubDate = parseDate(listTime);
-                return {
-                    title: `${title} ${listTime}`,
-                    description: '南京市停水通知',
-                    link: `${HOME_PAGE}${link}`,
-                    pubDate,
-                };
-            })
-            .get(),
+        item: list.toArray().map((item) => {
+            const $item = $(item);
+            const title = $item.find('a span').text();
+            const link = $item.find('a').attr('href');
+            const listTime = $item.find('.list-time').text();
+            const pubDate = parseDate(listTime);
+            return {
+                title: `${title} ${listTime}`,
+                description: '南京市停水通知',
+                link: `${HOME_PAGE}${link}`,
+                pubDate,
+            };
+        }),
     };
 }

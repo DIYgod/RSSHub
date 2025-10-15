@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/cngal/weekly',
     parameters: {},
@@ -25,13 +25,13 @@ export const route: Route = {
         },
     ],
     name: '每周速报',
-    maintainers: ['chengyuhui'],
+    maintainers: ['kmod-midori'],
     handler,
     url: 'www.cngal.org/',
 };
 
 async function handler() {
-    const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
+    const response = await got('https://api.cngal.org/api/news/GetWeeklyNewsOverview');
 
     return {
         title: 'CnGal - 每周速报',

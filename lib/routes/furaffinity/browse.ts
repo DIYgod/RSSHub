@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/browse/:mode?',
     name: 'Browse',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/browse/nsfw',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: { mode: 'R18 content toggle, default value is sfw, options are sfw, nsfw' },
@@ -16,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

@@ -57,7 +57,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const title = $('meta[name="keywords"]').prop('content')?.replace(/,/g, ' - ') ?? $('title').text();
+    const title = $('meta[name="keywords"]').prop('content')?.replaceAll(',', ' - ') ?? $('title').text();
     const image = new URL($('div.logo img').prop('src'), rootUrl).href;
 
     return {

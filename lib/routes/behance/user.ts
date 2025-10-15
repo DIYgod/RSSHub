@@ -9,7 +9,7 @@ import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPa
 
 export const route: Route = {
     path: '/:user/:type?',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/behance/mishapetrick',
     parameters: {
@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     const uuid = crypto.randomUUID();
     const headers = {
-        Cookie: `gk_suid=${Math.random().toString().substring(2, 10)}, gki=; originalReferrer=; bcp=${uuid}`,
+        Cookie: `gk_suid=${Math.random().toString().slice(2, 10)}, gki=; originalReferrer=; bcp=${uuid}`,
         'X-BCP': uuid,
         'X-Requested-With': 'XMLHttpRequest',
     };

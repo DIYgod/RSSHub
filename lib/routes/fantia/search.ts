@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/fantia/search/posts/all/daily',
     parameters: {
@@ -86,6 +86,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Search',
     maintainers: ['nczitzk'],
@@ -151,7 +152,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://fantia.jp';
     const apiUrl = `${rootUrl}/api/v1/search/${type}?keyword=${keyword}&peroid=${period}&brand_type=0&category=${caty === 'all' ? '' : caty}&order=${order}${
-        rating === 'all' ? '' : (rating === 'general' ? '&rating=general' : '&adult=1')
+        rating === 'all' ? '' : rating === 'general' ? '&rating=general' : '&adult=1'
     }&per_page=30`;
     const response = await got({
         method: 'get',

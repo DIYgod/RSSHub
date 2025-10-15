@@ -137,7 +137,7 @@ async function handler(ctx) {
                     ? $(script)
                           .text()
                           ?.match(/\$\('#lower'\)\.prepend\('(.*)'\);/)?.[1]
-                          ?.replaceAll(/\\"/g, '"')
+                          ?.replaceAll(String.raw`\"`, '"')
                     : '';
                 if (lowerContent) {
                     const $ = cheerio.load(lowerContent, null, false);
@@ -158,7 +158,7 @@ async function handler(ctx) {
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
                 item.pubDate = parseDate(item.pubDate);
-                item.guid = item.link.includes('?') ? item.link : item.link.substring(0, item.link.lastIndexOf('/'));
+                item.guid = item.link.includes('?') ? item.link : item.link.slice(0, item.link.lastIndexOf('/'));
 
                 return item;
             })

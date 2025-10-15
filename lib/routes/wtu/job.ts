@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import zlib from 'zlib';
+import zlib from 'node:zlib';
 import { load } from 'cheerio';
 
 const baseUrl = 'https://wtu.91wllm.com/';
@@ -31,8 +31,8 @@ function decodeData(str) {
     const substr2Num = Number.parseInt(match[3]);
     // 解压缩
     const unzipContent = zlib.inflateSync(Buffer.from(compressedContent, 'base64')).toString('utf8');
-    const content = Buffer.from(unzipContent.substring(substr1Num), 'base64');
-    return content.toString('utf8').substring(substr2Num);
+    const content = Buffer.from(unzipContent.slice(substr1Num), 'base64');
+    return content.toString('utf8').slice(substr2Num);
 }
 
 export const route: Route = {

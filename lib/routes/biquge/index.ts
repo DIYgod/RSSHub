@@ -58,7 +58,7 @@ async function handler(ctx) {
 
     let items = $('dl dd a')
         .toArray()
-        .reverse()
+        .toReversed()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 1)
         .map((item) => {
             item = $(item);

@@ -79,19 +79,17 @@ async function handler(ctx) {
     const $ = load(response.data);
     const publications = $('dd');
 
-    const list = publications
-        .map((_, publication) => {
-            const title = $(publication).find('a').first().text();
-            const filename = $(publication).find('b').attr('id');
-            const link = `https://cnki.net/kcms/detail/detail.aspx?filename=${filename}&dbcode=CJFD`;
+    const list = publications.toArray().map((publication) => {
+        const title = $(publication).find('a').first().text();
+        const filename = $(publication).find('b').attr('id');
+        const link = `https://cnki.net/kcms/detail/detail.aspx?filename=${filename}&dbcode=CJFD`;
 
-            return {
-                title,
-                link,
-                pubDate: date,
-            };
-        })
-        .get();
+        return {
+            title,
+            link,
+            pubDate: date,
+        };
+    });
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 

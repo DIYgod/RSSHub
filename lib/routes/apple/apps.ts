@@ -17,7 +17,7 @@ const platforms = {
 
 export const route: Route = {
     path: '/apps/update/:country/:id/:platform?',
-    categories: ['program-update', 'popular'],
+    categories: ['program-update'],
     view: ViewType.Notifications,
     example: '/apple/apps/update/us/id408709785',
     parameters: {
@@ -130,7 +130,7 @@ async function handler(ctx) {
         return {
             title: `${appName} ${item.versionDisplay} for ${p}`,
             link: currentUrl,
-            description: item.releaseNotes?.replace(/\n/g, '<br>'),
+            description: item.releaseNotes?.replaceAll('\n', '<br>'),
             category: [p],
             guid: `apple/apps/${country}/${id}/${pid}#${item.versionDisplay}`,
             pubDate: parseDate(item.releaseTimestamp),
@@ -147,7 +147,7 @@ async function handler(ctx) {
         item: items,
         title: `${title} - Apple App Store`,
         link: currentUrl,
-        description: description?.replace(/\n/g, ' '),
+        description: description?.replaceAll('\n', ' '),
         language: $('html').prop('lang'),
         image: $('meta[property="og:image"]').prop('content'),
         icon,

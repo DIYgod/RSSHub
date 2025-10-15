@@ -18,6 +18,9 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     url: 'javtrailers.com/casts',
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

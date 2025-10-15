@@ -4,7 +4,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -70,16 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.date').first().text();
                     const upDatedStr: string | undefined = pubDateStr;
 
-                    const clearIndex = $$pageBox
-                        .children()
-                        .toArray()
-                        .map((el, index) => ({ el, index }))
-                        .filter(({ el }) => el.tagName === 'div' && el.attributes.some((attr) => attr.name === 'style' && attr.value.split(';').some((prop) => prop.trim() === 'clear:both')))
-                        .reduce((_, { index }) => index, -1);
-
-                    if (clearIndex !== -1) {
-                        $$pageBox.children().slice(0, clearIndex).remove();
-                    }
+                    $$pageBox.find('h2, div.date, .the_champ_sharing_container').remove();
 
                     const description: string | undefined = $$pageBox.html() ?? item.description;
 
@@ -151,7 +143,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [最新遊戲](https://app.mycard520.com.tw/category/cardgame/)，网址为 \`https://app.mycard520.com.tw/category/cardgame/\`，请截取 \`https://app.mycard520.com.tw/category/\` 到末尾 \`/\` 的部分 \`cardgame\` 作为 \`category\` 参数填入，此时目标路由为 [\`/mycard520/category/cardgame\`](https://rsshub.app/mycard520/category/cardgame)。
 :::
 
@@ -240,7 +232,7 @@ export const route: Route = {
                 ],
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [最新游戏](https://app.mycard520.com.tw/category/cardgame/)，网址为 \`https://app.mycard520.com.tw/category/cardgame/\`，请截取 \`https://app.mycard520.com.tw/category/\` 到末尾 \`/\` 的部分 \`cardgame\` 作为 \`category\` 参数填入，此时目标路由为 [\`/mycard520/category/cardgame\`](https://rsshub.app/mycard520/category/cardgame)。
 :::
 

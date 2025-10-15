@@ -6,7 +6,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 
 const domain: string = 'www.dydytt.net';
@@ -203,9 +204,8 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [最新影片](${baseUrl}/html/gndy/dyzz)，网址为 \`${baseUrl}/html/gndy/dyzz\`，请截取 \`${baseUrl}/html/\` 到末尾的部分 \`gndy/dyzz\` 作为 \`category\` 参数填入，此时目标路由为 [\`/dytt/gndy/dyzz\`](https://rsshub.app/dytt/gndy/dyzz)。
-
 :::
 
 <details>

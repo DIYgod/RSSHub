@@ -122,7 +122,7 @@ const setUrl = (info) => {
 
 export const route: Route = {
     path: '/campaign/:type/:free?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     example: '/dlsite/campaign/home',
     parameters: {
         type: {
@@ -141,6 +141,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Discounted Works',
     maintainers: ['cssxsh'],

@@ -50,14 +50,10 @@ async function handler(ctx) {
     return {
         title: info.title,
         link: siteUrl,
-        item:
-            list &&
-            list
-                .map((index, item) => ({
-                    title: $(item).find('a').attr('title').trim(),
-                    pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
-                    link: $(item).find('a').attr('href'),
-                }))
-                .get(),
+        item: list.toArray().map((item) => ({
+            title: $(item).find('a').attr('title').trim(),
+            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
+            link: $(item).find('a').attr('href'),
+        })),
     };
 }

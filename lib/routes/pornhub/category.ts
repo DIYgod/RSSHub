@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/category/:caty',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/category/popular-with-women',
     parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)' },
@@ -18,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Category',
     maintainers: ['nczitzk'],
@@ -32,8 +33,8 @@ async function handler(ctx) {
         return data.categories;
     });
 
-    const categoryId = isNaN(category) ? categories.find((item) => item.category === category)?.id : category;
-    const categoryName = isNaN(category) ? category : categories.find((item) => item.id === Number.parseInt(category)).category;
+    const categoryId = Number.isNaN(category) ? categories.find((item) => item.category === category)?.id : category;
+    const categoryName = Number.isNaN(category) ? category : categories.find((item) => item.id === Number.parseInt(category)).category;
 
     const response = await cache.tryGet(
         `pornhub:category:${categoryName}`,

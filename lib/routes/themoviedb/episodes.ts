@@ -36,7 +36,7 @@ async function handler(ctx) {
         description: seasonDetails.overview.trim(),
         image: `https://image.tmdb.org/t/p/original${seasonDetails.poster_path}`,
         link: `https://www.themoviedb.org/tv/${tvShowDetails.id}/season/${seasonDetails.season_number}`,
-        item: seasonDetails.episodes.reverse().map((item) => ({
+        item: seasonDetails.episodes.toReversed().map((item) => ({
             title: `${item.episode_number} ${item.name}`,
             link: `https://www.themoviedb.org/tv/${tvShowDetails.id}/season/${item.season_number}/episode/${item.episode_number}`,
             description: handleDescription(item),

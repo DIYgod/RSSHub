@@ -1,5 +1,5 @@
-{{ if headerImage }}
-    <img src="https://ph-files.imgix.net/{{ headerImage }}"><br>
+{{ if tagline }}
+<blockquote>{{ tagline }}</blockquote>
 {{ /if }}
 
 {{ if description }}

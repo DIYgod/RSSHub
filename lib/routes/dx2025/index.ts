@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type?/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dx2025',
     parameters: { type: '内容类别，见下表，默认为空', category: '行业分类，见下表，默认为空' },
     features: {
@@ -58,14 +58,14 @@ async function handler(ctx) {
 
     const list = $('.entry-title a')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.text(),
                 link: item.attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

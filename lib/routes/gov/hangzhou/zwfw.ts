@@ -38,7 +38,7 @@ async function handler() {
     const host = 'https://www.hangzhou.gov.cn/col/col1256349/index.html';
     const response = await ofetch(host);
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const link = host;
     const formatted = response
         .replace('<script type="text/xml">', '')

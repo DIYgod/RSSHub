@@ -39,12 +39,12 @@ async function handler() {
         link: homeUrl,
         description: `北京大学生命科学学院近期讲座`,
         item: $('a.clearfix')
-            .map((index, item) => ({
+            .toArray()
+            .map((item) => ({
                 title: $(item).find('p').text().trim(),
                 description: '日期: ' + $(item).find('span'), // ${item.find('.chair_txt div').find('span').second().text()}
                 pubDate: parseDate($(item).find('.date').text()),
                 link: baseUrl + $('a.clearfix').attr('href'),
-            }))
-            .get(),
+            })),
     };
 }

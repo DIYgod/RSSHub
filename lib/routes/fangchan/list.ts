@@ -6,7 +6,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, type Cheerio, type Element, load } from 'cheerio';
+import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { type Context } from 'hono';
 import path from 'node:path';
 
@@ -174,7 +175,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [列表](https://www.fangchan.com/)，网址为 \`https://www.fangchan.com/\`，请截取 \`https://www.fangchan.com/\` 到末尾 \`.html\` 的部分 \`datalist\` 作为 \`id\` 参数填入，此时目标路由为 [\`/fangchan/datalist\`](https://rsshub.app/fangchan/datalist)。
 :::
 

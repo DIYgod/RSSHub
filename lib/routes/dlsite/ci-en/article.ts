@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/ci-en/:id/article',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dlsite/ci-en/7400/article',
     parameters: { id: 'Creator id, can be found in URL' },
@@ -18,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

@@ -21,7 +21,7 @@ const categories = {
 
 export const route: Route = {
     path: '/profundity/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/panewslab/profundity',
     parameters: { category: '分类，见下表，默认为精选' },
     radar: [
