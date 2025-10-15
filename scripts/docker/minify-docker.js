@@ -6,7 +6,7 @@ import { nodeFileTrace } from '@vercel/nft';
 
 const projectRoot = path.resolve(process.env.PROJECT_ROOT || path.join(path.dirname(new URL(import.meta.url).pathname), '../..'));
 const resultFolder = path.join(projectRoot, 'app-minimal'); // no need to resolve, ProjectRoot is always absolute
-const files = ['dist/index.js', 'node_modules/cross-env/src/bin/cross-env.js', 'node_modules/.bin/cross-env'].map((file) => path.join(projectRoot, file));
+const files = ['dist/index.js', 'node_modules/cross-env/dist/bin/cross-env.js', 'node_modules/.bin/cross-env'].map((file) => path.join(projectRoot, file));
 
 console.log('Start analyzing, project root:', projectRoot);
 const { fileList: fileSet } = await nodeFileTrace(files, {
