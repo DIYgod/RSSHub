@@ -28750,6 +28750,20 @@
       }
     ]
   },
+  "miyuki.jp": {
+    "_name": "中島みゆき Official",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/",
+          "/s/y10/news/list"
+        ],
+        "target": "/miyuki/news"
+      }
+    ]
+  },
   "modelscope.cn": {
     "_name": "ModelScope 魔搭社区",
     "community": [

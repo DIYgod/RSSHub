@@ -5316,6 +5316,9 @@
   "/mixi2/user/:name/:media?": [
     "KarasuShin"
   ],
+  "/miyuki/news": [
+    "KarasuShin"
+  ],
   "/modb/topic/:id": [
     "yueneiqi"
   ],
