@@ -33,18 +33,20 @@ async function handler() {
             .toArray()
             .map(async (item) => {
                 const $item = $(item);
-                const category = $item.find('p span').last().text();
                 const link = `${ORIGIN}${$item.find('a').attr('href')!}`;
-                return {
-                    title: `${category} - ${$item.find('a').text()}`,
-                    link,
-                    pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
-                    category: [category],
-                    description: await cache.tryGet(link, async () => {
-                        const $detail = load(await ofetch(link));
-                        return $detail('.contents_area__inner').html()!;
-                    }),
-                } as DataItem;
+                return await cache.tryGet(link, async () => {
+                    const category = $item.find('p span').last().text();
+                    return {
+                        title: `${category} - ${$item.find('a').text()}`,
+                        link,
+                        pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
+                        category: [category],
+                        description: await cache.tryGet(link, async () => {
+                            const $detail = load(await ofetch(link));
+                            return $detail('.contents_area__inner').html()!;
+                        }),
+                    } as DataItem;
+                });
             })
     );
 
