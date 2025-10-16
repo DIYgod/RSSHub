@@ -32,16 +32,52 @@ async function getNoticeContent(item) {
     const response = await got(item.link);
     const $ = load(response.body);
 
-    let content = $('#vsb_content').html() || $('.article_content').html() || $('.content').html() || $('.news_content').html();
+    const $content = $('.v_news_content');
 
-    if (content) {
-        const $content = load(content);
-        $content('script').remove();
-        $content('style').remove();
-        content = $content.html();
+    if ($content.length) {
+        // 移除无用元素
+        $content.find('script').remove();
+        $content.find('style').remove();
+        $content.find('.vsbcontent_end').remove();
+
+        // 清理所有标签的属性
+        $content.find('*').removeAttr('style class id');
+        $content.find('p').removeAttr('text-indent line-height text-align');
+
+        // 清理 span 标签但保留内容
+        $content.find('span').each((_, elem) => {
+            const $elem = $(elem);
+            $elem.replaceWith($elem.html() || '');
+        });
+
+        // 清理图片的无用属性，只保留 src 和 alt
+        $content.find('img').each((_, elem) => {
+            const $elem = $(elem);
+            const src = $elem.attr('src');
+            const alt = $elem.attr('alt') || '';
+            $elem.attr({});
+            if (src) {
+                $elem.attr('src', src);
+            }
+            if (alt) {
+                $elem.attr('alt', alt);
+            }
+        });
+
+        // 移除空段落
+        $content.find('p').each((_, elem) => {
+            const $elem = $(elem);
+            const text = $elem.text().trim();
+            if (!text || text === '&nbsp;' || text === ' ') {
+                $elem.remove();
+            }
+        });
+
+        item.description = $content.html() || item.title;
+    } else {
+        item.description = item.title;
     }
 
-    item.description = content || item.title;
     return item;
 }
 
