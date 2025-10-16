@@ -12258,6 +12258,20 @@
       }
     ]
   },
+  "csust.edu.cn": {
+    "_name": "长沙理工大学",
+    "www": [
+      {
+        "title": "通告公示",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tggs.htm",
+          "/"
+        ],
+        "target": "/csust/tggs"
+      }
+    ]
+  },
   "ctbu.edu.cn": {
     "_name": "重庆工商大学",
     "www": [
