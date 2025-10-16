@@ -40,9 +40,34 @@ async function getNoticeContent(item) {
         $content.find('style').remove();
         $content.find('.vsbcontent_end').remove();
 
-        // 清理所有标签的属性
-        $content.find('*').removeAttr('style class id');
-        $content.find('p').removeAttr('text-indent line-height text-align');
+        // 保留必要的排版属性
+        $content.find('*').each((_, elem) => {
+            const $elem = $(elem);
+            const style = $elem.attr('style');
+
+            // 保留文本对齐和缩进相关的样式
+            if (style) {
+                const textAlign = style.match(/text-align:\s*(\w+)/)?.[1];
+                const textIndent = style.match(/text-indent:\s*([\d.]+(?:px|em))/)?.[1];
+
+                let newStyle = '';
+                if (textAlign && ['left', 'center', 'right', 'justify'].includes(textAlign)) {
+                    newStyle += `text-align: ${textAlign};`;
+                }
+                if (textIndent) {
+                    newStyle += ` text-indent: ${textIndent};`;
+                }
+
+                if (newStyle) {
+                    $elem.attr('style', newStyle.trim());
+                } else {
+                    $elem.removeAttr('style');
+                }
+            }
+
+            // 移除其他无用属性
+            $elem.removeAttr('class id');
+        });
 
         // 清理 span 标签但保留内容
         $content.find('span').each((_, elem) => {
