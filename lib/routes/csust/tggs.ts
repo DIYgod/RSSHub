@@ -39,8 +39,9 @@ async function getNoticeContent(item) {
         $content.find('script').remove();
         $content.find('style').remove();
         $content.find('.vsbcontent_end').remove();
+        $content.find('iframe').remove();
 
-        // 保留必要的排版属性
+        // 清理其他元素的样式属性，保留排版相关
         $content.find('*').each((_, elem) => {
             const $elem = $(elem);
             const style = $elem.attr('style');
@@ -67,35 +68,6 @@ async function getNoticeContent(item) {
 
             // 移除其他无用属性
             $elem.removeAttr('class id');
-        });
-
-        // 清理 span 标签但保留内容
-        $content.find('span').each((_, elem) => {
-            const $elem = $(elem);
-            $elem.replaceWith($elem.html() || '');
-        });
-
-        // 清理图片的无用属性，只保留 src 和 alt
-        $content.find('img').each((_, elem) => {
-            const $elem = $(elem);
-            const src = $elem.attr('src');
-            const alt = $elem.attr('alt') || '';
-            $elem.attr({});
-            if (src) {
-                $elem.attr('src', src);
-            }
-            if (alt) {
-                $elem.attr('alt', alt);
-            }
-        });
-
-        // 移除空段落
-        $content.find('p').each((_, elem) => {
-            const $elem = $(elem);
-            const text = $elem.text().trim();
-            if (!text || text === '&nbsp;' || text === ' ') {
-                $elem.remove();
-            }
         });
 
         item.description = $content.html() || item.title;
