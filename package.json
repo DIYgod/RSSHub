@@ -166,7 +166,7 @@
         "@types/supertest": "6.0.3",
         "@typescript-eslint/eslint-plugin": "8.46.1",
         "@typescript-eslint/parser": "8.46.1",
-        "@vercel/nft": "0.30.2",
+        "@vercel/nft": "0.30.3",
         "@vitest/coverage-v8": "2.1.9",
         "discord-api-types": "0.38.30",
         "domhandler": "5.0.3",
