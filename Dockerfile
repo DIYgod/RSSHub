@@ -17,7 +17,6 @@ RUN \
     fi;
 
 COPY ./tsconfig.json /app/
-COPY ./patches /app/patches
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
@@ -71,7 +70,7 @@ WORKDIR /app
 RUN \
     set -ex && \
     pnpm build && \
-    find /app/lib -mindepth 1 -not -path "/app/lib/assets*" -exec rm -rf {} \; 2>/dev/null || true && \
+    rm -rf /app/lib && \
     cp /app/scripts/docker/minify-docker.js /minifier/ && \
     export PROJECT_ROOT=/app && \
     node /minifier/minify-docker.js && \
