@@ -288,8 +288,8 @@ importers:
         specifier: 1.9.1
         version: 1.9.1
       youtubei.js:
-        specifier: 16.0.0
-        version: 16.0.0
+        specifier: 16.0.1
+        version: 16.0.1
       zod:
         specifier: 3.25.76
         version: 3.25.76
@@ -6111,8 +6111,8 @@ packages:
     resolution: {integrity: sha512-KK1OparV3kpIIRkMgLRsQPE73Tu0hYy0CDKcWkF8O3eikyib0IqVjoDNDiGt0KhGbg0/jhh+VUOCcWn/G6nvAw==}
     engines: {node: '>=14.0.0'}
 
-  youtubei.js@16.0.0:
-    resolution: {integrity: sha512-aMx+ulnrxzsgVsxTr7gbBVnIjti2NQUlMwCoo1/MzICCJS3iMLOPUFdo7bSpwskL6ljzQ/LxmmB4WQC3FtkBlA==}
+  youtubei.js@16.0.1:
+    resolution: {integrity: sha512-3802bCAGkBc2/G5WUTc0l/bO5mPYJbQAHL04d9hE9PnrDHoBUT8MN721Yqt4RCNncAXdHcfee9VdJy3Fhq1r5g==}
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
@@ -12307,7 +12307,7 @@ snapshots:
       he: 1.2.0
       striptags: 3.2.0
 
-  youtubei.js@16.0.0:
+  youtubei.js@16.0.1:
     dependencies:
       '@bufbuild/protobuf': 2.9.0
       meriyah: 6.1.4
