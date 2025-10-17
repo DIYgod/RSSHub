@@ -336,9 +336,6 @@ importers:
       '@types/html-to-text':
         specifier: 9.0.4
         version: 9.0.4
-      '@types/imapflow':
-        specifier: 1.0.189
-        version: 1.0.189
       '@types/js-beautify':
         specifier: 1.14.3
         version: 1.14.3
@@ -2363,10 +2360,6 @@ packages:
 
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
-
-  '@types/imapflow@1.0.189':
-    resolution: {integrity: sha512-3I/9/rKYd4+p4tAkQ3sRtTu2EazHzvruzwgpjpM6ZLx8YHjUyqPv3rBEg5wabVWuuX7/+yHULYROQz5cgALX0g==}
-    deprecated: This is a stub types definition. imapflow provides its own type definitions, so you do not need this installed.
 
   '@types/js-beautify@1.14.3':
     resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
@@ -8154,10 +8147,6 @@ snapshots:
   '@types/html-to-text@9.0.4': {}
 
   '@types/http-cache-semantics@4.0.4': {}
-
-  '@types/imapflow@1.0.189':
-    dependencies:
-      imapflow: 1.0.199
 
   '@types/js-beautify@1.14.3': {}
 
