@@ -41,7 +41,7 @@ async function handler() {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
     });
 
-    const lastDate = dateListResponse.obj.dateList.sort().at(-1);
+    const lastDate = dateListResponse.obj.dateList.toSorted().at(-1);
 
     const sectionListResponse = await ofetch<SectionListResponse>(`${API_HOST}/uv/article/period/periodTime`, {
         method: 'POST',
