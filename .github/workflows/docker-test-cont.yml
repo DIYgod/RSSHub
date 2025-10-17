@@ -116,7 +116,7 @@ jobs:
 
       - name: Print Docker container logs
         if: ${{ always() }}
-        run: docker logs rsshub # logs/combined.log? Not so readable...
+        run: docker logs rsshub || true # logs/combined.log? Not so readable...
 
   fail-build:
     name: Fail build

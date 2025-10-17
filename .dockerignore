@@ -3,12 +3,11 @@
 .github
 .husky
 .idea
+.idx
 .vscode
-Dockerfile*
-LICENSE
-Procfile
 app-minimal
 coverage
+eslint-plugins
 node_modules
 test
 
@@ -24,6 +23,8 @@ test
 .prettier*
 .(yarn|npm|nvm)rc
 *.md
+Dockerfile*
+LICENSE
 app.json
 eslint.config.mjs
 docker-compose*

@@ -14,36 +14,19 @@ overrides:
   safer-buffer: npm:@nolyfill/safer-buffer@^1
   side-channel: npm:@nolyfill/side-channel@^1
 
-patchedDependencies:
-  '@bbob/core@4.2.0':
-    hash: 2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4
-    path: patches/@bbob__core@4.2.0.patch
-  '@bbob/parser@4.2.0':
-    hash: 58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6
-    path: patches/@bbob__parser@4.2.0.patch
-  '@bbob/plugin-helper@4.2.0':
-    hash: d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca
-    path: patches/@bbob__plugin-helper@4.2.0.patch
-  '@bbob/preset-html5@4.2.0':
-    hash: 2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b
-    path: patches/@bbob__preset-html5@4.2.0.patch
-  '@bbob/preset@4.2.0':
-    hash: 6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed
-    path: patches/@bbob__preset@4.2.0.patch
-
 importers:
 
   .:
     dependencies:
       '@bbob/html':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.3.1
+        version: 4.3.1
       '@bbob/plugin-helper':
-        specifier: 4.2.0
-        version: 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
+        specifier: 4.3.1
+        version: 4.3.1
       '@bbob/preset-html5':
-        specifier: 4.2.0
-        version: 4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)
+        specifier: 4.3.1
+        version: 4.3.1
       '@hono/node-server':
         specifier: 1.19.5
         version: 1.19.5(hono@4.10.1)
@@ -301,8 +284,8 @@ importers:
         specifier: 7.27.1
         version: 7.27.1(@babel/core@7.28.3)
       '@bbob/types':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.3.1
+        version: 4.3.1
       '@eslint/eslintrc':
         specifier: 3.3.1
         version: 3.3.1
@@ -1021,26 +1004,26 @@ packages:
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
 
-  '@bbob/core@4.2.0':
-    resolution: {integrity: sha512-i5VUIO6xx+TCrBE8plQF9KpW1z+0QcCh9GawCCWYG9KcZrEsyRy57my5/kem0a2lFxXjh0o+tgjQY9sCP5b3bw==}
+  '@bbob/core@4.3.1':
+    resolution: {integrity: sha512-qNS5wNY2oJROV5CQ2e29e9dBz4ZuSO7JcciBXM2yDHvKFUYl+J4o8DxOsugce6z2cFpGz6F4J7vJN7X+6ujWiQ==}
 
-  '@bbob/html@4.2.0':
-    resolution: {integrity: sha512-mZG7MmE/YluH1/FNCr2Jv/Vz3Mq5stZ5tFAjBmYpVVN6Ndus4+FA84vKoHFdUHDiuU1p/e2/o/VUrwsWwLdoIA==}
+  '@bbob/html@4.3.1':
+    resolution: {integrity: sha512-W1qFvBZwhpGkZBNfeRpUFsoF492BlfNmgdh5iczg7B/PDULdOPH5lPLtT/6ZNpyx/xo6/DBssl9YtEO/bm15hw==}
 
-  '@bbob/parser@4.2.0':
-    resolution: {integrity: sha512-l8BppXjdQClrUiv+qIN0Oe6aS/vlH7CEduMreDaxYDadUPC0RMzxj9lXVjO0xTbFEVEIUJCGc53qnpiApLbx2g==}
+  '@bbob/parser@4.3.1':
+    resolution: {integrity: sha512-BqDo8PDLcVLhFvOMdLmeaWk5qqD8E1bEdvzSJQuJC/U1XFs1tMC4lwZ4oPBFmZCeCLNsYFawqjP/S5MDdr7/Tg==}
 
-  '@bbob/plugin-helper@4.2.0':
-    resolution: {integrity: sha512-Uxs/UJROnkpcq5EJfz/8NCEYAcme8l6oAgMeWLX1nxWeieUhRgpY8BWQ9eQwUOXEKa0tsKVPnlmbUAjFhppVPw==}
+  '@bbob/plugin-helper@4.3.1':
+    resolution: {integrity: sha512-0gyhW5sU270iCBvaRO1jYDTs1oGHu913yB9tqxPO9zT5OIDhu47PwensdJ7EuZwgYKEyQ4zZZ+1jvDzkubjdyQ==}
 
-  '@bbob/preset-html5@4.2.0':
-    resolution: {integrity: sha512-X2EIeb2vqTz/n34KWQXEL5IC0SuB6i2/ltRpEaMTyK7IoDEs0XGIWcqVpenb7Z2d4eNA3gTWhkoUUkKlZmfQRQ==}
+  '@bbob/preset-html5@4.3.1':
+    resolution: {integrity: sha512-6Yn8kOrBWt/2u4ZUt7nSTzWP+xvTaH4TlAds6p+BcBRbs4Ov2f1zkRgCh1JlckMXwhH9q9CGF0wn6w8bkUYcFA==}
 
-  '@bbob/preset@4.2.0':
-    resolution: {integrity: sha512-IA+kxlrRcYBXE634B8W6uU2DO7VvrxeOqWUzIDKV2CgzTMpmCG875ihGp+Q3T+QxGwzG5S0L4GdmCIULTbzC4A==}
+  '@bbob/preset@4.3.1':
+    resolution: {integrity: sha512-we6ITgrwciNIdpZRRJl4y3OOEbXEEVA21895JUInvYXevZBrIgIAvO502qlEYQtqhJqQ1HxY5xyhDjZ9rEYQHg==}
 
-  '@bbob/types@4.2.0':
-    resolution: {integrity: sha512-bSCZnNg0VrPosBBUVkjBDYVKNEqwT0jTNuzvAuNrZkuILgUKtLYI9GHuT8rY4lZecCb7UqGDsHsYt0YJO36eJg==}
+  '@bbob/types@4.3.1':
+    resolution: {integrity: sha512-TXxFPfKvZVH/sR0mfn5I99bEFmbnAzIoqFBxG1htRiKyJUx7Yb/ZNS/OsQD1mIsR6+srDqXFDaWbDgVudTTjvQ==}
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
@@ -6857,39 +6840,39 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bbob/core@4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)':
+  '@bbob/core@4.3.1':
     dependencies:
-      '@bbob/parser': 4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/types': 4.2.0
+      '@bbob/parser': 4.3.1
+      '@bbob/plugin-helper': 4.3.1
+      '@bbob/types': 4.3.1
 
-  '@bbob/html@4.2.0':
+  '@bbob/html@4.3.1':
     dependencies:
-      '@bbob/core': 4.2.0(patch_hash=2145e7e74e896ed9a0245a5c0efc45359739aa9cf8f4f797557d74124c49dfe4)
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/types': 4.2.0
+      '@bbob/core': 4.3.1
+      '@bbob/plugin-helper': 4.3.1
+      '@bbob/types': 4.3.1
 
-  '@bbob/parser@4.2.0(patch_hash=58c1d33094ba97e82bb2d6f3aebe02293280282dc236ba5c0b4addffb079a5a6)':
+  '@bbob/parser@4.3.1':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/types': 4.2.0
+      '@bbob/plugin-helper': 4.3.1
+      '@bbob/types': 4.3.1
 
-  '@bbob/plugin-helper@4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)':
+  '@bbob/plugin-helper@4.3.1':
     dependencies:
-      '@bbob/types': 4.2.0
+      '@bbob/types': 4.3.1
 
-  '@bbob/preset-html5@4.2.0(patch_hash=2dfb8d9be036009fcc315551cb39b08f478c9a279511267cf570a3486073d39b)':
+  '@bbob/preset-html5@4.3.1':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/preset': 4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)
-      '@bbob/types': 4.2.0
+      '@bbob/plugin-helper': 4.3.1
+      '@bbob/preset': 4.3.1
+      '@bbob/types': 4.3.1
 
-  '@bbob/preset@4.2.0(patch_hash=6d367f09bfaa669d1936b0d0da34a962fdd4fdf2cacc103a856dc5ba310abfed)':
+  '@bbob/preset@4.3.1':
     dependencies:
-      '@bbob/plugin-helper': 4.2.0(patch_hash=d40357c9c2cb427a75a812d7bc567abd246bd57a77fe38b15847556a626a5bca)
-      '@bbob/types': 4.2.0
+      '@bbob/plugin-helper': 4.3.1
+      '@bbob/types': 4.3.1
 
-  '@bbob/types@4.2.0': {}
+  '@bbob/types@4.3.1': {}
 
   '@bcoe/v8-coverage@0.2.3': {}
 
