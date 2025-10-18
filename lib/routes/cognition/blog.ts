@@ -1,5 +1,4 @@
 import { type Data, type DataItem, type Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
@@ -56,7 +55,6 @@ const splitAuthors = (text: string | undefined): DataItem['author'] => {
 };
 
 export async function handler(ctx: Context): Promise<Data> {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
     const pageParam = ctx.req.param('page');
     const pageNumber = Number.parseInt(pageParam ?? '1', 10);
     const currentPage = Number.isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
@@ -66,85 +64,49 @@ export async function handler(ctx: Context): Promise<Data> {
     const html = await ofetch(targetUrl);
     const $ = load(html);
 
-    const items: DataItem[] = [];
+    const items = $('#blog-post-list__list li.blog-post-list__list-item')
+        .toArray()
+        .map((el) => {
+            const element = $(el);
+            const linkElement = element.find('a.o-blog-preview').first();
 
-    for (const el of $('#blog-post-list__list li.blog-post-list__list-item').slice(0, limit).toArray()) {
-        const element = $(el);
-        const linkElement = element.find('a.o-blog-preview').first();
-
-        const href = linkElement.attr('href');
-        const link = href ? new URL(href, baseUrl).href : undefined;
-
-        if (!link) {
-            continue;
-        }
-
-        const title = linkElement.find('h3.o-blog-preview__title').text().trim();
-        if (!title) {
-            continue;
-        }
-
-        const summary = linkElement.find('p.o-blog-preview__intro').text().trim();
-
-        const dateNode = linkElement.find('.o-blog-preview__meta-date').clone();
-        dateNode.find('.o-blog-preview__meta').remove();
-        const dateText = dateNode.text().trim();
-        const authorText = linkElement.find('.o-blog-preview__meta-author').text().trim();
-
-        const dataItem: DataItem = {
-            title,
-            link,
-            pubDate: parseDate(dateText),
-        };
-
-        if (summary) {
-            dataItem.description = summary;
-        }
-
-        const authors = splitAuthors(authorText);
-        if (authors) {
-            dataItem.author = authors;
-        }
-
-        items.push(dataItem);
-    }
-
-    const detailedItems = await Promise.all(
-        items.map((item) => {
-            const link = item.link;
+            const href = linkElement.attr('href');
+            const link = href ? new URL(href, baseUrl).href : undefined;
 
             if (!link) {
-                return item;
+                return;
             }
 
-            return cache.tryGet(link, async () => {
-                const detailHtml = await ofetch(link);
-                const $$ = load(detailHtml);
+            const title = linkElement.find('h3.o-blog-preview__title').text().trim();
+            if (!title) {
+                return;
+            }
 
-                const article = $$('#blog-post__body').first();
-                const image = $$('meta[property="og:image"]').attr('content');
+            const summary = linkElement.find('p.o-blog-preview__intro').text().trim();
 
-                const processedItem: DataItem = {
-                    ...item,
-                };
+            const dateNode = linkElement.find('.o-blog-preview__meta-date').clone();
+            dateNode.find('.o-blog-preview__meta').remove();
+            const dateText = dateNode.text().trim();
+            const authorText = linkElement.find('.o-blog-preview__meta-author').text().trim();
 
-                if (image) {
-                    processedItem.banner = image;
-                    processedItem.image = image;
-                }
+            const dataItem: DataItem = {
+                title,
+                link,
+                pubDate: parseDate(dateText),
+            };
 
-                const articleHtml = article.html();
-                if (articleHtml) {
-                    processedItem.content = {
-                        html: articleHtml,
-                        text: article.text().trim(),
-                    };
-                }
+            if (summary) {
+                dataItem.description = summary;
+            }
 
-                return processedItem;
-            });
+            const authors = splitAuthors(authorText);
+            if (authors) {
+                dataItem.author = authors;
+            }
+
+            return dataItem;
         })
-    );
+        .filter((item): item is DataItem => item !== undefined);
 
     const imageAttr = $('meta[property="og:image"]').attr('content');
     const image = imageAttr ? new URL(imageAttr, baseUrl).href : undefined;
@@ -154,7 +116,7 @@ export async function handler(ctx: Context): Promise<Data> {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         allowEmpty: true,
-        item: detailedItems,
+        item: items,
         image,
     };
 }
