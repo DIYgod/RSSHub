@@ -38850,6 +38850,19 @@
       }
     ]
   },
+  "stdaily.com": {
+    "_name": "中国科技网",
+    "epaper": [
+      {
+        "title": "科技日报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/statics/technology-site/index.html"
+        ],
+        "target": "/stdaily/digitalpaper"
+      }
+    ]
+  },
   "steamcommunity.com": {
     "_name": "Steam",
     ".": [
