@@ -1,10 +1,10 @@
 import type { APIRoute, Namespace, Route } from '@/types';
-import { directoryImport } from 'directory-import';
 import { Hono, type Handler } from 'hono';
 import { routePath } from 'hono/route';
 import path from 'node:path';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { config } from '@/config';
+import importDirectory from 'esm-import-directory';
 
 import index from '@/routes/index';
 import healthz from '@/routes/healthz';
@@ -66,10 +66,9 @@ switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
         }
         break;
     default:
-        modules = directoryImport({
-            targetDirectoryPath: path.join(__dirname, './routes'),
-            importPattern: /\.ts$/,
-        }) as typeof modules;
+        modules = (await importDirectory(path.join(import.meta.dirname, './routes'), {
+            extensions: ['.ts'],
+        })) as typeof modules;
 }
 
 if (config.feature.disable_nsfw) {

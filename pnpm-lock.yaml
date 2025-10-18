@@ -99,9 +99,6 @@ importers:
       destr:
         specifier: 2.0.5
         version: 2.0.5
-      directory-import:
-        specifier: 3.3.2
-        version: 3.3.2
       dotenv:
         specifier: 17.2.3
         version: 17.2.3
@@ -388,6 +385,9 @@ importers:
       eslint-plugin-yml:
         specifier: 1.19.0
         version: 1.19.0(eslint@9.37.0(jiti@2.6.1))
+      esm-import-directory:
+        specifier: 3.1.0
+        version: 3.1.0
       fs-extra:
         specifier: 11.3.2
         version: 11.3.2
@@ -2650,6 +2650,10 @@ packages:
     resolution: {integrity: sha512-x1FCFnFifvYDDzTaLII71vG5uvDwgtmDTEVWAxrgeiR8VjMONcCXJx7E+USjDtHlwFmt9MysbqgF9b9Vjr6w+w==}
     engines: {node: '>=4'}
 
+  async-compat@1.7.1:
+    resolution: {integrity: sha512-h+5rmYWLLqjGwJjlPeUoWpjcNljmUUvhKEL+Vv2Hwi3ZVfRTZmZsRFT+y68rGlE3xxhELXt4ZgPc81G1u4qpjA==}
+    engines: {node: '>=0.8'}
+
   async-mutex@0.3.2:
     resolution: {integrity: sha512-HuTK7E7MT7jZEh1P9GtRW9+aTWiDWWi9InbZ5hjxrnRa39KS4BW04+xLBhYNS2aXhHUIKZSw3gj4Pn1pj+qGAA==}
 
@@ -3201,10 +3205,6 @@ packages:
     resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
-  directory-import@3.3.2:
-    resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
-    engines: {node: '>=18.17.0'}
-
   discord-api-types@0.38.30:
     resolution: {integrity: sha512-KhAqlBrg+rVK+Ob7INMF5o63yW4/GUzRatG/AjyVsIO8lgcLyR8qCl2HokIVzWwmzkJYG0CEPXsKMOqau3E8NA==}
 
@@ -3499,6 +3499,14 @@ packages:
       jiti:
         optional: true
 
+  esm-import-directory@3.1.0:
+    resolution: {integrity: sha512-qAUjK7ptvXnWQoBXWZG4nciapua0zVj0C515E/sWItYDpmIcTq5BloVpwPd7cbGyZndsSxMZRausbRdfsxuuPg==}
+    engines: {node: '>=0.8'}
+
+  esm-require-directory@3.1.4:
+    resolution: {integrity: sha512-lvuqpdER/C+gVRAyG74oCqWf9RR7ZGsI4231Z6oi1/Q10S1cvmjA6O8kqOu+kkajpsApt7fYpje8BEKfVaHHDg==}
+    engines: {node: '>=0.8'}
+
   esniff@2.0.1:
     resolution: {integrity: sha512-kTUIGKQ/mDPFoJ0oVfcmyJn4iBDRptjNVIzwIFR7tqWXdVI9xfA2RMwY/gbSpJG3lkdWNEjLap/NqVHZiJsdfg==}
     engines: {node: '>=0.10'}
@@ -3701,6 +3709,10 @@ packages:
   fs-extra@11.3.2:
     resolution: {integrity: sha512-Xr9F6z6up6Ws+NjzMCZc6WXg2YFRlrLP9NQDO3VQrWrfiojdhS56TzueT88ze0uBdCTwEIhQ3ptnmKeWGFAe0A==}
     engines: {node: '>=14.14'}
+
+  fs-iterator@6.1.3:
+    resolution: {integrity: sha512-Xv1xPG3VmPEa2VoLflWf1SdtJLcPC5aSFjqKlf+wU1b20ZYjicMMh3aVn4kJMstGBuq7g5KXDv1h4i9qGfPXRA==}
+    engines: {node: '>=0.8'}
 
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -4032,6 +4044,9 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     hasBin: true
 
+  is-error@2.2.2:
+    resolution: {integrity: sha512-IOQqts/aHWbiisY5DuPJQ0gcbvaLFCa7fBa9xoLfxBZvQ+ZI/Zh9xoI7Gk+G64N0FdK4AbibytHht2tWgpJWLg==}
+
   is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
@@ -4078,6 +4093,9 @@ packages:
 
   is-potential-custom-element-name@1.0.1:
     resolution: {integrity: sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==}
+
+  is-promise@4.0.0:
+    resolution: {integrity: sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==}
 
   is-stream@2.0.1:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
@@ -4127,6 +4145,10 @@ packages:
   istanbul-reports@3.1.7:
     resolution: {integrity: sha512-BewmUXImeuRk2YY0PVbxgKAysvhRPUQE0h5QRM++nVWyubKGV0l8qQ5op8+B2DOmwSe63Jivj0BjkPQVf8fP5g==}
     engines: {node: '>=8'}
+
+  iterator-next-callback@2.0.4:
+    resolution: {integrity: sha512-gDOLYzGHESUMAMTapGp0itbT6+eyaeHnRydpuh3j0bibtQc+8EVK80CE46tHxUq5jl8vFS7pnQ9NVTa0kxN3nA==}
+    engines: {node: '>=0.8'}
 
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
@@ -4402,6 +4424,10 @@ packages:
 
   markdown-table@2.0.0:
     resolution: {integrity: sha512-Ezda85ToJUBhM6WGaG6veasyym+Tbs3cMAw/ZhOPqXiYsr0jgocBV3j3nx+4lk47plLlIqjwuTm/ywVI+zjJ/A==}
+
+  maximize-iterator@4.0.6:
+    resolution: {integrity: sha512-q2IpesALdmlxd3y8jGHy5rl3nQR8Aw28jT6kMArm5LkFuEpURTPyNCjPNcFuYqzs2sGbq2+mOJEajmEUJoyKKg==}
+    engines: {node: '>=0.8'}
 
   mdast-util-from-markdown@2.0.2:
     resolution: {integrity: sha512-uZhTV/8NBuw0WHkPTrCqDOl0zVe1BIng5ZtHoDk49ME1qqcjYmmLmOf0gELgcRMxN4w2iuIeVso5/6QymSrgmA==}
@@ -4893,6 +4919,14 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
+  pinkie-promise@2.0.1:
+    resolution: {integrity: sha512-0Gni6D4UcLTbv9c57DfxDGdr41XfgUjqWZu492f0cIGr16zDU06BWP/RAEvOuo7CQ0CNjHaLlM59YJJFm3NWlw==}
+    engines: {node: '>=0.10.0'}
+
+  pinkie@2.0.4:
+    resolution: {integrity: sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==}
+    engines: {node: '>=0.10.0'}
+
   pino-abstract-transport@2.0.0:
     resolution: {integrity: sha512-F63x5tizV6WCh4R6RHyi2Ml+M70DNRXt/+HANowMflpgGFMAym/VKm6G7ZOQRjqN7XbGxK1Lg9t6ZrtzOaivMw==}
 
@@ -5327,6 +5361,10 @@ packages:
     resolution: {integrity: sha512-2p2KJZTSqQ/I3+HX42EpYOa2l3f8Erv8MWKsy2I9uf4wA7yFIkXRffYdsx86y6z4vHtV8u7g+pPlr8/4ouAxsQ==}
     engines: {node: '>=0.10.0'}
     hasBin: true
+
+  stack-base-iterator@2.1.4:
+    resolution: {integrity: sha512-xKUfhaFqeMMq5NulGvBj+Rw2StMG11iYfcS8YMPQCp1OX1kvnowu229OEn5u68j5tKi3C87j0RhTdg/9AO49Sg==}
+    engines: {node: '>=0.8'}
 
   stack-trace@0.0.10:
     resolution: {integrity: sha512-KGzahc7puUKkzyMt+IqAep+TVNbKP+k2Lmwhub39m1AsTSkaDutx56aDCo+HLDzf/D26BIHTJWNiTG1KAJiQCg==}
@@ -8504,6 +8542,11 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  async-compat@1.7.1:
+    dependencies:
+      is-error: 2.2.2
+      is-promise: 4.0.0
+
   async-mutex@0.3.2:
     dependencies:
       tslib: 2.8.1
@@ -9032,8 +9075,6 @@ snapshots:
     dependencies:
       heap: 0.2.7
 
-  directory-import@3.3.2: {}
-
   discord-api-types@0.38.30: {}
 
   doctrine@3.0.0:
@@ -9470,6 +9511,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  esm-import-directory@3.1.0:
+    dependencies:
+      esm-require-directory: 3.1.4
+
+  esm-require-directory@3.1.4:
+    dependencies:
+      fs-iterator: 6.1.3
+
   esniff@2.0.1:
     dependencies:
       d: 1.0.2
@@ -9689,6 +9738,12 @@ snapshots:
       graceful-fs: 4.2.11
       jsonfile: 6.2.0
       universalify: 2.0.1
+
+  fs-iterator@6.1.3:
+    dependencies:
+      async-compat: 1.7.1
+      fs.realpath: 1.0.0
+      stack-base-iterator: 2.1.4
 
   fs.realpath@1.0.0: {}
 
@@ -10084,6 +10139,8 @@ snapshots:
 
   is-docker@3.0.0: {}
 
+  is-error@2.2.2: {}
+
   is-extglob@2.1.1: {}
 
   is-fullwidth-code-point@3.0.0: {}
@@ -10113,6 +10170,8 @@ snapshots:
   is-plain-object@5.0.0: {}
 
   is-potential-custom-element-name@1.0.1: {}
+
+  is-promise@4.0.0: {}
 
   is-stream@2.0.1: {}
 
@@ -10158,6 +10217,10 @@ snapshots:
     dependencies:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.1
+
+  iterator-next-callback@2.0.4:
+    dependencies:
+      is-promise: 4.0.0
 
   jackspeak@3.4.3:
     dependencies:
@@ -10460,6 +10523,11 @@ snapshots:
   markdown-table@2.0.0:
     dependencies:
       repeat-string: 1.6.1
+
+  maximize-iterator@4.0.6:
+    dependencies:
+      async-compat: 1.7.1
+      iterator-next-callback: 2.0.4
 
   mdast-util-from-markdown@2.0.2:
     dependencies:
@@ -10997,6 +11065,12 @@ snapshots:
 
   pidtree@0.6.0: {}
 
+  pinkie-promise@2.0.1:
+    dependencies:
+      pinkie: 2.0.4
+
+  pinkie@2.0.4: {}
+
   pino-abstract-transport@2.0.0:
     dependencies:
       split2: 4.2.0
@@ -11519,6 +11593,13 @@ snapshots:
       jsbn: 0.1.1
       safer-buffer: '@nolyfill/safer-buffer@1.0.44'
       tweetnacl: 0.14.5
+
+  stack-base-iterator@2.1.4:
+    dependencies:
+      async-compat: 1.7.1
+      iterator-next-callback: 2.0.4
+      maximize-iterator: 4.0.6
+      pinkie-promise: 2.0.1
 
   stack-trace@0.0.10: {}
 
