@@ -42,26 +42,17 @@ function ehgot_thumb(cache, thumb_url) {
 
 async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false, my_tags = false) {
     const $ = load(data);
-    // "m" for Minimal
-    // "p" for Minimal+
-    // "l" for Compact
-    // "e" for Extended
-    // "t" for Thumbnail
     let layout = 't';
 
-    // "itg gld" for Thumbnail
     let galleries = $('div[class^="itg gld"]');
-    // "itg gltm" for Minimal or Minimal+
     if (galleries.length <= 0) {
         galleries = $('table[class^="itg gltm"] tbody');
         layout = 'm';
     }
-    // "itg gltc" for Compact
     if (galleries.length <= 0) {
         galleries = $('table[class^="itg gltc"] tbody');
         layout = 'l';
     }
-    // "itg glte" for Extended
     if (galleries.length <= 0) {
         galleries = $('table[class^="itg glte"] tbody');
         layout = 'e';
@@ -69,53 +60,62 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
     if (galleries.length <= 0) {
         return [];
     }
-
-    async function parseElement(cache, element) {
-        const el = $(element);
-        const title = el.find('.glink').html();
-        const rawDate = el.find('div[id^="posted_"]').text();
-        const pubDate = rawDate ? timezone(rawDate, 0) : rawDate;
-        let el_a;
-        let el_img;
-        let category;
-        let tags_selector = '';
-
-        // match layout
-        if ('mpl'.includes(layout)) {
-            // Minimal, Minimal+, Compact
-            el_a = el.find('td[class^="gl3"] a');
-            el_img = el.find('td[class^=gl2] div.glthumb div img');
-            category = el.find('td.gl1c.glcat .cn').text();
-            tags_selector = 'td.gl3c.glname div.gt';
-        } else if (layout === 'e') {
-            // Extended
-            el_a = el.find('td[class^="gl1"] a');
-            el_img = el_a.find('img');
-            category = el.find('div.gl3e .cn').text();
-            tags_selector = 'table div[title]';
-        } else if (layout === 't') {
+    const layoutConfigs = {
+        t: {
             // Thumbnail
-            el_a = el.find('div[class^="gl3t"] a');
-            el_img = el_a.find('img');
-            category = el.find('div.gl5t .cs').text();
-            tags_selector = 'div.gl6t .gt';
+            link_selector: 'div[class^="gl3t"] a',
+            thumb_selector: 'div[class^="gl3t"] a img',
+            category_selector: 'div.gl5t .cs',
+            tags_selector: 'div.gl6t .gt',
+            has_author: false,
+        },
+        m: {
+            // Minimal, Minimal+
+            link_selector: 'td[class^="gl3"] a',
+            thumb_selector: 'td[class^=gl2] div.glthumb div img',
+            category_selector: 'td.gl1c.glcat .cn',
+            tags_selector: 'td.gl3c.glname div.gt',
+            has_author: false,
+        },
+        l: {
+            // Compact
+            link_selector: 'td[class^="gl3"] a',
+            thumb_selector: 'td[class^=gl2] div.glthumb div img',
+            category_selector: 'td.gl1c.glcat .cn',
+            tags_selector: 'td.gl3c.glname div.gt',
+            has_author: true,
+        },
+        e: {
+            // Extended
+            link_selector: 'td[class^="gl1"] a',
+            thumb_selector: 'td[class^="gl1"] a img',
+            category_selector: 'div.gl3e .cn',
+            tags_selector: 'table div[title]',
+            has_author: true,
+        },
+    };
+
+    // --- 辅助函数：处理缩略图 ---
+    async function processThumbnail(el_img, cache) {
+        let thumbnail = el_img.data('src') ?? el_img.attr('src');
+        if (!thumbnail) {
+            return '';
         }
 
-        const tags = el
-            .find(tags_selector)
-            .toArray()
-            .map((tag) => $(tag).attr('title'));
-
-        const link = el_a.attr('href');
-        let thumbnail = el_img.data('src') ?? el_img.attr('src');
-        if (config.ehentai.img_proxy && thumbnail) {
+        if (config.ehentai.img_proxy) {
             const url = new URL(thumbnail);
             thumbnail = config.ehentai.img_proxy + url.pathname + url.search;
         }
-        if (embed_thumb && thumbnail) {
-            thumbnail = await ehgot_thumb(cache, thumbnail);
+
+        if (embed_thumb) {
+            return await ehgot_thumb(cache, thumbnail);
         }
-        let description = `<img src='${thumbnail}' alt='thumbnail'>`;
+        return thumbnail;
+    }
+
+    // --- 辅助函数：构建描述 ---
+    function buildDescription(thumbnail, el, tags_selector) {
+        let description = thumbnail ? `<img src='${thumbnail}' alt='thumbnail'>` : '';
         if (my_tags && tags_selector) {
             const highlighted_tags = el.find(`${tags_selector}[style]`);
             if (highlighted_tags.length > 0) {
@@ -127,39 +127,81 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
                 description += highlighted_tags_html;
             }
         }
-        if (title && link) {
-            const item: any = {
-                title,
-                description,
-                pubDate,
-                link,
-                category: [`category:${category.toLowerCase()}`, ...(tags || [])],
-            };
-            if (get_bittorrent) {
-                const el_down = el.find('div.gldown');
-                const bittorrent_page_url = el_down.find('a').attr('href');
-                if (bittorrent_page_url) {
-                    const bittorrent_url = await getBittorrent(cache, bittorrent_page_url);
-                    if (bittorrent_url) {
-                        item.enclosure_url = bittorrent_url;
-                        item.enclosure_type = 'application/x-bittorrent';
-                        item.bittorrent_page_url = bittorrent_page_url;
-                    }
-                }
-            }
-            if ('le'.includes(layout)) {
-                // artist tags will only show in Compact or Extended layout
-                // get artist names as author
-                item.author = $(el)
-                    .find('div.gt[title^="artist:"]')
-                    .toArray()
-                    .map((tag) => $(tag).text())
-                    .join(' / ');
-            }
-            return item;
-        }
+        return description;
     }
 
+    // --- 辅助函数：获取BT种子信息 ---
+    async function getEnclosureInfo(el, cache) {
+        const el_down = el.find('div.gldown');
+        const bittorrent_page_url = el_down.find('a').attr('href');
+        if (bittorrent_page_url) {
+            const bittorrent_url = await getBittorrent(cache, bittorrent_page_url);
+            if (bittorrent_url) {
+                return {
+                    enclosure_url: bittorrent_url,
+                    enclosure_type: 'application/x-bittorrent',
+                    bittorrent_page_url,
+                };
+            }
+        }
+        return null;
+    }
+
+    // --- 重构后的核心解析函数 ---
+    async function parseElement(cache, element) {
+        const el = $(element);
+        const config = layoutConfigs[layout];
+
+        // 1. 基本信息提取
+        const title = el.find('.glink').html();
+        const rawDate = el.find('div[id^="posted_"]').text();
+        const el_a = el.find(config.link_selector);
+        const link = el_a.attr('href');
+        if (!title || !rawDate || !link) {
+            return null; // 如果没有标题、日期或链接，则为无效条目
+        }
+
+        const pubDate = timezone(rawDate, 0);
+        const category = el.find(config.category_selector).text();
+
+        const tags = el
+            .find(config.tags_selector)
+            .toArray()
+            .map((tag) => $(tag).attr('title'));
+
+        // 2. 调用辅助函数处理复杂逻辑
+        const thumbnail = await processThumbnail(el.find(config.thumb_selector), cache);
+        const description = buildDescription(thumbnail, el, config.tags_selector);
+
+        // 3. 组装核心 item
+        const item: any = {
+            title,
+            description,
+            pubDate,
+            link,
+            category: [`category:${category.toLowerCase()}`, ...(tags || [])],
+        };
+
+        // 4. 按需附加额外信息
+        if (get_bittorrent) {
+            const enclosure = await getEnclosureInfo(el, cache);
+            if (enclosure) {
+                Object.assign(item, enclosure);
+            }
+        }
+
+        if (config.has_author) {
+            item.author = el
+                .find('div.gt[title^="artist:"]')
+                .toArray()
+                .map((tag) => $(tag).text())
+                .join(' / ');
+        }
+
+        return item;
+    }
+
+    // --- 后续逻辑保持不变 ---
     const item_Promises: any[] = [];
     galleries.children().each((index, element) => {
         item_Promises.push(parseElement(cache, element));
