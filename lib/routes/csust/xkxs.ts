@@ -2,15 +2,15 @@ import { Route } from '@/types';
 import { createCsustHandler } from './utils';
 
 const handler = createCsustHandler({
-    listPath: '/tggs.htm',
-    feedTitle: '长沙理工大学 - 通告公示',
-    feedDescription: '长沙理工大学通告公示',
+    listPath: '/xkxs.htm',
+    feedTitle: '长沙理工大学 - 学科学术',
+    feedDescription: '长沙理工大学学科学术',
 });
 
 export const route: Route = {
-    path: '/tggs',
+    path: '/xkxs',
     categories: ['university'],
-    example: '/csust/tggs',
+    example: '/csust/xkxs',
     parameters: {},
     features: {
         requireConfig: false,
@@ -22,11 +22,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.csust.edu.cn/tggs.htm', 'www.csust.edu.cn/'],
+            source: ['www.csust.edu.cn/xkxs.htm', 'www.csust.edu.cn/'],
         },
     ],
-    name: '通告公示',
+    name: '学科学术',
     maintainers: ['powerfullz'],
     handler,
-    url: 'www.csust.edu.cn/tggs.htm',
+    url: 'www.csust.edu.cn/xkxs.htm',
 };
