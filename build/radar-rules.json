@@ -12269,6 +12269,15 @@
           "/"
         ],
         "target": "/csust/tggs"
+      },
+      {
+        "title": "学科学术",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xkxs.htm",
+          "/"
+        ],
+        "target": "/csust/xkxs"
       }
     ]
   },
