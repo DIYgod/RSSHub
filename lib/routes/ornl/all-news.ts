@@ -151,7 +151,7 @@ export const route: Route = {
     example: '/ornl/all-news',
     parameters: undefined,
     description: undefined,
-    categories: ['new-media'],
+    categories: ['government'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
