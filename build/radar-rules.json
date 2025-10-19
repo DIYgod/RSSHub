@@ -31229,6 +31229,19 @@
       }
     ]
   },
+  "ornl.gov": {
+    "_name": "Oak Ridge National Laboratory",
+    "www": [
+      {
+        "title": "All News",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/all-news"
+        ],
+        "target": "/ornl/all-news"
+      }
+    ]
+  },
   "oschina.net": {
     "_name": "开源中国",
     "www": [
