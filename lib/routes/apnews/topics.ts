@@ -1,4 +1,3 @@
-import { routePath } from 'hono/route';
 import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -38,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = routePath(ctx) === '/apnews/nav/:nav{.*}?';
+    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.*}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
