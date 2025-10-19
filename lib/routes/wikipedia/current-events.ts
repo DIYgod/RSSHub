@@ -51,12 +51,19 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
     }
 
     // Look for {{Current events|content=...}} template
-    const templateMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content\s*=\s*([\s\S]*?)\}\}/);
-    if (!templateMatch) {
+    // The closing }} is always at the end of wikitext
+    const contentMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content\s*=\s*([\s\S]*)\}\}$/);
+    if (!contentMatch) {
         return null;
     }
 
-    return templateMatch[1].trim();
+    return contentMatch[1].trim();
+}
+
+function stripTemplates(wikitext: string): string {
+    // Remove MediaWiki template delimiters {{...}} but keep the content
+    // This prevents conflicts with art-template's {{ }} delimiters in RSS generation
+    return wikitext.replaceAll(/\{\{([^}]+)\}\}/g, '$1');
 }
 
 function convertWikiLinks(html: string): string {
@@ -83,97 +90,99 @@ function convertTextFormatting(html: string): string {
 
 function processListsAndLines(html: string): string {
     const lines = html.split('\n');
-    const processedLines: string[] = [];
+    const result: string[] = [];
+    const depthStack: number[] = []; // Track nesting depth
+    let lastDepth = 0;
 
     for (const line of lines) {
         const trimmedLine = line.trim();
 
         if (!trimmedLine) {
-            // Empty line - add paragraph break
-            processedLines.push('</p><p>');
+            // Empty line - close all lists and add paragraph break
+            while (depthStack.length > 0) {
+                depthStack.pop();
+                result.push('  '.repeat(depthStack.length) + '</ul>');
+                if (depthStack.length > 0) {
+                    result.push('  '.repeat(depthStack.length) + '</li>');
+                }
+            }
+            result.push('</p><p>');
+            lastDepth = 0;
             continue;
         }
 
-        // Check for bullet points and convert to proper nesting
+        // Check for bullet points
         const bulletMatch = trimmedLine.match(/^(\*+)\s*(.*)$/);
         if (bulletMatch) {
             const depth = bulletMatch[1].length;
             const content = bulletMatch[2];
+
             if (!content) {
                 continue; // Skip empty bullets like "*"
             }
-            // Create proper nested list structure
-            const indent = '  '.repeat(depth - 1);
-            processedLines.push(`${indent}<li>${content}</li>`);
+
+            // Handle depth changes
+            if (depth > lastDepth) {
+                // Going deeper - open new nested list(s)
+                for (let d = lastDepth; d < depth; d++) {
+                    result.push('  '.repeat(depthStack.length) + '<ul>');
+                    depthStack.push(d + 1);
+                }
+            } else if (depth < lastDepth) {
+                // Going back up - close deeper lists
+                while (depthStack.length > 0 && depthStack.at(-1) > depth) {
+                    // Close the current <li> first
+                    result.push('  '.repeat(depthStack.length) + '</li>');
+                    depthStack.pop();
+                    // Then close the </ul>
+                    result.push('  '.repeat(depthStack.length) + '</ul>');
+                    // And close the parent <li> if there is one
+                    if (depthStack.length > 0 && depthStack.at(-1) > depth) {
+                        // There's still more to close, the parent li will be closed in next iteration
+                    } else if (depthStack.length > 0) {
+                        // We're done going back up, close the parent <li>
+                        result.push('  '.repeat(depthStack.length) + '</li>');
+                    }
+                }
+            } else if (depthStack.length > 0) {
+                // Same depth - close previous <li>
+                result.push('  '.repeat(depthStack.length) + '</li>');
+            }
+
+            // Add the new list item (leave it open for potential nested lists)
+            result.push('  '.repeat(depthStack.length) + `<li>${content}`);
+            lastDepth = depth;
         } else {
-            // Regular text line
-            processedLines.push(trimmedLine);
+            // Regular text line - close all lists
+            while (depthStack.length > 0) {
+                depthStack.pop();
+                result.push('  '.repeat(depthStack.length) + '</ul>');
+                if (depthStack.length > 0) {
+                    result.push('  '.repeat(depthStack.length) + '</li>');
+                }
+            }
+            result.push(trimmedLine);
+            lastDepth = 0;
         }
     }
 
-    let results = processedLines.join('\n');
+    // Close any remaining open items and lists
+    if (depthStack.length > 0) {
+        // Close the deepest <li> first
+        result.push('  '.repeat(depthStack.length) + '</li>');
+        depthStack.pop();
 
-    // Process lists
-    results = wrapListItems(results);
-    return processNestedLists(results);
-}
-
-function wrapListItems(html: string): string {
-    // Convert consecutive <li> elements into proper <ul> structures
-    return html.replaceAll(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, (match) => `<ul>\n${match}\n</ul>`);
-}
-
-function processNestedLists(html: string): string {
-    const finalLines = html.split('\n');
-    const result: string[] = [];
-    let currentDepth = 0;
-    const openTags: string[] = [];
-
-    for (const line of finalLines) {
-        const trimmed = line.trim();
-
-        if (trimmed.startsWith('<li>')) {
-            const indent = line.match(/^(\s*)/)?.[1]?.length || 0;
-            const depth = Math.floor(indent / 2) + 1;
-
-            // Close deeper levels
-            while (currentDepth > depth) {
-                result.push('  '.repeat(currentDepth - 1) + '</ul>');
-                openTags.pop();
-                currentDepth--;
-            }
-
-            // Open new level if needed
-            if (currentDepth < depth) {
-                result.push('  '.repeat(depth - 1) + '<ul>');
-                openTags.push('ul');
-                currentDepth = depth;
-            }
-
-            result.push('  '.repeat(depth) + trimmed);
-        } else {
-            // Close all open lists
-            while (currentDepth > 0) {
-                result.push('  '.repeat(currentDepth - 1) + '</ul>');
-                openTags.pop();
-                currentDepth--;
-            }
-
-            if (trimmed === '</p><p>') {
-                result.push('</p>\n<p>');
-            } else if (trimmed) {
-                result.push(trimmed);
-            }
+        // Then close all remaining </ul> and their parent </li>
+        while (depthStack.length > 0) {
+            result.push('  '.repeat(depthStack.length) + '</ul>', '  '.repeat(depthStack.length) + '</li>');
+            depthStack.pop();
         }
+
+        // Close the final </ul>
+        result.push('</ul>');
     }
 
-    // Close any remaining open lists
-    while (currentDepth > 0) {
-        result.push('  '.repeat(currentDepth - 1) + '</ul>');
-        currentDepth--;
-    }
-
-    return result.join('');
+    return result.join('\n');
 }
 
 function stripComments(html: string): string {
@@ -199,10 +208,11 @@ function wrapInParagraphsAndCleanup(html: string): string {
 }
 
 // Wiki markup to HTML converter with proper list handling
-function wikiToHtml(wikitext: string): string {
+export function wikiToHtml(wikitext: string): string {
     let html = wikitext;
 
     // Apply transformations in order
+    html = stripTemplates(html); // Must be first to prevent art-template conflicts
     html = convertWikiLinks(html);
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);
