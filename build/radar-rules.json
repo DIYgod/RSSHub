@@ -11663,6 +11663,19 @@
       }
     ]
   },
+  "cognition.ai": {
+    "_name": "cognition",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog/1"
+        ],
+        "target": "/cognition/blog"
+      }
+    ]
+  },
   "cohere.com": {
     "_name": "Cohere",
     ".": [
