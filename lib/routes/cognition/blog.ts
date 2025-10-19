@@ -2,20 +2,14 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import { type Context } from 'hono';
-
-const baseUrl = 'https://cognition.ai';
 
 export const route: Route = {
-    path: '/blog/:page?',
+    path: '/blog',
     name: 'Blog',
     url: 'cognition.ai/blog',
     maintainers: ['Loongphy'],
     example: '/cognition/blog',
     categories: ['programming'],
-    parameters: {
-        page: 'Page number, defaults to 1',
-    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,8 +21,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: [String.raw`cognition.ai/blog/:page(\d+)`],
-            target: '/blog/:page',
+            source: ['cognition.ai/blog/1'],
+            target: '/blog',
         },
     ],
     view: ViewType.Articles,
@@ -54,12 +48,9 @@ const splitAuthors = (text: string | undefined): DataItem['author'] => {
     }));
 };
 
-export async function handler(ctx: Context): Promise<Data> {
-    const pageParam = ctx.req.param('page');
-    const pageNumber = Number.parseInt(pageParam ?? '1', 10);
-    const currentPage = Number.isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
-
-    const listPath = `/blog/${currentPage}`;
+export async function handler(): Promise<Data> {
+    const baseUrl = 'https://cognition.ai';
+    const listPath = '/blog/1';
     const targetUrl = new URL(listPath, baseUrl).href;
     const html = await ofetch(targetUrl);
     const $ = load(html);
