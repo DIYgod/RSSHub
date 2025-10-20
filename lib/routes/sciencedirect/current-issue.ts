@@ -78,12 +78,12 @@ async function handler(ctx) {
 
                 const abstracts = response.data?.[0]?.abstracts ?? [];
                 item.description =
-                    abstracts.length <= 1
-                        ? (abstracts[0]?.html ?? '')
+                    abstracts.length === 0
+                        ? ''
                         : abstracts
-                              .slice(0, 2)
                               .map((abs) => abs?.html ?? '')
-                              .join('<br/><br/>') || '';
+                              .filter(Boolean)
+                              .join('<br/><br/>');
 
                 return item;
             })
