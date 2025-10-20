@@ -104,6 +104,7 @@ jobs:
           ALLOW_USER_HOTLINK_TEMPLATE: true
           ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
           NODE_ENV: dev
+          NODE_OPTIONS: '--max-http-header-size=32768'
           LOGGER_LEVEL: debug
 
       - name: Generate feedback
