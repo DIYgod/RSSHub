@@ -88,26 +88,91 @@ function convertTextFormatting(html: string): string {
     return html;
 }
 
+interface ListProcessorState {
+    result: string[];
+    depthStack: number[];
+    lastDepth: number;
+}
+
+function createListProcessorState(): ListProcessorState {
+    return {
+        result: [],
+        depthStack: [],
+        lastDepth: 0,
+    };
+}
+
+function addIndentedTag(state: ListProcessorState, tag: string): void {
+    state.result.push('  '.repeat(state.depthStack.length) + tag);
+}
+
+function closeAllListsAndAddParagraph(state: ListProcessorState): void {
+    while (state.depthStack.length > 0) {
+        state.depthStack.pop();
+        addIndentedTag(state, '</ul>');
+        if (state.depthStack.length > 0) {
+            addIndentedTag(state, '</li>');
+        }
+    }
+    state.lastDepth = 0;
+}
+
+function openNestedLists(state: ListProcessorState, targetDepth: number): void {
+    for (let d = state.lastDepth; d < targetDepth; d++) {
+        addIndentedTag(state, '<ul>');
+        state.depthStack.push(d + 1);
+    }
+}
+
+function closeNestedLists(state: ListProcessorState, targetDepth: number): void {
+    while (state.depthStack.length > 0 && state.depthStack.at(-1)! > targetDepth) {
+        addIndentedTag(state, '</li>');
+        state.depthStack.pop();
+        addIndentedTag(state, '</ul>');
+
+        if (state.depthStack.length > 0 && state.depthStack.at(-1)! > targetDepth) {
+            // There's still more to close, the parent li will be closed in next iteration
+        } else if (state.depthStack.length > 0) {
+            // We're done going back up, close the parent <li>
+            addIndentedTag(state, '</li>');
+        }
+    }
+}
+
+function closePreviousListItem(state: ListProcessorState): void {
+    if (state.depthStack.length > 0) {
+        addIndentedTag(state, '</li>');
+    }
+}
+
+function closeAllOpenLists(state: ListProcessorState): void {
+    if (state.depthStack.length === 0) {
+        return;
+    }
+
+    // Close the deepest <li> first
+    addIndentedTag(state, '</li>');
+    state.depthStack.pop();
+
+    // Then close all remaining </ul> and their parent </li>
+    while (state.depthStack.length > 0) {
+        state.result.push('  '.repeat(state.depthStack.length) + '</ul>', '  '.repeat(state.depthStack.length) + '</li>');
+        state.depthStack.pop();
+    }
+
+    // Close the final </ul>
+    state.result.push('</ul>');
+}
+
 function processListsAndLines(html: string): string {
     const lines = html.split('\n');
-    const result: string[] = [];
-    const depthStack: number[] = []; // Track nesting depth
-    let lastDepth = 0;
+    const state = createListProcessorState();
 
     for (const line of lines) {
         const trimmedLine = line.trim();
 
         if (!trimmedLine) {
-            // Empty line - close all lists and add paragraph break
-            while (depthStack.length > 0) {
-                depthStack.pop();
-                result.push('  '.repeat(depthStack.length) + '</ul>');
-                if (depthStack.length > 0) {
-                    result.push('  '.repeat(depthStack.length) + '</li>');
-                }
-            }
-            result.push('</p><p>');
-            lastDepth = 0;
+            closeAllListsAndAddParagraph(state);
             continue;
         }
 
@@ -122,89 +187,31 @@ function processListsAndLines(html: string): string {
             }
 
             // Handle depth changes
-            if (depth > lastDepth) {
-                // Going deeper - open new nested list(s)
-                for (let d = lastDepth; d < depth; d++) {
-                    result.push('  '.repeat(depthStack.length) + '<ul>');
-                    depthStack.push(d + 1);
-                }
-            } else if (depth < lastDepth) {
-                // Going back up - close deeper lists
-                while (depthStack.length > 0 && depthStack.at(-1) > depth) {
-                    // Close the current <li> first
-                    result.push('  '.repeat(depthStack.length) + '</li>');
-                    depthStack.pop();
-                    // Then close the </ul>
-                    result.push('  '.repeat(depthStack.length) + '</ul>');
-                    // And close the parent <li> if there is one
-                    if (depthStack.length > 0 && depthStack.at(-1) > depth) {
-                        // There's still more to close, the parent li will be closed in next iteration
-                    } else if (depthStack.length > 0) {
-                        // We're done going back up, close the parent <li>
-                        result.push('  '.repeat(depthStack.length) + '</li>');
-                    }
-                }
-            } else if (depthStack.length > 0) {
-                // Same depth - close previous <li>
-                result.push('  '.repeat(depthStack.length) + '</li>');
+            if (depth > state.lastDepth) {
+                openNestedLists(state, depth);
+            } else if (depth < state.lastDepth) {
+                closeNestedLists(state, depth);
+            } else {
+                closePreviousListItem(state);
             }
 
             // Add the new list item (leave it open for potential nested lists)
-            result.push('  '.repeat(depthStack.length) + `<li>${content}`);
-            lastDepth = depth;
+            addIndentedTag(state, `<li>${content}`);
+            state.lastDepth = depth;
         } else {
             // Regular text line - close all lists
-            while (depthStack.length > 0) {
-                depthStack.pop();
-                result.push('  '.repeat(depthStack.length) + '</ul>');
-                if (depthStack.length > 0) {
-                    result.push('  '.repeat(depthStack.length) + '</li>');
-                }
-            }
-            result.push(trimmedLine);
-            lastDepth = 0;
+            closeAllListsAndAddParagraph(state);
+            state.result.push(trimmedLine);
         }
     }
 
-    // Close any remaining open items and lists
-    if (depthStack.length > 0) {
-        // Close the deepest <li> first
-        result.push('  '.repeat(depthStack.length) + '</li>');
-        depthStack.pop();
-
-        // Then close all remaining </ul> and their parent </li>
-        while (depthStack.length > 0) {
-            result.push('  '.repeat(depthStack.length) + '</ul>', '  '.repeat(depthStack.length) + '</li>');
-            depthStack.pop();
-        }
-
-        // Close the final </ul>
-        result.push('</ul>');
-    }
-
-    return result.join('\n');
+    closeAllOpenLists(state);
+    return state.result.join('\n');
 }
 
 function stripComments(html: string): string {
     // Remove HTML comments
     return html.replaceAll(/<!--[\s\S]*?-->/g, '');
-}
-
-function wrapInParagraphsAndCleanup(html: string): string {
-    // Clean up multiple paragraph tags and empty paragraphs
-    html = html.replaceAll(/<\/p>\s*<p>/g, '</p>\n<p>');
-    html = html.replaceAll(/<p>\s*<ul>/g, '<ul>');
-    html = html.replaceAll(/<\/ul>\s*<\/p>/g, '</ul>');
-
-    // Remove any empty paragraphs (be aggressive about it)
-    html = html.replaceAll(/<p>[\s\n\r]*<\/p>/g, '');
-    html = html.replaceAll(/<p>\s*<\/p>/g, '');
-    html = html.replaceAll('<p></p>', '');
-
-    // Final cleanup - remove trailing empty paragraphs that might have been added
-    html = html.replaceAll(/<p>\s*$/g, '').replaceAll(/\s*<\/p>$/g, '');
-
-    return html;
 }
 
 // Wiki markup to HTML converter with proper list handling
@@ -217,7 +224,6 @@ export function wikiToHtml(wikitext: string): string {
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);
     html = processListsAndLines(html);
-    html = wrapInParagraphsAndCleanup(html);
     html = stripComments(html);
 
     return html;
