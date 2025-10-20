@@ -84,7 +84,6 @@ async function handler(ctx) {
                               .map((abs) => abs?.html ?? '')
                               .filter(Boolean)
                               .join('<br/><br/>');
-
                 return item;
             })
         )
