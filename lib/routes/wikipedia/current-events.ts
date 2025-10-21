@@ -56,7 +56,17 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
         return null;
     }
 
-    return contentMatch[1].trim();
+    let content = contentMatch[1].trim();
+
+    // Strip comments to detect empty content
+    content = stripComments(content);
+
+    // Check if content is empty or only contains empty bullets (e.g., "*", "**", with whitespace)
+    if (/^\s*\*+\s*$/.test(content)) {
+        return null;
+    }
+
+    return content;
 }
 
 function stripTemplates(wikitext: string): string {
@@ -223,7 +233,6 @@ export function wikiToHtml(wikitext: string): string {
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);
     html = processListsAndLines(html);
-    html = stripComments(html);
 
     return html;
 }
