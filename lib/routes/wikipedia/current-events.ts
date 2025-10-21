@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
 /* The different ways to query Wikipedia's Current Events
@@ -360,13 +359,21 @@ async function handler(ctx) {
                 const html = contentMap[pageName];
 
                 if (html) {
-                    const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const dateStr = `${year}-${month}-${day}`;
+
+                    // Calculate the end of day in GMT-12 (latest timezone to complete a day)
+                    // This is 23:59:59 on the given date in GMT-12, which equals 11:59:59 the next day in GMT
+                    const endOfDayGMTMinus12 = Date.UTC(year, date.getMonth(), date.getDate() + 1, 11, 59, 59);
 
                     return {
                         title: `Current events: ${dateStr}`,
                         link: `https://en.wikipedia.org/wiki/${pageName}`,
                         description: html,
-                        pubDate: parseDate(date.toISOString()),
+                        // we estimate pubDate by taking the min of the latest possible entry and current time
+                        pubDate: new Date(Math.min(endOfDayGMTMinus12, Date.now())),
                         guid: `wikipedia-current-events-${dateStr}`,
                     };
                 }
