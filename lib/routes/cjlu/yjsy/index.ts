@@ -14,6 +14,8 @@ const titleMap = new Map([
     ['jstz', '中量大研究生院 —— 教师通知'],
 ]);
 
+const excludeResourceTypes = new Set(['image', 'stylesheet']);
+
 export const route: Route = {
     path: '/yjsy/:cate',
     categories: ['university'],
@@ -71,9 +73,10 @@ async function handler(ctx) {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+                excludeResourceTypes.has(request.resourceType()) ? request.abort() : request.continue();
             });
         },
+        gotoConfig: { waitUntil: 'networkidle0' },
     });
 
     const cookies = await browser.cookies();
