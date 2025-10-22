@@ -4,7 +4,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import timezone from '@/utils/timezone';
-import { config } from '@/config';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
@@ -24,7 +23,7 @@ const headers = {
     'Sec-Fetch-Site': 'same-origin',
     'Sec-Fetch-User': '?1',
     'Upgrade-Insecure-Requests': '1',
-    'User-Agent': config.ua,
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0',
     'sec-ch-ua': '"Microsoft Edge";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
@@ -134,8 +133,8 @@ async function handler(ctx) {
                 const res = await ofetch(item.link, {
                     responseType: 'text',
                     headers: {
+                        ...headers,
                         Cookie: cookieString,
-                        'User-Agent': config.ua,
                         Referer: url,
                     },
                 });
