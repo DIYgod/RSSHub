@@ -48,7 +48,6 @@ async function handler(ctx) {
         const bootstrapEnvelope = nextData.props.pageProps.bootstrapEnvelope;
 
         return {
-            meta: bootstrapEnvelope.meta,
             id: bootstrapEnvelope.pageBootstrap.campaign.data.id,
             attributes: bootstrapEnvelope.pageBootstrap.campaign.data.attributes,
         };
@@ -114,8 +113,8 @@ async function handler(ctx) {
     });
 
     return {
-        title: creatorData.meta.title,
-        description: creatorData.meta.desc,
+        title: creatorData.attributes.name,
+        description: creatorData.attributes.creation_name,
         link,
         image: creatorData.attributes.avatar_photo_url,
         item: items,
