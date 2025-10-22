@@ -142,8 +142,8 @@ importers:
         specifier: 1.46.1
         version: 1.46.1
       ioredis:
-        specifier: 5.8.1
-        version: 5.8.1
+        specifier: 5.8.2
+        version: 5.8.2
       ip-regex:
         specifier: 5.0.0
         version: 5.0.0
@@ -3998,8 +3998,8 @@ packages:
       re2:
         optional: true
 
-  ioredis@5.8.1:
-    resolution: {integrity: sha512-Qho8TgIamqEPdgiMadJwzRMW3TudIg6vpg4YONokGDudy4eqRIJtDbVX72pfLBcWxvbn3qm/40TyGUObdW4tLQ==}
+  ioredis@5.8.2:
+    resolution: {integrity: sha512-C6uC+kleiIMmjViJINWk80sOQw5lEzse1ZmvD+S/s8p8CWapftSaC+kocGTx6xrbrJ4WmYQGC08ffHLr6ToR6Q==}
     engines: {node: '>=12.22.0'}
 
   ip-address@10.0.1:
@@ -10060,7 +10060,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ioredis@5.8.1:
+  ioredis@5.8.2:
     dependencies:
       '@ioredis/commands': 1.4.0
       cluster-key-slot: 1.1.2
