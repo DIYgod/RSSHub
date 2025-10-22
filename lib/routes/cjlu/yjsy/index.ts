@@ -14,7 +14,7 @@ const titleMap = new Map([
     ['jstz', '中量大研究生院 —— 教师通知'],
 ]);
 
-const excludeResourceTypes = new Set(['image', 'stylesheet']);
+const excludeResourceTypes = new Set(['image']);
 
 export const route: Route = {
     path: '/yjsy/:cate',
