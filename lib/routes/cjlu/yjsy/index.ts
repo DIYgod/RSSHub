@@ -13,6 +13,22 @@ const titleMap = new Map([
     ['yjstz', '中量大研究生院 —— 研究生通知'],
     ['jstz', '中量大研究生院 —— 教师通知'],
 ]);
+const headers = {
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+    'Cache-Control': 'max-age=0',
+    Connection: 'keep-alive',
+    Referer: 'https://yjsy.cjlu.edu.cn',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': config.ua,
+    'sec-ch-ua': '"Microsoft Edge";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+};
 
 const excludeResourceTypes = new Set(['image']);
 
@@ -71,6 +87,7 @@ async function handler(ctx) {
 
     const { page, destory, browser } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
+            await page.setExtraHTTPHeaders(headers);
             await page.setRequestInterception(true);
             page.on('request', (request) => {
                 excludeResourceTypes.has(request.resourceType()) ? request.abort() : request.continue();
