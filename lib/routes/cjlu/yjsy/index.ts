@@ -100,7 +100,7 @@ async function handler(ctx) {
             const route = href.startsWith('../') ? href.replace(/^\.\.\//, '') : href;
 
             return {
-                title: a.attr('title') ?? titleMap.get(cate),
+                title: a.attr('title') ?? titleMap.get(cate) ?? '中量大研究生院通知',
                 pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), +8),
                 link: `${host}${route}`,
                 description: '',
