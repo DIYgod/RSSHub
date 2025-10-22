@@ -92,7 +92,7 @@ async function handler(ctx) {
                 excludeResourceTypes.has(request.resourceType()) ? request.abort() : request.continue();
             });
         },
-        gotoConfig: { waitUntil: 'networkidle0' },
+        gotoConfig: { waitUntil: 'networkidle2' },
     });
 
     const cookies = await browser.cookies();
