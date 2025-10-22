@@ -4,6 +4,8 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import timezone from '@/utils/timezone';
+import { config } from '@/config';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
 
@@ -17,12 +19,25 @@ export const route: Route = {
     categories: ['university'],
     example: '/cjlu/yjsy/yjstz',
     parameters: {
-        cate: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
+        cate: {
+            description: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
+            default: 'yjstz',
+            options: [
+                {
+                    label: '教师通知',
+                    value: 'jstz',
+                },
+                {
+                    label: '研究生通知',
+                    value: 'yjstz',
+                },
+            ],
+        },
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -50,11 +65,22 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
+    const url = `${host}index/${cate}.htm`;
 
-    const response = await ofetch(`${cate}.htm`, {
-        baseURL: `${host}/index/`,
-        responseType: 'text',
+    const { page, destory, browser } = await getPuppeteerPage(url, {
+        onBeforeLoad: async (page) => {
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+            });
+        },
     });
+
+    const cookies = await browser.cookies();
+    const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+
+    const response = await page.content();
+    await destory();
 
     const $ = load(response);
 
@@ -87,6 +113,11 @@ async function handler(ctx) {
 
                 const res = await ofetch(item.link, {
                     responseType: 'text',
+                    headers: {
+                        Cookie: cookieString,
+                        'User-Agent': config.ua,
+                        Referer: url,
+                    },
                 });
                 const $ = load(res);
 
