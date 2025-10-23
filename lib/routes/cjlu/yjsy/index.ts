@@ -86,6 +86,7 @@ async function handler(ctx) {
 
     const { page, destory, browser } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
+            await page.setUserAgent(headers['User-Agent']);
             await page.setExtraHTTPHeaders(headers);
             await page.setRequestInterception(true);
             page.on('request', (request) => {
