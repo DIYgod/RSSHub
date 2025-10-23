@@ -57,7 +57,7 @@ async function handler(ctx) {
 
         // 提取文章发布日期
         // 优先使用 dc:date，因为它通常更精确
-        const pubDate = parseDate($item.find(String.raw`dc\:date`).text() || ''); // 如果都没有，则为空字符串
+        const pubDate = parseDate($item.find(String.raw`dc\:date`).text() || '');
 
         // 提取文章作者
         // 可能有多个 dc:creator 标签
@@ -75,6 +75,8 @@ async function handler(ctx) {
             author,
         });
     });
+    // 按发布日期降序排序
+    items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
     return {
         title: `${channelTitle} | arc.aiaa.org`,
