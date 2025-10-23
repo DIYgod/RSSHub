@@ -82,6 +82,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const url = `${host}index/${cate}.htm`;
 
     const { page, destory, browser } = await getPuppeteerPage(url, {
@@ -107,6 +108,7 @@ async function handler(ctx) {
     const list = $('div.grid685.right div.body ul')
         .find('li')
         .toArray()
+        .slice(0, limit)
         .map((element) => {
             const item = $(element);
 
