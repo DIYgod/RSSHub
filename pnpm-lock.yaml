@@ -136,8 +136,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0
       imapflow:
-        specifier: 1.0.200
-        version: 1.0.200
+        specifier: 1.1.0
+        version: 1.1.0
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -1941,6 +1941,9 @@ packages:
 
   '@paralleldrive/cuid2@2.2.2':
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
+
+  '@pinojs/redact@0.4.0':
+    resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -3964,8 +3967,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.0.200:
-    resolution: {integrity: sha512-hjVxsJxLICR4255CmSPelQde2WqiXwNirT+m0N1F0tBlQzIvK2f6FzxJARfoIsPQD1FO9P+4yss8VQhfKU1JXA==}
+  imapflow@1.1.0:
+    resolution: {integrity: sha512-p1b3d4DUn7n+7ITO/NxEWIKpGugkGh7PjwaV55ZAkAr1mef2SdlYnlV3nR+JWH5CzUzswThx8PBTJgo70sL4lg==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4677,6 +4680,10 @@ packages:
   node-releases@2.0.20:
     resolution: {integrity: sha512-7gK6zSXEH6neM212JgfYFXe+GmZQM+fia5SsusuBIUgnPheLFBmIPhtFoAQRj8/7wASYQnbDlHPVwY0BefoFgA==}
 
+  nodemailer@7.0.10:
+    resolution: {integrity: sha512-Us/Se1WtT0ylXgNFfyFSx4LElllVLJXQjWi2Xz17xWw7amDKO2MLtFnVp1WACy7GkVGs+oBlRopVNUzlrGSw1w==}
+    engines: {node: '>=6.0.0'}
+
   nodemailer@7.0.9:
     resolution: {integrity: sha512-9/Qm0qXIByEP8lEV2qOqcAW7bRpL8CR9jcTwk3NBnHJNmP9fIJ86g2fgmIXqHY+nj55ZEMwWqYAT2QTDpRUYiQ==}
     engines: {node: '>=6.0.0'}
@@ -4907,8 +4914,8 @@ packages:
   pino-std-serializers@7.0.0:
     resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
 
-  pino@10.0.0:
-    resolution: {integrity: sha512-eI9pKwWEix40kfvSzqEP6ldqOoBIN7dwD/o91TY5z8vQI12sAffpR/pOqAD1IVVwIVHDpHjkq0joBPdJD0rafA==}
+  pino@10.1.0:
+    resolution: {integrity: sha512-0zZC2ygfdqvqK8zJIr1e+wT1T/L+LF6qvqvbzEQ6tiMAoTqEVK9a1K3YRu8HEUvGEvNqZyPJTtb2sNIoTkB83w==}
     hasBin: true
 
   pluralize@8.0.0:
@@ -5289,9 +5296,6 @@ packages:
 
   slide@1.1.6:
     resolution: {integrity: sha512-NwrtjCg+lZoqhFU8fOwl4ay2ei8PaqCBOUV3/ektPY9trO1yQ1oXEfmHAhKArUVUr/hOHvy5f6AdP17dCM0zMw==}
-
-  slow-redact@0.3.2:
-    resolution: {integrity: sha512-MseHyi2+E/hBRqdOi5COy6wZ7j7DxXRz9NkseavNYSvvWC06D8a5cidVZX3tcG5eCW3NIyVU4zT63hw0Q486jw==}
 
   smart-buffer@4.2.0:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
@@ -7757,6 +7761,8 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.8.0
 
+  '@pinojs/redact@0.4.0': {}
+
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -10008,7 +10014,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.0.200:
+  imapflow@1.1.0:
     dependencies:
       '@zone-eu/mailsplit': 5.4.7
       encoding-japanese: 2.2.0
@@ -10016,8 +10022,8 @@ snapshots:
       libbase64: 1.3.0
       libmime: 5.3.7
       libqp: 2.1.1
-      nodemailer: 7.0.9
-      pino: 10.0.0
+      nodemailer: 7.0.10
+      pino: 10.1.0
       socks: 2.8.7
 
   import-fresh@3.3.1:
@@ -10796,6 +10802,8 @@ snapshots:
 
   node-releases@2.0.20: {}
 
+  nodemailer@7.0.10: {}
+
   nodemailer@7.0.9: {}
 
   nopt@7.2.1:
@@ -11029,8 +11037,9 @@ snapshots:
 
   pino-std-serializers@7.0.0: {}
 
-  pino@10.0.0:
+  pino@10.1.0:
     dependencies:
+      '@pinojs/redact': 0.4.0
       atomic-sleep: 1.0.0
       on-exit-leak-free: 2.1.2
       pino-abstract-transport: 2.0.0
@@ -11039,7 +11048,6 @@ snapshots:
       quick-format-unescaped: 4.0.4
       real-require: 0.2.0
       safe-stable-stringify: 2.5.0
-      slow-redact: 0.3.2
       sonic-boom: 4.2.0
       thread-stream: 3.1.0
 
@@ -11500,8 +11508,6 @@ snapshots:
       is-fullwidth-code-point: 5.1.0
 
   slide@1.1.6: {}
-
-  slow-redact@0.3.2: {}
 
   smart-buffer@4.2.0: {}
 
