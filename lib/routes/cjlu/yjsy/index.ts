@@ -86,8 +86,8 @@ async function handler(ctx) {
 
     const { page, destory, browser } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
-            await page.setUserAgent(headers['User-Agent']);
             await page.setExtraHTTPHeaders(headers);
+            await page.setUserAgent(headers['User-Agent']);
             await page.setRequestInterception(true);
             page.on('request', (request) => {
                 excludeResourceTypes.has(request.resourceType()) ? request.abort() : request.continue();
@@ -126,27 +126,31 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link || item.link === host) {
+            cache.tryGet(
+                item.link,
+                async () => {
+                    if (!item.link || item.link === host) {
+                        return item;
+                    }
+
+                    const res = await ofetch(item.link, {
+                        responseType: 'text',
+                        headers: {
+                            ...headers,
+                            Cookie: cookieString,
+                            Referer: url,
+                        },
+                    });
+                    const $ = load(res);
+
+                    const content = $('#vsb_content').html() ?? '';
+                    const attachments = $('form[name="_newscontent_fromname"] div ul').html() ?? '';
+
+                    item.description = `${content}<br>${attachments}`;
                     return item;
-                }
-
-                const res = await ofetch(item.link, {
-                    responseType: 'text',
-                    headers: {
-                        ...headers,
-                        Cookie: cookieString,
-                        Referer: url,
-                    },
-                });
-                const $ = load(res);
-
-                const content = $('#vsb_content').html() ?? '';
-                const attachments = $('form[name="_newscontent_fromname"] div ul').html() ?? '';
-
-                item.description = `${content}<br>${attachments}`;
-                return item;
-            })
+                },
+                24 * 60 * 60 // cache post content for 1 day
+            )
         )
     );
 
