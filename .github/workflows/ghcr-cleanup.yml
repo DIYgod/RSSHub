@@ -1,0 +1,220 @@
+name: 'Clean up GHCR Packages'
+
+on:
+  # 每周日 UTC 00:00 执行
+  schedule:
+    - cron: '0 0 * * 0'
+  # Docker 发布完成后自动触发
+  workflow_run:
+    workflows: ['Docker Release']
+    types:
+      - completed
+  # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run mode (preview only, no actual deletion)'
+        required: false
+        type: boolean
+        default: true
+      retention_days:
+        description: 'Number of days to keep package versions'
+        required: false
+        type: number
+        default: 30
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Cleanup old GHCR package versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+          RETENTION_DAYS: ${{ github.event.inputs.retention_days || '30' }}
+          PACKAGE_NAME: rsshub
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -e
+          
+          echo "=================================================="
+          echo "GHCR Package Cleanup"
+          echo "=================================================="
+          echo "Package: ghcr.io/${OWNER}/${PACKAGE_NAME}"
+          echo "Retention period: ${RETENTION_DAYS} days"
+          echo "Dry run mode: ${DRY_RUN}"
+          echo "=================================================="
+          echo ""
+          
+          # 计算截止日期（UTC时间）
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS
+            CUTOFF_DATE=$(date -u -v-${RETENTION_DAYS}d +%Y-%m-%dT%H:%M:%SZ)
+          else
+            # Linux
+            CUTOFF_DATE=$(date -u -d "${RETENTION_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ)
+          fi
+          
+          CUTOFF_TIMESTAMP=$(date -d "${CUTOFF_DATE}" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "${CUTOFF_DATE}" +%s)
+          
+          echo "Current time (UTC): $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "Cutoff date (UTC): ${CUTOFF_DATE}"
+          echo ""
+          
+          # 获取所有包版本（处理分页）
+          echo "Fetching package versions..."
+          PAGE=1
+          PER_PAGE=100
+          ALL_VERSIONS=""
+          
+          while true; do
+            echo "Fetching page ${PAGE}..."
+            
+            # 尝试组织 API
+            RESPONSE=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=${PER_PAGE}&page=${PAGE}" 2>&1 || echo "ORG_API_FAILED")
+            
+            # 如果组织 API 失败，尝试用户 API
+            if [[ "$RESPONSE" == "ORG_API_FAILED" ]] || echo "$RESPONSE" | grep -q "Not Found"; then
+              RESPONSE=$(gh api \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=${PER_PAGE}&page=${PAGE}" 2>&1)
+            fi
+            
+            # 检查是否有数据
+            VERSION_COUNT=$(echo "$RESPONSE" | jq '. | length')
+            
+            if [[ "$VERSION_COUNT" == "0" ]]; then
+              break
+            fi
+            
+            ALL_VERSIONS="${ALL_VERSIONS}${RESPONSE}"$'\n'
+            
+            # 如果返回的版本数少于每页数量，说明已经是最后一页
+            if [[ "$VERSION_COUNT" -lt "$PER_PAGE" ]]; then
+              break
+            fi
+            
+            PAGE=$((PAGE + 1))
+          done
+          
+          # 合并所有版本到一个 JSON 数组
+          ALL_VERSIONS_JSON=$(echo "$ALL_VERSIONS" | jq -s 'add')
+          TOTAL_VERSIONS=$(echo "$ALL_VERSIONS_JSON" | jq 'length')
+          
+          echo "Total versions found: ${TOTAL_VERSIONS}"
+          echo ""
+          
+          # 统计信息
+          echo "=================================================="
+          echo "Processing versions..."
+          echo "=================================================="
+          echo ""
+          
+          # 创建临时文件存储统计信息
+          TEMP_DIR=$(mktemp -d)
+          DELETED_LIST="${TEMP_DIR}/deleted.txt"
+          KEPT_LIST="${TEMP_DIR}/kept.txt"
+          ERROR_LIST="${TEMP_DIR}/errors.txt"
+          touch "$DELETED_LIST" "$KEPT_LIST" "$ERROR_LIST"
+          
+          # 遍历所有版本
+          echo "$ALL_VERSIONS_JSON" | jq -c '.[]' | while read -r version; do
+            VERSION_ID=$(echo "$version" | jq -r '.id')
+            VERSION_NAME=$(echo "$version" | jq -r '.name // "untagged"')
+            CREATED_AT=$(echo "$version" | jq -r '.created_at')
+            TAGS=$(echo "$version" | jq -r '.metadata.container.tags[]? // empty' | tr '\n' ',' | sed 's/,$//')
+            
+            # 计算版本时间戳
+            VERSION_TIMESTAMP=$(date -d "${CREATED_AT}" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "${CREATED_AT}" +%s)
+            
+            # 计算年龄（天）
+            AGE_SECONDS=$(($(date +%s) - VERSION_TIMESTAMP))
+            AGE_DAYS=$((AGE_SECONDS / 86400))
+            
+            # 判断是否需要删除
+            if [[ $VERSION_TIMESTAMP -lt $CUTOFF_TIMESTAMP ]]; then
+              # 显示版本信息
+              if [[ -n "$TAGS" ]]; then
+                echo "🗑️  [TO DELETE] Version ID: ${VERSION_ID}, Tags: ${TAGS}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}"
+              else
+                echo "🗑️  [TO DELETE] Version ID: ${VERSION_ID}, Name: ${VERSION_NAME}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}"
+              fi
+              
+              # 执行删除（如果不是 dry run）
+              if [[ "$DRY_RUN" == "false" ]]; then
+                # 尝试组织 API
+                DELETE_RESULT=$(gh api \
+                  --method DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" 2>&1 || echo "ORG_DELETE_FAILED")
+                
+                # 如果组织 API 失败，尝试用户 API
+                if [[ "$DELETE_RESULT" == "ORG_DELETE_FAILED" ]] || echo "$DELETE_RESULT" | grep -q "Not Found"; then
+                  DELETE_RESULT=$(gh api \
+                    --method DELETE \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "X-GitHub-Api-Version: 2022-11-28" \
+                    "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" 2>&1 || echo "DELETE_FAILED")
+                fi
+                
+                if [[ "$DELETE_RESULT" == *"FAILED"* ]] || [[ -n "$DELETE_RESULT" ]]; then
+                  echo "   ❌ Failed to delete: ${DELETE_RESULT}"
+                  echo "${VERSION_ID}" >> "$ERROR_LIST"
+                else
+                  echo "   ✅ Successfully deleted"
+                  echo "${VERSION_ID}" >> "$DELETED_LIST"
+                fi
+              else
+                echo "   ⏭️  Skipped (dry run mode)"
+                echo "${VERSION_ID}" >> "$DELETED_LIST"
+              fi
+            else
+              echo "${VERSION_ID}" >> "$KEPT_LIST"
+            fi
+          done
+          
+          # 读取统计信息
+          DELETED_COUNT=$(wc -l < "$DELETED_LIST" | tr -d ' ')
+          KEPT_COUNT=$(wc -l < "$KEPT_LIST" | tr -d ' ')
+          ERROR_COUNT=$(wc -l < "$ERROR_LIST" | tr -d ' ')
+          
+          echo ""
+          echo "=================================================="
+          echo "Cleanup Summary"
+          echo "=================================================="
+          echo "Total versions processed: ${TOTAL_VERSIONS}"
+          echo "Versions to keep: ${KEPT_COUNT}"
+          echo "Versions to delete: ${DELETED_COUNT}"
+          
+          if [[ "$DRY_RUN" == "false" ]]; then
+            echo "Versions successfully deleted: ${DELETED_COUNT}"
+            if [[ $ERROR_COUNT -gt 0 ]]; then
+              echo "Versions failed to delete: ${ERROR_COUNT}"
+            fi
+          else
+            echo ""
+            echo "⚠️  DRY RUN MODE - No versions were actually deleted"
+            echo "   To perform actual deletion, set dry_run to false"
+          fi
+          echo "=================================================="
+          
+          # 清理临时文件
+          rm -rf "$TEMP_DIR"
+          
+          # 如果有错误，退出时返回非零状态码
+          if [[ "$DRY_RUN" == "false" ]] && [[ $ERROR_COUNT -gt 0 ]]; then
+            exit 1
+          fi
+
