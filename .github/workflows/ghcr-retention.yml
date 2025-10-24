@@ -15,6 +15,7 @@ jobs:
         uses: vlaurin/action-ghcr-prune@0cf7d39f88546edd31965acba78cdcb0be14d641 # v0.6.0
         with:
           token: ${{ secrets.PAT }}
+          user: ${{ github.repository_owner }}
           container: rsshub
           dry-run: false
           keep-younger-than: 30 # days
