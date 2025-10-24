@@ -143,6 +143,9 @@ jobs:
 
           START_TIME=$(date +%s)
 
+          # 创建结果目录（避免并发写入同一文件）
+          mkdir -p "${TEMP_DIR}/results"
+
           # 定义删除函数（用于并行执行）
           delete_version() {
             local version_id=$1
@@ -178,16 +181,18 @@ jobs:
                   if [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; then
                     sleep 10
                   else
-                    echo "ERROR:${version_id}:Rate limit exceeded" >> "${TEMP_DIR}/errors.log"
+                    # 每个进程写入独立文件，避免并发冲突
+                    touch "${TEMP_DIR}/results/error_${version_id}"
                     return 1
                   fi
                 else
-                  echo "ERROR:${version_id}:${DELETE_RESULT}" >> "${TEMP_DIR}/errors.log"
+                  touch "${TEMP_DIR}/results/error_${version_id}"
                   return 1
                 fi
               else
                 SUCCESS=true
-                echo "SUCCESS:${version_id}" >> "${TEMP_DIR}/success.log"
+                # 每个进程写入独立文件，避免并发冲突
+                touch "${TEMP_DIR}/results/success_${version_id}"
                 return 0
               fi
             done
@@ -200,20 +205,17 @@ jobs:
           export OWNER PACKAGE_NAME TEMP_DIR
 
           # 使用 xargs 并行删除（10个并行worker）
-          # 延迟设置为 0.9 秒 (10 workers * 3600 / 0.9 ≈ 4000 req/hour)
+          # 使用 || true 确保即使有错误也继续执行
           cat "${TEMP_DIR}/to_delete.txt" | \
-            xargs -P 10 -I {} bash -c 'delete_version "$@"' _ {} "$OWNER" "$PACKAGE_NAME" "$TEMP_DIR"
+            xargs -P 10 -I {} bash -c 'delete_version "$@" || true' _ {} "$OWNER" "$PACKAGE_NAME" "$TEMP_DIR" || true
 
-          # 统计结果
+          # 统计结果（统计独立文件数量）
           SUCCESS_COUNT=0
           ERROR_COUNT=0
 
-          if [[ -f "${TEMP_DIR}/success.log" ]]; then
-            SUCCESS_COUNT=$(wc -l < "${TEMP_DIR}/success.log" | tr -d ' ')
-          fi
-
-          if [[ -f "${TEMP_DIR}/errors.log" ]]; then
-            ERROR_COUNT=$(wc -l < "${TEMP_DIR}/errors.log" | tr -d ' ')
+          if [[ -d "${TEMP_DIR}/results" ]]; then
+            SUCCESS_COUNT=$(find "${TEMP_DIR}/results" -name "success_*" 2>/dev/null | wc -l | tr -d ' ')
+            ERROR_COUNT=$(find "${TEMP_DIR}/results" -name "error_*" 2>/dev/null | wc -l | tr -d ' ')
           fi
 
           PROCESSED=$((SUCCESS_COUNT + ERROR_COUNT))
@@ -248,8 +250,12 @@ jobs:
 
           if [[ $ERROR_COUNT -gt 0 ]]; then
             echo ""
-            echo "Errors encountered:"
-            head -n 5 "${TEMP_DIR}/errors.log" 2>/dev/null || echo "(No error log found)"
+            echo "Errors encountered: ${ERROR_COUNT} versions failed to delete"
+            echo "Sample of failed version IDs:"
+            find "${TEMP_DIR}/results" -name "error_*" 2>/dev/null | head -n 5 | while read -r error_file; do
+              version_id=$(basename "$error_file" | sed 's/^error_//')
+              echo "  - Version ID: ${version_id}"
+            done
           fi
 
           echo "=================================================="
