@@ -39,7 +39,7 @@ export async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const url = `https://i.eastmoney.com/api/guba/myreply?pageindex=1&uid=${uid}&checkauth=true`;
 
-    const response = await got(url, {});
+    const response = await got(url);
     const arr = response.data.result.list;
     const nickname = arr[0].reply_user.user_nickname;
 
