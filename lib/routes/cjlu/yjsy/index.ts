@@ -29,7 +29,7 @@ const headers = {
     'sec-ch-ua-platform': '"Windows"',
 };
 
-const excludeResourceTypes = new Set(['image']);
+const allowedResourceTypes = new Set(['document', 'script']);
 
 export const route: Route = {
     path: '/yjsy/:cate',
@@ -91,7 +91,7 @@ async function handler(ctx) {
             await page.setUserAgent(headers['User-Agent']);
             await page.setRequestInterception(true);
             page.on('request', (request) => {
-                excludeResourceTypes.has(request.resourceType()) ? request.abort() : request.continue();
+                allowedResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
             });
         },
         gotoConfig: { waitUntil: 'networkidle2' },
@@ -128,31 +128,27 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(
-                item.link,
-                async () => {
-                    if (!item.link || item.link === host) {
-                        return item;
-                    }
-
-                    const res = await ofetch(item.link, {
-                        responseType: 'text',
-                        headers: {
-                            ...headers,
-                            Cookie: cookieString,
-                            Referer: url,
-                        },
-                    });
-                    const $ = load(res);
-
-                    const content = $('#vsb_content').html() ?? '';
-                    const attachments = $('form[name="_newscontent_fromname"] div ul').html() ?? '';
-
-                    item.description = `${content}<br>${attachments}`;
+            cache.tryGet(item.link, async () => {
+                if (!item.link || item.link === host) {
                     return item;
-                },
-                24 * 60 * 60 // cache post content for 1 day
-            )
+                }
+
+                const res = await ofetch(item.link, {
+                    responseType: 'text',
+                    headers: {
+                        ...headers,
+                        Cookie: cookieString,
+                        Referer: url,
+                    },
+                });
+                const $ = load(res);
+
+                const content = $('#vsb_content').html() ?? '';
+                const attachments = $('form[name="_newscontent_fromname"] div ul').html() ?? '';
+
+                item.description = `${content}<br>${attachments}`;
+                return item;
+            })
         )
     );
 
