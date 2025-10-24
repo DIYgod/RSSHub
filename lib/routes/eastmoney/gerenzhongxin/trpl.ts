@@ -54,7 +54,7 @@ export async function handler(ctx) {
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`,
             guid,
-            author: nickname,
+            author: item.reply_user.user_nickname,
         };
     });
 
