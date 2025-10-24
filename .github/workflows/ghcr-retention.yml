@@ -24,7 +24,7 @@ jobs:
         with:
           account: user
           token: ${{ secrets.PAT }}
-          image-names: "*"
+          image-names: '*'
           cut-off: 30d
           keep-n-most-recent: 5
           dry-run: false
