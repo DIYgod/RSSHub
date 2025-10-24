@@ -45,7 +45,7 @@ jobs:
           set -e
           
           echo "=================================================="
-          echo "GHCR Package Cleanup"
+          echo "GHCR Package Cleanup (Optimized)"
           echo "=================================================="
           echo "Package: ghcr.io/${OWNER}/${PACKAGE_NAME}"
           echo "Retention period: ${RETENTION_DAYS} days"
@@ -68,112 +68,116 @@ jobs:
           echo "Cutoff date (UTC): ${CUTOFF_DATE}"
           echo ""
           
-          # 获取所有包版本（处理分页）
+          # 创建临时目录
+          TEMP_DIR=$(mktemp -d)
+          TO_DELETE_FILE="${TEMP_DIR}/to_delete.txt"
+          TO_KEEP_FILE="${TEMP_DIR}/to_keep.txt"
+          
           echo "Fetching package versions..."
-          PAGE=1
-          PER_PAGE=100
-          ALL_VERSIONS=""
           
-          while true; do
-            echo "Fetching page ${PAGE}..."
-            
-            # 尝试组织 API
-            RESPONSE=$(gh api \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=${PER_PAGE}&page=${PAGE}" 2>&1 || echo "ORG_API_FAILED")
-            
-            # 如果组织 API 失败，尝试用户 API
-            if [[ "$RESPONSE" == "ORG_API_FAILED" ]] || echo "$RESPONSE" | grep -q "Not Found"; then
-              RESPONSE=$(gh api \
-                -H "Accept: application/vnd.github+json" \
-                -H "X-GitHub-Api-Version: 2022-11-28" \
-                "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=${PER_PAGE}&page=${PAGE}" 2>&1)
-            fi
-            
-            # 检查是否有数据
-            VERSION_COUNT=$(echo "$RESPONSE" | jq '. | length')
-            
-            if [[ "$VERSION_COUNT" == "0" ]]; then
-              break
-            fi
-            
-            ALL_VERSIONS="${ALL_VERSIONS}${RESPONSE}"$'\n'
-            
-            # 如果返回的版本数少于每页数量，说明已经是最后一页
-            if [[ "$VERSION_COUNT" -lt "$PER_PAGE" ]]; then
-              break
-            fi
-            
-            PAGE=$((PAGE + 1))
-            
-            # 防止无限循环，最多获取1000页
-            if [[ $PAGE -gt 1000 ]]; then
-              echo "⚠️  Warning: Reached maximum page limit (1000 pages)"
-              break
-            fi
-          done
+          # 使用更高效的方式获取版本列表
+          # 直接使用 gh 命令的 --paginate 选项
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions" > "${TEMP_DIR}/all_versions.json" 2>/dev/null || \
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions" > "${TEMP_DIR}/all_versions.json"
           
-          # 合并所有版本到一个 JSON 数组
-          ALL_VERSIONS_JSON=$(echo "$ALL_VERSIONS" | jq -s 'add')
-          TOTAL_VERSIONS=$(echo "$ALL_VERSIONS_JSON" | jq 'length')
-          
+          TOTAL_VERSIONS=$(jq 'length' "${TEMP_DIR}/all_versions.json")
           echo "Total versions found: ${TOTAL_VERSIONS}"
           echo ""
           
-          # 统计信息
-          echo "=================================================="
           echo "Processing versions..."
+          
+          # 使用 jq 一次性处理所有版本，生成待删除列表
+          jq -r --arg cutoff "$CUTOFF_TIMESTAMP" '
+            .[] | 
+            select((.created_at | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) < ($cutoff | tonumber)) |
+            .id
+          ' "${TEMP_DIR}/all_versions.json" > "$TO_DELETE_FILE"
+          
+          # 生成保留列表
+          jq -r --arg cutoff "$CUTOFF_TIMESTAMP" '
+            .[] | 
+            select((.created_at | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) >= ($cutoff | tonumber)) |
+            .id
+          ' "${TEMP_DIR}/all_versions.json" > "$TO_KEEP_FILE"
+          
+          DELETED_COUNT=$(wc -l < "$TO_DELETE_FILE" | tr -d ' ')
+          KEPT_COUNT=$(wc -l < "$TO_KEEP_FILE" | tr -d ' ')
+          
           echo "=================================================="
+          echo "Analysis Complete"
+          echo "=================================================="
+          echo "Total versions: ${TOTAL_VERSIONS}"
+          echo "Versions to keep: ${KEPT_COUNT}"
+          echo "Versions to delete: ${DELETED_COUNT}"
           echo ""
           
-          # 创建临时文件存储统计信息
-          TEMP_DIR=$(mktemp -d)
-          DELETED_LIST="${TEMP_DIR}/deleted.txt"
-          KEPT_LIST="${TEMP_DIR}/kept.txt"
-          ERROR_LIST="${TEMP_DIR}/errors.txt"
-          TO_DELETE_INFO="${TEMP_DIR}/to_delete_info.txt"
-          touch "$DELETED_LIST" "$KEPT_LIST" "$ERROR_LIST" "$TO_DELETE_INFO"
+          if [[ $DELETED_COUNT -eq 0 ]]; then
+            echo "✅ No versions need to be deleted."
+            rm -rf "$TEMP_DIR"
+            exit 0
+          fi
           
-          # 遍历所有版本
-          PROCESSED=0
-          echo "$ALL_VERSIONS_JSON" | jq -c '.[]' | while read -r version; do
-            VERSION_ID=$(echo "$version" | jq -r '.id')
-            VERSION_NAME=$(echo "$version" | jq -r '.name // "untagged"')
-            CREATED_AT=$(echo "$version" | jq -r '.created_at')
-            TAGS=$(echo "$version" | jq -r '.metadata.container.tags[]? // empty' | tr '\n' ',' | sed 's/,$//')
+          # 显示一些样本
+          echo "Sample of versions to delete:"
+          head -n 10 "$TO_DELETE_FILE" | while read -r version_id; do
+            # 获取版本详情
+            VERSION_INFO=$(jq -r --arg id "$version_id" '.[] | select(.id == $id)' "${TEMP_DIR}/all_versions.json")
+            TAGS=$(echo "$VERSION_INFO" | jq -r '.metadata.container.tags[]? // empty' | tr '\n' ',' | sed 's/,$//')
+            CREATED_AT=$(echo "$VERSION_INFO" | jq -r '.created_at')
+            AGE_DAYS=$(( ($(date +%s) - $(date -d "$CREATED_AT" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$CREATED_AT" +%s)) / 86400 ))
             
-            # 计算版本时间戳
-            VERSION_TIMESTAMP=$(date -d "${CREATED_AT}" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "${CREATED_AT}" +%s)
-            
-            # 计算年龄（天）
-            AGE_SECONDS=$(($(date +%s) - VERSION_TIMESTAMP))
-            AGE_DAYS=$((AGE_SECONDS / 86400))
-            
-            PROCESSED=$((PROCESSED + 1))
-            
-            # 每处理100个版本显示一次进度
-            if [[ $((PROCESSED % 100)) -eq 0 ]]; then
-              echo "Progress: ${PROCESSED}/${TOTAL_VERSIONS} versions processed..."
+            if [[ -n "$TAGS" ]]; then
+              echo "  Version ID: ${version_id}, Tags: ${TAGS}, Age: ${AGE_DAYS} days"
+            else
+              echo "  Version ID: ${version_id}, Age: ${AGE_DAYS} days"
             fi
+          done
+          
+          if [[ $DELETED_COUNT -gt 10 ]]; then
+            echo "  ... and $((DELETED_COUNT - 10)) more versions"
+          fi
+          echo ""
+          
+          if [[ "$DRY_RUN" == "true" ]]; then
+            echo "⚠️  DRY RUN MODE - No versions were actually deleted"
+            echo "   To perform actual deletion, set dry_run to false"
+            rm -rf "$TEMP_DIR"
+            exit 0
+          fi
+          
+          echo "Starting batch deletion..."
+          
+          # 批量删除 - 使用并行处理
+          BATCH_SIZE=50
+          TOTAL_BATCHES=$(( (DELETED_COUNT + BATCH_SIZE - 1) / BATCH_SIZE ))
+          
+          echo "Processing ${DELETED_COUNT} versions in ${TOTAL_BATCHES} batches of ${BATCH_SIZE}..."
+          
+          # 创建批处理文件
+          split -l $BATCH_SIZE "$TO_DELETE_FILE" "${TEMP_DIR}/batch_"
+          
+          SUCCESS_COUNT=0
+          ERROR_COUNT=0
+          
+          for batch_file in "${TEMP_DIR}/batch_"*; do
+            BATCH_NUM=$((SUCCESS_COUNT + ERROR_COUNT + 1))
+            echo "Processing batch ${BATCH_NUM}/${TOTAL_BATCHES}..."
             
-            # 判断是否需要删除
-            if [[ $VERSION_TIMESTAMP -lt $CUTOFF_TIMESTAMP ]]; then
-              # 记录版本信息到文件（减少实时输出）
-              if [[ -n "$TAGS" ]]; then
-                echo "Version ID: ${VERSION_ID}, Tags: ${TAGS}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}" >> "$TO_DELETE_INFO"
-              else
-                echo "Version ID: ${VERSION_ID}, Name: ${VERSION_NAME}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}" >> "$TO_DELETE_INFO"
-              fi
-              
-              # 执行删除（如果不是 dry run）
-              if [[ "$DRY_RUN" == "false" ]]; then
+            # 并行删除当前批次
+            while read -r version_id; do
+              (
                 # 尝试组织 API
                 DELETE_RESULT=$(gh api \
                   --method DELETE \
                   -H "Accept: application/vnd.github+json" \
                   -H "X-GitHub-Api-Version: 2022-11-28" \
-                  "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" 2>&1 || echo "ORG_DELETE_FAILED")
+                  "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "ORG_DELETE_FAILED")
                 
                 # 如果组织 API 失败，尝试用户 API
                 if [[ "$DELETE_RESULT" == "ORG_DELETE_FAILED" ]] || echo "$DELETE_RESULT" | grep -q "Not Found"; then
@@ -181,63 +185,56 @@ jobs:
                     --method DELETE \
                     -H "Accept: application/vnd.github+json" \
                     -H "X-GitHub-Api-Version: 2022-11-28" \
-                    "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${VERSION_ID}" 2>&1 || echo "DELETE_FAILED")
+                    "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "DELETE_FAILED")
                 fi
                 
                 if [[ "$DELETE_RESULT" == *"FAILED"* ]] || [[ -n "$DELETE_RESULT" ]]; then
-                  echo "${VERSION_ID}" >> "$ERROR_LIST"
+                  echo "ERROR:${version_id}:${DELETE_RESULT}" >> "${TEMP_DIR}/errors.log"
                 else
-                  echo "${VERSION_ID}" >> "$DELETED_LIST"
+                  echo "SUCCESS:${version_id}" >> "${TEMP_DIR}/success.log"
                 fi
-              else
-                echo "${VERSION_ID}" >> "$DELETED_LIST"
-              fi
-            else
-              echo "${VERSION_ID}" >> "$KEPT_LIST"
-            fi
+              ) &
+            done < "$batch_file"
+            
+            # 等待当前批次完成
+            wait
+            
+            # 更新计数
+            BATCH_SUCCESS=$(wc -l < "${TEMP_DIR}/success.log" 2>/dev/null || echo "0")
+            BATCH_ERROR=$(wc -l < "${TEMP_DIR}/errors.log" 2>/dev/null || echo "0")
+            
+            echo "  Batch ${BATCH_NUM} completed. Success: ${BATCH_SUCCESS}, Errors: ${BATCH_ERROR}"
           done
           
-          # 读取统计信息
-          DELETED_COUNT=$(wc -l < "$DELETED_LIST" | tr -d ' ')
-          KEPT_COUNT=$(wc -l < "$KEPT_LIST" | tr -d ' ')
-          ERROR_COUNT=$(wc -l < "$ERROR_LIST" | tr -d ' ')
+          # 最终统计
+          FINAL_SUCCESS=$(wc -l < "${TEMP_DIR}/success.log" 2>/dev/null || echo "0")
+          FINAL_ERROR=$(wc -l < "${TEMP_DIR}/errors.log" 2>/dev/null || echo "0")
           
           echo ""
           echo "=================================================="
-          echo "Cleanup Summary"
+          echo "Cleanup Complete"
           echo "=================================================="
           echo "Total versions processed: ${TOTAL_VERSIONS}"
-          echo "Versions to keep: ${KEPT_COUNT}"
-          echo "Versions to delete: ${DELETED_COUNT}"
+          echo "Versions kept: ${KEPT_COUNT}"
+          echo "Versions successfully deleted: ${FINAL_SUCCESS}"
+          echo "Versions failed to delete: ${FINAL_ERROR}"
           
-          # 显示部分待删除版本详情（最多显示前50个）
-          if [[ $DELETED_COUNT -gt 0 ]]; then
+          if [[ $FINAL_ERROR -gt 0 ]]; then
             echo ""
-            echo "Sample of versions to delete (first 50):"
-            head -n 50 "$TO_DELETE_INFO"
-            if [[ $DELETED_COUNT -gt 50 ]]; then
-              echo "... and $((DELETED_COUNT - 50)) more versions"
+            echo "Errors encountered:"
+            head -n 10 "${TEMP_DIR}/errors.log"
+            if [[ $FINAL_ERROR -gt 10 ]]; then
+              echo "... and $((FINAL_ERROR - 10)) more errors"
             fi
           fi
           
-          if [[ "$DRY_RUN" == "false" ]]; then
-            echo ""
-            echo "Versions successfully deleted: ${DELETED_COUNT}"
-            if [[ $ERROR_COUNT -gt 0 ]]; then
-              echo "Versions failed to delete: ${ERROR_COUNT}"
-            fi
-          else
-            echo ""
-            echo "⚠️  DRY RUN MODE - No versions were actually deleted"
-            echo "   To perform actual deletion, set dry_run to false"
-          fi
           echo "=================================================="
           
           # 清理临时文件
           rm -rf "$TEMP_DIR"
           
           # 如果有错误，退出时返回非零状态码
-          if [[ "$DRY_RUN" == "false" ]] && [[ $ERROR_COUNT -gt 0 ]]; then
+          if [[ $FINAL_ERROR -gt 0 ]]; then
             exit 1
           fi
 
