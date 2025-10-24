@@ -55,7 +55,7 @@ export async function handler(ctx) {
             description: descriptionContent,
             pubDate: timezone(parseDate(item.post_publish_time), 8),
             link: `https://guba.eastmoney.com/news,${item.post_guba.stockbar_code},${item.post_id}.html`,
-            author: nickname,
+            author: item.post_user.user_nickname,
         };
     });
 
