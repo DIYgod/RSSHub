@@ -69,5 +69,6 @@ async function handler(): Promise<Data> {
                 guid: item.guid,
             })
         ),
+        language: 'ja',
     };
 }
