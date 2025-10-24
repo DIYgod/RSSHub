@@ -139,7 +139,7 @@
         "zod": "3.25.76"
     },
     "devDependencies": {
-        "@babel/preset-env": "7.28.3",
+        "@babel/preset-env": "7.28.5",
         "@babel/preset-typescript": "7.27.1",
         "@bbob/types": "4.3.1",
         "@eslint/eslintrc": "3.3.1",
