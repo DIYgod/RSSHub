@@ -67,7 +67,7 @@ async function handler(ctx: Context) {
     const tags = decodeURIComponent(_tags).trim();
 
     const { limit = 40 }: { limit?: number } = ctx.req.query();
-    const { apiKey, useId } = getAPIKeys();
+    const { apiKey, userId } = getAPIKeys();
 
     const response = await got({
         url: 'https://gelbooru.com/index.php',
@@ -77,7 +77,7 @@ async function handler(ctx: Context) {
             q: 'index',
             tags,
             api_key: apiKey,
-            user_id: useId,
+            user_id: userId,
             limit: limit <= 0 || limit > 100 ? 40 : limit,
             json: 1,
         }),
