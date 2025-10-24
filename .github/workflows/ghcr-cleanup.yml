@@ -43,7 +43,7 @@ jobs:
           OWNER: ${{ github.repository_owner }}
         run: |
           set -e
-          
+
           echo "=================================================="
           echo "GHCR Package Cleanup (Fast Mode - Hourly)"
           echo "=================================================="
@@ -54,20 +54,20 @@ jobs:
           echo "Schedule: Every hour (56K versions ~66 hours)"
           echo "=================================================="
           echo ""
-          
+
           # 计算截止日期（UTC时间）
           CUTOFF_DATE=$(date -u -d "${RETENTION_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ)
           CUTOFF_TIMESTAMP=$(date -d "${CUTOFF_DATE}" +%s)
-          
+
           echo "Current time (UTC): $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           echo "Cutoff date (UTC): ${CUTOFF_DATE}"
           echo ""
-          
+
           # 创建临时目录
           TEMP_DIR=$(mktemp -d)
-          
+
           echo "Fetching package versions (fast mode)..."
-          
+
           # 快速获取前1000个版本（最多10页）
           gh api --paginate \
             -H "Accept: application/vnd.github+json" \
@@ -81,12 +81,12 @@ jobs:
             "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=100" \
             --jq '.[] | select((.created_at | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) < '"$CUTOFF_TIMESTAMP"') | .id' \
             > "${TEMP_DIR}/to_delete.txt"
-          
+
           TOTAL_TO_DELETE=$(wc -l < "${TEMP_DIR}/to_delete.txt" | tr -d ' ')
-          
+
           # 限制每次运行删除数量（避免超时，保持在1小时内）
           MAX_PER_RUN=850
-          
+
           if [[ $TOTAL_TO_DELETE -gt $MAX_PER_RUN ]]; then
             echo "Found ${TOTAL_TO_DELETE} versions to delete"
             echo "Limiting to ${MAX_PER_RUN} this run (to stay within rate limits)"
@@ -98,7 +98,7 @@ jobs:
             DELETED_COUNT=$TOTAL_TO_DELETE
             REMAINING=0
           fi
-          
+
           echo "=================================================="
           echo "Analysis Complete"
           echo "=================================================="
@@ -109,47 +109,47 @@ jobs:
             echo "Estimated additional runs needed: ${RUNS_NEEDED}"
           fi
           echo ""
-          
+
           if [[ $DELETED_COUNT -eq 0 ]]; then
             echo "✅ No versions need to be deleted."
             rm -rf "$TEMP_DIR"
             exit 0
           fi
-          
+
           # 显示一些样本
           echo "Sample of versions to delete:"
           head -n 5 "${TEMP_DIR}/to_delete.txt" | while read -r version_id; do
             echo "  Version ID: ${version_id}"
           done
-          
+
           if [[ $DELETED_COUNT -gt 5 ]]; then
             echo "  ... and $((DELETED_COUNT - 5)) more versions"
           fi
           echo ""
-          
+
           if [[ "$DRY_RUN" == "true" ]]; then
             echo "⚠️  DRY RUN MODE - No versions were actually deleted"
             echo "   To perform actual deletion, set dry_run to false"
             rm -rf "$TEMP_DIR"
             exit 0
           fi
-          
+
           echo "Starting deletion (optimized for speed)..."
           echo "⚠️  Using 4-second intervals (900 requests/hour)"
           echo ""
-          
+
           SUCCESS_COUNT=0
           ERROR_COUNT=0
           PROCESSED=0
           START_TIME=$(date +%s)
-          
+
           # 串行删除，带重试机制
           while read -r version_id; do
             PROCESSED=$((PROCESSED + 1))
             RETRY_COUNT=0
             MAX_RETRIES=3
             SUCCESS=false
-            
+
             while [[ $RETRY_COUNT -lt $MAX_RETRIES ]] && [[ "$SUCCESS" == "false" ]]; do
               # 尝试组织 API
               DELETE_RESULT=$(gh api \
@@ -157,7 +157,7 @@ jobs:
                 -H "Accept: application/vnd.github+json" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                 "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "ORG_DELETE_FAILED")
-              
+
               # 如果组织 API 失败，尝试用户 API
               if [[ "$DELETE_RESULT" == "ORG_DELETE_FAILED" ]] || echo "$DELETE_RESULT" | grep -q "Not Found"; then
                 DELETE_RESULT=$(gh api \
@@ -166,7 +166,7 @@ jobs:
                   -H "X-GitHub-Api-Version: 2022-11-28" \
                   "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "DELETE_FAILED")
               fi
-              
+
               # 检查是否成功
               if [[ "$DELETE_RESULT" == *"FAILED"* ]] || [[ -n "$DELETE_RESULT" ]]; then
                 # 检查是否是速率限制错误
@@ -191,7 +191,7 @@ jobs:
                 SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
               fi
             done
-            
+
             # 显示进度（每50个版本）
             if [[ $((PROCESSED % 50)) -eq 0 ]]; then
               CURRENT_TIME=$(date +%s)
@@ -199,15 +199,15 @@ jobs:
               RATE=$((PROCESSED * 3600 / ELAPSED))
               echo "Progress: ${PROCESSED}/${DELETED_COUNT} (Success: ${SUCCESS_COUNT}, Errors: ${ERROR_COUNT}) - Rate: ${RATE}/hour"
             fi
-            
+
             # 请求间延迟（4秒 = 900 requests/hour，低于1000限制）
             sleep 4
           done < "${TEMP_DIR}/to_delete.txt"
-          
+
           END_TIME=$(date +%s)
           TOTAL_TIME=$((END_TIME - START_TIME))
           ACTUAL_RATE=$((PROCESSED * 3600 / TOTAL_TIME))
-          
+
           echo ""
           echo "=================================================="
           echo "Cleanup Complete"
@@ -216,25 +216,25 @@ jobs:
           echo "Versions failed to delete: ${ERROR_COUNT}"
           echo "Total time: ${TOTAL_TIME} seconds"
           echo "Actual rate: ${ACTUAL_RATE} deletions/hour"
-          
+
           if [[ $REMAINING -gt 0 ]]; then
             echo ""
             echo "ℹ️  Note: This was a partial cleanup run."
             echo "   Remaining versions will be deleted in the next scheduled run."
             echo "   Estimated runs needed: $(( (REMAINING + MAX_PER_RUN - 1) / MAX_PER_RUN ))"
           fi
-          
+
           if [[ $ERROR_COUNT -gt 0 ]]; then
             echo ""
             echo "Errors encountered:"
             head -n 5 "${TEMP_DIR}/errors.log" 2>/dev/null || echo "(No error log found)"
           fi
-          
+
           echo "=================================================="
-          
+
           # 清理临时文件
           rm -rf "$TEMP_DIR"
-          
+
           # 如果错误率超过50%，返回失败状态
           if [[ $ERROR_COUNT -gt $((SUCCESS_COUNT / 2)) ]]; then
             echo "⚠️  High error rate detected"
