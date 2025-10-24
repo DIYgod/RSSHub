@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/gerenzhongxin/trpl/:uid',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/gerenzhongxin/trpl/2922094262312522',
+    example: '/eastmoney/gerenzhongxin/trpl/2922094262312522',
     parameters: { uid: '用户id,即用户主页网址末尾的数字' },
     features: {
         requireConfig: false,
