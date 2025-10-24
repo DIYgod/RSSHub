@@ -26,7 +26,7 @@ on:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     permissions:
       packages: write
       contents: read
@@ -106,6 +106,12 @@ jobs:
             fi
             
             PAGE=$((PAGE + 1))
+            
+            # 防止无限循环，最多获取1000页
+            if [[ $PAGE -gt 1000 ]]; then
+              echo "⚠️  Warning: Reached maximum page limit (1000 pages)"
+              break
+            fi
           done
           
           # 合并所有版本到一个 JSON 数组
@@ -126,9 +132,11 @@ jobs:
           DELETED_LIST="${TEMP_DIR}/deleted.txt"
           KEPT_LIST="${TEMP_DIR}/kept.txt"
           ERROR_LIST="${TEMP_DIR}/errors.txt"
-          touch "$DELETED_LIST" "$KEPT_LIST" "$ERROR_LIST"
+          TO_DELETE_INFO="${TEMP_DIR}/to_delete_info.txt"
+          touch "$DELETED_LIST" "$KEPT_LIST" "$ERROR_LIST" "$TO_DELETE_INFO"
           
           # 遍历所有版本
+          PROCESSED=0
           echo "$ALL_VERSIONS_JSON" | jq -c '.[]' | while read -r version; do
             VERSION_ID=$(echo "$version" | jq -r '.id')
             VERSION_NAME=$(echo "$version" | jq -r '.name // "untagged"')
@@ -142,13 +150,20 @@ jobs:
             AGE_SECONDS=$(($(date +%s) - VERSION_TIMESTAMP))
             AGE_DAYS=$((AGE_SECONDS / 86400))
             
+            PROCESSED=$((PROCESSED + 1))
+            
+            # 每处理100个版本显示一次进度
+            if [[ $((PROCESSED % 100)) -eq 0 ]]; then
+              echo "Progress: ${PROCESSED}/${TOTAL_VERSIONS} versions processed..."
+            fi
+            
             # 判断是否需要删除
             if [[ $VERSION_TIMESTAMP -lt $CUTOFF_TIMESTAMP ]]; then
-              # 显示版本信息
+              # 记录版本信息到文件（减少实时输出）
               if [[ -n "$TAGS" ]]; then
-                echo "🗑️  [TO DELETE] Version ID: ${VERSION_ID}, Tags: ${TAGS}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}"
+                echo "Version ID: ${VERSION_ID}, Tags: ${TAGS}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}" >> "$TO_DELETE_INFO"
               else
-                echo "🗑️  [TO DELETE] Version ID: ${VERSION_ID}, Name: ${VERSION_NAME}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}"
+                echo "Version ID: ${VERSION_ID}, Name: ${VERSION_NAME}, Age: ${AGE_DAYS} days, Created: ${CREATED_AT}" >> "$TO_DELETE_INFO"
               fi
               
               # 执行删除（如果不是 dry run）
@@ -170,14 +185,11 @@ jobs:
                 fi
                 
                 if [[ "$DELETE_RESULT" == *"FAILED"* ]] || [[ -n "$DELETE_RESULT" ]]; then
-                  echo "   ❌ Failed to delete: ${DELETE_RESULT}"
                   echo "${VERSION_ID}" >> "$ERROR_LIST"
                 else
-                  echo "   ✅ Successfully deleted"
                   echo "${VERSION_ID}" >> "$DELETED_LIST"
                 fi
               else
-                echo "   ⏭️  Skipped (dry run mode)"
                 echo "${VERSION_ID}" >> "$DELETED_LIST"
               fi
             else
@@ -198,7 +210,18 @@ jobs:
           echo "Versions to keep: ${KEPT_COUNT}"
           echo "Versions to delete: ${DELETED_COUNT}"
           
+          # 显示部分待删除版本详情（最多显示前50个）
+          if [[ $DELETED_COUNT -gt 0 ]]; then
+            echo ""
+            echo "Sample of versions to delete (first 50):"
+            head -n 50 "$TO_DELETE_INFO"
+            if [[ $DELETED_COUNT -gt 50 ]]; then
+              echo "... and $((DELETED_COUNT - 50)) more versions"
+            fi
+          fi
+          
           if [[ "$DRY_RUN" == "false" ]]; then
+            echo ""
             echo "Versions successfully deleted: ${DELETED_COUNT}"
             if [[ $ERROR_COUNT -gt 0 ]]; then
               echo "Versions failed to delete: ${ERROR_COUNT}"
