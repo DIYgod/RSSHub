@@ -19,12 +19,19 @@ jobs:
       packages: write
       contents: read
     steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Delete old container versions (30+ days)
         uses: snok/container-retention-policy@v3.0.1
         with:
-          account: ${{ github.repository_owner }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          image-names: "rsshub"
+          account: user
+          token: ${{ steps.generate-token.outputs.token }}
+          image-names: "*"
           cut-off: 30d
           keep-n-most-recent: 5
           dry-run: false
