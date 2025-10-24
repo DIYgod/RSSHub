@@ -38,7 +38,7 @@ export async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const url = `https://i.eastmoney.com/api/guba/postCenterList?uid=${uid}&pagenum=1&pagesize=10&type=1&filterType=1&onlyYt=0`;
 
-    const response = await got(url, {});
+    const response = await got(url);
     const arr = response.data.result;
     // console.log(arr[0].post_user);
     const nickname = arr[0].post_user.user_nickname;
