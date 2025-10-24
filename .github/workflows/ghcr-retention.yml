@@ -12,12 +12,11 @@ jobs:
       contents: read
     steps:
       - name: Delete old container versions (30+ days)
-        uses: snok/container-retention-policy@3b0972b2276b171b212f8c4efbca59ebba26eceb # v3.0.1
+        uses: vlaurin/action-ghcr-prune@0cf7d39f88546edd31965acba78cdcb0be14d641 # v0.6.0
         with:
-          account: user
           token: ${{ secrets.PAT }}
-          image-names: rsshub
-          image-tags: '* !latest'
-          cut-off: 30d
-          keep-n-most-recent: 5
+          container: rsshub
           dry-run: false
+          keep-younger-than: 30 # days
+          keep-last: 5
+          prune-untagged: true
