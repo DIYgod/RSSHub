@@ -10182,7 +10182,7 @@
         source:[ "/" ],
         target:"/hyperdash/top-traders" } ] },
   "arktca.com":{ _name:"鹰角网络",
-    aneot:[ { title:"期刊",
+    aneot:[ { title:"回归线",
         docs:"https://docs.rsshub.app/routes/game",
         source:[ "/" ],
         target:"/hypergryph/arknights/arktca" } ] },
