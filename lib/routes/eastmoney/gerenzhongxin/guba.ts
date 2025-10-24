@@ -51,7 +51,7 @@ export async function handler(ctx) {
         }
 
         return {
-            title: `${nickname} 发布了帖子: ${descriptionContent}`,
+            post_title: `${nickname} 发布了帖子: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.post_publish_time), 8),
             link: `https://guba.eastmoney.com/news,${item.post_guba.stockbar_code},${item.post_id}.html`,
