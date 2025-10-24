@@ -44,7 +44,11 @@ export async function handler(ctx) {
     const nickname = arr[0].reply_user.user_nickname;
 
     const items = arr.map((item) => {
-        const descriptionContent = item.reply_text + '<br><br>---主帖内容：---<br><br>' + item.source_post_title;
+        const descriptionContent = `
+                                    ${item.reply_text}
+                                    <br><br>---主帖内容：---<br><br>
+                                    ${item.source_post_title}
+                                `;
 
         const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
 
