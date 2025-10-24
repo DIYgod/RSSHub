@@ -11,11 +11,13 @@ async function getToken() {
         const username = config.twitter.username[index];
         const password = config.twitter.password[index];
         const authenticationSecret = config.twitter.authenticationSecret?.[index];
+        const phoneOrEmail = config.twitter.phoneOrEmail?.[index];
         if (username && password) {
             const authentication = await login({
                 username,
                 password,
                 authenticationSecret,
+                phoneOrEmail,
             });
             if (!authentication) {
                 throw new ConfigNotFoundError(`Invalid twitter configs: ${username}`);

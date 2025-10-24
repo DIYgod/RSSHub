@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,11 +25,11 @@ export const route: Route = {
 
   所以对应路由为 [\`/radio/1552135\`](https://rsshub.app/radio/1552135)
 
-  :::tip
+::: tip
   该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
 
   与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 \`columnId\` 长度相比，它们的 \`columnId\` 长度较短
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

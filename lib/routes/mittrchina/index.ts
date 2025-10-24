@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -25,8 +23,8 @@ export const route: Route = {
     maintainers: ['EsuRt', 'queensferryme'],
     handler,
     description: `| 快讯     | 本周热文 | 首页资讯 | 视频  |
-  | -------- | -------- | -------- | ----- |
-  | breaking | hot      | index    | video |`,
+| -------- | -------- | -------- | ----- |
+| breaking | hot      | index    | video |`,
 };
 
 async function handler(ctx) {
@@ -52,7 +50,7 @@ async function handler(ctx) {
     const { type = 'index' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
-    const link = `https://apii.mittrchina.com${typeMap[type].apiPath}`;
+    const link = `https://apii.web.mittrchina.com${typeMap[type].apiPath}`;
     const { data: response } =
         type === 'breaking'
             ? await got.post(link, {
@@ -82,20 +80,22 @@ async function handler(ctx) {
                           type: article.address.split('.').pop(),
                       },
                   })
-                : article.summary,
-        pubDate: article.start_time ? parseDate(article.start_time, 'X') : undefined,
+                : type === 'breaking'
+                  ? article.content
+                  : article.summary,
+        pubDate: article.start_time ? parseDate(article.start_time, 'X') : article.push_time ? parseDate(article.push_time, 'X') : undefined,
         id: article.id,
         link: `https://www.mittrchina.com/news/detail/${article.id}`,
     }));
 
     let items = list;
-    if (type !== 'video') {
+    if (type !== 'video' && type !== 'breaking') {
         items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link, async () => {
                     const {
                         data: { data: details },
-                    } = await got(`https://apii.mittrchina.com/information/details?id=${item.id}`);
+                    } = await got(`https://apii.web.mittrchina.com/information/details?id=${item.id}`);
 
                     item.description = details.content;
 

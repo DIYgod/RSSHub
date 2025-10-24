@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -35,6 +33,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -45,9 +44,9 @@ export const route: Route = {
     maintainers: ['FeCCC'],
     handler,
     url: 'ecchi.iwara.tv/',
-    description: `:::warning
+    description: `::: warning
   This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
-  :::`,
+:::`,
 };
 
 async function handler() {

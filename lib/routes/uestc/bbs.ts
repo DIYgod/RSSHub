@@ -35,7 +35,7 @@ export const route: Route = {
         supportScihub: false,
     },
     description: `
-:::tip
+::: tip
 仅支持自建，您需要设置以下配置才能正常使用：
 -   河畔cookie: \`UESTC_BBS_COOKIE\`
 -   Header中的授权字段: \`UESTC_BBS_AUTH_KEY\`

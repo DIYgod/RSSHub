@@ -3,7 +3,7 @@ import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/work/:id/:order?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Pictures,
     example: '/hpoi/items/work/4117491',
     parameters: {

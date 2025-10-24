@@ -18,7 +18,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hk.news.yahoo.com/', 'tw.news.yahoo.com/'],
+            source: ['hk.news.yahoo.com/'],
+        },
+        {
+            source: ['tw.news.yahoo.com/'],
         },
     ],
     name: '新聞來源列表',

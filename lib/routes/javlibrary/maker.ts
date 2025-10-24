@@ -14,13 +14,14 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Videos by makers',
     maintainers: [],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |`,
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |`,
 };
 
 async function handler(ctx) {

@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'job.hrbeu.edu.cn/*',
     description: `| 通知公告 | 热点新闻 |
-  | :------: | :------: |
-  |   tzgg   |   rdxw   |
+| :------: | :------: |
+|   tzgg   |   rdxw   |
 
 #### 大型招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-da-xing-zhao-pin-hui}
 
@@ -65,12 +65,12 @@ async function handler() {
     const $ = load(todayResponse);
 
     const list = $('li.clearfix')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('span.news_tit.news_tit_s').find('a').attr('title'),
             description: '点击标题，登录查看招聘详情',
             link: $(item).find('span.news_tit.news_tit_s').find('a').attr('href'),
-        }))
-        .get();
+        }));
 
     return {
         title: '今日招聘会',

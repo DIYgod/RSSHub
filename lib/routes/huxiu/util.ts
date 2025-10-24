@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,15 +27,17 @@ const cleanUpHTML = (data) => {
     $('em.vote__bar, div.vote__btn, div.vote__time').remove();
     $('p img').each((_, e) => {
         e = $(e);
-        e.parent().replaceWith(
-            art(path.join(__dirname, 'templates/description.art'), {
-                image: {
-                    src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
-                    width: e.prop('data-w'),
-                    height: e.prop('data-h'),
-                },
-            })
-        );
+        if ((e.prop('src') ?? e.prop('_src')) !== undefined) {
+            e.parent().replaceWith(
+                art(path.join(__dirname, 'templates/description.art'), {
+                    image: {
+                        src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
+                        width: e.prop('data-w'),
+                        height: e.prop('data-h'),
+                    },
+                })
+            );
+        }
     });
     $('p, span').each((_, e) => {
         e = $(e);
@@ -258,7 +257,7 @@ const generateSignature = () => {
 
     const appSecret = 'hUzaABtNfDE-6UiyaYhfsmjW-8dnoyVc';
     const nonce = generateNonce();
-    const r = [appSecret, timestamp, nonce].sort();
+    const r = [appSecret, timestamp, nonce].toSorted();
     return {
         nonce,
         timestamp,
@@ -364,7 +363,7 @@ const processItems = async (items, limit, tryGet) => {
             return {
                 ...audioItem,
                 ...videoItem,
-                title: (item.title ?? item.summary ?? item.content)?.replace(/<\/?(?:em|br)?>/g, ''),
+                title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
                 link,
                 description: art(path.join(__dirname, 'templates/description.art'), {
                     image: {

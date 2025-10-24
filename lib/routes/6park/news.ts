@@ -13,8 +13,17 @@ export const route: Route = {
             target: '/:id?',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '新闻栏目',
+    maintainers: ['nczitzk', 'cscnk52'],
+    parameters: {
+        site: '分站，可选newspark、local，默认为 newspark',
+        id: '栏目 id，可选，默认为空',
+        keyword: '关键词，可选，默认为空',
+    },
+    description: `::: tip 提示
+若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 \`newspark\` 为分站，\`1\` 为栏目 id。
+若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 <https://local.6parknews.com/index.php?type_id=1>，其中 \`local\` 为分站，\`1\` 为栏目 id。
+:::`,
     handler,
 };
 
@@ -29,7 +38,7 @@ async function handler(ctx) {
 
     const rootUrl = `https://${isLocal ? site : 'www'}.6parknews.com`;
     const indexUrl = `${rootUrl}${isLocal ? '' : '/newspark'}/index.php`;
-    const currentUrl = `${indexUrl}${keyword ? `?act=newssearch&app=news&keywords=${keyword}&submit=查询` : id ? (isNaN(id) ? `?act=${id}` : isLocal ? `?type_id=${id}` : `?type=${id}`) : ''}`;
+    const currentUrl = `${indexUrl}${keyword ? `?act=newssearch&app=news&keywords=${keyword}&submit=查询` : id ? (Number.isNaN(id) ? `?act=${id}` : isLocal ? `?type_id=${id}` : `?type=${id}`) : ''}`;
 
     const response = await got({
         method: 'get',

@@ -29,20 +29,20 @@ export const route: Route = {
     maintainers: ['dzx-dzx'],
     handler,
     description: `| 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | work     | enroll   | train    | degree   | exchange | xsjy     |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| work     | enroll   | train    | degree   | exchange | xsjy     |
 
   当\`type\`为\`enroll\`, \`num\`可选字段:
 
-  | 58       | 59       | 60         | 61       | 62       |
-  | -------- | -------- | ---------- | -------- | -------- |
-  | 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+| 58       | 59       | 60         | 61       | 62       |
+| -------- | -------- | ---------- | -------- | -------- |
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
 
   当\`type\`为\`exchange\`, \`num\`可选字段:
 
-  | 67             | 68             | 69             | 70             | 71             |
-  | -------------- | -------------- | -------------- | -------------- | -------------- |
-  | 国家公派研究生 | 国际化培养资助 | 校际交换与联培 | 交流与合作项目 | 项目招募与宣讲 |`,
+| 67             | 68             | 69             | 70             | 71             |
+| -------------- | -------------- | -------------- | -------------- | -------------- |
+| 国家公派研究生 | 国际化培养资助 | 校际交换与联培 | 交流与合作项目 | 项目招募与宣讲 |`,
 };
 
 async function handler(ctx) {
@@ -59,7 +59,8 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const list = $('a.announcement-item')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
 
             const day = item.find('.day').text().trim().replace('.', '-');
@@ -70,8 +71,7 @@ async function handler(ctx) {
                 link: `${item.attr('href').startsWith('http') ? '' : rootUrl}${item.attr('href')}`,
                 pubDate: timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), +8),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

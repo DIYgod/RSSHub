@@ -20,10 +20,10 @@ export const route: Route = {
     name: 'myFT personal RSS',
     maintainers: ['HenryQW'],
     handler,
-    description: `:::tip
+    description: `::: tip
   -   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
   -   Obtain the key from the personal RSS address, it looks like \`12345678-abcd-4036-82db-vdv20db024b8\`
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -55,12 +55,12 @@ async function handler(ctx) {
                 item.category = [
                     $('.n-content-tag--with-follow').text(),
                     ...$('.article__right-bottom a.concept-list__concept')
-                        .map((i, e) => $(e).text().trim())
-                        .get(),
+                        .toArray()
+                        .map((e) => $(e).text().trim()),
                 ];
                 item.author = $('a.n-content-tag--author')
-                    .map((i, e) => ({ name: $(e).text() }))
-                    .get();
+                    .toArray()
+                    .map((e) => ({ name: $(e).text() }));
 
                 return item;
             })

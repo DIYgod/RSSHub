@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'guancha.cn/',
     description: `| 精选      | 观书堂 | 在线课  | 观学院   |
-  | --------- | ------ | ------- | -------- |
-  | recommend | books  | courses | huodongs |`,
+| --------- | ------ | ------- | -------- |
+| recommend | books  | courses | huodongs |`,
 };
 
 async function handler(ctx) {
@@ -102,7 +102,7 @@ async function handler(ctx) {
                     enclosure_length: item.media_size,
                     itunes_duration,
                     enclosure_type: 'audio/mpeg',
-                    pubDate: isNaN(+item.created_at) ? timezone(parseDate(item.created_at), +8) : parseDate(item.created_at * 1000),
+                    pubDate: Number.isNaN(+item.created_at) ? timezone(parseDate(item.created_at), +8) : parseDate(item.created_at * 1000),
                 };
             });
     }

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { config } from '@/config';
@@ -53,7 +51,7 @@ async function handler(ctx) {
                 waitUntil: 'networkidle0',
             });
             const SIGI_STATE = await page.evaluate(() => window.SIGI_STATE);
-            browser.close();
+            await browser.close();
 
             const lang = SIGI_STATE.AppContext.lang;
             const SharingMetaState = SIGI_STATE.SharingMetaState;

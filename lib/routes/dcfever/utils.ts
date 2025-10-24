@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -63,11 +60,20 @@ const parseTradeItem = (item) =>
         const response = await ofetch(item.link);
         const $ = load(response);
 
-        $('.selector_text').remove();
-        $('.selector_image_div').each((_, div) => {
+        const photoSelector = $('#trading_item_section .description')
+            .contents()
+            .filter((_, e) => e.type === 'comment')
+            .toArray()
+            .map((e) => e.data)
+            .join('');
+
+        const $photo = load(photoSelector, null, false);
+
+        $photo('.selector_text').remove();
+        $photo('.selector_image_div').each((_, div) => {
             delete div.attribs.onclick;
         });
-        $('.desktop_photo_selector img').each((_, img) => {
+        $photo('.desktop_photo_selector img').each((_, img) => {
             if (img.attribs.src.endsWith('_sqt.jpg')) {
                 img.attribs.src = img.attribs.src.replace('_sqt.jpg', '.jpg');
             }
@@ -76,7 +82,7 @@ const parseTradeItem = (item) =>
         item.description = art(path.join(__dirname, 'templates/trading.art'), {
             info: $('.info_col'),
             description: $('.description_text').html(),
-            photo: $('.desktop_photo_selector').html(),
+            photo: $photo('.desktop_photo_selector').html(),
         });
 
         return item;

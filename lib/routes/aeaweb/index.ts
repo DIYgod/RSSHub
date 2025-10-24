@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -32,9 +30,9 @@ export const route: Route = {
     handler,
     description: `The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is \`https://www.aeaweb.org/journals/aer\`, where \`aer\` is the id of the journal, so the route for this journal is \`/aeaweb/aer\`.
 
-  :::tip
+::: tip
   More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

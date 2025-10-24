@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'www.dykszx.com',
     categories: ['government'],
     description: '德阳人事考试网',
+    lang: 'zh-CN',
 };

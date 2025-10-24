@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Route, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import { URL } from 'node:url';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/nea/sjzz/ghs',
@@ -21,64 +22,96 @@ export const route: Route = {
     radar: [
         {
             source: ['nea.gov.cn/sjzz/ghs/'],
+            target: '/nea/sjzz/ghs',
         },
     ],
     name: '发展规划司',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
-    url: 'nea.gov.cn/sjzz/ghs/',
+    url: 'www.nea.gov.cn/sjzz/ghs/',
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
 
     const rootUrl = 'https://www.nea.gov.cn';
-    const currentUrl = new URL('sjzz/ghs/', rootUrl).href;
+    const targetUrl: string = new URL('sjzz/ghs/', rootUrl).href;
 
-    const { data: response } = await got(currentUrl);
-
+    const response = await ofetch(targetUrl);
     const $ = load(response);
 
-    let items = $('div.right_box ul li')
-        .slice(0, limit)
-        .toArray()
-        .map((item) => {
-            item = $(item);
+    const dataSourceId: string | undefined = $('ul#showData0').attr('data')?.split(/:/).pop();
 
-            const a = item.find('a');
+    if (!dataSourceId) {
+        throw new Error('Data source ID not found');
+    }
 
-            return {
-                title: a.text(),
-                link: a.prop('href'),
-                pubDate: parseDate(item.find('span.date-tex').text()),
-            };
-        });
+    const jsonUrl = new URL(`ds_${dataSourceId}.json`, targetUrl).href;
 
-    items = await Promise.all(
-        items.map((item) =>
+    const jsonData: NeaGhsResponse = await ofetch(jsonUrl);
+
+    const list: DataItem[] = jsonData.datasource.slice(0, limit).map((item) => {
+        const itemLink = new URL(item.publishUrl, rootUrl).href;
+
+        const $title = load(item.showTitle);
+        const titleText = $title.text();
+
+        return {
+            title: titleText,
+            link: itemLink,
+            pubDate: item.publishTime ? timezone(parseDate(item.publishTime), +8) : undefined,
+            description: item.summary?.trim() || titleText,
+            author: [...new Set([item.sourceText, item.author, item.editor, item.responsibleEditor].filter(Boolean))].map((author) => ({
+                name: author,
+            })),
+            category: item.keywords.split(/,/),
+        };
+    });
+
+    const items = await Promise.all(
+        list.map((item: DataItem) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+                try {
+                    const detailResponse = await ofetch(item.link);
+                    const content = load(detailResponse);
 
-                const content = load(detailResponse);
-
-                item.title = content('meta[name="ArticleTitle"]').prop('content');
-                item.description = content('td.detail').html() || content('div.article-content td').html();
-                item.author = content('meta[name="ContentSource"]').prop('content');
-                item.category = content('meta[name="keywords"]').prop('content').split(/,/);
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
-
+                    item.title = content('meta[name="ArticleTitle"]').prop('content') || item.title;
+                    item.description = content('td.detail').html() || content('div.article-content').html() || item.description;
+                    item.category = [...new Set([...(item.category ?? []), ...(content('meta[name="keywords"]').attr('conetnt')?.split(/,/) ?? [])])];
+                    const detailPubDate = content('meta[name="PubDate"]').prop('content');
+                    item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), +8) : item.pubDate;
+                } catch {
+                    // logger.error(`Failed to fetch detail for ${item.link}`);
+                }
                 return item;
             })
         )
     );
 
+    const filteredItems: DataItem[] = items.filter(Boolean) as DataItem[];
+
     return {
-        item: items,
-        title: $('title').text(),
-        link: currentUrl,
-        description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh',
-        subtitle: $('meta[name="ColumnType"]').prop('content'),
-        author: $('meta[name="ColumnKeywords"]').prop('content'),
+        item: filteredItems,
+        title: '国家能源局 - 发展规划司工作进展',
+        link: targetUrl,
+        description: '国家能源局 - 发展规划司工作进展',
     };
+}
+
+interface NeaGhsItem {
+    showTitle: string;
+    publishUrl: string;
+    publishTime: string;
+    summary?: string;
+    sourceText?: string;
+    author?: string;
+    editor?: string;
+    responsibleEditor?: string;
+    keywords: string;
+}
+
+interface NeaGhsResponse {
+    categoryName?: string;
+    categoryDesc?: string;
+    datasource: NeaGhsItem[];
 }

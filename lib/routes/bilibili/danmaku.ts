@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import { load } from 'cheerio';
 import cache from './cache';
 import got from '@/utils/got';
-import zlib from 'zlib';
+import zlib from 'node:zlib';
 
 const processFloatTime = (time) => {
     const totalSeconds = Number.parseInt(time);
@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     let danmakuText = danmakuResponse.body;
 
-    danmakuText = await ((danmakuText[0] & 0x0f) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
+    danmakuText = await ((danmakuText[0] & 0x0F) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
 
     let danmakuList = [];
     const $ = load(danmakuText, { xmlMode: true });
@@ -62,7 +62,7 @@ async function handler(ctx) {
         danmakuList.push({ p: $(item).attr('p'), text: $(item).text() });
     });
 
-    danmakuList = danmakuList.reverse().slice(0, limit);
+    danmakuList = danmakuList.toReversed().slice(0, limit);
 
     return {
         title: `${videoName} 的 弹幕动态`,

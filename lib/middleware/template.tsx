@@ -14,6 +14,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const ttl = (cacheModule.status.available && Math.trunc(config.cache.routeExpire / 60)) || 1;
     await next();
 
+    const apiData = ctx.get('apiData');
+    if (apiData) {
+        return ctx.json(apiData);
+    }
+
     const data: Data = ctx.get('data');
     const outputType = ctx.req.query('format') || 'rss';
 
@@ -102,7 +107,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return ctx.json(result);
     }
 
-    if (ctx.get('no-content')) {
+    if (ctx.get('redirect')) {
+        return ctx.redirect(ctx.get('redirect'), 301);
+    } else if (ctx.get('no-content')) {
         return ctx.body(null);
     } else {
         // retain .ums for backward compatibility

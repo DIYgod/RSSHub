@@ -5,7 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/account_id/:site/:account_id/statuses/:only_media?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/mastodon/account_id/mas.to/109300507275095341/statuses/false',
     parameters: {
@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const site = ctx.req.param('site');
     const account_id = ctx.req.param('account_id');
-    const only_media = ctx.req.param('only_media') ? 'true' : 'false';
+    const only_media = ctx.req.param('only_media') === 'true' ? 'true' : 'false';
     if (!config.feature.allow_user_supply_unsafe_domain && !utils.allowSiteList.includes(site)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }

@@ -3,7 +3,8 @@ import type { Context } from 'hono';
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { asyncPoolAll, fetchThread, generateDescription, getDate, bbsOrigin } from '../utils';
+import { fetchThread, generateDescription, getDate, bbsOrigin } from '../utils';
+import pMap from 'p-map';
 import cache from '@/utils/cache';
 
 export const route: Route = {
@@ -34,7 +35,7 @@ export const route: Route = {
             },
         ],
     },
-    description: `:::warning
+    description: `::: warning
 百合会BBS访问部分板块需要用户登录认证，请参考配置说明
 :::`,
 };
@@ -81,8 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    items = await asyncPoolAll(
-        5,
+    items = await pMap(
         items,
         async (item) =>
             (await cache.tryGet(item.link!, async () => {
@@ -105,7 +105,8 @@ async function handler(ctx: Context): Promise<Data> {
                     description,
                     pubDate: item.pubDate,
                 };
-            })) as DataItem
+            })) as DataItem,
+        { concurrency: 5 }
     );
 
     return {

@@ -37,15 +37,15 @@ export const route: Route = {
 
   职位类型代码见下表：
 
-  | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
+| 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
 
   排序参数见下表：
 
-  | 最新发布 | 最快处理 | 处理率最高 |
-  | -------- | -------- | ---------- |
-  | 1        | 2        | 3          |`,
+| 最新发布 | 最快处理 | 处理率最高 |
+| -------- | -------- | ---------- |
+| 1        | 2        | 3          |`,
 };
 
 async function handler(ctx) {
@@ -60,7 +60,8 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('ul.reco-job-list li')
         .slice(0, 30)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const title = item.find('a.reco-job-title');
             const company = item.find('div.reco-job-com a');
@@ -78,8 +79,7 @@ async function handler(ctx) {
                 link: url.resolve(rootUrl, title.attr('href')),
                 pubDate: date.toUTCString(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

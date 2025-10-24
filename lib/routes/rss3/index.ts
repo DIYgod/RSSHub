@@ -9,7 +9,7 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/rss3/vitalik.eth',
     name: 'Account Activities',
-    maintainers: ['DIYgod'],
+    maintainers: ['DIYgod', 'pseudoyu'],
     url: 'docs.rss3.io/api-reference#tag/decentralized/GET/decentralized/%7Baccount%7D',
     handler,
     description: 'Retrieve the activities associated with a specified account in the decentralized system.',
@@ -122,6 +122,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { account, network, tag } = ctx.req.param();
+
+    // Check if account contains "://" or "/"
+    if (account.includes('://') || account.includes('/')) {
+        throw new Error('Account should not contain "://" or path components');
+    }
 
     const { data } = await ofetch(
         `https://gi.rss3.io/decentralized/${account}?${new URLSearchParams({

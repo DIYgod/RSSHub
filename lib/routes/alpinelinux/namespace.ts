@@ -8,4 +8,5 @@ export const namespace: Namespace = {
         name: 'Alpine Linux',
         description: 'Alpine Linux 是一个基于 musl libc 和 busybox 的面向安全的轻量级 Linux 发行版。',
     },
+    lang: 'en',
 };

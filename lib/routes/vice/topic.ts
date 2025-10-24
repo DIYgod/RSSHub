@@ -3,12 +3,10 @@ import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
-import path from 'path';
-import { getCurrentPath } from '@/utils/helpers';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
-const __dirname = getCurrentPath(import.meta.url);
-const render = (data) => art(path.join(__dirname, 'templates', 'article.art'), data);
+const render = (data) => art(path.join(__dirname, 'templates/article.art'), data);
 
 export const route: Route = {
     path: '/topic/:topic/:language?',

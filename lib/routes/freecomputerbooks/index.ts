@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
@@ -8,7 +6,6 @@ import path from 'node:path';
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import { parseDate } from '@/utils/parse-date';
 
 const baseURL = 'https://freecomputerbooks.com/';
 
@@ -88,15 +85,6 @@ function buildPostItem(listItem, categoryTitle, cache) {
                   .map((elem) => $(elem).text())
             : categoryTitle,
     };
-
-    const pubDateText = postInfo.find('span:last').text().replace(/^on /, '');
-    if (pubDateText) {
-        // Pretty much the same situation: Only a "Selected New Books" page has
-        // explicit publication dates for posts; even on each post's details
-        // page, there seems to be only the publication date for the book, but
-        // the post's creation date is still missing.
-        postItem.pubDate = parseDate(pubDateText);
-    }
 
     return cache.tryGet(postItem.link, () => insertDescriptionInto(postItem));
 }

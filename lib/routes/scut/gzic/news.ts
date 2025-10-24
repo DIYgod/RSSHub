@@ -20,7 +20,7 @@ export const route: Route = {
     name: '广州国际校区 - 新闻聚焦',
     maintainers: ['gdzhht'],
     handler,
-    description: `:::warning
+    description: `::: warning
 由于学校网站对非大陆 IP 的访问存在限制，可能需自行部署。
 :::`,
 };

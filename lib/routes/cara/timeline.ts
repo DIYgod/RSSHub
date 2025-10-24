@@ -2,12 +2,9 @@ import type { Data, DataItem, Route } from '@/types';
 import type { PostsResponse } from './types';
 import { customFetch, parseUserData } from './utils';
 import { API_HOST, CDN_HOST, HOST } from './constant';
-import { getCurrentPath } from '@/utils/helpers';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
-
-const __dirname = getCurrentPath(import.meta.url);
 
 export const route: Route = {
     path: ['/timeline/:user'],

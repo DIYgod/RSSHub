@@ -42,19 +42,19 @@ export const route: Route = {
     handler,
     description: `Provides a way to get an specific rss feed by date and category over the official one.
 
-  | Category             | \`:category\` |
-  | -------------------- | ----------- |
-  | Capital              | capital     |
-  | Cartones             | cartones    |
-  | Ciencia y Tecnología | ciencia     |
-  | Cultura              | cultura     |
-  | Deportes             | deportes    |
-  | Economía             | economia    |
-  | Estados              | estados     |
-  | Mundo                | mundo       |
-  | Opinión              | opinion     |
-  | Política             | politica    |
-  | Sociedad             | sociedad    |`,
+| Category             | \`:category\` |
+| -------------------- | ----------- |
+| Capital              | capital     |
+| Cartones             | cartones    |
+| Ciencia y Tecnología | ciencia     |
+| Cultura              | cultura     |
+| Deportes             | deportes    |
+| Economía             | economia    |
+| Estados              | estados     |
+| Mundo                | mundo       |
+| Opinión              | opinion     |
+| Política             | politica    |
+| Sociedad             | sociedad    |`,
 };
 
 async function handler(ctx) {

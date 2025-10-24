@@ -18,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -30,9 +31,9 @@ export const route: Route = {
     url: 'jmcomic.group/',
     description: `分类
 
-  | 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
-  | ---- | -------- | -------- | -------- | -------- |
-  |      | dinner   | raiders  | jg       | figure   |`,
+| 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
+| ---- | -------- | -------- | -------- | -------- |
+|      | dinner   | raiders  | jg       | figure   |`,
 };
 
 async function handler(ctx) {

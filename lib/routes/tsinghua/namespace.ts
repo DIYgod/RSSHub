@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'tsinghua.edu.cn',
     categories: ['university'],
     description: '',
+    lang: 'zh-CN',
 };

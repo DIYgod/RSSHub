@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -30,8 +28,8 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
-  | :---------------: | :---------------: | :--------: | :--------: | :------: | :------: |
-  |         1         |         2         |      3     |      4     |     5    |     6    |`,
+| :---------------: | :---------------: | :--------: | :--------: | :------: | :------: |
+|         1         |         2         |      3     |      4     |     5    |     6    |`,
 };
 
 async function handler(ctx) {
@@ -45,15 +43,15 @@ async function handler(ctx) {
     const title = $('div.z > a').last().text();
     const list = $('tbody > tr')
         .slice(0, 25)
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('td.title2').text(),
             link: new URL($(item).find('td.title2 > a').attr('href'), rootUrl).href,
             author: $(item).find('td.author').text(),
             pubDate: timezone(parseDate($(item).find('td.dateline').text(), 'YYYY-M-D HH:mm'), +8),
             category: $(item).find('td.forum').text(),
         }))
-        .filter((_, item) => item.title)
-        .get();
+        .filter((item) => item.title);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -64,7 +62,8 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
                 item.description = content('div.c_table')
-                    .map((_, item) =>
+                    .toArray()
+                    .map((item) =>
                         art(path.join(__dirname, 'templates/fornumtopic.art'), {
                             content: content(item)
                                 .find('td.t_f')
@@ -72,17 +71,16 @@ async function handler(ctx) {
                                 .remove()
                                 .end()
                                 .html()
-                                ?.replace(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                                ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
                                 .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2'),
                             pattl: content(item)
                                 .find('div.pattl')
                                 .html()
-                                ?.replace(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
+                                ?.replaceAll(/(<img.*?) src=".*?"(.*?>)/g, '$1$2')
                                 .replaceAll(/(<img.*?)zoomfile(.*?>)/g, '$1src$2'),
                             author: content(item).find('a.xw1').text().trim(),
                         })
                     )
-                    .get()
                     .join('\n');
 
                 return item;

@@ -26,7 +26,8 @@
  */
 
 import ofetch from '@/utils/ofetch';
-import { type Cheerio, type CheerioAPI, type Element, load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -127,7 +128,7 @@ const showTypeMap = {
 const showTypeMapReverse = Object.fromEntries(Object.entries(showTypeMap).map(([k, v]) => [v, k]));
 
 class ExtractMetadata {
-    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => RegExp(`\\b${varName}\\s*${assignPattern}\\s*(?<quote>["'])(?<value>${valuePattern})\\k<quote>`, 'mg');
+    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(`\\b${varName}\\s*${assignPattern}\\s*(?<quote>["'])(?<value>${valuePattern})\\k<quote>`, 'mg');
 
     private static genExtractFunc = (
         varName: string,
@@ -623,19 +624,21 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
 const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
-    const fetchedItem = await fetchArticle(item.link);
-    for (const key in fetchedItem) {
-        switch (key) {
-            case 'author':
-                item.author = setMpNameAsAuthor
-                    ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
-                    : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
-                break;
-            case 'link':
-                item.link = skipLink ? item.link : fetchedItem.link || item.link;
-                break;
-            default:
-                item[key] = item[key] || fetchedItem[key];
+    if (item.link) {
+        const fetchedItem = await fetchArticle(item.link);
+        for (const key in fetchedItem) {
+            switch (key) {
+                case 'author':
+                    item.author = setMpNameAsAuthor
+                        ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
+                        : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
+                    break;
+                case 'link':
+                    item.link = skipLink ? item.link : fetchedItem.link || item.link;
+                    break;
+                default:
+                    item[key] = item[key] || fetchedItem[key];
+            }
         }
     }
     return item;

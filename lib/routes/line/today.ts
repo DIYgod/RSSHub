@@ -18,9 +18,9 @@ export const route: Route = {
     url: 'today.line.me/',
     description: `Edition
 
-  | Taiwan | Thailand | Hong Kong |
-  | ------ | -------- | --------- |
-  | tw     | th       | hk        |`,
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |`,
 };
 
 async function handler(ctx) {

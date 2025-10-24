@@ -1,23 +1,29 @@
 import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
+import { getDataByUsername as getDataByUsernameGoogle } from './api/google';
+import { callApi } from './utils';
 
 export const route: Route = {
-    path: '/user/:username/:embed?',
-    categories: ['social-media', 'popular'],
+    path: '/user/:username/:routeParams?',
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/youtube/user/@JFlaMusic',
-    parameters: { username: 'YouTuber username with @', embed: 'Default to embed the video, set to any value to disable embedding' },
+    parameters: {
+        username: 'YouTuber handle with @',
+        routeParams: 'Extra parameters, see the table below',
+    },
+    description: `::: tip Parameter
+| Name       | Description                                                                         | Default |
+| ---------- | ----------------------------------------------------------------------------------- | ------- |
+| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
+| filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
+:::`,
     features: {
         requireConfig: [
             {
                 name: 'YOUTUBE_KEY',
                 description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -28,64 +34,34 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.youtube.com/user/:username'],
+            source: ['www.youtube.com/user/:username', 'www.youtube.com/:username', 'www.youtube.com/:username/videos'],
             target: '/user/:username',
         },
     ],
-    name: 'Channel with username',
-    maintainers: ['DIYgod'],
+    name: 'Channel with user handle',
+    maintainers: ['DIYgod', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
-    if (!config.youtube || !config.youtube.key) {
-        throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
-    }
     const username = ctx.req.param('username');
-    const embed = !ctx.req.param('embed');
 
-    let playlistId;
-    let channelName;
-    let image;
-    let description;
-    if (username.startsWith('@')) {
-        const link = `https://www.youtube.com/${username}`;
-        const response = await got(link);
-        const $ = load(response.data);
-        const ytInitialData = JSON.parse(
-            $('script')
-                .text()
-                .match(/ytInitialData = ({.*?});/)?.[1] || '{}'
-        );
-        const channelId = ytInitialData.metadata.channelMetadataRenderer.externalId;
-        channelName = ytInitialData.metadata.channelMetadataRenderer.title;
-        image = ytInitialData.metadata.channelMetadataRenderer.avatar?.thumbnails?.[0]?.url;
-        description = ytInitialData.metadata.channelMetadataRenderer.description;
-        playlistId = (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
-    }
-    playlistId = playlistId || (await utils.getChannelWithUsername(username, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
+    // Parse route parameters
+    const routeParams = ctx.req.param('routeParams');
+    const params = new URLSearchParams(routeParams);
 
-    const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
+    // Get embed parameter
+    const embed = !params.get('embed');
 
-    return {
-        title: `${channelName || username} - YouTube`,
-        link: username.startsWith('@') ? `https://www.youtube.com/${username}` : `https://www.youtube.com/user/${username}`,
-        description: description || `YouTube user ${username}`,
-        image,
-        item: data
-            .filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video')
-            .map((item) => {
-                const snippet = item.snippet;
-                const videoId = snippet.resourceId.videoId;
-                const img = utils.getThumbnail(snippet.thumbnails);
-                return {
-                    title: snippet.title,
-                    description: utils.renderDescription(embed, videoId, img, utils.formatDescription(snippet.description)),
-                    pubDate: parseDate(snippet.publishedAt),
-                    link: `https://www.youtube.com/watch?v=${videoId}`,
-                    author: snippet.videoOwnerChannelTitle,
-                    image: img.url,
-                };
-            }),
-    };
+    // Get filterShorts parameter (default to true if not specified)
+    const filterShortsStr = params.get('filterShorts');
+    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
+
+    const data = await callApi({
+        googleApi: getDataByUsernameGoogle,
+        youtubeiApi: getDataByUsernameYoutubei,
+        params: { username, embed, filterShorts },
+    });
+
+    return data;
 }

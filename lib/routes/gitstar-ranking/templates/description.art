@@ -1,0 +1,38 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if stargazersCount }}
+  <table>
+    <tbody>
+      {{ if stargazersCount }}
+        <tr>
+          <th>Stars</th>
+          <td>{{ stargazersCount }}</td>
+        </tr>
+      {{ /if }}
+      {{ if language }}
+        <tr>
+          <th>Language</th>
+          <td>{{ language }}</td>
+        </tr>
+      {{ /if }}
+      {{ if description }}
+        <tr>
+          <th>Description</th>
+          <td>{{ description }}</td>
+        </tr>
+      {{ /if }}
+    </tbody>
+  </table>
+{{ /if }}

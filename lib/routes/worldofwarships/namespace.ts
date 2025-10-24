@@ -10,4 +10,5 @@ export const namespace: Namespace = {
         name: '戰艦世界',
     },
     description: 'Tip: use proxy if necessary.',
+    lang: 'en',
 };

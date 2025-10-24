@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
@@ -36,7 +36,7 @@ const weiboUtils = {
             widthOfPics: fallback(params.widthOfPics, queryToInteger(routeParams.widthOfPics), -1),
             heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.heightOfPics), -1),
             sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.sizeOfAuthorAvatar), 48),
-            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), true),
+            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
             showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
             preferMobileLink: fallback(params.preferMobileLink, queryToBoolean(routeParams.preferMobileLink), false),
         };
@@ -132,8 +132,8 @@ const weiboUtils = {
         }
 
         // drop live photo
-        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephotos').length : 0;
-        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephotos');
+        const livePhotoCount = status.pics ? status.pics.filter((pic) => pic.type === 'livephoto').length : 0;
+        const pics = status.pics && status.pics.filter((pic) => pic.type !== 'livephoto');
 
         // 添加微博配图
         if (pics) {
@@ -157,15 +157,23 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (widthOfPics >= 0) {
-                    html += ` width="${widthOfPics}"`;
-                    style += `width: ${widthOfPics}px;`;
+                if (item.large) {
+                    const { geo, url } = item.large;
+
+                    if (geo?.width || widthOfPics >= 0) {
+                        const width = geo?.width || widthOfPics;
+                        html += ` width="${width}"`;
+                        style += `width: ${width}px;`;
+                    }
+
+                    if (geo?.height || heightOfPics >= 0) {
+                        const height = geo?.height || heightOfPics;
+                        html += ` height="${height}"`;
+                        style += `height: ${height}px;`;
+                    }
+
+                    html += ` style="${style}" src="${url}">`;
                 }
-                if (heightOfPics >= 0) {
-                    html += ` height="${heightOfPics}"`;
-                    style += `height: ${heightOfPics}px;`;
-                }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
 
                 if (addLinkForPics) {
                     html += '</a>';
@@ -263,7 +271,7 @@ const weiboUtils = {
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;
-        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephotos' && pic.videoSrc);
+        const livePhotos = status.pics && status.pics.filter((pic) => pic.type === 'livephoto' && pic.videoSrc);
         let video = '<br clear="both" /><div style="clear: both"></div>';
         let anyVideo = false;
         if (livePhotos) {
@@ -399,7 +407,7 @@ const weiboUtils = {
         }
         return itemDesc;
     },
-    formatComments: async (ctx, itemDesc, status) => {
+    formatComments: async (ctx, itemDesc, status, showBloggerIcons) => {
         if (status && status.comments_count && status.id && status.mid) {
             const id = status.id;
             const mid = status.mid;
@@ -421,7 +429,11 @@ const weiboUtils = {
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
-                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${comment.user.screen_name}</a>: ${comment.text}`;
+                    let name = comment.user.screen_name;
+                    if (showBloggerIcons === '1' && comment.blogger_icons) {
+                        name += comment.blogger_icons[0].name;
+                    }
+                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${name}</a>: ${comment.text}`;
                     // 带有图片的评论直接输出图片
                     if ('pic' in comment) {
                         itemDesc += `<br><img src="${comment.pic.url}">`;
@@ -445,7 +457,11 @@ const weiboUtils = {
                                 }
                             }
                             itemDesc += '<div style="font-size: 0.9em">';
-                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${com.user.screen_name}</a>: ${com.text}`;
+                            let name = com.user.screen_name;
+                            if (showBloggerIcons === '1' && com.blogger_icons) {
+                                name += com.blogger_icons[0].name;
+                            }
+                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${name}</a>: ${com.text}`;
                             itemDesc += '</div>';
                         }
                         itemDesc += '</blockquote>';

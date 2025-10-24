@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     zh: {
         name: '北京交通大学',
     },
+    lang: 'zh-CN',
 };

@@ -18,11 +18,14 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['luogu.com/blog/:name'],
+        },
+        {
             source: ['luogu.com.cn/blog/:name'],
         },
     ],
     name: '用户博客',
-    maintainers: [],
+    maintainers: ['ftiasch'],
     handler,
 };
 

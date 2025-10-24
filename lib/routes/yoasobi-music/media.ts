@@ -1,8 +1,6 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import path from 'node:path';
@@ -40,14 +38,11 @@ async function handler() {
     const officialUrl = 'https://www.yoasobi-music.jp/media';
     const title = 'LATEST MEDIA';
 
-    const response = await got({
-        method: 'get',
-        url: api,
-    });
+    const response = await ofetch(api);
 
     const data = Object.values(parseJSONP(response.data).items)
-        .reduce((p, c) => [...p, ...c])
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .flat()
+        .toSorted((a, b) => new Date(b.date) - new Date(a.date))
         .map((item) => ({
             date: item.date,
             weekDay: item.youbi,

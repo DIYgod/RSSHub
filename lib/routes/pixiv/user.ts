@@ -9,7 +9,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Pictures,
     example: '/pixiv/user/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
@@ -20,10 +20,11 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
-            source: ['www.pixiv.net/users/:id'],
+            source: ['www.pixiv.net/users/:id', 'www.pixiv.net/en/users/:id'],
         },
     ],
     name: 'User Activity',
@@ -50,7 +51,7 @@ async function handler(ctx) {
     return {
         title: `${username} 的 pixiv 动态`,
         link: `https://www.pixiv.net/users/${id}`,
-        image: illusts[0].user.profile_image_urls.medium,
+        image: pixivUtils.getProxiedImageUrl(illusts[0].user.profile_image_urls.medium),
         description: `${username} 的 pixiv 最新动态`,
         item: illusts.map((illust) => {
             const images = pixivUtils.getImgs(illust);

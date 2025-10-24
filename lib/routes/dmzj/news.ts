@@ -28,8 +28,8 @@ export const route: Route = {
     handler,
     url: 'news.dmzj.com/',
     description: `| 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |
-  | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
-  | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |`,
+| ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+| manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |`,
 };
 
 async function handler(ctx) {
@@ -39,7 +39,8 @@ async function handler(ctx) {
         title: $('title').text(),
         link: url,
         item: $('.briefnews_con_li .li_img_de')
-            .map((_, item) => ({
+            .toArray()
+            .map((item) => ({
                 title: $(item).find('h3 a').text(),
                 link: $(item).find('h3 a').attr('href'),
                 author: $(item).find('.head_con_p_o span:nth-child(3)').text().split('：')[1],
@@ -47,9 +48,8 @@ async function handler(ctx) {
                 description: $(item).find('p.com_about').text(),
                 category: $(item)
                     .find('.u_comfoot a .bqwarp')
-                    .map((_, item) => $(item).text())
-                    .get(),
-            }))
-            .get(),
+                    .toArray()
+                    .map((item) => $(item).text()),
+            })),
     };
 }

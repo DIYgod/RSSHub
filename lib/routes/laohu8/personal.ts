@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,6 +9,7 @@ const rootUrl = 'https://www.laohu8.com';
 export const route: Route = {
     path: '/personal/:id',
     categories: ['finance'],
+    view: ViewType.Articles,
     example: '/laohu8/personal/3527667596890271',
     parameters: { id: '用户 ID，见网址链接' },
     features: {

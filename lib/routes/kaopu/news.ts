@@ -17,8 +17,8 @@ export const route: Route = {
     name: '全部',
     maintainers: ['fashioncj'],
     description: `| 简体中文    | 繁体中文     |
-  | ------- | -------- |
-  | zh-hans | zh-hant | `,
+| ------- | -------- |
+| zh-hans | zh-hant | `,
     handler,
 };
 
@@ -28,7 +28,7 @@ async function handler(ctx) {
     const rootUrl = 'https://kaopu.news';
     const currentUrl = `${rootUrl}/${language === 'zh-hant' ? 'zh-hant' : 'index'}.html`;
     // API PATH: https://kaopucdn.azureedge.net/jsondata/news_list_beta_hans_0.json
-    const apiUrl = `https://kaopucdn.azureedge.net/jsondata/news_list_beta_han${language === 'zh-hant' ? 't' : 's'}_0.json`;
+    const apiUrl = `https://kaopustorage.blob.core.windows.net/jsondata/news_list_beta_han${language === 'zh-hant' ? 't' : 's'}_0.json`;
 
     const response = await got({
         method: 'get',

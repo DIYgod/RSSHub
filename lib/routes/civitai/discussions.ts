@@ -21,6 +21,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -30,7 +31,7 @@ export const route: Route = {
     name: 'Model discussions',
     maintainers: ['DIYgod'],
     handler,
-    description: `:::warning
+    description: `::: warning
 Need to configure \`CIVITAI_COOKIE\` to obtain image information of NSFW models.
 :::`,
 };

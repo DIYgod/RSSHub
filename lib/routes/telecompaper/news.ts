@@ -29,15 +29,15 @@ export const route: Route = {
     handler,
     description: `Category
 
-  | WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
-  | -------- | --------- | --------- | ------- | -- | ------------------ |
-  | mobile   | internet  | boardcast | general | it | industry-resources |
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
 
-  :::tip
+::: tip
   If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`
 
   Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides \`Content Type\` which corresponds to \`type\`. \`year\` and \`country\` are not supported.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -102,7 +102,8 @@ async function handler(ctx) {
 
     const list = $('table.details_rows tbody tr')
         .slice(0, 10)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const a = item.find('a');
             return {
@@ -110,8 +111,7 @@ async function handler(ctx) {
                 link: a.attr('href'),
                 pubDate: new Date(item.find('span.source').text().replace('Published ', '').split(' CET | ')[0] + ' GMT+1').toUTCString(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>

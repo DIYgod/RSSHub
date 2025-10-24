@@ -5,9 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
 import { art } from '@/utils/render';
-import path from 'path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
+import path from 'node:path';
 
 interface Book {
     bibId: string;

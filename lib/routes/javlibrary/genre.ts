@@ -8,12 +8,15 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| videos with comments (by date) | everything (by date) |
-  | ------------------------------ | -------------------- |
-  | 1                              | 2                    |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
 
-  :::tip
+::: tip
   See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
-  :::`,
+:::`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

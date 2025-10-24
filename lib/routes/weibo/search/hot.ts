@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -16,7 +14,7 @@ let fullpic = 'false';
 
 export const route: Route = {
     path: '/search/hot/:fulltext?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/weibo/search/hot',
     parameters: {
@@ -142,7 +140,7 @@ function seekContent(clist) {
         if (curitem.card_type === 9) {
             const tbpic = curitem.mblog.thumbnail_pic ?? '';
             const index = tbpic.lastIndexOf('/');
-            const thumbfolder = tbpic.substring(0, index + 1);
+            const thumbfolder = tbpic.slice(0, index + 1);
 
             const curcontent = load(curitem.mblog.text);
             if (wpic === 'true') {

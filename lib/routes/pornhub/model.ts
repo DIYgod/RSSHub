@@ -2,12 +2,12 @@ import { Route, ViewType, Data } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
-import { headers, parseItems } from './utils';
+import { headers, parseItems, getRadarDomin } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/model/:username/:language?/:sort?',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/model/stacy-starando',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', sort: 'sorting method, see below' },
@@ -18,13 +18,9 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
-    radar: [
-        {
-            source: ['pornhub.com/model/:username/*'],
-            target: '/model/:username',
-        },
-    ],
+    radar: getRadarDomin('/model/:username'),
     name: 'Model',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,

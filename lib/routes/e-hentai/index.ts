@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -13,6 +11,9 @@ export const route: Route = {
     path: '/:what?/:id?/:needTorrents?/:needImages?',
     name: 'Unknown',
     maintainers: [],
+    features: {
+        nsfw: true,
+    },
     handler,
 };
 

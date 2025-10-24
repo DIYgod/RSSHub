@@ -3,7 +3,7 @@ import type { Namespace } from '@/types';
 export const namespace: Namespace = {
     name: 'Mastodon',
     url: 'mastodon.social',
-    description: `:::tip
+    description: `::: tip
 Official user RSS:
 
 -   RSS: \`https://**:instance**/users/**:username**.rss\` ([Example](https://pawoo.net/users/pawoo_support.rss))
@@ -11,4 +11,5 @@ Official user RSS:
 
 These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
 :::`,
+    lang: 'en',
 };

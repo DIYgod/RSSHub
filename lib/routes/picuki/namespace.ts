@@ -1,6 +1,1 @@
-import type { Namespace } from '@/types';
-
-export const namespace: Namespace = {
-    name: 'Instagram',
-    url: 'www.instagram.com',
-};
+export { namespace } from '@/routes/tiktok/namespace';

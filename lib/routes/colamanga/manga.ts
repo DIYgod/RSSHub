@@ -60,7 +60,7 @@ async function handler(ctx: Context) {
     });
 
     const response = await page.content();
-    browser.close();
+    await browser.close();
 
     const $ = load(response);
 
@@ -71,14 +71,14 @@ async function handler(ctx: Context) {
     const author = $("span:contains('作者')").parent().contents().eq(1).text();
     // const cover = $(".fed-deta-images a").attr('data-original');
     const items = $('.all_data_list >ul>li>a')
-        .map((i, elem) => ({
+        .toArray()
+        .map((elem, i) => ({
             title: `${book_name} ${$(elem).text()}`,
             link: elem.attribs.href,
             description: $('.fed-part-esan').text(),
             author,
             pubDate: shift_date(updateDate, -7 * i),
-        }))
-        .get();
+        }));
 
     return {
         title: book_name || 'Unknown Manga',

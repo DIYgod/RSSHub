@@ -21,11 +21,11 @@ export const route: Route = {
     maintainers: ['LogicJake'],
     handler,
     description: `| Sort options     | sort      |
-  | ---------------- | --------- |
-  | Best match       | bestmatch |
-  | Most stars       | stars     |
-  | Most forks       | forks     |
-  | Recently updated | updated   |`,
+| ---------------- | --------- |
+| Best match       | bestmatch |
+| Most stars       | stars     |
+| Most forks       | forks     |
+| Recently updated | updated   |`,
 };
 
 async function handler(ctx) {

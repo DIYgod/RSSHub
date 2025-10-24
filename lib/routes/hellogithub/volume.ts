@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -12,13 +10,14 @@ const md = MarkdownIt({
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 
 art.defaults.imports.render = function (string) {
     return md.render(string);
 };
 
 export const route: Route = {
-    path: ['/month', '/volume'],
+    path: '/volume',
     example: '/hellogithub/volume',
     name: '月刊',
     maintainers: ['moke8', 'nczitzk', 'CaoMeiYouRen'],
@@ -39,6 +38,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         volumes.map(async (volume) => {
             const current = volume.num;
+            const lastmod = volume.lastmod;
             const currentUrl = `${rootUrl}/periodical/volume/${current}`;
             const key = `hellogithub:${currentUrl}`;
             return await cache.tryGet(
@@ -61,6 +61,7 @@ async function handler(ctx) {
                         description: art(path.join(__dirname, 'templates/volume.art'), {
                             data: data.pageProps.volume.data,
                         }),
+                        pubDate: parseDate(lastmod),
                     };
                 },
                 config.cache.routeExpire,

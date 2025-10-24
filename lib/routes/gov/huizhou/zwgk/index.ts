@@ -34,12 +34,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const title = $('span#navigation').children('a').last().text();
     const list = $('ul.ul_art_row')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('a').text().trim(),
             link: $(item).find('a').attr('href'),
             pubDate: timezone(parseDate($(item).find('li.li_art_date').text().trim()), +8),
-        }))
-        .get();
+        }));
 
     const items = await Promise.all(
         list.map((item) =>

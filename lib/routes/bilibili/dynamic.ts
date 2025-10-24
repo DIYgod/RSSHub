@@ -2,29 +2,33 @@ import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils from './utils';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import cacheIn from './cache';
 import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import { parseDuration } from '@/utils/helpers';
+import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/bilibili/user/dynamic/2267573',
     parameters: {
         uid: '用户 id, 可在 UP 主主页中找到',
         routeParams: `
-| 键           | 含义                              | 接受的值       | 默认值 |
-| ------------ | --------------------------------- | -------------- | ------ |
-| showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
-| disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
-| useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
-| directLink   | 使用内容直链                      | 0/1/true/false | false  |
-| hideGoods    | 隐藏带货动态                      | 0/1/true/false | false  |
+| 键         | 含义                              | 接受的值       | 默认值 |
+| ---------- | --------------------------------- | -------------- | ------ |
+| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |
+| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |
+| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+| directLink | 使用内容直链                      | 0/1/true/false | false  |
+| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |
+| offset     | 偏移状态                         | string         | ""  |
 
-用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\``,
+用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1\``,
     },
     features: {
         requireConfig: [
@@ -108,45 +112,73 @@ const getDes = (data: Modules): string => {
 const getOriginTitle = (data?: Modules) => data && getTitle(data);
 const getOriginDes = (data?: Modules) => data && getDes(data);
 const getOriginName = (data?: Modules) => data?.module_author?.name;
-const getIframe = (data?: Modules, disableEmbed: boolean = false) => {
-    if (disableEmbed) {
+const getIframe = (data?: Modules, embed: boolean = true) => {
+    if (!embed) {
         return '';
     }
     const aid = data?.module_dynamic?.major?.archive?.aid;
     const bvid = data?.module_dynamic?.major?.archive?.bvid;
-    if (!aid) {
+    if (aid === undefined && bvid === undefined) {
         return '';
     }
-    return utils.iframe(aid, null, bvid);
+    // 不通过 utils.renderUGCDescription 渲染 img/description 以兼容其他格式的动态
+    return utils.renderUGCDescription(embed, '', '', aid, undefined, bvid);
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: string[] = [];
+    const imgUrls: {
+        url: string;
+        width?: number;
+        height?: number;
+    }[] = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
     }
     // 动态图片
     if (major.opus?.pics?.length) {
-        imgUrls.push(...major.opus.pics.map((e) => e.url));
+        imgUrls.push(
+            ...major.opus.pics.map((e) => ({
+                url: e.url,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 专栏封面
     if (major.article?.covers?.length) {
-        imgUrls.push(...major.article.covers);
+        imgUrls.push(
+            ...major.article.covers.map((e) => ({
+                url: e,
+            }))
+        );
     }
     // 相簿
     if (major.draw?.items?.length) {
-        imgUrls.push(...major.draw.items.map((e) => e.src));
+        imgUrls.push(
+            ...major.draw.items.map((e) => ({
+                url: e.src,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 正在直播的动态
     if (major.live_rcmd?.content) {
-        imgUrls.push(JSON.parse(major.live_rcmd.content)?.live_play_info?.cover);
+        imgUrls.push({
+            url: JSON.parse(major.live_rcmd.content)?.live_play_info?.cover,
+        });
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
-        imgUrls.push(major[type].cover);
+        imgUrls.push({
+            url: major[type]?.cover,
+        });
     }
-    return imgUrls.map((url) => `<img src="${url}">`).join('');
+    return imgUrls
+        .filter(Boolean)
+        .map((img) => `<img src="${img.url}" ${img.width ? `width="${img.width}"` : ''} ${img.height ? `height="${img.height}"` : ''}>`)
+        .join('');
 };
 
 const getUrl = (item?: Item2, useAvid = false) => {
@@ -156,6 +188,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     }
     let url = '';
     let text = '';
+    let videoPageUrl;
     const major = data.module_dynamic?.major;
     if (!major) {
         return null;
@@ -174,6 +207,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
             const id = useAvid ? `av${archive?.aid}` : archive?.bvid;
             url = `https://www.bilibili.com/video/${id}`;
             text = `视频地址：<a href=${url}>${url}</a>`;
+            videoPageUrl = getVideoUrl(archive?.bvid);
             break;
         }
         case 'MAJOR_TYPE_COMMON':
@@ -210,6 +244,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
         case 'MAJOR_TYPE_LIVE_RCMD': {
             const live_play_info = JSON.parse(major.live_rcmd?.content || '{}')?.live_play_info;
             url = `https://live.bilibili.com/${live_play_info?.room_id}`;
+            videoPageUrl = getLiveUrl(live_play_info?.room_id);
             text = `直播间地址：<a href=${url}>${url}</a>`;
             break;
         }
@@ -219,6 +254,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
     return {
         url,
         text,
+        videoPageUrl,
     };
 };
 
@@ -226,42 +262,66 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
-    const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
+    const embed = fallback(undefined, queryToBoolean(routeParams.embed), false);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
+    const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
     const hideGoods = fallback(undefined, queryToBoolean(routeParams.hideGoods), false);
 
-    const cookie = await cacheIn.getCookie();
+    const getDynamic = async (cookie: string) => {
+        const params = utils.addDmVerifyInfo(`offset=${offset}&host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
+        const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
+            headers: {
+                Referer: `https://space.bilibili.com/${uid}/`,
+                Cookie: cookie,
+            },
+        });
+        const body = JSONbig.parse(response.body);
+        return body;
+    };
 
-    const params = utils.addDmVerifyInfo(`host_mid=${uid}&platform=web&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote`, utils.getDmImgList());
-    const response = await got(`https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`, {
-        headers: {
-            Referer: `https://space.bilibili.com/${uid}/`,
-            Cookie: cookie,
-        },
-    });
-    const body = JSONbig.parse(response.body);
+    let body: BilibiliWebDynamicResponse;
+
+    const cookie = (await cacheIn.getCookie()) as string;
+    body = await getDynamic(cookie);
+
     if (body?.code === -352) {
-        cacheIn.clearCookie();
-        throw new Error('The cookie has expired, please try again.');
+        const cookie = (await cacheIn.getCookie(true)) as string;
+        body = await getDynamic(cookie);
+
+        if (body?.code === -352) {
+            cache.set('bili-cookie', '');
+            throw new CaptchaError('遇到源站风控校验，请稍后再试');
+        }
     }
     const items = (body as BilibiliWebDynamicResponse)?.data?.items;
 
-    const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
-    const author = usernameAndFace[0] ?? items[0]?.modules?.module_author?.name;
-    const face = usernameAndFace[1] ?? items[0]?.modules?.module_author?.face;
-    cache.set(`bili-username-from-uid-${uid}`, author);
-    cache.set(`bili-userface-from-uid-${uid}`, face);
+    let author = items[0]?.modules?.module_author?.name;
+    let face = items[0]?.modules?.module_author?.face;
+    if (!face || !author) {
+        const usernameAndFace = await cacheIn.getUsernameAndFaceFromUID(uid);
+        author = usernameAndFace[0] || items[0]?.modules?.module_author?.name;
+        face = usernameAndFace[1] || items[0]?.modules?.module_author?.face;
+    } else {
+        cache.set(`bili-username-from-uid-${uid}`, author);
+        cache.set(`bili-userface-from-uid-${uid}`, face);
+    }
 
     const rssItems = await Promise.all(
         items
-            .filter((item) => !hideGoods || item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS')
+            .filter((item) => {
+                if (hideGoods) {
+                    return item.modules.module_dynamic?.additional?.type !== 'ADDITIONAL_TYPE_GOODS';
+                }
+                return true;
+            })
             .map(async (item) => {
                 // const parsed = JSONbig.parse(item.card);
 
                 const data = item.modules;
                 const origin = item?.orig?.modules;
+                const bvid = data?.module_dynamic?.major?.archive?.bvid;
 
                 // link
                 let link = '';
@@ -269,8 +329,9 @@ async function handler(ctx) {
                     link = `https://t.bilibili.com/${item.id_str}`;
                 }
 
-                let description = getDes(data) || '';
-                const title = getTitle(data) || description; // 没有 title 的时候使用 desc 填充
+                const originalDescription = getDes(data) || '';
+                let description = originalDescription;
+                const title = getTitle(data);
                 const category: string[] = [];
                 // emoji
                 if (data.module_dynamic?.desc?.rich_text_nodes?.length) {
@@ -355,19 +416,31 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-
-                const descriptions = [description, originDescription, urlText, originUrlText, getIframe(data, disableEmbed), getIframe(origin, disableEmbed), getImgs(data), getImgs(origin)]
-                    .filter(Boolean)
+                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
                     .map((e) => e?.trim())
+                    .filter(Boolean)
                     .join('<br>');
 
+                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+
                 return {
-                    title,
+                    title: title || originalDescription,
                     description: descriptions,
                     pubDate: data.module_author?.pub_ts ? parseDate(data.module_author.pub_ts, 'X') : undefined,
                     link,
                     author,
                     category: category.length ? [...new Set(category)] : undefined,
+                    attachments:
+                        urlResult?.videoPageUrl || originUrlResult?.videoPageUrl
+                            ? [
+                                  {
+                                      url: urlResult?.videoPageUrl || originUrlResult?.videoPageUrl,
+                                      mime_type: 'text/html',
+                                      duration_in_seconds: data.module_dynamic?.major?.archive?.duration_text ? parseDuration(data.module_dynamic.major.archive.duration_text) : undefined,
+                                  },
+                                  ...subtitles,
+                              ]
+                            : undefined,
                 };
             })
     );

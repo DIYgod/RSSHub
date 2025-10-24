@@ -34,8 +34,8 @@ export const route: Route = {
     handler,
     url: 'woshipm.com/',
     description: `| 日榜  | 周榜   | 月榜    |
-  | ----- | ------ | ------- |
-  | daily | weekly | monthly |`,
+| ----- | ------ | ------- |
+| daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {
@@ -47,13 +47,14 @@ async function handler(ctx) {
         return {
             title: item.articleTitle,
             description: item.articleSummary,
-            link: `${baseUrl}/${item.type}/${item.id}.html`,
+            link: `${baseUrl}/${item.type || 'ai'}/${item.id}.html`,
             pubDate: parseDate(item.publishTime, 'x'),
             author: item.articleAuthor,
         };
     });
 
-    const result = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const results = await Promise.allSettled(list.map((item) => parseArticle(item, cache.tryGet)));
+    const result = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
 
     return {
         title: `热门文章 - ${rangeMap[range]} - 人人都是产品经理`,

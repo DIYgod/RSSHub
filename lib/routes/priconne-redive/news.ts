@@ -37,9 +37,9 @@ export const route: Route = {
     url: 'priconne-redive.jp/news',
     description: `服务器
 
-  | 国服  | 台服  | 日服  |
-  | ----- | ----- | ---- |
-  | zh-cn | zh-tw | jp   |`,
+| 国服  | 台服  | 日服  |
+| ----- | ----- | ---- |
+| zh-cn | zh-tw | jp   |`,
 };
 
 async function handler(ctx) {
@@ -115,7 +115,7 @@ async function handler(ctx) {
                 url: 'http://www.princessconnect.so-net.tw/news',
             });
             const $ = load(response.data);
-            const list = $('.news_con dl dd').get();
+            const list = $('.news_con dl dd').toArray();
 
             const items = await Promise.all(
                 list.map((item) => {

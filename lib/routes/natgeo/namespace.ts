@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '国家地理',
+    name: 'National Geographic',
     url: 'nationalgeographic.com',
+    lang: 'en',
 };

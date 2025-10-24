@@ -5,9 +5,8 @@ import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
-import { getCurrentPath } from '@/utils/helpers';
 
-const render = (work: Work, link: string) => art(path.join(getCurrentPath(import.meta.url), 'templates', 'work.art'), { work, link });
+const render = (work: Work, link: string) => art(path.join(__dirname, 'templates/work.art'), { work, link });
 
 export const route: Route = {
     path: '/works/:order?/:subtitle?/:sort?',
@@ -20,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     parameters: {
         order: '排序字段，默认按照资源的收录日期来排序，详见下表',

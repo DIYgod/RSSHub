@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['NagaruZ'],
     handler,
     description: `| 研究生 | 博士生 |
-  | ------ | ------ |
-  | 1      | 2      |`,
+| ------ | ------ |
+| 1      | 2      |`,
 };
 
 async function handler(ctx) {

@@ -20,10 +20,10 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| type    | 说明 |
-  | ------- | ---- |
-  | channel | 频道 |
-  | blog    | 专栏 |
-  | u       | 用户 |`,
+| ------- | ---- |
+| channel | 频道 |
+| blog    | 专栏 |
+| u       | 用户 |`,
 };
 
 async function handler(ctx) {

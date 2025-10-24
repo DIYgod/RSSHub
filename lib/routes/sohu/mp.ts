@@ -1,13 +1,13 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/mp/:xpt',
@@ -39,6 +39,21 @@ function randomString(length = 32) {
 }
 const defaultSUV = '1612268936507kas0gk';
 
+function decryptImageUrl(cipherText) {
+    const key = CryptoJS.enc.Utf8.parse('www.sohu.com6666');
+    const cipher = CryptoJS.AES.decrypt(cipherText, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+    return cipher.toString(CryptoJS.enc.Utf8);
+}
+
+function createAuthToken() {
+    const t = Date.now();
+    const e = 't' + t;
+    return 'v1' + t + CryptoJS.HmacSHA1(e, '439642a904ef43d092d45509cdc4391c').toString();
+}
+
 function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {
         const response = await ofetch(item.link);
@@ -46,6 +61,7 @@ function fetchArticle(item) {
 
         $('.original-title, .lookall-box').remove();
         item.author = item.author || $('span[data-role="original-link"] a').text();
+        item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')), 8);
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {
             const videoSrc = $('script')
@@ -63,6 +79,13 @@ function fetchArticle(item) {
 
             article.find('#backsohucom, p[data-role="editor-name"]').each((i, e) => {
                 $(e).remove();
+            });
+            article.find('img').each((_, e) => {
+                const $e = $(e);
+                if ($e.attr('data-src') && !$e.attr('src')) {
+                    $e.attr('src', decryptImageUrl($e.attr('data-src')));
+                    $e.removeAttr('data-src');
+                }
             });
 
             item.description = article.html();
@@ -105,13 +128,16 @@ async function handler(ctx) {
                         .text()
                         .match(/contentData = (.*)/)?.[1]
             )
-            .sort((a: any, b: any) => b.length - a.length)[0] || '{}'
+            .toSorted((a: any, b: any) => b.length - a.length)[0] || '{}'
     );
-    const renderData = JSON.parse(
+    const blockRenderData = JSON.parse(
         $('script:contains("column_2_text")')
             .text()
-            .match(/renderData:\s(.*)/)?.[1] || '{}'
+            .match(/({.*})/)?.[1]
     );
+    const renderData = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('FeedSlideloadAuthor'))];
+    const briefIntroductionCard = blockRenderData[Object.keys(blockRenderData).find((e) => e.startsWith('BriefIntroductionCard'))].param.data.list[0];
+
     const globalConst = JSON.parse(
         $('script:contains("globalConst")')
             .text()
@@ -137,7 +163,7 @@ async function handler(ctx) {
         },
         body: {
             pvId: CBDRenderConst.COMMONCONFIG.pvId || `${Date.now()}_${randomString(7)}`,
-            pageId: `${Date.now()}_${defaultSUV.slice(0, -5)}_${randomString(3)}`,
+            pageId: `${Date.now()}_${defaultSUV?.slice(0, -5)}_${randomString(3)}`,
             mainContent: {
                 productType: contentData.businessType || '13',
                 productId: contentData.id || '324',
@@ -158,11 +184,11 @@ async function handler(ctx) {
                         size: 20,
                         pro: renderData.param.pro || '0,1,3,4,5',
                         feedType: renderData.param.feedType || 'XTOPIC_SYNTHETICAL',
-                        view: '',
+                        view: 'operateFeedMode',
                         innerTag: renderData.param.data2.reqParam.content.innerTag || 'work',
                         spm: renderData.param.data2.reqParam.content.spm || 'smpc.channel_248.block3_308_hHsK47_2_fd',
                         page: 1,
-                        requestId: `${Date.now()}_${randomString(13)}_${contentData.id}`,
+                        requestId: `${Date.now()}${randomString(7)}_${contentData.id}`,
                     },
                     adInfo: {},
                     context: {
@@ -170,22 +196,23 @@ async function handler(ctx) {
                     },
                 },
             ],
+            asId: createAuthToken(),
         },
     });
 
     const list = blockData.data[renderData.param.data2.reqParam.tplCompKey].list.map((item) => ({
         title: item.title,
         description: item.brief,
-        link: `https://www.sohu.com/a/${item.id}_${item.authorId}`,
-        author: item.authorName,
-        pubDate: parseDate(item.postTime, 'x'),
+        link: `https://www.sohu.com/a/${item.id}_${globalConst.mkeyConst_mkey}`,
     }));
 
     const items = await Promise.all(list.map((e) => fetchArticle(e)));
 
     return {
         title: `搜狐号 - ${globalConst.title}`,
+        description: briefIntroductionCard.column_9_text,
         link: originalRequest.url,
+        image: `https:${briefIntroductionCard.column_2_image}`,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import got from '../pixiv-got';
 import { maskHeader } from '../constants';
-import assert from 'assert';
+import assert from 'node:assert';
 import queryString from 'query-string';
 
 const allowMode = new Set(['day', 'week', 'month', 'day_male', 'day_female', 'day_ai', 'week_original', 'week_rookie', 'day_r18', 'day_r18_ai', 'day_male_r18', 'day_female_r18', 'week_r18', 'week_r18g']);
@@ -13,7 +13,7 @@ const allowMode = new Set(['day', 'week', 'month', 'day_male', 'day_female', 'da
  * @returns {Promise<got.AxiosResponse<{illusts: illust[]}>>}
  */
 export default function getRanking(mode, date, token) {
-    assert(allowMode.has(mode), 'Mode not allow.');
+    assert.ok(allowMode.has(mode), 'Mode not allow.');
     return got('https://app-api.pixiv.net/v1/illust/ranking', {
         headers: {
             ...maskHeader,

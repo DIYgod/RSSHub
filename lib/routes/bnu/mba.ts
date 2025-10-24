@@ -84,39 +84,39 @@ export const route: Route = {
     handler,
     example: '/bnu/mba/xwdt',
     parameters: { category: '分类，默认为 xwdt，即新闻聚焦' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html)，网址为 \`https://mba.bnu.edu.cn/xwdt/index.html\`。截取 \`https://mba.bnu.edu.cn/\` 到末尾 \`/index.html\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/bnu/mba/xwdt\`](https://rsshub.app/bnu/mba/xwdt)。
-  :::
+:::
 
-  #### [主页](https://mba.bnu.edu.cn)
+#### [主页](https://mba.bnu.edu.cn)
 
-  | [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html) | [通知公告](https://mba.bnu.edu.cn/tzgg/index.html) | [MBA 系列讲座](https://mba.bnu.edu.cn/mbaxljz/index.html) |
-  | -------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
-  | [xwdt](https://rsshub.app/bnu/mba/xwdt)            | [tzgg](https://rsshub.app/bnu/mba/tzgg)            | [mbaxljz](https://rsshub.app/bnu/mba/mbaxljz)             |
+| [新闻聚焦](https://mba.bnu.edu.cn/xwdt/index.html) | [通知公告](https://mba.bnu.edu.cn/tzgg/index.html) | [MBA 系列讲座](https://mba.bnu.edu.cn/mbaxljz/index.html) |
+| -------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
+| [xwdt](https://rsshub.app/bnu/mba/xwdt)            | [tzgg](https://rsshub.app/bnu/mba/tzgg)            | [mbaxljz](https://rsshub.app/bnu/mba/mbaxljz)             |
 
-  #### [招生动态](https://mba.bnu.edu.cn/zsdt/zsjz/index.html)
+#### [招生动态](https://mba.bnu.edu.cn/zsdt/zsjz/index.html)
 
-  | [下载专区](https://mba.bnu.edu.cn/zsdt/cjwt/index.html) |
-  | ------------------------------------------------------- |
-  | [zsdt/cjwt](https://rsshub.app/bnu/mba/zsdt/cjwt)       |
+| [下载专区](https://mba.bnu.edu.cn/zsdt/cjwt/index.html) |
+| ------------------------------------------------------- |
+| [zsdt/cjwt](https://rsshub.app/bnu/mba/zsdt/cjwt)       |
 
-  #### [国际视野](https://mba.bnu.edu.cn/gjhz/hwjd/index.html)
+#### [国际视野](https://mba.bnu.edu.cn/gjhz/hwjd/index.html)
 
-  | [海外基地](https://mba.bnu.edu.cn/gjhz/hwjd/index.html) | [学位合作](https://mba.bnu.edu.cn/gjhz/xwhz/index.html) | [长期交换](https://mba.bnu.edu.cn/gjhz/zqjh/index.html) | [短期项目](https://mba.bnu.edu.cn/gjhz/dqxm/index.html) |
-  | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-  | [gjhz/hwjd](https://rsshub.app/bnu/mba/gjhz/hwjd)       | [gjhz/xwhz](https://rsshub.app/bnu/mba/gjhz/xwhz)       | [gjhz/zqjh](https://rsshub.app/bnu/mba/gjhz/zqjh)       | [gjhz/dqxm](https://rsshub.app/bnu/mba/gjhz/dqxm)       |
+| [海外基地](https://mba.bnu.edu.cn/gjhz/hwjd/index.html) | [学位合作](https://mba.bnu.edu.cn/gjhz/xwhz/index.html) | [长期交换](https://mba.bnu.edu.cn/gjhz/zqjh/index.html) | [短期项目](https://mba.bnu.edu.cn/gjhz/dqxm/index.html) |
+| ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| [gjhz/hwjd](https://rsshub.app/bnu/mba/gjhz/hwjd)       | [gjhz/xwhz](https://rsshub.app/bnu/mba/gjhz/xwhz)       | [gjhz/zqjh](https://rsshub.app/bnu/mba/gjhz/zqjh)       | [gjhz/dqxm](https://rsshub.app/bnu/mba/gjhz/dqxm)       |
 
-  #### [校园生活](https://mba.bnu.edu.cn/xysh/xszz/index.html)
+#### [校园生活](https://mba.bnu.edu.cn/xysh/xszz/index.html)
 
-  | [学生组织](https://mba.bnu.edu.cn/xysh/xszz/index.html) |
-  | ------------------------------------------------------- |
-  | [xysh/xszz](https://rsshub.app/bnu/mba/xysh/xszz)       |
+| [学生组织](https://mba.bnu.edu.cn/xysh/xszz/index.html) |
+| ------------------------------------------------------- |
+| [xysh/xszz](https://rsshub.app/bnu/mba/xysh/xszz)       |
 
-  #### [职业发展](https://mba.bnu.edu.cn/zyfz/xwds/index.html)
+#### [职业发展](https://mba.bnu.edu.cn/zyfz/xwds/index.html)
 
-  | [校外导师](https://mba.bnu.edu.cn/zyfz/xwds/index.html) | [企业实践](https://mba.bnu.edu.cn/zyfz/zycp/index.html) | [就业创业](https://mba.bnu.edu.cn/zyfz/jycy/index.html) |
-  | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-  | [zyfz/xwds](https://rsshub.app/bnu/mba/zyfz/xwds)       | [zyfz/zycp](https://rsshub.app/bnu/mba/zyfz/zycp)       | [zyfz/jycy](https://rsshub.app/bnu/mba/zyfz/jycy)       |
+| [校外导师](https://mba.bnu.edu.cn/zyfz/xwds/index.html) | [企业实践](https://mba.bnu.edu.cn/zyfz/zycp/index.html) | [就业创业](https://mba.bnu.edu.cn/zyfz/jycy/index.html) |
+| ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| [zyfz/xwds](https://rsshub.app/bnu/mba/zyfz/xwds)       | [zyfz/zycp](https://rsshub.app/bnu/mba/zyfz/zycp)       | [zyfz/jycy](https://rsshub.app/bnu/mba/zyfz/jycy)       |
   `,
     categories: ['university'],
 

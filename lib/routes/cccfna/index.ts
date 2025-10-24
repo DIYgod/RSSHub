@@ -19,7 +19,7 @@ export const route: Route = {
         },
     ],
     description: `
-:::tip
+::: tip
 存在**二级分类**的**一级分类**不能单独当作参数，如：\`/cccfna/hangyezixun\`
 :::
 

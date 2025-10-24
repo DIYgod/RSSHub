@@ -28,8 +28,8 @@ export const route: Route = {
     handler,
     url: 'it.ouc.edu.cn/',
     description: `| 新闻动态 | 学院活动 | 奖助工作获奖情况 |
-  | -------- | -------- | ---------------- |
-  | xwdt     | tzgg     | 21758            |`,
+| -------- | -------- | ---------------- |
+| xwdt     | tzgg     | 21758            |`,
 };
 
 async function handler(ctx) {

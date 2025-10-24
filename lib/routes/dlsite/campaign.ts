@@ -124,7 +124,16 @@ export const route: Route = {
     path: '/campaign/:type/:free?',
     categories: ['anime'],
     example: '/dlsite/campaign/home',
-    parameters: { type: 'Type, see table above', free: 'Free only, empty means false, other value means true' },
+    parameters: {
+        type: {
+            description: '类型',
+            options: Object.values(infos).map((info) => ({ value: info.type, label: info.name })),
+        },
+        free: {
+            description: '免费',
+            options: [{ value: '1', label: '是' }],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -132,6 +141,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Discounted Works',
     maintainers: ['cssxsh'],
@@ -149,9 +159,8 @@ async function handler(ctx) {
     }
     const link = setUrl(info);
 
-    const response = await got(link, {
+    const response = await got(new URL(link, host), {
         method: 'GET',
-        prefixUrl: host,
     });
     const data = response.data;
     const $ = load(data);

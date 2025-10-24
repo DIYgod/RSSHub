@@ -38,15 +38,15 @@ export const route: Route = {
     handler,
     description: `\`grade\` 列表：
 
-  | 本科 2016 级 | 本科 2017 级 | 本科 2018 级 | 本科 2019 级 |
-  | ------------ | ------------ | ------------ | ------------ |
-  | 16           | 17           | 18           | 19           |
+| 本科 2016 级 | 本科 2017 级 | 本科 2018 级 | 本科 2019 级 |
+| ------------ | ------------ | ------------ | ------------ |
+| 16           | 17           | 18           | 19           |
 
   \`type\` 列表：
 
-  | 年级通知（通知公告） | 每日动态（主任寄语） |
-  | -------------------- | -------------------- |
-  | tz                   | dt                   |`,
+| 年级通知（通知公告） | 每日动态（主任寄语） |
+| -------------------- | -------------------- |
+| tz                   | dt                   |`,
 };
 
 async function handler(ctx) {
@@ -70,14 +70,10 @@ async function handler(ctx) {
     return {
         title: info.title,
         link: siteUrl,
-        item:
-            list &&
-            list
-                .map((index, item) => ({
-                    title: $(item).find('a').text().trim(),
-                    pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
-                    link: $(item).find('a').attr('href'),
-                }))
-                .get(),
+        item: list.toArray().map((item) => ({
+            title: $(item).find('a').text().trim(),
+            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
+            link: $(item).find('a').attr('href'),
+        })),
     };
 }

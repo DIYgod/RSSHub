@@ -1,6 +1,2 @@
 <h2>Abstract</h2>
 <p>{{abstractContent}}</p>
-{{ if keywords }}
-<h2>Keywords</h2>
-<p>{{keywords}}</p>
-{{ /if }}

@@ -38,7 +38,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = $('page-title').text().trim();
+    const title = $('.page-title').text().trim();
 
     const items = $('article')
         .toArray()

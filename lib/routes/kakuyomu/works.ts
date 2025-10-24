@@ -49,7 +49,7 @@ async function handler(ctx: Context): Promise<Data> {
     const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
     const items = (await Promise.all(
         episodes
-            .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+            .toSorted((a, b) => b.publishedAt.localeCompare(a.publishedAt))
             .slice(0, limit)
             .map((item) => {
                 const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
@@ -58,8 +58,10 @@ async function handler(ctx: Context): Promise<Data> {
                     const description = $('.widget-episodeBody').html();
                     return {
                         title: item.title,
+                        link: episodeUrl,
                         description,
                         pubDate: parseDate(item.publishedAt),
+                        guid: item.id,
                     };
                 });
             })
@@ -67,6 +69,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title,
+        link: url,
         description: catchphrase,
         item: items,
     };

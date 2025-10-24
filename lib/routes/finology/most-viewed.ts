@@ -1,50 +1,27 @@
 import { Route } from '@/types';
-import logger from '@/utils/logger';
-import { getItems } from './utils';
+import { commonHandler } from './category';
 
 export const route: Route = {
-    path: '/most-viewed/:time',
+    path: '/most-viewed',
     categories: ['finance'],
-    example: '/finology/most-viewed/monthly',
-    parameters: { time: '`alltime` or `monthly` only' },
+    example: '/finology/most-viewed',
     radar: [
         {
             source: ['insider.finology.in/most-viewed'],
-            target: '/most-viewed/monthly',
+            target: '/most-viewed',
         },
     ],
     name: 'Most Viewed',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'insider.finology.in/most-viewed',
 };
 
-async function handler(ctx) {
-    const baseUrl = 'https://insider.finology.in/most-viewed';
-    let selector;
-    let title;
-    const time = ctx.req.param('time');
-    if (time === 'alltime') {
-        title = 'All Time';
-        selector = 'div.w100.pb2.bg-color.flex.flex-col.align-center.pt6 div.w23.br0625.shadow.position-r.bg-white.m-w100.card.t-w45';
-    } else if (time === 'monthly') {
-        title = 'Monthly';
-        selector = 'div.w100.pb2.bg-color.flex.flex-col.align-center:not(.pt6) div.w23.br0625.shadow.position-r.bg-white.m-w100.card.t-w45';
-    } else {
-        logger.error('Invalid Time');
-    }
-
+async function handler() {
     const extra = {
+        description: (topic: string) => `Check out the most talked-about articles among our readers! ${topic}`,
         date: false,
-        selector,
+        selector: `div.card`,
     };
-    const listItems = await getItems(baseUrl, extra);
-    return {
-        title: `Most Viewed ${title} - Finology Insider`,
-        link: baseUrl,
-        item: listItems,
-        description: "A lot of Insider's readers seem to be reading these articles. Take a look and find out why.",
-        logo: 'https://assets.finology.in/insider/images/favicon/apple-touch-icon.png',
-        icon: 'https://assets.finology.in/insider/images/favicon/favicon-32x32.png',
-        language: 'en-us',
-    };
+    return await commonHandler('https://insider.finology.in', '/most-viewed', extra);
 }

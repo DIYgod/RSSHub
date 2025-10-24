@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'geekpark.net',
     categories: ['new-media'],
     description: '',
+    lang: 'zh-CN',
 };

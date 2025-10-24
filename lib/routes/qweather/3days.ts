@@ -1,17 +1,9 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-
-const WEATHER_API = 'https://devapi.qweather.com/v7/weather/3d';
-const AIR_QUALITY_API = 'https://devapi.qweather.com/v7/air/5d';
-const CIRY_LOOKUP_API = 'https://geoapi.qweather.com/v2/city/lookup';
+import { render3DaysDescription, type WeatherForecastItem } from './util';
 const author = 'QWeather';
 
 export const route: Route = {
@@ -23,7 +15,11 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'HEFENG_KEY',
-                description: '',
+                description: 'QWeather API KEY',
+            },
+            {
+                name: 'HEFENG_API_HOST',
+                description: 'This is required after 2026/01/01: https://blog.qweather.com/announce/public-api-domain-change-to-api-host/',
             },
         ],
         requirePuppeteer: false,
@@ -35,19 +31,24 @@ export const route: Route = {
     name: '近三天天气',
     maintainers: ['Rein-Ou', 'la3rence'],
     handler,
-    description: `需自行注册获取 api 的 key，并在环境变量 HEFENG\_KEY 中进行配置，获取订阅近三天天气预报`,
+    description: '获取订阅近三天天气预报',
 };
 
 async function handler(ctx) {
-    if (!config.hefeng.key) {
+    if (!config.hefeng.key || !config.hefeng.apiHost) {
         throw new ConfigNotFoundError('QWeather RSS is disabled due to the lack of <a href="https://docs.rsshub.app/zh/install/config#%E5%92%8C%E9%A3%8E%E5%A4%A9%E6%B0%94">relevant config</a>');
     }
-    const id = await cache.tryGet(ctx.req.param('location') + '_id', async () => {
+
+    const WEATHER_API = `https://${config.hefeng.apiHost}/v7/weather/3d`;
+    const AIR_QUALITY_API = `https://${config.hefeng.apiHost}/v7/air/5d`;
+    const CIRY_LOOKUP_API = `https://${config.hefeng.apiHost}/geo/v2/city/lookup`;
+
+    const id = await cache.tryGet('qweather:' + ctx.req.param('location') + ':id', async () => {
         const response = await got(`${CIRY_LOOKUP_API}?location=${ctx.req.param('location')}&key=${config.hefeng.key}`);
         return response.data.location[0].id;
     });
     const weatherData = await cache.tryGet(
-        ctx.req.param('location'),
+        'qweather:' + ctx.req.param('location'),
         async () => {
             const response = await got(`${WEATHER_API}?key=${config.hefeng.key}&location=${id}`);
             return response.data;
@@ -68,7 +69,7 @@ async function handler(ctx) {
     const combined = {
         updateTime: weatherData.updateTime,
         fxLink: weatherData.fxLink,
-        daily: weatherData.daily.map((weatherItem) => {
+        daily: weatherData.daily.map((weatherItem: WeatherForecastItem) => {
             const dailyAirQuality = airQualityData.daily.find((airQualityItem) => airQualityItem.fxDate === weatherItem.fxDate);
             if (dailyAirQuality) {
                 return {
@@ -82,11 +83,9 @@ async function handler(ctx) {
             return weatherItem;
         }),
     };
-    const items = combined.daily.map((item) => ({
+    const items = combined.daily.map((item: WeatherForecastItem) => ({
         title: `${item.fxDate}: ${item.textDay === item.textNight ? item.textDay : item.textDay + '转' + item.textNight} ${item.tempMin}~${item.tempMax}℃`,
-        description: art(path.join(__dirname, 'templates/3days.art'), {
-            item,
-        }),
+        description: render3DaysDescription(item),
         pubDate: combined.updateTime,
         guid: '位置：' + ctx.req.param('location') + '--日期：' + item.fxDate,
         link: combined.fxLink,

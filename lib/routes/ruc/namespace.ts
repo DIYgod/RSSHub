@@ -6,4 +6,5 @@ export const namespace: Namespace = {
     zh: {
         name: '中国人民大学',
     },
+    lang: 'zh-CN',
 };

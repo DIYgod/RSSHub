@@ -5,7 +5,7 @@ import { defaultDomain, renderDescription } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/search/stepsister',
     parameters: { keyword: 'keyword' },
@@ -16,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Keyword Search',
     maintainers: ['nczitzk'],

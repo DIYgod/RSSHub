@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const token = await parseToken();
+    const token = await parseToken('https://xueqiu.com');
     const res2 = await got({
         method: 'get',
         url: 'https://xueqiu.com/statuses/hots.json',
@@ -44,20 +44,20 @@ async function handler() {
         }),
         headers: {
             Cookie: token,
-            Referer: `https://xueqiu.com/`,
+            Referer: 'https://xueqiu.com/',
         },
     });
     const data = res2.data;
 
     return {
-        title: `热帖 - 雪球`,
-        link: `https://xueqiu.com/`,
-        description: `雪球热门帖子`,
+        title: '热帖 - 雪球',
+        link: 'https://xueqiu.com/',
+        description: '雪球热门帖子',
         item: data.map((item) => {
             const description = item.text;
             return {
                 title: item.title ?? sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
-                description: item.text,
+                description,
                 pubDate: parseDate(item.created_at),
                 link: `https://xueqiu.com${item.target}`,
                 author: item.user.screen_name,

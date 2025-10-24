@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
@@ -22,6 +22,10 @@ export const route: Route = {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
             },
+            {
+                name: 'TWITTER_THIRD_PARTY_API',
+                description: 'Please see above for details.',
+            },
         ],
         requirePuppeteer: false,
         antiCrawler: false,
@@ -30,7 +34,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Keyword',
-    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9'],
+    maintainers: ['DIYgod', 'yindaheng98', 'Rongronggg9', 'pseudoyu'],
     handler,
     radar: [
         {

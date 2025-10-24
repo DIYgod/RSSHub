@@ -31,9 +31,9 @@ export const route: Route = {
     name: '米游社 - 用户关注动态',
     maintainers: ['CaoMeiYouRen'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -47,7 +47,7 @@ async function handler(ctx) {
         page_size,
     };
     const link = 'https://www.miyoushe.com/ys/timeline';
-    const url = 'https://bbs-api.miyoushe.com/post/wapi/timelines';
+    const url = 'https://bbs-api.miyoushe.com/painter/wapi/timeline/list';
     const response = await got({
         method: 'get',
         url,

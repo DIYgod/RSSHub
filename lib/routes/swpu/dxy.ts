@@ -30,8 +30,8 @@ export const route: Route = {
     handler,
     url: 'swpu.edu.cn/',
     description: `| 栏目 | 学院新闻 | 学院通知 |
-  | ---- | -------- | -------- |
-  | 代码 | 1122     | 1156     |`,
+| ---- | -------- | -------- |
+| 代码 | 1122     | 1156     |`,
 };
 
 async function handler(ctx): Promise<Data> {
@@ -43,7 +43,7 @@ async function handler(ctx): Promise<Data> {
     const $ = load(res.data);
 
     let title = $('title').text();
-    title = title.substring(0, title.indexOf('-'));
+    title = title.slice(0, title.indexOf('-'));
 
     // 获取标题、时间及链接
     const items: DataItem[] = $('tr[height="20"]')

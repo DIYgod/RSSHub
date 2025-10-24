@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,7 +7,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/user/:username/:cat?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/vimeo/user/filmsupply/picks',
     parameters: {
@@ -27,9 +25,9 @@ export const route: Route = {
     name: 'User Profile',
     maintainers: ['MisteryMonster'],
     handler,
-    description: `:::tip Special category name attention
+    description: `::: tip Special category name attention
   Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

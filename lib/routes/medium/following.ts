@@ -26,9 +26,9 @@ export const route: Route = {
     name: 'Personalized Recommendations - Following',
     maintainers: ['ImSingee'],
     handler,
-    description: `:::warning
+    description: `::: warning
   Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {

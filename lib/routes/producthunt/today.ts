@@ -1,19 +1,17 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
+import { config } from '@/config';
 
 export const route: Route = {
     path: '/today',
     categories: ['other'],
     example: '/producthunt/today',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -27,40 +25,76 @@ export const route: Route = {
             source: ['www.producthunt.com/'],
         },
     ],
-    name: 'Today Popular',
+    name: 'Top Products Launching Today',
     maintainers: ['miaoyafeng', 'Fatpandac'],
     handler,
     url: 'www.producthunt.com/',
 };
 
 async function handler() {
-    const response = await got('https://www.producthunt.com/');
+    const response = await ofetch('https://www.producthunt.com/', {
+        headers: {
+            'User-Agent': config.trueUA,
+        },
+    });
 
-    const data = JSON.parse(load(response.data)('#__NEXT_DATA__').html());
+    const $ = load(response);
+    const match = $('script:contains("ApolloSSRDataTransport")')
+        .text()
+        .match(/"events":(\[.+\])\}\)/)?.[1]
+        ?.trim()
+        .replaceAll('undefined', 'null');
 
-    const list = Object.values(data.props.apolloState)
-        .filter((o) => o.__typename === 'Post')
-        // only includes new post, not product
-        .filter((o) => Object.hasOwn(o, 'redirectToProduct') && o.redirectToProduct === null);
+    const data = JSON.parse(match);
+    const todayList = data.find((event) => event.type === 'next' && event.value.data.homefeed).value.data.homefeed.edges.find((edge) => edge.node.id === 'FEATURED-0').node;
+    // 0: Top Products Launching Today
+    // 1: Yesterday's Top Products
+    // 2: Last Week's Top Products
+    // 3: Last Month's Top Products
+
+    const list = todayList.items
+        .filter((i) => i.__typename === 'Post')
+        .map((item) => ({
+            title: item.name,
+            link: `https://www.producthunt.com/products/${item.product.slug}`,
+            postSlug: item.slug,
+            description: item.tagline,
+            pubDate: parseDate(item.createdAt),
+            image: `https://ph-files.imgix.net/${item.thumbnailImageUuid}`,
+            categories: item.topics.edges.map((topic) => topic.node.name),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.slug, async () => {
-                const detailresponse = await got(`https://www.producthunt.com/posts/${item.slug}`);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch('https://www.producthunt.com/frontend/graphql', {
+                    method: 'POST',
+                    headers: {
+                        'User-Agent': config.trueUA,
+                    },
+                    body: {
+                        operationName: 'PostPage',
+                        variables: {
+                            slug: item.postSlug,
+                        },
+                        extensions: {
+                            persistedQuery: {
+                                version: 1,
+                                sha256Hash: '488585149898ee974a51884b11e205c34ea8ad34ee01d47d7936a66a6db799ff',
+                            },
+                        },
+                    },
+                });
+                const post = response.data.post;
 
-                const data = JSON.parse(load(detailresponse.data)('#__NEXT_DATA__').html());
-                const descData = data.props.apolloState[`Post${item.id}`];
+                item.author = post.user.name;
+                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    tagline: post.tagline,
+                    description: post.description,
+                    media: post.media,
+                });
 
-                return {
-                    title: `${item.slug} - ${item.tagline}`,
-                    description:
-                        descData.description +
-                        art(path.join(__dirname, 'templates/descImg.art'), {
-                            descData,
-                        }),
-                    link: `https://www.producthunt.com/posts/${item.slug}`,
-                    pubDate: parseDate(descData.createdAt),
-                };
+                return item;
             })
         )
     );

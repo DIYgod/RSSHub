@@ -39,41 +39,44 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version
-    # grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
-    # grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
+    grep -Po '(?<="rebrowser-puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version && \
+    grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
+    grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
 # ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:22-bookworm-slim AS docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
-WORKDIR /app
-# COPY --from=dep-version-parser /ver/* /minifier/
+WORKDIR /minifier
+COPY --from=dep-version-parser /ver/* /minifier/
 
-# ARG USE_CHINA_NPM_REGISTRY=0
-# RUN \
-#     set -ex && \
-#     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-#         npm config set registry https://registry.npmmirror.com && \
-#         yarn config set registry https://registry.npmmirror.com && \
-#         pnpm config set registry https://registry.npmmirror.com ; \
-#     fi; \
-#     corepack enable pnpm && \
-#     pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
+ARG USE_CHINA_NPM_REGISTRY=0
+RUN \
+    set -ex && \
+    if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
+        npm config set registry https://registry.npmmirror.com && \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
+    fi; \
+    npm install -g corepack@latest && \
+    corepack enable pnpm && \
+    pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
 COPY --from=dep-builder /app /app
 
+WORKDIR /app
 RUN \
     set -ex && \
-    # cp /app/scripts/docker/minify-docker.js /minifier/ && \
-    # export PROJECT_ROOT=/app && \
-    # node /minifier/minify-docker.js && \
-    # rm -rf /app/node_modules /app/scripts && \
-    # mv /app/app-minimal/node_modules /app/ && \
-    # rm -rf /app/app-minimal && \
-    npm run build && \
+    pnpm build && \
+    rm -rf /app/lib && \
+    cp /app/scripts/docker/minify-docker.js /minifier/ && \
+    export PROJECT_ROOT=/app && \
+    node /minifier/minify-docker.js && \
+    rm -rf /app/node_modules /app/scripts && \
+    mv /app/app-minimal/node_modules /app/ && \
+    rm -rf /app/app-minimal && \
     ls -la /app && \
     du -hd1 /app
 
@@ -91,7 +94,7 @@ ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PUPPETEER_SKIP_DOWNLOAD=1
 # The official recommended way to use Puppeteer on x86(_64) is to use the bundled Chromium from Puppeteer:
-# https://pptr.dev/faq#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy
+# https://pptr.dev/faq#q-why-doesnt-puppeteer-vxxx-workwith-chromium-vyyy
 RUN \
     set -ex ; \
     if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
@@ -103,8 +106,9 @@ RUN \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
         corepack enable pnpm && \
-        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
-        pnpm rb ; \
+        pnpm --allow-build=rebrowser-puppeteer add rebrowser-puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
+        pnpm rb && \
+        pnpx rebrowser-puppeteer browsers install chrome ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;

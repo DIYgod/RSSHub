@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { config } from '@/config';
 import weiboUtils from './utils';
@@ -38,13 +38,13 @@ export const route: Route = {
     maintainers: ['cztchoice'],
     handler,
     url: 'weibo.com/',
-    description: `:::warning
+    description: `::: warning
   此方案必须使用用户\`Cookie\`进行抓取，只可以获取本人的收藏动态
 
   因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
 
   微博用户 Cookie 的配置可参照部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -167,7 +167,7 @@ async function handler(ctx) {
 
                 // 评论的处理
                 if (displayComments === '1') {
-                    description = await weiboUtils.formatComments(ctx, description, item.mblog);
+                    description = await weiboUtils.formatComments(ctx, description, item.mblog, '0');
                 }
 
                 // 文章的处理

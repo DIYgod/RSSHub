@@ -14,7 +14,7 @@ export const route: Route = {
         filter: 'Filter string',
     },
     description: `
-:::tip
+::: tip
 
 Filter parameters:
 - category: 100: trending, 200: newest, 300: top

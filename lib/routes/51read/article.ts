@@ -42,8 +42,8 @@ async function handler(ctx) {
 
     const pageLength = $chapter('.ml-page select')
         .find('option')
-        .map((_, option) => option.attribs.value)
-        .toArray().length;
+        .toArray()
+        .map((option) => option.attribs.value).length;
 
     const item = await createItem(chapter, pageLength);
 
@@ -63,8 +63,8 @@ const createItem = async (baseUrl: string, page: number) => {
     const $latest = load(await ofetch(url));
     const item = await Promise.all(
         $latest('.kb-jp li>a')
-            .map((_, chapter) => buildItem(chapter.attribs.href))
             .toArray()
+            .map((chapter) => buildItem(chapter.attribs.href))
             .toReversed()
     );
     return item;

@@ -1,0 +1,50 @@
+{{ if category || catalogue || title || size || date }}
+  <table>
+    <tbody>
+      {{ if category }}
+        <tr>
+          <th>Category</th>
+          <td>{{@ category }}</td>
+        </tr>
+      {{ /if }}
+      {{ if catalogue }}
+        <tr>
+          <th>Catalogue</th>
+          <td>{{@ catalogue }}</td>
+        </tr>
+      {{ /if }}
+      {{ if title }}
+        <tr>
+          <th>Title</th>
+          <td>{{@ title }}</td>
+        </tr>
+      {{ /if }}
+      {{ if size }}
+        <tr>
+          <th>Size</th>
+          <td>{{@ size }}</td>
+        </tr>
+      {{ /if }}
+      {{ if date }}
+        <tr>
+          <th>Date</th>
+          <td>{{@ date }}</td>
+        </tr>
+      {{ /if }}
+    </tbody>
+  </table>
+{{ /if }}
+
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}

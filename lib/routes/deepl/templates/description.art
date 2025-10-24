@@ -1,0 +1,21 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if intro }}
+  <blockquote>{{ intro }}</blockquote>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}

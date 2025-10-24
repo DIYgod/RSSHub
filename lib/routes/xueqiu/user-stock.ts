@@ -30,7 +30,7 @@ export const route: Route = {
     name: '用户自选动态',
     maintainers: ['hillerliao'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户自选动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };

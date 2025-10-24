@@ -1,0 +1,7 @@
+{{ if intro }}
+  <blockquote>{{ intro }}</blockquote>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}

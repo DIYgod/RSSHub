@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,13 +24,13 @@ export const route: Route = {
     name: 'Journal',
     maintainers: ['nczitzk'],
     handler,
-    description: `:::tip
+    description: `::: tip
   All journals at [Current journals](https://pubs.rsc.org/en/journals)
-  :::
+:::
 
-  | All Recent Articles | Advance Articles |
-  | ------------------- | ---------------- |
-  | allrecentarticles   | advancearticles  |`,
+| All Recent Articles | Advance Articles |
+| ------------------- | ---------------- |
+| allrecentarticles   | advancearticles  |`,
 };
 
 async function handler(ctx) {

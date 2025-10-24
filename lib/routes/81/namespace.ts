@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '81.cn',
     categories: ['government'],
     description: '',
+    lang: 'zh-CN',
 };

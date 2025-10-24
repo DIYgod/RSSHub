@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -54,8 +54,14 @@ const infos = {
 export const route: Route = {
     path: '/new/:type',
     categories: ['anime'],
+    view: ViewType.Articles,
     example: '/dlsite/new/home',
-    parameters: { type: 'Type, see table below' },
+    parameters: {
+        type: {
+            description: '类型',
+            options: Object.values(infos).map((info) => ({ value: info.type, label: info.name })),
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -63,13 +69,14 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Current Release',
     maintainers: ['cssxsh'],
     handler,
     description: `| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
-  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
-  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
+| ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
+| home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
 };
 
 async function handler(ctx) {
@@ -81,9 +88,8 @@ async function handler(ctx) {
 
     const link = info.url.slice(1);
 
-    const response = await got(link, {
+    const response = await got(new URL(link, host), {
         method: 'GET',
-        prefixUrl: host,
     });
     const data = response.data;
     const $ = load(data);

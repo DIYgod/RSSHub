@@ -5,8 +5,8 @@ import EhAPI from './ehapi';
 export const route: Route = {
     path: '/tag/:tag/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/tag/language:chinese/1',
-    parameters: { tag: 'Tag', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
+    example: '/ehentai/tag/language:chinese/0/bittorrent=true&embed_thumb=false',
+    parameters: { tag: 'Tag', page: 'Page number, set 0 to get latest', routeParams: 'Additional parameters, see the table above' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -14,6 +14,7 @@ export const route: Route = {
         supportBT: true,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Tag',
     maintainers: ['yindaheng98', 'syrinka'],

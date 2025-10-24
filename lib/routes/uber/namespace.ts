@@ -1,6 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Uber 优步',
+    name: 'Uber',
     url: 'www.uber.com',
+    lang: 'en',
 };

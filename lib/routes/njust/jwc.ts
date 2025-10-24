@@ -31,8 +31,8 @@ export const route: Route = {
     maintainers: ['MilkShakeYoung', 'jasongzy'],
     handler,
     description: `| 教师通知 | 学生通知 | 新闻 | 学院动态 |
-  | -------- | -------- | ---- | -------- |
-  | jstz     | xstz     | xw   | xydt     |`,
+| -------- | -------- | ---- | -------- |
+| jstz     | xstz     | xw   | xydt     |`,
 };
 
 async function handler(ctx) {
@@ -51,14 +51,10 @@ async function handler(ctx) {
     return {
         title: info.title,
         link: siteUrl,
-        item:
-            list &&
-            list
-                .map((index, item) => ({
-                    title: $(item).find('a').attr('title').trim(),
-                    pubDate: timezone(parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD'), +8),
-                    link: $(item).find('a').attr('href'),
-                }))
-                .get(),
+        item: list.toArray().map((item) => ({
+            title: $(item).find('a').attr('title').trim(),
+            pubDate: timezone(parseDate($(item).find('td[width="14%"]').text(), 'YYYY-MM-DD'), +8),
+            link: $(item).find('a').attr('href'),
+        })),
     };
 }

@@ -10,4 +10,5 @@ Compose papers faster: Focus on your text and let Typst take care of layout and 
     zh: {
         name: 'Typst',
     },
+    lang: 'en',
 };

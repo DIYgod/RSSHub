@@ -41,26 +41,24 @@ export const route: Route = {
     maintainers: ['yuxinliu-alex'],
     handler,
     description: `| 天下 | 四川 | 辟谣 | 国际 | 云招考 | 30 秒 | 拍客 | 体育 | 国内 | 帮扶铁军 | 文娱 | 宽窄 | 商业 | 千面 | 封面号 |
-  | ---- | ---- | ---- | ---- | ------ | ----- | ---- | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ------ |
-  | 3892 | 3560 | 3909 | 3686 | 11     | 3902  | 3889 | 3689 | 1    | 4002     | 12   | 46   | 4    | 21   | 17     |`,
+| ---- | ---- | ---- | ---- | ------ | ----- | ---- | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ------ |
+| 3892 | 3560 | 3909 | 3686 | 11     | 3902  | 3889 | 3689 | 1    | 4002     | 12   | 46   | 4    | 21   | 17     |`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '3892';
-    const targetUrl = rootUrl.concat(`/channel_${id}`);
+    const targetUrl = rootUrl + `/channel_${id}`;
     const resp = await got({
         method: 'get',
         url: targetUrl,
     });
     const $ = load(resp.data);
     const list = $('a.link-to-article')
-        .filter(function () {
-            return $(this).attr('href').startsWith('/');
-        })
-        .map((_, item) => ({
-            link: rootUrl.concat($(item).attr('href')),
-        }))
-        .get();
+        .toArray()
+        .filter((item) => $(item).attr('href').startsWith('/'))
+        .map((item) => ({
+            link: rootUrl + $(item).attr('href'),
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

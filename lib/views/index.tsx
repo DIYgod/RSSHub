@@ -78,7 +78,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Routes',
                 value: Object.keys(debug.routes)
-                    .sort((a, b) => debug.routes[b] - debug.routes[a])
+                    .toSorted((a, b) => debug.routes[b] - debug.routes[a])
                     .slice(0, 30)
                     .map((route) => (
                         <>
@@ -90,7 +90,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Paths',
                 value: Object.keys(debug.paths)
-                    .sort((a, b) => debug.paths[b] - debug.paths[a])
+                    .toSorted((a, b) => debug.paths[b] - debug.paths[a])
                     .slice(0, 30)
                     .map((path) => (
                         <>
@@ -102,7 +102,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Error Routes',
                 value: Object.keys(debug.errorRoutes)
-                    .sort((a, b) => debug.errorRoutes[b] - debug.errorRoutes[a])
+                    .toSorted((a, b) => debug.errorRoutes[b] - debug.errorRoutes[a])
                     .slice(0, 30)
                     .map((route) => (
                         <>
@@ -114,7 +114,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Error Paths',
                 value: Object.keys(debug.errorPaths)
-                    .sort((a, b) => debug.errorPaths[b] - debug.errorPaths[a])
+                    .toSorted((a, b) => debug.errorPaths[b] - debug.errorPaths[a])
                     .slice(0, 30)
                     .map((path) => (
                         <>
@@ -136,7 +136,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 }}
             ></div>
             <div className="w-full grow shrink-0 py-8 flex items-center justify-center flex-col space-y-4">
-                <img src="/logo.png" alt="RSSHub" width="100" loading="lazy" />
+                <img src="./logo.png" alt="RSSHub" width="100" loading="lazy" />
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[#F5712C]">RSSHub</span>!
                 </h1>

@@ -1,0 +1,22 @@
+name: 'Clean up GHCR Packages'
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Delete old container versions (30+ days)
+        uses: vlaurin/action-ghcr-prune@0cf7d39f88546edd31965acba78cdcb0be14d641 # v0.6.0
+        with:
+          token: ${{ secrets.PAT }}
+          container: rsshub
+          dry-run: false
+          keep-younger-than: 30 # days
+          keep-last: 5
+          prune-untagged: true

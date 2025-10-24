@@ -9,15 +9,18 @@ export const route: Route = {
     name: 'Characters',
     maintainers: ['flameleaf'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {
     const hostURL = 'https://www.chub.ai/characters';
-    const apiURL = 'https://api.chub.ai/api/characters/search';
-    const data = await ofetch(apiURL, {
+    const apiURL = 'https://api.chub.ai/search';
+    const { data } = await ofetch(apiURL, {
         headers: { Accept: 'application/json' },
         query: {
-            query: '',
+            search: '',
             first: 200,
             page: 1,
             sort: 'last_activity_at',
@@ -31,8 +34,6 @@ async function handler() {
             require_alternate_greetings: 'false',
             require_custom_prompt: 'false',
             exclude_mine: 'false',
-            venus: 'true',
-            chub: 'true',
             min_tokens: 50,
             require_expressions: 'false',
             require_lore: 'false',

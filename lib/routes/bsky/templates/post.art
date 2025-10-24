@@ -3,11 +3,20 @@
 {{ /if }}
 
 {{ if embed }}
-    {{ if embed.$type == 'app.bsky.embed.images#view'}}
+    {{ if embed.$type === 'app.bsky.embed.images#view' }}
         {{ each embed.images i }}
             <img src="{{ i.fullsize }}" alt="{{ i.alt }}"><br>
         {{ /each }}
-    {{ else if embed.$type == 'app.bsky.embed.external#view' }}
+    {{ else if embed.$type === 'app.bsky.embed.video#view' }}
+        <video 
+            controls
+            poster="{{ embed.thumbnail }}"
+            style="max-width: 100%; height: auto;"
+            preload="metadata">
+            <source src="{{ embed.playlist }}" type="application/x-mpegURL">
+            Your browser does not support HTML5 video playback.
+        </video><br>
+    {{ else if embed.$type === 'app.bsky.embed.external#view' }}
         <a href="{{ embed.external.uri }}"><b>{{ embed.external.title }}</b><br>
             {{ embed.external.description }}
         </a>

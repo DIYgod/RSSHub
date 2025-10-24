@@ -29,8 +29,8 @@ function ehgot(url) {
 function ehgot_thumb(cache, thumb_url) {
     return cache.tryGet(thumb_url, async () => {
         try {
-            const buffer = await got({ method: 'get', url: thumb_url, headers });
-            const data = new Buffer.from(buffer.rawBody).toString('base64');
+            const buffer = await got({ method: 'get', responseType: 'buffer', url: thumb_url, headers });
+            const data = buffer.body.toString('base64');
             const ext = path.extname(thumb_url).slice(1);
             return `data:image/${ext};base64,${data}`;
         } catch (error) {
@@ -72,7 +72,7 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
 
     async function parseElement(cache, element) {
         const el = $(element);
-        const title = el.find('div.glink').html();
+        const title = el.find('.glink').html();
         const rawDate = el.find('div[id^="posted_"]').text();
         const pubDate = rawDate ? timezone(rawDate, 0) : rawDate;
         let el_a;
@@ -150,7 +150,7 @@ function getBittorrent(cache, bittorrent_page_url) {
         try {
             const response = await got({ method: 'get', url: bittorrent_page_url, headers });
             const $ = load(response.data);
-            const el_forms = $('form').get();
+            const el_forms = $('form').toArray();
             let bittorrent_url;
             for (const el_form of el_forms) {
                 const el_a = $(el_form).find('a');

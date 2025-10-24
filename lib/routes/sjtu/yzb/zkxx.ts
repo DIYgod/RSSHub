@@ -25,8 +25,8 @@ export const route: Route = {
     maintainers: ['stdrc'],
     handler,
     description: `| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
-  | -------- | -------- | ---------- | -------- | -------- |
-  | bszs     | sszs     | gatzs      | kdxx     | yxdt     |`,
+| -------- | -------- | ---------- | -------- | -------- |
+| bszs     | sszs     | gatzs      | kdxx     | yxdt     |`,
 };
 
 async function handler(ctx) {

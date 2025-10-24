@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import got from '@/utils/got';
 import { config } from '@/config';
 import weiboUtils from './utils';
@@ -29,13 +29,13 @@ export const route: Route = {
     name: '自定义分组',
     maintainers: ['monologconnor', 'Rongronggg9'],
     handler,
-    description: `:::warning
+    description: `::: warning
   由于微博官方未提供自定义分组相关 api, 此方案必须使用用户\`Cookie\`进行抓取
 
   因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
 
   微博用户 Cookie 的配置可参照部署文档
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -96,7 +96,7 @@ async function handler(ctx) {
             }
 
             if (displayComments === '1') {
-                description = await weiboUtils.formatComments(ctx, description, item);
+                description = await weiboUtils.formatComments(ctx, description, item, '0');
             }
 
             if (displayArticle === '1') {

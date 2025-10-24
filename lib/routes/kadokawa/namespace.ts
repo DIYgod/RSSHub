@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: 'kadokawa.com.tw',
     categories: ['shopping'],
     description: 'TAIWAN KADOKAWA',
+    lang: 'zh-TW',
 };

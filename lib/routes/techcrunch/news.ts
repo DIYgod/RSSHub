@@ -4,8 +4,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 const host = 'https://techcrunch.com';
 export const route: Route = {
@@ -37,6 +35,7 @@ async function handler() {
     const items = data.map((item) => {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
+        $('.wp-block-techcrunch-inline-cta').remove();
         return {
             title: item.title.rendered,
             description: art(path.join(__dirname, 'templates/description.art'), {

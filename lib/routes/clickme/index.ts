@@ -27,7 +27,7 @@ async function handler(ctx) {
     const grouping = ctx.req.param('grouping') === 'tag' ? 'tag' : 'category';
     const name = ctx.req.param('name');
 
-    const url = `https://${site ? 'r18.' : ''}clickme.net/${grouping.substring(0, 1)}/${encodeURIComponent(name)}`;
+    const url = `https://${site ? 'r18.' : ''}clickme.net/${grouping.slice(0, 1)}/${encodeURIComponent(name)}`;
 
     const { data: response } = await got.post('https://api.clickme.net/article/list', {
         headers: {

@@ -6,12 +6,18 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/people/activities/:id',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -32,7 +38,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     // second: get real data from zhihu
-    const apiPath = `/api/v3/moments/${id}/activities?limit=7&desktop=true`;
+    const apiPath = `/api/v3/moments/${id}/activities?limit=5&desktop=true&ws_qiangzhisafe=0`;
 
     const signedHeader = await getSignedHeader(`https://www.zhihu.com/people/${id}`, apiPath);
 
@@ -40,7 +46,7 @@ async function handler(ctx) {
         headers: {
             ...header,
             ...signedHeader,
-            Referer: `https://www.zhihu.com/people/${id}/activities`,
+            Referer: `https://www.zhihu.com/people/${id}`,
             // Authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20', // hard-coded in js
         },
     });
@@ -102,6 +108,9 @@ async function handler(ctx) {
                                 height="${contentItem.playlist[1].height}"
                                 src="${contentItem.playlist[1].url}"></video></p>`;
 
+                                break;
+                            case 'link_card':
+                                link = `<p><a href="${contentItem.url.split('?')[0]}" target="_blank"></a></p>`;
                                 break;
 
                             default:

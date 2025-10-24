@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -71,7 +68,7 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
                     cover: content('#video_jacket_img').attr('src'),
                     info: content('#video_info').html().replaceAll('span><span', 'span>,&nbsp;<span'),
-                    comment: item.description?.replace(/\[img]/g, '<img src="')?.replace(/\[\/img]/g, '"/>'),
+                    comment: item.description?.replaceAll('[img]', '<img src="')?.replaceAll('[/img]', '"/>'),
                     thumbs: content('.previewthumbs img')
                         .toArray()
                         .map((img) => content(img).attr('src').replaceAll('-', 'jp-')),

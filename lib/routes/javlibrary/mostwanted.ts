@@ -8,8 +8,11 @@ export const route: Route = {
     maintainers: [],
     handler,
     description: `| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |`,
+| ---------- | -------- |
+| 1          | 2        |`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

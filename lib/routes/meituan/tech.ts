@@ -1,9 +1,10 @@
 import { Route } from '@/types';
-import { CheerioAPI, Element, load } from 'cheerio';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
+import parser from '@/utils/rss-parser';
+import ofetch from '@/utils/ofetch';
+import cache from '@/utils/cache';
 
-const DOMAIN = 'tech.meituan.com';
+const rootUrl = 'https://tech.meituan.com/';
 
 export const route: Route = {
     path: '/tech',
@@ -17,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        supportRadar: true,
     },
     radar: [
         {
@@ -24,44 +26,36 @@ export const route: Route = {
         },
     ],
     name: '技术团队博客',
-    url: DOMAIN,
-    maintainers: ['ktKongTong'],
+    url: 'tech.meituan.com',
+    maintainers: ['ktKongTong', 'cscnk52'],
     handler,
 };
 
-const extractPostInfo = ($: CheerioAPI, postEle: Element) => {
-    const title = $(postEle).find('.post-title').text().trim();
-    const authors = $(postEle).find('.m-post-nick').text().trim();
-    const date = $(postEle)
-        .find('.m-post-date')
-        .text()
-        .replaceAll(/[年月]/g, '-')
-        .replace('日', '')
-        .trim();
-    const description = $(postEle).find('.post-content').text();
-    const tags = $(postEle).find('.tag-links').text().trim();
-    const link = $(postEle).find('a.more-link').attr('href')!;
-    return {
-        title,
-        link,
-        description: description.replace(/阅读全文$/, '').trim(),
-        pubDate: parseDate(date),
-        author: authors,
-        category: tags.split(',').map((tag) => tag.trim()),
-    };
-};
-
 async function handler() {
-    const baseUrl = `https://${DOMAIN}`;
-    const { data: response } = await got(baseUrl);
-    const $ = load(response);
-    const postEls = $('.post-container-wrapper div.post-container').toArray();
-    const posts = postEls.map((el) => extractPostInfo($, el));
+    const rssUrl = `${rootUrl}feed/`;
+    const feed = await parser.parseURL(rssUrl);
+    const items = await Promise.all(
+        feed.items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                const content = $('div.content').html();
+                return {
+                    title: item.title,
+                    link: item.link,
+                    pubDate: item.pubDate,
+                    author: item.creator,
+                    description: content,
+                };
+            })
+        )
+    );
 
     return {
-        title: '美团技术团队',
-        link: baseUrl,
-        item: posts,
-        logo: 'https://awps-assets.meituan.net/mit/blog/v20190629/asset/icon/android-icon-192x192.png',
+        title: feed.title,
+        link: rootUrl,
+        description: feed.description,
+        language: feed.language,
+        item: items,
     };
 }

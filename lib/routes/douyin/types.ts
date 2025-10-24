@@ -14,6 +14,7 @@ interface ShareInfo {
     share_title_myself: string;
     share_title_other: string;
     share_desc_info: string;
+    share_link_desc: string;
 }
 
 interface Author {
@@ -420,11 +421,6 @@ interface TextExtra {
     caption_end: number;
     search_text: string;
     search_query_id: string;
-}
-
-interface ShareInfo {
-    share_url: string;
-    share_link_desc: string;
 }
 
 interface RiskInfos {

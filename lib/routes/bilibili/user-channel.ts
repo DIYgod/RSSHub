@@ -10,10 +10,10 @@ const notFoundData = {
 };
 
 export const route: Route = {
-    path: '/user/channel/:uid/:sid/:disableEmbed?',
+    path: '/user/channel/:uid/:sid/:embed?',
     categories: ['social-media'],
     example: '/bilibili/user/channel/2267573/396050',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', sid: '频道 id, 可在频道的 URL 中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', sid: '频道 id, 可在频道的 URL 中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = Number.parseInt(ctx.req.param('uid'));
     const sid = Number.parseInt(ctx.req.param('sid'));
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const limit = ctx.req.query('limit') ?? 25;
 
     const link = `https://space.bilibili.com/${uid}/channel/seriesdetail?sid=${sid}`;
@@ -68,21 +68,15 @@ async function handler(ctx) {
         title: `${userName} 的 bilibili 频道 ${channelInfo.meta.name}`,
         link,
         description: `${userName} 的 bilibili 频道`,
+        image: face,
         logo: face,
         icon: face,
-        item: data.archives.map((item) => {
-            const descList = [];
-            if (!disableEmbed) {
-                descList.push(utils.iframe(item.aid));
-            }
-            descList.push(`<img src="${item.pic}">`);
-            return {
-                title: item.title,
-                description: descList.join('<br>'),
-                pubDate: parseDate(item.pubdate, 'X'),
-                link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-                author: userName,
-            };
-        }),
+        item: data.archives.map((item) => ({
+            title: item.title,
+            description: utils.renderUGCDescription(embed, item.pic, '', item.aid, undefined, item.bvid),
+            pubDate: parseDate(item.pubdate, 'X'),
+            link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
+            author: userName,
+        })),
     };
 }

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { rootUrl } from './utils';
+import pMap from 'p-map';
 
 export const route: Route = {
     path: '/update',
@@ -46,8 +47,9 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items: DataItem[] = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
@@ -63,8 +65,8 @@ async function handler() {
                 item.description = content('.video_detail_left').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

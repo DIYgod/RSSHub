@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -21,6 +19,9 @@ export const route: Route = {
     maintainers: [],
     handler,
     url: 'asiantolick.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

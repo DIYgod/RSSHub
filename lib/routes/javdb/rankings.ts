@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -32,15 +33,15 @@ export const route: Route = {
     url: 'javdb.com/',
     description: `分类
 
-  | 有碼     | 無碼       | 歐美    |
-  | -------- | ---------- | ------- |
-  | censored | uncensored | western |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
   时间
 
-  | 日榜  | 週榜   | 月榜    |
-  | ----- | ------ | ------- |
-  | daily | weekly | monthly |`,
+| 日榜  | 週榜   | 月榜    |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {

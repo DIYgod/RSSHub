@@ -70,10 +70,10 @@ export const route: Route = {
     handler,
     url: 'news.wfu.edu.cn/',
     description: `| **内容** | **参数** |
-  | :------: | :------: |
-  | 潍院要闻 |   wyyw   |
-  | 综合新闻 |   zhxw   |
-  | 学术纵横 |   xszh   |`,
+| :------: | :------: |
+| 潍院要闻 |   wyyw   |
+| 综合新闻 |   zhxw   |
+| 学术纵横 |   xszh   |`,
 };
 
 async function handler(ctx) {
@@ -94,29 +94,27 @@ async function handler(ctx) {
 
     const result = await Promise.all(
         // 遍历每一篇文章
-        list
-            .map(async (item) => {
-                const $ = load(list[item]); // 将列表项加载成 html
-                const $item_url = 'https://www.wfu.edu.cn' + $('a').attr('href'); // 获取 每一项的url
-                const $title = $('a>div.txt>h1').text(); // 获取每个的标题
-                const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：')[1]), +8); // 获取发布时间
+        list.toArray().map(async (item) => {
+            const $ = load(item); // 将列表项加载成 html
+            const $item_url = 'https://www.wfu.edu.cn' + $('a').attr('href'); // 获取 每一项的url
+            const $title = $('a>div.txt>h1').text(); // 获取每个的标题
+            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：')[1]), +8); // 获取发布时间
 
-                // 列表上提取到的信息
-                // 标题 链接
-                const single = {
-                    title: $title,
-                    pubDate: $pubdate,
-                    link: $item_url,
-                    guid: $item_url,
-                };
+            // 列表上提取到的信息
+            // 标题 链接
+            const single = {
+                title: $title,
+                pubDate: $pubdate,
+                link: $item_url,
+                guid: $item_url,
+            };
 
-                // 对于列表的每一项, 单独获取 时间与详细内容
+            // 对于列表的每一项, 单独获取 时间与详细内容
 
-                const other = await cache.tryGet($item_url, () => loadContent($item_url));
-                // 合并解析后的结果集作为该篇文章最终的输出结果
-                return { ...single, ...other };
-            })
-            .get()
+            const other = await cache.tryGet($item_url, () => loadContent($item_url));
+            // 合并解析后的结果集作为该篇文章最终的输出结果
+            return { ...single, ...other };
+        })
     );
 
     return {

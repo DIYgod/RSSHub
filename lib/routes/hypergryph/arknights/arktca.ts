@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
 
-const rssDescription = '期刊《回归线》 | 泰拉创作者联合会';
+const rssDescription = '明日方舟期刊《回归线》 | 泰拉创作者联合会';
 const url = 'aneot.arktca.com';
 const author = 'Bendancom';
 
@@ -21,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '期刊',
+    name: '回归线',
     url,
     maintainers: [author],
     radar: [
@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = `https://${url}`;
-    const { data: allResponse } = await got(`${baseUrl}/posts`);
+    const { data: allResponse } = await got(`${baseUrl}/posts/`);
     const $ = load(allResponse);
 
     const allUrlList = $('div.theme-hope-content > table')

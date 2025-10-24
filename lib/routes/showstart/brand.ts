@@ -24,7 +24,7 @@ export const route: Route = {
     name: '按厂牌 - 演出更新',
     maintainers: ['lchtao26'],
     handler,
-    description: `:::tip
+    description: `::: tip
 厂牌 ID 查询: \`/showstart/search/brand/:keyword\`，如: [https://rsshub.app/showstart/search/brand/声场](https://rsshub.app/showstart/search/brand/声场)
 :::`,
 };

@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
+import { DataItem, Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/podcast/:id',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/xiaoyuzhou/podcast/6021f949a789fca4eff4492c',
     parameters: { id: '播客 id 或单集 id，可以在小宇宙播客的 URL 中找到' },
@@ -23,60 +24,72 @@ export const route: Route = {
         },
     ],
     name: '播客',
-    maintainers: ['hondajojo', 'jtsang4', 'pseudoyu'],
+    maintainers: ['hondajojo', 'jtsang4', 'pseudoyu', 'cscnk52'],
     handler,
     url: 'xiaoyuzhoufm.com/',
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    let link = `https://www.xiaoyuzhoufm.com/podcast/${id}`;
-    let response = await got({
-        method: 'get',
-        url: link,
-    });
+    let link;
+    let response;
+    let $;
+    let page_data;
 
-    let $ = load(response.data);
-    let page_data = JSON.parse($('#__NEXT_DATA__')[0].children[0].data);
+    // First try podcast URL, if that fails try episode URL
+    try {
+        link = `https://www.xiaoyuzhoufm.com/podcast/${id}`;
+        response = await ofetch(link);
 
-    if (!page_data.props.pageProps.podcast?.episodes) {
-        // If episodes are not found, it might be an episode page
-        // Try to get the podcast id from the episode page
+        $ = load(response);
+        const nextDataElement = $('#__NEXT_DATA__').get(0);
+        page_data = JSON.parse(nextDataElement.children[0].data);
+
+        // If no episodes found, we should try episode URL
+        if (!page_data.props.pageProps.podcast?.episodes) {
+            throw new Error('No episodes found in podcast data');
+        }
+    } catch {
+        // Try as episode instead
         link = `https://www.xiaoyuzhoufm.com/episode/${id}`;
-        response = await got({
-            method: 'get',
-            url: link,
-        });
+        response = await ofetch(link);
 
-        $ = load(response.data);
-        const podcastLink = $('.jsx-605929003.podcast-title .jsx-605929003.name').attr('href');
+        $ = load(response);
+        const podcastLink = $('a[href^="/podcast/"].name').attr('href');
+
         if (podcastLink) {
             const podcastId = podcastLink.split('/').pop();
             link = `https://www.xiaoyuzhoufm.com/podcast/${podcastId}`;
-            response = await got({
-                method: 'get',
-                url: link,
-            });
+            response = await ofetch(link);
 
-            $ = load(response.data);
-            page_data = JSON.parse($('#__NEXT_DATA__')[0].children[0].data);
+            $ = load(response);
+            const nextDataElement = $('#__NEXT_DATA__').get(0);
+            page_data = JSON.parse(nextDataElement.children[0].data);
         }
     }
 
-    if (!page_data.props.pageProps.podcast?.episodes) {
-        throw new Error('Failed to fetch podcast episodes');
-    }
-
-    const episodes = page_data.props.pageProps.podcast.episodes.map((item) => ({
+    let episodes = page_data.props.pageProps.podcast.episodes.map((item) => ({
         title: item.title,
         enclosure_url: item.enclosure.url,
         itunes_duration: item.duration,
         enclosure_type: 'audio/mpeg',
         link: `https://www.xiaoyuzhoufm.com/episode/${item.eid}`,
+        eid: item.eid,
         pubDate: parseDate(item.pubDate),
-        description: item.shownotes,
         itunes_item_image: (item.image || item.podcast?.image)?.smallPicUrl,
     }));
+
+    episodes = await Promise.all(
+        episodes.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const episodeLink = `https://www.xiaoyuzhoufm.com/_next/data/${page_data.buildId}/episode/${item.eid}.json`;
+                const response = await ofetch(episodeLink);
+                const episodeItem = response.pageProps.episode;
+                item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
+                return item as DataItem;
+            })
+        )
+    );
 
     return {
         title: page_data.props.pageProps.podcast.title,

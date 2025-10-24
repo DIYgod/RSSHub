@@ -26,7 +26,7 @@ const Index: FC<{
                     <p className="message">
                         Error Message:
                         <br />
-                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details">{message}</code>
+                        <code className="mt-2 block max-h-28 overflow-auto bg-zinc-100 align-bottom w-fit details whitespace-pre-line">{message}</code>
                     </p>
                     <p className="message">
                         Route: <code className="ml-2 bg-zinc-100">{errorRoute}</code>

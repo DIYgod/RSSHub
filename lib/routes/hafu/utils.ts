@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -90,42 +87,40 @@ function tryGetAttachments(articleData, articleBody, type) {
 async function ggtzParse(ctx, $) {
     const data = $('a[class=c269582]').parent().slice(0, limit);
     const resultItems = await Promise.all(
-        data
-            .map(async (_, item) => {
-                // .slice(3) for cut out str '../' in original link
-                const href = $(item).find('a[class=c269582]').attr('href').slice(3);
-                const link = typeMap.ggtz.root + href;
-                const title = $(item).find('a[class=c269582]').attr('title');
+        data.toArray().map(async (item) => {
+            // .slice(3) for cut out str '../' in original link
+            const href = $(item).find('a[class=c269582]').attr('href').slice(3);
+            const link = typeMap.ggtz.root + href;
+            const title = $(item).find('a[class=c269582]').attr('title');
 
-                const result = await cache.tryGet(link, async () => {
-                    const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
-                    let author = '';
-                    let pubDate = '';
-                    if (articleData instanceof Function) {
-                        const header = articleData('h1').next().text();
-                        const index = header.indexOf('日期');
+            const result = await cache.tryGet(link, async () => {
+                const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
+                let author = '';
+                let pubDate = '';
+                if (typeof articleData === 'function') {
+                    const header = articleData('h1').next().text();
+                    const index = header.indexOf('日期');
 
-                        author = header.substring(0, index - 2) || '';
+                    author = header.slice(0, index - 2) || '';
 
-                        const date = header.substring(index + 3, index + 19);
-                        pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
-                    } else {
-                        const date = $(item).find('a[class=c269582_date]').text();
-                        pubDate = parseDate(date, 'YYYY-MM-DD');
-                    }
+                    const date = header.substring(index + 3, index + 19);
+                    pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
+                } else {
+                    const date = $(item).find('a[class=c269582_date]').text();
+                    pubDate = parseDate(date, 'YYYY-MM-DD');
+                }
 
-                    return {
-                        title,
-                        description,
-                        pubDate: timezone(pubDate, +8),
-                        link,
-                        author,
-                    };
-                });
+                return {
+                    title,
+                    description,
+                    pubDate: timezone(pubDate, +8),
+                    link,
+                    author,
+                };
+            });
 
-                return result;
-            })
-            .get()
+            return result;
+        })
     );
 
     return resultItems;
@@ -135,35 +130,33 @@ async function ggtzParse(ctx, $) {
 async function jwcParse(ctx, $) {
     const data = $('a[class=c259713]').parent().parent().slice(0, limit);
     const resultItems = await Promise.all(
-        data
-            .map(async (_, item) => {
-                const href = $(item).find('a[class=c259713]').attr('href');
-                const link = typeMap.jwc.root + href;
-                const title = $(item).find('a[class=c259713]').attr('title');
+        data.toArray().map(async (item) => {
+            const href = $(item).find('a[class=c259713]').attr('href');
+            const link = typeMap.jwc.root + href;
+            const title = $(item).find('a[class=c259713]').attr('title');
 
-                const date = $(item).find('span[class=timestyle259713]').text();
-                const pubDate = parseDate(date, 'YYYY/MM/DD');
+            const date = $(item).find('span[class=timestyle259713]').text();
+            const pubDate = parseDate(date, 'YYYY/MM/DD');
 
-                const result = await cache.tryGet(link, async () => {
-                    const { articleData, description } = await tryGetFullText(href, link, 'jwc');
+            const result = await cache.tryGet(link, async () => {
+                const { articleData, description } = await tryGetFullText(href, link, 'jwc');
 
-                    let author = '';
-                    if (articleData instanceof Function) {
-                        author = articleData('span[class=authorstyle259690]').text();
-                    }
+                let author = '';
+                if (typeof articleData === 'function') {
+                    author = articleData('span[class=authorstyle259690]').text();
+                }
 
-                    return {
-                        title,
-                        description,
-                        pubDate: timezone(pubDate, +8),
-                        link,
-                        author: '供稿单位：' + author,
-                    };
-                });
+                return {
+                    title,
+                    description,
+                    pubDate: timezone(pubDate, +8),
+                    link,
+                    author: '供稿单位：' + author,
+                };
+            });
 
-                return result;
-            })
-            .get()
+            return result;
+        })
     );
 
     return resultItems;
@@ -173,37 +166,35 @@ async function jwcParse(ctx, $) {
 async function zsjycParse(ctx, $) {
     const data = $('a[class=c127701]').parent().parent().slice(0, limit);
     const resultItems = await Promise.all(
-        data
-            .map(async (_, item) => {
-                const href = $(item).find('a[class=c127701]').attr('href');
-                const link = typeMap.zsjyc.root + href;
+        data.toArray().map(async (item) => {
+            const href = $(item).find('a[class=c127701]').attr('href');
+            const link = typeMap.zsjyc.root + href;
 
-                const title = $(item).find('a[class=c127701]').attr('title');
+            const title = $(item).find('a[class=c127701]').attr('title');
 
-                const result = await cache.tryGet(link, async () => {
-                    const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
+            const result = await cache.tryGet(link, async () => {
+                const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
 
-                    let pubDate = '';
-                    if (articleData instanceof Function) {
-                        const date = articleData('span[class=timestyle127702]').text();
-                        pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
-                    } else {
-                        const date = $(item).find('a[class=c269582_date]').text();
-                        pubDate = parseDate(date, 'YYYY-MM-DD');
-                    }
+                let pubDate = '';
+                if (typeof articleData === 'function') {
+                    const date = articleData('span[class=timestyle127702]').text();
+                    pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
+                } else {
+                    const date = $(item).find('a[class=c269582_date]').text();
+                    pubDate = parseDate(date, 'YYYY-MM-DD');
+                }
 
-                    return {
-                        title,
-                        description,
-                        pubDate: timezone(pubDate, +8),
-                        link,
-                        author: '供稿单位：招生就业处',
-                    };
-                });
+                return {
+                    title,
+                    description,
+                    pubDate: timezone(pubDate, +8),
+                    link,
+                    author: '供稿单位：招生就业处',
+                };
+            });
 
-                return result;
-            })
-            .get()
+            return result;
+        })
     );
 
     return resultItems;

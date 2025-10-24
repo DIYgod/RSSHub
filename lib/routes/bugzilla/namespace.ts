@@ -8,4 +8,5 @@ export const namespace: Namespace = {
         name: 'Bugzilla',
         description: '各组织自建的Bugzilla实例。',
     },
+    lang: 'en',
 };

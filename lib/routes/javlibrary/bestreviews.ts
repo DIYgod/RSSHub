@@ -14,13 +14,14 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Best Reviews',
     maintainers: ['nczitzk'],
     handler,
     description: `| Last Month | All Time |
-  | ---------- | -------- |
-  | 1          | 2        |`,
+| ---------- | -------- |
+| 1          | 2        |`,
 };
 
 async function handler(ctx) {

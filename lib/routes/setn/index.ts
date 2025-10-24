@@ -2,6 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
+import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
 const defaultRootUrl = 'https://www.setn.com';
@@ -67,16 +68,16 @@ export const route: Route = {
     handler,
     url: 'setn.com/ViewAll.aspx',
     description: `| 即時 | 熱門 | 娛樂 | 政治 | 社會 |
-  | ---- | ---- | ---- | ---- | ---- |
+| ---- | ---- | ---- | ---- | ---- |
 
-  | 國際 | 兩岸 | 生活 | 健康 | 旅遊 |
-  | ---- | ---- | ---- | ---- | ---- |
+| 國際 | 兩岸 | 生活 | 健康 | 旅遊 |
+| ---- | ---- | ---- | ---- | ---- |
 
-  | 運動 | 地方 | 財經 | 富房網 | 名家 |
-  | ---- | ---- | ---- | ------ | ---- |
+| 運動 | 地方 | 財經 | 富房網 | 名家 |
+| ---- | ---- | ---- | ------ | ---- |
 
-  | 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
-  | ---- | ---- | ---- | ---- | ---- | -------- |`,
+| 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
+| ---- | ---- | ---- | ---- | ---- | -------- |`,
 };
 
 async function handler(ctx) {
@@ -118,11 +119,19 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
+                let head = {};
+                try {
+                    head = JSON.parse(content('script[type="application/ld+json"]').first().text());
+                } catch {
+                    head = {};
+                }
+
                 content('#gad_setn_innity_oop_1x1').remove();
 
-                item.author = content('meta[property="author"]').attr('content');
+                item.title = content('h1').text();
+                item.author = head?.author?.name || content('meta[name="author"]').attr('content');
                 item.category = [content('meta[property="article:section"]').attr('content'), ...content('meta[name="news_keywords"]').attr('content').split(',')];
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
                 item.description = content('article, .content-p').html();
 
                 return item;

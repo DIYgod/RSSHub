@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     url: 'lsnu.edu.cn/',
     description: `| 实践教学科 | 教育运行科 | 教研教改科 | 学籍管理科 | 考试科 | 教材建设管理科 |
-  | ---------- | ---------- | ---------- | ---------- | ------ | -------------- |
-  | sjjxk      | jxyxk      | jyjgk      | xjglk      | ksk    | jcjsglk        |`,
+| ---------- | ---------- | ---------- | ---------- | ------ | -------------- |
+| sjjxk      | jxyxk      | jyjgk      | xjglk      | ksk    | jcjsglk        |`,
 };
 
 async function handler(ctx) {
@@ -43,7 +43,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const list = $('tr[id^="line_u5_"]').get();
+    const list = $('tr[id^="line_u5_"]').toArray();
 
     const out = await Promise.all(
         list.map(async (item) => {

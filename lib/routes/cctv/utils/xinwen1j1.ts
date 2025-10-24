@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 async function loadContent(link) {
     const res = await got({ method: 'get', url: link });
     const $ = load(res.data);
-    // console.log($('div.image').get().text())
+    // console.log($('div.image').toArray().text())
     // console.log('********')
     const js_txt = '' + $('script');
 

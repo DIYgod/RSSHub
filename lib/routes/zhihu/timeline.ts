@@ -26,9 +26,9 @@ export const route: Route = {
     name: '用户关注时间线',
     maintainers: ['SeanChao'],
     handler,
-    description: `:::warning
+    description: `::: warning
   用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
+:::`,
 };
 
 async function handler(ctx) {
@@ -68,7 +68,6 @@ async function handler(ctx) {
             default:
                 return;
         }
-        return '';
     };
 
     /**
@@ -95,7 +94,7 @@ async function handler(ctx) {
         return (
             content
                 .map((e) => e.content)
-                .filter((e) => e instanceof String && !!e)
+                .filter((e) => !!e && typeof e === 'string')
                 // some content may not be wrapped in tag, it will cause error when parsing
                 .map((e) => `<div>${e}</div>`)
                 .join('')

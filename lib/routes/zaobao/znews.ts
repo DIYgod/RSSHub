@@ -1,5 +1,5 @@
 import { Route } from '@/types';
-import { parseList } from './util';
+import { logo, parseList } from './util';
 const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
@@ -19,8 +19,8 @@ export const route: Route = {
     maintainers: ['shunf4'],
     handler,
     description: `| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
-  | ----- | --------- | ------ | ----- | ------ |
-  | china | singapore | sea    | world | sports |`,
+| ----- | --------- | ------ | ----- | ------ |
+| china | singapore | sea    | world | sports |`,
 };
 
 async function handler(ctx) {
@@ -60,12 +60,13 @@ async function handler(ctx) {
             sectionLink = '/news/china';
     }
 
-    const { resultList } = await parseList(ctx, sectionLink);
+    const { resultList } = await parseList(sectionLink);
 
     return {
         title: `《联合早报》-${info}-新闻`,
         link: baseUrl + sectionLink,
         description: '新加坡、中国、亚洲和国际的即时、评论、商业、体育、生活、科技与多媒体新闻，尽在联合早报。',
+        image: logo,
         item: resultList,
     };
 }

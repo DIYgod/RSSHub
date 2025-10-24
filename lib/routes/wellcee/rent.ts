@@ -7,11 +7,9 @@ import { parseDate } from '@/utils/parse-date';
 import { baseUrl, getCitys, getDistricts } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { art } from '@/utils/render';
-import path from 'path';
-import { getCurrentPath } from '@/utils/helpers';
+import path from 'node:path';
 
-const __dirname = getCurrentPath(import.meta.url);
-const render = (data) => art(path.join(__dirname, 'templates', 'house.art'), data);
+const render = (data) => art(path.join(__dirname, 'templates/house.art'), data);
 
 export const route: Route = {
     path: '/rent/:city/:district?',

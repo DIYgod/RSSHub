@@ -17,7 +17,7 @@ export const handler = async (ctx) => {
     const currentUrl = new URL('nyb/pc/messageList.jsp', rootUrl).href;
     const frameUrl = new URL('iframe/top_sj/', rootFrameUrl).href;
 
-    let filterForm = {};
+    const filterForm = {};
 
     if (category) {
         const apiFilterUrl = new URL('nyb/getMessageFilters', rootUrl).href;
@@ -29,17 +29,19 @@ export const handler = async (ctx) => {
             },
         });
 
-        const filters = filterResponse.result.reduce((filters, f) => {
+        const filters: Record<string, string[]> = {};
+        for (const f of filterResponse.result) {
             filters[f.name.trim()] = f.data.map((d) => d.name.trim());
-            return filters;
-        }, {});
+        }
 
-        filterForm = category.split(/\//).reduce((form, c) => {
-            for (const key of Object.keys(filters).filter((key) => filters[key].includes(c))) {
-                form[key] = c;
+        const categories = category.split(/\//);
+        for (const c of categories) {
+            for (const key of Object.keys(filters)) {
+                if (filters[key].includes(c)) {
+                    filterForm[key] = c;
+                }
             }
-            return form;
-        }, {});
+        }
     }
 
     const { data: response } = await got.post(apiUrl, {
@@ -106,14 +108,14 @@ export const route: Route = {
     handler,
     example: '/gov/moa/zdscxx',
     parameters: { category: '分类，默认为全部，见下表' },
-    description: `:::tip
+    description: `::: tip
   若订阅 [中华人民共和国农业农村部数据](http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp) 的 \`价格指数\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/价格指数\`](https://rsshub.app/gov/moa/zdscxx/价格指数)。
-  
-  若订阅 \`央视网\` 报告来源 的 \`蔬菜生产\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/央视网/蔬菜生产\`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。
-  :::
 
-  | 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |
-  | -------- | -------- | ------------ | ------------ | -------- | -------- |
+  若订阅 \`央视网\` 报告来源 的 \`蔬菜生产\` 报告主题。此时路由为 [\`/gov/moa/zdscxx/央视网/蔬菜生产\`](https://rsshub.app/gov/moa/zdscxx/央视网/蔬菜生产)。
+:::
+
+| 价格指数 | 供需形势 | 分析报告周报 | 分析报告日报 | 日历信息 | 蔬菜生产 |
+| -------- | -------- | ------------ | ------------ | -------- | -------- |
     `,
     categories: ['government'],
 

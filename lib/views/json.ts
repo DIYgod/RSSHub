@@ -28,17 +28,19 @@ const json = (data: Data) => {
             authors: typeof item.author === 'string' ? [{ name: item.author }] : item.author,
             tags: typeof item.category === 'string' ? [item.category] : item.category,
             language: item.language,
-            attachments: item.enclosure_url
-                ? [
-                      {
-                          url: item.enclosure_url,
-                          mime_type: item.enclosure_type,
-                          title: item.enclosure_title,
-                          size_in_bytes: item.enclosure_length,
-                          duration_in_seconds: item.itunes_duration,
-                      },
-                  ]
-                : undefined,
+            attachments:
+                item.attachments ||
+                (item.enclosure_url
+                    ? [
+                          {
+                              url: item.enclosure_url,
+                              mime_type: item.enclosure_type,
+                              title: item.enclosure_title,
+                              size_in_bytes: item.enclosure_length,
+                              duration_in_seconds: item.itunes_duration,
+                          },
+                      ]
+                    : undefined),
             _extra: item._extra || undefined,
         })),
     };

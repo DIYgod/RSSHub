@@ -26,8 +26,8 @@ export const route: Route = {
     maintainers: ['Ji4n1ng'],
     handler,
     description: `| 学院动态 | 通知公告 | 学术论坛 |
-  | -------- | -------- | -------- |
-  | 0        | 1        | 2        |`,
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |`,
 };
 
 async function handler(ctx) {
@@ -38,14 +38,14 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let item = $('#page_right_main li a')
-        .map((_, e) => {
+        .toArray()
+        .map((e) => {
             e = $(e);
             return {
                 title: e.attr('title'),
                 link: e.attr('href'),
             };
-        })
-        .get();
+        });
 
     item = await Promise.all(
         item

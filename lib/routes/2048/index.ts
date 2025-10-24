@@ -1,15 +1,12 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:id?',
@@ -23,66 +20,75 @@ export const route: Route = {
         supportBT: true,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '论坛',
     maintainers: ['nczitzk'],
     handler,
     description: `| 最新合集 | 亞洲無碼 | 日本騎兵 | 歐美新片 | 國內原創 | 中字原創 | 三級寫真 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 3        | 4        | 5        | 13       | 15       | 16       | 18       |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3        | 4        | 5        | 13       | 15       | 16       | 18       |
 
-  | 有碼.HD | 亞洲 SM.HD | 日韓 VR/3D | 歐美 VR/3D | S-cute / Mywife / G-area |
-  | ------- | ---------- | ---------- | ---------- | ------------------------ |
-  | 116     | 114        | 96         | 97         | 119                      |
+| 有碼.HD | 亞洲 SM.HD | 日韓 VR/3D | 歐美 VR/3D | S-cute / Mywife / G-area |
+| ------- | ---------- | ---------- | ---------- | ------------------------ |
+| 116     | 114        | 96         | 97         | 119                      |
 
-  | 網友自拍 | 亞洲激情 | 歐美激情 | 露出偷窺 | 高跟絲襪 | 卡通漫畫 | 原創达人 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 23       | 24       | 25       | 26       | 27       | 28       | 135      |
+| 網友自拍 | 亞洲激情 | 歐美激情 | 露出偷窺 | 高跟絲襪 | 卡通漫畫 | 原創达人 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 23       | 24       | 25       | 26       | 27       | 28       | 135      |
 
-  | 唯美清純 | 网络正妹 | 亞洲正妹 | 素人正妹 | COSPLAY | 女优情报 | Gif 动图 |
-  | -------- | -------- | -------- | -------- | ------- | -------- | -------- |
-  | 21       | 274      | 276      | 277      | 278     | 29       |          |
+| 唯美清純 | 网络正妹 | 亞洲正妹 | 素人正妹 | COSPLAY | 女优情报 | Gif 动图 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| 21       | 274      | 276      | 277      | 278     | 29       |          |
 
-  | 獨家拍攝 | 稀有首發 | 网络见闻 | 主播實錄 | 珍稀套圖 | 名站同步 | 实用漫画 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 213      | 94       | 283      | 111      | 88       | 131      | 180      |
+| 獨家拍攝 | 稀有首發 | 网络见闻 | 主播實錄 | 珍稀套圖 | 名站同步 | 实用漫画 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 213      | 94       | 283      | 111      | 88       | 131      | 180      |
 
-  | 网盘二区 | 网盘三区 | 分享福利 | 国产精选 | 高清福利 | 高清首发 | 多挂原创 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 72       | 272      | 195      | 280      | 79       | 216      | 76       |
+| 网盘二区 | 网盘三区 | 分享福利 | 国产精选 | 高清福利 | 高清首发 | 多挂原创 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 72       | 272      | 195      | 280      | 79       | 216      | 76       |
 
-  | 磁链迅雷 | 正片大片 | H-GAME | 有声小说 | 在线视频 | 在线快播影院 |
-  | -------- | -------- | ------ | -------- | -------- | ------------ |
-  | 43       | 67       | 66     | 55       | 78       | 279          |
+| 磁链迅雷 | 正片大片 | H-GAME | 有声小说 | 在线视频 | 在线快播影院 |
+| -------- | -------- | ------ | -------- | -------- | ------------ |
+| 43       | 67       | 66     | 55       | 78       | 279          |
 
-  | 综合小说 | 人妻意淫 | 乱伦迷情 | 长篇连载 | 文学作者 | TXT 小说打包 |
-  | -------- | -------- | -------- | -------- | -------- | ------------ |
-  | 48       | 103      | 50       | 54       | 100      | 109          |
+| 综合小说 | 人妻意淫 | 乱伦迷情 | 长篇连载 | 文学作者 | TXT 小说打包 |
+| -------- | -------- | -------- | -------- | -------- | ------------ |
+| 48       | 103      | 50       | 54       | 100      | 109          |
 
-  | 聚友客栈 | 坛友自售 |
-  | -------- | -------- |
-  | 57       | 136      |`,
+| 聚友客栈 | 坛友自售 |
+| -------- | -------- |
+| 57       | 136      |`,
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '2';
+    const id = ctx.req.param('id') ?? '3';
 
     const rootUrl = 'https://hjd2048.com';
-
-    const entranceDomain = await cache.tryGet('2048:entranceDomain', async () => {
-        const { data: response } = await got('https://hjd.tw', {
-            headers: {
-                accept: '*/*',
-            },
-        });
+    // 获取地址发布页指向的 URL
+    const domainInfo = (await cache.tryGet('2048:domainInfo', async () => {
+        const response = await ofetch('https://2048.info');
         const $ = load(response);
-        const targetLink = new URL($('table.group-table tr').eq(1).find('td a').eq(0).attr('href')).href;
-        return targetLink;
+        const onclickValue = $('.button').first().attr('onclick');
+        const targetUrl = onclickValue.match(/window\.open\('([^']+)'/)[1];
+
+        return { url: targetUrl };
+    })) as { url: string };
+    // 获取重定向后的url和safeid
+    const redirectResponse = await ofetch.raw(domainInfo.url);
+    const currentUrl = `${redirectResponse.url}thread.php?fid-${id}.html`;
+    const redirectPageContent = load(redirectResponse._data);
+    const safeId =
+        redirectPageContent('script')
+            .text()
+            .match(/var safeid='(.*?)',/)?.[1] ?? '';
+
+    const response = await ofetch.raw(currentUrl, {
+        headers: {
+            cookie: `_safe=${safeId}`,
+        },
     });
-
-    const currentUrl = `${entranceDomain}2048/thread.php?fid-${id}.html`;
-
-    const response = await ofetch.raw(currentUrl);
 
     const $ = load(response._data);
     const currentHost = `https://${new URL(response.url).host}`; // redirected host
@@ -99,7 +105,7 @@ async function handler(ctx) {
 
             return {
                 title: item.text(),
-                link: `${currentHost}/2048/${item.attr('href')}`,
+                link: `${currentHost}/${item.attr('href')}`,
                 guid: `${rootUrl}/2048/${item.attr('href')}`,
             };
         })
@@ -108,17 +114,23 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.guid, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
+                const detailResponse = await ofetch(item.link, {
+                    headers: {
+                        cookie: `_safe=${safeId}`,
+                    },
                 });
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 content('.ads, .tips').remove();
 
                 content('ignore_js_op').each(function () {
-                    content(this).replaceWith(`<img src="${content(this).find('img').attr('src')}">`);
+                    const img = content(this).find('img');
+                    const originalSrc = img.attr('data-original');
+                    const fallbackSrc = img.attr('src');
+                    // 判断是否有 data-original 属性，若有则使用其值，否则使用 src 属性值
+                    const imgSrc = originalSrc || fallbackSrc;
+                    content(this).replaceWith(`<img src="${imgSrc}">`);
                 });
 
                 item.author = content('.fl.black').first().text();
@@ -126,17 +138,14 @@ async function handler(ctx) {
 
                 const downloadLink = content('#read_tpc').first().find('a').last();
                 const copyLink = content('#copytext')?.first()?.text();
-                if (downloadLink?.text()?.startsWith('http') && /down2048\.com$/.test(new URL(downloadLink.text()).hostname)) {
-                    const torrentResponse = await got({
-                        method: 'get',
-                        url: downloadLink.text(),
-                    });
+                if (downloadLink?.text()?.startsWith('http') && /bt\.azvmw\.com$/.test(new URL(downloadLink.text()).hostname)) {
+                    const torrentResponse = await ofetch(downloadLink.text());
 
-                    const torrent = load(torrentResponse.data);
+                    const torrent = load(torrentResponse);
 
                     item.enclosure_type = 'application/x-bittorrent';
                     const ahref = torrent('.uk-button').last().attr('href');
-                    item.enclosure_url = ahref?.startsWith('http') ? ahref : `https://data.datapps.org/${ahref}`;
+                    item.enclosure_url = ahref?.startsWith('http') ? ahref : `https://bt.azvmw.com/${ahref}`;
 
                     const magnet = torrent('.uk-button').first().attr('href');
 

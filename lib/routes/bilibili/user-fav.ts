@@ -5,10 +5,10 @@ import utils from './utils';
 import { config } from '@/config';
 
 export const route: Route = {
-    path: '/user/fav/:uid/:disableEmbed?',
+    path: '/user/fav/:uid/:embed?',
     categories: ['social-media'],
     example: '/bilibili/user/fav/2267573',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
     const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
@@ -53,7 +53,7 @@ async function handler(ctx) {
             data.data.archives &&
             data.data.archives.map((item) => ({
                 title: item.title,
-                description: `${item.desc}${disableEmbed ? '' : `<br><br>${utils.iframe(item.aid)}`}<br><img src="${item.pic}">`,
+                description: utils.renderUGCDescription(embed, item.pic, item.desc, item.aid, undefined, item.bvid),
                 pubDate: new Date(item.fav_at * 1000).toUTCString(),
                 link: item.fav_at > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,

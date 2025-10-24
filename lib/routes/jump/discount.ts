@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { art } from '@/utils/render';
@@ -114,20 +112,20 @@ export const route: Route = {
     maintainers: ['zytomorrow'],
     handler,
     description: `| switch | ps4  | ps5  | xbox   | steam | epic   |
-  | ------ | ---- | ---- | ------ | ----- | ------ |
-  | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
+| ------ | ---- | ---- | ------ | ----- | ------ |
+| 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
 
-  | filter | switch | ps4 | ps5 | steam |
-  | ------ | ------ | --- | --- | ----- |
-  | all    | ✔     | ✔  | ✔  | ✔    |
-  | jx     | ✔     | ✔  | ❌  | ✔    |
-  | sd     | ✔     | ✔  | ✔  | ✔    |
-  | dl     | ❌     | ✔  | ❌  | ✔    |
-  | vip    | ❌     | ❌  | ✔  | ❌    |
+| filter | switch | ps4 | ps5 | steam |
+| ------ | ------ | --- | --- | ----- |
+| all    | ✔     | ✔  | ✔  | ✔    |
+| jx     | ✔     | ✔  | ❌  | ✔    |
+| sd     | ✔     | ✔  | ✔  | ✔    |
+| dl     | ❌     | ✔  | ❌  | ✔    |
+| vip    | ❌     | ❌  | ✔  | ❌    |
 
-  | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-  | ---- | ------------ | ---- | ---- | ---- |
-  | na   | eu           | fr   | de   | jp   |`,
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |`,
 };
 
 async function handler(ctx) {

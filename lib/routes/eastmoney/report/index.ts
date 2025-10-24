@@ -1,5 +1,4 @@
-import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,13 +7,23 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 import { getRatingChangeStr, getEpsOrPeStr } from '../utils';
 
-const __dirname = getCurrentPath(import.meta.url);
-
 export const route: Route = {
     path: '/report/:category',
     categories: ['finance'],
+    view: ViewType.Articles,
     example: '/eastmoney/report/strategyreport',
-    parameters: { category: '研报类型' },
+    parameters: {
+        category: {
+            description: '研报类型',
+            options: [
+                { value: 'strategyreport', label: '策略报告' },
+                { value: 'macresearch', label: '宏观研究' },
+                { value: 'brokerreport', label: '券商晨报' },
+                { value: 'industry', label: '行业研报' },
+                { value: 'stock', label: '个股研报' },
+            ],
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -32,8 +41,8 @@ export const route: Route = {
     maintainers: ['syzq'],
     handler,
     description: `| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 | 个股研报 |
-  | -------------- | ----------- | ------------ | -------- | -------- |
-  | strategyreport | macresearch | brokerreport | industry | stock    |`,
+| -------------- | ----------- | ------------ | -------- | -------- |
+| strategyreport | macresearch | brokerreport | industry | stock    |`,
 };
 
 async function handler(ctx) {

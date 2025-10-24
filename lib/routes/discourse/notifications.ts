@@ -25,7 +25,7 @@ export const route: Route = {
     name: 'Notifications',
     maintainers: [],
     handler,
-    description: `:::warning
+    description: `::: warning
 If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter to your query to avoid sending too many request.
 :::`,
 };

@@ -23,35 +23,39 @@ export const route: Route = {
         },
     ],
     name: 'User Feed',
-    maintainers: [],
+    maintainers: ['Jkker'],
     handler,
 };
 
 async function handler(ctx) {
     const user = ctx.req.param('user');
 
-    const rootUrl = 'https://blog.csdn.net';
+    const rootUrl = 'https://rss.csdn.net';
     const blogUrl = `${rootUrl}/${user}`;
-    const rssUrl = blogUrl + '/rss/list';
+    const rssUrl = blogUrl + '/rss/map';
 
     const feed = await rssParser.parseURL(rssUrl);
 
     const items = await Promise.all(
         feed.items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                try {
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
 
-                const $ = load(response.data);
+                    const $ = load(response.data);
 
-                const description = $('#content_views').html();
+                    const description = $('#content_views').html();
 
-                return {
-                    ...item,
-                    description,
-                };
+                    return {
+                        ...item,
+                        description,
+                    };
+                } catch {
+                    return item;
+                }
             })
         )
     );

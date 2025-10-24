@@ -41,15 +41,15 @@ export const route: Route = {
     maintainers: ['quiniapiezoelectricity'],
     handler,
     description: `
-  | Language | English | Bahasa Malaysia | 华文     |
-  | -------- | ------ | ------- | ------ | 
-  | \`:lang\`  | \`en\`    | \`my\`   | \`zh\`    |
+| Language | English | Bahasa Malaysia | 华文     |
+| -------- | ------ | ------- | ------ | 
+| \`:lang\`  | \`en\`    | \`my\`   | \`zh\`    |
 
-  | Category               | \`:category\` |
-  | ---------------------- | ------------- |
-  | News                   | \`news\`      |
-  | Columns                | \`columns\`   |
-  | From Our Readers       | \`letters\`   |`,
+| Category               | \`:category\` |
+| ---------------------- | ------------- |
+| News                   | \`news\`      |
+| Columns                | \`columns\`   |
+| From Our Readers       | \`letters\`   |`,
     radar: [
         {
             source: ['malaysiakini.com/'],

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,6 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/investigates',
     categories: ['traditional-media'],
+    view: ViewType.Articles,
     example: '/reuters/investigates',
     parameters: {},
     features: {
@@ -30,11 +31,11 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('article.section-article-container.row')
-        .map((_, item) => ({
+        .toArray()
+        .map((item) => ({
             title: $(item).find('h2.subtitle').text(),
             link: $(item).find('a.row.d-flex').prop('href'),
-        }))
-        .get();
+        }));
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

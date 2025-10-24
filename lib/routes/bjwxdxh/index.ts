@@ -22,8 +22,8 @@ export const route: Route = {
     maintainers: ['Misaka13514'],
     handler,
     description: `| 协会活动 | 公告通知 | 会议情况 | 简报 | 政策法规 | 学习园地 | 业余无线电服务中心 | 经验交流 | 新技术推介 | 活动通知 | 爱好者园地 | 结果查询 | 资料下载 | 会员之家 | 会员简介 | 会员风采 | 活动报道 |
-  | -------- | -------- | -------- | ---- | -------- | -------- | ------------------ | -------- | ---------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 86       | 99       | 102      | 103  | 106      | 107      | 108                | 111      | 112        | 114      | 115        | 116      | 118      | 119      | 120      | 121      | 122      |`,
+| -------- | -------- | -------- | ---- | -------- | -------- | ------------------ | -------- | ---------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 86       | 99       | 102      | 103  | 106      | 107      | 108                | 111      | 112        | 114      | 115        | 116      | 118      | 119      | 120      | 121      | 122      |`,
 };
 
 async function handler(ctx) {
@@ -38,15 +38,15 @@ async function handler(ctx) {
 
     const $ = load(response.data);
     const list = $('div#newsquery > ul > li')
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             return {
                 title: item.find('div.title > a').text(),
                 link: new URL(item.find('div.title > a').attr('href'), baseUrl).href,
                 // pubDate: parseDate(item.find('div.time').text(), 'YYYY-MM-DD'),
             };
-        })
-        .get();
+        });
 
     await Promise.all(
         list.map((item) =>

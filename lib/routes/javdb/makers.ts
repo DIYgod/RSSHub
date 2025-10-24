@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -31,8 +32,8 @@ export const route: Route = {
     handler,
     url: 'javdb.com/',
     description: `| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
-  | ---- | -------- | -------- | -------- | ----- | ------- |
-  |      | playable | single   | download | cnsub | preview |
+| ---- | -------- | -------- | -------- | ----- | ------- |
+|      | playable | single   | download | cnsub | preview |
 
   所有片商编号参见 [片商庫](https://javdb.com/makers)`,
 };

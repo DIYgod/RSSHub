@@ -1,11 +1,9 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
+import { config } from '@/config';
 
 const getArchive = async (region, limit, tag, providerId?) => {
     const { data: response } = await got(
@@ -82,14 +80,22 @@ const parseList = (region, response) =>
 
 const parseItem = (item, tryGet) =>
     tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+        const { data: response } = await got(item.link, {
+            headers: {
+                'User-Agent': config.trueUA,
+            },
+        });
         const $ = load(response);
 
-        const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
-        const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
-        const body = $('.caas-body');
+        const ldJson = JSON.parse(
+            $('script[type="application/ld+json"]')
+                .toArray()
+                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data
+        );
+        const author = ldJson.author.name;
+        const body = $('.atoms');
 
-        body.find('noscript').remove();
+        body.find('noscript, .text-gandalf, [id^="sda-inbody-"]').remove();
         // remove padding
         body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
             const $ele = $(ele);

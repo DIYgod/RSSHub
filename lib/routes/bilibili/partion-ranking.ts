@@ -16,10 +16,10 @@ function formatDate(now) {
 }
 
 export const route: Route = {
-    path: '/partion/ranking/:tid/:days?/:disableEmbed?',
+    path: '/partion/ranking/:tid/:days?/:embed?',
     categories: ['social-media'],
     example: '/bilibili/partion/ranking/171/3',
-    parameters: { tid: '分区 id, 见上方表格', days: '缺省为 7, 指最近多少天内的热度排序', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    parameters: { tid: '分区 id, 见上方表格', days: '缺省为 7, 指最近多少天内的热度排序', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const days = ctx.req.param('days') ?? 7;
-    const disableEmbed = ctx.req.param('disableEmbed');
+    const embed = !ctx.req.param('embed');
 
     const responseApi = `https://api.bilibili.com/x/web-interface/newlist?ps=15&rid=${tid}&_=${Date.now()}`;
 
@@ -59,7 +59,7 @@ async function handler(ctx) {
     for (let item of hotlist) {
         item = {
             title: item.title,
-            description: `${item.description}${disableEmbed ? '' : `<br><br>${utils.iframe(item.id)}`}<br><img src="https:${item.pic}"><br/>Tags:${item.tag}`,
+            description: utils.renderUGCDescription(embed, item.pic, `${item.description} - ${item.tag}`, item.id, undefined, item.bvid),
             pubDate: new Date(item.pubdate).toUTCString(),
             link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.id}`,
             author: item.author,

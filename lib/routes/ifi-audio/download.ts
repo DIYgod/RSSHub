@@ -20,7 +20,7 @@ export const route: Route = {
     name: 'Download Hub',
     maintainers: ['EthanWng97'],
     handler,
-    description: `:::warning
+    description: `::: warning
 1.  Open [https://ifi-audio.com/download-hub](https://ifi-audio.com/download-hub) and the Network panel
 2.  Select the device and the corresponding serial number in the website and click Search
 3.  Find the last request named \`https://ifi-audio.com/wp-admin/admin-ajax.php\` in the Network panel, find out the val and id in the Payload panel, and fill in the url

@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -25,8 +23,8 @@ export const route: Route = {
     maintainers: ['hoilc'],
     handler,
     description: `| 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
-  | ----- | ---- | ------ | ------ | -------- | -------- |
-  | event | info | system | esport | patch    | TFTpatch |`,
+| ----- | ---- | ------ | ------ | -------- | -------- |
+| event | info | system | esport | patch    | TFTpatch |`,
 };
 
 async function handler(ctx) {

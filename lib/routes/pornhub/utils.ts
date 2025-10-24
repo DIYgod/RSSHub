@@ -1,6 +1,3 @@
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
-
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -30,4 +27,15 @@ const parseItems = (e) => ({
     pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))).toDate() || parseRelativeDate(e.find('.added').text()),
 });
 
-export { defaultDomain, headers, renderDescription, parseItems };
+const getRadarDomin = (path: string) => [
+    {
+        source: [`www.pornhub.com${path}`, `www.pornhub.com${path}/*`],
+        target: path,
+    },
+    ...['de', 'fr', 'es', 'it', 'pt', 'pl', 'rt', 'jp', 'nl', 'cz', 'cn'].map((language) => ({
+        source: [`${language}.pornhub.com${path}`, `${language}.pornhub.com${path}/*`],
+        target: `${path}/${language}`,
+    })),
+];
+
+export { defaultDomain, headers, renderDescription, parseItems, getRadarDomin };

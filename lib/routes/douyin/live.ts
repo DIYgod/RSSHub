@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rid = ctx.req.param('rid');
-    if (isNaN(rid)) {
+    if (Number.isNaN(rid)) {
         throw new InvalidParameterError('Invalid room ID. Room ID should be a number.');
     }
 
@@ -58,7 +58,7 @@ async function handler(ctx) {
             await page.goto(pageUrl, {
                 waitUntil: 'networkidle2',
             });
-            browser.close();
+            await browser.close();
 
             return roomInfo;
         },

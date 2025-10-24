@@ -1,0 +1,100 @@
+{{ if images }}
+  {{ each images image }}
+    {{ if image?.src }}
+      <figure>
+        <img
+          {{ if image.alt }}
+            alt="{{ image.alt }}"
+          {{ /if }}
+        src="{{ image.src }}">
+      </figure>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if item }}
+  <table>
+    <tbody>
+      <tr>
+        <th>名称</th>
+        <td>{{ item.name }}</td>
+      </tr>
+      <tr>
+        <th>标签</th>
+        <td>
+          {{ each strToArray(item.tags) t  }}
+            <a href="/topic/{{ t }}">{{ t }}</a>&nbsp
+          {{ /each }}
+        </td>
+      </tr>
+      <tr>
+        <th>类型</th>
+        <td>
+          {{ if item.proctypename }}
+            {{ item.proctypename }}
+          {{ else }}
+             无
+          {{ /if }}
+        </td>
+      </tr>
+        <th>描述</th>
+          {{ if item.desc }}
+            {{ item.desc }}
+          {{ else }}
+             无
+          {{ /if }}
+      </tr>
+      <tr>
+        <th>需求人群</th>
+        <td>
+          {{ set list = strToArray(item.use) }}
+          {{ if list.length === 1 }}
+            {{ list[0] }}
+          {{ else }}
+            {{ each list l }}
+              <li>{{ l }}</li>
+            {{ /each }}
+          {{ /if }}
+        </td>
+      </tr>
+      <tr>
+        <th>使用场景示例</th>
+        <td>
+          {{ set list = strToArray(item.example) }}
+          {{ if list.length === 1 }}
+            {{ list[0] }}
+          {{ else }}
+            {{ each list l }}
+              <li>{{ l }}</li>
+            {{ /each }}
+          {{ /if }}
+        </td>
+      </tr>
+      <tr>
+        <th>产品特色</th>
+        <td>
+          {{ set list = strToArray(item.functions) }}
+          {{ if list.length === 1 }}
+            {{ list[0] }}
+          {{ else }}
+            {{ each list l }}
+              <li>{{ l }}</li>
+            {{ /each }}
+          {{ /if }}
+        </td>
+      </tr>
+      <tr>
+        <th>站点</th>
+        <td>
+          {{ if item.url }}
+            <a href="{{ item.url }}">
+              {{ item.url }}
+            </a>
+          {{ else }}
+             无
+          {{ /if }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{{ /if }}

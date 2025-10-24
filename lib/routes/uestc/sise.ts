@@ -55,8 +55,8 @@ export const route: Route = {
     handler,
     url: 'sise.uestc.edu.cn/',
     description: `| 最新 | 院办 | 学生科 | 教务科 | 研管科 | 组织 | 人事 | 实践教育中心 | Int'I |
-  | ---- | ---- | ------ | ------ | ------ | ---- | ---- | ------------ | ----- |
-  | 1    | 2    | 3      | 4      | 5      | 6    | 7    | 8            | 9     |`,
+| ---- | ---- | ------ | ------ | ------ | ---- | ---- | ------------ | ----- |
+| 1    | 2    | 3      | 4      | 5      | 6    | 7    | 8            | 9     |`,
 };
 
 async function handler(ctx) {
@@ -66,7 +66,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('type not supported');
     }
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
@@ -83,7 +83,8 @@ async function handler(ctx) {
     const items = $(`div[id="${divId}"] p.news-item`);
 
     const out = $(items)
-        .map((_, item) => {
+        .toArray()
+        .map((item) => {
             item = $(item);
             const now = dayjs();
             let date = dayjs(now.year() + '-' + item.find('span').text().replace('/', '-'));
@@ -99,8 +100,7 @@ async function handler(ctx) {
                 link: newsLink,
                 pubDate: newsPubDate,
             };
-        })
-        .get();
+        });
 
     return {
         title: `信软学院通知-${mapTitle[type]}`,

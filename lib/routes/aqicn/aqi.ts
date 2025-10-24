@@ -1,5 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { Route } from '@/types';
 
 export const route: Route = {
     path: '/:city/:pollution?',

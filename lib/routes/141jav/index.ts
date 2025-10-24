@@ -1,6 +1,4 @@
 import { Route } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -49,6 +47,9 @@ export const route: Route = {
 -  \`/141jav/date/2020/07/30\`
 
       \`date\` 类型的关键词必须填写 **日期(年/月/日)**`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
@@ -66,7 +67,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     if (getSubPath(ctx) === '/') {
-        ctx.redirect(`/141jav${$('.overview').first().attr('href')}`);
+        ctx.set('redirect', `/141jav${$('.overview').first().attr('href')}`);
         return;
     }
 

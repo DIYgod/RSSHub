@@ -27,20 +27,20 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Set up Docker Buildx  # needed by `cache-from`
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
         with:
           images: rsshub
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
@@ -54,12 +54,12 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@v3
+        uses: actions-cool/issues-helper@45d75b6cf72bf4f254be6230cb887ad002702491 # v3.6.3
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          labels: 'Auto: Route Test Failed'
+          labels: 'auto: DO NOT merge'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
@@ -68,7 +68,7 @@ jobs:
         run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
       - name: Upload Docker image
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: docker-image
           path: rsshub.tar.zst

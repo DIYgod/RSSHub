@@ -19,7 +19,15 @@ export const route: Route = {
     handler,
 };
 
-export const getAuthorById = (id: string) => cache.tryGet(`inspirehep:author:${id}`, () => ofetch<AuthorResponse>(`${baseUrl}/api/authors/${id}`));
+export const getAuthorById = (id: string) =>
+    cache.tryGet(`inspirehep:author:${id}`, () =>
+        ofetch<AuthorResponse>(`${baseUrl}/api/authors/${id}`, {
+            headers: {
+                accept: 'application/vnd+inspire.record.ui+json',
+            },
+            parseResponse: JSON.parse,
+        })
+    );
 
 async function handler(ctx) {
     const id = ctx.req.param('id');

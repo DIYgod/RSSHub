@@ -38,7 +38,7 @@ async function handler(ctx) {
     const url = `${HOME_PAGE}/${rss}.rss`;
     const res = await parser.parseURL(url);
 
-    const items = ctx.req.query('mode') === 'fulltext' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res;
+    const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res;
 
     return {
         ...res,

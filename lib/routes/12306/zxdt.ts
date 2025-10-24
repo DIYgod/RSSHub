@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as url from 'node:url';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/zxdt/:id?',
@@ -40,41 +40,23 @@ async function handler(ctx) {
     const name = $('div.nav_center > a:nth-child(4)').text();
 
     const list = $('#newList > ul > li')
-        .map(function () {
-            const info = {
-                title: $(this).find('a').text(),
-                link: $(this).find('a').attr('href'),
-                date: $(this).find('span').text().slice(1, -1),
-            };
-            return info;
-        })
-        .get();
+        .toArray()
+        .map((item) => ({
+            title: $(item).find('a').text(),
+            link: new URL($(item).find('a').attr('href'), link).href,
+            pubDate: parseDate($(item).find('span').text().slice(1, -1)),
+        }));
 
     const out = await Promise.all(
-        list.map(async (info) => {
-            const title = info.title;
-            const date = info.date;
-            const itemUrl = url.resolve(link, info.link);
+        list.map((info) =>
+            cache.tryGet(info.link, async () => {
+                const response = await got.get(info.link);
+                const $ = load(response.data);
+                info.description = $('.article-box').html() || $('.content_text').html() || '文章已被删除';
 
-            const cacheIn = await cache.get(itemUrl);
-            if (cacheIn) {
-                return JSON.parse(cacheIn);
-            }
-
-            const response = await got.get(itemUrl);
-            const $ = load(response.data);
-            let description = $('.article-box').html();
-            description = description ? description.replaceAll('src="', `src="${url.resolve(itemUrl, '.')}`).trim() : $('.content_text').html() || '文章已被删除';
-
-            const single = {
-                title,
-                link: itemUrl,
-                description,
-                pubDate: new Date(date).toUTCString(),
-            };
-            cache.set(itemUrl, JSON.stringify(single));
-            return single;
-        })
+                return info;
+            })
+        )
     );
 
     return {

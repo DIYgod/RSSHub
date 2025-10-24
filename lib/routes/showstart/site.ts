@@ -24,7 +24,7 @@ export const route: Route = {
     name: '按场地 - 演出更新',
     maintainers: ['lchtao26'],
     handler,
-    description: `:::tip
+    description: `::: tip
 -   演出场地 ID 查询: \`/showstart/search/site/:keyword\`, 如: [https://rsshub.app/showstart/search/site/酒球会](https://rsshub.app/showstart/search/site/酒球会)
 :::`,
 };

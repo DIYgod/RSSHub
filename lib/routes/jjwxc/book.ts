@@ -1,6 +1,4 @@
 import { Route, ViewType } from '@/types';
-import { getCurrentPath } from '@/utils/helpers';
-const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -13,7 +11,7 @@ import path from 'node:path';
 
 export const route: Route = {
     path: '/book/:id?',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Notifications,
     example: '/jjwxc/book/7013024',
     parameters: { id: '作品 id，可在对应作品页中找到' },
