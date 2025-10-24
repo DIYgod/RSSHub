@@ -1,7 +1,6 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
 /* The different ways to query Wikipedia's Current Events
@@ -51,12 +50,29 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
     }
 
     // Look for {{Current events|content=...}} template
-    const templateMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content\s*=\s*([\s\S]*?)\}\}/);
-    if (!templateMatch) {
+    // The closing }} is always at the end of wikitext
+    const contentMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content\s*=\s*([\s\S]*)\}\}$/);
+    if (!contentMatch) {
         return null;
     }
 
-    return templateMatch[1].trim();
+    let content = contentMatch[1].trim();
+
+    // Strip comments to detect empty content
+    content = stripComments(content);
+
+    // Check if content is empty or only contains empty bullets (e.g., "*", "**", with whitespace)
+    if (/^\s*\*+\s*$/.test(content)) {
+        return null;
+    }
+
+    return content;
+}
+
+function stripTemplates(wikitext: string): string {
+    // Remove MediaWiki template delimiters {{...}} but keep the content
+    // This prevents conflicts with art-template's {{ }} delimiters in RSS generation
+    return wikitext.replaceAll(/\{\{([^}]+)\}\}/g, '$1');
 }
 
 function convertWikiLinks(html: string): string {
@@ -81,99 +97,125 @@ function convertTextFormatting(html: string): string {
     return html;
 }
 
+interface ListProcessorState {
+    result: string[];
+    depthStack: number[];
+    lastDepth: number;
+}
+
+function createListProcessorState(): ListProcessorState {
+    return {
+        result: [],
+        depthStack: [],
+        lastDepth: 0,
+    };
+}
+
+function addIndentedTag(state: ListProcessorState, tag: string): void {
+    state.result.push('  '.repeat(state.depthStack.length) + tag);
+}
+
+function closeAllListsAndAddParagraph(state: ListProcessorState): void {
+    while (state.depthStack.length > 0) {
+        state.depthStack.pop();
+        addIndentedTag(state, '</ul>');
+        if (state.depthStack.length > 0) {
+            addIndentedTag(state, '</li>');
+        }
+    }
+    state.lastDepth = 0;
+}
+
+function openNestedLists(state: ListProcessorState, targetDepth: number): void {
+    for (let d = state.lastDepth; d < targetDepth; d++) {
+        addIndentedTag(state, '<ul>');
+        state.depthStack.push(d + 1);
+    }
+}
+
+function closeNestedLists(state: ListProcessorState, targetDepth: number): void {
+    while (state.depthStack.length > 0 && state.depthStack.at(-1)! > targetDepth) {
+        addIndentedTag(state, '</li>');
+        state.depthStack.pop();
+        addIndentedTag(state, '</ul>');
+
+        if (state.depthStack.length > 0 && state.depthStack.at(-1)! > targetDepth) {
+            // There's still more to close, the parent li will be closed in next iteration
+        } else if (state.depthStack.length > 0) {
+            // We're done going back up, close the parent <li>
+            addIndentedTag(state, '</li>');
+        }
+    }
+}
+
+function closePreviousListItem(state: ListProcessorState): void {
+    if (state.depthStack.length > 0) {
+        addIndentedTag(state, '</li>');
+    }
+}
+
+function closeAllOpenLists(state: ListProcessorState): void {
+    if (state.depthStack.length === 0) {
+        return;
+    }
+
+    // Close the deepest <li> first
+    addIndentedTag(state, '</li>');
+    state.depthStack.pop();
+
+    // Then close all remaining </ul> and their parent </li>
+    while (state.depthStack.length > 0) {
+        state.result.push('  '.repeat(state.depthStack.length) + '</ul>', '  '.repeat(state.depthStack.length) + '</li>');
+        state.depthStack.pop();
+    }
+
+    // Close the final </ul>
+    state.result.push('</ul>');
+}
+
 function processListsAndLines(html: string): string {
     const lines = html.split('\n');
-    const processedLines: string[] = [];
+    const state = createListProcessorState();
 
     for (const line of lines) {
         const trimmedLine = line.trim();
 
         if (!trimmedLine) {
-            // Empty line - add paragraph break
-            processedLines.push('</p><p>');
+            closeAllListsAndAddParagraph(state);
             continue;
         }
 
-        // Check for bullet points and convert to proper nesting
+        // Check for bullet points
         const bulletMatch = trimmedLine.match(/^(\*+)\s*(.*)$/);
         if (bulletMatch) {
             const depth = bulletMatch[1].length;
             const content = bulletMatch[2];
+
             if (!content) {
                 continue; // Skip empty bullets like "*"
             }
-            // Create proper nested list structure
-            const indent = '  '.repeat(depth - 1);
-            processedLines.push(`${indent}<li>${content}</li>`);
+
+            // Handle depth changes
+            if (depth > state.lastDepth) {
+                openNestedLists(state, depth);
+            } else if (depth < state.lastDepth) {
+                closeNestedLists(state, depth);
+            } else {
+                closePreviousListItem(state);
+            }
+
+            // Add the new list item (leave it open for potential nested lists)
+            addIndentedTag(state, `<li>${content}`);
+            state.lastDepth = depth;
         } else {
-            // Regular text line
-            processedLines.push(trimmedLine);
+            // Regular text line - close all lists
+            closeAllListsAndAddParagraph(state);
+            state.result.push(trimmedLine);
         }
     }
 
-    let results = processedLines.join('\n');
-
-    // Process lists
-    results = wrapListItems(results);
-    return processNestedLists(results);
-}
-
-function wrapListItems(html: string): string {
-    // Convert consecutive <li> elements into proper <ul> structures
-    return html.replaceAll(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, (match) => `<ul>\n${match}\n</ul>`);
-}
-
-function processNestedLists(html: string): string {
-    const finalLines = html.split('\n');
-    const result: string[] = [];
-    let currentDepth = 0;
-    const openTags: string[] = [];
-
-    for (const line of finalLines) {
-        const trimmed = line.trim();
-
-        if (trimmed.startsWith('<li>')) {
-            const indent = line.match(/^(\s*)/)?.[1]?.length || 0;
-            const depth = Math.floor(indent / 2) + 1;
-
-            // Close deeper levels
-            while (currentDepth > depth) {
-                result.push('  '.repeat(currentDepth - 1) + '</ul>');
-                openTags.pop();
-                currentDepth--;
-            }
-
-            // Open new level if needed
-            if (currentDepth < depth) {
-                result.push('  '.repeat(depth - 1) + '<ul>');
-                openTags.push('ul');
-                currentDepth = depth;
-            }
-
-            result.push('  '.repeat(depth) + trimmed);
-        } else {
-            // Close all open lists
-            while (currentDepth > 0) {
-                result.push('  '.repeat(currentDepth - 1) + '</ul>');
-                openTags.pop();
-                currentDepth--;
-            }
-
-            if (trimmed === '</p><p>') {
-                result.push('</p>\n<p>');
-            } else if (trimmed) {
-                result.push(trimmed);
-            }
-        }
-    }
-
-    // Close any remaining open lists
-    while (currentDepth > 0) {
-        result.push('  '.repeat(currentDepth - 1) + '</ul>');
-        currentDepth--;
-    }
-
-    return result.join('');
+    closeAllOpenLists(state);
+    return state.result.join('\n');
 }
 
 function stripComments(html: string): string {
@@ -181,34 +223,16 @@ function stripComments(html: string): string {
     return html.replaceAll(/<!--[\s\S]*?-->/g, '');
 }
 
-function wrapInParagraphsAndCleanup(html: string): string {
-    // Clean up multiple paragraph tags and empty paragraphs
-    html = html.replaceAll(/<\/p>\s*<p>/g, '</p>\n<p>');
-    html = html.replaceAll(/<p>\s*<ul>/g, '<ul>');
-    html = html.replaceAll(/<\/ul>\s*<\/p>/g, '</ul>');
-
-    // Remove any empty paragraphs (be aggressive about it)
-    html = html.replaceAll(/<p>[\s\n\r]*<\/p>/g, '');
-    html = html.replaceAll(/<p>\s*<\/p>/g, '');
-    html = html.replaceAll('<p></p>', '');
-
-    // Final cleanup - remove trailing empty paragraphs that might have been added
-    html = html.replaceAll(/<p>\s*$/g, '').replaceAll(/\s*<\/p>$/g, '');
-
-    return html;
-}
-
 // Wiki markup to HTML converter with proper list handling
-function wikiToHtml(wikitext: string): string {
+export function wikiToHtml(wikitext: string): string {
     let html = wikitext;
 
     // Apply transformations in order
+    html = stripTemplates(html); // Must be first to prevent art-template conflicts
     html = convertWikiLinks(html);
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);
     html = processListsAndLines(html);
-    html = wrapInParagraphsAndCleanup(html);
-    html = stripComments(html);
 
     return html;
 }
@@ -344,13 +368,21 @@ async function handler(ctx) {
                 const html = contentMap[pageName];
 
                 if (html) {
-                    const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const dateStr = `${year}-${month}-${day}`;
+
+                    // Calculate the end of day in GMT-12 (latest timezone to complete a day)
+                    // This is 23:59:59 on the given date in GMT-12, which equals 11:59:59 the next day in GMT
+                    const endOfDayGMTMinus12 = Date.UTC(year, date.getMonth(), date.getDate() + 1, 11, 59, 59);
 
                     return {
                         title: `Current events: ${dateStr}`,
                         link: `https://en.wikipedia.org/wiki/${pageName}`,
                         description: html,
-                        pubDate: parseDate(date.toISOString()),
+                        // we estimate pubDate by taking the min of the latest possible entry and current time
+                        pubDate: new Date(Math.min(endOfDayGMTMinus12, Date.now())),
                         guid: `wikipedia-current-events-${dateStr}`,
                     };
                 }
