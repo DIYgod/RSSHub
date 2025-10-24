@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/gerenzhongxin/cfh/:uid',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/gerenzhongxin/cfh/2922094262312522',
+    example: '/eastmoney/gerenzhongxin/cfh/2922094262312522',
     parameters: { uid: '用户id,即用户主页网址末尾的数字' },
     features: {
         requireConfig: false,
