@@ -1474,7 +1474,7 @@
         docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/" ],
         target:"/aamacau/:category?/:id?" } ] },
-  "abc.net.au":{ _name:"ABC News",
+  "abc.net.au":{ _name:"ABC News (Australian Broadcasting Corporation)",
     ".":[ { title:"Channel & Topic",
         docs:"https://docs.rsshub.app/routes/traditional-media",
         source:[ "/:category*" ],
