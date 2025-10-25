@@ -44,7 +44,7 @@ export async function handler(ctx) {
     const nickname = arr[0].reply_user.user_nickname;
 
     const items = arr.map((item) => {
-        const linkUrl = `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`;
+        const linkUrl = `https://guba.eastmoney.com/news,${item?.reply_guba.stockbar_code},${item?.source_post_id}.html#allReplyList`;
         const descriptionContent = `
         <p>${item.source_post_title}</p>
         <hr/>

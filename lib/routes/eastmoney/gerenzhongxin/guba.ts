@@ -44,7 +44,7 @@ export async function handler(ctx) {
     const nickname = arr[0].post_user.user_nickname;
 
     const items = arr.map((item) => {
-        let descriptionContent = item.post_content;
+        let descriptionContent = item?.post_content;
         if (item.post_pic_url && item.post_pic_url.length > 0) {
             const imagesHTML = item.post_pic_url.map((url: string) => `<img src="${url}">`).join('');
             descriptionContent += '<br>' + imagesHTML;
