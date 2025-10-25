@@ -51,6 +51,7 @@ jobs:
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
             type=gha,scope=docker-release
+          outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
       - name: Pull Request Labeler
         if: ${{ failure() }}

@@ -84,6 +84,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha,scope=docker-release
           cache-to: type=gha,mode=max,scope=docker-release
+          outputs: type=image,compression=zstd,force-compression=true
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
@@ -117,6 +118,7 @@ jobs:
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
+          outputs: type=image,compression=zstd,force-compression=true
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
