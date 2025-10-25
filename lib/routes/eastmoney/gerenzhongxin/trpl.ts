@@ -44,11 +44,16 @@ export async function handler(ctx) {
     const nickname = arr[0].reply_user.user_nickname;
 
     const items = arr.map((item) => {
+        const linkUrl = `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`;
         const descriptionContent = `
-                                    ${item.reply_text}
-                                    <br><br>---主帖内容：---<br><br>
-                                    ${item.source_post_title}
-                                `;
+        <p>${item.source_post_title}</p>
+        <hr/>
+        <br/>
+        <blockquote cite="${linkUrl}">
+          <p>${item.reply_text}</p>
+        </blockquote>
+        <p style="text-align:right;">—— 评论者：<cite>${item.reply_user.user_nickname}</cite></p>
+        `;
 
         const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
 
@@ -56,7 +61,7 @@ export async function handler(ctx) {
             title: `${nickname} 发布了评论: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
-            link: `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`,
+            link: linkUrl,
             guid,
             author: item.reply_user.user_nickname,
         };
