@@ -14,7 +14,7 @@ const parser = new Parser<any, CustomItem>({
 export const route: Route = {
     path: '/articles',
     categories: ['anime'],
-    example: '/articles',
+    example: '/ntrblog/articles',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
