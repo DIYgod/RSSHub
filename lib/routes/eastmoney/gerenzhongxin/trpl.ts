@@ -53,7 +53,7 @@ export async function handler(ctx) {
         const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
 
         return {
-            post_title: `${nickname} 发布了评论: ${descriptionContent}`,
+            title: `${nickname} 发布了评论: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`,
