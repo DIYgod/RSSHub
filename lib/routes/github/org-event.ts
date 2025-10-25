@@ -4,12 +4,12 @@ import { config } from '@/config';
 import { filterEvents } from './eventapi';
 
 export const route: Route = {
-    path: '/feed/:user/:types?',
+    path: '/org_event/:org/:types?',
     categories: ['programming'],
-    example: '/github/feed/yihong0618/star,release,pr',
+    example: '/github/org_event/RSSNext',
     view: ViewType.Notifications,
     parameters: {
-        user: 'GitHub username',
+        org: 'Organization name',
         types: {
             description: 'Event types to include, comma separated',
             default: 'all',
@@ -31,6 +31,10 @@ export const route: Route = {
                     value: 'fork',
                 },
                 {
+                    label: 'Issue create events',
+                    value: 'issue',
+                },
+                {
                     label: 'Issue comment events',
                     value: 'issuecomm',
                 },
@@ -45,6 +49,10 @@ export const route: Route = {
                 {
                     label: 'Pull request review comment events',
                     value: 'prcomm',
+                },
+                {
+                    label: 'Pull request review events',
+                    value: 'prrev',
                 },
                 {
                     label: 'Public events',
@@ -62,6 +70,18 @@ export const route: Route = {
                     label: 'Watch events (stars)',
                     value: 'star',
                 },
+                {
+                    label: 'Wiki item create or update events',
+                    value: 'wiki',
+                },
+                {
+                    label: 'Commit comment events',
+                    value: 'cmcomm',
+                },
+                {
+                    label: 'Discussion events',
+                    value: 'discussion',
+                },
             ],
         },
     },
@@ -70,7 +90,7 @@ export const route: Route = {
             {
                 name: 'GITHUB_ACCESS_TOKEN',
                 optional: true,
-                description: 'GitHub access token to access private events',
+                description: 'GitHub access token to avoid access limit',
             },
         ],
         requirePuppeteer: false,
@@ -81,17 +101,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['github.com/:user'],
-            target: '/feed/:user',
+            source: ['github.com/orgs/:org'],
+            target: '/org_event/:org',
         },
     ],
-    name: "User's Feed",
-    maintainers: ['RtYkk'],
+    name: 'Organization Event',
+    maintainers: ['mslxl'],
     handler,
 };
 
 async function handler(ctx) {
-    const user = ctx.req.param('user');
+    const org = ctx.req.param('org');
     const types = ctx.req.param('types') || 'all';
 
     const isAuthenticated = config.github && config.github.access_token;
@@ -103,7 +123,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/users/${user}/received_events`,
+        url: `https://api.github.com/orgs/${org}/events`,
         headers,
         searchParams: {
             per_page: 100,
@@ -111,14 +131,12 @@ async function handler(ctx) {
     });
 
     const items = filterEvents(types, response.data);
-
     const typeFilter = types === 'all' ? 'All Events' : `Events: ${types}`;
-    const feedType = isAuthenticated ? 'Private Feed' : 'Public Feed';
 
     return {
-        title: `${user}'s GitHub ${feedType} - ${typeFilter}`,
-        link: `https://github.com/${user}`,
-        description: `GitHub events received by ${user}${types === 'all' ? '' : ` (filtered: ${types})`}${isAuthenticated ? ' - includes private events' : ' - public events only'}`,
+        title: `${org} GitHub organization Feed - ${typeFilter}`,
+        link: `https://github.com/${org}`,
+        description: `GitHub events received by ${org}`,
         item: items,
     };
 }
