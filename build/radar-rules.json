@@ -30867,6 +30867,19 @@
       }
     ]
   },
+  "ntrblog.com": {
+    "_name": "NTR BLOG（寝取られブログ）",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/ntrblog/articles"
+      }
+    ]
+  },
   "nua.edu.cn": {
     "_name": "Nanjing University of the Arts 南京艺术学院",
     "dc": [
