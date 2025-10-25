@@ -44,14 +44,14 @@ export async function handler(ctx) {
     const nickname = arr[0].post_user.user_nickname;
 
     const items = arr.map((item) => {
-        let descriptionContent = item?.post_content;
+        let descriptionContent = item.post_content;
         if (item.post_pic_url && item.post_pic_url.length > 0) {
             const imagesHTML = item.post_pic_url.map((url: string) => `<img src="${url}">`).join('');
             descriptionContent += '<br>' + imagesHTML;
         }
 
         return {
-            title: item?.post_title || `${nickname} 发布了长文: ${descriptionContent}`,
+            title: item.post_title || `${nickname} 发布了长文: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.post_publish_time), 8),
             link: `https://caifuhao.eastmoney.com/news/${item.post_source_id}`,

@@ -44,7 +44,7 @@ export async function handler(ctx) {
     const nickname = arr[0].reply_user.user_nickname;
 
     const items = arr.map((item) => {
-        const linkUrl = `https://guba.eastmoney.com/news,${item?.reply_guba.stockbar_code},${item?.source_post_id}.html#allReplyList`;
+        const linkUrl = `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`;
         const descriptionContent = `
         <p>${item.source_post_title}</p>
         <hr/>
@@ -58,7 +58,7 @@ export async function handler(ctx) {
         const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
 
         return {
-            title: item?.post_title || `${nickname} 发布了评论: ${descriptionContent}`,
+            title: item.post_title || `${nickname} 发布了评论: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: linkUrl,
