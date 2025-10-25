@@ -51,7 +51,7 @@ export async function handler(ctx) {
         }
 
         return {
-            title: `${nickname} 发布了长文: ${descriptionContent}`,
+            title: item?.post_title || `${nickname} 发布了长文: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.post_publish_time), 8),
             link: `https://caifuhao.eastmoney.com/news/${item.post_source_id}`,

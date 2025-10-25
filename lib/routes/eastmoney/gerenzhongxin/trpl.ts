@@ -58,7 +58,7 @@ export async function handler(ctx) {
         const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
 
         return {
-            title: `${nickname} 发布了评论: ${descriptionContent}`,
+            title: item?.post_title || `${nickname} 发布了评论: ${descriptionContent}`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: linkUrl,
