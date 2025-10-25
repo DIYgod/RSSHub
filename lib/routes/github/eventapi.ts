@@ -53,7 +53,7 @@ function formatEventItem(event: any) {
             break;
         case 'PullRequestReviewEvent':
             title = `${actor.login} reviewed a pull request in ${repo.name}`;
-            description = `${actor.login} ${payload.review?.state ?? "operated"} the PR` + (payload.review?.body ? `: ${payload.review.body}` : '');
+            description = `${actor.login} ${payload.review?.state ?? 'operated'} the PR` + (payload.review?.body ? `: ${payload.review.body}` : '');
             link = payload.review?.html_url || `https://github.com/${repo.name}`;
             break;
         case 'IssueCommentEvent':
