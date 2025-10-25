@@ -3111,6 +3111,9 @@
   "/github/notifications": [
     "zhzy0077"
   ],
+  "/github/org_event/:org/:types?": [
+    "mslxl"
+  ],
   "/github/feed/:user/:types?": [
     "RtYkk"
   ],
@@ -3120,6 +3123,9 @@
   ],
   "/github/pulse/:user/:repo/:period?": [
     "jameschensmith"
+  ],
+  "/github/repo_event/:owner/:repo/:types?": [
+    "mslxl"
   ],
   "/github/repos/:user/:type?/:sort?": [
     "DIYgod"
@@ -3139,6 +3145,9 @@
   "/github/trending/:since/:language/:spoken_language?": [
     "DIYgod",
     "jameschensmith"
+  ],
+  "/github/user_event/:username/:types?": [
+    "mslxl"
   ],
   "/github/wiki/:user/:repo/:page?": [
     "TonyRL"

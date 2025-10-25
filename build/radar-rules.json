@@ -16652,6 +16652,14 @@
         "target": "/github/notifications"
       },
       {
+        "title": "Organization Event",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/orgs/:org"
+        ],
+        "target": "/github/org_event/:org"
+      },
+      {
         "title": "User's Feed",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
@@ -16677,6 +16685,14 @@
           "/:user/:repo/pulse/:period"
         ],
         "target": "/github/pulse/:user/:repo/:period?"
+      },
+      {
+        "title": "Repository Event",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo"
+        ],
+        "target": "/github/repo_event/:owner/:repo"
       },
       {
         "title": "User Repo",
@@ -16718,6 +16734,14 @@
           "/trending"
         ],
         "target": "/github/trending/:since"
+      },
+      {
+        "title": "User Event",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:username"
+        ],
+        "target": "/github/user_event/:username"
       },
       {
         "title": "Wiki History",
