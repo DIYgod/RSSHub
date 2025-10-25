@@ -4,12 +4,13 @@ import { config } from '@/config';
 import { filterEvents } from './eventapi';
 
 export const route: Route = {
-    path: '/feed/:user/:types?',
+    path: '/repo_event/:owner/:repo/:types?',
     categories: ['programming'],
-    example: '/github/feed/yihong0618/star,release,pr',
+    example: '/github/repo_event/DIYgod/RSSHub',
     view: ViewType.Notifications,
     parameters: {
-        user: 'GitHub username',
+        owner: 'Username or organization name',
+        repo: 'Repository name',
         types: {
             description: 'Event types to include, comma separated',
             default: 'all',
@@ -31,6 +32,10 @@ export const route: Route = {
                     value: 'fork',
                 },
                 {
+                    label: 'Issue create events',
+                    value: 'issue',
+                },
+                {
                     label: 'Issue comment events',
                     value: 'issuecomm',
                 },
@@ -45,6 +50,10 @@ export const route: Route = {
                 {
                     label: 'Pull request review comment events',
                     value: 'prcomm',
+                },
+                {
+                    label: 'Pull request review events',
+                    value: 'prrev',
                 },
                 {
                     label: 'Public events',
@@ -62,6 +71,18 @@ export const route: Route = {
                     label: 'Watch events (stars)',
                     value: 'star',
                 },
+                {
+                    label: 'Wiki item create or update events',
+                    value: 'wiki',
+                },
+                {
+                    label: 'Commit comment events',
+                    value: 'cmcomm',
+                },
+                {
+                    label: 'Discussion events',
+                    value: 'discussion',
+                },
             ],
         },
     },
@@ -70,7 +91,7 @@ export const route: Route = {
             {
                 name: 'GITHUB_ACCESS_TOKEN',
                 optional: true,
-                description: 'GitHub access token to access private events',
+                description: 'GitHub access token to access private repository events',
             },
         ],
         requirePuppeteer: false,
@@ -81,17 +102,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['github.com/:user'],
-            target: '/feed/:user',
+            source: ['github.com/:owner/:repo'],
+            target: '/repo_event/:owner/:repo',
         },
     ],
-    name: "User's Feed",
-    maintainers: ['RtYkk'],
+    name: 'Repository Event',
+    maintainers: ['mslxl'],
     handler,
 };
 
 async function handler(ctx) {
-    const user = ctx.req.param('user');
+    const owner = ctx.req.param('owner');
+    const repo = ctx.req.param('repo');
     const types = ctx.req.param('types') || 'all';
 
     const isAuthenticated = config.github && config.github.access_token;
@@ -103,7 +125,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.github.com/users/${user}/received_events`,
+        url: `https://api.github.com/repos/${owner}/${repo}/events`,
         headers,
         searchParams: {
             per_page: 100,
@@ -111,14 +133,12 @@ async function handler(ctx) {
     });
 
     const items = filterEvents(types, response.data);
-
     const typeFilter = types === 'all' ? 'All Events' : `Events: ${types}`;
-    const feedType = isAuthenticated ? 'Private Feed' : 'Public Feed';
 
     return {
-        title: `${user}'s GitHub ${feedType} - ${typeFilter}`,
-        link: `https://github.com/${user}`,
-        description: `GitHub events received by ${user}${types === 'all' ? '' : ` (filtered: ${types})`}${isAuthenticated ? ' - includes private events' : ' - public events only'}`,
+        title: `${owner}/${repo} GitHub Repo Feed - ${typeFilter}`,
+        link: `https://github.com/${owner}/${repo}`,
+        description: `GitHub events received by ${owner}/${repo}${types === 'all' ? '' : ` (filtered: ${types})`}${isAuthenticated ? ' - includes private events' : ' - public events only'}`,
         item: items,
     };
 }
