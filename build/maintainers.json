@@ -2469,6 +2469,18 @@
   "/eastday/sh": [
     "saury"
   ],
+  "/eastmoney/gerenzhongxin/cfh/:uid": [
+    "AwesomeDog"
+  ],
+  "/eastmoney/gerenzhongxin/gather/:uid": [
+    "AwesomeDog"
+  ],
+  "/eastmoney/gerenzhongxin/guba/:uid": [
+    "AwesomeDog"
+  ],
+  "/eastmoney/gerenzhongxin/trpl/:uid": [
+    "AwesomeDog"
+  ],
   "/eastmoney/report/:category": [
     "syzq"
   ],

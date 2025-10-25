@@ -14234,6 +14234,108 @@
   },
   "eastmoney.com": {
     "_name": "东方财富",
+    "guba": [
+      {
+        "title": "个人中心长文",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/cfh/:uid"
+      },
+      {
+        "title": "个人中心所有活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/gather/:uid"
+      },
+      {
+        "title": "个人中心帖子",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/guba/:uid"
+      },
+      {
+        "title": "个人中心评论",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/trpl/:uid"
+      }
+    ],
+    "caifuhao": [
+      {
+        "title": "个人中心长文",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/cfh/:uid"
+      },
+      {
+        "title": "个人中心所有活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/gather/:uid"
+      },
+      {
+        "title": "个人中心帖子",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/guba/:uid"
+      },
+      {
+        "title": "个人中心评论",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/eastmoney/gerenzhongxin/trpl/:uid"
+      }
+    ],
+    "i": [
+      {
+        "title": "个人中心长文",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:uid"
+        ],
+        "target": "/eastmoney/gerenzhongxin/cfh/:uid"
+      },
+      {
+        "title": "个人中心所有活动",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:uid"
+        ],
+        "target": "/eastmoney/gerenzhongxin/gather/:uid"
+      },
+      {
+        "title": "个人中心帖子",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:uid"
+        ],
+        "target": "/eastmoney/gerenzhongxin/guba/:uid"
+      },
+      {
+        "title": "个人中心评论",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:uid"
+        ],
+        "target": "/eastmoney/gerenzhongxin/trpl/:uid"
+      }
+    ],
     "data": [
       {
         "title": "研究报告",
