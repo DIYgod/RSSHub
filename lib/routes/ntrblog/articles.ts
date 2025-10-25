@@ -47,7 +47,8 @@ async function handler(): Promise<Data> {
                 const $ = load(response);
                 const content = $('div.article-body');
                 content.find('#twitter-widget-1').remove();
-                content.find('.related-articles').remove();
+                content.find('[id^="ldblog_related_articles_"]').remove();
+                content.find('#ad2').remove();
                 item.content = `<div lang="ja">${content.html()}</div>`;
                 return item;
             });
