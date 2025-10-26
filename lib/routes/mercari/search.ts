@@ -18,9 +18,16 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search',
-    maintainers: ['yana9i, Tsuyumi25'],
+    maintainers: ['yana9i', 'Tsuyumi25'],
     url: 'jp.mercari.com',
     handler,
+    description: `::: warning
+此路由僅支援 \`jp.mercari.com\`，不支援 \`tw.mercari.com\` 和 \`hk.mercari.com\`。
+
+**注意：** 不同站點的查詢參數格式不同
+- 日本: \`keyword=シャツ&order=desc&sort=created_time&status=on_sale\`
+- 台灣: \`keyword=シャツ&sort=new&status=in-stock&availability=1\`
+:::`,
 };
 
 function parseSearchQuery(queryString: string) {
