@@ -54,7 +54,7 @@ if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && 
 
 export { youtubeOAuth2Client, exec };
 
-export const getDataByUsername = async ({ username, embed, filterShorts }: { username: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
+export const getDataByUsername = async ({ username, embed, filterShorts, isJsonFeed }: { username: string; embed: boolean; filterShorts: boolean; isJsonFeed: boolean }): Promise<Data> => {
     let userHandleData;
     if (username.startsWith('@')) {
         userHandleData = await cache.tryGet(`youtube:handle:${username}`, async () => {
@@ -109,7 +109,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
     }
     const videoIds = playlistItems.data.items.map((item) => item.snippet.resourceId.videoId);
     const videoDetails = await utils.getVideos(videoIds.join(','), 'contentDetails', cache);
-    const subtitlesMap = await getSrtAttachmentBatch(videoIds);
+    const subtitlesMap = isJsonFeed ? await getSrtAttachmentBatch(videoIds) : {};
 
     return {
         title: `${userHandleData?.channelName || username} - YouTube`,
@@ -123,7 +123,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts }: { use
                 const videoId = snippet.resourceId.videoId;
                 const img = utils.getThumbnail(snippet.thumbnails);
                 const detail = videoDetails?.data.items.find((d) => d.id === videoId);
-                const srtAttachments = subtitlesMap[videoId] || [];
+                const srtAttachments = subtitlesMap ? subtitlesMap[videoId] || [] : [];
 
                 return {
                     title: snippet.title,
