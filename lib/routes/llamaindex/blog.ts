@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = $('html').attr('lang') ?? 'en';
 
     const links = new Set<string>();
-    $('a[href^="/blog/"].PostThumbnail').each((_, element) => {
+    $('.AllPosts .PostTitle a').each((_, element) => {
         const href = $(element).attr('href');
         if (href && !href.includes('?tag=')) {
             links.add(href);
