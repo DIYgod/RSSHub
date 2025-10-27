@@ -395,8 +395,8 @@ importers:
         specifier: 16.4.0
         version: 16.4.0
       got:
-        specifier: 14.6.0
-        version: 14.6.0
+        specifier: 14.6.1
+        version: 14.6.1
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -3835,8 +3835,8 @@ packages:
     resolution: {integrity: sha512-dIN768H8so9qGucFtjYPBZJ+OCEgDi/xYyvYQHniPL1ZCYvrRDBTmtbjVjKCPG1CuOhG4CKHZDXiFe6QZ2qBeQ==}
     engines: {node: '>=18'}
 
-  got@14.6.0:
-    resolution: {integrity: sha512-K30JHMsHcwhy+JYet3IxRFw+L9rb77y5LE3OkoAD4qzMR9/g30bWYBfkHYVJL2BBPgfU4lJsRwhy4HUkLPQc3g==}
+  got@14.6.1:
+    resolution: {integrity: sha512-56lZOw904LHKr6KdKN0Zbgz9Lw6cpEAAqZcS+0iY4D27caHoLiFT0EGCbrX9ZKYvt+I2lGl3a8eeDNSbmhyjkQ==}
     engines: {node: '>=20'}
 
   graceful-fs@4.2.11:
@@ -9616,7 +9616,7 @@ snapshots:
       camelcase-keys: 9.1.3
       decamelize-keys: 2.0.1
       form-data: 4.0.4
-      got: 14.6.0
+      got: 14.6.1
       he: 1.2.0
       hmacsha1: 1.0.0
       oauth-1.0a: 2.2.6
@@ -9876,7 +9876,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  got@14.6.0:
+  got@14.6.1:
     dependencies:
       '@sindresorhus/is': 7.1.0
       '@szmarczak/http-timer': 5.0.1
