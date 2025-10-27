@@ -33,6 +33,8 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const uid = ctx.req.param('uid');
     const embed = !ctx.req.param('embed');
     const cookie = await cache.getCookie();
@@ -74,7 +76,7 @@ async function handler(ctx: Context) {
             data.data.list.vlist &&
             (await Promise.all(
                 data.data.list.vlist.map(async (item) => {
-                    const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                    const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                     return {
                         title: item.title,
                         description: utils.renderUGCDescription(embed, item.pic, item.description, item.aid, undefined, item.bvid),
