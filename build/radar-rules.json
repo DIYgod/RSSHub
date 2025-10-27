@@ -18079,6 +18079,168 @@
   },
   "mee.gov.cn": {
     "_name": "深圳市罗湖区人民政府",
+    "nnsa": [
+      {
+        "title": "国家核安全局",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:category"
+        ],
+        "target": "/gov/mee/nnsa/:category"
+      },
+      {
+        "title": "要闻动态 - 时政要闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/szyw/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/szyw"
+      },
+      {
+        "title": "要闻动态 - 环境要闻",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/hjyw/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/hjyw"
+      },
+      {
+        "title": "要闻动态 - 监管动态",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/gzdt/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/gzdt"
+      },
+      {
+        "title": "要闻动态 - 行业资讯",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/hyzx/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/hyzx"
+      },
+      {
+        "title": "要闻动态 - 国际资讯",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/gjzx/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/gjzx"
+      },
+      {
+        "title": "要闻动态 - 公示公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/gsqg/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/gsqg"
+      },
+      {
+        "title": "要闻动态 - 曝光台",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdt/bgt/"
+        ],
+        "target": "/gov/mee/nnsa/ywdt/bgt"
+      },
+      {
+        "title": "政策文件 - 中央有关文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/zyygwj/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/zyygwj"
+      },
+      {
+        "title": "政策文件 - 国务院有关文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/gwyygwj/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/gwyygwj"
+      },
+      {
+        "title": "政策文件 - 部文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/bwj/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/bwj"
+      },
+      {
+        "title": "政策文件 - 核安全局文件",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/haqjwj/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/haqjwj"
+      },
+      {
+        "title": "政策文件 - 其他",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/qt/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/qt"
+      },
+      {
+        "title": "政策文件 - 解读",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zcwj/jd/"
+        ],
+        "target": "/gov/mee/nnsa/zcwj/jd"
+      },
+      {
+        "title": "业务工作 - 核动力厂和研究堆",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/fyd/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/fyd"
+      },
+      {
+        "title": "业务工作 - 核燃料、放废",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/hrlff/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/hrlff"
+      },
+      {
+        "title": "业务工作 - 核技术、电磁、矿冶",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/hjsdcky/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/hjsdcky"
+      },
+      {
+        "title": "业务工作 - 监测与应急",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/jcyj_1/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/jcyj_1"
+      },
+      {
+        "title": "业务工作 - 核安全设备与人员",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/haqsbry/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/haqsbry"
+      },
+      {
+        "title": "业务工作 - 国际合作",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/ywdh/gjhz/"
+        ],
+        "target": "/gov/mee/nnsa/ywdh/gjhz"
+      }
+    ],
     "www": [
       {
         "title": "要闻动态",
