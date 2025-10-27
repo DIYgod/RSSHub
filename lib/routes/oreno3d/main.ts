@@ -138,9 +138,8 @@ async function handler(ctx) {
         pagelimit = 1;
     }
     // 构造网页数据的对应数组
-    const responseList = [];
+    const responseList = [response];
     // 将第一页的数据加入数组
-    responseList.push(response);
     // 创建不含第一页链接的数组
     const Links = [];
     for (let i = 1; i < pagelimit; i++) {

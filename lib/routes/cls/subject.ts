@@ -76,7 +76,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = parseDate(data.ctime, 'X');
-                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]) ?? [])].filter(Boolean);
+                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]))].filter(Boolean);
                 item.author = data.author?.name ?? item.author;
                 item.guid = guid;
                 item.id = guid;

@@ -11,6 +11,7 @@ const deprecatedRoute = 'route: deprecated';
 const route = 'route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
+// eslint-disable-next-line unicorn/no-useless-collection-argument
 const dndUsernames = new Set([]);
 
 async function parseBodyRoutes(body, core) {

@@ -104,15 +104,14 @@ async function handler(ctx: Context): Promise<Data> {
                     pubDate: parseDate(response.onlineTime),
                     link,
                     image: response.cover,
+                    description:
+                        'zhTextList' in response && 'enTextList' in response
+                            ? art(templatePath, {
+                                  zh: response.zhTextList,
+                                  en: response.enTextList,
+                              })
+                            : response.content,
                 };
-
-                dataItem.description =
-                    'zhTextList' in response && 'enTextList' in response
-                        ? art(templatePath, {
-                              zh: response.zhTextList,
-                              en: response.enTextList,
-                          })
-                        : response.content;
 
                 if ('paperList' in response) {
                     const { doi, authors } = response.paperList[0];

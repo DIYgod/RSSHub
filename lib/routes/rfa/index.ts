@@ -46,9 +46,10 @@ async function handler(ctx) {
     const list = [];
     for (const selector of selectors) {
         $(selector).each((_, e) => {
-            const item = {};
-            item.title = $(e).find('h2 a span').first().text();
-            item.link = $(e).find('h2 a').first().attr('href');
+            const item = {
+                title: $(e).find('h2 a span').first().text(),
+                link: $(e).find('h2 a').first().attr('href'),
+            };
             list.push(item);
         });
     }

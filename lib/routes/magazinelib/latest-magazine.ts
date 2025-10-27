@@ -46,11 +46,12 @@ async function handler(ctx) {
     }
 
     const items = response.data.map((obj) => {
-        const data = {};
-        data.date = obj.date_gmt;
-        data.link = obj.link;
-        data.featuredMediaLink = obj._links['wp:featuredmedia'][0].href;
-        data.title = obj.title.rendered;
+        const data = {
+            date: obj.date_gmt,
+            link: obj.link,
+            featuredMediaLink: obj._links['wp:featuredmedia'][0].href,
+            title: obj.title.rendered,
+        };
         const $ = load(obj.content.rendered);
         const content = $('.vk-att');
         content.find('img[src="https://magazinelib.com/wp-includes/images/media/default.png"]').remove();
