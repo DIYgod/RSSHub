@@ -46,8 +46,9 @@ export const parseList = async (
 
             return cache.tryGet(link, async () => {
                 if ($item.attr('href')?.includes('https://')) {
+                    const isSingapore = pageResponse.url.startsWith('https://www.zaobao.com.sg/');
                     return {
-                        title: $item.attr('title')?.trim() as string,
+                        title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
                         link: $item.attr('href') as string,
                         pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), +8),
                     };
