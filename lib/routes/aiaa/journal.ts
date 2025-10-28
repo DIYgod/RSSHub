@@ -15,7 +15,7 @@ export const route: Route = {
     name: 'aiaa ASR Articles',
     maintainers: ['HappyZhu99'],
     categories: ['journal'],
-    path: 'aiaa/journal/:journalID',
+    path: '/aiaa/journal/:journalID',
     parameters: {
         journalID: 'journal ID, can be found in the URL',
     },
