@@ -34,10 +34,7 @@ function formatEventItem(event: any) {
             description = `Pushed ${commitCount}to ${branch} in ${repo.name}`;
 
             if (payload.commits) {
-                link = payload.commits.at(-1).url.replace(
-                    /https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/commits\/(\d+)/,
-                    'https://github.com/$1/$2/commit/$3'
-                );
+                link = payload.commits.at(-1).url.replace(/https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/commits\/(\d+)/, 'https://github.com/$1/$2/commit/$3');
                 description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
             } else {
                 link = `https://github.com/${repo.name}/commit/${payload.head}`;
@@ -47,10 +44,7 @@ function formatEventItem(event: any) {
         case 'PullRequestEvent':
             title = `${actor.login} ${payload.action} a pull request in ${repo.name}`;
             if (payload.pull_request) {
-                link = payload.pull_request.url.replace(
-                    /https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/pulls\/(\d+)/,
-                    'https://github.com/$1/$2/pull/$3'
-                );
+                link = payload.pull_request.url.replace(/https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/pulls\/(\d+)/, 'https://github.com/$1/$2/pull/$3');
                 description = `PR: ${link}`;
             } else {
                 link = `https://github.com/${repo.name}`;
