@@ -5,7 +5,16 @@ import { Innertube } from 'youtubei.js';
 import utils, { getVideoUrl } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
-const innertubePromise = Innertube.create();
+const innertubePromise = Innertube.create({
+    fetch: (input, init) => {
+        const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+
+        return fetch(url, {
+            method: input?.method,
+            ...init,
+        });
+    },
+});
 
 export const getChannelIdByUsername = (username: string) =>
     cache.tryGet(`youtube:getChannelIdByUsername:${username}`, async () => {
