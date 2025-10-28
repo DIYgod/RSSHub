@@ -43,8 +43,16 @@ function formatEventItem(event: any) {
         }
         case 'PullRequestEvent':
             title = `${actor.login} ${payload.action} a pull request in ${repo.name}`;
-            description = `PR: ${payload.pull_request?.url || 'Unknown'}`;
-            link = payload.pull_request?.url || `https://github.com/${repo.name}`;
+            if (payload.pull_request) {
+                link = payload.pull_request.url.replace(
+                    /https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/pulls\/(\d+)/,
+                    'https://github.com/$1/$2/pull/$3'
+                );
+                description = `PR: ${link}`;
+            } else {
+                link = `https://github.com/${repo.name}`;
+                description = `PR: Unknown`;
+            }
             break;
         case 'PullRequestReviewCommentEvent':
             title = `${actor.login} commented on a pull request review in ${repo.name}`;
