@@ -5,6 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import { renderToString } from 'hono/jsx/dom/server';
 import { base32 } from 'rfc4648';
 import Zaobao from './zaobao';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.zaobao.com';
 export const logo = 'https://www.zaobao.com.sg/favicon.ico';
@@ -21,10 +22,10 @@ export const parseList = async (
     title: string;
     resultList: {
         title: string;
-        description: string;
+        description?: string;
         pubDate: Date;
         link: string;
-        category: string[];
+        category?: string[];
     }[];
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
@@ -36,7 +37,7 @@ export const parseList = async (
     }
     const origin = new URL(pageResponse.url).origin;
 
-    const title = $('meta[property="og:title"]').attr('content');
+    const title = $('meta[property="og:title"]').attr('content') as string;
 
     const resultList = await Promise.all(
         data.toArray().map((item) => {
@@ -44,7 +45,15 @@ export const parseList = async (
             const link = baseUrl + $item.attr('href');
 
             return cache.tryGet(link, async () => {
-                const response = await ofetch.raw(origin + $item.attr('href'));
+                if ($item.attr('href')?.includes('https://')) {
+                    const isSingapore = pageResponse.url.startsWith('https://www.zaobao.com.sg/');
+                    return {
+                        title: isSingapore ? $item.text().trim() : ($item.attr('title')?.trim() as string),
+                        link: $item.attr('href') as string,
+                        pubDate: timezone($item.next().text().trim().includes(':') ? parseDate($item.next().text().trim(), 'HH:mm') : parseDate($item.next().text().trim(), 'MM月DD日'), +8),
+                    };
+                }
+                const response = await ofetch.raw(new URL($item.attr('href') as string, origin).href);
                 let $1 = load(response._data);
 
                 let title, pubDate, category, images;
