@@ -34,7 +34,10 @@ function formatEventItem(event: any) {
             description = `Pushed ${commitCount}to ${branch} in ${repo.name}`;
 
             if (payload.commits) {
-                link = payload.commits.at(-1).url.replace('api.github.com/repos/', 'github.com/').replace('/commits/', '/commit/');
+                link = payload.commits.at(-1).url.replace(
+                    /https:\/\/api\.github\.com\/repos\/([^/]+)\/([^/]+)\/commits\/(\d+)/,
+                    'https://github.com/$1/$2/commit/$3'
+                );
                 description += `<br><strong>Latest commit:</strong> ${payload.commits.at(-1).message}`;
             } else {
                 link = `https://github.com/${repo.name}/commit/${payload.head}`;
