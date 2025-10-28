@@ -12,14 +12,14 @@ interface RSSItem {
 }
 
 export const route: Route = {
-    name: 'IEEE Journal Articles',
+    name: 'aiaa ASR Articles',
     maintainers: ['HappyZhu99'],
     categories: ['journal'],
-    path: '/journal/:journalID',
+    path: 'aiaa/journal/:journalID',
     parameters: {
         journalID: 'journal ID, can be found in the URL',
     },
-    example: '/ieee/journal/aiaaj',
+    example: '/aiaa/journal/aiaaj',
     handler,
 };
 
