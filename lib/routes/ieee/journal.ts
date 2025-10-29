@@ -40,9 +40,18 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(`https://doi.org/${item.doi}`);
+                const response = await ofetch(`https://ieeexplore.ieee.org${item.link}`);
+
                 const $ = load(response);
-                item.abstract = $('meta[property="twitter:description"]').attr('content') || '';
+
+                const target = $('script[type="text/javascript"]')
+                    .filter((_, el) => /xplGlobal\.document\.metadata\s*=/.test($(el).html() || ''))
+                    .first();
+                const code = target.html() || '';
+
+                // 捕获等号右侧的 JSON（最小匹配直到紧随的分号）
+                const m = code.match(/xplGlobal\.document\.metadata\s*=\s*(\{[\s\S]*?\})\s*;/);
+                item.abstract = m ? ((JSON.parse(m[1]) as { abstract?: string }).abstract ?? ' ') : ' ';
                 item.description = art(path.join(__dirname, 'templates/description.art'), {
                     item,
                 });
