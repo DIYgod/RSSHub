@@ -24,6 +24,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const embed = !ctx.req.param('embed');
 
     const status_response = await got({
@@ -50,7 +51,7 @@ async function handler(ctx) {
         link: 'https://www.bilibili.com/h5/weekly-recommend',
         description: 'B站每周必看',
         item: data.map(async (item) => {
-            const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+            const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
             return {
                 title: item.title,
                 description: utils.renderUGCDescription(embed, item.cover, `${weekly_name} ${item.title} - ${item.rcmd_reason}`, item.param, undefined, item.bvid),

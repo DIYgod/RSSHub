@@ -185,6 +185,7 @@ function getAPI(ridIndex: number) {
 }
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const args = ctx.req.param();
     if (args.redirect1 || args.redirect2) {
         // redirect old routes like /bilibili/ranking/0/3/1 or /bilibili/ranking/0/3/1/xxx
@@ -216,7 +217,7 @@ async function handler(ctx) {
         link,
         item: await Promise.all(
             list.map(async (item) => {
-                const subtitles = !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
+                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && item.bvid ? await cache.getVideoSubtitleAttachment(item.bvid) : [];
                 return {
                     title: item.title,
                     description: utils.renderUGCDescription(embed, item.pic, item.description || item.title, item.aid, undefined, item.bvid),
