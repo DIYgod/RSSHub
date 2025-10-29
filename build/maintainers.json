@@ -698,6 +698,9 @@
   "/azul/downloads": [
     "nczitzk"
   ],
+  "/azurlane/news/:server/:type?": [
+    "AnitsuriW"
+  ],
   "/baai/hub/events": [
     "TonyRL"
   ],
