@@ -158,7 +158,7 @@ async function handler(ctx) {
                     orderBy: {
                         createdAt: 'DESC',
                     },
-                    isFree: Boolean(freeOnly),
+                    isFree: freeOnly ? true : null,
                     category: null,
                     artistUrl: username,
                     aggregationKeywords: ['PACKAGE_IDS', 'TAG_IDS', 'INSTRUMENTS', 'SHEET_TYPE', 'INCLUDE_CHORD', 'INCLUDE_LYRICS', 'INSTRUMENTATION', 'LEVEL', 'CATEGORY'],
