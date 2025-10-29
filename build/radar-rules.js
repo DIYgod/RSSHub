@@ -13660,7 +13660,7 @@
         source:[ "/search/label/:label",
           "/" ],
         target:"/mygopen/:label?" } ] },
-  "mymusicsheet.com":{ _name:"MyMusicSheet",
+  "mymusicfive.com":{ _name:"mymusic5 (MyMusicSheet)",
     ".":[ { title:"User Sheets",
         docs:"https://docs.rsshub.app/routes/shopping",
         source:[ "/:username/*",
