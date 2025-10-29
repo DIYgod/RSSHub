@@ -84,7 +84,7 @@ async function parseVideo(body: VideoPost['body']) {
             ret += await getSoundCloudEmbedUrl(body.video.videoId);
             break;
         case 'youtube':
-            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0"></iframe>`;
+            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             break;
         case 'vimeo':
             ret += `<iframe src="https://player.vimeo.com/video/${body.video.videoId}" frameborder="0"></iframe>`;

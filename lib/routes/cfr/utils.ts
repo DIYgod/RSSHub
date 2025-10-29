@@ -247,7 +247,7 @@ function getVideoIframe($ele: Cheerio<Element>) {
         if (youtubeSource) {
             const videoId = youtubeSource.src.match(/\?v=([^&]+)/)?.[1];
             if (videoId) {
-                return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
+                return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             }
         }
     }

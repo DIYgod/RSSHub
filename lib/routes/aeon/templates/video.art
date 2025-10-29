@@ -5,6 +5,6 @@
     {{ set video = "https://www.youtube-nocookie.com/embed/" + video }}
 {{ /if }}
 
-<iframe width="672" height="377" src="{{ video }}" frameborder="0" allowfullscreen></iframe>
+<iframe width="672" height="377" src="{{ video }}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
 {{@ article.credits }}
 {{@ article.description }}
