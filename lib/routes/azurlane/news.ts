@@ -72,7 +72,7 @@ export const route: Route = {
     name: 'News',
     categories: ['game'],
     maintainers: ['AnitsuriW'],
-    example: '/news/jp/0',
+    example: '/azurlane/news/jp/0',
     parameters: {
         server: 'game server (ISO 3166 two-letter country code, case-insensitive), only `JP` is supported for now',
         type: 'news type, see the table below, `0` by default',
