@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler() {
     const { posts: data } = await ofetch('https://cohere-ai.ghost.io/ghost/api/content/posts', {
-        params: {
+        query: {
             key: '572d288a9364f8e4186af1d60a',
             limit: 'all',
             include: ['authors', 'tags'],

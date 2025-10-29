@@ -33,7 +33,7 @@ export async function getFulltext(url: string) {
 
     const isWeekly = url.includes('weekly');
     const res = await ofetch(`https://gateway.caixin.com/api/newauth/checkAuthByIdJsonp`, {
-        params: {
+        query: {
             type: 1,
             page: isWeekly ? 0 : 1,
             rand: Math.random(),
