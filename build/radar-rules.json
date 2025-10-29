@@ -13587,6 +13587,51 @@
       }
     ]
   },
+  "dgtle.com": {
+    "_name": "数字尾巴",
+    "www": [
+      {
+        "title": "鲸闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/dgtle/news"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/dgtle/news/0"
+      },
+      {
+        "title": "直播",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/dgtle/news/395"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/dgtle/news/396"
+      },
+      {
+        "title": "每日一言",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/dgtle/news/388"
+      }
+    ]
+  },
   "dgut.edu.cn": {
     "_name": "东莞理工学院",
     "jwb": [
