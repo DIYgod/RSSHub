@@ -57,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             title,
             description,
             pubDate: pubDate ? timezone(parseDate(pubDate, 'X'), +8) : undefined,
-            link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+            link: new URL(linkUrl, baseUrl).href,
             category: categories,
             author: authors,
             guid,
