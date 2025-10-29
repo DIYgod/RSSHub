@@ -1,6 +1,9 @@
 import { Route } from '@/types';
 
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
 import path from 'node:path';
 import { art } from '@/utils/render';
 
@@ -31,17 +34,28 @@ async function handler(ctx) {
     const list = tocData.records.map((item) => {
         const mappedItem = mapRecordToItem(volume)(item);
 
-        mappedItem.description = art(path.join(__dirname, 'templates/description.art'), {
-            item: mappedItem,
-        });
-
         return mappedItem;
     });
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(`https://doi.org/${item.doi}`);
+                const $ = load(response);
+                item.abstract = $('meta[property="twitter:description"]').attr('content') || '';
+                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    item,
+                });
+
+                return item;
+            })
+        )
+    );
 
     return {
         title: displayTitle,
         link: `${ieeeHost}/xpl/tocresult.jsp?isnumber=${issueNumber}`,
-        item: list,
+        item: items,
         image: `${ieeeHost}${coverImagePath}`,
     };
 }
