@@ -7,7 +7,7 @@ import { URLSearchParams } from 'node:url';
 export const route: Route = {
     path: '/watched/:params?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/watched/f_cats=1021/0/bittorrent=true&embed_thumb=false&my_tags=true',
+    example: '/ehentai/watched/f_cats=1021/bittorrent=true&embed_thumb=false&my_tags=true',
     parameters: {
         params: 'Search parameters. You can copy the content after `https://e-hentai.org/watched?`',
         routeParams: 'Additional parameters, see the table above',

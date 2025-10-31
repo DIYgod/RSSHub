@@ -7,7 +7,7 @@ export const route: Route = {
     categories: ['picture'],
     example: '/ehentai/popular/f_sft=on&f_sfu=on&f_sfl=on/bittorrent=true&embed_thumb=false&my_tags=true',
     parameters: {
-        params: 'Filter parameters. You can copy the content after `https://e-hentai.org/popular?',
+        params: 'Filter parameters. You can copy the content after `https://e-hentai.org/popular?`',
         routeParams: 'Additional parameters, see the table above. E.g. `bittorrent=true&embed_thumb=false`',
     },
     features: {
