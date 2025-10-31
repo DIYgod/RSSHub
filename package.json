@@ -54,7 +54,7 @@
         "@bbob/html": "4.3.1",
         "@bbob/plugin-helper": "4.3.1",
         "@bbob/preset-html5": "4.3.1",
-        "@hono/node-server": "1.19.5",
+        "@hono/node-server": "1.19.6",
         "@hono/zod-openapi": "0.19.10",
         "@notionhq/client": "5.3.0",
         "@opentelemetry/api": "1.9.0",
