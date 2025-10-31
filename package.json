@@ -94,7 +94,7 @@
         "instagram-private-api": "1.46.1",
         "ioredis": "5.8.2",
         "ip-regex": "5.0.0",
-        "jsdom": "27.0.1",
+        "jsdom": "27.1.0",
         "json-bigint": "1.0.0",
         "jsonpath-plus": "10.3.0",
         "jsrsasign": "10.9.0",
