@@ -1,6 +1,5 @@
 import { Route } from '@/types';
-import got from '@/utils/got';
-import * as url from 'node:url';
+import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
 export const route: Route = {
@@ -24,56 +23,55 @@ export const route: Route = {
     handler,
 };
 
+const getMediaApiToken = (metaContent) => {
+    if (!metaContent) {
+        throw new Error('Empty web experience config meta content');
+    }
+    const config = JSON.parse(decodeURIComponent(metaContent));
+    return config.MEDIA_API.token;
+};
+
 async function handler(ctx) {
     const country = ctx.req.param('country');
     const id = ctx.req.param('id');
     const link = `https://apps.apple.com/${country}/app/${id}`;
-    const target = url.resolve(link, '?mt=8#see-all/in-app-purchases');
 
-    const res = await got.get(target);
-    const $ = load(res.data);
+    const res = await ofetch(link);
+    const $ = load(res);
     const lang = $('html').attr('lang');
+    const mediaToken = getMediaApiToken($('meta[name="web-experience-app/config/environment"]').attr('content'));
 
-    const apiResponse = (
-        await got({
-            method: 'get',
-            url: `https://amp-api.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}?platform=web&include=Cmerchandised-in-apps%2Ctop-in-apps%2Ceula&l=${lang}`,
-            headers: {
-                authorization:
-                    'Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNSRjVITkJHUFEifQ.eyJpc3MiOiI4Q1UyNk1LTFM0IiwiaWF0IjoxNjA3MDMxMTcwLCJleHAiOjE2MTAwNTUxNzB9.qzq2PKkPBNDwHbShoBY3T7J2IjgWsR_MyAvTnZtQB5FZjsH_ZY5esBa0qXbA9kUiq_90GkRoNVMR03meOQQ7SQ',
-                authority: 'amp-api.apps.apple.com',
-                referer: target,
-            },
-        })
-    ).data.data[0];
+    const apiResponse = await ofetch(`https://amp-api-edge.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
+        query: {
+            platform: 'web',
+            include: 'merchandised-in-apps,top-in-apps,eula',
+            l: lang,
+        },
+        headers: {
+            authorization: `Bearer ${mediaToken}`,
+            origin: 'https://apps.apple.com',
+        },
+    });
 
-    const attributes = apiResponse.attributes;
-    const titleTemp = attributes.name;
+    const appData = apiResponse.data[0];
+    const attributes = appData.attributes;
 
     const platform = attributes.deviceFamilies.includes('mac') ? 'macOS' : 'iOS';
-    let title;
+
     let item = [];
 
-    const iap = apiResponse.relationships['top-in-apps'].data;
+    const iap = appData.relationships['top-in-apps'].data;
     if (iap) {
-        title = `${country === 'cn' ? '内购限免提醒' : 'IAP price watcher'}: ${titleTemp} for ${platform}`;
-
-        item = iap.map((e) => {
-            const title = `${e.attributes.name} is now ${e.attributes.offers[0].priceFormatted}`;
-
-            const result = {
-                link,
-                guid: e.attributes.url,
-                description: e.attributes.artwork ? e.attributes.description.standard + `<br><img src=${e.attributes.artwork.url.replace('{w}x{h}{c}.{f}', '320x0w.jpg')}>` : e.attributes.description.standard,
-                title,
-                pubDate: new Date().toUTCString(),
-            };
-            return result;
-        });
+        item = iap.map(({ attributes }) => ({
+            title: `${attributes.name} is now ${attributes.offers[0].priceFormatted}`,
+            link: attributes.url,
+            guid: `${attributes.url}:${attributes.offerName}:${attributes.offers[0].priceString}`,
+            description: attributes.artwork ? attributes.description.standard + `<br><img src=${attributes.artwork.url.replace('{w}x{h}{c}.{f}', '3000x3000bb.webp')}>` : attributes.description.standard,
+        }));
     }
 
     return {
-        title,
+        title: `${country.toLowerCase() === 'cn' ? '内购限免提醒' : 'IAP price watcher'}: ${attributes.name} for ${platform}`,
         link,
         item,
     };
