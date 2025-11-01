@@ -55,7 +55,7 @@ async function handler(ctx) {
     const params = new URLSearchParams(routeParams);
 
     // Get embed parameter
-    const embed = !params.get('embed');
+    const embed = !params.has('embed');
 
     // Get filterShorts parameter (default to true if not specified)
     const filterShortsStr = params.get('filterShorts');
