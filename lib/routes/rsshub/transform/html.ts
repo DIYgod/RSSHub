@@ -10,6 +10,7 @@ export const route: Route = {
     path: '/transform/html/:url/:routeParams',
     categories: ['other'],
     example: '/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a',
+    // '/rsshub/transform/html/https%3A%2F%2Fwww.math.pku.edu.cn%2Fbms%2Fxhxw%2Findex.htm/title=北京数学会&item=.sub_list%20li&itemTitle=a&itemLink=a&itemDesc=a&itemPubDate=span&itemContent=.subArticleCon%2C%20%23js_content'
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
         requireConfig: [
@@ -25,7 +26,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Transformation - HTML',
-    maintainers: ['ttttmr', 'hyoban'],
+    maintainers: ['ttttmr', 'hyoban', 'binshe'],
     description: `Pass URL and transformation rules to convert HTML/JSON into RSS.
 
 Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from HTML.
@@ -43,6 +44,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 | \`itemPubDate\`     | The HTML elements as \`pubDate\` in \`item\` using CSS selector                                               | \`string\`      | \`item\` element         |
 | \`itemPubDateAttr\` | The attributes of \`pubDate\` element as pubDate                                                              | \`string\`      | Element html             |
 | \`itemContent\`     | The HTML elements as \`description\` in \`item\` using CSS selector ( in \`itemLink\` page for full content ) | \`string\`      |                          |
+| \`itemContentIncl\` | The file extensions to include to fetch \`itemContent\` (comma separated)                                     | \`string\`      | \`html, htm\`            |
 | \`encoding\`        | The encoding of the HTML content                                                                              | \`string\`      | utf-8                    |
 
   Parameters parsing in the above example:
@@ -61,14 +63,14 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
         if (!config.feature.allow_user_supply_unsafe_domain) {
             throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
         }
-        const url = ctx.req.param('url');
+        const url = decodeURIComponent(ctx.req.param('url'));
         const response = await got({
             method: 'get',
             url,
             responseType: 'arrayBuffer',
         });
 
-        const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+        const routeParams = new URLSearchParams(decodeURIComponent(ctx.req.param('routeParams')));
         const encoding = routeParams.get('encoding') || 'utf-8';
         const decoder = new TextDecoder(encoding);
 
@@ -122,6 +124,22 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                 items.map((item) => {
                     if (!item.link) {
                         return item;
+                    }
+
+                    const itemContentIncl = routeParams.get('itemContentIncl')?.trim() || 'html, htm';
+                    const fileName = item.link.split('/').pop()?.split(/[?#]/)[0] || '';
+                    const fileExt = fileName.includes('.') && fileName.lastIndexOf('.') < fileName.length - 1 ? fileName.slice(fileName.lastIndexOf('.') + 1).toLowerCase() : '';
+                    if (fileExt) {
+                        const exts = itemContentIncl
+                            .split(',')
+                            .map((ext) => ext.trim().toLowerCase())
+                            .filter(Boolean);
+                        if (!exts.includes(fileExt)) {
+                            item.enclosure_url = item.link;
+                            item.enclosure_type = `application/${fileExt}`;
+                            item.enclosure_length = 0;
+                            return item;
+                        }
                     }
 
                     return cache.tryGet(`transform:${item.link}:${itemContentSelector}`, async () => {

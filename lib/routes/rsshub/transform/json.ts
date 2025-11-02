@@ -3,6 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
 
 function jsonGet(obj, attr) {
     if (typeof attr !== 'string') {
@@ -20,6 +21,7 @@ export const route: Route = {
     path: '/transform/json/:url/:routeParams',
     categories: ['other'],
     example: '/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body',
+    // '/rsshub/transform/json/https%3A%2F%2Fwww.jiqizhixin.com%2Fapi%2Farticle_library%2Farticles.json/title=机器之心&item=articles&itemTitle=title&itemLink=slug&itemLinkPrefix=%2Farticles%2F&itemDesc=content&itemPubDate=publishedAt&itemContent=content&itemJSONPrefix=%2Fapi%2Farticle_library%2Farticles%2F'
     parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
     features: {
         requireConfig: [
@@ -35,7 +37,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Transformation - JSON',
-    maintainers: ['ttttmr'],
+    maintainers: ['ttttmr', 'binshe'],
     handler,
     description: `Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from JSON.
 
@@ -47,6 +49,8 @@ export const route: Route = {
 | \`itemLink\`       | The JSON Path as \`link\` in \`item\`        | \`string\`        | None                                       |
 | \`itemLinkPrefix\` | Optional Prefix for \`itemLink\` value       | \`string\`        | None                                       |
 | \`itemDesc\`       | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
+| \`itemContent\`    | The JSON Path of full content in \`itemLink\`| \`string\`        | None                                       |
+| \`itemJSONPrefix\` | Opt Prefix for \`itemLink\` JSON endpoint    | \`string\`        | None                                       |
 | \`itemPubDate\`    | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
 
 ::: tip
@@ -74,13 +78,12 @@ async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
-    const url = ctx.req.param('url');
+    const url = decodeURIComponent(ctx.req.param('url'));
     const response = await got({
         method: 'get',
         url,
     });
-
-    const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
+    const routeParams = new URLSearchParams(decodeURIComponent(ctx.req.param('routeParams')));
     let rssTitle = routeParams.get('title');
     if (!rssTitle) {
         const resp = await got({
@@ -91,8 +94,9 @@ async function handler(ctx) {
         rssTitle = $('title').text();
     }
 
-    const items = jsonGet(response.data, routeParams.get('item')).map((item) => {
+    let items = jsonGet(response.data, routeParams.get('item')).map((item) => {
         let link = jsonGet(item, routeParams.get('itemLink')).trim();
+        const itemLink = link;
         const linkPrefix = routeParams.get('itemLinkPrefix');
 
         if (link && linkPrefix) {
@@ -105,10 +109,44 @@ async function handler(ctx) {
         return {
             title: jsonGet(item, routeParams.get('itemTitle')),
             link,
+            itemLink,
             description: routeParams.get('itemDesc') ? jsonGet(item, routeParams.get('itemDesc')) : '',
             pubDate: routeParams.get('itemPubDate') ? jsonGet(item, routeParams.get('itemPubDate')) : '',
         };
     });
+
+    const itemContentSelector = routeParams.get('itemContent');
+    if (itemContentSelector) {
+        items = await Promise.all(
+            items.map((item) => {
+                const jsonPrefix = routeParams.get('itemJSONPrefix');
+                if (!item.itemLink) {
+                    return item;
+                }
+
+                let link = item.link;
+                if (jsonPrefix.startsWith('http')) {
+                    link = `${jsonPrefix}${item.itemLink}`;
+                } else if (jsonPrefix) {
+                    link = `${new URL(url).origin}${jsonPrefix}${item.itemLink}`;
+                }
+
+                return cache.tryGet(`transform:${item.link}`, async () => {
+                    const response = await got({
+                        method: 'get',
+                        url: link,
+                    });
+
+                    const content = response ? jsonGet(response.data, routeParams.get('itemContent')) : '';
+                    if (content?.trim()) {
+                        item.description = content;
+                    }
+
+                    return item;
+                });
+            })
+        );
+    }
 
     return {
         title: rssTitle,
