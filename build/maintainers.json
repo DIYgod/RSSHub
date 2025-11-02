@@ -4588,6 +4588,9 @@
   "/jjwxc/book/:id?": [
     "nczitzk"
   ],
+  "/jl1mall/forum/:type?/:key?": [
+    "nczitzk"
+  ],
   "/jlu/jwc": [
     "mayouxi"
   ],
