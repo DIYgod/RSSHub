@@ -64,6 +64,7 @@ async function handler(ctx) {
     return {
         title,
         description: $('.tt p').text().trim(),
+        image: $('.ii img').attr('src'),
         link,
         item: [
             {
