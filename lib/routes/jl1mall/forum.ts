@@ -34,12 +34,11 @@ const findMainIds = (data: readonly any[], searchKey: string): MainIdsResult => 
             }
 
             const nextList = item.nextList;
+
             if (Array.isArray(nextList) && nextList.length > 0) {
                 const result = recurse(nextList, item.mainId as string | undefined, parentMainId);
 
-                if (result) {
-                    return result;
-                }
+                return result;
             }
         }
 
