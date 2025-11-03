@@ -12125,6 +12125,19 @@
       }
     ]
   },
+  "cqu.edu.cn": {
+    "_name": "重庆大学",
+    "jwc": [
+      {
+        "title": "本科教学信息网通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:path"
+        ],
+        "target": "/cqu/jwc/:path"
+      }
+    ]
+  },
   "crac.org.cn": {
     "_name": "中国无线电协会业余无线电分会",
     "www": [

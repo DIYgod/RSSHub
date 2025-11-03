@@ -1858,6 +1858,9 @@
   "/cqgas/tqtz": [
     "Mai19930513"
   ],
+  "/cqu/jwc/:path{.+}?": [
+    "AhsokaTano26"
+  ],
   "/cqwu/news/:type?": [
     "Fatpandac"
   ],
