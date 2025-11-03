@@ -91,7 +91,7 @@ async function handler(ctx) {
                     item.description =
                         `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><br>` +
                         ldJson.description.replaceAll('\n', '<br>');
-                    item.pubDate = parseDate(ldJson.uploadDate);
+                    item.pubDate = timzone(parseDate(ldJson.uploadDate), 8);
                     item.image = ldJson.thumbnailUrl[0];
 
                     return item;
