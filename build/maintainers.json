@@ -1935,6 +1935,9 @@
   "/ctbu/xxgg": [
     "Skylwn"
   ],
+  "/ctinews/topic/:topic?": [
+    "TonyRL"
+  ],
   "/cts/:category": [
     "miles170"
   ],
