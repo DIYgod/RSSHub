@@ -52,7 +52,7 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
         page.on('request', (request) => {
             const resourceType = request.resourceType();
             // 允许必要的资源类型
-            if (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(resourceType)) {
+            if (['document', 'script', 'xhr', 'fetch'].includes(resourceType)) {
                 request.continue();
             } else {
                 request.abort();
@@ -61,17 +61,20 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
 
         const loadPageWithRetry = async (attempt = 0): Promise<string> => {
             try {
+                // keep single operation timeout safely below any external forced close
                 await page.goto(item.link!, {
                     waitUntil: 'domcontentloaded',
-                    timeout: 20000,
-                });
-
-                await page.waitForSelector('body', { timeout: 3000 }).catch(() => {
-                    // if loading error, continue
+                    timeout: 15000,
                 });
 
                 return page.content();
-            } catch (error) {
+            } catch (error: any) {
+                // If browser/page was closed externally, stop retrying and surface the error
+                const msg = (error && error.message) || '';
+                if (msg.includes('Target closed') || msg.includes('Browser closed') || msg.includes('Session closed')) {
+                    throw error;
+                }
+
                 if (attempt >= 2) {
                     throw error;
                 }
@@ -83,20 +86,10 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
         };
 
         const pageContent = await loadPageWithRetry();
-
         const $ = load(pageContent);
 
-        const candidateSelectors = [
-            '#__next > div.min-h-screen.flex.flex-col > div > div.space-y-8.pb-8.flex-1 > section:nth-child(3)',
-            'article',
-            'section.max-w-prose',
-            'div.max-w-prose',
-            'main section',
-            'main div[class*="prose"]',
-            'div[class*="space-y-4"]',
-            'section:last-of-type',
-            'body > div:last-child section',
-        ];
+        // Keep a minimal, stable set of selectors (avoid brute-force matching)
+        const candidateSelectors = ['#__next > div.min-h-screen.flex.flex-col > div > div.space-y-8.pb-8.flex-1 > section:nth-child(3)', 'article'];
 
         let fullContent = '';
 
@@ -111,22 +104,22 @@ const fetchArticleContent = async (item: DataItem, sharedBrowser: any): Promise<
             }
         }
 
-        if (!fullContent) {
-            const fallbackContent = $('body').text().trim();
-            if (fallbackContent.length > 500) {
-                fullContent = fallbackContent.slice(0, 2000) + '...';
-            }
-        }
-
         return {
             ...item,
             description: fullContent || item.description || 'Content extraction failed',
         };
-    } catch (error) {
-        logger.error(`Error fetching article content for ${item.link}: ${error}`);
+    } catch (error: any) {
+        // Only catch specific errors during page operations; log and return with fallback description.
+        // Do not silently swallow errors — if a critical error occurs, let framework handle it.
+        const msg = (error && error.message) || String(error);
+        if (msg.includes('Target closed') || msg.includes('Browser closed') || msg.includes('Session closed')) {
+            logger.warn(`Article fetch aborted due to browser closure for ${item.link}`);
+        } else {
+            logger.error(`Error fetching article content for ${item.link}: ${error}`);
+        }
         return {
             ...item,
-            description: item.description || 'Content extraction failed due to error',
+            description: item.description || 'Content extraction failed',
         };
     } finally {
         if (page && !page.isClosed()) {
@@ -141,8 +134,8 @@ async function handler() {
     let browser;
     let page;
 
+    browser = await puppeteer();
     try {
-        browser = await puppeteer();
         page = await browser.newPage();
 
         await page.setViewport({ width: 1280, height: 720 });
@@ -164,55 +157,32 @@ async function handler() {
 
         page.on('request', (request) => {
             const resourceType = request.resourceType();
-            if (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(resourceType)) {
+            if (['document', 'script', 'xhr', 'fetch'].includes(resourceType)) {
                 request.continue();
             } else {
                 request.abort();
             }
         });
 
+        // Wait until network is mostly idle so content is ready (avoid using body as readiness)
         await page.goto(blogUrl, {
-            waitUntil: 'domcontentloaded',
-            timeout: 30000,
+            waitUntil: 'networkidle2',
+            timeout: 15000,
         });
-
-        try {
-            await page.waitForSelector('a', { timeout: 5000 });
-        } catch {
-            // if waiting error, continue
-        }
         const html = await page.content();
         const $ = load(html);
 
-        let articles = $('section a');
+        // Only use `section a` as per reviewer guidance
+        const articles = $('section a');
 
         if (articles.length === 0) {
-            articles = $('a[href*="/blog/"]');
-        }
-        if (articles.length === 0) {
-            articles = $('article a');
-        }
-        if (articles.length === 0) {
-            articles = $('a').filter((_, el) => {
-                const href = $(el).attr('href');
-                const text = $(el).text().trim();
-                return !!(href && text && (href.includes('blog') || href.startsWith('/')) && text.length > 5);
-            });
-        }
-
-        if (articles.length === 0) {
+            // likely anti-crawler or layout change — return empty feed and mark protected
             return {
                 title: 'Nijijourney Blog',
                 link: blogUrl,
-                item: [
-                    {
-                        title: 'Nijijourney Blog (Access Limited)',
-                        description: 'Unable to fetch blog articles due to anti-crawler protection.',
-                        link: blogUrl,
-                        pubDate: new Date().toUTCString(),
-                    },
-                ],
-            };
+                item: [],
+                isProtected: true,
+            } as any;
         }
 
         const preliminaryItems = articles
@@ -229,27 +199,22 @@ async function handler() {
                 }
 
                 const link = href.startsWith('http') ? href : baseUrl + href;
-                return {
+                const data: Partial<DataItem> = {
                     title,
                     link,
                     description,
-                    pubDate: new Date().toUTCString(),
-                } as DataItem;
+                };
+
+                return data as DataItem;
             })
             .filter((item): item is DataItem => item !== null);
 
         if (preliminaryItems.length === 0) {
+            // No valid articles found; return empty feed (don't create fake entries with fake dates)
             return {
                 title: 'Nijijourney Blog',
                 link: blogUrl,
-                item: [
-                    {
-                        title: 'Nijijourney Blog (No Valid Articles)',
-                        description: 'No valid articles found.',
-                        link: blogUrl,
-                        pubDate: new Date().toUTCString(),
-                    },
-                ],
+                item: [],
             };
         }
 
@@ -266,6 +231,7 @@ async function handler() {
             item: items,
         };
     } finally {
+        // Always attempt to close resources; let errors propagate instead of swallowing them.
         await safeBrowserClose(browser, page);
     }
 }
