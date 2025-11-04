@@ -75,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 if (enclosureUrl) {
                     processedItem = {
                         ...processedItem,
-                        enclosure_url: enclosureUrl ? new URL(enclosureUrl, targetUrl).href : undefined,
+                        enclosure_url: new URL(enclosureUrl, targetUrl).href,
                         enclosure_type: `application/${enclosureUrl.split(/\./).pop()}`,
                         enclosure_title: title,
                     };
