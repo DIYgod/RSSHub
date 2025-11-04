@@ -959,7 +959,7 @@
   "/bilibili/popular/all/:embed?": [
     "ziminliu"
   ],
-  "/bilibili/ranking/:rid_index?/:embed?/:redirect1?/:redirect2?": [
+  "/bilibili/ranking/:rid?/:embed?/:redirect1?/:redirect2?": [
     "DIYgod",
     "hyoban"
   ],
@@ -1731,7 +1731,9 @@
     "Derekmini",
     "pseudoyu"
   ],
-  "/cnljxh/:category?/:id?": [],
+  "/cnljxh/news/:id?": [
+    "nczitzk"
+  ],
   "/cntheory/paper/:id?": [
     "nczitzk"
   ],
