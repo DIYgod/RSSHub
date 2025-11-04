@@ -55,7 +55,7 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@ca1b238fecb728f25584d2beb288d7f1727f9fa6 # v3.7.0
+        uses: actions-cool/issues-helper@564cd9b1baacd7a9cd634e8039a149901ee5f600 # v3.7.1
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
