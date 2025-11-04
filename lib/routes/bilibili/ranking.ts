@@ -159,6 +159,12 @@ export const route: Route = {
         redirect1: '留空，用于兼容之前的路由',
         redirect2: '留空，用于兼容之前的路由',
     },
+    radar: [
+        {
+            source: ['www.bilibili.com/v/popular/rank/:rid'],
+            target: '/ranking/:rid',
+        },
+    ],
     handler,
 };
 
