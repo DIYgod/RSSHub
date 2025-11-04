@@ -1731,9 +1731,7 @@
     "Derekmini",
     "pseudoyu"
   ],
-  "/cnljxh/news/:id?": [
-    "nczitzk"
-  ],
+  "/cnljxh/:category?/:id?": [],
   "/cntheory/paper/:id?": [
     "nczitzk"
   ],
