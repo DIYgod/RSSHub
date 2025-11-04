@@ -166,7 +166,8 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
     if (isNumericRid) {
         const zone = ridList[rid as number];
         return {
-            apiUrl: `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${rid}&type=all&web_location=333.934`,
+            apiBase: 'https://api.bilibili.com/x/web-interface/ranking/v2',
+            apiParams: `rid=${rid}&type=all&web_location=333.934`,
             referer: 'https://www.bilibili.com/v/popular/rank/all',
             ridChinese: zone?.chinese ?? '',
             ridType: 'x/rid',
@@ -183,17 +184,20 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
     const ridChinese = zone[1].chinese;
     const ridEnglish = zone[1].english;
 
-    let apiUrl = '';
+    let apiBase = 'https://api.bilibili.com/x/web-interface/ranking/v2';
+    let apiParams = '';
 
     switch (ridType) {
         case 'x/rid':
-            apiUrl = `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${numericRid}&type=all&web_location=333.934`;
+            apiParams = `rid=${numericRid}&type=all&web_location=333.934`;
             break;
         case 'pgc/web':
-            apiUrl = `https://api.bilibili.com/pgc/web/rank/list?day=3&season_type=${numericRid}&web_location=333.934`;
+            apiBase = 'https://api.bilibili.com/pgc/web/rank/list';
+            apiParams = `day=3&season_type=${numericRid}&web_location=333.934`;
             break;
         case 'pgc/season':
-            apiUrl = `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${numericRid}&web_location=333.934`;
+            apiBase = 'https://api.bilibili.com/pgc/season/rank/web/list';
+            apiParams = `day=3&season_type=${numericRid}&web_location=333.934`;
             break;
         // case 'x/type':
         //     apiUrl = `https://api.bilibili.com/x/web-interface/ranking?rid=0&type=${numericRid}&web_location=333.934`;
@@ -203,7 +207,8 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
     }
 
     return {
-        apiUrl,
+        apiBase,
+        apiParams,
         referer: `https://www.bilibili.com/v/popular/rank/${ridEnglish}`,
         ridChinese,
         ridType,
@@ -225,14 +230,15 @@ async function handler(ctx) {
     const embed = !ctx.req.param('embed');
     const isNumericRid = /^\d+$/.test(rid);
 
-    const { apiUrl, referer, ridChinese, link, ridType } = getAPI(isNumericRid, rid);
+    const { apiBase, apiParams, referer, ridChinese, link, ridType } = getAPI(isNumericRid, rid);
     if (ridType.startsWith('pgc/')) {
         throw new Error('This type of ranking is not supported yet');
     }
 
-    const response = await ofetch(apiUrl, {
+    const response = await ofetch(`${apiBase}?${apiParams}`, {
         headers: {
             Referer: referer,
+            origin: 'https://www.bilibili.com',
         },
     });
 
