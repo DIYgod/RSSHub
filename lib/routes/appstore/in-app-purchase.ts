@@ -1,6 +1,7 @@
 import { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import { appstoreBearerToken } from '@/routes/apple/utils';
 
 export const route: Route = {
     path: '/iap/:country/:id',
@@ -23,14 +24,6 @@ export const route: Route = {
     handler,
 };
 
-const getMediaApiToken = (metaContent) => {
-    if (!metaContent) {
-        throw new Error('Empty web experience config meta content');
-    }
-    const config = JSON.parse(decodeURIComponent(metaContent));
-    return config.MEDIA_API.token;
-};
-
 async function handler(ctx) {
     const country = ctx.req.param('country');
     const id = ctx.req.param('id');
@@ -39,17 +32,17 @@ async function handler(ctx) {
     const res = await ofetch(link);
     const $ = load(res);
     const lang = $('html').attr('lang');
-    const mediaToken = getMediaApiToken($('meta[name="web-experience-app/config/environment"]').attr('content'));
+    const mediaToken = await appstoreBearerToken();
 
     const apiResponse = await ofetch(`https://amp-api-edge.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
+        headers: {
+            authorization: `Bearer ${mediaToken}`,
+            origin: 'https://apps.apple.com',
+        },
         query: {
             platform: 'web',
             include: 'merchandised-in-apps,top-in-apps,eula',
             l: lang,
-        },
-        headers: {
-            authorization: `Bearer ${mediaToken}`,
-            origin: 'https://apps.apple.com',
         },
     });
 
