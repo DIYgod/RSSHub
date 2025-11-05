@@ -60,10 +60,14 @@ async function handler() {
             if (href) {
                 if (href.startsWith('http')) {
                     linkUrl = href;
-                } else if (href.startsWith('../')) {
-                    linkUrl = `${baseUrl}${href.replace('../', '/')}`;
                 } else {
-                    linkUrl = `${baseUrl}/news/${href}`;
+                    // 使用 URL 构造函数处理所有类型的相对路径（包括 '../' 和 '../..' 等）
+                    try {
+                        linkUrl = new URL(href, `${baseUrl}/news/`).href;
+                    } catch {
+                        // 如果 URL 构造失败，回退到简单拼接
+                        linkUrl = href.startsWith('../') ? `${baseUrl}/${href.replaceAll('../', '')}` : `${baseUrl}/news/${href}`;
+                    }
                 }
             }
 
