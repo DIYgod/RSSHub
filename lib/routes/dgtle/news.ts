@@ -1,20 +1,16 @@
 import { type Data, type DataItem, type Route, ViewType } from '@/types';
 
-import { art } from '@/utils/render';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
-import path from 'node:path';
+
+import { baseUrl, ProcessItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '0' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.dgtle.com';
     const targetUrl: string = new URL('news', baseUrl).href;
     const apiUrl: string = new URL(`news/getNewsIndexList/${id}`, baseUrl).href;
 
@@ -24,94 +20,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(apiUrl);
 
-    let items: DataItem[] = [];
+    const items: DataItem[] = await ProcessItems(limit, response.data.dataList);
 
-    items = response.data.dataList.slice(0, limit).map((item): DataItem => {
-        const title: string = item.title || item.content;
-        const image: string | undefined = item.cover;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
-            images: image
-                ? [
-                      {
-                          src: image,
-                          alt: title,
-                      },
-                  ]
-                : undefined,
-            description: item.content,
-        });
-        const pubDate: number | string = item.created_at;
-        const linkUrl: string | undefined = `${item.live_status === undefined ? 'news' : 'live'}-${item.id}-1.html`;
-        const categories: string[] = [item.column];
-        const authors: DataItem['author'] = [
-            {
-                name: item.user?.username,
-                url: new URL(`user?uid=${item.user_id}`, baseUrl).href,
-                avatar: item.user?.avatar_path,
-            },
-        ];
-        const guid: string = `dgtle-${item.id}`;
-        const updated: number | string = pubDate;
-
-        const processedItem: DataItem = {
-            title,
-            description,
-            pubDate: pubDate ? timezone(parseDate(pubDate, 'X'), +8) : undefined,
-            link: new URL(linkUrl, baseUrl).href,
-            category: categories,
-            author: authors,
-            guid,
-            id: guid,
-            content: {
-                html: description,
-                text: description,
-            },
-            image,
-            banner: image,
-            updated: updated ? timezone(parseDate(updated, 'X'), +8) : undefined,
-            language,
-            live_status: item.live_status,
-        };
-
-        return processedItem;
-    });
-
-    items = await Promise.all(
-        items.map((item) => {
-            if (item.live_status !== undefined || !item.link) {
-                delete item.live_status;
-                return item;
-            }
-
-            delete item.live_status;
-
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
-                const $$: CheerioAPI = load(detailResponse);
-
-                $$('div.logo').remove();
-                $$('p.tip').remove();
-                $$('p.dgtle').remove();
-
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.whale_news_detail-daily-content, div#articleContent').html(),
-                });
-
-                const processedItem: DataItem = {
-                    description,
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
-                };
-            });
-        })
-    );
+    const title: string | undefined = $(`div.whale_news_index-content-tab li[data_id="${id}"]`).text();
 
     return {
-        title: `${$('title').text().trim().split(/\s/)[0]} - ${$(`div.whale_news_index-content-tab li[data_id="${id}"]`).text()}`,
+        title: `${$('title').text().trim().split(/\s/)[0]}${title ? ` - ${title}` : id}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
@@ -130,7 +44,7 @@ export const route: Route = {
     handler,
     example: '/dgtle/news/0',
     parameters: {
-        category: {
+        id: {
             description: '分类，默认为 `0`，即最新，可在下表中找到',
             options: [
                 {
