@@ -1,7 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 import { Route } from '@/types';
 
 export const route: Route = {
@@ -58,29 +57,10 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
-                    const response = await got(item.link);
-                    const $ = load(response.data);
-                    const articleContent = $('div.article, article.content, .content').first().html();
-                    if (articleContent) {
-                        item.description = articleContent;
-                    }
-                    return item;
-                } catch {
-                    // 如果获取详情页失败，返回基本信息
-                    return item;
-                }
-            })
-        )
-    );
-
     return {
         title: '首都师范大学教务处 - 通知公示',
         link,
         description: '首都师范大学教务处通知公示',
-        item: items,
+        item: list,
     };
 }
