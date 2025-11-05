@@ -2149,6 +2149,9 @@
     "blade0910"
   ],
   "/dgjyw*": [],
+  "/dgtle/article/:id?/:pushed?": [
+    "nczitzk"
+  ],
   "/dgtle/news/:id?": [
     "nczitzk"
   ],
