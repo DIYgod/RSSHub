@@ -11911,6 +11911,59 @@
       }
     ]
   },
+  "cnu.edu.cn": {
+    "_name": "首都师范大学",
+    "iec": [
+      {
+        "title": "信息工程学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/ggml/tzgg1/index.htm"
+        ],
+        "target": "/cnu/cnu/iec"
+      }
+    ],
+    "news": [
+      {
+        "title": "焦点关注",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xysx/jdxw/index.htm"
+        ],
+        "target": "/cnu/cnu/jdxw"
+      }
+    ],
+    "jwc": [
+      {
+        "title": "教务处通知公示",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg/index.htm"
+        ],
+        "target": "/cnu/cnu/jwc"
+      }
+    ],
+    "physics": [
+      {
+        "title": "物理系院系新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news/index.htm"
+        ],
+        "target": "/cnu/cnu/physics"
+      }
+    ],
+    "smkxxy": [
+      {
+        "title": "生命科学学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/tzgg3/index.htm"
+        ],
+        "target": "/cnu/cnu/smkxxy"
+      }
+    ]
+  },
   "cockroachlabs.com": {
     "_name": "Cockroach Labs",
     ".": [

@@ -1741,6 +1741,21 @@
     "WhoIsSure",
     "Fatpandac"
   ],
+  "/cnu/iec": [
+    "liueic"
+  ],
+  "/cnu/jdxw": [
+    "liueic"
+  ],
+  "/cnu/jwc": [
+    "liueic"
+  ],
+  "/cnu/physics": [
+    "liueic"
+  ],
+  "/cnu/smkxxy": [
+    "liueic"
+  ],
   "/cockroachlabs/blog/:category?": [
     "CookiePieWw"
   ],
