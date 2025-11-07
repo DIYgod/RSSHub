@@ -45,7 +45,7 @@ async function handler() {
             const dateSpan = item.find('span.date');
             const day = dateSpan.find('span.day').text().trim();
             const year = dateSpan.find('span.year').text().trim();
-            const pubDate = year && day ? parseDate(`${year}-${day.padStart(2, '0')}`, 'YYYY-MM-DD') : null;
+            const pubDate = year && day ? parseDate(`${year}-${day}`, 'YYYY-MM-DD') : null;
 
             const categoryName = item.find('span.name').text().trim();
             return {
