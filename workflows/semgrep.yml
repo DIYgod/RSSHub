@@ -1,0 +1,2 @@
+- name: Run Semgrep
+  run: semgrep ci --config auto --no-suppress-errors
