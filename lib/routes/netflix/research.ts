@@ -47,7 +47,8 @@ const resolveArticle = (data, store) => {
 };
 
 async function handler() {
-    const link = 'https://research.netflix.com/archive';
+    const baseUrl = 'https://research.netflix.com';
+    const link = `${baseUrl}/archive`;
     const response = await ofetch(link);
 
     const $ = load(response);
