@@ -45,7 +45,7 @@ async function fetchNews(url: string): Promise<any> {
         redirect: 'manual',
     });
 
-    if (response.status === 302) {
+    if (response.status === 302 || response.status === 301) {
         const setCookieHeaders = response.headers.getSetCookie();
         if (setCookieHeaders) {
             parseCookies(setCookieHeaders);
