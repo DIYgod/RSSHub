@@ -5607,6 +5607,12 @@
   "/netflav/": [
     "TonyRL"
   ],
+  "/netflix/newsroom/:category?/:region?": [
+    "nczitzk"
+  ],
+  "/netflix/research": [
+    "TonyRL"
+  ],
   "/neu/bmie/:type": [
     "tennousuathena"
   ],

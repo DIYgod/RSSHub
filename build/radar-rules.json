@@ -31923,6 +31923,31 @@
       }
     ]
   },
+  "netflix.com": {
+    "_name": "Netflix",
+    "about": [
+      {
+        "title": "Newsroom",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:region/newsroom",
+          "/"
+        ],
+        "target": "/netflix/newsroom/:category?/:region?"
+      }
+    ],
+    "research": [
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archive",
+          "/"
+        ],
+        "target": "/netflix/research"
+      }
+    ]
+  },
   "neu.edu.cn": {
     "_name": "东北大学",
     "neunews": [
