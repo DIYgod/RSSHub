@@ -85,7 +85,7 @@ export const route: Route = {
 async function handler(ctx) {
     await fetchNews('https://news.web.nhk/tix/build_authorize?idp=a-alaz&profileType=abroad&redirect_uri=https%3A%2F%2Fnews.web.nhk%2Fnews%2Feasy%2F&entity=none&area=130&pref=13&jisx0402=13101&postal=1000001');
     const response = await fetchNews('https://www3.nhk.or.jp/news/easy/news-list.json');
-    const datas = response._data[0];
+    const dates = response._data[0];
 
     let items = Object.values(datas).flatMap((articles: any) =>
         articles.map((article: any) => ({
