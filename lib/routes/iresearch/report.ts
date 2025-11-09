@@ -307,12 +307,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return result;
         })();
 
-        if (medias) {
-            processedItem = {
-                ...processedItem,
-                media: medias,
-            };
-        }
+        processedItem = {
+            ...processedItem,
+            media: medias,
+        };
 
         return processedItem;
     });
@@ -404,12 +402,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     return result;
                 })();
 
-                if (medias) {
-                    processedItem = {
-                        ...processedItem,
-                        media: medias,
-                    };
-                }
+                processedItem = {
+                    ...processedItem,
+                    media: medias,
+                };
 
                 delete item.detailId;
 
