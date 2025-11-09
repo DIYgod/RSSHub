@@ -87,7 +87,7 @@ async function handler(ctx) {
     const response = await fetchNews('https://www3.nhk.or.jp/news/easy/news-list.json');
     const dates = response._data[0];
 
-    let items = Object.values(datas).flatMap((articles: any) =>
+    let items = Object.values(dates).flatMap((articles: any) =>
         articles.map((article: any) => ({
             title: article.title,
             description: art(path.join(__dirname, 'templates/news_web_easy.art'), {
