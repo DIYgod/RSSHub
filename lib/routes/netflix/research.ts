@@ -11,7 +11,6 @@ export const route: Route = {
     radar: [
         {
             source: ['research.netflix.com/archive', 'research.netflix.com'],
-            target: '',
         },
     ],
     name: 'Research',

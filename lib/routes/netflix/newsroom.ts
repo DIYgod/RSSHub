@@ -51,7 +51,6 @@ export const route: Route = {
     radar: [
         {
             source: ['about.netflix.com/:region/newsroom', 'netflix.com'],
-            target: '',
         },
     ],
     name: 'Newsroom',
