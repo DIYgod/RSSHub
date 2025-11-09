@@ -233,7 +233,16 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = [];
 
     items = response.List.slice(0, limit).map((item): DataItem => {
-        const title: string = item.reportname ?? (item.Title ? `${item.Title}${item.sTitle && item.sTitle !== item.Title ? ` - ${item.sTitle}` : ''}` : (item.sTitle ?? item.Content));
+        const title: string =
+            item.reportname ??
+            (() => {
+                if (item.Title) {
+                    const suffix: string = item.sTitle && item.sTitle !== item.Title ? ` - ${item.sTitle}` : '';
+                    return `${item.Title}${suffix}`;
+                }
+
+                return item.sTitle ?? item.Content;
+            })();
 
         const images: string[] = [item.BigImg, item.SmallImg, item.reportpic].filter(Boolean) as string[];
         const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
@@ -271,27 +280,32 @@ export const handler = async (ctx: Context): Promise<Data> => {
             detailId: item.id ?? (linkUrl ? item.NewsId : item.Id),
         };
 
-        const medias: Record<string, Record<string, string>> = images.reduce((acc: Record<string, Record<string, string>>, media) => {
-            const url: string | undefined = media;
+        const medias: Record<string, Record<string, string>> = (() => {
+            const result: Record<string, Record<string, string>> = {};
+            const medium: string = 'image';
+            let count: number = 0;
 
-            if (!url) {
-                return acc;
+            for (const media of images) {
+                const url: string | undefined = media;
+
+                if (!url) {
+                    continue;
+                }
+
+                count += 1;
+                const key: string = `${medium}${count}`;
+
+                result[key] = {
+                    url,
+                    medium,
+                    title,
+                    description: title,
+                    thumbnail: url,
+                };
             }
 
-            const medium: string = 'image';
-            const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-            const key: string = `${medium}${count}`;
-
-            acc[key] = {
-                url,
-                medium,
-                title,
-                description: title,
-                thumbnail: url,
-            };
-
-            return acc;
-        }, {});
+            return result;
+        })();
 
         if (medias) {
             processedItem = {
@@ -363,27 +377,32 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     updated: updated ? timezone(parseDate(updated), +8) : undefined,
                 };
 
-                const medias: Record<string, Record<string, string>> = images.reduce((acc: Record<string, Record<string, string>>, media) => {
-                    const url: string | undefined = media;
+                const medias: Record<string, Record<string, string>> = (() => {
+                    const result: Record<string, Record<string, string>> = {};
+                    const medium: string = 'image';
+                    let count: number = 0;
 
-                    if (!url) {
-                        return acc;
+                    for (const media of images) {
+                        const url: string | undefined = media;
+
+                        if (!url) {
+                            continue;
+                        }
+
+                        count += 1;
+                        const key: string = `${medium}${count}`;
+
+                        result[key] = {
+                            url,
+                            medium,
+                            title,
+                            description: title,
+                            thumbnail: url,
+                        };
                     }
 
-                    const medium: string = 'image';
-                    const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                    const key: string = `${medium}${count}`;
-
-                    acc[key] = {
-                        url,
-                        medium,
-                        title,
-                        description: title,
-                        thumbnail: url,
-                    };
-
-                    return acc;
-                }, {});
+                    return result;
+                })();
 
                 if (medias) {
                     processedItem = {
@@ -403,7 +422,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     return {
-        title: `${siteTitle}${typeObj && typeObj.label ? ` - ${typeObj.label}` : ''}${idObj && idObj.label ? ` - ${idObj.label}` : ''}`,
+        title: `${siteTitle}${typeObj.label ? ` - ${typeObj.label}` : ''}${idObj && idObj.label ? ` - ${idObj.label}` : ''}`,
         description: siteTitle,
         link: targetUrl,
         item: items,
