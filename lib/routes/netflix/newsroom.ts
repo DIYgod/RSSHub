@@ -205,10 +205,6 @@ const render = (node) => {
 
         default:
             throw new Error(`Unhandled node type: ${node.nodeType}`);
-        // if (node.content && Array.isArray(node.content)) {
-        //     return node.content.map((c) => render(c)).join('');
-        // }
-        // return '';
     }
 };
 
