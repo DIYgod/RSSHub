@@ -184,7 +184,7 @@ const render = (node) => {
         case 'embedded-entry-inline': {
             const embedLink = node.data.embedLink;
             if (embedLink.startsWith('https://www.youtube.com/') || embedLink.startsWith('https://youtu.be/')) {
-                const youtubeId = node.data.embedLink?.split('youtube.com/watch?v=')[1]?.split('&')[0] || node.data.embedLink?.split('youtu.be/')[1]?.split('?')[0];
+                const youtubeId = node.data.embedLink.split('youtube.com/watch?v=')[1]?.split('&')[0] || node.data.embedLink.split('youtu.be/')[1]?.split('?')[0];
                 return renderYoutube(youtubeId);
             }
             return `<a href="${embedLink}" target="_blank" rel="noopener noreferrer">${node.data.title ?? embedLink}</a>`;
