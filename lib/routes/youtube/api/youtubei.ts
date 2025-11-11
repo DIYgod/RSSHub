@@ -68,7 +68,7 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     };
 };
 
-export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean }): Promise<Data> => {
+export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean; isJsonFeed: boolean }): Promise<Data> => {
     const innertube = await innertubePromise;
     const playlist = await innertube.getPlaylist(playlistId);
     const videos = await playlist.videos;

@@ -145,7 +145,7 @@ export const getDataByUsername = async ({ username, embed, filterShorts, isJsonF
     };
 };
 
-export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { channelId: string; embed: boolean; filterShorts: boolean }): Promise<Data> => {
+export const getDataByChannelId = async ({ channelId, embed, filterShorts, isJsonFeed }: { channelId: string; embed: boolean; filterShorts: boolean; isJsonFeed: boolean }): Promise<Data> => {
     // Get original uploads playlist ID if needed
     const originalPlaylistId = filterShorts ? null : (await utils.getChannelWithId(channelId, 'contentDetails', cache)).data.items[0].contentDetails.relatedPlaylists.uploads;
 
@@ -155,7 +155,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
     const videoIds = data.map((item) => item.snippet.resourceId.videoId);
     const videoDetails = await utils.getVideos(videoIds.join(','), 'contentDetails', cache);
-    const subtitlesMap = await getSrtAttachmentBatch(videoIds);
+    const subtitlesMap = isJsonFeed ? await getSrtAttachmentBatch(videoIds) : {};
 
     return {
         title: `${data[0].snippet.channelTitle} - YouTube`,
@@ -168,7 +168,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
                 const videoId = snippet.resourceId.videoId;
                 const img = utils.getThumbnail(snippet.thumbnails);
                 const detail = videoDetails?.data.items.find((d) => d.id === videoId);
-                const srtAttachments = subtitlesMap[videoId] || [];
+                const srtAttachments = subtitlesMap ? subtitlesMap[videoId] || [] : [];
 
                 return {
                     title: snippet.title,
@@ -190,13 +190,13 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts }: { c
     };
 };
 
-export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean }): Promise<Data> => {
+export const getDataByPlaylistId = async ({ playlistId, embed, isJsonFeed }: { playlistId: string; embed: boolean; isJsonFeed: boolean }): Promise<Data> => {
     const playlistTitle = (await utils.getPlaylist(playlistId, 'snippet', cache)).data.items[0].snippet.title;
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items.filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video');
     const videoIds = data.map((item) => item.snippet.resourceId.videoId);
     const videoDetails = await utils.getVideos(videoIds.join(','), 'contentDetails', cache);
-    const subtitlesMap = await getSrtAttachmentBatch(videoIds);
+    const subtitlesMap = isJsonFeed ? await getSrtAttachmentBatch(videoIds) : {};
 
     return {
         title: `${playlistTitle} by ${data[0].snippet.channelTitle} - YouTube`,
@@ -207,7 +207,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
             const videoId = snippet.resourceId.videoId;
             const img = utils.getThumbnail(snippet.thumbnails);
             const detail = videoDetails?.data.items.find((d) => d.id === videoId);
-            const srtAttachments = subtitlesMap[videoId] || [];
+            const srtAttachments = subtitlesMap ? subtitlesMap[videoId] || [] : [];
 
             return {
                 title: snippet.title,
