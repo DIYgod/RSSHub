@@ -65,10 +65,12 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const data = await callApi({
         googleApi: getDataByChannelIdGoogle,
         youtubeiApi: getDataByChannelIdYoutubei,
-        params: { channelId: id, embed, filterShorts },
+        params: { channelId: id, embed, filterShorts, isJsonFeed },
     });
 
     return data;

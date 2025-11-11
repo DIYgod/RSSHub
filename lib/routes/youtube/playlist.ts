@@ -31,11 +31,12 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const embed = !ctx.req.param('embed');
+    const isJsonFeed = ctx.req.query('format') === 'json';
 
     const data = await callApi({
         googleApi: getDataByPlaylistIdGoogle,
         youtubeiApi: getDataByPlaylistIdYoutubei,
-        params: { playlistId: id, embed },
+        params: { playlistId: id, embed, isJsonFeed },
     });
 
     return data;
