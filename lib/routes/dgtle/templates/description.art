@@ -12,6 +12,26 @@
   {{ /each }}
 {{ /if }}
 
+{{ if videos }}
+  {{ each videos video }}
+    {{ if video?.src }}
+      <video
+        {{ set poster = video.poster || image?.src }}
+        {{ if poster }}
+          poster="{{ poster }}"
+        {{ /if }}
+        controls>
+        <source
+          src="{{ video.src }}"
+          type="{{ video.type }}">
+        <object data="{{ video.src }}">
+          <embed src="{{ video.src }}">
+        </object>
+      </video>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
 {{ if intro }}
   <blockquote>{{ intro }}</blockquote>
 {{ /if }}
