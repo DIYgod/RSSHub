@@ -2937,9 +2937,25 @@
   "/furstar/characters/:lang?": [
     "NeverBehave"
   ],
-  "/futunn/highlights": [],
-  "/futunn/main": [],
-  "/futunn/": [],
+  "/futunn/live/:lang?": [
+    "kennyfong19931"
+  ],
+  "/futunn/main": [
+    "Wsine",
+    "nczitzk",
+    "kennyfong19931"
+  ],
+  "/futunn/": [
+    "Wsine",
+    "nczitzk",
+    "kennyfong19931"
+  ],
+  "/futunn/topic/:id": [
+    "kennyfong19931"
+  ],
+  "/futunn/video": [
+    "kennyfong19931"
+  ],
   "/fx-markets/:channel": [],
   "/fx678/kx": [
     "occupy5",
