@@ -83,27 +83,27 @@ export const route: Route = {
         {
             title: '家电行业',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: '/iresearch/weekly/1',
+            target: '/weekly/1',
         },
         {
             title: '服装行业',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: '/iresearch/weekly/2',
+            target: '/weekly/2',
         },
         {
             title: '美妆行业',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: '/iresearch/weekly/3',
+            target: '/weekly/3',
         },
         {
             title: '食品饮料行业',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: '/iresearch/weekly/4',
+            target: '/weekly/4',
         },
         {
             title: '酒行业',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: '/iresearch/weekly/5',
+            target: '/weekly/5',
         },
     ],
     view: ViewType.Articles,
