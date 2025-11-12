@@ -32,11 +32,11 @@ async function getTopic(rootUrl, id, seqMarkInput = '') {
         url: `${rootUrl}/news-site-api/main/get-topics-list?pageSize=48&seqMark=${seqMarkInput}`,
     });
     const { hasMore, seqMark, list } = topicListResponse.data.data.data;
-    if (list.some((item) => item.idx === id)) {
-        const topicObj = list.find((item) => item.idx === id);
+    const topic = list.find((item) => item.idx === id);
+    if (topic) {
         return {
-            topicTitle: topicObj.title,
-            topicDescription: topicObj.detail,
+            topicTitle: topic.title,
+            topicDescription: topic.detail,
         };
     } else if (hasMore === 1) {
         return getTopic(rootUrl, id, seqMark);
