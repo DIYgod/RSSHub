@@ -8,40 +8,66 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/main', '/'],
+    path: '/topic/:id',
     categories: ['finance'],
-    example: '/futunn/main',
+    example: '/futunn/topic/1267',
+    parameters: { id: 'Topic ID, can be found in URL' },
     features: {
         supportRadar: true,
     },
     radar: [
         {
-            source: ['news.futunn.com/main', 'news.futunn.com/:lang/main'],
-            target: '/main',
+            source: ['news.futunn.com/news-topics/:id/*', 'news.futunn.com/:lang/news-topics/:id/*'],
+            target: '/topic/:id',
         },
     ],
-    name: '要闻',
-    maintainers: ['Wsine', 'nczitzk', 'kennyfong19931'],
+    name: '专题',
+    maintainers: ['kennyfong19931'],
     handler,
 };
 
+async function getTopic(rootUrl, id, seqMarkInput = '') {
+    const topicListResponse = await got({
+        method: 'get',
+        url: `${rootUrl}/news-site-api/main/get-topics-list?pageSize=48&seqMark=${seqMarkInput}`,
+    });
+    const { hasMore, seqMark, list } = topicListResponse.data.data.data;
+    const topic = list.find((item) => item.idx === id);
+    if (topic) {
+        return {
+            topicTitle: topic.title,
+            topicDescription: topic.detail,
+        };
+    } else if (hasMore === 1) {
+        return getTopic(rootUrl, id, seqMark);
+    } else {
+        return {
+            topicTitle: '',
+            topicDescription: '',
+        };
+    }
+}
+
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 48;
+    const id = ctx.req.param('id');
 
     const rootUrl = 'https://news.futunn.com';
-    const currentUrl = `${rootUrl}/main`;
-    const apiUrl = `${rootUrl}/news-site-api/main/get-market-list?size=${limit}`;
+    const link = `${rootUrl}/news-topics/${id}/`;
+    const apiUrl = `${rootUrl}/news-site-api/topic/get-topics-news-list?topicsId=${id}&pageSize=${limit}`;
+
+    const { topicTitle, topicDescription } = await cache.tryGet(link, async () => await getTopic(rootUrl, id));
 
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
 
-    let items = response.data.data.list.map((item) => ({
+    let items = response.data.data.data.map((item) => ({
         title: item.title,
-        link: item.url.split('?')[0],
+        link: item.url,
         author: item.source,
-        pubDate: parseDate(item.timestamp * 1000),
+        pubDate: parseDate(item.time * 1000),
         description: art(path.join(__dirname, 'templates/description.art'), {
             abs: item.abstract,
             pic: item.pic,
@@ -81,8 +107,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: '富途牛牛 - 要闻',
-        link: currentUrl,
+        title: `富途牛牛 - 专题 - ${topicTitle}`,
+        link,
+        description: topicDescription,
         item: items,
     };
 }
