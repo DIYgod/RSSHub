@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/highlights', '/main', '/'],
+    path: ['/main', '/'],
     categories: ['finance'],
     example: '/futunn/main',
     features: {
@@ -16,7 +16,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.futunn.com/main', 'news.futunn.com/hk/main', 'news.futunn.com/en/main'],
+            source: ['news.futunn.com/main', 'news.futunn.com/:lang/main'],
             target: '/main',
         },
     ],

@@ -8,7 +8,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/topic/:id'],
+    path: '/topic/:id',
     categories: ['finance'],
     example: '/futunn/topic/1267',
     parameters: { id: 'Topic ID, can be found in URL' },
@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.futunn.com/news-topics/:id/*', 'news.futunn.com/hk/news-topics/:id/*', 'news.futunn.com/en/news-topics/:id/*'],
+            source: ['news.futunn.com/news-topics/:id/*', 'news.futunn.com/:lang/news-topics/:id/*'],
             target: '/topic/:id',
         },
     ],
@@ -26,25 +26,37 @@ export const route: Route = {
     handler,
 };
 
+async function getTopic(rootUrl, id, seqMarkInput = '') {
+    const topicListResponse = await got({
+        method: 'get',
+        url: `${rootUrl}/news-site-api/main/get-topics-list?pageSize=48&seqMark=${seqMarkInput}`,
+    });
+    const { hasMore, seqMark, list } = topicListResponse.data.data.data;
+    if (list.some((item) => item.idx === id)) {
+        const topicObj = list.find((item) => item.idx === id);
+        return {
+            topicTitle: topicObj.title,
+            topicDescription: topicObj.detail,
+        };
+    } else if (hasMore === 1) {
+        return getTopic(rootUrl, id, seqMark);
+    } else {
+        return {
+            topicTitle: '',
+            topicDescription: '',
+        };
+    }
+}
+
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 48;
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://news.futunn.com';
     const link = `${rootUrl}/news-topics/${id}/`;
-    const apiUrl = `${rootUrl}/news-site-api/topic/get-topics-news-list?topicsId=1267&pageSize=${limit}`;
+    const apiUrl = `${rootUrl}/news-site-api/topic/get-topics-news-list?topicsId=${id}&pageSize=${limit}`;
 
-    const { topicTitle, topicDescription } = await cache.tryGet(link, async () => {
-        const topicResponse = await got({
-            method: 'get',
-            url: link,
-        });
-        const content = load(topicResponse.data);
-        return {
-            topicTitle: content('.topicInfo h1').text(),
-            topicDescription: content('.topicInfo p').text(),
-        };
-    });
+    const { topicTitle, topicDescription } = await cache.tryGet(link, async () => await getTopic(rootUrl, id));
 
     const response = await got({
         method: 'get',

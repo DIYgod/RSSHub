@@ -6,7 +6,7 @@ import { art } from '@/utils/render';
 import path from 'node:path';
 
 export const route: Route = {
-    path: ['/video'],
+    path: '/video',
     categories: ['finance'],
     example: '/futunn/video',
     features: {
@@ -14,7 +14,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.futunn.com/main/video-list', 'news.futunn.com/hk/main/video-list', 'news.futunn.com/en/main/video-list'],
+            source: ['news.futunn.com/main/video-list', 'news.futunn.com/:lang/main/video-list'],
             target: '/video',
         },
     ],

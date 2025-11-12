@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: ['/live/:lang?'],
+    path: '/live/:lang?',
     categories: ['finance'],
     example: '/futunn/live',
     parameters: {
@@ -68,16 +68,19 @@ async function handler(ctx) {
     const items = response.data.data.data.news.map((item) => {
         const audio = item.audioInfos.find((audio) => audio.language === lang);
         return {
-            title: item.title,
+            title: item.title || item.content,
             description: item.content,
             link: item.detailUrl,
-            author: item.source,
             pubDate: parseDate(item.time * 1000),
             category: item.quote.map((quote) => quote.name),
+            itunes_item_image: item.pic,
+            itunes_duration: audio.duration,
+            enclosure_url: audio.audioUrl,
+            enclosure_type: 'audio/mpeg',
             media: {
                 content: {
                     url: audio.audioUrl,
-                    type: `audio/mpeg`,
+                    type: 'audio/mpeg',
                     duration: audio.duration,
                     language: lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en',
                 },
@@ -93,5 +96,7 @@ async function handler(ctx) {
         link,
         item: items,
         language: lang === 'Mandarin' ? 'zh-CN' : lang === 'Cantonese' ? 'zh-HK' : 'en',
+        itunes_author: lang === 'Mandarin' || lang === 'Cantonese' ? '富途牛牛' : 'Futubull',
+        itunes_category: 'News',
     };
 }
