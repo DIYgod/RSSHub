@@ -19,10 +19,10 @@ const realBrowserOption = {
 
 async function getPageWithPuppeteer(url: string, selector: string): Promise<string> {
     const { page, browser } = await connect(realBrowserOption);
-    await page.goto(url, { timeout: 0 });
+    await page.goto(url, { timeout: 50000 });
     let verify: boolean | null = null;
     const startDate = Date.now();
-    while (!verify && Date.now() - startDate < 500000) {
+    while (!verify && Date.now() - startDate < 50000) {
         // eslint-disable-next-line no-await-in-loop, no-restricted-syntax
         verify = await page.evaluate((sel) => (document.querySelector(sel) ? true : null), selector).catch(() => null);
         // eslint-disable-next-line no-await-in-loop
@@ -106,10 +106,10 @@ async function handler(ctx) {
                 cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
                     const page = await browser.newPage();
                     try {
-                        await page.goto(item.link, { timeout: 0 });
+                        await page.goto(item.link, { timeout: 50000 });
                         let verify: boolean | null = null;
                         const startDate = Date.now();
-                        while (!verify && Date.now() - startDate < 500000) {
+                        while (!verify && Date.now() - startDate < 50000) {
                             // eslint-disable-next-line no-await-in-loop, no-restricted-syntax
                             verify = await page.evaluate(() => (document.querySelector('.video_img') || document.querySelector('.swiper-slide') ? true : null)).catch(() => null);
                             // eslint-disable-next-line no-await-in-loop
