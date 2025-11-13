@@ -1,4 +1,3 @@
-import { config } from '@/config';
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -45,11 +44,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
-    const { page, browser } = await connect({
-        customConfig: {
-            chromePath: config.chromiumExecutablePath,
-        },
-    });
+    const { page, browser } = await connect({});
     await page.goto(profileUrl);
     let verify: boolean | null = null;
     const startDate = Date.now();
