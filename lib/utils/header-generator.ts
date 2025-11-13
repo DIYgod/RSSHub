@@ -27,8 +27,16 @@ const isValidUserAgent = (userAgent: string, browser: string): boolean => {
  * @param {Partial<HeaderGeneratorOptions>} preset Preset from header-generator package (defaults to PRESETS.MODERN_MACOS_CHROME)
  * @returns Headers object with user-agent and additional headers
  */
+// Cache for HeaderGenerator instances per preset
+const generatorCache = new Map<string, HeaderGenerator>();
+
 export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESETS.MODERN_MACOS_CHROME) => {
-    const generator = new HeaderGenerator(preset);
+    const cacheKey = JSON.stringify(preset);
+    let generator = generatorCache.get(cacheKey);
+    if (!generator) {
+        generator = new HeaderGenerator(preset);
+        generatorCache.set(cacheKey, generator);
+    }
     let headers = generator.getHeaders();
 
     const userAgent = headers['user-agent'];
