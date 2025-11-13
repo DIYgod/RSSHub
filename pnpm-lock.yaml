@@ -69,9 +69,6 @@ importers:
       '@sentry/node':
         specifier: 10.25.0
         version: 10.25.0
-      '@tonyrl/rand-user-agent':
-        specifier: 2.0.83
-        version: 2.0.83
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -2302,10 +2299,6 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
-
-  '@tonyrl/rand-user-agent@2.0.83':
-    resolution: {integrity: sha512-FqifQhfeJ1WojY8j6s7D3qcs20KhZwVggirT7btqi7g5bSTbbD4v0cuhxHaASyHlv3R757Jum2ro03dRVUXgVw==}
-    engines: {node: '>=14.16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
@@ -8114,8 +8107,6 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
-
-  '@tonyrl/rand-user-agent@2.0.83': {}
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 

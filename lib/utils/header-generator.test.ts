@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import ofetch from '@/utils/ofetch';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 
-describe('rand-user-agent', () => {
+describe('header-generator', () => {
     it('should has no ua', async () => {
         const response = await ofetch('http://rsshub.test/headers');
         expect(response['user-agent']).toBeUndefined();
