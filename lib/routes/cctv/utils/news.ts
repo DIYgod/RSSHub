@@ -3,9 +3,7 @@ import got from '@/utils/got';
 import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import randUserAgent from '@/utils/rand-user-agent';
-
-const UA = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
+import { PRESETS } from '@/utils/header-generator';
 
 const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
@@ -15,8 +13,8 @@ const getNews = async (category) => {
         url,
         headers: {
             Referer: `http://news.cctv.com/${category}`,
-            'User-Agent': UA,
         },
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
     const data = JSON.parse(response.data.slice(category.length + 1, -1));
@@ -58,9 +56,7 @@ const getNews = async (category) => {
                     const { data } = await got({
                         method: 'get',
                         url: api,
-                        headers: {
-                            'User-Agent': UA,
-                        },
+                        headerGeneratorOptions: PRESETS.MODERN_IOS,
                     });
 
                     switch (type) {

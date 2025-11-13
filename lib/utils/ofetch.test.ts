@@ -6,7 +6,7 @@ import { config } from '@/config';
 describe('ofetch', () => {
     it('headers', async () => {
         const data = await ofetch('http://rsshub.test/headers');
-        expect(data['user-agent']).toBe(config.ua);
+        expect(data['user-agent']).toBeUndefined();
     });
 
     it('retry', async () => {

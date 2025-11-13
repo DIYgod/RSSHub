@@ -4,9 +4,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import randUserAgent from '@/utils/rand-user-agent';
-
-const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });
+import { PRESETS } from '@/utils/header-generator';
 
 const getArticleDetails = async (items) => {
     const list = await Promise.all(
@@ -14,9 +12,7 @@ const getArticleDetails = async (items) => {
             cache.tryGet(item.link, async () => {
                 const url = item.link;
                 const html = await ofetch(url, {
-                    headers: {
-                        'User-Agent': UA,
-                    },
+                    headerGeneratorOptions: PRESETS.MODERN_ANDROID,
                 });
                 const $ = load(html);
                 let data = JSON.parse($('script#__NEXT_DATA__').text());

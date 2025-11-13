@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import randUserAgent from '@/utils/rand-user-agent';
+import { PRESETS, generateHeaders } from '@/utils/header-generator';
 import { generate_a_bogus } from './a-bogus';
 import { Feed } from './types';
 import RejectError from '@/errors/types/reject';
@@ -30,17 +30,17 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { token } = ctx.req.param();
-    const ua = randUserAgent({ browser: 'chrome', os: 'windows', device: 'desktop' });
 
     const feed = (await cache.tryGet(
         `toutiao:user:${token}`,
         async () => {
             const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
 
-            const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, ua)}`, {
-                headers: {
-                    'User-Agent': ua,
-                },
+            const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
+            const userAgent = headers['user-agent'];
+
+            const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
+                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
             });
 
             return data.data;
