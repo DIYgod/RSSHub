@@ -4,6 +4,8 @@ import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import { useRegisterRequest } from 'node-network-devtools';
+import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
+import type { HeaderGeneratorOptions } from 'header-generator';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -25,20 +27,23 @@ export const useCustomHeader = (headers: Headers) => {
         });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit) => {
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions> }) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
+    const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
+
     // ua
-    if (!request.headers.get('user-agent')) {
+    if (!request.headers.has('user-agent')) {
         request.headers.set('user-agent', config.ua);
     }
 
-    // accept
-    if (!request.headers.get('accept')) {
-        request.headers.set('accept', '*/*');
+    for (const header of HEADER_LIST) {
+        if (!request.headers.has(header) && generatedHeaders[header]) {
+            request.headers.set(header, generatedHeaders[header]);
+        }
     }
 
     // referer
