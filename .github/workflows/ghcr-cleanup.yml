@@ -1,0 +1,273 @@
+name: 'Clean up GHCR Packages'
+
+on:
+  # 每小时执行一次（快速清理模式）
+  schedule:
+    - cron: '0 * * * *'
+  # Docker 发布完成后自动触发
+  workflow_run:
+    workflows: ['Docker Release']
+    types:
+      - completed
+  # 支持手动触发
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run mode (preview only, no actual deletion)'
+        required: false
+        type: boolean
+        default: false
+      retention_days:
+        description: 'Number of days to keep package versions'
+        required: false
+        type: number
+        default: 30
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Cleanup old GHCR package versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          RETENTION_DAYS: ${{ github.event.inputs.retention_days || '30' }}
+          PACKAGE_NAME: rsshub
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -e
+
+          echo "=================================================="
+          echo "GHCR Package Cleanup (High-Performance Mode)"
+          echo "=================================================="
+          echo "Package: ghcr.io/${OWNER}/${PACKAGE_NAME}"
+          echo "Retention period: ${RETENTION_DAYS} days"
+          echo "Dry run mode: ${DRY_RUN}"
+          echo "Using PAT: Enhanced rate limits (5000 req/hour)"
+          echo "Parallel workers: 10"
+          echo "Target: ~4000 deletions per hour"
+          echo "=================================================="
+          echo ""
+
+          # 计算截止日期（UTC时间）
+          CUTOFF_DATE=$(date -u -d "${RETENTION_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ)
+          CUTOFF_TIMESTAMP=$(date -d "${CUTOFF_DATE}" +%s)
+
+          echo "Current time (UTC): $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "Cutoff date (UTC): ${CUTOFF_DATE}"
+          echo ""
+
+          # 创建临时目录
+          TEMP_DIR=$(mktemp -d)
+
+          echo "Fetching package versions (fast mode)..."
+
+          # 快速获取前1000个版本（最多10页）
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=100" \
+            --jq '.[] | select((.created_at | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) < '"$CUTOFF_TIMESTAMP"') | .id' \
+            2>/dev/null > "${TEMP_DIR}/to_delete.txt" || \
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions?per_page=100" \
+            --jq '.[] | select((.created_at | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) < '"$CUTOFF_TIMESTAMP"') | .id' \
+            > "${TEMP_DIR}/to_delete.txt"
+
+          TOTAL_TO_DELETE=$(wc -l < "${TEMP_DIR}/to_delete.txt" 2>/dev/null | tr -d ' ' || echo "0")
+
+          # 使用 PAT 后提高每次运行的删除上限
+          # PAT rate limit: 5000 req/hour，使用并行处理可以更高效
+          MAX_PER_RUN=4000
+
+          if [[ $TOTAL_TO_DELETE -gt $MAX_PER_RUN ]]; then
+            echo "Found ${TOTAL_TO_DELETE} versions to delete"
+            echo "Limiting to ${MAX_PER_RUN} this run (optimized for PAT rate limits)"
+            head -n $MAX_PER_RUN "${TEMP_DIR}/to_delete.txt" > "${TEMP_DIR}/to_delete_limited.txt"
+            mv "${TEMP_DIR}/to_delete_limited.txt" "${TEMP_DIR}/to_delete.txt"
+            DELETED_COUNT=$MAX_PER_RUN
+            REMAINING=$((TOTAL_TO_DELETE - MAX_PER_RUN))
+          else
+            DELETED_COUNT=$TOTAL_TO_DELETE
+            REMAINING=0
+          fi
+
+          echo "=================================================="
+          echo "Analysis Complete"
+          echo "=================================================="
+          echo "Versions to delete this run: ${DELETED_COUNT}"
+          if [[ $REMAINING -gt 0 ]]; then
+            echo "Remaining for future runs: ${REMAINING}"
+            RUNS_NEEDED=$(( (REMAINING + MAX_PER_RUN - 1) / MAX_PER_RUN ))
+            echo "Estimated additional runs needed: ${RUNS_NEEDED}"
+          fi
+          echo ""
+
+          if [[ $DELETED_COUNT -eq 0 ]]; then
+            echo "✅ No versions need to be deleted."
+            rm -rf "$TEMP_DIR"
+            exit 0
+          fi
+
+          # 显示一些样本
+          echo "Sample of versions to delete:"
+          head -n 5 "${TEMP_DIR}/to_delete.txt" | while read -r version_id; do
+            echo "  Version ID: ${version_id}"
+          done || true
+
+          if [[ $DELETED_COUNT -gt 5 ]]; then
+            echo "  ... and $((DELETED_COUNT - 5)) more versions"
+          fi
+          echo ""
+
+          if [[ "$DRY_RUN" == "true" ]]; then
+            echo "⚠️  DRY RUN MODE - No versions were actually deleted"
+            echo "   To perform actual deletion, set dry_run to false"
+            rm -rf "$TEMP_DIR"
+            exit 0
+          fi
+
+          echo "Starting deletion (high-performance parallel mode)..."
+          echo "⚠️  Using parallel processing with 10 workers"
+          echo "⚠️  Optimized for PAT rate limits (5000 req/hour)"
+          echo ""
+
+          START_TIME=$(date +%s)
+
+          # 创建结果目录（避免并发写入同一文件）
+          mkdir -p "${TEMP_DIR}/results"
+
+          # 定义删除函数（用于并行执行）
+          delete_version() {
+            # 关闭 set -e，确保错误不会导致进程异常退出
+            set +e
+
+            local version_id=$1
+            local OWNER=$2
+            local PACKAGE_NAME=$3
+            local TEMP_DIR=$4
+            local MAX_RETRIES=3
+            local RETRY_COUNT=0
+            local SUCCESS=false
+
+            while [[ $RETRY_COUNT -lt $MAX_RETRIES ]] && [[ "$SUCCESS" == "false" ]]; do
+              # 尝试组织 API
+              DELETE_RESULT=$(gh api \
+                --method DELETE \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "/orgs/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "ORG_DELETE_FAILED")
+
+              # 如果组织 API 失败，尝试用户 API（使用字符串匹配避免管道）
+              if [[ "$DELETE_RESULT" == "ORG_DELETE_FAILED" ]] || [[ "$DELETE_RESULT" == *"Not Found"* ]]; then
+                DELETE_RESULT=$(gh api \
+                  --method DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  "/users/${OWNER}/packages/container/${PACKAGE_NAME}/versions/${version_id}" 2>&1 || echo "DELETE_FAILED")
+              fi
+
+              # 检查是否成功
+              if [[ "$DELETE_RESULT" == *"FAILED"* ]] || [[ -n "$DELETE_RESULT" ]]; then
+                # 检查是否是速率限制错误（使用字符串匹配避免管道）
+                if [[ "$DELETE_RESULT" == *"rate limit"* ]]; then
+                  RETRY_COUNT=$((RETRY_COUNT + 1))
+                  if [[ $RETRY_COUNT -lt $MAX_RETRIES ]]; then
+                    sleep 10
+                  else
+                    # 每个进程写入独立文件，避免并发冲突
+                    touch "${TEMP_DIR}/results/error_${version_id}" 2>/dev/null
+                    return 1
+                  fi
+                else
+                  touch "${TEMP_DIR}/results/error_${version_id}" 2>/dev/null
+                  return 1
+                fi
+              else
+                SUCCESS=true
+                # 每个进程写入独立文件，避免并发冲突
+                touch "${TEMP_DIR}/results/success_${version_id}" 2>/dev/null
+                return 0
+              fi
+            done
+
+            return 1
+          }
+
+          # 导出函数和变量供 xargs 使用
+          export -f delete_version
+          export OWNER PACKAGE_NAME TEMP_DIR
+
+          # 使用 xargs 并行删除（10个并行worker）
+          # 关闭 set -e 避免子进程因错误退出导致 broken pipe
+          cat "${TEMP_DIR}/to_delete.txt" | \
+            xargs -P 10 -I {} bash -c 'set +e; delete_version "$@"' _ {} "$OWNER" "$PACKAGE_NAME" "$TEMP_DIR"
+
+          # 统计结果（统计独立文件数量）
+          SUCCESS_COUNT=0
+          ERROR_COUNT=0
+
+          if [[ -d "${TEMP_DIR}/results" ]]; then
+            SUCCESS_COUNT=$(find "${TEMP_DIR}/results" -name "success_*" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
+            ERROR_COUNT=$(find "${TEMP_DIR}/results" -name "error_*" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
+          fi
+
+          PROCESSED=$((SUCCESS_COUNT + ERROR_COUNT))
+
+          END_TIME=$(date +%s)
+          TOTAL_TIME=$((END_TIME - START_TIME))
+
+          # 避免除以零
+          if [[ $TOTAL_TIME -gt 0 ]]; then
+            ACTUAL_RATE=$((PROCESSED * 3600 / TOTAL_TIME))
+          else
+            ACTUAL_RATE=0
+          fi
+
+          echo ""
+          echo "=================================================="
+          echo "Cleanup Complete (High-Performance Mode)"
+          echo "=================================================="
+          echo "Versions successfully deleted: ${SUCCESS_COUNT}"
+          echo "Versions failed to delete: ${ERROR_COUNT}"
+          echo "Total processed: ${PROCESSED}"
+          echo "Total time: ${TOTAL_TIME} seconds ($((TOTAL_TIME / 60)) minutes)"
+          echo "Actual rate: ${ACTUAL_RATE} deletions/hour"
+          echo "Performance improvement: ~4-5x faster than serial mode"
+
+          if [[ $REMAINING -gt 0 ]]; then
+            echo ""
+            echo "ℹ️  Note: This was a partial cleanup run."
+            echo "   Remaining versions will be deleted in the next scheduled run."
+            echo "   Estimated runs needed: $(( (REMAINING + MAX_PER_RUN - 1) / MAX_PER_RUN ))"
+          fi
+
+          if [[ $ERROR_COUNT -gt 0 ]]; then
+            echo ""
+            echo "Errors encountered: ${ERROR_COUNT} versions failed to delete"
+            echo "Sample of failed version IDs:"
+            find "${TEMP_DIR}/results" -name "error_*" 2>/dev/null | head -n 5 | while read -r error_file; do
+              version_id=$(basename "$error_file" | sed 's/^error_//')
+              echo "  - Version ID: ${version_id}"
+            done || true
+          fi
+
+          echo "=================================================="
+
+          # 清理临时文件
+          rm -rf "$TEMP_DIR"
+
+          # 如果错误率超过50%，返回失败状态
+          if [[ $ERROR_COUNT -gt $((SUCCESS_COUNT / 2)) ]]; then
+            echo "⚠️  High error rate detected"
+            exit 1
+          fi

@@ -67,6 +67,7 @@ jobs:
           docker run -d \
             --name rsshub \
             -e NODE_ENV=dev \
+            -e NODE_OPTIONS='--max-http-header-size=32768' \
             -e LOGGER_LEVEL=debug \
             -e ALLOW_USER_HOTLINK_TEMPLATE=true \
             -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
@@ -107,7 +108,7 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@45d75b6cf72bf4f254be6230cb887ad002702491 # v3.6.3
+        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -134,7 +135,7 @@ jobs:
           sourceRunId: ${{ github.event.workflow_run.id }}
 
       - name: Pull Request Labeler
-        uses: actions-cool/issues-helper@45d75b6cf72bf4f254be6230cb887ad002702491 # v3.6.3
+        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}

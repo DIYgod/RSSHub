@@ -1,2 +1,2 @@
-<iframe width="672" height="377" src="https://www.youtube-nocookie.com/embed/{{ section.youtube_id }}" frameborder="0" allowfullscreen></iframe>
+<iframe width="672" height="377" src="https://www.youtube-nocookie.com/embed/{{ section.youtube_id }}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <br>

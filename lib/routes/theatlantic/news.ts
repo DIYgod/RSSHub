@@ -42,9 +42,7 @@ async function handler(ctx) {
     let list = Object.values(data)[0].river.edges;
     list = list.filter((item) => !item.node.url.startsWith('https://www.theatlantic.com/photo'));
     list = list.map((item) => {
-        const data = {};
-        data.link = item.node.url;
-        data.pubDate = item.node.datePublished;
+        const data = { link: item.node.url, pubDate: item.node.datePublished };
         return data;
     });
     const items = await getArticleDetails(list);

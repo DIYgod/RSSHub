@@ -95,7 +95,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authorEls: Element[] = $$('div.article-box__meta div.item-list div.item a')
                         .toArray()
-                        .filter((i) => ($$(i).attr('href') ? new RegExp(`^${userHostRegex}/u/\\d+$`).test($$(i).attr('href') as string) : false));
+                        .filter((i) => ($$(i).attr('href') ? new RegExp(String.raw`^${userHostRegex}/u/\d+$`).test($$(i).attr('href') as string) : false));
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $authorEl: Cheerio<Element> = $$(authorEl);
 

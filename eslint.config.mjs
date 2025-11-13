@@ -119,12 +119,12 @@ export default [
                 },
                 {
                     selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]',
-                    message: "Usage of .catch(() => []) is not allowed. Please handle the error appropriately."
+                    message: 'Usage of .catch(() => []) is not allowed. Please handle the error appropriately.',
                 },
                 {
                     selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]',
-                    message: "Usage of .catch(() => {}) is not allowed. Please handle the error appropriately."
-                }
+                    message: 'Usage of .catch(() => {}) is not allowed. Please handle the error appropriately.',
+                },
             ],
 
             'no-unneeded-ternary': 'error',
@@ -157,6 +157,14 @@ export default [
                 {
                     allowShortCircuit: true,
                     allowTernary: true,
+                },
+            ],
+
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    args: 'after-used',
+                    argsIgnorePattern: '^_',
                 },
             ],
 

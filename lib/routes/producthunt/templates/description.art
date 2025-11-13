@@ -12,7 +12,7 @@
             <img src="https://ph-files.imgix.net/{{ m.imageUuid }}"><br>
         {{ else if m.mediaType === 'video' }}
             {{ if m.metadata.platform === 'youtube' }}
-                <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ m.metadata.videoId }}" frameborder="0" allowfullscreen></iframe>
+                <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ m.metadata.videoId }}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
             {{ /if }}
         {{ /if }}
     {{ /each }}
