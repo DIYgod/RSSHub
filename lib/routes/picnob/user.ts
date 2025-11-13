@@ -4,6 +4,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import { connect } from 'puppeteer-real-browser';
 import sanitizeHtml from 'sanitize-html';
+import pMap from 'p-map';
 
 const realBrowserOption = {
     args: ['--start-maximized'],
@@ -101,8 +102,9 @@ async function handler(ctx) {
     // Fetch all post details concurrently using a single browser instance
     const { browser } = await connect(realBrowserOption);
     try {
-        const newDescription = await Promise.all(
-            list.map((item) =>
+        const newDescription = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
                     const page = await browser.newPage();
                     try {
@@ -133,8 +135,8 @@ async function handler(ctx) {
                     } finally {
                         await page.close();
                     }
-                })
-            )
+                }),
+            { concurrency: 5 }
         );
 
         return {
