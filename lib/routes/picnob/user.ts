@@ -5,8 +5,21 @@ import { load } from 'cheerio';
 import { connect } from 'puppeteer-real-browser';
 import sanitizeHtml from 'sanitize-html';
 
+const realBrowserOption = {
+    args: ['--start-maximized'],
+    turnstile: true,
+    headless: false,
+    // disableXvfb: true,
+    // ignoreAllFlags:true,
+    customConfig: {},
+    connectOption: {
+        defaultViewport: null,
+    },
+    plugins: [],
+};
+
 async function getPageWithPuppeteer(url: string, selector: string): Promise<string> {
-    const { page, browser } = await connect({});
+    const { page, browser } = await connect(realBrowserOption);
     await page.goto(url);
     let verify: boolean | null = null;
     const startDate = Date.now();
@@ -86,7 +99,7 @@ async function handler(ctx) {
         });
 
     // Fetch all post details concurrently using a single browser instance
-    const { browser } = await connect({});
+    const { browser } = await connect(realBrowserOption);
     try {
         const newDescription = await Promise.all(
             list.map((item) =>
