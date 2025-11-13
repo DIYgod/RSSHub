@@ -3,7 +3,7 @@ import https from 'node:https';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 import proxy from '@/utils/proxy';
-import { generateHeaders } from '@/utils/header-generator';
+import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
 import type { HeaderGeneratorOptions } from 'header-generator';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
@@ -53,18 +53,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             options.headers['user-agent'] = config.ua;
         }
 
-        for (const header of [
-            'accept',
-            // sec-ch-ua (chrome client hints)
-            'sec-ch-ua',
-            'sec-ch-ua-mobile',
-            'sec-ch-ua-platform',
-            // sec-fetch (fetch metadata)
-            'sec-fetch-site',
-            'sec-fetch-mode',
-            'sec-fetch-user',
-            'sec-fetch-dest',
-        ]) {
+        for (const header of HEADER_LIST) {
             if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
                 options.headers[header] = generatedHeaders[header];
             }

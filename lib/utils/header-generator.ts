@@ -53,9 +53,10 @@ export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESET
 /** List of headers to include from header-generator output
  * excluding headers that are typically set manually or by the environment
  */
-export const headers = new Set([
+export const generatedHeaders = new Set([
     // 'content-length',
     // 'cache-control',
+    // sec-ch-ua (chrome client hints)
     'sec-ch-ua',
     'sec-ch-ua-mobile',
     'sec-ch-ua-platform',
@@ -64,6 +65,7 @@ export const headers = new Set([
     'upgrade-insecure-requests',
     // 'user-agent', // handle manually
     'accept',
+    // sec-fetch (fetch metadata)
     'sec-fetch-site',
     'sec-fetch-mode',
     'sec-fetch-user',

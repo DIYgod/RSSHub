@@ -4,7 +4,7 @@ import undici, { Request, RequestInfo, RequestInit } from 'undici';
 import proxy from '@/utils/proxy';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import { useRegisterRequest } from 'node-network-devtools';
-import { generateHeaders } from '@/utils/header-generator';
+import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
 import type { HeaderGeneratorOptions } from 'header-generator';
 
 const limiter = new RateLimiterMemory({
@@ -40,18 +40,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.set('user-agent', config.ua);
     }
 
-    for (const header of [
-        'accept',
-        // sec-ch-ua (chrome client hints)
-        'sec-ch-ua',
-        'sec-ch-ua-mobile',
-        'sec-ch-ua-platform',
-        // sec-fetch (fetch metadata)
-        'sec-fetch-site',
-        'sec-fetch-mode',
-        'sec-fetch-user',
-        'sec-fetch-dest',
-    ]) {
+    for (const header of HEADER_LIST) {
         if (!request.headers.has(header) && generatedHeaders[header]) {
             request.headers.set(header, generatedHeaders[header]);
         }
