@@ -3,7 +3,6 @@ import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import { connect } from 'puppeteer-real-browser';
-import sanitizeHtml from 'sanitize-html';
 
 const realBrowserOption = {
     args: ['--start-maximized'],
@@ -85,13 +84,14 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const sum = $item.find('.sum').text();
             const coverLink = $item.find('.cover_link').attr('href');
             const shortcode = coverLink?.split('/')?.[2];
+            const image = $item.find('.cover .cover_link img');
+            const title = image.attr('alt') || '';
 
             return {
-                title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
-                description: `<img src="${$item.find('.preview_w img').attr('data-src')}" /><br />${sum.replaceAll('\n', '<br>')}`,
+                title,
+                description: `<img src="${image.attr('data-src')}" /><br />${title}`,
                 link: `${baseUrl}${coverLink}`,
                 guid: shortcode,
                 pubDate: parseRelativeDate($item.find('.time .txt').text()),
