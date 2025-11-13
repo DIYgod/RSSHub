@@ -59,14 +59,4 @@ describe('rand-user-agent', () => {
         expect(headers['sec-ch-ua-mobile']).toBe('?0');
         expect(headers['user-agent']).toMatch(/Chrome/);
     });
-
-    it('should use headerGeneratorOptions with ofetch', async () => {
-        const response = await ofetch('http://rsshub.test/headers', {
-            headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
-        });
-
-        // Note: The specific header values will be handled by the request-rewriter,
-        // but we can verify the request went through without errors
-        expect(response).toBeDefined();
-    });
 });

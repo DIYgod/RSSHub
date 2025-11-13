@@ -24,8 +24,6 @@ const isValidUserAgent = (userAgent: string, browser: string): boolean => {
 };
 
 /**
- * Generate full headers including sec-ch-* and sec-fetch-* headers
- *
  * @param {Partial<HeaderGeneratorOptions>} preset Preset from header-generator package (defaults to PRESETS.MODERN_MACOS_CHROME)
  * @returns Headers object with user-agent and additional headers
  */
@@ -33,8 +31,6 @@ export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESET
     const generator = new HeaderGenerator(preset);
     let headers = generator.getHeaders();
 
-    // Apply filtering logic for unwanted UAs
-    // For preset-based approach, we'll use a generic browser detection from the user agent
     const userAgent = headers['user-agent'];
     let detectedBrowser: string;
     if (userAgent.includes('Firefox')) {
