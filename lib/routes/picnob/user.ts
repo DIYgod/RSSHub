@@ -1,29 +1,10 @@
+import { config } from '@/config';
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import { connect } from 'puppeteer-real-browser';
 import sanitizeHtml from 'sanitize-html';
-
-async function getPageWithPuppeteer(url: string, selector: string): Promise<string> {
-    const { page, browser } = await connect({});
-    await page.goto(url);
-    let verify: boolean | null = null;
-    const startDate = Date.now();
-    while (!verify && Date.now() - startDate < 30000) {
-        // eslint-disable-next-line no-await-in-loop, no-restricted-syntax
-        verify = await page.evaluate((sel) => (document.querySelector(sel) ? true : null), selector).catch(() => null);
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise((r) => setTimeout(r, 1000));
-    }
-    const html = await page.content();
-    await browser.close();
-    return html;
-}
-
-function getProfilePage(profileUrl: string): Promise<string> {
-    return getPageWithPuppeteer(profileUrl, '.post_box');
-}
 
 export const route: Route = {
     path: '/user/:id/:type?',
@@ -64,7 +45,21 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
-    const html = await getProfilePage(profileUrl);
+    const { page, browser } = await connect({
+        customConfig: {
+            chromePath: config.chromiumExecutablePath,
+        },
+    });
+    await page.goto(profileUrl);
+    let verify: boolean | null = null;
+    const startDate = Date.now();
+    while (!verify && Date.now() - startDate < 30000) {
+        // eslint-disable-next-line no-await-in-loop, no-restricted-syntax
+        verify = await page.evaluate((sel) => (document.querySelector(sel) ? true : null), '.post_box').catch(() => null);
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((r) => setTimeout(r, 1000));
+    }
+    const html = await page.content();
 
     const $ = load(html);
 
@@ -85,8 +80,6 @@ async function handler(ctx) {
             };
         });
 
-    // Fetch all post details concurrently using a single browser instance
-    const { browser } = await connect({});
     try {
         const newDescription = await Promise.all(
             list.map((item) =>
