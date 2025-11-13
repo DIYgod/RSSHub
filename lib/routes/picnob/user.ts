@@ -1,16 +1,19 @@
+import { config } from '@/config';
 import { Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
-import { connect } from 'puppeteer-real-browser';
+import { connect, Options } from 'puppeteer-real-browser';
 
-const realBrowserOption = {
+const realBrowserOption: Options = {
     args: ['--start-maximized'],
     turnstile: true,
     headless: false,
     // disableXvfb: true,
     // ignoreAllFlags:true,
-    customConfig: {},
+    customConfig: {
+        chromePath: config.chromiumExecutablePath,
+    },
     connectOption: {
         defaultViewport: null,
     },
