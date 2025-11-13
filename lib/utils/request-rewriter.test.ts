@@ -107,6 +107,26 @@ describe('request-rewriter', () => {
         }
     });
 
+    it('ofetch custom ua', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch');
+        const userAgent = config.trueUA;
+
+        try {
+            await ofetch('http://rsshub.test/headers', {
+                retry: 0,
+                headers: {
+                    'user-agent': userAgent,
+                },
+            });
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(headers.get('user-agent')).toBe(userAgent);
+    });
+
     it('ofetch header preset', async () => {
         const fetchSpy = vi.spyOn(undici, 'fetch');
 

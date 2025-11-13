@@ -46,8 +46,6 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         options.headers = options.headers || {};
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
-        // Generate headers using header-generator for realistic browser headers
-        // Use the provided preset or default to MODERN_MACOS_CHROME
         const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
 
         // ua

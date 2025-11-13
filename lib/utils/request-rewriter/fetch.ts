@@ -33,8 +33,6 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
-    // Generate headers using header-generator for realistic browser headers
-    // Use the provided preset or default to MODERN_MACOS_CHROME
     const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
     // ua
