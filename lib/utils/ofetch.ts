@@ -33,9 +33,6 @@ const rofetch = createFetch().create({
     onRequestError({ request, error }) {
         logger.error(`Request ${request} fail: ${error.cause} ${error}`);
     },
-    // headers: {
-    //     'user-agent': config.ua,
-    // },
     onResponse({ request, response }) {
         if (response.redirected) {
             logger.http(`Redirecting to ${response.url} for ${request}`);
