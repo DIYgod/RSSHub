@@ -4,8 +4,7 @@ import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-import { Decoder } from '@toondepauw/node-zstd';
-const decoder = new Decoder();
+import { zstdDecompressSync } from 'node:zlib';
 
 const fetchThirdPartyApi = async (endpoint: string, params: Record<string, any>) => {
     const response = await ofetch.raw(`${config.twitter.thirdPartyApi}${endpoint}`, {
@@ -18,7 +17,7 @@ const fetchThirdPartyApi = async (endpoint: string, params: Record<string, any>)
     let body = Buffer.from(response._data as ArrayBuffer);
 
     if (encoding.includes('zstd')) {
-        body = await decoder.decode(body);
+        body = zstdDecompressSync(body);
     }
 
     return JSON.parse(body.toString('utf-8'));

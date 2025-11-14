@@ -69,9 +69,6 @@ importers:
       '@sentry/node':
         specifier: 10.25.0
         version: 10.25.0
-      '@toondepauw/node-zstd':
-        specifier: ^1.2.0
-        version: 1.2.0
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -2310,58 +2307,6 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
-
-  '@toondepauw/node-zstd-darwin-arm64@1.2.0':
-    resolution: {integrity: sha512-fdBGlRSrf19M1+IJ98aJCLK6/HKQRnRlhE5i6EZ7kVfD2r6h5Bq9NqHAmQ5MgwtmfB9VMmiIrQAMIxKVeT54pg==}
-    engines: {node: '>= 14'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@toondepauw/node-zstd-darwin-x64@1.2.0':
-    resolution: {integrity: sha512-ZVu4zkQUgCQ8z1lLd7/LZzIYDKL48tPguIN8L4SRfLuWWlTq2/4OT6AmchztDbe5soLCDuw64t5X5otDvgsGJA==}
-    engines: {node: '>= 14'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@toondepauw/node-zstd-freebsd-x64@1.2.0':
-    resolution: {integrity: sha512-kDK+l3uP7htiWvM/klY32siEGIBk3K5Da4/DcXV2q/Vp+Ph86FWpQRzC46wJIpJB60xEU67pxFGLBH/8/RB02g==}
-    engines: {node: '>= 14'}
-    cpu: [x64]
-    os: [freebsd]
-
-  '@toondepauw/node-zstd-linux-arm64-gnu@1.2.0':
-    resolution: {integrity: sha512-KteUWam7McA0moNiRgu7KSgPu3FE+KXuh3ObqWoco5JK53Sp4Pgr/q1IYsdN6TYYbgJMkJpof62NIbyi6tnVfg==}
-    engines: {node: '>= 14'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@toondepauw/node-zstd-linux-arm64-musl@1.2.0':
-    resolution: {integrity: sha512-KjbGOXvPmorhWGD4kEVjdBz/gJgUOw1Eu0xziBwsq03URrI0XSDAY6YiJZpZtGnSjm7XonEpnBZcVwXH1HZz3Q==}
-    engines: {node: '>= 14'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@toondepauw/node-zstd-linux-x64-gnu@1.2.0':
-    resolution: {integrity: sha512-qNJDZGd/jplK/1J+8V87dYdrviAxNt1iwI/SQ0JR3HTz5Jdbu+BnVB9oMklCc/bGWa8zTkiZkl/EwA3gtbpo+Q==}
-    engines: {node: '>= 14'}
-    cpu: [x64]
-    os: [linux]
-
-  '@toondepauw/node-zstd-linux-x64-musl@1.2.0':
-    resolution: {integrity: sha512-Cw1qnMXde8caitDMbk0vWrqnVHTSK+JB/Dp3XnZghQjBrD7JLj2qNzh0eTkxNFa+nijbo8HyyslWGswCugYZCw==}
-    engines: {node: '>= 14'}
-    cpu: [x64]
-    os: [linux]
-
-  '@toondepauw/node-zstd-win32-x64-msvc@1.2.0':
-    resolution: {integrity: sha512-7cD2/R7DLZHMxHTsQNtOX3vJCT4qd74a3nWjYYthJ89gqXwwEoC8BwttQxvHd0qCZ3S/cZ/BYoTikXMwMNmCEg==}
-    engines: {node: '>= 14'}
-    cpu: [x64]
-    os: [win32]
-
-  '@toondepauw/node-zstd@1.2.0':
-    resolution: {integrity: sha512-vVDvPUstF9gKEX+Kqp654bL+4UNus6pkmY8mlcJQpIw/Sn6sO9fl1PEwxB0d0unH5PmVfBUicf1lOXu74OLrCg==}
-    engines: {node: '>= 14'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
@@ -8259,41 +8204,6 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
-
-  '@toondepauw/node-zstd-darwin-arm64@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-darwin-x64@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-freebsd-x64@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-linux-arm64-gnu@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-linux-arm64-musl@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-linux-x64-gnu@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-linux-x64-musl@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd-win32-x64-msvc@1.2.0':
-    optional: true
-
-  '@toondepauw/node-zstd@1.2.0':
-    optionalDependencies:
-      '@toondepauw/node-zstd-darwin-arm64': 1.2.0
-      '@toondepauw/node-zstd-darwin-x64': 1.2.0
-      '@toondepauw/node-zstd-freebsd-x64': 1.2.0
-      '@toondepauw/node-zstd-linux-arm64-gnu': 1.2.0
-      '@toondepauw/node-zstd-linux-arm64-musl': 1.2.0
-      '@toondepauw/node-zstd-linux-x64-gnu': 1.2.0
-      '@toondepauw/node-zstd-linux-x64-musl': 1.2.0
-      '@toondepauw/node-zstd-win32-x64-msvc': 1.2.0
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
