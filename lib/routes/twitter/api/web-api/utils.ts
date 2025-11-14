@@ -10,8 +10,7 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 import login from './login';
-import { Decoder } from '@toondepauw/node-zstd';
-const decoder = new Decoder();
+import { zstdDecompressSync } from 'node:zlib';
 
 let authTokenIndex = 0;
 
@@ -26,7 +25,7 @@ const fetchThirdPartyTimeline = async (endpoint: string, params: Record<string, 
     let body = Buffer.from(response._data as ArrayBuffer);
 
     if (encoding.includes('zstd')) {
-        body = await decoder.decode(body);
+        body = zstdDecompressSync(body);
     }
 
     return JSON.parse(body.toString('utf-8'));
