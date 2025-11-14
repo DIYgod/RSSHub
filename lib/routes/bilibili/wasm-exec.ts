@@ -147,7 +147,6 @@
         };
     }
 
-
     if (!globalThis.crypto) {
         throw new Error('globalThis.crypto is not available, polyfill required (crypto.getRandomValues only)');
     }
@@ -373,7 +372,6 @@
                     // func getRandomData(r []byte)
                     'runtime.getRandomData': (sp) => {
                         sp >>>= 0;
-
                         crypto.getRandomValues(loadSlice(sp + 8));
                     },
 
