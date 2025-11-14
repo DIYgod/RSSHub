@@ -148,7 +148,7 @@ RUN \
             ; \
         else \
             apt-get install -yq --no-install-recommends \
-                chromium \
+                chromium xvfb \
             && \
             echo "CHROMIUM_EXECUTABLE_PATH=$(which chromium)" | tee /app/.env ; \
         fi; \
