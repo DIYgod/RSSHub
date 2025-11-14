@@ -73,7 +73,7 @@ export const route: Route = {
         },
     ],
     name: 'User Profile - Picnob',
-    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod'],
+    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod', 'hyoban'],
     handler,
     view: ViewType.Pictures,
 };
