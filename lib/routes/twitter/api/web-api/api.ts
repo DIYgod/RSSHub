@@ -4,6 +4,25 @@ import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
+import { Decoder } from '@toondepauw/node-zstd';
+const decoder = new Decoder();
+
+const fetchThirdPartyApi = async (endpoint: string, params: Record<string, any>) => {
+    const response = await ofetch.raw(`${config.twitter.thirdPartyApi}${endpoint}`, {
+        method: 'GET',
+        params,
+        responseType: 'arrayBuffer',
+    });
+
+    const encoding = response.headers.get('content-encoding')?.toLowerCase() ?? '';
+    let body = Buffer.from(response._data as ArrayBuffer);
+
+    if (encoding.includes('zstd')) {
+        body = await decoder.decode(body);
+    }
+
+    return JSON.parse(body.toString('utf-8'));
+};
 
 const getUserData = (id) =>
     cache.tryGet(`twitter-userdata-${id}`, () => {
@@ -26,10 +45,7 @@ const getUserData = (id) =>
         if (config.twitter.thirdPartyApi) {
             const endpoint = id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName;
 
-            return ofetch(`${config.twitter.thirdPartyApi}${endpoint}`, {
-                method: 'GET',
-                params,
-            });
+            return fetchThirdPartyApi(endpoint, params);
         }
 
         return twitterGot(`${baseUrl}${id.startsWith('+') ? gqlMap.UserByRestId : gqlMap.UserByScreenName}`, params, {
