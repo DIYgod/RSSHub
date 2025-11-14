@@ -9,6 +9,7 @@ export type Config = {
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
+    puppeteerRealBrowserService?: string;
     puppeteerWSEndpoint?: string;
     chromiumExecutablePath?: string;
     // network
@@ -480,6 +481,7 @@ const calculateValue = () => {
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
+        puppeteerRealBrowserService: envs.PUPPETEER_REAL_BROWSER_SERVICE,
         puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
         chromiumExecutablePath: envs.CHROMIUM_EXECUTABLE_PATH,
         // network
