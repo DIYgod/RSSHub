@@ -167,7 +167,7 @@
         "@typescript-eslint/eslint-plugin": "8.46.4",
         "@typescript-eslint/parser": "8.46.4",
         "@vercel/nft": "0.30.3",
-        "@vitest/coverage-v8": "2.1.9",
+        "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.33",
         "domhandler": "5.0.3",
         "eslint": "9.39.1",
@@ -194,7 +194,7 @@
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
-        "vitest": "2.1.9",
+        "vitest": "4.0.9",
         "yaml-eslint-parser": "1.3.0"
     },
     "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
