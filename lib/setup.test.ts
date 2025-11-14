@@ -1,6 +1,7 @@
 import { afterAll, afterEach } from 'vitest';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
+import zlib from 'node:zlib';
 
 const genWeChatMpPage = (rich_media_content: string, scripts: string[] | string) => {
     if (!Array.isArray(scripts)) {
@@ -241,8 +242,31 @@ Unknown paragraph
             test: jsonData?.test,
         });
     }),
-    http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
+    http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>')),
+    http.get(`http://rsshub.test/zstd-json`, () => {
+        const originalData = JSON.stringify({ test: 'rsshub' });
+        const compressed = zlib.zstdCompressSync(Buffer.from(originalData));
+        return new HttpResponse(compressed, {
+            status: 200,
+            headers: {
+                'Content-Encoding': 'zstd',
+                'Content-Type': 'application/json',
+            },
+        });
+    }),
+    http.get(`http://rsshub.test/zstd-html`, () => {
+        const originalData = '<html><body>rsshub_test</body></html>';
+        const compressed = zlib.zstdCompressSync(Buffer.from(originalData));
+        return new HttpResponse(compressed, {
+            status: 200,
+            headers: {
+                'Content-Encoding': 'zstd',
+                'Content-Type': 'text/html',
+            },
+        });
+    })
 );
+
 server.listen();
 
 afterAll(() => server.close());
