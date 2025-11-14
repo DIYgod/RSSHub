@@ -119,10 +119,8 @@ async function handler(ctx) {
         htmlList = (await Promise.all(
             list.map((item) =>
                 cache.tryGet(`picnob:user:${id}:${item.guid}:html`, async () => {
-                    const urls = [item.link];
                     const selector = '.video_img, .swiper-slide';
-                    const urlParams = urls.map((url) => `url=${encodeURIComponent(url)}`).join('&');
-                    const res = await fetch(`${config.puppeteerRealBrowserService}?${urlParams}&selector=${encodeURIComponent(selector)}`);
+                    const res = await fetch(`${config.puppeteerRealBrowserService}?url=${encodeURIComponent(item.link)}&selector=${encodeURIComponent(selector)}`);
                     const json = await res.json();
                     return (json.data?.at(0) || '') as string;
                 })
