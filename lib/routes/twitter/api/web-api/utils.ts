@@ -10,7 +10,6 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 import login from './login';
-// eslint-disable-next-line n/no-unsupported-features/node-builtins
 import { zstdDecompressSync } from 'node:zlib';
 
 let authTokenIndex = 0;

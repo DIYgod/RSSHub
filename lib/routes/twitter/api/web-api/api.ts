@@ -4,7 +4,6 @@ import cache from '@/utils/cache';
 import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
-// eslint-disable-next-line n/no-unsupported-features/node-builtins
 import { zstdDecompressSync } from 'node:zlib';
 
 const fetchThirdPartyApi = async (endpoint: string, params: Record<string, any>) => {
