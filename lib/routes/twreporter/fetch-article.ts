@@ -30,11 +30,14 @@ export default async function fetch(slug: string) {
         authors += '；' + photographers;
     }
 
-    const bannerImage = post.hero_image.resized_targets.desktop.url;
+    // Prioritize hero_image, but fall back to og_image if it's missing
+    const imageSource = post.hero_image ?? post.og_image;
+    const bannerImage = imageSource?.resized_targets.desktop.url;
     const caption = post.leading_image_description;
-    const bannerDescription = post.hero_image.description;
+    const bannerDescription = imageSource?.description ?? '';
     const ogDescription = post.og_description;
-    const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
+    // Only render the banner if we successfully found an image URL
+    const banner = imageSource ? art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption }) : '';
 
     function format(type, content) {
         let block = '';
