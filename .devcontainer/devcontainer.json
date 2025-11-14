@@ -1,8 +1,16 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/devcontainers/images/blob/v0.3.24/src/javascript-node/.devcontainer/devcontainer.json
+// https://github.com/devcontainers/images/blob/v0.4.19/src/typescript-node/.devcontainer/devcontainer.json
 {
-    "name": "Node.js",
-    "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+    "name": "Node.js & TypeScript",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli": {
+            "version": "latest"
+        }
+    },
 
     // Configure tool-specific properties.
     "customizations": {
@@ -23,15 +31,11 @@
     },
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [1200, 3000],
+    "forwardPorts": [1200],
 
     "portsAttributes": {
         "1200": {
             "label": "app port",
-            "onAutoForward": "notify"
-        },
-        "3000": {
-            "label": "docs port",
             "onAutoForward": "notify"
         }
     },
@@ -46,17 +50,8 @@
     // Disable auto start dev env since codespaces sometimes fails to attach to the terminal
     // "postAttachCommand": {
     //     "app": "pnpm i",
-    //     // "docs": "pnpm -C website start"
     // },
 
-    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "node",
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker": {
-            "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/github-cli": {
-            "version": "latest"
-        }
-    }
+    // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "node"
 }
