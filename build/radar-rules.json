@@ -14194,6 +14194,14 @@
           "/news"
         ],
         "target": "/dgtle/news/388"
+      },
+      {
+        "title": "视频",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/video"
+        ],
+        "target": "/dgtle/video"
       }
     ]
   },

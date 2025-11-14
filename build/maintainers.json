@@ -2170,6 +2170,9 @@
   "/dgtle/news/:id?": [
     "nczitzk"
   ],
+  "/dgtle/video": [
+    "nczitzk"
+  ],
   "/dgut/jwb/:type?": [
     "1200522928"
   ],
