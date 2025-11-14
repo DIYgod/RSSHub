@@ -3,7 +3,7 @@ import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import { art } from '@/utils/render';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { type CheerioAPI, type Cheerio, load } from 'cheerio';
@@ -113,12 +113,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
                 });
                 const guid: string = $$('.id').text();
-                const upDatedStr: string | undefined = $$('.time').text() || pubDateStr;
+                const upDatedStr: string | undefined = pubDateStr;
 
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), +8) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseRelativeDate(pubDateStr), +8) : item.pubDate,
                     link: linkUrl ? new URL(linkUrl, baseUrl).href : item.link,
                     category: categories,
                     author: authors,
@@ -131,7 +131,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), +8) : item.updated,
+                    updated: upDatedStr ? timezone(parseRelativeDate(upDatedStr), +8) : item.updated,
                     language,
                 };
 
