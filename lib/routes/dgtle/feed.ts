@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
         const pubDate: number | string = item.created_at;
         const linkUrl: string | undefined = item.url;
-        const categories: string[] = [...new Set((item.tags_info?.map((t) => t.title) as string[]).filter(Boolean))];
+        const categories: string[] = [...new Set((item.tags_info?.map((t) => t.title) ?? []).filter(Boolean) as string[])];
         const authors: DataItem['author'] = [
             {
                 name: item.user_name,
