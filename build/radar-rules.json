@@ -11654,9 +11654,9 @@
         "title": "栏目",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/news"
+          "/:category"
         ],
-        "target": "/cnljxh(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classid\")??void 0;return`/cnljxh/news${id?`/${id}`:\"\"}`}"
+        "target": "/cnljxh(params,url)=>{const urlObj=new URL(url);const category=params.category;const id=urlObj.searchParams.get(\"classid\")??void 0;return`/cnljxh${category?`/${category}${id?`/${id}`:\"\"}`:\"\"}`}"
       },
       {
         "title": "协会专区 - 协会简介",
@@ -11808,7 +11808,7 @@
         "source": [
           "/price/?classid=299"
         ],
-        "target": "/cnljxh/news/299"
+        "target": "/cnljxh/price/299"
       },
       {
         "title": "市场价格 - 双焦运费",
@@ -11816,7 +11816,7 @@
         "source": [
           "/price/?classid=2143"
         ],
-        "target": "/cnljxh/news/2143"
+        "target": "/cnljxh/price/2143"
       },
       {
         "title": "市场价格 - 价格汇总",
@@ -11824,7 +11824,7 @@
         "source": [
           "/collect/?classid=10039"
         ],
-        "target": "/cnljxh/news/10039"
+        "target": "/cnljxh/price/10039"
       },
       {
         "title": "分析数据 - 市场分析",
@@ -11832,7 +11832,7 @@
         "source": [
           "/info/?classid=575"
         ],
-        "target": "/cnljxh/news/575"
+        "target": "/cnljxh/info/575"
       },
       {
         "title": "分析数据 - 一周评述",
@@ -11840,7 +11840,7 @@
         "source": [
           "/info/?classid=5573"
         ],
-        "target": "/cnljxh/news/5573"
+        "target": "/cnljxh/info/5573"
       },
       {
         "title": "分析数据 - 核心数据",
@@ -11848,7 +11848,7 @@
         "source": [
           "/info/?classid=5417"
         ],
-        "target": "/cnljxh/news/5417"
+        "target": "/cnljxh/info/5417"
       },
       {
         "title": "价格指数 - 焦炭指数(MyCpic)",
@@ -11856,7 +11856,7 @@
         "source": [
           "/date/?classid=5575"
         ],
-        "target": "/cnljxh/news/5575"
+        "target": "/cnljxh/date/5575"
       },
       {
         "title": "价格指数 - 炼焦煤指数(MyCpic)",
@@ -11864,7 +11864,7 @@
         "source": [
           "/date/?classid=5907"
         ],
-        "target": "/cnljxh/news/5907"
+        "target": "/cnljxh/date/5907"
       },
       {
         "title": "价格指数 - 山西焦炭价格指数（SCSPI）",
