@@ -4793,6 +4793,19 @@
       }
     ]
   },
+  "pages.dev": {
+    "_name": "AI 博客",
+    "aiblog-2xv": [
+      {
+        "title": "归档-全部文章",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/archives"
+        ],
+        "target": "/aiblog-2xv/archives"
+      }
+    ]
+  },
   "ainvest.com": {
     "_name": "AInvest",
     ".": [
