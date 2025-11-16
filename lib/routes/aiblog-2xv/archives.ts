@@ -32,29 +32,30 @@ async function handler() {
     const baseUrl = 'https://aiblog-2xv.pages.dev';
     const response = await ofetch(`${baseUrl}/archives`);
     const $ = load(response);
-    const list: any[] = [];
 
     // 遍历每个月份分组
-    $('#top > main > div > div.archive-month').each((_, monthItem) => {
-        // 遍历分组内的每篇文章
-        $(monthItem)
-            .find('.archive-posts .archive-entry')
-            .each((_, postItem) => {
-                const $post = $(postItem);
-                const $link = $post.find('a').first();
-                const $title = $post.find('h3').first();
-                const $dateMeta = $post.find('.archive-meta span');
+    const list = $('#top > main > div > div.archive-month')
+        .toArray()
+        .flatMap((monthItem) =>
+            $(monthItem)
+                .find('.archive-posts .archive-entry')
+                .toArray()
+                .map((postItem) => {
+                    const $post = $(postItem);
+                    const $link = $post.find('a').first();
+                    const $title = $post.find('h3').first();
+                    const $dateMeta = $post.find('.archive-meta span');
 
-                list.push({
-                    title: $title.text().trim(), // 去除首尾空格
-                    link: $link.attr('href'),
-                    // 解析发布时间和更新时间（根据页面结构调整选择器，若存在则启用）
-                    pubDate: parseDate($dateMeta.eq(0).attr('title') || ''),
-                    // updated: $dateMeta.eq(1).attr('title') ? parseDate($dateMeta.eq(1).attr('title')) : undefined,
-                    // 若页面有作者信息，可添加：author: $post.find('.author').text().trim()
-                });
-            });
-    });
+                    return {
+                        title: $title.text().trim(), // 去除首尾空格
+                        link: $link.attr('href') || '',
+                        // 解析发布时间和更新时间（根据页面结构调整选择器，若存在则启用）
+                        pubDate: parseDate($dateMeta.eq(0).attr('title') || ''),
+                        author: $post.find('.archive-meta span').last().text().trim() || '',
+                        description: '',
+                    };
+                })
+        );
 
     const items = await Promise.all(
         list.map((item) =>
@@ -62,18 +63,11 @@ async function handler() {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                // 选择类名为“comment-body”的第一个元素
-                // $('main').first().html()
                 const $main = $('main').first();
                 item.description = `<article>
                     <header>
-                        ${$main.find('header h1').first().html()}
                         <div class="post-description">
                         ${$main.find('header .post-description').first().html()}
-                        </div>
-
-                        <div class="post-meta">
-                        ${$main.find('header .post-meta').first().html()}
                         </div>
                     </header>
 
@@ -85,9 +79,6 @@ async function handler() {
                         ${$main.find('.post-content').first().html()}
                     </div>
                     </article>`;
-
-                // 上面每个列表项的每个属性都在此重用，
-                // 并增加了一个新属性“description”
                 return item;
             })
         )
