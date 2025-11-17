@@ -3287,6 +3287,9 @@
     "zoenglinghou",
     "pseudoyu"
   ],
+  "/google/play/:id/:lang?": [
+    "surwall"
+  ],
   "/google/research": [
     "Levix",
     "cscnk52"

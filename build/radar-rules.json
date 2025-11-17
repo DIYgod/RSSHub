@@ -17693,6 +17693,16 @@
         ],
         "target": "/google/chrome/extension/:id"
       }
+    ],
+    "play": [
+      {
+        "title": "Play Store Update",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/store/apps/details?id=:id"
+        ],
+        "target": "/google/play/:id/:lang?"
+      }
     ]
   },
   "research.google": {
