@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = $('html').attr('lang') ?? 'ja';
 
     const postIds: number[] = [];
-    const regExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\\?p=\\d+$`);
+    const regExp = new RegExp(String.raw`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\?p=\d+$`);
 
     for (const item of response.slice(0, limit)) {
         const linkUrl: string | undefined = item.link;

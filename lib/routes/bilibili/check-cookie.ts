@@ -24,8 +24,18 @@ async function handler() {
             Cookie: cookie as string,
         },
     });
+    const isResponseValid = response.code === 0 && !!response.data.mid;
+
+    const subtitleResponse = await ofetch(`https://api.bilibili.com/x/player/wbi/v2?bvid=BV1iU411o7R2&cid=1550543560`, {
+        headers: {
+            Referer: `https://www.bilibili.com/video/BV1iU411o7R2`,
+            Cookie: cookie,
+        },
+    });
+    const subtitles = subtitleResponse?.data?.subtitle?.subtitles || [];
+    const isSubtitleResponseValid = subtitleResponse?.data?.permission !== '0' && subtitles.length > 0;
 
     return {
-        code: response.code === 0 && !!response.data.mid ? 0 : -1,
+        code: isResponseValid && isSubtitleResponseValid ? 0 : -1,
     };
 }

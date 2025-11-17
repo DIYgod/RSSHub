@@ -9,7 +9,18 @@ const getArticleDetail = (link) =>
         const response = await got(link);
         const $ = load(response.data);
 
-        const categories = $('.slug').text().trim();
+        // Prefer tags to slug
+        let categories = $('.tag')
+            .toArray()
+            .map((el) => $(el).text().trim());
+
+        if (categories.length < 1) {
+            const slug = $('.slug a').contents().first().text().trim();
+
+            if (slug) {
+                categories = [slug];
+            }
+        }
 
         // ignore item until audio is available
         if ($('.audio-availability-message').length > 0) {
@@ -23,9 +34,9 @@ const getArticleDetail = (link) =>
             $(x).replaceWith(audio_tag);
         }
 
-        // primaryaudio is not in `.storytext`, prepend to it
-        const primaryaudio = $('#primaryaudio');
-        const audio = primaryaudio.length > 0 ? $('#primaryaudio').html() : '';
+        // Prepend audio to the article if available
+        const primaryaudio = $('#headlineaudio');
+        const audio = primaryaudio.length > 0 ? $('#headlineaudio').html() + '<br>' : '';
 
         // replace video
         const regex = /\?storyId=(\d+)&amp;mediaId=(\d+)/;
@@ -39,6 +50,10 @@ const getArticleDetail = (link) =>
                 nprVideo.replaceWith(video_tag);
             }
         }
+
+        // Removes related articles and sponsor messages
+        $('div.bucketwrap.internallink.insettwocolumn.inset2col').remove();
+        $('aside.ad-wrap').remove();
 
         // remove duplicate caption and images
         $('.enlarge_measure').remove();

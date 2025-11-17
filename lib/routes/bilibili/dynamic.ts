@@ -259,6 +259,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
 };
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -421,7 +422,7 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
-                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
 
                 return {
                     title: title || originalDescription,

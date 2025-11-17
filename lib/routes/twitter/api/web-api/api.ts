@@ -29,6 +29,9 @@ const getUserData = (id) =>
             return ofetch(`${config.twitter.thirdPartyApi}${endpoint}`, {
                 method: 'GET',
                 params,
+                headers: {
+                    'accept-encoding': 'gzip',
+                },
             });
         }
 

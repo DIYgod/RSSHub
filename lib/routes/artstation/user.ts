@@ -2,6 +2,7 @@ import { Route } from '@/types';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 import { art } from '@/utils/render';
@@ -41,10 +42,11 @@ async function handler(ctx) {
     };
 
     const csrfToken = await cache.tryGet('artstation:csrfToken', async () => {
-        const tokenResponse = await got.post('https://www.artstation.com/api/v2/csrf_protection/token.json', {
+        const tokenResponse = await ofetch.raw('https://www.artstation.com/api/v2/csrf_protection/token.json', {
+            method: 'POST',
             headers,
         });
-        return tokenResponse.headers['set-cookie'][0].split(';')[0].split('=')[1];
+        return tokenResponse.headers.getSetCookie()[0].split(';')[0].split('=')[1];
     });
 
     const { data: userData } = await got(`https://www.artstation.com/users/${handle}/quick.json`, {

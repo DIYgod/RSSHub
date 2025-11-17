@@ -1,4 +1,3 @@
-import randUserAgent from '@/utils/rand-user-agent';
 import 'dotenv/config';
 import { ofetch } from 'ofetch';
 
@@ -10,6 +9,7 @@ export type Config = {
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
+    puppeteerRealBrowserService?: string;
     puppeteerWSEndpoint?: string;
     chromiumExecutablePath?: string;
     // network
@@ -481,6 +481,7 @@ const calculateValue = () => {
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
+        puppeteerRealBrowserService: envs.PUPPETEER_REAL_BROWSER_SERVICE,
         puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
         chromiumExecutablePath: envs.CHROMIUM_EXECUTABLE_PATH,
         // network
@@ -490,7 +491,7 @@ const calculateValue = () => {
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
-        ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : randUserAgent({ browser: 'chrome', os: 'mac os', device: 'desktop' })),
+        ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
         trueUA: TRUE_UA,
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache

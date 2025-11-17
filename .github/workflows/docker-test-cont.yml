@@ -67,15 +67,16 @@ jobs:
           docker run -d \
             --name rsshub \
             -e NODE_ENV=dev \
+            -e NODE_OPTIONS='--max-http-header-size=32768' \
             -e LOGGER_LEVEL=debug \
             -e ALLOW_USER_HOTLINK_TEMPLATE=true \
             -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
             -p 1200:1200 \
             rsshub:latest
 
-      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
 
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         if: (env.TEST_CONTINUE)
         with:
           node-version: lts/*
@@ -107,7 +108,7 @@ jobs:
 
       - name: Pull Request Labeler
         if: ${{ failure() }}
-        uses: actions-cool/issues-helper@45d75b6cf72bf4f254be6230cb887ad002702491 # v3.6.3
+        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -116,7 +117,7 @@ jobs:
 
       - name: Print Docker container logs
         if: ${{ always() }}
-        run: docker logs rsshub # logs/combined.log? Not so readable...
+        run: docker logs rsshub || true # logs/combined.log? Not so readable...
 
   fail-build:
     name: Fail build
@@ -134,7 +135,7 @@ jobs:
           sourceRunId: ${{ github.event.workflow_run.id }}
 
       - name: Pull Request Labeler
-        uses: actions-cool/issues-helper@45d75b6cf72bf4f254be6230cb887ad002702491 # v3.6.3
+        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}

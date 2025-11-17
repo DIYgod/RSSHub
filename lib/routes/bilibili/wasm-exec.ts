@@ -147,7 +147,6 @@
         };
     }
 
-    // eslint-disable-next-line n/no-unsupported-features/node-builtins
     if (!globalThis.crypto) {
         throw new Error('globalThis.crypto is not available, polyfill required (crypto.getRandomValues only)');
     }
@@ -373,7 +372,6 @@
                     // func getRandomData(r []byte)
                     'runtime.getRandomData': (sp) => {
                         sp >>>= 0;
-                        // eslint-disable-next-line n/no-unsupported-features/node-builtins
                         crypto.getRandomValues(loadSlice(sp + 8));
                     },
 

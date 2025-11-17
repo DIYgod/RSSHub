@@ -5,9 +5,9 @@ import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
 
 describe('got', () => {
-    it('headers', async () => {
+    it('no ua headers', async () => {
         const { data } = await got('http://rsshub.test/headers');
-        expect(data['user-agent']).toBe(config.ua);
+        expect(data['user-agent']).toBeUndefined();
     });
 
     it('retry', async () => {
