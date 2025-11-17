@@ -4,10 +4,14 @@ import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-async function getPageWithRealBrowser(url: string, selector: string): Promise<string> {
-    const res = await fetch(`${config.puppeteerRealBrowserService}?url=${encodeURIComponent(url)}&selector=${encodeURIComponent(selector)}`);
-    const json = await res.json();
-    return (json.data?.at(0) || '') as string;
+async function getPageWithRealBrowser(url: string, selector: string) {
+    try {
+        const res = await fetch(`${config.puppeteerRealBrowserService}?url=${encodeURIComponent(url)}&selector=${encodeURIComponent(selector)}`);
+        const json = await res.json();
+        return (json.data?.at(0) || '') as string;
+    } catch {
+        return '';
+    }
 }
 
 export const route: Route = {
@@ -44,7 +48,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.puppeteerRealBrowserService) {
-        throw new Error('PUPPETEER_REAL_BROWSER_SERVICE or CHROMIUM_EXECUTABLE_PATH is required to use this route.');
+        throw new Error('PUPPETEER_REAL_BROWSER_SERVICE is required to use this route.');
     }
 
     // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixnoy' eventually
@@ -54,6 +58,9 @@ async function handler(ctx) {
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
     const html = await getPageWithRealBrowser(profileUrl, '.post_box');
+    if (!html) {
+        throw new Error('Failed to fetch user profile page. User may not exist or there are no posts available.');
+    }
 
     const $ = load(html);
 
