@@ -55,7 +55,7 @@
         "@bbob/plugin-helper": "4.3.1",
         "@bbob/preset-html5": "4.3.1",
         "@hono/node-server": "1.19.6",
-        "@hono/zod-openapi": "0.19.10",
+        "@hono/zod-openapi": "1.1.4",
         "@notionhq/client": "5.4.0",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.208.0",
@@ -87,7 +87,7 @@
         "header-generator": "2.1.77",
         "hono": "4.10.6",
         "html-to-text": "9.0.5",
-        "http-cookie-agent": "7.0.2",
+        "http-cookie-agent": "7.0.3",
         "https-proxy-agent": "7.0.6",
         "iconv-lite": "0.7.0",
         "imapflow": "1.1.1",
@@ -127,7 +127,7 @@
         "title": "4.0.1",
         "tldts": "7.0.17",
         "tosource": "2.0.0-alpha.3",
-        "tough-cookie": "5.1.2",
+        "tough-cookie": "6.0.0",
         "tsx": "4.20.6",
         "twitter-api-v2": "1.28.0",
         "ufo": "1.6.1",
@@ -137,7 +137,7 @@
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.9.1",
         "youtubei.js": "16.0.1",
-        "zod": "3.25.76"
+        "zod": "4.1.12"
     },
     "devDependencies": {
         "@babel/preset-env": "7.28.5",
@@ -199,7 +199,7 @@
     },
     "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
     "engines": {
-        "node": "^24"
+        "node": "^22.20.0 || ^24"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
