@@ -34,6 +34,16 @@ jobs:
       packages: write
       id-token: write
     steps:
+      - name: Enable ZRAM
+        # Reduce memory pressure
+        # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
+        run: |
+          sudo apt-get update -yq
+          sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
+          echo -e 'ALGO=lz4\nPERCENT=100' | sudo tee -a /etc/default/zramswap
+          sudo systemctl restart zramswap
+          swapon
+
       - name: Checkout
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
 
