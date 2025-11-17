@@ -1,11 +1,11 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load, type CheerioAPI } from 'cheerio';
 import type { Element } from 'domhandler';
 import { art } from '@/utils/render';
 import path from 'node:path';
 import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 
 const appUrl = 'https://app.theinitium.com/';
 const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
@@ -73,9 +73,7 @@ const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, appUrl?
 };
 
 async function getUA(url: string) {
-    return await got({
-        method: 'get',
-        url,
+    return await ofetch(url, {
         headers: {
             'User-Agent': userAgent,
         },
@@ -84,7 +82,7 @@ async function getUA(url: string) {
 
 async function fetchAppPage(url: URL) {
     const response = await getUA(url.href);
-    const $ = load(response.data);
+    const $ = load(response);
     // resolve relative links with app.theinitium.com
     // code from @/middleware/paratmeter.ts
     $('a, area').each((_, elem) => {
@@ -115,20 +113,14 @@ async function fetchAppPage(url: URL) {
 }
 
 async function fetchWebPage(url: URL) {
-    const response = await got(url.href);
-    const $ = load(response.data);
-    const article = $('.entry-content');
-    article.find('.block-related-articles').remove();
-    article.find('.cta-subscription').remove();
-    article.find('.entry-copyright').wrapInner('<small></small>').wrapInner('<figure></figure>');
-    article.find('figure.wp-block-pullquote').children().unwrap();
-    article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
-    article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
-    article.find('p.has-small-font-size').wrapInner('<small></small>');
+    const response = await ofetch(url.href);
+    const $ = load(response);
+    const article = $('.ghost-content');
+    article.find('.kg-card, .gh-post-upgrade-cta').remove();
     return art(path.join(__dirname, 'templates/description.art'), {
-        standfirst: $('span.caption1').html(),
-        coverImage: $('.wp-post-image').attr('src'),
-        coverCaption: $('.image-caption').html(),
+        standfirst: $('p.caption1').html(),
+        coverImage: $('.post-hero .object-cover').attr('src')?.replace('/size/w30', ''),
+        coverCaption: $('.post-hero figcaption').html(),
         article: article.html(),
     });
 }
@@ -137,9 +129,9 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
 
     const feeds = await cache.tryGet(new URL('timelines.json', appUrl).href, async () => await getUA(new URL('timelines.json', appUrl).href), config.cache.routeExpire, false);
-    const metadata = feeds.data.timelines.find((timeline) => timeline.id === category);
+    const metadata = feeds.timelines.find((timeline) => timeline.id === category);
     const response = await getUA(new URL(metadata.feed, appUrl).href);
-    const feed = response.data.stories.filter((item) => item.type === 'article');
+    const feed = response.stories.filter((item) => item.type === 'article');
 
     const items = await Promise.all(
         feed.map((item) =>
@@ -161,15 +153,21 @@ async function handler(ctx) {
                     }
                 }
                 item.category = [...new Set(item.category)];
-                switch (url.hostname) {
-                    case 'app.theinitium.com':
-                        item.description = await fetchAppPage(url);
-                        break;
-                    case 'theinitium.com':
-                        item.description = await fetchWebPage(url);
-                        break;
-                    default:
-                        break;
+                try {
+                    switch (url.hostname) {
+                        case 'app.theinitium.com':
+                            item.description = (await fetchAppPage(url)) ?? item.description;
+                            break;
+                        case 'theinitium.com':
+                            item.description = (await fetchWebPage(url)) ?? item.description;
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (error: any) {
+                    if (error?.response?.status === 404) {
+                        // ignore 404
+                    }
                 }
                 return item;
             })
