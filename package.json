@@ -85,7 +85,7 @@
         "form-data": "4.0.5",
         "googleapis": "166.0.0",
         "header-generator": "2.1.77",
-        "hono": "4.10.5",
+        "hono": "4.10.6",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "7.0.2",
         "https-proxy-agent": "7.0.6",
