@@ -127,8 +127,8 @@ importers:
         specifier: 9.0.5
         version: 9.0.5
       http-cookie-agent:
-        specifier: 7.0.2
-        version: 7.0.2(tough-cookie@5.1.2)(undici@7.16.0)
+        specifier: 7.0.3
+        version: 7.0.3(tough-cookie@5.1.2)(undici@7.16.0)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -3957,11 +3957,11 @@ packages:
   http-cache-semantics@4.2.0:
     resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
 
-  http-cookie-agent@7.0.2:
-    resolution: {integrity: sha512-aHaES6SOFtnSlmWu0yEaaQvu+QexUG2gscSAvMhJ7auzW8r/jYOgGrzuAm9G9nHbksuhz7Lw4zOwDHmfQaxZvw==}
+  http-cookie-agent@7.0.3:
+    resolution: {integrity: sha512-EeZo7CGhfqPW6R006rJa4QtZZUpBygDa2HZH3DJqsTzTjyRE6foDBVQIv/pjVsxHC8z2GIdbB1Hvn9SRorP3WQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      tough-cookie: ^4.0.0 || ^5.0.0
+      tough-cookie: ^4.0.0 || ^5.0.0 || ^6.0.0
       undici: ^7.0.0
     peerDependenciesMeta:
       undici:
@@ -10102,7 +10102,7 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@7.0.2(tough-cookie@5.1.2)(undici@7.16.0):
+  http-cookie-agent@7.0.3(tough-cookie@5.1.2)(undici@7.16.0):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 5.1.2
