@@ -115,18 +115,12 @@ async function fetchAppPage(url: URL) {
 async function fetchWebPage(url: URL) {
     const response = await ofetch(url.href);
     const $ = load(response);
-    const article = $('.entry-content');
-    article.find('.block-related-articles').remove();
-    article.find('.cta-subscription').remove();
-    article.find('.entry-copyright').wrapInner('<small></small>').wrapInner('<figure></figure>');
-    article.find('figure.wp-block-pullquote').children().unwrap();
-    article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
-    article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
-    article.find('p.has-small-font-size').wrapInner('<small></small>');
+    const article = $('.ghost-content');
+    article.find('.kg-card, .gh-post-upgrade-cta').remove();
     return art(path.join(__dirname, 'templates/description.art'), {
-        standfirst: $('span.caption1').html(),
-        coverImage: $('.wp-post-image').attr('src'),
-        coverCaption: $('.image-caption').html(),
+        standfirst: $('p.caption1').html(),
+        coverImage: $('.post-hero .object-cover').attr('src')?.replace('/size/w30', ''),
+        coverCaption: $('.post-hero figcaption').html(),
         article: article.html(),
     });
 }
