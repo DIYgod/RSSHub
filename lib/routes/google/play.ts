@@ -1,10 +1,7 @@
 import { Route } from '@/types';
 import type { Context } from 'hono';
-import puppeteer from '@/utils/puppeteer';
-import logger from '@/utils/logger';
+import gPlay from 'google-play-scraper';
 import { parseDate } from '@/utils/parse-date';
-import { Browser } from 'rebrowser-puppeteer';
-import { load } from 'cheerio';
 
 export const route: Route = {
     name: 'Play Store Update',
@@ -75,90 +72,46 @@ async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const lang = ctx.req.param('lang') ?? 'en-us';
     const baseurl = 'https://play.google.com/store/apps';
-    const link = `${baseurl}/details?id=${id}&hl=${lang}`;
+    const hl = lang.split('-')[0].toLowerCase();
+    const gl = lang.split('-')[1].toLowerCase();
+    const link = `${baseurl}/details?id=${id}&hl=${hl}&gl=${gl}`;
 
-    let browser: Browser | undefined;
-    let htmlContent = '';
-    try {
-        browser = await puppeteer();
-        const page = await browser.newPage();
-        page.setRequestInterception(true);
-        page.on('request', (req) => {
-            if (['image', 'font', 'stylesheet'].includes(req.resourceType())) {
-                req.abort();
-            } else {
-                req.continue();
-            }
-        });
+    const appInfo = await gPlay.app({ appId: id, lang: hl, country: gl });
 
-        logger.http(`Requesting ${link}`);
-        await page.goto(link, {
-            waitUntil: 'domcontentloaded',
-        });
+    const appName = appInfo.title;
+    const appImage = appInfo.icon;
 
-        // click "about this app" arrow button
-        const aboutThisAppButtonXpath = `::-p-xpath(//button[@aria-label='${keywords.aboutThisAppButton[lang]}'])`;
-        await page.click(aboutThisAppButtonXpath);
+    const version = appInfo.version;
+    const offeredBy = appInfo.developer || appInfo.developerLegalName;
 
-        // waiting for a dialog containing  <div class="xxxx">Version</div>
-        const versionXpath = `::-p-xpath(//div[text()="${keywords.version[lang]}"]/following-sibling::*[1])`;
-        await page.waitForSelector(versionXpath);
+    const updatedDate = parseDate(appInfo.updated);
 
-        htmlContent = await page.content();
-        const $ = load(htmlContent);
+    const whatsNew = appInfo.recentChanges;
 
-        const appName = $('span[itemprop=name]').first().text();
-        const appImage = $('img[itemprop=image]').first().attr('src');
-
-        let updatedOnStr: string | undefined;
-        let version: string | undefined;
-        let offeredBy: string | undefined;
-
-        $('div').each(function () {
-            if ($(this).text().trim() === keywords.updatedOn[lang]) {
-                updatedOnStr = $(this).next().text().trim();
-            } else if ($(this).text().trim() === keywords.version[lang]) {
-                version = $(this).next().text().trim();
-            } else if ($(this).text().trim() === keywords.offeredBy[lang]) {
-                offeredBy = $(this).next().text().trim();
-            }
-        });
-
-        if (!updatedOnStr || !version || !offeredBy) {
-            throw new Error('Failed to parse the page');
-        }
-
-        const updatedDate = parseDate(updatedOnStr, ...keywords.updatedOnFormat[lang]);
-
-        const whatsNew = $('div[itemprop=description]').html();
-
-        const feedContent = `
+    const feedContent = `
             <h2>${keywords.whatsNew[lang]}</h2>
             <p>${whatsNew ?? 'No release notes'}</p>
         `;
 
-        return {
-            title: appName + ' - Google Play',
-            link,
-            image: appImage,
-            item: [
-                {
-                    title: formatVersion(version, updatedDate),
-                    description: feedContent,
-                    link,
-                    pubDate: updatedDate,
-                    guid: formatGuid(version, updatedDate),
-                    author: offeredBy,
-                },
-            ],
-        };
-    } finally {
-        await browser?.close();
-    }
+    return {
+        title: appName + ' - Google Play',
+        link,
+        image: appImage,
+        item: [
+            {
+                title: formatVersion(version, updatedDate),
+                description: feedContent,
+                link,
+                pubDate: updatedDate,
+                guid: formatGuid(version, updatedDate),
+                author: offeredBy,
+            },
+        ],
+    };
 }
 
 function formatVersion(version: string, updatedDate: Date) {
-    // some apps show version as "Varies with device"
+    // some apps show version as "VARY"
     // https://play.google.com/store/apps/details?id=com.adobe.reader&hl=en-us
     const isVersion = /^\d/.test(version);
     return isVersion ? version : updatedDate.toISOString().slice(0, 10);
