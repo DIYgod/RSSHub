@@ -1,6 +1,6 @@
 import { Route } from '@/types';
 import type { Context } from 'hono';
-import gplay from 'google-play-scraper';
+import gPlay from 'google-play-scraper';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -76,7 +76,7 @@ async function handler(ctx: Context) {
     const gl = lang.split('-')[1].toLowerCase();
     const link = `${baseurl}/details?id=${id}&hl=${hl}&gl=${gl}`;
 
-    const appInfo = await gplay.app({ appId: id, lang: hl, country: gl });
+    const appInfo = await gPlay.app({ appId: id, lang: hl, country: gl });
 
     const appName = appInfo.title;
     const appImage = appInfo.icon;
