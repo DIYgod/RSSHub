@@ -40,7 +40,7 @@ export const route: Route = {
             target: '/user/:id/tagged',
         },
     ],
-    name: 'User Profile - Picnob',
+    name: 'User Profile - Pixnoy',
     maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod', 'hyoban'],
     handler,
     view: ViewType.Pictures,
