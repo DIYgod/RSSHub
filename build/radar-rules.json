@@ -36163,7 +36163,7 @@
     "_name": "Instagram",
     "www": [
       {
-        "title": "User Profile - Picnob",
+        "title": "User Profile - Pixnoy",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:id"
@@ -36171,7 +36171,7 @@
         "target": "/picnob/user/:id"
       },
       {
-        "title": "User Profile - Picnob",
+        "title": "User Profile - Pixnoy",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/profile/:id/tagged"
