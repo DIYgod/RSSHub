@@ -35,7 +35,8 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const feed = await parser.parseURL('https://ntrblog.com/atom.xml');
+    const rsp = await got('https://ntrblog.com/atom.xml');
+    const feed = await parser.parseString(rsp.data);
 
     const items = await Promise.all(
         feed.items.map((item) => {
