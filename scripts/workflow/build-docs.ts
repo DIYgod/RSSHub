@@ -3,14 +3,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { categories } from './data';
 import { getCurrentPath } from '../../lib/utils/helpers';
+import { config } from '../../lib/config';
 
 const fullTests = await (await fetch('https://cdn.jsdelivr.net/gh/DIYgod/RSSHub@gh-pages/build/test-full-routes.json')).json();
 const testResult = fullTests.testResults[0].assertionResults;
 
 const foloAnalysis = await (
-    await fetch('https://api.follow.is/discover/rsshub-analytics', {
+    await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
         headers: {
-            'user-agent': 'RSSHub',
+            'user-agent': config.trueUA,
         },
     })
 ).json();

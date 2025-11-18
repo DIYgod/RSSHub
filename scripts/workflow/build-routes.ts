@@ -4,14 +4,15 @@ import { parse } from 'tldts';
 import fs from 'node:fs';
 import path from 'node:path';
 import toSource from 'tosource';
+import { config } from '../../lib/config';
 
 import { getCurrentPath } from '../../lib/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 const foloAnalysis = await (
-    await fetch('https://api.follow.is/discover/rsshub-analytics', {
+    await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
         headers: {
-            'user-agent': 'RSSHub',
+            'user-agent': config.trueUA,
         },
     })
 ).json();
