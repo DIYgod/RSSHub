@@ -168,7 +168,7 @@
         "@typescript-eslint/parser": "8.46.4",
         "@vercel/nft": "0.30.3",
         "@vitest/coverage-v8": "4.0.9",
-        "discord-api-types": "0.38.33",
+        "discord-api-types": "0.38.34",
         "domhandler": "5.0.3",
         "eslint": "9.39.1",
         "eslint-config-prettier": "10.1.8",
