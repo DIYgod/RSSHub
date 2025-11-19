@@ -26,12 +26,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
-            const $actualTitleEl: Cheerio<Element> = $el.parent().parent().find('a.actual-title');
+            const $actualTitleEl: Cheerio<Element> = $el.parent().parent().find('a');
             const actualTitle: string = $actualTitleEl.text();
             const type: string = $el.find('strong').first().text();
             const text: string = $el.find('span.whitespace-pre-wrap').first().text();
 
-            const title: string = `${type} - ${text}`;
+            const title: string = `${type ? `${type} - ` : ''}${text}`;
             const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
                 actualTitle,
                 description: $el.html(),
