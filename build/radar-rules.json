@@ -11322,6 +11322,19 @@
       }
     ]
   },
+  "cloudflarestatus.com": {
+    "_name": "Cloudflare Status",
+    "www": [
+      {
+        "title": "Status",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/cloudflarestatus/"
+      }
+    ]
+  },
   "cls.cn": {
     "_name": "财联社",
     ".": [
