@@ -36,11 +36,7 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     if (type(item.link) === 'htm') {
                         try {
-                            const { data } = await got(item.link, {
-                                https: {
-                                    rejectUnauthorized: false,
-                                },
-                            });
+                            const { data } = await got(item.link);
                             const $ = load(data);
                             item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
                             return item;
