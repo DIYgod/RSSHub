@@ -1,0 +1,7 @@
+{{ if actualTitle }}
+  <h2>{{ actualTitle}}</h2>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}
