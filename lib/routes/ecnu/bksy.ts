@@ -14,7 +14,7 @@ export const route: Route = {
     radar: [
         {
             source: ['bksy.ecnu.edu.cn'],
-            target: '/tzgg',
+            target: '/bksy',
         },
     ],
     name: '本科生院通知',
