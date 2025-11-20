@@ -29,7 +29,7 @@ export const route: Route = {
             .map((el) => ({
                 pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
-                title: $(el).find('a').text(),
+                title: $(el).find('.news_title').text(),
             }));
         const items = await Promise.all(
             links.map((item) =>
