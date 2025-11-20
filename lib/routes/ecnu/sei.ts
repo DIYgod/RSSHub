@@ -8,28 +8,28 @@ import timezone from '@/utils/timezone';
 const type = (filename) => filename.split('.').pop();
 
 export const route: Route = {
-    path: '/bksy',
+    path: '/sei',
     categories: ['university'],
-    example: '/ecnu/bksy',
+    example: '/ecnu/sei',
     radar: [
         {
-            source: ['bksy.ecnu.edu.cn'],
-            target: '/bksy',
+            source: ['sei.ecnu.edu.cn'],
+            target: '/sei',
         },
     ],
-    name: '本科生院通知',
-    maintainers: ['ChiyoYuki', 'FrozenStarrrr'],
+    name: '软件工程学院通知公告',
+    maintainers: ['ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
-        const baseUrl = 'https://bksy.ecnu.edu.cn/';
+        const baseUrl = 'https://sei.ecnu.edu.cn/';
 
-        const response = await got(`${baseUrl}tzggwwxsgg/list.htm`);
+        const response = await got(`${baseUrl}33171/list.htm`);
         const $ = load(response.data);
-        const links = $('ul.news_list.list2 > li')
+        const links = $('ul.data-list > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
+                pubDate: timezone(parseDate($(el).find('.data-list-time').text()), 8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
-                title: $(el).find('.news_title').text(),
+                title: $(el).find('a').text(),
             }));
         const items = await Promise.all(
             links.map((item) =>
@@ -38,7 +38,7 @@ export const route: Route = {
                         try {
                             const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                            item.description = $('div.right-nr')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
                             return item;
                         } catch {
                             // intranet
@@ -55,8 +55,8 @@ export const route: Route = {
         );
 
         return {
-            title: '本科生院通知',
-            link: 'https://bksy.ecnu.edu.cn/tzggwwxsgg/list.htm',
+            title: '软件工程学院通知公告',
+            link: 'http://www.sei.ecnu.edu.cn/33171/list.htm',
             item: items,
         };
     },
