@@ -41,14 +41,14 @@ const weiboUtils = {
             } else {
                 logger.info(`Fetching visitor Cookies from ${url}`);
             }
+            let times = 0;
             const { page, destory } = await getPuppeteerPage(url, {
                 onBeforeLoad: async (page) => {
-                    let times = 0;
                     const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                     await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);
                     await page.setRequestInterception(true);
                     page.on('request', (request) => {
-                        // 1st: 302 to visitor.passport.weibo.cn, 2nd: auth ok
+                        // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
                         if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
                             request.abort();
                             return;
@@ -59,12 +59,16 @@ const weiboUtils = {
                         request.continue();
                     });
                 },
-                gotoConfig: { waitUntil: 'networkidle2' },
+                // networkidle2 returns too early if the connection is slow
+                gotoConfig: { waitUntil: 'networkidle0' },
             });
             const cookies: string = await getCookies(page, 'weibo.cn');
             await destory();
             if (!cookies) {
-                throw new Error('Unable to get visitor cookies. Please set WEIBO_COOKIES');
+                if (times < 2) {
+                    throw new Error(`Unexpected redirection, last URL: ${page.url()}`);
+                }
+                throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Last URL: ${page.url()}`);
             }
             return cookies;
         });
