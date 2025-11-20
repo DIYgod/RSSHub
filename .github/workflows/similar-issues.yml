@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
 
       - name: Prepare prompt variables
         id: prepare_input
@@ -28,6 +28,7 @@ jobs:
             const bodyIndented = body.replace(/\n/g, '\n' + indent);
             core.setOutput('issue_title_json', JSON.stringify(title));
             core.setOutput('issue_body_indented_json', JSON.stringify(bodyIndented));
+            core.setOutput('issue_number', issue.number);
 
       - name: Find similar issues with AI (MCP)
         id: inference
@@ -37,6 +38,7 @@ jobs:
           input: |
             issue_title: ${{ steps.prepare_input.outputs.issue_title_json }}
             issue_body: ${{ steps.prepare_input.outputs.issue_body_indented_json }}
+            issue_number: ${{ steps.prepare_input.outputs.issue_number }}
             repository: ${{ github.repository }}
           enable-github-mcp: true
           # Inference token can use GITHUB_TOKEN. MCP specifically requires a PAT.
@@ -58,7 +60,7 @@ jobs:
               core.setOutput('has_matches', 'false');
               return;
             }
-            const matches = Array.isArray(data.matches) ? data.matches : [];
+            const matches = Array.isArray(data.matches) ? data.matches.filter(m => m.number !== context.payload.issue.number) : [];
             if (!matches.length) {
               core.setOutput('has_matches', 'false');
               return;

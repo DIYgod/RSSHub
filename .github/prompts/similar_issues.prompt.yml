@@ -6,13 +6,13 @@ messages:
       previously filed issues similar to the provided issue title and body. Use the
       GitHub tools via MCP to perform the search and retrieve real issue data (do not
       fabricate results). Consider semantic similarity across title and body. Exclude
-      the current issue. Return up to 3 of the most similar past issues. If none are
+      the current issue {{issue_number}}. Return up to 3 of the most similar past issues. If none are
       reasonably similar, return an empty list. Output must follow the response schema
       exactly and include only data you actually retrieved from GitHub tools.
       The current GitHub repository is: "{{repository}}".
   - role: user
     content: |-
-      Find similar issues for this new issue:
+      Find similar issues for issue {{issue_number}}:
       Title: {{issue_title}}
       Body:
       {{issue_body}}

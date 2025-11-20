@@ -1,9 +1,0 @@
-diff --git a/es/index.js b/es/index.js
-index 5f5546ed7af8a8072b4ed57fc2a1b930318ea033..03a4087da2750ef174ad99ea4e06b4ca0030b716 100644
---- a/es/index.js
-+++ b/es/index.js
-@@ -1,3 +1,3 @@
- /* eslint-disable indent */ import { createPreset } from "@bbob/preset";
--import defaultTags from "./defaultTags";
-+import defaultTags from "./defaultTags.js";
- export default createPreset(defaultTags);

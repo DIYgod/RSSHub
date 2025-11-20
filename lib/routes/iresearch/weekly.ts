@@ -1,61 +1,110 @@
-import { Route } from '@/types';
+import { type Data, type Route, ViewType } from '@/types';
 
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import { type Context } from 'hono';
+
+export const handler = (ctx: Context): Data | undefined => {
+    const { id } = ctx.req.param();
+    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+
+    ctx.set('redirect', `/iresearch/report/3${id ? `/${id}` : ''}?limit=${limit}`);
+    return;
+};
 
 export const route: Route = {
-    path: '/weekly/:category?',
-    categories: ['other'],
+    path: '/weekly/:id?',
+    name: '周度市场观察',
+    url: 'www.iresearch.com.cn',
+    maintainers: ['nczitzk'],
+    handler,
     example: '/iresearch/weekly',
-    parameters: { category: '分类，见下表，默认为全部' },
+    parameters: {
+        id: {
+            description: '行业 ID，默认为全部，即全部行业，可在对应行业页 URL 中找到',
+            options: [
+                {
+                    label: '全部',
+                    value: '',
+                },
+                {
+                    label: '家电行业',
+                    value: '1',
+                },
+                {
+                    label: '服装行业',
+                    value: '2',
+                },
+                {
+                    label: '美妆行业',
+                    value: '3',
+                },
+                {
+                    label: '食品饮料行业',
+                    value: '4',
+                },
+                {
+                    label: '酒行业',
+                    value: '5',
+                },
+            ],
+        },
+    },
+    description: `:::tip
+订阅 [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)，其源网址为 \`https://www.iresearch.com.cn/report.shtml?type=3&classId=1\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/iresearch/weekly/家电行业\`](https://rsshub.app/iresearch/weekly/家电行业) 或 [\`/iresearch/weekly/1\`](https://rsshub.app/iresearch/weekly/1)。
+:::
+
+| 名称                                                                       | ID                                           |
+| -------------------------------------------------------------------------- | -------------------------------------------- |
+| [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)     | [1](https://rsshub.app/iresearch/report/3/1) |
+| [服装行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=2)     | [2](https://rsshub.app/iresearch/report/3/2) |
+| [美妆行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=3)     | [3](https://rsshub.app/iresearch/report/3/3) |
+| [食品饮料行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=4) | [4](https://rsshub.app/iresearch/report/3/4) |
+| [酒行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=5)       | [5](https://rsshub.app/iresearch/report/3/5) |
+`,
+    categories: ['other'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '周度市场观察',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
-| -------- | -------- | -------- | ------------ |`,
+    radar: [
+        {
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: (_, url) => {
+                const urlObj: URL = new URL(url);
+                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
+
+                return `/iresearch/weekly${id ? `/${id}` : ''}`;
+            },
+        },
+        {
+            title: '家电行业',
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: '/weekly/1',
+        },
+        {
+            title: '服装行业',
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: '/weekly/2',
+        },
+        {
+            title: '美妆行业',
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: '/weekly/3',
+        },
+        {
+            title: '食品饮料行业',
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: '/weekly/4',
+        },
+        {
+            title: '酒行业',
+            source: ['www.iresearch.com.cn/report.shtml'],
+            target: '/weekly/5',
+        },
+    ],
+    view: ViewType.Articles,
 };
-
-async function handler(ctx) {
-    const category = ctx.req.param('category') ?? '';
-
-    const rootUrl = 'https://www.iresearch.com.cn';
-    const currentUrl = `${rootUrl}/report?type=3`;
-    const apiUrl = `${rootUrl}/api/json/report/ireport.json`;
-
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    const items = JSON.parse(response.data.slice(1))
-        .filter((item) => (category ? item.classname === category : true))
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 200)
-        .map((item) => ({
-            title: item.reportname,
-            pubDate: parseDate(item.addtime),
-            link: `${rootUrl}/report/detail?id=${item.id}`,
-            category: [item.classname, ...item.keywords.split(',')],
-            description: art(path.join(__dirname, 'templates/weekly.art'), {
-                id: item.id,
-                cover: item.reportpic,
-                content: item.shortcoutent,
-                pages: item.PagesCount,
-            }),
-        }));
-
-    return {
-        title: '艾瑞咨询 - 周度市场观察',
-        link: currentUrl,
-        item: items,
-    };
-}

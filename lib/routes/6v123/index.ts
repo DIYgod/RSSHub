@@ -269,9 +269,8 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [最新电影](https://www.hao6v.me/dy/)，其源网址为 \`https://www.hao6v.me/dy/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/6v123/dy\`](https://rsshub.app/6v123/dy)。
-
 :::
 
 <details>

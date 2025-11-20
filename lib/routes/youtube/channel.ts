@@ -21,7 +21,7 @@ export const route: Route = {
     name: 'Channel with id',
     maintainers: ['DIYgod', 'pseudoyu'],
     handler,
-    description: `:::tip Parameter
+    description: `::: tip Parameter
 | Name       | Description                                                                         | Default |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
 | embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
@@ -65,10 +65,12 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const data = await callApi({
         googleApi: getDataByChannelIdGoogle,
         youtubeiApi: getDataByChannelIdYoutubei,
-        params: { channelId: id, embed, filterShorts },
+        params: { channelId: id, embed, filterShorts, isJsonFeed },
     });
 
     return data;

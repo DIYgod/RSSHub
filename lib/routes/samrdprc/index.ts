@@ -144,7 +144,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [网站公告](https://www.samrdprc.org.cn/wzgg/)，其源网址为 \`https://www.samrdprc.org.cn/wzgg/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/samrdprc/wzgg\`](https://rsshub.app/samrdprc/wzgg)。
 :::
 

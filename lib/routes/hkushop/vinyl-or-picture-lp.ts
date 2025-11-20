@@ -76,7 +76,7 @@ async function handler(ctx) {
             };
         });
 
-    const title = cat ? `黑胶\\彩胶系列 - ${$('.page-title').text().trim()}` : String.raw`黑胶\\彩胶系列 - HKU Shop 环球唱片网店`;
+    const title = cat ? `黑胶彩胶系列 - ${$('.page-title').text().trim()}` : '黑胶彩胶系列 - HKU Shop 环球唱片网店';
 
     return {
         title,
