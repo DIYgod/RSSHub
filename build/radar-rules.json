@@ -15026,7 +15026,7 @@
         "source": [
           "/"
         ],
-        "target": "/ecnu/tzgg"
+        "target": "/ecnu/bksy"
       }
     ],
     "acm": [
@@ -15058,6 +15058,16 @@
           "/"
         ],
         "target": "/ecnu/tzgg"
+      }
+    ],
+    "sei": [
+      {
+        "title": "软件工程学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/sei"
       }
     ]
   },
