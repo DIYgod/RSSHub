@@ -14,7 +14,7 @@ export const route: Route = {
     radar: [
         {
             source: ['sei.ecnu.edu.cn'],
-            target: '/33171',
+            target: '/sei',
         },
     ],
     name: '软件工程学院通知公告',
