@@ -64,10 +64,10 @@ const weiboUtils = {
             });
             const cookies: string = await getCookies(page, 'weibo.cn');
             await destory();
+            if (times < 2) {
+                throw new Error(`Unexpected redirection. Last URL: ${page.url()}`);
+            }
             if (!cookies) {
-                if (times < 2) {
-                    throw new Error(`Unexpected redirection, last URL: ${page.url()}`);
-                }
                 throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Last URL: ${page.url()}`);
             }
             return cookies;
