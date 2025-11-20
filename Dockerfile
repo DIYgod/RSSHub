@@ -132,6 +132,7 @@ ARG PUPPETEER_SKIP_DOWNLOAD=1
 # https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
 # The official recommended way to use Puppeteer on arm/arm64 is to install Chromium from the distribution repositories:
 # https://github.com/puppeteer/puppeteer/blob/07391bbf5feaf85c191e1aa8aa78138dce84008d/packages/puppeteer-core/src/node/BrowserFetcher.ts#L128-L131
+# Dependencies of puppeteer-real-browser: xvfb, procps
 RUN \
     set -ex && \
     apt-get update && \
@@ -148,10 +149,13 @@ RUN \
             ; \
         else \
             apt-get install -yq --no-install-recommends \
-                chromium xvfb \
+                chromium \
             && \
             echo "CHROMIUM_EXECUTABLE_PATH=$(which chromium)" | tee /app/.env ; \
         fi; \
+        apt-get install -yq --no-install-recommends \
+            xvfb procps \
+        ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
@@ -161,7 +165,9 @@ RUN \
     set -ex && \
     if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        if ldd $(find /app/node_modules/.cache/puppeteer/ -name chrome -type f) | grep "not found"; then \
+        _chrome_path=$(find /app/node_modules/.cache/puppeteer/chrome/ -name chrome -xtype f -executable | head -n1) && \
+        echo "CHROMIUM_EXECUTABLE_PATH=$_chrome_path" | tee /app/.env && \
+        if ldd "$_chrome_path" | grep "not found"; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
             exit 1 ; \
         else \
