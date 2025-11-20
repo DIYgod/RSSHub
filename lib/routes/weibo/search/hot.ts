@@ -6,7 +6,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import path from 'node:path';
-// import weiboUtils from '../utils';
+import weiboUtils from '../utils';
 
 // Default hide all picture
 let wpic = 'false';
@@ -27,8 +27,14 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                optional: true,
+                description: '',
+            },
+        ],
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -50,16 +56,17 @@ async function handler(ctx) {
     fullpic = ctx.req.query('fullpic') ?? 'false';
     const {
         data: { data },
-    } = await got({
-        method: 'get',
-        url: 'https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot&title=%E5%BE%AE%E5%8D%9A%E7%83%AD%E6%90%9C&extparam=filter_type%3Drealtimehot%26mi_cid%3D100103%26pos%3D0_0%26c_type%3D30%26display_time%3D1540538388&luicode=10000011&lfid=231583',
-        headers: {
-            Referer: 'https://s.weibo.com/top/summary?cate=realtimehot',
-            'MWeibo-Pwa': 1,
-            'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
-        },
-    });
+    } = await weiboUtils.tryWithCookies((cookies) =>
+        got({
+            method: 'get',
+            url: 'https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot&title=%E5%BE%AE%E5%8D%9A%E7%83%AD%E6%90%9C&extparam=filter_type%3Drealtimehot%26mi_cid%3D100103%26pos%3D0_0%26c_type%3D30%26display_time%3D1540538388&luicode=10000011&lfid=231583',
+            headers: {
+                Referer: 'https://s.weibo.com/top/summary?cate=realtimehot',
+                Cookie: cookies,
+                ...weiboUtils.apiHeaders,
+            },
+        })
+    );
 
     let resultItems = null;
     if (ctx.req.param('fulltext') === 'fulltext') {
