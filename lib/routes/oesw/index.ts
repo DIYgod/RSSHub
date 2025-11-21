@@ -45,8 +45,11 @@ Make sure to remove the \`?\` at the beginning from the query parameters!`,
                 const image = imageSrc.startsWith('/') ? SITE_URL + imageSrc : imageSrc;
 
                 return {
+                    // add count to identifier so that rss readers display a new item
+                    // when only the count (i.e. available rentals) gets changed
+                    guid: el.attribs.href + (count ? `#count-${count}` : ''),
                     title: (count ? `(${count}) ` : '') + titles.join(', '),
-                    link: el.attribs.href + (count ? `#count-${count}` : ''),
+                    link: el.attribs.href,
                     description: el.attribs['data-description'],
                     category,
                     image,
