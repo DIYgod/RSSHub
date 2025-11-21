@@ -71,7 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('h2 a');
 
             const title: string = $aEl.text();
-            const pubDateStr: string | undefined = $el.find('em.fRight').text();
+            const pubDateStr: string | undefined = $el.find('em.fRight').text() || undefined;
             const linkUrl: string | undefined = $aEl.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.articleTitle h1').text();
                 const description: string | undefined = $$('div#articleBox').html() ?? undefined;
-                const pubDateStr: string | undefined = `${$$('span.yearMsg').text()} ${$$('span.timeMsg').text()}`;
+                const pubDateStr: string | undefined = $$('span.yearMsg').text() && $$('span.timeMsg').text() ? `${$$('span.yearMsg').text()} ${$$('span.timeMsg').text()}` : undefined;
                 const authors: DataItem['author'] = $$('spna.sourceMsg').text();
                 const upDatedStr: string | undefined = pubDateStr;
 
