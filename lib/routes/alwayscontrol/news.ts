@@ -24,7 +24,8 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['/zh-CN/news/list', '/'],
+            source: ['/zh-CN/news/list'],
+            target: '/news',
         },
     ],
     description: 'Always Control（旭衡电子）智能能源管理系统解决方案专家的最新动态',
@@ -70,8 +71,34 @@ async function handler() {
                     // 提取文章内容
                     const content = $detail('article').html() || '';
 
-                    // 处理图片URL
-                    const processedContent = content.replaceAll(/src="(\/[^"]+)"/g, `src="${baseUrl}$1"`);
+                    // 处理图片URL（相对路径转绝对路径）
+                    let processedContent = content.replaceAll(/src="(\/[^"]+)"/g, `src="${baseUrl}$1"`);
+
+                    // 清理RSS阅读器不支持的样式和标签，保留核心内容
+                    const $content = load(processedContent);
+
+                    // 移除所有 class、style 等属性，但保留 src、href、alt
+                    $content('*').each((_, elem) => {
+                        const $elem = $content(elem);
+                        const allowedAttrs = new Set(['src', 'href', 'alt', 'title']);
+                        const attrs = Object.keys(elem.attribs || {});
+                        for (const attr of attrs) {
+                            if (!allowedAttrs.has(attr)) {
+                                $elem.removeAttr(attr);
+                            }
+                        }
+                    });
+
+                    // 简化图片标签：将 <figure><img></figure> 转为 <p><img></p>
+                    $content('figure').each((_, elem) => {
+                        const $figure = $content(elem);
+                        const img = $figure.find('img');
+                        if (img.length > 0) {
+                            $figure.replaceWith(`<p>${$content(img).toString()}</p>`);
+                        }
+                    });
+
+                    processedContent = $content('body').html() || processedContent;
 
                     item.description = processedContent;
                     item.author = '旭衡电子(深圳)有限公司';
@@ -79,8 +106,8 @@ async function handler() {
 
                     return item;
                 } catch {
-                    // 如果获取详情失败,返回基本信息
-                    item.description = `<img src="${item.image}"><br><p>${item.title}</p>`;
+                    // 如果获取详情失败,返回基本图片信息
+                    item.description = item.image ? `<img src="${item.image}">` : '';
                     return item;
                 }
             })
