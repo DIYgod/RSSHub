@@ -14,8 +14,14 @@ export const route: Route = {
     example: '/weibo/keyword/RSSHub',
     parameters: { keyword: '你想订阅的微博关键词', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                optional: true,
+                description: '',
+            },
+        ],
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -29,23 +35,24 @@ export const route: Route = {
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
-    const data = await cache.tryGet(
-        `weibo:keyword:${keyword}`,
-        async () => {
-            const _r = await got({
-                method: 'get',
-                url: `https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D61%26q%3D${encodeURIComponent(keyword)}%26t%3D0`,
-                headers: {
-                    Referer: `https://m.weibo.cn/p/searchall?containerid=100103type%3D1%26q%3D${encodeURIComponent(keyword)}`,
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
-                },
-            });
-            return _r.data.data.cards;
-        },
-        config.cache.routeExpire,
-        false
+    const data = await weiboUtils.tryWithCookies((cookies) =>
+        cache.tryGet(
+            `weibo:keyword:${keyword}`,
+            async () => {
+                const _r = await got({
+                    method: 'get',
+                    url: `https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D61%26q%3D${encodeURIComponent(keyword)}%26t%3D0`,
+                    headers: {
+                        Referer: `https://m.weibo.cn/p/searchall?containerid=100103type%3D1%26q%3D${encodeURIComponent(keyword)}`,
+                        Cookie: cookies,
+                        ...weiboUtils.apiHeaders,
+                    },
+                });
+                return _r.data.data.cards;
+            },
+            config.cache.routeExpire,
+            false
+        )
     );
 
     const routeParams = querystring.parse(ctx.req.param('routeParams'));

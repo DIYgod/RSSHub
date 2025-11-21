@@ -74,9 +74,8 @@ async function handler(ctx) {
                 url: 'https://m.weibo.cn/api/config',
                 headers: {
                     Referer: 'https://m.weibo.cn/',
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
+                    ...weiboUtils.apiHeaders,
                 },
             });
             return _r.data.data.uid;
@@ -93,9 +92,8 @@ async function handler(ctx) {
                 url: `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}`,
                 headers: {
                     Referer: `https://m.weibo.cn/u/${uid}`,
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
+                    ...weiboUtils.apiHeaders,
                 },
             });
             return _r.data;
@@ -119,9 +117,8 @@ async function handler(ctx) {
                 url: `https://m.weibo.cn/api/container/getIndex?containerid=${bookmarkContainerId}&openApp=0`,
                 headers: {
                     Referer: 'https://m.weibo.cn/',
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
+                    ...weiboUtils.apiHeaders,
                 },
             });
             return _r.data.data.cards;

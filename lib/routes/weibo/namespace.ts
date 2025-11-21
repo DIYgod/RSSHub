@@ -8,6 +8,10 @@ export const namespace: Namespace = {
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 \`locallimit.us.sinaimg.cn\` 而非 \`f.video.weibocdn.com\`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
 :::
 
+::: warning
+大部分路由均需要 Cookies 才能获取。优先使用 \`WEIBO_COOKIES\`；未设置时尝试使用 Puppeteer 获取访客 Cookies。部分路由不支持访客访问，则必须设置 \`WEIBO_COOKIES\`，详见各个路由的文档。
+:::
+
 对于微博内容，在 \`routeParams\` 参数中以 query string 格式指定选项，可以控制输出的样式
 
 | 键                         | 含义                                                               | 接受的值       | 默认值                              |
