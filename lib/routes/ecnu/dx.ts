@@ -34,7 +34,16 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     const { data } = await got(item.link);
                     const $ = load(data);
-                    item.description = $('div.read')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                    const $read = $('div.read');
+                    $read.find('img[src], a[href]').each((i, el) => {
+                        const $el = $(el);
+                        const attr = el.tagName === 'img' ? 'src' : 'href';
+                        const val = $el.attr(attr);
+                        if (val) {
+                            $el.attr(attr, new URL(val, baseUrl).toString());
+                        }
+                    });
+                    item.description = $read.html()?.trim();
                     return item;
                 })
             )
