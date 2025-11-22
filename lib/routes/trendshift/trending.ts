@@ -3,9 +3,9 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/trending',
+    path: '/trending/:language?/:range?/:limit?',
     categories: ['programming'],
-    example: '/trendshift/trending?range=7&language=javascript&limit=50',
+    example: '/trendshift/trending',
     parameters: {
         range: 'Trending range: 1, 7, 30, 360, default all days',
         language: 'Programming language: javascript, typescript, python, etc., or default all languages',
@@ -31,9 +31,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const range = ctx.req.query('range') || undefined;
-    const language = ctx.req.query('language') || undefined;
-    const limit = ctx.req.query('limit') || undefined;
+    const range = ctx.req.param('range') || undefined;
+    const language = ctx.req.param('language') || undefined;
+    const limit = ctx.req.param('limit') || undefined;
 
     const params = new URLSearchParams();
     if (range) {
@@ -45,7 +45,6 @@ async function handler(ctx) {
     if (limit) {
         params.set('trending-limit', limit);
     }
-
     const url = `https://trendshift.io/?${params.toString()}`;
     const { data } = await got(url);
     const $ = load(data);
@@ -54,15 +53,15 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const titleLink = $item.find('a.text-indigo-400.font-medium').first();
+            const titleLink = $item.find('a.text-primary').first();
             const title = titleLink.text().trim();
             const repoLink = titleLink.attr('href');
             const description = $item.find('.text-gray-500.text-xs').last().text().trim();
 
             // Extract stars and forks from the stats section
-            const statsItems = $item.find('.flex.items-center.space-x-3.text-xs.text-gray-500 .flex.items-center');
-            const starsText = statsItems.first().text().trim();
-            const forksText = statsItems.eq(1).text().trim();
+
+            const starsText = $item.find('.lucide.lucide-star').parent().text().trim();
+            const forksText = $item.find('.lucide.lucide-git-fork').parent().text().trim();
 
             // Extract language from the language indicator
             const languageDiv = $item.find('.text-gray-500.flex.items-center.text-xs').first();
