@@ -18,7 +18,7 @@ export const route: Route = {
         },
     ],
     name: '地球科学学部通知公告',
-    maintainers: ['ChiyoYuki', 'ECNU-minus'],
+    maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
         const baseUrl = 'https://dxb.ecnu.edu.cn/';
 
@@ -35,19 +35,22 @@ export const route: Route = {
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
                     if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
-                        }
+                        const { data } = await got(item.link);
+                        const $ = load(data);
+                        const $read = $('div.read');
+                        $read.find('img[src], a[href]').each((i, el) => {
+                            const $el = $(el);
+                            const attr = el.tagName === 'img' ? 'src' : 'href';
+                            const val = $el.attr(attr);
+                            if (val) {
+                                $el.attr(attr, new URL(val, baseUrl).toString());
+                            }
+                        });
+                        item.description = $read.html()?.trim();
+                        return item;
                     } else {
                         // file to download
-                        item.description = '点击认证后访问内容';
+                        item.description = '请到原网页访问';
                         return item;
                     }
                 })
