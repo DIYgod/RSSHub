@@ -15029,6 +15029,16 @@
         "target": "/ecnu/bksy"
       }
     ],
+    "cee": [
+      {
+        "title": "通信与电子工程学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/cee"
+      }
+    ],
     "acm": [
       {
         "title": "ACM Online-Judge contests list",
@@ -15038,6 +15048,86 @@
           "/"
         ],
         "target": "/ecnu/acm/contest/"
+      }
+    ],
+    "cs": [
+      {
+        "title": "计算机科学与技术学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/cs"
+      }
+    ],
+    "dase": [
+      {
+        "title": "数据科学与工程学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/dase"
+      }
+    ],
+    "dx": [
+      {
+        "title": "大夏书院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/dx"
+      }
+    ],
+    "dxb": [
+      {
+        "title": "地球科学学部通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/dxb"
+      }
+    ],
+    "ed": [
+      {
+        "title": "教育学部通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/ed"
+      }
+    ],
+    "geoai": [
+      {
+        "title": "空间人工智能学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/geoai"
+      }
+    ],
+    "www.ghcollege": [
+      {
+        "title": "光华书院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/ghcollege"
+      }
+    ],
+    "history": [
+      {
+        "title": "历史学系通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/history"
       }
     ],
     "www.jwc": [
@@ -15058,6 +15148,26 @@
           "/"
         ],
         "target": "/ecnu/tzgg"
+      }
+    ],
+    "mxcsy": [
+      {
+        "title": "孟宪承书院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/mxcsy"
+      }
+    ],
+    "www.philo": [
+      {
+        "title": "哲学系通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/philo"
       }
     ],
     "sei": [
