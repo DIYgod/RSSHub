@@ -35,16 +35,10 @@ export const route: Route = {
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
                     if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
-                        }
+                        const { data } = await got(item.link);
+                        const $ = load(data);
+                        item.description = $('div.wp_articlecontent')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                        return item;
                     } else {
                         // file to download
                         item.description = '点击认证后访问内容';
@@ -56,7 +50,7 @@ export const route: Route = {
 
         return {
             title: '空间人工智能学院通知公告',
-            link: 'https://dase.ecnu.edu.cn/tzgg/list.htm',
+            link: 'https://geoai.ecnu.edu.cn/tzgg/list.htm',
             item: items,
         };
     },

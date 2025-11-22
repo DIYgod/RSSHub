@@ -35,19 +35,13 @@ export const route: Route = {
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
                     if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
-                        }
+                        const { data } = await got(item.link);
+                        const $ = load(data);
+                        item.description = $('div.wp_articlecontent')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                        return item;
                     } else {
                         // file to download
-                        item.description = '点击认证后访问内容';
+                        item.description = '请至原网页访问内容';
                         return item;
                     }
                 })
