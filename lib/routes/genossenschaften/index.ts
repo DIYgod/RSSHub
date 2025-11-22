@@ -12,7 +12,7 @@ export const route: Route = {
     name: 'Immobiliensuche',
     path: '*',
     maintainers: ['sk22'],
-    categories: ['other'],
+    categories: ['housing'],
     description: `
 Note that all parameters are optional and many can be specified multiple times
 (e.g. \`district=wien-1-innere-stadt&district=wien-2-leopoldstadt\`).
