@@ -1,7 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'East China Normal University 华东师范大学',
-    url: 'www.ecnu.edu.cn',
+    name: '北青网',
+    url: 'ynet.com',
+    categories: ['new-media'],
+    description: '',
     lang: 'zh-CN',
 };
