@@ -5,8 +5,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const type = (filename) => filename.split('.').pop();
-
 export const route: Route = {
     path: '/bksy',
     categories: ['university'],
@@ -34,31 +32,19 @@ export const route: Route = {
         const items = await Promise.all(
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            const $read = $('div.read');
-                            $read.find('img[src], a[href]').each((i, el) => {
-                                const $el = $(el);
-                                const attr = el.tagName === 'img' ? 'src' : 'href';
-                                const val = $el.attr(attr);
-                                if (val) {
-                                    $el.attr(attr, new URL(val, baseUrl).toString());
-                                }
-                            });
-                            item.description = $read.html()?.trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    const $read = $('div.read');
+                    $read.find('img[src], a[href]').each((i, el) => {
+                        const $el = $(el);
+                        const attr = el.tagName === 'img' ? 'src' : 'href';
+                        const val = $el.attr(attr);
+                        if (val) {
+                            $el.attr(attr, new URL(val, baseUrl).toString());
                         }
-                    } else {
-                        // file to download
-                        item.description = '点击认证后访问内容';
-                        return item;
-                    }
+                    });
+                    item.description = $read.html()?.trim();
+                    return item;
                 })
             )
         );
