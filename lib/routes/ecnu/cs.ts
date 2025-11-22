@@ -6,26 +6,26 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/sei',
+    path: '/cs',
     categories: ['university'],
-    example: '/ecnu/sei',
+    example: '/ecnu/cs',
     radar: [
         {
-            source: ['sei.ecnu.edu.cn'],
-            target: '/sei',
+            source: ['cs.ecnu.edu.cn'],
+            target: '/cs',
         },
     ],
-    name: '软件工程学院通知公告',
+    name: '计算机科学与技术学院通知公告',
     maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
-        const baseUrl = 'https://sei.ecnu.edu.cn/';
+        const baseUrl = 'https://cs.ecnu.edu.cn/';
 
-        const response = await got(`${baseUrl}33171/list.htm`);
+        const response = await got(`${baseUrl}19867/list.htm`);
         const $ = load(response.data);
-        const links = $('ul.data-list > li')
+        const links = $('div#wp_news_w6 ul.data-list > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.data-list-time').text()), +8),
+                pubDate: timezone(parseDate($(el).find('span').text()), +8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
                 title: $(el).find('a').text(),
             }));
@@ -34,7 +34,7 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     const { data } = await got(item.link);
                     const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
+                    const $read = $('div.view-cnt');
                     $read.find('img[src], a[href]').each((i, el) => {
                         const $el = $(el);
                         const attr = el.tagName === 'img' ? 'src' : 'href';
@@ -50,8 +50,8 @@ export const route: Route = {
         );
 
         return {
-            title: '软件工程学院通知公告',
-            link: 'http://www.sei.ecnu.edu.cn/33171/list.htm',
+            title: '计算机科学与技术学院通知公告',
+            link: 'https://cs.ecnu.edu.cn/19867/list.htm',
             item: items,
         };
     },

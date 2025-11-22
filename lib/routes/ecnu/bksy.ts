@@ -5,8 +5,6 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const type = (filename) => filename.split('.').pop();
-
 export const route: Route = {
     path: '/bksy',
     categories: ['university'],
@@ -18,7 +16,7 @@ export const route: Route = {
         },
     ],
     name: '本科生院通知',
-    maintainers: ['ChiyoYuki', 'FrozenStarrrr'],
+    maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
         const baseUrl = 'https://bksy.ecnu.edu.cn/';
 
@@ -27,29 +25,26 @@ export const route: Route = {
         const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
+                pubDate: timezone(parseDate($(el).find('.news_date').text()), +8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
                 title: $(el).find('.news_title').text(),
             }));
         const items = await Promise.all(
             links.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    if (type(item.link) === 'htm') {
-                        try {
-                            const { data } = await got(item.link);
-                            const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
-                            return item;
-                        } catch {
-                            // intranet
-                            item.description = '请进行统一身份认证之后再访问';
-                            return item;
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    const $read = $('div.read');
+                    $read.find('img[src], a[href]').each((i, el) => {
+                        const $el = $(el);
+                        const attr = el.tagName === 'img' ? 'src' : 'href';
+                        const val = $el.attr(attr);
+                        if (val) {
+                            $el.attr(attr, new URL(val, baseUrl).toString());
                         }
-                    } else {
-                        // file to download
-                        item.description = '点击认证后访问内容';
-                        return item;
-                    }
+                    });
+                    item.description = $read.html()?.trim();
+                    return item;
                 })
             )
         );
