@@ -26,6 +26,7 @@ export type Category =
     | 'study'
     | 'journal'
     | 'finance'
+    | 'housing'
     | 'other';
 
 // rss

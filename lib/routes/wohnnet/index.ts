@@ -12,7 +12,7 @@ export const route: Route = {
     name: 'Immobiliensuche',
     path: '/:category/:region/*',
     maintainers: ['sk22'],
-    categories: ['other'],
+    categories: ['housing'],
     description: `
 Only returns the first page of search results, allowing you to keep track of
 newly added apartments. If you're looking for an apartment, make sure to also
