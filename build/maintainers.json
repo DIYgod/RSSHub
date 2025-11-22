@@ -9213,6 +9213,9 @@
   "/yna/:lang?/:channel?": [
     "quiniapiezoelectricity"
   ],
+  "/ynet/list/:category?/:id?": [
+    "nczitzk"
+  ],
   "/yoasobi-music/info/:category?": [],
   "/yoasobi-music/live": [
     "Kiotlin"
