@@ -1,7 +1,7 @@
-import { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import { getSubPath } from '@/utils/common-utils';
+import ofetch from '@/utils/ofetch';
+import type { Data, DataItem, Route } from '@/types';
 
 const FEED_TITLE = 'Gesiba' as const;
 const FEED_LANGUAGE = 'de' as const;
@@ -33,6 +33,8 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
         const link = `${BASE_URL}/index.php?${MAGIC_QUERY_PARAMS}&${params}`;
         const response = await ofetch(link);
         const $ = load(response);
+        const selected = $('option[selected]').text();
+        const title = selected ? `${selected} - ${FEED_TITLE}` : FEED_TITLE;
 
         const items = $('#object-result a.card')
             .toArray()
@@ -47,11 +49,18 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
                     .toArray()
                     .map((el) => $(el).text().trim())
                     .join(', ');
-                const metadata = $el
-                    .find('.justify-content-between > .flex-column > small')
+                const tagline = $el
+                    .find('.seperated:first-child > *')
                     .toArray()
                     .map((el) => $(el).text().trim())
                     .join(', ');
+                const metadata = $el
+                    .find('.justify-content-between > .flex-column > *')
+                    .toArray()
+                    .map((el) => $(el).text().trim())
+                    .join(', ');
+
+                const description = (price ? `${price}, ` : '') + metadata + (tagline ? `, ${tagline}` : '');
 
                 return {
                     // add metadata to identifier so that rss readers display a new item
@@ -59,7 +68,7 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
                     guid: `${link}#${encodeURIComponent(metadata)}`,
                     title: `${title}, ${subtitle}`,
                     link,
-                    description: (price ? `${price}, ` : '') + metadata,
+                    description,
                     image,
                     content: { html: $el.html() ?? $el.text(), text: $el.text() },
                     // no pubDate :(
@@ -67,7 +76,7 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
             });
 
         return {
-            title: FEED_TITLE,
+            title,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
             allowEmpty: true,
