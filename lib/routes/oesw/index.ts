@@ -1,9 +1,8 @@
-import { Data, DataItem, Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import { getSubPath } from '@/utils/common-utils';
+import ofetch from '@/utils/ofetch';
+import type { Data, DataItem, Route } from '@/types';
 
-const FEED_TITLE = 'ÖSW' as const;
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.oesw.at/fileadmin/Logos/OeSW_AG/OeSW-Logo2024-RGB.png';
 const SITE_URL = 'https://www.oesw.at' as const;
@@ -30,6 +29,7 @@ Make sure to remove the \`?\` at the beginning from the query parameters!`,
         const link = `${BASE_URL}${listingPage}.html?${params}`;
         const response = await ofetch(link);
         const $ = load(response);
+        const title = $('title').text();
 
         const items = $('li[data-objlist-url] > a')
             .toArray()
@@ -59,7 +59,7 @@ Make sure to remove the \`?\` at the beginning from the query parameters!`,
             });
 
         return {
-            title: FEED_TITLE,
+            title,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
             allowEmpty: true,
