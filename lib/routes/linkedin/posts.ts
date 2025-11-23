@@ -12,7 +12,7 @@ export const route: Route = {
     description: "Get company's LinkedIn posts by company ID",
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportRadar: false,
         supportBT: false,
