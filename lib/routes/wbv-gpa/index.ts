@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
 
-const FEED_TITLE = 'WBV-GPA' as const;
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.wbv-gpa.at/app/uploads/2024/01/cropped-WBV-Favicon-192x192.png';
 const SITE_URL = 'https://www.wbv-gpa.at' as const;
@@ -37,6 +36,7 @@ Filtering by state is done client-side.
         const link = BASE_URL + category;
         const response = await ofetch(link);
         const $ = load(response);
+        const title = $('title').text();
 
         const items = $('.objects__list__rows__item.mix')
             .toArray()
@@ -60,7 +60,7 @@ Filtering by state is done client-side.
             .filter((item) => item !== false);
 
         return {
-            title: FEED_TITLE,
+            title,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
             allowEmpty: true,
