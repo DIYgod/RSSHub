@@ -220,14 +220,19 @@ async function processDiscordMessages(channels: any[], limit: number) {
 }
 
 function processAnnouncements(announcements: any[], authorName: string, source: string, userId: string, limit: number) {
-    return announcements.slice(0, limit).map((announcement) => ({
-        title: `Announcement from ${announcement.published ? parseDate(announcement.published).toDateString() : 'Unknown Date'}`,
-        description: `<div>${announcement.content || ''}</div>`,
-        author: authorName,
-        pubDate: parseDate(announcement.published),
-        guid: `kemono:${source}:${userId}:announcement:${announcement.hash}`,
-        link: `${KEMONO_ROOT_URL}/${source}/user/${userId}/announcements`,
-    }));
+    return announcements.slice(0, limit).map((announcement) => {
+        const rawDate = announcement.published || announcement.added;
+        const displayDate = parseDate(rawDate);
+
+        return {
+            title: `Announcement from ${displayDate.toDateString()}`,
+            description: `<div>${announcement.content || ''}</div>`,
+            author: authorName,
+            pubDate: displayDate,
+            guid: `kemono:${source}:${userId}:announcement:${announcement.hash}`,
+            link: `${KEMONO_ROOT_URL}/${source}/user/${userId}/announcements`,
+        };
+    });
 }
 
 function processFancards(fancards: any[], authorName: string, source: string, userId: string, limit: number) {
