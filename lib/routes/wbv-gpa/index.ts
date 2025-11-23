@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
 
 const FEED_TITLE = 'WBV-GPA' as const;
