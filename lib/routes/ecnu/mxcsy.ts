@@ -6,26 +6,26 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/sei',
+    path: '/mxcsy',
     categories: ['university'],
-    example: '/ecnu/sei',
+    example: '/ecnu/mxcsy',
     radar: [
         {
-            source: ['sei.ecnu.edu.cn'],
-            target: '/sei',
+            source: ['mxcsy.ecnu.edu.cn'],
+            target: '/mxcsy',
         },
     ],
-    name: '软件工程学院通知公告',
+    name: '孟宪承书院通知公告',
     maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
-        const baseUrl = 'https://sei.ecnu.edu.cn/';
+        const baseUrl = 'https://mxcsy.ecnu.edu.cn/';
 
-        const response = await got(`${baseUrl}33171/list.htm`);
+        const response = await got(`${baseUrl}29520/list.htm`);
         const $ = load(response.data);
-        const links = $('ul.data-list > li')
+        const links = $('ul.wp_article_list > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.data-list-time').text()), +8),
+                pubDate: timezone(parseDate($(el).find('.Article_PublishDate').text()), +8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
                 title: $(el).find('a').text(),
             }));
@@ -50,8 +50,8 @@ export const route: Route = {
         );
 
         return {
-            title: '软件工程学院通知公告',
-            link: 'http://www.sei.ecnu.edu.cn/33171/list.htm',
+            title: '孟宪承书院通知公告',
+            link: 'https://mxcsy.ecnu.edu.cn/29520/list.htm',
             item: items,
         };
     },

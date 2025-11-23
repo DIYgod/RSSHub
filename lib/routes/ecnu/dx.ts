@@ -6,26 +6,26 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/sei',
+    path: '/dx',
     categories: ['university'],
-    example: '/ecnu/sei',
+    example: '/ecnu/dx',
     radar: [
         {
-            source: ['sei.ecnu.edu.cn'],
-            target: '/sei',
+            source: ['dx.ecnu.edu.cn'],
+            target: '/dx',
         },
     ],
-    name: '软件工程学院通知公告',
+    name: '大夏书院通知公告',
     maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
     handler: async () => {
-        const baseUrl = 'https://sei.ecnu.edu.cn/';
+        const baseUrl = 'https://dx.ecnu.edu.cn/';
 
-        const response = await got(`${baseUrl}33171/list.htm`);
+        const response = await got(`${baseUrl}xydt/list.htm`);
         const $ = load(response.data);
-        const links = $('ul.data-list > li')
+        const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('.data-list-time').text()), +8),
+                pubDate: timezone(parseDate($(el).find('.news_meta').text()), +8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
                 title: $(el).find('a').text(),
             }));
@@ -34,7 +34,7 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     const { data } = await got(item.link);
                     const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
+                    const $read = $('div.read');
                     $read.find('img[src], a[href]').each((i, el) => {
                         const $el = $(el);
                         const attr = el.tagName === 'img' ? 'src' : 'href';
@@ -50,8 +50,8 @@ export const route: Route = {
         );
 
         return {
-            title: '软件工程学院通知公告',
-            link: 'http://www.sei.ecnu.edu.cn/33171/list.htm',
+            title: '大夏书院通知公告',
+            link: 'https://dx.ecnu.edu.cn/xydt/list.htm',
             item: items,
         };
     },
