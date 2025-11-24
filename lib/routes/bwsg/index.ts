@@ -1,9 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import { load } from 'cheerio';
 import { ofetch } from 'ofetch';
+import type { Data, DataItem, Route } from '@/types';
 
-const FEED_TITLE = 'BWSG' as const;
+const FEED_TITLE = 'Immobilien - BWSG' as const;
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.bwsg.at/wp-content/uploads/2024/06/favicon-bwsg.png';
 const SITE_URL = 'https://www.bwsg.at' as const;
