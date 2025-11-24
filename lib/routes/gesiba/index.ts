@@ -3,7 +3,7 @@ import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import type { Data, DataItem, Route } from '@/types';
 
-const FEED_TITLE = 'Gesiba' as const;
+const FEED_TITLE = 'Wohnungen - Gesiba' as const;
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.gesiba.at/assets/img/gesiba-logo.png';
 const BASE_URL = 'https://www.gesiba.at' as const;
@@ -33,8 +33,6 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
         const link = `${BASE_URL}/index.php?${MAGIC_QUERY_PARAMS}&${params}`;
         const response = await ofetch(link);
         const $ = load(response);
-        const selected = $('option[selected]').text();
-        const title = selected ? `${selected} - ${FEED_TITLE}` : FEED_TITLE;
 
         const items = $('#object-result a.card')
             .toArray()
@@ -76,7 +74,7 @@ like \`&plz[]=1100&plz[]=1120\`, if multiple values are passed to one parameter
             });
 
         return {
-            title,
+            title: FEED_TITLE,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
             allowEmpty: true,
