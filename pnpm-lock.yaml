@@ -35,7 +35,7 @@ importers:
         version: 1.19.6(hono@4.10.6)
       '@hono/zod-openapi':
         specifier: 1.1.5
-        version: 1.1.5(hono@4.10.6)(zod@4.1.12)
+        version: 1.1.5(hono@4.10.6)(zod@4.1.13)
       '@notionhq/client':
         specifier: 5.4.0
         version: 5.4.0
@@ -283,8 +283,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1
       zod:
-        specifier: 4.1.12
-        version: 4.1.12
+        specifier: 4.1.13
+        version: 4.1.13
     devDependencies:
       '@babel/preset-env':
         specifier: 7.28.5
@@ -6237,8 +6237,8 @@ packages:
   zod@4.1.11:
     resolution: {integrity: sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==}
 
-  zod@4.1.12:
-    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
+  zod@4.1.13:
+    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
 
 snapshots:
 
@@ -6277,10 +6277,10 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.1.12)':
+  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.1.13)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 4.1.12
+      zod: 4.1.13
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -7319,18 +7319,18 @@ snapshots:
     dependencies:
       hono: 4.10.6
 
-  '@hono/zod-openapi@1.1.5(hono@4.10.6)(zod@4.1.12)':
+  '@hono/zod-openapi@1.1.5(hono@4.10.6)(zod@4.1.13)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.12)
-      '@hono/zod-validator': 0.7.5(hono@4.10.6)(zod@4.1.12)
+      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
+      '@hono/zod-validator': 0.7.5(hono@4.10.6)(zod@4.1.13)
       hono: 4.10.6
       openapi3-ts: 4.5.0
-      zod: 4.1.12
+      zod: 4.1.13
 
-  '@hono/zod-validator@0.7.5(hono@4.10.6)(zod@4.1.12)':
+  '@hono/zod-validator@0.7.5(hono@4.10.6)(zod@4.1.13)':
     dependencies:
       hono: 4.10.6
-      zod: 4.1.12
+      zod: 4.1.13
 
   '@humanfs/core@0.19.1': {}
 
@@ -12581,4 +12581,4 @@ snapshots:
 
   zod@4.1.11: {}
 
-  zod@4.1.12: {}
+  zod@4.1.13: {}
