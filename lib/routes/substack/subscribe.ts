@@ -29,7 +29,10 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid user');
     }
 
-    const feed = await parser.parseURL(`https://${user}.substack.com/feed`);
+    const response = await fetch(`https://${user}.substack.com/feed`);
+    const raw = await response.text();
+    const cleaned = raw.replaceAll(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+    const feed = await parser.parseString(cleaned);
 
     return {
         title: feed.title ?? 'Substack',
