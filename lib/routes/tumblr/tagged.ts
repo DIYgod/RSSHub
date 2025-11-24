@@ -1,0 +1,72 @@
+import { Data, Route } from '@/types';
+import got from '@/utils/got';
+import utils from './utils';
+import type { Context } from 'hono';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import { fallback, queryToInteger } from '@/utils/readable-social';
+
+export const route: Route = {
+    path: '/tagged/:tag',
+    categories: ['blog', 'social-media'],
+    example: '/tumblr/tagged/nature',
+    parameters: {
+        tag: 'Tag name (see `https://www.tumblr.com/docs/en/api/v2#tagged--get-posts-with-tag`)',
+    },
+    radar: [],
+    features: {
+        requireConfig: [
+            {
+                name: 'TUMBLR_CLIENT_ID',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TUMBLR_CLIENT_SECRET',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TUMBLR_REFRESH_TOKEN',
+                description: 'Please see above for details.',
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Tagged Posts',
+    maintainers: ['PolarisStarnor'],
+    handler,
+};
+
+async function handler(ctx: Context): Promise<Data> {
+    if (!config.tumblr || !config.tumblr.clientId) {
+        throw new ConfigNotFoundError('Tumblr RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+    }
+
+    const tagName = ctx.req.param('tag');
+    const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
+
+    const response = await got.get(`https://api.tumblr.com/v2/tagged?tag=${tagName}`, {
+        searchParams: {
+            ...utils.generateAuthParams(),
+            limit,
+        },
+        headers: await utils.generateAuthHeaders(),
+    });
+
+    const posts = response.data.response.posts.map((post: any) => utils.processPost(post));
+
+    return {
+        title: `Tumblr - ${tagName}`,
+        link: `https://www.tumblr.com/tagged/${tagName}`,
+        item: posts.map((post) => ({
+                author: post.title,
+                pubDate: post.timestamp,
+                description: post.body,
+                link: `https://www.tumblr.com/${post.blog_name}/${post.id_string}`,
+            })),
+        allowEmpty: true,
+    };
+}
