@@ -1,4 +1,5 @@
 import { Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -29,10 +30,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid user');
     }
 
-    const response = await fetch(`https://${user}.substack.com/feed`);
-    const raw = await response.text();
-    const cleaned = raw.replaceAll(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
-    const feed = await parser.parseString(cleaned);
+    const response = await ofetch(`https://${user}.substack.com/feed`);
+    const feed = await parser.parseString(response);
 
     return {
         title: feed.title ?? 'Substack',
