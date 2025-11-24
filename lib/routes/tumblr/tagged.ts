@@ -61,12 +61,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `Tumblr - ${tagName}`,
         link: `https://www.tumblr.com/tagged/${tagName}`,
-        item: posts.map((post) => ({
-                author: post.title,
-                pubDate: post.timestamp,
-                description: post.body,
-                link: `https://www.tumblr.com/${post.blog_name}/${post.id_string}`,
-            })),
+        item: posts,
         allowEmpty: true,
     };
 }

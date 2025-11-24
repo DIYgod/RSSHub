@@ -58,6 +58,7 @@ const processPost: (post: any) => DataItem = (post) => {
     }
 
     return {
+        author: post.blog_name,
         id: post.id_string,
         title: post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,
