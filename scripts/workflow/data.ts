@@ -138,12 +138,6 @@ export const categories = [
         zh: '金融',
     },
     {
-        icon: '🏠',
-        link: '/routes/housing',
-        en: 'Housing',
-        de: 'Immobilien',
-    },
-    {
         icon: '🔍',
         link: '/routes/other',
         en: 'Uncategorized',
