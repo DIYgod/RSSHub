@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/wiensued/city=Wien&search=&space-from=30&space-to=100&room-from=2&room-to=4&rent=1&property=1&state[]=inplanung&state[]=inbau&state[]=sofort&state[]=bestand',
     path: '*',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `
 Pass in the parameters (e.g. \`city=Wien&state[]=sofort\`) and/or the path
 leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)
