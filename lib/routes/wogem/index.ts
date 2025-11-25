@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/wogem/angebote',
     path: '/:page?/:filter?',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `
 Pass in the name of the php file, e.g. \`angebote\` for \`/de/angebote.php\`\`.
 Second parameter is a case-insensitve RegExp pattern to filter the results`,
