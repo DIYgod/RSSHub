@@ -14,7 +14,7 @@ export const route: Route = {
     example: '/bwsg/_vermarktungsart=miete&_objektart=wohnung&_zimmer=2,3&_wohnflaeche=45,70&_plz=1210,1220',
     path: '*',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `
 Copy the query parameters for your https://www.bwsg.at/immobilien/immobilie-suchen search,
 omitting the leading \`?\``,
