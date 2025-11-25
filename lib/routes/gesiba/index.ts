@@ -17,7 +17,7 @@ export const route: Route = {
     example: '/gesiba/verfuegbar=alle&plz[]=1100&plz[]=1120&size-from=45&size-to=80&rooms-from=2&rooms-to=3&betreuung=0',
     path: '*',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `
 Note that, on https://www.gesiba.at/immobilien/wohnungen, filters are added to
 the URL like \`&filter[plz]=1100,1120\`, but the endpoint used here expects it
