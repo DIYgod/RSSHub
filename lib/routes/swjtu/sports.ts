@@ -2,7 +2,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const rootURL = 'https://sports.swjtu.edu.cn';
 const pageURL = `${rootURL}/xwzx.htm`;

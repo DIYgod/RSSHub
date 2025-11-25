@@ -1,4 +1,4 @@
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 export interface TraderData {
     address: string;

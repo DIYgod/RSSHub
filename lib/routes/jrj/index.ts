@@ -3,7 +3,7 @@ import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { ofetch } from 'ofetch';
+import ofetch from '@/utils/ofetch';
 
 const options = {
     '103': '财经资讯',
