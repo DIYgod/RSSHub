@@ -13,7 +13,7 @@ export const route: Route = {
     example: '/oesw/sofort-verfuegbar/objectType=1&financingType=2&region=1020',
     path: '*',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `Get your parameters on ${SITE_URL} under "Immobilienangebot".
 Make sure to remove the \`?\` at the beginning from the query parameters!`,
 
