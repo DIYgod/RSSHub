@@ -24406,12 +24406,13 @@
   },
   "iwara.tv": {
     "_name": "iwara",
-    "ecchi": [
+    "www": [
       {
         "title": "User Subscriptions",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
-          "/"
+          "/subscriptions/videos",
+          "/subscriptions/images"
         ],
         "target": "/iwara/subscriptions"
       }
