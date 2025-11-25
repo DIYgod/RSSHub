@@ -8702,6 +8702,9 @@
   "/washingtonpost/app/:category{.+}?": [
     "quiniapiezoelectricity"
   ],
+  "/wbv-gpa/:category?/:state?": [
+    "sk22"
+  ],
   "/wchscu/recruit": [
     "ViggoC"
   ],
