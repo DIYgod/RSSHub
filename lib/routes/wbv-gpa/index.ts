@@ -12,7 +12,7 @@ export const route: Route = {
     example: '/wbv-gpa/wohnungen/wien',
     path: '/:category?/:state?',
     maintainers: ['sk22'],
-    categories: ['housing'],
+    categories: ['other'],
     description: `
 Search housing by WBV-GPA, see "Angebote" menu item in https://www.wbv-gpa.at.
 Filtering by state is done client-side.
