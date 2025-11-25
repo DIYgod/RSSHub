@@ -62,7 +62,6 @@ async function handler(ctx) {
         'study',
         'journal',
         'finance',
-        'housing',
         'other',
     ];
     const all = await Promise.all(
