@@ -45,11 +45,12 @@ async function handler(ctx: Context): Promise<Data> {
         throw new ConfigNotFoundError('Tumblr RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const tagName = ctx.req.param('tag');
+    const tag = ctx.req.param('tag');
     const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
 
-    const response = await got.get(`https://api.tumblr.com/v2/tagged?tag=${tagName}`, {
+    const response = await got.get(`https://api.tumblr.com/v2/tagged`, {
         searchParams: {
+            tag,
             ...utils.generateAuthParams(),
             limit,
         },
@@ -59,7 +60,7 @@ async function handler(ctx: Context): Promise<Data> {
     const posts = response.data.response.map((post: any) => utils.processPost(post));
 
     return {
-        title: `Tumblr - ${tagName}`,
+        title: `Tumblr - ${tag}`,
         item: posts,
         allowEmpty: true,
     };
