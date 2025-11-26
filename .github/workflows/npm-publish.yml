@@ -33,10 +33,6 @@ jobs:
         run: pnpm i
       - name: Run postinstall script for dependencies
         run: pnpm rb
-      - name: Install npm
-        # TODO: OIDC requires npm >=11.5.1.
-        # Until Node.js v24 is LTS (with npm 11 as the default), we need to bump.
-        run: npm install -g npm@latest
       - name: Release
         run: |
           git config --local user.email "action@github.com"
