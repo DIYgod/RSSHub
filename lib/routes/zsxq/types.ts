@@ -30,6 +30,7 @@ interface BasicTopic {
     reading_count: number;
     rewards_count: number;
     topic_id: number;
+    topic_uid: string;
     type: string;
     user_specific: {
         liked: false;
@@ -147,7 +148,7 @@ export interface TopicImage {
 
 export type Topic = TalkTopic | QATopic | TaskTopic | SolutionTopic;
 
-export type ResponseData = UserInfo | GroupInfo | Topic[];
+export type ResponseData = UserInfo | GroupInfo | { topics: Topic[] };
 
 export type UserInfoResponse = BasicResponse<UserInfo>;
 

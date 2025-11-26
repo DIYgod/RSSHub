@@ -58,6 +58,6 @@ async function handler(ctx: Context): Promise<Data> {
         description: group.description,
         image: group.background_url,
         link: `https://wx.zsxq.com/dweb2/index/group/${groupId}`,
-        item: generateTopicDataItem(topics),
+        item: generateTopicDataItem(groupId, topics),
     };
 }
