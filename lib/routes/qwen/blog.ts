@@ -5,13 +5,11 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 
 export const route: Route = {
-    path: '/blog/:lang?/:tag?',
+    path: '/blog/:lang?',
     categories: ['blog'],
     example: '/qwen/blog/zh-cn',
     parameters: {
-        description: `
-- \`lang\`: 语言，例如 \`zh-cn\`, \`en\`
-- \`tag\`: 博客标签，用于筛选文章，例如 \`Research\`, \`Release\`, \`Open-Source\``,
+        lang: '语言，例如 `zh-cn`, `en`',
     },
     features: {
         requireConfig: false,
@@ -21,17 +19,11 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['qwen.ai/research/'],
-            target: '/qwen/blog/:lang',
-        },
-    ],
     name: 'Blog',
     maintainers: ['Kjasn'],
     handler: async (ctx) => {
         const base = 'https://qwen.ai';
-        const { lang = 'zh-cn', tag = '' } = ctx.req.param();
+        const { lang = 'zh-cn' } = ctx.req.param();
         const blogUrl = `${base}/api/page_config?code=research.research-list&language=${lang}`;
 
         const response = await ofetch(blogUrl, {
@@ -41,17 +33,15 @@ export const route: Route = {
             },
         });
 
-        const articles = response
-            .filter((item: any) => !tag || item.tags?.includes(tag)) // filter by tag
-            .map((item: any) => ({
-                title: item.title,
-                image: item.cover_small, // or item.cover
-                pubDate: item.date,
-                author: item.author,
-                link: `${base}/blog?id=${item.id}`,
-                description: item.introduction,
-                category: item.tags,
-            }));
+        const articles = response.map((item: any) => ({
+            title: item.title,
+            image: item.cover_small, // or item.cover
+            pubDate: item.date,
+            author: item.author,
+            link: `${base}/blog?id=${item.id}`,
+            description: item.introduction,
+            category: item.tags,
+        }));
 
         // get blog content
         const items = await Promise.all(
@@ -67,7 +57,7 @@ export const route: Route = {
 
         return {
             title: 'Qwen Blog',
-            link: blogUrl,
+            link: `${base}/research`,
             item: items,
         };
     },
