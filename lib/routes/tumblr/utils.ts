@@ -31,8 +31,8 @@ const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () 
     };
 };
 
-const generateAuthParams: () => { api_key?: string } = () => ({
-    api_key: config.tumblr.clientId,
+const generateAuthParams: () => { apiKey?: string } = () => ({
+    apiKey: config.tumblr.clientId,
 });
 
 const processPost: (post: any) => DataItem = (post) => {

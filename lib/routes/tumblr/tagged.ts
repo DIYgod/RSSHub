@@ -51,7 +51,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await got.get(`https://api.tumblr.com/v2/tagged`, {
         searchParams: {
             tag,
-            ...utils.generateAuthParams(),
+            api_key: utils.generateAuthParams(),
             limit,
         },
         headers: await utils.generateAuthHeaders(),
