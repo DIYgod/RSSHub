@@ -1,10 +1,10 @@
-import { setConfig } from '@/config';
+import { type ConfigEnv, setConfig } from '@/config';
 import { Hono } from 'hono';
 import type { RoutePath } from '@/../assets/build/route-paths';
 
 let app: Hono;
 
-export const init = async (conf: Record<string, any>) => {
+export const init = async (conf: ConfigEnv) => {
     setConfig(
         Object.assign(
             {
