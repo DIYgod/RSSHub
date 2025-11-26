@@ -16,14 +16,21 @@
     "license": "MIT",
     "author": "DIYgod",
     "type": "module",
-    "main": "lib/pkg.ts",
+    "exports": {
+        ".": {
+            "types": "./dist-lib/pkg.d.mts",
+            "import": "./dist-lib/pkg.mjs"
+        }
+    },
     "files": [
-        "lib"
+        "dist-lib"
     ],
     "scripts": {
         "build": "tsx scripts/workflow/build-routes.ts && tsdown",
         "build:vercel": "tsx scripts/workflow/build-routes.ts && tsdown --config ./tsdown-vercel.config.ts && mv dist/server.mjs dist/index.mjs && tsx scripts/workflow/build-vercel-packagejson.ts",
         "build:docs": "tsx scripts/workflow/build-docs.ts",
+        "prepublishOnly": "npm run build:lib",
+        "build:lib": "tsdown --config ./tsdown-lib.config.ts",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
         "format": "prettier \"**/*.{ts,tsx,js,json}\" --write --experimental-cli && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto",
