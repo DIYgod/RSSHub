@@ -26,7 +26,7 @@ export default [
     //     },
     // },
     {
-        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist'],
+        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
     ...compat.extends('eslint:recommended', 'plugin:prettier/recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
     n.configs['flat/recommended-script'],

@@ -3,11 +3,9 @@ import artTemplatesPlugin from './plugins/rollup-plugin-art-templates.ts';
 
 export default defineConfig({
     entry: ['./lib/pkg.ts'],
-    // minify: true,
     shims: true,
     clean: true,
     dts: true,
     plugins: [artTemplatesPlugin()],
-    copy: ['lib/assets'],
     outDir: 'dist-lib',
 });
