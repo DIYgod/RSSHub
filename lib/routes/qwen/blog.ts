@@ -8,7 +8,11 @@ export const route: Route = {
     path: '/blog/:lang?/:tag?',
     categories: ['blog'],
     example: '/qwen/blog/zh-cn',
-    parameters: { lang: 'Blog language' },
+    parameters: {
+        description: `
+- \`lang\`: 语言，例如 \`zh-cn\`, \`en\`
+- \`tag\`: 博客标签，用于筛选文章，例如 \`Research\`, \`Release\`, \`Open-Source\``,
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -46,7 +50,7 @@ export const route: Route = {
                 author: item.author,
                 link: `${base}/blog?id=${item.id}`,
                 description: item.introduction,
-                tags: item.tags,
+                category: item.tags,
             }));
 
         // get blog content
