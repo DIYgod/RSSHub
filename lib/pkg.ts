@@ -4,6 +4,10 @@ import type { RoutePath } from '@/../assets/build/route-paths';
 import type { Data, Route, Namespace } from './types';
 import { namespaces } from './registry';
 
+export * from '@/types';
+export { default as ofetch } from '@/utils/ofetch';
+export * from '@/utils/parse-date';
+
 let app: Hono | null = null;
 
 function ensureAppInitialized(app: Hono | null): asserts app is Hono {
