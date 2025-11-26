@@ -34,11 +34,11 @@ function parseTopicContent(text: string = '', images: TopicImage[] = []) {
     return result;
 }
 
-export function generateTopicDataItem(topics: Topic[], groupId?: string): DataItem[] {
+export function generateTopicDataItem(topics: Topic[]): DataItem[] {
     return topics.map((topic) => {
         let description: string | undefined;
         let title = '';
-        const url = groupId ? `https://wx.zsxq.com/group/${groupId}/topic/${topic.topic_uid}` : `https://wx.zsxq.com/topic/${topic.topic_uid}`;
+        const url = `https://wx.zsxq.com/group/${topic.group.group_id}/topic/${topic.topic_uid}`;
         switch (topic.type) {
             case 'talk':
                 title = topic.talk?.text?.split('\n')[0] ?? '文章';
