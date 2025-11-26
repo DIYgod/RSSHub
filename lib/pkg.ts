@@ -5,7 +5,7 @@ import type { Data } from './types';
 
 let app: Hono;
 
-export const init = async (conf: ConfigEnv) => {
+export const init = async (conf?: ConfigEnv) => {
     setConfig(
         Object.assign(
             {
