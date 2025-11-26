@@ -36,7 +36,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Posts',
-    maintainers: ['Rakambda'],
+    maintainers: ['Rakambda', 'PolarisStarnor'],
     description: `::: tip
 Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance [https://biketouring-nearby.tumblr.com](https://biketouring-nearby.tumblr.com/rss).
 :::`,
@@ -53,7 +53,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
         searchParams: {
-            ...utils.generateAuthParams(),
+            api_key: utils.generateAuthParams(),
             limit,
         },
         headers: await utils.generateAuthHeaders(),
