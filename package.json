@@ -182,6 +182,7 @@
         "eslint": "9.39.1",
         "eslint-config-prettier": "10.1.8",
         "eslint-nibble": "9.1.1",
+        "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-n": "17.23.1",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-simple-import-sort": "12.1.1",
@@ -224,6 +225,7 @@
             "rebrowser-puppeteer",
             "rolldown",
             "sleep",
+            "unrs-resolver",
             "utf-8-validate",
             "vue-demi"
         ],

@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
 import prettier from 'eslint-plugin-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -61,7 +62,6 @@ export default [
 
             'no-await-in-loop': 'error',
             'no-control-regex': 'off',
-            'no-duplicate-imports': 'error',
             'no-prototype-builtins': 'off',
 
             // suggestions
@@ -344,10 +344,13 @@ export default [
     {
         plugins: {
             'simple-import-sort': simpleImportSort,
+            'import-x': importX,
         },
         rules: {
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
+            'no-duplicate-imports': 'off',
+            'import-x/no-duplicates': 'error',
         },
     },
 ];
