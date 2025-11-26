@@ -1,6 +1,6 @@
 import { setConfig } from '@/config';
 import { Hono } from 'hono';
-import type { RoutePath } from '../assets/build/route-paths';
+import type { RoutePath } from '@/../assets/build/route-paths';
 
 let app: Hono;
 
