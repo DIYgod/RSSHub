@@ -30,6 +30,7 @@ interface BasicTopic {
     reading_count: number;
     rewards_count: number;
     topic_id: number;
+    topic_uid: string;
     type: string;
     user_specific: {
         liked: false;
