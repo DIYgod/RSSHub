@@ -1,13 +1,14 @@
-import prettier from 'eslint-plugin-prettier';
-import stylistic from '@stylistic/eslint-plugin';
-import unicorn from 'eslint-plugin-unicorn';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import n from 'eslint-plugin-n';
-import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
-import yamlParser from 'yaml-eslint-parser';
-import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import n from 'eslint-plugin-n';
+import prettier from 'eslint-plugin-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
+import yamlParser from 'yaml-eslint-parser';
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
 const __dirname = import.meta.dirname;
@@ -338,6 +339,15 @@ export default [
                     beforeBlockComment: false,
                 },
             ],
+        },
+    },
+    {
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+        },
+        rules: {
+            'simple-import-sort/imports': 'error',
+            'simple-import-sort/exports': 'error',
         },
     },
 ];
