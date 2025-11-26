@@ -1,5 +1,6 @@
 import { setConfig } from '@/config';
 import { Hono } from 'hono';
+import type { RoutePath } from '../assets/build/route-paths';
 
 let app: Hono;
 
@@ -15,7 +16,7 @@ export const init = async (conf: Record<string, any>) => {
     app = (await import('@/app')).default;
 };
 
-export const request = async (path: string) => {
+export const request = async (path: RoutePath) => {
     const res = await app.request(path);
     return res.json();
 };
