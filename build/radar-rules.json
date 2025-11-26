@@ -9361,6 +9361,99 @@
       }
     ]
   },
+  "ccagm.org.cn": {
+    "_name": "中国百货商业协会",
+    "www": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category"
+        ],
+        "target": "/ccagm/:category"
+      },
+      {
+        "title": "协会动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/association-news.html"
+        ],
+        "target": "/ccagm/association-news"
+      },
+      {
+        "title": "会议活动",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xh-activity/activities-huiyi.html"
+        ],
+        "target": "/ccagm/xh-activity/activities-huiyi"
+      },
+      {
+        "title": "调研与报告",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xh-activity/bg-yj.html"
+        ],
+        "target": "/ccagm/xh-activity/bg-yj"
+      },
+      {
+        "title": "协会党建",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/xie-hui-dang-jian.html"
+        ],
+        "target": "/ccagm/xie-hui-dang-jian"
+      },
+      {
+        "title": "行业新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/members-info.html"
+        ],
+        "target": "/ccagm/members-info"
+      },
+      {
+        "title": "行业研究",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/bg-yj.html"
+        ],
+        "target": "/ccagm/bg-yj"
+      },
+      {
+        "title": "行业标准",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/industry-policy/industry-standard.html"
+        ],
+        "target": "/ccagm/industry-policy/industry-standard"
+      },
+      {
+        "title": "法律法规",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/industry-policy/policies-regulations.html"
+        ],
+        "target": "/ccagm/industry-policy/policies-regulations"
+      },
+      {
+        "title": "资料下载",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/download.html"
+        ],
+        "target": "/ccagm/download"
+      },
+      {
+        "title": "工作总结与计划",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/about-association/gong-zuo-zong-jie-yu-ji-hua.html"
+        ],
+        "target": "/ccagm/about-association/gong-zuo-zong-jie-yu-ji-hua"
+      }
+    ]
+  },
   "cccfna.org.cn": {
     "_name": "中国食品土畜进出口商会",
     "www": [
