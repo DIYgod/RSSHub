@@ -90,9 +90,14 @@ const weiboUtils = {
     })(),
     tryWithCookies: (() => {
         let errors: number = 0;
-        return async (callback: (cookies: string) => Promise<any>) => {
+        const verifier = (resp: any): void => {
+            if (resp?.data?.ok === -100) {
+                throw new RenewWeiboCookiesError(`Cookies expired. Msg: ${resp?.data?.msg || ''} ${resp?.data?.url || ''}`);
+            }
+        };
+        return async <T>(callback: (cookies: string, verifier: (resp: any) => void) => Promise<T>): Promise<T> => {
             try {
-                return await callback(await weiboUtils.getCookies(false));
+                return await callback(await weiboUtils.getCookies(false), verifier);
             } catch (error: any) {
                 if (error.message?.includes('WEIBO_COOKIES')) {
                     throw error;
@@ -109,7 +114,7 @@ const weiboUtils = {
                     throw error;
                 }
                 errors = 0;
-                return await callback(await weiboUtils.getCookies(error));
+                return await callback(await weiboUtils.getCookies(error), verifier);
             }
         };
     })(),

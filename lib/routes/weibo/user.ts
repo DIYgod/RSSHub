@@ -70,7 +70,7 @@ async function handler(ctx) {
         }
     }
 
-    const containerData = await weiboUtils.tryWithCookies((cookies) =>
+    const containerData = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:user:index:${uid}`,
             async () => {
@@ -83,6 +83,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data;
             },
             config.cache.routeExpire,
@@ -95,7 +96,7 @@ async function handler(ctx) {
     const profileImageUrl = containerData.data.userInfo.profile_image_url;
     const containerId = containerData.data.tabsInfo.tabs.find((item) => item.tab_type === 'weibo').containerid;
 
-    const cards = await weiboUtils.tryWithCookies((cookies) =>
+    const cards = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:user:cards:${uid}:${containerId}`,
             async () => {
@@ -108,6 +109,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data.data.cards;
             },
             config.cache.routeExpire,
