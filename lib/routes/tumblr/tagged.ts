@@ -60,7 +60,6 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `Tumblr - ${tagName}`,
-        link: `https://www.tumblr.com/tagged/${tagName}`,
         item: posts,
         allowEmpty: true,
     };
