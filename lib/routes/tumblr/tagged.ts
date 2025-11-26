@@ -56,7 +56,7 @@ async function handler(ctx: Context): Promise<Data> {
         headers: await utils.generateAuthHeaders(),
     });
 
-    const posts = response.data.response.posts.map((post: any) => utils.processPost(post));
+    const posts = response.data.response.map((post: any) => utils.processPost(post));
 
     return {
         title: `Tumblr - ${tagName}`,
