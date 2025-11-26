@@ -6,6 +6,8 @@ on:
       - master
     paths:
       - '.github/workflows/npm-publish.yml'
+      - 'tsdown-lib.config.ts'
+      - 'scripts/workflow/build-routes.ts'
       - 'lib/**'
 
 permissions:
