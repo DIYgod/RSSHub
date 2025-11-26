@@ -2,7 +2,6 @@ import { type ConfigEnv, setConfig } from '@/config';
 import { Handler, Hono } from 'hono';
 import type { RoutePath } from '@/../assets/build/route-paths';
 import type { Data, Route, Namespace } from './types';
-import { namespaces } from './registry';
 
 export * from '@/types';
 export { default as ofetch } from '@/utils/ofetch';
@@ -35,8 +34,10 @@ export async function request(path: RoutePath | (string & {})) {
     return res.json() as Promise<Data>;
 }
 
-export function registerRoute(namespace: string, route: Route, namespaceConfig?: Namespace) {
+export async function registerRoute(namespace: string, route: Route, namespaceConfig?: Namespace) {
     ensureAppInitialized(app);
+
+    const { namespaces } = await import('./registry');
 
     if (!namespaces[namespace]) {
         namespaces[namespace] = {
