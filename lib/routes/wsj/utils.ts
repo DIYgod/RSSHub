@@ -4,11 +4,8 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import path from 'node:path';
-import randUserAgent from '@/utils/rand-user-agent';
+import { PRESETS } from '@/utils/header-generator';
 
-const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });
-
-// const chromeMobileUserAgent = 'Mozilla/5.0 (Linux; Android 7.0; SM-G892A Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/67.0.3396.87 Mobile Safari/537.36';
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
         // Fetch the AMP version
@@ -16,9 +13,7 @@ const parseArticle = (item) =>
         const response = await got({
             url,
             method: 'get',
-            headers: {
-                'User-Agent': UA,
-            },
+            headerGeneratorOptions: PRESETS.MODERN_ANDROID,
         });
         const html = response.data;
         const $ = load(html);

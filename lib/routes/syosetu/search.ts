@@ -50,37 +50,37 @@ function mapToSearchParams(query: string, limit: number): SearchParams {
     const searchParams: SearchParams = {
         gzip: 5,
         lim: limit,
+
+        word: setIfExists(params.word),
+        notword: setIfExists(params.notword),
+
+        title: setIfExists(params.title),
+        ex: setIfExists(params.ex),
+        keyword: setIfExists(params.keyword),
+        wname: setIfExists(params.wname),
+
+        sasie: setIfExists(params.sasie),
+        iszankoku: setIfExists(params.iszankoku),
+        isbl: setIfExists(params.isbl),
+        isgl: setIfExists(params.isgl),
+        istensei: setIfExists(params.istensei),
+        istenni: setIfExists(params.istenni),
+
+        stop: setIfExists(params.stop),
+        notzankoku: setIfExists(params.notzankoku),
+        notbl: setIfExists(params.notbl),
+        notgl: setIfExists(params.notgl),
+        nottensei: setIfExists(params.nottensei),
+        nottenni: setIfExists(params.nottenni),
+
+        minlen: setIfExists(params.minlen),
+        maxlen: setIfExists(params.maxlen),
+
+        type: setIfExists(params.type as NovelTypeParam),
+        order: setIfExists(params.order as Order),
+        genre: setIfExists(params.genre as Join<Genre> | Genre),
+        nocgenre: setIfExists(params.nocgenre as Join<R18Site> | R18Site),
     };
-
-    searchParams.word = setIfExists(params.word);
-    searchParams.notword = setIfExists(params.notword);
-
-    searchParams.title = setIfExists(params.title);
-    searchParams.ex = setIfExists(params.ex);
-    searchParams.keyword = setIfExists(params.keyword);
-    searchParams.wname = setIfExists(params.wname);
-
-    searchParams.sasie = setIfExists(params.sasie);
-    searchParams.iszankoku = setIfExists(params.iszankoku);
-    searchParams.isbl = setIfExists(params.isbl);
-    searchParams.isgl = setIfExists(params.isgl);
-    searchParams.istensei = setIfExists(params.istensei);
-    searchParams.istenni = setIfExists(params.istenni);
-
-    searchParams.stop = setIfExists(params.stop);
-    searchParams.notzankoku = setIfExists(params.notzankoku);
-    searchParams.notbl = setIfExists(params.notbl);
-    searchParams.notgl = setIfExists(params.notgl);
-    searchParams.nottensei = setIfExists(params.nottensei);
-    searchParams.nottenni = setIfExists(params.nottenni);
-
-    searchParams.minlen = setIfExists(params.minlen);
-    searchParams.maxlen = setIfExists(params.maxlen);
-
-    searchParams.type = setIfExists(params.type as NovelTypeParam);
-    searchParams.order = setIfExists(params.order as Order);
-    searchParams.genre = setIfExists(params.genre as Join<Genre> | Genre);
-    searchParams.nocgenre = setIfExists(params.nocgenre as Join<R18Site> | R18Site);
 
     if (params.mintime || params.maxtime) {
         searchParams.time = `${params.mintime || ''}-${params.maxtime || ''}`;
