@@ -256,12 +256,14 @@ if (config.debugInfo) {
     // Only enable tracing in debug mode
     app.get('/metrics', metrics);
 }
-app.use(
-    '/*',
-    serveStatic({
-        root: path.join(__dirname, 'assets'),
-        rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
-    })
-);
+if (!config.isPackage) {
+    app.use(
+        '/*',
+        serveStatic({
+            root: path.join(__dirname, 'assets'),
+            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
+        })
+    );
+}
 
 export default app;
