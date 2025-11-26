@@ -7,5 +7,6 @@ export default defineConfig({
     clean: true,
     dts: true,
     plugins: [artTemplatesPlugin()],
+    copy: ['lib/assets'],
     outDir: 'dist-lib',
 });
