@@ -67,7 +67,7 @@
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.25",
         "@scalar/hono-api-reference": "0.9.25",
-        "@sentry/node": "10.26.0",
+        "@sentry/node": "10.27.0",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
         "cheerio": "1.1.2",
@@ -165,9 +165,9 @@
         "@types/node": "24.10.1",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
-        "@typescript-eslint/eslint-plugin": "8.47.0",
-        "@typescript-eslint/parser": "8.47.0",
-        "@vercel/nft": "1.0.0",
+        "@typescript-eslint/eslint-plugin": "8.48.0",
+        "@typescript-eslint/parser": "8.48.0",
+        "@vercel/nft": "1.1.0",
         "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.34",
         "domhandler": "5.0.3",
@@ -196,7 +196,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
         "vitest": "4.0.9",
-        "yaml-eslint-parser": "1.3.0"
+        "yaml-eslint-parser": "1.3.1"
     },
     "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
     "engines": {
