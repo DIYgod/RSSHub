@@ -1372,9 +1372,6 @@
   "/ccac/news/:type/:lang?": [
     "linbuxiao"
   ],
-  "/ccagm/:category{.+}?": [
-    "nczitzk"
-  ],
   "/cccfna/:category/:type?": [
     "hualiong"
   ],
