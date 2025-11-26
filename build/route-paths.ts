@@ -2,1222 +2,851 @@
 // Do not edit manually
 
 export type RoutePath = 
-  | `/005`
-  | `/005/${string}`
-  | `/0818tuan`
-  | `/0818tuan/${string}`
+  | `/005/:category?`
+  | `/0818tuan/:listId?`
   | `/0x80/blog`
-  | `/0xxx`
-  | `/0xxx/${string}`
-  | `/10000link/info`
-  | `/10000link/info/${string}/${string}`
-  | `/10jqka/realtimenews`
-  | `/10jqka/realtimenews/${string}`
+  | `/0xxx/:filter?`
+  | `/10000link/info/:category?/:id?`
+  | `/10jqka/realtimenews/:tag?`
   | `/121/weatherLive`
-  | `/12306/${string}/${string}/${string}`
-  | `/12306/${string}/${string}/${string}/${string}`
-  | `/12306/zxdt`
-  | `/12306/zxdt/${string}`
-  | `/12371`
-  | `/12371/${string}`
-  | `/141jav/${string}`
-  | `/141jav/${string}/${string}`
-  | `/141ppv/${string}`
-  | `/141ppv/${string}/${string}`
-  | `/163/ds/${string}`
-  | `/163/dy/${string}`
-  | `/163/dy2/${string}`
-  | `/163/exclusive`
-  | `/163/exclusive/${string}`
-  | `/163/music/artist/${string}`
-  | `/163/music/artist/songs/${string}`
-  | `/163/music/djradio/${string}`
-  | `/163/music/djradio/${string}/${string}`
-  | `/163/music/playlist/${string}`
-  | `/163/music/user/events/${string}`
-  | `/163/music/user/playlist/${string}`
-  | `/163/music/user/playrecords/${string}`
-  | `/163/music/user/playrecords/${string}/${string}`
-  | `/163/news/rank`
-  | `/163/news/rank/${string}/${string}/${string}`
-  | `/163/news/special`
-  | `/163/news/special/${string}`
+  | `/12306/:date/:from/:to/:type?`
+  | `/12306/zxdt/:id?`
+  | `/12371/:category?`
+  | `/141jav/:type/:keyword{.*}?`
+  | `/141ppv/:type/:keyword{.*}?`
+  | `/163/ds/:id`
+  | `/163/dy/:id`
+  | `/163/dy2/:id`
+  | `/163/exclusive/:id?`
+  | `/163/music/artist/:id`
+  | `/163/music/artist/songs/:id`
+  | `/163/music/djradio/:id/:info?`
+  | `/163/music/playlist/:id`
+  | `/163/music/user/events/:id`
+  | `/163/music/user/playlist/:uid`
+  | `/163/music/user/playrecords/:uid/:type?`
+  | `/163/news/rank/:category?/:type?/:time?`
+  | `/163/news/special/:type?`
   | `/163/open/vip`
-  | `/163/renjian`
-  | `/163/renjian/${string}`
-  | `/163/today`
-  | `/163/today/${string}`
-  | `/18comic`
-  | `/18comic/${string}/${string}/${string}/${string}`
-  | `/18comic/album/${string}`
-  | `/18comic/blogs`
-  | `/18comic/blogs/${string}`
-  | `/18comic/search`
-  | `/18comic/search/${string}/${string}/${string}/${string}/${string}`
-  | `/199it`
-  | `/199it/${string}`
-  | `/19lou`
-  | `/19lou/${string}`
-  | `/1lou`
-  | `/1lou/${string}`
-  | `/1point3acres/blog`
-  | `/1point3acres/blog/${string}`
-  | `/1point3acres/category`
-  | `/1point3acres/category/${string}/${string}/${string}`
-  | `/1point3acres/offer`
-  | `/1point3acres/offer/${string}/${string}/${string}`
-  | `/1point3acres/section`
-  | `/1point3acres/section/${string}/${string}/${string}`
-  | `/1point3acres/thread`
-  | `/1point3acres/thread/${string}/${string}`
-  | `/1point3acres/user/${string}/posts`
-  | `/1point3acres/user/${string}/threads`
-  | `/1x`
-  | `/1x/${string}`
-  | `/2023game`
-  | `/2023game/${string}/${string}`
-  | `/2048`
-  | `/2048/${string}`
-  | `/21caijing/channel`
-  | `/21caijing/channel/${string}`
-  | `/2cycd/${string}`
-  | `/2cycd/${string}/${string}`
-  | `/30secondsofcode/category`
-  | `/30secondsofcode/category/${string}/${string}`
+  | `/163/renjian/:category?`
+  | `/163/today/:need_content?`
+  | `/18comic/:category?/:time?/:order?/:keyword?`
+  | `/18comic/album/:id`
+  | `/18comic/blogs/:category?`
+  | `/18comic/search/:option?/:category?/:keyword?/:time?/:order?`
+  | `/199it/:category{.+}?`
+  | `/19lou/:city?`
+  | `/1lou/:params{.+}?`
+  | `/1point3acres/blog/:category?`
+  | `/1point3acres/category/:id?/:type?/:order?`
+  | `/1point3acres/offer/:year?/:major?/:school?`
+  | `/1point3acres/section/:id?/:type?/:order?`
+  | `/1point3acres/thread/:type?/:order?`
+  | `/1point3acres/user/:id/posts`
+  | `/1point3acres/user/:id/threads`
+  | `/1x/:category{.+}?`
+  | `/2023game/:category?/:tab?`
+  | `/2048/:id?`
+  | `/21caijing/channel/:name{.+}?`
+  | `/2cycd/:fid/:sort?`
+  | `/30secondsofcode/category/:category?/:subCategory?`
   | `/30secondsofcode/latest`
-  | `/36kr/${string}`
-  | `/36kr/${string}/${string}/${string}`
-  | `/36kr/hot-list`
-  | `/36kr/hot-list/${string}`
-  | `/3dmgame/games/${string}`
-  | `/3dmgame/games/${string}/${string}`
-  | `/3dmgame/news`
-  | `/3dmgame/news/${string}`
-  | `/3kns`
-  | `/3kns/${string}/${string}`
-  | `/423down`
-  | `/423down/${string}`
+  | `/36kr/:category/:subCategory?/:keyword?`
+  | `/36kr/hot-list/:category?`
+  | `/3dmgame/games/:name/:type?`
+  | `/3dmgame/news/:category?`
+  | `/3kns/:filters?/:order?`
+  | `/423down/:category{.+}?`
   | `/4gamers/`
-  | `/4gamers/category/${string}`
-  | `/4gamers/tag/${string}`
-  | `/4gamers/topic/${string}`
+  | `/4gamers/category/:category`
+  | `/4gamers/tag/:tag`
+  | `/4gamers/topic/:topic`
   | `/4khd/`
-  | `/4khd/category/${string}`
-  | `/4ksj`
-  | `/4ksj/${string}`
+  | `/4khd/category/:category`
+  | `/4ksj/:id?`
   | `/4kup/`
-  | `/4kup/category/${string}`
-  | `/4kup/popular/${string}`
-  | `/4kup/tag/${string}`
-  | `/500px/tribe/set/${string}`
+  | `/4kup/category/:category`
+  | `/4kup/popular/:period`
+  | `/4kup/tag/:tag`
+  | `/500px/tribe/set/:id`
   | `/50forum/`
   | `/51cto/index/recommend`
-  | `/51read/article/${string}`
-  | `/52hrtt`
-  | `/52hrtt/${string}/${string}`
-  | `/52hrtt/symposium`
-  | `/52hrtt/symposium/${string}/${string}`
-  | `/56kog/class`
-  | `/56kog/class/${string}`
-  | `/56kog/top`
-  | `/56kog/top/${string}`
-  | `/591/${string}/rent`
-  | `/591/${string}/rent/${string}`
+  | `/51read/article/:id`
+  | `/52hrtt/:area?/:type?`
+  | `/52hrtt/symposium/:id?/:classId?`
+  | `/56kog/class/:category?`
+  | `/56kog/top/:category?`
+  | `/591/:country/rent/:query?`
   | `/5eplay/article`
-  | `/5music/new-releases`
-  | `/5music/new-releases/${string}`
-  | `/69shu/article/${string}`
-  | `/6park/index`
-  | `/6park/index/${string}/${string}/${string}`
-  | `/6park/news`
-  | `/6park/news/${string}/${string}/${string}`
-  | `/6v123`
-  | `/6v123/${string}`
+  | `/5music/new-releases/:category?`
+  | `/69shu/article/:id`
+  | `/6park/index/:id?/:type?/:keyword?`
+  | `/6park/news/:site?/:id?/:keyword?`
+  | `/6v123/:category{.+}?`
   | `/6v123/latestMovies`
   | `/6v123/latestTVSeries`
-  | `/78dm`
-  | `/78dm/${string}`
-  | `/7mmtv`
-  | `/7mmtv/${string}/${string}/${string}`
-  | `/81/81rc`
-  | `/81/81rc/${string}`
-  | `/8264/list`
-  | `/8264/list/${string}`
+  | `/78dm/:category{.+}?`
+  | `/7mmtv/:language?/:category?/:type?`
+  | `/81/81rc/:category{.+}?`
+  | `/8264/list/:id?`
   | `/8kcos/`
-  | `/8kcos/cat`
-  | `/8kcos/cat/${string}`
-  | `/8kcos/tag/${string}`
+  | `/8kcos/cat/:cat{.+}?`
+  | `/8kcos/tag/:tag`
   | `/8world*`
-  | `/91porn`
-  | `/91porn/${string}`
-  | `/91porn/author/${string}`
-  | `/91porn/author/${string}/${string}`
-  | `/95mm/category/${string}`
-  | `/95mm/tab`
-  | `/95mm/tab/${string}`
-  | `/95mm/tag/${string}`
-  | `/9to5/${string}`
-  | `/9to5/${string}/${string}`
-  | `/a9vg`
-  | `/a9vg/${string}`
-  | `/aa1/60s`
-  | `/aa1/60s/${string}`
-  | `/aamacau`
-  | `/aamacau/${string}/${string}`
-  | `/abc`
-  | `/abc/${string}`
-  | `/abmedia`
-  | `/abmedia/${string}`
+  | `/91porn/:lang?`
+  | `/91porn/author/:uid/:lang?`
+  | `/95mm/category/:category`
+  | `/95mm/tab/:tab?`
+  | `/95mm/tag/:tag`
+  | `/9to5/:subsite/:tag?`
+  | `/a9vg/:category{.+}?`
+  | `/aa1/60s/:category?`
+  | `/aamacau/:category?/:id?`
+  | `/abc/:category{.+}?`
+  | `/abmedia/:category?`
   | `/abmedia/index`
   | `/abskoop/`
   | `/abskoop/nsfw`
-  | `/academia/topic/${string}`
-  | `/accessbriefing`
-  | `/accessbriefing/${string}`
-  | `/acfun/article/${string}`
-  | `/acfun/article/${string}/${string}/${string}`
-  | `/acfun/bangumi/${string}`
-  | `/acfun/user/video/${string}`
+  | `/academia/topic/:interest`
+  | `/accessbriefing/:category{.+}?`
+  | `/acfun/article/:categoryId/:sortType?/:timeRange?`
+  | `/acfun/bangumi/:id`
+  | `/acfun/user/video/:uid`
   | `/acg17/post/all`
   | `/acgvinyl/news`
-  | `/acpaa`
-  | `/acpaa/${string}/${string}`
-  | `/acs/journal/${string}`
+  | `/acpaa/:id?/:name?`
+  | `/acs/journal/:id`
   | `/adquan/`
   | `/adquan/case_library`
-  | `/aeaweb/${string}`
-  | `/aeon/${string}`
-  | `/aeon/category/${string}`
-  | `/afdian/dynamic`
-  | `/afdian/dynamic/${string}`
-  | `/afdian/explore/${string}`
-  | `/afdian/explore/${string}/${string}`
+  | `/aeaweb/:id`
+  | `/aeon/:type`
+  | `/aeon/category/:category`
+  | `/afdian/dynamic/:uid?`
+  | `/afdian/explore/:type/:category?`
   | `/aflcio/blog`
   | `/afr/latest`
-  | `/afr/navigation/${string}`
-  | `/agefans/detail/${string}`
+  | `/afr/navigation/:path{.+}`
+  | `/agefans/detail/:id`
   | `/agefans/update`
-  | `/agirls`
-  | `/agirls/${string}`
-  | `/agirls/topic/${string}`
+  | `/agirls/:category?`
+  | `/agirls/topic/:topic`
   | `/agirls/topic_list`
-  | `/agora0`
-  | `/agora0/${string}`
+  | `/agora0/:category?`
   | `/agora0/pen0`
-  | `/agri`
-  | `/agri/${string}`
+  | `/agri/:category{.+}?`
   | `/ahjzu/news`
-  | `/aiaa/journal/${string}`
+  | `/aiaa/journal/:journalID`
   | `/aibase/daily`
-  | `/aibase/discover`
-  | `/aibase/discover/${string}`
+  | `/aibase/discover/:id?`
   | `/aibase/news`
-  | `/aibase/topic`
-  | `/aibase/topic/${string}/${string}`
+  | `/aibase/topic/:id?/:filter?`
   | `/aiblog-2xv/archives`
-  | `/aicaijing`
-  | `/aicaijing/${string}/${string}`
-  | `/aiea/seminars/${string}`
-  | `/aijishu/${string}`
-  | `/aijishu/${string}/${string}`
+  | `/aicaijing/:category?/:id?`
+  | `/aiea/seminars/:period`
+  | `/aijishu/:type/:name?`
   | `/ainvest/article`
   | `/ainvest/news`
-  | `/aip/${string}/${string}`
-  | `/air-level/air/${string}`
-  | `/air-level/rank`
-  | `/air-level/rank/${string}`
+  | `/aip/:pub/:jrn`
+  | `/air-level/air/:area`
+  | `/air-level/rank/:status?`
   | `/airchina/announcement`
-  | `/aisixiang/column/${string}`
-  | `/aisixiang/ranking`
-  | `/aisixiang/ranking/${string}/${string}`
-  | `/aisixiang/thinktank/${string}`
-  | `/aisixiang/thinktank/${string}/${string}`
-  | `/aisixiang/toplist`
-  | `/aisixiang/toplist/${string}/${string}`
-  | `/aisixiang/zhuanti/${string}`
-  | `/ajcass/shxyj`
-  | `/ajcass/shxyj/${string}/${string}`
-  | `/ajmide/${string}`
-  | `/ali213/news`
-  | `/ali213/news/${string}`
-  | `/ali213/zl`
-  | `/ali213/zl/${string}`
-  | `/alicesoft/information`
-  | `/alicesoft/information/${string}/${string}`
-  | `/alipan/files/${string}`
-  | `/alipan/files/${string}/${string}`
-  | `/aliresearch/information`
-  | `/aliresearch/information/${string}`
+  | `/aisixiang/column/:id`
+  | `/aisixiang/ranking/:id?/:period?`
+  | `/aisixiang/thinktank/:id/:type?`
+  | `/aisixiang/toplist/:id?/:period?`
+  | `/aisixiang/zhuanti/:id`
+  | `/ajcass/shxyj/:year?/:issue?`
+  | `/ajmide/:id`
+  | `/ali213/news/:category?`
+  | `/ali213/zl/:category?`
+  | `/alicesoft/information/:category?/:game?`
+  | `/alipan/files/:share_id/:parent_file_id?`
+  | `/aliresearch/information/:type?`
   | `/alistapart/`
-  | `/alistapart/${string}`
+  | `/alistapart/:topic`
   | `/aliyun/database_month`
-  | `/aliyun/developer/group/${string}`
-  | `/aliyun/notice`
-  | `/aliyun/notice/${string}`
+  | `/aliyun/developer/group/:type`
+  | `/aliyun/notice/:type?`
   | `/aljazeera*`
-  | `/ally/rail`
-  | `/ally/rail/${string}/${string}`
-  | `/alpinelinux/pkgs/${string}`
-  | `/alpinelinux/pkgs/${string}/${string}`
-  | `/alternativeto/platform/${string}`
-  | `/alternativeto/platform/${string}/${string}`
-  | `/alternativeto/software/${string}`
-  | `/alternativeto/software/${string}/${string}`
-  | `/altotrain`
-  | `/altotrain/${string}`
-  | `/amazfitwatchfaces/${string}/${string}`
-  | `/amazfitwatchfaces/${string}/${string}/${string}`
-  | `/amazon/awsblogs`
-  | `/amazon/awsblogs/${string}`
+  | `/ally/rail/:category?/:topic?`
+  | `/alpinelinux/pkgs/:name/:routeParams?`
+  | `/alternativeto/platform/:name/:routeParams?`
+  | `/alternativeto/software/:name/:routeParams?`
+  | `/altotrain/:language?`
+  | `/amazfitwatchfaces/:device/:sort/:searchParams?`
+  | `/amazon/awsblogs/:locale?`
   | `/amazon/kindle/software-updates`
   | `/amz123/kx`
   | `/android/platform-tools-releases`
   | `/android/security-bulletin`
-  | `/anime1anime/${string}/${string}`
-  | `/anime1search/${string}`
-  | `/annualreviews/${string}`
-  | `/anquanke/${string}`
-  | `/anquanke/${string}/${string}`
+  | `/anime1anime/:category/:name`
+  | `/anime1search/:keyword`
+  | `/annualreviews/:id`
+  | `/anquanke/:category/:fulltext?`
   | `/anthropic/engineering`
   | `/anthropic/news`
   | `/anthropic/research`
   | `/anytxt/release-notes`
   | `/apache/apisix/blog`
   | `/apiseven/blog`
-  | `/apkpure/versions/${string}`
-  | `/apkpure/versions/${string}/${string}`
-  | `/apnews/mobile`
-  | `/apnews/mobile/${string}`
-  | `/apnews/nav`
-  | `/apnews/nav/${string}`
-  | `/apnews/rss`
-  | `/apnews/rss/${string}`
-  | `/apnews/sitemap/${string}`
-  | `/apnews/topics`
-  | `/apnews/topics/${string}`
+  | `/apkpure/versions/:pkg/:region?`
+  | `/apnews/mobile/:path{.+}?`
+  | `/apnews/nav/:nav{.*}?`
+  | `/apnews/rss/:category?`
+  | `/apnews/sitemap/:route`
+  | `/apnews/topics/:topic?`
   | `/apnic/blog`
-  | `/app-center/release/${string}/${string}/${string}`
-  | `/app-sales`
-  | `/app-sales/${string}/${string}`
-  | `/app-sales/mostwanted`
-  | `/app-sales/mostwanted/${string}/${string}`
-  | `/apple/apps/update/${string}/${string}`
-  | `/apple/apps/update/${string}/${string}/${string}`
+  | `/app-center/release/:user/:app/:distribution_group`
+  | `/app-sales/:category?/:country?`
+  | `/app-sales/mostwanted/:time?/:country?`
+  | `/apple/apps/update/:country/:id/:platform?`
   | `/apple/design`
-  | `/apple/exchange_repair`
-  | `/apple/exchange_repair/${string}`
-  | `/apple/podcast/${string}`
-  | `/apple/podcast/${string}/${string}`
-  | `/apple/security-releases`
-  | `/apple/security-releases/${string}`
-  | `/appleinsider`
-  | `/appleinsider/${string}`
-  | `/appstare/comments/${string}/${string}`
-  | `/appstore/iap/${string}/${string}`
-  | `/appstore/price/${string}/${string}/${string}`
+  | `/apple/exchange_repair/:country?`
+  | `/apple/podcast/:id/:region?`
+  | `/apple/security-releases/:language?`
+  | `/appleinsider/:category?`
+  | `/appstare/comments/:country/:appid`
+  | `/appstore/iap/:country/:id`
+  | `/appstore/price/:country/:type/:id`
   | `/appstore/xianmian`
   | `/appstorrent/programs`
   | `/aqara*`
-  | `/aqara/${string}`
-  | `/aqara/${string}/${string}`
+  | `/aqara/:region/:type?`
   | `/aqara/cn/news`
-  | `/aqara/community`
-  | `/aqara/community/${string}/${string}`
-  | `/aqicn/${string}`
-  | `/aqicn/${string}/${string}`
-  | `/arcteryx/new-arrivals/${string}/${string}`
-  | `/arcteryx/outlet/${string}/${string}`
+  | `/aqara/community/:id?/:keyword?`
+  | `/aqicn/:city/:pollution?`
+  | `/arcteryx/new-arrivals/:country/:gender`
+  | `/arcteryx/outlet/:country/:gender`
   | `/arcteryx/regear/new-arrivals`
-  | `/artstation/${string}`
-  | `/asiafruitchina/categories`
-  | `/asiafruitchina/categories/${string}`
+  | `/artstation/:handle`
+  | `/asiafruitchina/categories/:category?`
   | `/asiafruitchina/news`
-  | `/asianfanfics/tag/${string}/${string}`
-  | `/asianfanfics/text-search/${string}`
-  | `/asiantolick`
-  | `/asiantolick/${string}`
-  | `/asmr-200/works`
-  | `/asmr-200/works/${string}/${string}/${string}`
-  | `/asus/bios/${string}`
-  | `/asus/bios/${string}/${string}`
+  | `/asianfanfics/tag/:tag/:type`
+  | `/asianfanfics/text-search/:keyword`
+  | `/asiantolick/:category{.+}?`
+  | `/asmr-200/works/:order?/:subtitle?/:sort?`
+  | `/asus/bios/:model/:lang?`
   | `/asus/gpu-tweak`
-  | `/atcoder/contest`
-  | `/atcoder/contest/${string}/${string}/${string}/${string}`
-  | `/atcoder/post`
-  | `/atcoder/post/${string}/${string}`
-  | `/atptour/news`
-  | `/atptour/news/${string}`
+  | `/atcoder/contest/:language?/:rated?/:category?/:keyword?`
+  | `/atcoder/post/:language?/:keyword?`
+  | `/atptour/news/:lang?`
   | `/augmentcode/blog`
-  | `/auto-stats`
-  | `/auto-stats/${string}`
+  | `/auto-stats/:category?`
   | `/autocentre/`
   | `/azul/downloads`
-  | `/azurlane/news/${string}`
-  | `/azurlane/news/${string}/${string}`
-  | `/baai/hub`
-  | `/baai/hub/${string}/${string}/${string}`
+  | `/azurlane/news/:server/:type?`
+  | `/baai/hub/:tagId?/:sort?/:range?`
   | `/baai/hub/events`
   | `/backlinko/blog`
   | `/bad*`
   | `/baidu/gushitong/index`
-  | `/baidu/search/${string}`
-  | `/baidu/tieba/forum/${string}`
-  | `/baidu/tieba/forum/${string}/${string}`
-  | `/baidu/tieba/forum/good/${string}`
-  | `/baidu/tieba/forum/good/${string}/${string}/${string}`
-  | `/baidu/tieba/post/${string}`
-  | `/baidu/tieba/post/lz/${string}`
-  | `/baidu/tieba/search/${string}`
-  | `/baidu/tieba/search/${string}/${string}`
-  | `/baidu/tieba/user/${string}`
-  | `/baidu/top`
-  | `/baidu/top/${string}`
+  | `/baidu/search/:keyword`
+  | `/baidu/tieba/forum/:kw/:sortBy?`
+  | `/baidu/tieba/forum/good/:kw/:cid?/:sortBy?`
+  | `/baidu/tieba/post/:id`
+  | `/baidu/tieba/post/lz/:id`
+  | `/baidu/tieba/search/:qw/:routeParams?`
+  | `/baidu/tieba/user/:uid`
+  | `/baidu/top/:board?`
   | `/baijing/article`
-  | `/bakamh/manga/${string}`
+  | `/bakamh/manga/:name`
   | `/bandcamp/live`
-  | `/bandcamp/tag`
-  | `/bandcamp/tag/${string}`
+  | `/bandcamp/tag/:tag?`
   | `/bandcamp/weekly`
-  | `/bandisoft/history`
-  | `/bandisoft/history/${string}/${string}`
+  | `/bandisoft/history/:id?/:language?`
   | `/bangumi.moe/*`
   | `/bangumi.online/`
-  | `/bangumi.tv/${string}/followrank`
+  | `/bangumi.tv/:type/followrank`
   | `/bangumi.tv/calendar/today`
-  | `/bangumi.tv/group/${string}`
-  | `/bangumi.tv/person/${string}`
-  | `/bangumi.tv/subject/${string}`
-  | `/bangumi.tv/subject/${string}/${string}/${string}`
-  | `/bangumi.tv/topic/${string}`
-  | `/bangumi.tv/user/blog/${string}`
-  | `/bangumi.tv/user/collections/${string}/${string}/${string}`
-  | `/banshujiang`
-  | `/banshujiang/${string}`
-  | `/banyuetan`
-  | `/banyuetan/${string}`
+  | `/bangumi.tv/group/:id`
+  | `/bangumi.tv/person/:id`
+  | `/bangumi.tv/subject/:id/:type?/:showOriginalName?`
+  | `/bangumi.tv/topic/:id`
+  | `/bangumi.tv/user/blog/:id`
+  | `/bangumi.tv/user/collections/:id/:subjectType/:type`
+  | `/banshujiang/:category{.+}?`
+  | `/banyuetan/:id?`
   | `/baobua/`
-  | `/baobua/category/${string}`
-  | `/baobua/search/${string}`
+  | `/baobua/category/:category`
+  | `/baobua/search/:keyword`
   | `/baoyu/blog`
-  | `/baozimh/comic/${string}`
-  | `/barronschina`
-  | `/barronschina/${string}`
-  | `/baselang/blog`
-  | `/baselang/blog/${string}`
+  | `/baozimh/comic/:name`
+  | `/barronschina/:id?`
+  | `/baselang/blog/:category?`
   | `/bast*`
-  | `/bbc`
-  | `/bbc/${string}/${string}`
-  | `/bbc/learningenglish`
-  | `/bbc/learningenglish/${string}`
+  | `/bbc/:site?/:channel?`
+  | `/bbc/learningenglish/:channel?`
   | `/bbcnewslabs/news`
-  | `/bc3ts/post/list`
-  | `/bc3ts/post/list/${string}`
-  | `/bdys`
-  | `/bdys/${string}/${string}/${string}/${string}/${string}`
-  | `/behance/${string}`
-  | `/behance/${string}/${string}`
-  | `/beijingprice`
-  | `/beijingprice/${string}`
+  | `/bc3ts/post/list/:sort?`
+  | `/bdys/:caty?/:type?/:area?/:year?/:order?`
+  | `/behance/:user/:type?`
+  | `/beijingprice/:category{.+}?`
   | `/bellroy/new-releases`
-  | `/bendibao/news/${string}`
-  | `/bestblogs/feeds`
-  | `/bestblogs/feeds/${string}`
+  | `/bendibao/news/:city`
+  | `/bestblogs/feeds/:category?`
   | `/bestofjs/rankings/monthly`
   | `/bfl/announcements`
-  | `/bgmlist/onair`
-  | `/bgmlist/onair/${string}`
+  | `/bgmlist/onair/:lang?`
   | `/bigquant/collections`
-  | `/bilibili/app`
-  | `/bilibili/app/${string}`
-  | `/bilibili/audio/${string}`
-  | `/bilibili/bangumi/media/${string}`
-  | `/bilibili/bangumi/media/${string}/${string}`
-  | `/bilibili/fav/${string}/${string}`
-  | `/bilibili/fav/${string}/${string}/${string}`
-  | `/bilibili/followings/article/${string}`
-  | `/bilibili/followings/dynamic/${string}`
-  | `/bilibili/followings/dynamic/${string}/${string}`
-  | `/bilibili/followings/video/${string}`
-  | `/bilibili/followings/video/${string}/${string}`
+  | `/bilibili/app/:id?`
+  | `/bilibili/audio/:id`
+  | `/bilibili/bangumi/media/:mediaid/:embed?`
+  | `/bilibili/fav/:uid/:fid/:embed?`
+  | `/bilibili/followings/article/:uid`
+  | `/bilibili/followings/dynamic/:uid/:routeParams?`
+  | `/bilibili/followings/video/:uid/:embed?`
   | `/bilibili/hot-search`
-  | `/bilibili/link/news/${string}`
-  | `/bilibili/live/area/${string}/${string}`
-  | `/bilibili/live/room/${string}`
-  | `/bilibili/live/search/${string}/${string}`
-  | `/bilibili/mall/ip/${string}`
-  | `/bilibili/mall/new`
-  | `/bilibili/mall/new/${string}`
-  | `/bilibili/manga/followings/${string}`
-  | `/bilibili/manga/followings/${string}/${string}`
-  | `/bilibili/manga/update/${string}`
-  | `/bilibili/partion/${string}`
-  | `/bilibili/partion/${string}/${string}`
-  | `/bilibili/partion/ranking/${string}`
-  | `/bilibili/partion/ranking/${string}/${string}/${string}`
-  | `/bilibili/platform`
-  | `/bilibili/platform/${string}/${string}/${string}`
-  | `/bilibili/popular/all`
-  | `/bilibili/popular/all/${string}`
-  | `/bilibili/precious`
-  | `/bilibili/precious/${string}`
-  | `/bilibili/ranking`
-  | `/bilibili/ranking/${string}/${string}/${string}/${string}`
-  | `/bilibili/readlist/${string}`
-  | `/bilibili/user/article/${string}`
-  | `/bilibili/user/bangumi/${string}`
-  | `/bilibili/user/bangumi/${string}/${string}`
-  | `/bilibili/user/channel/${string}/${string}`
-  | `/bilibili/user/channel/${string}/${string}/${string}`
-  | `/bilibili/user/coin/${string}`
-  | `/bilibili/user/coin/${string}/${string}`
-  | `/bilibili/user/collection/${string}/${string}`
-  | `/bilibili/user/collection/${string}/${string}/${string}/${string}/${string}`
-  | `/bilibili/user/dynamic/${string}`
-  | `/bilibili/user/dynamic/${string}/${string}`
-  | `/bilibili/user/fav/${string}`
-  | `/bilibili/user/fav/${string}/${string}`
-  | `/bilibili/user/followers/${string}/${string}`
-  | `/bilibili/user/followings/${string}/${string}`
-  | `/bilibili/user/like/${string}`
-  | `/bilibili/user/like/${string}/${string}`
-  | `/bilibili/user/video-all/${string}`
-  | `/bilibili/user/video-all/${string}/${string}`
-  | `/bilibili/user/video/${string}`
-  | `/bilibili/user/video/${string}/${string}`
-  | `/bilibili/video/danmaku/${string}`
-  | `/bilibili/video/danmaku/${string}/${string}`
-  | `/bilibili/video/page/${string}`
-  | `/bilibili/video/page/${string}/${string}`
-  | `/bilibili/video/reply/${string}`
-  | `/bilibili/vsearch/${string}`
-  | `/bilibili/vsearch/${string}/${string}/${string}/${string}`
-  | `/bilibili/watchlater/${string}`
-  | `/bilibili/watchlater/${string}/${string}`
-  | `/bilibili/weekly`
-  | `/bilibili/weekly/${string}`
-  | `/binance/announcement/${string}`
+  | `/bilibili/link/news/:product`
+  | `/bilibili/live/area/:areaID/:order`
+  | `/bilibili/live/room/:roomID`
+  | `/bilibili/live/search/:key/:order`
+  | `/bilibili/mall/ip/:id`
+  | `/bilibili/mall/new/:category?`
+  | `/bilibili/manga/followings/:uid/:limits?`
+  | `/bilibili/manga/update/:comicid`
+  | `/bilibili/partion/:tid/:embed?`
+  | `/bilibili/partion/ranking/:tid/:days?/:embed?`
+  | `/bilibili/platform/:area?/:p_type?/:uid?`
+  | `/bilibili/popular/all/:embed?`
+  | `/bilibili/precious/:embed?`
+  | `/bilibili/ranking/:rid?/:embed?/:redirect1?/:redirect2?`
+  | `/bilibili/readlist/:listid`
+  | `/bilibili/user/article/:uid`
+  | `/bilibili/user/bangumi/:uid/:type?`
+  | `/bilibili/user/channel/:uid/:sid/:embed?`
+  | `/bilibili/user/coin/:uid/:embed?`
+  | `/bilibili/user/collection/:uid/:sid/:embed?/:sortReverse?/:page?`
+  | `/bilibili/user/dynamic/:uid/:routeParams?`
+  | `/bilibili/user/fav/:uid/:embed?`
+  | `/bilibili/user/followers/:uid/:loginUid`
+  | `/bilibili/user/followings/:uid/:loginUid`
+  | `/bilibili/user/like/:uid/:embed?`
+  | `/bilibili/user/video-all/:uid/:embed?`
+  | `/bilibili/user/video/:uid/:embed?`
+  | `/bilibili/video/danmaku/:bvid/:pid?`
+  | `/bilibili/video/page/:bvid/:embed?`
+  | `/bilibili/video/reply/:bvid`
+  | `/bilibili/vsearch/:kw/:order?/:embed?/:tid?`
+  | `/bilibili/watchlater/:uid/:embed?`
+  | `/bilibili/weekly/:embed?`
+  | `/binance/announcement/:type`
   | `/binance/launchpool`
-  | `/bing`
-  | `/bing/${string}`
-  | `/bing/search/${string}`
-  | `/biodiscover`
-  | `/biodiscover/${string}`
+  | `/bing/:routeParams?`
+  | `/bing/search/:keyword`
+  | `/biodiscover/:channel?`
   | `/bioone/featured`
-  | `/bioone/journals`
-  | `/bioone/journals/${string}`
+  | `/bioone/journals/:journal?`
   | `/biquge*`
   | `/bit/cs`
   | `/bit/jwc`
   | `/bit/rszhaopin`
   | `/bit/yjs`
-  | `/bitbucket/commits/${string}/${string}`
-  | `/bitbucket/tags/${string}/${string}`
-  | `/bitget/announcement/${string}`
-  | `/bitget/announcement/${string}/${string}`
+  | `/bitbucket/commits/:workspace/:repo_slug`
+  | `/bitbucket/tags/:workspace/:repo_slug`
+  | `/bitget/announcement/:type/:lang?`
   | `/bitmovin/blog`
   | `/bjfu/grs`
-  | `/bjfu/it/${string}`
-  | `/bjfu/jwc/${string}`
+  | `/bjfu/it/:type`
+  | `/bjfu/jwc/:type`
   | `/bjfu/kjc`
-  | `/bjfu/news/${string}`
-  | `/bjnews/cat/${string}`
-  | `/bjnews/column/${string}`
+  | `/bjfu/news/:type`
+  | `/bjnews/cat/:cat`
+  | `/bjnews/column/:column`
   | `/bjp/apod`
-  | `/bjsk`
-  | `/bjsk/${string}`
-  | `/bjsk/keti`
-  | `/bjsk/keti/${string}`
-  | `/bjtu/gs`
-  | `/bjtu/gs/${string}`
-  | `/bjwxdxh`
-  | `/bjwxdxh/${string}`
-  | `/bjx/fd/${string}`
-  | `/bjx/gf/${string}`
+  | `/bjsk/:path?`
+  | `/bjsk/keti/:id?`
+  | `/bjtu/gs/:type?`
+  | `/bjwxdxh/:type?`
+  | `/bjx/fd/:type`
+  | `/bjx/gf/:type`
   | `/bjx/huanbao`
-  | `/blizzard/news`
-  | `/blizzard/news-cn`
-  | `/blizzard/news-cn/${string}`
-  | `/blizzard/news/${string}/${string}`
+  | `/blizzard/news-cn/:category?`
+  | `/blizzard/news/:language?/:category?`
   | `/blockworks/`
   | `/blogread/newest`
-  | `/bloomberg`
-  | `/bloomberg/${string}`
-  | `/bloomberg/authors/${string}/${string}`
-  | `/bloomberg/authors/${string}/${string}/${string}`
-  | `/bluearchive/news/${string}`
-  | `/bluearchive/news/${string}/${string}`
+  | `/bloomberg/:site?`
+  | `/bloomberg/authors/:id/:slug/:source?`
+  | `/bluearchive/news/:server/:type?`
   | `/bluestacks/release/5`
   | `/bmkg/earthquake`
   | `/bmkg/news`
   | `/bnext/`
-  | `/bnu/bs`
-  | `/bnu/bs/${string}`
-  | `/bnu/dwxgb/${string}/${string}`
-  | `/bnu/fdy`
-  | `/bnu/fdy/${string}`
-  | `/bnu/fe/${string}`
+  | `/bnu/bs/:category?`
+  | `/bnu/dwxgb/:category/:type`
+  | `/bnu/fdy/:path{.+}?`
+  | `/bnu/fe/:category`
   | `/bnu/jwb`
-  | `/bnu/lib`
-  | `/bnu/lib/${string}`
-  | `/bnu/mba`
-  | `/bnu/mba/${string}`
-  | `/boc/whpj`
-  | `/boc/whpj/${string}`
-  | `/bookfere/${string}`
-  | `/bookwalker/search`
-  | `/bookwalker/search/${string}`
-  | `/booru/mmda/tags`
-  | `/booru/mmda/tags/${string}`
-  | `/bossdesign`
-  | `/bossdesign/${string}`
+  | `/bnu/lib/:category?`
+  | `/bnu/mba/:category{.+}?`
+  | `/boc/whpj/:format?`
+  | `/bookfere/:category`
+  | `/bookwalker/search/:filter?`
+  | `/booru/mmda/tags/:tags?`
+  | `/bossdesign/:category?`
   | `/brave/latest`
-  | `/brooklynmuseum/exhibitions`
-  | `/brooklynmuseum/exhibitions/${string}`
-  | `/bse`
-  | `/bse/${string}/${string}`
-  | `/bsky/keyword/${string}`
-  | `/bsky/profile/${string}`
-  | `/bsky/profile/${string}/${string}`
-  | `/bsky/profile/${string}/feed/${string}`
-  | `/bsky/profile/${string}/feed/${string}/${string}`
-  | `/bt0/mv/${string}`
-  | `/bt0/mv/${string}/${string}`
-  | `/bt0/tlist/${string}`
-  | `/bt0/tlist/${string}/${string}`
-  | `/btzj`
-  | `/btzj/${string}`
-  | `/buaa/jiaowu`
-  | `/buaa/jiaowu/${string}`
-  | `/buaa/lib/space/${string}`
-  | `/buaa/news/${string}`
-  | `/buaa/sme`
-  | `/buaa/sme/${string}`
+  | `/brooklynmuseum/exhibitions/:state?`
+  | `/bse/:category?/:keyword?`
+  | `/bsky/keyword/:keyword`
+  | `/bsky/profile/:handle/:routeParams?`
+  | `/bsky/profile/:handle/feed/:space/:routeParams?`
+  | `/bt0/mv/:number/:domain?`
+  | `/bt0/tlist/:sc/:domain?`
+  | `/btzj/:category?`
+  | `/buaa/jiaowu/:cddm?`
+  | `/buaa/lib/space/:path{newbook.*}`
+  | `/buaa/news/:type`
+  | `/buaa/sme/:path{.+}?`
   | `/buct/cist`
-  | `/buct/gr/${string}`
+  | `/buct/gr/:type`
   | `/buct/jwc`
-  | `/bugzilla/bug/${string}/${string}`
+  | `/bugzilla/bug/:site/:bugId`
   | `/bulianglin/`
-  | `/bullionvault/gold-news`
-  | `/bullionvault/gold-news/${string}`
-  | `/bupt/jwc/${string}`
+  | `/bullionvault/gold-news/:category?`
+  | `/bupt/jwc/:type`
   | `/bupt/rczp`
   | `/bupt/scss/tzgg`
-  | `/byau/news/${string}`
+  | `/byau/news/:type_id`
   | `/byteclicks/`
-  | `/byteclicks/tag/${string}`
+  | `/byteclicks/tag/:tag`
   | `/bytes/`
-  | `/c114/roll`
-  | `/c114/roll/${string}`
-  | `/caai/${string}`
-  | `/caam`
-  | `/caam/${string}`
+  | `/c114/roll/:original?`
+  | `/caai/:caty`
+  | `/caam/:category?`
   | `/caareviews/book`
   | `/caareviews/essay`
   | `/caareviews/exhibition`
-  | `/cags/edu/${string}`
-  | `/cahkms`
-  | `/cahkms/${string}`
+  | `/cags/edu/:category`
+  | `/cahkms/:category?`
   | `/caijing/roll`
-  | `/caixin/${string}/${string}`
+  | `/caixin/:column/:category`
   | `/caixin/article`
-  | `/caixin/blog`
-  | `/caixin/blog/${string}`
+  | `/caixin/blog/:column?`
   | `/caixin/database`
   | `/caixin/k`
   | `/caixin/latest`
   | `/caixin/weekly`
   | `/caixinglobal/latest`
-  | `/camchina`
-  | `/camchina/${string}`
-  | `/cankaoxiaoxi`
-  | `/cankaoxiaoxi/${string}`
-  | `/cankaoxiaoxi/column`
-  | `/cankaoxiaoxi/column/${string}`
+  | `/camchina/:id?`
+  | `/cankaoxiaoxi/:id?`
+  | `/cankaoxiaoxi/column/:id?`
   | `/capitalmind/insights`
   | `/capitalmind/podcasts`
-  | `/cara/likes/${string}`
-  | `/cara/portfolio/${string}`
-  | `/cara/timeline/${string}`
-  | `/cartoonmad/comic/${string}`
-  | `/cas/cg`
-  | `/cas/cg/${string}`
-  | `/cas/genetics/${string}`
+  | `/cara/likes/:user`
+  | `/cara/portfolio/:user`
+  | `/cara/timeline/:user`
+  | `/cartoonmad/comic/:id`
+  | `/cas/cg/:caty?`
+  | `/cas/genetics/:path{.+}`
   | `/cas/ia/yjs`
   | `/cas/iee/kydt`
-  | `/cas/is/${string}`
+  | `/cas/is/:path{.+}`
   | `/cas/mesalab/kb`
   | `/cas/sim/kyjz`
-  | `/casssp/news`
-  | `/casssp/news/${string}`
-  | `/cast/${string}/${string}`
-  | `/cast/${string}/${string}/${string}`
-  | `/catti/news/${string}`
+  | `/casssp/news/:category?`
+  | `/cast/:column/:subColumn/:category?`
+  | `/catti/news/:category`
   | `/cau/ele`
   | `/cau/yjs`
-  | `/caus`
-  | `/caus/${string}`
+  | `/caus/:category?`
   | `/cbaigui*`
-  | `/cbc/topics`
-  | `/cbc/topics/${string}`
-  | `/cbirc`
-  | `/cbirc/${string}`
-  | `/cbndata/information`
-  | `/cbndata/information/${string}`
+  | `/cbc/topics/:topic?`
+  | `/cbirc/:category?`
+  | `/cbndata/information/:id?`
   | `/cbnweek/`
-  | `/cbpanet/dzp_news`
-  | `/cbpanet/dzp_news/${string}/${string}`
-  | `/ccac/news/${string}`
-  | `/ccac/news/${string}/${string}`
-  | `/ccagm`
-  | `/ccagm/${string}`
-  | `/cccfna/${string}`
-  | `/cccfna/${string}/${string}`
-  | `/cccmc`
-  | `/cccmc/${string}`
-  | `/ccf/ccfcv/${string}/${string}`
-  | `/ccf/news`
-  | `/ccf/news/${string}`
-  | `/ccf/tfbd/${string}/${string}`
-  | `/ccfa`
-  | `/ccfa/${string}`
-  | `/ccg`
-  | `/ccg/${string}`
+  | `/cbpanet/dzp_news/:bigId?/:smallId?`
+  | `/ccac/news/:type/:lang?`
+  | `/ccagm/:category{.+}?`
+  | `/cccfna/:category/:type?`
+  | `/cccmc/:category{.+}?`
+  | `/ccf/ccfcv/:channel/:category`
+  | `/ccf/news/:category?`
+  | `/ccf/tfbd/:caty/:id`
+  | `/ccfa/:type?`
+  | `/ccg/:category?`
   | `/ccnu/career`
   | `/ccnu/cs`
   | `/ccnu/wu`
   | `/ccnu/yjs`
   | `/ccreports/article`
-  | `/cctv/${string}`
-  | `/cctv/${string}/${string}/${string}`
-  | `/cctv/lm`
-  | `/cctv/lm/${string}`
+  | `/cctv/:category`
+  | `/cctv/:site/:category/:name`
+  | `/cctv/lm/:id?`
   | `/cctv/photo/jx`
-  | `/cde/${string}/${string}`
-  | `/cde/xxgk/${string}`
-  | `/cde/zdyz/${string}`
-  | `/cdi`
-  | `/cdi/${string}`
+  | `/cde/:channel/:category`
+  | `/cde/xxgk/:category`
+  | `/cde/zdyz/:category`
+  | `/cdi/:id?`
   | `/cdu/cdrw`
   | `/cdu/jwgg`
   | `/cdu/tzggcdunews`
   | `/cdzjryb/zw/projectList`
-  | `/ce/district`
-  | `/ce/district/${string}`
+  | `/ce/district/:category?`
   | `/cebbank/quotation/all`
-  | `/cebbank/quotation/history/${string}`
-  | `/ceph/blog`
-  | `/ceph/blog/${string}`
-  | `/cfachina/servicesupport/analygarden`
-  | `/cfachina/servicesupport/analygarden/${string}`
+  | `/cebbank/quotation/history/:type`
+  | `/ceph/blog/:topic?`
+  | `/cfachina/servicesupport/analygarden/:program?`
   | `/cffex/announcement`
-  | `/cfmmc`
-  | `/cfmmc/${string}`
-  | `/cfr/${string}`
-  | `/cfr/${string}/${string}`
-  | `/cgtn/podcast/${string}/${string}`
+  | `/cfmmc/:id{.+}?`
+  | `/cfr/:category/:subCategory?`
+  | `/cgtn/podcast/:category/:id`
   | `/chaincatcher/`
   | `/chaincatcher/news`
-  | `/changba/${string}`
-  | `/chaoxing/qk/${string}`
-  | `/chaoxing/qk/${string}/${string}`
+  | `/changba/:userid`
+  | `/chaoxing/qk/:id/:needContent?`
   | `/chaping/banner`
-  | `/chaping/news`
-  | `/chaping/news/${string}`
+  | `/chaping/news/:caty?`
   | `/chaping/newsflash`
   | `/cherrytimes/market`
-  | `/chiculture/topic`
-  | `/chiculture/topic/${string}`
+  | `/chiculture/topic/:category?`
   | `/chikubi/`
-  | `/chikubi/${string}`
-  | `/chikubi/category/${string}`
-  | `/chikubi/nipple-video-category/${string}`
-  | `/chikubi/nipple-video-maker/${string}`
-  | `/chikubi/search/${string}`
-  | `/chikubi/tag/${string}`
-  | `/china/finance`
-  | `/china/finance/${string}`
-  | `/china/news`
-  | `/china/news/${string}`
+  | `/chikubi/:keyword`
+  | `/chikubi/category/:keyword`
+  | `/chikubi/nipple-video-category/:keyword`
+  | `/chikubi/nipple-video-maker/:keyword`
+  | `/chikubi/search/:keyword`
+  | `/chikubi/tag/:keyword`
+  | `/china/finance/:category?`
+  | `/china/news/:category?`
   | `/china/news/military`
-  | `/chinacdc`
-  | `/chinacdc/${string}`
-  | `/chinadaily/language`
-  | `/chinadaily/language/${string}`
-  | `/chinadegrees`
-  | `/chinadegrees/${string}`
+  | `/chinacdc/:category{.+}?`
+  | `/chinadaily/language/:category{.+}?`
+  | `/chinadegrees/:province?`
   | `/chinafactcheck/`
-  | `/chinaisa`
-  | `/chinaisa/${string}`
-  | `/chinamoney`
-  | `/chinamoney/${string}`
+  | `/chinaisa/:id?`
+  | `/chinamoney/:channelId?`
   | `/chinanews/`
-  | `/chinania`
-  | `/chinania/${string}`
-  | `/chinaratings/CreditResearch`
-  | `/chinaratings/CreditResearch/${string}`
-  | `/chinathinktanks/${string}`
-  | `/chinatimes`
-  | `/chinatimes/${string}`
-  | `/chinaventure/news`
-  | `/chinaventure/news/${string}`
-  | `/chinawriter`
-  | `/chinawriter/${string}`
-  | `/chiphell/portal`
-  | `/chiphell/portal/${string}`
+  | `/chinania/:category{.+}?`
+  | `/chinaratings/CreditResearch/:category{.+}?`
+  | `/chinathinktanks/:id`
+  | `/chinatimes/:category?`
+  | `/chinaventure/news/:id?`
+  | `/chinawriter/:id{.+}?`
+  | `/chiphell/portal/:catId?`
   | `/chlinlearn/daily-blog`
   | `/chnmuseum/zx/xingnew`
   | `/chnmuseum/zx/xwzt`
-  | `/chocolatey/packages/${string}`
+  | `/chocolatey/packages/:id`
   | `/chongbuluo/newthread`
   | `/chongdiantou/`
   | `/chsi/hotnews`
   | `/chsi/kydt`
-  | `/chsi/kyzx/${string}`
+  | `/chsi/kyzx/:type`
   | `/chuanliu/nice`
-  | `/chuapp`
-  | `/chuapp/${string}`
+  | `/chuapp/:category?`
   | `/chub/characters`
-  | `/cib/whpj`
-  | `/cib/whpj/${string}`
-  | `/cih-index/report/list`
-  | `/cih-index/report/list/${string}`
-  | `/ciidbnu`
-  | `/ciidbnu/${string}`
-  | `/cisia`
-  | `/cisia/${string}`
-  | `/civitai/discussions/${string}`
+  | `/cib/whpj/:format?`
+  | `/cih-index/report/list/:report?`
+  | `/ciidbnu/:id?`
+  | `/cisia/:id?`
+  | `/civitai/discussions/:modelId`
   | `/civitai/models`
-  | `/civitai/user/${string}/articles`
-  | `/ciweimao/chapter/${string}`
-  | `/cjlu/yjsy/${string}`
-  | `/clickme/${string}/${string}/${string}`
+  | `/civitai/user/:username/articles`
+  | `/ciweimao/chapter/:id`
+  | `/cjlu/yjsy/:cate`
+  | `/clickme/:site/:grouping/:name`
   | `/cline/blog`
   | `/cloudflarestatus/`
   | `/cloudnative/blog`
-  | `/cls/depth`
-  | `/cls/depth/${string}`
+  | `/cls/depth/:category?`
   | `/cls/hot`
-  | `/cls/subject`
-  | `/cls/subject/${string}`
-  | `/cls/telegraph`
-  | `/cls/telegraph/${string}`
-  | `/cma/channel`
-  | `/cma/channel/${string}`
-  | `/cmde`
-  | `/cmde/${string}`
+  | `/cls/subject/:id?`
+  | `/cls/telegraph/:category?`
+  | `/cma/channel/:id?`
+  | `/cmde/:cate{.+}?`
   | `/cmpxchg8b/articles`
   | `/cmu/andypavlo/blog`
   | `/cn-healthcare/index`
-  | `/cna`
-  | `/cna/${string}`
-  | `/cna/web`
-  | `/cna/web/${string}`
-  | `/cnbc/rss`
-  | `/cnbc/rss/${string}`
+  | `/cna/:id?`
+  | `/cna/web/:id?`
+  | `/cnbc/rss/:id?`
   | `/cnbeta/`
-  | `/cnbeta/category/${string}`
-  | `/cnbeta/topics/${string}`
+  | `/cnbeta/category/:id`
+  | `/cnbeta/topics/:id`
   | `/cnblogs/aggsite/headline`
   | `/cnblogs/aggsite/topdiggs`
   | `/cnblogs/aggsite/topviews`
-  | `/cnblogs/cate/${string}`
+  | `/cnblogs/cate/:type`
   | `/cnblogs/pick`
-  | `/cncf`
-  | `/cncf/${string}`
+  | `/cncf/:cate?`
   | `/cncf/reports`
-  | `/cneb/yjxw`
-  | `/cneb/yjxw/${string}`
+  | `/cneb/yjxw/:category?`
   | `/cneb/yjxx/*`
-  | `/cngal/entry/${string}`
+  | `/cngal/entry/:id`
   | `/cngal/weekly`
-  | `/cngold`
-  | `/cngold/${string}`
-  | `/cnjxol`
-  | `/cnjxol/${string}/${string}`
-  | `/cnki/author/${string}/${string}`
-  | `/cnki/journals/${string}`
-  | `/cnki/journals/debut/${string}`
-  | `/cnljxh`
-  | `/cnljxh/${string}/${string}`
-  | `/cntheory/paper`
-  | `/cntheory/paper/${string}`
-  | `/cntv/${string}`
+  | `/cngold/:category?`
+  | `/cnjxol/:category?/:id?`
+  | `/cnki/author/:name/:company`
+  | `/cnki/journals/:name`
+  | `/cnki/journals/debut/:name`
+  | `/cnljxh/:category?/:id?`
+  | `/cntheory/paper/:id?`
+  | `/cntv/:column`
   | `/cnu/iec`
   | `/cnu/jdxw`
   | `/cnu/jwc`
   | `/cnu/physics`
   | `/cnu/smkxxy`
-  | `/cockroachlabs/blog`
-  | `/cockroachlabs/blog/${string}`
+  | `/cockroachlabs/blog/:category?`
   | `/codeforces/contests`
-  | `/codeforces/recent-actions`
-  | `/codeforces/recent-actions/${string}`
+  | `/codeforces/recent-actions/:minrating?`
   | `/cognition/blog`
   | `/cohere/blog`
   | `/coindesk/consensus-magazine`
   | `/coindesk/news`
   | `/cointelegraph/`
-  | `/colamanga/${string}`
+  | `/colamanga/:id`
   | `/collabo-cafe/`
-  | `/collabo-cafe/category/${string}`
-  | `/collabo-cafe/tag/${string}`
-  | `/comicat/search/${string}`
-  | `/comicskingdom/${string}`
+  | `/collabo-cafe/category/:category`
+  | `/collabo-cafe/tag/:tag`
+  | `/comicat/search/:keyword`
+  | `/comicskingdom/:name`
   | `/commonhealth/`
-  | `/consumer`
-  | `/consumer/${string}/${string}/${string}`
-  | `/consumer/shopping-guide`
-  | `/consumer/shopping-guide/${string}/${string}`
-  | `/cool18`
-  | `/cool18/${string}/${string}/${string}`
-  | `/coolapk/dyh/${string}`
-  | `/coolapk/hot`
-  | `/coolapk/hot/${string}/${string}`
-  | `/coolapk/huati/${string}`
-  | `/coolapk/toutiao`
-  | `/coolapk/toutiao/${string}`
-  | `/coolapk/tuwen`
-  | `/coolapk/tuwen/${string}`
-  | `/coolapk/user/${string}/dynamic`
+  | `/consumer/:category?/:language?/:keyword?`
+  | `/consumer/shopping-guide/:category?/:language?`
+  | `/cool18/:id?/:type?/:keyword?`
+  | `/coolapk/dyh/:dyhId`
+  | `/coolapk/hot/:type?/:period?`
+  | `/coolapk/huati/:tag`
+  | `/coolapk/toutiao/:type?`
+  | `/coolapk/tuwen/:type?`
+  | `/coolapk/user/:uid/dynamic`
   | `/coolbuy/`
   | `/coolidge/film-guide`
   | `/coolidge/news`
   | `/coolpc/news`
-  | `/coomer`
-  | `/coomer/${string}/${string}`
-  | `/copymanga/comic/${string}`
-  | `/copymanga/comic/${string}/${string}`
+  | `/coomer/:source?/:id?`
+  | `/copymanga/comic/:id/:chapterCnt?`
   | `/cosplaytele/`
-  | `/cosplaytele/category/${string}`
-  | `/cosplaytele/popular/${string}`
-  | `/cosplaytele/tag/${string}`
-  | `/counter-strike/news`
-  | `/counter-strike/news/${string}/${string}`
-  | `/cpcaauto/news`
-  | `/cpcaauto/news/${string}/${string}`
-  | `/cpcey`
-  | `/cpcey/${string}`
-  | `/cpta/${string}`
+  | `/cosplaytele/category/:category`
+  | `/cosplaytele/popular/:period`
+  | `/cosplaytele/tag/:tag`
+  | `/counter-strike/news/:category?/:language?`
+  | `/cpcaauto/news/:type?/:id?`
+  | `/cpcey/:type?`
+  | `/cpta/:category`
   | `/cpuid/news`
   | `/cqgas/tqtz`
-  | `/cqu/jwc`
-  | `/cqu/jwc/${string}`
-  | `/cqwu/news`
-  | `/cqwu/news/${string}`
-  | `/crac`
-  | `/crac/${string}`
+  | `/cqu/jwc/:path{.+}?`
+  | `/cqwu/news/:type?`
+  | `/crac/:type?`
   | `/crac/exam`
-  | `/creative-comic/book/${string}`
-  | `/creative-comic/book/${string}/${string}/${string}`
-  | `/crossbell/feeds/following/${string}`
+  | `/creative-comic/book/:id/:coverOnly?/:quality?`
+  | `/crossbell/feeds/following/:characterId`
   | `/crossbell/notes`
-  | `/crossbell/notes/character/${string}`
-  | `/crossbell/notes/source/${string}`
-  | `/crush/pages/${string}`
+  | `/crossbell/notes/character/:characterId`
+  | `/crossbell/notes/source/:source`
+  | `/crush/pages/:id`
   | `/cryptoslate/`
-  | `/cs`
-  | `/cs/${string}`
+  | `/cs/:category{.+}?`
   | `/cs/news/zzkx`
-  | `/cs/video`
-  | `/cs/video/${string}`
+  | `/cs/video/:category?`
   | `/cs/zzkx`
-  | `/csdn/blog/${string}`
+  | `/csdn/blog/:user`
   | `/css-tricks/articles`
-  | `/css-tricks/collections/${string}`
+  | `/css-tricks/collections/:type`
   | `/css-tricks/popular`
-  | `/cssn/iolaw`
-  | `/cssn/iolaw/${string}`
-  | `/cste`
-  | `/cste/${string}`
+  | `/cssn/iolaw/:section?`
+  | `/cste/:id?`
   | `/csu/career`
-  | `/csu/cse`
-  | `/csu/cse/${string}`
-  | `/csu/mail`
-  | `/csu/mail/${string}`
+  | `/csu/cse/:type?`
+  | `/csu/mail/:type?`
   | `/csust/tggs`
   | `/csust/xkxs`
   | `/ctbu/xxgg`
-  | `/ctinews/topic`
-  | `/ctinews/topic/${string}`
-  | `/cts/${string}`
+  | `/ctinews/topic/:topic?`
+  | `/cts/:category`
   | `/cuc/yz`
-  | `/cuilingmag`
-  | `/cuilingmag/${string}`
+  | `/cuilingmag/:category?`
   | `/cupl/jwc`
-  | `/curiouscat/user/${string}`
-  | `/curius/links/${string}`
-  | `/cursor/blog`
-  | `/cursor/blog/${string}`
+  | `/curiouscat/user/:id`
+  | `/curius/links/:name`
+  | `/cursor/blog/:topic?`
   | `/cursor/changelog`
-  | `/cw/author/${string}`
-  | `/cw/master/${string}`
-  | `/cw/sub/${string}`
+  | `/cw/author/:channel`
+  | `/cw/master/:channel`
+  | `/cw/sub/:channel`
   | `/cw/today`
-  | `/cybersecurityventures/news`
-  | `/cybersecurityventures/news/${string}`
-  | `/cyzone`
-  | `/cyzone/${string}`
-  | `/cyzone/author/${string}`
-  | `/cyzone/channel`
-  | `/cyzone/channel/${string}`
-  | `/cyzone/label/${string}`
+  | `/cybersecurityventures/news/:category?`
+  | `/cyzone/:id?`
+  | `/cyzone/author/:id`
+  | `/cyzone/channel/:id?`
+  | `/cyzone/label/:name`
   | `/cztv/zjxwlb`
   | `/cztv/zjxwlb/daily`
-  | `/dahecube`
-  | `/dahecube/${string}`
-  | `/daily/discussed`
-  | `/daily/discussed/${string}/${string}/${string}`
-  | `/daily/popular`
-  | `/daily/popular/${string}/${string}`
-  | `/daily/source/${string}`
-  | `/daily/source/${string}/${string}`
-  | `/daily/squads/${string}`
-  | `/daily/squads/${string}/${string}`
-  | `/daily/upvoted`
-  | `/daily/upvoted/${string}/${string}/${string}`
-  | `/daily/user/${string}`
-  | `/daily/user/${string}/${string}`
-  | `/damai/activity/${string}/${string}/${string}`
-  | `/damai/activity/${string}/${string}/${string}/${string}`
-  | `/dangdang/notice`
-  | `/dangdang/notice/${string}`
+  | `/dahecube/:type?`
+  | `/daily/discussed/:period?/:innerSharedContent?/:dateSort?`
+  | `/daily/popular/:innerSharedContent?/:dateSort?`
+  | `/daily/source/:sourceId/:innerSharedContent?`
+  | `/daily/squads/:squads/:innerSharedContent?`
+  | `/daily/upvoted/:period?/:innerSharedContent?/:dateSort?`
+  | `/daily/user/:userId/:innerSharedContent?`
+  | `/damai/activity/:city/:category/:subcategory/:keyword?`
+  | `/dangdang/notice/:type?`
   | `/daoxuan/`
-  | `/dapenti/subject/${string}`
+  | `/dapenti/subject/:id`
   | `/dapenti/tugua`
   | `/darwinawards/`
   | `/dataguidance/news`
-  | `/daum/potplayer`
-  | `/daum/potplayer/${string}`
-  | `/dayanzai/${string}`
-  | `/dayanzai/${string}/${string}`
+  | `/daum/potplayer/:lang?`
+  | `/dayanzai/:category/:fulltext?`
   | `/dbaplus/`
-  | `/dbaplus/news`
-  | `/dbaplus/news/${string}`
-  | `/dblp/${string}`
-  | `/dcard/${string}`
-  | `/dcard/${string}/${string}`
-  | `/dcfever/news`
-  | `/dcfever/news/${string}`
-  | `/dcfever/reviews`
-  | `/dcfever/reviews/${string}`
-  | `/dcfever/trading/${string}`
-  | `/dcfever/trading/search/${string}`
-  | `/dcfever/trading/search/${string}/${string}`
+  | `/dbaplus/news/:id?`
+  | `/dblp/:field`
+  | `/dcard/:section/:type?`
+  | `/dcfever/news/:type?`
+  | `/dcfever/reviews/:type?`
+  | `/dcfever/trading/:id`
+  | `/dcfever/trading/search/:keyword/:mainCat?`
   | `/ddosi/`
-  | `/ddosi/category`
-  | `/ddosi/category/${string}`
+  | `/ddosi/category/:category?`
   | `/deadbydaylight/blog`
   | `/deadline/`
   | `/dealstreetasia/home`
-  | `/dealstreetasia/section/${string}`
+  | `/dealstreetasia/section/:section`
   | `/decrypt/`
-  | `/dedao`
-  | `/dedao/${string}`
-  | `/dedao/articles`
-  | `/dedao/articles/${string}`
-  | `/dedao/knowledge`
-  | `/dedao/knowledge/${string}/${string}`
-  | `/dedao/list`
-  | `/dedao/list/${string}`
-  | `/dedao/user/${string}`
-  | `/dedao/user/${string}/${string}`
-  | `/deepin/homepage/${string}`
-  | `/deepin/threads`
-  | `/deepin/threads/${string}`
-  | `/deepl/blog`
-  | `/deepl/blog/${string}`
-  | `/deeplearning/the-batch`
-  | `/deeplearning/the-batch/${string}`
+  | `/dedao/:category?`
+  | `/dedao/articles/:id?`
+  | `/dedao/knowledge/:topic?/:type?`
+  | `/dedao/list/:category?`
+  | `/dedao/user/:id/:type?`
+  | `/deepin/homepage/:user_id`
+  | `/deepin/threads/:type?`
+  | `/deepl/blog/:lang?`
+  | `/deeplearning/the-batch/:tag{.+}?`
   | `/deepmind/blog`
   | `/deepseek/news`
-  | `/dehenglaw`
-  | `/dehenglaw/${string}/${string}`
+  | `/dehenglaw/:language?/:category?`
   | `/deltaio/blog`
   | `/dev.to/guides`
-  | `/dev.to/top/${string}`
+  | `/dev.to/top/:period`
   | `/devolverdigital/blog`
   | `/devtrium/`
-  | `/dewu/declaration`
-  | `/dewu/declaration/${string}`
+  | `/dewu/declaration/:categoryId?`
   | `/dgjyw*`
-  | `/dgtle/article`
-  | `/dgtle/article/${string}/${string}`
-  | `/dgtle/news`
-  | `/dgtle/news/${string}`
+  | `/dgtle/article/:id?/:pushed?`
+  | `/dgtle/news/:id?`
   | `/dgtle/video`
-  | `/dgut/jwb`
-  | `/dgut/jwb/${string}`
-  | `/dhu/jiaowu/news`
-  | `/dhu/jiaowu/news/${string}`
+  | `/dgut/jwb/:type?`
+  | `/dhu/jiaowu/news/:type?`
   | `/dhu/news/xsxx`
   | `/dhu/xxgk/news`
-  | `/dhu/yjs/news`
-  | `/dhu/yjs/news/${string}`
-  | `/dhu/yjs/zs`
-  | `/dhu/yjs/zs/${string}`
-  | `/diandong/news`
-  | `/diandong/news/${string}`
-  | `/dianping/user/${string}`
-  | `/diariofruticola/filtro/${string}`
+  | `/dhu/yjs/news/:type?`
+  | `/dhu/yjs/zs/:type?`
+  | `/diandong/news/:cate?`
+  | `/dianping/user/:id`
+  | `/diariofruticola/filtro/:filter{.+}`
   | `/diershoubing/news`
   | `/digitalcameraworld/news`
-  | `/digitalpolicyalert/activity-tracker`
-  | `/digitalpolicyalert/activity-tracker/${string}`
-  | `/dingshao/share/${string}`
-  | `/discord/channel/${string}`
-  | `/discord/search/${string}/${string}`
-  | `/discourse/${string}/notifications`
-  | `/discourse/${string}/notifications/${string}`
-  | `/discourse/${string}/official/${string}`
-  | `/discourse/${string}/posts`
-  | `/discuz/${string}`
-  | `/discuz/${string}/${string}`
-  | `/discuz/${string}/${string}/${string}`
+  | `/digitalpolicyalert/activity-tracker/:filters?`
+  | `/dingshao/share/:shortId`
+  | `/discord/channel/:channelId`
+  | `/discord/search/:guildId/:routeParams`
+  | `/discourse/:configId/notifications/:fulltext?`
+  | `/discourse/:configId/official/:path{.+}`
+  | `/discourse/:configId/posts`
+  | `/discuz/:link{.+}`
+  | `/discuz/:ver{[7x]}/:cid{[0-9]{2}}/:link{.+}`
+  | `/discuz/:ver{[7x]}/:link{.+}`
   | `/disinfo/publications`
   | `/diskanalyzer/whats-new`
   | `/distill/`
-  | `/dlnews`
-  | `/dlnews/${string}`
+  | `/dlnews/:category?`
   | `/dlsite*`
-  | `/dlsite/campaign/${string}`
-  | `/dlsite/campaign/${string}/${string}`
-  | `/dlsite/ci-en/${string}/article`
-  | `/dlsite/new/${string}`
-  | `/dmzj/news`
-  | `/dmzj/news/${string}`
-  | `/dn/${string}/news`
-  | `/dn/${string}/news/${string}`
-  | `/dnaindia/${string}`
-  | `/dnaindia/topic/${string}`
-  | `/dockerhub/build/${string}/${string}`
-  | `/dockerhub/build/${string}/${string}/${string}`
-  | `/dockerhub/repositories/${string}`
-  | `/dockerhub/tag/${string}/${string}`
-  | `/dockerhub/tag/${string}/${string}/${string}`
-  | `/docschina/weekly`
-  | `/docschina/weekly/${string}`
-  | `/dol/announce`
-  | `/dol/announce/${string}/${string}/${string}`
-  | `/domp4/detail/${string}`
-  | `/domp4/latest`
-  | `/domp4/latest/${string}`
+  | `/dlsite/campaign/:type/:free?`
+  | `/dlsite/ci-en/:id/article`
+  | `/dlsite/new/:type`
+  | `/dmzj/news/:category?`
+  | `/dn/:language/news/:category?`
+  | `/dnaindia/:category`
+  | `/dnaindia/topic/:topic`
+  | `/dockerhub/build/:owner/:image/:tag?`
+  | `/dockerhub/repositories/:owner`
+  | `/dockerhub/tag/:owner/:image/:limits?`
+  | `/docschina/weekly/:category?`
+  | `/dol/announce/:owner?/:province?/:office?`
+  | `/domp4/detail/:id`
+  | `/domp4/latest/:type?`
   | `/domp4/latest_movie_bt`
   | `/dongqiudi/daily`
-  | `/dongqiudi/player_news/${string}`
-  | `/dongqiudi/result/${string}`
-  | `/dongqiudi/special/${string}`
-  | `/dongqiudi/team_news/${string}`
-  | `/dongqiudi/top_news`
-  | `/dongqiudi/top_news/${string}`
-  | `/dora-world/article/${string}`
-  | `/dora-world/article/${string}/${string}`
+  | `/dongqiudi/player_news/:id`
+  | `/dongqiudi/result/:team`
+  | `/dongqiudi/special/:id`
+  | `/dongqiudi/team_news/:team`
+  | `/dongqiudi/top_news/:id?`
+  | `/dora-world/article/:topic/:topicId?`
   | `/dorohedoro/news`
-  | `/douban/${string}/discussion`
-  | `/douban/book/latest`
-  | `/douban/book/latest/${string}`
-  | `/douban/book/rank`
-  | `/douban/book/rank/${string}`
+  | `/douban/:id/discussion`
+  | `/douban/book/latest/:type?`
+  | `/douban/book/rank/:type?`
   | `/douban/bookstore`
-  | `/douban/celebrity/${string}`
-  | `/douban/celebrity/${string}/${string}`
-  | `/douban/channel/${string}`
-  | `/douban/channel/${string}/${string}`
-  | `/douban/channel/${string}/subject/${string}`
+  | `/douban/celebrity/:id/:sort?`
+  | `/douban/channel/:id/:nav?`
+  | `/douban/channel/:id/subject/:nav`
   | `/douban/commercialpress/latest`
-  | `/douban/doulist/${string}`
-  | `/douban/event/hot/${string}`
+  | `/douban/doulist/:id`
+  | `/douban/event/hot/:locationId`
   | `/douban/explore`
-  | `/douban/explore/column/${string}`
-  | `/douban/group/${string}`
-  | `/douban/group/${string}/${string}`
-  | `/douban/jobs/${string}`
-  | `/douban/list`
-  | `/douban/list/${string}/${string}`
-  | `/douban/movie/classification`
-  | `/douban/movie/classification/${string}/${string}/${string}`
+  | `/douban/explore/column/:id`
+  | `/douban/group/:groupid/:type?`
+  | `/douban/jobs/:type`
+  | `/douban/list/:type?/:routeParams?`
+  | `/douban/movie/classification/:sort?/:score?/:tags?`
   | `/douban/movie/coming`
   | `/douban/movie/later`
   | `/douban/movie/playing`
-  | `/douban/movie/playing/${string}`
+  | `/douban/movie/playing/:score`
   | `/douban/movie/ustop`
-  | `/douban/movie/weekly`
-  | `/douban/movie/weekly/${string}`
-  | `/douban/music/latest`
-  | `/douban/music/latest/${string}`
-  | `/douban/people/${string}/status`
-  | `/douban/people/${string}/status/${string}`
-  | `/douban/people/${string}/wish`
-  | `/douban/people/${string}/wish/${string}`
-  | `/douban/recommended`
-  | `/douban/recommended/${string}/${string}`
-  | `/douban/replied/${string}`
-  | `/douban/replies/${string}`
-  | `/douban/topic/${string}`
-  | `/douban/topic/${string}/${string}`
-  | `/douyin/hashtag/${string}`
-  | `/douyin/hashtag/${string}/${string}`
-  | `/douyin/live/${string}`
-  | `/douyin/user/${string}`
-  | `/douyin/user/${string}/${string}`
-  | `/douyu/group/${string}`
-  | `/douyu/group/${string}/${string}`
-  | `/douyu/post/${string}`
-  | `/douyu/room/${string}`
-  | `/dribbble/keyword/${string}`
-  | `/dribbble/popular`
-  | `/dribbble/popular/${string}`
-  | `/dribbble/user/${string}`
-  | `/dtcj/datahero`
-  | `/dtcj/datahero/${string}`
-  | `/dtcj/datainsight`
-  | `/dtcj/datainsight/${string}`
+  | `/douban/movie/weekly/:type?`
+  | `/douban/music/latest/:area?`
+  | `/douban/people/:userid/status/:routeParams?`
+  | `/douban/people/:userid/wish/:routeParams?`
+  | `/douban/recommended/:type?/:routeParams?`
+  | `/douban/replied/:uid`
+  | `/douban/replies/:uid`
+  | `/douban/topic/:id/:sort?`
+  | `/douyin/hashtag/:cid/:routeParams?`
+  | `/douyin/live/:rid`
+  | `/douyin/user/:uid/:routeParams?`
+  | `/douyu/group/:id/:sort?`
+  | `/douyu/post/:id`
+  | `/douyu/room/:id`
+  | `/dribbble/keyword/:keyword`
+  | `/dribbble/popular/:timeframe?`
+  | `/dribbble/user/:name`
+  | `/dtcj/datahero/:category?`
+  | `/dtcj/datainsight/:id?`
   | `/duckdb/news`
-  | `/duozhuayu/search/${string}`
+  | `/duozhuayu/search/:wd`
   | `/dushu/fuzhou`
-  | `/dut`
-  | `/dut/${string}`
   | `/dut/*/*`
-  | `/dw/news`
-  | `/dw/news/${string}/${string}`
-  | `/dw/rss`
-  | `/dw/rss/${string}`
-  | `/dx2025`
-  | `/dx2025/${string}/${string}`
-  | `/dxy/bbs/board/${string}`
-  | `/dxy/bbs/profile/thread/${string}`
-  | `/dxy/bbs/special/${string}`
-  | `/dykszx/news`
-  | `/dykszx/news/${string}`
-  | `/dytt`
-  | `/dytt/${string}`
-  | `/e-hentai`
-  | `/e-hentai/${string}/${string}/${string}/${string}`
-  | `/ea/apex-news`
-  | `/ea/apex-news/${string}/${string}`
-  | `/eagle/blog`
-  | `/eagle/blog/${string}/${string}`
-  | `/eagle/changelog`
-  | `/eagle/changelog/${string}`
-  | `/earthquake`
-  | `/earthquake/${string}`
-  | `/earthquake/ceic`
-  | `/earthquake/ceic/${string}`
-  | `/eastday/24`
-  | `/eastday/24/${string}`
+  | `/dut/:0?`
+  | `/dw/news/:lang?/:id?`
+  | `/dw/rss/:channel?`
+  | `/dx2025/:type?/:category?`
+  | `/dxy/bbs/board/:boardId`
+  | `/dxy/bbs/profile/thread/:userId`
+  | `/dxy/bbs/special/:specialId`
+  | `/dykszx/news/:newsType?`
+  | `/dytt/:category{.+}?`
+  | `/e-hentai/:what?/:id?/:needTorrents?/:needImages?`
+  | `/ea/apex-news/:lang?/:type?`
+  | `/eagle/blog/:cate?/:language?`
+  | `/eagle/changelog/:language?`
+  | `/earthquake/:region?`
+  | `/earthquake/ceic/:type?`
+  | `/eastday/24/:category?`
   | `/eastday/portrait`
   | `/eastday/sh`
-  | `/eastmoney/gerenzhongxin/cfh/${string}`
-  | `/eastmoney/gerenzhongxin/gather/${string}`
-  | `/eastmoney/gerenzhongxin/guba/${string}`
-  | `/eastmoney/gerenzhongxin/trpl/${string}`
-  | `/eastmoney/report/${string}`
-  | `/eastmoney/search/${string}`
-  | `/eastmoney/ttjj/user/${string}`
+  | `/eastmoney/gerenzhongxin/cfh/:uid`
+  | `/eastmoney/gerenzhongxin/gather/:uid`
+  | `/eastmoney/gerenzhongxin/guba/:uid`
+  | `/eastmoney/gerenzhongxin/trpl/:uid`
+  | `/eastmoney/report/:category`
+  | `/eastmoney/search/:keyword`
+  | `/eastmoney/ttjj/user/:uid`
   | `/easynomad/`
-  | `/ebc/realtime`
-  | `/ebc/realtime/${string}`
-  | `/ecnu/acm/contest`
-  | `/ecnu/acm/contest/${string}`
+  | `/ebc/realtime/:category?`
+  | `/ecnu/acm/contest/:category?`
   | `/ecnu/bksy`
   | `/ecnu/cee`
   | `/ecnu/cs`
@@ -1233,812 +862,565 @@ export type RoutePath =
   | `/ecnu/philo`
   | `/ecnu/sei`
   | `/ecnu/yjs`
-  | `/economist/${string}`
+  | `/economist/:endpoint`
   | `/economist/espresso`
-  | `/economist/global-business-review`
-  | `/economist/global-business-review/${string}`
-  | `/ecust/jwc`
-  | `/ecust/jwc/${string}`
+  | `/economist/global-business-review/:language?`
+  | `/ecust/jwc/:category?`
   | `/ecust/jxjy/news`
   | `/ecust/yjs`
   | `/eeo/kuaixun`
   | `/egsea/flash`
-  | `/ehentai/favorites`
-  | `/ehentai/favorites/${string}/${string}/${string}/${string}`
-  | `/ehentai/search`
-  | `/ehentai/search/${string}/${string}/${string}`
-  | `/ehentai/tag/${string}`
-  | `/ehentai/tag/${string}/${string}/${string}`
-  | `/ekantipur`
-  | `/ekantipur/${string}`
-  | `/elasticsearch-cn`
-  | `/elasticsearch-cn/${string}`
-  | `/elecfans/article/${string}`
-  | `/elecfans/soft/${string}`
+  | `/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?`
+  | `/ehentai/search/:params?/:page?/:routeParams?`
+  | `/ehentai/tag/:tag/:page?/:routeParams?`
+  | `/ekantipur/:channel?`
+  | `/elasticsearch-cn/:params?`
+  | `/elecfans/article/:atype`
+  | `/elecfans/soft/:atype`
   | `/eleduck/jobs`
-  | `/eleduck/posts`
-  | `/eleduck/posts/${string}`
-  | `/elsevier/${string}`
-  | `/elsevier/${string}/${string}`
-  | `/elsevier/${string}/latest`
-  | `/elsevier/${string}/vol/${string}`
-  | `/embassy/${string}`
-  | `/embassy/${string}/${string}`
-  | `/engineering/tag/${string}`
+  | `/eleduck/posts/:id?`
+  | `/elsevier/:journal`
+  | `/elsevier/:journal/:issue`
+  | `/elsevier/:journal/latest`
+  | `/elsevier/:journal/vol/:issue`
+  | `/embassy/:country/:city?`
+  | `/engineering/tag/:tag`
   | `/englishhome/`
   | `/enterprisecraftsmanship/archives`
-  | `/epicgames/freegames`
-  | `/epicgames/freegames/${string}/${string}`
-  | `/eprice`
-  | `/eprice/${string}`
-  | `/eshukan/academic`
-  | `/eshukan/academic/${string}`
-  | `/espn/news/${string}`
-  | `/esquirehk/tag`
-  | `/esquirehk/tag/${string}`
+  | `/epicgames/freegames/:locale?/:country?`
+  | `/eprice/:region?`
+  | `/eshukan/academic/:id?`
+  | `/espn/news/:sport`
+  | `/esquirehk/tag/:id?`
   | `/europechinese/latest`
-  | `/eventbrite/${string}`
-  | `/eventbrite/${string}/${string}/${string}`
-  | `/eventernote/actors/${string}/${string}`
+  | `/eventbrite/:region/:eventType?/:includePromoted?`
+  | `/eventernote/actors/:name/:id`
   | `/everia/`
-  | `/everia/category/${string}`
-  | `/everia/search/${string}`
-  | `/everia/tag/${string}`
-  | `/expats/czech-news`
-  | `/expats/czech-news/${string}`
-  | `/f-droid/apprelease/${string}`
-  | `/famitsu/category`
-  | `/famitsu/category/${string}`
-  | `/fanbox/${string}`
-  | `/fangchan/list`
-  | `/fangchan/list/${string}`
-  | `/fanqienovel/page/${string}`
-  | `/fansly/tag/${string}`
-  | `/fansly/user/${string}`
-  | `/fantia/search`
-  | `/fantia/search/${string}/${string}/${string}/${string}/${string}/${string}`
-  | `/fantia/user/${string}`
-  | `/fantube/r18/creator/${string}`
+  | `/everia/category/:category`
+  | `/everia/search/:keyword`
+  | `/everia/tag/:tag`
+  | `/expats/czech-news/:category?`
+  | `/f-droid/apprelease/:app`
+  | `/famitsu/category/:category?`
+  | `/fanbox/:creator`
+  | `/fangchan/list/:id?`
+  | `/fanqienovel/page/:bookId`
+  | `/fansly/tag/:tag`
+  | `/fansly/user/:username`
+  | `/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?`
+  | `/fantia/user/:id`
+  | `/fantube/r18/creator/:identifier`
   | `/fanxinzhui/`
-  | `/farcaster/user/${string}`
-  | `/farmatters`
-  | `/farmatters/${string}`
-  | `/farmatters/${string}/${string}`
-  | `/farmatters/${string}/${string}/${string}`
-  | `/farmatters/exclusive`
-  | `/farmatters/exclusive/${string}`
-  | `/farmatters/news`
-  | `/farmatters/news/${string}`
-  | `/fashionnetwork/cn/lists`
-  | `/fashionnetwork/cn/lists/${string}`
+  | `/farcaster/user/:username`
+  | `/farmatters/:locale?`
+  | `/farmatters/:type/:id/:locale?`
+  | `/farmatters/exclusive/:locale?`
+  | `/farmatters/news/:locale?`
+  | `/fashionnetwork/cn/lists/:id?`
   | `/fastbull/express-news`
   | `/fastbull/news`
-  | `/fda/cdrh`
-  | `/fda/cdrh/${string}`
-  | `/fediverse/timeline/${string}`
-  | `/feng/forum/${string}`
-  | `/feng/forum/${string}/${string}`
-  | `/ff14/ff14_global/${string}`
-  | `/ff14/ff14_global/${string}/${string}`
-  | `/ff14/ff14_zh`
-  | `/ff14/ff14_zh/${string}`
-  | `/ff14/global/${string}`
-  | `/ff14/global/${string}/${string}`
-  | `/ff14/zh`
-  | `/ff14/zh/${string}`
-  | `/fffdm/manhua/${string}`
-  | `/fffdm/manhua/${string}/${string}`
+  | `/fda/cdrh/:titleOnly?`
+  | `/fediverse/timeline/:account`
+  | `/feng/forum/:id/:type?`
+  | `/ff14/ff14_global/:lang/:type?`
+  | `/ff14/ff14_zh/:type?`
+  | `/ff14/global/:lang/:type?`
+  | `/ff14/zh/:type?`
+  | `/fffdm/manhua/:id/:cdn?`
   | `/finology/bullets`
-  | `/finology/category/${string}`
+  | `/finology/category/:category`
   | `/finology/most-viewed`
-  | `/finology/tag/${string}`
-  | `/finviz`
-  | `/finviz/${string}`
-  | `/finviz/news/${string}`
-  | `/firecore/${string}`
-  | `/firefox/addons/${string}`
+  | `/finology/tag/:topic`
+  | `/finviz/:category?`
+  | `/finviz/news/:ticker`
+  | `/firecore/:os`
+  | `/firefox/addons/:id`
   | `/firefox/breaches`
-  | `/firefox/release`
-  | `/firefox/release/${string}`
+  | `/firefox/release/:platform?`
   | `/fisher-spb/news`
   | `/fishshell/`
-  | `/fjksbm`
-  | `/fjksbm/${string}`
+  | `/fjksbm/:category?`
   | `/flashcat/blog`
-  | `/flyert/creditcard/${string}`
-  | `/flyert/forum`
-  | `/flyert/forum/${string}`
+  | `/flyert/creditcard/:bank`
+  | `/flyert/forum/:params{.+}?`
   | `/flyert/preferential`
-  | `/focustaiwan`
-  | `/focustaiwan/${string}`
-  | `/follow/profile/${string}`
-  | `/followin`
-  | `/followin/${string}/${string}`
-  | `/followin/kol/${string}`
-  | `/followin/kol/${string}/${string}`
-  | `/followin/news`
-  | `/followin/news/${string}`
-  | `/followin/tag/${string}`
-  | `/followin/tag/${string}/${string}`
-  | `/followin/topic/${string}`
-  | `/followin/topic/${string}/${string}`
+  | `/focustaiwan/:category?`
+  | `/follow/profile/:uid`
+  | `/followin/:categoryId?/:lang?`
+  | `/followin/kol/:kolId/:lang?`
+  | `/followin/news/:lang?`
+  | `/followin/tag/:tagId/:lang?`
+  | `/followin/topic/:topicId/:lang?`
   | `/foodtalks/`
   | `/foreignaffairs/rss`
   | `/foresightnews/`
   | `/foresightnews/article`
-  | `/foresightnews/column/${string}`
+  | `/foresightnews/column/:id`
   | `/foresightnews/news`
   | `/foreverblog/feeds`
   | `/forklog/news`
-  | `/fortnite/news`
-  | `/fortnite/news/${string}`
-  | `/fortunechina`
-  | `/fortunechina/${string}`
-  | `/fosshub/${string}`
+  | `/fortnite/news/:options?`
+  | `/fortunechina/:category?`
+  | `/fosshub/:id`
   | `/free/`
-  | `/freebuf/articles/${string}`
-  | `/freecomputerbooks`
-  | `/freecomputerbooks/${string}`
-  | `/freewechat/profile/${string}`
-  | `/freexcomic/book/${string}`
-  | `/ft/myft/${string}`
-  | `/ftchinese/${string}`
-  | `/ftchinese/${string}/${string}`
+  | `/freebuf/articles/:type`
+  | `/freecomputerbooks/:category?`
+  | `/freewechat/profile/:id`
+  | `/freexcomic/book/:id`
+  | `/ft/myft/:key`
+  | `/ftchinese/:language/:channel?`
   | `/ftm/`
   | `/fuliba/latest`
-  | `/furaffinity/art/${string}/${string}`
-  | `/furaffinity/art/${string}/${string}/${string}`
-  | `/furaffinity/browse`
-  | `/furaffinity/browse/${string}`
-  | `/furaffinity/commissions/${string}`
-  | `/furaffinity/home/${string}`
-  | `/furaffinity/home/${string}/${string}`
-  | `/furaffinity/journal-comments/${string}`
-  | `/furaffinity/journals/${string}`
-  | `/furaffinity/search/${string}`
-  | `/furaffinity/search/${string}/${string}/${string}`
-  | `/furaffinity/shouts/${string}`
+  | `/furaffinity/art/:folder/:username/:mode?`
+  | `/furaffinity/browse/:mode?`
+  | `/furaffinity/commissions/:username`
+  | `/furaffinity/home/:category/:mode?`
+  | `/furaffinity/journal-comments/:id`
+  | `/furaffinity/journals/:username`
+  | `/furaffinity/search/:query/:mode?/:routeParams?`
+  | `/furaffinity/shouts/:username`
   | `/furaffinity/status`
-  | `/furaffinity/submission-comments/${string}`
-  | `/furaffinity/user/${string}`
-  | `/furaffinity/watchers/${string}`
-  | `/furaffinity/watching/${string}`
-  | `/furstar/archive`
-  | `/furstar/archive/${string}`
-  | `/furstar/artists`
-  | `/furstar/artists/${string}`
-  | `/furstar/characters`
-  | `/furstar/characters/${string}`
+  | `/furaffinity/submission-comments/:id`
+  | `/furaffinity/user/:username`
+  | `/furaffinity/watchers/:username`
+  | `/furaffinity/watching/:username`
+  | `/furstar/archive/:lang?`
+  | `/furstar/artists/:lang?`
+  | `/furstar/characters/:lang?`
   | `/futunn/`
-  | `/futunn/live`
-  | `/futunn/live/${string}`
+  | `/futunn/live/:lang?`
   | `/futunn/main`
-  | `/futunn/topic/${string}`
+  | `/futunn/topic/:id`
   | `/futunn/video`
-  | `/fx-markets/${string}`
+  | `/fx-markets/:channel`
   | `/fx678/kx`
-  | `/fxiaoke/crm/${string}`
+  | `/fxiaoke/crm/:type`
   | `/fzmtr/announcements`
-  | `/galxe/quest/${string}`
+  | `/galxe/quest/:alias`
   | `/gameapps/`
-  | `/gamebase/news`
-  | `/gamebase/news/${string}/${string}`
+  | `/gamebase/news/:type?/:category?`
   | `/gamegene/news`
   | `/gamekee/news`
-  | `/gamer/ani/anime/${string}`
+  | `/gamer/ani/anime/:sn`
   | `/gamer/ani/new_anime`
-  | `/gamer/gnn`
-  | `/gamer/gnn/${string}`
-  | `/gamer/hot/${string}`
-  | `/gamer520`
-  | `/gamer520/${string}/${string}`
-  | `/gamersecret`
-  | `/gamersecret/${string}/${string}`
-  | `/gamersky/ent`
-  | `/gamersky/ent/${string}`
-  | `/gamersky/news`
-  | `/gamersky/news/${string}`
-  | `/gamersky/review`
-  | `/gamersky/review/${string}`
-  | `/gamme/${string}`
-  | `/gamme/${string}/${string}`
-  | `/gamme/${string}/tag/${string}`
+  | `/gamer/gnn/:category?`
+  | `/gamer/hot/:bsn`
+  | `/gamer520/:category?/:order?`
+  | `/gamersecret/:type?/:category?`
+  | `/gamersky/ent/:category?`
+  | `/gamersky/news/:type?`
+  | `/gamersky/review/:type?`
+  | `/gamme/:domain/:category?`
+  | `/gamme/:domain/tag/:tag`
   | `/gaoyu/blog`
-  | `/gc.ca/pm`
-  | `/gc.ca/pm/${string}`
+  | `/gc.ca/pm/:language?`
   | `/gcores/articles`
-  | `/gcores/categories/${string}`
-  | `/gcores/categories/${string}/${string}`
-  | `/gcores/collections/${string}`
-  | `/gcores/collections/${string}/${string}`
+  | `/gcores/categories/:id/:tab?`
+  | `/gcores/collections/:id/:tab?`
   | `/gcores/news`
-  | `/gcores/radios`
-  | `/gcores/radios/${string}`
+  | `/gcores/radios/:category?`
   | `/gcores/radios/preview`
-  | `/gcores/tags/${string}`
-  | `/gcores/tags/${string}/${string}`
-  | `/gcores/topics/${string}/recommend`
+  | `/gcores/tags/:id/:tab?`
+  | `/gcores/topics/:id/recommend`
   | `/gcores/topics/recommend`
   | `/gcores/videos`
-  | `/gdsrx`
-  | `/gdsrx/${string}`
+  | `/gdsrx/:id?`
   | `/gdufs/news`
-  | `/gdufs/xwxy`
-  | `/gdufs/xwxy/${string}`
-  | `/gdut/oa_news`
-  | `/gdut/oa_news/${string}`
-  | `/geekpark`
-  | `/geekpark/${string}`
-  | `/gelbooru/post`
-  | `/gelbooru/post/${string}/${string}`
-  | `/gelonghui/home`
-  | `/gelonghui/home/${string}`
-  | `/gelonghui/hot-article`
-  | `/gelonghui/hot-article/${string}`
-  | `/gelonghui/keyword/${string}`
+  | `/gdufs/xwxy/:category?`
+  | `/gdut/oa_news/:type?`
+  | `/geekpark/:column?`
+  | `/gelbooru/post/:tags?/:quality?`
+  | `/gelonghui/home/:tag?`
+  | `/gelonghui/hot-article/:type?`
+  | `/gelonghui/keyword/:keyword`
   | `/gelonghui/live`
-  | `/gelonghui/subject/${string}`
-  | `/gelonghui/user/${string}`
+  | `/gelonghui/subject/:id`
+  | `/gelonghui/user/:id`
   | `/genossenschaften*`
-  | `/geocaching/blogs`
-  | `/geocaching/blogs/${string}`
+  | `/geocaching/blogs/:language?`
   | `/gesiba*`
   | `/getdr/`
-  | `/getitfree`
-  | `/getitfree/${string}`
-  | `/gettr/user/${string}`
-  | `/gf-cn/news`
-  | `/gf-cn/news/${string}`
-  | `/gihyo/list/group/${string}`
-  | `/gisreportsonline/${string}`
-  | `/gitcode/commits/${string}/${string}`
-  | `/gitcode/commits/${string}/${string}/${string}`
-  | `/gitee/commits/${string}/${string}`
-  | `/gitee/events/${string}`
-  | `/gitee/events/${string}/${string}`
-  | `/gitee/releases/${string}/${string}`
-  | `/github/activity/${string}`
-  | `/github/advisor/data`
-  | `/github/advisor/data/${string}/${string}`
-  | `/github/branches/${string}/${string}`
-  | `/github/comments/${string}/${string}`
-  | `/github/comments/${string}/${string}/${string}`
-  | `/github/contributors/${string}/${string}`
-  | `/github/contributors/${string}/${string}/${string}/${string}`
-  | `/github/discussion/${string}/${string}`
-  | `/github/discussion/${string}/${string}/${string}/${string}`
-  | `/github/feed/${string}`
-  | `/github/feed/${string}/${string}`
-  | `/github/file/${string}/${string}/${string}/${string}`
-  | `/github/gist/${string}`
-  | `/github/issue/${string}/${string}`
-  | `/github/issue/${string}/${string}/${string}/${string}`
+  | `/getitfree/:filter{.+}?`
+  | `/gettr/user/:id`
+  | `/gf-cn/news/:category?`
+  | `/gihyo/list/group/:id`
+  | `/gisreportsonline/:path{.*}`
+  | `/gitcode/commits/:owner/:repo/:branch?`
+  | `/gitee/commits/:owner/:repo`
+  | `/gitee/events/:owner/:repo`
+  | `/gitee/events/:username`
+  | `/gitee/releases/:owner/:repo`
+  | `/github/activity/:user`
+  | `/github/advisor/data/:type?/:category?`
+  | `/github/branches/:user/:repo`
+  | `/github/comments/:user/:repo/:number?`
+  | `/github/contributors/:user/:repo/:order?/:anon?`
+  | `/github/discussion/:user/:repo/:state?/:category?`
+  | `/github/feed/:user/:types?`
+  | `/github/file/:user/:repo/:branch/:filepath{.+}`
+  | `/github/gist/:gistId`
+  | `/github/issue/:user/:repo/:state?/:labels?`
   | `/github/notifications`
-  | `/github/org_event/${string}`
-  | `/github/org_event/${string}/${string}`
-  | `/github/pull/${string}/${string}`
-  | `/github/pull/${string}/${string}/${string}/${string}`
-  | `/github/pulse/${string}/${string}`
-  | `/github/pulse/${string}/${string}/${string}`
-  | `/github/repo_event/${string}/${string}`
-  | `/github/repo_event/${string}/${string}/${string}`
-  | `/github/repos/${string}`
-  | `/github/repos/${string}/${string}/${string}`
-  | `/github/search/${string}`
-  | `/github/search/${string}/${string}/${string}`
-  | `/github/starred_repos/${string}`
-  | `/github/stars/${string}/${string}`
-  | `/github/topics/${string}`
-  | `/github/topics/${string}/${string}`
-  | `/github/trending/${string}/${string}`
-  | `/github/trending/${string}/${string}/${string}`
-  | `/github/user/followers/${string}`
-  | `/github/user_event/${string}`
-  | `/github/user_event/${string}/${string}`
-  | `/github/wiki/${string}/${string}`
-  | `/github/wiki/${string}/${string}/${string}`
+  | `/github/org_event/:org/:types?`
+  | `/github/pull/:user/:repo/:state?/:labels?`
+  | `/github/pulse/:user/:repo/:period?`
+  | `/github/repo_event/:owner/:repo/:types?`
+  | `/github/repos/:user/:type?/:sort?`
+  | `/github/search/:query/:sort?/:order?`
+  | `/github/starred_repos/:user`
+  | `/github/stars/:user/:repo`
+  | `/github/topics/:name/:qs?`
+  | `/github/trending/:since/:language/:spoken_language?`
+  | `/github/user/followers/:user`
+  | `/github/user_event/:username/:types?`
+  | `/github/wiki/:user/:repo/:page?`
   | `/gitpod/blog`
   | `/gitpod/changelog`
-  | `/gitstar-ranking`
-  | `/gitstar-ranking/${string}`
+  | `/gitstar-ranking/:category?`
   | `/globallawreview/`
   | `/gmcmonline/chinacustoms`
-  | `/gmu/news`
-  | `/gmu/news/${string}`
-  | `/gmu/yjs/${string}/${string}`
-  | `/go/jihs/idwr`
-  | `/go/jihs/idwr/${string}`
-  | `/go/mhlw/pdf`
-  | `/go/mhlw/pdf/${string}`
+  | `/gmu/news/:type?`
+  | `/gmu/yjs/:type/:subtype`
+  | `/go/jihs/idwr/:year?`
+  | `/go/mhlw/pdf/:category{.+}?`
   | `/gocn/`
   | `/gocn/jobs`
   | `/gocn/news`
   | `/gocn/topics`
-  | `/gofans`
-  | `/gofans/${string}`
+  | `/gofans/:kind?`
   | `/gogoanimehd/recent-releases`
-  | `/google/album/${string}`
-  | `/google/alerts/${string}`
-  | `/google/chrome/extension/${string}`
-  | `/google/citations/${string}`
-  | `/google/developers`
-  | `/google/developers/${string}`
-  | `/google/doodles`
-  | `/google/doodles/${string}`
-  | `/google/fonts`
-  | `/google/fonts/${string}`
+  | `/google/album/:id`
+  | `/google/alerts/:keyword`
+  | `/google/chrome/extension/:id`
+  | `/google/citations/:id`
+  | `/google/developers/:locale?`
+  | `/google/doodles/:language?`
+  | `/google/fonts/:sort?`
   | `/google/jules/changelog`
-  | `/google/news/${string}/${string}`
-  | `/google/play/${string}`
-  | `/google/play/${string}/${string}`
+  | `/google/news/:category/:locale`
+  | `/google/play/:id/:lang?`
   | `/google/research`
-  | `/google/scholar/${string}`
-  | `/google/search/${string}`
-  | `/google/search/${string}/${string}`
-  | `/gov/ah/kjt`
-  | `/gov/ah/kjt/${string}`
-  | `/gov/beijing/bjedu/gh`
-  | `/gov/beijing/bjedu/gh/${string}`
+  | `/google/scholar/:query`
+  | `/google/search/:keyword/:language?`
+  | `/gov/ah/kjt/:category{.+}?`
+  | `/gov/beijing/bjedu/gh/:urlPath?`
   | `/gov/beijing/bphc/*`
   | `/gov/beijing/jw/tzgg`
-  | `/gov/beijing/kw/${string}`
-  | `/gov/caac/cjwt`
-  | `/gov/caac/cjwt/${string}`
+  | `/gov/beijing/kw/:channel`
+  | `/gov/caac/cjwt/:category?`
   | `/gov/cac/*`
-  | `/gov/cbirc`
-  | `/gov/cbirc/${string}`
+  | `/gov/cbirc/:id?`
   | `/gov/ccdi/*`
-  | `/gov/chinamine-safety/xw`
-  | `/gov/chinamine-safety/xw/${string}`
-  | `/gov/chinamine-safety/zfxxgk`
-  | `/gov/chinamine-safety/zfxxgk/${string}`
+  | `/gov/chinamine-safety/xw/:category{.+}?`
+  | `/gov/chinamine-safety/zfxxgk/:category{.+}?`
   | `/gov/chinatax/latest`
-  | `/gov/chongqing/gzw`
-  | `/gov/chongqing/gzw/${string}`
+  | `/gov/chongqing/gzw/:category{.+}?`
   | `/gov/chongqing/rsks`
-  | `/gov/chongqing/sydwgkzp`
-  | `/gov/chongqing/sydwgkzp/${string}`
+  | `/gov/chongqing/sydwgkzp/:year?`
   | `/gov/cmse/*`
   | `/gov/cmse/fxrw`
-  | `/gov/cn/news/${string}`
+  | `/gov/cn/news/:uid`
   | `/gov/cnnic/*`
-  | `/gov/csrc/auditstatus/${string}`
-  | `/gov/csrc/news`
-  | `/gov/csrc/news/${string}`
-  | `/gov/csrc/zfxxgk_zdgk`
-  | `/gov/csrc/zfxxgk_zdgk/${string}`
-  | `/gov/customs/list`
-  | `/gov/customs/list/${string}`
+  | `/gov/csrc/auditstatus/:apply_id`
+  | `/gov/csrc/news/:suffix{.+}?`
+  | `/gov/csrc/zfxxgk_zdgk/:id?`
+  | `/gov/customs/list/:gchannel?`
   | `/gov/dianbai/*`
-  | `/gov/fmprc`
-  | `/gov/fmprc/${string}`
-  | `/gov/forestry/gjlckjdjt`
-  | `/gov/forestry/gjlckjdjt/${string}`
+  | `/gov/fmprc/:category?`
+  | `/gov/forestry/gjlckjdjt/:category?`
   | `/gov/gaozhou/*`
   | `/gov/guangdong/tqyb/sncsyjxh`
   | `/gov/guangdong/tqyb/tfxtq`
-  | `/gov/gz/${string}/${string}`
+  | `/gov/gz/:channel/:category`
   | `/gov/hainan/iitb/tzgg`
   | `/gov/hangzhou/zwfw`
-  | `/gov/hebei/czt/xwdt`
-  | `/gov/hebei/czt/xwdt/${string}`
+  | `/gov/hebei/czt/xwdt/:category?`
   | `/gov/huazhou/*`
-  | `/gov/huizhou/zwgk`
-  | `/gov/huizhou/zwgk/${string}`
+  | `/gov/huizhou/zwgk/:category?`
   | `/gov/hunan/changsha/major-email`
   | `/gov/immiau/news`
-  | `/gov/jgjcndrc`
-  | `/gov/jgjcndrc/${string}/${string}`
-  | `/gov/jiangsu/wlt`
-  | `/gov/jiangsu/wlt/${string}`
+  | `/gov/jgjcndrc/:columnId?/:subColumnId?`
+  | `/gov/jiangsu/wlt/:page?`
   | `/gov/jinan/healthcommission/medical_exam_notice`
-  | `/gov/lswz`
-  | `/gov/lswz/${string}`
+  | `/gov/lswz/:category{.+}?`
   | `/gov/maoming/*`
-  | `/gov/maonan/${string}`
-  | `/gov/mee/nnsa`
-  | `/gov/mee/nnsa/${string}`
-  | `/gov/mee/ywdt`
-  | `/gov/mee/ywdt/${string}`
-  | `/gov/mem/gk/sgcc`
-  | `/gov/mem/gk/sgcc/${string}`
+  | `/gov/maonan/:category`
+  | `/gov/mee/nnsa/:category{.+}?`
+  | `/gov/mee/ywdt/:category?`
+  | `/gov/mem/gk/sgcc/:category?`
   | `/gov/mem/gk/zfxxgkpt/fdzdgknr`
-  | `/gov/mfa/wjdt`
-  | `/gov/mfa/wjdt/${string}`
+  | `/gov/mfa/wjdt/:category?`
   | `/gov/mgs/*`
-  | `/gov/miit/wjfb/${string}`
+  | `/gov/miit/wjfb/:ministry`
   | `/gov/miit/wjgs`
   | `/gov/miit/yjzj`
   | `/gov/miit/zcjd`
   | `/gov/miit/zcwj`
   | `/gov/mmht/*`
-  | `/gov/moa/gjs`
-  | `/gov/moa/gjs/${string}`
-  | `/gov/moa/suburl/${string}`
+  | `/gov/moa/gjs/:category{.+}?`
+  | `/gov/moa/suburl/:suburl{.+}`
   | `/gov/moa/szcpxx`
-  | `/gov/moa/zdscxx`
-  | `/gov/moa/zdscxx/${string}`
-  | `/gov/moe/${string}`
-  | `/gov/moe/s78/${string}`
-  | `/gov/mof/bond`
-  | `/gov/mof/bond/${string}`
-  | `/gov/mof/gss`
-  | `/gov/mof/gss/${string}`
-  | `/gov/mofcom/article/${string}`
-  | `/gov/moj/aac/news`
-  | `/gov/moj/aac/news/${string}`
+  | `/gov/moa/zdscxx/:category{.+}?`
+  | `/gov/moe/:type`
+  | `/gov/moe/s78/:column`
+  | `/gov/mof/bond/:category?`
+  | `/gov/mof/gss/:category?`
+  | `/gov/mofcom/article/:suffix{.+}`
+  | `/gov/moj/aac/news/:type?`
   | `/gov/moj/lfyjzj`
-  | `/gov/mot`
-  | `/gov/mot/${string}`
-  | `/gov/ndrc/fggz`
-  | `/gov/ndrc/fggz/${string}`
-  | `/gov/ndrc/xwdt`
-  | `/gov/ndrc/xwdt/${string}`
+  | `/gov/mot/:category{.+}?`
+  | `/gov/ndrc/fggz/:category{.+}?`
+  | `/gov/ndrc/xwdt/:category{.+}?`
   | `/gov/ndrc/zfxxgk`
   | `/gov/nea/sjzz/ghs`
-  | `/gov/nifdc`
-  | `/gov/nifdc/${string}`
+  | `/gov/nifdc/:path{.+}?`
   | `/gov/nmpa/*`
   | `/gov/nopss/*`
-  | `/gov/npc/${string}`
-  | `/gov/nrta/dsj`
-  | `/gov/nrta/dsj/${string}`
-  | `/gov/nrta/news`
-  | `/gov/nrta/news/${string}`
+  | `/gov/npc/:caty`
+  | `/gov/nrta/dsj/:category?`
+  | `/gov/nrta/news/:category?`
   | `/gov/nsfc/*`
   | `/gov/pbc/goutongjiaoliu`
   | `/gov/pbc/gzlw`
   | `/gov/pbc/tradeAnnouncement`
   | `/gov/pbc/zcyj`
   | `/gov/pudong/zwgk`
-  | `/gov/safe/business`
-  | `/gov/safe/business/${string}`
-  | `/gov/safe/complaint`
-  | `/gov/safe/complaint/${string}`
-  | `/gov/samr/xgzlyhd`
-  | `/gov/samr/xgzlyhd/${string}/${string}`
-  | `/gov/sasac/${string}`
+  | `/gov/safe/business/:site?`
+  | `/gov/safe/complaint/:site?`
+  | `/gov/samr/xgzlyhd/:category?/:department?`
+  | `/gov/sasac/:path{.+}`
   | `/gov/sdb/*`
-  | `/gov/sh/fgw`
-  | `/gov/sh/fgw/${string}`
+  | `/gov/sh/fgw/:category{.+}?`
   | `/gov/sh/rsj/ksxm`
-  | `/gov/sh/wgj`
-  | `/gov/sh/wgj/${string}`
+  | `/gov/sh/wgj/:page?`
   | `/gov/sh/wsjkw/yqtb`
   | `/gov/sh/yjj/*`
-  | `/gov/shaanxi/kjt`
-  | `/gov/shaanxi/kjt/${string}`
-  | `/gov/shanghai/fgw`
-  | `/gov/shanghai/fgw/${string}`
+  | `/gov/shaanxi/kjt/:id?`
+  | `/gov/shanghai/fgw/:category{.+}?`
   | `/gov/shanghai/rsj/ksxm`
-  | `/gov/shanghai/wgj`
-  | `/gov/shanghai/wgj/${string}`
+  | `/gov/shanghai/wgj/:page?`
   | `/gov/shanghai/wsjkw/yqtb`
   | `/gov/shanghai/yjj/*`
-  | `/gov/shenzhen/hrss/szksy/${string}`
-  | `/gov/shenzhen/hrss/szksy/${string}/${string}`
-  | `/gov/shenzhen/szlh/zwfw/zffw/${string}`
-  | `/gov/shenzhen/xxgk/zfxxgj/${string}`
-  | `/gov/shenzhen/zjj/xxgk/${string}`
-  | `/gov/shenzhen/zzb/${string}`
-  | `/gov/shenzhen/zzb/${string}/${string}`
-  | `/gov/sichuan/deyang/govpublicinfo/${string}`
-  | `/gov/sichuan/deyang/govpublicinfo/${string}/${string}`
-  | `/gov/sichuan/deyang/mztoday`
-  | `/gov/sichuan/deyang/mztoday/${string}`
+  | `/gov/shenzhen/hrss/szksy/:caty/:page?`
+  | `/gov/shenzhen/szlh/zwfw/zffw/:caty`
+  | `/gov/shenzhen/xxgk/zfxxgj/:caty`
+  | `/gov/shenzhen/zjj/xxgk/:caty`
+  | `/gov/shenzhen/zzb/:caty/:page?`
+  | `/gov/sichuan/deyang/govpublicinfo/:countyName/:infoType?`
+  | `/gov/sichuan/deyang/mztoday/:infoType?`
   | `/gov/stats/*`
   | `/gov/suzhou/doc`
-  | `/gov/suzhou/fg`
-  | `/gov/suzhou/fg/${string}`
-  | `/gov/suzhou/news/${string}`
-  | `/gov/taiyuan/rsj/${string}`
-  | `/gov/taiyuan/rsj/${string}/${string}`
-  | `/gov/tianjin/tjftz-notice/${string}`
-  | `/gov/tianjin/tjrcgzw-notice/${string}/${string}`
+  | `/gov/suzhou/fg/:category{.+}?`
+  | `/gov/suzhou/news/:uid`
+  | `/gov/taiyuan/rsj/:caty/:page?`
+  | `/gov/tianjin/tjftz-notice/:channelId`
+  | `/gov/tianjin/tjrcgzw-notice/:cate/:subCate`
   | `/gov/wuhan/sy/whyw`
   | `/gov/xinyi/*`
-  | `/gov/xuzhou/hrss`
-  | `/gov/xuzhou/hrss/${string}`
-  | `/gov/zhejiang/gwy`
-  | `/gov/zhejiang/gwy/${string}/${string}`
-  | `/gov/zhengce`
-  | `/gov/zhengce/${string}`
-  | `/gov/zhengce/govall`
-  | `/gov/zhengce/govall/${string}`
-  | `/gov/zhengce/wenjian`
-  | `/gov/zhengce/wenjian/${string}`
-  | `/gov/zhengce/zhengceku/${string}`
+  | `/gov/xuzhou/hrss/:category?`
+  | `/gov/zhejiang/gwy/:category?/:column?`
+  | `/gov/zhengce/:category{.+}?`
+  | `/gov/zhengce/govall/:advance?`
+  | `/gov/zhengce/wenjian/:pcodeJiguan?`
+  | `/gov/zhengce/zhengceku/:department`
   | `/gov/zhengce/zuixin`
-  | `/gov/zj/ningbogzw-notice`
-  | `/gov/zj/ningbogzw-notice/${string}`
-  | `/gov/zj/ningborsjnotice`
-  | `/gov/zj/ningborsjnotice/${string}`
-  | `/gov/zj/search`
-  | `/gov/zj/search/${string}/${string}/${string}`
+  | `/gov/zj/ningbogzw-notice/:colId?`
+  | `/gov/zj/ningborsjnotice/:colId?`
+  | `/gov/zj/search/:websiteid?/:word/:cateid?`
   | `/gq/news`
-  | `/grainoil/${string}/${string}`
-  | `/greasyfork/${string}`
-  | `/greasyfork/${string}/${string}`
-  | `/greasyfork/scripts/${string}/feedback`
-  | `/greasyfork/scripts/${string}/versions`
-  | `/greasyfork/scripts/sort/${string}`
-  | `/greasyfork/scripts/sort/${string}/${string}`
+  | `/grainoil/:category/:id`
+  | `/greasyfork/:language/:domain?`
+  | `/greasyfork/scripts/:script/feedback`
+  | `/greasyfork/scripts/:script/versions`
+  | `/greasyfork/scripts/sort/:sort/:language?`
   | `/grist/`
   | `/grist/featured`
-  | `/grist/series/${string}`
-  | `/grist/topic/${string}`
+  | `/grist/series/:series`
+  | `/grist/topic/:topic`
   | `/grubstreet/`
   | `/gs/developer/blog`
-  | `/guancha`
-  | `/guancha/${string}`
+  | `/guancha/:category?`
   | `/guancha/headline`
-  | `/guancha/member`
-  | `/guancha/member/${string}`
-  | `/guancha/personalpage/${string}`
-  | `/guancha/topic/${string}`
-  | `/guancha/topic/${string}/${string}`
-  | `/guangdiu`
-  | `/guangdiu/${string}`
-  | `/guangdiu/cheaps`
-  | `/guangdiu/cheaps/${string}`
+  | `/guancha/member/:category?`
+  | `/guancha/personalpage/:uid`
+  | `/guancha/topic/:id/:order?`
+  | `/guangdiu/:query?`
+  | `/guangdiu/cheaps/:query?`
   | `/guangdiu/rank`
-  | `/guangdiu/search`
-  | `/guangdiu/search/${string}`
+  | `/guangdiu/search/:query?`
   | `/guangzhoumetro/news`
   | `/guanhai/`
   | `/guduodata/daily`
-  | `/gumroad/${string}/${string}`
-  | `/guokr/column/${string}`
+  | `/gumroad/:username/:products`
+  | `/guokr/column/:channel`
   | `/guokr/scientific`
   | `/guozaoke/default`
   | `/gxmzu/aitzgg`
   | `/gxmzu/libzxxx`
   | `/gxmzu/yjszsgg`
-  | `/gzdaily/app`
-  | `/gzdaily/app/${string}`
+  | `/gzdaily/app/:column?`
   | `/gzhu/yjs`
-  | `/hackernews`
-  | `/hackernews/${string}/${string}/${string}`
+  | `/hackernews/:section?/:type?/:user?`
   | `/hackertalk/`
-  | `/hacking8`
-  | `/hacking8/${string}`
-  | `/hacking8/search`
-  | `/hacking8/search/${string}`
-  | `/hackmd/profile/${string}`
+  | `/hacking8/:category?`
+  | `/hacking8/search/:keyword?`
+  | `/hackmd/profile/:path`
   | `/hackyournews/`
-  | `/hafu/news`
-  | `/hafu/news/${string}`
-  | `/hakkatv/news`
-  | `/hakkatv/news/${string}`
+  | `/hafu/news/:type?`
+  | `/hakkatv/news/:type?`
   | `/hamel/blog`
-  | `/hameln/chapter/${string}`
-  | `/hanime1/previews`
-  | `/hanime1/previews/${string}`
-  | `/hanime1/search/${string}`
+  | `/hameln/chapter/:id`
+  | `/hanime1/previews/:date?`
+  | `/hanime1/search/:params`
   | `/harvard/health/blog`
-  | `/hashnode/blog/${string}`
-  | `/hbooker/chapter/${string}`
-  | `/hbr/topic`
-  | `/hbr/topic/${string}/${string}`
-  | `/hdu/auto`
-  | `/hdu/auto/${string}`
+  | `/hashnode/blog/:username`
+  | `/hbooker/chapter/:id`
+  | `/hbr/topic/:topic?/:type?`
+  | `/hdu/auto/:type?`
   | `/hdu/cs`
   | `/hdu/cs/pg`
   | `/hebtv/nbszxd`
-  | `/hedwig/posts/${string}`
-  | `/hellobtc/information`
-  | `/hellobtc/information/${string}`
-  | `/hellobtc/kepu`
-  | `/hellobtc/kepu/${string}`
+  | `/hedwig/posts/:site`
+  | `/hellobtc/information/:channel?`
+  | `/hellobtc/kepu/:channel?`
   | `/hellobtc/news`
-  | `/hellogithub/article`
-  | `/hellogithub/article/${string}`
-  | `/hellogithub/home`
-  | `/hellogithub/home/${string}/${string}`
-  | `/hellogithub/ranking`
-  | `/hellogithub/ranking/${string}`
+  | `/hellogithub/article/:sort?`
+  | `/hellogithub/home/:sort?/:id?`
+  | `/hellogithub/ranking/:type?`
   | `/hellogithub/volume`
   | `/hex-rays/news`
   | `/hexun/pe/news`
-  | `/hfut/hf/notice`
-  | `/hfut/hf/notice/${string}`
-  | `/hfut/xc/notice`
-  | `/hfut/xc/notice/${string}`
+  | `/hfut/hf/notice/:type?`
+  | `/hfut/xc/notice/:type?`
   | `/hicairo/`
-  | `/hinatazaka46/blog`
-  | `/hinatazaka46/blog/${string}/${string}`
+  | `/hinatazaka46/blog/:id?/:page?`
   | `/hinatazaka46/news`
-  | `/hiring.cafe/jobs/${string}`
-  | `/hit/hitgs`
-  | `/hit/hitgs/${string}`
-  | `/hit/today/${string}`
-  | `/hitcon/zeroday/vulnerability`
-  | `/hitcon/zeroday/vulnerability/${string}`
-  | `/hitsz/article`
-  | `/hitsz/article/${string}`
-  | `/hitsz/due/general`
-  | `/hitsz/due/general/${string}`
+  | `/hiring.cafe/jobs/:keywords`
+  | `/hit/hitgs/:id?`
+  | `/hit/today/:category`
+  | `/hitcon/zeroday/vulnerability/:status?`
+  | `/hitsz/article/:category?`
+  | `/hitsz/due/general/:type?`
   | `/hitsz/due/tzgg`
   | `/hitwh/today`
-  | `/hizu`
-  | `/hizu/${string}`
-  | `/hk01/channel`
-  | `/hk01/channel/${string}`
+  | `/hizu/:column?`
+  | `/hk01/channel/:id?`
   | `/hk01/hot`
-  | `/hk01/issue`
-  | `/hk01/issue/${string}`
+  | `/hk01/issue/:id?`
   | `/hk01/latest`
-  | `/hk01/tag`
-  | `/hk01/tag/${string}`
-  | `/hk01/zone`
-  | `/hk01/zone/${string}`
-  | `/hkej`
-  | `/hkej/${string}`
-  | `/hkepc`
-  | `/hkepc/${string}`
-  | `/hket`
-  | `/hket/${string}`
+  | `/hk01/tag/:id?`
+  | `/hk01/zone/:id?`
+  | `/hkej/:category?`
+  | `/hkepc/:category?`
+  | `/hket/:category?`
   | `/hkjunkcall/`
   | `/hko/earthquake`
   | `/hko/weather`
-  | `/hkushop/vinyl`
-  | `/hkushop/vinyl/${string}`
-  | `/hlju/news`
-  | `/hlju/news/${string}`
-  | `/hljucm/yjsy`
-  | `/hljucm/yjsy/${string}`
-  | `/hnrb`
-  | `/hnrb/${string}`
+  | `/hkushop/vinyl/:cat?`
+  | `/hlju/news/:category?`
+  | `/hljucm/yjsy/:category?`
+  | `/hnrb/:id?`
   | `/hnu/careers`
   | `/home-assistant/hacs/repositories`
-  | `/hongkong/chp`
-  | `/hongkong/chp/${string}/${string}`
-  | `/hongkong/dh`
-  | `/hongkong/dh/${string}`
-  | `/hostmonit/cloudflareyes`
-  | `/hostmonit/cloudflareyes/${string}`
+  | `/hongkong/chp/:category?/:language?`
+  | `/hongkong/dh/:language?`
+  | `/hostmonit/cloudflareyes/:type?`
   | `/hostmonit/cloudflareyesv6`
   | `/hottoys/`
-  | `/hotukdeals/${string}`
+  | `/hotukdeals/:type`
   | `/hotukdeals/hottest`
   | `/houxu/`
   | `/houxu/events`
-  | `/houxu/lives/${string}`
+  | `/houxu/lives/:id`
   | `/houxu/memory`
   | `/howtoforge/`
-  | `/hoyolab/news/${string}/${string}/${string}`
+  | `/hoyolab/news/:language/:gids/:type`
   | `/hpoi/bannerItem`
-  | `/hpoi/info`
-  | `/hpoi/info/${string}/${string}`
-  | `/hpoi/items/all`
-  | `/hpoi/items/all/${string}`
-  | `/hpoi/items/character/${string}`
-  | `/hpoi/items/character/${string}/${string}`
-  | `/hpoi/items/work/${string}`
-  | `/hpoi/items/work/${string}/${string}`
-  | `/hpoi/user/${string}/${string}`
-  | `/hrbeu/cec/${string}`
-  | `/hrbeu/gx/card/${string}`
-  | `/hrbeu/gx/card/${string}/${string}`
-  | `/hrbeu/gx/list/${string}`
-  | `/hrbeu/gx/list/${string}/${string}`
+  | `/hpoi/info/:type?/:catType?`
+  | `/hpoi/items/all/:order?`
+  | `/hpoi/items/character/:id/:order?`
+  | `/hpoi/items/work/:id/:order?`
+  | `/hpoi/user/:user_id/:caty`
+  | `/hrbeu/cec/:id`
+  | `/hrbeu/gx/card/:column/:id?`
+  | `/hrbeu/gx/list/:column/:id?`
   | `/hrbeu/job/bigemploy`
   | `/hrbeu/job/calendar`
-  | `/hrbeu/job/list/${string}`
-  | `/hrbeu/sec/${string}`
-  | `/hrbeu/uae/${string}`
-  | `/hrbeu/ugs/news`
-  | `/hrbeu/ugs/news/${string}/${string}`
-  | `/hrbeu/yjsy/list/${string}`
-  | `/hrbust/cs`
-  | `/hrbust/cs/${string}`
-  | `/hrbust/gzc`
-  | `/hrbust/gzc/${string}`
-  | `/hrbust/jwzx`
-  | `/hrbust/jwzx/${string}/${string}`
-  | `/hrbust/lib`
-  | `/hrbust/lib/${string}`
-  | `/hrbust/news`
-  | `/hrbust/news/${string}`
-  | `/hrbust/nic`
-  | `/hrbust/nic/${string}`
-  | `/huanqiu/news`
-  | `/huanqiu/news/${string}`
+  | `/hrbeu/job/list/:id`
+  | `/hrbeu/sec/:id`
+  | `/hrbeu/uae/:id`
+  | `/hrbeu/ugs/news/:author?/:category?`
+  | `/hrbeu/yjsy/list/:id`
+  | `/hrbust/cs/:category?`
+  | `/hrbust/gzc/:category?`
+  | `/hrbust/jwzx/:type?/:page?`
+  | `/hrbust/lib/:category?`
+  | `/hrbust/news/:category?`
+  | `/hrbust/nic/:category?`
+  | `/huanqiu/news/:category?`
   | `/huawei/developer/harmonyos/sample-code`
-  | `/hubu/www`
-  | `/hubu/www/${string}`
-  | `/hubu/zhxy`
-  | `/hubu/zhxy/${string}`
-  | `/hudsonrivertrading/blog`
-  | `/hudsonrivertrading/blog/${string}`
+  | `/hubu/www/:category{.+}?`
+  | `/hubu/zhxy/:category{.+}?`
+  | `/hudsonrivertrading/blog/:section?`
   | `/huggingface/blog`
-  | `/huggingface/blog-community`
-  | `/huggingface/blog-community/${string}`
+  | `/huggingface/blog-community/:sort?`
   | `/huggingface/blog-zh`
-  | `/huggingface/daily-papers`
-  | `/huggingface/daily-papers/${string}/${string}`
+  | `/huggingface/daily-papers/:cycle?/:voteFliter?`
   | `/huijin-inv/news`
-  | `/hunanpea/rsks/${string}`
-  | `/hunau/gfxy`
-  | `/hunau/gfxy/${string}/${string}`
-  | `/hunau/ied`
-  | `/hunau/ied/${string}/${string}/${string}`
-  | `/hunau/jwc`
-  | `/hunau/jwc/${string}/${string}`
-  | `/hunau/xky`
-  | `/hunau/xky/${string}/${string}`
+  | `/hunanpea/rsks/:guid`
+  | `/hunau/gfxy/:category?/:page?`
+  | `/hunau/ied/:type?/:category?/:page?`
+  | `/hunau/jwc/:category?/:page?`
+  | `/hunau/xky/:category?/:page?`
   | `/huoxian/zone`
-  | `/hupu`
-  | `/hupu/${string}`
-  | `/hupu/all`
-  | `/hupu/all/${string}`
-  | `/hupu/bbs`
-  | `/hupu/bbs/${string}/${string}`
-  | `/hupu/bxj`
-  | `/hupu/bxj/${string}/${string}`
-  | `/hupu/dept`
-  | `/hupu/dept/${string}`
+  | `/hupu/:category?`
+  | `/hupu/all/:id?`
+  | `/hupu/bbs/:id?/:order?`
+  | `/hupu/bxj/:id?/:order?`
+  | `/hupu/dept/:category?`
   | `/hust/aia/news`
-  | `/hust/aia/notice`
-  | `/hust/aia/notice/${string}`
+  | `/hust/aia/notice/:type?`
   | `/hust/auto/news`
-  | `/hust/auto/notice`
-  | `/hust/auto/notice/${string}`
-  | `/hust/gs`
-  | `/hust/gs/${string}`
-  | `/hust/mse`
-  | `/hust/mse/${string}`
+  | `/hust/auto/notice/:type?`
+  | `/hust/gs/:category{.+}?`
+  | `/hust/mse/:category{.+}?`
   | `/hust/yjs`
   | `/huxiu/article`
-  | `/huxiu/author/${string}`
-  | `/huxiu/author/${string}/${string}`
-  | `/huxiu/briefcolumn/${string}`
-  | `/huxiu/channel`
-  | `/huxiu/channel/${string}`
-  | `/huxiu/club/${string}`
-  | `/huxiu/collection/${string}`
-  | `/huxiu/member/${string}`
-  | `/huxiu/member/${string}/${string}`
+  | `/huxiu/author/:id/:type?`
+  | `/huxiu/briefcolumn/:id`
+  | `/huxiu/channel/:id?`
+  | `/huxiu/club/:id`
+  | `/huxiu/collection/:id`
+  | `/huxiu/member/:id/:type?`
   | `/huxiu/moment`
-  | `/huxiu/search/${string}`
-  | `/huxiu/tag/${string}`
+  | `/huxiu/search/:keyword`
+  | `/huxiu/tag/:id`
   | `/hyperdash/top-traders`
-  | `/hypergryph/arknights/announce`
-  | `/hypergryph/arknights/announce/${string}/${string}`
+  | `/hypergryph/arknights/announce/:platform?/:group?`
   | `/hypergryph/arknights/arktca`
   | `/hypergryph/arknights/japan`
-  | `/hypergryph/arknights/news`
-  | `/hypergryph/arknights/news/${string}`
-  | `/i-cable/news`
-  | `/i-cable/news/${string}`
-  | `/ianspriggs`
-  | `/ianspriggs/${string}`
-  | `/icac/news`
-  | `/icac/news/${string}`
-  | `/icbc/whpj`
-  | `/icbc/whpj/${string}`
-  | `/idaily`
-  | `/idaily/${string}`
-  | `/idolmaster/news`
-  | `/idolmaster/news/${string}`
+  | `/hypergryph/arknights/news/:group?`
+  | `/i-cable/news/:category?`
+  | `/ianspriggs/:category?`
+  | `/icac/news/:lang?`
+  | `/icbc/whpj/:format?`
+  | `/idaily/:language?`
+  | `/idolmaster/news/:routeParams?`
   | `/idolypride/news`
   | `/ieee-security/security-privacy`
-  | `/ieee/author/${string}/${string}`
-  | `/ieee/journal/${string}`
-  | `/ieee/journal/${string}/${string}`
-  | `/iehou`
-  | `/iehou/${string}`
+  | `/ieee/author/:aid/:sortType`
+  | `/ieee/journal/:punumber/:earlyAccess?`
+  | `/iehou/:category?`
   | `/ielts/`
-  | `/ifanr/category/${string}`
+  | `/ifanr/category/:name`
   | `/ifanr/digest`
   | `/ifanr/index`
-  | `/ifeng/feng/${string}/${string}`
+  | `/ifeng/feng/:id/:type`
   | `/ifeng/news/*`
-  | `/ifi-audio/download/${string}/${string}`
-  | `/ifun/n/category`
-  | `/ifun/n/category/${string}`
-  | `/ifun/n/search/${string}`
-  | `/ifun/n/tag/${string}`
+  | `/ifi-audio/download/:val/:id`
+  | `/ifun/n/category/:id?`
+  | `/ifun/n/search/:keywords`
+  | `/ifun/n/tag/:name`
   | `/iguoguo/html5`
   | `/iheima/recommend`
   | `/iiilab/`
@@ -2047,709 +1429,502 @@ export type RoutePath =
   | `/ikea/cn/new`
   | `/ikea/gb/new`
   | `/ikea/gb/offer`
-  | `/iknowwhatyoudownload/stats/daily/${string}`
+  | `/iknowwhatyoudownload/stats/daily/:country`
   | `/imagemagick/changelog`
-  | `/imdb/chart`
-  | `/imdb/chart/${string}`
+  | `/imdb/chart/:chart?`
   | `/imhcg/`
   | `/imiker/ask/jinghua`
   | `/immich/cursed-knowledge`
   | `/imop/tianshu`
-  | `/indianexpress/section`
-  | `/indianexpress/section/${string}`
+  | `/indianexpress/section/:id{.+}?`
   | `/indiansinkuwait/latest`
-  | `/indienova/${string}`
-  | `/indienova/column/${string}`
+  | `/indienova/:type`
+  | `/indienova/column/:columnId`
   | `/indienova/gamedb/recent`
   | `/indienova/usergames`
-  | `/inewsweek/${string}`
-  | `/infoq/presentations`
-  | `/infoq/presentations/${string}`
+  | `/inewsweek/:channel`
+  | `/infoq/presentations/:conference?`
   | `/infoq/recommend`
-  | `/infoq/topic/${string}`
-  | `/informedainews/zh-Hans/docs/${string}`
-  | `/informs`
-  | `/informs/${string}`
-  | `/infzm/${string}`
+  | `/infoq/topic/:id`
+  | `/informedainews/zh-Hans/docs/:type`
+  | `/informs/:category?`
+  | `/infzm/:id`
   | `/infzm/hot`
-  | `/inoreader/html_clip/${string}/${string}`
-  | `/inoreader/rss/${string}/${string}`
-  | `/inspirehep/authors/${string}`
-  | `/inspirehep/literature/${string}`
-  | `/instagram/${string}/${string}`
-  | `/instagram/2/${string}/${string}`
-  | `/instructables/projects`
-  | `/instructables/projects/${string}`
-  | `/investor`
-  | `/investor/${string}`
+  | `/inoreader/html_clip/:user/:tag`
+  | `/inoreader/rss/:user/:tag`
+  | `/inspirehep/authors/:id`
+  | `/inspirehep/literature/:q`
+  | `/instagram/2/:category/:key`
+  | `/instagram/:category/:key`
+  | `/instructables/projects/:category?`
+  | `/investor/:id{.+}?`
   | `/iplaysoft/`
-  | `/iplaysoft/category/${string}`
-  | `/iplaysoft/tag/${string}`
+  | `/iplaysoft/category/:slug`
+  | `/iplaysoft/tag/:slug`
   | `/ippa/`
-  | `/ipsw.dev/index/${string}`
-  | `/ipsw/index/${string}/${string}`
-  | `/iqilu/v`
-  | `/iqilu/v/${string}`
-  | `/iqiyi/album/${string}`
-  | `/iqiyi/user/video/${string}`
+  | `/ipsw.dev/index/:productID`
+  | `/ipsw/index/:ptype/:pname`
+  | `/iqilu/v/:category{.+}?`
+  | `/iqiyi/album/:id`
+  | `/iqiyi/user/video/:uid`
   | `/iqnew/latest`
-  | `/iresearch/report`
-  | `/iresearch/report/${string}/${string}`
-  | `/iresearch/weekly`
-  | `/iresearch/weekly/${string}`
-  | `/isct/news/${string}`
-  | `/issuehunt/funded/${string}/${string}`
-  | `/itc/collection/${string}`
+  | `/iresearch/report/:type?/:id?`
+  | `/iresearch/weekly/:id?`
+  | `/isct/news/:lang`
+  | `/issuehunt/funded/:username/:repo`
+  | `/itc/collection/:colType`
   | `/itch*`
-  | `/itch/devlog/${string}/${string}`
-  | `/itch/posts/${string}/${string}`
-  | `/ithome/${string}`
-  | `/ithome/ranking/${string}`
-  | `/ithome/tag/${string}`
-  | `/ithome/tw/feeds/${string}`
-  | `/ithome/zt`
-  | `/ithome/zt/${string}`
+  | `/itch/devlog/:user/:id`
+  | `/itch/posts/:topic/:id`
+  | `/ithome/:caty`
+  | `/ithome/ranking/:type`
+  | `/ithome/tag/:name`
+  | `/ithome/tw/feeds/:category`
+  | `/ithome/zt/:id?`
   | `/iwara/subscriptions`
-  | `/iwara/users/${string}`
-  | `/iwara/users/${string}/${string}`
-  | `/ixigua/user/video/${string}`
-  | `/ixigua/user/video/${string}/${string}`
+  | `/iwara/users/:username/:type?`
+  | `/ixigua/user/video/:uid/:disableEmbed?`
   | `/j-test/news`
   | `/jamesclear/3-2-1`
   | `/jamesclear/book-summaries`
   | `/jamesclear/great-speeches`
   | `/jamesclear/quotes`
   | `/jandan/`
-  | `/jandan/${string}`
-  | `/jandan/${string}/${string}`
-  | `/japanpost/track/${string}`
-  | `/japanpost/track/${string}/${string}`
-  | `/javbus`
-  | `/javbus/${string}`
-  | `/javdb/actors/${string}`
-  | `/javdb/actors/${string}/${string}`
-  | `/javdb/home`
-  | `/javdb/home/${string}/${string}/${string}`
-  | `/javdb/lists/${string}`
-  | `/javdb/lists/${string}/${string}/${string}`
-  | `/javdb/makers/${string}`
-  | `/javdb/makers/${string}/${string}`
-  | `/javdb/rankings`
-  | `/javdb/rankings/${string}/${string}`
-  | `/javdb/search`
-  | `/javdb/search/${string}/${string}/${string}`
-  | `/javdb/series/${string}`
-  | `/javdb/series/${string}/${string}`
-  | `/javdb/tags`
-  | `/javdb/tags/${string}/${string}`
-  | `/javdb/video_codes/${string}`
-  | `/javdb/video_codes/${string}/${string}`
-  | `/javlibrary/${string}/${string}`
-  | `/javlibrary/${string}/${string}/${string}`
-  | `/javlibrary/bestrated`
-  | `/javlibrary/bestrated/${string}/${string}`
-  | `/javlibrary/bestreviews`
-  | `/javlibrary/bestreviews/${string}/${string}`
-  | `/javlibrary/genre`
-  | `/javlibrary/genre/${string}/${string}/${string}`
-  | `/javlibrary/mostwanted`
-  | `/javlibrary/mostwanted/${string}/${string}`
-  | `/javlibrary/newentries`
-  | `/javlibrary/newentries/${string}`
-  | `/javlibrary/newrelease`
-  | `/javlibrary/newrelease/${string}/${string}`
-  | `/javlibrary/star/${string}`
-  | `/javlibrary/star/${string}/${string}/${string}`
-  | `/javlibrary/update`
-  | `/javlibrary/update/${string}`
-  | `/javlibrary/users/${string}/${string}`
-  | `/javlibrary/users/${string}/${string}/${string}`
-  | `/javlibrary/videos/bestrated`
-  | `/javlibrary/videos/bestrated/${string}/${string}`
-  | `/javlibrary/videos/genre`
-  | `/javlibrary/videos/genre/${string}/${string}/${string}`
-  | `/javlibrary/videos/maker`
-  | `/javlibrary/videos/maker/${string}/${string}/${string}`
-  | `/javlibrary/videos/mostwanted`
-  | `/javlibrary/videos/mostwanted/${string}/${string}`
-  | `/javlibrary/videos/newentries`
-  | `/javlibrary/videos/newentries/${string}`
-  | `/javlibrary/videos/newrelease`
-  | `/javlibrary/videos/newrelease/${string}/${string}`
-  | `/javlibrary/videos/update`
-  | `/javlibrary/videos/update/${string}`
-  | `/javtiful/actress/${string}`
-  | `/javtiful/channel/${string}`
-  | `/javtrailers/casts/${string}`
-  | `/javtrailers/categories/${string}`
-  | `/javtrailers/studios/${string}`
-  | `/jbma/report`
-  | `/jbma/report/${string}`
-  | `/jd/price/${string}`
-  | `/jetbrains/youtrack/comments/${string}`
+  | `/jandan/:category/:type?`
+  | `/japanpost/track/:reqCode/:locale?`
+  | `/javbus/:path{.+}?`
+  | `/javdb/actors/:id/:filter?`
+  | `/javdb/home/:category?/:sort?/:filter?`
+  | `/javdb/lists/:id/:filter?/:sort?`
+  | `/javdb/makers/:id/:filter?`
+  | `/javdb/rankings/:category?/:time?`
+  | `/javdb/search/:keyword?/:filter?/:sort?`
+  | `/javdb/series/:id/:filter?`
+  | `/javdb/tags/:query?/:category?`
+  | `/javdb/video_codes/:code/:filter?`
+  | `/javlibrary/:type/:id/:language?`
+  | `/javlibrary/bestrated/:language?/:mode?`
+  | `/javlibrary/bestreviews/:language?/:mode?`
+  | `/javlibrary/genre/:genre?/:language?/:mode?`
+  | `/javlibrary/mostwanted/:language?/:mode?`
+  | `/javlibrary/newentries/:language?`
+  | `/javlibrary/newrelease/:language?/:mode?`
+  | `/javlibrary/star/:id/:language?/:mode?`
+  | `/javlibrary/update/:language?`
+  | `/javlibrary/users/:id/:type/:language?`
+  | `/javlibrary/videos/bestrated/:language?/:mode?`
+  | `/javlibrary/videos/genre/:genre?/:language?/:mode?`
+  | `/javlibrary/videos/maker/:maker?/:language?/:mode?`
+  | `/javlibrary/videos/mostwanted/:language?/:mode?`
+  | `/javlibrary/videos/newentries/:language?`
+  | `/javlibrary/videos/newrelease/:language?/:mode?`
+  | `/javlibrary/videos/update/:language?`
+  | `/javtiful/actress/:id`
+  | `/javtiful/channel/:id`
+  | `/javtrailers/casts/:cast`
+  | `/javtrailers/categories/:category`
+  | `/javtrailers/studios/:studio`
+  | `/jbma/report/:filter{.+}?`
+  | `/jd/price/:id`
+  | `/jetbrains/youtrack/comments/:issueId`
   | `/jewishmuseum/exhibitions`
-  | `/jianshu/collection/${string}`
+  | `/jianshu/collection/:id`
   | `/jianshu/home`
-  | `/jianshu/user/${string}`
+  | `/jianshu/user/:id`
   | `/jiaoliudao/`
   | `/jiemian/account/main/1`
-  | `/jiemian/lists/${string}`
+  | `/jiemian/lists/:id`
   | `/jiemian/pro/lists/12`
   | `/jiemian/special/1192`
   | `/jiemian/video/lists/258_1`
-  | `/jike/topic/${string}`
-  | `/jike/topic/${string}/${string}`
-  | `/jike/topic/text/${string}`
-  | `/jike/user/${string}`
-  | `/jimmyspa/books/${string}`
-  | `/jimmyspa/news/${string}`
-  | `/jin10`
-  | `/jin10/${string}`
-  | `/jin10/category/${string}`
-  | `/jin10/topic/${string}`
+  | `/jike/topic/:id/:showUid?`
+  | `/jike/topic/text/:id`
+  | `/jike/user/:id`
+  | `/jimmyspa/books/:language`
+  | `/jimmyspa/news/:language`
+  | `/jin10/:important?`
+  | `/jin10/category/:id`
+  | `/jin10/topic/:id`
   | `/jingzhengu/news`
-  | `/jinritemai/docs`
-  | `/jinritemai/docs/${string}`
-  | `/jinse`
-  | `/jinse/${string}`
-  | `/jinse/lives`
-  | `/jinse/lives/${string}`
-  | `/jinse/timeline`
-  | `/jinse/timeline/${string}`
-  | `/jisilu/category/${string}`
-  | `/jisilu/explore`
-  | `/jisilu/explore/${string}`
-  | `/jisilu/people/${string}`
-  | `/jisilu/people/${string}/${string}`
-  | `/jisilu/topic/${string}`
+  | `/jinritemai/docs/:dirId?`
+  | `/jinse/:category?`
+  | `/jinse/lives/:category?`
+  | `/jinse/timeline/:category?`
+  | `/jisilu/category/:id`
+  | `/jisilu/explore/:filter?`
+  | `/jisilu/people/:id/:type?`
+  | `/jisilu/topic/:id`
   | `/jiuyangongshe/community`
-  | `/jjwxc/author`
-  | `/jjwxc/author/${string}`
-  | `/jjwxc/book`
-  | `/jjwxc/book/${string}`
-  | `/jl1mall/forum`
-  | `/jl1mall/forum/${string}/${string}`
-  | `/jlu/ccst/xwzx/${string}`
+  | `/jjwxc/author/:id?`
+  | `/jjwxc/book/:id?`
+  | `/jl1mall/forum/:type?/:key?`
+  | `/jlu/ccst/xwzx/:category`
   | `/jlu/jwc`
-  | `/jlu/phy/${string}/${string}`
-  | `/jlu/phy/${string}/${string}/${string}`
-  | `/joins/chinese`
-  | `/joins/chinese/${string}`
-  | `/joneslanglasalle`
-  | `/joneslanglasalle/${string}/${string}`
-  | `/jornada`
-  | `/jornada/${string}/${string}`
-  | `/joshwcomeau/latest`
-  | `/joshwcomeau/latest/${string}`
+  | `/jlu/phy/:category/:column/:subcolumn?`
+  | `/joins/chinese/:category?`
+  | `/joneslanglasalle/:language?/:category{.+}?`
+  | `/jornada/:date?/:category?`
+  | `/joshwcomeau/latest/:category?`
   | `/joshwcomeau/popular`
   | `/jou/tzgg`
   | `/jou/yztzgg`
   | `/jpmorganchase/`
-  | `/jpxgmn/search/${string}`
-  | `/jpxgmn/tab`
-  | `/jpxgmn/tab/${string}`
+  | `/jpxgmn/search/:kw`
+  | `/jpxgmn/tab/:tab?`
   | `/jpxgmn/weekly`
-  | `/jrj/${string}`
-  | `/jseea/news`
-  | `/jseea/news/${string}`
-  | `/jsu/cxzx`
-  | `/jsu/cxzx/${string}`
-  | `/jsu/jwc`
-  | `/jsu/jwc/${string}`
+  | `/jrj/:channelNum`
+  | `/jseea/news/:type?`
+  | `/jsu/cxzx/:types?`
+  | `/jsu/jwc/:types?`
   | `/jsu/notice`
   | `/jsu/rjxy`
   | `/jsu/stxy`
-  | `/juejin/aicoding`
-  | `/juejin/aicoding/${string}/${string}`
+  | `/juejin/aicoding/:tag?/:sort?`
   | `/juejin/books`
-  | `/juejin/category/${string}`
-  | `/juejin/collection/${string}`
-  | `/juejin/collections/${string}`
-  | `/juejin/column/${string}`
-  | `/juejin/dynamic/${string}`
-  | `/juejin/pins`
-  | `/juejin/pins/${string}`
-  | `/juejin/posts/${string}`
-  | `/juejin/tag/${string}`
-  | `/juejin/trending/${string}/${string}`
-  | `/jumeili/home`
-  | `/jumeili/home/${string}`
-  | `/jump/discount/${string}`
-  | `/jump/discount/${string}/${string}/${string}`
+  | `/juejin/category/:category`
+  | `/juejin/collection/:collectionId`
+  | `/juejin/collections/:userId`
+  | `/juejin/column/:id`
+  | `/juejin/dynamic/:id`
+  | `/juejin/pins/:type?`
+  | `/juejin/posts/:id`
+  | `/juejin/tag/:tag`
+  | `/juejin/trending/:category/:type`
+  | `/jumeili/home/:column?`
+  | `/jump/discount/:platform/:filter?/:countries?`
   | `/junhe/legal-updates`
   | `/kadokawa/blog`
-  | `/kakuyomu/works/${string}`
-  | `/kamen-rider-official/news`
-  | `/kamen-rider-official/news/${string}`
-  | `/kantarworldpanel`
-  | `/kantarworldpanel/${string}/${string}`
-  | `/kanxue/topic`
-  | `/kanxue/topic/${string}/${string}`
-  | `/kaopu/news`
-  | `/kaopu/news/${string}`
-  | `/kbs/news`
-  | `/kbs/news/${string}/${string}`
-  | `/kbs/today`
-  | `/kbs/today/${string}`
-  | `/kcna/${string}`
-  | `/kcna/${string}/${string}`
+  | `/kakuyomu/works/:id`
+  | `/kamen-rider-official/news/:category?`
+  | `/kantarworldpanel/:region?/:category{.+}?`
+  | `/kanxue/topic/:category?/:type?`
+  | `/kaopu/news/:language?`
+  | `/kbs/news/:category?/:language?`
+  | `/kbs/today/:language?`
+  | `/kcna/:lang/:category?`
   | `/ke/researchResults`
-  | `/keep/user/${string}`
+  | `/keep/user/:id`
   | `/keepass/`
-  | `/kelownacapnews/${string}`
-  | `/kemono`
-  | `/kemono/${string}/${string}/${string}`
+  | `/kelownacapnews/:type`
+  | `/kemono/:source?/:id?/:type?`
   | `/kepu/live`
-  | `/keylol/${string}`
+  | `/keylol/:path`
   | `/kimlaw/thesis`
   | `/kiro/blog`
   | `/kiro/changelog`
-  | `/kisskiss/blog`
-  | `/kisskiss/blog/${string}`
-  | `/komiic/comic/${string}`
-  | `/konachan/post/popular_recent`
-  | `/konachan/post/popular_recent/${string}`
-  | `/konachan/sfw/post/popular_recent`
-  | `/konachan/sfw/post/popular_recent/${string}`
+  | `/kisskiss/blog/:category?`
+  | `/komiic/comic/:id`
+  | `/konachan/post/popular_recent/:period?`
+  | `/konachan/sfw/post/popular_recent/:period?`
   | `/konghq/blog-posts`
-  | `/koreaherald`
-  | `/koreaherald/${string}`
+  | `/koreaherald/:category{.+}?`
   | `/kovidgoyal/kitty/changelog`
-  | `/koyso`
-  | `/koyso/${string}/${string}`
-  | `/kpmg/insights`
-  | `/kpmg/insights/${string}`
-  | `/kpopping/kpics`
-  | `/kpopping/kpics/${string}`
-  | `/kpopping/news`
-  | `/kpopping/news/${string}`
-  | `/ktown4u/artistBrandlist/${string}`
-  | `/ktown4u/artistBrandlist/${string}/${string}`
+  | `/koyso/:category?/:sort?`
+  | `/kpmg/insights/:lang?`
+  | `/kpopping/kpics/:filter{.+}?`
+  | `/kpopping/news/:filter{.+}?`
+  | `/ktown4u/artistBrandlist/:grpNo/:grpNo2?`
   | `/kuaidi100/company`
-  | `/kuaidi100/track/${string}/${string}`
-  | `/kuaidi100/track/${string}/${string}/${string}`
-  | `/kuaishou/profile/${string}`
+  | `/kuaidi100/track/:number/:id/:phone?`
+  | `/kuaishou/profile/:principalId`
   | `/kunchengblog/essay`
-  | `/kurogames/wutheringwaves/news`
-  | `/kurogames/wutheringwaves/news/${string}`
-  | `/kuwaitlocal`
-  | `/kuwaitlocal/${string}`
-  | `/kyodonews`
-  | `/kyodonews/${string}/${string}`
-  | `/laimanhua/${string}`
+  | `/kurogames/wutheringwaves/news/:language?`
+  | `/kuwaitlocal/:category?`
+  | `/kyodonews/:language?/:keyword?`
+  | `/laimanhua/:id`
   | `/lala/`
   | `/landiannews/`
-  | `/landiannews/category/${string}`
-  | `/landiannews/tag/${string}`
-  | `/lang/live/room/${string}`
+  | `/landiannews/category/:slug`
+  | `/landiannews/tag/:slug`
+  | `/lang/live/room/:id`
   | `/langchain/blog`
-  | `/lanqiao/author/${string}`
-  | `/lanqiao/courses/${string}/${string}`
-  | `/lanqiao/questions/${string}`
-  | `/laohu8/personal/${string}`
+  | `/lanqiao/author/:uid`
+  | `/lanqiao/courses/:sort/:tag`
+  | `/lanqiao/questions/:id`
+  | `/laohu8/personal/:id`
   | `/last-origin/news`
-  | `/latepost`
-  | `/latepost/${string}`
+  | `/latepost/:proma?`
   | `/layoffs/`
   | `/leagueoflegends/patch-notes`
-  | `/learnblockchain/posts/${string}`
-  | `/learnblockchain/posts/${string}/${string}`
-  | `/learnku/${string}`
-  | `/learnku/${string}/${string}`
+  | `/learnblockchain/posts/:cid/:sort?`
+  | `/learnku/:community/:category?`
   | `/leetcode/articles`
   | `/leetcode/dailyquestion/cn`
   | `/leetcode/dailyquestion/en`
   | `/leetcode/dailyquestion/solution/cn`
   | `/leetcode/dailyquestion/solution/en`
-  | `/leiphone`
-  | `/leiphone/${string}/${string}`
+  | `/leiphone/:do?/:keyword?`
   | `/leiphone/newsflash`
-  | `/lemmy/${string}`
-  | `/lemmy/${string}/${string}`
-  | `/lenovo/drive/${string}`
-  | `/lens/profile/${string}`
-  | `/letterboxd/${string}/watchlist`
+  | `/lemmy/:community/:sort?`
+  | `/lenovo/drive/:selName`
+  | `/lens/profile/:handle`
+  | `/letterboxd/:username/watchlist`
   | `/lfsyd/home`
   | `/lfsyd/old_home`
-  | `/lfsyd/tag`
-  | `/lfsyd/tag/${string}`
-  | `/lfsyd/user`
-  | `/lfsyd/user/${string}`
-  | `/lhratings/research`
-  | `/lhratings/research/${string}`
-  | `/lianxh`
-  | `/lianxh/${string}`
-  | `/lifeweek/channel/${string}`
-  | `/lifeweek/tag/${string}`
-  | `/lightnovel/${string}`
-  | `/lightnovel/${string}/${string}`
-  | `/likeshop/${string}`
-  | `/line/today`
-  | `/line/today/${string}/${string}`
-  | `/line/today/${string}/publisher/${string}`
+  | `/lfsyd/tag/:tagId?`
+  | `/lfsyd/user/:id?`
+  | `/lhratings/research/:type?`
+  | `/lianxh/:category?`
+  | `/lifeweek/channel/:id`
+  | `/lifeweek/tag/:id`
+  | `/lightnovel/:keywords/:security_key?`
+  | `/likeshop/:site`
+  | `/line/today/:edition/publisher/:id`
+  | `/line/today/:edition?/:tab?`
   | `/lineageos/changes`
   | `/link3/events`
-  | `/link3/profile/${string}`
-  | `/linkedin/cn/jobs`
-  | `/linkedin/cn/jobs/${string}`
-  | `/linkedin/company/${string}/posts`
-  | `/linkedin/jobs/${string}/${string}`
-  | `/linkedin/jobs/${string}/${string}/${string}/${string}`
-  | `/linkresearcher/${string}`
-  | `/linovelib/novel/${string}`
-  | `/linovelib/volume/${string}`
-  | `/liquipedia/counterstrike/matches/${string}`
-  | `/liquipedia/dota2/matches/${string}`
-  | `/literotica/category/${string}`
+  | `/link3/profile/:handle`
+  | `/linkedin/cn/jobs/:keywords?`
+  | `/linkedin/company/:company_id/posts`
+  | `/linkedin/jobs/:job_types/:exp_levels/:keywords?/:routeParams?`
+  | `/linkresearcher/:params`
+  | `/linovelib/novel/:id`
+  | `/linovelib/volume/:id`
+  | `/liquipedia/counterstrike/matches/:team`
+  | `/liquipedia/dota2/matches/:id`
+  | `/literotica/category/:category`
   | `/literotica/new`
-  | `/liulinblog`
-  | `/liulinblog/${string}`
-  | `/liulinblog/itnews/${string}`
-  | `/liveuamap`
-  | `/liveuamap/${string}`
-  | `/lkong/forum`
-  | `/lkong/forum/${string}/${string}`
-  | `/lkong/thread/${string}`
+  | `/liulinblog/:params{.+}?`
+  | `/liulinblog/itnews/:channel`
+  | `/liveuamap/:region?`
+  | `/lkong/forum/:id?/:digest?`
+  | `/lkong/thread/:id`
   | `/lmu/jobs`
-  | `/lofter/collection/${string}`
-  | `/lofter/tag`
-  | `/lofter/tag/${string}/${string}`
-  | `/lofter/user`
-  | `/lofter/user/${string}`
-  | `/logclub`
-  | `/logclub/${string}`
-  | `/logclub/lc_report`
-  | `/logclub/lc_report/${string}`
-  | `/logclub/report`
-  | `/logclub/report/${string}`
+  | `/lofter/collection/:collectionID`
+  | `/lofter/tag/:name?/:type?`
+  | `/lofter/user/:name?`
+  | `/logclub/:category{.+}?`
+  | `/logclub/lc_report/:id?`
+  | `/logclub/report/:id?`
   | `/logonews*`
-  | `/logonews/tag/${string}`
-  | `/logonews/work/tags/${string}`
-  | `/logrocket/${string}`
-  | `/loltw/news`
-  | `/loltw/news/${string}`
-  | `/loongarch/post`
-  | `/loongarch/post/${string}`
-  | `/lorientlejour`
-  | `/lorientlejour/${string}`
-  | `/lovelive-anime/news`
-  | `/lovelive-anime/news/${string}/${string}/${string}`
-  | `/lrepacks`
-  | `/lrepacks/${string}`
-  | `/lsnu/jiaowc/tzgg`
-  | `/lsnu/jiaowc/tzgg/${string}`
+  | `/logonews/tag/:tag`
+  | `/logonews/work/tags/:tag`
+  | `/logrocket/:type`
+  | `/loltw/news/:category?`
+  | `/loongarch/post/:type?`
+  | `/lorientlejour/:category?`
+  | `/lovelive-anime/news/:abbr?/:category?/:option?`
+  | `/lrepacks/:category?`
+  | `/lsnu/jiaowc/tzgg/:category?`
   | `/ltaaa/article`
-  | `/luma/${string}`
+  | `/luma/:url`
   | `/luogu/contest`
-  | `/luogu/daily`
-  | `/luogu/daily/${string}`
-  | `/luogu/user/article/${string}`
-  | `/luogu/user/blog/${string}`
-  | `/luogu/user/feed/${string}`
+  | `/luogu/daily/:id?`
+  | `/luogu/user/article/:uid`
+  | `/luogu/user/blog/:name`
+  | `/luogu/user/feed/:uid`
   | `/luolei/`
   | `/luxiangdong/archive`
-  | `/lvv2/news/${string}`
-  | `/lvv2/news/${string}/${string}`
-  | `/lvv2/top/${string}`
-  | `/lvv2/top/${string}/${string}`
+  | `/lvv2/news/:channel/:sort?`
+  | `/lvv2/top/:channel/:sort?`
   | `/lxixsxa/disco`
   | `/lxixsxa/info`
-  | `/m-78/news`
-  | `/m-78/news/${string}`
-  | `/m4`
-  | `/m4/${string}/${string}`
-  | `/maccms/${string}`
-  | `/maccms/${string}/${string}/${string}`
+  | `/m-78/news/:category?`
+  | `/m4/:id?/:category{.+}?`
+  | `/maccms/:domain/:type?/:size?`
   | `/macfilos/blog`
-  | `/macmenubar/recently`
-  | `/macmenubar/recently/${string}`
-  | `/macupdate/app/${string}`
-  | `/macupdate/app/${string}/${string}`
-  | `/magazinelib/latest-magazine`
-  | `/magazinelib/latest-magazine/${string}`
+  | `/macmenubar/recently/:category?`
+  | `/macupdate/app/:appId/:appSlug?`
+  | `/magazinelib/latest-magazine/:query?`
   | `/magnumphotos/magazine`
-  | `/mail/imap/${string}`
-  | `/mail/imap/${string}/${string}`
+  | `/mail/imap/:email/:folder{.+}?`
   | `/makerworld/contests`
   | `/makerworld/trending`
-  | `/makerworld/user/${string}/upload`
-  | `/malaysiakini/${string}`
-  | `/malaysiakini/${string}/${string}`
-  | `/mangadex/manga/${string}`
-  | `/mangadex/manga/${string}/${string}`
-  | `/mangadex/mdlist/${string}`
-  | `/mangadex/mdlist/${string}/${string}`
-  | `/mangadex/user/feed/follow`
-  | `/mangadex/user/feed/follow/${string}`
-  | `/mangadex/user/follow`
-  | `/mangadex/user/follow/${string}`
-  | `/manhuagui`
-  | `/manhuagui/${string}/comic/${string}/${string}`
-  | `/manhuagui/comic/${string}`
-  | `/manhuagui/comic/${string}/${string}`
+  | `/makerworld/user/:handle/upload`
+  | `/malaysiakini/:lang/:category?`
+  | `/mangadex/manga/:id/:lang?`
+  | `/mangadex/mdlist/:id/:lang?`
+  | `/mangadex/user/feed/follow/:lang?`
+  | `/mangadex/user/follow/:type?`
+  | `/manhuagui/:domain?/comic/:id/:chapterCnt?`
+  | `/manhuagui/comic/:id/:chapterCnt?`
   | `/manhuagui/subscribe`
   | `/manus/blog`
-  | `/manyvids/profile/vids/${string}`
-  | `/mashiro/${string}`
-  | `/mastodon/account_id/${string}/${string}/statuses`
-  | `/mastodon/account_id/${string}/${string}/statuses/${string}`
-  | `/mastodon/acct/${string}/statuses`
-  | `/mastodon/acct/${string}/statuses/${string}`
-  | `/mastodon/remote/${string}`
-  | `/mastodon/remote/${string}/${string}`
-  | `/mastodon/tag/${string}/${string}`
-  | `/mastodon/tag/${string}/${string}/${string}`
-  | `/mastodon/timeline/${string}`
-  | `/mastodon/timeline/${string}/${string}`
+  | `/manyvids/profile/vids/:uid`
+  | `/mashiro/:lang`
+  | `/mastodon/account_id/:site/:account_id/statuses/:only_media?`
+  | `/mastodon/acct/:acct/statuses/:only_media?`
+  | `/mastodon/remote/:site/:only_media?`
+  | `/mastodon/tag/:site/:hashtag/:only_media?`
+  | `/mastodon/timeline/:site/:only_media?`
   | `/mathpix/blog`
-  | `/matters/author/${string}`
-  | `/matters/latest`
-  | `/matters/latest/${string}`
-  | `/matters/tags/${string}`
-  | `/mckinsey/cn`
-  | `/mckinsey/cn/${string}`
-  | `/mcmod/${string}`
-  | `/mdpi/${string}`
+  | `/matters/author/:uid`
+  | `/matters/latest/:type?`
+  | `/matters/tags/:tid`
+  | `/mckinsey/cn/:category?`
+  | `/mcmod/:type`
+  | `/mdpi/:journal`
   | `/medieval-china/`
-  | `/medium/feed/${string}`
-  | `/medium/following/${string}`
-  | `/medium/for-you/${string}`
-  | `/medium/list/${string}/${string}`
-  | `/medium/tag/${string}/${string}`
-  | `/medsci`
-  | `/medsci/${string}/${string}`
-  | `/meishichina/recipe`
-  | `/meishichina/recipe/${string}`
+  | `/medium/feed/:user`
+  | `/medium/following/:user`
+  | `/medium/for-you/:user`
+  | `/medium/list/:user/:catalogId`
+  | `/medium/tag/:user/:tag`
+  | `/medsci/:sid?/:tid?`
+  | `/meishichina/recipe/:category{.+}?`
   | `/meituan/tech`
-  | `/melonbooks/search`
-  | `/melonbooks/search/${string}`
-  | `/mercari/${string}/${string}/${string}/${string}`
-  | `/mercari/search/${string}`
+  | `/melonbooks/search/:query?`
+  | `/mercari/:sort/:order/:status/:keyword`
+  | `/mercari/search/:query`
   | `/meta/ai/blog`
-  | `/metacritic`
-  | `/metacritic/${string}/${string}/${string}`
+  | `/metacritic/:type?/:sort?/:filter?`
   | `/meteoblue/weathernews`
-  | `/meteor`
-  | `/meteor/${string}`
+  | `/meteor/:board?`
   | `/meteor/boards`
-  | `/metmuseum/exhibitions`
-  | `/metmuseum/exhibitions/${string}`
+  | `/metmuseum/exhibitions/:state?`
   | `/mi/crowdfunding`
   | `/mi/golden`
-  | `/microsoft/edge/addon/${string}`
+  | `/microsoft/edge/addon/:crxid`
   | `/microsoft/mcr/product/*`
-  | `/mihoyo/bbs/follow-list/${string}`
-  | `/mihoyo/bbs/img-ranking/${string}`
-  | `/mihoyo/bbs/img-ranking/${string}/${string}`
-  | `/mihoyo/bbs/official/${string}`
-  | `/mihoyo/bbs/official/${string}/${string}/${string}/${string}`
+  | `/mihoyo/bbs/follow-list/:uid`
+  | `/mihoyo/bbs/img-ranking/:game/:routeParams?`
+  | `/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?`
   | `/mihoyo/bbs/timeline`
-  | `/mihoyo/bbs/user-post/${string}`
-  | `/mihoyo/sr`
-  | `/mihoyo/sr/${string}/${string}`
-  | `/mihoyo/ys`
-  | `/mihoyo/ys/${string}/${string}`
-  | `/mihoyo/zzz`
-  | `/mihoyo/zzz/${string}/${string}`
-  | `/mindmeister`
-  | `/mindmeister/${string}/${string}`
+  | `/mihoyo/bbs/user-post/:uid`
+  | `/mihoyo/sr/:location?/:category?`
+  | `/mihoyo/ys/:location?/:category?`
+  | `/mihoyo/zzz/:location?/:category?`
+  | `/mindmeister/:category?/:language?`
   | `/minecraft/blockedservers`
-  | `/minecraft/java-runtime`
-  | `/minecraft/java-runtime/${string}/${string}`
-  | `/minecraft/version`
-  | `/minecraft/version/${string}/${string}`
-  | `/mingpao`
-  | `/mingpao/${string}/${string}`
-  | `/miniflux/entry/${string}`
-  | `/miniflux/entry/${string}/${string}`
-  | `/miniflux/subscription`
-  | `/miniflux/subscription/${string}`
-  | `/mirror/${string}`
+  | `/minecraft/java-runtime/:arch?/:javaType?`
+  | `/minecraft/version/:versionType?/:linkType?`
+  | `/mingpao/:type?/:category?`
+  | `/miniflux/entry/:feeds/:parameters?`
+  | `/miniflux/subscription/:parameters?`
+  | `/mirror/:id`
   | `/mirrormedia/`
-  | `/mirrormedia/category/${string}`
-  | `/mirrormedia/section/${string}`
+  | `/mirrormedia/category/:category`
+  | `/mirrormedia/section/:section`
   | `/missav/new`
-  | `/misskey/notes/featured/${string}`
-  | `/misskey/timeline/home/${string}`
-  | `/misskey/timeline/home/${string}/${string}`
-  | `/misskey/users/notes/${string}`
-  | `/misskey/users/notes/${string}/${string}`
-  | `/misskon/posts`
-  | `/misskon/posts/${string}`
-  | `/misskon/tag/${string}`
-  | `/misskon/top/${string}`
+  | `/misskey/notes/featured/:site`
+  | `/misskey/timeline/home/:site/:routeParams?`
+  | `/misskey/users/notes/:username/:routeParams?`
+  | `/misskon/posts/:routeParams?`
+  | `/misskon/tag/:tag`
+  | `/misskon/top/:k`
   | `/mit/hanlab/blog`
-  | `/mittrchina`
-  | `/mittrchina/${string}`
-  | `/miui/community/user/${string}`
-  | `/miui/firmware/${string}`
-  | `/miui/firmware/${string}/${string}/${string}`
-  | `/mixcloud/${string}`
-  | `/mixcloud/${string}/${string}`
-  | `/mixcloud/${string}/playlists/${string}`
-  | `/mixi2/community/${string}`
-  | `/mixi2/community/${string}/${string}`
+  | `/mittrchina/:type?`
+  | `/miui/community/user/:uid`
+  | `/miui/firmware/:device/:type?/:region?`
+  | `/mixcloud/:username/:type?`
+  | `/mixcloud/:username/playlists/:playlist`
+  | `/mixi2/community/:id/:media?`
   | `/mixi2/discovery`
   | `/mixi2/home`
-  | `/mixi2/user/${string}`
-  | `/mixi2/user/${string}/${string}`
+  | `/mixi2/user/:name/:media?`
   | `/miyuki/news`
-  | `/modb/topic/${string}`
+  | `/modb/topic/:id`
   | `/modelscope/community`
   | `/modelscope/datasets`
   | `/modelscope/learn`
   | `/modelscope/models`
   | `/modelscope/studios`
-  | `/modian/zhongchou`
-  | `/modian/zhongchou/${string}/${string}/${string}`
-  | `/modrinth/project/${string}/versions`
-  | `/modrinth/project/${string}/versions/${string}`
+  | `/modian/zhongchou/:category?/:sort?/:status?`
+  | `/modrinth/project/:id/versions/:routeParams?`
   | `/mohw/clarification`
-  | `/moodysmismicrosite/report`
-  | `/moodysmismicrosite/report/${string}`
-  | `/mox`
-  | `/mox/${string}`
-  | `/mpaypass/main`
-  | `/mpaypass/main/${string}`
+  | `/moodysmismicrosite/report/:industry?`
+  | `/mox/:category?`
+  | `/mpaypass/main/:type?`
   | `/mpaypass/news`
   | `/mrdx/today`
-  | `/mrm`
-  | `/mrm/${string}`
-  | `/msn/${string}/${string}/${string}`
-  | `/musify`
-  | `/musify/${string}`
+  | `/mrm/:category?`
+  | `/msn/:market/:name/:id`
+  | `/musify/:language?`
   | `/musikguru/news`
-  | `/mwm`
-  | `/mwm/${string}`
+  | `/mwm/:category?`
   | `/my-formosa/`
-  | `/mycard520/category`
-  | `/mycard520/category/${string}`
-  | `/mydrivers`
-  | `/mydrivers/${string}`
-  | `/mydrivers/cid`
-  | `/mydrivers/cid/${string}`
-  | `/mydrivers/rank`
-  | `/mydrivers/rank/${string}`
-  | `/myfans/user/${string}`
-  | `/myfigurecollection`
-  | `/myfigurecollection/${string}/${string}`
-  | `/myfigurecollection/activity`
-  | `/myfigurecollection/activity/${string}/${string}/${string}/${string}/${string}/${string}`
-  | `/mygopen`
-  | `/mygopen/${string}`
-  | `/mymusicsheet/user/sheets/${string}`
-  | `/mymusicsheet/user/sheets/${string}/${string}/${string}`
-  | `/mysql/release`
-  | `/mysql/release/${string}`
-  | `/nankai/ai`
-  | `/nankai/ai/${string}`
-  | `/nankai/cc`
-  | `/nankai/cc/${string}`
-  | `/nankai/graduate`
-  | `/nankai/graduate/${string}`
+  | `/mycard520/category/:category?`
+  | `/mydrivers/:category{.+}?`
+  | `/mydrivers/cid/:id?`
+  | `/mydrivers/rank/:range?`
+  | `/myfans/user/:username`
+  | `/myfigurecollection/:category?/:language?`
+  | `/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?`
+  | `/mygopen/:label?`
+  | `/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?`
+  | `/mysql/release/:version?`
+  | `/nankai/ai/:type?`
+  | `/nankai/cc/:type?`
+  | `/nankai/graduate/:type?`
   | `/nankai/jwc`
   | `/nankai/notice`
-  | `/nankai/yzb`
-  | `/nankai/yzb/${string}`
+  | `/nankai/yzb/:type?`
   | `/nasa/apod`
   | `/nasa/apod-cn`
   | `/nasa/apod-ncku`
-  | `/natgeo/${string}`
-  | `/natgeo/${string}/${string}`
+  | `/natgeo/:cat/:type?`
   | `/natgeo/dailyphoto`
   | `/natgeo/dailyselection`
   | `/nationalgeographic/latest-stories`
   | `/naturalism/`
   | `/nature/cover`
-  | `/nature/highlight`
-  | `/nature/highlight/${string}`
+  | `/nature/highlight/:journal?`
   | `/nature/news`
-  | `/nature/news-and-comment`
-  | `/nature/news-and-comment/${string}`
-  | `/nature/research`
-  | `/nature/research/${string}`
+  | `/nature/news-and-comment/:journal?`
+  | `/nature/research/:journal?`
   | `/nature/siteindex`
-  | `/nautil/topic/${string}`
+  | `/nautil/topic/:tid`
   | `/nautiljon/releases/manga`
-  | `/nbd`
-  | `/nbd/${string}`
+  | `/nbd/:id?`
   | `/nbd/daily`
   | `/nber/new`
   | `/nber/papers`
-  | `/ncc-cma/cmdp/image`
-  | `/ncc-cma/cmdp/image/${string}`
-  | `/ncepu/master/${string}`
-  | `/ncku/csie`
-  | `/ncku/csie/${string}`
-  | `/ncku/phys`
-  | `/ncku/phys/${string}`
+  | `/ncc-cma/cmdp/image/:id{.+}?`
+  | `/ncepu/master/:type`
+  | `/ncku/csie/:catagory?`
+  | `/ncku/phys/:catagory?`
   | `/ncpssd/newlist`
   | `/ncu/jwc`
   | `/ncwu/notice`
   | `/ndss-symposium/ndss`
-  | `/neatdownloadmanager/download`
-  | `/neatdownloadmanager/download/${string}`
+  | `/neatdownloadmanager/download/:os?`
   | `/neea/jlpt`
-  | `/neea/local/${string}`
+  | `/neea/local/:type`
   | `/nenu/sohac/*`
   | `/nenu/yjsy/*`
   | `/netflav/`
-  | `/netflix/newsroom`
-  | `/netflix/newsroom/${string}/${string}`
+  | `/netflix/newsroom/:category?/:region?`
   | `/netflix/research`
-  | `/neu/bmie/${string}`
-  | `/neu/news/${string}`
-  | `/neu/yz/${string}`
+  | `/neu/bmie/:type`
+  | `/neu/news/:type`
+  | `/neu/yz/:type`
   | `/newmuseum/exhibitions`
-  | `/newrank/douyin/${string}`
-  | `/newrank/wechat/${string}`
+  | `/newrank/douyin/:dyid`
+  | `/newrank/wechat/:wxid`
   | `/news/whxw`
   | `/news/xhsxw`
   | `/newseed/latest`
   | `/newslaundry/explainer`
   | `/newslaundry/nl-cheatsheet`
   | `/newslaundry/nl-collaborations`
-  | `/newslaundry/podcast`
-  | `/newslaundry/podcast/${string}`
+  | `/newslaundry/podcast/:category?`
   | `/newslaundry/reports`
   | `/newslaundry/shot`
   | `/newslaundry/subscriber-only`
-  | `/newsmarket`
-  | `/newsmarket/${string}`
+  | `/newsmarket/:category?`
   | `/newswav/`
-  | `/newyorker/${string}`
-  | `/newzmz`
-  | `/newzmz/${string}/${string}`
-  | `/nextapple/realtime`
-  | `/nextapple/realtime/${string}`
+  | `/newyorker/:category`
+  | `/newzmz/:id?/:downLinkType?`
+  | `/nextapple/realtime/:category?`
   | `/nextjs/blog`
-  | `/nga/forum/${string}`
-  | `/nga/forum/${string}/${string}`
-  | `/nga/post/${string}`
-  | `/nga/post/${string}/${string}`
-  | `/ngocn2`
-  | `/ngocn2/${string}`
-  | `/nhentai/index/${string}/${string}`
-  | `/nhentai/index/${string}/${string}/${string}`
-  | `/nhentai/search/${string}`
-  | `/nhentai/search/${string}/${string}`
-  | `/nhk/news`
-  | `/nhk/news/${string}`
+  | `/nga/forum/:fid/:recommend?`
+  | `/nga/post/:tid/:authorId?`
+  | `/ngocn2/:category?`
+  | `/nhentai/index/:key/:keyword/:mode?`
+  | `/nhentai/search/:keyword/:mode?`
+  | `/nhk/news/:lang?`
   | `/nhk/news_web_easy`
   | `/niaogebiji/`
-  | `/niaogebiji/cat/${string}`
+  | `/niaogebiji/cat/:cat`
   | `/niaogebiji/today`
-  | `/nicovideo/mylist/${string}`
-  | `/nicovideo/user/${string}/video`
-  | `/nicovideo/user/${string}/video/${string}`
+  | `/nicovideo/mylist/:id`
+  | `/nicovideo/user/:id/video/:embed?`
   | `/nielsberglund/blog`
-  | `/nifd/research`
-  | `/nifd/research/${string}`
+  | `/nifd/research/:categoryGuid?`
   | `/nikkei/asia`
   | `/nikkei/cn/*`
   | `/nikkei/index`
-  | `/nikkei/news/${string}`
-  | `/nikkei/news/${string}/${string}`
+  | `/nikkei/news/:category/:article_type?`
   | `/nintendo/direct`
   | `/nintendo/eshop/cn`
   | `/nintendo/eshop/hk`
@@ -2758,1701 +1933,1193 @@ export type RoutePath =
   | `/nintendo/news`
   | `/nintendo/news/china`
   | `/nintendo/system-update`
-  | `/nio/nioradio/${string}`
-  | `/nippon`
-  | `/nippon/${string}`
+  | `/nio/nioradio/:albumid`
+  | `/nippon/:category?`
   | `/njglyy/ygbjypx`
-  | `/njit/jwc`
-  | `/njit/jwc/${string}`
+  | `/njit/jwc/:type?`
   | `/njit/tzgg`
-  | `/njnu/ceai/${string}`
-  | `/njnu/jwc/${string}`
+  | `/njnu/ceai/:type`
+  | `/njnu/jwc/:type`
   | `/nju/admission`
   | `/nju/dafls`
-  | `/nju/exchangesys/${string}`
+  | `/nju/exchangesys/:type`
   | `/nju/gra`
   | `/nju/hospital`
   | `/nju/hqjt`
   | `/nju/itsc`
   | `/nju/jjc`
-  | `/nju/jw/${string}`
-  | `/nju/rczp/${string}`
-  | `/nju/scit/${string}`
-  | `/nju/zbb/${string}`
+  | `/nju/jw/:type`
+  | `/nju/rczp/:type`
+  | `/nju/scit/:type`
+  | `/nju/zbb/:type`
   | `/nju/zcc`
   | `/njucm/grabszs`
   | `/njuferret/blog`
-  | `/njupt/jwc`
-  | `/njupt/jwc/${string}`
-  | `/njust/cs`
-  | `/njust/cs/${string}`
-  | `/njust/cwc`
-  | `/njust/cwc/${string}`
-  | `/njust/dgxg`
-  | `/njust/dgxg/${string}`
-  | `/njust/eo`
-  | `/njust/eo/${string}/${string}`
-  | `/njust/eoe`
-  | `/njust/eoe/${string}`
-  | `/njust/gs`
-  | `/njust/gs/${string}`
-  | `/njust/jwc`
-  | `/njust/jwc/${string}`
+  | `/njupt/jwc/:type?`
+  | `/njust/cs/:type?`
+  | `/njust/cwc/:type?`
+  | `/njust/dgxg/:type?`
+  | `/njust/eo/:grade?/:type?`
+  | `/njust/eoe/:type?`
+  | `/njust/gs/:type?`
+  | `/njust/jwc/:type?`
   | `/njxzc/libtzgg`
   | `/njxzc/tzgg`
-  | `/nlc/read`
-  | `/nlc/read/${string}`
-  | `/nltimes/news`
-  | `/nltimes/news/${string}`
-  | `/nmc/weatheralarm`
-  | `/nmc/weatheralarm/${string}`
-  | `/nmtv/column`
-  | `/nmtv/column/${string}`
-  | `/nodejs/blog`
-  | `/nodejs/blog/${string}`
-  | `/nogizaka46/blog`
-  | `/nogizaka46/blog/${string}`
+  | `/nlc/read/:type?`
+  | `/nltimes/news/:category?`
+  | `/nmc/weatheralarm/:province?`
+  | `/nmtv/column/:id?`
+  | `/nodejs/blog/:language?`
+  | `/nogizaka46/blog/:id?`
   | `/nogizaka46/news`
-  | `/nosec`
-  | `/nosec/${string}`
+  | `/nosec/:keykind?`
   | `/notateslaapp/ota`
-  | `/notefolio/search`
-  | `/notefolio/search/${string}/${string}/${string}/${string}`
-  | `/notion/database/${string}`
+  | `/notefolio/search/:category?/:order?/:time?/:query?`
+  | `/notion/database/:databaseId`
   | `/notion/release`
-  | `/now/news`
-  | `/now/news/${string}/${string}`
-  | `/nowcoder/discuss/${string}/${string}`
-  | `/nowcoder/experience/${string}`
-  | `/nowcoder/jobcenter`
-  | `/nowcoder/jobcenter/${string}/${string}/${string}/${string}/${string}`
+  | `/now/news/:category?/:id?`
+  | `/nowcoder/discuss/:type/:order`
+  | `/nowcoder/experience/:tagId`
+  | `/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?`
   | `/nowcoder/recommend`
-  | `/nowcoder/schedule`
-  | `/nowcoder/schedule/${string}/${string}`
-  | `/npm/package/${string}/)?[a-z0-9-~][a-z0-9-._~]*}`
-  | `/npr`
-  | `/npr/${string}`
-  | `/ntdm/video/${string}`
-  | `/ntdtv/${string}/${string}`
+  | `/nowcoder/schedule/:propertyId?/:typeId?`
+  | `/npm/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}`
+  | `/npr/:endpoint?`
+  | `/ntdm/video/:id`
+  | `/ntdtv/:language/:id`
   | `/ntrblog/articles`
-  | `/nua/dc/${string}`
-  | `/nua/gra/${string}`
-  | `/nua/index/${string}`
-  | `/nua/lib/${string}`
-  | `/nua/sxw/${string}`
-  | `/nuaa/cae/${string}`
-  | `/nuaa/cae/${string}/${string}`
-  | `/nuaa/cs/${string}`
-  | `/nuaa/cs/${string}/${string}`
-  | `/nuaa/jwc/${string}`
-  | `/nuaa/jwc/${string}/${string}`
-  | `/nuaa/yjsy/${string}`
-  | `/nuaa/yjsy/${string}/${string}`
-  | `/nudt/yjszs`
-  | `/nudt/yjszs/${string}`
-  | `/nuist/bulletin`
-  | `/nuist/bulletin/${string}`
-  | `/nuist/cas`
-  | `/nuist/cas/${string}`
-  | `/nuist/jwc`
-  | `/nuist/jwc/${string}`
+  | `/nua/dc/:type`
+  | `/nua/gra/:type`
+  | `/nua/index/:type`
+  | `/nua/lib/:type`
+  | `/nua/sxw/:type`
+  | `/nuaa/cae/:type/:getDescription?`
+  | `/nuaa/cs/:type/:getDescription?`
+  | `/nuaa/jwc/:type/:getDescription?`
+  | `/nuaa/yjsy/:type/:getDescription?`
+  | `/nudt/yjszs/:keyId?`
+  | `/nuist/bulletin/:category?`
+  | `/nuist/cas/:category?`
+  | `/nuist/jwc/:category?`
   | `/nuist/lib`
-  | `/nuist/scs`
-  | `/nuist/scs/${string}`
-  | `/nuist/sese`
-  | `/nuist/sese/${string}`
+  | `/nuist/scs/:category?`
+  | `/nuist/sese/:category?`
   | `/nuist/xgc`
   | `/nuist/yjs/*`
-  | `/nwafu`
-  | `/nwafu/${string}`
-  | `/nwnu/college/csse/${string}`
-  | `/nwnu/department/academic-affairs/${string}`
-  | `/nwnu/department/postgraduate/${string}`
-  | `/nyaa/search`
-  | `/nyaa/search/${string}`
-  | `/nyaa/sukebei/search`
-  | `/nyaa/sukebei/search/${string}`
-  | `/nyaa/sukebei/user`
-  | `/nyaa/sukebei/user/${string}`
-  | `/nyaa/sukebei/user/${string}/search`
-  | `/nyaa/sukebei/user/${string}/search/${string}`
-  | `/nyaa/user`
-  | `/nyaa/user/${string}`
-  | `/nyaa/user/${string}/search`
-  | `/nyaa/user/${string}/search/${string}`
-  | `/nycu/aa`
-  | `/nycu/aa/${string}`
-  | `/nycu/announcement/${string}`
-  | `/nycu/cs`
-  | `/nycu/cs/${string}`
-  | `/nycu/osa`
-  | `/nycu/osa/${string}`
+  | `/nwafu/:type?`
+  | `/nwnu/college/csse/:column`
+  | `/nwnu/department/academic-affairs/:column`
+  | `/nwnu/department/postgraduate/:column`
+  | `/nyaa/search/:query?`
+  | `/nyaa/sukebei/search/:query?`
+  | `/nyaa/sukebei/user/:username/search/:query?`
+  | `/nyaa/sukebei/user/:username?`
+  | `/nyaa/user/:username/search/:query?`
+  | `/nyaa/user/:username?`
+  | `/nycu/aa/:id?`
+  | `/nycu/announcement/:type`
+  | `/nycu/cs/:category?`
+  | `/nycu/osa/:id?`
   | `/nymity/censorbib`
-  | `/nytimes`
-  | `/nytimes/${string}`
-  | `/nytimes/book`
-  | `/nytimes/book/${string}`
+  | `/nytimes/:lang?`
+  | `/nytimes/book/:category?`
   | `/nytimes/daily_briefing_chinese`
-  | `/nytimes/rss`
-  | `/nytimes/rss/${string}`
+  | `/nytimes/rss/:cat?`
   | `/obsidian/plugins`
-  | `/obsidian/publish/${string}`
-  | `/oceanengine/index/${string}`
-  | `/oceanengine/index/${string}/${string}`
+  | `/obsidian/publish/:id`
+  | `/oceanengine/index/:keyword/:channel?`
   | `/oct0pu5/`
-  | `/odaily`
-  | `/odaily/${string}`
+  | `/odaily/:id?`
   | `/odaily/activity`
   | `/odaily/newsflash`
-  | `/odaily/search/news/${string}`
-  | `/odaily/user/${string}`
-  | `/oeeee/app/channel/${string}`
-  | `/oeeee/app/reporter/${string}`
-  | `/oeeee/web/${string}`
+  | `/odaily/search/news/:keyword`
+  | `/odaily/user/:id`
+  | `/oeeee/app/channel/:id`
+  | `/oeeee/app/reporter/:id`
+  | `/oeeee/web/:channel`
   | `/oesw*`
-  | `/oilchem`
-  | `/oilchem/${string}/${string}/${string}`
-  | `/okx`
-  | `/okx/${string}`
-  | `/olevod/vod/${string}`
+  | `/oilchem/:type?/:category?/:subCategory?`
+  | `/okx/:section?`
+  | `/olevod/vod/:id`
   | `/olevod/vodlist`
   | `/ollama/blog`
   | `/ollama/library`
-  | `/oncc/${string}`
-  | `/oncc/${string}/${string}`
-  | `/oncc/money18`
-  | `/oncc/money18/${string}`
+  | `/oncc/:language/:channel?`
+  | `/oncc/money18/:id?`
   | `/onehu/`
   | `/onet/news`
-  | `/oo-software/changelog/${string}`
+  | `/oo-software/changelog/:id`
   | `/openai/chatgpt/release-notes`
   | `/openai/cookbook`
   | `/openai/news`
   | `/openai/research`
-  | `/openrice/${string}/hongkong/explore/chart/${string}`
-  | `/openrice/${string}/hongkong/offers`
-  | `/openrice/${string}/hongkong/promos`
-  | `/openrice/${string}/hongkong/voting/top/${string}`
-  | `/openwrt/releases/${string}/${string}`
-  | `/orcid/${string}`
-  | `/oreno3d/authors/${string}/${string}`
-  | `/oreno3d/authors/${string}/${string}/${string}`
-  | `/oreno3d/characters/${string}/${string}`
-  | `/oreno3d/characters/${string}/${string}/${string}`
-  | `/oreno3d/origins/${string}/${string}`
-  | `/oreno3d/origins/${string}/${string}/${string}`
-  | `/oreno3d/search/${string}/${string}`
-  | `/oreno3d/search/${string}/${string}/${string}`
-  | `/oreno3d/tags/${string}/${string}`
-  | `/oreno3d/tags/${string}/${string}/${string}`
+  | `/openrice/:lang/hongkong/explore/chart/:category`
+  | `/openrice/:lang/hongkong/offers`
+  | `/openrice/:lang/hongkong/promos`
+  | `/openrice/:lang/hongkong/voting/top/:categoryKey`
+  | `/openwrt/releases/:brand/:model`
+  | `/orcid/:id`
+  | `/oreno3d/authors/:authorid/:sort/:pagelimit?`
+  | `/oreno3d/characters/:characterid/:sort/:pagelimit?`
+  | `/oreno3d/origins/:originid/:sort/:pagelimit?`
+  | `/oreno3d/search/:keyword/:sort/:pagelimit?`
+  | `/oreno3d/tags/:tagid/:sort/:pagelimit?`
   | `/ornl/all-news`
-  | `/oschina/column/${string}`
-  | `/oschina/event`
-  | `/oschina/event/${string}`
-  | `/oschina/news`
-  | `/oschina/news/${string}`
-  | `/oschina/topic/${string}`
-  | `/oschina/u/${string}`
-  | `/oschina/user/${string}`
-  | `/oshwhub/explore`
-  | `/oshwhub/explore/${string}/${string}/${string}`
-  | `/osu/latest-ranked`
-  | `/osu/latest-ranked/${string}`
-  | `/osu/packs`
-  | `/osu/packs/${string}`
-  | `/otobanana/user/${string}`
-  | `/otobanana/user/${string}/cast`
-  | `/otobanana/user/${string}/livestream`
+  | `/oschina/column/:id`
+  | `/oschina/event/:category?`
+  | `/oschina/news/:category?`
+  | `/oschina/topic/:topic`
+  | `/oschina/u/:uid`
+  | `/oschina/user/:id`
+  | `/oshwhub/explore/:type?/:origin?/:projectTag{.+}?`
+  | `/osu/latest-ranked/:routeParams?`
+  | `/osu/packs/:type?`
+  | `/otobanana/user/:id`
+  | `/otobanana/user/:id/cast`
+  | `/otobanana/user/:id/livestream`
   | `/ouc/hqsz`
-  | `/ouc/it`
-  | `/ouc/it/${string}`
+  | `/ouc/it/:type?`
   | `/ouc/it/postgraduate`
-  | `/ouc/it/tx`
-  | `/ouc/it/tx/${string}`
+  | `/ouc/it/tx/:id?`
   | `/ouc/jwc`
   | `/ouc/jwgl`
   | `/ouc/yjs`
-  | `/oup/journals/${string}`
-  | `/outagereport/${string}`
-  | `/outagereport/${string}/${string}`
-  | `/p-articles/contributors/${string}`
-  | `/p-articles/section/${string}`
+  | `/oup/journals/:name`
+  | `/outagereport/:name/:count?`
+  | `/p-articles/contributors/:author`
+  | `/p-articles/section/:section`
   | `/pacilution/latest`
-  | `/panewslab/author/${string}`
-  | `/panewslab/column/${string}`
+  | `/panewslab/author/:id`
+  | `/panewslab/column/:id`
   | `/panewslab/news`
-  | `/panewslab/profundity`
-  | `/panewslab/profundity/${string}`
-  | `/panewslab/topic/${string}`
-  | `/papers/category`
-  | `/papers/category/${string}`
-  | `/papers/query`
-  | `/papers/query/${string}`
+  | `/panewslab/profundity/:category?`
+  | `/panewslab/topic/:id`
+  | `/papers/category/:id{.+}?`
+  | `/papers/query/:keyword{.+}?`
   | `/paradigm/writing`
-  | `/parliament.uk/commonslibrary/type`
-  | `/parliament.uk/commonslibrary/type/${string}`
-  | `/parliament.uk/lordslibrary/type`
-  | `/parliament.uk/lordslibrary/type/${string}`
-  | `/parliament.uk/petitions`
-  | `/parliament.uk/petitions/${string}`
-  | `/parliament/section77`
-  | `/parliament/section77/${string}`
-  | `/patagonia/new-arrivals/${string}`
-  | `/patreon/${string}`
+  | `/parliament.uk/commonslibrary/type/:topic?`
+  | `/parliament.uk/lordslibrary/type/:topic?`
+  | `/parliament.uk/petitions/:state?`
+  | `/parliament/section77/:type?`
+  | `/patagonia/new-arrivals/:category`
+  | `/patreon/:creator`
   | `/paulgraham/`
   | `/paulgraham/articles`
   | `/paulgraham/essays`
-  | `/pconline/focus`
-  | `/pconline/focus/${string}`
+  | `/pconline/focus/:category?`
   | `/pencilnews/`
   | `/penguin-random-house/articles`
   | `/penguin-random-house/the-read-down`
-  | `/people`
-  | `/people/${string}/${string}`
-  | `/people/liuyan/${string}`
-  | `/people/liuyan/${string}/${string}`
-  | `/people/xjpjh`
-  | `/people/xjpjh/${string}/${string}`
-  | `/peopo/topic`
-  | `/peopo/topic/${string}`
-  | `/phoronix`
-  | `/phoronix/${string}/${string}`
+  | `/people/:site?/:category{.+}?`
+  | `/people/liuyan/:id/:state?`
+  | `/people/xjpjh/:keyword?/:year?`
+  | `/peopo/topic/:topicId?`
+  | `/phoronix/:category?/:topic?`
   | `/pianyivps/`
-  | `/pianyuan/index`
-  | `/pianyuan/index/${string}`
+  | `/pianyuan/index/:media?`
   | `/pianyuan/indexers/pianyuan/results/search/api`
-  | `/picnob.info/user/${string}`
-  | `/picnob.info/user/${string}/${string}`
-  | `/picnob/user/${string}`
-  | `/picnob/user/${string}/${string}`
-  | `/picuki/profile/${string}`
-  | `/picuki/profile/${string}/${string}/${string}`
-  | `/pikabu/${string}/${string}`
-  | `/pikabu/user/${string}`
-  | `/pincong/category`
-  | `/pincong/category/${string}/${string}`
-  | `/pincong/hot`
-  | `/pincong/hot/${string}`
-  | `/pincong/topic/${string}`
+  | `/picnob.info/user/:id/:type?`
+  | `/picnob/user/:id/:type?`
+  | `/picuki/profile/:id/:type?/:functionalFlag?`
+  | `/pikabu/:type/:name`
+  | `/pikabu/user/:name`
+  | `/pincong/category/:category?/:sort?`
+  | `/pincong/hot/:category?`
+  | `/pincong/topic/:topic`
   | `/pingwest/status`
-  | `/pingwest/tag/${string}/${string}`
-  | `/pingwest/tag/${string}/${string}/${string}`
-  | `/pingwest/user/${string}`
-  | `/pingwest/user/${string}/${string}/${string}`
-  | `/pinterest/user/${string}`
-  | `/pinterest/user/${string}/${string}`
-  | `/pixabay/search/${string}`
-  | `/pixabay/search/${string}/${string}`
-  | `/pixelstech/feed`
-  | `/pixelstech/feed/${string}`
-  | `/pixiv/novel/series/${string}`
-  | `/pixiv/ranking/${string}`
-  | `/pixiv/ranking/${string}/${string}`
-  | `/pixiv/search/${string}`
-  | `/pixiv/search/${string}/${string}/${string}/${string}`
-  | `/pixiv/user/${string}`
-  | `/pixiv/user/bookmarks/${string}`
+  | `/pingwest/tag/:tag/:type/:option?`
+  | `/pingwest/user/:uid/:type?/:option?`
+  | `/pinterest/user/:username/:type?`
+  | `/pixabay/search/:q/:order?`
+  | `/pixelstech/feed/:topic?`
+  | `/pixiv/novel/series/:id`
+  | `/pixiv/ranking/:mode/:date?`
+  | `/pixiv/search/:keyword/:order?/:mode?/:include_ai?`
+  | `/pixiv/user/:id`
+  | `/pixiv/user/bookmarks/:id`
   | `/pixiv/user/illustfollows`
-  | `/pixiv/user/novels/${string}`
-  | `/pixiv/user/novels/${string}/${string}`
-  | `/pixivision/${string}`
-  | `/pixivision/${string}/${string}`
+  | `/pixiv/user/novels/:id/:full_content?`
+  | `/pixivision/:lang/:category?`
   | `/piyao/jrpy`
   | `/pkmer/recent`
   | `/pku/admission/sszs`
   | `/pku/bbs/hot`
   | `/pku/cls/announcement`
   | `/pku/cls/lecture`
-  | `/pku/eecs`
-  | `/pku/eecs/${string}`
-  | `/pku/hr`
-  | `/pku/hr/${string}`
+  | `/pku/eecs/:type?`
+  | `/pku/hr/:category?`
   | `/pku/nsd/gd`
   | `/pku/rccp/mzyt`
-  | `/pku/scc/recruit`
-  | `/pku/scc/recruit/${string}`
+  | `/pku/scc/recruit/:type?`
   | `/pku/ss/admission`
   | `/pku/ss/notice`
   | `/pku/ss/pgadmin`
-  | `/playno1/av`
-  | `/playno1/av/${string}`
-  | `/playno1/st`
-  | `/playno1/st/${string}`
+  | `/playno1/av/:catid?`
+  | `/playno1/st/:catid?`
   | `/playpcesor/`
   | `/plurk/anonymous`
   | `/plurk/hotlinks`
-  | `/plurk/news`
-  | `/plurk/news/${string}`
-  | `/plurk/search/${string}`
-  | `/plurk/top`
-  | `/plurk/top/${string}/${string}`
-  | `/plurk/topic/${string}`
-  | `/plurk/user/${string}`
-  | `/pnas`
-  | `/pnas/${string}`
+  | `/plurk/news/:lang?`
+  | `/plurk/search/:keyword`
+  | `/plurk/top/:category?/:lang?`
+  | `/plurk/topic/:topic`
+  | `/plurk/user/:user`
+  | `/pnas/:topicPath{.+}?`
   | `/podwise/explore`
-  | `/podwise/explore/${string}`
-  | `/pornhub/category/${string}`
-  | `/pornhub/category_url`
-  | `/pornhub/category_url/${string}/${string}`
-  | `/pornhub/model/${string}`
-  | `/pornhub/model/${string}/${string}/${string}`
-  | `/pornhub/pornstar/${string}`
-  | `/pornhub/pornstar/${string}/${string}/${string}`
-  | `/pornhub/search/${string}`
-  | `/pornhub/users/${string}`
-  | `/pornhub/users/${string}/${string}`
+  | `/podwise/explore/:type`
+  | `/pornhub/category/:caty`
+  | `/pornhub/category_url/:url?/:language?`
+  | `/pornhub/model/:username/:language?/:sort?`
+  | `/pornhub/pornstar/:username/:language?/:sort?`
+  | `/pornhub/search/:keyword`
+  | `/pornhub/users/:username/:language?`
   | `/postman/release-notes`
-  | `/priconne-redive/news`
-  | `/priconne-redive/news/${string}`
+  | `/priconne-redive/news/:server?`
   | `/producthunt/today`
   | `/ps/monthly-games`
-  | `/ps/trophy/${string}`
+  | `/ps/trophy/:id`
   | `/psnine/`
   | `/psnine/game`
-  | `/psnine/node`
-  | `/psnine/node/${string}/${string}`
+  | `/psnine/node/:id?/:order?`
   | `/psnine/shuzhe`
   | `/psnine/trade`
-  | `/psyche/topic/${string}`
-  | `/psyche/type/${string}`
+  | `/psyche/topic/:topic`
+  | `/psyche/type/:type`
   | `/pts*`
   | `/pts/curations`
-  | `/pts/live/${string}`
+  | `/pts/live/:id`
   | `/pts/projects`
-  | `/publico/ciencias`
-  | `/publico/ciencias/${string}`
-  | `/publico/culturas`
-  | `/publico/culturas/${string}`
-  | `/publico/economia`
-  | `/publico/economia/${string}`
-  | `/publico/internacional`
-  | `/publico/internacional/${string}`
-  | `/publico/mujer`
-  | `/publico/mujer/${string}`
-  | `/publico/opinion`
-  | `/publico/opinion/${string}`
-  | `/publico/politica`
-  | `/publico/politica/${string}`
+  | `/publico/ciencias/:subsection?`
+  | `/publico/culturas/:subsection?`
+  | `/publico/economia/:subsection?`
+  | `/publico/internacional/:subsection?`
+  | `/publico/mujer/:subsection?`
+  | `/publico/opinion/:subsection?`
+  | `/publico/politica/:subsection?`
   | `/publico/public`
-  | `/publico/sociedad`
-  | `/publico/sociedad/${string}`
+  | `/publico/sociedad/:subsection?`
   | `/publico/tremending`
-  | `/pubmed/trending`
-  | `/pubmed/trending/${string}`
-  | `/pubscholar/explore`
-  | `/pubscholar/explore/${string}/${string}`
+  | `/pubmed/trending/:filters?`
+  | `/pubscholar/explore/:category?/:keyword?`
   | `/pumc/mdadmission`
   | `/putty/changes`
   | `/pwc/strategyand/sustainability`
   | `/python/release`
-  | `/qbitai/category/${string}`
-  | `/qbitai/tag/${string}`
+  | `/qbitai/category/:category`
+  | `/qbitai/tag/:tag`
   | `/qbittorrent/news`
   | `/qdu/houqin`
   | `/qdu/jwc`
-  | `/qianp/news`
-  | `/qianp/news/${string}`
-  | `/qianzhan/analyst/column`
-  | `/qianzhan/analyst/column/${string}`
-  | `/qianzhan/analyst/rank`
-  | `/qianzhan/analyst/rank/${string}`
-  | `/qiche365/recall/${string}`
-  | `/qidian/author/${string}`
-  | `/qidian/chapter/${string}`
-  | `/qidian/forum/${string}`
-  | `/qidian/free`
-  | `/qidian/free-next`
-  | `/qidian/free-next/${string}`
-  | `/qidian/free/${string}`
-  | `/qingting/channel/${string}`
-  | `/qingting/podcast/${string}`
-  | `/qipamaijia`
-  | `/qipamaijia/${string}`
-  | `/qiyoujiage/${string}`
+  | `/qianp/news/:path{.+}?`
+  | `/qianzhan/analyst/column/:type?`
+  | `/qianzhan/analyst/rank/:type?`
+  | `/qiche365/recall/:channel`
+  | `/qidian/author/:id`
+  | `/qidian/chapter/:id`
+  | `/qidian/forum/:id`
+  | `/qidian/free-next/:type?`
+  | `/qidian/free/:type?`
+  | `/qingting/channel/:id`
+  | `/qingting/podcast/:id`
+  | `/qipamaijia/:cate?`
+  | `/qiyoujiage/:path{.+}`
   | `/qlu/notice`
-  | `/qm120/news`
-  | `/qm120/news/${string}`
-  | `/qoo-app/apps`
-  | `/qoo-app/apps/${string}/card/${string}`
-  | `/qoo-app/apps/${string}/comment/${string}`
-  | `/qoo-app/apps/${string}/note/${string}`
-  | `/qoo-app/apps/${string}/post/${string}`
-  | `/qoo-app/news`
-  | `/qoo-app/news/${string}`
-  | `/qoo-app/notes`
-  | `/qoo-app/notes/${string}/note/${string}`
-  | `/qoo-app/notes/${string}/topic/${string}`
-  | `/qoo-app/notes/${string}/user/${string}`
-  | `/qoo-app/user`
-  | `/qoo-app/user/${string}/appComment/${string}`
-  | `/qq/ac/comic`
-  | `/qq/ac/comic/${string}`
-  | `/qq/ac/rank`
-  | `/qq/ac/rank/${string}/${string}`
-  | `/qq/cfhd/news`
-  | `/qq/cfhd/news/${string}`
+  | `/qm120/news/:category?`
+  | `/qoo-app/apps/:lang?/card/:id`
+  | `/qoo-app/apps/:lang?/comment/:id`
+  | `/qoo-app/apps/:lang?/note/:id`
+  | `/qoo-app/apps/:lang?/post/:id`
+  | `/qoo-app/news/:lang?`
+  | `/qoo-app/notes/:lang?/note/:id`
+  | `/qoo-app/notes/:lang?/topic/:topic`
+  | `/qoo-app/notes/:lang?/user/:uid`
+  | `/qoo-app/user/:lang?/appComment/:uid`
+  | `/qq/ac/comic/:id?`
+  | `/qq/ac/rank/:type?/:time?`
+  | `/qq/cfhd/news/:category?`
   | `/qq/fact`
-  | `/qq/kg/${string}`
-  | `/qq/kg/reply/${string}`
-  | `/qq/lol/news`
-  | `/qq/lol/news/${string}`
-  | `/qq/pd/guild/${string}`
-  | `/qq/pd/guild/${string}/${string}/${string}`
-  | `/qq/weread/${string}`
-  | `/qq88`
-  | `/qq88/${string}`
-  | `/qqorw`
-  | `/qqorw/${string}`
-  | `/qstheory`
-  | `/qstheory/${string}`
-  | `/qstheory/magazine/${string}`
-  | `/questmobile/report`
-  | `/questmobile/report/${string}/${string}`
-  | `/questn/community/${string}`
-  | `/questn/events`
-  | `/questn/events/${string}`
-  | `/quicker/qa`
-  | `/quicker/qa/${string}/${string}`
-  | `/quicker/share`
-  | `/quicker/share/${string}`
+  | `/qq/kg/:userId`
+  | `/qq/kg/reply/:playId`
+  | `/qq/lol/news/:category?`
+  | `/qq/pd/guild/:id/:sub?/:sort?`
+  | `/qq/weread/:category`
+  | `/qq88/:category?`
+  | `/qqorw/:category?`
+  | `/qstheory/:category?`
+  | `/qstheory/magazine/:magazine`
+  | `/questmobile/report/:industry?/:label?`
+  | `/questn/community/:communityUrl`
+  | `/questn/events/:filter?`
+  | `/quicker/qa/:category?/:state?`
+  | `/quicker/share/:category?`
   | `/quicker/update`
-  | `/quicker/user/${string}/${string}`
+  | `/quicker/user/:category/:id`
   | `/quicker/versions`
   | `/qust/jw`
-  | `/qweather/3days/${string}`
-  | `/qweather/now/${string}`
-  | `/qwenlm/blog`
-  | `/qwenlm/blog/${string}`
-  | `/qztc/home/${string}`
-  | `/qztc/jwc/${string}`
-  | `/qztc/sjxy/${string}`
-  | `/radio-canada/latest`
-  | `/radio-canada/latest/${string}`
-  | `/radio/${string}`
-  | `/radio/album/${string}`
-  | `/radio/zhibo/${string}`
+  | `/qweather/3days/:location`
+  | `/qweather/now/:location`
+  | `/qwenlm/blog/:lang?`
+  | `/qztc/home/:type`
+  | `/qztc/jwc/:type`
+  | `/qztc/sjxy/:type`
+  | `/radio-canada/latest/:language?`
+  | `/radio/:id`
+  | `/radio/album/:id`
+  | `/radio/zhibo/:id`
   | `/railway/blog`
   | `/rarehistoricalphotos/`
   | `/raspberrypi/magazine`
-  | `/rattibha/user/${string}`
-  | `/rawkuma/manga/${string}`
+  | `/rattibha/user/:user`
+  | `/rawkuma/manga/:id`
   | `/raycast/changelog`
   | `/react/blog`
   | `/reactiflux/transcripts`
   | `/reactnewsletter/`
-  | `/readhub`
-  | `/readhub/${string}`
+  | `/readhub/:category?`
   | `/readhub/daily`
-  | `/readwise/list`
-  | `/readwise/list/${string}`
+  | `/readwise/list/:routeParams?`
   | `/rebase/geekdaily`
   | `/remnote/changelog`
-  | `/researchgate/publications/${string}`
-  | `/resetera/thread/${string}`
+  | `/researchgate/publications/:id`
+  | `/resetera/thread/:id`
   | `/resonac/products`
-  | `/reuters/${string}`
-  | `/reuters/${string}/${string}`
+  | `/reuters/:category/:topic?`
   | `/reuters/investigates`
-  | `/rfa`
-  | `/rfa/${string}/${string}/${string}`
-  | `/rfi`
-  | `/rfi/${string}`
-  | `/right/forum`
-  | `/right/forum/${string}`
+  | `/rfa/:language?/:channel?/:subChannel?`
+  | `/rfi/:path{.+}?`
+  | `/right/forum/:id?`
   | `/rockthejvm/articles`
-  | `/rodong/news`
-  | `/rodong/news/${string}`
-  | `/routledge/${string}/book-series/${string}`
-  | `/rsc/journal/${string}`
-  | `/rsc/journal/${string}/${string}`
-  | `/rss3/${string}`
-  | `/rss3/${string}/${string}/${string}`
-  | `/rsshub/routes`
-  | `/rsshub/routes/${string}`
-  | `/rsshub/transform/html/${string}/${string}`
-  | `/rsshub/transform/json/${string}/${string}`
-  | `/rsshub/transform/sitemap/${string}`
-  | `/rsshub/transform/sitemap/${string}/${string}`
+  | `/rodong/news/:language?`
+  | `/routledge/:bookName/book-series/:bookId`
+  | `/rsc/journal/:id/:category?`
+  | `/rss3/:account/:network?/:tag?`
+  | `/rsshub/routes/:lang?`
+  | `/rsshub/transform/html/:url/:routeParams`
+  | `/rsshub/transform/json/:url/:routeParams`
+  | `/rsshub/transform/sitemap/:url/:routeParams?`
   | `/ruancan/`
-  | `/ruancan/category`
-  | `/ruancan/category/${string}`
-  | `/ruancan/search`
-  | `/ruancan/search/${string}`
-  | `/ruancan/user/${string}`
+  | `/ruancan/category/:category?`
+  | `/ruancan/search/:keyword?`
+  | `/ruancan/user/:id`
   | `/ruankao/news`
-  | `/ruc/ai`
-  | `/ruc/ai/${string}`
-  | `/ruc/hr`
-  | `/ruc/hr/${string}`
+  | `/ruc/ai/:category?`
+  | `/ruc/hr/:category?`
   | `/runtrail/`
   | `/rustcc/jobs`
   | `/rustcc/news`
-  | `/sakurazaka46/blog`
-  | `/sakurazaka46/blog/${string}/${string}`
+  | `/sakurazaka46/blog/:id?/:page?`
   | `/sakurazaka46/news`
-  | `/samd/news/${string}`
-  | `/samrdprc`
-  | `/samrdprc/${string}`
-  | `/samrdprc/news/${string}/${string}`
+  | `/samd/news/:typeId`
+  | `/samrdprc/:id{.+}?`
+  | `/samrdprc/news/:type1/:type2`
   | `/samsung/research/blog`
-  | `/sankei/news/${string}`
-  | `/sankei/topics/${string}`
-  | `/sara/${string}`
-  | `/saraba1st/digest/${string}`
-  | `/saraba1st/thread/${string}`
-  | `/sass/gs/${string}`
+  | `/sankei/news/:category`
+  | `/sankei/topics/:topic`
+  | `/sara/:type`
+  | `/saraba1st/digest/:tid`
+  | `/saraba1st/thread/:tid`
+  | `/sass/gs/:type`
   | `/scau/yjsy`
   | `/scau/yzb`
-  | `/science/blogs`
-  | `/science/blogs/${string}`
+  | `/science/blogs/:name?`
   | `/science/cover`
-  | `/science/current`
-  | `/science/current/${string}`
-  | `/science/early`
-  | `/science/early/${string}`
-  | `/sciencedirect/call-for-paper/${string}`
-  | `/sciencedirect/journal/${string}`
-  | `/sciencedirect/journal/${string}/current`
-  | `/sciencenet/blog`
-  | `/sciencenet/blog/${string}/${string}/${string}`
-  | `/sciencenet/user/${string}`
-  | `/scientificamerican/podcast`
-  | `/scientificamerican/podcast/${string}`
+  | `/science/current/:journal?`
+  | `/science/early/:journal?`
+  | `/sciencedirect/call-for-paper/:subject`
+  | `/sciencedirect/journal/:id`
+  | `/sciencedirect/journal/:id/current`
+  | `/sciencenet/blog/:type?/:time?/:sort?`
+  | `/sciencenet/user/:id`
+  | `/scientificamerican/podcast/:id?`
   | `/scitechvista/`
-  | `/scmp/${string}`
+  | `/scmp/:category_id`
   | `/scmp/coronavirus`
-  | `/scmp/topics/${string}`
+  | `/scmp/topics/:topic`
   | `/scnu/cs/match`
   | `/scnu/jw`
   | `/scnu/library`
   | `/scnu/ss`
   | `/scnu/yjs`
-  | `/scoop/apps`
-  | `/scoop/apps/${string}`
-  | `/scpta/news/${string}`
-  | `/sctv/programme`
-  | `/sctv/programme/${string}/${string}/${string}`
+  | `/scoop/apps/:query?`
+  | `/scpta/news/:category`
+  | `/sctv/programme/:id?/:limit?/:isFull?`
   | `/scu/jwc`
   | `/scu/scupi`
   | `/scut/gzic/media`
   | `/scut/gzic/news`
-  | `/scut/gzic/notice`
-  | `/scut/gzic/notice/${string}`
+  | `/scut/gzic/notice/:category?`
   | `/scut/jwc/news`
-  | `/scut/jwc/notice`
-  | `/scut/jwc/notice/${string}`
-  | `/scut/jwc/school`
-  | `/scut/jwc/school/${string}`
+  | `/scut/jwc/notice/:category?`
+  | `/scut/jwc/school/:category?`
   | `/scut/scet/notice`
   | `/scut/seie/news_center`
-  | `/scut/smae`
-  | `/scut/smae/${string}`
+  | `/scut/smae/:category?`
   | `/scut/yjs`
   | `/scvtc/xygg`
-  | `/sdo/ff14risingstones/posts`
-  | `/sdo/ff14risingstones/posts/${string}/${string}`
-  | `/sdo/ff14risingstones/strats`
-  | `/sdo/ff14risingstones/strats/${string}/${string}`
+  | `/sdo/ff14risingstones/posts/:pid?/:type?`
+  | `/sdo/ff14risingstones/strats/:pid?/:type?`
   | `/sdo/ff14risingstones/timeline`
-  | `/sdo/ff14risingstones/user-dynamics/${string}`
-  | `/sdo/ff14risingstones/user-posts/${string}`
-  | `/sdo/ff14risingstones/user-resently/${string}`
-  | `/sdo/ff14risingstones/user-strats/${string}`
-  | `/sdu/cmse`
-  | `/sdu/cmse/${string}`
-  | `/sdu/cs/index`
-  | `/sdu/cs/index/${string}`
-  | `/sdu/cs/yjsgz`
-  | `/sdu/cs/yjsgz/${string}`
-  | `/sdu/epe`
-  | `/sdu/epe/${string}`
-  | `/sdu/gjsw`
-  | `/sdu/gjsw/${string}`
-  | `/sdu/mech`
-  | `/sdu/mech/${string}`
-  | `/sdu/qd/xszxqd`
-  | `/sdu/qd/xszxqd/${string}`
-  | `/sdu/qd/xyb`
-  | `/sdu/qd/xyb/${string}`
-  | `/sdu/sc`
-  | `/sdu/sc/${string}`
-  | `/sdu/wh/jwc`
-  | `/sdu/wh/jwc/${string}`
-  | `/sdu/wh/news`
-  | `/sdu/wh/news/${string}`
-  | `/sdu/ygb`
-  | `/sdu/ygb/${string}`
-  | `/sdust/yjsy/zhaosheng`
-  | `/sdust/yjsy/zhaosheng/${string}`
-  | `/sdzk`
-  | `/sdzk/${string}/${string}`
+  | `/sdo/ff14risingstones/user-dynamics/:uid`
+  | `/sdo/ff14risingstones/user-posts/:uid`
+  | `/sdo/ff14risingstones/user-resently/:uid`
+  | `/sdo/ff14risingstones/user-strats/:uid`
+  | `/sdu/cmse/:type?`
+  | `/sdu/cs/index/:type?`
+  | `/sdu/cs/yjsgz/:type?`
+  | `/sdu/epe/:type?`
+  | `/sdu/gjsw/:type?`
+  | `/sdu/mech/:type?`
+  | `/sdu/qd/xszxqd/:type?`
+  | `/sdu/qd/xyb/:type?`
+  | `/sdu/sc/:type?`
+  | `/sdu/wh/jwc/:column?`
+  | `/sdu/wh/news/:column?`
+  | `/sdu/ygb/:type?`
+  | `/sdust/yjsy/zhaosheng/:id?`
+  | `/sdzk/:bcid?/:cid?`
   | `/sec-in/`
   | `/sec-wiki/weekly`
-  | `/secretsanfrancisco`
-  | `/secretsanfrancisco/${string}`
-  | `/secrss/author/${string}`
-  | `/secrss/category`
-  | `/secrss/category/${string}`
-  | `/seekingalpha/${string}`
-  | `/seekingalpha/${string}/${string}`
+  | `/secretsanfrancisco/:category?`
+  | `/secrss/author/:author`
+  | `/secrss/category/:category?`
+  | `/seekingalpha/:symbol/:category?`
   | `/sega/maimaidx/news`
   | `/sega/pjsekai/news`
-  | `/segmentfault/blogs/${string}`
-  | `/segmentfault/channel/${string}`
-  | `/segmentfault/user/${string}`
+  | `/segmentfault/blogs/:tag`
+  | `/segmentfault/channel/:name`
+  | `/segmentfault/user/:name`
   | `/sehuatang`
-  | `/sehuatang/${string}`
-  | `/sehuatang/${string}/${string}`
-  | `/sehuatang/bt`
-  | `/sehuatang/bt/${string}`
-  | `/sehuatang/picture/${string}`
-  | `/sehuatang/user/${string}`
-  | `/sensortower/blog`
-  | `/sensortower/blog/${string}`
-  | `/setn`
-  | `/setn/${string}`
-  | `/seu/cse`
-  | `/seu/cse/${string}`
+  | `/sehuatang/:subforumid?`
+  | `/sehuatang/:subforumid?/:type?`
+  | `/sehuatang/bt/:subforumid?`
+  | `/sehuatang/picture/:subforumid`
+  | `/sehuatang/user/:uid`
+  | `/sensortower/blog/:language?`
+  | `/setn/:category?`
+  | `/seu/cse/:type?`
   | `/seu/cyber/tzgg`
   | `/seu/radio/academic`
   | `/seu/yjs`
-  | `/seu/yzb/${string}`
-  | `/sfacg/novel/chapter/${string}`
+  | `/seu/yzb/:type`
+  | `/sfacg/novel/chapter/:id`
   | `/shcstheatre/programs`
-  | `/shiep/${string}`
-  | `/shiep/${string}/${string}`
-  | `/shisu/en/${string}`
-  | `/shisu/news/${string}`
-  | `/shmeea`
-  | `/shmeea/${string}`
+  | `/shiep/:type/:id?`
+  | `/shisu/en/:section`
+  | `/shisu/news/:section`
+  | `/shmeea/:id?`
   | `/shmeea/self-study`
-  | `/shmtu/jwc/${string}`
-  | `/shmtu/portal/${string}`
-  | `/shmtu/www/${string}`
+  | `/shmtu/jwc/:type`
+  | `/shmtu/portal/:type`
+  | `/shmtu/www/:type`
   | `/shoac/recent-show`
-  | `/shopback/${string}`
-  | `/shopify/apps/${string}/reviews`
-  | `/shopify/apps/${string}/reviews/${string}`
-  | `/shopify/apps/search/${string}`
+  | `/shopback/:store`
+  | `/shopify/apps/:handle/reviews/:page?`
+  | `/shopify/apps/search/:q`
   | `/shoppingdesign/posts`
-  | `/showstart/artist/${string}`
-  | `/showstart/brand/${string}`
-  | `/showstart/event/${string}`
-  | `/showstart/event/${string}/${string}`
-  | `/showstart/search/${string}`
-  | `/showstart/search/${string}/${string}`
-  | `/showstart/site/${string}`
-  | `/shu/global`
-  | `/shu/global/${string}`
-  | `/shu/gs`
-  | `/shu/gs/${string}`
+  | `/showstart/artist/:id`
+  | `/showstart/brand/:id`
+  | `/showstart/event/:cityCode/:showStyle?`
+  | `/showstart/search/:type/:keyword?`
+  | `/showstart/site/:siteId`
+  | `/shu/global/:type?`
+  | `/shu/gs/:type?`
   | `/shu/journals/society/current`
-  | `/shu/jwb`
-  | `/shu/jwb/${string}`
-  | `/shu/news`
-  | `/shu/news/${string}`
-  | `/shu/xxgk`
-  | `/shu/xxgk/${string}`
-  | `/shu/xykd`
-  | `/shu/xykd/${string}`
+  | `/shu/jwb/:type?`
+  | `/shu/news/:type?`
+  | `/shu/xxgk/:type?`
+  | `/shu/xykd/:type?`
   | `/shuiguopai/`
-  | `/sicau/dky`
-  | `/sicau/dky/${string}`
-  | `/sicau/jiaowu/jxtz`
-  | `/sicau/jiaowu/jxtz/${string}`
-  | `/sicau/jk/${string}/${string}/${string}/${string}`
-  | `/sicau/yan`
-  | `/sicau/yan/${string}`
-  | `/sicau/zsjy`
-  | `/sicau/zsjy/${string}`
+  | `/sicau/dky/:category?`
+  | `/sicau/jiaowu/jxtz/:detail?`
+  | `/sicau/jk/:gid/:typeId/:sortType/:token`
+  | `/sicau/yan/:category?`
+  | `/sicau/zsjy/:category?`
   | `/sigsac/ccs`
-  | `/simpleinfo`
-  | `/simpleinfo/${string}`
+  | `/simpleinfo/:category?`
   | `/sina/csj`
-  | `/sina/discovery/${string}`
-  | `/sina/finance/china`
-  | `/sina/finance/china/${string}`
-  | `/sina/finance/stock/usstock`
-  | `/sina/finance/stock/usstock/${string}`
-  | `/sina/rollnews`
-  | `/sina/rollnews/${string}`
-  | `/sina/sports`
-  | `/sina/sports/${string}`
+  | `/sina/discovery/:type`
+  | `/sina/finance/china/:lid?`
+  | `/sina/finance/stock/usstock/:cids?`
+  | `/sina/rollnews/:lid?`
+  | `/sina/sports/:type?`
   | `/sinchew*`
-  | `/sis001/author`
-  | `/sis001/author/${string}`
-  | `/sis001/forum`
-  | `/sis001/forum/${string}`
-  | `/sjtu/gs/${string}`
-  | `/sjtu/gs/${string}/${string}`
-  | `/sjtu/jwc`
-  | `/sjtu/jwc/${string}`
-  | `/sjtu/seiee/${string}`
-  | `/sjtu/seiee/${string}/${string}/${string}`
-  | `/sjtu/seiee/icisee/${string}`
-  | `/sjtu/tongqu`
-  | `/sjtu/tongqu/${string}`
-  | `/sjtu/yzb/zkxx/${string}`
-  | `/skeb/${string}`
-  | `/skeb/following_creators/${string}`
-  | `/skeb/following_works/${string}`
-  | `/skeb/friend_works/${string}`
-  | `/skeb/search/${string}`
-  | `/skeb/works/${string}`
-  | `/skebetter/${string}`
-  | `/skebetter/illust/${string}`
-  | `/skebetter/manga/${string}`
-  | `/sketis/isabelle-dev/blog/${string}`
-  | `/skysports/news/${string}`
-  | `/slowmist`
-  | `/slowmist/${string}`
-  | `/smartlink/${string}`
-  | `/smashingmagazine`
-  | `/smashingmagazine/${string}`
-  | `/smzdm/article/${string}`
-  | `/smzdm/baoliao/${string}`
-  | `/smzdm/haowen`
-  | `/smzdm/haowen/${string}`
-  | `/smzdm/haowen/fenlei/${string}`
-  | `/smzdm/haowen/fenlei/${string}/${string}`
-  | `/smzdm/keyword/${string}`
-  | `/smzdm/product/${string}`
-  | `/smzdm/ranking/${string}/${string}/${string}`
+  | `/sis001/author/:id?`
+  | `/sis001/forum/:id?`
+  | `/sjtu/gs/:type/:num?`
+  | `/sjtu/jwc/:type?`
+  | `/sjtu/seiee/:path/:catID?/:searchCatCode?`
+  | `/sjtu/seiee/icisee/:cat`
+  | `/sjtu/tongqu/:type?`
+  | `/sjtu/yzb/zkxx/:type`
+  | `/skeb/:category`
+  | `/skeb/following_creators/:username`
+  | `/skeb/following_works/:username`
+  | `/skeb/friend_works/:username`
+  | `/skeb/search/:keyword`
+  | `/skeb/works/:username`
+  | `/skebetter/:type`
+  | `/skebetter/illust/:type`
+  | `/skebetter/manga/:order`
+  | `/sketis/isabelle-dev/blog/:blog`
+  | `/skysports/news/:team`
+  | `/slowmist/:type?`
+  | `/smartlink/:site`
+  | `/smashingmagazine/:category?`
+  | `/smzdm/article/:uid`
+  | `/smzdm/baoliao/:uid`
+  | `/smzdm/haowen/:day?`
+  | `/smzdm/haowen/fenlei/:name/:sort?`
+  | `/smzdm/keyword/:keyword`
+  | `/smzdm/product/:id`
+  | `/smzdm/ranking/:rank_type/:rank_id/:hour`
   | `/snowpeak/us/new-arrivals`
-  | `/sobooks`
-  | `/sobooks/${string}`
-  | `/sobooks/date`
-  | `/sobooks/date/${string}`
-  | `/sobooks/tag`
-  | `/sobooks/tag/${string}`
+  | `/sobooks/:category?`
+  | `/sobooks/date/:date?`
+  | `/sobooks/tag/:id?`
   | `/sogou/doodles`
-  | `/sogou/search/${string}`
+  | `/sogou/search/:keyword`
   | `/sohu/mobile`
-  | `/sohu/mp/${string}`
-  | `/solidot`
-  | `/solidot/${string}`
-  | `/sony/downloads/${string}/${string}`
+  | `/sohu/mp/:xpt`
+  | `/solidot/:type?`
+  | `/sony/downloads/:productType/:productId`
   | `/sorrycc/`
-  | `/sotwe/user/${string}`
-  | `/soundofhope/${string}/${string}`
-  | `/soundon/p/${string}`
-  | `/sourceforge`
-  | `/sourceforge/${string}`
-  | `/southcn/nfapp/column`
-  | `/southcn/nfapp/column/${string}`
-  | `/southcn/nfapp/reporter/${string}`
+  | `/sotwe/user/:id`
+  | `/soundofhope/:channel/:id`
+  | `/soundon/p/:id`
+  | `/sourceforge/:routeParams?`
+  | `/southcn/nfapp/column/:column?`
+  | `/southcn/nfapp/reporter/:reporter`
   | `/spankbang/new_videos`
-  | `/spglobal/ratings`
-  | `/spglobal/ratings/${string}`
-  | `/spotify/artist/${string}`
-  | `/spotify/playlist/${string}`
-  | `/spotify/saved`
-  | `/spotify/saved/${string}`
-  | `/spotify/show/${string}`
+  | `/spglobal/ratings/:language?`
+  | `/spotify/artist/:id`
+  | `/spotify/playlist/:id`
+  | `/spotify/saved/:limit?`
+  | `/spotify/show/:id`
   | `/spotify/top/artists`
   | `/spotify/top/tracks`
-  | `/springer/journal/${string}`
-  | `/sputniknews`
-  | `/sputniknews/${string}/${string}`
-  | `/sqmc/www`
-  | `/sqmc/www/${string}`
-  | `/sse/convert`
-  | `/sse/convert/${string}`
-  | `/sse/disclosure`
-  | `/sse/disclosure/${string}`
+  | `/springer/journal/:journal`
+  | `/sputniknews/:category?/:language?`
+  | `/sqmc/www/:category?`
+  | `/sse/convert/:query?`
+  | `/sse/disclosure/:query?`
   | `/sse/inquire`
   | `/sse/renewal`
-  | `/sse/sselawsrules`
-  | `/sse/sselawsrules/${string}`
+  | `/sse/sselawsrules/:category{.+}?`
   | `/ssm/news`
-  | `/sspai/activity/${string}`
-  | `/sspai/author/${string}`
-  | `/sspai/bookmarks/${string}`
-  | `/sspai/column/${string}`
+  | `/sspai/activity/:slug`
+  | `/sspai/author/:id`
+  | `/sspai/bookmarks/:slug`
+  | `/sspai/column/:id`
   | `/sspai/index`
   | `/sspai/matrix`
   | `/sspai/prime/community`
   | `/sspai/series`
-  | `/sspai/series/${string}`
+  | `/sspai/series/:id`
   | `/sspai/shortcuts`
-  | `/sspai/tag/${string}`
-  | `/sspai/topic/${string}`
+  | `/sspai/tag/:keyword`
+  | `/sspai/topic/:id`
   | `/sspai/topics`
-  | `/sspu/jwc/${string}`
-  | `/sspu/pe`
-  | `/sspu/pe/${string}`
+  | `/sspu/jwc/:listId`
+  | `/sspu/pe/:id?`
   | `/stanford/hazyresearch/blog`
-  | `/startuplatte`
-  | `/startuplatte/${string}`
+  | `/startuplatte/:category?`
   | `/stbu/jsjxy`
   | `/stbu/xyxw`
-  | `/stcn/article/list`
-  | `/stcn/article/list/${string}`
+  | `/stcn/article/list/:id?`
   | `/stcn/article/list/kx`
-  | `/stcn/article/rank`
-  | `/stcn/article/rank/${string}`
+  | `/stcn/article/rank/:id?`
   | `/stdaily/digitalpaper`
-  | `/steam/appcommunityfeed/${string}`
-  | `/steam/appcommunityfeed/${string}/${string}`
-  | `/steam/curator/${string}`
-  | `/steam/curator/${string}/${string}`
-  | `/steam/news/${string}`
-  | `/steam/news/${string}/${string}`
-  | `/steam/search/${string}`
-  | `/steam/sharefile-changelog/${string}`
-  | `/steam/sharefile-changelog/${string}/${string}`
-  | `/steam/workshopsearch`
-  | `/steam/workshopsearch/${string}/${string}`
-  | `/stheadline/std`
-  | `/stheadline/std/${string}`
+  | `/steam/appcommunityfeed/:appid/:routeParams?`
+  | `/steam/curator/:id/:routeParams?`
+  | `/steam/news/:appid/:language?`
+  | `/steam/search/:params`
+  | `/steam/sharefile-changelog/:sharefileID/:routeParams?`
+  | `/steam/workshopsearch/:appid?/:routeParams?`
+  | `/stheadline/std/:category{.+}?`
   | `/stockedge/daily-updates/news`
-  | `/storm`
-  | `/storm/${string}/${string}`
-  | `/storm/channel`
-  | `/storm/channel/${string}`
+  | `/storm/:category?/:id?`
+  | `/storm/channel/:id?`
   | `/storyfm/episodes`
   | `/storyfm/index`
-  | `/straitstimes`
-  | `/straitstimes/${string}/${string}`
+  | `/straitstimes/:category?/:section?`
   | `/stratechery/`
   | `/stream-capital/search`
-  | `/studygolang/go`
-  | `/studygolang/go/${string}`
+  | `/studygolang/go/:id?`
   | `/studygolang/jobs`
   | `/studygolang/weekly`
-  | `/subhd`
-  | `/subhd/${string}/${string}`
-  | `/substack/subscribe/${string}`
+  | `/subhd/:type?/:category?`
+  | `/substack/subscribe/:user`
   | `/supchina/`
   | `/supchina/podcasts`
-  | `/surfshark/blog`
-  | `/surfshark/blog/${string}`
+  | `/surfshark/blog/:category{.+}?`
   | `/sustainabilitymag/articles`
   | `/sustech/bidding`
   | `/sustech/newshub-zh`
   | `/sustech/yjs`
-  | `/swissinfo`
-  | `/swissinfo/${string}/${string}`
+  | `/swissinfo/:language?/:category?`
   | `/swjtu/gsee/yjs`
   | `/swjtu/jtys/yjs`
   | `/swjtu/jwc`
   | `/swjtu/jyzpxx`
-  | `/swjtu/scai/${string}`
+  | `/swjtu/scai/:type`
   | `/swjtu/sports`
-  | `/swjtu/xg`
-  | `/swjtu/xg/${string}`
-  | `/swpu/bgw/${string}`
-  | `/swpu/cjxy/${string}`
-  | `/swpu/dean/${string}`
-  | `/swpu/dxy/${string}`
-  | `/swpu/is/${string}`
-  | `/swpu/scs/${string}`
-  | `/sycl`
-  | `/sycl/${string}`
-  | `/syosetu/${string}`
+  | `/swjtu/xg/:code?`
+  | `/swpu/bgw/:code`
+  | `/swpu/cjxy/:code`
+  | `/swpu/dean/:code`
+  | `/swpu/dxy/:code`
+  | `/swpu/is/:code`
+  | `/swpu/scs/:code`
+  | `/sycl/:feed?`
+  | `/syosetu/:ncode`
   | `/syosetu/dev`
-  | `/syosetu/ranking/${string}/${string}`
-  | `/syosetu/rankingr18/${string}/${string}`
-  | `/syosetu/search/${string}/${string}`
+  | `/syosetu/ranking/:listType/:type`
+  | `/syosetu/rankingr18/:sub/:type`
+  | `/syosetu/search/:sub/:query`
   | `/sysu/cse`
-  | `/sysu/ygafz`
-  | `/sysu/ygafz/${string}`
+  | `/sysu/ygafz/:type?`
   | `/szftedu/dongtai`
   | `/szftedu/gonggao`
-  | `/szse/disclosure/listed/notice`
-  | `/szse/disclosure/listed/notice/${string}`
-  | `/szse/inquire`
-  | `/szse/inquire/${string}/${string}/${string}`
+  | `/szse/disclosure/listed/notice/:query?`
+  | `/szse/inquire/:category?/:select?/:keyword?`
   | `/szse/notice`
-  | `/szse/projectdynamic`
-  | `/szse/projectdynamic/${string}/${string}/${string}`
-  | `/szse/rule`
-  | `/szse/rule/${string}`
-  | `/szu/yz`
-  | `/szu/yz/${string}`
-  | `/t66y/${string}`
-  | `/t66y/${string}/${string}/${string}`
-  | `/t66y/post/${string}`
+  | `/szse/projectdynamic/:type?/:stage?/:status?`
+  | `/szse/rule/:channel{.+}?`
+  | `/szu/yz/:type?`
+  | `/t66y/:id/:type?/:search?`
+  | `/t66y/post/:tid`
   | `/tableau/viz-of-the-day`
   | `/tailwindcss/blog`
   | `/taiwanmobile/rate-plans`
-  | `/taiwannews/hot`
-  | `/taiwannews/hot/${string}`
-  | `/tangshufang`
-  | `/tangshufang/${string}`
+  | `/taiwannews/hot/:lang?`
+  | `/tangshufang/:category?`
   | `/taobao/mysql/monthly`
-  | `/taobao/zhongchou`
-  | `/taobao/zhongchou/${string}`
-  | `/taoguba`
-  | `/taoguba/${string}`
-  | `/taoguba/blog/${string}`
-  | `/taptap/changelog/${string}`
-  | `/taptap/changelog/${string}/${string}`
-  | `/taptap/intl/changelog/${string}`
-  | `/taptap/intl/changelog/${string}/${string}`
-  | `/taptap/intl/review/${string}`
-  | `/taptap/intl/review/${string}/${string}/${string}`
-  | `/taptap/review/${string}`
-  | `/taptap/review/${string}/${string}/${string}`
-  | `/taptap/topic/${string}`
-  | `/taptap/topic/${string}/${string}/${string}/${string}`
-  | `/tass`
-  | `/tass/${string}`
-  | `/techcrunch/category/${string}`
+  | `/taobao/zhongchou/:type?`
+  | `/taoguba/:category?`
+  | `/taoguba/blog/:id`
+  | `/taptap/changelog/:id/:lang?`
+  | `/taptap/intl/changelog/:id/:lang?`
+  | `/taptap/intl/review/:id/:order?/:lang?`
+  | `/taptap/review/:id/:order?/:lang?`
+  | `/taptap/topic/:id/:type?/:sort?/:lang?`
+  | `/tass/:category?`
+  | `/techcrunch/category/:categoryId`
   | `/techcrunch/news`
   | `/techflowpost/`
   | `/techflowpost/express`
   | `/techpowerup/`
-  | `/techpowerup/review`
-  | `/techpowerup/review/${string}`
+  | `/techpowerup/review/:keyword?`
   | `/techsir/`
-  | `/telecompaper/news/${string}`
-  | `/telecompaper/news/${string}/${string}/${string}/${string}`
-  | `/telecompaper/search`
-  | `/telecompaper/search/${string}/${string}/${string}/${string}`
+  | `/telecompaper/news/:caty/:year?/:country?/:type?`
+  | `/telecompaper/search/:keyword?/:company?/:sort?/:period?`
   | `/telegram/blog`
-  | `/telegram/channel/${string}`
-  | `/telegram/channel/${string}/${string}`
-  | `/telegram/media/${string}/${string}`
-  | `/telegram/stickerpack/${string}`
-  | `/telegram/stories/${string}`
-  | `/telegram/stories/${string}/${string}`
-  | `/tencent/cloud/developer/column`
-  | `/tencent/cloud/developer/column/${string}`
-  | `/tencent/news/author/${string}`
-  | `/tencent/news/coronavirus/data`
-  | `/tencent/news/coronavirus/data/${string}/${string}`
+  | `/telegram/channel/:username/:routeParams?`
+  | `/telegram/media/:entityName/:messageId`
+  | `/telegram/stickerpack/:name`
+  | `/telegram/stories/:username/:story?`
+  | `/tencent/cloud/developer/column/:categoryId?`
+  | `/tencent/news/author/:mid`
+  | `/tencent/news/coronavirus/data/:province?/:city?`
   | `/tencent/news/coronavirus/total`
-  | `/tencent/pvp/newsindex/${string}`
-  | `/tencent/qq/sdk/changelog/${string}`
-  | `/tesla/cx`
-  | `/tesla/cx/${string}/${string}`
+  | `/tencent/pvp/newsindex/:type`
+  | `/tencent/qq/sdk/changelog/:platform`
+  | `/tesla/cx/:category?/:city?`
   | `/tesla/price`
-  | `/test/${string}`
-  | `/test/${string}/${string}`
+  | `/test/:id/:params?`
   | `/tfc-taiwan/`
-  | `/tfc-taiwan/category/${string}`
-  | `/tgbus/list/${string}`
-  | `/the`
-  | `/the/${string}`
-  | `/theatlantic/${string}`
-  | `/theblock/category/${string}`
-  | `/theblockbeats`
-  | `/theblockbeats/${string}/${string}`
-  | `/thecover/channel`
-  | `/thecover/channel/${string}`
-  | `/thegadgetflow`
-  | `/thegadgetflow/${string}`
+  | `/tfc-taiwan/category/:category`
+  | `/tgbus/list/:category`
+  | `/the/:filter{.+}?`
+  | `/theatlantic/:category`
+  | `/theblock/category/:category`
+  | `/theblockbeats/:channel?/:original?`
+  | `/thecover/channel/:id?`
+  | `/thegadgetflow/:category?`
   | `/thegradient/posts`
-  | `/thehindu/topic/${string}`
-  | `/theinitium/app`
-  | `/theinitium/app/${string}`
-  | `/theinitium/author/${string}`
-  | `/theinitium/author/${string}/${string}`
-  | `/theinitium/channel`
-  | `/theinitium/channel/${string}/${string}`
-  | `/theinitium/follow/articles`
-  | `/theinitium/follow/articles/${string}`
-  | `/theinitium/tags/${string}`
-  | `/theinitium/tags/${string}/${string}`
-  | `/themoviedb/${string}/${string}`
-  | `/themoviedb/${string}/${string}/${string}`
-  | `/themoviedb/collection/${string}`
-  | `/themoviedb/collection/${string}/${string}`
-  | `/themoviedb/trending/${string}/${string}`
-  | `/themoviedb/trending/${string}/${string}/${string}`
-  | `/themoviedb/tv/${string}/seasons`
-  | `/themoviedb/tv/${string}/seasons/${string}`
-  | `/themoviedb/tv/${string}/seasons/${string}/episodes`
-  | `/themoviedb/tv/${string}/seasons/${string}/episodes/${string}`
+  | `/thehindu/topic/:topic`
+  | `/theinitium/app/:category?`
+  | `/theinitium/author/:type/:language?`
+  | `/theinitium/channel/:type?/:language?`
+  | `/theinitium/follow/articles/:language?`
+  | `/theinitium/tags/:type/:language?`
+  | `/themoviedb/:mediaType/:sheet/:lang?`
+  | `/themoviedb/collection/:id/:lang?`
+  | `/themoviedb/trending/:mediaType/:timeWindow/:lang?`
+  | `/themoviedb/tv/:id/seasons/:lang?`
+  | `/themoviedb/tv/:id/seasons/:seasonNumber/episodes/:lang?`
   | `/thenewslens*`
   | `/thepaper/839studio`
-  | `/thepaper/839studio/${string}`
-  | `/thepaper/channel/${string}`
-  | `/thepaper/factpaper`
-  | `/thepaper/factpaper/${string}`
+  | `/thepaper/839studio/:id`
+  | `/thepaper/channel/:id`
+  | `/thepaper/factpaper/:status?`
   | `/thepaper/featured`
-  | `/thepaper/list/${string}`
-  | `/thepaper/sidebar`
-  | `/thepaper/sidebar/${string}`
-  | `/thepaper/user/${string}`
-  | `/thepetcity`
-  | `/thepetcity/${string}`
-  | `/theverge`
-  | `/theverge/${string}`
+  | `/thepaper/list/:id`
+  | `/thepaper/sidebar/:sec?`
+  | `/thepaper/user/:pphId`
+  | `/thepetcity/:term?`
+  | `/theverge/:hub?`
   | `/thewirehindi/`
-  | `/thewirehindi/category/${string}`
-  | `/thoughtco`
-  | `/thoughtco/${string}`
+  | `/thewirehindi/category/:category`
+  | `/thoughtco/:category?`
   | `/thoughtworks/blog`
-  | `/threads/${string}`
-  | `/threads/${string}/${string}`
-  | `/thwiki/calendar`
-  | `/thwiki/calendar/${string}/${string}`
+  | `/threads/:user/:routeParams?`
+  | `/thwiki/calendar/:before?/:after?`
   | `/thzt/blog`
-  | `/tidb/blog/c`
-  | `/tidb/blog/c/${string}`
+  | `/tidb/blog/c/:category?`
   | `/tiddlywiki/releases`
-  | `/tiktok/user/${string}`
-  | `/tiktok/user/${string}/${string}`
-  | `/timednews/news`
-  | `/timednews/news/${string}`
-  | `/tingshuitz/changsha`
-  | `/tingshuitz/changsha/${string}`
+  | `/tiktok/user/:user/:iframe?`
+  | `/timednews/news/:type?`
+  | `/tingshuitz/changsha/:channelId?`
   | `/tingshuitz/dalian`
   | `/tingshuitz/dongguan`
   | `/tingshuitz/guangzhou`
   | `/tingshuitz/hangzhou`
   | `/tingshuitz/nanjing`
   | `/tingshuitz/shenzhen`
-  | `/tingshuitz/wuhan`
-  | `/tingshuitz/wuhan/${string}`
+  | `/tingshuitz/wuhan/:channelId?`
   | `/tingshuitz/xian`
   | `/tingshuitz/xiaoshan`
   | `/tingshuitz/yangjiang`
-  | `/tingtingfm/program/${string}`
+  | `/tingtingfm/program/:programId`
   | `/tisi/latest`
-  | `/tju/cic`
-  | `/tju/cic/${string}`
-  | `/tju/news`
-  | `/tju/news/${string}`
-  | `/tju/oaa`
-  | `/tju/oaa/${string}`
-  | `/tju/yzb`
-  | `/tju/yzb/${string}`
-  | `/tkww`
-  | `/tkww/${string}`
-  | `/tmtpost/column/${string}`
+  | `/tju/cic/:type?`
+  | `/tju/news/:type?`
+  | `/tju/oaa/:type?`
+  | `/tju/yzb/:type?`
+  | `/tkww/:column{.+}?`
+  | `/tmtpost/column/:id`
   | `/tmtpost/new`
   | `/tmtpost/nictation`
-  | `/tokeninsight/blog`
-  | `/tokeninsight/blog/${string}`
-  | `/tokeninsight/bulletin`
-  | `/tokeninsight/bulletin/${string}`
-  | `/tokeninsight/report`
-  | `/tokeninsight/report/${string}`
+  | `/tokeninsight/blog/:lang?`
+  | `/tokeninsight/bulletin/:lang?`
+  | `/tokeninsight/report/:lang?`
   | `/tongji/bks`
   | `/tongji/gs`
-  | `/tongji/sem`
-  | `/tongji/sem/${string}`
-  | `/tongji/sse`
-  | `/tongji/sse/${string}`
+  | `/tongji/sem/:type?`
+  | `/tongji/sse/:type?`
   | `/tongji/yjs`
-  | `/tongli/news/${string}`
-  | `/toodaylab`
-  | `/toodaylab/${string}`
-  | `/tophub/${string}`
-  | `/tophub/list/${string}`
-  | `/topys`
-  | `/topys/${string}`
-  | `/toranoana/news`
-  | `/toranoana/news/${string}`
-  | `/toutiao/user/token/${string}`
+  | `/tongli/news/:type`
+  | `/toodaylab/:params{.+}?`
+  | `/tophub/:id`
+  | `/tophub/list/:id`
+  | `/topys/:keyword?`
+  | `/toranoana/news/:category?`
+  | `/toutiao/user/token/:token`
   | `/towardsdatascience/latest`
-  | `/tradingview/blog`
-  | `/tradingview/blog/${string}`
+  | `/tradingview/blog/:category{.+}?`
   | `/tradingview/desktop`
-  | `/tradingview/pine`
-  | `/tradingview/pine/${string}`
-  | `/transcriptforest`
-  | `/transcriptforest/${string}`
+  | `/tradingview/pine/:version?`
+  | `/transcriptforest/:channel?`
   | `/transformer-circuits/`
   | `/trendforce/news`
-  | `/trendingpapers/papers`
-  | `/trendingpapers/papers/${string}/${string}/${string}`
+  | `/trendingpapers/papers/:category?/:time?/:cited?`
   | `/tribalfootball/`
   | `/trow/portal`
-  | `/tsdm39/bd`
-  | `/tsdm39/bd/${string}`
-  | `/tsinghua/lib/tzgg/${string}`
-  | `/tsinghua/lib/zydt`
-  | `/tsinghua/lib/zydt/${string}`
-  | `/tsinghua/news`
-  | `/tsinghua/news/${string}`
-  | `/ttv`
-  | `/ttv/${string}`
-  | `/tumblr/posts/${string}`
-  | `/tvb/news`
-  | `/tvb/news/${string}/${string}`
-  | `/tver/series/${string}`
-  | `/tvtropes/featured`
-  | `/tvtropes/featured/${string}`
-  | `/twitch/live/${string}`
-  | `/twitch/schedule/${string}`
-  | `/twitch/video/${string}`
-  | `/twitch/video/${string}/${string}`
-  | `/twitter/home`
-  | `/twitter/home/${string}`
-  | `/twitter/home_latest`
-  | `/twitter/home_latest/${string}`
-  | `/twitter/keyword/${string}`
-  | `/twitter/keyword/${string}/${string}`
-  | `/twitter/likes/${string}`
-  | `/twitter/likes/${string}/${string}`
-  | `/twitter/list/${string}`
-  | `/twitter/list/${string}/${string}`
-  | `/twitter/media/${string}`
-  | `/twitter/media/${string}/${string}`
-  | `/twitter/trends`
-  | `/twitter/trends/${string}`
-  | `/twitter/tweet/${string}/status/${string}`
-  | `/twitter/tweet/${string}/status/${string}/${string}`
-  | `/twitter/user/${string}`
-  | `/twitter/user/${string}/${string}`
-  | `/twreporter/category/${string}`
+  | `/tsdm39/bd/:type?`
+  | `/tsinghua/lib/tzgg/:category`
+  | `/tsinghua/lib/zydt/:category?`
+  | `/tsinghua/news/:category?`
+  | `/ttv/:category?`
+  | `/tumblr/posts/:blog`
+  | `/tvb/news/:category?/:language?`
+  | `/tver/series/:id`
+  | `/tvtropes/featured/:category?`
+  | `/twitch/live/:login`
+  | `/twitch/schedule/:login`
+  | `/twitch/video/:login/:filter?`
+  | `/twitter/home/:routeParams?`
+  | `/twitter/home_latest/:routeParams?`
+  | `/twitter/keyword/:keyword/:routeParams?`
+  | `/twitter/likes/:id/:routeParams?`
+  | `/twitter/list/:id/:routeParams?`
+  | `/twitter/media/:id/:routeParams?`
+  | `/twitter/trends/:woeid?`
+  | `/twitter/tweet/:id/status/:status/:original?`
+  | `/twitter/user/:id/:routeParams?`
+  | `/twreporter/category/:category`
   | `/twreporter/newest`
   | `/txks/news`
-  | `/txrjy/fornumtopic`
-  | `/txrjy/fornumtopic/${string}`
+  | `/txrjy/fornumtopic/:channel?`
   | `/tynu/`
   | `/typora/changelog`
   | `/typora/changelog/dev`
   | `/typst/universe`
-  | `/u3c3`
-  | `/u3c3/${string}/${string}`
-  | `/u3c3/search/${string}`
-  | `/u3c3/search/${string}/${string}`
-  | `/u9a9`
-  | `/u9a9/${string}`
-  | `/u9a9/search/${string}`
-  | `/u9a9/search/${string}/${string}`
-  | `/uber/blog`
-  | `/uber/blog/${string}`
+  | `/u3c3/:type?/:preview?`
+  | `/u3c3/search/:keyword/:preview?`
+  | `/u9a9/:preview?`
+  | `/u9a9/search/:keyword/:preview?`
+  | `/uber/blog/:compat?`
   | `/ucas/ai`
-  | `/ucas/job`
-  | `/ucas/job/${string}`
-  | `/uchicago/journals/current/${string}`
-  | `/udn/global`
-  | `/udn/global/${string}`
-  | `/udn/global/tag`
-  | `/udn/global/tag/${string}`
-  | `/udn/news/breakingnews/${string}`
+  | `/ucas/job/:type?`
+  | `/uchicago/journals/current/:journal`
+  | `/udn/global/:category?`
+  | `/udn/global/tag/:tag?`
+  | `/udn/news/breakingnews/:id`
   | `/uestc/auto`
-  | `/uestc/bbs`
-  | `/uestc/bbs/${string}`
-  | `/uestc/cqe`
-  | `/uestc/cqe/${string}`
-  | `/uestc/gr`
-  | `/uestc/gr/${string}`
-  | `/uestc/jwc`
-  | `/uestc/jwc/${string}`
-  | `/uestc/news`
-  | `/uestc/news/${string}`
+  | `/uestc/bbs/:types?`
+  | `/uestc/cqe/:type?`
+  | `/uestc/gr/:type?`
+  | `/uestc/jwc/:type?`
+  | `/uestc/news/:type?`
   | `/uestc/scse`
   | `/uestc/sice`
-  | `/uestc/sise`
-  | `/uestc/sise/${string}`
-  | `/uibe/hr`
-  | `/uibe/hr/${string}/${string}`
-  | `/ulapia/reports`
-  | `/ulapia/reports/${string}`
+  | `/uestc/sise/:type?`
+  | `/uibe/hr/:category?/:type?`
+  | `/ulapia/reports/:category?`
   | `/ulapia/research/latest`
   | `/unipd/ilbolive/news`
-  | `/uniqlo/new/${string}/${string}`
+  | `/uniqlo/new/:country/:category`
   | `/unraid/community-apps`
   | `/unusualwhales/news`
-  | `/upc/jsj/${string}`
-  | `/upc/jwc`
-  | `/upc/jwc/${string}`
-  | `/upc/main/${string}`
+  | `/upc/jsj/:type`
+  | `/upc/jwc/:type?`
+  | `/upc/main/:type`
   | `/upc/yjs`
-  | `/ups/track/${string}`
-  | `/uptimerobot/rss/${string}`
-  | `/uptimerobot/rss/${string}/${string}`
+  | `/ups/track/:trackingNumber`
+  | `/uptimerobot/rss/:id/:routeParams?`
   | `/uraaka-joshi/`
-  | `/uraaka-joshi/${string}`
+  | `/uraaka-joshi/:id`
   | `/urbandictionary/random`
   | `/usenix/loginonline`
   | `/usenix/usenix-security-sympoium`
-  | `/usepanda/feeds/${string}`
-  | `/ustb/tj/news`
-  | `/ustb/tj/news/${string}`
-  | `/ustb/yjsy/news/${string}`
+  | `/usepanda/feeds/:id`
+  | `/ustb/tj/news/:type?`
+  | `/ustb/yjsy/news/:type`
   | `/ustb/yzxc/tzgg`
-  | `/ustc/eeis`
-  | `/ustc/eeis/${string}`
-  | `/ustc/gs`
-  | `/ustc/gs/${string}`
-  | `/ustc/job`
-  | `/ustc/job/${string}`
-  | `/ustc/jwc`
-  | `/ustc/jwc/${string}`
-  | `/ustc/math`
-  | `/ustc/math/${string}`
-  | `/ustc/news`
-  | `/ustc/news/${string}`
-  | `/ustc/scms`
-  | `/ustc/scms/${string}`
-  | `/ustc/sist`
-  | `/ustc/sist/${string}`
-  | `/usts/jwch`
-  | `/usts/jwch/${string}`
-  | `/utgd/category`
-  | `/utgd/category/${string}`
+  | `/ustc/eeis/:type?`
+  | `/ustc/gs/:type?`
+  | `/ustc/job/:category?`
+  | `/ustc/jwc/:type?`
+  | `/ustc/math/:type?`
+  | `/ustc/news/:type?`
+  | `/ustc/scms/:type?`
+  | `/ustc/sist/:type?`
+  | `/usts/jwch/:type?`
+  | `/utgd/category/:category?`
   | `/utgd/timeline`
-  | `/utgd/topic`
-  | `/utgd/topic/${string}`
-  | `/uw/gix/news/${string}`
+  | `/utgd/topic/:topic?`
+  | `/uw/gix/news/:category`
   | `/v1tx/`
-  | `/v2ex/post/${string}`
-  | `/v2ex/tab/${string}`
-  | `/v2ex/topics/${string}`
+  | `/v2ex/post/:postid`
+  | `/v2ex/tab/:tabid`
+  | `/v2ex/topics/:type`
   | `/v2ex/xna`
   | `/v2rayshare/`
   | `/vcb-s/`
-  | `/vcb-s/category/${string}`
-  | `/verfghbw/press`
-  | `/verfghbw/press/${string}`
+  | `/vcb-s/category/:cate`
+  | `/verfghbw/press/:keyword?`
   | `/vertikal/latest`
-  | `/vice/topic/${string}`
-  | `/vice/topic/${string}/${string}`
-  | `/vimeo/category/${string}`
-  | `/vimeo/category/${string}/${string}`
-  | `/vimeo/channel/${string}`
-  | `/vimeo/user/${string}`
-  | `/vimeo/user/${string}/${string}`
+  | `/vice/topic/:topic/:language?`
+  | `/vimeo/category/:category/:staffpicks?`
+  | `/vimeo/channel/:channel`
+  | `/vimeo/user/:username/:cat?`
   | `/visionias/dailySummary`
   | `/visionias/monthlyMagazine`
-  | `/visionias/newsToday`
-  | `/visionias/newsToday/${string}`
+  | `/visionias/newsToday/:filter?`
   | `/visionias/weeklyFocus`
   | `/visualstudio/code/blog`
-  | `/vocus/publication/${string}`
-  | `/vocus/user/${string}`
-  | `/vom/featured`
-  | `/vom/featured/${string}`
-  | `/voronoiapp/author/${string}`
-  | `/voronoiapp/editors-pick`
-  | `/voronoiapp/editors-pick/${string}`
-  | `/voronoiapp/home`
-  | `/voronoiapp/home/${string}`
-  | `/voronoiapp/latest`
-  | `/voronoiapp/latest/${string}`
-  | `/voronoiapp/popular`
-  | `/voronoiapp/popular/${string}/${string}/${string}`
-  | `/voronoiapp/search/${string}`
+  | `/vocus/publication/:id`
+  | `/vocus/user/:id`
+  | `/vom/featured/:lang?`
+  | `/voronoiapp/author/:username`
+  | `/voronoiapp/editors-pick/:category?`
+  | `/voronoiapp/home/:category?`
+  | `/voronoiapp/latest/:category?`
+  | `/voronoiapp/popular/:tab?/:time_range?/:category?`
+  | `/voronoiapp/search/:keyword`
   | `/wabei/hot-recommend`
-  | `/wainao/topics`
-  | `/wainao/topics/${string}`
+  | `/wainao/topics/:id?`
   | `/wainao/wainao-reads`
-  | `/wallhaven`
-  | `/wallhaven/${string}/${string}`
-  | `/wallhaven/search`
-  | `/wallhaven/search/${string}/${string}`
+  | `/wallhaven/:filter?/:needDetails?`
+  | `/wallhaven/search/:filter?/:needDetails?`
   | `/wallpaperhub/`
-  | `/wallstreetcn/calendar`
-  | `/wallstreetcn/calendar/${string}`
-  | `/wallstreetcn/hot`
-  | `/wallstreetcn/hot/${string}`
-  | `/wallstreetcn/live`
-  | `/wallstreetcn/live/${string}/${string}`
-  | `/wallstreetcn/news`
-  | `/wallstreetcn/news/${string}`
+  | `/wallstreetcn/calendar/:section?`
+  | `/wallstreetcn/hot/:period?`
+  | `/wallstreetcn/live/:category?/:score?`
+  | `/wallstreetcn/news/:category?`
   | `/wanqu/news`
   | `/warhammer-community/news`
   | `/warp/blog`
   | `/warthunder/news`
-  | `/washingtonpost/app`
-  | `/washingtonpost/app/${string}`
-  | `/wbv-gpa`
-  | `/wbv-gpa/${string}/${string}`
+  | `/washingtonpost/app/:category{.+}?`
+  | `/wbv-gpa/:category?/:state?`
   | `/wchscu/recruit`
-  | `/wdc/download`
-  | `/wdc/download/${string}`
-  | `/wdfxw/bookfree`
-  | `/wdfxw/bookfree/${string}`
+  | `/wdc/download/:id?`
+  | `/wdfxw/bookfree/:id?`
   | `/web/articles`
   | `/web/blog`
-  | `/web/series/${string}`
+  | `/web/series/:seriesName`
   | `/web3caff*`
   | `/webcatalog/changelog`
   | `/wechat/announce`
-  | `/wechat/ce/${string}`
-  | `/wechat/data258`
-  | `/wechat/data258/${string}`
-  | `/wechat/ershicimi/${string}`
-  | `/wechat/mp/homepage/${string}/${string}`
-  | `/wechat/mp/homepage/${string}/${string}/${string}`
-  | `/wechat/mp/msgalbum/${string}/${string}`
-  | `/wechat/sogou/${string}`
-  | `/wechat/tgchannel/${string}`
-  | `/wechat/tgchannel/${string}/${string}/${string}`
-  | `/wechat/uread/${string}`
-  | `/wechat/wechat2rss/${string}`
+  | `/wechat/ce/:id`
+  | `/wechat/data258/:id?`
+  | `/wechat/ershicimi/:id`
+  | `/wechat/mp/homepage/:biz/:hid/:cid?`
+  | `/wechat/mp/msgalbum/:biz/:aid`
+  | `/wechat/sogou/:id`
+  | `/wechat/tgchannel/:id/:mpName?/:searchQueryType?`
+  | `/wechat/uread/:userid`
+  | `/wechat/wechat2rss/:id`
   | `/weekendhk/`
-  | `/weibo/friends`
-  | `/weibo/friends/${string}`
-  | `/weibo/group/${string}`
-  | `/weibo/group/${string}/${string}/${string}`
-  | `/weibo/keyword/${string}`
-  | `/weibo/keyword/${string}/${string}`
-  | `/weibo/oasis/user/${string}`
-  | `/weibo/search/hot`
-  | `/weibo/search/hot/${string}`
-  | `/weibo/super_index/${string}`
-  | `/weibo/super_index/${string}/${string}/${string}`
-  | `/weibo/timeline/${string}`
-  | `/weibo/timeline/${string}/${string}/${string}`
-  | `/weibo/user/${string}`
-  | `/weibo/user/${string}/${string}`
-  | `/weibo/user_bookmarks/${string}`
-  | `/weibo/user_bookmarks/${string}/${string}`
-  | `/wellcee/rent/${string}`
-  | `/wellcee/rent/${string}/${string}`
+  | `/weibo/friends/:routeParams?`
+  | `/weibo/group/:gid/:gname?/:routeParams?`
+  | `/weibo/keyword/:keyword/:routeParams?`
+  | `/weibo/oasis/user/:userid`
+  | `/weibo/search/hot/:fulltext?`
+  | `/weibo/super_index/:id/:type?/:routeParams?`
+  | `/weibo/timeline/:uid/:feature?/:routeParams?`
+  | `/weibo/user/:uid/:routeParams?`
+  | `/weibo/user_bookmarks/:uid/:routeParams?`
+  | `/wellcee/rent/:city/:district?`
   | `/wellcee/support-city`
-  | `/wenku8`
-  | `/wenku8/${string}`
-  | `/wenku8/chapter/${string}`
-  | `/wenku8/volume/${string}`
+  | `/wenku8/:category?`
+  | `/wenku8/chapter/:id`
+  | `/wenku8/volume/:id`
   | `/wfdf/news`
   | `/wfu/jwc`
-  | `/wfu/news`
-  | `/wfu/news/${string}`
-  | `/whitehouse/news`
-  | `/whitehouse/news/${string}`
-  | `/who/news`
-  | `/who/news-room`
-  | `/who/news-room/${string}/${string}`
-  | `/who/news/${string}`
-  | `/who/speeches`
-  | `/who/speeches/${string}`
-  | `/whu/cs/${string}`
-  | `/whu/gs`
-  | `/whu/gs/${string}`
-  | `/whu/hyxt`
-  | `/whu/hyxt/${string}`
-  | `/whu/news`
-  | `/whu/news/${string}`
-  | `/whu/rsgis/${string}`
-  | `/whu/rsgis/${string}/${string}`
-  | `/whu/swrh/${string}`
+  | `/wfu/news/:type?`
+  | `/whitehouse/news/:category?`
+  | `/who/news-room/:category?/:language?`
+  | `/who/news/:language?`
+  | `/who/speeches/:language?`
+  | `/whu/cs/:type`
+  | `/whu/gs/:type?`
+  | `/whu/hyxt/:category{.+}?`
+  | `/whu/news/:category{.+}?`
+  | `/whu/rsgis/:type/:sub?`
+  | `/whu/swrh/:type`
   | `/wiensued*`
   | `/wikinews/latest`
-  | `/wikipedia/current-events`
-  | `/wikipedia/current-events/${string}`
+  | `/wikipedia/current-events/:includeToday?`
   | `/windsurf/blog`
   | `/windsurf/changelog`
-  | `/winstall/${string}`
-  | `/wired/tag/${string}`
-  | `/wise/pair/${string}/${string}`
+  | `/winstall/:appId`
+  | `/wired/tag/:tag`
+  | `/wise/pair/:source/:target`
   | `/withgoogle/explorables`
   | `/wizfile/updates`
-  | `/wmc-bj/publish`
-  | `/wmc-bj/publish/${string}`
-  | `/wmpvp/news/${string}`
+  | `/wmc-bj/publish/:category{.+}?`
+  | `/wmpvp/news/:type`
   | `/wnacg/`
-  | `/wnacg/category/${string}`
-  | `/wnacg/tag/${string}`
-  | `/wohnnet/${string}/${string}/*`
-  | `/wordpress`
-  | `/wordpress/${string}/${string}`
-  | `/worldjournal`
-  | `/worldjournal/${string}`
+  | `/wnacg/category/:cid`
+  | `/wnacg/tag/:tag`
+  | `/wohnnet/:category/:region/*`
+  | `/wordpress/:url?/:filter{.+}?`
+  | `/worldjournal/:path{.+}?`
   | `/worldofwarships/devblog`
-  | `/woshipm/popular`
-  | `/woshipm/popular/${string}`
-  | `/woshipm/user_article/${string}`
+  | `/woshipm/popular/:range?`
+  | `/woshipm/user_article/:id`
   | `/woshipm/wen`
-  | `/wsj/${string}`
-  | `/wsj/${string}/${string}`
-  | `/wsyu/news`
-  | `/wsyu/news/${string}`
-  | `/wtu/${string}`
-  | `/wtu/job/${string}`
+  | `/wsj/:lang/:category?`
+  | `/wsyu/news/:type?`
+  | `/wtu/:type`
+  | `/wtu/job/:type`
   | `/wufazhuce/one`
-  | `/wyzxwk/article`
-  | `/wyzxwk/article/${string}`
-  | `/wzu/news`
-  | `/wzu/news/${string}`
-  | `/x-mol/news`
-  | `/x-mol/news/${string}`
-  | `/x-mol/paper/${string}/${string}`
-  | `/x6d`
-  | `/x6d/${string}`
-  | `/xaufe/jiaowu`
-  | `/xaufe/jiaowu/${string}`
-  | `/xaut/index`
-  | `/xaut/index/${string}`
-  | `/xaut/jwc`
-  | `/xaut/jwc/${string}`
-  | `/xaut/rsc`
-  | `/xaut/rsc/${string}`
+  | `/wyzxwk/article/:id?`
+  | `/wzu/news/:type?`
+  | `/x-mol/news/:tag?`
+  | `/x-mol/paper/:type/:magazine`
+  | `/x6d/:id?`
+  | `/xaufe/jiaowu/:category?`
+  | `/xaut/index/:category?`
+  | `/xaut/jwc/:category?`
+  | `/xaut/rsc/:category?`
   | `/xbmu/academic`
   | `/xbmu/announcement`
-  | `/xbookcn`
-  | `/xbookcn/${string}`
+  | `/xbookcn/:label?`
   | `/xboxfan/news`
-  | `/xianbao`
-  | `/xianbao/${string}`
-  | `/xiaoheihe/add2cart/${string}`
-  | `/xiaoheihe/discount/${string}`
+  | `/xianbao/:category?`
+  | `/xiaoheihe/add2cart/:platform`
+  | `/xiaoheihe/discount/:platform`
   | `/xiaoheihe/news`
-  | `/xiaoheihe/user/${string}`
-  | `/xiaohongshu/board/${string}`
-  | `/xiaohongshu/user/${string}/${string}`
-  | `/xiaohongshu/user/${string}/${string}/${string}`
+  | `/xiaoheihe/user/:id`
+  | `/xiaohongshu/board/:board_id`
+  | `/xiaohongshu/user/:user_id/:category/:routeParams?`
   | `/xiaomiyoupin/crowdfunding`
   | `/xiaomiyoupin/latest`
   | `/xiaote/news`
   | `/xiaoyuzhou/`
-  | `/xiaoyuzhou/podcast/${string}`
-  | `/xiaozhuanlan/column/${string}`
-  | `/xidian/cs`
-  | `/xidian/cs/${string}`
-  | `/xidian/gr`
-  | `/xidian/gr/${string}`
-  | `/xidian/jwc`
-  | `/xidian/jwc/${string}`
-  | `/ximalaya/${string}/${string}/${string}`
-  | `/ximalaya/${string}/${string}/${string}/${string}`
-  | `/xinpianchang`
-  | `/xinpianchang/${string}`
-  | `/xinpianchang/discover`
-  | `/xinpianchang/discover/${string}`
-  | `/xinpianchang/rank`
-  | `/xinpianchang/rank/${string}`
-  | `/xjtu/2yuan/news`
-  | `/xjtu/2yuan/news/${string}`
-  | `/xjtu/dean/${string}`
-  | `/xjtu/dyyy/${string}`
-  | `/xjtu/ee`
-  | `/xjtu/ee/${string}`
-  | `/xjtu/ee/jzxx`
-  | `/xjtu/ee/jzxx/${string}`
+  | `/xiaoyuzhou/podcast/:id`
+  | `/xiaozhuanlan/column/:id`
+  | `/xidian/cs/:category?`
+  | `/xidian/gr/:category?`
+  | `/xidian/jwc/:category?`
+  | `/ximalaya/:type/:id/:all/:shownote?`
+  | `/xinpianchang/:params?`
+  | `/xinpianchang/discover/:params?`
+  | `/xinpianchang/rank/:category?`
+  | `/xjtu/2yuan/news/:id?`
+  | `/xjtu/dean/:subpath{.+}`
+  | `/xjtu/dyyy/:path{.+}`
+  | `/xjtu/ee/:id?`
+  | `/xjtu/ee/jzxx/:category?`
   | `/xjtu/gs/tzgg`
-  | `/xjtu/international/${string}`
-  | `/xjtu/job`
-  | `/xjtu/job/${string}`
-  | `/xjtu/std`
-  | `/xjtu/std/${string}`
-  | `/xjtu/yz`
-  | `/xjtu/yz/${string}`
-  | `/xjtu/zs`
-  | `/xjtu/zs/${string}`
-  | `/xkb/${string}`
-  | `/xmanhua/${string}`
-  | `/xmnn/epaper`
-  | `/xmnn/epaper/${string}`
-  | `/xmnn/news`
-  | `/xmnn/news/${string}`
+  | `/xjtu/international/:subpath{.+}`
+  | `/xjtu/job/:subpath?`
+  | `/xjtu/std/:category?`
+  | `/xjtu/yz/:category?`
+  | `/xjtu/zs/:category{.+}?`
+  | `/xkb/:channel`
+  | `/xmanhua/:uid`
+  | `/xmnn/epaper/:id?`
+  | `/xmnn/news/:category{.+}?`
   | `/xmu/kydt`
-  | `/xmut/jwc/bkjw`
-  | `/xmut/jwc/bkjw/${string}`
-  | `/xmut/jwc/yjjw`
-  | `/xmut/jwc/yjjw/${string}`
-  | `/xsijishe/forum/${string}`
-  | `/xsijishe/rank/${string}`
-  | `/xueqiu/column/${string}`
-  | `/xueqiu/favorite/${string}`
-  | `/xueqiu/fund/${string}`
+  | `/xmut/jwc/bkjw/:category?`
+  | `/xmut/jwc/yjjw/:category?`
+  | `/xsijishe/forum/:fid`
+  | `/xsijishe/rank/:type`
+  | `/xueqiu/column/:id`
+  | `/xueqiu/favorite/:id`
+  | `/xueqiu/fund/:id`
   | `/xueqiu/hots`
-  | `/xueqiu/snb/${string}`
-  | `/xueqiu/stock_comments/${string}`
-  | `/xueqiu/stock_info/${string}`
-  | `/xueqiu/stock_info/${string}/${string}`
-  | `/xueqiu/timeline`
-  | `/xueqiu/timeline/${string}`
+  | `/xueqiu/snb/:id`
+  | `/xueqiu/stock_comments/:id`
+  | `/xueqiu/stock_info/:id/:type?`
+  | `/xueqiu/timeline/:usergroup_id?`
   | `/xueqiu/today`
-  | `/xueqiu/user/${string}`
-  | `/xueqiu/user/${string}/${string}`
-  | `/xueqiu/user_stock/${string}`
+  | `/xueqiu/user/:id/:type?`
+  | `/xueqiu/user_stock/:id`
   | `/xunhupay/blog`
-  | `/xwenming`
-  | `/xwenming/${string}`
+  | `/xwenming/:category?`
   | `/xys/new`
   | `/xyu/index/tzgg`
   | `/xyu/library`
-  | `/xyzrank`
-  | `/xyzrank/${string}`
-  | `/yahoo/news/${string}`
-  | `/yahoo/news/${string}/${string}`
-  | `/yahoo/news/list/${string}/${string}`
-  | `/yahoo/news/provider/${string}/${string}`
-  | `/yahoo/news/providers/${string}/list`
+  | `/xyzrank/:category?`
+  | `/yahoo/news/:region/:category?`
+  | `/yahoo/news/list/:region/:listId`
+  | `/yahoo/news/provider/:region/:providerId`
+  | `/yahoo/news/providers/:region/list`
   | `/yamap/`
-  | `/yamibo/bbs/forum/${string}`
-  | `/yamibo/bbs/forum/${string}/${string}`
-  | `/yamibo/bbs/thread/${string}`
-  | `/yande/post/popular_recent`
-  | `/yande/post/popular_recent/${string}`
+  | `/yamibo/bbs/forum/:fid/:type?`
+  | `/yamibo/bbs/thread/:tid`
+  | `/yande/post/popular_recent/:period?`
   | `/yangtzeu/dongke/*`
-  | `/ycwb/${string}`
-  | `/yenpress/series/${string}`
+  | `/ycwb/:node`
+  | `/yenpress/series/:name`
   | `/ygkkk/`
-  | `/yicai/author`
-  | `/yicai/author/${string}`
+  | `/yicai/author/:id?`
   | `/yicai/brief`
   | `/yicai/carousel`
-  | `/yicai/dt`
-  | `/yicai/dt/${string}/${string}`
-  | `/yicai/feed`
-  | `/yicai/feed/${string}`
+  | `/yicai/dt/:column?/:category?`
+  | `/yicai/feed/:id?`
   | `/yicai/headline`
   | `/yicai/latest`
-  | `/yicai/news`
-  | `/yicai/news/${string}`
-  | `/yicai/video`
-  | `/yicai/video/${string}`
-  | `/yicai/vip`
-  | `/yicai/vip/${string}`
+  | `/yicai/news/:id?`
+  | `/yicai/video/:id?`
+  | `/yicai/vip/:id?`
   | `/yilinzazhi/`
   | `/yilinzazhi/latest`
-  | `/ymgal/article`
-  | `/ymgal/article/${string}`
+  | `/ymgal/article/:type?`
   | `/ymgal/game/release`
-  | `/yna`
-  | `/yna/${string}/${string}`
-  | `/ynet/list`
-  | `/ynet/list/${string}/${string}`
-  | `/yoasobi-music/info`
-  | `/yoasobi-music/info/${string}`
+  | `/yna/:lang?/:channel?`
+  | `/ynet/list/:category?/:id?`
+  | `/yoasobi-music/info/:category?`
   | `/yoasobi-music/live`
   | `/yoasobi-music/media`
-  | `/yomiuri`
-  | `/yomiuri/${string}`
-  | `/yomujp`
-  | `/yomujp/${string}`
-  | `/youku/channel/${string}`
-  | `/youku/channel/${string}/${string}`
-  | `/youmemark/${string}`
-  | `/youtube/c/${string}`
-  | `/youtube/c/${string}/${string}`
-  | `/youtube/channel/${string}`
-  | `/youtube/channel/${string}/${string}`
-  | `/youtube/charts`
-  | `/youtube/charts/${string}/${string}/${string}`
-  | `/youtube/community/${string}`
-  | `/youtube/live/${string}`
-  | `/youtube/live/${string}/${string}`
-  | `/youtube/playlist/${string}`
-  | `/youtube/playlist/${string}/${string}`
-  | `/youtube/subscriptions`
-  | `/youtube/subscriptions/${string}`
-  | `/youtube/user/${string}`
-  | `/youtube/user/${string}/${string}`
-  | `/youzhiyouxing/materials`
-  | `/youzhiyouxing/materials/${string}`
-  | `/yuanliao`
-  | `/yuanliao/${string}`
-  | `/yuque/${string}/${string}`
-  | `/yxdown/news`
-  | `/yxdown/news/${string}`
+  | `/yomiuri/:category?`
+  | `/yomujp/:level?`
+  | `/youku/channel/:channelId/:embed?`
+  | `/youmemark/:userid`
+  | `/youtube/c/:username/:embed?`
+  | `/youtube/channel/:id/:routeParams?`
+  | `/youtube/charts/:category?/:country?/:embed?`
+  | `/youtube/community/:handle`
+  | `/youtube/live/:username/:embed?`
+  | `/youtube/playlist/:id/:embed?`
+  | `/youtube/subscriptions/:embed?`
+  | `/youtube/user/:username/:routeParams?`
+  | `/youzhiyouxing/materials/:id?`
+  | `/yuanliao/:tag?`
+  | `/yuque/:name/:book`
+  | `/yxdown/news/:category?`
   | `/yxdown/recommend`
-  | `/yxdzqb/${string}`
-  | `/yxrb`
-  | `/yxrb/${string}`
-  | `/yyets/article`
-  | `/yyets/article/${string}`
+  | `/yxdzqb/:type`
+  | `/yxrb/:category?`
+  | `/yyets/article/:type?`
   | `/yyets/today`
-  | `/yystv/category/${string}`
+  | `/yystv/category/:category`
   | `/yystv/docs`
-  | `/zagg/new-arrivals`
-  | `/zagg/new-arrivals/${string}`
-  | `/zaimanhua/comic/${string}`
+  | `/zagg/new-arrivals/:query?`
+  | `/zaimanhua/comic/:id`
   | `/zaimanhua/update`
-  | `/zaker/channel`
-  | `/zaker/channel/${string}`
+  | `/zaker/channel/:id?`
   | `/zaker/focusread`
   | `/zaobao/interactive-graphics`
-  | `/zaobao/other`
-  | `/zaobao/other/${string}/${string}`
-  | `/zaobao/realtime`
-  | `/zaobao/realtime/${string}`
-  | `/zaobao/znews`
-  | `/zaobao/znews/${string}`
-  | `/zaozao/article`
-  | `/zaozao/article/${string}`
-  | `/zcmu/jwc`
-  | `/zcmu/jwc/${string}`
-  | `/zcmu/yxy`
-  | `/zcmu/yxy/${string}`
-  | `/zcool/discover`
-  | `/zcool/discover/${string}/${string}/${string}/${string}/${string}/${string}/${string}`
-  | `/zcool/top/${string}`
-  | `/zcool/user/${string}`
+  | `/zaobao/other/:type?/:section?`
+  | `/zaobao/realtime/:section?`
+  | `/zaobao/znews/:section?`
+  | `/zaozao/article/:type?`
+  | `/zcmu/jwc/:type?`
+  | `/zcmu/yxy/:type?`
+  | `/zcool/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?`
+  | `/zcool/top/:type`
+  | `/zcool/user/:uid`
   | `/zed/blog`
-  | `/zhibo8/forum/${string}`
-  | `/zhibo8/luxiang`
-  | `/zhibo8/luxiang/${string}`
-  | `/zhibo8/more`
-  | `/zhibo8/more/${string}`
-  | `/zhibo8/post/${string}`
+  | `/zhibo8/forum/:id`
+  | `/zhibo8/luxiang/:category?`
+  | `/zhibo8/more/:category?`
+  | `/zhibo8/post/:id`
   | `/zhihu/bookstore/newest`
-  | `/zhihu/collection/${string}`
-  | `/zhihu/collection/${string}/${string}`
+  | `/zhihu/collection/:id/:getAll?`
   | `/zhihu/daily`
-  | `/zhihu/daily/section/${string}`
-  | `/zhihu/hot`
-  | `/zhihu/hot/${string}`
-  | `/zhihu/people/activities/${string}`
-  | `/zhihu/people/allCollections/${string}`
-  | `/zhihu/people/answers/${string}`
-  | `/zhihu/people/pins/${string}`
+  | `/zhihu/daily/section/:sectionId`
+  | `/zhihu/hot/:category?`
+  | `/zhihu/people/activities/:id`
+  | `/zhihu/people/allCollections/:id`
+  | `/zhihu/people/answers/:id`
+  | `/zhihu/people/pins/:id`
   | `/zhihu/pin/daily`
   | `/zhihu/pin/hotlist`
-  | `/zhihu/posts/${string}/${string}`
-  | `/zhihu/question/${string}`
-  | `/zhihu/question/${string}/${string}`
+  | `/zhihu/posts/:usertype/:id`
+  | `/zhihu/question/:questionId/:sortBy?`
   | `/zhihu/timeline`
-  | `/zhihu/topic/${string}`
-  | `/zhihu/topic/${string}/${string}`
+  | `/zhihu/topic/:topicId/:isTop?`
   | `/zhihu/weekly`
-  | `/zhihu/xhu/collection/${string}`
-  | `/zhihu/xhu/people/activities/${string}`
-  | `/zhihu/xhu/people/answers/${string}`
-  | `/zhihu/xhu/people/posts/${string}`
-  | `/zhihu/xhu/question/${string}`
-  | `/zhihu/xhu/question/${string}/${string}`
-  | `/zhihu/xhu/topic/${string}`
-  | `/zhihu/xhu/zhuanlan/${string}`
-  | `/zhihu/zhuanlan/${string}`
-  | `/zhitongcaijing`
-  | `/zhitongcaijing/${string}/${string}`
-  | `/zhiy/letters/${string}`
-  | `/zhiy/posts/${string}`
+  | `/zhihu/xhu/collection/:id`
+  | `/zhihu/xhu/people/activities/:hexId`
+  | `/zhihu/xhu/people/answers/:hexId`
+  | `/zhihu/xhu/people/posts/:hexId`
+  | `/zhihu/xhu/question/:questionId/:sortBy?`
+  | `/zhihu/xhu/topic/:topicId`
+  | `/zhihu/xhu/zhuanlan/:id`
+  | `/zhihu/zhuanlan/:id`
+  | `/zhitongcaijing/:id?/:category?`
+  | `/zhiy/letters/:author`
+  | `/zhiy/posts/:author`
   | `/zhizhuan100/analytic`
-  | `/zhonglun/research/article`
-  | `/zhonglun/research/article/${string}`
-  | `/zhubai/posts/${string}`
+  | `/zhonglun/research/article/:language{[a-zA-Z0-9-]+}?`
+  | `/zhubai/posts/:id`
   | `/zhubai/top20`
   | `/zhujiceping/`
   | `/zhuwang/zhujia`
-  | `/zimuxia`
-  | `/zimuxia/${string}`
-  | `/zimuxia/portfolio/${string}`
-  | `/zjgtjy`
-  | `/zjgtjy/${string}`
-  | `/zjol/paper`
-  | `/zjol/paper/${string}`
-  | `/zju/career/${string}`
-  | `/zju/cse`
-  | `/zju/cse/${string}`
-  | `/zju/cst/${string}`
-  | `/zju/cst/custom/${string}`
-  | `/zju/grs/${string}`
-  | `/zju/list/${string}`
-  | `/zju/physics/${string}`
-  | `/zju/sis/${string}`
-  | `/zjut/cs/${string}`
-  | `/zjut/da/${string}`
-  | `/zjut/jwc/${string}`
-  | `/zjut/news/${string}`
-  | `/zjut/www/${string}`
+  | `/zimuxia/:category?`
+  | `/zimuxia/portfolio/:id`
+  | `/zjgtjy/:type?`
+  | `/zjol/paper/:id?`
+  | `/zju/career/:type`
+  | `/zju/cse/:category?`
+  | `/zju/cst/:type`
+  | `/zju/cst/custom/:id`
+  | `/zju/grs/:type`
+  | `/zju/list/:type`
+  | `/zju/physics/:type`
+  | `/zju/sis/:type`
+  | `/zjut/cs/:type`
+  | `/zjut/da/:type`
+  | `/zjut/jwc/:type`
+  | `/zjut/news/:type`
+  | `/zjut/www/:type`
   | `/zjuvag/blog`
-  | `/zodgame/forum`
-  | `/zodgame/forum/${string}`
-  | `/zongheng/detail/${string}`
+  | `/zodgame/forum/:fid?`
+  | `/zongheng/detail/:id`
   | `/zotero/versions`
   | `/zrblog/`
-  | `/zsxq/group/${string}`
-  | `/zsxq/group/${string}/${string}`
-  | `/zsxq/user/${string}`
+  | `/zsxq/group/:id/:scope?`
+  | `/zsxq/user/:id`
   | `/zuel/notice`
-  | `/zuvio/student5`
-  | `/zuvio/student5/${string}`
+  | `/zuvio/student5/:board?`
   | `/zuvio/student5/boards`
-  | `/zxcs/novel/${string}`
+  | `/zxcs/novel/:type`
   | `/zyshow*`
-  | `/zyw/hot`
-  | `/zyw/hot/${string}`;
+  | `/zyw/hot/:site?`;
