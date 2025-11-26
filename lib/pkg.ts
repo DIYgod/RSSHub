@@ -3,7 +3,7 @@ import { Hono } from 'hono';
 
 let app: Hono;
 
-export const init = async (conf) => {
+export const init = async (conf: Record<string, any>) => {
     setConfig(
         Object.assign(
             {
@@ -15,7 +15,7 @@ export const init = async (conf) => {
     app = (await import('@/app')).default;
 };
 
-export const request = async (path) => {
+export const request = async (path: string) => {
     const res = await app.request(path);
     return res.json();
 };
