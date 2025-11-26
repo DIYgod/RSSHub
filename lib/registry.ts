@@ -53,23 +53,27 @@ export type NamespacesType = Record<
 
 let namespaces: NamespacesType = {};
 
-switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
-    case 'production':
-        namespaces = (await import('../assets/build/routes.js')).default;
-        break;
-    case 'test':
-        // @ts-expect-error
-        namespaces = await import('../assets/build/routes.json');
-        if (namespaces.default) {
-            // @ts-ignore
-            namespaces = namespaces.default;
-        }
-        break;
-    default:
-        modules = directoryImport({
-            targetDirectoryPath: path.join(__dirname, './routes'),
-            importPattern: /\.ts$/,
-        }) as typeof modules;
+if (config.isPackage) {
+    namespaces = (await import('../assets/build/routes.js')).default;
+} else {
+    switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
+        case 'production':
+            namespaces = (await import('../assets/build/routes.js')).default;
+            break;
+        case 'test':
+            // @ts-expect-error
+            namespaces = await import('../assets/build/routes.json');
+            if (namespaces.default) {
+                // @ts-ignore
+                namespaces = namespaces.default;
+            }
+            break;
+        default:
+            modules = directoryImport({
+                targetDirectoryPath: path.join(__dirname, './routes'),
+                importPattern: /\.ts$/,
+            }) as typeof modules;
+    }
 }
 
 if (config.feature.disable_nsfw) {
