@@ -17,7 +17,7 @@ export const init = async (conf?: ConfigEnv) => {
     app = (await import('@/app')).default;
 };
 
-export const request = async (path: RoutePath) => {
+export const request = async (path: RoutePath | (string & {})) => {
     const res = await app.request(path);
     return res.json() as Promise<Data>;
 };
