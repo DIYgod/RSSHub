@@ -342,6 +342,7 @@ export default [
         },
     },
     {
+        files: ['**/*.?([cm])[jt]s?(x)'],
         plugins: {
             'simple-import-sort': simpleImportSort,
             'import-x': importX,
@@ -351,6 +352,7 @@ export default [
             'simple-import-sort/exports': 'error',
             'no-duplicate-imports': 'off',
             'import-x/no-duplicates': 'error',
+            "@typescript-eslint/consistent-type-imports": "error",
         },
     },
 ];
