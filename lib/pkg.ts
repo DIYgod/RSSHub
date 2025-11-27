@@ -1,7 +1,9 @@
+import { sValidator } from '@hono/standard-validator';
 import type { Handler, Hono } from 'hono';
 
 import type { RoutePath } from '@/../assets/build/route-paths';
 import { type ConfigEnv, setConfig } from '@/config';
+import emptyMiddleware from '@/middleware/empty';
 
 import type { Data, Namespace, Route } from './types';
 
@@ -68,6 +70,6 @@ export async function registerRoute(namespace: string, route: Route, namespaceCo
             location: `custom/${namespace}`,
         };
 
-        subApp.get(path, wrappedHandler);
+        subApp.get(path, route.param ? sValidator('param', route.param) : emptyMiddleware, route.query ? sValidator('query', route.query) : emptyMiddleware, wrappedHandler);
     }
 }
