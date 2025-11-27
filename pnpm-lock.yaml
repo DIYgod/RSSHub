@@ -39,7 +39,7 @@ importers:
         specifier: 1.19.6
         version: 1.19.6(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))
       '@hono/standard-validator':
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: 0.2.0(@standard-schema/spec@1.0.0)(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))
       '@hono/zod-openapi':
         specifier: 1.1.5
@@ -81,7 +81,7 @@ importers:
         specifier: 10.27.0
         version: 10.27.0
       '@standard-schema/spec':
-        specifier: ^1.0.0
+        specifier: 1.0.0
         version: 1.0.0
       aes-js:
         specifier: 3.1.2
@@ -315,6 +315,9 @@ importers:
       '@microsoft/eslint-formatter-sarif':
         specifier: 3.1.0
         version: 3.1.0
+      '@standard-community/standard-json':
+        specifier: 0.3.5
+        version: 0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(quansync@0.2.11)(zod@4.1.13)
       '@stylistic/eslint-plugin':
         specifier: 5.6.1
         version: 5.6.1(eslint@9.39.1(jiti@2.6.1))
@@ -2334,6 +2337,38 @@ packages:
 
   '@so-ric/colorspace@1.1.6':
     resolution: {integrity: sha512-/KiKkpHNOBgkFJwu9sh48LkHSMYGyuTcSFK/qMBdnOAlrRJzRSXAOFB5qwzaVQuDl8wAvHVMkaASQDReTahxuw==}
+
+  '@standard-community/standard-json@0.3.5':
+    resolution: {integrity: sha512-4+ZPorwDRt47i+O7RjyuaxHRK/37QY/LmgxlGrRrSTLYoFatEOzvqIc85GTlM18SFZ5E91C+v0o/M37wZPpUHA==}
+    peerDependencies:
+      '@standard-schema/spec': ^1.0.0
+      '@types/json-schema': ^7.0.15
+      '@valibot/to-json-schema': ^1.3.0
+      arktype: ^2.1.20
+      effect: ^3.16.8
+      quansync: ^0.2.11
+      sury: ^10.0.0
+      typebox: ^1.0.17
+      valibot: ^1.1.0
+      zod: ^3.25.0 || ^4.0.0
+      zod-to-json-schema: ^3.24.5
+    peerDependenciesMeta:
+      '@valibot/to-json-schema':
+        optional: true
+      arktype:
+        optional: true
+      effect:
+        optional: true
+      sury:
+        optional: true
+      typebox:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
+      zod-to-json-schema:
+        optional: true
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -8351,6 +8386,14 @@ snapshots:
     dependencies:
       color: 5.0.2
       text-hex: 1.0.0
+
+  '@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(quansync@0.2.11)(zod@4.1.13)':
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      '@types/json-schema': 7.0.15
+      quansync: 0.2.11
+    optionalDependencies:
+      zod: 4.1.13
 
   '@standard-schema/spec@1.0.0': {}
 
