@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
 import { defineRoute, ViewType } from '@/types';
-import { ofetch } from '@/utils';
-import { parseDate } from '@/utils/parse-date';
+import { ofetch, parseDate } from '@/utils';
 
 const hot = z.literal('hot').describe('最热主题');
 const latest = z.literal('latest').describe('最新主题');
