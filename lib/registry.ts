@@ -2,8 +2,8 @@ import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
 import { directoryImport } from 'directory-import';
-import type {Handler} from 'hono';
-import {  Hono } from 'hono';
+import type { Handler } from 'hono';
+import { Hono } from 'hono';
 import { routePath } from 'hono/route';
 
 import { config } from '@/config';

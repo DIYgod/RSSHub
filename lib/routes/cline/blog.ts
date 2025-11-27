@@ -1,5 +1,5 @@
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';

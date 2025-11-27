@@ -25,8 +25,8 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-import type {Cheerio, CheerioAPI} from 'cheerio';
-import {   load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import cache from '@/utils/cache';
@@ -184,7 +184,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>> this.doExtract(this.commonMetadataToBeExtracted, scriptText);
+                const metadataExtracted = <Record<string, string>>this.doExtract(this.commonMetadataToBeExtracted, scriptText);
                 const showType = showTypeMapReverse[metadataExtracted.showType];
                 const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
                 metadataExtracted.sourceUrl = metadataExtracted.sourceUrl && fixUrl(metadataExtracted.sourceUrl);
@@ -219,7 +219,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>> this.doExtract(this.audioMetadataToBeExtracted, scriptText);
+                const metadataExtracted = <Record<string, string>>this.doExtract(this.audioMetadataToBeExtracted, scriptText);
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -235,7 +235,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string[]>> this.doExtract(this.imgMetadataToBeExtracted, scriptText);
+                const metadataExtracted = <Record<string, string[]>>this.doExtract(this.imgMetadataToBeExtracted, scriptText);
                 if (Array.isArray(metadataExtracted.imgUrls)) {
                     metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
                 }

@@ -1,7 +1,7 @@
 import path from 'node:path';
 
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import { config } from '@/config';

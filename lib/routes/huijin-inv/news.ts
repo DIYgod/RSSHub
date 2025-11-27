@@ -1,5 +1,5 @@
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';

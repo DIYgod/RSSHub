@@ -1,7 +1,7 @@
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
-import type {Data, DataItem, Route} from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';

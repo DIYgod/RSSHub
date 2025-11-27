@@ -207,7 +207,7 @@
             };
 
             const storeValue = (addr, v) => {
-                const nanHead = 0x7F_F8_00_00;
+                const nanHead = 0x7f_f8_00_00;
 
                 if (typeof v === 'number' && v !== 0) {
                     if (Number.isNaN(v)) {
