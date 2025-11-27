@@ -269,7 +269,7 @@ type ParamObjectFromPath<P extends string> = P extends `${string}:${infer Param}
 
 type HasPathParams<P extends string> = P extends `${string}:${string}` ? true : false;
 
-type RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = {
+type RouteItem<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = {
     /**
      * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
      */
@@ -309,7 +309,7 @@ type RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObject
                 };
             }
         >
-    ) => Promise<Data | null | Response> | Data | null | Response;
+    ) => Promise<R | null>;
 
     /**
      * An example URL of the route
@@ -399,15 +399,20 @@ type RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObject
           query?: Q;
       });
 
-export type Route<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = RouteItem<P, T, Q> & {
-    ja?: RouteItem<P, T, Q>;
-    zh?: RouteItem<P, T, Q>;
-    'zh-TW'?: RouteItem<P, T, Q>;
+export type Route<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = RouteItem<
+    P,
+    R,
+    T,
+    Q
+> & {
+    ja?: RouteItem<P, R, T, Q>;
+    zh?: RouteItem<P, R, T, Q>;
+    'zh-TW'?: RouteItem<P, R, T, Q>;
 };
 
-export function defineRoute<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1>(
-    route: Route<P, T, Q>
-): Route<P, T, Q> {
+export function defineRoute<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1>(
+    route: Route<P, R, T, Q>
+): Route<P, R, T, Q> {
     return route;
 }
 
