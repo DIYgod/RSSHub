@@ -724,6 +724,7 @@ export type RoutePath =
   | `/dewu/declaration/:categoryId?`
   | `/dgjyw*`
   | `/dgtle/article/:id?/:pushed?`
+  | `/dgtle/feed`
   | `/dgtle/news/:id?`
   | `/dgtle/video`
   | `/dgut/jwb/:type?`

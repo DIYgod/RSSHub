@@ -2176,6 +2176,9 @@
   "/dgtle/article/:id?/:pushed?": [
     "nczitzk"
   ],
+  "/dgtle/feed": [
+    "nczitzk"
+  ],
   "/dgtle/news/:id?": [
     "nczitzk"
   ],
