@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
+import type { Route } from '@/types';
+
+import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/column/:id',

@@ -1,10 +1,11 @@
-import { Data, Route } from '@/types';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import { config } from '@/config';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import { Context } from 'hono';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     name: 'Packages',

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { generateRequestHeaders, generateProductItem } from './utils';
+
+import { generateProductItem, generateRequestHeaders } from './utils';
 
 const request = ({ moreToken = '' }) =>
     got({

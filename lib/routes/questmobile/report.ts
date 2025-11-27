@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.

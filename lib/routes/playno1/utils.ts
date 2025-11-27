@@ -1,6 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { CookieJar, Cookie } from 'tough-cookie';
+import { Cookie, CookieJar } from 'tough-cookie';
+
+import got from '@/utils/got';
+
 const cookieJar = new CookieJar();
 const cookie = Cookie.fromJSON({
     key: 'playno1',

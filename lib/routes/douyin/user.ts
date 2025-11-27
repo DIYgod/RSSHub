@@ -1,14 +1,15 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import { config } from '@/config';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import puppeteer from '@/utils/puppeteer';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { PostData } from './types';
+import { parseDate } from '@/utils/parse-date';
+import puppeteer from '@/utils/puppeteer';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { art } from '@/utils/render';
+
+import type { PostData } from './types';
+import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',

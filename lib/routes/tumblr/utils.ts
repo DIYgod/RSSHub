@@ -1,9 +1,9 @@
-import { parseDate } from '@/utils/parse-date';
-import { DataItem } from '@/types';
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 
 const getAccessToken: () => Promise<string | null> = async () => {
     let accessToken: string | null = await cache.get('tumblr:accessToken', false);

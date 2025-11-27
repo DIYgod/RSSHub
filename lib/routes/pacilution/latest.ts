@@ -1,9 +1,10 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import iconv from 'iconv-lite';
 
 const BASE_URL = 'http://www.pacilution.com/';
 

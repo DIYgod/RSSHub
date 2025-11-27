@@ -1,14 +1,17 @@
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { stream } from 'hono/streaming';
-import { Api, TelegramClient } from 'telegram';
-import { IterDownloadFunction } from 'telegram/client/downloads.js';
-import { getAppropriatedPartSize } from 'telegram/Utils.js';
-import { config } from '@/config';
-import cacheModule from '@/utils/cache/index';
-import { getClient, getDocument, getFilename, unwrapMedia } from './tglib/client';
+import type { TelegramClient } from 'telegram';
+import { Api } from 'telegram';
+import type { IterDownloadFunction } from 'telegram/client/downloads.js';
 import { returnBigInt as bigInt } from 'telegram/Helpers.js';
+import { getAppropriatedPartSize } from 'telegram/Utils.js';
+
+import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cacheModule from '@/utils/cache/index';
+
+import { getClient, getDocument, getFilename, unwrapMedia } from './tglib/client';
 
 /**
  * https://core.telegram.org/api/files#stripped-thumbnails

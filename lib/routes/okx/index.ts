@@ -1,9 +1,10 @@
-import { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:section?',

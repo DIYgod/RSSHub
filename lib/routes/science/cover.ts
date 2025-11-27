@@ -1,5 +1,8 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 // journals form AAAS publishing group
 //
 // science:        Science
@@ -8,12 +11,10 @@ import { Route } from '@/types';
 // scirobotics:    Science Robotics
 // signaling:      Science Signaling
 // stm:            Science Translational Medicine
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 import { baseUrl } from './utils';
 
 export const route: Route = {

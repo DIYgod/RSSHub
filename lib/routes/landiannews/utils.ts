@@ -1,5 +1,5 @@
-import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 const rootUrl = 'https://www.landiannews.com/';
 
@@ -31,4 +31,4 @@ async function fetchNewsItems(apiUrl: string) {
     }));
 }
 
-export { fetchCategory, fetchTag, fetchNewsItems };
+export { fetchCategory, fetchNewsItems, fetchTag };

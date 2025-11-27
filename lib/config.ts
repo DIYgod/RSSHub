@@ -1,4 +1,5 @@
 import 'dotenv/config';
+
 import { ofetch } from 'ofetch';
 
 type ConfigEnvKeys =

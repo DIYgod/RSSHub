@@ -1,8 +1,8 @@
-import { type Data, type Route, ViewType } from '@/types';
-
 import { type Context } from 'hono';
 
-import { baseUrl, apiBaseUrl, processItems } from './util';
+import { type Data, type Route, ViewType } from '@/types';
+
+import { apiBaseUrl, baseUrl, processItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);

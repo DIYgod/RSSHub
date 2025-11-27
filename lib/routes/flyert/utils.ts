@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import pMap from 'p-map';
+
+import got from '@/utils/got';
 import wait from '@/utils/wait';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');

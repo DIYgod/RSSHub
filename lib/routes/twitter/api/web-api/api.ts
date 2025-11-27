@@ -1,9 +1,10 @@
-import { baseUrl, gqlMap, gqlFeatures } from './constants';
 import { config } from '@/config';
-import cache from '@/utils/cache';
-import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+import { baseUrl, gqlFeatures, gqlMap } from './constants';
+import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
 const getUserData = (id) =>
     cache.tryGet(`twitter-userdata-${id}`, () => {

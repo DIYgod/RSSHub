@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { createCsustHandler } from './utils';
 
 const handler = createCsustHandler({

@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
+import * as cheerio from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { config } from '@/config';
-import { ArticleDetail, Category, CategoryArticle } from './types';
+
+import type { ArticleDetail, Category, CategoryArticle } from './types';
 
 const baseUrl = 'https://www.famitsu.com';
 

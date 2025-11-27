@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { fallback, queryToInteger } from '@/utils/readable-social';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/recommended/:type?/:routeParams?',

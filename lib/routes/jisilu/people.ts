@@ -1,12 +1,11 @@
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { rootUrl, processItems } from './util';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { processItems, rootUrl } from './util';
 
 const actions: { [key: string]: string } = {
     questions: '101',

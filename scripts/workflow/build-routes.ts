@@ -1,12 +1,14 @@
-import { namespaces } from '../../lib/registry';
-import { RadarItem } from '../../lib/types';
-import { parse } from 'tldts';
 import fs from 'node:fs';
 import path from 'node:path';
-import toSource from 'tosource';
-import { config } from '../../lib/config';
 
+import { parse } from 'tldts';
+import toSource from 'tosource';
+
+import { config } from '../../lib/config';
+import { namespaces } from '../../lib/registry';
+import type { RadarItem } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
+
 const __dirname = getCurrentPath(import.meta.url);
 
 const foloAnalysis = await (

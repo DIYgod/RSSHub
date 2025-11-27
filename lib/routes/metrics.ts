@@ -1,4 +1,5 @@
 import type { Handler } from 'hono';
+
 import { getContext } from '@/utils/otel';
 
 const handler: Handler = (ctx) =>

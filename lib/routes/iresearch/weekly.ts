@@ -1,6 +1,6 @@
-import { type Data, type Route, ViewType } from '@/types';
-
 import { type Context } from 'hono';
+
+import { type Data, type Route, ViewType } from '@/types';
 
 export const handler = (ctx: Context): Data | undefined => {
     const { id } = ctx.req.param();

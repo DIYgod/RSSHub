@@ -1,8 +1,10 @@
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { CookieJar } from 'tough-cookie';
+
 const baseUrl = 'https://www.nature.com';
 
 const fixFigure = (html) => {
