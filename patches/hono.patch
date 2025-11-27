@@ -1,0 +1,26 @@
+diff --git a/dist/cjs/validator/validator.js b/dist/cjs/validator/validator.js
+index 552cd60072c827bf913c59208aafd16adcb6e211..e324efe8a21dbe210f505c858a4346315632e088 100644
+--- a/dist/cjs/validator/validator.js
++++ b/dist/cjs/validator/validator.js
+@@ -100,7 +100,7 @@ const validator = (target, validationFunc) => {
+       return res;
+     }
+     c.req.addValidatedData(target, res);
+-    return await next();
++    await next();
+   };
+ };
+ // Annotate the CommonJS export names for ESM import in node:
+diff --git a/dist/validator/validator.js b/dist/validator/validator.js
+index 6b3689ae016417759244d0d286a51360951923dc..abb6abaa031723fa8246b7eebf5294bba9a6710e 100644
+--- a/dist/validator/validator.js
++++ b/dist/validator/validator.js
+@@ -78,7 +78,7 @@ var validator = (target, validationFunc) => {
+       return res;
+     }
+     c.req.addValidatedData(target, res);
+-    return await next();
++    await next();
+   };
+ };
+ export {

@@ -1,12 +1,14 @@
 import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
+import { sValidator } from '@hono/standard-validator';
 import { directoryImport } from 'directory-import';
 import type { Handler } from 'hono';
 import { Hono } from 'hono';
 import { routePath } from 'hono/route';
 
 import { config } from '@/config';
+import emptyMiddleware from '@/middleware/empty';
 import healthz from '@/routes/healthz';
 import index from '@/routes/index';
 import metrics from '@/routes/metrics';
@@ -211,7 +213,7 @@ for (const namespace in namespaces) {
                 ctx.set('data', response);
             }
         };
-        subApp.get(path, wrappedHandler);
+        subApp.get(path, routeData.param ? sValidator('param', routeData.param) : emptyMiddleware, routeData.query ? sValidator('query', routeData.query) : emptyMiddleware, wrappedHandler);
     }
 }
 

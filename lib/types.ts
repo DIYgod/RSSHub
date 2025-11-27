@@ -1,3 +1,4 @@
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type { Context } from 'hono';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
@@ -256,11 +257,23 @@ export enum ViewType {
 }
 
 // route
-interface RouteItem {
+type ParamObjectFromPath<P extends string> = P extends `${string}:${infer Param}/${infer Rest}`
+    ? Param extends `${infer Name}?`
+        ? { [K in Name]?: string } & ParamObjectFromPath<`/${Rest}`>
+        : { [K in Param]: string } & ParamObjectFromPath<`/${Rest}`>
+    : P extends `${string}:${infer Param}`
+      ? Param extends `${infer Name}?`
+          ? { [K in Name]?: string }
+          : { [K in Param]: string }
+      : Record<string, never>;
+
+type HasPathParams<P extends string> = P extends `${string}:${string}` ? true : false;
+
+type RouteItem<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = {
     /**
      * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
      */
-    path: string | string[];
+    path: P | string[];
 
     /**
      * The human-readable name of the route, which will be used as the level 3 heading in the documentation
@@ -281,7 +294,22 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data | null | Response> | Data | null | Response;
+    handler: (
+        ctx: Context<
+            any,
+            P,
+            {
+                in: {
+                    param: StandardSchemaV1.InferInput<T>;
+                    query: StandardSchemaV1.InferInput<Q>;
+                };
+                out: {
+                    param: StandardSchemaV1.InferOutput<T>;
+                    query: StandardSchemaV1.InferOutput<Q>;
+                };
+            }
+        >
+    ) => Promise<R | null>;
 
     /**
      * An example URL of the route
@@ -361,12 +389,31 @@ interface RouteItem {
      * The [Follow](https://github.com/RSSNext/follow) default view of the route, default to `ViewType.Articles`
      */
     view?: ViewType;
-}
+} & (HasPathParams<P> extends true
+    ? {
+          param: T;
+          query?: Q;
+      }
+    : {
+          param?: T;
+          query?: Q;
+      });
 
-export interface Route extends RouteItem {
-    ja?: RouteItem;
-    zh?: RouteItem;
-    'zh-TW'?: RouteItem;
+export type Route<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = RouteItem<
+    P,
+    R,
+    T,
+    Q
+> & {
+    ja?: RouteItem<P, R, T, Q>;
+    zh?: RouteItem<P, R, T, Q>;
+    'zh-TW'?: RouteItem<P, R, T, Q>;
+};
+
+export function defineRoute<P extends string = string, R extends Response | Data = Data, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1>(
+    route: Route<P, R, T, Q>
+): Route<P, R, T, Q> {
+    return route;
 }
 
 // radar

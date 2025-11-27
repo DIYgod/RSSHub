@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { toJsonSchema } from '@standard-community/standard-json';
+
 import { config } from '../../lib/config';
 import { namespaces } from '../../lib/registry';
 import { getCurrentPath } from '../../lib/utils/helpers';
@@ -61,6 +63,10 @@ for (const namespace in namespaces) {
             docs[category][namespace].description = namespaces[namespace].description;
             docs[category][namespace].routes[realPath] = {
                 ...data,
+                // eslint-disable-next-line no-await-in-loop
+                param: data.param ? await toJsonSchema(data.param) : undefined,
+                // eslint-disable-next-line no-await-in-loop
+                query: data.query ? await toJsonSchema(data.query) : undefined,
                 heat: foloAnalysisResult[realPath]?.subscriptionCount || 0,
                 topFeeds: foloAnalysisResult[realPath]?.topFeeds || [],
             };
