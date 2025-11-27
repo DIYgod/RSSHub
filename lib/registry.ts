@@ -214,7 +214,7 @@ for (const namespace in namespaces) {
         };
         const getValidator = (target: 'param' | 'query') =>
             validator(target, async (value, c) => {
-                const schema = routeData.param;
+                const schema = routeData[target];
                 if (!schema) {
                     return value;
                 }
