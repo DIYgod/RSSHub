@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { load } from 'cheerio';
 
-import { type Data, type DataItem, type Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';

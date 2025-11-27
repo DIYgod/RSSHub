@@ -1,6 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 
-import { type DataItem } from '@/types';
+import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 export function parseItems($: CheerioAPI): DataItem[] {

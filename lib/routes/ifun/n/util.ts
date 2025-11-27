@@ -1,4 +1,4 @@
-import { type DataItem } from '@/types';
+import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 const author: string = '趣集';

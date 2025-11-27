@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { type ErrorHandler, type NotFoundHandler } from 'hono';
+import type { ErrorHandler, NotFoundHandler } from 'hono';
 import { routePath } from 'hono/route';
 
 import { config } from '@/config';

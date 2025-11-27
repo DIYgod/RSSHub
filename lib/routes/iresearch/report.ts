@@ -1,8 +1,9 @@
 import path from 'node:path';
 
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';

@@ -1,5 +1,6 @@
-import { type CheerioAPI, load } from 'cheerio';
-import { type MiddlewareHandler } from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { MiddlewareHandler } from 'hono';
 
 import { config } from '@/config';
 import type { Data } from '@/types';

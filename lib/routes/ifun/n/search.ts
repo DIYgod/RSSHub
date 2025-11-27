@@ -1,6 +1,7 @@
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { author, language, processItems, rootUrl } from './util';

@@ -25,7 +25,8 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import cache from '@/utils/cache';

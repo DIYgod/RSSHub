@@ -6,7 +6,8 @@ import { ProxyAgent } from 'undici';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
-import createMultiProxy, { type MultiProxyResult, type ProxyState } from './multi-proxy';
+import type { MultiProxyResult, ProxyState } from './multi-proxy';
+import createMultiProxy from './multi-proxy';
 import pacProxy from './pac-proxy';
 import unifyProxy from './unify-proxy';
 

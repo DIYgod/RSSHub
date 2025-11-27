@@ -1,4 +1,4 @@
-import { type Browser } from 'rebrowser-puppeteer';
+import type { Browser } from 'rebrowser-puppeteer';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import wait from './wait';

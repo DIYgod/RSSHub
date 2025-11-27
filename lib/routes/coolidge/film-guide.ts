@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { load } from 'cheerio';
 
-import { type Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 

@@ -5,7 +5,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { type NowItem, renderNowDescription } from './util';
+import type { NowItem } from './util';
+import { renderNowDescription } from './util';
 
 export const route: Route = {
     path: '/now/:location',

@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';

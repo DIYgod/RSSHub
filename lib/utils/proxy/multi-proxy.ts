@@ -1,4 +1,4 @@
-import { type Config } from '@/config';
+import type { Config } from '@/config';
 import logger from '@/utils/logger';
 
 import unifyProxy from './unify-proxy';

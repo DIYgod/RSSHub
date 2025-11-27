@@ -1,5 +1,6 @@
 import Parser from '@postlight/parser';
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import * as entities from 'entities';
 import type { MiddlewareHandler } from 'hono';

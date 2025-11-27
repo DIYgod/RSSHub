@@ -1,4 +1,5 @@
-import { Category, MixiClient, type Persona, type Post } from 'mixi2';
+import type { Persona, Post } from 'mixi2';
+import { Category, MixiClient } from 'mixi2';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';

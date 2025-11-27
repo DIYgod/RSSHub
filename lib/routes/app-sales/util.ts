@@ -1,9 +1,10 @@
 import path from 'node:path';
 
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
-import { type DataItem } from '@/types';
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 
