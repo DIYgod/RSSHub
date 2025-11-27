@@ -3,13 +3,17 @@ import { z } from 'zod';
 import { defineRoute, ViewType } from '@/types';
 import { ofetch, parseDate } from '@/utils';
 
-const hot = z.literal('hot').describe('最热主题');
-const latest = z.literal('latest').describe('最新主题');
+import type { Topic } from './types';
+
+const topics = {
+    hot: '最热主题',
+    latest: '最新主题',
+} as const;
 
 export const route = defineRoute({
     path: '/topics/:type',
     param: z.object({
-        type: z.union([hot, latest]).describe('主题类型'),
+        type: z.union((Object.keys(topics) as Array<keyof typeof topics>).map((key) => z.literal(key).describe(topics[key]))).describe('主题类型'),
     }),
     categories: ['bbs'],
     view: ViewType.Articles,
@@ -40,16 +44,10 @@ export const route = defineRoute({
     },
     name: '最热 / 最新主题',
     maintainers: ['WhiteWorld'],
-    handler: async function handler(ctx) {
+    async handler(ctx) {
         const { type } = ctx.req.valid('param');
-        const data = await ofetch(`https://www.v2ex.com/api/topics/${type}.json`);
-
-        let title;
-        if (type === 'hot') {
-            title = '最热主题';
-        } else if (type === 'latest') {
-            title = '最新主题';
-        }
+        const title = topics[type];
+        const data = (await ofetch(`https://www.v2ex.com/api/topics/${type}.json`)) as Array<Topic>;
 
         return {
             title: `V2EX-${title}`,
