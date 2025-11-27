@@ -1,10 +1,14 @@
-import { Data, DataItem } from '@/types';
-import { NarouNovelFetch, SearchBuilder, SearchParams, BigGenre } from 'narou';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { SearchParams } from 'narou';
+import { BigGenre, NarouNovelFetch, SearchBuilder } from 'narou';
+import type { Join } from 'narou/util/type';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Join } from 'narou/util/type';
-import { RankingPeriod, NovelType, periodToJapanese, novelTypeToJapanese, periodToOrder, periodToPointField, IsekaiCategory, isekaiCategoryToJapanese } from './types/ranking';
+import type { Data, DataItem } from '@/types';
+import { art } from '@/utils/render';
+
+import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, periodToPointField, RankingPeriod } from './types/ranking';
 
 export function parseIsekaiRankingType(type: string): { period: RankingPeriod; category: IsekaiCategory; novelType: NovelType } {
     const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_');

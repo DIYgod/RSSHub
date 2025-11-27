@@ -1,7 +1,8 @@
-import { Route, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {

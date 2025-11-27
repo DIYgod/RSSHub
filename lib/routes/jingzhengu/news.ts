@@ -1,10 +1,10 @@
-import { Route } from '@/types';
-import { NewsInfo, NewsDetail } from './types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import type { NewsDetail, NewsInfo } from './types';
 import { sign } from './utils';
 
 export const route: Route = {

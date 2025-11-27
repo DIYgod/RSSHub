@@ -1,4 +1,5 @@
 import type { Handler } from 'hono';
+
 import Index from '@/views/index';
 
 const handler: Handler = (ctx) => {

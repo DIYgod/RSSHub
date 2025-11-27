@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import sanitizeHtml from 'sanitize-html';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/journal/:id/current',

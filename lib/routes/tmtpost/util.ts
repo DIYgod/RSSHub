@@ -1,12 +1,12 @@
-import { type Data, type DataItem } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import { type CheerioAPI, load } from 'cheerio';
+
+import { type Data, type DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 const baseUrl: string = 'https://www.tmtpost.com';
 const apiBaseUrl: string = 'https://api.tmtpost.com';
@@ -201,4 +201,4 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
     };
 };
 
-export { baseUrl, apiBaseUrl, processItems };
+export { apiBaseUrl, baseUrl, processItems };

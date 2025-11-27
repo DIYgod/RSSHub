@@ -1,5 +1,6 @@
-import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
+
+import got from '@/utils/got'; // get web content
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

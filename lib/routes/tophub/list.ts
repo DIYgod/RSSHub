@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import { config } from '@/config';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { load } from 'cheerio';
 import xxhash from 'xxhash-wasm';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/list/:id',

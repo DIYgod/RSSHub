@@ -1,8 +1,10 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const getImageById = async (id) => {
     const response = await ofetch('https://api.aeonmedia.co/graphql', {

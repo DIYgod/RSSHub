@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 
 const rootUrl = 'https://getitfree.cn';
 const apiSlug = 'wp-json/wp/v2';
@@ -312,4 +313,4 @@ const parseFilterStr = (filterStr) => {
     return parseStr(filterStr, {});
 };
 
-export { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr };
+export { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr, rootUrl };

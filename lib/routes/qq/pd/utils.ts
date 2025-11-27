@@ -1,6 +1,6 @@
 // Description: QQ PD utils
 
-import { Feed, FeedImage, FeedPattern, FeedFontProps, FeedPatternData } from './types';
+import type { Feed, FeedFontProps, FeedImage, FeedPattern, FeedPatternData } from './types';
 
 const patternTypeMap = {
     1: 'text',

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/user/followings/:uid/:loginUid',

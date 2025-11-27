@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 // test url http://localhost:1200/asianfanfics/text-search/milklove
 

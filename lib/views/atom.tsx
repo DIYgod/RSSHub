@@ -1,5 +1,6 @@
 import type { FC } from 'hono/jsx';
-import { Data } from '@/types';
+
+import type { Data } from '@/types';
 
 const RSS: FC<{ data: Data }> = ({ data }) => (
     <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas">

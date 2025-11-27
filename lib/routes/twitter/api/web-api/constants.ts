@@ -114,4 +114,4 @@ const timelineParams = {
 
 const bearerToken = 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
-export { baseUrl, gqlMap, gqlFeatures, timelineParams, bearerToken, thirdPartySupportedAPI };
+export { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI, timelineParams };

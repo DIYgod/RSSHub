@@ -80,4 +80,4 @@ const countReplies = (id) => ({
     },
 });
 
-export { viewForum, viewThread, countReplies };
+export { countReplies, viewForum, viewThread };

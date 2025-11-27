@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import apiKey from './api-key';
 import { MEDIA_TYPE_TO_ITEM_HANDLE } from './utils';
 

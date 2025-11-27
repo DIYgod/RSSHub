@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import md5 from '@/utils/md5';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/quotation/all',

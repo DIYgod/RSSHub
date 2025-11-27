@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
-import path from 'node:path';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/radios/:category?',

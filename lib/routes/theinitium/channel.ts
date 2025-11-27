@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { processFeed } from './utils';
 
 const handler = (ctx) => processFeed('channel', ctx);

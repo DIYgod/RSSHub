@@ -1,13 +1,15 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-dayjs.extend(customParseFormat);
 import { art } from '@/utils/render';
-import path from 'node:path';
+
+dayjs.extend(customParseFormat);
 const renderDesc = (content) => art(path.join(__dirname, 'templates/description.art'), content);
 
 export const route: Route = {

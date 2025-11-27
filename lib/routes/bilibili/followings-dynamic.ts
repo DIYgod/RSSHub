@@ -1,13 +1,16 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
-import { config } from '@/config';
-import utils from './utils';
-import JSONbig from 'json-bigint';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
 import querystring from 'node:querystring';
+
+import JSONbig from 'json-bigint';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import logger from '@/utils/logger';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import cache from './cache';
+import utils from './utils';
 
 export const route: Route = {
     path: '/followings/dynamic/:uid/:routeParams?',

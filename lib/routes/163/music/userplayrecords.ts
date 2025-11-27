@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { config } from '@/config';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
 
 const headers = {
     cookie: config.ncm.cookies,

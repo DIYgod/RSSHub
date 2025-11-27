@@ -1,5 +1,6 @@
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { art } from '@/utils/render';
 
 const parseModule = (floors, module_key) => floors.find((floor) => floor.module_key === module_key);
 
@@ -15,4 +16,4 @@ const parseFloorItem = (floor) =>
         };
     });
 
-export { parseModule, parseFloorItem };
+export { parseFloorItem, parseModule };

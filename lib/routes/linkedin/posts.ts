@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
-import { parseCompanyName, parseCompanyPosts, BASE_URL } from './utils';
+
+import type { Route } from '@/types';
 import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
+
+import { BASE_URL, parseCompanyName, parseCompanyPosts } from './utils';
 
 export const route: Route = {
     path: '/company/:company_id/posts',

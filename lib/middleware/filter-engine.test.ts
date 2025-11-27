@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll, vi, afterEach } from 'vitest';
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 afterAll(() => {
     delete process.env.FILTER_REGEX_ENGINE;

@@ -1,5 +1,5 @@
-import { APIMessage } from 'discord-api-types/v10';
-import { RESTGetAPIGuildResult, RESTGetAPIGuildChannelsResult, RESTGetAPIChannelResult, RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult } from 'discord-api-types/rest/v10';
+import type { RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult, RESTGetAPIChannelResult, RESTGetAPIGuildChannelsResult, RESTGetAPIGuildResult } from 'discord-api-types/rest/v10';
+import type { APIMessage } from 'discord-api-types/v10';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';

@@ -1,9 +1,11 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import { rootUrl } from './utils';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/update',

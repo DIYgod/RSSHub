@@ -1,11 +1,13 @@
-import cache from '@/utils/cache';
+import querystring from 'node:querystring';
+
+import { load } from 'cheerio';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 import { getCookies } from '@/utils/puppeteer-utils';
-import logger from '@/utils/logger';
-import querystring from 'node:querystring';
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
 class RenewWeiboCookiesError extends Error {

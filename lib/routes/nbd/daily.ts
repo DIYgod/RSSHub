@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 export const route: Route = {
     path: '/daily',
     categories: ['finance'],

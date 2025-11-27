@@ -1,9 +1,12 @@
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
-import { Detail } from './types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
+
+import type { Detail } from './types';
 
 const X_UA = (lang = 'zh_CN') => `X-UA=${encodeURIComponent(`V=1&PN=WebApp&VN=0.1.0&LANG=${lang}&PLT=PC`)}`;
 
@@ -44,4 +47,4 @@ const videoPost = (video) =>
         previewUrl: video.thumbnail.original_url || video.thumbnail.url,
     });
 
-export { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost };
+export { appDetail, getRootUrl, imagePost, topicPost, videoPost, X_UA };

@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import { art } from '@/utils/render';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/:handle',

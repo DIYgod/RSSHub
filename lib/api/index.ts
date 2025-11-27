@@ -1,12 +1,13 @@
 // import { route as rulesRoute, handler as rulesHandler } from '@/api/radar/rules';
-import { route as namespaceAllRoute, handler as namespaceAllHandler } from '@/api/namespace/all';
-import { route as namespaceOneRoute, handler as namespaceOneHandler } from '@/api/namespace/one';
-import { route as radarRulesAllRoute, handler as radarRulesAllHandler } from '@/api/radar/rules/all';
-import { route as radarRulesOneRoute, handler as radarRulesOneHandler } from '@/api/radar/rules/one';
-import { route as categoryOneRoute, handler as categoryOneHandler } from '@/api/category/one';
-import { route as followConfigRoute, handler as followConfigHandler } from '@/api/follow/config';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { Scalar } from '@scalar/hono-api-reference';
+
+import { handler as categoryOneHandler, route as categoryOneRoute } from '@/api/category/one';
+import { handler as followConfigHandler, route as followConfigRoute } from '@/api/follow/config';
+import { handler as namespaceAllHandler, route as namespaceAllRoute } from '@/api/namespace/all';
+import { handler as namespaceOneHandler, route as namespaceOneRoute } from '@/api/namespace/one';
+import { handler as radarRulesAllHandler, route as radarRulesAllRoute } from '@/api/radar/rules/all';
+import { handler as radarRulesOneHandler, route as radarRulesOneRoute } from '@/api/radar/rules/one';
 
 const app = new OpenAPIHono();
 

@@ -1,10 +1,12 @@
-import { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { getHeaders } from './utils';
 
 export const route: Route = {
     path: '/product/:id',

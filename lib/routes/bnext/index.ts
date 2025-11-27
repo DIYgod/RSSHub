@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
 import type { Item } from 'rss-parser';
+
+import type { Route } from '@/types';
+import parser from '@/utils/rss-parser';
 
 const FEED_URL = 'https://rss.bnextmedia.com.tw/feed/bnext';
 

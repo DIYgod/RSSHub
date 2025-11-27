@@ -1,14 +1,17 @@
 // https://github.com/BANKA2017/twitter-monitor/blob/node/apps/open_account/scripts/login.mjs
 
-import { bearerToken, guestActivateUrl } from './constants';
-import got from '@/utils/got';
-import ofetch from '@/utils/ofetch';
 import crypto from 'node:crypto';
-import { v5 as uuidv5 } from 'uuid';
+
 import { authenticator } from 'otplib';
-import logger from '@/utils/logger';
-import cache from '@/utils/cache';
 import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
+import { v5 as uuidv5 } from 'uuid';
+
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+
+import { bearerToken, guestActivateUrl } from './constants';
 
 const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 

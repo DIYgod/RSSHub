@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
 const domain = 'manhua.fffdm.com';
 const host = `https://${domain}`;
-import { art } from '@/utils/render';
-import path from 'node:path';
-import { parseDate } from '@/utils/parse-date';
 
 const get_pic = async (url) => {
     const response = await got(url);

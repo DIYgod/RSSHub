@@ -160,4 +160,4 @@ export function isNewsDataItem(item: HomePostItem | NewsDataItem): item is NewsD
 }
 
 // 导出具体类型以供外部使用
-export type { Badge, HomePostItem, NewsDataItem, RecommendMatch, HomePageProps, BasketballPageProps, SoccerPageProps, CategoryPageProps, ApiResponseProps };
+export type { ApiResponseProps, Badge, BasketballPageProps, CategoryPageProps, HomePageProps, HomePostItem, NewsDataItem, RecommendMatch, SoccerPageProps };

@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import g_encrypt from './execlib/x-zse-96-v3';
-import md5 from '@/utils/md5';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+
+import g_encrypt from './execlib/x-zse-96-v3';
 
 export const header = {
     'x-api-version': '3.0.91',

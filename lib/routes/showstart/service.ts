@@ -183,4 +183,4 @@ async function fetchDictionary(cityCode: string, showStyle: string) {
     };
 }
 
-export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchSiteList, fetchSiteInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };
+export { fetchActivityList, fetchBrandInfo, fetchBrandList, fetchCityList, fetchDictionary, fetchPerformerInfo, fetchPerformerList, fetchSiteInfo, fetchSiteList, fetchStyleList };

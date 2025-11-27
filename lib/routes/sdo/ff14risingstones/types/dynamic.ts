@@ -1,6 +1,6 @@
 import type { DynamicSource } from '../constant';
 import type { DateTimeFormat, UserPost } from './other';
-import type { DutiesParty, NoviceNetworkParty, FreeCompanyParty, OtherParty, RolePlayParty } from './party';
+import type { DutiesParty, FreeCompanyParty, NoviceNetworkParty, OtherParty, RolePlayParty } from './party';
 
 interface BaseUserDynamic {
     character_name: string;

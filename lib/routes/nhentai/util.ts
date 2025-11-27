@@ -1,11 +1,13 @@
+import path from 'node:path';
+
 import { load } from 'cheerio';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -145,4 +147,4 @@ const getDetail = async (simple) => {
     };
 };
 
-export { baseUrl, getSimple, getDetails, getTorrents };
+export { baseUrl, getDetails, getSimple, getTorrents };

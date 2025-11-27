@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { HOST, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, LINK, PUBLIC_IMG, PRIVATE_IMG } from './constant';
+
+import { HOST, LINK, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, PRIVATE_IMG, PUBLIC_IMG } from './constant';
 import { getI18nGameInfo, getI18nType } from './utils';
 
 const getEventList = async ({ type, gids, size, language }) => {

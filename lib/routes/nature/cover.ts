@@ -1,4 +1,7 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // The content is generateed by undocumentated API of nature journals
 // This router has **just** been tested in:
@@ -15,12 +18,10 @@ import cache from '@/utils/cache';
 // nplants:          Nature Plants
 // natastron:        Nature Astronomy
 // nphys             Nature Physics
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import { baseUrl, journalMap } from './utils';
-import { CookieJar } from 'tough-cookie';
 
 export const route: Route = {
     path: '/cover',

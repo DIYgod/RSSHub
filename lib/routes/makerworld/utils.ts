@@ -1,7 +1,8 @@
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 export const baseUrl = 'https://makerworld.com';
 

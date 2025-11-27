@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
-import { isValidHost } from '@/utils/valid-host';
+
+import { load } from 'cheerio';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:username/:products',

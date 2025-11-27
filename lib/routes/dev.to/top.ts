@@ -1,8 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/top/:period',

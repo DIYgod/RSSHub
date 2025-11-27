@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import ofetch from '@/utils/ofetch';
+
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
+import ofetch from '@/utils/ofetch';
 
 describe('header-generator', () => {
     it('should has no ua', async () => {

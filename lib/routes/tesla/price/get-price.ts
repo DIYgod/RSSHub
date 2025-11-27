@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 
 async function getTeslaPrice(link) {
     const response = await got(link);

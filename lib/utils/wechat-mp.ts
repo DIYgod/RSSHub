@@ -25,12 +25,13 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-import ofetch from '@/utils/ofetch';
 import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { parseDate } from '@/utils/parse-date';
+
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 class WeChatMpError extends Error {
     constructor(message: string) {
@@ -645,4 +646,4 @@ const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = fal
 };
 
 const exportedForTestingOnly = { toggleWerror, ExtractMetadata, showTypeMapReverse };
-export { exportedForTestingOnly, WeChatMpError, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
+export { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl, WeChatMpError };

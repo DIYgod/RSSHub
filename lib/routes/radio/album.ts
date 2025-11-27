@@ -1,9 +1,9 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 import timezone from '@/utils/timezone';
 
 const audio_types = {

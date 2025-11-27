@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import * as cheerio from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { Item } from './types';
 import { parseDate } from '@/utils/parse-date';
+
+import type { Item } from './types';
 
 export const route: Route = {
     path: '/tag/:tag',

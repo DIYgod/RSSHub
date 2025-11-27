@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
-import { rootUrl, buildApiUrl, processItems } from './util';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { buildApiUrl, processItems, rootUrl } from './util';
 
 export const handler = async (ctx) => {
     const { id, filter = 'id' } = ctx.req.param();

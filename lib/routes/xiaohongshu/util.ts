@@ -1,11 +1,12 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import CaptchaError from '@/errors/types/captcha';
 
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
@@ -282,4 +283,4 @@ async function checkCookie() {
     return res.code === 0 && !!res.data.user_id;
 }
 
-export { getUser, getBoard, formatText, formatNote, renderNotesFulltext, getFullNote, getUserWithCookie, checkCookie };
+export { checkCookie, formatNote, formatText, getBoard, getFullNote, getUser, getUserWithCookie, renderNotesFulltext };

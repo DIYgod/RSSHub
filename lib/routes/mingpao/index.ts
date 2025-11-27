@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import * as cheerio from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import parser from '@/utils/rss-parser';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import parser from '@/utils/rss-parser';
 
 const renderFanBox = (media) =>
     art(path.join(__dirname, 'templates/fancybox.art'), {

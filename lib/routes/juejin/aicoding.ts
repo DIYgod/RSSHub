@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import type { Tag } from './types';
 import { getTagList, parseList, ProcessFeed } from './utils';
-import { Tag } from './types';
 
 export const route: Route = {
     path: '/aicoding/:tag?/:sort?',

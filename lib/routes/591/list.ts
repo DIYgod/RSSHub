@@ -1,14 +1,13 @@
-import { Route } from '@/types';
-
 import path from 'node:path';
 
-import { CookieJar } from 'tough-cookie';
 import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const cookieJar = new CookieJar();
 

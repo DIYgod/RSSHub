@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+
+import logger from '@/utils/logger';
+
 import getIllustDetail from '../../api/get-illust-detail';
 import pixivUtils from '../../utils';
-import logger from '@/utils/logger';
 
 export function convertPixivProtocolExtended(caption: string): string {
     const protocolMap = new Map([

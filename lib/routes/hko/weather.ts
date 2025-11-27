@@ -1,6 +1,7 @@
+import * as cheerio from 'cheerio';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const handler = async () => {

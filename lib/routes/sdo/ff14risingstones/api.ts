@@ -1,4 +1,5 @@
 import cache from '@/utils/cache';
+
 import { API_URL } from './constant';
 import type { DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, Resently, UserDynamic, UserInfo, UserPost } from './types';
 import { requestAPI } from './utils';

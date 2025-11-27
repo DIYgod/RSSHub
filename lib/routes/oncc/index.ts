@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import { art } from '@/utils/render';
 
 const rootUrl = 'https://hk.on.cc';

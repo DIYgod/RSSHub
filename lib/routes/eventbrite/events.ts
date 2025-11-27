@@ -1,9 +1,10 @@
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
 import type { Data, DataItem, Route } from '@/types';
 import { toTitleCase } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import type { Context } from 'hono';
 
 export const route: Route = {
     path: '/:region/:eventType?/:includePromoted?',

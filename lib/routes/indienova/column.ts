@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { baseUrl, parseList, parseItem } from './utils';
+
+import { baseUrl, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/column/:columnId',

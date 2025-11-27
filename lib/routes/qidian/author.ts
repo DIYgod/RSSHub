@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {

@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import MarkdownIt from 'markdown-it';
+import { parseDate } from '@/utils/parse-date';
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/models',

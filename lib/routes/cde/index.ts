@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 const channelLinkMap = {
     news: 'https://www.cde.org.cn/main/news/listpage/545cf855a50574699b46b26bcb165f32',

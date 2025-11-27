@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const rootUrl = `https://www.ssm.gov.mo`;

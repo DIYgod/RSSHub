@@ -1,5 +1,6 @@
-import packageJson from '../../package.json';
 import fs from 'node:fs';
+
+import packageJson from '../../package.json';
 
 packageJson.name = 'rsshub-vercel';
 // @ts-ignore

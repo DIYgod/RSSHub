@@ -1,9 +1,12 @@
-import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import crypto from 'node:crypto';
+
+import * as cheerio from 'cheerio';
+
 import cache from '@/utils/cache';
-import { Category, Collection, Tag } from './types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Category, Collection, Tag } from './types';
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
 const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');

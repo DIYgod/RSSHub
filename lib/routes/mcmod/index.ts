@@ -1,11 +1,13 @@
-import { DataItem, Route } from '@/types';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
 
 const render = (mod) => art(path.join(__dirname, 'templates/mod.art'), { mod });
 

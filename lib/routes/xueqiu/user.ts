@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import sanitizeHtml from 'sanitize-html';
+
+import { parseToken } from '@/routes/xueqiu/cookies';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import sanitizeHtml from 'sanitize-html';
-import { parseToken } from '@/routes/xueqiu/cookies';
 import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://xueqiu.com';

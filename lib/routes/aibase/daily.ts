@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { rootUrl, buildApiUrl } from './util';
-import cache from '@/utils/cache';
+
+import { buildApiUrl, rootUrl } from './util';
 
 export const route: Route = {
     path: '/daily',

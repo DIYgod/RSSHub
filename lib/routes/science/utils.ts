@@ -1,7 +1,9 @@
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 const baseUrl = 'https://www.science.org';
 

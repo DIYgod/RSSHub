@@ -1,9 +1,10 @@
+import path from 'node:path';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import path from 'node:path';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { PRESETS } from '@/utils/header-generator';
 
 const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;

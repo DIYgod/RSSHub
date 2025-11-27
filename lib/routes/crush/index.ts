@@ -1,9 +1,10 @@
-import { type Data, type DataItem, type Route } from '@/types';
 import { type CheerioAPI, load } from 'cheerio';
+
+import { type Data, type DataItem, type Route } from '@/types';
+import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import md5 from '@/utils/md5';
 
 const baseUrl = 'https://www.crush.ninja';
 

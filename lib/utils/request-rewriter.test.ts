@@ -1,7 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
-import undici from 'undici';
-import got from 'got';
 import http from 'node:http';
+
+import got from 'got';
+import undici from 'undici';
+import { describe, expect, it, vi } from 'vitest';
+
 import { PRESETS } from '@/utils/header-generator';
 
 process.env.PROXY_URI = 'http://rsshub.proxy:2333/';

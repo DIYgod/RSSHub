@@ -1,8 +1,11 @@
-import { google } from 'googleapis';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { google } from 'googleapis';
+
 import { config } from '@/config';
-import { youtubeOAuth2Client, exec } from './api/google';
+import { art } from '@/utils/render';
+
+import { exec, youtubeOAuth2Client } from './api/google';
 
 export const getPlaylistItems = (id, part, cache) =>
     cache.tryGet(

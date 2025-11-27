@@ -1,8 +1,9 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch'; // 使用默认导出的方式导入ofetch
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch'; // 使用默认导出的方式导入ofetch
 
 async function getNoticeList(ctx, url, host, titleSelector, dateSelector, contentSelector, listSelector) {
     const response = await ofetch(url);

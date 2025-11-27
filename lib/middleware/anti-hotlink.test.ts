@@ -1,5 +1,5 @@
-import { describe, expect, it, vi, afterEach, afterAll } from 'vitest';
 import Parser from 'rss-parser';
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 const parser = new Parser();
 

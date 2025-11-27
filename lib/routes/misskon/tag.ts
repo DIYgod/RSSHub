@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { getPosts, getTags } from './utils';
 
 export const route: Route = {

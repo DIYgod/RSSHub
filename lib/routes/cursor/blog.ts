@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+import { type Context } from 'hono';
+
 import { type Data, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { topic } = ctx.req.param();

@@ -1,5 +1,6 @@
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 const getComments = async (subjectID, minLength) => {

@@ -1,9 +1,10 @@
-import got from '@/utils/got';
 import cache from '@/utils/cache';
-import pixivUtils from '../../utils';
-import { parseNovelContent } from './utils';
-import { NovelContent, SFWNovelDetail } from './types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import pixivUtils from '../../utils';
+import type { NovelContent, SFWNovelDetail } from './types';
+import { parseNovelContent } from './utils';
 
 const baseUrl = 'https://www.pixiv.net';
 

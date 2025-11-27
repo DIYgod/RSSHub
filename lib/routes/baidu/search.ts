@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 const renderDescription = (description, images) => art(path.join(__dirname, './templates/description.art'), { description, images });
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:keyword',

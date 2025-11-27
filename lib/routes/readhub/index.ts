@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
 
-import { rootUrl, apiTopicUrl, art, processItems } from './util';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { apiTopicUrl, art, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/:category?',

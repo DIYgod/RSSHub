@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { ImapFlow } from 'imapflow';
-import { config } from '@/config';
 import { simpleParser } from 'mailparser';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/imap/:email/:folder{.+}?',

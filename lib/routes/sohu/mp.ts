@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import * as cheerio from 'cheerio';
+import CryptoJS from 'crypto-js';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import path from 'node:path';
 import { art } from '@/utils/render';
-import CryptoJS from 'crypto-js';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/mp/:xpt',

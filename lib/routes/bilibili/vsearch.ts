@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import utils from './utils';
+
 import cacheIn from './cache';
+import utils from './utils';
 
 export const route: Route = {
     path: '/vsearch/:kw/:order?/:embed?/:tid?',

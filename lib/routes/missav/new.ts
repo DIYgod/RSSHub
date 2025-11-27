@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
 // import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import type { Route } from '@/types';
 // import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
+import { art } from '@/utils/render';
 
 const urlPath = 'dm514/new';
 

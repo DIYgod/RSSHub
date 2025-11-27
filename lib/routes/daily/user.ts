@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
-import { baseUrl, getBuildId, getData, getList } from './utils';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, getBuildId, getData, getList } from './utils';
 
 const userPostQuery = `
   query AuthorFeed(

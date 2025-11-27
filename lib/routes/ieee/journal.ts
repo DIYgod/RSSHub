@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import path from 'node:path';
 import { art } from '@/utils/render';
 
 const ieeeHost = 'https://ieeexplore.ieee.org';

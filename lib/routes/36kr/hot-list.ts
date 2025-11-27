@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { rootUrl, ProcessItem } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { ProcessItem, rootUrl } from './utils';
 
 const categories = {
     24: {

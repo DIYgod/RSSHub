@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import queryString from 'query-string';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import queryString from 'query-string';
 
 export const route: Route = {
     path: '/jw/:type',

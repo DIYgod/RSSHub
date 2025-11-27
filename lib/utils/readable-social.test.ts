@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { fallback, queryToBoolean, queryToInteger, queryToFloat } from './readable-social';
+
+import { fallback, queryToBoolean, queryToFloat, queryToInteger } from './readable-social';
 
 describe('fallback', () => {
     test('应该返回第一个存在的参数', () => {

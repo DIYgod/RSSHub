@@ -32,4 +32,4 @@ function getEpsOrPeStr(epsOrPe, keepDecimal) {
     return EpsOrPeStr;
 }
 
-export { getRatingChangeStr, getEpsOrPeStr };
+export { getEpsOrPeStr, getRatingChangeStr };

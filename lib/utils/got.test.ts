@@ -1,8 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
+import { describe, expect, it, vi } from 'vitest';
+
+import { config } from '@/config';
+import got from '@/utils/got';
 
 describe('got', () => {
     it('no ua headers', async () => {

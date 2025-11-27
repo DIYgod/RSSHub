@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
 
 async function newsContent(link, department = '') {
     try {

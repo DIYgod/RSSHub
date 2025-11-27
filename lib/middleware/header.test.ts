@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 process.env.NODE_NAME = 'mock';
 process.env.ALLOW_ORIGIN = 'rsshub.mock';

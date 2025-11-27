@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import { config } from '@/config';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import puppeteer from '@/utils/puppeteer';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { art } from '@/utils/render';
+
+import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
 export const route: Route = {
     path: '/hashtag/:cid/:routeParams?',

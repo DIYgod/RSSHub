@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const discountUrl = 'https://switch.jumpvg.com/jump/discount/find4Discount/5/v2';
 // const detailUrl = 'https://switch.jumpvg.com/jump/game/detail';

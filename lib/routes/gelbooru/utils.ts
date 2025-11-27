@@ -1,6 +1,7 @@
 import path from 'node:path';
-import { art } from '@/utils/render';
+
 import { config } from '@/config';
+import { art } from '@/utils/render';
 
 export function renderDesc(post, link, quality: 'sample' | 'orig') {
     const { id, source, owner, file_url: fileUrl, tags, score } = post;

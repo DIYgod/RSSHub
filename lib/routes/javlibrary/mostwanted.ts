@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { defaultMode, defaultLanguage, rootUrl, ProcessItems } from './utils';
+
+import { defaultLanguage, defaultMode, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: ['/videos/mostwanted/:language?/:mode?', '/mostwanted/:language?/:mode?'],

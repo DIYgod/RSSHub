@@ -86,4 +86,4 @@ const Now = ({ item }: { item: NowItem }) => (
     </p>
 );
 
-export { render3DaysDescription, renderNowDescription, type WeatherForecastItem, type NowItem };
+export { type NowItem, render3DaysDescription, renderNowDescription, type WeatherForecastItem };

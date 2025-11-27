@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
+import utils from './utils';
 
 const sections = {
     hotNews: '澎湃热榜',

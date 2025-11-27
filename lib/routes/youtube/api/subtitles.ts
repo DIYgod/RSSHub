@@ -1,5 +1,6 @@
-import { getSubtitles } from 'youtube-caption-extractor';
 import pMap from 'p-map';
+import { getSubtitles } from 'youtube-caption-extractor';
+
 import cache from '@/utils/cache';
 
 function pad(n: number, width: number = 2) {

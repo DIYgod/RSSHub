@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import sanitizeHtml from 'sanitize-html';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { getRandom16, decryptUrl } from './utils';
-const baseUrl = 'https://www.ximalaya.com';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
-import { Album, RichIntro, TrackInfoResponse } from './types';
-import sanitizeHtml from 'sanitize-html';
+
+import type { Album, RichIntro, TrackInfoResponse } from './types';
+import { decryptUrl, getRandom16 } from './utils';
+
+const baseUrl = 'https://www.ximalaya.com';
 
 // Find category from: https://help.apple.com/itc/podcasts_connect/?lang=en#/itc9267a2f12
 const categoryDict = {

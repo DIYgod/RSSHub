@@ -1,7 +1,8 @@
-import { Result, Work } from '@/routes/asmr-200/type';
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import path from 'node:path';
+
+import type { Result, Work } from '@/routes/asmr-200/type';
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';

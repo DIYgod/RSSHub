@@ -1,5 +1,6 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+
 import { mapPostToItem } from './utils';
 
 export const route: Route = {

@@ -1,6 +1,7 @@
+import path from 'node:path';
+
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const renderItems = (items) =>
     items.map((item) => {

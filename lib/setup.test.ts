@@ -1,6 +1,6 @@
-import { afterAll, afterEach } from 'vitest';
-import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+import { afterAll, afterEach } from 'vitest';
 
 const genWeChatMpPage = (rich_media_content: string, scripts: string[] | string) => {
     if (!Array.isArray(scripts)) {

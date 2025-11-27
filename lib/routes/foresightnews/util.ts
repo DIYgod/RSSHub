@@ -1,8 +1,9 @@
+import path from 'node:path';
+import zlib from 'node:zlib';
+
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import zlib from 'node:zlib';
 
 const constants = {
     labelHot: '热门',
@@ -82,4 +83,4 @@ const processItems = async (apiUrl, limit, ...parameters) => {
     return { items, info };
 };
 
-export { icon, image, rootUrl, apiRootUrl, imgRootUrl, processItems };
+export { apiRootUrl, icon, image, imgRootUrl, processItems, rootUrl };

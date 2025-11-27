@@ -1,15 +1,17 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import path from 'node:path';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+
 import { config } from './config';
 import { radar } from './radar';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:type/:id?',

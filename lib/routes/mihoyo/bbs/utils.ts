@@ -1,6 +1,7 @@
-import { art } from '@/utils/render';
 import path from 'node:path';
+
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });
 

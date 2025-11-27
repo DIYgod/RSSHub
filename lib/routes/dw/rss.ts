@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import { config } from '@/config';
 import Parser from 'rss-parser';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+
 import { processItems } from './utils';
 
 export const route: Route = {

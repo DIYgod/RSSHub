@@ -1,5 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { logo, parseList } from './util';
+
 const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {

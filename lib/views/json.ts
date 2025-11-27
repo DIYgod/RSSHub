@@ -1,4 +1,4 @@
-import { Data } from '@/types';
+import type { Data } from '@/types';
 
 /**
  * This function should be used by RSSHub middleware only.

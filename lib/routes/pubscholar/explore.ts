@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
+import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { baseUrl, uuidv4, getArticleLink, getSignedHeaders } from './utils';
-import md5 from '@/utils/md5';
-import { Resource } from './types';
-import sanitizeHtml from 'sanitize-html';
+
+import type { Resource } from './types';
+import { baseUrl, getArticleLink, getSignedHeaders, uuidv4 } from './utils';
 
 export const route: Route = {
     path: '/explore/:category?/:keyword?',

@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import { rootUrl, ProcessItems } from './utils';
+import type { Route } from '@/types';
+
+import { ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/ac/rank/:type?/:time?',

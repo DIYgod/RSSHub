@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/vinyl/:cat?',

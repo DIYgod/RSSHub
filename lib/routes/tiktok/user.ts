@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import path from 'node:path';
-import { queryToBoolean } from '@/utils/readable-social';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import { queryToBoolean } from '@/utils/readable-social';
+import { art } from '@/utils/render';
 
 const baseUrl = 'https://www.tiktok.com';
 

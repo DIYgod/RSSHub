@@ -1,8 +1,10 @@
-import got from '@/utils/got';
+import path from 'node:path';
+
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const rootUrl = 'https://www.javlibrary.com';
 const defaultMode = '1';
@@ -91,4 +93,4 @@ const ProcessItems = async (language, currentUrl, tryGet) => {
     };
 };
 
-export { rootUrl, defaultMode, defaultGenre, defaultMaker, defaultLanguage, ProcessItems };
+export { defaultGenre, defaultLanguage, defaultMaker, defaultMode, ProcessItems, rootUrl };

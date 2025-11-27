@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
 
 // 合并不同 subjectType 的 type 映射
 const getTypeNames = (subjectType) => {

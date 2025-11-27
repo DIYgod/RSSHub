@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseRelativeDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import cache from '@/utils/cache';
 import pMap from 'p-map';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/default',

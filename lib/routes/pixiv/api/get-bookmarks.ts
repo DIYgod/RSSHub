@@ -1,6 +1,7 @@
-import got from '../pixiv-got';
-import { maskHeader } from '../constants';
 import queryString from 'query-string';
+
+import { maskHeader } from '../constants';
+import got from '../pixiv-got';
 
 /**
  * 获取用户的收藏

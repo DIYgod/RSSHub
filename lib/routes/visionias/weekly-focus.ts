@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { baseUrl, extractNews } from './utils';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, extractNews } from './utils';
 
 export const route: Route = {
     path: '/weeklyFocus',

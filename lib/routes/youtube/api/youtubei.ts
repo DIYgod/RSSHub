@@ -1,7 +1,9 @@
-import { Data } from '@/types';
+import { Innertube } from 'youtubei.js';
+
+import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { Innertube } from 'youtubei.js';
+
 import utils, { getVideoUrl } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 

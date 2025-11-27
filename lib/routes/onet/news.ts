@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import parser from '@/utils/rss-parser';
+
 import { parseArticleContent, parseMainImage } from './utils';
 
 export const route: Route = {

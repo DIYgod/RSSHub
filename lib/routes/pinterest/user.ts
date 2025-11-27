@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { BoardsFeedResource, UserActivityPinsResource, UserProfile } from './types';
+
+import type { BoardsFeedResource, UserActivityPinsResource, UserProfile } from './types';
 
 export const route: Route = {
     path: '/user/:username/:type?',

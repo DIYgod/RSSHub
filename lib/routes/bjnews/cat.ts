@@ -1,9 +1,10 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { fetchArticle } from './utils';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/cat/:cat',

@@ -1,11 +1,13 @@
+import { load } from 'cheerio';
+
+import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { config } from '@/config';
-import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
+
+import { puppeteerGet } from './utils';
 
 const baseUrl = 'https://xsijishe.com';
 

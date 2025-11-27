@@ -1,9 +1,11 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from './cache';
 import { decodeHTML } from 'entities';
+
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/live/room/:roomID',

@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common/changelog';
 
 export const route: Route = {

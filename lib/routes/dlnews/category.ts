@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
-import got from '@/utils/got';
-import { getData, getList } from './utils';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
+
+import { getData, getList } from './utils';
 
 const _website = 'dlnews';
 const topics = {

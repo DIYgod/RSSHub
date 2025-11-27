@@ -1,6 +1,7 @@
-import { Headers, FormData, Request, Response } from 'undici';
 import http from 'node:http';
 import https from 'node:https';
+
+import { FormData, Headers, Request, Response } from 'undici';
 
 import fetch from '@/utils/request-rewriter/fetch';
 import getWrappedGet from '@/utils/request-rewriter/get';

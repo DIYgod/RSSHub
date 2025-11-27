@@ -1,7 +1,9 @@
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
-import { CreatorFragment, PostReelNode } from './types';
+import ofetch from '@/utils/ofetch';
+
+import type { CreatorFragment, PostReelNode } from './types';
 
 export const baseUrl = 'https://www.fantube.tokyo';
 

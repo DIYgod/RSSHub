@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { FetchError } from 'ofetch';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-import { config } from '@/config';
-import { FetchError } from 'ofetch';
 
 export const route: Route = {
     path: '/:lang/:category?',

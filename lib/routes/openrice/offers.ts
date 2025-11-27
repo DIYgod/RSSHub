@@ -1,7 +1,9 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 const baseUrl = 'https://www.openrice.com';
 
 export const route: Route = {

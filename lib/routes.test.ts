@@ -1,8 +1,10 @@
-import { describe, expect, it } from 'vitest';
-import app from '@/app';
 import Parser from 'rss-parser';
-const parser = new Parser();
+import { describe, expect, it } from 'vitest';
+
+import app from '@/app';
 import { config } from '@/config';
+
+const parser = new Parser();
 
 process.env.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN = 'true';
 

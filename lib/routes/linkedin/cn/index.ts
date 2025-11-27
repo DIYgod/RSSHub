@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import { parseSearchHit, parseJobPosting } from './utils';
+import type { Route } from '@/types';
+
+import { parseJobPosting, parseSearchHit } from './utils';
 
 const siteUrl = 'https://www.linkedin.cn/incareer/jobs/search';
 

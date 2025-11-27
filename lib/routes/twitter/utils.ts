@@ -1,8 +1,10 @@
 import URL from 'node:url';
-import { config } from '@/config';
+
 import { TwitterApi } from 'twitter-api-v2';
-import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+
+import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
+import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
 const getQueryParams = (url) => URL.parse(url, true).query;
 const getOriginalImg = (url) => {

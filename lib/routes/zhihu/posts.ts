@@ -1,10 +1,12 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { header, getSignedHeader, processImage } from './utils';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { Articles, Profile } from './types';
+
+import type { Articles, Profile } from './types';
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',

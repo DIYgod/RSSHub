@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
-import got from '@/utils/got';
 import path from 'node:path';
-import timezone from '@/utils/timezone';
-import { art } from '@/utils/render';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/community',

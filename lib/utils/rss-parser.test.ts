@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import parser from '@/utils/rss-parser';
 
 describe('rss-parser', () => {

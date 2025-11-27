@@ -1,10 +1,9 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
 import { type CheerioAPI, load } from 'cheerio';
 import { type Context } from 'hono';
+
+import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);

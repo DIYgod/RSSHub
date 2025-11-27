@@ -1,8 +1,9 @@
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { API_HOST, CDN_HOST, HOST } from './constant';
 import type { PortfolioResponse } from './types';
 import { customFetch, fetchPortfolioItem, parseUserData } from './utils';
-import { API_HOST, CDN_HOST, HOST } from './constant';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: ['/portfolio/:user'],

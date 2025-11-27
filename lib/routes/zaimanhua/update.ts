@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import path from 'node:path';
+
+import pMap from 'p-map';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import cache from '@/utils/cache';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/update',

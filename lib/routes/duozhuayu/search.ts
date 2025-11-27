@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import aesjs from 'aes-js';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import aesjs from 'aes-js';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/search/:wd',

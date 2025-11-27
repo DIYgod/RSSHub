@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 
 /* The different ways to query Wikipedia's Current Events
 

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { finishArticleItem } from '@/utils/wechat-mp';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { finishArticleItem } from '@/utils/wechat-mp';
 
 const oaa_base_url = 'http://oaa.tju.edu.cn/';
 const repo_url = 'https://github.com/DIYgod/RSSHub/issues';

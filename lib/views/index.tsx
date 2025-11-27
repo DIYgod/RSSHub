@@ -1,9 +1,9 @@
 import type { FC } from 'hono/jsx';
 
-import { Layout } from '@/views/layout';
 import { config } from '@/config';
-import { gitHash, gitDate } from '@/utils/git-hash';
 import { getDebugInfo } from '@/utils/debug-info';
+import { gitDate, gitHash } from '@/utils/git-hash';
+import { Layout } from '@/views/layout';
 
 const startTime = Date.now();
 

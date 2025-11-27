@@ -1,13 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm
 // - 学术关注：http://computer.upc.edu.cn/6278/list.htm
 // - 学工动态：http://computer.upc.edu.cn/6279/list.htm
 // - 通知公告：http://computer.upc.edu.cn/6280/list.htm
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

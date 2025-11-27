@@ -1,10 +1,11 @@
-import { DataItem, Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import sanitizeHtml from 'sanitize-html';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/transform/html/:url/:routeParams',

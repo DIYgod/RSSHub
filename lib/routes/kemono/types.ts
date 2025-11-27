@@ -28,4 +28,4 @@ interface DiscordMessage {
     attachments?: any[];
 }
 
-export type { KemonoPost, KemonoFile, DiscordMessage };
+export type { DiscordMessage, KemonoFile, KemonoPost };

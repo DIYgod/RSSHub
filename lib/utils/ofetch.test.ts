@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import ofetch from '@/utils/ofetch';
+import { describe, expect, it, vi } from 'vitest';
+
 import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 
 describe('ofetch', () => {
     it('headers', async () => {

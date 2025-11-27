@@ -1,13 +1,14 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import path from 'node:path';
 
-import { rootUrl, title, categories, convertToQueryString, getInfo, processItems } from './util';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
+
+import { categories, convertToQueryString, getInfo, processItems, rootUrl, title } from './util';
 
 export const route: Route = {
     path: '/:category{.+}?',

@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import MarkdownIt from 'markdown-it';
 
 export const route: Route = {
     path: '/release/:user/:app/:distribution_group',

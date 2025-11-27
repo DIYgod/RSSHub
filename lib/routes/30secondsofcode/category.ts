@@ -1,7 +1,10 @@
-import { Data, Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 import { processList } from './utils';
+
 export const route: Route = {
     path: '/category/:category?/:subCategory?',
     categories: ['programming'],

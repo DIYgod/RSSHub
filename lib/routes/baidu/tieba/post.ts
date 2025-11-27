@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 
 /**
  * 获取最新的帖子回复（倒序查看）

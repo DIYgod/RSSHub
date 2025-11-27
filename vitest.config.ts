@@ -1,8 +1,9 @@
-import { defineConfig, configDefaults } from 'vitest/config';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
+
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
     plugins: [tsconfigPaths()],

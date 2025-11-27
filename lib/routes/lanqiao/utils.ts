@@ -1,5 +1,6 @@
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { art } from '@/utils/render';
 
 const courseDesc = (picurl, desc) =>
     art(path.join(__dirname, 'templates/courseDesc.art'), {

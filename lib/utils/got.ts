@@ -1,5 +1,7 @@
 import { destr } from 'destr';
+
 import ofetch from '@/utils/ofetch';
+
 import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {

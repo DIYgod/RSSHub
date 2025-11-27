@@ -1,6 +1,7 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
-import wait from './wait';
 import { type Browser } from 'rebrowser-puppeteer';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import wait from './wait';
 
 let browser: Browser | null = null;
 

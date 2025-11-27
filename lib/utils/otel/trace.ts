@@ -1,8 +1,8 @@
+import { trace } from '@opentelemetry/api';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { resourceFromAttributes } from '@opentelemetry/resources';
 import { BasicTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { trace } from '@opentelemetry/api';
 
 const exporter = new OTLPTraceExporter({
     // optional OTEL_EXPORTER_OTLP_ENDPOINT=https://localhost:4318

@@ -1,4 +1,4 @@
-import { HeaderGenerator, PRESETS, type HeaderGeneratorOptions } from 'header-generator';
+import { HeaderGenerator, type HeaderGeneratorOptions, PRESETS } from 'header-generator';
 
 export { PRESETS } from 'header-generator';
 

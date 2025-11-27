@@ -1,7 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import { getData } from './utils';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import { getData } from './utils';
 
 export const route: Route = {
     path: '/type/:type',

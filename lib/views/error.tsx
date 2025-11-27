@@ -1,7 +1,7 @@
 import type { FC } from 'hono/jsx';
 
+import { gitDate, gitHash } from '@/utils/git-hash';
 import { Layout } from '@/views/layout';
-import { gitHash, gitDate } from '@/utils/git-hash';
 
 const Index: FC<{
     requestPath: string;

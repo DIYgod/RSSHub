@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/album/:id',

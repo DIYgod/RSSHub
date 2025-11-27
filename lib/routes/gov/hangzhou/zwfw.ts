@@ -1,15 +1,17 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
 import { load } from 'cheerio';
 
-import puppeteer from '@/utils/puppeteer';
-import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { crawler, analyzer } from './zjzwfw';
-import timezone from '@/utils/timezone';
-import path from 'node:path';
+import puppeteer from '@/utils/puppeteer';
 import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
+
+import { analyzer, crawler } from './zjzwfw';
 
 export const route: Route = {
     path: '/hangzhou/zwfw',

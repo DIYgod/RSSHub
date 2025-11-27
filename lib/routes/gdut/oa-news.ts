@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { CookieJar } from 'tough-cookie';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import pMap from 'p-map';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {

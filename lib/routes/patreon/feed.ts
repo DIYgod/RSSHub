@@ -1,13 +1,15 @@
-import { Route } from '@/types';
-import { CreatorData, MediaRelation, PostData } from './types';
+import path from 'node:path';
 
+import * as cheerio from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import { art } from '@/utils/render';
-import { config } from '@/config';
+
+import type { CreatorData, MediaRelation, PostData } from './types';
 
 export const route: Route = {
     path: '/:creator',

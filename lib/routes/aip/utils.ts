@@ -1,4 +1,5 @@
 import path from 'node:path';
+
 import { art } from '@/utils/render';
 
 const puppeteerGet = async (url, browser) => {

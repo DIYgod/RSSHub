@@ -1,11 +1,13 @@
-import { Route, DataItem } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import path from 'node:path';
+
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import logger from '@/utils/logger';
 
 // Define the main route path
 export const route: Route = {

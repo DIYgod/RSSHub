@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import cache from '@/utils/cache';
-import NotFoundError from '@/errors/types/not-found';
-import ofetch from '@/utils/ofetch';
 import { JSDOM } from 'jsdom';
 import { JSONPath } from 'jsonpath-plus';
+
+import NotFoundError from '@/errors/types/not-found';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
 const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
@@ -167,4 +168,4 @@ const buildContent = (item, options) => {
     return { title, description };
 };
 
-export { profileUrl, threadUrl, extractTokens, getUserId, buildContent };
+export { buildContent, extractTokens, getUserId, profileUrl, threadUrl };

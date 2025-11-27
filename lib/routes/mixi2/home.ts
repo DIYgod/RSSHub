@@ -1,5 +1,7 @@
-import { type Data, type Route, ViewType } from '@/types';
 import type { Context } from 'hono';
+
+import { type Data, type Route, ViewType } from '@/types';
+
 import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
 const handler = async (ctx: Context) => {

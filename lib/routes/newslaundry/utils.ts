@@ -1,8 +1,9 @@
-import { Data, DataItem } from '@/types';
+import path from 'node:path';
+
+import type { Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const rootUrl = 'https://www.newslaundry.com';
 

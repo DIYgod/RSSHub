@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
 import { renderDescription } from './utils';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/charts/:category?/:country?/:embed?',

@@ -1,9 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
-import utils from './utils';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
+
+import utils from './utils';
+
 export const route: Route = {
     path: '/:site?/:channel?',
     name: 'News',

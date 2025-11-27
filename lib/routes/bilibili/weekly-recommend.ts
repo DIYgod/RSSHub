@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import utils, { getVideoUrl } from './utils';
-import { parseDuration } from '@/utils/helpers';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDuration } from '@/utils/helpers';
+
 import cache from './cache';
+import utils, { getVideoUrl } from './utils';
 
 export const route: Route = {
     path: '/weekly/:embed?',

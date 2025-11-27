@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import * as cheerio from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/weatheralarm/:province?',

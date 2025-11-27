@@ -1,5 +1,6 @@
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { art } from '@/utils/render';
 
 const extractArticle = (data) => data.props.pageProps.data.summary + data.props.pageProps.data.memo;
 

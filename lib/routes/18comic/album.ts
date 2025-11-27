@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import { defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { art } from '@/utils/render';
+
+import { defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/album/:id',

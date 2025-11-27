@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { notesUrl, extractNotes } from '../utils';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { extractNotes, notesUrl } from '../utils';
 
 export const route: Route = {
     path: '/notes/:lang?/topic/:topic',

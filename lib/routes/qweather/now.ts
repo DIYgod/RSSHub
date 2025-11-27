@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { renderNowDescription, type NowItem } from './util';
+
+import { type NowItem, renderNowDescription } from './util';
 
 export const route: Route = {
     path: '/now/:location',

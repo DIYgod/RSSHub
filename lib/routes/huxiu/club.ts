@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { apiBriefRootUrl, processItems, fetchClubData } from './util';
+import { apiBriefRootUrl, fetchClubData, processItems } from './util';
 
 export const route: Route = {
     path: '/club/:id',

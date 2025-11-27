@@ -1,13 +1,14 @@
-import { DataItem, Route } from '@/types';
+import path from 'node:path';
+
+import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
 
-import ofetch from '@/utils/ofetch';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import * as cheerio from 'cheerio';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 
 const render = (data) => art(path.join(__dirname, 'templates/series.art'), data);
 

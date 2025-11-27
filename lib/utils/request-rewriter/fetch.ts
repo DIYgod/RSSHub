@@ -1,11 +1,13 @@
-import logger from '@/utils/logger';
-import { config } from '@/config';
-import undici, { Request, RequestInfo, RequestInit } from 'undici';
-import proxy from '@/utils/proxy';
-import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import { useRegisterRequest } from 'node-network-devtools';
-import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
 import type { HeaderGeneratorOptions } from 'header-generator';
+import { useRegisterRequest } from 'node-network-devtools';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+import type { RequestInfo, RequestInit } from 'undici';
+import undici, { Request } from 'undici';
+
+import { config } from '@/config';
+import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import logger from '@/utils/logger';
+import proxy from '@/utils/proxy';
 
 const limiter = new RateLimiterMemory({
     points: 10,

@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({
     html: true,
 });

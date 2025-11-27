@@ -1,8 +1,10 @@
+import path from 'node:path';
+
+import { type CheerioAPI, load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load, type CheerioAPI } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const formatId = '605';
 

@@ -45,4 +45,4 @@ const extractNotes = ($) => {
         });
 };
 
-export { appsUrl, newsUrl, notesUrl, ssoUrl, userUrl, siteIcon, fixImg, extractNotes };
+export { appsUrl, extractNotes, fixImg, newsUrl, notesUrl, siteIcon, ssoUrl, userUrl };

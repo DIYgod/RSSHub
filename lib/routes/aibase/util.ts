@@ -1,9 +1,11 @@
+import path from 'node:path';
+
+import type { CheerioAPI } from 'cheerio';
+
 import ofetch from '@/utils/ofetch';
-import { CheerioAPI } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 
 const defaultSrc = '_static/ee6af7e.js';
 const defaultToken = 'djflkdsoisknfoklsyhownfrlewfknoiaewf';
@@ -111,4 +113,4 @@ const processItems = (items: any[]): any[] =>
         };
     });
 
-export { rootUrl, processItems, buildApiUrl };
+export { buildApiUrl, processItems, rootUrl };

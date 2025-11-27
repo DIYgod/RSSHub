@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { load } from 'cheerio';
+
 const host = 'https://www.zagg.com/en_us';
 export const route: Route = {
     path: '/new-arrivals/:query?',

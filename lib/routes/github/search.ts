@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import * as url from 'node:url';
+
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const host = 'https://github.com';
 

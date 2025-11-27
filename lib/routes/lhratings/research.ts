@@ -1,11 +1,10 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import type { Element } from 'domhandler';
 import { type Context } from 'hono';
+
+import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '1' } = ctx.req.param();

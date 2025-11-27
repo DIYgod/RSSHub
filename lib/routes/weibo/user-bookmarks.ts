@@ -1,13 +1,15 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import got from '@/utils/got';
+
 import { config } from '@/config';
-import weiboUtils from './utils';
-import timezone from '@/utils/timezone';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+import timezone from '@/utils/timezone';
+
+import weiboUtils from './utils';
 
 export const route: Route = {
     path: '/user_bookmarks/:uid/:routeParams?',

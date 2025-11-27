@@ -1,8 +1,9 @@
-import { MiddlewareHandler } from 'hono';
-import { routePath } from 'hono/route';
 import etagCalculate from 'etag';
+import type { MiddlewareHandler } from 'hono';
+import { routePath } from 'hono/route';
+
 import { config } from '@/config';
-import { Data } from '@/types';
+import type { Data } from '@/types';
 
 const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'GET',
