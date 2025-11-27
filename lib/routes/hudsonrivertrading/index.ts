@@ -1,5 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { type Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

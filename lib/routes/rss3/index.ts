@@ -1,6 +1,6 @@
 import { renderItemActionToHTML } from '@rss3/sdk';
 
-import type { type DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { camelcaseKeys } from '@/utils/camelcase-keys';
 import ofetch from '@/utils/ofetch';
 
