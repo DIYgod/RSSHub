@@ -1,19 +1,20 @@
 import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
+import { sValidator } from '@hono/standard-validator';
 import { directoryImport } from 'directory-import';
-import { type Handler, Hono } from 'hono';
+import type { Handler } from 'hono';
+import { Hono } from 'hono';
 import { routePath } from 'hono/route';
-import { validator } from 'hono/validator';
 
 import { config } from '@/config';
+import emptyMiddleware from '@/middleware/empty';
 import healthz from '@/routes/healthz';
 import index from '@/routes/index';
 import metrics from '@/routes/metrics';
 import robotstxt from '@/routes/robots.txt';
 import type { APIRoute, Namespace, Route } from '@/types';
 import logger from '@/utils/logger';
-import { sanitizeIssues } from '@/utils/standard-validator';
 
 const __dirname = import.meta.dirname;
 
@@ -212,22 +213,7 @@ for (const namespace in namespaces) {
                 ctx.set('data', response);
             }
         };
-        const getValidator = (target: 'param' | 'query') =>
-            validator(target, async (value, c) => {
-                const schema = routeData[target];
-                if (!schema) {
-                    return value;
-                }
-                const result = await schema['~standard'].validate(value);
-
-                if (result.issues) {
-                    const processedIssues = sanitizeIssues(result.issues, schema['~standard'].vendor, target);
-                    return c.json({ data: value, error: processedIssues, success: false }, 400);
-                }
-
-                return result.value;
-            });
-        subApp.get(path, getValidator('param'), getValidator('query'), wrappedHandler);
+        subApp.get(path, routeData.param ? sValidator('param', routeData.param) : emptyMiddleware, routeData.query ? sValidator('query', routeData.query) : emptyMiddleware, wrappedHandler);
     }
 }
 
