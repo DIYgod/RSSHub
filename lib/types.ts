@@ -257,19 +257,15 @@ export enum ViewType {
 }
 
 // route
-type ParamObjectFromPath<P extends string> =
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    P extends `${infer _Start}:${infer Param}/${infer Rest}`
-        ? Param extends `${infer Name}?`
-            ? { [K in Name]?: string } & ParamObjectFromPath<`/${Rest}`>
-            : { [K in Param]: string } & ParamObjectFromPath<`/${Rest}`>
-        : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          P extends `${infer _Start}:${infer Param}`
-          ? Param extends `${infer Name}?`
-              ? { [K in Name]?: string }
-              : { [K in Param]: string }
-          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-            {};
+type ParamObjectFromPath<P extends string> = P extends `${string}:${infer Param}/${infer Rest}`
+    ? Param extends `${infer Name}?`
+        ? { [K in Name]?: string } & ParamObjectFromPath<`/${Rest}`>
+        : { [K in Param]: string } & ParamObjectFromPath<`/${Rest}`>
+    : P extends `${string}:${infer Param}`
+      ? Param extends `${infer Name}?`
+          ? { [K in Name]?: string }
+          : { [K in Param]: string }
+      : Record<string, never>;
 
 interface RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> {
     /**
