@@ -37,6 +37,6 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          npx version-from-git --allow-same-version --template 'master.short'
+          pnpx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: pnpm publish --provenance --access public --tag latest
+        run: pnpm publish --access public --tag latest
