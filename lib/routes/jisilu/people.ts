@@ -1,10 +1,10 @@
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
-import type {Context} from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type {Data, DataItem, Route} from '@/types';
-import {    ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import { processItems, rootUrl } from './util';

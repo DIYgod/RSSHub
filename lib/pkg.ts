@@ -1,8 +1,8 @@
 import type { Handler, Hono } from 'hono';
 
 import type { RoutePath } from '@/../assets/build/route-paths';
-import type {ConfigEnv} from '@/config';
-import {  setConfig } from '@/config';
+import type { ConfigEnv } from '@/config';
+import { setConfig } from '@/config';
 
 import type { Data, Namespace, Route } from './types';
 

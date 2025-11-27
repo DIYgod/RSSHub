@@ -1,5 +1,5 @@
-import type {Data, DataItem, Route} from '@/types';
-import {    ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

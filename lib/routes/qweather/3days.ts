@@ -4,8 +4,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import type {WeatherForecastItem} from './util';
-import { render3DaysDescription  } from './util';
+import type { WeatherForecastItem } from './util';
+import { render3DaysDescription } from './util';
 
 const author = 'QWeather';
 

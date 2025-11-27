@@ -103,7 +103,7 @@ function readDerLength(buf: Buffer, offset: number): { length: number; bytesRead
     if (byte < 0x80) {
         return { length: byte, bytesRead: 1 };
     }
-    const bytesCount = byte & 0x7F;
+    const bytesCount = byte & 0x7f;
     if (bytesCount > 4) {
         throw new Error('DER length too long');
     }

@@ -1,5 +1,5 @@
-import type {Cheerio, CheerioAPI} from 'cheerio';
-import {   load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import type { DataItem } from '@/types';

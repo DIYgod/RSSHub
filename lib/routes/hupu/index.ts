@@ -6,8 +6,8 @@ import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import type {HomePostItem, HupuApiResponse, NewsDataItem} from './types';
-import {   isHomePostItem  } from './types';
+import type { HomePostItem, HupuApiResponse, NewsDataItem } from './types';
+import { isHomePostItem } from './types';
 
 const categories = {
     nba: {

@@ -1,7 +1,7 @@
 import path from 'node:path';
 
-import type {CheerioAPI} from 'cheerio';
-import {  load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
