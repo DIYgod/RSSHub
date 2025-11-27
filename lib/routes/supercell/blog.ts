@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:game/blog/:locale?',
@@ -78,10 +77,9 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/en/games/${game}${localePrefix}/blog/`;
 
     const { data: response } = await got(currentUrl);
-    const $ = load(response);
-
-    // 从 __NEXT_DATA__ 脚本中提取 JSON 数据
-    const nextData = JSON.parse($('#__NEXT_DATA__').text());
+    // 用正则提取 __NEXT_DATA__ JSON
+    const match = response.match(/<script id="__NEXT_DATA__" type="application\/json">(.+?)<\/script>/);
+    const nextData = match ? JSON.parse(match[1]) : {};
     const articles = nextData.props.pageProps.articles || [];
     const buildId = nextData.buildId;
 
