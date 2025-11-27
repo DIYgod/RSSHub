@@ -129,7 +129,7 @@ export const route: Route = {
     url: 'www.dgtle.com',
     maintainers: ['nczitzk'],
     handler,
-    example: '/dglte/feed',
+    example: '/dgtle/feed',
     parameters: undefined,
     description: undefined,
     categories: ['new-media'],
