@@ -1,4 +1,4 @@
-import type { Data, DataItem, Route} from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { fetchNewsItems } from './utils';

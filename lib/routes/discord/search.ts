@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
 import { art } from '@/utils/render';
 
-import type { HasType, SearchGuildMessagesParams} from './discord-api';
+import type { HasType, SearchGuildMessagesParams } from './discord-api';
 import { baseUrl, getGuild, searchGuildMessages, VALID_HAS_TYPES } from './discord-api';
 
 export const route: Route = {

@@ -1,6 +1,6 @@
 import sanitizeHtml from 'sanitize-html';
 
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';

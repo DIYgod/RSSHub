@@ -1,7 +1,7 @@
 import type { Data } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import type { Article} from './constants';
+import type { Article } from './constants';
 import { Language, SUPPORTED_LANGUAGES } from './constants';
 
 /**

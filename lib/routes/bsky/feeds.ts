@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';

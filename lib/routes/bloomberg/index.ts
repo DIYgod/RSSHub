@@ -1,6 +1,6 @@
 import pMap from 'p-map';
 
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { parseArticle, parseNewsList, rootUrl } from './utils';

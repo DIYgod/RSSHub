@@ -1,7 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';

@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import type { Article} from './constants';
+import type { Article } from './constants';
 import { Language, Parameter, SUPPORTED_LANGUAGES } from './constants';
 import { fetchArticles, getArticleContentLink, getArticleLink, getHandlerLanguage, isValidLanguage, parseInteger } from './utils';
 

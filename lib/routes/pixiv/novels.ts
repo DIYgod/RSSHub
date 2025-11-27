@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Data, Route} from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 

@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { load } from 'cheerio';
 
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';

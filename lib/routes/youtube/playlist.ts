@@ -1,4 +1,4 @@
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { getDataByPlaylistId as getDataByPlaylistIdGoogle } from './api/google';

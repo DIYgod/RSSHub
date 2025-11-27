@@ -1,7 +1,7 @@
 import { load } from 'cheerio'; // html parser
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!

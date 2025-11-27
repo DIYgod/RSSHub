@@ -1,6 +1,6 @@
 import 'dayjs/locale/fr.js';
 
-import type { Cheerio} from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
