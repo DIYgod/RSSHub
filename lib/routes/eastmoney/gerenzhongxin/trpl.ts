@@ -1,4 +1,4 @@
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';

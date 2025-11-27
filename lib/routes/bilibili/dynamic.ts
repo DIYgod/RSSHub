@@ -2,7 +2,7 @@ import JSONbig from 'json-bigint';
 
 import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';

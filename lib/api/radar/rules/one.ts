@@ -1,4 +1,4 @@
-import type { RouteHandler} from '@hono/zod-openapi';
+import type { RouteHandler } from '@hono/zod-openapi';
 import { createRoute, z } from '@hono/zod-openapi';
 import { parse } from 'tldts';
 

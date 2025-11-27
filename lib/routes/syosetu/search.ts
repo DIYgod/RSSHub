@@ -10,7 +10,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import { art } from '@/utils/render';
 
-import type { NarouSearchParams} from './types/search';
+import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
 
 export const route: Route = {

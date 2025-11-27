@@ -1,4 +1,4 @@
-import type { Data, Route} from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { fetchCollection, rootUrl } from './utils';

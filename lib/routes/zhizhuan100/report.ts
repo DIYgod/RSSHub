@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 
-import type { Route} from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseRelativeDate } from '@/utils/parse-date';

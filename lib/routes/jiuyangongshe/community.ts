@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import type { Context } from 'hono';
 
-import type { Data, Route} from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';

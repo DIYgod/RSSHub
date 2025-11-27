@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import type { NarouSearchResult} from 'narou';
+import type { NarouSearchResult } from 'narou';
 import { NarouNovelFetch, SearchBuilder, SearchBuilderR18 } from 'narou';
 
 import { config } from '@/config';

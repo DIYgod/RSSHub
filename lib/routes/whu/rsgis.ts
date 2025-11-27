@@ -1,4 +1,4 @@
-import type { AnyNode, Cheerio} from 'cheerio';
+import type { AnyNode, Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
