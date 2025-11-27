@@ -1,76 +1,76 @@
 name: PR - Docker build test
 
 on:
-  pull_request:
-    branches:
-      - master
-    paths:
-      - '.github/workflows/docker-test.yml'
-      - 'lib/**'
-      - 'Dockerfile'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-    types: [opened, reopened, synchronize, edited]
-  # Please, always create a pull request instead of push to master.
+    pull_request:
+        branches:
+            - master
+        paths:
+            - '.github/workflows/docker-test.yml'
+            - 'lib/**'
+            - 'Dockerfile'
+            - 'package.json'
+            - 'pnpm-lock.yaml'
+        types: [opened, reopened, synchronize, edited]
+    # Please, always create a pull request instead of push to master.
 
 concurrency:
-  group: docker-test-${{ github.ref_name }}
-  cancel-in-progress: true
+    group: docker-test-${{ github.ref_name }}
+    cancel-in-progress: true
 
 jobs:
-  test:
-    name: Docker build & tests
-    permissions:
-      pull-requests: write
-      attestations: write
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+    test:
+        name: Docker build & tests
+        permissions:
+            pull-requests: write
+            attestations: write
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - name: Checkout
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
-      - name: Set up Docker Buildx  # needed by `cache-from`
-        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+            - name: Set up Docker Buildx # needed by `cache-from`
+              uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
-        with:
-          images: rsshub
-          flavor: latest=true
+            - name: Extract Docker metadata
+              id: meta
+              uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
+              with:
+                  images: rsshub
+                  flavor: latest=true
 
-      - name: Build Docker image
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
-        with:
-          context: .
-          build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
-          load: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64  # explicit
-          cache-from: |
-            type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-            type=gha,scope=docker-release
-          outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
+            - name: Build Docker image
+              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+              with:
+                  context: .
+                  build-args: PUPPETEER_SKIP_DOWNLOAD=0 # also test bundling Chromium
+                  load: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  platforms: linux/amd64 # explicit
+                  cache-from: |
+                      type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
+                      type=gha,scope=docker-release
+                  outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
-      - name: Pull Request Labeler
-        if: ${{ failure() }}
-        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
-        with:
-          actions: 'add-labels'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          labels: 'auto: DO NOT merge'
+            - name: Pull Request Labeler
+              if: ${{ failure() }}
+              uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
+              with:
+                  actions: 'add-labels'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-number: ${{ github.event.pull_request.number }}
+                  labels: 'auto: DO NOT merge'
 
-      - name: Test Docker image
-        run: bash scripts/docker/test-docker.sh
+            - name: Test Docker image
+              run: bash scripts/docker/test-docker.sh
 
-      - name: Export Docker image
-        run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
+            - name: Export Docker image
+              run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
-      - name: Upload Docker image
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: docker-image
-          path: rsshub.tar.zst
-          retention-days: 1
+            - name: Upload Docker image
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+              with:
+                  name: docker-image
+                  path: rsshub.tar.zst
+                  retention-days: 1
