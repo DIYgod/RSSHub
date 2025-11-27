@@ -17,6 +17,11 @@ overrides:
   safer-buffer: npm:@nolyfill/safer-buffer@^1
   side-channel: npm:@nolyfill/side-channel@^1
 
+patchedDependencies:
+  hono:
+    hash: 2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78
+    path: patches/hono.patch
+
 importers:
 
   .:
@@ -32,10 +37,13 @@ importers:
         version: 4.3.1
       '@hono/node-server':
         specifier: 1.19.6
-        version: 1.19.6(hono@4.10.6)
+        version: 1.19.6(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))
+      '@hono/standard-validator':
+        specifier: ^0.2.0
+        version: 0.2.0(@standard-schema/spec@1.0.0)(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))
       '@hono/zod-openapi':
         specifier: 1.1.5
-        version: 1.1.5(hono@4.10.6)(zod@4.1.13)
+        version: 1.1.5(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))(zod@4.1.13)
       '@notionhq/client':
         specifier: 5.4.0
         version: 5.4.0
@@ -68,10 +76,13 @@ importers:
         version: 0.0.25
       '@scalar/hono-api-reference':
         specifier: 0.9.25
-        version: 0.9.25(hono@4.10.6)
+        version: 0.9.25(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))
       '@sentry/node':
         specifier: 10.27.0
         version: 10.27.0
+      '@standard-schema/spec':
+        specifier: ^1.0.0
+        version: 1.0.0
       aes-js:
         specifier: 3.1.2
         version: 3.1.2
@@ -128,7 +139,7 @@ importers:
         version: 2.1.77
       hono:
         specifier: 4.10.6
-        version: 4.10.6
+        version: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
       html-to-text:
         specifier: 9.0.5
         version: 9.0.5
@@ -1469,6 +1480,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/standard-validator@0.2.0':
+    resolution: {integrity: sha512-pFq0UVAnjzXcDAgqFpDeVL3MOUPrlIh/kPqBDvbCYoThVhhS+Vf37VcdsakdOFFGiqoiYVxp3LifXFhGhp/rgQ==}
+    peerDependencies:
+      '@standard-schema/spec': 1.0.0
+      hono: '>=3.9.0'
 
   '@hono/zod-openapi@1.1.5':
     resolution: {integrity: sha512-EAnY6ad4yt/MUKHx716BEGGOXSl5d0/FOLozOYB/pmSEFq07qrzefKFtBEMAgd3hlpJXjH+4lwgTtlAo+BGBgQ==}
@@ -7281,21 +7298,26 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@hono/node-server@1.19.6(hono@4.10.6)':
+  '@hono/node-server@1.19.6(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))':
     dependencies:
-      hono: 4.10.6
+      hono: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
 
-  '@hono/zod-openapi@1.1.5(hono@4.10.6)(zod@4.1.13)':
+  '@hono/standard-validator@0.2.0(@standard-schema/spec@1.0.0)(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))':
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      hono: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
+
+  '@hono/zod-openapi@1.1.5(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))(zod@4.1.13)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.1.13)
-      '@hono/zod-validator': 0.7.5(hono@4.10.6)(zod@4.1.13)
-      hono: 4.10.6
+      '@hono/zod-validator': 0.7.5(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))(zod@4.1.13)
+      hono: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
       openapi3-ts: 4.5.0
       zod: 4.1.13
 
-  '@hono/zod-validator@0.7.5(hono@4.10.6)(zod@4.1.13)':
+  '@hono/zod-validator@0.7.5(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))(zod@4.1.13)':
     dependencies:
-      hono: 4.10.6
+      hono: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
       zod: 4.1.13
 
   '@humanfs/core@0.19.1': {}
@@ -8082,10 +8104,10 @@ snapshots:
     dependencies:
       '@scalar/types': 0.5.0
 
-  '@scalar/hono-api-reference@0.9.25(hono@4.10.6)':
+  '@scalar/hono-api-reference@0.9.25(hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78))':
     dependencies:
       '@scalar/core': 0.3.23
-      hono: 4.10.6
+      hono: 4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78)
 
   '@scalar/types@0.5.0':
     dependencies:
@@ -10028,7 +10050,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.10.6: {}
+  hono@4.10.6(patch_hash=2a8acbe72ff84bf8226584e0299825accf329eb57138619b30a5170ec3b0ce78): {}
 
   hookable@5.5.3: {}
 

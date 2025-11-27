@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
 // and lib/routes/rsshub/routes.ts
@@ -256,11 +257,14 @@ export enum ViewType {
 }
 
 // route
-interface RouteItem {
+interface RouteItem<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1> {
     /**
      * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
      */
-    path: string | string[];
+    path: P | string[];
+
+    param?: T;
+    query?: Q;
 
     /**
      * The human-readable name of the route, which will be used as the level 3 heading in the documentation
@@ -281,7 +285,22 @@ interface RouteItem {
     /**
      * The handler function of the route
      */
-    handler: (ctx: Context) => Promise<Data | null | Response> | Data | null | Response;
+    handler: (
+        ctx: Context<
+            any,
+            P,
+            {
+                in: {
+                    param: StandardSchemaV1.InferInput<T>;
+                    query: StandardSchemaV1.InferInput<Q>;
+                };
+                out: {
+                    param: StandardSchemaV1.InferOutput<T>;
+                    query: StandardSchemaV1.InferOutput<Q>;
+                };
+            }
+        >
+    ) => Promise<Data | null | Response> | Data | null | Response;
 
     /**
      * An example URL of the route
@@ -363,10 +382,14 @@ interface RouteItem {
     view?: ViewType;
 }
 
-export interface Route extends RouteItem {
-    ja?: RouteItem;
-    zh?: RouteItem;
-    'zh-TW'?: RouteItem;
+export interface Route<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1> extends RouteItem<P, T, Q> {
+    ja?: RouteItem<P, T, Q>;
+    zh?: RouteItem<P, T, Q>;
+    'zh-TW'?: RouteItem<P, T, Q>;
+}
+
+export function defineRoute<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1>(route: Route<P, T, Q>): Route<P, T, Q> {
+    return route;
 }
 
 // radar

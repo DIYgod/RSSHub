@@ -1,9 +1,13 @@
-import { Route, ViewType } from '@/types';
+import { defineRoute, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { z } from 'zod';
 
-export const route: Route = {
+export const route = defineRoute({
     path: '/topics/:type',
+    param: z.object({
+        type: z.enum(['hot', 'latest']).default('hot').describe('主题类型'),
+    }),
     categories: ['bbs'],
     view: ViewType.Articles,
     example: '/v2ex/topics/latest',
@@ -33,34 +37,31 @@ export const route: Route = {
     },
     name: '最热 / 最新主题',
     maintainers: ['WhiteWorld'],
-    handler,
-};
+    handler: async function handler(ctx) {
+        const { type } = ctx.req.valid('param');
+        const { data } = await got(`https://www.v2ex.com/api/topics/${type}.json`);
 
-async function handler(ctx) {
-    const type = ctx.req.param('type');
+        let title;
+        if (type === 'hot') {
+            title = '最热主题';
+        } else if (type === 'latest') {
+            title = '最新主题';
+        }
 
-    const { data } = await got(`https://www.v2ex.com/api/topics/${type}.json`);
-
-    let title;
-    if (type === 'hot') {
-        title = '最热主题';
-    } else if (type === 'latest') {
-        title = '最新主题';
-    }
-
-    return {
-        title: `V2EX-${title}`,
-        link: 'https://www.v2ex.com/',
-        description: `V2EX-${title}`,
-        item: data.map((item) => ({
-            title: item.title,
-            description: `${item.member.username}: ${item.content_rendered}`,
-            content: { text: item.content, html: item.content_rendered },
-            pubDate: parseDate(item.created, 'X'),
-            link: item.url,
-            author: item.member.username,
-            comments: item.replies,
-            category: [item.node.title],
-        })),
-    };
-}
+        return {
+            title: `V2EX-${title}`,
+            link: 'https://www.v2ex.com/',
+            description: `V2EX-${title}`,
+            item: data.map((item) => ({
+                title: item.title,
+                description: `${item.member.username}: ${item.content_rendered}`,
+                content: { text: item.content, html: item.content_rendered },
+                pubDate: parseDate(item.created, 'X'),
+                link: item.url,
+                author: item.member.username,
+                comments: item.replies,
+                category: [item.node.title],
+            })),
+        };
+    },
+});
