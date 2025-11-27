@@ -257,7 +257,21 @@ export enum ViewType {
 }
 
 // route
-interface RouteItem<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1> {
+type ParamObjectFromPath<P extends string> =
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    P extends `${infer _Start}:${infer Param}/${infer Rest}`
+        ? Param extends `${infer Name}?`
+            ? { [K in Name]?: string } & ParamObjectFromPath<`/${Rest}`>
+            : { [K in Param]: string } & ParamObjectFromPath<`/${Rest}`>
+        : // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          P extends `${infer _Start}:${infer Param}`
+          ? Param extends `${infer Name}?`
+              ? { [K in Name]?: string }
+              : { [K in Param]: string }
+          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+            {};
+
+interface RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> {
     /**
      * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
      */
@@ -382,13 +396,15 @@ interface RouteItem<P extends string = string, T extends StandardSchemaV1 = Stan
     view?: ViewType;
 }
 
-export interface Route<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1> extends RouteItem<P, T, Q> {
+export interface Route<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> extends RouteItem<P, T, Q> {
     ja?: RouteItem<P, T, Q>;
     zh?: RouteItem<P, T, Q>;
     'zh-TW'?: RouteItem<P, T, Q>;
 }
 
-export function defineRoute<P extends string = string, T extends StandardSchemaV1 = StandardSchemaV1, Q extends StandardSchemaV1 = StandardSchemaV1>(route: Route<P, T, Q>): Route<P, T, Q> {
+export function defineRoute<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1>(
+    route: Route<P, T, Q>
+): Route<P, T, Q> {
     return route;
 }
 

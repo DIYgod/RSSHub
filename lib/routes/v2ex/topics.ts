@@ -3,10 +3,13 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { z } from 'zod';
 
+const hot = z.literal('hot').describe('最热主题');
+const latest = z.literal('latest').describe('最新主题');
+
 export const route = defineRoute({
     path: '/topics/:type',
     param: z.object({
-        type: z.enum(['hot', 'latest']).default('hot').describe('主题类型'),
+        type: z.union([hot, latest]).describe('主题类型'),
     }),
     categories: ['bbs'],
     view: ViewType.Articles,
