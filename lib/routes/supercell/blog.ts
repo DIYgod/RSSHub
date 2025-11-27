@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Game Blog',
-    maintainers: [],
+    maintainers: ['fishyo'],
     handler,
     description: `Supported games
 
@@ -83,6 +83,7 @@ async function handler(ctx) {
     // 从 __NEXT_DATA__ 脚本中提取 JSON 数据
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
     const articles = nextData.props.pageProps.articles || [];
+    const buildId = nextData.buildId;
 
     const items = await Promise.all(
         articles.map((article) => {
@@ -91,12 +92,10 @@ async function handler(ctx) {
 
             return cache.tryGet(link, async () => {
                 try {
-                    const { data: articleResponse } = await got(link);
-                    const $$ = load(articleResponse);
-
-                    // 从文章页面的 __NEXT_DATA__ 中提取完整内容
-                    const articleNextData = JSON.parse($$('#__NEXT_DATA__').text());
-                    const pageProps = articleNextData.props?.pageProps;
+                    // 直接从 Next.js 数据端点获取 JSON
+                    const dataUrl = `${rootUrl}/_next/data/${buildId}${article.linkUrl}.json`;
+                    const { data: articleData } = await got(dataUrl);
+                    const pageProps = articleData.pageProps;
 
                     // 尝试从不同的可能位置提取内容
                     let content = '';
@@ -106,10 +105,6 @@ async function handler(ctx) {
                         content = pageProps.contentHtml;
                     } else if (pageProps?.content) {
                         content = pageProps.content;
-                    } else {
-                        // 如果找不到,尝试从页面本身提取主要内容
-                        const mainContent = $$('main').html() || $$('article').html() || '';
-                        content = mainContent;
                     }
 
                     return {
