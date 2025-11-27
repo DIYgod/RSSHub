@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { defineRoute, ViewType } from '@/types';
-import got from '@/utils/got';
+import { ofetch } from '@/utils';
 import { parseDate } from '@/utils/parse-date';
 
 const hot = z.literal('hot').describe('最热主题');
@@ -43,7 +43,7 @@ export const route = defineRoute({
     maintainers: ['WhiteWorld'],
     handler: async function handler(ctx) {
         const { type } = ctx.req.valid('param');
-        const { data } = await got(`https://www.v2ex.com/api/topics/${type}.json`);
+        const data = await ofetch(`https://www.v2ex.com/api/topics/${type}.json`);
 
         let title;
         if (type === 'hot') {
