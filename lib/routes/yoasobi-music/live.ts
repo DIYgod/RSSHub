@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { parseJSONP } from './jsonp-helper';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
+
+import { parseJSONP } from './jsonp-helper';
 
 export const route: Route = {
     path: '/live',

@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 const rootUrl = 'https://www.iwara.tv';
 const apiRootUrl = 'https://api.iwara.tv';

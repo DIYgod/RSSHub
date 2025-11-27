@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/routes/:lang?',

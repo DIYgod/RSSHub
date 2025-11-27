@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
 export const route: Route = {

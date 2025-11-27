@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { load, type CheerioAPI } from 'cheerio';
-import type { Element } from 'domhandler';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { type CheerioAPI, load } from 'cheerio';
+import type { Element } from 'domhandler';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 const appUrl = 'https://app.theinitium.com/';
 const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';

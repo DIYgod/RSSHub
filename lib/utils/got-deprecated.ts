@@ -1,6 +1,8 @@
-import logger from '@/utils/logger';
+import type { CancelableRequest, Got, Options, OptionsInit, Response as GotResponse } from 'got';
+import got from 'got';
+
 import { config } from '@/config';
-import got, { CancelableRequest, Response as GotResponse, OptionsInit, Options, Got } from 'got';
+import logger from '@/utils/logger';
 
 type Response<T> = GotResponse<string> & {
     data: T;
@@ -76,4 +78,4 @@ const custom: {
 custom.all = (list) => Promise.all(list);
 
 export default custom;
-export type { Response, Options } from 'got';
+export type { Options, Response } from 'got';

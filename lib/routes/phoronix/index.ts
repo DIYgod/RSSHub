@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
-import got from '@/utils/got';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 

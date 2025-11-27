@@ -1,7 +1,8 @@
+import { z } from 'zod';
+
 import { defineRoute, ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { z } from 'zod';
 
 const hot = z.literal('hot').describe('最热主题');
 const latest = z.literal('latest').describe('最新主题');

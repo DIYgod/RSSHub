@@ -11,7 +11,7 @@ on:
       - 'lib/**'
 
 permissions:
-  id-token: write
+  id-token: write # Required for OIDC
 
 jobs:
   build:
@@ -35,10 +35,8 @@ jobs:
         run: pnpm rb
       - name: Release
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          npx version-from-git --allow-same-version --template 'master.short'
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          pnpx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: pnpm publish --provenance --access public --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm publish --access public --tag latest

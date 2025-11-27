@@ -1,14 +1,16 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
+import { config } from '@/config';
+import RejectError from '@/errors/types/reject';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { PRESETS, generateHeaders } from '@/utils/header-generator';
-import { generate_a_bogus } from './a-bogus';
-import { Feed } from './types';
-import RejectError from '@/errors/types/reject';
-import { config } from '@/config';
-import path from 'node:path';
 import { art } from '@/utils/render';
+
+import { generate_a_bogus } from './a-bogus';
+import type { Feed } from './types';
 
 export const route: Route = {
     path: '/user/token/:token',

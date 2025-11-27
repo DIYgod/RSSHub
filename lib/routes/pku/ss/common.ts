@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.ss.pku.edu.cn';
@@ -30,4 +31,4 @@ const getArticle = (item, tryGet) =>
         return item;
     });
 
-export { baseUrl, getSingleRecord, getArticle };
+export { baseUrl, getArticle, getSingleRecord };

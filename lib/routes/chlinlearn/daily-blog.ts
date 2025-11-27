@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import CryptoJS from 'crypto-js';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 import timezone from '@/utils/timezone';
-import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/daily-blog',

@@ -1,9 +1,11 @@
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { load } from 'cheerio';
+
 import { config } from '@/config';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 const getArchive = async (region, limit, tag, providerId?) => {
     const { data: response } = await got(
@@ -137,4 +139,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-export { getArchive, getList, getCategories, getProviderList, getStores, parseList, parseItem };
+export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList };

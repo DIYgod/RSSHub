@@ -1,8 +1,10 @@
-import { CheerioAPI } from 'cheerio';
-import timezone from '@/utils/timezone';
+import path from 'node:path';
+
+import type { CheerioAPI } from 'cheerio';
+
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.flyert.com.cn';
 
@@ -182,4 +184,4 @@ const parsePost = ($$: CheerioAPI, item) => {
     return item;
 };
 
-export { rootUrl, parseArticleList, parsePostList, parseArticle, parsePost };
+export { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl };

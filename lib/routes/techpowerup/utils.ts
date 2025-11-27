@@ -1,7 +1,8 @@
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.techpowerup.com';
 
@@ -73,4 +74,4 @@ const parseReviews = async ($, item) => {
     item.description = content.html();
 };
 
-export { baseUrl, headers, fixImages, hdImage, parseReviews, removeFigureStyle, removeResponsiveStyle };
+export { baseUrl, fixImages, hdImage, headers, parseReviews, removeFigureStyle, removeResponsiveStyle };

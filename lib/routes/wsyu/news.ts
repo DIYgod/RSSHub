@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import * as url from 'node:url';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import * as url from 'node:url';
 
 const baseUrl = 'http://www.wsyu.edu.cn';
 

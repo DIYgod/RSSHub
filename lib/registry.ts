@@ -1,16 +1,17 @@
-import type { APIRoute, Namespace, Route } from '@/types';
-import { directoryImport } from 'directory-import';
-import { Hono, type Handler } from 'hono';
-import { routePath } from 'hono/route';
 import path from 'node:path';
+
 import { serveStatic } from '@hono/node-server/serve-static';
-import { config } from '@/config';
+import { directoryImport } from 'directory-import';
+import { type Handler, Hono } from 'hono';
+import { routePath } from 'hono/route';
 import { validator } from 'hono/validator';
 
-import index from '@/routes/index';
+import { config } from '@/config';
 import healthz from '@/routes/healthz';
-import robotstxt from '@/routes/robots.txt';
+import index from '@/routes/index';
 import metrics from '@/routes/metrics';
+import robotstxt from '@/routes/robots.txt';
+import type { APIRoute, Namespace, Route } from '@/types';
 import logger from '@/utils/logger';
 import { sanitizeIssues } from '@/utils/standard-validator';
 

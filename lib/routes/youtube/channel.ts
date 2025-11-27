@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import utils, { callApi } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { getDataByChannelId as getDataByChannelIdYoutubei } from './api/youtubei';
+import type { Route } from '@/types';
+
 import { getDataByChannelId as getDataByChannelIdGoogle } from './api/google';
+import { getDataByChannelId as getDataByChannelIdYoutubei } from './api/youtubei';
+import utils, { callApi } from './utils';
 
 export const route: Route = {
     path: '/channel/:id/:routeParams?',

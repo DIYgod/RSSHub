@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-import sanitizeHtml from 'sanitize-html';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/stock_comments/:id',

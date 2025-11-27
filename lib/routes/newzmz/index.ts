@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
-import { rootUrl, getItems, getItemInfo, processItems } from './util';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { getItemInfo, getItems, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/:id?/:downLinkType?',

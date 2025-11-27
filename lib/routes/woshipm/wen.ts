@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-const baseUrl = 'https://wen.woshipm.com';
 import { parseRelativeDate } from '@/utils/parse-date';
+
+const baseUrl = 'https://wen.woshipm.com';
 
 export const route: Route = {
     path: '/wen',

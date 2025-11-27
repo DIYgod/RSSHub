@@ -1,6 +1,7 @@
-import { art } from '@/utils/render';
 import path from 'node:path';
+
 import got from '@/utils/got';
+import { art } from '@/utils/render';
 
 const token =
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTcyMzI1MjMsInN5c3RlbV9uYW1lIjoiZm9ydW0iLCJ6dXZpb19pZCI6LTk5OSwiZW1haWwiOm51bGwsIm5hbWUiOm51bGwsInVuaXZlcnNpdHlfaWQiOm51bGwsInVuaXZlcnNpdHlfbmFtZSI6bnVsbH0.0KoJiSnyazsJxLCNEnqnuNUdKsJFhBdCn3R2BJpoUtk';
@@ -66,4 +67,4 @@ const getBoards = (tryGet) =>
         }));
     });
 
-export { token, apiUrl, rootUrl, renderDesc, renderSections, getBoards };
+export { apiUrl, getBoards, renderDesc, renderSections, rootUrl, token };

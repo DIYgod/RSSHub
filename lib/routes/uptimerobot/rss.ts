@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-
-import Parser from 'rss-parser';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
 import dayjs from 'dayjs';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
+import Parser from 'rss-parser';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { art } from '@/utils/render';
 
 const titleRegex = /(.+)\s+is\s+([A-Z]+)\s+\((.+)\)/;
 

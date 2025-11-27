@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got'; // Custom got instance
 import { load } from 'cheerio'; // HTML parser with jQuery-like API
+
+import type { Route } from '@/types';
+import got from '@/utils/got'; // Custom got instance
 
 export const route: Route = {
     path: '/ccst/xwzx/:category',

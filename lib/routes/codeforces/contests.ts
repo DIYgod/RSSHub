@@ -1,14 +1,15 @@
-import { Route } from '@/types';
+import 'dayjs/locale/zh-cn.js';
 
-import ofetch from '@/utils/ofetch';
 import path from 'node:path';
-import { art } from '@/utils/render';
 
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import duration from 'dayjs/plugin/duration.js';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import 'dayjs/locale/zh-cn.js';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(duration);

@@ -1,7 +1,9 @@
-import { type ConfigEnv, setConfig } from '@/config';
-import { Handler, Hono } from 'hono';
+import type { Handler, Hono } from 'hono';
+
 import type { RoutePath } from '@/../assets/build/route-paths';
-import type { Data, Route, Namespace } from './types';
+import { type ConfigEnv, setConfig } from '@/config';
+
+import type { Data, Namespace, Route } from './types';
 
 export * from '@/types';
 export { default as ofetch } from '@/utils/ofetch';

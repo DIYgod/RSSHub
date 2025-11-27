@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import weiboUtils from './utils';
-import queryString from 'query-string';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/super_index/:id/:type?/:routeParams?',

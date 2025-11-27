@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
 import type { Data, DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.wbv-gpa.at/app/uploads/2024/01/cropped-WBV-Favicon-192x192.png';

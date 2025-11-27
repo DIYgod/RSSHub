@@ -1,13 +1,15 @@
-import { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } from './constants';
-import { config } from '@/config';
-import logger from '@/utils/logger';
-import OAuth from 'oauth-1.0a';
 import CryptoJS from 'crypto-js';
+import OAuth from 'oauth-1.0a';
 import queryString from 'query-string';
-import { getToken } from './token';
-import cache from '@/utils/cache';
+
+import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+
+import { baseUrl, consumerKey, consumerSecret, gqlFeatures, gqlMap } from './constants';
+import { getToken } from './token';
 
 const twitterGot = async (url, params) => {
     const token = await getToken();

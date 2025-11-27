@@ -1,12 +1,14 @@
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import utils from './utils';
 import { load } from 'cheerio';
-import { config } from '@/config';
-import logger from '@/utils/logger';
-import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { getPuppeteerPage } from '@/utils/puppeteer';
+
+import utils from './utils';
 
 const subtitleLimiter = new RateLimiterMemory({
     points: 5,

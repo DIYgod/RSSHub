@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
-import type { Data, DataItem, Route } from '@/types';
 
 const FEED_LANGUAGE = 'de' as const;
 const FEED_LOGO = 'https://www.oesw.at/fileadmin/Logos/OeSW_AG/OeSW-Logo2024-RGB.png';

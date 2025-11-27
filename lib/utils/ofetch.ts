@@ -1,8 +1,9 @@
+import type { HeaderGeneratorOptions } from 'header-generator';
+import { register } from 'node-network-devtools';
 import { createFetch } from 'ofetch';
+
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import { register } from 'node-network-devtools';
-import type { HeaderGeneratorOptions } from 'header-generator';
 
 declare module 'ofetch' {
     interface FetchOptions {

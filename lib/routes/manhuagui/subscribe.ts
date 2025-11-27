@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseRelativeDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
 const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
 
 export const route: Route = {

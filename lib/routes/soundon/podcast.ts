@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { Podcast, PodcastInfo } from './types';
+
+import type { Podcast, PodcastInfo } from './types';
 
 const handler = async (ctx) => {
     const { id } = ctx.req.param();

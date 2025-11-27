@@ -1,5 +1,6 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
 import Parser from 'rss-parser';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import wait from '@/utils/wait';
 
 process.env.CACHE_EXPIRE = '1';

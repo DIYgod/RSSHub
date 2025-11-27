@@ -1,9 +1,11 @@
 import { config } from '@/config';
-import { Route, ViewType } from '@/types';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
+
 import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const getTrueHour = (rank_type, rank_id, hour) => {
     const rank_two_hour = ['11', '17', '28', '29'];

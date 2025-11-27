@@ -1,10 +1,12 @@
-import { Data, DataItem, Route } from '@/types';
 import path from 'node:path';
-import got from '@/utils/got';
+
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
+
 import { config } from '@/config';
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const actualParametersDescTable = `

@@ -1,12 +1,15 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import got from '@/utils/got';
-import weiboUtils from './utils';
+
 import { config } from '@/config';
-import timezone from '@/utils/timezone';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import timezone from '@/utils/timezone';
+
+import weiboUtils from './utils';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',

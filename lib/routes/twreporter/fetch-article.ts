@@ -1,7 +1,8 @@
+import path from 'node:path';
+
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 export default async function fetch(slug: string) {
     const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;

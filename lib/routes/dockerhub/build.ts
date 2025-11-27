@@ -1,5 +1,7 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
+
 import { hash } from './utils';
 
 export const route: Route = {

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-import { parseJSONP } from './jsonp-helper';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
+
+import { parseJSONP } from './jsonp-helper';
 
 export const route: Route = {
     path: '/media',

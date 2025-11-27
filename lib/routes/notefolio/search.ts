@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
-import dayjs from 'dayjs';
-import path from 'node:path';
 import { art } from '@/utils/render';
 
 // 分类
