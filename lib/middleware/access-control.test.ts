@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import md5 from '@/utils/md5';
 
 process.env.NODE_NAME = 'mock';

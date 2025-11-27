@@ -1,6 +1,6 @@
-import { art } from '@/utils/render';
-
 import path from 'node:path';
+
+import { art } from '@/utils/render';
 
 interface Style {
     [key: string]: string;

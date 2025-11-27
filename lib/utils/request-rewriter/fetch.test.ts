@@ -1,6 +1,7 @@
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+
 import { useCustomHeader } from './fetch';
-import { describe, beforeEach, afterEach, test, expect } from 'vitest';
 
 const getInitRequest = () =>
     ({

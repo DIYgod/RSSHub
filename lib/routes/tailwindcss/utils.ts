@@ -1,8 +1,10 @@
-import ofetch from '@/utils/ofetch';
-import { Data, DataItem } from '@/types';
-import { BASE_URL } from './constants';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Data, DataItem } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { BASE_URL } from './constants';
 
 /** Fetch the content of a given article. */
 export const fetchArticleContent = async (url: string): Promise<string> => {

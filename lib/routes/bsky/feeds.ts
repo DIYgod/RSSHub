@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { resolveHandle, getFeed, getFeedGenerator } from './utils';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { getFeed, getFeedGenerator, resolveHandle } from './utils';
 
 export const route: Route = {
     path: '/profile/:handle/feed/:space/:routeParams?',

@@ -29,13 +29,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-env
     if: needs.check-env.outputs.check-docker == 'true'
-    timeout-minutes: 60
+    timeout-minutes: 120
     permissions:
       packages: write
       id-token: write
     steps:
+      - name: Enable ZRAM
+        # Reduce memory pressure
+        # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
+        run: |
+          sudo apt-get update -yq
+          sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
+          echo -e 'ALGO=lz4\nPERCENT=100' | sudo tee -a /etc/default/zramswap
+          sudo systemctl restart zramswap
+          swapon
+
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -132,7 +142,7 @@ jobs:
     if: needs.check-env.outputs.check-docker == 'true'
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0

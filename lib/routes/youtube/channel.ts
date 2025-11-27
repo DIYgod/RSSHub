@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import utils, { callApi } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { getDataByChannelId as getDataByChannelIdYoutubei } from './api/youtubei';
+import type { Route } from '@/types';
+
 import { getDataByChannelId as getDataByChannelIdGoogle } from './api/google';
+import { getDataByChannelId as getDataByChannelIdYoutubei } from './api/youtubei';
+import utils, { callApi } from './utils';
 
 export const route: Route = {
     path: '/channel/:id/:routeParams?',
@@ -65,10 +66,12 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
     }
 
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const data = await callApi({
         googleApi: getDataByChannelIdGoogle,
         youtubeiApi: getDataByChannelIdYoutubei,
-        params: { channelId: id, embed, filterShorts },
+        params: { channelId: id, embed, filterShorts, isJsonFeed },
     });
 
     return data;

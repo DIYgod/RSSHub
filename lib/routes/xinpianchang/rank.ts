@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { rootUrl, getData, processItems } from './util';
+import { getData, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/rank/:category?',

@@ -1,7 +1,8 @@
-import { load, type CheerioAPI } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { Route, DataItem } from '@/types';
 
 const rootUrl = 'https://cline.bot';
 const blogUrl = `${rootUrl}/blog`;

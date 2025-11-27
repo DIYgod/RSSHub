@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { fetchSearchItems, fetchItemDetail, MercariSort, MercariOrder, MercariStatus, formatItemDetail } from './util';
+
+import { fetchItemDetail, fetchSearchItems, formatItemDetail, MercariOrder, MercariSort, MercariStatus } from './util';
 
 export const route: Route = {
     path: '/:sort/:order/:status/:keyword',

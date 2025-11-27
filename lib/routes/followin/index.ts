@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem } from './utils';
+
+import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/:categoryId?/:lang?',

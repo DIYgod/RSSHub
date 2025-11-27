@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import logger from '@/utils/logger';
+
 import api from './api';
 import utils from './utils';
-import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/media/:id/:routeParams?',

@@ -1,10 +1,10 @@
-import { Route } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import bbobHTML from '@bbob/html';
 import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const swapLinebreak = (tree: BBobCoreTagNodeTree) =>

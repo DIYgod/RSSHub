@@ -1,11 +1,13 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
+
+import { load } from 'cheerio';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import { load } from 'cheerio';
-import path from 'node:path';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',

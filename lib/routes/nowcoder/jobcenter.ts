@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import * as url from 'node:url';
-import got from '@/utils/got';
+
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?',

@@ -1,9 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:keyword/:language?',

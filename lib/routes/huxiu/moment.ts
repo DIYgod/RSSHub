@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { rootUrl, apiMomentRootUrl, processItems, fetchData } from './util';
+import { apiMomentRootUrl, fetchData, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/moment',

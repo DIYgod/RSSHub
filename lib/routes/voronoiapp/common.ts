@@ -1,6 +1,7 @@
-import { ViewType, type Data, type DataItem, type Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { type Data, type DataItem, type Route, ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 import type { Post } from './types';
 
 export async function getPostItems(params: {

@@ -1,10 +1,11 @@
 // 修改自计算机学院route
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 // import { parseDate } from '@/utils/parse-date';
 // import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://swrh.whu.edu.cn';

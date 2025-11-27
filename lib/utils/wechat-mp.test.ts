@@ -1,8 +1,10 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { exportedForTestingOnly, WeChatMpError, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl } from '@/utils/wechat-mp';
+import { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl, WeChatMpError } from '@/utils/wechat-mp';
+
 const { toggleWerror, ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
 
 vi.mock('@/utils/request-rewriter', () => ({ default: null }));

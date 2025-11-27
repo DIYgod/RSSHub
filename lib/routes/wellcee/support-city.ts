@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
 
 import { baseUrl, getCitys, getDistricts } from './utils';
 

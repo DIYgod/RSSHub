@@ -1,13 +1,15 @@
-import prettier from 'eslint-plugin-prettier';
-import stylistic from '@stylistic/eslint-plugin';
-import unicorn from 'eslint-plugin-unicorn';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import n from 'eslint-plugin-n';
-import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
-import yamlParser from 'yaml-eslint-parser';
-import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import { importX } from 'eslint-plugin-import-x';
+import n from 'eslint-plugin-n';
+import prettier from 'eslint-plugin-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
+import yamlParser from 'yaml-eslint-parser';
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
 const __dirname = import.meta.dirname;
@@ -26,7 +28,7 @@ export default [
     //     },
     // },
     {
-        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist'],
+        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
     ...compat.extends('eslint:recommended', 'plugin:prettier/recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
     n.configs['flat/recommended-script'],
@@ -60,7 +62,6 @@ export default [
 
             'no-await-in-loop': 'error',
             'no-control-regex': 'off',
-            'no-duplicate-imports': 'error',
             'no-prototype-builtins': 'off',
 
             // suggestions
@@ -300,7 +301,8 @@ export default [
             'n/no-unsupported-features/node-builtins': [
                 'error',
                 {
-                    version: '>=22.16.0',
+                    version: '^22.20.0 || ^24',
+                    allowExperimental: true,
                     ignores: [],
                 },
             ],
@@ -337,6 +339,26 @@ export default [
                     beforeBlockComment: false,
                 },
             ],
+        },
+    },
+    {
+        files: ['**/*.?([cm])[jt]s?(x)'],
+        plugins: {
+            'simple-import-sort': simpleImportSort,
+            'import-x': importX,
+        },
+        rules: {
+            'sort-imports': 'off',
+            'import-x/order': 'off',
+            'simple-import-sort/imports': 'error',
+            'simple-import-sort/exports': 'error',
+
+            'import-x/first': 'error',
+            'import-x/newline-after-import': 'error',
+            'no-duplicate-imports': 'off',
+            'import-x/no-duplicates': 'error',
+
+            '@typescript-eslint/consistent-type-imports': 'error',
         },
     },
 ];

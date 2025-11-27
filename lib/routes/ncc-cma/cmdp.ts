@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import iconv from 'iconv-lite';
 
 export const handler = async (ctx) => {
     const { id = 'RPJQWQYZ' } = ctx.req.param();

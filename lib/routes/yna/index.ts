@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {

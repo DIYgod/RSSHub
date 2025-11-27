@@ -1,8 +1,10 @@
-import got from '@/utils/got';
+import path from 'node:path';
+
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const rootUrl = 'https://nzmz.xyz';
 
@@ -157,4 +159,4 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
         });
 };
 
-export { rootUrl, getItems, getItemInfo, processItems };
+export { getItemInfo, getItems, processItems, rootUrl };

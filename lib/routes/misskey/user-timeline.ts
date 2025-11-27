@@ -1,9 +1,12 @@
+import querystring from 'node:querystring';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Data, Route, ViewType } from '@/types';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import querystring from 'node:querystring';
+
 import utils from './utils';
 
 export const route: Route = {

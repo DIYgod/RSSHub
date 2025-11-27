@@ -1,9 +1,11 @@
-import got from '@/utils/got';
+import path from 'node:path';
+
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import CryptoJS from 'crypto-js';
 
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;
@@ -442,4 +444,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { rootUrl, apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems };
+export { apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };

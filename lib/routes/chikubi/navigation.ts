@@ -1,6 +1,7 @@
-import { Route, Data } from '@/types';
-import { getBySlug, getPostsBy, processItems } from './utils';
+import type { Data, Route } from '@/types';
 import parser from '@/utils/rss-parser';
+
+import { getBySlug, getPostsBy, processItems } from './utils';
 
 export const route: Route = {
     path: '/:keyword',

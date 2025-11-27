@@ -1,13 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
+import { describe, expect, it, vi } from 'vitest';
+
+import { config } from '@/config';
+import got from '@/utils/got';
 
 describe('got', () => {
-    it('headers', async () => {
+    it('no ua headers', async () => {
         const { data } = await got('http://rsshub.test/headers');
-        expect(data['user-agent']).toBe(config.ua);
+        expect(data['user-agent']).toBeUndefined();
     });
 
     it('retry', async () => {

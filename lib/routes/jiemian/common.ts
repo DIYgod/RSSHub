@@ -1,11 +1,12 @@
-import { Data } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const handler = async (ctx): Promise<Data> => {
     const { category = '' } = ctx.req.param();

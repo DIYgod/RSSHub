@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/news/:category?',

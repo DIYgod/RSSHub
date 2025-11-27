@@ -1,11 +1,13 @@
+import path from 'node:path';
+
 import { config } from '@/config';
 import type { DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
-import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
+import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
 
 export function getHeaders() {
     const sessionid = config.fanbox.session;

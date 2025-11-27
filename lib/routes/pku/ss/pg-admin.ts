@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { baseUrl, getSingleRecord, getArticle } from './common';
+
+import { baseUrl, getArticle, getSingleRecord } from './common';
 
 const host = `${baseUrl}/admission/admbrochure/`;
 

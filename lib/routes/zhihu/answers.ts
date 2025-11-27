@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { header, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header } from './utils';
 
 export const route: Route = {
     path: '/people/answers/:id',

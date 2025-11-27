@@ -1,10 +1,13 @@
+import path from 'node:path';
+
+import CryptoJS from 'crypto-js';
+
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
-import CryptoJS from 'crypto-js';
-import path from 'node:path';
-import { MediaResult, ResultResponse, SeasonResult } from './types';
+
+import type { MediaResult, ResultResponse, SeasonResult } from './types';
 
 // a
 function randomHexStr(length) {

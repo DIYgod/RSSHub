@@ -1,4 +1,5 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { baseUrl, fetchArticles } from './utils';
 
 export const route: Route = {

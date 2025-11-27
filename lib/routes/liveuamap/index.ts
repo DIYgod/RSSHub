@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { isValidHost } from '@/utils/valid-host';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:region?',

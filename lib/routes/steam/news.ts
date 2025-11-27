@@ -1,12 +1,12 @@
-import { Route, Data, DataItem } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory, NodeContent } from '@bbob/types';
-
-import got from '@/utils/got';
 import bbobHTML from '@bbob/html';
-import presetHTML5 from '@bbob/preset-html5';
 import { getUniqAttr } from '@bbob/plugin-helper';
-import { parseDate } from '@/utils/parse-date';
+import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree, NodeContent, PresetFactory } from '@bbob/types';
 import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:appid/:language?',
