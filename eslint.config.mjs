@@ -359,6 +359,7 @@ export default [
             'import-x/no-duplicates': 'error',
 
             '@typescript-eslint/consistent-type-imports': 'error',
+            'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         },
     },
 ];
