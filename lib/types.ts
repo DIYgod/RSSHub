@@ -267,14 +267,13 @@ type ParamObjectFromPath<P extends string> = P extends `${string}:${infer Param}
           : { [K in Param]: string }
       : Record<string, never>;
 
-interface RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> {
+type HasPathParams<P extends string> = P extends `${string}:${string}` ? true : false;
+
+type RouteItem<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = {
     /**
      * The route path, using [Hono routing](https://hono.dev/api/routing) syntax
      */
     path: P | string[];
-
-    param?: T;
-    query?: Q;
 
     /**
      * The human-readable name of the route, which will be used as the level 3 heading in the documentation
@@ -390,13 +389,21 @@ interface RouteItem<P extends string = string, T extends StandardSchemaV1<ParamO
      * The [Follow](https://github.com/RSSNext/follow) default view of the route, default to `ViewType.Articles`
      */
     view?: ViewType;
-}
+} & (HasPathParams<P> extends true
+    ? {
+          param: T;
+          query?: Q;
+      }
+    : {
+          param?: T;
+          query?: Q;
+      });
 
-export interface Route<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> extends RouteItem<P, T, Q> {
+export type Route<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1> = RouteItem<P, T, Q> & {
     ja?: RouteItem<P, T, Q>;
     zh?: RouteItem<P, T, Q>;
     'zh-TW'?: RouteItem<P, T, Q>;
-}
+};
 
 export function defineRoute<P extends string = string, T extends StandardSchemaV1<ParamObjectFromPath<P>> = StandardSchemaV1<ParamObjectFromPath<P>>, Q extends StandardSchemaV1 = StandardSchemaV1>(
     route: Route<P, T, Q>
