@@ -1,147 +1,147 @@
 name: Test
 
 on:
-  push:
-    branches-ignore:
-      - 'dependabot/**'
-    paths:
-      - 'lib/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/test.yml'
-  pull_request: {}
+    push:
+        branches-ignore:
+            - 'dependabot/**'
+        paths:
+            - 'lib/**'
+            - 'package.json'
+            - 'pnpm-lock.yaml'
+            - '.github/workflows/test.yml'
+    pull_request: {}
 
 permissions:
-  checks: write
+    checks: write
 
 jobs:
-  vitest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-        options: --entrypoint redis-server
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ latest, lts/*, lts/-1 ]
-    name: Vitest on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm)
-        run: pnpm i
-      - name: Run postinstall script for dependencies
-        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
-      - name: Build routes
-        run: pnpm build
-      - name: Test all and generate coverage
-        run: pnpm run vitest:coverage --reporter=github-actions
-        env:
-          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-      - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == 'lts/*' }}
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+    vitest:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        services:
+            redis:
+                image: redis
+                ports:
+                    - 6379/tcp
+                options: --entrypoint redis-server
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [latest, lts/*, lts/-1]
+        name: Vitest on Node ${{ matrix.node-version }}
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm)
+              run: pnpm i
+            - name: Run postinstall script for dependencies
+              run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
+            - name: Build routes
+              run: pnpm build
+            - name: Test all and generate coverage
+              run: pnpm run vitest:coverage --reporter=github-actions
+              env:
+                  REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+            - name: Upload coverage to Codecov
+              if: ${{ matrix.node-version == 'lts/*' }}
+              uses: codecov/codecov-action@v5
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
 
-  puppeteer:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ latest, lts/*, lts/-1 ]
-        chromium:
-          - name: bundled Chromium
-            dependency: ''
-            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
-          - name: Chromium from Ubuntu
-            dependency: chromium-browser
-            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
-          - name: Chrome from Google
-            dependency: google-chrome-stable
-            environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
-    name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm)
-        run: pnpm i
-        env: ${{ fromJSON(matrix.chromium.environment) }}
-      - name: Run postinstall script for dependencies
-        run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
-        env: ${{ fromJSON(matrix.chromium.environment) }}
-      - name: Build routes
-        run: pnpm build
-        env: ${{ fromJSON(matrix.chromium.environment) }}
-      - name: Install Chromium
-        if: ${{ matrix.chromium.dependency != '' }}
-        # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-        # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
-        # which provides up-to-date native packages.
-        run: |
-          set -eux
-          curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
-            sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
-          echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
-            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
-          sudo apt-get update
-          sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
-      - name: Test puppeteer
-        run: |
-          set -eux
-          export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
-          pnpm run vitest puppeteer
-        env: ${{ fromJSON(matrix.chromium.environment) }}
+    puppeteer:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [latest, lts/*, lts/-1]
+                chromium:
+                    - name: bundled Chromium
+                      dependency: ''
+                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
+                    - name: Chromium from Ubuntu
+                      dependency: chromium-browser
+                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
+                    - name: Chrome from Google
+                      dependency: google-chrome-stable
+                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
+        name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm)
+              run: pnpm i
+              env: ${{ fromJSON(matrix.chromium.environment) }}
+            - name: Run postinstall script for dependencies
+              run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
+              env: ${{ fromJSON(matrix.chromium.environment) }}
+            - name: Build routes
+              run: pnpm build
+              env: ${{ fromJSON(matrix.chromium.environment) }}
+            - name: Install Chromium
+              if: ${{ matrix.chromium.dependency != '' }}
+              # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+              # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+              # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
+              # which provides up-to-date native packages.
+              run: |
+                  set -eux
+                  curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+                    sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+                  echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+                    sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+                  sudo apt-get update
+                  sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+            - name: Test puppeteer
+              run: |
+                  set -eux
+                  export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+                  pnpm run vitest puppeteer
+              env: ${{ fromJSON(matrix.chromium.environment) }}
 
-  all:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      attestations: write
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 24, 22, 20 ]
-    name: Build radar and maintainer on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-      - run: pnpm i
-      - name: Build radar and maintainer
-        run: npm run build
-      - name: Upload assets
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: generated-assets-${{ matrix.node-version }}
-          path: assets/build/
+    all:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            attestations: write
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version: [24, 22, 20]
+        name: Build radar and maintainer on Node ${{ matrix.node-version }}
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+            - run: pnpm i
+            - name: Build radar and maintainer
+              run: npm run build
+            - name: Upload assets
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+              with:
+                  name: generated-assets-${{ matrix.node-version }}
+                  path: assets/build/
 
-  automerge:
-    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    needs: [ vitest, puppeteer, all ]
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - uses: fastify/github-action-merge-dependabot@1b2ed42db8f9d81a46bac83adedfc03eb5149dff # v3.11.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          target: patch
+    automerge:
+        if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+        needs: [vitest, puppeteer, all]
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+            contents: write
+        steps:
+            - uses: fastify/github-action-merge-dependabot@1b2ed42db8f9d81a46bac83adedfc03eb5149dff # v3.11.2
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  target: patch

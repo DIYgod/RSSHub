@@ -1,143 +1,143 @@
 name: PR - route test
 
 on:
-  workflow_run:
-    workflows: [PR - Docker build test] # open, reopen, synchronized, edited included
-    types: [completed]
+    workflow_run:
+        workflows: [PR - Docker build test] # open, reopen, synchronized, edited included
+        types: [completed]
 
 jobs:
-  testRoute:
-    name: Route test
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+    testRoute:
+        name: Route test
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+        if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
-      # https://github.com/orgs/community/discussions/25220
-      - name: Search the PR that triggered this workflow
-        uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
-        id: source-run-info
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          sourceRunId: ${{ github.event.workflow_run.id }}
+            # https://github.com/orgs/community/discussions/25220
+            - name: Search the PR that triggered this workflow
+              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
+              id: source-run-info
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  sourceRunId: ${{ github.event.workflow_run.id }}
 
-      - name: Fetch PR data via GitHub API
-        uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
-        id: pr-data
-        with:
-          route: GET /repos/{repo}/pulls/{number}
-          repo: ${{ github.repository }}
-          number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Fetch PR data via GitHub API
+              uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
+              id: pr-data
+              with:
+                  route: GET /repos/{repo}/pulls/{number}
+                  repo: ${{ github.repository }}
+                  number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch affected routes
-        id: fetch-route
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
-        with:
-          # by default, JSON format returned
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const PR = JSON.parse(process.env.PULL_REQUEST)
-            const body = PR.body
-            const number = PR.number
-            const sender = PR.user.login
-            const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
-            return identify({ github, context, core }, body, number, sender)
+            - name: Fetch affected routes
+              id: fetch-route
+              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              env:
+                  PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
+              with:
+                  # by default, JSON format returned
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const PR = JSON.parse(process.env.PULL_REQUEST)
+                      const body = PR.body
+                      const number = PR.number
+                      const sender = PR.user.login
+                      const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+                      return identify({ github, context, core }, body, number, sender)
 
-      - name: Fetch Docker image
-        if: (env.TEST_CONTINUE)
-        uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
-        with:
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          run_id: ${{ github.event.workflow_run.id }}
-          name: docker-image
-          path: ../artifacts-${{ github.run_id }}
+            - name: Fetch Docker image
+              if: (env.TEST_CONTINUE)
+              uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
+              with:
+                  workflow: ${{ github.event.workflow_run.workflow_id }}
+                  run_id: ${{ github.event.workflow_run.id }}
+                  name: docker-image
+                  path: ../artifacts-${{ github.run_id }}
 
-      - name: Import Docker image and set up Docker container
-        if: (env.TEST_CONTINUE)
-        working-directory: ../artifacts-${{ github.run_id }}
-        run: |
-          set -ex
-          zstd -d --stdout rsshub.tar.zst | docker load
-          docker run -d \
-            --name rsshub \
-            -e NODE_ENV=dev \
-            -e NODE_OPTIONS='--max-http-header-size=32768' \
-            -e LOGGER_LEVEL=debug \
-            -e ALLOW_USER_HOTLINK_TEMPLATE=true \
-            -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
-            -p 1200:1200 \
-            rsshub:latest
+            - name: Import Docker image and set up Docker container
+              if: (env.TEST_CONTINUE)
+              working-directory: ../artifacts-${{ github.run_id }}
+              run: |
+                  set -ex
+                  zstd -d --stdout rsshub.tar.zst | docker load
+                  docker run -d \
+                    --name rsshub \
+                    -e NODE_ENV=dev \
+                    -e NODE_OPTIONS='--max-http-header-size=32768' \
+                    -e LOGGER_LEVEL=debug \
+                    -e ALLOW_USER_HOTLINK_TEMPLATE=true \
+                    -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
+                    -p 1200:1200 \
+                    rsshub:latest
 
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
 
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        if: (env.TEST_CONTINUE)
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              if: (env.TEST_CONTINUE)
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
 
-      - name: Install dependencies (pnpm) # require js-beautify
-        if: (env.TEST_CONTINUE)
-        run: pnpm i
+            - name: Install dependencies (pnpm) # require js-beautify
+              if: (env.TEST_CONTINUE)
+              run: pnpm i
 
-      - name: Generate feedback
-        if: (env.TEST_CONTINUE)
-        id: generate-feedback
-        timeout-minutes: 10
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
-          PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const PR = JSON.parse(process.env.PULL_REQUEST)
-            const link = process.env.TEST_BASEURL
-            const routes = JSON.parse(process.env.TEST_ROUTES)
-            const number = PR.number
-            core.info(`${link}, ${routes}, ${number}`)
-            const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
-            await test({ github, context, core }, link, routes, number)
+            - name: Generate feedback
+              if: (env.TEST_CONTINUE)
+              id: generate-feedback
+              timeout-minutes: 10
+              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              env:
+                  TEST_BASEURL: http://localhost:1200
+                  TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
+                  PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const PR = JSON.parse(process.env.PULL_REQUEST)
+                      const link = process.env.TEST_BASEURL
+                      const routes = JSON.parse(process.env.TEST_ROUTES)
+                      const number = PR.number
+                      core.info(`${link}, ${routes}, ${number}`)
+                      const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+                      await test({ github, context, core }, link, routes, number)
 
-      - name: Pull Request Labeler
-        if: ${{ failure() }}
-        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
-        with:
-          actions: 'add-labels'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
-          labels: 'auto: DO NOT merge'
+            - name: Pull Request Labeler
+              if: ${{ failure() }}
+              uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
+              with:
+                  actions: 'add-labels'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  labels: 'auto: DO NOT merge'
 
-      - name: Print Docker container logs
-        if: ${{ always() }}
-        run: docker logs rsshub || true # logs/combined.log? Not so readable...
+            - name: Print Docker container logs
+              if: ${{ always() }}
+              run: docker logs rsshub || true # logs/combined.log? Not so readable...
 
-  fail-build:
-    name: Fail build
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps:
-      # https://github.com/orgs/community/discussions/25220
-      - name: Search the PR that triggered this workflow
-        uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
-        id: source-run-info
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          sourceRunId: ${{ github.event.workflow_run.id }}
+    fail-build:
+        name: Fail build
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        steps:
+            # https://github.com/orgs/community/discussions/25220
+            - name: Search the PR that triggered this workflow
+              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
+              id: source-run-info
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  sourceRunId: ${{ github.event.workflow_run.id }}
 
-      - name: Pull Request Labeler
-        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
-        with:
-          actions: 'add-labels'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
-          labels: 'auto: DO NOT merge'
+            - name: Pull Request Labeler
+              uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
+              with:
+                  actions: 'add-labels'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  labels: 'auto: DO NOT merge'

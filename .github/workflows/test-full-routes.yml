@@ -1,39 +1,39 @@
 name: Build assets (Full Routes Test Result)
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
+    workflow_dispatch:
+    schedule:
+        - cron: '0 0 * * *'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Build assets
-    timeout-minutes: 120
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - name: Install pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-      - name: Use Node.js Active LTS
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - name: Install dependencies (yarn)
-        run: pnpm i
-      - name: Build assets
-        run: pnpm build
-      - name: Build full routes test result
-        continue-on-error: true
-        run: pnpm vitest:fullroutes
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./assets
-          user_name: 'github-actions[bot]'
-          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
-          keep_files: true
+    build:
+        runs-on: ubuntu-latest
+        name: Build assets
+        timeout-minutes: 120
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - name: Install pnpm
+              uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - name: Use Node.js Active LTS
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (yarn)
+              run: pnpm i
+            - name: Build assets
+              run: pnpm build
+            - name: Build full routes test result
+              continue-on-error: true
+              run: pnpm vitest:fullroutes
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./assets
+                  user_name: 'github-actions[bot]'
+                  user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+                  keep_files: true

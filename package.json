@@ -34,8 +34,8 @@
         "prepublishOnly": "npm run build:lib",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
-        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier \"**/*.{ts,tsx,js,json}\" --write --experimental-cli",
-        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier \"**/*.{ts,tsx,js,json}\" --check --experimental-cli",
+        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --write --experimental-cli",
+        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --check --experimental-cli",
         "format:staged": "lint-staged",
         "lint": "eslint --cache . --concurrency auto",
         "prepare": "husky || true",
@@ -48,15 +48,13 @@
         "vitest:watch": "cross-env NODE_ENV=test vitest --watch"
     },
     "lint-staged": {
-        "*.js": [
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
-            "eslint --cache --fix --concurrency auto"
+        "!(*.ts|*.tsx|*.js|*.yml)": [
+            "prettier --write --ignore-unknown"
         ],
-        "*.{ts,tsx}": [
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
-            "eslint --cache --fix --concurrency auto"
-        ],
-        "*.yml": "eslint --cache --fix --concurrency auto"
+        "*.{ts,tsx,js,yml}": [
+            "eslint --cache --fix --concurrency auto",
+            "prettier --write --ignore-unknown"
+        ]
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
@@ -180,11 +178,9 @@
         "discord-api-types": "0.38.34",
         "domhandler": "5.0.3",
         "eslint": "9.39.1",
-        "eslint-config-prettier": "10.1.8",
         "eslint-nibble": "9.1.1",
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-n": "17.23.1",
-        "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-simple-import-sort": "12.1.1",
         "eslint-plugin-unicorn": "62.0.0",
         "eslint-plugin-yml": "1.19.0",

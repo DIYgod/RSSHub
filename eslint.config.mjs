@@ -5,7 +5,6 @@ import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
-import prettier from 'eslint-plugin-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
@@ -30,12 +29,11 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
-    ...compat.extends('eslint:recommended', 'plugin:prettier/recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
+    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
     n.configs['flat/recommended-script'],
     unicorn.configs.recommended,
     {
         plugins: {
-            prettier,
             '@stylistic': stylistic,
             '@typescript-eslint': typescriptEslint,
         },
@@ -254,6 +252,7 @@ export default [
             'unicorn/prevent-abbreviations': 'off',
             'unicorn/switch-case-braces': ['error', 'avoid'],
             'unicorn/text-encoding-identifier-case': 'off',
+            'unicorn/number-literal-case': 'off',
 
             // formatting rules
             '@stylistic/arrow-parens': 'error',
@@ -261,7 +260,7 @@ export default [
             '@stylistic/comma-spacing': 'error',
             '@stylistic/comma-style': 'error',
             '@stylistic/function-call-spacing': 'error',
-            '@stylistic/keyword-spacing': 'error',
+            '@stylistic/keyword-spacing': 'off',
             '@stylistic/linebreak-style': 'error',
 
             '@stylistic/lines-around-comment': [
@@ -306,8 +305,6 @@ export default [
                     ignores: [],
                 },
             ],
-
-            'prettier/prettier': 'off',
 
             'yml/quotes': [
                 'error',

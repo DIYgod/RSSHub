@@ -1,152 +1,152 @@
 name: 'Docker Release'
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '.github/workflows/docker-release.yml'
-      - 'lib/**'
-      - '!lib/**/*.test.ts'
-      - 'Dockerfile'
-  workflow_dispatch: {}
+    push:
+        branches:
+            - master
+        paths:
+            - '.github/workflows/docker-release.yml'
+            - 'lib/**'
+            - '!lib/**/*.test.ts'
+            - 'Dockerfile'
+    workflow_dispatch: {}
 
 jobs:
-  check-env:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      check-docker: ${{ steps.check-docker.outputs.defined }}
-    steps:
-      - id: check-docker
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        if: ${{ env.DOCKER_USERNAME != '' }}
-        run: echo "defined=true" >> $GITHUB_OUTPUT
-  release:
-    runs-on: ubuntu-latest
-    needs: check-env
-    if: needs.check-env.outputs.check-docker == 'true'
-    timeout-minutes: 120
-    permissions:
-      packages: write
-      id-token: write
-    steps:
-      - name: Enable ZRAM
-        # Reduce memory pressure
-        # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
-        run: |
-          sudo apt-get update -yq
-          sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
-          echo -e 'ALGO=lz4\nPERCENT=100' | sudo tee -a /etc/default/zramswap
-          sudo systemctl restart zramswap
-          swapon
+    check-env:
+        permissions:
+            contents: none
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        outputs:
+            check-docker: ${{ steps.check-docker.outputs.defined }}
+        steps:
+            - id: check-docker
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+              if: ${{ env.DOCKER_USERNAME != '' }}
+              run: echo "defined=true" >> $GITHUB_OUTPUT
+    release:
+        runs-on: ubuntu-latest
+        needs: check-env
+        if: needs.check-env.outputs.check-docker == 'true'
+        timeout-minutes: 120
+        permissions:
+            packages: write
+            id-token: write
+        steps:
+            - name: Enable ZRAM
+              # Reduce memory pressure
+              # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
+              run: |
+                  sudo apt-get update -yq
+                  sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
+                  echo -e 'ALGO=lz4\nPERCENT=100' | sudo tee -a /etc/default/zramswap
+                  sudo systemctl restart zramswap
+                  swapon
 
-      - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - name: Checkout
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+            - name: Install cosign
+              if: github.event_name != 'pull_request'
+              uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+            - name: Log in to Docker Hub
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              with:
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Log in to the Container registry
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract Docker metadata (ordinary version)
-        id: meta-ordinary
-        uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
-        with:
-          images: |
-            ${{ secrets.DOCKER_USERNAME }}/rsshub
-            ghcr.io/${{ github.repository }}
-          tags: |
-            type=raw,value=latest,enable=true
-            type=raw,value={{date 'YYYY-MM-DD'}},enable=true
-            type=sha,format=long,prefix=,enable=true
-          flavor: latest=false
+            - name: Extract Docker metadata (ordinary version)
+              id: meta-ordinary
+              uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
+              with:
+                  images: |
+                      ${{ secrets.DOCKER_USERNAME }}/rsshub
+                      ghcr.io/${{ github.repository }}
+                  tags: |
+                      type=raw,value=latest,enable=true
+                      type=raw,value={{date 'YYYY-MM-DD'}},enable=true
+                      type=sha,format=long,prefix=,enable=true
+                  flavor: latest=false
 
-      - name: Build and push Docker image (ordinary version)
-        id: build-and-push
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta-ordinary.outputs.tags }}
-          labels: ${{ steps.meta-ordinary.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha,scope=docker-release
-          cache-to: type=gha,mode=max,scope=docker-release
-          outputs: type=image,compression=zstd,force-compression=true
+            - name: Build and push Docker image (ordinary version)
+              id: build-and-push
+              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+              with:
+                  context: .
+                  push: true
+                  tags: ${{ steps.meta-ordinary.outputs.tags }}
+                  labels: ${{ steps.meta-ordinary.outputs.labels }}
+                  platforms: linux/amd64,linux/arm64
+                  cache-from: type=gha,scope=docker-release
+                  cache-to: type=gha,mode=max,scope=docker-release
+                  outputs: type=image,compression=zstd,force-compression=true
 
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          COSIGN_EXPERIMENTAL: 'true'
-        run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
+            - name: Sign the published Docker image
+              if: ${{ github.event_name != 'pull_request' }}
+              env:
+                  COSIGN_EXPERIMENTAL: 'true'
+              run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
 
-      - name: Extract Docker metadata (Chromium-bundled version)
-        id: meta-chromium-bundled
-        uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
-        with:
-          images: |
-            ${{ secrets.DOCKER_USERNAME }}/rsshub
-            ghcr.io/${{ github.repository }}
-          tags: |
-            type=raw,value=chromium-bundled,enable=true
-            type=raw,value=chromium-bundled-{{date 'YYYY-MM-DD'}},enable=true
-            type=sha,format=long,prefix=chromium-bundled-,enable=true
-          flavor: latest=false
+            - name: Extract Docker metadata (Chromium-bundled version)
+              id: meta-chromium-bundled
+              uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
+              with:
+                  images: |
+                      ${{ secrets.DOCKER_USERNAME }}/rsshub
+                      ghcr.io/${{ github.repository }}
+                  tags: |
+                      type=raw,value=chromium-bundled,enable=true
+                      type=raw,value=chromium-bundled-{{date 'YYYY-MM-DD'}},enable=true
+                      type=sha,format=long,prefix=chromium-bundled-,enable=true
+                  flavor: latest=false
 
-      - name: Build and push Docker image (Chromium-bundled version)
-        id: build-and-push-chromium
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
-        with:
-          context: .
-          build-args: PUPPETEER_SKIP_DOWNLOAD=0
-          push: true
-          tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
-          labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: |
-            type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-          cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
-          outputs: type=image,compression=zstd,force-compression=true
+            - name: Build and push Docker image (Chromium-bundled version)
+              id: build-and-push-chromium
+              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+              with:
+                  context: .
+                  build-args: PUPPETEER_SKIP_DOWNLOAD=0
+                  push: true
+                  tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
+                  labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
+                  platforms: linux/amd64,linux/arm64
+                  cache-from: |
+                      type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
+                  cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled # inline cache is enough
+                  outputs: type=image,compression=zstd,force-compression=true
 
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          COSIGN_EXPERIMENTAL: 'true'
-        run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
+            - name: Sign the published Docker image
+              if: ${{ github.event_name != 'pull_request' }}
+              env:
+                  COSIGN_EXPERIMENTAL: 'true'
+              run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
 
-  description:
-    runs-on: ubuntu-latest
-    needs: check-env
-    if: needs.check-env.outputs.check-docker == 'true'
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+    description:
+        runs-on: ubuntu-latest
+        needs: check-env
+        if: needs.check-env.outputs.check-docker == 'true'
+        timeout-minutes: 5
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
-      - name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ secrets.DOCKER_USERNAME }}/rsshub
+            - name: Docker Hub Description
+              uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
+              with:
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
+                  repository: ${{ secrets.DOCKER_USERNAME }}/rsshub
