@@ -1,5 +1,5 @@
-import type { Context } from 'hono';
 import type { StandardSchemaV1 } from '@standard-schema/spec';
+import type { Context } from 'hono';
 
 // Make sure it's synchronise with scripts/workflow/data.ts
 // and lib/routes/rsshub/routes.ts
