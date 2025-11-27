@@ -8897,6 +8897,9 @@
   "/wnacg/tag/:tag": [
     "Gandum2077"
   ],
+  "/wogem/:page?": [
+    "sk22"
+  ],
   "/wohnnet/:category/:region/*": [
     "sk22"
   ],

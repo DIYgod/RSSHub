@@ -2905,6 +2905,7 @@ export type RoutePath =
   | `/wnacg/`
   | `/wnacg/category/:cid`
   | `/wnacg/tag/:tag`
+  | `/wogem/:page?`
   | `/wohnnet/:category/:region/*`
   | `/wordpress/:url?/:filter{.+}?`
   | `/worldjournal/:path{.+}?`
