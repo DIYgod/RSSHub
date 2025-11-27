@@ -18,32 +18,8 @@ export const route = defineRoute({
     categories: ['bbs'],
     view: ViewType.Articles,
     example: '/v2ex/topics/latest',
-    parameters: {
-        type: {
-            description: '主题类型',
-            options: [
-                {
-                    value: 'hot',
-                    label: '最热主题',
-                },
-                {
-                    value: 'latest',
-                    label: '最新主题',
-                },
-            ],
-            default: 'hot',
-        },
-    },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
     name: '最热 / 最新主题',
-    maintainers: ['WhiteWorld'],
+    maintainers: ['WhiteWorld', 'hyoban'],
     async handler(ctx) {
         const { type } = ctx.req.valid('param');
         const title = topics[type];
