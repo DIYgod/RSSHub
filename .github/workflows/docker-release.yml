@@ -72,7 +72,7 @@ jobs:
 
             - name: Extract Docker metadata (ordinary version)
               id: meta-ordinary
-              uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
               with:
                   images: |
                       ${{ secrets.DOCKER_USERNAME }}/rsshub
@@ -104,7 +104,7 @@ jobs:
 
             - name: Extract Docker metadata (Chromium-bundled version)
               id: meta-chromium-bundled
-              uses: docker/metadata-action@318604b99e75e41977312d83839a89be02ca4893 # v5.9.0
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
               with:
                   images: |
                       ${{ secrets.DOCKER_USERNAME }}/rsshub
