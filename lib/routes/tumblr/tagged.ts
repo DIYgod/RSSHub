@@ -61,6 +61,8 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `Tumblr - ${tag}`,
+        description: `Tumblr posts tagged #${tag}`,
+        link: `https://tumblr.com/tagged/${tag}`,
         item: posts,
         allowEmpty: true,
     };
