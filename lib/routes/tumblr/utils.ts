@@ -40,6 +40,10 @@ const processPost: (post: any) => DataItem = (post) => {
         case 'text':
             description = post.body;
             break;
+        case 'ask':
+            description = post.question;
+            description += post.answer;
+            break;
         case 'photo':
             for (const photo of post.photos ?? []) {
                 description += `<img src="${photo.original_size.url}"/><br/>`;
