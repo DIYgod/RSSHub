@@ -89,5 +89,6 @@ async function handler() {
             pubDate: timezone(parseDate(item.qfdate), +8),
             link: item.pdfpath,
         })),
+        link: urlRoot,
     };
 }
