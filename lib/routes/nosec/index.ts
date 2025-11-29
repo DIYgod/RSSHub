@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 
 const baseUrl = 'https://nosec.org/home/ajaxindexdata';
 const keykinds = {

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {

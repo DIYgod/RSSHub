@@ -1,8 +1,9 @@
 import type { Context } from 'hono';
-import { DataItem, Route } from '@/types';
-import { UserInfo, VideoItem } from './types';
 
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+
+import type { UserInfo, VideoItem } from './types';
 import { getUserInfoById, getUserVideosById, renderVideo } from './utils';
 
 const handler = async (ctx: Context) => {

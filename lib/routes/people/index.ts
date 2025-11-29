@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import { isValidHost } from '@/utils/valid-host';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:site?/:category{.+}?',

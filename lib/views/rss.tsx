@@ -1,5 +1,6 @@
 import type { FC } from 'hono/jsx';
-import { Data } from '@/types';
+
+import type { Data } from '@/types';
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
     const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));

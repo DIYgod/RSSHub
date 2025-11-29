@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import path from 'node:path';
 import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
 
 const renderDesc = (item) => art(path.join(__dirname, 'templates/daily.art'), item);
 

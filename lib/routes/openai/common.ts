@@ -1,11 +1,13 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { DataItem } from '@/types';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { config } from '@/config';
 
 export const BASE_URL = new URL('https://openai.com');
 

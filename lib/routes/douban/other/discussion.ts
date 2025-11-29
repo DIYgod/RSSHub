@@ -1,4 +1,6 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 /*
  * @Author: nightmare-mio wanglongwei2009@qq.com
@@ -7,7 +9,6 @@ import cache from '@/utils/cache';
  * @Description:
  */
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {

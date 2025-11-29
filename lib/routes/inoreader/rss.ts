@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:user/:tag',

@@ -1,10 +1,11 @@
+import path from 'node:path';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { MisskeyNote, MisskeyUser } from './types';
+import type { MisskeyNote, MisskeyUser } from './types';
 
 const allowSiteList = ['misskey.io', 'madost.one', 'mk.nixnet.social'];
 

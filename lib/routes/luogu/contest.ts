@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt();
-import pMap from 'p-map';
 
 const baseUrl = 'https://www.luogu.com.cn';
 

@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/freegames/:locale?/:country?',

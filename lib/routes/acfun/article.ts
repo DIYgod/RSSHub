@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const baseUrl = 'https://www.acfun.cn';
 const categoryMap = {

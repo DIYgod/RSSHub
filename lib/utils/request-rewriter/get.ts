@@ -1,10 +1,12 @@
-import http from 'node:http';
-import https from 'node:https';
-import logger from '@/utils/logger';
-import { config } from '@/config';
-import proxy from '@/utils/proxy';
-import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
+import type http from 'node:http';
+import type https from 'node:https';
+
 import type { HeaderGeneratorOptions } from 'header-generator';
+
+import { config } from '@/config';
+import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import logger from '@/utils/logger';
+import proxy from '@/utils/proxy';
 
 type Get = typeof http.get | typeof https.get | typeof http.request | typeof https.request;
 

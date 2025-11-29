@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({ html: true });
-import { config } from '@/config';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/:community/:sort?',

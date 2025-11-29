@@ -1,14 +1,47 @@
+import { load } from 'cheerio';
+import type { ConnectResult, Options } from 'puppeteer-real-browser';
+import { connect } from 'puppeteer-real-browser';
+
 import { config } from '@/config';
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
-async function getPageWithRealBrowser(url: string, selector: string) {
+const realBrowserOption: Options = {
+    args: ['--start-maximized'],
+    turnstile: true,
+    headless: false,
+    // disableXvfb: true,
+    // ignoreAllFlags:true,
+    customConfig: {
+        chromePath: config.chromiumExecutablePath,
+    },
+    connectOption: {
+        defaultViewport: null,
+    },
+    plugins: [],
+};
+
+async function getPageWithRealBrowser(url: string, selector: string, conn: ConnectResult | null) {
     try {
-        const res = await fetch(`${config.puppeteerRealBrowserService}?url=${encodeURIComponent(url)}&selector=${encodeURIComponent(selector)}`);
-        const json = await res.json();
-        return (json.data?.at(0) || '') as string;
+        if (conn) {
+            const page = conn.page;
+            await page.goto(url, { timeout: 30000 });
+            let verify: boolean | null = null;
+            const startDate = Date.now();
+            while (!verify && Date.now() - startDate < 30000) {
+                // eslint-disable-next-line no-await-in-loop, no-restricted-syntax
+                verify = await page.evaluate((sel) => (document.querySelector(sel) ? true : null), selector).catch(() => null);
+                // eslint-disable-next-line no-await-in-loop
+                await new Promise((r) => setTimeout(r, 1000));
+            }
+            return await page.content();
+        } else {
+            const res = await fetch(`${config.puppeteerRealBrowserService}?url=${encodeURIComponent(url)}&selector=${encodeURIComponent(selector)}`);
+            const json = await res.json();
+            return (json.data?.at(0) || '') as string;
+        }
     } catch {
         return '';
     }
@@ -41,14 +74,14 @@ export const route: Route = {
         },
     ],
     name: 'User Profile - Pixnoy',
-    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod', 'hyoban'],
+    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod', 'hyoban', 'Rongronggg9'],
     handler,
     view: ViewType.Pictures,
 };
 
 async function handler(ctx) {
-    if (!config.puppeteerRealBrowserService) {
-        throw new Error('PUPPETEER_REAL_BROWSER_SERVICE is required to use this route.');
+    if (!config.puppeteerRealBrowserService && !config.chromiumExecutablePath) {
+        throw new Error('PUPPETEER_REAL_BROWSER_SERVICE or CHROMIUM_EXECUTABLE_PATH is required to use this route.');
     }
 
     // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixnoy' eventually
@@ -57,8 +90,24 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
-    const html = await getPageWithRealBrowser(profileUrl, '.post_box');
+    let conn: ConnectResult | null = null;
+
+    if (!config.puppeteerRealBrowserService) {
+        conn = await connect(realBrowserOption);
+
+        setTimeout(async () => {
+            if (conn) {
+                await conn.browser.close();
+            }
+        }, 60000);
+    }
+
+    const html = await getPageWithRealBrowser(profileUrl, '.post_box', conn);
     if (!html) {
+        if (conn) {
+            await conn.browser.close();
+            conn = null;
+        }
         throw new Error('Failed to fetch user profile page. User may not exist or there are no posts available.');
     }
 
@@ -82,7 +131,23 @@ async function handler(ctx) {
             };
         });
 
-    const htmlList = (await Promise.all(list.map((item) => cache.tryGet(`picnob:user:${id}:${item.guid}:html`, async () => await getPageWithRealBrowser(item.link, '.view'))))) as string[];
+    const jobs = list.map((item) => cache.tryGet(`picnob:user:${id}:${item.guid}:html`, async () => await getPageWithRealBrowser(item.link, '.view', conn)));
+
+    let htmlList: string[] = [];
+    if (conn) {
+        try {
+            for (const job of jobs) {
+                // eslint-disable-next-line no-await-in-loop
+                const html = await job;
+                htmlList.push(html);
+            }
+        } finally {
+            await conn.browser.close();
+            conn = null;
+        }
+    } else {
+        htmlList = await Promise.all(jobs);
+    }
 
     const newDescription = htmlList.map((html) => {
         if (!html) {
@@ -94,7 +159,10 @@ async function handler(ctx) {
         } else {
             let description = '';
             for (const pic of $('.pic img').toArray()) {
-                description += `<img src="${$(pic).attr('data-src')}" /><br />`;
+                const dataSrc = $(pic).attr('data-src');
+                if (dataSrc) {
+                    description += `<img src="${dataSrc}" /><br />`;
+                }
             }
             description += $('.sum_full').text();
             return description;

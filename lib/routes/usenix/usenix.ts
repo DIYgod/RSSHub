@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-const url = 'https://www.usenix.org';
 import { parseDate } from '@/utils/parse-date';
+
+const url = 'https://www.usenix.org';
 
 const seasons = ['spring', 'summer', 'fall', 'winter'];
 

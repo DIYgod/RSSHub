@@ -1,15 +1,16 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import path from 'node:path';
-import { setCookies } from '@/utils/puppeteer-utils';
+
+import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import { setCookies } from '@/utils/puppeteer-utils';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',

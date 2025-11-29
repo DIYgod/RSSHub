@@ -1,10 +1,14 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import { getUser, renderNotesFulltext, getUserWithCookie } from './util';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import { getUser, getUserWithCookie, renderNotesFulltext } from './util';
+
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',

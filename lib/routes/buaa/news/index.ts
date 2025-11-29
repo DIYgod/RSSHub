@@ -1,8 +1,9 @@
-import { Route, Data, DataItem } from '@/types';
-import { Context } from 'hono';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

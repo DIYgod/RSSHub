@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import { getData } from './utils';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { getData } from './utils';
 
 export const route: Route = {
     path: '/news/coronavirus/data/:province?/:city?',

@@ -1,8 +1,10 @@
-import { type Data, type DataItem, Route } from '@/types';
-import { type CheerioAPI, load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const BASE_URL = 'https://www.huijin-inv.cn';
 

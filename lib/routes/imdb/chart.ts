@@ -1,10 +1,14 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
+import path from 'node:path';
+
 import * as cheerio from 'cheerio';
 import type { Context } from 'hono';
-import { ChartTitleSearchConnection } from './types';
-import path from 'node:path';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
+
+import type { ChartTitleSearchConnection } from './types';
 
 const render = (data) => art(path.join(__dirname, 'templates/chart.art'), data);
 

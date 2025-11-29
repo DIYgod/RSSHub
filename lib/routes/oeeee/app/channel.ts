@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { parseArticle } from '../utils';
 import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { parseArticle } from '../utils';
 
 export const route: Route = {
     path: '/app/channel/:id',

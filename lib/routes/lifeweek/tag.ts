@@ -1,7 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import getRssItem from './utils';
+
 const rootApiUrl = 'https://www.lifeweek.com.cn/api/userWebFollow/getFollowTagContentList?type=4&sort=2&tagId';
 const rootUrl = 'https://www.lifeweek.com.cn/articleList';
 const articleRootUrl = 'https://www.lifeweek.com.cn/article';

@@ -1,9 +1,12 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/news/:language',

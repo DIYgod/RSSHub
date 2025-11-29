@@ -1,8 +1,9 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 

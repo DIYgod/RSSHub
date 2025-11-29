@@ -1,11 +1,13 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import { getToken } from './token';
-import getIllusts from './api/get-illusts';
 import { config } from '@/config';
-import pixivUtils from './utils';
-import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import getIllusts from './api/get-illusts';
+import { getToken } from './token';
+import pixivUtils from './utils';
 
 export const route: Route = {
     path: '/user/:id',

@@ -1,8 +1,11 @@
 import path from 'node:path';
+
 import { load } from 'cheerio';
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
 
 const BASEURL = 'https://bestofjs.org/rankings/monthly';

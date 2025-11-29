@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import { baseUrl, parsePage } from './utils';
+import type { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
+
+import { baseUrl, parsePage } from './utils';
 
 export const route: Route = {
     path: '/today',
