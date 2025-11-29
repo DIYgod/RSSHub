@@ -41,7 +41,10 @@ const processPost: (post: any) => DataItem = (post) => {
             description = post.body;
             break;
         case 'answer':
-            description = post.question;
+            description += post.asking_url === 'null' ? `<p><a href="${post.asking_url}">${post.asking_name}</a> asks:</p>` : `<p>${post.asking_name}</p> asks:`;
+            description += post.question;
+            description += '<hr>';
+            description += `<p><a href="${post.blog.url}">${post.blog_name}</a> answers:</p>`;
             description += post.answer;
             break;
         case 'photo':
