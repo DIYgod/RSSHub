@@ -40,7 +40,7 @@ const processPost: (post: any) => DataItem = (post) => {
         case 'text':
             description = post.body;
             break;
-        case 'ask':
+        case 'answer':
             description = post.question;
             description += post.answer;
             break;
