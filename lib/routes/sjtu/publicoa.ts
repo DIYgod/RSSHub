@@ -36,7 +36,7 @@ const cookieJar = new CookieJar();
 
 async function handler() {
     if (!config.sjtu?.JAAuthCookie) {
-        throw '请先在配置文件中填写上海交通大学教务处的JAAuthCookie';
+        throw 'JAAuthCookie needs to be set to use this route.';
     }
 
     cookieJar.setCookieSync(`JAAuthCookie=${config.sjtu.JAAuthCookie}; Domain=.jaccount.sjtu.edu.cn; Path=/`, 'https://jaccount.sjtu.edu.cn');
