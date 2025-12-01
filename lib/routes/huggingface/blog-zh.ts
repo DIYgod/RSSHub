@@ -1,8 +1,28 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+interface AuthorData {
+    fullname?: string;
+    name: string;
+}
+
+interface BlogItem {
+    slug: string;
+    title: string;
+    publishedAt: string;
+    authorsData: AuthorData[];
+    upvotes: number;
+    thumbnail?: string;
+    tags: string[];
+}
+
+interface ArticlesData {
+    allBlogs: BlogItem[];
+}
 
 export const route: Route = {
     path: '/blog-zh',
@@ -32,25 +52,40 @@ async function handler() {
     const { body: response } = await got('https://huggingface.co/blog/zh');
     const $ = load(response);
 
-    /** @type {Array<{blog: {local: string, title: string, author: string, thumbnail: string, date: string, tags: Array<string>}, blogUrl: string, lang: 'zh', link: string}>} */
-    const papers = $('div[data-target="BlogThumbnail"]')
-        .toArray()
-        .map((item) => {
-            const props = $(item).data('props');
-            const link = $(item).find('a').attr('href');
-            return {
-                ...props,
-                link,
-            };
-        });
+    const data = $('div[data-target="Articles"]').data('props') as ArticlesData;
+    const { allBlogs } = data;
 
-    const items = papers.map((item) => ({
+    const papers = allBlogs.map((blog) => ({
+        blog,
+        link: `/blog/zh/${blog.slug}`,
+    }));
+
+    const lists = papers.map((item) => ({
         title: item.blog.title,
         link: `https://huggingface.co${item.link}`,
-        category: item.blog.tags,
         pubDate: parseDate(item.blog.publishedAt),
-        author: item.blog.author,
+        author: item.blog.authorsData.map((author) => ({
+            name: author.fullname || author.name,
+        })),
+        upvotes: item.blog.upvotes,
+        image: item.blog.thumbnail ? new URL(item.blog.thumbnail, 'https://huggingface.co').toString() : undefined,
+        category: item.blog.tags,
     }));
+
+    const items: DataItem[] = await Promise.all(
+        lists.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const { body: response } = await got(item.link);
+                const $ = load(response);
+                // Remove navigation elements and non-content elements
+                $('.mb-4, .mb-6, .not-prose').remove();
+                return {
+                    ...item,
+                    description: $('.blog-content').html() ?? undefined,
+                };
+            })
+        )
+    );
 
     return {
         title: 'Huggingface 中文博客',

@@ -113,7 +113,7 @@ async function handler(ctx) {
                 $('.mb-4, h1, .mb-6, .not-prose').remove();
                 return {
                     ...item,
-                    description: $('.blog-content').html(),
+                    description: $('.blog-content').html() ?? undefined,
                 };
             })
         )
