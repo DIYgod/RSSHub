@@ -270,8 +270,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
     const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return moduleItems || entries || [];
+    return gridEntries || moduleItems || entries || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {

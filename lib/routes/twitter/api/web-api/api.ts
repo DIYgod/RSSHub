@@ -84,21 +84,10 @@ const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
     );
 
 const getUserMedia = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, async (id, params = {}) => {
-        const cursorSource = await paginationTweets('UserMedia', id, {
-            ...params,
-            count: 20,
-            includePromotedContent: false,
-            withClientEventToken: false,
-            withBirdwatchNotes: false,
-            withVoice: true,
-            withV2Timeline: true,
-        });
-        const cursor = cursorSource.find((i) => i.content?.cursorType === 'Top').content.value;
-        return gatherLegacyFromData(
+    cacheTryGet(id, params, async (id, params = {}) =>
+        gatherLegacyFromData(
             await paginationTweets('UserMedia', id, {
                 ...params,
-                cursor,
                 count: 20,
                 includePromotedContent: false,
                 withClientEventToken: false,
@@ -106,8 +95,8 @@ const getUserMedia = (id: string, params?: Record<string, any>) =>
                 withVoice: true,
                 withV2Timeline: true,
             })
-        );
-    });
+        )
+    );
 
 const getUserLikes = (id: string, params?: Record<string, any>) =>
     cacheTryGet(id, params, async (id, params = {}) =>
