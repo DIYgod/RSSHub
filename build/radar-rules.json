@@ -37380,6 +37380,19 @@
       }
     ]
   },
+  "producereport.com": {
+    "_name": "Produce Report",
+    "www": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/producereport/:category"
+      }
+    ]
+  },
   "producthunt.com": {
     "_name": "Product Hunt",
     "www": [

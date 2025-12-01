@@ -6625,6 +6625,9 @@
     "SayaSS",
     "frankcwl"
   ],
+  "/producereport/:category{.+}?": [
+    "nczitzk"
+  ],
   "/producthunt/today": [
     "miaoyafeng",
     "Fatpandac"
