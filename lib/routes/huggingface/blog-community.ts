@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -38,18 +38,18 @@ export const route: Route = {
     url: 'huggingface.co/blog/community',
 };
 
-interface CommunityBlog {
-    classNames: string;
-    posts: Post[];
-    pagination: Pagination;
-    sort: string;
-    showBackLink: boolean;
-}
-
-interface Pagination {
-    numItemsPerPage: number;
-    numTotalItems: number;
-    pageIndex: number;
+interface AuthorData {
+    _id?: string;
+    avatarUrl: string;
+    fullname: string;
+    name: string;
+    type: 'org' | 'user';
+    isPro?: boolean;
+    isHf: boolean;
+    isHfAdmin: boolean;
+    isMod: boolean;
+    followerCount: number;
+    isEnterprise?: boolean;
 }
 
 interface Post {
@@ -60,60 +60,45 @@ interface Post {
     numCoauthors: number;
     publishedAt: string;
     slug: string;
-    status: Status;
+    status: string;
     title: string;
     upvotes: number;
+    thumbnail?: string;
 }
 
-interface AuthorData {
-    _id?: string;
-    avatarUrl: string;
-    fullname: string;
-    name: string;
-    type: Type;
-    isPro?: boolean;
-    isHf: boolean;
-    isHfAdmin: boolean;
-    isMod: boolean;
-    followerCount: number;
-    isEnterprise?: boolean;
-}
-
-export enum Type {
-    Org = 'org',
-    User = 'user',
-}
-
-export enum Status {
-    Published = 'published',
+interface CommunityBlogApiResponse {
+    posts: Post[];
+    pagination: {
+        numItemsPerPage: number;
+        numTotalItems: number;
+        pageIndex: number;
+    };
 }
 
 async function handler(ctx) {
     const { sort = 'trending' } = ctx.req.param();
-    const { body: response } = await got(`https://huggingface.co/blog/community?sort=${sort}`);
-    const $ = load(response);
+    const response = await ofetch<CommunityBlogApiResponse>(`https://huggingface.co/api/blog/community?sort=${sort}`);
 
-    const data = $('div[data-target="CommunityBlogsContainer"]').attr('data-props');
-    if (!data) {
-        throw new Error('Failed to fetch data from Huggingface Community Articles');
-    }
-    const articles: CommunityBlog = JSON.parse(data);
-    const lists = articles.posts.map((item) => ({
+    const { posts } = response;
+
+    const lists = posts.map((item) => ({
         title: item.title,
         link: `https://huggingface.co/blog/${item.authorData.name}/${item.slug}`,
         pubDate: parseDate(item.publishedAt),
-        author: item.authorData.name,
+        author: item.authorData.fullname || item.authorData.name,
+        upvotes: item.upvotes,
+        image: item.thumbnail ? new URL(item.thumbnail, 'https://huggingface.co').toString() : undefined,
     }));
 
-    const items = await Promise.all(
+    const items: DataItem[] = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { body: response } = await got(item.link);
+                const response = await ofetch(item.link);
                 const $ = load(response);
-                $('.mb-4, h1, .mb-6, .not-prose').remove();
+                $('.mb-4, .mb-6, .not-prose, h1').remove();
                 return {
                     ...item,
-                    description: $('.blog-content').html(),
+                    description: $('.blog-content').html() ?? undefined,
                 };
             })
         )

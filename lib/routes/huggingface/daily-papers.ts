@@ -66,7 +66,7 @@ async function handler(ctx) {
 
     const { body: response } = await got(url);
     const $ = load(response);
-    const papers = $('main > div[data-target="DailyPapers"]').data('props') as PapersData;
+    const papers = $('div[data-target="DailyPapers"]').data('props') as PapersData;
 
     const items = papers.dailyPapers
         .filter((item) => item.paper.upvotes >= voteFliter)
