@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 interface AuthorData {
@@ -20,7 +20,7 @@ interface BlogItem {
     tags: string[];
 }
 
-interface ArticlesData {
+interface BlogApiResponse {
     allBlogs: BlogItem[];
 }
 
@@ -49,36 +49,28 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { body: response } = await got('https://huggingface.co/blog/zh');
-    const $ = load(response);
+    const response = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog/zh');
 
-    const data = $('div[data-target="Articles"]').data('props') as ArticlesData;
-    const { allBlogs } = data;
+    const { allBlogs } = response;
 
-    const papers = allBlogs.map((blog) => ({
-        blog,
-        link: `/blog/zh/${blog.slug}`,
-    }));
-
-    const lists = papers.map((item) => ({
-        title: item.blog.title,
-        link: `https://huggingface.co${item.link}`,
-        pubDate: parseDate(item.blog.publishedAt),
-        author: item.blog.authorsData.map((author) => ({
+    const lists = allBlogs.map((blog) => ({
+        title: blog.title,
+        link: `https://huggingface.co/blog/zh/${blog.slug}`,
+        pubDate: parseDate(blog.publishedAt),
+        author: blog.authorsData.map((author) => ({
             name: author.fullname || author.name,
         })),
-        upvotes: item.blog.upvotes,
-        image: item.blog.thumbnail ? new URL(item.blog.thumbnail, 'https://huggingface.co').toString() : undefined,
-        category: item.blog.tags,
+        upvotes: blog.upvotes,
+        image: blog.thumbnail ? new URL(blog.thumbnail, 'https://huggingface.co').toString() : undefined,
+        category: blog.tags,
     }));
 
     const items: DataItem[] = await Promise.all(
         lists.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { body: response } = await got(item.link);
+                const response = await ofetch(item.link);
                 const $ = load(response);
-                // Remove navigation elements and non-content elements
-                $('.mb-4, .mb-6, .not-prose').remove();
+                $('.mb-4, .mb-6, .not-prose, h1').remove();
                 return {
                     ...item,
                     description: $('.blog-content').html() ?? undefined,
