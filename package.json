@@ -175,7 +175,7 @@
         "@typescript-eslint/parser": "8.48.0",
         "@vercel/nft": "1.1.1",
         "@vitest/coverage-v8": "4.0.9",
-        "discord-api-types": "0.38.35",
+        "discord-api-types": "0.38.36",
         "domhandler": "5.0.3",
         "eslint": "9.39.1",
         "eslint-nibble": "9.1.1",
