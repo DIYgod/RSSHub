@@ -67,9 +67,8 @@ async function handler(ctx) {
                 url: `https://m.weibo.cn/feed/group?gid=${gid}`,
                 headers: {
                     Referer: `https://m.weibo.cn/`,
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
+                    ...weiboUtils.apiHeaders,
                 },
             });
             return _r.data.data;

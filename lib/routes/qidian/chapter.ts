@@ -30,13 +30,18 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`https://m.qidian.com/book/${id}.html`);
+    const userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1';
+    const headers = {
+        'User-Agent': userAgent,
+    };
+
+    const response = await got(`https://m.qidian.com/book/${id}.html`, { headers });
     const $ = load(response.data);
 
     const name = $('meta[property="og:title"]').attr('content');
     const coverUrl = `https:${$('.detail__header-cover__img').attr('src')}`;
 
-    const { data: catalog } = await got(`https://m.qidian.com/book/${id}/catalog/`);
+    const { data: catalog } = await got(`https://m.qidian.com/book/${id}/catalog/`, { headers });
     const $c = load(catalog);
     const { pageContext } = JSON.parse($c('#vite-plugin-ssr_pageContext').text());
 

@@ -43,7 +43,7 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
                 link: `${rootUrl}/thread/${item.tid}`,
                 description: item.summary,
                 pubDate: parseDate((order === '' ? item.lastpost : item.dateline) * 1000),
-                category: [item.forum_name, ...item.tags.map((t) => t.displayname)],
+                category: [item.forum_name, ...(item.tags ? item.tags.map((t) => t.displayname) : [])],
             };
 
             return tryGet(result.link, async () => {
