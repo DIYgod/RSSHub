@@ -8,7 +8,7 @@ import { fallback, queryToInteger } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/tagged/:tag',
-    categories: ['blog', 'social-media'],
+    categories: ['social-media'],
     example: '/tumblr/tagged/nature',
     parameters: {
         tag: 'Tag name (see `https://www.tumblr.com/docs/en/api/v2#tagged--get-posts-with-tag`)',
