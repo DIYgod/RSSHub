@@ -27,9 +27,9 @@ export const route: Route = {
         const links = $('ul.news_list.list2 > li')
             .toArray()
             .map((el) => ({
-                pubDate: timezone(parseDate($(el).find('news_meta').text()), +8),
+                pubDate: timezone(parseDate($(el).find('.news_meta').text()), +8),
                 link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
-                title: $(el).find('a').text(),
+                title: $(el).find('a').attr('title'),
             }));
         const items = await Promise.all(
             links.map((item) =>
