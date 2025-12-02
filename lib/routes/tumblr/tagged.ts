@@ -48,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
     const tag = ctx.req.param('tag');
     const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
 
-    const response = await got.get(`https://api.tumblr.com/v2/tagged`, {
+    const response = await got.get('https://api.tumblr.com/v2/tagged', {
         searchParams: {
             tag,
             api_key: utils.generateAuthParams(),
