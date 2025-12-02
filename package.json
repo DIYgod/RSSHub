@@ -27,11 +27,10 @@
     ],
     "scripts": {
         "build": "npm run build:routes && tsdown",
-        "build:routes": "tsx scripts/workflow/build-routes.ts",
-        "build:vercel": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts && mv dist/server.mjs dist/index.mjs && tsx scripts/workflow/build-vercel-packagejson.ts",
         "build:docs": "npm run build:routes && tsx scripts/workflow/build-docs.ts",
         "build:lib": "npm run build:routes && tsdown --config ./tsdown-lib.config.ts",
-        "prepublishOnly": "npm run build:lib",
+        "build:routes": "tsx scripts/workflow/build-routes.ts",
+        "build:vercel": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts && mv dist/server.mjs dist/index.mjs && tsx scripts/workflow/build-vercel-packagejson.ts",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
         "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --write --experimental-cli",
@@ -39,6 +38,7 @@
         "format:staged": "lint-staged",
         "lint": "eslint --cache . --concurrency auto",
         "prepare": "husky || true",
+        "prepublishOnly": "npm run build:lib",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
         "start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' node dist/index.mjs",
         "test": "npm run format:check && npm run vitest:coverage",
@@ -234,9 +234,15 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
+            "js-beautify@1.15.4>glob": "^10.5.0",
+            "rss-parser@3.13.0>entities": "^7.0.0",
+            "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
             "side-channel": "npm:@nolyfill/side-channel@^1"
+        },
+        "patchedDependencies": {
+            "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
         }
     }
 }

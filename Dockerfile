@@ -17,6 +17,7 @@ RUN \
     fi;
 
 COPY ./tsconfig.json /app/
+COPY ./patches /app/patches
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
