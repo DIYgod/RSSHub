@@ -22,7 +22,7 @@
                 "dbaeumer.vscode-eslint",
                 "eamodio.gitlens",
                 "EditorConfig.EditorConfig",
-                "esbenp.prettier-vscode",
+                "prettier.prettier-vscode",
                 "SonarSource.sonarlint-vscode",
                 "VASubasRaj.flashpost", // Thunder Client is paywalled in WSL/Codespaces/SSH > 2.30.0
                 "ZihanLi.at-helper"
