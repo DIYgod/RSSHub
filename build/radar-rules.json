@@ -32824,9 +32824,9 @@
       }
     ]
   },
-  "nhk.or.jp": {
+  "web.nhk": {
     "_name": "NHK",
-    "www3": [
+    "news": [
       {
         "title": "News Web Easy",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
@@ -32835,7 +32835,12 @@
           "/"
         ],
         "target": "/nhk/news_web_easy"
-      },
+      }
+    ]
+  },
+  "nhk.or.jp": {
+    "_name": "NHK",
+    "www3": [
       {
         "title": "WORLD-JAPAN - Top Stories",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
