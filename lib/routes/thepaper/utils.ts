@@ -3,7 +3,7 @@ import path from 'node:path';
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
@@ -28,8 +28,10 @@ export default {
         }
         const itemUrl = `https://m.thepaper.cn/${item.cornerLabelDesc && item.cornerLabelDesc === '短剧' ? 'series' : 'detail'}/${item.contId}`;
         return cache.tryGet(`${itemUrl}${useOldMode ? ':old' : ''}`, async () => {
-            const res = await got(itemUrl);
-            const data = JSON.parse(load(res.data)('#__NEXT_DATA__').html());
+            const res = await ofetch(itemUrl);
+            const $ = load(res);
+            const nextData = $('#__NEXT_DATA__').text();
+            const data = JSON.parse(nextData);
             const detailData = data.props.pageProps.detailData;
             const contentDetail = detailData.contentDetail || detailData.liveDetail || detailData.specialDetail?.specialInfo;
             if (!contentDetail) {
