@@ -9,11 +9,11 @@ import { fallback, queryToInteger } from '@/utils/readable-social';
 import utils from './utils';
 
 export const route: Route = {
-    path: '/posts/:blog',
-    categories: ['blog'],
-    example: '/tumblr/posts/biketouring-nearby',
+    path: '/tagged/:tag',
+    categories: ['social-media'],
+    example: '/tumblr/tagged/nature',
     parameters: {
-        blog: 'Blog identifier (see `https://www.tumblr.com/docs/en/api/v2#blog-identifiers`)',
+        tag: 'Tag name (see `https://www.tumblr.com/docs/en/api/v2#tagged--get-posts-with-tag`)',
     },
     radar: [],
     features: {
@@ -37,11 +37,8 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Posts',
-    maintainers: ['Rakambda', 'PolarisStarnor'],
-    description: `::: tip
-Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance [https://biketouring-nearby.tumblr.com](https://biketouring-nearby.tumblr.com/rss).
-:::`,
+    name: 'Tagged Posts',
+    maintainers: ['PolarisStarnor'],
     handler,
 };
 
@@ -50,27 +47,25 @@ async function handler(ctx: Context): Promise<Data> {
         throw new ConfigNotFoundError('Tumblr RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const blogIdentifier = ctx.req.param('blog');
+    const tag = ctx.req.param('tag');
     const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
 
-    const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
+    const response = await got.get('https://api.tumblr.com/v2/tagged', {
         searchParams: {
+            tag,
             api_key: utils.generateAuthParams(),
             limit,
         },
         headers: await utils.generateAuthHeaders(),
     });
 
-    const blog = response.data.response.blog;
-    const posts = response.data.response.posts.map((post: any) => utils.processPost(post));
+    const posts = response.data.response.map((post: any) => utils.processPost(post));
 
     return {
-        title: `Tumblr - ${blogIdentifier} - Posts`,
-        author: blog?.name,
-        link: blog?.url ?? `https://${blogIdentifier}/`,
+        title: `Tumblr - ${tag}`,
+        description: `Tumblr posts tagged #${tag}`,
+        link: `https://tumblr.com/tagged/${tag}`,
         item: posts,
         allowEmpty: true,
-        image: blog?.avatar?.slice(-1)?.url,
-        description: blog?.description,
     };
 }
