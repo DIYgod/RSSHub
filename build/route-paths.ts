@@ -2723,6 +2723,7 @@ export type RoutePath =
   | `/tsinghua/news/:category?`
   | `/ttv/:category?`
   | `/tumblr/posts/:blog`
+  | `/tumblr/tagged/:tag`
   | `/tvb/news/:category?/:language?`
   | `/tver/series/:id`
   | `/tvtropes/featured/:category?`

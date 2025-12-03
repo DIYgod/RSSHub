@@ -8322,7 +8322,11 @@
     "dzx-dzx"
   ],
   "/tumblr/posts/:blog": [
-    "Rakambda"
+    "Rakambda",
+    "PolarisStarnor"
+  ],
+  "/tumblr/tagged/:tag": [
+    "PolarisStarnor"
   ],
   "/tvb/news/:category?/:language?": [
     "nczitzk"
