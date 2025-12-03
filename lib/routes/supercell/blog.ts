@@ -201,6 +201,25 @@ async function handler(ctx: any) {
                                     }
                                 }
 
+                                // ImageBlock
+                                if (block.__typename === 'ImageBlock') {
+                                    const imageUrl = block.image?.url || block.url || '';
+                                    if (imageUrl) {
+                                        parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
+                                    }
+                                }
+
+                                // CarouselBlock
+                                if (block.__typename === 'CarouselBlock') {
+                                    if (block.items && Array.isArray(block.items)) {
+                                        block.items.forEach((item: any) => {
+                                            if (item.image?.url) {
+                                                parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
+                                            }
+                                        });
+                                    }
+                                }
+
                                 return parts.join('');
                             })
                             .join('');
