@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { AuthorResponse, LiteratureResponse } from './types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
+import type { AuthorResponse, LiteratureResponse } from './types';
 import { baseUrl, parseLiterature } from './utils';
 
 export const route: Route = {

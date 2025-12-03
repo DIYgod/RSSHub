@@ -1,5 +1,7 @@
 import path from 'node:path';
+
 import winston from 'winston';
+
 import { config } from '@/config';
 
 let transports: (typeof winston.transports.File)[] = [];

@@ -29,7 +29,6 @@ export {
      * @returns decoded email address
      */
     decodeCFEmail,
-
     /**
      * Returns CloudFlare protected email address.
      * @param {String} email - email in plaintext

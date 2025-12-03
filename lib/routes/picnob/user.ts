@@ -1,9 +1,12 @@
+import { load } from 'cheerio';
+import type { ConnectResult, Options } from 'puppeteer-real-browser';
+import { connect } from 'puppeteer-real-browser';
+
 import { config } from '@/config';
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { connect, Options, ConnectResult } from 'puppeteer-real-browser';
 
 const realBrowserOption: Options = {
     args: ['--start-maximized'],

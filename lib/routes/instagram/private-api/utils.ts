@@ -1,7 +1,8 @@
 import { IgApiClient } from 'instagram-private-api';
-import logger from '@/utils/logger';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import logger from '@/utils/logger';
 
 const ig = new IgApiClient();
 

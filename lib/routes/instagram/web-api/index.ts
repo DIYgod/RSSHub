@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { CookieJar } from 'tough-cookie';
+
 import { config } from '@/config';
-import { renderItems } from '../common-utils';
-import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeed, renderGuestItems } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { renderItems } from '../common-utils';
+import { baseUrl, checkLogin, COOKIE_URL, getTagsFeed, getUserFeedItems, getUserInfo, renderGuestItems } from './utils';
 
 export const route: Route = {
     path: '/2/:category/:key',

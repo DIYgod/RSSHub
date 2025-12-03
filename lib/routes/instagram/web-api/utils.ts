@@ -1,10 +1,11 @@
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 const baseUrl = 'https://www.instagram.com';
 const COOKIE_URL = baseUrl;
@@ -195,4 +196,4 @@ const renderGuestItems = (items) => {
     });
 };
 
-export { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeed, renderGuestItems };
+export { baseUrl, checkLogin, COOKIE_URL, getTagsFeed, getUserFeedItems, getUserInfo, renderGuestItems };

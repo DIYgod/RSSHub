@@ -1,11 +1,14 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import got from '@/utils/got';
-import weiboUtils from './utils';
-import timezone from '@/utils/timezone';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+import timezone from '@/utils/timezone';
+
+import weiboUtils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
@@ -35,7 +38,7 @@ export const route: Route = {
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
-    const data = await weiboUtils.tryWithCookies((cookies) =>
+    const data = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:keyword:${keyword}`,
             async () => {
@@ -48,6 +51,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data.data.cards;
             },
             config.cache.routeExpire,

@@ -1,11 +1,12 @@
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
 import path from 'node:path';
+
+import { load } from 'cheerio';
 import { destr } from 'destr';
 
-import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
@@ -603,4 +604,4 @@ const documentToHtmlString = async (document) => {
     return str;
 };
 
-export { rootUrl, parseNewsList, parseArticle };
+export { parseArticle, parseNewsList, rootUrl };

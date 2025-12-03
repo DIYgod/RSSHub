@@ -1,6 +1,7 @@
-import { Data, DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, DataItem, Route } from '@/types';
+
 import { getFollowingsItems } from './utils';
 
 export const route: Route = {

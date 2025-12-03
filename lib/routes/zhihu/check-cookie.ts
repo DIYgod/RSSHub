@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import { APIRoute } from '@/types';
+import type { APIRoute } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const apiRoute: APIRoute = {

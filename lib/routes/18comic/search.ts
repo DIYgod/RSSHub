@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
+import path from 'node:path';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import cache from '@/utils/cache';
+
+import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/search/:option?/:category?/:keyword?/:time?/:order?',

@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const render = (data) => art(path.join(__dirname, 'templates/article.art'), data);

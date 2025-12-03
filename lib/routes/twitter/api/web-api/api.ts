@@ -1,9 +1,10 @@
-import { baseUrl, gqlMap, gqlFeatures } from './constants';
 import { config } from '@/config';
-import cache from '@/utils/cache';
-import { twitterGot, paginationTweets, gatherLegacyFromData } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+import { baseUrl, gqlFeatures, gqlMap } from './constants';
+import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
 const getUserData = (id) =>
     cache.tryGet(`twitter-userdata-${id}`, () => {
@@ -83,21 +84,10 @@ const getUserTweetsAndReplies = (id: string, params?: Record<string, any>) =>
     );
 
 const getUserMedia = (id: string, params?: Record<string, any>) =>
-    cacheTryGet(id, params, async (id, params = {}) => {
-        const cursorSource = await paginationTweets('UserMedia', id, {
-            ...params,
-            count: 20,
-            includePromotedContent: false,
-            withClientEventToken: false,
-            withBirdwatchNotes: false,
-            withVoice: true,
-            withV2Timeline: true,
-        });
-        const cursor = cursorSource.find((i) => i.content?.cursorType === 'Top').content.value;
-        return gatherLegacyFromData(
+    cacheTryGet(id, params, async (id, params = {}) =>
+        gatherLegacyFromData(
             await paginationTweets('UserMedia', id, {
                 ...params,
-                cursor,
                 count: 20,
                 includePromotedContent: false,
                 withClientEventToken: false,
@@ -105,8 +95,8 @@ const getUserMedia = (id: string, params?: Record<string, any>) =>
                 withVoice: true,
                 withV2Timeline: true,
             })
-        );
-    });
+        )
+    );
 
 const getUserLikes = (id: string, params?: Record<string, any>) =>
     cacheTryGet(id, params, async (id, params = {}) =>

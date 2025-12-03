@@ -1,7 +1,10 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import { load } from 'cheerio';
-import path from 'node:path';
+
 import utils from './utils';
 
 let baseTitle = '日本郵便';

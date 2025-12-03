@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import type { Context } from 'hono';
 import gPlay from 'google-play-scraper';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {

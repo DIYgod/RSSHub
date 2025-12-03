@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import { UserProfile, Videos } from './types';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
+
+import type { UserProfile, Videos } from './types';
 
 export const route: Route = {
     path: '/profile/vids/:uid',

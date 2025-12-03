@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import { namespace } from './namespace';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { namespace } from './namespace';
 
 const baseUrl = `https://${namespace.url}`;
 

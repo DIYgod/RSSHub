@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseArticle } from '../utils';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { parseArticle } from '../utils';
 
 export const route: Route = {
     path: '/app/reporter/:id',

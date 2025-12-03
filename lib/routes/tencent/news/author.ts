@@ -1,12 +1,13 @@
-import { Route, Data } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/news/author/:mid',

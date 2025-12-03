@@ -1,8 +1,10 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const rootUrl = 'https://ac.qq.com';
 const mobileRootUrl = 'https://m.ac.qq.com';
@@ -66,4 +68,4 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
     };
 };
 
-export { rootUrl, mobileRootUrl, ProcessItems };
+export { mobileRootUrl, ProcessItems, rootUrl };

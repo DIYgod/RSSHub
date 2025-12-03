@@ -1,8 +1,8 @@
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
-import { type DataItem } from '@/types';
-
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -109,4 +109,4 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
         .slice(0, limit);
 };
 
-export { rootUrl, processItems };
+export { processItems, rootUrl };

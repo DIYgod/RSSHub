@@ -1,7 +1,6 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
-
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/tag/:tag',

@@ -1,9 +1,9 @@
-import got from '@/utils/got';
 import { config } from '@/config';
-import cache from '@/utils/cache';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import getToken from './_access';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
+import getToken from './_access';
 import constants from './_constants';
 
 const getSetting = async () => {
