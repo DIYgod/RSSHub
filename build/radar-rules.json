@@ -15120,6 +15120,16 @@
   },
   "ecnu.edu.cn": {
     "_name": "East China Normal University 华东师范大学",
+    "art": [
+      {
+        "title": "美术学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/art"
+      }
+    ],
     "bksy": [
       {
         "title": "本科生院通知",
@@ -15138,6 +15148,36 @@
           "/"
         ],
         "target": "/ecnu/cee"
+      }
+    ],
+    "chem": [
+      {
+        "title": "化学与分子工程学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/chem"
+      }
+    ],
+    "chinese": [
+      {
+        "title": "国际汉语文化学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/chinese"
+      }
+    ],
+    "comm": [
+      {
+        "title": "传播学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/comm"
       }
     ],
     "acm": [
@@ -15251,6 +15291,16 @@
         "target": "/ecnu/tzgg"
       }
     ],
+    "mks": [
+      {
+        "title": "马克思主义学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/mks"
+      }
+    ],
     "mxcsy": [
       {
         "title": "孟宪承书院通知公告",
@@ -15259,6 +15309,16 @@
           "/"
         ],
         "target": "/ecnu/mxcsy"
+      }
+    ],
+    "pharm": [
+      {
+        "title": "药学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/pharm"
       }
     ],
     "www.philo": [
@@ -15271,6 +15331,36 @@
         "target": "/ecnu/philo"
       }
     ],
+    "phy": [
+      {
+        "title": "物理与电子科学学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/phy"
+      }
+    ],
+    "psy": [
+      {
+        "title": "心理与认知科学学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/psy"
+      }
+    ],
+    "sees": [
+      {
+        "title": "生态与环境科学学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/sees"
+      }
+    ],
     "sei": [
       {
         "title": "软件工程学院通知公告",
@@ -15279,6 +15369,36 @@
           "/"
         ],
         "target": "/ecnu/sei"
+      }
+    ],
+    "spm": [
+      {
+        "title": "公共管理学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/spm"
+      }
+    ],
+    "stat": [
+      {
+        "title": "统计学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/stat"
+      }
+    ],
+    "tyxx": [
+      {
+        "title": "体育与健康学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/tyxx"
       }
     ]
   },

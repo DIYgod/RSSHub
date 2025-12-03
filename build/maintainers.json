@@ -2546,12 +2546,32 @@
   "/ebc/realtime/:category?": [
     "quiniapiezoelectricity"
   ],
+  "/ecnu/art": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
   "/ecnu/bksy": [
     "FrozenStarrrr",
     "ChiyoYuki",
     "ECNU-minus"
   ],
   "/ecnu/cee": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/chem": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/chinese": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/comm": [
     "FrozenStarrrr",
     "ChiyoYuki",
     "ECNU-minus"
@@ -2602,7 +2622,17 @@
   "/ecnu/jwc": [
     "markbang"
   ],
+  "/ecnu/mks": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
   "/ecnu/mxcsy": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/pharm": [
     "FrozenStarrrr",
     "ChiyoYuki",
     "ECNU-minus"
@@ -2612,7 +2642,37 @@
     "ChiyoYuki",
     "ECNU-minus"
   ],
+  "/ecnu/phy": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/psy": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/sees": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
   "/ecnu/sei": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/spm": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/stat": [
+    "FrozenStarrrr",
+    "ChiyoYuki",
+    "ECNU-minus"
+  ],
+  "/ecnu/tyxx": [
     "FrozenStarrrr",
     "ChiyoYuki",
     "ECNU-minus"

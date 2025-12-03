@@ -848,8 +848,12 @@ export type RoutePath =
   | `/easynomad/`
   | `/ebc/realtime/:category?`
   | `/ecnu/acm/contest/:category?`
+  | `/ecnu/art`
   | `/ecnu/bksy`
   | `/ecnu/cee`
+  | `/ecnu/chem`
+  | `/ecnu/chinese`
+  | `/ecnu/comm`
   | `/ecnu/cs`
   | `/ecnu/dase`
   | `/ecnu/dx`
@@ -859,9 +863,17 @@ export type RoutePath =
   | `/ecnu/ghcollege`
   | `/ecnu/history`
   | `/ecnu/jwc`
+  | `/ecnu/mks`
   | `/ecnu/mxcsy`
+  | `/ecnu/pharm`
   | `/ecnu/philo`
+  | `/ecnu/phy`
+  | `/ecnu/psy`
+  | `/ecnu/sees`
   | `/ecnu/sei`
+  | `/ecnu/spm`
+  | `/ecnu/stat`
+  | `/ecnu/tyxx`
   | `/ecnu/yjs`
   | `/economist/:endpoint`
   | `/economist/espresso`
