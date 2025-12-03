@@ -16,21 +16,29 @@
     "license": "MIT",
     "author": "DIYgod",
     "type": "module",
-    "main": "lib/pkg.ts",
+    "exports": {
+        ".": {
+            "types": "./dist-lib/pkg.d.mts",
+            "import": "./dist-lib/pkg.mjs"
+        }
+    },
     "files": [
-        "lib"
+        "dist-lib"
     ],
     "scripts": {
-        "build": "tsx scripts/workflow/build-routes.ts && tsdown",
-        "build:vercel": "tsx scripts/workflow/build-routes.ts && tsdown --config ./tsdown-vercel.config.ts && mv dist/server.mjs dist/index.mjs && tsx scripts/workflow/build-vercel-packagejson.ts",
-        "build:docs": "tsx scripts/workflow/build-docs.ts",
+        "build": "npm run build:routes && tsdown",
+        "build:docs": "npm run build:routes && tsx scripts/workflow/build-docs.ts",
+        "build:lib": "npm run build:routes && tsdown --config ./tsdown-lib.config.ts",
+        "build:routes": "tsx scripts/workflow/build-routes.ts",
+        "build:vercel": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts && mv dist/server.mjs dist/index.mjs && tsx scripts/workflow/build-vercel-packagejson.ts",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
-        "format": "prettier \"**/*.{ts,tsx,js,json}\" --write --experimental-cli && eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto",
-        "format:check": "prettier \"**/*.{ts,tsx,js,json}\" --check --experimental-cli && eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto",
+        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --write --experimental-cli",
+        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --check --experimental-cli",
         "format:staged": "lint-staged",
         "lint": "eslint --cache . --concurrency auto",
         "prepare": "husky || true",
+        "prepublishOnly": "npm run build:lib",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
         "start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' node dist/index.mjs",
         "test": "npm run format:check && npm run vitest:coverage",
@@ -40,15 +48,13 @@
         "vitest:watch": "cross-env NODE_ENV=test vitest --watch"
     },
     "lint-staged": {
-        "*.js": [
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
-            "eslint --cache --fix --concurrency auto"
+        "!(*.ts|*.tsx|*.js|*.yml)": [
+            "prettier --write --ignore-unknown"
         ],
-        "*.{ts,tsx}": [
-            "prettier --ignore-unknown --ignore-path ./.gitignore --write",
-            "eslint --cache --fix --concurrency auto"
-        ],
-        "*.yml": "eslint --cache --fix --concurrency auto"
+        "*.{ts,tsx,js,yml}": [
+            "eslint --cache --fix --concurrency auto",
+            "prettier --write --ignore-unknown"
+        ]
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
@@ -85,8 +91,8 @@
         "form-data": "4.0.5",
         "google-play-scraper": "10.1.2",
         "googleapis": "166.0.0",
-        "header-generator": "2.1.77",
-        "hono": "4.10.6",
+        "header-generator": "2.1.78",
+        "hono": "4.10.7",
         "html-to-text": "9.0.5",
         "http-cookie-agent": "7.0.3",
         "https-proxy-agent": "7.0.6",
@@ -99,7 +105,7 @@
         "json-bigint": "1.0.0",
         "jsonpath-plus": "10.3.0",
         "jsrsasign": "10.9.0",
-        "lru-cache": "11.2.2",
+        "lru-cache": "11.2.4",
         "lz-string": "1.5.0",
         "mailparser": "3.9.0",
         "markdown-it": "14.1.0",
@@ -115,7 +121,7 @@
         "proxy-chain": "2.6.0",
         "puppeteer-real-browser": "1.4.4",
         "query-string": "9.3.1",
-        "rate-limiter-flexible": "8.3.0",
+        "rate-limiter-flexible": "9.0.0",
         "re2js": "1.2.0",
         "rebrowser-puppeteer": "24.8.1",
         "rfc4648": "1.5.4",
@@ -129,7 +135,7 @@
         "tldts": "7.0.19",
         "tosource": "2.0.0-alpha.3",
         "tough-cookie": "6.0.0",
-        "tsx": "4.20.6",
+        "tsx": "4.21.0",
         "twitter-api-v2": "1.28.0",
         "ufo": "1.6.1",
         "undici": "7.16.0",
@@ -144,7 +150,7 @@
         "@babel/preset-env": "7.28.5",
         "@babel/preset-typescript": "7.28.5",
         "@bbob/types": "4.3.1",
-        "@eslint/eslintrc": "3.3.1",
+        "@eslint/eslintrc": "3.3.3",
         "@eslint/js": "9.39.1",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
         "@stylistic/eslint-plugin": "5.6.1",
@@ -167,15 +173,15 @@
         "@types/supertest": "6.0.3",
         "@typescript-eslint/eslint-plugin": "8.48.0",
         "@typescript-eslint/parser": "8.48.0",
-        "@vercel/nft": "1.1.0",
+        "@vercel/nft": "1.1.1",
         "@vitest/coverage-v8": "4.0.9",
-        "discord-api-types": "0.38.34",
+        "discord-api-types": "0.38.36",
         "domhandler": "5.0.3",
         "eslint": "9.39.1",
-        "eslint-config-prettier": "10.1.8",
         "eslint-nibble": "9.1.1",
+        "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-n": "17.23.1",
-        "eslint-plugin-prettier": "5.5.4",
+        "eslint-plugin-simple-import-sort": "12.1.1",
         "eslint-plugin-unicorn": "62.0.0",
         "eslint-plugin-yml": "1.19.0",
         "fs-extra": "11.3.2",
@@ -188,10 +194,10 @@
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.29",
-        "prettier": "3.6.2",
+        "prettier": "3.7.3",
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
-        "tsdown": "0.16.6",
+        "tsdown": "0.16.8",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
@@ -215,6 +221,7 @@
             "rebrowser-puppeteer",
             "rolldown",
             "sleep",
+            "unrs-resolver",
             "utf-8-validate",
             "vue-demi"
         ],
@@ -227,9 +234,15 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
+            "js-beautify@1.15.4>glob": "^10.5.0",
+            "rss-parser@3.13.0>entities": "^7.0.0",
+            "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
             "side-channel": "npm:@nolyfill/side-channel@^1"
+        },
+        "patchedDependencies": {
+            "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
         }
     }
 }

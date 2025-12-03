@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
-import type { Data, DataItem, Route } from '@/types';
 
 const FEED_TITLE = 'Wohnungen - Gesiba' as const;
 const FEED_LANGUAGE = 'de' as const;

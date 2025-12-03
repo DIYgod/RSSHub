@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 const get_url = (caty) => `https://${caty}.ithome.com/`;
 

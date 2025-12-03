@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import getData from './_base';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { art } from '@/utils/render';
+
+import getData from './_base';
 
 export const route: Route = {
     path: '/calendar/today',

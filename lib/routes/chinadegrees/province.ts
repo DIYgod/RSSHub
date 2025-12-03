@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import { art } from '@/utils/render';
+
 const baseUrl = 'http://www.chinadegrees.com.cn';
 
 export const route: Route = {

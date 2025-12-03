@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
+import { destr } from 'destr';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { destr } from 'destr';
 
 const topics = new Set(['style', 'watches', 'lifestyle', 'health', 'money-investment', 'gear', 'people', 'watch', 'mens-talk']);
 

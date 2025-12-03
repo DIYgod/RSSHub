@@ -1,8 +1,9 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import md5 from '@/utils/md5';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gerenzhongxin/trpl/:uid',

@@ -1,8 +1,9 @@
-import { Route, Data, DataItem } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 type CustomItem = { issued: string };
 const parser = new Parser<any, CustomItem>({

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 // 导入所需模组
 import ofetch from '@/utils/ofetch';
 // import { parseDate } from '@/utils/parse-date';

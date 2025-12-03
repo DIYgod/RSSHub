@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { Context } from 'hono';
 
 export const route: Route = {
     path: '/java-runtime/:arch?/:javaType?',

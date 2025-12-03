@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/yjxx/*',

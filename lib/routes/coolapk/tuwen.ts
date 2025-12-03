@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import utils from './utils';
 
 export const route: Route = {

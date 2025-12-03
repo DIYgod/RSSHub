@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 import { getCategoryBrief, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {

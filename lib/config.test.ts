@@ -1,4 +1,4 @@
-import { describe, expect, it, afterEach, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 afterEach(() => {
     vi.resetModules();

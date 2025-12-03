@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { namespace } from './namespace';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+
+import { namespace } from './namespace';
 
 export const route: Route = {
     path: '/',

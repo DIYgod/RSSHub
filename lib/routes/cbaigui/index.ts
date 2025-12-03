@@ -1,13 +1,14 @@
-import { Route } from '@/types';
-
-import { getSubPath } from '@/utils/common-utils';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import path from 'node:path';
 
-import { rootUrl, apiSlug, GetFilterId } from './utils';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
+import { apiSlug, GetFilterId, rootUrl } from './utils';
 
 export const route: Route = {
     path: '*',

@@ -1,10 +1,13 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 
 export const route: Route = {

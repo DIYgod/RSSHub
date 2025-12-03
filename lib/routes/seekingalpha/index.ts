@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 const baseUrl = 'https://seekingalpha.com';
 

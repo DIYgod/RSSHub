@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-
-import { getSubPath } from '@/utils/common-utils';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '*',

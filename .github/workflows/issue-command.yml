@@ -1,136 +1,136 @@
 name: Issue Command
 
 on:
-  issue_comment:
-    types: [created]
+    issue_comment:
+        types: [created]
 
 jobs:
-  rebase:
-    name: Automatic Rebase
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          fetch-depth: 0
-      - name: Automatic Rebase
-        uses: cirrus-actions/rebase@1.8
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    rebase:
+        name: Automatic Rebase
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - name: Checkout the latest code
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+              with:
+                  fetch-depth: 0
+            - name: Automatic Rebase
+              uses: cirrus-actions/rebase@1.8
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  self-assign:
-    name: Self Assign
-    if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      issues: write
-    steps:
-      - uses: bdougie/take-action@1439165ac45a7461c2d89a59952cd7d941964b87 # v1.6.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          trigger: '/wip'
+    self-assign:
+        name: Self Assign
+        if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            issues: write
+        steps:
+            - uses: bdougie/take-action@1439165ac45a7461c2d89a59952cd7d941964b87 # v1.6.1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  trigger: '/wip'
 
-  test-on-demand:
-    name: Test route on demand
-    if: startsWith(github.event.comment.body, '/test')
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      attestations: write
-      issues: write
-      pull-requests: write
-    steps:
-      - name: Fetch PR data (for PR)
-        if: github.event.issue.pull_request
-        uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
-        id: pr-data
-        with:
-          route: GET /repos/{repo}/pulls/{number}
-          repo: ${{ github.repository }}
-          number: ${{ github.event.issue.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    test-on-demand:
+        name: Test route on demand
+        if: startsWith(github.event.comment.body, '/test')
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            attestations: write
+            issues: write
+            pull-requests: write
+        steps:
+            - name: Fetch PR data (for PR)
+              if: github.event.issue.pull_request
+              uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
+              id: pr-data
+              with:
+                  route: GET /repos/{repo}/pulls/{number}
+                  repo: ${{ github.repository }}
+                  number: ${{ github.event.issue.number }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Checkout
-        if: ${{ !github.event.issue.pull_request }}
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - name: Checkout
+              if: ${{ !github.event.issue.pull_request }}
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 
-      - name: Checkout PR
-        if: github.event.issue.pull_request
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
+            - name: Checkout PR
+              if: github.event.issue.pull_request
+              uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+              with:
+                  ref: ${{ fromJson(steps.pr-data.outputs.data).head.ref }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - name: Install pnpm
+              uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
 
-      - name: Use Node.js Active LTS
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
+            - name: Use Node.js Active LTS
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
 
-      - name: Install dependencies (pnpm)
-        run: pnpm i && pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
+            - name: Install dependencies (pnpm)
+              run: pnpm i && pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
 
-      - name: Fetch affected routes
-        id: fetch-route
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          EVENT: ${{ toJson(github.event) }}
-        with:
-          script: |
-            const event = JSON.parse(process.env.EVENT)
-            const body = event.comment.body
-            const number = event.issue.number
-            const sender = event.comment.user.login
-            const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
-            return identify({ github, context, core }, body, number, sender)
+            - name: Fetch affected routes
+              id: fetch-route
+              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              env:
+                  EVENT: ${{ toJson(github.event) }}
+              with:
+                  script: |
+                      const event = JSON.parse(process.env.EVENT)
+                      const body = event.comment.body
+                      const number = event.issue.number
+                      const sender = event.comment.user.login
+                      const { default: identify } = await import('${{ github.workspace }}/scripts/workflow/test-route/identify.mjs')
+                      return identify({ github, context, core }, body, number, sender)
 
-      - name: Build RSSHub
-        if: env.TEST_CONTINUE
-        run: pnpm build
+            - name: Build RSSHub
+              if: env.TEST_CONTINUE
+              run: pnpm build
 
-      - name: Start RSSHub
-        if: env.TEST_CONTINUE
-        run: pnpm start &
-        env:
-          ALLOW_USER_HOTLINK_TEMPLATE: true
-          ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
-          NODE_ENV: dev
-          NODE_OPTIONS: '--max-http-header-size=32768'
-          LOGGER_LEVEL: debug
+            - name: Start RSSHub
+              if: env.TEST_CONTINUE
+              run: pnpm start &
+              env:
+                  ALLOW_USER_HOTLINK_TEMPLATE: true
+                  ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
+                  NODE_ENV: dev
+                  NODE_OPTIONS: '--max-http-header-size=32768'
+                  LOGGER_LEVEL: debug
 
-      - name: Generate feedback
-        if: env.TEST_CONTINUE
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
-          EVENT: ${{ toJson(github.event) }}
-        with:
-          script: |
-            const event = JSON.parse(process.env.EVENT)
-            const link = process.env.TEST_BASEURL
-            const routes = JSON.parse(process.env.TEST_ROUTES)
-            const number = event.issue.number
-            core.info(`${link}, ${routes}, ${number}`)
-            const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
-            await test({ github, context, core }, link, routes, number)
+            - name: Generate feedback
+              if: env.TEST_CONTINUE
+              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              env:
+                  TEST_BASEURL: http://localhost:1200
+                  TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
+                  EVENT: ${{ toJson(github.event) }}
+              with:
+                  script: |
+                      const event = JSON.parse(process.env.EVENT)
+                      const link = process.env.TEST_BASEURL
+                      const routes = JSON.parse(process.env.TEST_ROUTES)
+                      const number = event.issue.number
+                      core.info(`${link}, ${routes}, ${number}`)
+                      const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
+                      await test({ github, context, core }, link, routes, number)
 
-      - name: Print logs
-        if: env.TEST_CONTINUE
-        run: cat ${{ github.workspace }}/logs/combined.log
+            - name: Print logs
+              if: env.TEST_CONTINUE
+              run: cat ${{ github.workspace }}/logs/combined.log
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: logs
-          path: logs
-          retention-days: 1
+            - name: Upload Artifact
+              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+              with:
+                  name: logs
+                  path: logs
+                  retention-days: 1

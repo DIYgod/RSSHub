@@ -1,7 +1,8 @@
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 // App Store and Podcast use different bearer tokens
 export const appstoreBearerToken = () =>

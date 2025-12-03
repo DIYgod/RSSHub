@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
 import { fetchArticle } from '@/utils/wechat-mp';
-import { config } from '@/config';
 
 const configs = {
     all: {

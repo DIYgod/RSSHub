@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import weiboUtils from './utils';
-import queryString from 'query-string';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/super_index/:id/:type?/:routeParams?',
@@ -51,7 +53,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
 
-    const containerData = (await weiboUtils.tryWithCookies((cookies) =>
+    const containerData = (await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:super_index:container:${id}:${type}`,
             async () => {
@@ -67,6 +69,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data.data;
             },
             config.cache.routeExpire,

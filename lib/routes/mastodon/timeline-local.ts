@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
-import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/timeline/:site/:only_media?',

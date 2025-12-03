@@ -1,9 +1,12 @@
-import { Route, ViewType } from '@/types';
 import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
+
 import { parseArticle } from './utils';
-import pMap from 'p-map';
 
 const parseAuthorNewsList = async (slug) => {
     const baseURL = `https://www.bloomberg.com/authors/${slug}`;

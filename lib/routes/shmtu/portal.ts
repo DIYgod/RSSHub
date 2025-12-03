@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import path from 'node:path';
 import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
 
 const bootstrapHost = 'https://weixin.shmtu.edu.cn/dynamic/shmtuHttps';
 const host = 'https://portal.shmtu.edu.cn/api';

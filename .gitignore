@@ -24,6 +24,7 @@ memory-bank/
 node_modules
 tmp
 dist
+dist-lib
 
 Session.vim
 combined.log

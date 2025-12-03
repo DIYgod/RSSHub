@@ -1,10 +1,13 @@
-import { Route, Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import { type HupuApiResponse, type HomePostItem, type NewsDataItem, isHomePostItem } from './types';
+import timezone from '@/utils/timezone';
+
+import type { HomePostItem, HupuApiResponse, NewsDataItem } from './types';
+import { isHomePostItem } from './types';
 
 const categories = {
     nba: {
