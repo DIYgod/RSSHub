@@ -189,7 +189,7 @@ async function handler(ctx: any) {
                                 }
 
                                 // FeatureBlock
-                                if (block.__typename === 'FeatureBlock') {
+                                else if (block.__typename === 'FeatureBlock') {
                                     if (block.title) {
                                         parts.push(`<h3>${block.title}</h3>`);
                                     }
@@ -202,7 +202,7 @@ async function handler(ctx: any) {
                                 }
 
                                 // ImageBlock
-                                if (block.__typename === 'ImageBlock') {
+                                else if (block.__typename === 'ImageBlock') {
                                     const imageUrl = block.image?.url || block.url || '';
                                     if (imageUrl) {
                                         parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
@@ -210,13 +210,13 @@ async function handler(ctx: any) {
                                 }
 
                                 // CarouselBlock
-                                if (block.__typename === 'CarouselBlock') {
+                                else if (block.__typename === 'CarouselBlock') {
                                     if (block.items && Array.isArray(block.items)) {
-                                        block.items.forEach((item: any) => {
+                                        for (const item of block.items) {
                                             if (item.image?.url) {
                                                 parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
                                             }
-                                        });
+                                        }
                                     }
                                 }
 
