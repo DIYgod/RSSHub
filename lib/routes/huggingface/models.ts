@@ -8,9 +8,9 @@ export const route: Route = {
     path: '/models/:group/:cycle?',
     categories: ['programming'],
     example: '/huggingface/models/deepseek-ai/week',
-    parameters: { 
+    parameters: {
         group: 'The organization or user group name',
-        cycle: 'The time cycle for filtering. Choose from: date, week, month. Default: week' 
+        cycle: 'The time cycle for filtering. Choose from: date, week, month. Default: week',
     },
     features: {
         requireConfig: false,
@@ -34,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { group, cycle = 'date' } = ctx.req.param();
-    
+
     // Validate cycle parameter
     if (!['date', 'week', 'month'].includes(cycle)) {
         throw new Error(`Invalid cycle: ${cycle}`);
@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const now = new Date();
     let filterDate: Date;
-    
+
     switch (cycle) {
         case 'date':
             filterDate = new Date(now);
@@ -63,7 +63,7 @@ async function handler(ctx) {
             break;
         default:
             filterDate = new Date(now);
-            filterDate.setDate(filterDate.getDate() - 7);
+            filterDate.setDate(filterDate.getDate() - 1);
     }
 
     const items = $('article')
@@ -74,11 +74,11 @@ async function handler(ctx) {
             const link = `https://huggingface.co/${title}`;
             const timeElement = $article.find('a > div > div > span.truncate > time');
             const datetime = timeElement.attr('datetime');
-            const description = $article.text().replace(/\s+/g, ' ').trim();
+            const description = $article.text().replaceAll(/\s+/g, ' ').trim();
 
             return {
                 title,
-                link: link,
+                link,
                 description,
                 pubDate: datetime ? parseDate(datetime) : undefined,
                 datetime,
@@ -91,7 +91,7 @@ async function handler(ctx) {
             const itemDate = new Date(item.datetime);
             return itemDate >= filterDate;
         })
-        .map(({ datetime: _datetime, ...item }) => item); // Remove datetime from final output
+        .map(({ datetime: _datetime, ...item }) => item);
 
     return {
         title: `Huggingface ${group} Models - ${cycle}`,
