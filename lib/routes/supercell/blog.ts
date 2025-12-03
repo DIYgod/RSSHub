@@ -144,36 +144,44 @@ function renderNodeContent(node: any): string {
 function renderBlock(block: any): string {
     const parts: string[] = [];
 
-    if (block.__typename === 'TextBlock') {
-        if (block.title) {
-            parts.push(`<h3>${block.title}</h3>`);
+    switch (block.__typename) {
+        case 'TextBlock':
+            if (block.title) {
+                parts.push(`<h3>${block.title}</h3>`);
+            }
+            if (block.text?.json?.content) {
+                parts.push(renderRichText(block.text.json));
+            }
+            break;
+        case 'FeatureBlock':
+            if (block.title) {
+                parts.push(`<h3>${block.title}</h3>`);
+            }
+            if (block.featureThumbnail?.url) {
+                parts.push(`<img src="${block.featureThumbnail.url}" alt="${block.featureThumbnail.title || ''}">`);
+            }
+            if (block.featureText?.json?.content) {
+                parts.push(renderRichText(block.featureText.json));
+            }
+            break;
+        case 'ImageBlock': {
+            const imageUrl = block.image?.url || block.url || '';
+            if (imageUrl) {
+                parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
+            }
+            break;
         }
-        if (block.text?.json?.content) {
-            parts.push(renderRichText(block.text.json));
-        }
-    } else if (block.__typename === 'FeatureBlock') {
-        if (block.title) {
-            parts.push(`<h3>${block.title}</h3>`);
-        }
-        if (block.featureThumbnail?.url) {
-            parts.push(`<img src="${block.featureThumbnail.url}" alt="${block.featureThumbnail.title || ''}">`);
-        }
-        if (block.featureText?.json?.content) {
-            parts.push(renderRichText(block.featureText.json));
-        }
-    } else if (block.__typename === 'ImageBlock') {
-        const imageUrl = block.image?.url || block.url || '';
-        if (imageUrl) {
-            parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
-        }
-    } else if (block.__typename === 'CarouselBlock') {
-        if (block.items && Array.isArray(block.items)) {
-            for (const item of block.items) {
-                if (item.image?.url) {
-                    parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
+        case 'CarouselBlock':
+            if (block.items && Array.isArray(block.items)) {
+                for (const item of block.items) {
+                    if (item.image?.url) {
+                        parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
+                    }
                 }
             }
-        }
+            break;
+        default:
+            break;
     }
 
     return parts.join('');
