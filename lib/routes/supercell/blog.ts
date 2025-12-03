@@ -140,6 +140,45 @@ function renderNodeContent(node: any): string {
         .join('');
 }
 
+// 渲染 block 内容
+function renderBlock(block: any): string {
+    const parts: string[] = [];
+
+    if (block.__typename === 'TextBlock') {
+        if (block.title) {
+            parts.push(`<h3>${block.title}</h3>`);
+        }
+        if (block.text?.json?.content) {
+            parts.push(renderRichText(block.text.json));
+        }
+    } else if (block.__typename === 'FeatureBlock') {
+        if (block.title) {
+            parts.push(`<h3>${block.title}</h3>`);
+        }
+        if (block.featureThumbnail?.url) {
+            parts.push(`<img src="${block.featureThumbnail.url}" alt="${block.featureThumbnail.title || ''}">`);
+        }
+        if (block.featureText?.json?.content) {
+            parts.push(renderRichText(block.featureText.json));
+        }
+    } else if (block.__typename === 'ImageBlock') {
+        const imageUrl = block.image?.url || block.url || '';
+        if (imageUrl) {
+            parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
+        }
+    } else if (block.__typename === 'CarouselBlock') {
+        if (block.items && Array.isArray(block.items)) {
+            for (const item of block.items) {
+                if (item.image?.url) {
+                    parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
+                }
+            }
+        }
+    }
+
+    return parts.join('');
+}
+
 async function handler(ctx: any) {
     const game: string = ctx.req.param('game');
     const locale: string = ctx.req.param('locale') || '';
@@ -174,55 +213,7 @@ async function handler(ctx: any) {
                     // 从 bodyCollection 渲染内容
                     let content = '';
                     if (pageProps?.bodyCollection && Array.isArray(pageProps.bodyCollection)) {
-                        content = pageProps.bodyCollection
-                            .map((block: any) => {
-                                const parts: string[] = [];
-
-                                // TextBlock
-                                if (block.__typename === 'TextBlock') {
-                                    if (block.title) {
-                                        parts.push(`<h3>${block.title}</h3>`);
-                                    }
-                                    if (block.text?.json?.content) {
-                                        parts.push(renderRichText(block.text.json));
-                                    }
-                                }
-
-                                // FeatureBlock
-                                else if (block.__typename === 'FeatureBlock') {
-                                    if (block.title) {
-                                        parts.push(`<h3>${block.title}</h3>`);
-                                    }
-                                    if (block.featureThumbnail?.url) {
-                                        parts.push(`<img src="${block.featureThumbnail.url}" alt="${block.featureThumbnail.title || ''}">`);
-                                    }
-                                    if (block.featureText?.json?.content) {
-                                        parts.push(renderRichText(block.featureText.json));
-                                    }
-                                }
-
-                                // ImageBlock
-                                else if (block.__typename === 'ImageBlock') {
-                                    const imageUrl = block.image?.url || block.url || '';
-                                    if (imageUrl) {
-                                        parts.push(`<img src="${imageUrl}" alt="${block.image?.title || block.title || ''}">`);
-                                    }
-                                }
-
-                                // CarouselBlock
-                                else if (block.__typename === 'CarouselBlock') {
-                                    if (block.items && Array.isArray(block.items)) {
-                                        for (const item of block.items) {
-                                            if (item.image?.url) {
-                                                parts.push(`<img src="${item.image.url}" alt="${item.image.title || ''}">`);
-                                            }
-                                        }
-                                    }
-                                }
-
-                                return parts.join('');
-                            })
-                            .join('');
+                        content = pageProps.bodyCollection.map((block: any) => renderBlock(block)).join('');
                     }
 
                     return {
