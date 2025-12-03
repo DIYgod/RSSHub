@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { defaultDomain, renderDescription } from './utils';
 
 export const route: Route = {
@@ -16,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Keyword Search',
     maintainers: ['nczitzk'],

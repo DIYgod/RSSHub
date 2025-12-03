@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
@@ -16,7 +18,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'YOUTUBE_KEY',
-                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                description: 'YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
             },
         ],
         requirePuppeteer: false,

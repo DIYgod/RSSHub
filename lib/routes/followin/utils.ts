@@ -1,9 +1,11 @@
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 
 const apiUrl = 'https://api.followin.io';
 const baseUrl = 'https://followin.io';
@@ -70,4 +72,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-export { apiUrl, baseUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem };
+export { apiUrl, baseUrl, favicon, getBParam, getBuildId, getGToken, parseItem, parseList };

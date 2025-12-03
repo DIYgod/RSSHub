@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { getAccountByUsername, getTimelineByAccountId, parseDescription, baseUrl } from './utils';
+
+import { baseUrl, getAccountByUsername, getTimelineByAccountId, parseDescription } from './utils';
 
 export const route: Route = {
     path: '/user/:username',
@@ -14,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

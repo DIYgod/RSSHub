@@ -1,5 +1,5 @@
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import puppeteer from '@/utils/puppeteer';
 import { getCookies } from '@/utils/puppeteer-utils';
 

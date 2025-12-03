@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import util from './utils';
-const software_url = 'https://www.nintendoswitch.com.cn/software/';
 import { parseDate } from '@/utils/parse-date';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import util from './utils';
+
+const software_url = 'https://www.nintendoswitch.com.cn/software/';
 
 export const route: Route = {
     path: '/eshop/cn',

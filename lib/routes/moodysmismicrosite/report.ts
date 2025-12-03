@@ -1,6 +1,7 @@
-import { Route, ViewType } from '@/types';
-import { parseRelativeDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/report/:industry?',

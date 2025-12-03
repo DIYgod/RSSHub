@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { getCurrentPath } from '@/utils/helpers';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const __dirname = getCurrentPath(import.meta.url);

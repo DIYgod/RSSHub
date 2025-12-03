@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
-import { baseUrl, apiHost, getTagsData, parseEventDetail, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { apiHost, baseUrl, getTagsData, parseEventDetail, parseItem } from './utils';
 
 export const route: Route = {
     path: ['/hub/:tagId?/:sort?/:range?'],

@@ -1,13 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zsxx1/zskx' } = ctx.req.param();
@@ -139,7 +140,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [招生快讯](https://zs.xjtu.edu.cn/zsxx1/zskx.htm)，网址为 \`https://zs.xjtu.edu.cn/zsxx1/zskx.htm\`，请截取 \`https://zs.xjtu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`zsxx1/zskx\` 作为 \`category\` 参数填入，此时目标路由为 [\`/xjtu/zs/zsxx1/zskx\`](https://rsshub.app/xjtu/zs/zsxx1/zskx)。
 :::
 

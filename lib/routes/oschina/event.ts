@@ -1,14 +1,16 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
@@ -198,7 +200,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `latest`，即最新活动，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [强力推荐](https://www.oschina.net/event?tab=recommend)，网址为 \`https://www.oschina.net/event?tab=recommend\`，请截取 \`https://www.oschina.net/event?tab=\` 到末尾的部分 \`recommend\` 作为 \`category\` 参数填入，此时目标路由为 [\`/oschina/event/recommend\`](https://rsshub.app/oschina/event/recommend)。
 :::
 

@@ -1,6 +1,7 @@
-import { Route, Data } from '@/types';
-import { processItems } from './utils';
+import type { Data, Route } from '@/types';
 import parser from '@/utils/rss-parser';
+
+import { processItems } from './utils';
 
 export const route: Route = {
     path: '/nipple-video-category/:keyword',
@@ -14,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '動画カテゴリー',
     maintainers: ['SnowAgar25'],

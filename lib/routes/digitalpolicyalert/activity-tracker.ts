@@ -1,10 +1,11 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 const createSearchParams = (queryString: string, limit: number = 30): URLSearchParams => {
     const params = new URLSearchParams(queryString);
@@ -106,7 +107,7 @@ export const route: Route = {
             description: 'Filter, all by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Activity Tracker - International trade](https://digitalpolicyalert.org/activity-tracker?policy=1), where the source URL is \`https://digitalpolicyalert.org/activity-tracker?policy=1\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/digitalpolicyalert/activity-tracker/policy=1\`](https://rsshub.app/digitalpolicyalert/activity-tracker/policy=1).
 :::
 `,

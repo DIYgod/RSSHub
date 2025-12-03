@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import { ig, login } from './utils';
-import logger from '@/utils/logger';
 import { config } from '@/config';
-import { renderItems } from '../common-utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+
+import { renderItems } from '../common-utils';
+import { ig, login } from './utils';
 
 // loadContent pulls the desired user/tag/etc
 async function loadContent(category, nameOrId, tryGet) {

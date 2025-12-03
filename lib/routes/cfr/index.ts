@@ -1,9 +1,11 @@
-import type { Data, Route } from '@/types';
-import type { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { getDataItem } from './utils';
+import type { Context } from 'hono';
 import pMap from 'p-map';
+
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { getDataItem } from './utils';
 
 export const route: Route = {
     path: '/:category/:subCategory?',

@@ -1,9 +1,10 @@
-import { Data, Route } from '@/types';
 import { config } from '@/config';
+import type { Data, Route } from '@/types';
+import got from '@/utils/got';
+
 import { getNSFWSeriesNovels } from './novel-api/series/nsfw';
 import { getSFWSeriesNovels } from './novel-api/series/sfw';
-import { SeriesDetail } from './novel-api/series/types';
-import got from '@/utils/got';
+import type { SeriesDetail } from './novel-api/series/types';
 
 const baseUrl = 'https://www.pixiv.net';
 
@@ -30,6 +31,7 @@ Pixiv 登錄後的 refresh_token，用於獲取 R18 小說
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Novel Series',
     maintainers: ['SnowAgar25', 'keocheung'],

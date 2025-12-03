@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { art } from '@/utils/render';
 
 const host = 'https://www.regear.arcteryx.com';
 function getUSDPrice(number) {
@@ -48,14 +49,16 @@ async function handler() {
     items = items.filter((item) => item.availableSizes.length !== 0);
 
     const list = items.map((item) => {
-        const data = {};
-        data.title = item.displayTitle;
-        data.link = item.pdpLink.url;
-        data.imgUrl = JSON.parse(item.imageUrls).front;
-        data.availableSizes = item.availableSizes;
-        data.color = item.color;
-        data.originalPrice = getUSDPrice(item.originalPrice);
-        data.regearPrice = item.priceRange[0] === item.priceRange[1] ? getUSDPrice(item.priceRange[0]) : `${getUSDPrice(item.priceRange[0])} - ${getUSDPrice(item.priceRange[1])}`;
+        const data = {
+            title: item.displayTitle,
+            link: item.pdpLink.url,
+            imgUrl: JSON.parse(item.imageUrls).front,
+            availableSizes: item.availableSizes,
+            color: item.color,
+            originalPrice: getUSDPrice(item.originalPrice),
+            regearPrice: item.priceRange[0] === item.priceRange[1] ? getUSDPrice(item.priceRange[0]) : `${getUSDPrice(item.priceRange[0])} - ${getUSDPrice(item.priceRange[1])}`,
+            description: '',
+        };
         data.description = art(path.join(__dirname, 'templates/regear-product-description.art'), {
             data,
         });

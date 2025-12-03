@@ -1,12 +1,13 @@
-import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import ofetch from '@/utils/ofetch';
+import { describe, expect, it, vi } from 'vitest';
+
 import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 
 describe('ofetch', () => {
     it('headers', async () => {
         const data = await ofetch('http://rsshub.test/headers');
-        expect(data['user-agent']).toBe(config.ua);
+        expect(data['user-agent']).toBeUndefined();
     });
 
     it('retry', async () => {

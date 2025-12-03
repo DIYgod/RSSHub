@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import weiboUtils from './utils';
-import queryString from 'query-string';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/super_index/:id/:type?/:routeParams?',
@@ -11,8 +13,14 @@ export const route: Route = {
     example: '/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time',
     parameters: { id: '超话ID', type: '类型：见下表', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
+        requireConfig: [
+            {
+                name: 'WEIBO_COOKIES',
+                optional: true,
+                description: '',
+            },
+        ],
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -45,26 +53,28 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
 
-    const containerData = (await cache.tryGet(
-        `weibo:super_index:container:${id}:${type}`,
-        async () => {
-            const _r = await got('https://m.weibo.cn/api/container/getIndex', {
-                searchParams: queryString.stringify({
-                    containerid: `${id}_-_${type}`,
-                    luicode: '10000011',
-                    lfid: `${id}_-_main`,
-                }),
-                headers: {
-                    Referer: `https://m.weibo.cn/p/index?containerid=${id}_-_soul&luicode=10000011&lfid=${id}_-_main`,
-                    'MWeibo-Pwa': '1',
-                    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-            });
-            return _r.data.data;
-        },
-        config.cache.routeExpire,
-        false
+    const containerData = (await weiboUtils.tryWithCookies((cookies, verifier) =>
+        cache.tryGet(
+            `weibo:super_index:container:${id}:${type}`,
+            async () => {
+                const _r = await got('https://m.weibo.cn/api/container/getIndex', {
+                    searchParams: queryString.stringify({
+                        containerid: `${id}_-_${type}`,
+                        luicode: '10000011',
+                        lfid: `${id}_-_main`,
+                    }),
+                    headers: {
+                        Referer: `https://m.weibo.cn/p/index?containerid=${id}_-_soul&luicode=10000011&lfid=${id}_-_main`,
+                        Cookie: cookies,
+                        ...weiboUtils.apiHeaders,
+                    },
+                });
+                verifier(_r);
+                return _r.data.data;
+            },
+            config.cache.routeExpire,
+            false
+        )
     )) as {
         cards?: Card[];
         pageInfo?: {

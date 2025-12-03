@@ -1,9 +1,12 @@
-import { DataItem, Route, ViewType } from '@/types';
+import * as cheerio from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import * as cheerio from 'cheerio';
-import { AnnouncementCatalog, AnnouncementsConfig } from './types';
+
+import type { AnnouncementCatalog, AnnouncementsConfig } from './types';
 
 interface AnnouncementFragment {
     reactRoot: [{ id: 'Fragment'; children: { id: string; props: object }[]; props: object }];

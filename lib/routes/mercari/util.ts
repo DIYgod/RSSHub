@@ -1,11 +1,14 @@
-import crypto from 'node:crypto';
 import { Buffer } from 'node:buffer';
+import crypto from 'node:crypto';
+import path from 'node:path';
+
+import type { DataItem } from '@/types';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import { SearchResponse, ItemDetail, ShopItemDetail } from './types';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { DataItem } from '@/types';
+
+import type { ItemDetail, SearchResponse, ShopItemDetail } from './types';
 
 const rootURL = 'https://api.mercari.jp/';
 const rootProductURL = 'https://jp.mercari.com/item/';
@@ -100,7 +103,7 @@ function readDerLength(buf: Buffer, offset: number): { length: number; bytesRead
     if (byte < 0x80) {
         return { length: byte, bytesRead: 1 };
     }
-    const bytesCount = byte & 0x7F;
+    const bytesCount = byte & 0x7f;
     if (bytesCount > 4) {
         throw new Error('DER length too long');
     }
@@ -192,7 +195,21 @@ const pageToPageToken = (page: number): string => {
     return `v1:${page}`;
 };
 
-const fetchSearchItems = async (sort: string, order: string, status: string, keyword: string): Promise<SearchResponse> => {
+interface SearchOptions {
+    categoryId?: number[];
+    brandId?: number[];
+    priceMin?: number;
+    priceMax?: number;
+    itemConditionId?: number[];
+    excludeKeyword?: string;
+    itemTypes?: string[];
+    attributes?: Array<{
+        id: string;
+        values: string[];
+    }>;
+}
+
+const fetchSearchItems = async (sort: string, order: string, status: string[], keyword: string, options: SearchOptions = {}): Promise<SearchResponse> => {
     const data = {
         userId: `MERCARI_BOT_${uuidv4()}`,
         pageSize: 120,
@@ -202,24 +219,24 @@ const fetchSearchItems = async (sort: string, order: string, status: string, key
         thumbnailTypes: [],
         searchCondition: {
             keyword,
-            excludeKeyword: '',
+            excludeKeyword: options.excludeKeyword || '',
             sort,
             order,
-            status: [],
+            status: status || [],
             sizeId: [],
-            categoryId: [],
-            brandId: [],
+            categoryId: options.categoryId || [],
+            brandId: options.brandId || [],
             sellerId: [],
-            priceMin: 0,
-            priceMax: 0,
-            itemConditionId: [],
+            priceMin: options.priceMin || 0,
+            priceMax: options.priceMax || 0,
+            itemConditionId: options.itemConditionId || [],
             shippingPayerId: [],
             shippingFromArea: [],
             shippingMethod: [],
             colorId: [],
             hasCoupon: false,
-            attributes: [],
-            itemTypes: [],
+            attributes: options.attributes || [],
+            itemTypes: options.itemTypes || [],
             skuIds: [],
             shopIds: [],
             excludeShippingMethodIds: [],
@@ -240,6 +257,7 @@ const fetchSearchItems = async (sort: string, order: string, status: string, key
         withAuction: true,
     };
 
+    logger.debug(JSON.stringify(data));
     return await fetchFromMercari<SearchResponse>(searchURL, data, 'POST');
 };
 
@@ -303,4 +321,4 @@ const formatItemDetail = (detail: ItemDetail | ShopItemDetail): DataItem => {
     };
 };
 
-export { fetchSearchItems, fetchItemDetail, formatItemDetail, MercariSort, MercariOrder, MercariStatus };
+export { fetchItemDetail, fetchSearchItems, formatItemDetail, MercariOrder, MercariSort, MercariStatus };

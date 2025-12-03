@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -14,6 +14,9 @@ export const route: Route = {
     maintainers: ['zhenhappy'],
     handler,
     url: 'ahhhhfs.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

@@ -1,11 +1,13 @@
+import path from 'node:path';
+
 import { config } from '@/config';
 import type { DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
-import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
+import type { ArticlePost, FilePost, ImagePost, PostDetailResponse, PostItem, TextPost, VideoPost } from './types';
 
 export function getHeaders() {
     const sessionid = config.fanbox.session;
@@ -84,7 +86,7 @@ async function parseVideo(body: VideoPost['body']) {
             ret += await getSoundCloudEmbedUrl(body.video.videoId);
             break;
         case 'youtube':
-            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0"></iframe>`;
+            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             break;
         case 'vimeo':
             ret += `<iframe src="https://player.vimeo.com/video/${body.video.videoId}" frameborder="0"></iframe>`;

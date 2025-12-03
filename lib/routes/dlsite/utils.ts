@@ -1,11 +1,13 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import dayjs from 'dayjs';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.dlsite.com';
 
@@ -20,7 +22,7 @@ const formatDate = (date, format) => dayjs(date).format(format);
 const addFilters = (url, filters) => {
     const keys = Object.keys(filters);
     const filterStr = keys.map((k) => `/${k}/${filters[k]}`).join('');
-    const newUrl = url.replaceAll(new RegExp(`(/${keys.join(String.raw`/\w+|/`)}/\\w+)`, 'g'), '');
+    const newUrl = url.replaceAll(new RegExp(String.raw`(/${keys.join(String.raw`/\w+|/`)}/\w+)`, 'g'), '');
     return `${newUrl}${/=/.test(newUrl) ? '' : '/='}${filterStr}`;
 };
 

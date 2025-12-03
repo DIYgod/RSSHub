@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { rootUrl, ProcessItems } from './utils';
+import { ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/news/:id?',

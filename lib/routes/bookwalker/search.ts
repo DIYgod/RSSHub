@@ -1,12 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
-import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 import path from 'node:path';
+
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter = 'order=sell_desc' } = ctx.req.param();
@@ -91,10 +93,9 @@ export const route: Route = {
             description: '过滤器，默认为 `order=sell_desc`，即依發售日新至舊排序',
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [依發售日新至舊排序的文學小說](https://www.bookwalker.com.tw/search?order=sell_desc&s=34)，其源网址为 \`https://www.bookwalker.com.tw/search?order=sell_desc&s=34\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/bookwalker/search/order=sell_desc&s=34\`](https://rsshub.app/bookwalker/search/order=sell_desc&s=34)。
-:::
-`,
+:::`,
     categories: ['shopping'],
     features: {
         requireConfig: false,

@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { load } from 'cheerio';
+
 const host = 'https://www.amazon.com';
 export const route: Route = {
     path: '/kindle/software-updates',
@@ -39,15 +41,16 @@ async function handler() {
     const list = $('.a-row.cs-help-landing-section.help-display-cond')
         .toArray()
         .map((item) => {
-            const data = {};
-            data.title = $(item).find('.sectiontitle').text();
-            data.link = $(item).find('a').eq(0).attr('href');
-            data.version = $(item).find('li').first().text();
-            data.website = `${url}?nodeId=${nodeIdValue}`;
-            data.description = $(item)
-                .find('.a-column.a-span8')
-                .html()
-                .replaceAll(/[\t\n]/g, '');
+            const data = {
+                title: $(item).find('.sectiontitle').text(),
+                link: $(item).find('a').eq(0).attr('href'),
+                version: $(item).find('li').first().text(),
+                website: `${url}?nodeId=${nodeIdValue}`,
+                description: $(item)
+                    .find('.a-column.a-span8')
+                    .html()
+                    .replaceAll(/[\t\n]/g, ''),
+            };
             return data;
         });
     return {

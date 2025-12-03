@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { baseUrl, favicon, getBuildId, parseList, parseItem } from './utils';
+
+import { baseUrl, favicon, getBuildId, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',

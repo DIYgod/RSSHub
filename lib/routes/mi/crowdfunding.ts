@@ -1,5 +1,7 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
-import { CrowdfundingDetailInfo, CrowdfundingList } from './types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+
+import type { CrowdfundingDetailInfo, CrowdfundingList } from './types';
 import utils from './utils';
 
 export const route: Route = {

@@ -1,12 +1,14 @@
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import utils from './utils';
 import { load } from 'cheerio';
-import { config } from '@/config';
-import logger from '@/utils/logger';
-import { getPuppeteerPage } from '@/utils/puppeteer';
 import { JSDOM } from 'jsdom';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { getPuppeteerPage } from '@/utils/puppeteer';
+
+import utils from './utils';
 
 const subtitleLimiter = new RateLimiterMemory({
     points: 5,
@@ -29,7 +31,7 @@ const getCookie = (disableConfig = false) => {
             }
         }
 
-        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
+        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
@@ -40,7 +42,7 @@ const getCookie = (disableConfig = false) => {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
                     page.on('requestfinished', async (request) => {
-                        if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
+                        if (request.url() === 'https://api.bilibili.com/x/web-interface/nav') {
                             const cookies = await page.cookies();
                             let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
                             cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
@@ -259,16 +261,21 @@ const getVideoSubtitle = async (
         return [];
     }
 
-    const cookie = await getCookie();
     return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
         await subtitleLimiterQueue.removeTokens(1);
-        const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
-            headers: {
-                Referer: `https://www.bilibili.com/video/${bvid}`,
-                Cookie: cookie,
-            },
-        });
 
+        const getSubtitleData = async (cookie: string) => {
+            const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
+                headers: {
+                    Referer: `https://www.bilibili.com/video/${bvid}`,
+                    Cookie: cookie,
+                },
+            });
+            return response;
+        };
+
+        const cookie = await getCookie();
+        const response = await getSubtitleData(cookie);
         const subtitles = response?.data?.data?.subtitle?.subtitles || [];
 
         return await Promise.all(

@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { getCreatorFragment, getCreatorPostReelList, baseUrl } from './utils';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+
+import { baseUrl, getCreatorFragment, getCreatorPostReelList } from './utils';
 
 export const route: Route = {
     path: '/r18/creator/:identifier',

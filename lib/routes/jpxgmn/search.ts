@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import { getOriginUrl, getArticleDesc } from './utils';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
+import { getArticleDesc, getOriginUrl } from './utils';
 
 export const route: Route = {
     path: '/search/:kw',
@@ -13,6 +15,9 @@ export const route: Route = {
     name: '搜索',
     maintainers: ['Urabartin'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

@@ -1,8 +1,8 @@
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const allowSiteList = ['mastodon.social', 'pawoo.net', 'fosstodon.org', config.mastodon.apiHost].filter(Boolean);
 

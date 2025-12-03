@@ -1,11 +1,12 @@
-import { type DataItem } from '@/types';
-
-import { art } from '@/utils/render';
-import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
 import path from 'node:path';
+
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+
+import type { DataItem } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 const baseUrl: string = 'https://www.app-sales.net';
 

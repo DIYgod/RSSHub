@@ -1,10 +1,12 @@
+import path from 'node:path';
+
+import bbobHTML from '@bbob/html';
+import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree } from '@bbob/types';
+
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import type { BBobCoreTagNodeTree } from '@bbob/types';
-import bbobHTML from '@bbob/html';
-import presetHTML5 from '@bbob/preset-html5';
 
 const rootUrl = 'https://instant.1point3acres.com';
 const apiRootUrl = 'https://api.1point3acres.com';
@@ -43,7 +45,7 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
                 link: `${rootUrl}/thread/${item.tid}`,
                 description: item.summary,
                 pubDate: parseDate((order === '' ? item.lastpost : item.dateline) * 1000),
-                category: [item.forum_name, ...item.tags.map((t) => t.displayname)],
+                category: [item.forum_name, ...(item.tags ? item.tags.map((t) => t.displayname) : [])],
             };
 
             return tryGet(result.link, async () => {
@@ -137,4 +139,4 @@ const ProcessThreads = async (tryGet, apiUrl, order) => {
     return items;
 };
 
-export { rootUrl, apiRootUrl, types, ProcessThreads };
+export { apiRootUrl, ProcessThreads, rootUrl, types };

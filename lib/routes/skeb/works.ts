@@ -1,10 +1,11 @@
-import { Data, DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { baseUrl, processWork } from './utils';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, processWork } from './utils';
 
 export const route: Route = {
     path: '/works/:username',
@@ -24,6 +25,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Creator Works',
     maintainers: ['SnowAgar25'],

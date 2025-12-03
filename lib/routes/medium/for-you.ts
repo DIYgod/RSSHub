@@ -1,9 +1,9 @@
-import { Route } from '@/types';
 import { config } from '@/config';
-
-import parseArticle from './parse-article.js';
-import { getWebInlineRecommendedFeedQuery } from './graphql.js';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
+import type { Route } from '@/types';
+
+import { getWebInlineRecommendedFeedQuery } from './graphql.js';
+import parseArticle from './parse-article.js';
 
 export const route: Route = {
     path: '/for-you/:user',

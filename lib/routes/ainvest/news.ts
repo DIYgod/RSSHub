@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { getHeaders, randomString, decryptAES } from './utils';
+
+import { decryptAES, getHeaders, randomString } from './utils';
 
 export const route: Route = {
     path: '/news',

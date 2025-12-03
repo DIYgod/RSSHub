@@ -1,12 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 const orderbys = (desc: string) => {
     const base = {
@@ -158,11 +160,9 @@ export const route: Route = {
             description: 'Query, `s=2&d=1&n=true&dm=true&o=true` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Apps](https://scoop.sh/#/apps?s=2&d=1&n=true&dm=true&o=true), where the source URL is \`https://scoop.sh/#/apps?s=2&d=1&n=true&dm=true&o=true\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/scoop/apps/s=2&d=1&n=true&dm=true&o=true\`](https://rsshub.app/scoop/apps/s=2&d=1&n=true&dm=true&o=true).
-
-:::
-`,
+:::`,
     categories: ['program-update'],
     features: {
         requireConfig: false,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { toTitleCase, collapseWhitespace, convertDateToISO8601, getLocalhostAddress } from '@/utils/common-utils';
+
+import { collapseWhitespace, convertDateToISO8601, getLocalhostAddress, toTitleCase } from '@/utils/common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {

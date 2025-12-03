@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import { baseUrl, getPlurk } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const categoryList = new Set(['topReplurks', 'topFavorites', 'topResponded']);
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import rss3 from './rss3';
 
 const NETWORK = 'rsshub';

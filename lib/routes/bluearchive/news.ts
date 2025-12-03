@@ -42,7 +42,7 @@ const ja: Route['handler'] = async (ctx) => {
     const { type = '0' } = ctx.req.param();
 
     const data = await ofetch<{ data: { rows: { id: number; content: string; summary: string; publishTime: number }[] } }, 'json'>('https://api-web.bluearchive.jp/api/news/list', {
-        params: {
+        query: {
             typeId: type,
             pageNum: 16,
             pageIndex: 1,
