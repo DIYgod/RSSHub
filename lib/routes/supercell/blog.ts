@@ -27,7 +27,7 @@ export const route: Route = {
     ],
     name: 'Game Blog',
     maintainers: ['fishyo'],
-    handler,
+    handler: handler as any,
     description: `Supported games
 
 | Game              | Slug          |
@@ -64,9 +64,85 @@ const GAME_NAMES = {
     hayday: 'Hay Day',
 };
 
-async function handler(ctx) {
-    const game = ctx.req.param('game');
-    const locale = ctx.req.param('locale') || '';
+// 解析富文本 JSON 格式
+function renderRichText(json: any): string {
+    if (!json?.content || !Array.isArray(json.content)) {
+        return '';
+    }
+
+    return json.content
+        .map((node) => {
+            switch (node.nodeType) {
+                case 'paragraph':
+                    return `<p>${renderNodeContent(node)}</p>`;
+                case 'heading-1':
+                case 'heading-2':
+                case 'heading-3':
+                case 'heading-4':
+                case 'heading-5':
+                case 'heading-6': {
+                    const level: string = node.nodeType.split('-')[1];
+                    return `<h${level}>${renderNodeContent(node)}</h${level}>`;
+                }
+                case 'quote':
+                    return `<blockquote>${renderNodeContent(node)}</blockquote>`;
+                case 'unordered-list':
+                case 'ordered-list':
+                    return `<${node.nodeType === 'unordered-list' ? 'ul' : 'ol'}>${node.content?.map((item) => `<li>${renderNodeContent(item)}</li>`).join('') || ''}</${node.nodeType === 'unordered-list' ? 'ul' : 'ol'}>`;
+                case 'list-item':
+                    return renderNodeContent(node);
+                default:
+                    return renderNodeContent(node);
+            }
+        })
+        .join('');
+}
+
+// 渲染节点内容（处理文本和标记）
+function renderNodeContent(node: any): string {
+    if (!node?.content) {
+        return '';
+    }
+
+    return node.content
+        .map((item: any) => {
+            if (item.nodeType === 'text') {
+                let text = item.value || '';
+                // 应用标记（粗体、斜体等）
+                if (item.marks && Array.isArray(item.marks)) {
+                    for (const mark of item.marks) {
+                        switch (mark.type) {
+                            case 'bold':
+                                text = `<strong>${text}</strong>`;
+                                break;
+                            case 'italic':
+                                text = `<em>${text}</em>`;
+                                break;
+                            case 'underline':
+                                text = `<u>${text}</u>`;
+                                break;
+                            case 'code':
+                                text = `<code>${text}</code>`;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                return text;
+            }
+            // 递归处理嵌套节点
+            if (item.nodeType === 'paragraph' || item.nodeType === 'list-item') {
+                return renderNodeContent(item);
+            }
+            return '';
+        })
+        .join('');
+}
+
+async function handler(ctx: any) {
+    const game: string = ctx.req.param('game');
+    const locale: string = ctx.req.param('locale') || '';
 
     if (!GAME_NAMES[game]) {
         throw new Error(`Unsupported game: ${game}. Supported games: ${Object.keys(GAME_NAMES).join(', ')}`);
@@ -97,16 +173,35 @@ async function handler(ctx) {
 
                     // 从 bodyCollection 渲染内容
                     let content = '';
-                    if (pageProps?.bodyCollection?.items) {
-                        content = pageProps.bodyCollection.items
-                            .map((item) => {
-                                if (item.__typename === 'ComponentText') {
-                                    return item.text || '';
-                                } else if (item.__typename === 'ComponentImage') {
-                                    const imageUrl = item.image?.url || '';
-                                    return imageUrl ? `<img src="${imageUrl}">` : '';
+                    if (pageProps?.bodyCollection && Array.isArray(pageProps.bodyCollection)) {
+                        content = pageProps.bodyCollection
+                            .map((block: any) => {
+                                const parts: string[] = [];
+
+                                // TextBlock
+                                if (block.__typename === 'TextBlock') {
+                                    if (block.title) {
+                                        parts.push(`<h3>${block.title}</h3>`);
+                                    }
+                                    if (block.text?.json?.content) {
+                                        parts.push(renderRichText(block.text.json));
+                                    }
                                 }
-                                return '';
+
+                                // FeatureBlock
+                                if (block.__typename === 'FeatureBlock') {
+                                    if (block.title) {
+                                        parts.push(`<h3>${block.title}</h3>`);
+                                    }
+                                    if (block.featureThumbnail?.url) {
+                                        parts.push(`<img src="${block.featureThumbnail.url}" alt="${block.featureThumbnail.title || ''}">`);
+                                    }
+                                    if (block.featureText?.json?.content) {
+                                        parts.push(renderRichText(block.featureText.json));
+                                    }
+                                }
+
+                                return parts.join('');
                             })
                             .join('');
                     }
