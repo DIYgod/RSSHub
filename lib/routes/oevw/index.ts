@@ -14,21 +14,25 @@ const csrfTokenRegex = /csrfToken\s*=\s*['"](.*?)["']/;
 
 export const route: Route = {
     name: FEED_TITLE,
-    example: '/oevw/{"rooms":["2","3"]}',
+    example: '/oevw/%7B%22rooms%22%3A%5B%222%22%2C%223%22%5D%7D',
     path: '/:json?',
     maintainers: ['sk22'],
     categories: ['other'],
     description: `
 When applying a filter on https://www.oevw.at/suche, a POST request is sent
-to https://www.oevw.at/suche/filter. You can use the JSON body as a parameter
+to https://www.oevw.at/suche/filter. You can take its JSON body, URL-encode it
+(\`encodeURIComponent('{...}')\`) and append it to the URL, see example URL.
 for this route.`,
+    parameters: {
+        json: 'JSON request body, as sent to oevw.at/suche',
+    },
 
     async handler(ctx) {
         const json = JSON.parse(ctx.req.param('json') || '{}');
 
         // first, get https://www.oevw.at/suche to extract csrf token and cookies
         const res = await ofetch.raw(BASE_URL);
-        const cookies = res.headers.getSetCookie().map((setCookie) => setCookie.split(';')[0].trim());
+        const cookies = res.headers.getSetCookie().map((setCookie: string) => setCookie.split(';')[0].trim());
         const csrfToken = csrfTokenRegex.exec(res._data)![1];
         const headers = {
             Origin: ORIGIN_URL,
