@@ -95,14 +95,20 @@ async function handler(ctx) {
                     const { data: articleData } = await got(dataUrl);
                     const pageProps = articleData.pageProps;
 
-                    // 尝试从不同的可能位置提取内容
+                    // 从 bodyCollection 渲染内容
                     let content = '';
-
-                    // 从 contentHtml 或 content 字段提取
-                    if (pageProps?.contentHtml) {
-                        content = pageProps.contentHtml;
-                    } else if (pageProps?.content) {
-                        content = pageProps.content;
+                    if (pageProps?.bodyCollection?.items) {
+                        content = pageProps.bodyCollection.items
+                            .map((item) => {
+                                if (item.__typename === 'ComponentText') {
+                                    return item.text || '';
+                                } else if (item.__typename === 'ComponentImage') {
+                                    const imageUrl = item.image?.url || '';
+                                    return imageUrl ? `<img src="${imageUrl}">` : '';
+                                }
+                                return '';
+                            })
+                            .join('');
                     }
 
                     return {

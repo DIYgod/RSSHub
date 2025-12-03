@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'supercell',
+    name: 'Supercell',
     url: 'supercell.com',
     lang: 'en',
 };
