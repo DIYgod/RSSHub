@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 import cache from './cache';
 
 const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:level?',

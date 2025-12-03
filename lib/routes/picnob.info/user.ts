@@ -1,10 +1,13 @@
-import { config } from '@/config';
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
-import { Post, Profile, Pull, Status, Story } from './types';
 import xxhash from 'xxhash-wasm';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Post, Profile, Pull, Status, Story } from './types';
 
 export const route: Route = {
     path: '/user/:id/:type?',

@@ -1,6 +1,7 @@
-import { Route, Data } from '@/types';
-import puppeteer from '@/utils/puppeteer';
 import { config } from '@/config';
+import type { Data, Route } from '@/types';
+import puppeteer from '@/utils/puppeteer';
+
 export const route: Route = {
     name: 'Profile',
     path: '/profile/:principalId',

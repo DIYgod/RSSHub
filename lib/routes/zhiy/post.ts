@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { baseUrl, fetchUserDate } from './utils';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import dayjs from 'dayjs';
+
+import { baseUrl, fetchUserDate } from './utils';
 
 export const route: Route = {
     path: '/posts/:author',

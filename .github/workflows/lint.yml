@@ -4,62 +4,62 @@ name: Linter
 # pull_request includes [opened, reopened, synchronize] events by default
 # 'edited' is required for title-lint
 on:
-  push: {}
-  pull_request:
-    types: [opened, reopened, synchronize, edited]
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited]
+    push: {}
+    pull_request:
+        types: [opened, reopened, synchronize, edited]
+    pull_request_target:
+        types: [opened, reopened, synchronize, edited]
 
 jobs:
-# https://github.com/actions/starter-workflows/blob/main/code-scanning/eslint.yml
-  eslint-warning:
-    name: Lint
-    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      security-events: write
-    steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - run: pnpm i
-      - name: Lint
-        run: pnpm run lint
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
-        continue-on-error: true
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+    # https://github.com/actions/starter-workflows/blob/main/code-scanning/eslint.yml
+    eslint-warning:
+        name: Lint
+        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            security-events: write
+        steps:
+            - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - run: pnpm i
+            - name: Lint
+              run: pnpm run lint
+                  --format @microsoft/eslint-formatter-sarif
+                  --output-file eslint-results.sarif
+              continue-on-error: true
+            - name: Upload analysis results to GitHub
+              uses: github/codeql-action/upload-sarif@v4
+              with:
+                  sarif_file: eslint-results.sarif
+                  wait-for-processing: true
 
-# https://github.com/amannn/action-semantic-pull-request
-  title-lint:
-    if: ${{ github.event_name == 'pull_request_target' && github.repository == 'DIYgod/RSSHub' }}
-    name: Validate PR title
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ignoreLabels: |
-            dependencies
-          wip: true
+    # https://github.com/amannn/action-semantic-pull-request
+    title-lint:
+        if: ${{ github.event_name == 'pull_request_target' && github.repository == 'DIYgod/RSSHub' }}
+        name: Validate PR title
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  ignoreLabels: |
+                      dependencies
+                  wip: true
 
-  labeler:
-    name: Pull Request Labeler
-    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
-    permissions:
-      pull-requests: write
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+    labeler:
+        name: Pull Request Labeler
+        if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            pull-requests: write
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
+              with:
+                  repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,13 +1,15 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+import { isValidHost } from '@/utils/valid-host';
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
-import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/:id',

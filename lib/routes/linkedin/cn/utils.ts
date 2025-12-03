@@ -1,8 +1,10 @@
-import cache from '@/utils/cache';
 import crypto from 'node:crypto';
 import path from 'node:path';
-import { art } from '@/utils/render';
+
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { art } from '@/utils/render';
+
 import { parseAttr } from './renderer';
 
 const apiUrl = 'https://www.linkedin.cn/karpos/api/graphql';
@@ -117,4 +119,4 @@ const parseJobPosting = (ctx, jobPosting) => {
     });
 };
 
-export { parseSearchHit, parseJobPosting };
+export { parseJobPosting, parseSearchHit };

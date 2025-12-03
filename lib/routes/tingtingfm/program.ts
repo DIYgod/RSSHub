@@ -1,11 +1,13 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
 import { getClientVal, sign } from './utils';
 
 export const route: Route = {

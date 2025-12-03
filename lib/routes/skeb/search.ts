@@ -1,8 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { processWork, baseUrl } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { baseUrl, processWork } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',

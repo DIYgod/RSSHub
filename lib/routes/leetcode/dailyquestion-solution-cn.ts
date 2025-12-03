@@ -1,12 +1,15 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 const md = MarkdownIt({
     html: true,
     breaks: true,
 });
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
 export const route: Route = {
     path: '/dailyquestion/solution/cn',
     radar: [

@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const rootUrl = 'https://zodgame.xyz';
 

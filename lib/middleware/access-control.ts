@@ -1,7 +1,8 @@
 import type { MiddlewareHandler } from 'hono';
+
 import { config } from '@/config';
-import md5 from '@/utils/md5';
 import RejectError from '@/errors/types/reject';
+import md5 from '@/utils/md5';
 
 const reject = (requestPath) => {
     throw new RejectError(`Authentication failed. Access denied.\n${requestPath}`);

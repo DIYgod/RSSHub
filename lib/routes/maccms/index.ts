@@ -1,7 +1,8 @@
-import { Result, Vod } from '@/routes/maccms/type';
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import path from 'node:path';
+
+import type { Result, Vod } from '@/routes/maccms/type';
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';

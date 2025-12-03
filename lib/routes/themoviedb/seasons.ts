@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import apiKey from './api-key';
 import { handleDescription } from './utils';
 

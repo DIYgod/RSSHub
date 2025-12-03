@@ -1,8 +1,11 @@
-import { Route } from '@/types';
-import { load } from 'cheerio';
-import cache from './cache';
-import got from '@/utils/got';
 import zlib from 'node:zlib';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import cache from './cache';
 
 const processFloatTime = (time) => {
     const totalSeconds = Number.parseInt(time);
@@ -54,7 +57,7 @@ async function handler(ctx) {
 
     let danmakuText = danmakuResponse.body;
 
-    danmakuText = await ((danmakuText[0] & 0x0F) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
+    danmakuText = await ((danmakuText[0] & 0x0f) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
 
     let danmakuList = [];
     const $ = load(danmakuText, { xmlMode: true });

@@ -1,10 +1,13 @@
-import { Route, ViewType } from '@/types';
+import crypto from 'node:crypto';
+import path from 'node:path';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import crypto from 'node:crypto';
-import path from 'node:path';
 import { art } from '@/utils/render';
+
 import { getAppreciatedQuery, getProfileProjectsAndSelectionsQuery, getProjectPageQuery } from './queries';
 
 export const route: Route = {

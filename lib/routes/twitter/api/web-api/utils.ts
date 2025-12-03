@@ -1,14 +1,16 @@
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { baseUrl, gqlFeatures, bearerToken, gqlMap, thirdPartySupportedAPI } from './constants';
-import { config } from '@/config';
+import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import { CookieAgent, cookie as HttpCookieAgentCookie } from 'http-cookie-agent/undici';
-import { ProxyAgent, Client } from 'undici';
+import { Client, ProxyAgent } from 'undici';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
+
+import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
 import login from './login';
 
 let authTokenIndex = 0;
@@ -268,8 +270,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
     const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return moduleItems || entries || [];
+    return gridEntries || moduleItems || entries || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {

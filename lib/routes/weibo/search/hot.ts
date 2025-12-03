@@ -1,11 +1,14 @@
-import { Route, ViewType } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 import { art } from '@/utils/render';
-import { load } from 'cheerio';
-import path from 'node:path';
+
 import weiboUtils from '../utils';
 
 // Default hide all picture
@@ -56,8 +59,8 @@ async function handler(ctx) {
     fullpic = ctx.req.query('fullpic') ?? 'false';
     const {
         data: { data },
-    } = await weiboUtils.tryWithCookies((cookies) =>
-        got({
+    } = await weiboUtils.tryWithCookies(async (cookies, verifier) => {
+        const _r = await got({
             method: 'get',
             url: 'https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot&title=%E5%BE%AE%E5%8D%9A%E7%83%AD%E6%90%9C&extparam=filter_type%3Drealtimehot%26mi_cid%3D100103%26pos%3D0_0%26c_type%3D30%26display_time%3D1540538388&luicode=10000011&lfid=231583',
             headers: {
@@ -65,8 +68,10 @@ async function handler(ctx) {
                 Cookie: cookies,
                 ...weiboUtils.apiHeaders,
             },
-        })
-    );
+        });
+        verifier(_r);
+        return _r;
+    });
 
     let resultItems = null;
     if (ctx.req.param('fulltext') === 'fulltext') {

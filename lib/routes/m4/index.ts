@@ -1,14 +1,15 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { isValidHost } from '@/utils/valid-host';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:id?/:category{.+}?',

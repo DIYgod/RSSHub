@@ -1,12 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
-import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 import path from 'node:path';
+
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { art } from '@/utils/render';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'repositories' } = ctx.req.param();

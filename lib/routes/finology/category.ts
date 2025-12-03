@@ -1,6 +1,8 @@
-import { Data, Route } from '@/types';
-import { getItems } from './utils';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { getItems } from './utils';
 
 export const route: Route = {
     path: '/category/:category',

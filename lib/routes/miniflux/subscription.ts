@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/subscription/:parameters?',

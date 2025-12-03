@@ -1,10 +1,11 @@
-import { Essential, Mylist, UserInfo, VideoItem } from './types';
-
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import { config } from '@/config';
 import path from 'node:path';
+
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { art } from '@/utils/render';
+
+import type { Essential, Mylist, UserInfo, VideoItem } from './types';
 
 export const getUserInfoById = (id: string) => cache.tryGet(`nicovideo:user:${id}`, () => ofetch<UserInfo>(`https://embed.nicovideo.jp/users/${id}`)) as Promise<UserInfo>;
 

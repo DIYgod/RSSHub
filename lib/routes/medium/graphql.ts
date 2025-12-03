@@ -47,7 +47,7 @@ async function getUserCatalogMainContentQuery(user, catalogId, cookie, pagingLim
     return (await graphqlRequest(newUserCatalogMainContentQuery(catalogId, pagingLimit), cookie))?.catalogById;
 }
 
-export { getWebInlineRecommendedFeedQuery, getFollowingFeedQuery, getWebInlineTopicFeedQuery, getUserCatalogMainContentQuery };
+export { getFollowingFeedQuery, getUserCatalogMainContentQuery, getWebInlineRecommendedFeedQuery, getWebInlineTopicFeedQuery };
 
 function newFollowingFeedQuery(pagingLimit = 5) {
     return {

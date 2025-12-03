@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { Media, PostResponse } from './types';
-import { config } from '@/config';
+
+import type { Media, PostResponse } from './types';
 
 export const route: Route = {
     path: '/post/list/:sort?',

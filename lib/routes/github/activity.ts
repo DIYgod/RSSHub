@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 import Parser from 'rss-parser';
 import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const parser = new Parser();
 

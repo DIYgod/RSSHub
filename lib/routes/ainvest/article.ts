@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { getHeaders, randomString, encryptAES, decryptAES } from './utils';
+
+import { decryptAES, encryptAES, getHeaders, randomString } from './utils';
 
 export const route: Route = {
     path: '/article',
