@@ -1,15 +1,23 @@
-app = "rsshub"
+# fly.toml app configuration file generated for rsshub-5bwria on 2025-12-04T08:06:03Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'rsshub-5bwria'
+primary_region = 'syd'
+
+[build]
 
 [http_service]
-internal_port = 1200
-force_https = true
-auto_stop_machines = "suspend"
-auto_start_machines = true
-min_machines_running = 1
+  internal_port = 1200
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-[[http_service.checks]]
-grace_period = "10s"
-interval = "30s"
-method = "GET"
-timeout = "5s"
-path = "/healthz"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
