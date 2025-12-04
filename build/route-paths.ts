@@ -2566,6 +2566,7 @@ export type RoutePath =
   | `/substack/subscribe/:user`
   | `/supchina/`
   | `/supchina/podcasts`
+  | `/supercell/:game/blog/:locale?`
   | `/surfshark/blog/:category{.+}?`
   | `/sustainabilitymag/articles`
   | `/sustech/bidding`

@@ -41857,6 +41857,19 @@
       }
     ]
   },
+  "supercell.com": {
+    "_name": "Supercell",
+    ".": [
+      {
+        "title": "Game Blog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/en/games/:game/:locale/blog"
+        ],
+        "target": "/supercell/:game/blog/:locale"
+      }
+    ]
+  },
   "surfshark.com": {
     "_name": "Surfshark",
     ".": [

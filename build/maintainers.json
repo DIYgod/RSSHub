@@ -7860,6 +7860,9 @@
   "/supchina/podcasts": [
     "nczitzk"
   ],
+  "/supercell/:game/blog/:locale?": [
+    "fishyo"
+  ],
   "/surfshark/blog/:category{.+}?": [
     "nczitzk"
   ],
