@@ -1,11 +1,12 @@
 // RSSHub route for fetching posts from Ganjing World.
 // Returns a list of posts in a channel.
 // Source: https://www.ganjingworld.com
-import { Route } from '@/types';
-import { ApiResponse } from '../interfaces/api';
-
-import ofetch from '@/utils/ofetch';
 import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import type { ApiResponse } from '../interfaces/api';
 
 // Minimal helper to turn "\u003C" etc. into real characters
 export function decodeEscapedHtml(input: string) {

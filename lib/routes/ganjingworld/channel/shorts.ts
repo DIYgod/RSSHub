@@ -1,9 +1,10 @@
 // RSSHub route for fetching shorts from Ganjing World.
 // Returns a list of shorts in a channel.
 // Source: https://www.ganjingworld.com
-import { Route } from '@/types';
-import { ApiResponse } from '../interfaces/api';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import type { ApiResponse } from '../interfaces/api';
 
 export const route: Route = {
     path: '/channel/shorts/:id',

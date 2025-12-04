@@ -2,9 +2,10 @@
 // Returns a list of articles in a channel.
 // Source: https://www.ganjingworld.com
 
-import { Route } from '@/types';
-import { ApiResponse } from '../interfaces/api';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import type { ApiResponse } from '../interfaces/api';
 
 export const route: Route = {
     path: '/channel/articles/:id',
