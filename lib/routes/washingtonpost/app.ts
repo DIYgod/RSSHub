@@ -1,13 +1,15 @@
-import { Route } from '@/types';
+import path from 'node:path';
+
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import utc from 'dayjs/plugin/utc.js';
+import { FetchError } from 'ofetch';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { FetchError } from 'ofetch';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 
 export const route: Route = {
     path: '/app/:category{.+}?',

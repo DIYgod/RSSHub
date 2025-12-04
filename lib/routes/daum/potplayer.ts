@@ -1,8 +1,9 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
@@ -125,7 +126,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html), where the source URL is \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/daum/potplayer/Eng\`](https://rsshub.app/daum/potplayer/Eng).
 :::
 
@@ -239,7 +240,7 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
                 ],
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html)，网址为 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html\`，请截取 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update\` 到末尾的部分 \`Chs\` 作为 \`lang\` 参数填入，此时目标路由为 [\`/daum/potplayer/Chs\`](https://rsshub.app/daum/potplayer/Chs)。
 :::
 

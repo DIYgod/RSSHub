@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { URLSearchParams } from 'node:url';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { URLSearchParams } from 'node:url';
 
 export const route: Route = {
     path: '/nioradio/:albumid',
     categories: ['multimedia'],
     description: `
-:::tip
+::: tip
 **如何获取电台 ID？**
 打开蔚来 APP 后，点击“此地”→“NIO Radio”，找到自己想要转换为播客的专辑，分享后在生成的链接中找到\`container_id=\`后方的数字即可。
 常见电台 ID：

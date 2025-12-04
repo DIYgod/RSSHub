@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
 import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 async function handler(ctx) {
     const { params } = ctx.req.param();
@@ -92,6 +93,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     handler,
 };

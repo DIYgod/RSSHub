@@ -1,7 +1,10 @@
-import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const getArchive = async (region, limit, tag, providerId?) => {
@@ -79,11 +82,19 @@ const parseList = (region, response) =>
 
 const parseItem = (item, tryGet) =>
     tryGet(item.link, async () => {
-        const { data: response } = await got(item.link);
+        const { data: response } = await got(item.link, {
+            headers: {
+                'User-Agent': config.trueUA,
+            },
+        });
         const $ = load(response);
 
-        const ldJson = JSON.parse($('script[type="application/ld+json"]').first().text());
-        const author = `${$('span.caas-author-byline-collapse').text()} @${$('span.caas-attr-provider').text()}`;
+        const ldJson = JSON.parse(
+            $('script[type="application/ld+json"]')
+                .toArray()
+                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data
+        );
+        const author = ldJson.author.name;
         const body = $('.atoms');
 
         body.find('noscript, .text-gandalf, [id^="sda-inbody-"]').remove();
@@ -128,4 +139,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-export { getArchive, getList, getCategories, getProviderList, getStores, parseList, parseItem };
+export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList };

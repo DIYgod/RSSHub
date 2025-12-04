@@ -1,9 +1,11 @@
-import { Data, DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { baseUrl, processWork } from './utils';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+
+import { baseUrl, processWork } from './utils';
 
 export const route: Route = {
     path: '/works/:username',
@@ -23,6 +25,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Creator Works',
     maintainers: ['SnowAgar25'],
@@ -46,32 +49,19 @@ async function handler(ctx): Promise<Data> {
 
     const url = `${baseUrl}/api/users/${username.replace('@', '')}/works`;
 
-    const items = await cache.tryGet(url, async () => {
-        const fetchData = async (retryCount = 0, maxRetries = 3) => {
-            const data = await ofetch(url, {
-                retry: 0,
-                method: 'GET',
-                query: { role: 'creator', sort: 'date', offset: '0' },
-                headers: {
-                    'User-Agent': config.ua,
-                    Cookie: `request_key=${cache.get('skeb:request_key')}`,
-                    Authorization: `Bearer ${config.skeb.bearerToken}`,
-                },
-            }).catch((error) => {
-                if (retryCount >= maxRetries) {
-                    throw new Error('Max retries reached');
-                }
-                const newRequestKey = error.response?._data?.match(/request_key=(.*?);/)?.[1];
-                if (newRequestKey) {
-                    cache.set('skeb:request_key', newRequestKey);
-                    return fetchData(retryCount + 1, maxRetries);
-                }
-                throw error;
-            });
-            return data;
-        };
+    await ensureRequestKey(url);
 
-        const data = await fetchData();
+    const items = await cache.tryGet(url, async () => {
+        const data = await ofetch(url, {
+            retry: 0,
+            method: 'GET',
+            query: { role: 'creator', sort: 'date', offset: '0' },
+            headers: {
+                'User-Agent': config.ua,
+                Cookie: `request_key=${await cache.get('skeb:request_key')}`,
+                Authorization: `Bearer ${config.skeb.bearerToken}`,
+            },
+        });
 
         if (!data || !Array.isArray(data)) {
             throw new Error('Invalid data received from API');
@@ -85,4 +75,34 @@ async function handler(ctx): Promise<Data> {
         link: `${baseUrl}/${username}`,
         item: items as DataItem[],
     };
+}
+
+function hasResponseData(error: unknown): error is { response: { _data: string } } {
+    return error !== null && typeof error === 'object' && 'response' in error && typeof (error as { response?: { _data?: unknown } }).response?._data === 'string';
+}
+
+async function ensureRequestKey(url: string) {
+    if (await cache.get('skeb:request_key')) {
+        return;
+    }
+
+    try {
+        await ofetch(url, {
+            retry: 0,
+            headers: {
+                'User-Agent': config.ua,
+                Authorization: `Bearer ${config.skeb.bearerToken}`,
+            },
+        });
+    } catch (error) {
+        if (hasResponseData(error)) {
+            const newRequestKey = error.response?._data?.match(/request_key=(.*?);/)?.[1];
+            if (newRequestKey) {
+                cache.set('skeb:request_key', newRequestKey);
+                logger.debug(`Retrieved new request_key: ${newRequestKey}`);
+            } else {
+                logger.error('Failed to extract request_key from error response');
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
@@ -15,6 +16,9 @@ export const route: Route = {
     maintainers: ['SettingDust', 'Halcao'],
     handler,
     url: 'uraaka-joshi.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

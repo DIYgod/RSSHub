@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/',
@@ -18,6 +19,9 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'netflav.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

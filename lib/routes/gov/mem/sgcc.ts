@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -49,7 +50,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
 
-            const regExp = new RegExp(`\\/sgcc\\/${category}\\/\\.\\.\\.`);
+            const regExp = new RegExp(String.raw`\/sgcc\/${category}\/\.\.\.`);
             const link = new URL(`${category}/${item.prop('href').replace(/\.\//, '')}`, currentUrl).href.replace(regExp, '');
 
             return {

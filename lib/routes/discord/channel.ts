@@ -1,11 +1,12 @@
-import { DataItem, Route } from '@/types';
+import path from 'node:path';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
+
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/channel/:channelId',

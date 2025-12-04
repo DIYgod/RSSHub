@@ -1,12 +1,13 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'cardgame' } = ctx.req.param();
@@ -143,7 +144,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [最新遊戲](https://app.mycard520.com.tw/category/cardgame/)，网址为 \`https://app.mycard520.com.tw/category/cardgame/\`，请截取 \`https://app.mycard520.com.tw/category/\` 到末尾 \`/\` 的部分 \`cardgame\` 作为 \`category\` 参数填入，此时目标路由为 [\`/mycard520/category/cardgame\`](https://rsshub.app/mycard520/category/cardgame)。
 :::
 
@@ -232,7 +233,7 @@ export const route: Route = {
                 ],
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [最新游戏](https://app.mycard520.com.tw/category/cardgame/)，网址为 \`https://app.mycard520.com.tw/category/cardgame/\`，请截取 \`https://app.mycard520.com.tw/category/\` 到末尾 \`/\` 的部分 \`cardgame\` 作为 \`category\` 参数填入，此时目标路由为 [\`/mycard520/category/cardgame\`](https://rsshub.app/mycard520/category/cardgame)。
 :::
 

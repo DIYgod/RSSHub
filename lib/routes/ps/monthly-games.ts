@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { art } from '@/utils/render';
 
 export const route: Route = {

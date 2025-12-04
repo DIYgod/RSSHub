@@ -1,14 +1,16 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news' } = ctx.req.param();
@@ -142,7 +144,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [新闻动态](http://www.ccg.org.cn/news)，其源网址为 \`http://www.ccg.org.cn/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/ccg/news\`](https://rsshub.app/ccg/news)。
 :::
 

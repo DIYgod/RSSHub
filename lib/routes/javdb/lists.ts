@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -13,6 +14,9 @@ export const route: Route = {
     maintainers: ['dddepg'],
     handler,
     url: 'javdb.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

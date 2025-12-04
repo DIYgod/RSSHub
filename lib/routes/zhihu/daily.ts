@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/daily',
@@ -28,11 +30,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const key = 'zhihu:daily';
-    const response = await cache.tryGet(key, async () => {
-        const response = await ofetch('https://daily.zhihu.com/');
-        return response;
-    });
+    const response = await ofetch('https://daily.zhihu.com/');
 
     const $ = load(response);
 
@@ -42,22 +40,22 @@ async function handler() {
             .map(async (item) => {
                 item = $(item);
                 const linkElem = item.find('.link-button');
-                const storyUrl = 'https://daily.zhihu.com' + linkElem.attr('href');
+                const storyUrl = 'https://daily.zhihu.com/api/7' + linkElem.attr('href');
 
                 // Fetch full story content
-                const storyResponse = await cache.tryGet(storyUrl, async () => {
+                const storyJson = await cache.tryGet(storyUrl, async () => {
                     const response = await ofetch(storyUrl);
                     return response;
                 });
 
-                const $story = load(storyResponse);
-                const storyTitle = $story('.DailyHeader-title').text();
-                const storyContent = $story('.DailyRichText').html();
+                const storyTitle = storyJson.title;
+                const storyContent = storyJson.body;
 
                 return {
                     title: storyTitle,
                     description: storyContent,
-                    link: storyUrl,
+                    link: storyJson.url,
+                    pubDate: parseDate(storyJson.publish_time, 'X'),
                 };
             })
     );

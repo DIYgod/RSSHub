@@ -1,13 +1,14 @@
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const processMenu = (data: any[]) => {
     const result = {};
@@ -185,7 +186,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为热点，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [热点](https://m.21jingji.com/#/)，请将 \`热点\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/热点\`](https://rsshub.app/21caijing/channel/热点)。
 
 若订阅 [投资通 - 盘前情报](https://m.21jingji.com/#/channel/investment)，请将 \`投资通/盘前情报\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/投资通/盘前情报\`](https://rsshub.app/21caijing/channel/投资通/盘前情报)。

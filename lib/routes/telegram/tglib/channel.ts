@@ -1,10 +1,14 @@
 /* eslint-disable no-await-in-loop */
-import { DataItem } from '@/types';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html.js';
-import { getClient, getDocument, getFilename, unwrapMedia } from './client';
+import { returnBigInt } from 'telegram/Helpers.js';
 import { getDisplayName } from 'telegram/Utils.js';
+
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+
+import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 
 export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
@@ -114,7 +118,16 @@ export function humanDuration(seconds: number) {
 export default async function handler(ctx: Context) {
     const client = await getClient();
     const username = ctx.req.param('username');
-    const peer = await client.getInputEntity(username);
+
+    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
+    if (!peerCache) {
+        const p = await client.getInputEntity(username);
+        peerCache = JSON.stringify(p.toJSON());
+        await cache.set(`telegram:inputEntity:${username}`, peerCache);
+    }
+    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
+    const peer = new Api.InputPeerChannel(peerData);
+
     const entity = await client.getEntity(peer);
 
     let attachments: string[] = [];

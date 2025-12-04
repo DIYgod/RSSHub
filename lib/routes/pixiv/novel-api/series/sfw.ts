@@ -1,8 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { getSFWNovelContent } from '../content/sfw';
+
+import got from '@/utils/got';
+
 import pixivUtils from '../../utils';
-import { SeriesContentResponse, SeriesFeed } from './types';
+import { getSFWNovelContent } from '../content/sfw';
+import type { SeriesContentResponse, SeriesFeed } from './types';
 
 const baseUrl = 'https://www.pixiv.net';
 

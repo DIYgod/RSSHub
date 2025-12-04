@@ -1,10 +1,10 @@
-import xxhash from 'xxhash-wasm';
 import type { MiddlewareHandler } from 'hono';
+import xxhash from 'xxhash-wasm';
 
 import { config } from '@/config';
 import RequestInProgressError from '@/errors/types/request-in-progress';
+import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
-import { Data } from '@/types';
 
 const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
 // only give cache string, as the `!` condition tricky
@@ -17,10 +17,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     }
 
     const requestPath = ctx.req.path;
+    const format = `:${ctx.req.query('format') || 'rss'}`;
     const limit = ctx.req.query('limit') ? `:${ctx.req.query('limit')}` : '';
     const { h64ToString } = await xxhash();
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + limit);
-    const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + limit);
+    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + format + limit);
+    const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + format + limit);
 
     const isRequesting = await cacheModule.globalCache.get(controlKey);
 

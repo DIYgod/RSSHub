@@ -1,15 +1,17 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
@@ -151,7 +153,7 @@ export const route: Route = {
     parameters: {
         filter: 'Filter',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，where the URL is \`https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order\`, extract the part \`https://kpopping.com/news\` to the end, which is \`gender-male/category-all/idol-any/group-any/order\`, and use it as the parameter to fill in. Therefore, the route will be [\`/kpopping/news/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order).
 :::
 `,
@@ -187,7 +189,7 @@ If you subscribe to [All male articles](https://kpopping.com/news/gender-male/ca
         parameters: {
             filter: '筛选，可在对应分类页 URL 中找到',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [All male articles](https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order)，网址为 \`https://kpopping.com/news/gender-male/category-all/idol-any/group-any/order\`，请截取 \`https://kpopping.com/news/\` 到末尾的部分 \`gender-male/category-all/idol-any/group-any/order\` 作为 \`filter\` 参数填入，此时目标路由为 [\`/kpopping/news/gender-male/category-all/idol-any/group-any/order\`](https://rsshub.app/kpopping/news/gender-male/category-all/idol-any/group-any/order)。
 :::
 `,

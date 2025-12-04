@@ -1,14 +1,16 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import path from 'node:path';
 
-import { art } from '@/utils/render';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { art } from '@/utils/render';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { device, sort, searchParams } = ctx.req.param();
@@ -270,11 +272,10 @@ export const route: Route = {
             description: 'Search Params',
         },
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Updated watch faces for Amazfit X](https://amazfitwatchfaces.com/amazfit-x/updated)，where the URL is \`https://amazfitwatchfaces.com/amazfit-x/updated\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`amazfit-x/updated\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/amazfit-x/updated\`](https://rsshub.app/amazfitwatchfaces/amazfit-x/updated).
 
 If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months)，where the URL is \`https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`mi-band/top\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months\`](https://rsshub.app/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months).
-
 :::
 
 <details>

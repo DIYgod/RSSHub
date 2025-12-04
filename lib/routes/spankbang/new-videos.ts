@@ -1,12 +1,13 @@
-import { Data, Route } from '@/types';
-
-import puppeteer from '@/utils/puppeteer';
-import * as cheerio from 'cheerio';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import * as cheerio from 'cheerio';
+
 import { config } from '@/config';
-import logger from '@/utils/logger';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
+import { art } from '@/utils/render';
 
 const render = (data) => art(path.join(__dirname, 'templates/video.art'), data);
 

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import utils from './utils';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/fav/:uid/:fid/:embed?',

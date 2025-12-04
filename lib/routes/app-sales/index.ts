@@ -1,9 +1,10 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 import { baseUrl, fetchItems } from './util';
 
@@ -130,7 +131,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Highlights](https://www.app-sales.net/highlights/), where the source URL is \`https://www.app-sales.net/highlights/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/app-sales/highlights\`](https://rsshub.app/app-sales/highlights).
 :::
 

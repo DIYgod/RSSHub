@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
 import { baseUrl, getItem, headers, parseList } from './utils';
 
 export const route: Route = {
@@ -17,6 +17,9 @@ export const route: Route = {
     name: 'Studios',
     maintainers: ['TonyRL'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

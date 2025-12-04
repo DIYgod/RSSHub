@@ -1,5 +1,5 @@
-import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
@@ -11,6 +11,7 @@ const deprecatedRoute = 'route: deprecated';
 const route = 'route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
+// eslint-disable-next-line unicorn/no-useless-collection-argument
 const dndUsernames = new Set([]);
 
 async function parseBodyRoutes(body, core) {

@@ -1,11 +1,12 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll("'", '&quot;')?.replaceAll("'", '&#039;') ?? text;
 
@@ -240,7 +241,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [管理与运维](https://tidb.net/blog/c/management-and-operation)，其源网址为 \`https://tidb.net/blog/c/management-and-operation\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/tidb/blog/c/management-and-operation\`](https://rsshub.app/tidb/blog/c/management-and-operation)。
 :::
 

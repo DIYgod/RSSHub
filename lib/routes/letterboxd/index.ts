@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import { namespace } from './namespace';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { namespace } from './namespace';
 
 const baseUrl = `https://${namespace.url}`;
 
@@ -57,7 +59,7 @@ async function handler(ctx: Context) {
     );
 
     return {
-        title: $('title').text() || `${username}'s Watchlist • Letterboxd`,
+        title: $('title').text().trim().replaceAll('\u200E', '') || `${username}'s Watchlist • Letterboxd`,
         link: currentUrl,
         item: items,
         allowEmpty: true,

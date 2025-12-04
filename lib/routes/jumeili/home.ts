@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/home/:column?',
@@ -30,7 +31,7 @@ export const route: Route = {
     name: '首页资讯',
     maintainers: ['kjasn'],
     handler,
-    description: `:::Warning
+    description: `::: Warning
 未登录用户无法获取完整文章内容，只能看到预览内容。想要获取完整文章内容，需要设置\`JUMEILI_COOKIE\`环境变量。
 :::`,
 };

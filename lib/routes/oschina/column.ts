@@ -1,15 +1,16 @@
 import path from 'node:path';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -95,7 +96,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authorEls: Element[] = $$('div.article-box__meta div.item-list div.item a')
                         .toArray()
-                        .filter((i) => ($$(i).attr('href') ? new RegExp(`^${userHostRegex}/u/\\d+$`).test($$(i).attr('href') as string) : false));
+                        .filter((i) => ($$(i).attr('href') ? new RegExp(String.raw`^${userHostRegex}/u/\d+$`).test($$(i).attr('href') as string) : false));
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $authorEl: Cheerio<Element> = $$(authorEl);
 
@@ -183,9 +184,8 @@ export const route: Route = {
     parameters: {
         id: '专栏 id，可在对应专栏页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [开源安全专栏](https://www.oschina.net/news/column?columnId=14)，网址为 \`https://www.oschina.net/news/column?columnId=14\`，请截取 \`https://www.oschina.net/news/column?columnId=\` 到末尾的部分 \`14\` 作为 \`id\` 参数填入，此时目标路由为 [\`/oschina/column/14\`](https://rsshub.app/oschina/column/14)。
-
 :::
 
 <details>

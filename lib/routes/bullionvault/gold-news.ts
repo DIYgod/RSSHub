@@ -1,12 +1,13 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
@@ -160,7 +161,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Gold Price News](https://www.bullionvault.com/gold-news/gold-price-news)，where the URL is \`https://www.bullionvault.com/gold-news/gold-price-news\`, extract the part \`https://www.bullionvault.com/gold-news/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/bullionvault/gold-news/gold-price-news\`](https://rsshub.app/bullionvault/gold-news/gold-price-news).
 :::
 

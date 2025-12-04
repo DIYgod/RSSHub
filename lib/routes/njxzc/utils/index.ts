@@ -1,11 +1,12 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch'; // 使用默认导出的方式导入ofetch
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch'; // 使用默认导出的方式导入ofetch
 
 async function getNoticeList(ctx, url, host, titleSelector, dateSelector, contentSelector, listSelector) {
-    const response = await ofetch(url).catch(() => null);
+    const response = await ofetch(url);
     if (!response) {
         return [];
     }
@@ -25,7 +26,7 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link).catch(() => null);
+                const response = await ofetch(item.link);
                 if (!response || (response.status >= 300 && response.status < 400)) {
                     return {
                         ...item,

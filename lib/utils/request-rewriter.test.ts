@@ -1,7 +1,10 @@
-import { describe, expect, it, vi } from 'vitest';
-import undici from 'undici';
-import got from 'got';
 import http from 'node:http';
+
+import got from 'got';
+import undici from 'undici';
+import { describe, expect, it, vi } from 'vitest';
+
+import { PRESETS } from '@/utils/header-generator';
 
 process.env.PROXY_URI = 'http://rsshub.proxy:2333/';
 process.env.PROXY_AUTH = 'rsshubtest';
@@ -24,8 +27,15 @@ describe('request-rewriter', () => {
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
         expect(headers.get('user-agent')).toBe(config.ua);
-        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
+        expect(headers.get('sec-ch-ua')).toBeDefined();
+        expect(headers.get('sec-ch-ua-mobile')).toBeDefined();
+        expect(headers.get('sec-ch-ua-platform')).toBeDefined();
+        expect(headers.get('sec-fetch-site')).toBeDefined();
+        expect(headers.get('sec-fetch-mode')).toBeDefined();
+        expect(headers.get('sec-fetch-user')).toBeDefined();
+        expect(headers.get('sec-fetch-dest')).toBeDefined();
 
         // proxy
         const options = fetchSpy.mock.lastCall?.[1];
@@ -64,8 +74,15 @@ describe('request-rewriter', () => {
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
         expect(headers.get('user-agent')).toBe(config.ua);
-        expect(headers.get('accept')).toBe('*/*');
+        expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
+        expect(headers.get('sec-ch-ua')).toBeDefined();
+        expect(headers.get('sec-ch-ua-mobile')).toBeDefined();
+        expect(headers.get('sec-ch-ua-platform')).toBeDefined();
+        expect(headers.get('sec-fetch-site')).toBeDefined();
+        expect(headers.get('sec-fetch-mode')).toBeDefined();
+        expect(headers.get('sec-fetch-user')).toBeDefined();
+        expect(headers.get('sec-fetch-dest')).toBeDefined();
 
         // proxy
         const options = fetchSpy.mock.lastCall?.[1];
@@ -92,6 +109,52 @@ describe('request-rewriter', () => {
         }
     });
 
+    it('ofetch custom ua', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch');
+        const userAgent = config.trueUA;
+
+        try {
+            await ofetch('http://rsshub.test/headers', {
+                retry: 0,
+                headers: {
+                    'user-agent': userAgent,
+                },
+            });
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(headers.get('user-agent')).toBe(userAgent);
+    });
+
+    it('ofetch header preset', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch');
+
+        try {
+            await ofetch('http://rsshub.test/headers', {
+                retry: 0,
+                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+            });
+        } catch {
+            // ignore
+        }
+
+        // headers
+        const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
+        expect(headers.get('user-agent')).toBeDefined();
+        expect(headers.get('accept')).toBeDefined();
+        expect(headers.get('referer')).toBe('http://rsshub.test');
+        expect(headers.get('sec-ch-ua')).toBeDefined();
+        expect(headers.get('sec-ch-ua-mobile')).toBe('?0');
+        expect(headers.get('sec-ch-ua-platform')).toBe('"Windows"');
+        expect(headers.get('sec-fetch-site')).toBeDefined();
+        expect(headers.get('sec-fetch-mode')).toBeDefined();
+        expect(headers.get('sec-fetch-user')).toBeDefined();
+        expect(headers.get('sec-fetch-dest')).toBeDefined();
+    });
+
     it('http', async () => {
         const httpSpy = vi.spyOn(http, 'request');
 
@@ -110,7 +173,7 @@ describe('request-rewriter', () => {
         const options = httpSpy.mock.lastCall?.[1];
         const headers = options?.headers;
         expect(headers?.['user-agent']).toBe(config.ua);
-        expect(headers?.accept).toBe('*/*');
+        expect(headers?.accept).toBeDefined();
         expect(headers?.referer).toBe('http://rsshub.test');
 
         // proxy

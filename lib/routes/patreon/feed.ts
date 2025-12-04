@@ -1,13 +1,15 @@
-import { Route } from '@/types';
-import { CreatorData, MediaRelation, PostData } from './types';
+import path from 'node:path';
 
+import * as cheerio from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 import { art } from '@/utils/render';
-import { config } from '@/config';
+
+import type { CreatorData, MediaRelation, PostData } from './types';
 
 export const route: Route = {
     path: '/:creator',
@@ -22,6 +24,7 @@ export const route: Route = {
                 description: 'The value of the session_id cookie after logging in to Patreon, required to access paid posts',
             },
         ],
+        nsfw: true,
     },
     radar: [
         {
@@ -47,7 +50,6 @@ async function handler(ctx) {
         const bootstrapEnvelope = nextData.props.pageProps.bootstrapEnvelope;
 
         return {
-            meta: bootstrapEnvelope.meta,
             id: bootstrapEnvelope.pageBootstrap.campaign.data.id,
             attributes: bootstrapEnvelope.pageBootstrap.campaign.data.attributes,
         };
@@ -113,8 +115,8 @@ async function handler(ctx) {
     });
 
     return {
-        title: creatorData.meta.title,
-        description: creatorData.meta.desc,
+        title: creatorData.attributes.name,
+        description: creatorData.attributes.creation_name,
         link,
         image: creatorData.attributes.avatar_photo_url,
         item: items,

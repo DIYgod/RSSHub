@@ -1,10 +1,12 @@
-import { Data, DataItem, Route } from '@/types';
 import path from 'node:path';
-import got from '@/utils/got';
+
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
+
 import { config } from '@/config';
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
 const actualParametersDescTable = `
@@ -34,7 +36,7 @@ This actual parameters should be passed as \`routeParams\` in URL Query String f
 
     /osu/latest-ranked/modeInTitle=true&includeMode=osu
 
-:::tip
+::: tip
 You could make use of \`difficultyLimit\` paramters to create a "high difficulty/low difficulty only" only feed.
 
 For example, if you only wants to play low star rating beatmap like 1 or 2 star, you could subscribe to:
@@ -49,8 +51,7 @@ with star rating higher than a certain threshold.
     /osu/latest-ranked/difficultyLimit=L6
 
 Now all beatmapsets that don't provided at least one beatmap with star rating higher than \`6.00\` will be filtered.
-:::
-`;
+:::`;
 
 export const route: Route = {
     path: '/latest-ranked/:routeParams?',

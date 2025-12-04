@@ -1,9 +1,12 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
-import { config } from '@/config';
+
 export const route: Route = {
     path: '/people/:userid/status/:routeParams?',
     categories: ['social-media'],

@@ -1,13 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+import iconv from 'iconv-lite';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import iconv from 'iconv-lite';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
@@ -269,9 +270,8 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [最新电影](https://www.hao6v.me/dy/)，其源网址为 \`https://www.hao6v.me/dy/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/6v123/dy\`](https://rsshub.app/6v123/dy)。
-
 :::
 
 <details>

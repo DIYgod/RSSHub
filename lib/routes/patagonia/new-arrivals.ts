@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import path from 'node:path';
 
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import { load } from 'cheerio';
+
 const host = 'https://www.patagonia.com';
 const categoryMap = {
     mens: ['mens-new', 'mens-new-arrivals'],
@@ -55,19 +57,21 @@ async function handler(ctx) {
     const list = $('.product')
         .toArray()
         .map((element) => {
-            const data = {};
-            data.title = $(element).find('.product-tile').data('tealium').product_name[0];
+            const data = {
+                title: $(element).find('.product-tile').data('tealium').product_name[0],
+                link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
+                description: '',
+                category: $(element).find('[itemprop="category"]').attr('content'),
+            };
             let imgUrl = new URL($(element).find('[itemprop="image"]').attr('content'));
             imgUrl = extractSfrmUrl(imgUrl);
 
             const price = $(element).find('[itemprop="price"]').eq(0).text();
-            data.link = host + '/' + $(element).find('[itemprop="url"]').attr('href');
             data.description =
                 price +
                 art(path.join(__dirname, 'templates/product-description.art'), {
                     imgUrl,
                 });
-            data.category = $(element).find('[itemprop="category"]').attr('content');
             return data;
         });
     return {

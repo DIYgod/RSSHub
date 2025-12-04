@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import app from '@/app';
 import { config } from '@/config';
 

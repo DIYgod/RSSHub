@@ -42,4 +42,4 @@ const getOriginAvatar = (url) =>
         .replace(/^(.*\.douyinpic\.com\/).*(\/aweme-avatar\/)([^?]*)(\?.*)?$/, '$1origin$2$3')
         .replaceAll(/~\w+_\d+x\d+/g, '');
 
-export { templates, resolveUrl, proxyVideo, getOriginAvatar };
+export { getOriginAvatar, proxyVideo, resolveUrl, templates };

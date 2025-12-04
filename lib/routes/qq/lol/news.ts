@@ -1,13 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import cache from '@/utils/cache';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 import iconv from 'iconv-lite';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 23 } = ctx.req.param();
@@ -157,7 +158,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `23`，即综合，见下表',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [英雄联盟首页新闻列表 - 公告](https://lol.qq.com/news/index.shtml)，网址为 \`https://lol.qq.com/news/index.shtml\`，请选择 \`24\` 作为 \`category\` 参数填入，此时目标路由为 [\`/qq/lol/news/24\`](https://rsshub.app/qq/lol/news/24)。
 :::
 

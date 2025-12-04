@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:id',
@@ -36,28 +37,31 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const link = `https://tophub.today/n/${id}`;
-    const response = await got.get(link, {
+    const response = await ofetch(link, {
         headers: {
             Referer: 'https://tophub.today',
-            Cookie: config.tophub.cookie,
+            Cookie: config.tophub?.cookie ?? '',
         },
     });
-    const $ = load(response.data);
+    const $ = load(response);
 
-    const title = $('div.Xc-ec-L.b-L').text().trim();
+    const title = $('.tt h3').text().trim();
 
-    const out = $('div.Zd-p-Sc > div:nth-child(1) tr')
+    const out = $('.rank-all-item:not(.history-content) .jc-c tr')
         .toArray()
         .map((e) => {
             const info = {
-                title: $(e).find('td.al a').text(),
-                link: $(e).find('td.al a').attr('href'),
+                title: $(e).find('td a').first().text(),
+                link: $(e).find('td a').first().attr('href'),
+                description: $(e).find('.ws').text().trim(),
             };
             return info;
         });
 
     return {
         title,
+        description: $('.tt p').text().trim(),
+        image: $('.ii img').attr('src'),
         link,
         item: out,
     };

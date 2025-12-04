@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
-import { getArchive, getCategories, parseList, parseItem } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { getArchive, getCategories, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/news/:region/:category?',
