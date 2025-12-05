@@ -1,0 +1,18 @@
+项目：
+{{ if item.meta.name === item.meta.workoutName }}
+    {{ item.meta.name }}
+{{ else }}
+    {{ item.meta.name }} - {{ item.meta.workoutName }}
+{{ /if }}
+<br>
+时长：{{ minute }}分{{ second }}秒
+{{ if item.content }}
+    <br>
+    备注：{{ item.content }}
+{{ /if }}
+{{ if images }}
+    <br>
+    {{ each images image }}
+        <img src="{{ image }}">
+    {{ /each }}
+{{ /if }}

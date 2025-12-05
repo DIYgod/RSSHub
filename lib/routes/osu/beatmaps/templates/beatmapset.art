@@ -1,0 +1,37 @@
+<img src="{{ covers['cover@2x'] || covers.cover }}" alt="{{ title }}" style="max-width: 100%; height: auto;" />
+
+<h3>Song Info</h3>
+<ul>
+    <li><strong>English Title:</strong> {{ title }}</li>
+    <li><strong>Artist:</strong> {{ artist_unicode }} ({{ artist }})</li>
+    <li><strong>Length:</strong> {{ readableTotalLength }}</li>
+    <li><strong>BPM:</strong> {{ bpm }}</li>
+</ul>
+
+<h3>Beatmapset Info</h3>
+<ul>
+    <li><strong>Mode:</strong> {{ modeLiteralToDisplayNameMap[beatmaps[0].mode] }}</li>
+    <li><strong>Creator:</strong> {{ creator }}</li>
+</ul>
+
+<h3>Difficulties</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>Rating</th>
+            <th>AR</th>
+            <th>Drain</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ each beatmaps as beatmap }}
+        <tr>
+            <td><a href="{{ beatmap.url }}" target="_blank">{{ beatmap.version }}</a></td>
+            <td>{{ beatmap.difficulty_rating.toFixed(2) }}</td>
+            <td>{{ beatmap.ar.toFixed(1) }}</td>
+            <td>{{ beatmap.drain }}</td>
+        </tr>
+        {{ /each }}
+    </tbody>
+</table>

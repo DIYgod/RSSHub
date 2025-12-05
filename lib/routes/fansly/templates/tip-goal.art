@@ -1,0 +1,2 @@
+{{ label }}<br>
+{{ currentPercentage }}% ${{ currentAmount / 1000 }} / ${{ goalAmount / 1000  }}

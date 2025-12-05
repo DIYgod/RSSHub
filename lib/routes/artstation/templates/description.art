@@ -1,0 +1,17 @@
+{{ if description }}
+    {{@ description }}<br>
+{{ /if }}
+
+{{ if image }}
+    <img src="{{ image.src }}" alt="{{ image.title }}">
+{{ /if }}
+
+{{ if assets }}
+    {{ each assets a }}
+        {{ if (a.asset_type === 'video' || a.asset_type === 'video_clip') && a.player_embedded }}
+            {{@ a.player_embedded }}<br>
+        {{ else if a.asset_type === 'image' || a.asset_type === 'cover' }}
+            <img src="{{ a.image_url }}"><br>
+        {{ /if }}
+    {{ /each }}
+{{ /if }}

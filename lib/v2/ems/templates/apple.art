@@ -1,6 +1,0 @@
-{{ each trails}}
-<H2>{{ $value.optime }}</H2>
-<p>{{ $value.opreateType}} </p>
-<p>{{ $value.processingInstructions }}</p>
-<hr>
-{{/each}}

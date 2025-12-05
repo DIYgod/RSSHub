@@ -1,4 +1,0 @@
-{{@ img }}
-{{ productProps.dangerousHed }}<br>
-{{ if productProps.offerRetailer }}{{ productProps.offerRetailer }} {{ /if }}{{ if productProps.multipleOffers }}{{ productProps.multipleOffers[0].price }}{{ /if }}
-{{ if productProps.offerUrl }}<br><a href="{{ productProps.offerUrl }}" target="_blank">Buy It</a>{{ /if }}

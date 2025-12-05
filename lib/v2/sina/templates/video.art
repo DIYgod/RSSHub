@@ -1,5 +1,0 @@
-{{ if videoUrl }}
-<video controls poster="{{ poster }}" preload="none">
-    <source src="{{ videoUrl }}">
-</video>
-{{ /if }}

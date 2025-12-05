@@ -1,29 +1,30 @@
 name: Comment on Issue
 
 on:
-  issues:
-    types: [opened, edited, reopened]
+    issues:
+        types: [opened, edited, reopened]
 
 jobs:
-  testRoute:
-    name: Call maintainers
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v3 # just need its cache
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
-      - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
-        run: pnpm i
-      - name: Generate feedback
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
-            return script({ github, context, core })
+    testRoute:
+        name: Call maintainers
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            issues: write
+        if: github.event.sender.login != 'issuehunt-oss[bot]'
+        steps:
+            - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+            - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+            - name: Install dependencies (pnpm) # import remark-parse and unified
+              run: pnpm i
+            - name: Generate feedback
+              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const { default: callMaintainer } = await import('${{ github.workspace }}/scripts/workflow/test-issue/call-maintainer.mjs')
+                      await callMaintainer({ github, context, core })
