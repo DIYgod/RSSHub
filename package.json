@@ -72,7 +72,7 @@
         "@opentelemetry/semantic-conventions": "1.38.0",
         "@postlight/parser": "2.2.3",
         "@rss3/sdk": "0.0.25",
-        "@scalar/hono-api-reference": "0.9.25",
+        "@scalar/hono-api-reference": "0.9.26",
         "@sentry/node": "10.28.0",
         "aes-js": "3.1.2",
         "art-template": "4.13.2",
@@ -90,7 +90,7 @@
         "fanfou-sdk": "6.0.0",
         "form-data": "4.0.5",
         "google-play-scraper": "10.1.2",
-        "googleapis": "166.0.0",
+        "googleapis": "167.0.0",
         "header-generator": "2.1.78",
         "hono": "4.10.7",
         "html-to-text": "9.0.5",
@@ -202,7 +202,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "5.1.4",
         "vitest": "4.0.9",
-        "yaml-eslint-parser": "1.3.1"
+        "yaml-eslint-parser": "1.3.2"
     },
     "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
     "engines": {
