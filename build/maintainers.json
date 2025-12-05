@@ -4237,6 +4237,9 @@
     "nczitzk",
     "hyoban"
   ],
+  "/hupu/news/:team": [
+    "hyoban"
+  ],
   "/hust/gs/:category{.+}?": [
     "nczitzk"
   ],
