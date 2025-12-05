@@ -18,6 +18,7 @@ interface BlogItem {
     upvotes: number;
     thumbnail: string;
     tags: string[];
+    url: string;
 }
 
 interface BlogApiResponse {

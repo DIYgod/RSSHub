@@ -54,7 +54,7 @@ interface AuthorData {
 
 interface Post {
     _id: string;
-    authorData: AuthorData;
+    authorsData: AuthorData[];
     canonical: boolean;
     isUpvotedByUser: boolean;
     numCoauthors: number;
@@ -64,6 +64,7 @@ interface Post {
     title: string;
     upvotes: number;
     thumbnail?: string;
+    url: string;
 }
 
 interface CommunityBlogApiResponse {
