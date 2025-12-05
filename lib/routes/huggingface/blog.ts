@@ -55,7 +55,7 @@ async function handler() {
 
     const lists = allBlogs.map((blog) => ({
         title: blog.title,
-        link: `https://huggingface.co/blog/${blog.slug}`,
+        link: `https://huggingface.co${blog.url}`,
         pubDate: parseDate(blog.publishedAt),
         author: blog.authorsData.map((author) => ({
             name: author.fullname || author.name,

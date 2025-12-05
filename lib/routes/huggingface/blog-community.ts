@@ -83,9 +83,9 @@ async function handler(ctx) {
 
     const lists = posts.map((item) => ({
         title: item.title,
-        link: `https://huggingface.co/blog/${item.authorData.name}/${item.slug}`,
+        link: `https://huggingface.co${item.url}`,
         pubDate: parseDate(item.publishedAt),
-        author: item.authorData.fullname || item.authorData.name,
+        author: item.authorsData?.[0]?.fullname || item.authorsData?.[0]?.name || 'Unknown',
         upvotes: item.upvotes,
         image: item.thumbnail ? new URL(item.thumbnail, 'https://huggingface.co').toString() : undefined,
     }));
