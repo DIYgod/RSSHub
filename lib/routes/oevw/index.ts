@@ -28,7 +28,7 @@ for this route.`,
     },
 
     async handler(ctx) {
-        const json = JSON.parse(ctx.req.param('json') || '{}');
+        const json = JSON.parse(decodeURIComponent(ctx.req.param('json') || '{}'));
 
         // first, get https://www.oevw.at/suche to extract csrf token and cookies
         const res = await ofetch.raw(BASE_URL);
