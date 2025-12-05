@@ -5,12 +5,11 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/models/:group/:cycle?',
+    path: '/models/:group',
     categories: ['programming'],
-    example: '/huggingface/models/deepseek-ai/week',
+    example: '/huggingface/models/deepseek-ai',
     parameters: {
         group: 'The organization or user group name',
-        cycle: 'The time cycle for filtering. Choose from: date, week, month. Default: week',
     },
     features: {
         requireConfig: false,
@@ -27,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: 'Group Models',
-    maintainers: [],
+    maintainers: ['WuNein'],
     handler,
     url: 'huggingface.co',
 };
@@ -44,27 +43,6 @@ async function handler(ctx) {
 
     const { body: response } = await got(url);
     const $ = load(response);
-
-    const now = new Date();
-    let filterDate: Date;
-
-    switch (cycle) {
-        case 'date':
-            filterDate = new Date(now);
-            filterDate.setDate(filterDate.getDate() - 1);
-            break;
-        case 'week':
-            filterDate = new Date(now);
-            filterDate.setDate(filterDate.getDate() - 7);
-            break;
-        case 'month':
-            filterDate = new Date(now);
-            filterDate.setMonth(filterDate.getMonth() - 1);
-            break;
-        default:
-            filterDate = new Date(now);
-            filterDate.setDate(filterDate.getDate() - 1);
-    }
 
     const items = $('article')
         .toArray()
@@ -84,17 +62,10 @@ async function handler(ctx) {
                 datetime,
             };
         })
-        .filter((item) => {
-            if (!item.title || !item.datetime) {
-                return false;
-            }
-            const itemDate = new Date(item.datetime);
-            return itemDate >= filterDate;
-        })
-        .map(({ datetime: _datetime, ...item }) => item);
+        .filter((item) => item.title);
 
     return {
-        title: `Huggingface ${group} Models - ${cycle}`,
+        title: `Huggingface ${group} Models`,
         link: url,
         item: items,
     };
