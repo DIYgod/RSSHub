@@ -6263,6 +6263,9 @@
   "/oesw*": [
     "sk22"
   ],
+  "/oevw/:json?": [
+    "sk22"
+  ],
   "/oilchem/:type?/:category?/:subCategory?": [
     "nczitzk"
   ],
