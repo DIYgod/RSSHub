@@ -1,6 +1,6 @@
 .DS_Store
 .cursorrules
-.env*
+.env
 .eslintcache
 .idea
 .log

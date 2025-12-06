@@ -11,16 +11,31 @@ import { getCurrentPath } from '../../lib/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const foloAnalysis = await (
-    await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
-        headers: {
-            'user-agent': config.trueUA,
-        },
-    })
-).json();
-const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+type FoloAnalysis = Record<string, { subscriptionCount: number; topFeeds: any[] }>;
+
+const loadFoloAnalysis = async (): Promise<FoloAnalysis> => {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
+            headers: {
+                'user-agent': config.trueUA,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Unexpected status ${response.status}`);
+        }
+
+        const data = await response.json();
+        return (data?.data as FoloAnalysis) || {};
+    } catch (error) {
+        process.emitWarning(`Failed to fetch rsshub-analytics.json, continuing without popularity data. ${String(error)}`);
+        return {};
+    }
+};
+
+const foloAnalysisResult = await loadFoloAnalysis();
 const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
-    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
+    .toSorted((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
     .slice(0, 150);
 
 const maintainers: Record<string, string[]> = {};
