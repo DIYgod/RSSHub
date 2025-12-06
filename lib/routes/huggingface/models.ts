@@ -69,7 +69,7 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
-                    // async的问题帮我看一下
+                    // 一般有readme, 且没设置权限的模型
                     const { body: detailResp } = await got(item.link + '/raw/main/README.md');
                     item.description += '\n\n' + detailResp;
                     return item;
@@ -77,11 +77,16 @@ async function handler(ctx) {
                     if (error instanceof FetchError && (error.statusCode === 403 || error.statusCode === 401)) {
                         // 要权限的情况
                         // Example: https://huggingface.co/facebook/sam-3d-objects/raw/main/README.md
-                        const { body: respHtml } = await got(item.link + '/blob/main/README.md?code=true');
-                        const $ = load(respHtml);
-                        const detailHtml = $('body').find('div > main > div > section > div > div > div > div > div > table > tbody').text().trim();
-                        item.description += '\n\n' + detailHtml;
-                        return item;
+                        try {
+                            // 以免再次出错
+                            const { body: respHtml } = await got(item.link + '/blob/main/README.md?code=true');
+                            const $ = load(respHtml);
+                            const detailHtml = $('body').find('div > main > div > section > div > div > div > div > div > table > tbody').text().trim();
+                            item.description += '\n\n' + detailHtml;
+                            return item;
+                        } catch {
+                            return item;
+                        }
                     } else if (error instanceof FetchError && error.statusCode === 404) {
                         // 没有介绍页面的情况
                         // Example: https://huggingface.co/ianyang02/aita_qwen3-30b/raw/main/README.md
