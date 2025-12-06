@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -44,7 +46,7 @@ async function handler(ctx) {
     const { body: response } = await got(url);
     const $ = load(response);
 
-    const items = $('article')
+    let items = $('article')
         .toArray()
         .map((article) => {
             const $article = $(article);
@@ -62,6 +64,36 @@ async function handler(ctx) {
             };
         })
         .filter((item) => item.title);
+
+    items = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link, async () => {
+                try {
+                    // async的问题帮我看一下
+                    const { body: detailResp } = await got(item.link + '/raw/main/README.md');
+                    item.description += '\n\n' + detailResp;
+                    return item;
+                } catch (error) {
+                    if (error instanceof FetchError && (error.statusCode === 403 || error.statusCode === 401)) {
+                        // 要权限的情况
+                        // Example: https://huggingface.co/facebook/sam-3d-objects/raw/main/README.md
+                        const { body: respHtml } = await got(item.link + '/blob/main/README.md?code=true');
+                        const $ = load(respHtml);
+                        const detailHtml = $('body').find('div > main > div > section > div > div > div > div > div > table > tbody').text().trim();
+                        item.description += '\n\n' + detailHtml;
+                        return item;
+                    } else if (error instanceof FetchError && error.statusCode === 404) {
+                        // 没有介绍页面的情况
+                        // Example: https://huggingface.co/ianyang02/aita_qwen3-30b/raw/main/README.md
+                        return item;
+                    } else {
+                        // 其他错误的情况
+                        return item;
+                    }
+                }
+            })
+        )
+    );
 
     return {
         title: `Huggingface ${group} Models`,
