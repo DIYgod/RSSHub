@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import app from '@/app';
 import Parser from 'rss-parser';
+import { describe, expect, it } from 'vitest';
+
+import app from '@/app';
 
 const parser = new Parser();
 

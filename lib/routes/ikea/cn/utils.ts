@@ -1,6 +1,7 @@
-import { art } from '@/utils/render';
-import md5 from '@/utils/md5';
 import path from 'node:path';
+
+import md5 from '@/utils/md5';
+import { art } from '@/utils/render';
 
 const generateRequestHeaders = () => {
     const now = Math.round(Date.now() / 1000);
@@ -36,4 +37,4 @@ const generateProductItem = (product) => {
     };
 };
 
-export { generateRequestHeaders, generateProductItem };
+export { generateProductItem, generateRequestHeaders };

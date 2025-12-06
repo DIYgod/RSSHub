@@ -1,10 +1,12 @@
-import { DataItem, Route, Data } from '@/types';
-import cache from '@/utils/cache';
-import { joinUrl } from './utils';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { joinUrl } from './utils';
 
 export const route: Route = {
     path: '/dean/:code',

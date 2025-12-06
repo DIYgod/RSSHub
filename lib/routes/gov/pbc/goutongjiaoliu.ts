@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import puppeteer from '@/utils/puppeteer';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/pbc/goutongjiaoliu',

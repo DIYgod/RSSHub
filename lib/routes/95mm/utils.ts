@@ -1,8 +1,10 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import path from 'node:path';
 
 const rootUrl = 'https://www.95mm.vip';
 
@@ -57,4 +59,4 @@ const ProcessItems = async (ctx, title, currentUrl) => {
     };
 };
 
-export { rootUrl, ProcessItems };
+export { ProcessItems, rootUrl };

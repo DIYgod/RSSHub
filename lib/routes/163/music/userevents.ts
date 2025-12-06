@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-
 import path from 'node:path';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
+
 const renderDescription = (info) => art(path.join(__dirname, '../templates/music/userevents.art'), info);
 
 export const route: Route = {

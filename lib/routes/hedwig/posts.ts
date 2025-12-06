@@ -1,12 +1,14 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
-import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     html: true,
 });

@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, afterEach, afterAll, beforeAll } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+
 import wait from '@/utils/wait';
 
 beforeAll(() => {

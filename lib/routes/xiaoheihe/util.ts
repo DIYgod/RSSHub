@@ -27,7 +27,7 @@ function c3(v) {
 }
 
 function convertByte(v) {
-    return v & 0x80 ? 0xFF & ((v << 1) ^ 0x1B) : v << 1;
+    return v & 0x80 ? 0xff & ((v << 1) ^ 0x1b) : v << 1;
 }
 
 /**

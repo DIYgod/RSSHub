@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { fetchTopTraders, formatCurrency, formatPnL } from './utils';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
+import { fetchTopTraders, formatCurrency, formatPnL } from './utils';
 
 export const route: Route = {
     path: '/top-traders',

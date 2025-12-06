@@ -1,9 +1,11 @@
-import got from '@/utils/got';
+import path from 'node:path';
+
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import path from 'node:path';
-import CryptoJS from 'crypto-js';
 
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;
@@ -334,9 +336,9 @@ const processItems = async (items, limit, tryGet) => {
             let guid = '';
             let link = '';
 
-            if (item.moment_id) {
-                guid = `huxiu-moment-${item.moment_id}`;
-                link = item.url || new URL(`moment/${item.moment_id}.html`, rootUrl).href;
+            if (item.object_type === 8) {
+                guid = `huxiu-moment-${item.object_id}`;
+                link = item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href;
             } else if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
                 item.brief_id = item.brief_id ?? item.aid;
                 guid = `huxiu-brief-${item.brief_id}`;
@@ -442,4 +444,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { rootUrl, apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems };
+export { apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };

@@ -1,9 +1,12 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { topicDataHanding, constructTopicEntry } from './utils';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { constructTopicEntry, topicDataHanding } from './utils';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 

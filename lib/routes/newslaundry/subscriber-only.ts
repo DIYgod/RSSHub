@@ -1,4 +1,6 @@
-import { Data, Route, ViewType } from '@/types';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { fetchCollection } from './utils';
 
 export const route: Route = {

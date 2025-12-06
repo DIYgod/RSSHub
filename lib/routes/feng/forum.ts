@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-
-import { parseDate } from '@/utils/parse-date';
-import { baseUrl, getForumMeta, getThreads, getThread } from './utils';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
+import { baseUrl, getForumMeta, getThread, getThreads } from './utils';
 
 export const route: Route = {
     path: '/forum/:id/:type?',

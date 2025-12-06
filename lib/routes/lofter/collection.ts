@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {

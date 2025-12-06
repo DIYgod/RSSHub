@@ -1,8 +1,9 @@
-import { Route, Data, DataItem } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 type CustomItem = { issued: string };
 const parser = new Parser<any, CustomItem>({
@@ -35,7 +36,8 @@ export const route: Route = {
 };
 
 async function handler(): Promise<Data> {
-    const feed = await parser.parseURL('https://ntrblog.com/atom.xml');
+    const rsp = await got('https://ntrblog.com/atom.xml');
+    const feed = await parser.parseString(rsp.data);
 
     const items = await Promise.all(
         feed.items.map((item) => {

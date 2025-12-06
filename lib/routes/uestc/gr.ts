@@ -1,11 +1,12 @@
-import { Data, DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Context } from 'hono';
 
 const baseUrl = 'https://gr.uestc.edu.cn/';
 const detailUrl = 'https://gr.uestc.edu.cn/';

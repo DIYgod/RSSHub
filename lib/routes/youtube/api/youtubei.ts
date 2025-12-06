@@ -1,7 +1,9 @@
-import { Data } from '@/types';
+import { Innertube } from 'youtubei.js';
+
+import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { Innertube } from 'youtubei.js';
+
 import utils, { getVideoUrl } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
@@ -68,7 +70,7 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     };
 };
 
-export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean }): Promise<Data> => {
+export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: string; embed: boolean; isJsonFeed: boolean }): Promise<Data> => {
     const innertube = await innertubePromise;
     const playlist = await innertube.getPlaylist(playlistId);
     const videos = await playlist.videos;

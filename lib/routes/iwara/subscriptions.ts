@@ -1,13 +1,15 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { config } from '@/config';
-import { art } from '@/utils/render';
-import { parseDate } from '@/utils/parse-date';
 import path from 'node:path';
+
 import MarkdownIt from 'markdown-it';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { art } from '@/utils/render';
+
 const md = MarkdownIt({
     html: true,
 });
@@ -37,13 +39,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ecchi.iwara.tv/'],
+            source: ['www.iwara.tv/subscriptions/videos', 'www.iwara.tv/subscriptions/images'],
         },
     ],
     name: 'User Subscriptions',
     maintainers: ['FeCCC'],
     handler,
-    url: 'ecchi.iwara.tv/',
+    url: 'www.iwara.tv/',
     description: `::: warning
   This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/deploy/config#route-specific-configurations) for route-specific configurations.
 :::`,
@@ -54,7 +56,7 @@ async function handler() {
         throw new ConfigNotFoundError('Iwara subscription RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const rootUrl = `https://www.iwara.tv`;
+    const rootUrl = 'https://www.iwara.tv';
     const username = config.iwara.username;
     const password = config.iwara.password;
 
@@ -62,19 +64,19 @@ async function handler() {
     const refreshHeaders = await cache.tryGet(
         'iwara:token',
         async () => {
-            const loginResponse = await got({
+            const loginResponse = await ofetch('https://api.iwara.tv/user/login', {
                 method: 'post',
-                url: 'https://api.iwara.tv/user/login',
                 headers: {
-                    'content-type': 'application/json',
+                    referer: 'https://www.iwara.tv/',
+                    'user-agent': config.trueUA,
                 },
-                body: JSON.stringify({
+                body: {
                     email: username,
                     password,
-                }),
+                },
             });
             return {
-                authorization: 'Bearer ' + loginResponse.data.token,
+                authorization: 'Bearer ' + loginResponse.token,
             };
         },
         30 * 24 * 60 * 60,
@@ -82,54 +84,62 @@ async function handler() {
     );
 
     // get subscription list
-    const videoSubUrl = 'https://api.iwara.tv/videos?page=0&limit=30&subscribed=true';
-    const imageSubUrl = 'https://api.iwara.tv/images?page=0&limit=30&subscribed=true';
+    const videoSubUrl = 'https://api.iwara.tv/videos?rating=all&page=0&limit=24&subscribed=true';
+    const imageSubUrl = 'https://api.iwara.tv/images?rating=all&page=0&limit=24&subscribed=true';
 
     // get access token
-    const accessResponse = await got({
-        method: 'post',
-        url: 'https://api.iwara.tv/user/token',
-        headers: refreshHeaders,
-    });
+    const authHeaders = await cache.tryGet(
+        'iwara:authToken',
+        async () => {
+            const accessResponse = await ofetch('https://api.iwara.tv/user/token', {
+                method: 'post',
+                headers: {
+                    ...refreshHeaders,
+                    referer: 'https://www.iwara.tv/',
+                    'user-agent': config.trueUA,
+                },
+            });
+            return {
+                authorization: 'Bearer ' + accessResponse.accessToken,
+            };
+        },
+        60 * 60,
+        false
+    );
 
-    const authHeaders = {
-        authorization: 'Bearer ' + accessResponse.data.accessToken,
-    };
-
-    const videoResponse = await got({
-        method: 'get',
-        url: videoSubUrl,
+    const videoResponse = await ofetch(videoSubUrl, {
         headers: authHeaders,
     });
 
-    const imageResponse = await got({
-        method: 'get',
-        url: imageSubUrl,
-        headers: authHeaders,
+    const imageResponse = await ofetch(imageSubUrl, {
+        headers: {
+            ...authHeaders,
+            'user-agent': config.trueUA,
+        },
     });
 
-    const videoList = videoResponse.data.results.map((item) => {
-        const img_path = item.private === true ? 'https://i.iwara.tv/image/original/' : 'https://i.iwara.tv/image/thumbnail/';
-        const imageUrl = item.file ? img_path + item.file.id.toString().padStart(2, '0') + '/thumbnail-' + item.thumbnail.toString().padStart(2, '0') + '.jpg' : '';
+    const videoList = videoResponse.results.map((item) => {
+        const imgPath = 'https://i.iwara.tv/image/original/';
+        const imageUrl = item.file ? `${imgPath}${item.file.id}/thumbnail-${item.thumbnail.toString().padStart(2, '0')}.jpg` : '';
 
         return {
             title: item.title,
             author: item.user.name,
-            link: rootUrl + '/video/' + item.id,
-            category: 'Video',
+            link: `${rootUrl}/video/${item.id}`,
+            category: ['Video', ...(item.tags ? item.tags.map((i) => i.id) : [])],
             imageUrl,
             pubDate: parseDate(item.createdAt),
             private: item.private,
         };
     });
 
-    const imageList = imageResponse.data.results.map((item) => {
-        const imageUrl = item.thumbnail ? 'https://i.iwara.tv/image/thumbnail/' + item.thumbnail.id + '/' + item.thumbnail.id + '.jpg' : '';
+    const imageList = imageResponse.results.map((item) => {
+        const imageUrl = item.thumbnail ? `https://i.iwara.tv/image/original/${item.thumbnail.id}/${item.thumbnail.name}` : '';
         return {
             title: item.title,
             author: item.user.name,
-            link: rootUrl + '/image/' + item.id,
-            category: 'Image',
+            link: `${rootUrl}/image/${item.id}`,
+            category: ['Image', ...(item.tags ? item.tags.map((i) => i.id) : [])],
             imageUrl,
             pubDate: parseDate(item.createdAt),
         };
@@ -141,8 +151,7 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 let description = art(path.join(__dirname, 'templates/subscriptions.art'), {
-                    type: item.category,
-                    imageUrl: item.imageUrl,
+                    images: [item.imageUrl],
                 });
 
                 if (item.private === true) {
@@ -157,12 +166,18 @@ async function handler() {
                     };
                 }
                 const link = item.link.replace('www.iwara.tv', 'api.iwara.tv');
-                const response = await got({
-                    method: 'get',
-                    url: link,
-                    headers: authHeaders,
+                const response = await ofetch(link, {
+                    headers: {
+                        ...authHeaders,
+                        'user-agent': config.trueUA,
+                    },
                 });
-                const body = response.data.body ? md.render(response.data.body) : '';
+
+                description = art(path.join(__dirname, 'templates/subscriptions.art'), {
+                    images: response.files ? response.files.filter((f) => f.type === 'image')?.map((f) => `https://i.iwara.tv/image/original/${f.id}/${f.name}`) : [item.imageUrl],
+                });
+
+                const body = response.body ? md.render(response.body) : '';
                 description += body;
 
                 return {
@@ -178,7 +193,7 @@ async function handler() {
     );
 
     return {
-        title: `Iwara Subscription`,
+        title: 'Iwara Subscription',
         link: rootUrl,
         item: items,
     };

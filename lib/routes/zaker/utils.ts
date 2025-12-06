@@ -1,11 +1,11 @@
-import { DataItem } from '@/types';
-
-import CryptoJS from 'crypto-js';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import logger from '@/utils/logger';
 import * as cheerio from 'cheerio';
+import CryptoJS from 'crypto-js';
+
+import { config } from '@/config';
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

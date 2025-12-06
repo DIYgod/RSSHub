@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
 import MarkdownIt from 'markdown-it';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/pull/:user/:repo/:state?/:labels?',

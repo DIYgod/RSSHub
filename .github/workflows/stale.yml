@@ -1,37 +1,37 @@
 name: 'Close stale issues and PRs'
 
 on:
-  schedule:
-    - cron: '31 23 * * *'
+    schedule:
+        - cron: '31 23 * * *'
 
 permissions:
-  issues: write
-  pull-requests: write
+    issues: write
+    pull-requests: write
 
 jobs:
-  stale:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/stale@5f858e3efba33a5ca4407a664cc011ad407f2008 # v10.1.0
-        with:
-          # Don't stale issues
-          days-before-issue-stale: -1
-          days-before-pr-stale: 23
-          days-before-close: 7
-          stale-pr-message: >
-            This PR is stale because it has been opened for more than 3 weeks with no activity. Comment or this will be closed in 7 days.
-          close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
-          close-pr-message: 'This PR was closed because it has been stalled for 7 days with no activity.'
-          exempt-issue-labels: 'dependencies,wait for upstream'
-          exempt-pr-labels: 'dependencies,wait for upstream'
-          any-of-issue-labels: 'more data required'
-  lock:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5.0.1
-        with:
-          github-token: ${{ github.token }}
-          process-only: 'prs'
-          pr-inactive-days: '30'
-          pr-comment: >
-            This pull request has been automatically locked since there has not been any recent activity after it was closed. Please open a new issue for related bugs.
+    stale:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/stale@997185467fa4f803885201cee163a9f38240193d # v10.1.1
+              with:
+                  # Don't stale issues
+                  days-before-issue-stale: -1
+                  days-before-pr-stale: 23
+                  days-before-close: 7
+                  stale-pr-message: >
+                      This PR is stale because it has been opened for more than 3 weeks with no activity. Comment or this will be closed in 7 days.
+                  close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
+                  close-pr-message: 'This PR was closed because it has been stalled for 7 days with no activity.'
+                  exempt-issue-labels: 'dependencies,wait for upstream'
+                  exempt-pr-labels: 'dependencies,wait for upstream'
+                  any-of-issue-labels: 'more data required'
+    lock:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: dessant/lock-threads@1bf7ec25051fe7c00bdd17e6a7cf3d7bfb7dc771 # v5.0.1
+              with:
+                  github-token: ${{ github.token }}
+                  process-only: 'prs'
+                  pr-inactive-days: '30'
+                  pr-comment: >
+                      This pull request has been automatically locked since there has not been any recent activity after it was closed. Please open a new issue for related bugs.

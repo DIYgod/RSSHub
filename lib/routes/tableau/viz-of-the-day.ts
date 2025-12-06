@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 // import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';

@@ -1,13 +1,14 @@
-import { DataItem, Route } from '@/types';
-
-import cache from '@/utils/cache';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
-import { art } from '@/utils/render';
 import path from 'node:path';
+
+import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { getPuppeteerPage } from '@/utils/puppeteer';
 import NotFoundError from '@/errors/types/not-found';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { getPuppeteerPage } from '@/utils/puppeteer';
+import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/profile/:id/:type?/:functionalFlag?',

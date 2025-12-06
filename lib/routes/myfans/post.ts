@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { showByUsername, getPostByAccountId, baseUrl } from './utils';
 import path from 'node:path';
+
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+
+import { baseUrl, getPostByAccountId, showByUsername } from './utils';
 
 export const route: Route = {
     path: '/user/:username',
