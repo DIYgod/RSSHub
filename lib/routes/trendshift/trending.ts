@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export const route: Route = {
-    path: '/trending/:language?/:range?/:limit?',
+    path: '/trending/:language?/:range?',
     categories: ['programming'],
     example: '/trendshift/trending',
     parameters: {
@@ -33,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const range = ctx.req.param('range') || undefined;
     const language = ctx.req.param('language') || undefined;
-    const limit = ctx.req.param('limit') || undefined;
+    const limit = ctx.req.query('limit') || undefined;
 
     const params = new URLSearchParams();
     if (range) {
