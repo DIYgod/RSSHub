@@ -9,6 +9,8 @@ import { namespaces } from '../../lib/registry';
 import type { RadarItem } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
 
+process.env.NODE_ENV = 'development';
+
 const __dirname = getCurrentPath(import.meta.url);
 
 const foloAnalysis = await (
