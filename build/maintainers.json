@@ -4203,6 +4203,9 @@
     "zeyugao",
     "ovo-tim"
   ],
+  "/huggingface/models/:group": [
+    "WuNein"
+  ],
   "/huijin-inv/news": [
     "la3rence"
   ],

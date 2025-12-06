@@ -1380,6 +1380,7 @@ export type RoutePath =
   | `/huggingface/blog-community/:sort?`
   | `/huggingface/blog-zh`
   | `/huggingface/daily-papers/:cycle?/:voteFliter?`
+  | `/huggingface/models/:group`
   | `/huijin-inv/news`
   | `/hunanpea/rsks/:guid`
   | `/hunau/gfxy/:category?/:page?`

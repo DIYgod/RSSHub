@@ -22336,6 +22336,14 @@
           "/papers/:cycle"
         ],
         "target": "/huggingface/daily-papers/:cycle"
+      },
+      {
+        "title": "Group Models",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:group/models"
+        ],
+        "target": "/huggingface/models/:group"
       }
     ]
   },
