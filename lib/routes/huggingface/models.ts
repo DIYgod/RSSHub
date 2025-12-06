@@ -87,11 +87,10 @@ async function handler(ctx) {
                         } catch {
                             return item;
                         }
-                    } else if (error instanceof FetchError && error.statusCode === 404) {
-                        // 没有介绍页面的情况
-                        // Example: https://huggingface.co/ianyang02/aita_qwen3-30b/raw/main/README.md
-                        return item;
                     } else {
+                        // 没有介绍页面的情况 error.statusCode === 404
+                        // Example: https://huggingface.co/ianyang02/aita_qwen3-30b/raw/main/README.md
+                        // return item;
                         // 其他错误的情况
                         return item;
                     }
