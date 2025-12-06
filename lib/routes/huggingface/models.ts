@@ -59,7 +59,6 @@ async function handler(ctx) {
                 link,
                 description,
                 pubDate: datetime ? parseDate(datetime) : undefined,
-                datetime,
             };
         })
         .filter((item) => item.title);
