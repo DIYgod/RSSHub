@@ -258,7 +258,7 @@ if (config.debugInfo) {
     // Only enable tracing in debug mode
     app.get('/metrics', metrics);
 }
-if (!config.isPackage) {
+if (!config.isPackage && !process.env.VERCEL_ENV) {
     app.use(
         '/*',
         serveStatic({
