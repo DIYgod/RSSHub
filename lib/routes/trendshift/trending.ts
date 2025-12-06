@@ -50,7 +50,7 @@ async function handler(ctx) {
         };
     });
 
-    const languageText = language ?? 'All Languages';
+    const languageText = language === 'all' ? 'All Languages' : language;
 
     return {
         title: `TrendShift - Daily repositories to explore ( ${languageText})`,
