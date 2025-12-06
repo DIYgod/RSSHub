@@ -1,15 +1,13 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/trending/:language?/:range?',
+    path: '/trending/:language?',
     categories: ['programming'],
     example: '/trendshift/trending',
     parameters: {
-        range: 'Trending range: 1, 7, 30, 360, default all days',
         language: 'Programming language: javascript, typescript, python, etc., or default all languages',
-        limit: 'Number of repositories: 25, 50, 100, default 25',
     },
     features: {
         requireConfig: false,
@@ -31,63 +29,44 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const range = ctx.req.param('range') || undefined;
-    const language = ctx.req.param('language') || undefined;
-    const limit = ctx.req.query('limit') || undefined;
+    const language = ctx.req.param('language') || 'all';
+    const date = parseRelativeDate('1 day ago');
+    const isoDate = new Date(date).toISOString().split('T')[0];
+    const nextAction = '7fcfa70a759dfb860300f6e58d2ba5a6e7d788cb13';
+    const url = 'https://trendshift.io';
+    const { data } = await got.post(url, {
+        json: [isoDate, language],
+        headers: { 'Content-Type': 'application/json', 'next-action': nextAction },
+    });
 
-    const params = new URLSearchParams();
-    if (range) {
-        params.set('trending-range', range);
-    }
-    if (language) {
-        params.set('trending-language', language);
-    }
-    if (limit) {
-        params.set('trending-limit', limit);
-    }
-    const url = `https://trendshift.io/?${params.toString()}`;
-    const { data } = await got(url);
-    const $ = load(data);
+    const jsonData = convertToJson(data);
+    const items = jsonData.map((item) => {
+        const { full_name, repository_stars, repository_forks, repository_language, repository_description } = item;
+        return {
+            title: full_name || 'Repository',
+            description: `${repository_description}\n\nStars: ${repository_stars}\nForks: ${repository_forks}\nLanguage: ${repository_language}`,
+            link: `https://github.com/${full_name}`,
+            category: [repository_language].filter(Boolean),
+        };
+    });
 
-    const items = $('.bg-white.rounded-lg.border.border-gray-300.px-4.py-3.shadow-sm')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const titleLink = $item.find('a.text-primary').first();
-            const title = titleLink.text().trim();
-            const repoLink = titleLink.attr('href');
-            const description = $item.find('.text-gray-500.text-xs').last().text().trim();
-
-            // Extract stars and forks from the stats section
-
-            const starsText = $item.find('.lucide.lucide-star').parent().text().trim();
-            const forksText = $item.find('.lucide.lucide-git-fork').parent().text().trim();
-
-            // Extract language from the language indicator
-            const languageDiv = $item.find('.text-gray-500.flex.items-center.text-xs').first();
-            const languageSpan = languageDiv.contents().text().trim();
-
-            const githubLink = $item.find('a[href*="github.com"]').attr('href');
-
-            return {
-                title: title || 'Repository',
-                description: `${description}\n\nStars: ${starsText}\nForks: ${forksText}\nLanguage: ${languageSpan}`,
-                link: githubLink || `https://trendshift.io${repoLink}`,
-                category: [languageSpan].filter(Boolean),
-            };
-        })
-        .filter((item) => item.title !== 'Repository');
-
-    const rangeText = range ? `${range} days` : 'All Time';
     const languageText = language ?? 'All Languages';
 
     return {
-        title: `TrendShift - Trending Repositories (${rangeText}, ${languageText})`,
+        title: `TrendShift - Daily repositories to explore ( ${languageText})`,
         link: url,
         item: items,
-        description: `Trending GitHub repositories on TrendShift for ${rangeText} in ${languageText}`,
+        description: `An alternative to GitHub Trending, using a consistent scoring algorithm informed by daily engagement metrics`,
         logo: 'https://trendshift.io/favicon.ico',
         icon: 'https://trendshift.io/favicon.ico',
         language: 'en-us',
     } as Data;
+}
+
+function convertToJson(data: string): Array<any> {
+    const line = data.split('\n')[1];
+
+    const idx = line.indexOf(':');
+    const jsonpart = line.slice(idx + 1).trim();
+    return JSON.parse(jsonpart);
 }
