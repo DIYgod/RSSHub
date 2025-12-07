@@ -66,8 +66,7 @@ export default function artTemplatesPlugin(opts = {}) {
                 }
 
                 // Replace the original string inside the call
-                // Always use path.resolve instead of path.join for vercel compatibility
-                const replacedCall = callSrc.replaceAll(strRe, `'${templatesDir}/${newName}'`).replace('path.join', 'path.resolve');
+                const replacedCall = callSrc.replaceAll(strRe, `'${templatesDir}/${newName}'`);
                 mString ||= new MagicString(code);
                 mString.overwrite(match.index, match.index + callSrc.length, replacedCall);
             }
