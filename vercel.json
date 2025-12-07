@@ -1,8 +1,12 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
-    "buildCommand": "pnpm run build:vercel",
-    "outputDirectory": "dist",
+    "outputDirectory": "src",
+    "functions": {
+        "src/server.mjs": {
+            "includeFiles": "./src/templates/**/*.art"
+        }
+    },
     "rewrites": [
         {
             "source": "/favicon.ico",
