@@ -5,7 +5,7 @@
     "outputDirectory": "dist",
     "functions": {
         "index.mjs": {
-            "includeFiles": "templates/**"
+            "includeFiles": "dist/templates/**"
         }
     }
 }
