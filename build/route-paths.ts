@@ -371,6 +371,7 @@ export type RoutePath =
   | `/bmkg/earthquake`
   | `/bmkg/news`
   | `/bnext/`
+  | `/bntnews/:category?`
   | `/bnu/bs/:category?`
   | `/bnu/dwxgb/:category/:type`
   | `/bnu/fdy/:path{.+}?`
