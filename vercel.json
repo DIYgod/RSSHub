@@ -6,5 +6,11 @@
         "src/server.mjs": {
             "includeFiles": "./src/templates/**/*.art"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/favicon.ico",
+            "destination": "/favicon.png"
+        }
+    ]
 }
