@@ -2,10 +2,5 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
     "buildCommand": "pnpm run build:vercel",
-    "outputDirectory": "dist",
-    "functions": {
-        "index.mjs": {
-            "includeFiles": "dist/templates/**"
-        }
-    }
+    "outputDirectory": "dist"
 }
