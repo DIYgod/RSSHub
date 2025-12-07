@@ -83,10 +83,7 @@ async function handler(ctx) {
 
                     item.author = content('.bbs-user-wrapper-content-name-span').first().text();
                     item.pubDate = item.pubDate ?? timezone(parseRelativeDate(content('.second-line-user-info').first().text()), +8);
-                    const artPath = path.join(__dirname, 'templates/description.art');
-                    // eslint-disable-next-line no-console
-                    console.log({ artPath });
-                    item.description = art(artPath, {
+                    item.description = art(path.resolve(__dirname, 'templates/description.art'), {
                         videos,
                         description: content('.bbs-content').first().html(),
                     });
