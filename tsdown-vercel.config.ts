@@ -11,7 +11,13 @@ export default defineConfig({
     shims: true,
     clean: true,
     plugins: [artTemplatesPlugin()],
-    copy: [{ from: 'lib/assets', to: '.vercel/output/static' }],
+    copy: [
+        { from: 'lib/assets', to: '.vercel/output/static' },
+        {
+            from: 'node_modules',
+            to: '.vercel/output/functions/index.func/node_modules',
+        },
+    ],
     hooks: {
         'build:done'() {
             fs.writeFileSync(
