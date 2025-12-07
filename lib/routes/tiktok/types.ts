@@ -94,7 +94,7 @@ export type Item = {
             }[];
         };
     };
-    officalItem: boolean;
+    officalItem: boolean; // Not a typo for "officialItem"
     originalItem: boolean;
     privateItem: boolean;
     secret: boolean;
