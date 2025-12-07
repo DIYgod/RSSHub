@@ -2,5 +2,11 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
     "buildCommand": "pnpm run build:vercel",
-    "outputDirectory": "dist"
+    "outputDirectory": "dist",
+    "rewrites": [
+        {
+            "source": "/favicon.ico",
+            "destination": "/favicon.png"
+        }
+    ]
 }
