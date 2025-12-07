@@ -4,7 +4,7 @@
     "buildCommand": "pnpm run build:vercel",
     "outputDirectory": "dist",
     "functions": {
-        "index.mjs": {
+        "dist/index.mjs": {
             "includeFiles": "dist/templates/**"
         }
     }
