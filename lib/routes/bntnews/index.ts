@@ -30,10 +30,10 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Category',
-    maintainers: [],
+    maintainers: ['iamsnn'],
     handler,
     description: `| Beauty | Fashion | Star | Style+ | Photo | Life | Now |
-|Data | ---- | ---- | ---- | ---- | ---- | ---- |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | bnt003000000 | bnt002000000 | bnt004000000 | bnt007000000 | bnt009000000 | bnt005000000 | bnt008000000 |`,
 };
 
@@ -45,28 +45,24 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: currentUrl,
+        searchParams: {
+            returnType: 'ajax',
+        },
     });
 
-    const $ = load(response.data);
+    const articles = response.data.result?.items || [];
 
-    const list = $('li.article')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const link = $item.find('a.link').attr('href');
-            const title = $item.find('h4.title').text();
-            const description = $item.find('.desc').text();
-            const date = $item.find('.info .date').text();
-            const author = $item.find('.info .writer').text();
+    const list = articles.map((article) => {
+        const link = `${rootUrl}/article/view/${article.aid}`;
 
-            return {
-                title,
-                link: link ? (link.startsWith('http') ? link : `${rootUrl}${link}`) : '',
-                description,
-                pubDate: timezone(parseDate(date), +9),
-                author,
-            };
-        });
+        return {
+            title: article.title,
+            link,
+            description: article.content,
+            pubDate: timezone(parseDate(article.firstPublishDate), +9),
+            author: article.reporter?.[0]?.name || '',
+        };
+    });
 
     const items = await Promise.all(
         list.map((item) =>
