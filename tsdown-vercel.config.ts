@@ -6,7 +6,7 @@ import artTemplatesPlugin from './plugins/rollup-plugin-art-templates.ts';
 
 export default defineConfig({
     entry: ['./lib/server.ts'],
-    outDir: '.vercel/output/functions/index.func',
+    outDir: '.vercel/output/functions/index.func/dist',
     minify: true,
     shims: true,
     clean: true,
