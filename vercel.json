@@ -1,5 +1,10 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
-    "outputDirectory": "dist"
+    "outputDirectory": "dist",
+    "functions": {
+        "src/server.mjs": {
+            "includeFiles": "./src/templates/**/*.art"
+        }
+    }
 }
