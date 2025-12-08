@@ -1,7 +1,5 @@
 import type { Route } from '@/types';
-
 import { load } from 'cheerio';
-
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
