@@ -18,10 +18,10 @@
   # https://devenv.sh/languages/
   languages.javascript = {
     enable = true;
-    package = pkgs.nodejs_22;
+    package = pkgs.nodejs_24;
     pnpm = {
       enable = true;
-      package = pkgs.pnpm_9;
+      package = pkgs.pnpm_10;
     };
   };
 
