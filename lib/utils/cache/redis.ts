@@ -58,12 +58,7 @@ export default {
         if (!status.available || !clients.redisClient) {
             return;
         }
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        value = JSON.stringify(value);
         if (key) {
             if (maxAge !== config.cache.contentExpire) {
                 // intentionally store the cache ttl if it is not the default value

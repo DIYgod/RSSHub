@@ -36,12 +36,7 @@ if (config.cache.type === 'redis') {
         }
     };
     globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        value = JSON.stringify(value);
         if (key && memoryCache) {
             return memoryCache.set(key, value, { ttl: maxAge * 1000 });
         }
