@@ -2,12 +2,18 @@ import path from 'node:path';
 
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
+
+const md = MarkdownIt({
+    html: true,
+    linkify: true,
+});
 
 const baseUrl: string = 'https://www.dgtle.com';
 
@@ -116,4 +122,82 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
     return items;
 };
 
-export { baseUrl, ProcessItems };
+const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem[] =>
+    dataList.slice(0, limit).map((item): DataItem => {
+        const content: string = item.content ? md.render(item.content) : '';
+
+        const title: string = $(content).text();
+        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            images: item.imgs_url.map((src) => ({
+                src,
+            })),
+            description: content,
+        });
+        const pubDate: number | string = item.created_at;
+        const linkUrl: string | undefined = item.url;
+        const categories: string[] = [...new Set((item.tags_info?.map((t) => t.title) ?? []).filter(Boolean) as string[])];
+        const authors: DataItem['author'] = [
+            {
+                name: item.user_name,
+                url: new URL(`user?uid=${item.encode_uid}`, baseUrl).href,
+                avatar: item.avatar_path,
+            },
+        ];
+        const guid: string = `dgtle-${item.id}`;
+        const image: string | undefined = item.imgs_url?.[0];
+        const updated: number | string = item.updated_at ?? pubDate;
+
+        let processedItem: DataItem = {
+            title,
+            description,
+            pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
+            link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+            category: categories,
+            author: authors,
+            guid,
+            id: guid,
+            content: {
+                html: description,
+                text: description,
+            },
+            image,
+            banner: image,
+            updated: updated ? parseDate(updated, 'X') : undefined,
+        };
+
+        const medias: Record<string, Record<string, string>> = (() => {
+            const acc: Record<string, Record<string, string>> = {};
+
+            for (const media of item.imgs_url) {
+                const url: string | undefined = media;
+
+                if (!url) {
+                    continue;
+                }
+
+                const medium: string = 'image';
+
+                const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
+                const key: string = `${medium}${count}`;
+
+                acc[key] = {
+                    url,
+                    medium,
+                    title: '',
+                    description: '',
+                    thumbnail: url,
+                };
+            }
+
+            return acc;
+        })();
+
+        processedItem = {
+            ...processedItem,
+            media: medias,
+        };
+
+        return processedItem;
+    });
+
+export { baseUrl, ProcessFeedItems, ProcessItems };
