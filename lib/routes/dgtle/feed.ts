@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    const items: DataItem[] = await ProcessFeedItems(limit, response.data.dataList, $);
+    const items: DataItem[] = ProcessFeedItems(limit, response.data.dataList, $);
 
     return {
         title: $('title').text(),
