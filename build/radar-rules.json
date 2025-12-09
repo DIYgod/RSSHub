@@ -14323,6 +14323,14 @@
         "target": "/dgtle/news/388"
       },
       {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/$tag-:id-/d+.html"
+        ],
+        "target": "/dgtle/tag/:id"
+      },
+      {
         "title": "视频",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [

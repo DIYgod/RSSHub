@@ -2188,6 +2188,9 @@
   "/dgtle/news/:id?": [
     "nczitzk"
   ],
+  "/dgtle/tag/:id": [
+    "nczitzk"
+  ],
   "/dgtle/video": [
     "nczitzk"
   ],

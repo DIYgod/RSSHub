@@ -728,6 +728,7 @@ export type RoutePath =
   | `/dgtle/article/:id?/:pushed?`
   | `/dgtle/feed`
   | `/dgtle/news/:id?`
+  | `/dgtle/tag/:id`
   | `/dgtle/video`
   | `/dgut/jwb/:type?`
   | `/dhu/jiaowu/news/:type?`
