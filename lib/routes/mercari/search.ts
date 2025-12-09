@@ -1,3 +1,4 @@
+import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
@@ -87,7 +88,9 @@ async function handler(ctx) {
     const { keyword, sort, order, status, options } = parseSearchQuery(queryString);
     const searchItems = (await fetchSearchItems(sort, order, status, keyword, options)).items;
 
-    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
+    const items = await Promise.all(
+        searchItems.map((item) => cache.tryGet(`mercari:${item.id}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)), config.cache.routeExpire, false))
+    );
 
     return {
         title: `${keyword} の検索結果`,
