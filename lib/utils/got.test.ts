@@ -53,7 +53,7 @@ describe('got', () => {
     });
 
     it('buffer-get', async () => {
-        const response = await got.get('http://example.com', {
+        const response = await got.get('http://rsshub.test/headers', {
             responseType: 'buffer',
         });
         expect(response.body instanceof Buffer).toBe(true);
