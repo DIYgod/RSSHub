@@ -97,7 +97,7 @@ async function handler(ctx) {
                     const detailResp = await got(item.link);
                     const $ = load(detailResp.data);
 
-                    const content = $('div.p-page__detail.p-article');
+                    const content = $('.p-article__content');
                     for (const v of content.find('img')) {
                         v.attribs.src = 'https://www.lovelive-anime.jp' + v.attribs.src;
                     }
