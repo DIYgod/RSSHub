@@ -1,7 +1,8 @@
-import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:lang/:module',
