@@ -296,7 +296,7 @@ async function handler(ctx): Promise<Data> {
         })) satisfies DataItem[];
 
     return {
-        title: `Search - ${keyword}`,
+        title: `Carousell ${region.toUpperCase()} Search - ${keyword}`,
         item: items,
     };
 }
