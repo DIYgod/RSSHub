@@ -1320,6 +1320,9 @@
   "/cara/timeline/:user": [
     "KarasuShin"
   ],
+  "/carousell/:region/:keyword": [
+    "TonyRL"
+  ],
   "/cartoonmad/comic/:id": [
     "KellyHwong"
   ],
