@@ -103,32 +103,37 @@ async function getAccountIdByAcct(acct) {
     const search_url = `https://${site}/api/v2/search`;
     const cacheUid = `mastodon_acct_id/${site}/${acct}`;
 
-    const account_id = await cache.tryGet(cacheUid, async () => {
-        const search_response = await got({
-            method: 'get',
-            url: search_url,
-            headers: apiHeaders(site),
-            searchParams: {
-                q: acct,
-                type: 'accounts',
-            },
-        });
-        const [acctUser, acctHost] = acct.split('@').filter(Boolean);
-        let acctOnServer;
+    const account_id = await cache.tryGet(
+        cacheUid,
+        async () => {
+            const search_response = await got({
+                method: 'get',
+                url: search_url,
+                headers: apiHeaders(site),
+                searchParams: {
+                    q: acct,
+                    type: 'accounts',
+                },
+            });
+            const [acctUser, acctHost] = acct.split('@').filter(Boolean);
+            let acctOnServer;
 
-        if (acctHost) {
-            acctOnServer = acctHost === acctDomain ? acctUser : acctUser + '@' + acctHost;
-        } else {
-            acctOnServer = acctUser;
-        }
+            if (acctHost) {
+                acctOnServer = acctHost === acctDomain ? acctUser : acctUser + '@' + acctHost;
+            } else {
+                acctOnServer = acctUser;
+            }
 
-        const accountData = search_response.data.accounts.filter((item) => item.acct === acctOnServer);
+            const accountData = search_response.data.accounts.filter((item) => item.acct === acctOnServer);
 
-        if (accountData.length === 0) {
-            throw new Error(`acct ${acct} not found`);
-        }
-        return accountData[0].id;
-    });
+            if (accountData.length === 0) {
+                throw new Error(`acct ${acct} not found`);
+            }
+            return accountData[0].id;
+        },
+        config.cache.contentExpire,
+        false
+    );
     return { site, account_id };
 }
 
