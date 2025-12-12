@@ -96,7 +96,7 @@
         "html-to-text": "9.0.5",
         "http-cookie-agent": "7.0.3",
         "https-proxy-agent": "7.0.6",
-        "iconv-lite": "0.7.0",
+        "iconv-lite": "0.7.1",
         "imapflow": "1.1.1",
         "instagram-private-api": "1.46.1",
         "ioredis": "5.8.2",
