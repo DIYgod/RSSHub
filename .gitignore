@@ -12,6 +12,9 @@
 .yarn
 .yarnrc.yml
 .pnp*
+.direnv
+.devenv
+.pre-commit-config.yaml
 
 *.swp
 *.iml
