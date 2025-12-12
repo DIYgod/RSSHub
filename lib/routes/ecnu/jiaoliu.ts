@@ -52,7 +52,7 @@ export const route: Route = {
 
         return {
             title: '本科生交流通知',
-            link: 'http://www.jiaoliu.ecnu.edu.cn/',
+            link: baseUrl,
             item: items,
         };
     },

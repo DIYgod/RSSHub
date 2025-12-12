@@ -43,8 +43,9 @@ export const route: Route = {
         const response = await got(baseUrl);
         const $ = load(response.data);
 
-        const filteredEls = $('div.limit_style1 > table > tbody > tr > td')
-            .filter((_, el) => $(el).closest('div').attr('frag') === fragList[type].frag)
+        const filteredEls = $('div.limit_style1')
+            .filter((_, el) => $(el).attr('frag') === fragList[type].frag)
+            .find('table > tbody > tr > td')
             .toArray();
         const links = filteredEls.map((el) => ({
             pubDate: timezone(parseDate($(el).find('.data').text()), +8),
@@ -57,8 +58,8 @@ export const route: Route = {
                     if (item.link.split('.').pop() === 'htm') {
                         const { data } = await got(item.link);
                         const $ = load(data);
-                        const $read = $('div.wp_articlecontent').length <= 0 ? $('div.m3nEditor') : $('div.wp_articlecontent');
-                        $read.find('img[src], a[href]').each((i, el) => {
+                        const $read = $('div.wp_articlecontent').length > 0 ? $('div.wp_articlecontent') : $('div.m3nEditor');
+                        $read.find('img[src], a[href]').each((_, el) => {
                             const $el = $(el);
                             const attr = el.tagName === 'img' ? 'src' : 'href';
                             const val = $el.attr(attr);
@@ -79,7 +80,7 @@ export const route: Route = {
 
         return {
             title: fragList[type].session,
-            link: 'http://www.cxcy.ecnu.edu.cn/',
+            link: baseUrl,
             item: items,
         };
     },
