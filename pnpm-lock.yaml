@@ -150,8 +150,8 @@ importers:
         specifier: 0.7.1
         version: 0.7.1
       imapflow:
-        specifier: 1.1.1
-        version: 1.1.1
+        specifier: 1.2.0
+        version: 1.2.0
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -2688,9 +2688,6 @@ packages:
   '@vitest/utils@4.0.9':
     resolution: {integrity: sha512-cEol6ygTzY4rUPvNZM19sDf7zGa35IYTm9wfzkHoT/f5jX10IOY7QleWSOh5T0e3I3WVozwK5Asom79qW8DiuQ==}
 
-  '@zone-eu/mailsplit@5.4.7':
-    resolution: {integrity: sha512-jApX86aDgolMz08pP20/J2zcns02NSK3zSiYouf01QQg4250L+GUAWSWicmS7eRvs+Z7wP7QfXrnkaTBGrIpwQ==}
-
   '@zone-eu/mailsplit@5.4.8':
     resolution: {integrity: sha512-eEyACj4JZ7sjzRvy26QhLgKEMWwQbsw1+QZnlLX+/gihcNH07lVPOcnwf5U6UAL7gkc//J3jVd76o/WS+taUiA==}
 
@@ -4133,8 +4130,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.1.1:
-    resolution: {integrity: sha512-cgK0eGagmw8C3pY6IiVLSF52N4bwvNRJ7mog4bdZOTafG90yNgUkShQBjo4/CRqvl/isPcaV1Gc0OmFBdXF0HQ==}
+  imapflow@1.2.0:
+    resolution: {integrity: sha512-xX4L/61Cw6oKKWN6QpQu3eeyWEvn5Qjc/XJf1ycsMSXT4GlAKlYJHaKqQvPf6UdLEPcrVUcdD4noLdfXzsGqQA==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4865,10 +4862,6 @@ packages:
 
   node-releases@2.0.27:
     resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
-
-  nodemailer@7.0.10:
-    resolution: {integrity: sha512-Us/Se1WtT0ylXgNFfyFSx4LElllVLJXQjWi2Xz17xWw7amDKO2MLtFnVp1WACy7GkVGs+oBlRopVNUzlrGSw1w==}
-    engines: {node: '>=6.0.0'}
 
   nodemailer@7.0.11:
     resolution: {integrity: sha512-gnXhNRE0FNhD7wPSCGhdNh46Hs6nm+uTyg+Kq0cZukNQiYdnCsoQjodNP9BQVG9XrcK/v6/MgpAPBUFyzh9pvw==}
@@ -8726,12 +8719,6 @@ snapshots:
       '@vitest/pretty-format': 4.0.9
       tinyrainbow: 3.0.3
 
-  '@zone-eu/mailsplit@5.4.7':
-    dependencies:
-      libbase64: 1.3.0
-      libmime: 5.3.7
-      libqp: 2.1.1
-
   '@zone-eu/mailsplit@5.4.8':
     dependencies:
       libbase64: 1.3.0
@@ -10364,15 +10351,15 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.1.1:
+  imapflow@1.2.0:
     dependencies:
-      '@zone-eu/mailsplit': 5.4.7
+      '@zone-eu/mailsplit': 5.4.8
       encoding-japanese: 2.2.0
       iconv-lite: 0.7.0
       libbase64: 1.3.0
       libmime: 5.3.7
       libqp: 2.1.1
-      nodemailer: 7.0.10
+      nodemailer: 7.0.11
       pino: 10.1.0
       socks: 2.8.7
 
@@ -11179,8 +11166,6 @@ snapshots:
       - utf-8-validate
 
   node-releases@2.0.27: {}
-
-  nodemailer@7.0.10: {}
 
   nodemailer@7.0.11: {}
 
