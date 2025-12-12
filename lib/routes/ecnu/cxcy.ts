@@ -10,14 +10,18 @@ export const route: Route = {
     path: '/cxcy/:type?',
     categories: ['university'],
     example: '/ecnu/cxcy',
+    parameters: { type: '默认为 announcement' },
     radar: [
         {
             source: ['cxcy.ecnu.edu.cn'],
             target: '/cxcy',
         },
     ],
-    name: '本科生院通知',
+    name: '本科创新创业教育网',
     maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
+    description: `| 通知公告     | 新闻动态     | 学科竞赛     | 常用资源     |
+| ------------ | ------------ | ------------ | ------------ |
+| announcement | news         | contest      | resources    |`,
     handler: async (ctx) => {
         const fragList = {
             announcement: {
