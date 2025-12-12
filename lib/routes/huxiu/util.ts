@@ -336,9 +336,9 @@ const processItems = async (items, limit, tryGet) => {
             let guid = '';
             let link = '';
 
-            if (item.moment_id) {
-                guid = `huxiu-moment-${item.moment_id}`;
-                link = item.url || new URL(`moment/${item.moment_id}.html`, rootUrl).href;
+            if (item.object_type === 8) {
+                guid = `huxiu-moment-${item.object_id}`;
+                link = item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href;
             } else if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
                 item.brief_id = item.brief_id ?? item.aid;
                 guid = `huxiu-brief-${item.brief_id}`;
