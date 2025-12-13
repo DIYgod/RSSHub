@@ -21,7 +21,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '校园要闻',
-    maintainers: ['karinido'],
+    maintainers: ['karinido', 'arkylin'],
     handler,
     description: `通知类别
 
