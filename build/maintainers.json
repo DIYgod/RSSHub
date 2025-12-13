@@ -1297,6 +1297,9 @@
   "/camchina/:id?": [
     "nczitzk"
   ],
+  "/canada.ca/news/:lang/:department?": [
+    "elibroftw"
+  ],
   "/cankaoxiaoxi/column/:id?": [
     "yuxinliu-alex",
     "nczitzk"

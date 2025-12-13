@@ -8451,6 +8451,44 @@
       }
     ]
   },
+  "canada.ca": {
+    "_name": "Canada.ca",
+    "www": [
+      {
+        "title": "News by Department",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:lang/department-finance.html",
+          "/:lang/ministere-finances.html",
+          "/:lang/department-finance/news/*",
+          "/:lang/ministere-finances/nouvelles/*"
+        ],
+        "target": "/canada.ca/news/:lang/departmentfinance"
+      },
+      {
+        "title": "News by Department",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/:lang/news/advanced-news-search/news-results.html",
+          "/:lang/nouvelles/recherche-avancee-de-nouvelles/resultats-de-nouvelles.html"
+        ],
+        "target": "/canada.ca/news/:lang"
+      }
+    ],
+    "ised-isde": [
+      {
+        "title": "News by Department",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/site/ised/:lang",
+          "/site/isde/:lang",
+          "/:lang/innovation-science-economic-development/news/*",
+          "/:lang/innovation-sciences-developpement-economique/nouvelles/*"
+        ],
+        "target": "/canada.ca/news/:lang/departmentofindustry"
+      }
+    ]
+  },
   "capitalmind.in": {
     "_name": "Capitalmind",
     ".": [

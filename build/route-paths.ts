@@ -429,6 +429,7 @@ export type RoutePath =
   | `/caixin/weekly`
   | `/caixinglobal/latest`
   | `/camchina/:id?`
+  | `/canada.ca/news/:lang/:department?`
   | `/cankaoxiaoxi/:id?`
   | `/cankaoxiaoxi/column/:id?`
   | `/capitalmind/insights`
