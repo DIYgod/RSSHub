@@ -7,7 +7,7 @@ import EhAPI from './ehapi';
 export const route: Route = {
     path: '/favorites/:favcat?/:order?/:page?/:routeParams?',
     categories: ['picture'],
-    example: '/ehentai/favorites/0/posted/0/bittorrent=true&embed_thumb=false',
+    example: '/ehentai/favorites/0/posted/0/bittorrent=true&embed_thumb=false&my_tags=true',
     parameters: {
         favcat: 'Favorites folder number',
         order: '`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)',
@@ -35,10 +35,11 @@ async function handler(ctx) {
     const favcat = ctx.req.param('favcat') ? Number.parseInt(ctx.req.param('favcat')) : 0;
     const page = ctx.req.param('page');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = routeParams.get('bittorrent') || false;
-    const embed_thumb = routeParams.get('embed_thumb') || false;
+    const bittorrent = routeParams.get('bittorrent') === 'true';
+    const embed_thumb = routeParams.get('embed_thumb') === 'true';
+    const my_tags = routeParams.get('my_tags') === 'true';
     const inline_set = ctx.req.param('order') === 'posted' ? 'fs_p' : 'fs_f';
-    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb);
+    const items = await EhAPI.getFavoritesItems(cache, favcat, inline_set, page, bittorrent, embed_thumb, my_tags);
 
     return EhAPI.from_ex
         ? {
