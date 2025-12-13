@@ -51,17 +51,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('#main-content');
-
-                // Remove meaningless information
-                $(`
-                    [class^="PostDetail_post-heading"],
-                    [class^="ArticleDetail_sidebar-container"],
-                    [class^="QuoteCarousel_carousel-controls"],
-                    [class^="PostDetail_b-social-share"],
-                    [class^="LandingPageSection_root"],
-                    [class^="CodeBlock_controls"]
-                `).remove();
+                const content = $('article > div > div[class*="__body"]');
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);
