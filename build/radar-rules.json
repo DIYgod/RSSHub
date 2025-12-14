@@ -43491,6 +43491,19 @@
       }
     ]
   },
+  "thebrain.com": {
+    "_name": "TheBrain",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/blog"
+        ],
+        "target": "/thebrain/blog"
+      }
+    ]
+  },
   "thegadgetflow.com": {
     "_name": "Gadget Flow",
     ".": [
