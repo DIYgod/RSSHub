@@ -33,18 +33,16 @@ async function handler() {
         },
     });
 
-    const items = response.results
-        .sort((a, b) => b.id - a.id)
-        .map((item) => ({
-            title: item.title,
-            link: item.url,
-            pubDate: parseDate(item.publication_date),
-            author: item.author_name,
-            description: `
+    const items = response.results.map((item) => ({
+        title: item.title,
+        link: item.url,
+        pubDate: parseDate(item.publication_date),
+        author: item.author_name,
+        description: `
             ${item.recommender_name ? `<p>Recommended by: ${item.recommender_name}</p>` : ''}
             ${item.screenshot ? `<img src="${item.screenshot}" alt="Screenshot - ${item.title}">` : ''}
         `,
-        }));
+    }));
 
     return {
         title: 'Read Something Wonderful',
