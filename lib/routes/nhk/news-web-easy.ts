@@ -24,17 +24,54 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www3.nhk.or.jp/news/easy/', 'www3.nhk.or.jp/'],
+            source: ['news.web.nhk/news/easy/', 'news.web.nhk/'],
         },
     ],
     name: 'News Web Easy',
     maintainers: ['Andiedie'],
     handler,
-    url: 'www3.nhk.or.jp/news/easy/',
+    url: 'news.web.nhk/news/easy/',
 };
 
 async function handler(ctx) {
-    const data = await ofetch('https://www3.nhk.or.jp/news/easy/news-list.json');
+    const buildAuthorizeResponse = await ofetch.raw('https://news.web.nhk/tix/build_authorize', {
+        query: {
+            idp: 'a-alaz',
+            profileType: 'abroad',
+            redirect_uri: 'https://news.web.nhk/news/easy/',
+            entity: 'none',
+            area: '130',
+            pref: '13',
+            jisx0402: '13101',
+            postal: '1000001',
+        },
+        redirect: 'manual',
+    });
+    const buildAuthorizeCookie = buildAuthorizeResponse.headers
+        .getSetCookie()
+        .map((c) => c.split(';')[0])
+        .join('; ');
+
+    const authorizeResponse = await ofetch.raw(buildAuthorizeResponse.headers.get('location'), {
+        redirect: 'manual',
+    });
+
+    const idpResponse = await ofetch.raw(authorizeResponse.headers.get('location'), {
+        headers: {
+            cookie: buildAuthorizeCookie,
+        },
+        redirect: 'manual',
+    });
+    const idpCookie = idpResponse.headers
+        .getSetCookie()
+        .map((c) => c.split(';')[0])
+        .join('; ');
+
+    const data = await ofetch('https://news.web.nhk/news/easy/news-list.json', {
+        headers: {
+            cookie: buildAuthorizeCookie + '; ' + idpCookie,
+        },
+    });
     const dates = data[0];
 
     let items = Object.values(dates).flatMap((articles) =>
@@ -46,7 +83,7 @@ async function handler(ctx) {
             }),
             guid: article.news_id,
             pubDate: timezone(parseDate(article.news_prearranged_time), +9),
-            link: `https://www3.nhk.or.jp/news/easy/${article.news_id}/${article.news_id}.html`,
+            link: `https://news.web.nhk/news/easy/${article.news_id}/${article.news_id}.html`,
         }))
     );
 
@@ -55,7 +92,11 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
+                const data = await ofetch(item.link, {
+                    headers: {
+                        cookie: buildAuthorizeCookie + '; ' + idpCookie,
+                    },
+                });
                 const $ = load(data);
                 item.description += $('.article-body').html();
                 return item;
@@ -65,7 +106,7 @@ async function handler(ctx) {
 
     return {
         title: 'NEWS WEB EASY',
-        link: 'https://www3.nhk.or.jp/news/easy/',
+        link: 'https://news.web.nhk/news/easy/',
         description: 'NEWS WEB EASYは、小学生・中学生の皆さんや、日本に住んでいる外国人のみなさんに、わかりやすいことば　でニュースを伝えるウェブサイトです。',
         item: items,
     };
