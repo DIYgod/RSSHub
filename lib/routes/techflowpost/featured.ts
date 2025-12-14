@@ -65,7 +65,7 @@ async function handler(ctx) {
     }));
 
     return {
-        title: '深潮TechFlow - 精选',
+        title: '深潮TechFlow - 精选文章',
         link: currentUrl,
         item: items,
     };
