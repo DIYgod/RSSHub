@@ -5,12 +5,12 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/featured',
+    path: '/featured/:category?',
     categories: ['finance'],
     view: ViewType.Articles,
     example: '/techflowpost/featured',
     parameters: {
-        category: '分类，见下表，默认为全部，如 `/techflowpost/featured?category=1`',
+        category: '分类，见下表，默认为全部',
     },
     features: {
         requireConfig: false,
@@ -35,7 +35,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.query('category') ?? '';
+    const category = ctx.req.param('category') ?? '';
     const limit = ctx.req.query('limit') ?? 50;
 
     const rootUrl = 'https://www.techflowpost.com';
