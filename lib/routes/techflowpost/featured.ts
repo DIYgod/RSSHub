@@ -31,7 +31,22 @@ export const route: Route = {
     url: 'techflowpost.com/article/index.html',
     description: `| 全部 | 行业 & 项目观察 | 项目简介 | 项目动态 | 赛道解读 | 播客笔记 | 交易观察 | VC洞察 | 实用教程 | 人物故事 & 访谈 | 法律 & 监管动态 | 活动动态 | 交易所动态 |
   | ---- | --------------- | -------- | -------- | -------- | -------- | -------- | ------ | -------- | --------------- | --------------- | -------- | ---------- |
-  |      | 1               | 2        | 3        | 4        | 5        | 6        | 7      | 8        | 9               | 10              | 11       | 12         |`,
+  |      | 2040            | 2046     | 2047     | 2045     | 2044     | 2043     | 2042   | 2041     | 2039            | 2033            | 2032     | 2031       |`,
+};
+
+const categoryMap: Record<string, string> = {
+    '2040': '行业 & 项目观察',
+    '2046': '项目简介',
+    '2047': '项目动态',
+    '2045': '赛道解读',
+    '2044': '播客笔记',
+    '2043': '交易观察',
+    '2042': 'VC洞察',
+    '2041': '实用教程',
+    '2039': '人物故事 & 访谈',
+    '2033': '法律 & 监管动态',
+    '2032': '活动动态',
+    '2031': '交易所动态',
 };
 
 async function handler(ctx) {
@@ -44,10 +59,11 @@ async function handler(ctx) {
     const formData: Record<string, string | number> = {
         pageindex: 1,
         pagesize: limit,
+        is_specialnews: 'N',
     };
 
     if (category) {
-        formData.cata_id = category;
+        formData.ncata_id = category;
     }
 
     const { data: response } = await got.post('https://www.techflowpost.com/ashx/index.ashx', {
@@ -64,8 +80,10 @@ async function handler(ctx) {
         description: item.scontent,
     }));
 
+    const categoryName = category && categoryMap[category] ? `（${categoryMap[category]}）` : '';
+
     return {
-        title: '深潮TechFlow - 精选文章',
+        title: `深潮TechFlow - 精选文章${categoryName}`,
         link: currentUrl,
         item: items,
     };
