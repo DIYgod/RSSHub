@@ -8056,6 +8056,9 @@
   "/techflowpost/express": [
     "nczitzk"
   ],
+  "/techflowpost/featured/:category?": [
+    "zhenlohuang"
+  ],
   "/techflowpost/": [
     "nczitzk"
   ],

@@ -43246,6 +43246,14 @@
         "target": "/techflowpost/express"
       },
       {
+        "title": "精选",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/article/index.html"
+        ],
+        "target": "/techflowpost/featured/:category?"
+      },
+      {
         "title": "首页",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
