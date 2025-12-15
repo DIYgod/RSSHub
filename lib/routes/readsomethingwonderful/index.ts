@@ -26,12 +26,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data: response } = await got('https://api.getmatter.com/tools/api/rsw_entries/', {
-        headers: {
-            'User-Agent': 'curl/8.7.1',
-            Accept: '*/*',
-        },
-    });
+    const { data: response } = await got('https://api.getmatter.com/tools/api/rsw_entries/?format=json');
 
     const items = response.results.map((item) => ({
         title: item.title,
