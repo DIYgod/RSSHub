@@ -62,7 +62,7 @@
         "@bbob/preset-html5": "4.3.1",
         "@hono/node-server": "1.19.7",
         "@hono/zod-openapi": "1.1.5",
-        "@notionhq/client": "5.4.0",
+        "@notionhq/client": "5.6.0",
         "@opentelemetry/api": "1.9.0",
         "@opentelemetry/exporter-prometheus": "0.208.0",
         "@opentelemetry/exporter-trace-otlp-http": "0.208.0",
@@ -90,7 +90,7 @@
         "fanfou-sdk": "6.0.0",
         "form-data": "4.0.5",
         "google-play-scraper": "10.1.2",
-        "googleapis": "168.0.0",
+        "googleapis": "169.0.0",
         "header-generator": "2.1.78",
         "hono": "4.11.1",
         "html-to-text": "9.0.5",
@@ -144,7 +144,7 @@
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.9.1",
         "youtubei.js": "16.0.1",
-        "zod": "4.2.0"
+        "zod": "4.2.1"
     },
     "devDependencies": {
         "@babel/preset-env": "7.28.5",
@@ -197,7 +197,7 @@
         "prettier": "3.7.4",
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
-        "tsdown": "0.17.4",
+        "tsdown": "0.18.0",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.1",

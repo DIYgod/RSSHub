@@ -43,10 +43,10 @@ importers:
         version: 1.19.7(hono@4.11.1)
       '@hono/zod-openapi':
         specifier: 1.1.5
-        version: 1.1.5(hono@4.11.1)(zod@4.2.0)
+        version: 1.1.5(hono@4.11.1)(zod@4.2.1)
       '@notionhq/client':
-        specifier: 5.4.0
-        version: 5.4.0
+        specifier: 5.6.0
+        version: 5.6.0
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -129,8 +129,8 @@ importers:
         specifier: 10.1.2
         version: 10.1.2
       googleapis:
-        specifier: 168.0.0
-        version: 168.0.0
+        specifier: 169.0.0
+        version: 169.0.0
       header-generator:
         specifier: 2.1.78
         version: 2.1.78
@@ -291,8 +291,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1
       zod:
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.2.1
+        version: 4.2.1
     devDependencies:
       '@babel/preset-env':
         specifier: 7.28.5
@@ -445,8 +445,8 @@ importers:
         specifier: 7.1.4
         version: 7.1.4
       tsdown:
-        specifier: 0.17.4
-        version: 0.17.4(synckit@0.11.11)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(synckit@0.11.11)(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -1703,8 +1703,8 @@ packages:
     resolution: {integrity: sha512-y3SvzjuY1ygnzWA4Krwx/WaJAsTMP11DN+e21A8Fa8PW1oDtVB5NSRW7LWurAiS2oKRkuCgcjTYMkBuBkcPCRg==}
     engines: {node: '>=12.4.0'}
 
-  '@notionhq/client@5.4.0':
-    resolution: {integrity: sha512-SJsprS26S0Wi9CoTQp4vC8/nPpAIo1gMB4H7aJ2E/k0fWnNGIEAg984KwtzK6h9ZGaPcEaryVRSz1VVClJcVUw==}
+  '@notionhq/client@5.6.0':
+    resolution: {integrity: sha512-eA3dO87vQJhFmR59utXH8r0nnulW7C7oTcxfp3bpiiTiv59luCkOkbbALCIa8TzBDdELoRD/zJEIfKcynyFR6Q==}
     engines: {node: '>=18'}
 
   '@one-ini/wasm@0.1.1':
@@ -3969,8 +3969,8 @@ packages:
     resolution: {integrity: sha512-eCzNACUXPb1PW5l0ULTzMHaL/ltPRADoPgjBlT8jWsTbxkCp6siv+qKJ/1ldaybCthGwsYFYallF7u9AkU4L+A==}
     engines: {node: '>=18.0.0'}
 
-  googleapis@168.0.0:
-    resolution: {integrity: sha512-A1gQtli8/UXjuGnBAwvObwcsIs2xheV82OnmnrrqSOzgzU0gsu18VbOBLh6G8DiMsZze5hJmOJJM7qsVuqAe6g==}
+  googleapis@169.0.0:
+    resolution: {integrity: sha512-IOGMG8tljCZSLvYgdojRu6mB10KEsK0J7X62sXXlQz9koe5BUAW+rqkY3qhQM9wXM6hVL3/Hase7XbxoMyeYiQ==}
     engines: {node: '>=18'}
 
   got@14.6.5:
@@ -5810,8 +5810,8 @@ packages:
       typescript:
         optional: true
 
-  tsdown@0.17.4:
-    resolution: {integrity: sha512-z+kNuv1rwM1POQIufDUVrdNc/uGy0ueRVafCyDH39IdHxin4JXgB8DNGSPoqdIpcOpqUoRbNreK8NxENFmlhKw==}
+  tsdown@0.18.0:
+    resolution: {integrity: sha512-Yotdh3NzizysnqR96xfpHFYtEntk1cZvSRHz8A+Pn3ZHNdTQa4fBQxh6HHzWZwfjdQv47xb7GCv6vEWMtxBirw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -6322,8 +6322,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.2.0:
-    resolution: {integrity: sha512-Bd5fw9wlIhtqCCxotZgdTOMwGm1a0u75wARVEY9HMs1X17trvA/lMi4+MGK5EUfYkXVTbX8UDiDKW4OgzHVUZw==}
+  zod@4.2.1:
+    resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
 
 snapshots:
 
@@ -6362,10 +6362,10 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.2.0)':
+  '@asteasolutions/zod-to-openapi@8.1.0(zod@4.2.1)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 4.2.0
+      zod: 4.2.1
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -7406,18 +7406,18 @@ snapshots:
     dependencies:
       hono: 4.11.1
 
-  '@hono/zod-openapi@1.1.5(hono@4.11.1)(zod@4.2.0)':
+  '@hono/zod-openapi@1.1.5(hono@4.11.1)(zod@4.2.1)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.2.0)
-      '@hono/zod-validator': 0.7.5(hono@4.11.1)(zod@4.2.0)
+      '@asteasolutions/zod-to-openapi': 8.1.0(zod@4.2.1)
+      '@hono/zod-validator': 0.7.5(hono@4.11.1)(zod@4.2.1)
       hono: 4.11.1
       openapi3-ts: 4.5.0
-      zod: 4.2.0
+      zod: 4.2.1
 
-  '@hono/zod-validator@0.7.5(hono@4.11.1)(zod@4.2.0)':
+  '@hono/zod-validator@0.7.5(hono@4.11.1)(zod@4.2.1)':
     dependencies:
       hono: 4.11.1
-      zod: 4.2.0
+      zod: 4.2.1
 
   '@humanfs/core@0.19.1': {}
 
@@ -7638,7 +7638,7 @@ snapshots:
 
   '@nolyfill/side-channel@1.0.44': {}
 
-  '@notionhq/client@5.4.0': {}
+  '@notionhq/client@5.6.0': {}
 
   '@one-ini/wasm@0.1.1': {}
 
@@ -8215,7 +8215,7 @@ snapshots:
     dependencies:
       nanoid: 5.1.5
       type-fest: 5.0.0
-      zod: 4.2.0
+      zod: 4.2.1
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -9601,7 +9601,7 @@ snapshots:
   eslint-compat-utils@0.5.1(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       eslint: 9.39.2(jiti@2.6.1)
-      semver: 7.7.2
+      semver: 7.7.3
 
   eslint-compat-utils@0.6.5(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
@@ -10166,7 +10166,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis@168.0.0:
+  googleapis@169.0.0:
     dependencies:
       google-auth-library: 10.5.0
       googleapis-common: 8.0.1
@@ -12235,7 +12235,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  tsdown@0.17.4(synckit@0.11.11)(typescript@5.9.3):
+  tsdown@0.18.0(synckit@0.11.11)(typescript@5.9.3):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
@@ -12726,4 +12726,4 @@ snapshots:
 
   zod@3.25.76: {}
 
-  zod@4.2.0: {}
+  zod@4.2.1: {}
