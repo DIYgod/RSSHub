@@ -171,8 +171,8 @@
         "@types/node": "25.0.2",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
-        "@typescript-eslint/eslint-plugin": "8.49.0",
-        "@typescript-eslint/parser": "8.49.0",
+        "@typescript-eslint/eslint-plugin": "8.50.0",
+        "@typescript-eslint/parser": "8.50.0",
         "@vercel/nft": "1.1.1",
         "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.37",
@@ -204,7 +204,7 @@
         "vitest": "4.0.9",
         "yaml-eslint-parser": "1.3.2"
     },
-    "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
+    "packageManager": "pnpm@10.26.0+sha512.3b3f6c725ebe712506c0ab1ad4133cf86b1f4b687effce62a9b38b4d72e3954242e643190fc51fa1642949c735f403debd44f5cb0edd657abe63a8b6a7e1e402",
     "engines": {
         "node": "^22.20.0 || ^24"
     },
