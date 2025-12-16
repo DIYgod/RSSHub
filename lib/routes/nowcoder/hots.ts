@@ -2,12 +2,11 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/hots/:type?/:size?',
+    path: '/hots/:type?',
     categories: ['bbs'],
-    example: '/nowcoder/hots/1',
+    example: '/nowcoder/hots/1?size=20',
     parameters: {
         type: '热榜类型, `1` 指热议话题, `2`全站热贴, 默认为热议话题',
-        size: '返回数量, 默认是20',
     },
     features: {
         requireConfig: false,
@@ -23,7 +22,10 @@ export const route: Route = {
         },
     ],
     name: '牛客热榜',
-    description: '牛客热榜,包括热议话题和全站热贴',
+    description: `牛客热榜,包括热议话题和全站热贴
+可选参数：
+- size: 返回列表大小（query 参数，默认 20）
+    `,
     maintainers: ['xia0ne'],
     handler,
     url: 'nowcoder.com/',
@@ -31,7 +33,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? '1';
-    const size = ctx.req.param('size') ?? '20';
+    const rawSize = ctx.req.query('size');
+    const sizeNum = Number.parseInt(rawSize ?? '20', 10);
+    const size = Number.isFinite(sizeNum) && sizeNum > 0 ? sizeNum : 20;
 
     let link = '';
     if (type === '1') {
