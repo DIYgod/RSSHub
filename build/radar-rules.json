@@ -46538,6 +46538,19 @@
       }
     ]
   },
+  "x410.dev": {
+    "_name": "x410",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/x410/news"
+      }
+    ]
+  },
   "xboxfan.com": {
     "_name": "盒心光环",
     ".": [

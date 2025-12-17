@@ -9049,6 +9049,9 @@
   "/x-mol/paper/:type/:magazine": [
     "cssxsh"
   ],
+  "/x410/news": [
+    "nczitzk"
+  ],
   "/x6d/:id?": [
     "nczitzk"
   ],

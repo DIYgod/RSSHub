@@ -2948,6 +2948,7 @@ export type RoutePath =
   | `/wzu/news/:type?`
   | `/x-mol/news/:tag?`
   | `/x-mol/paper/:type/:magazine`
+  | `/x410/news`
   | `/x6d/:id?`
   | `/xaufe/jiaowu/:category?`
   | `/xaut/index/:category?`
