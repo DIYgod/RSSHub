@@ -23,7 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['ganjingworld.com'],
-            target: '/:lang?/channel/:id*',
+            target: '/channel/videos/:id',
         },
     ],
     url: 'www.ganjingworld.com',

@@ -1,7 +1,6 @@
 // RSSHub route for fetching posts from Ganjing World.
 // Returns a list of posts in a channel.
 // Source: https://www.ganjingworld.com
-import sanitizeHtml from 'sanitize-html';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -34,7 +33,7 @@ export const route: Route = {
     radar: [
         {
             source: ['ganjingworld.com'],
-            target: '/:lang?/channel/:id?tab=posts*',
+            target: '/channel/posts/:id',
         },
     ],
     url: 'www.ganjingworld.com',
@@ -57,18 +56,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         parsed.data.list.map((item) => {
             const pubDate = new Date(item.time_scheduled);
-            const raw = item.text || '';
-            const decoded = /\\u003C|\\x3C|&lt;/.test(raw) ? decodeEscapedHtml(raw) : raw;
-            const clean = sanitizeHtml(decoded, {
-                allowedTags: ['p', 'span', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'em', 'strong', 'br', 'blockquote', 'figure', 'img', 'a'],
-                allowedAttributes: {
-                    a: ['href', 'title', 'target', 'rel'],
-                    img: ['src', 'alt', 'width', 'height', 'title', 'loading', 'referrerpolicy'],
-                    span: ['lang', 'dir'],
-                },
-                disallowedTagsMode: 'discard',
-            });
-            const textWithMedia = clean + `<figure><img src="${item.media[0].url}" referrerpolicy="no-referrer"></figure>`;
+            const raw = item.text.replaceAll('\n', '<br>') || '';
+            const textWithMedia = raw + `<figure><img src="${item.media[0].url}"></figure>`;
             return {
                 title: item.title,
                 link: `https://www.ganjingworld.com/news/${item.id}`,
