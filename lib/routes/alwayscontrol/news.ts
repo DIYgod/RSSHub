@@ -3,6 +3,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { load } from 'cheerio';
 
 const baseUrl = 'https://www.alwayscontrol.com.cn';
