@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
     radar: [
         {
-            source: ['www.alwayscontrol.com.cn/zh-CN/news/list', '/'],
+            source: ['www.alwayscontrol.com.cn/zh-CN/news/list'],
             target: '/news',
         },
     ],
