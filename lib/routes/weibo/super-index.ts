@@ -53,7 +53,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'feed';
 
-    const containerData = (await weiboUtils.tryWithCookies((cookies) =>
+    const containerData = (await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:super_index:container:${id}:${type}`,
             async () => {
@@ -69,6 +69,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data.data;
             },
             config.cache.routeExpire,

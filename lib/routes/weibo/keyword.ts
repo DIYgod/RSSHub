@@ -38,7 +38,7 @@ export const route: Route = {
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
-    const data = await weiboUtils.tryWithCookies((cookies) =>
+    const data = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
             `weibo:keyword:${keyword}`,
             async () => {
@@ -51,6 +51,7 @@ async function handler(ctx) {
                         ...weiboUtils.apiHeaders,
                     },
                 });
+                verifier(_r);
                 return _r.data.data.cards;
             },
             config.cache.routeExpire,
