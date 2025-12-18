@@ -3,14 +3,13 @@ import type { FC } from 'hono/jsx';
 import type { Data } from '@/types';
 
 const RSS: FC<{ data: Data }> = ({ data }) => (
-    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas">
+    <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xml:lang={data.language || 'en'}>
         <title>{data.title || 'RSSHub'}</title>
         <link href={data.link || 'https://docs.rsshub.app'} />
         <id>{data.id || data.link}</id>
         <subtitle>{data.description || data.title} - Powered by RSSHub</subtitle>
         <generator>RSSHub</generator>
         <webMaster>contact@rsshub.app (RSSHub)</webMaster>
-        <language>{data.language || 'en'}</language>
         <updated>{data.lastBuildDate}</updated>
         <author>
             <name>{data.author || 'RSSHub'}</name>
