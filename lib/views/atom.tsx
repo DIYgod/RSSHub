@@ -9,7 +9,6 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
         <id>{data.id || data.link}</id>
         <subtitle>{data.description || data.title} - Powered by RSSHub</subtitle>
         <generator>RSSHub</generator>
-        <webMaster>contact@rsshub.app (RSSHub)</webMaster>
         <updated>{data.lastBuildDate}</updated>
         <author>
             <name>{data.author || 'RSSHub'}</name>
