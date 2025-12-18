@@ -22,8 +22,8 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 <content type="html">{item.description}</content>
                 <link href={item.link} />
                 <id>{item.guid || item.link || item.title}</id>
-                {item.pubDate && <published>{item.pubDate}</published>}
-                {item.updated && <updated>{item.updated || item.pubDate}</updated>}
+                {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
+                <updated>{new Date(item.updated || item.pubDate || new Date()).toISOString()}</updated>
                 {item.author && (
                     <author>
                         <name>{item.author}</name>
