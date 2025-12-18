@@ -1,8 +1,11 @@
 .DS_Store
 .cursorrules
+.devenv
+.direnv
 .env
 .eslintcache
 .idea
+.pre-commit-config.yaml
 .log
 .now
 .roomodes
