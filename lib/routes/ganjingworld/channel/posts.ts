@@ -55,7 +55,7 @@ async function handler(ctx) {
     const title = parsed.data.list[0].channel.name;
     const items = await Promise.all(
         parsed.data.list.map((item) => {
-            const pubDate = new Date(item.time_scheduled);
+            const pubDate = new Date(item.timeScheduled);
             const raw = item.text.replaceAll('\n', '<br>') || '';
             const textWithMedia = raw + `<figure><img src="${item.media[0].url}"></figure>`;
             return {

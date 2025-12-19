@@ -3,6 +3,7 @@
 // Source: https://www.ganjingworld.com
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 import type { ApiResponse } from '../interfaces/api';
@@ -44,18 +45,22 @@ async function handler(ctx) {
     }
     const title = parsed.data.list[0].channel.name;
     const items = await Promise.all(
-        parsed.data.list.map(async (item) => {
-            const pubDate = new Date(item.time_scheduled);
-            const fetchArticleUrl = `https://gw.ganjingworld.com/v1.1/content/query?lang=zh-TW&query=basic%2Cfull%2Ctranslations%2Clike%2Cshare%2Csave%2Cview%2Ctag_list&ids=${item.id}`;
-            const parsedArticle: ApiResponse = await ofetch<ApiResponse>(fetchArticleUrl);
-            const description = parsedArticle.data.list[0].text || '';
-            return {
-                title: item.title,
-                link: `https://www.ganjingworld.com/news/${item.id}`,
-                pubDate,
-                description,
-            };
-        })
+        parsed.data.list.map((item) =>
+            cache.tryGet(item.id, async () => {
+                const pubDate = new Date(item.timeScheduled);
+                const fetchArticleUrl = `https://gw.ganjingworld.com/v1.1/content/query?lang=zh-TW&query=basic%2Cfull%2Ctranslations%2Clike%2Cshare%2Csave%2Cview%2Ctag_list&ids=${item.id}`;
+                const parsedArticle: ApiResponse = await ofetch<ApiResponse>(fetchArticleUrl);
+
+                const description = parsedArticle.data.list[0]?.text ?? '';
+
+                return {
+                    title: item.title,
+                    link: `https://www.ganjingworld.com/news/${item.id}`,
+                    pubDate,
+                    description,
+                };
+            })
+        )
     );
 
     return {

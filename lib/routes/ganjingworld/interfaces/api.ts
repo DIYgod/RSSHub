@@ -9,10 +9,10 @@ export interface ListItem {
     title: string;
     description: string;
     id: string;
-    time_scheduled: number;
+    timeScheduled: number;
     channel: Channel;
-    poster_url: string;
-    video_url: string;
+    posterUrl: string;
+    videoUrl: string;
     text: string;
     media: Media[];
 }
