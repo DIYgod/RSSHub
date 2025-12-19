@@ -42,9 +42,9 @@ async function handler(ctx) {
     } else {
         const title = parsed.data.list[0].channel.name;
         const items = parsed.data.list.map((item) => {
-            const pubDate = new Date(item.timeScheduled);
-            const videoUrl = item.videoUrl || (item.media.length > 0 ? item.media[0].url : '');
-            const posterUrl = item.posterUrl || '';
+            const pubDate = new Date(item.time_scheduled);
+            const videoUrl = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
+            const posterUrl = item.poster_url || '';
             const description = item.description;
             if (videoUrl) {
                 item.description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>`;
