@@ -55,7 +55,10 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
                         });
                         item.description = $content.html();
                     }
-                    const preDate = $(contentSelector.date).text().replaceAll(/年|月/g, '-').replaceAll('日', '');
+                    const preDate = $(contentSelector.date)
+                        .text()
+                        .replaceAll(/年|月/g, '-')
+                        .replaceAll('日', '');
                     item.pubDate = timezone(parseDate(preDate), +8);
                 }
                 return item;

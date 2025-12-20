@@ -18,10 +18,7 @@ export async function fetchArticles(path) {
             const link = baseUrl + $element.attr('href');
             return await cache.tryGet(link, async () => {
                 const title = $element.find('h3').text().trim();
-                const author = $element
-                    .find(String.raw`div.text-[16px]`)
-                    .text()
-                    .trim();
+                const author = $element.find(String.raw`div.text-[16px]`).text().trim();
                 const image = $element.find('img').attr('src');
                 const imageUrl = image?.startsWith('/_next/image') ? image.split('url=')[1].split('&')[0] : image;
                 const decodedImageUrl = imageUrl ? decodeURIComponent(imageUrl) : '';

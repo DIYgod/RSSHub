@@ -53,20 +53,10 @@ async function handler(ctx) {
                 ['spa', 'es'],
             ]);
 
-            const title = $(e)
-                .find(String.raw`news\:title`)
-                .text();
-            const pubDate = parseDate(
-                $(e)
-                    .find(String.raw`news\:publication_date`)
-                    .text()
-            );
+            const title = $(e).find(String.raw`news\:title`).text();
+            const pubDate = parseDate($(e).find(String.raw`news\:publication_date`).text());
             const lastmod = timezone(parseDate($(e).find(`lastmod`).text()), -4);
-            const language = LANGUAGE_MAP.get(
-                $(e)
-                    .find(String.raw`news\:language`)
-                    .text()
-            );
+            const language = LANGUAGE_MAP.get($(e).find(String.raw`news\:language`).text());
             let res = { link: $(e).find('loc').text() };
             if (title) {
                 res = Object.assign(res, { title });

@@ -1,0 +1,9 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "printWidth": 233,
+    "tabWidth": 4,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "arrowParens": "always",
+    "ignorePatterns": ["lib/routes-deprecated", "lib/router.js", "babel.config.js", "scripts/docker/minify-docker.js", "dist", "pnpm-lock.yaml"]
+}

@@ -435,6 +435,9 @@ importers:
       node-network-devtools:
         specifier: 1.0.29
         version: 1.0.29(undici@7.16.0)(utf-8-validate@5.0.10)
+      oxfmt:
+        specifier: 0.19.0
+        version: 0.19.0
       prettier:
         specifier: 3.7.4
         version: 3.7.4
@@ -1956,6 +1959,46 @@ packages:
 
   '@oxc-project/types@0.103.0':
     resolution: {integrity: sha512-bkiYX5kaXWwUessFRSoXFkGIQTmc6dLGdxuRTrC+h8PSnIdZyuXHHlLAeTmOue5Br/a0/a7dHH0Gca6eXn9MKg==}
+
+  '@oxfmt/darwin-arm64@0.19.0':
+    resolution: {integrity: sha512-FfNpn3ximwbBZCaS8WL2vAXcFuQFQgvv/brO6D1WdmL4pnFOgfBIpFfkeFnKfdmdpxtg9O0wF8NTcdw5Iyl2Bg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oxfmt/darwin-x64@0.19.0':
+    resolution: {integrity: sha512-31FWUHAgTdTzOslz0zoA60UDEdeZZpeM6wTzCdffetwLbHkK8ZuCuzd+DauHZPNlSU8G72iw4lF7Zve9pSkK9w==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oxfmt/linux-arm64-gnu@0.19.0':
+    resolution: {integrity: sha512-BkU9h39xKj/8uko82uFDJUharM8VxZO+uXKglpBnEC8XxWRzXocVCX4wpLT/Tfk4NyBy6fRM9DeISdZvQKZCjA==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxfmt/linux-arm64-musl@0.19.0':
+    resolution: {integrity: sha512-wWYk6Z/3iC+0zZAUkVCcEHui/IsUqsl+GEm9o6H7oARPLisXajbwCQcmqYslUD7eK6OXdYoWriBkEvSX/5dU4A==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxfmt/linux-x64-gnu@0.19.0':
+    resolution: {integrity: sha512-EB/b3or437E3uDie8QxeU3eA502JcmR1koyIBcH9rFidY0cMik58xvw54tXCY3WpMRxEXf37aHZzUSDP3qJnZg==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxfmt/linux-x64-musl@0.19.0':
+    resolution: {integrity: sha512-htMB45orYoa1oFSjSmoGgcBDsD47/0joDfqpa8TrTDI5qsW5kAedpFR5wSce8Is9oj7SJ07omhOj96P/QiekWA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxfmt/win32-arm64@0.19.0':
+    resolution: {integrity: sha512-x7+3Eh/VWdXEda+BUmAKYlhGrRJVera7RfWw47Yx8PJUGtNqBfeYGDbf0W59ceK8Z3bY3OinrmOO3d1jOuXzMQ==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@oxfmt/win32-x64@0.19.0':
+    resolution: {integrity: sha512-X+FKXBg2jx4CxF5SJs3xpx1msMw5JfxaGD5qBZYqlHGdryQsy6zUY+bQwDDcuy3Ic/WNGD8ZNEuggeYNE7jx/Q==}
+    cpu: [x64]
+    os: [win32]
 
   '@paralleldrive/cuid2@2.2.2':
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
@@ -4964,6 +5007,11 @@ packages:
     resolution: {integrity: sha512-dD4UpyBh/9m4X2NVjA+73/ZPBRF+uF4zIMFvvQsabMiEK8x41L3rQ8EENOi35kyyoaJwNxEeJcP6Fj1H4U409Q==}
     engines: {node: '>=12'}
 
+  oxfmt@0.19.0:
+    resolution: {integrity: sha512-tPTa3j4kXdJBzBRlK9wR0/Lnd4J21rzg29cRr/VVqqfvdhZs6M+Q6TkL+rxI/IQpq8ZY8L3c+KZvga/RgeuMsg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+
   p-cancelable@4.0.1:
     resolution: {integrity: sha512-wBowNApzd45EIKdO1LaU+LrMBwAcjfPaYtVzV3lmfM3gf8Z4CHZsiIqlM8TZZ8okYvh5A1cP6gTfCRQtwUpaUg==}
     engines: {node: '>=14.16'}
@@ -5711,6 +5759,10 @@ packages:
   tinyglobby@0.2.15:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
+
+  tinypool@2.0.0:
+    resolution: {integrity: sha512-/RX9RzeH2xU5ADE7n2Ykvmi9ED3FBGPAjw9u3zucrNNaEBIO0HPSYgL0NT7+3p147ojeSdaVu08F6hjpv31HJg==}
+    engines: {node: ^20.0.0 || >=22.0.0}
 
   tinyrainbow@3.0.3:
     resolution: {integrity: sha512-PSkbLUoxOFRzJYjjxHJt9xro7D+iilgMX/C9lawzVuYiIdcihh9DXmVibBe8lmcFrRi/VzlPjBxbN7rH24q8/Q==}
@@ -7956,6 +8008,30 @@ snapshots:
       '@otplib/plugin-thirty-two': 12.0.1
 
   '@oxc-project/types@0.103.0': {}
+
+  '@oxfmt/darwin-arm64@0.19.0':
+    optional: true
+
+  '@oxfmt/darwin-x64@0.19.0':
+    optional: true
+
+  '@oxfmt/linux-arm64-gnu@0.19.0':
+    optional: true
+
+  '@oxfmt/linux-arm64-musl@0.19.0':
+    optional: true
+
+  '@oxfmt/linux-x64-gnu@0.19.0':
+    optional: true
+
+  '@oxfmt/linux-x64-musl@0.19.0':
+    optional: true
+
+  '@oxfmt/win32-arm64@0.19.0':
+    optional: true
+
+  '@oxfmt/win32-x64@0.19.0':
+    optional: true
 
   '@paralleldrive/cuid2@2.2.2':
     dependencies:
@@ -11287,6 +11363,19 @@ snapshots:
       lodash.isequal: 4.5.0
       vali-date: 1.0.0
 
+  oxfmt@0.19.0:
+    dependencies:
+      tinypool: 2.0.0
+    optionalDependencies:
+      '@oxfmt/darwin-arm64': 0.19.0
+      '@oxfmt/darwin-x64': 0.19.0
+      '@oxfmt/linux-arm64-gnu': 0.19.0
+      '@oxfmt/linux-arm64-musl': 0.19.0
+      '@oxfmt/linux-x64-gnu': 0.19.0
+      '@oxfmt/linux-x64-musl': 0.19.0
+      '@oxfmt/win32-arm64': 0.19.0
+      '@oxfmt/win32-x64': 0.19.0
+
   p-cancelable@4.0.1: {}
 
   p-limit@3.1.0:
@@ -12159,6 +12248,8 @@ snapshots:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
+
+  tinypool@2.0.0: {}
 
   tinyrainbow@3.0.3: {}
 
