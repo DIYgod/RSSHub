@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 import type { HomePostItem, HupuApiResponse, NewsDataItem } from './types';
 import { isHomePostItem } from './types';
-import { getEntryDetails } from './utils';
+import { extractNextData, getEntryDetails } from './utils';
 
 const categories = {
     nba: {
@@ -67,21 +67,7 @@ export const route: Route = {
             url: currentUrl,
         });
 
-        const scriptMatch = response.data.match(/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/);
-        if (!scriptMatch || !scriptMatch[1]) {
-            throw new Error(`Failed to find __NEXT_DATA__ script tag in page: ${currentUrl}`);
-        }
-
-        const fullJsonString = scriptMatch[1];
-        let fullData;
-
-        try {
-            fullData = JSON.parse(fullJsonString);
-        } catch (error) {
-            throw new Error(`Failed to parse full JSON data: ${error instanceof Error ? error.message : String(error)}`);
-        }
-
-        const data: HupuApiResponse = fullData;
+        const data = extractNextData<HupuApiResponse>(response.data, currentUrl);
         const { pageProps } = data.props;
 
         const dataKey = categories[category].data;
