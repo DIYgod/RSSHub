@@ -71,6 +71,7 @@ async function handler(ctx) {
                 const pubDate = head.datePublished;
                 const descriptionDom = $('div[data-cy=storyWrapper]');
                 descriptionDom.find('div[class=share]').remove();
+                descriptionDom.find('div[class^="textToSpeech"]').remove();
                 const description = descriptionDom.html();
 
                 return { title, author, pubDate, description, link };
