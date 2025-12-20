@@ -1,4 +1,3 @@
-import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
@@ -59,9 +58,7 @@ async function handler(ctx) {
     const { sort, order, status, keyword } = ctx.req.param();
     const statusArray = MercariStatus[status] ? [MercariStatus[status]] : [];
     const searchItems = (await fetchSearchItems(MercariSort[sort], MercariOrder[order], statusArray, keyword)).items;
-    const items = await Promise.all(
-        searchItems.map((item) => cache.tryGet(`mercari:${item.id}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)), config.cache.routeExpire, false))
-    );
+    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
 
     return {
         title: `${keyword} の検索結果`,
