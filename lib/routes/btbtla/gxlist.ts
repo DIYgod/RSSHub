@@ -32,9 +32,6 @@ async function handler() {
                 title,
                 link: link ? `https://btbtla.com${link}` : '',
                 description: `大小: ${size}, 下载量: ${views}, 时间: ${time}`,
-                size,
-                views,
-                time,
             };
         });
 
