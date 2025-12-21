@@ -1988,6 +1988,7 @@ export type RoutePath =
   | `/njxzc/tzgg`
   | `/nlc/read/:type?`
   | `/nltimes/news/:category?`
+  | `/nmc/publish/:id{.+}?`
   | `/nmc/weatheralarm/:province?`
   | `/nmtv/column/:id?`
   | `/nodejs/blog/:language?`

@@ -6045,6 +6045,9 @@
   "/nltimes/news/:category?": [
     "Hivol"
   ],
+  "/nmc/publish/:id{.+}?": [
+    "nczitzk"
+  ],
   "/nmc/weatheralarm/:province?": [
     "ylc395"
   ],
