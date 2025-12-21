@@ -72,6 +72,7 @@ const oFetch = (url, ...options) =>
         ...options,
         headers: {
             host: 'nhentai.net',
+            'user-agent': config.trueUA,
         },
     });
 
@@ -105,6 +106,7 @@ const parseSimpleDetail = ($ele) => {
     const highResoThumbSrc = thumbSrc
         .replace('thumb', '1')
         .replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net')
+        .replace(/\.(jpg|png|gif)\.webp$/, '.$1')
         .replace('.webp.webp', '.webp');
     return {
         title: $ele.children('.caption').text(),
