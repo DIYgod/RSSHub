@@ -392,6 +392,7 @@ export type RoutePath =
   | `/bsky/profile/:handle/feed/:space/:routeParams?`
   | `/bt0/mv/:number/:domain?`
   | `/bt0/tlist/:sc/:domain?`
+  | `/btbtla/gxlist`
   | `/btzj/:category?`
   | `/buaa/jiaowu/:cddm?`
   | `/buaa/lib/space/:path{newbook.*}`
