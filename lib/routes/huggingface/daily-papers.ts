@@ -81,6 +81,7 @@ async function handler(ctx) {
         .toSorted((a, b) => b.upvotes - a.upvotes);
 
     return {
+        allowEmpty: true,
         title: 'Huggingface Daily Papers',
         link: 'https://huggingface.co/papers',
         item: items,
