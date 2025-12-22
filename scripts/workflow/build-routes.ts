@@ -4,12 +4,16 @@ import path from 'node:path';
 import { parse } from 'tldts';
 import toSource from 'tosource';
 
-import { config } from '../../lib/config';
-import { namespaces } from '../../lib/registry';
 import type { RadarItem } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);
+
+// Ignore Redis and remote config in route generation to avoid side effects.
+process.env.REDIS_URL = '';
+process.env.REMOTE_CONFIG = '';
+
+const [{ config }, { namespaces }] = await Promise.all([import('../../lib/config'), import('../../lib/registry')]);
 
 type FoloAnalysis = Record<string, { subscriptionCount: number; topFeeds: any[] }>;
 
