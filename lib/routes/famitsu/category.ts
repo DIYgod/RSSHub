@@ -77,6 +77,7 @@ function renderJSON(c) {
         case 'ITEMIZATION':
         case 'ITEMIZATION_NUM':
         case 'NOLINK':
+        case 'PBOX':
         case 'STRING':
         case 'TWITTER':
         case 'YOUTUBE':
@@ -85,6 +86,7 @@ function renderJSON(c) {
         case 'BUTTON_ANDROID':
         case 'BUTTON_EC':
         case 'BUTTON_IOS':
+        case 'BUTTON_QUESTION':
         case 'BUTTON_TAB':
         case 'LINK':
         case 'LINK_TAB':
