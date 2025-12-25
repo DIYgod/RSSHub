@@ -108,7 +108,7 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@d1d51fccf39469b5458203b1369060db0ff0c0db # v3.7.4
+              uses: actions-cool/issues-helper@e2ff99831a4f13625d35064e2b3dfe65c07a0396 # v3.7.5
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -135,7 +135,7 @@ jobs:
                   sourceRunId: ${{ github.event.workflow_run.id }}
 
             - name: Pull Request Labeler
-              uses: actions-cool/issues-helper@d1d51fccf39469b5458203b1369060db0ff0c0db # v3.7.4
+              uses: actions-cool/issues-helper@e2ff99831a4f13625d35064e2b3dfe65c07a0396 # v3.7.5
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
