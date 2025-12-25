@@ -5,9 +5,10 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { puppeteerGet } from './utils';
 
 const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
@@ -63,16 +64,17 @@ export const route: Route = {
 | 155      | 125      | 50       | 48       | 49       | 117      | 165      |`,
 };
 
-const getSafeId = (host) =>
+const getSafeId = (headers, host) =>
     cache.tryGet(
         'sehuatang:safeid',
         async () => {
-            const response = await ofetch(host);
-            const $ = load(response);
+            const current = await puppeteerGet(headers, host);
+            const $ = load(current.response);
             const safeId =
                 $('script:contains("safeid")')
                     .text()
                     .match(/safeid\s*=\s*'(.+)';/)?.[1] || '';
+            logger.debug(`safeId: ${safeId}`);
             return safeId;
         },
         config.cache.routeExpire,
@@ -85,18 +87,21 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
     const host = `https://${domain}/`;
-    logger.http(`Requesting host ${host}`);
 
     const { subforumid = '103', type } = ctx.req.param();
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumid}${typefilter}`;
-    const headers = {
-        Cookie: `_safe=${await getSafeId(host)};`,
+
+    const cookiesSafeId = `_safe=${await getSafeId(null, host)};`;
+
+    const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0',
+        Cookie: cookiesSafeId,
     };
-    const response = await ofetch(link, {
-        headers,
-    });
-    const $ = load(response);
+
+    const current = await puppeteerGet(headers, link);
+    headers.Cookie = current.cookiesStr + '; ' + cookiesSafeId;
+    const $ = load(current.response);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
@@ -118,9 +123,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const response = await ofetch(info.link, {
-                    headers,
-                });
+                const response = await puppeteerGet(headers, info.link).then((res) => res.response);
 
                 const $ = load(response);
                 const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
