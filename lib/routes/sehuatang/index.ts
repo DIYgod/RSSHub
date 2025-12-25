@@ -12,6 +12,8 @@ import { puppeteerGet } from './utils';
 
 const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
+const imageProxyList = ['https://cdn.cdnjson.com/pic.html?url=', 'https://image.baidu.com/search/down?url='];
+
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
     example: '/sehuatang/103',
@@ -86,6 +88,7 @@ async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
+    const imageProxy = (ctx.req.query('imageProxy') ?? '-1').toString();
     const host = `https://${domain}/`;
 
     const { subforumid = '103', type } = ctx.req.param();
@@ -133,7 +136,17 @@ async function handler(ctx) {
                     if (!file || file === 'undefined') {
                         $(image).replaceWith('');
                     } else {
-                        $(image).replaceWith($(`<img src="${file}">`));
+                        let imageURL = file;
+                        try {
+                            new URL(imageProxy);
+                            imageURL = `${imageProxy}${encodeURIComponent(file)}`;
+                        } catch {
+                            const proxyIndex = Number.parseInt(imageProxy, 10);
+                            if (proxyIndex !== -1 && imageProxyList[proxyIndex]) {
+                                imageURL = `${imageProxyList[proxyIndex]}${encodeURIComponent(file)}`;
+                            }
+                        }
+                        $(image).replaceWith($(`<img src="${imageURL}">`));
                     }
                 }
                 // also parse image url from `.pattl`
