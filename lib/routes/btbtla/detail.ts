@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 export const route: Route = {
     path: '/detail/:name',
     categories: ['multimedia'],
-    example: '/detail/雍正王朝',
+    example: '/btbtla/detail/雍正王朝',
     parameters: { name: '电影 | 电视剧名称' },
     features: {
         requireConfig: false,
