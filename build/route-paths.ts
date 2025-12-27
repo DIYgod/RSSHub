@@ -862,6 +862,7 @@ export type RoutePath =
   | `/ecnu/chinese`
   | `/ecnu/comm`
   | `/ecnu/cs`
+  | `/ecnu/cxcy/:type?`
   | `/ecnu/dase`
   | `/ecnu/dx`
   | `/ecnu/dxb`
@@ -869,6 +870,7 @@ export type RoutePath =
   | `/ecnu/geoai`
   | `/ecnu/ghcollege`
   | `/ecnu/history`
+  | `/ecnu/jiaoliu`
   | `/ecnu/jwc`
   | `/ecnu/mks`
   | `/ecnu/mxcsy`

@@ -15469,6 +15469,16 @@
         "target": "/ecnu/cs"
       }
     ],
+    "cxcy": [
+      {
+        "title": "本科创新创业教育网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/cxcy"
+      }
+    ],
     "dase": [
       {
         "title": "数据科学与工程学院通知公告",
@@ -15537,6 +15547,16 @@
           "/"
         ],
         "target": "/ecnu/history"
+      }
+    ],
+    "www.jiaoliu": [
+      {
+        "title": "本科生交流通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/ecnu/jiaoliu"
       }
     ],
     "www.jwc": [
