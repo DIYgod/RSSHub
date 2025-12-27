@@ -5,12 +5,12 @@ import { namespace } from './namespace';
 import { apiBaseUrl, baseUrl, parseList, processItems } from './utils';
 
 export const route: Route = {
-    path: '/tag/:tagId',
+    path: '/news/tag/:tagId',
     parameters: {
         tagId: '标签 ID',
     },
     categories: namespace.categories,
-    example: '/foodtalks/tag/13335',
+    example: '/foodtalks/news/tag/13335',
     radar: [
         {
             source: ['www.foodtalks.cn/news/tag/:tagId'],
