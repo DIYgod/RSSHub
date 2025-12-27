@@ -1,74 +1,98 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const host = 'https://www.sehuatang.net/';
+import { puppeteerGet } from './utils';
 
-const forumIdMaps = {
-    // 原创 BT 电影
-    gcyc: '2', //     国产原创
-    yzwmyc: '36', //  亚洲无码原创
-    yzymyc: '37', //  亚洲有码原创
-    gqzwzm: '103', // 高清中文字幕
-    sjxz: '107', //   三级写真
-    vr: '160', //     VR 视频
-    srym: '104', //   素人有码
-    omwm: '38', //    欧美无码
-    '4k': '151', //   4K 原版
-    hgzb: '152', //   韩国主播
-    dmyc: '39', //    动漫原创
-    // 色花图片
-    yczp: '155', //   原创自拍
-    ztzp: '125', //   转贴自拍
-    hrjp: '50', //    华人街拍
-    yzxa: '48', //    亚洲性爱
-    omxa: '49', //    欧美性爱
-    ktdm: '117', //   卡通动漫
-    ttxz: '165', //   套图下载
+const allowDomain = new Set(['www.sehuatang.net', 'www.sehuatang.org']);
 
-    zhtl: '95', //    综合讨论
-    // no longer updated/available
-    mrhj: '106', //   每日合集
-    ai: '113', //     AI 换脸电影
-    ydsc: '111', //   原档收藏 WMV
-    hrxazp: '98', //  华人性爱自拍
-};
+const imageProxyList = ['https://cdn.cdnjson.com/pic.html?url=', 'https://image.baidu.com/search/down?url='];
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
+    example: '/sehuatang/103',
+    parameters: {
+        subforumid: {
+            description: '板块 ID ',
+            options: [
+                { value: 'forum_01', label: '== 原创 BT 电影 ==' },
+                { value: '2', label: '国产原创' },
+                { value: '36', label: '亚洲无码原创' },
+                { value: '37', label: '亚洲有码原创' },
+                { value: '103', label: '高清中文字幕' },
+                { value: '107', label: '三级写真' },
+                { value: '160', label: 'VR 视频' },
+                { value: '104', label: '素人有码' },
+                { value: '38', label: '欧美无码' },
+                { value: '152', label: '韩国主播' },
+                { value: '39', label: '动漫原创' },
+                { value: '95', label: '综合讨论' },
+                { value: 'forum_02', label: '== 色花图片 ==' },
+                { value: '155', label: '原创自拍' },
+                { value: '125', label: '转贴自拍' },
+                { value: '50', label: '华人街拍' },
+                { value: '48', label: '亚洲性爱' },
+                { value: '49', label: '欧美性爱' },
+                { value: '117', label: '卡通动漫' },
+                { value: '165', label: '套图下载' },
+            ],
+        },
+        type: {
+            description: '分类 ID, 可选,  板块内子分类 请参考论坛',
+        },
+    },
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,
     features: {
         nsfw: true,
     },
-    description: `**原创 BT 电影**
+    description: `
+    
+  **原创 BT 电影**
 
 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
 | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-| gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
+| 2        | 36           | 37           | 103          | 107      | 160     | 104      | 38       | 152      | 39       | 95       |
 
   **色花图片**
 
 | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
+| 155      | 125      | 50       | 48       | 49       | 117      | 165      |
+
+  **query 参数说明**
+- 'domain' ：可选，指定论坛域名，默认为 'www.sehuatang.net'。如果需要使用其他域名，请确保已在配置中启用 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' 选项。
+- 'imageProxy' ：可选，指定图片代理前缀，默认为 '-1'。可以设置为具体的 URL 前缀，或者使用内置的图片代理索引（0 或 1）。设置为 '-1' 则不使用图片代理。
+
+    内置图片代理列表：
+
+    0 = https://cdn.cdnjson.com/pic.html?url=
+    
+    1 = https://image.baidu.com/search/down?url=
+
+    也可以直接使用自建的代理 URL 前缀。
+
+  `,
 };
 
-const getSafeId = () =>
+const getSafeId = (headers, host) =>
     cache.tryGet(
         'sehuatang:safeid',
         async () => {
-            const response = await ofetch(host);
-            const $ = load(response);
-            const safeId = $('script:contains("safeid")')
-                .text()
-                .match(/safeid\s*=\s*'(.+)';/)?.[1];
+            const current = await puppeteerGet(headers, host);
+            const $ = load(current.response);
+            const safeId =
+                $('script:contains("safeid")')
+                    .text()
+                    .match(/safeid\s*=\s*'(.+)';/)?.[1] || '';
+            logger.debug(`safeId: ${safeId}`);
             return safeId;
         },
         config.cache.routeExpire,
@@ -76,40 +100,49 @@ const getSafeId = () =>
     );
 
 async function handler(ctx) {
-    const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
-    const subformId = subformName in forumIdMaps ? forumIdMaps[subformName] : subformName;
-    const type = ctx.req.param('type');
+    const domain = ctx.req.query('domain') ?? 'www.sehuatang.net';
+    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+    }
+    const imageProxy = (ctx.req.query('imageProxy') ?? '-1').toString();
+    const host = `https://${domain}/`;
+
+    const { subforumid = '103', type } = ctx.req.param();
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
-    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
-    const headers = {
-        Cookie: `_safe=${await getSafeId()};`,
+    const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subforumid}${typefilter}`;
+
+    const cookiesSafeId = `_safe=${await getSafeId(null, host)};`;
+
+    const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0',
+        Cookie: cookiesSafeId,
     };
 
-    const response = await ofetch(link, {
-        headers,
-    });
-    const $ = load(response);
+    const current = await puppeteerGet(headers, link);
+    headers.Cookie = current.cookiesStr + '; ' + cookiesSafeId;
+    const $ = load(current.response);
 
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
         .map((item) => {
-            item = $(item);
-            const hasCategory = item.find('th em a').length;
+            const $item = $(item);
+            const hasCategory = $item.find('th em a').length;
             return {
-                title: `${hasCategory ? `[${item.find('th em a').text()}]` : ''} ${item.find('a.xst').text()}`,
-                link: host + item.find('a.xst').attr('href'),
-                pubDate: parseDate(item.find('td.by').find('em span span').attr('title')),
-                author: item.find('td.by cite a').first().text(),
+                title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
+                link: host + $item.find('a.xst').attr('href'),
+                pubDate: parseDate($item.find('td.by').find('em span span').attr('title') || ''),
+                author: $item.find('td.by cite a').first().text(),
+                description: '',
+                enclosure_url: '',
+                enclosure_type: '',
             };
         });
 
     const out = await Promise.all(
         list.map((info) =>
             cache.tryGet(info.link, async () => {
-                const response = await ofetch(info.link, {
-                    headers,
-                });
+                const response = await puppeteerGet(headers, info.link).then((res) => res.response);
 
                 const $ = load(response);
                 const postMessage = $('div[id^="postmessage"], td[id^="postmessage"]').slice(0, 1);
@@ -119,7 +152,17 @@ async function handler(ctx) {
                     if (!file || file === 'undefined') {
                         $(image).replaceWith('');
                     } else {
-                        $(image).replaceWith($(`<img src="${file}">`));
+                        let imageURL = file;
+                        try {
+                            new URL(imageProxy);
+                            imageURL = `${imageProxy}${encodeURIComponent(file)}`;
+                        } catch {
+                            const proxyIndex = Number.parseInt(imageProxy, 10);
+                            if (proxyIndex !== -1 && imageProxyList[proxyIndex]) {
+                                imageURL = `${imageProxyList[proxyIndex]}${encodeURIComponent(file)}`;
+                            }
+                        }
+                        $(image).replaceWith($(`<img src="${imageURL}">`));
                     }
                 }
                 // also parse image url from `.pattl`
@@ -137,13 +180,13 @@ async function handler(ctx) {
                 $('em[onclick]').remove();
 
                 info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title')), 8);
+                info.pubDate = timezone(parseDate($('.authi em span').attr('title') || ''), 8);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
-                const torrent = postMessage.find('p.attnm a').attr('href');
+                const torrent = postMessage.find('p.attnm a').attr('href') || '';
 
-                const hasEnclosureUrl = isMag || torrent !== undefined;
+                const hasEnclosureUrl = isMag || torrent !== '';
                 if (hasEnclosureUrl) {
                     const enclosureUrl = isMag ? magnet : new URL(torrent, host).href;
                     info.enclosure_url = enclosureUrl;
