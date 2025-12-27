@@ -165,7 +165,11 @@ async function handler(ctx: Context): Promise<Data> {
         };
 
         if (media?.[0]) {
-            result.image = media[0];
+            const firstMedia = media[0];
+            const imageUrl = typeof firstMedia === 'string' ? firstMedia : firstMedia?.url;
+            if (typeof imageUrl === 'string') {
+                result.image = imageUrl;
+            }
         }
         if (link) {
             result.link = link;
