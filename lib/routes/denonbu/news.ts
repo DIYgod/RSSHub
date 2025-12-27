@@ -88,7 +88,7 @@ const AREA_NAMES = {
     shibuya: '帝音国際学院',
     kabuki: '真新宿GR学園',
     'deep-okubo': 'Bellemule（深大久保DJ＆ダンスアカデミー）',
-    'deep-okubo-k': '輝きノスタルジア（深大久保DJ＆ダンスアカデミー',
+    'deep-okubo-k': '輝きノスタルジア（深大久保DJ＆ダンスアカデミー）',
     shinsaibashi: "OKINI☆PARTY'S（心斎橋演芸高校）",
     ikebukuro: '池袋電音部（池袋空乗院高校）',
     neotokyo: '東京電脳（東京電脳学園）',
