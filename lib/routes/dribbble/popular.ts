@@ -9,8 +9,8 @@ export const route: Route = {
     parameters: { timeframe: 'support the following values: week, month, year and ever' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
