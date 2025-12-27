@@ -80,7 +80,7 @@ Working category IDs include \`news\` (the default), \`event\`, \`goods\`, \`com
     handler,
 };
 
-const names = {
+const AREA_NAMES = {
     akiba: '外神田文芸高校',
     harajuku: '神宮前参道學園',
     azabu: '港白金女学院',
@@ -103,15 +103,15 @@ const names = {
     livearchives: 'Live留档',
 };
 
-const baseUrl = 'https://denonbu.jp/backend-api/v1.0.0/';
-const commonHeaders = {
+const BASE_URL = 'https://denonbu.jp/backend-api/v1.0.0/';
+const COMMON_HEADERS = {
     'X-API-KEY': 'FVpHcMLqyf7v2EubqiLxznC9gVMqBDFFMt4zvkS2',
 };
-const primaryCategories = new Set(['news', 'event', 'goods', 'comic', 'movie', 'music', 'livearchives']);
+const PRIMARY_CATEGORIES = new Set(['news', 'event', 'goods', 'comic', 'movie', 'music', 'livearchives']);
 
 function getToken(): Promise<string> {
-    return ofetch(String(new URL('auths/token/get', baseUrl)), {
-        headers: commonHeaders,
+    return ofetch(String(new URL('auths/token/get', BASE_URL)), {
+        headers: COMMON_HEADERS,
     }).then((x) => x.payload.token);
 }
 
@@ -146,9 +146,9 @@ async function handler(ctx: Context): Promise<Data> {
     const { area: _area } = ctx.req.param();
     const area = _area ?? 'news';
     const token = await getToken();
-    const data = await ofetch(String(new URL(`contents/search/${area}?limit=20&offset=0`, baseUrl)), {
+    const data = await ofetch(String(new URL(`contents/search/${area}?limit=20&offset=0`, BASE_URL)), {
         headers: {
-            ...commonHeaders,
+            ...COMMON_HEADERS,
             Authorization: `Bearer ${token}`,
         },
     }).then((x) => x.payload.items);
@@ -174,8 +174,8 @@ async function handler(ctx: Context): Promise<Data> {
     });
 
     return {
-        title: `電音部新闻 - ${names[area] ?? area}`,
-        link: primaryCategories.has(area) ? `https://denonbu.jp/${area}` : `https://denonbu.jp/area/${area}`,
+        title: `電音部新闻 - ${AREA_NAMES[area] ?? area}`,
+        link: PRIMARY_CATEGORIES.has(area) ? `https://denonbu.jp/${area}` : `https://denonbu.jp/area/${area}`,
         item: items,
         language: 'ja',
     };
