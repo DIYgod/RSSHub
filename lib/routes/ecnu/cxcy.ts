@@ -47,8 +47,7 @@ export const route: Route = {
         const response = await got(baseUrl);
         const $ = load(response.data);
 
-        const filteredEls = $('div.limit_style1')
-            .filter((_, el) => $(el).attr('frag') === fragList[type].frag)
+        const filteredEls = $(`div.limit_style1[frag="${fragList[type].frag}"]`)
             .find('table > tbody > tr > td')
             .toArray();
         const links = filteredEls.map((el) => ({
