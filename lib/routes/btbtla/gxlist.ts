@@ -8,7 +8,7 @@ export const route: Route = {
     example: '/btbtla/gxlist',
     handler,
     maintainers: ['Hermes1030'],
-    name: 'BTBTLA',
+    name: 'BTBTLA | 最近更新',
     path: '/gxlist',
     url: 'btbtla.com/tt/gxlist.html',
 };
@@ -35,7 +35,7 @@ async function handler() {
             };
         });
 
-    const moduleTitle = $('.module-title').text();
+    const moduleTitle = 'BTBTLA | ' + $('.module-title').text();
 
     return {
         title: moduleTitle,
