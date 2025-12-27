@@ -47,7 +47,7 @@ async function handler(ctx) {
         item: await Promise.all(
             rss.items.map((e) =>
                 cache.tryGet(e.link, async () => {
-                    const res = await ofetch(e.link, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referrer: 'https://www.google.com/' });
+                    const res = await ofetch(e.link, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referer: 'https://www.google.com/' });
 
                     const $ = load(res);
 
