@@ -40028,6 +40028,19 @@
       }
     ]
   },
+  "semiconductors.org": {
+    "_name": "Semiconductor Industry Association",
+    "www": [
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/semiconductors/:category"
+      }
+    ]
+  },
   "sensortower.com": {
     "_name": "Sensor Tower",
     ".": [

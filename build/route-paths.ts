@@ -2420,6 +2420,7 @@ export type RoutePath =
   | `/sehuatang/bt/:subforumid?`
   | `/sehuatang/picture/:subforumid`
   | `/sehuatang/user/:uid`
+  | `/semiconductors/:category{.+}?`
   | `/sensortower/blog/:language?`
   | `/setn/:category?`
   | `/seu/cse/:type?`

@@ -7407,6 +7407,9 @@
   "/sehuatang/user/:uid": [
     "JamYiz"
   ],
+  "/semiconductors/:category{.+}?": [
+    "nczitzk"
+  ],
   "/sensortower/blog/:language?": [
     "nczitzk"
   ],
