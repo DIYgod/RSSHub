@@ -49,8 +49,8 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
                   platforms: linux/amd64 # explicit
                   cache-from: |
-                      type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-                      type=gha,scope=docker-release
+                      type=registry,ref=${{ vars.DOCKER_USERNAME }}/rsshub:chromium-bundled
+                      type=gha,scope=docker-release-linux-amd64
                   outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
             - name: Pull Request Labeler

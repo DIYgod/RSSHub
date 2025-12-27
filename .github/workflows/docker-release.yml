@@ -22,17 +22,28 @@ jobs:
         steps:
             - id: check-docker
               env:
-                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
               if: ${{ env.DOCKER_USERNAME != '' }}
               run: echo "defined=true" >> $GITHUB_OUTPUT
     release:
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.runner }}
         needs: check-env
         if: needs.check-env.outputs.check-docker == 'true'
-        timeout-minutes: 120
+        timeout-minutes: 30
+        outputs:
+            repo-name: ${{ steps.repo-name.outputs.repo-name }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - platform: linux/amd64
+                      runner: ubuntu-latest
+                    - platform: linux/arm64
+                      runner: ubuntu-24.04-arm
         permissions:
             packages: write
             id-token: write
+            attestations: write
         steps:
             - name: Enable ZRAM
               # Reduce memory pressure
@@ -40,19 +51,24 @@ jobs:
               run: |
                   sudo apt-get update -yq
                   sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
-                  echo -e 'ALGO=lz4\nPERCENT=100' | sudo tee -a /etc/default/zramswap
+                  echo -e 'ALGO=zstd\nPERCENT=100' | sudo tee -a /etc/default/zramswap
                   sudo systemctl restart zramswap
                   swapon
+
+            - name: Prepare
+              run: |
+                  platform=${{ matrix.platform }}
+                  echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
             - name: Checkout
               uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-            - name: Install cosign
-              if: github.event_name != 'pull_request'
-              uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
-
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3.7.0
+            - name: Extract repository name
+              id: repo-name
+              run: |
+                  REPO_NAME="${GITHUB_REPOSITORY#*/}"
+                  REPO_NAME_LOWER="${REPO_NAME,,}"
+                  echo "repo-name=$REPO_NAME_LOWER" >> "$GITHUB_OUTPUT"
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
@@ -60,7 +76,7 @@ jobs:
             - name: Log in to Docker Hub
               uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
               with:
-                  username: ${{ secrets.DOCKER_USERNAME }}
+                  username: ${{ vars.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Log in to the Container registry
@@ -75,7 +91,7 @@ jobs:
               uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
               with:
                   images: |
-                      ${{ secrets.DOCKER_USERNAME }}/rsshub
+                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
                       ghcr.io/${{ github.repository }}
                   tags: |
                       type=raw,value=latest,enable=true
@@ -83,31 +99,52 @@ jobs:
                       type=sha,format=long,prefix=,enable=true
                   flavor: latest=false
 
+            - name: Extract image names (ordinary version)
+              id: image-name-ordinary
+              run: |
+                  tags=$(jq -r '.target["docker-metadata-action"].args.DOCKER_META_IMAGES' "$DOCKER_METADATA_OUTPUT_BAKE_FILE_TAGS")
+                  echo "tags=$tags" >> "$GITHUB_OUTPUT"
+
             - name: Build and push Docker image (ordinary version)
               id: build-and-push
               uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
               with:
                   context: .
-                  push: true
-                  tags: ${{ steps.meta-ordinary.outputs.tags }}
+                  tags: ${{ steps.image-name-ordinary.outputs.tags }}
                   labels: ${{ steps.meta-ordinary.outputs.labels }}
-                  platforms: linux/amd64,linux/arm64
-                  cache-from: type=gha,scope=docker-release
-                  cache-to: type=gha,mode=max,scope=docker-release
-                  outputs: type=image,compression=zstd,force-compression=true
+                  platforms: ${{ matrix.platform }}
+                  cache-from: type=gha,scope=docker-release-${{ env.PLATFORM_PAIR }}
+                  cache-to: type=gha,mode=max,scope=docker-release-${{ env.PLATFORM_PAIR }}
+                  outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
-            - name: Sign the published Docker image
-              if: ${{ github.event_name != 'pull_request' }}
-              env:
-                  COSIGN_EXPERIMENTAL: 'true'
-              run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
+            - name: Attest (ordinary version)
+              uses: actions/attest-build-provenance@00014ed6ed5efc5b1ab7f7f34a39eb55d41aa4f8 # v3.1.0
+              with:
+                  subject-name: |
+                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
+                      ghcr.io/${{ github.repository }}
+                  subject-digest: ${{ steps.build-and-push.outputs.digest }}
+
+            - name: Export digest (ordinary version)
+              run: |
+                  mkdir -p ${{ runner.temp }}/digests/ordinary
+                  digest="${{ steps.build-and-push.outputs.digest }}"
+                  touch "${{ runner.temp }}/digests/ordinary/${digest#sha256:}"
+
+            - name: Upload digest (ordinary version)
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              with:
+                  name: digests-ordinary-${{ env.PLATFORM_PAIR }}
+                  path: ${{ runner.temp }}/digests/ordinary/*
+                  if-no-files-found: error
+                  retention-days: 1
 
             - name: Extract Docker metadata (Chromium-bundled version)
               id: meta-chromium-bundled
               uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
               with:
                   images: |
-                      ${{ secrets.DOCKER_USERNAME }}/rsshub
+                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
                       ghcr.io/${{ github.repository }}
                   tags: |
                       type=raw,value=chromium-bundled,enable=true
@@ -115,30 +152,128 @@ jobs:
                       type=sha,format=long,prefix=chromium-bundled-,enable=true
                   flavor: latest=false
 
+            - name: Extract image names (Chromium-bundled version)
+              id: image-name-chromium-bundled
+              run: |
+                  tags=$(jq -r '.target["docker-metadata-action"].args.DOCKER_META_IMAGES' "$DOCKER_METADATA_OUTPUT_BAKE_FILE_TAGS")
+                  echo "tags=$tags" >> "$GITHUB_OUTPUT"
+
             - name: Build and push Docker image (Chromium-bundled version)
               id: build-and-push-chromium
               uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
               with:
                   context: .
                   build-args: PUPPETEER_SKIP_DOWNLOAD=0
-                  push: true
-                  tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
+                  tags: ${{ steps.image-name-chromium-bundled.outputs.tags }}
                   labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
-                  platforms: linux/amd64,linux/arm64
+                  platforms: ${{ matrix.platform }}
                   cache-from: |
-                      type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-                  cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled # inline cache is enough
-                  outputs: type=image,compression=zstd,force-compression=true
+                      type=registry,ref=${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}:chromium-bundled
+                  cache-to: type=inline,ref=${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}:chromium-bundled # inline cache is enough
+                  outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
-            - name: Sign the published Docker image
-              if: ${{ github.event_name != 'pull_request' }}
-              env:
-                  COSIGN_EXPERIMENTAL: 'true'
-              run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
+            - name: Attest (Chromium-bundled version)
+              uses: actions/attest-build-provenance@00014ed6ed5efc5b1ab7f7f34a39eb55d41aa4f8 # v3.1.0
+              with:
+                  subject-name: |
+                      ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
+                      ghcr.io/${{ github.repository }}
+                  subject-digest: ${{ steps.build-and-push-chromium.outputs.digest }}
+
+            - name: Export digest (Chromium-bundled version)
+              run: |
+                  mkdir -p ${{ runner.temp }}/digests/chromium
+                  digest="${{ steps.build-and-push-chromium.outputs.digest }}"
+                  touch "${{ runner.temp }}/digests/chromium/${digest#sha256:}"
+
+            - name: Upload digest (Chromium-bundled version)
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              with:
+                  name: digests-chromium-${{ env.PLATFORM_PAIR }}
+                  path: ${{ runner.temp }}/digests/chromium/*
+                  if-no-files-found: error
+                  retention-days: 1
+
+    merge:
+        runs-on: ubuntu-latest
+        needs: [check-env, release]
+        if: needs.check-env.outputs.check-docker == 'true'
+        timeout-minutes: 5
+        permissions:
+            packages: write
+            id-token: write
+        steps:
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
+
+            - name: Log in to Docker Hub
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              with:
+                  username: ${{ vars.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
+
+            - name: Log in to the Container registry
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Download digests (ordinary version)
+              uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+              with:
+                  path: ${{ runner.temp }}/digests/ordinary
+                  pattern: digests-ordinary-*
+                  merge-multiple: true
+
+            - name: Extract Docker metadata (ordinary version)
+              id: meta-ordinary-merge
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
+              with:
+                  images: |
+                      ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
+                      ghcr.io/${{ github.repository }}
+                  tags: |
+                      type=raw,value=latest,enable=true
+                      type=raw,value={{date 'YYYY-MM-DD'}},enable=true
+                      type=sha,format=long,prefix=,enable=true
+                  flavor: latest=false
+
+            - name: Create manifest list and push (ordinary version)
+              working-directory: ${{ runner.temp }}/digests/ordinary
+              run: |
+                  docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+                      $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
+
+            - name: Download digests (Chromium-bundled version)
+              uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+              with:
+                  path: ${{ runner.temp }}/digests/chromium
+                  pattern: digests-chromium-*
+                  merge-multiple: true
+
+            - name: Extract Docker metadata (Chromium-bundled version)
+              id: meta-chromium-bundled-merge
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
+              with:
+                  images: |
+                      ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
+                      ghcr.io/${{ github.repository }}
+                  tags: |
+                      type=raw,value=chromium-bundled,enable=true
+                      type=raw,value=chromium-bundled-{{date 'YYYY-MM-DD'}},enable=true
+                      type=sha,format=long,prefix=chromium-bundled-,enable=true
+                  flavor: latest=false
+
+            - name: Create manifest list and push (Chromium-bundled version)
+              working-directory: ${{ runner.temp }}/digests/chromium
+              run: |
+                  docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+                      $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
     description:
         runs-on: ubuntu-latest
-        needs: check-env
+        needs: [check-env, release]
         if: needs.check-env.outputs.check-docker == 'true'
         timeout-minutes: 5
         steps:
@@ -147,6 +282,6 @@ jobs:
             - name: Docker Hub Description
               uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
               with:
-                  username: ${{ secrets.DOCKER_USERNAME }}
+                  username: ${{ vars.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
-                  repository: ${{ secrets.DOCKER_USERNAME }}/rsshub
+                  repository: ${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}
