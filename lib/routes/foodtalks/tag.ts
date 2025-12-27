@@ -36,7 +36,7 @@ const getTagName = async (tagId: string) => {
 
 async function handler(ctx) {
     const { tagId } = ctx.req.param();
-    const limit = ctx.req.query('limit') || 15;
+    const limit = Number.parseInt(ctx.req.query('limit'), 10) || 15;
 
     const response = await ofetch(`${apiBaseUrl}/news/news/page`, {
         headers: {

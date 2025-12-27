@@ -20,7 +20,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') || 15;
+    const limit = Number.parseInt(ctx.req.query('limit'), 10) || 15;
     const url = `${apiBaseUrl}/news/news/page?current=1&size=${limit}&isLatest=1&language=ZH`;
     const response = await ofetch(url, {
         headers: {
