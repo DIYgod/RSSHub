@@ -2988,6 +2988,9 @@
   "/foodtalks/": [
     "Geraldxm"
   ],
+  "/foodtalks/news/tag/:tagId": [
+    "TonyRL"
+  ],
   "/foreignaffairs/rss": [
     "dzx-dzx"
   ],

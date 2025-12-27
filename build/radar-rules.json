@@ -16786,12 +16786,20 @@
     "_name": "FoodTalks全球食品资讯网",
     "www": [
       {
-        "title": "FoodTalks global food information network",
+        "title": "最新资讯",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
         "target": "/foodtalks/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/tag/:tagId"
+        ],
+        "target": "/foodtalks/news/tag/:tagId"
       }
     ]
   },
