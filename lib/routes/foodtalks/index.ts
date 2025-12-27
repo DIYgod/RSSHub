@@ -24,7 +24,7 @@ async function handler(ctx) {
     const url = `${apiBaseUrl}/news/news/page?current=1&size=${limit}&isLatest=1&language=ZH`;
     const response = await ofetch(url, {
         headers: {
-            referrer: `${baseUrl}/`,
+            referer: `${baseUrl}/`,
         },
     });
     const list = parseList(response.data.records);
