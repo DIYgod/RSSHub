@@ -36,6 +36,6 @@ async function handler(ctx) {
         description: namespace.description,
         link: 'https://' + namespace.url,
         item: items,
-        image: `${baseUrl}/static/img/news-site-logo.7aaa5463.svg`,
+        image: `${baseUrl}/favicon.ico`,
     };
 }

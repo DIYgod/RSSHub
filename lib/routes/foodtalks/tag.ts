@@ -59,6 +59,6 @@ async function handler(ctx) {
         description: namespace.description,
         link: `${baseUrl}/news/tag/${tagId}`,
         item: items,
-        image: `${baseUrl}/static/img/news-site-logo.7aaa5463.svg`,
+        image: `${baseUrl}/favicon.ico`,
     };
 }
