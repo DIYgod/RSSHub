@@ -99,7 +99,7 @@ const AREA_NAMES = {
     event: '活动',
     goods: '商品',
     comic: '漫画',
-    movie: '动画',
+    movie: '影片',
     music: '音乐',
     livearchives: 'Live留档',
 };
