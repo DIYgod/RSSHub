@@ -113,7 +113,7 @@ const PRIMARY_CATEGORIES = new Set(['news', 'event', 'goods', 'comic', 'movie', 
 const CACHE_TOKEN_KEY = 'denonbu-news';
 
 async function getToken(): Promise<string> {
-    const cacheToken = await cache.get(CACHE_TOKEN_KEY);
+    const cacheToken = await cache.get(CACHE_TOKEN_KEY, false);
     if (cacheToken) {
         return cacheToken;
     }
