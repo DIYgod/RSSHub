@@ -13,7 +13,7 @@
         "type": "git",
         "url": "git+https://github.com/DIYgod/RSSHub.git"
     },
-    "license": "MIT",
+    "license": "AGPL-3.0",
     "author": "DIYgod",
     "type": "module",
     "exports": {
