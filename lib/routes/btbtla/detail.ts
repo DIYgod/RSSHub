@@ -1,6 +1,5 @@
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
-import { config } from '@/config'; // 导入配置
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
