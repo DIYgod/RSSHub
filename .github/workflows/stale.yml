@@ -10,7 +10,7 @@ permissions:
 
 jobs:
     stale:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         steps:
             - uses: actions/stale@997185467fa4f803885201cee163a9f38240193d # v10.1.1
               with:
@@ -26,7 +26,7 @@ jobs:
                   exempt-pr-labels: 'dependencies,wait for upstream'
                   any-of-issue-labels: 'more data required'
     lock:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         steps:
             - uses: dessant/lock-threads@7266a7ce5c1df01b1c6db85bf8cd86c737dadbe7 # v6.0.0
               with:

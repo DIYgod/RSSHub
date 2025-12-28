@@ -15,7 +15,7 @@ jobs:
     check-env:
         permissions:
             contents: none
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         outputs:
             check-docker: ${{ steps.check-docker.outputs.defined }}
@@ -272,7 +272,7 @@ jobs:
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
     description:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         needs: [check-env, release]
         if: needs.check-env.outputs.check-docker == 'true'
         timeout-minutes: 5
