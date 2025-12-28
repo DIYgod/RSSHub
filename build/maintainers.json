@@ -2171,6 +2171,9 @@
   "/deltaio/blog": [
     "RengarLee"
   ],
+  "/denonbu/news/:area?": [
+    "outloudvi"
+  ],
   "/dev.to/guides": [
     "Rjnishant530"
   ],

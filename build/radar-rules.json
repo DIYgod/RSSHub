@@ -14167,6 +14167,75 @@
       }
     ]
   },
+  "denonbu.jp": {
+    "_name": "電音部",
+    ".": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/news"
+        ],
+        "target": "/denonbu/news"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/event"
+        ],
+        "target": "/denonbu/news/event"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/goods"
+        ],
+        "target": "/denonbu/news/goods"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/comic"
+        ],
+        "target": "/denonbu/news/comic"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/movie"
+        ],
+        "target": "/denonbu/news/movie"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/music"
+        ],
+        "target": "/denonbu/news/music"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/livearchives"
+        ],
+        "target": "/denonbu/news/livearchives"
+      },
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/area/:area"
+        ],
+        "target": "/denonbu/news/:area"
+      }
+    ]
+  },
   "dev.to": {
     "_name": "DEV Community",
     ".": [

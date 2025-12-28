@@ -722,6 +722,7 @@ export type RoutePath =
   | `/deepseek/news`
   | `/dehenglaw/:language?/:category?`
   | `/deltaio/blog`
+  | `/denonbu/news/:area?`
   | `/dev.to/guides`
   | `/dev.to/top/:period`
   | `/devolverdigital/blog`
