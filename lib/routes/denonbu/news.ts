@@ -171,7 +171,7 @@ async function handler(ctx: Context): Promise<Data> {
         const { title, body, post_date, category, media } = item;
         const link = buildLink(item);
         const result: DataItem = {
-            title: title ?? body.split('\n')[0] + '...',
+            title: title ?? body.split('\n')[0],
             description: body,
             pubDate: timezone(parseDate(post_date), +9),
             category: category.map((x) => x.name),
