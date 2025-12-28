@@ -43,15 +43,12 @@ async function handler(ctx) {
             const link = $row.find('.module-row-text').attr('href');
 
             // 使用缓存获取磁力链接
-            const magnet = await cache.tryGet(
-                `btbtla:magnet:${link}`,
-                async () => {
-                    if (link) {
-                        return await getMagnet('https://www.btbtla.com' + link);
-                    }
-                    return '';
-                },
-            );
+            const magnet = await cache.tryGet(`btbtla:magnet:${link}`, async () => {
+                if (link) {
+                    return await getMagnet('https://www.btbtla.com' + link);
+                }
+                return '';
+            });
 
             return {
                 title,
