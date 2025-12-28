@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -109,11 +110,23 @@ const COMMON_HEADERS = {
     'X-API-KEY': 'FVpHcMLqyf7v2EubqiLxznC9gVMqBDFFMt4zvkS2',
 };
 const PRIMARY_CATEGORIES = new Set(['news', 'event', 'goods', 'comic', 'movie', 'music', 'livearchives']);
+const CACHE_TOKEN_KEY = 'denonbu-news';
 
-function getToken(): Promise<string> {
-    return ofetch(String(new URL('auths/token/get', BASE_URL)), {
+async function getToken(): Promise<string> {
+    const cacheToken = await cache.get(CACHE_TOKEN_KEY);
+    if (cacheToken) {
+        return cacheToken;
+    }
+
+    const payload = await ofetch(String(new URL('auths/token/get', BASE_URL)), {
         headers: COMMON_HEADERS,
-    }).then((x) => x.payload.token);
+    }).then((x) => x.payload);
+    const { token, expires } = payload;
+    if (!token) {
+        throw new Error('Failed to get token');
+    }
+    cache.set(CACHE_TOKEN_KEY, token, expires ? expires - Number(Date.now()) / 1000 - 1 : 3600);
+    return token;
 }
 
 function buildLink(body: any): string | null {
