@@ -51,7 +51,6 @@ async function handler(ctx) {
                     }
                     return '';
                 },
-                config.cache.routeExpire
             );
 
             return {
