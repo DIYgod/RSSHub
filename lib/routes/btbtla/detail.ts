@@ -1,5 +1,6 @@
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
+import { config } from '@/config'; // 导入配置
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
@@ -23,10 +24,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let name = '';
-    if (ctx.req.path.includes('/detail/')) {
-        name = ctx.req.path.split('/detail/')[1].split('.')[0];
-    }
+    const name = ctx.req.param('name');
+
     const idUrl = await getId(name);
     if (!idUrl) {
         return null;
@@ -42,23 +41,25 @@ async function handler(ctx) {
         itemElements.map(async (element) => {
             const $row = $(element);
             const title = $row.find('.module-row-title h4').text().trim();
-            const linkFromRow = $row.find('.module-row-text').attr('href');
+            const link = $row.find('.module-row-text').attr('href');
+
             // 使用缓存获取磁力链接
-            const link = await cache.tryGet(
-                `btbtla:magnet:${linkFromRow}`,
+            const magnet = await cache.tryGet(
+                `btbtla:magnet:${link}`,
                 async () => {
-                    if (linkFromRow) {
-                        return await getMagnet('https://www.btbtla.com' + linkFromRow);
+                    if (link) {
+                        return await getMagnet('https://www.btbtla.com' + link);
                     }
-                    return null;
+                    return '';
                 },
-                3600 // 缓存1小时
+                config.cache.routeExpire
             );
 
             return {
                 title,
-                description: $row.find('.module-row-one.active .module-row-shortcuts a span').text(),
-                link: link ?? '',
+                link,
+                enclosure_url: magnet,
+                enclosure_type: 'application/x-bittorrent',
             };
         })
     );
@@ -80,7 +81,7 @@ async function getId(name: string) {
     const link = $(`.module-items .module-item-titlebox a[title="${name}"]`).attr('href');
 
     // format '/detail/46830832.html'
-    return link ?? null;
+    return link;
 }
 
 async function getMagnet(link: string | undefined) {
@@ -91,5 +92,5 @@ async function getMagnet(link: string | undefined) {
     const $ = load(response);
     const magnet = $('.btn-important').attr('href');
 
-    return magnet ?? null;
+    return magnet;
 }
