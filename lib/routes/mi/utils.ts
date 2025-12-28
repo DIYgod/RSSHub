@@ -25,7 +25,7 @@ dayjs.extend(utc);
 export const getCrowdfundingList = async (): Promise<CrowdfundingList[]> => {
     const response = await ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
         headers: {
-            referrer: 'https://m.mi.com/',
+            referer: 'https://m.mi.com/',
         },
         method: 'POST',
     });
@@ -42,7 +42,7 @@ export const getCrowdfundingItem = (item: CrowdfundingItem): Promise<Crowdfundin
     cache.tryGet(`mi:crowdfunding:${item.project_id}`, async () => {
         const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
             headers: {
-                referrer: 'https://m.mi.com/crowdfunding/home',
+                referer: 'https://m.mi.com/crowdfunding/home',
             },
             method: 'POST',
             query: {
