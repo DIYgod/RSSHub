@@ -136,7 +136,7 @@ function buildLink(body: any): string | null {
         case 'shinsaibashi':
         case 'neotokyo': {
             const { sid, uid } = body;
-            if (sid !== undefined && uid !== undefined) {
+            if (sid && uid) {
                 return `https://denonbu.jp/detail/${sid}/${uid}`;
             }
             return null;
@@ -146,7 +146,7 @@ function buildLink(body: any): string | null {
                 account: { account_id },
                 uid,
             } = body;
-            if (account_id && uid !== undefined) {
+            if (account_id && uid) {
                 return `https://twitter.com/${account_id}/status/${uid}`;
             }
             return null;
