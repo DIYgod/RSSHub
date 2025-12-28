@@ -27,7 +27,7 @@ jobs:
         #   - https://gh.io/supported-runners-and-hardware-resources
         #   - https://gh.io/using-larger-runners
         # Consider using larger runners for possible analysis time improvements.
-        runs-on: ubuntu-slim
+        runs-on: ubuntu-latest
         timeout-minutes: 10
         permissions:
             # required for all workflows
