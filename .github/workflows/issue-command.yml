@@ -39,7 +39,7 @@ jobs:
     test-on-demand:
         name: Test route on demand
         if: startsWith(github.event.comment.body, '/test')
-        runs-on: ubuntu-slim
+        runs-on: ubuntu-latest
         timeout-minutes: 5
         permissions:
             attestations: write
