@@ -17,7 +17,7 @@ jobs:
     build:
         name: npm publish
         if: github.repository == 'DIYgod/RSSHub'
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         env:
             HUSKY: 0

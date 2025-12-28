@@ -136,7 +136,7 @@ jobs:
     automerge:
         if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
         needs: [vitest, puppeteer, all]
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         permissions:
             pull-requests: write
             contents: write

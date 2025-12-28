@@ -121,7 +121,7 @@ jobs:
 
     fail-build:
         name: Fail build
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         permissions:
             pull-requests: write
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}
