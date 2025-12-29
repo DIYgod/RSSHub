@@ -7403,6 +7403,16 @@
         ],
         "target": "/binance/launchpool"
       }
+    ],
+    "www": [
+      {
+        "title": "币安公告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/zh-CN/messages/v2/group/announcement"
+        ],
+        "target": "/binance/binance/messages/announcement"
+      }
     ]
   },
   "bing.com": {

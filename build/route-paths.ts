@@ -331,6 +331,7 @@ export type RoutePath =
   | `/bilibili/weekly/:embed?`
   | `/binance/announcement/:type`
   | `/binance/launchpool`
+  | `/binance/messages/announcement`
   | `/bing/:routeParams?`
   | `/bing/search/:keyword`
   | `/biodiscover/:channel?`

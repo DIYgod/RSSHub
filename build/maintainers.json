@@ -1007,6 +1007,9 @@
   "/binance/launchpool": [
     "zhenlohuang"
   ],
+  "/binance/messages/announcement": [
+    "DIYgod"
+  ],
   "/bing/:routeParams?": [
     "FHYunCai",
     "LLLLLFish"
