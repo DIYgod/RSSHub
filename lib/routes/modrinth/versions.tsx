@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';

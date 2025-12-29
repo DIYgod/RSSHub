@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';

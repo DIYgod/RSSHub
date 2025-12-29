@@ -1,5 +1,5 @@
 import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 type ImageEmbed = {
     fullsize: string;

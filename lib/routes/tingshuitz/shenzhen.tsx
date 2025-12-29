@@ -1,4 +1,4 @@
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';

@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 
 import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';

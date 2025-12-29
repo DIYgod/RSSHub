@@ -1,4 +1,4 @@
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 const puppeteerGet = async (url, browser) => {
     const page = await browser.newPage();

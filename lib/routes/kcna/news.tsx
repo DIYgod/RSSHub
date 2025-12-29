@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 import sanitizeHtml from 'sanitize-html';
 

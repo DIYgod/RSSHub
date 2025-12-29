@@ -1,4 +1,4 @@
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionImage = {
     src?: string;

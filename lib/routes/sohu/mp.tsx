@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import CryptoJS from 'crypto-js';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';

@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';

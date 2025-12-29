@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 import Parser from 'rss-parser';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { renderToString } from 'hono/jsx/dom';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
