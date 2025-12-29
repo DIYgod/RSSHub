@@ -1,5 +1,0 @@
-{{ if img }}
-<img src="{{ img.large || img.middle || img.small || img.min }}" alt="{{ img.alt }}">
-<br>
-{{ /if }}
-{{@ description }}

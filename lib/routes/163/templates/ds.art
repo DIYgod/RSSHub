@@ -1,7 +1,0 @@
-{{ text }}
-
-{{ each medias }}
-    {{ if $value.mimeType.indexOf('image') > -1 }}
-        <img src="{{$value.url}}">
-    {{ /if }}
-{{ /each }}

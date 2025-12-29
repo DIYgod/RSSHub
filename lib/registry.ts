@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
-import { directoryImport } from 'directory-import';
 import type { Handler } from 'hono';
 import { Hono } from 'hono';
 import { routePath } from 'hono/route';
@@ -12,6 +11,7 @@ import index from '@/routes/index';
 import metrics from '@/routes/metrics';
 import robotstxt from '@/routes/robots.txt';
 import type { APIRoute, Namespace, Route } from '@/types';
+import { directoryImport } from '@/utils/directory-import';
 import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
@@ -73,7 +73,7 @@ if (config.isPackage) {
         default:
             modules = directoryImport({
                 targetDirectoryPath: path.join(__dirname, './routes'),
-                importPattern: /\.ts$/,
+                importPattern: /\.tsx?$/,
             }) as typeof modules;
     }
 }

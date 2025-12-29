@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const audio_types = {
     m3u8: 'x-mpegURL',
@@ -84,11 +83,7 @@ async function handler(ctx) {
             guid: item.id,
             title: `${dateString} ${item.name}`,
             link: enclosure_url,
-            description: art(path.join(__dirname, 'templates/description.art'), {
-                description: item.des,
-                enclosure_url,
-                enclosure_type,
-            }),
+            description: renderDescription({ description: item.des, enclosure_url, enclosure_type }),
             pubDate: parseDate(item.startTime),
             enclosure_url,
             enclosure_type,

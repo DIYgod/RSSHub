@@ -1,14 +1,12 @@
-import path from 'node:path';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import type { Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
 import { parseContent } from './parser';
+import { renderDescription } from './templates/description';
 
 const baseUrl: string = 'https://www.gcores.com';
 const imageBaseUrl: string = 'https://image.gcores.com';
@@ -113,7 +111,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
             };
         }
 
-        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string = renderDescription({
             images: attributes.cover
                 ? [
                       {

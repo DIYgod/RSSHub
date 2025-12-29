@@ -1,5 +1,0 @@
-{{ if installers }}
-    {{ each installers installer }}
-        <a href="{{ installer }}">{{ installer }}</a><br>
-    {{ /each }}
-{{ /if }}

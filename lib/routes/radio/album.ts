@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const audio_types = {
     m3u8: 'x-mpegURL',
@@ -83,10 +82,7 @@ async function handler(ctx) {
             guid: item.id,
             title: item.name,
             link: `${rootUrl}/share/albumPlay?correlateId=${item.id}&columnId=${id}`,
-            description: art(path.join(__dirname, 'templates/description.art'), {
-                enclosure_url,
-                enclosure_type,
-            }),
+            description: renderDescription({ enclosure_url, enclosure_type }),
             pubDate: timezone(parseDate(item.createTime), +8),
             enclosure_url,
             enclosure_type,

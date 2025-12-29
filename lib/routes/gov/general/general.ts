@@ -39,9 +39,10 @@ import { getSubPath } from '@/utils/common-utils';
 // };
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 import { finishArticleItem } from '@/utils/wechat-mp';
+
+import { renderZcjdpt } from './templates/zcjdpt';
 
 const gdgov = async (info, ctx) => {
     const path = getSubPath(ctx)
@@ -183,7 +184,7 @@ const gdgov = async (info, ctx) => {
                     return {
                         link,
                         title: data.art_title,
-                        description: art(path.join(__dirname, 'templates/zcjdpt.art'), data),
+                        description: renderZcjdpt(data),
                         pubDate: timezone(parseDate(data.pub_time), +8),
                         author: /(本|本网|本站)/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };
