@@ -50,5 +50,3 @@ const processItems = async (items, tryGet) =>
     );
 
 export { apiRootUrl, apiTopicUrl, processItems, rootUrl };
-
-export { art } from '@/utils/render';
