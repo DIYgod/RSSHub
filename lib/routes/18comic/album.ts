@@ -1,9 +1,7 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import { defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
@@ -58,7 +56,7 @@ async function handler(ctx) {
             pubDate: new Date(addTime * 1000),
             category,
             author,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 introduction: description,
                 // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
                 images: [`https://cdn-msp3.${domain}/media/albums/${id}_3x4.jpg`],
@@ -81,7 +79,7 @@ async function handler(ctx) {
                     result.pubDate = addTime;
                     result.category = category;
                     result.author = author;
-                    result.description = art(path.join(__dirname, 'templates/description.art'), {
+                    result.description = renderDescription({
                         introduction: description,
                         // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
                         images: [`https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`],

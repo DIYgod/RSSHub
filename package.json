@@ -75,7 +75,6 @@
         "@scalar/hono-api-reference": "0.9.30",
         "@sentry/node": "10.32.1",
         "aes-js": "3.1.2",
-        "art-template": "4.13.2",
         "cheerio": "1.1.2",
         "city-timezones": "1.3.2",
         "cross-env": "10.1.0",
@@ -83,7 +82,6 @@
         "currency-symbol-map": "5.1.0",
         "dayjs": "1.11.8",
         "destr": "2.0.5",
-        "directory-import": "3.3.2",
         "dotenv": "17.2.3",
         "entities": "7.0.0",
         "etag": "1.8.1",
@@ -226,7 +224,6 @@
             "vue-demi"
         ],
         "overrides": {
-            "art-template@4.13.2>html-minifier": "~4.0.0",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
             "google-play-scraper>got": "^14.6.4",

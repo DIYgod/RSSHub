@@ -1,7 +1,0 @@
-<p>
-{{ each description.split('\n') }}
-    {{$value}}{{if $index !== description.split('\n').length - 1}}<br>{{/if}}
-{{/each}}
-{{ each pics }}
-<img src="{{$value}}">
-{{ /each }}</p>

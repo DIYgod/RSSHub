@@ -1,3 +1,0 @@
-{{ if description }}
-<p>{{ description }}</p>
-{{ /if }}

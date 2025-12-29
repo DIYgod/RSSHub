@@ -1,6 +1,0 @@
-{{@ description }}
-{{if images}}
-    {{each images}}
-        <img src="{{ $value }}">
-    {{/each}}
-{{/if}}

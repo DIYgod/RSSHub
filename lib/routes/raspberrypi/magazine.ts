@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,7 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
@@ -35,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text()?.trim();
             const image: string | undefined = $el.find('div.o-media__fixed a.c-link img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -83,8 +82,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const title: string = $$('h1.rspec-issue__heading').text().split(/-/).pop()?.trim() ?? item.title;
                     const description: string | undefined =
                         item.description +
-                        art(path.join(__dirname, 'templates/description.art'), {
-                            description: $$('div.rspec-issue__description').html(),
+                        renderDescription({
+                            description: $$('div.rspec-issue__description').html() || undefined,
                         });
                     const pubDateStr: string | undefined = $$('time.rspec-issue__publication-month').attr('datetime');
                     const image: string | undefined = $$('img.c-figure__image').attr('src');

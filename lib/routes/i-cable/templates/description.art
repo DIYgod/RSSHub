@@ -1,8 +1,0 @@
-{{ if media.length > 0 }}
-    {{ each media }}
-        <figure><img src="{{ $value.source_url }}" /></figure>
-    {{ /each }}  
-{{ /if }}
-{{ if content }}
-    {{@ content }}
-{{ /if }} 

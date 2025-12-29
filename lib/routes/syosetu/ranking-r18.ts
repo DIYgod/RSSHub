@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import type { Context } from 'hono';
 import type { SearchParams } from 'narou';
 import { NarouNovelFetch, SearchBuilderR18 } from 'narou';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, RankingPeriod, SyosetuSub, syosetuSubToJapanese, syosetuSubToNocgenre } from './types/ranking-r18';
 
 /**
@@ -177,9 +175,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = result.values.map((novel, index) => ({
         title: `#${index + 1} ${novel.title}`,
         link: `https://novel18.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: art(path.join(__dirname, 'templates/description.art'), {
-            novel,
-        }),
+        description: renderDescription({ novel }),
         author: novel.writer,
         category: novel.keyword.split(/[\s/\uFF0F]/).filter(Boolean),
     }));

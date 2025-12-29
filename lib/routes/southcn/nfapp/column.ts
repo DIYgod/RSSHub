@@ -1,12 +1,10 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from '../templates/description';
 import { parseArticle } from './utils';
 
 export const route: Route = {
@@ -54,7 +52,7 @@ async function handler(ctx) {
         .filter((i) => i.articleType === 0)
         .map((item) => ({
             title: '【' + item.columnName + '】' + item.title,
-            description: art(path.join(__dirname, '../templates/description.art'), {
+            description: renderDescription({
                 thumb: item.picMiddle,
                 description: item.summary === '详见内文' ? '' : item.summary,
             }),

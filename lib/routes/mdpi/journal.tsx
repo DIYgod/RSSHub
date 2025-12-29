@@ -1,0 +1,121 @@
+import { load } from 'cheerio';
+import { renderToString } from 'hono/jsx/dom/server';
+import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+const cookieJar = new CookieJar();
+
+export const route: Route = {
+    path: '/:journal',
+    categories: ['journal'],
+    example: '/mdpi/analytica',
+    parameters: { journal: 'Journal Name, get it from the journal homepage' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['www.mdpi.com/journal/:journal'],
+        },
+    ],
+    name: 'Journal',
+    maintainers: ['Derekmini'],
+    handler,
+};
+
+async function handler(ctx) {
+    const journal = ctx.req.param('journal');
+    const host = 'https://www.mdpi.com';
+    const jrnlUrl = `${host}/journal/${journal}`;
+
+    const response = await got(jrnlUrl, {
+        cookieJar,
+    });
+    const $ = load(response.data);
+    const jrnlName = $('.journal__description').find('h1').text();
+    const issueUrl = `${host}${$('.side-menu-ul').find('a').eq(1).attr('href')}`;
+
+    const response2 = await got(issueUrl, {
+        cookieJar,
+    });
+    const $2 = load(response2.data);
+    const issue = $2('.content__container').find('h1').text().trim();
+    const list = $2('.article-item')
+        .toArray()
+        .map((item) => {
+            const title = $2(item).find('.title-link').text();
+            const link = `${host}${$2(item).find('.title-link').attr('href')}`;
+            const authors = $2(item).find('.authors').find('.inlineblock').text();
+            const doiLink = $2(item).find('.color-grey-dark').find('a').attr('href');
+            let doi = '';
+            if (doiLink !== undefined) {
+                doi = doiLink.replace('https://doi.org/', '');
+            }
+            $2(item).find('.abstract-full').find('a').remove();
+            const abstract = $2(item).find('.abstract-full').text().trim();
+            const img = `${host}${$2(item).find('.openpopupgallery').find('img').attr('data-src')}`;
+            return {
+                title,
+                authors,
+                link,
+                doi,
+                abstract,
+                issue,
+                img,
+            };
+        });
+
+    const renderDesc = (item) =>
+        renderToString(
+            <>
+                <p>
+                    <span>
+                        <big>{item.title}</big>
+                    </span>
+                    <br />
+                </p>
+                <p>
+                    <span>
+                        <small>
+                            <i>{item.authors}</i>
+                        </small>
+                    </span>
+                    <br />
+                    <span>
+                        <small>
+                            <i>{`https://doi.org/${item.doi}`}</i>
+                        </small>
+                    </span>
+                    <br />
+                    <span>
+                        <small>
+                            <i>{item.issue}</i>
+                        </small>
+                    </span>
+                    <br />
+                    <img src={item.img} />
+                </p>
+                <p>
+                    <span>{item.abstract}</span>
+                    <br />
+                </p>
+            </>
+        );
+    const items = list.map((item) => {
+        item.description = renderDesc(item);
+        return item;
+    });
+
+    return {
+        title: jrnlName,
+        link: jrnlUrl,
+        item: items,
+    };
+}

@@ -1,7 +1,5 @@
 import 'dayjs/locale/zh-cn.js';
 
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
@@ -9,7 +7,8 @@ import { JSDOM } from 'jsdom';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderEshopCnDescription } from './templates/eshop-cn';
 
 dayjs.extend(localizedFormat);
 
@@ -142,7 +141,7 @@ const ProcessItemChina = (list, cache) =>
             return {
                 ...item,
                 category: [...software.supportLanguages, ...software.genre, ...software.playMode],
-                description: art(path.join(__dirname, 'templates/eshop_cn.art'), {
+                description: renderEshopCnDescription({
                     item,
                     software,
                     releaseDatetime: dayjs(software.releaseDatetime).locale('zh-cn').format('lll'),

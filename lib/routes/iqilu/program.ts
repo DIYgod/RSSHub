@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/v/:category{.+}?',
@@ -40,7 +39,7 @@ async function handler(ctx) {
             return {
                 title: a.prop('title'),
                 link: a.prop('href'),
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     image: {
                         src: image.prop('src'),
                         alt: image.prop('alt'),
@@ -68,7 +67,7 @@ async function handler(ctx) {
                 item.enclosure_url = content('#copy_mp4text').prop('value');
                 item.enclosure_type = item.enclosure_url ? `video/${item.enclosure_url.split(/\./).pop()}` : undefined;
 
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     image: {
                         src: item.itunes_item_image,
                         alt: item.title,

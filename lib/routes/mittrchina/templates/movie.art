@@ -1,5 +1,0 @@
-{{ if video }}
- <video poster="{{ poster }}"  controls>
-    <source src="{{ video.address }}" type="{{ video.type }}">
-</video>
-{{ /if }}

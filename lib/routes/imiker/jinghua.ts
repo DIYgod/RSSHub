@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/ask/jinghua',
@@ -51,7 +50,7 @@ async function handler(ctx) {
     let items = response.slice(0, limit).map((item) => ({
         title: item.question_content,
         link: new URL(`question/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             headImage: item.headimage,
             author: item.nick_name,
             question: item.question_detail,
@@ -74,7 +73,7 @@ async function handler(ctx) {
                     const image = content(e).find('img');
 
                     content(e).replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             image: {
                                 src: image.prop('data-original'),
                                 alt: image.prop('alt'),
@@ -86,7 +85,7 @@ async function handler(ctx) {
                 });
 
                 item.title = content('div.title h1').text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('div#warp').html(),
                 });
                 item.author = content('div.name').text();

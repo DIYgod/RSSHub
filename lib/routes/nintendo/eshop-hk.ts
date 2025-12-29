@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderEshopHkDescription } from './templates/eshop-hk';
 
 export const route: Route = {
     path: '/eshop/hk',
@@ -54,7 +53,7 @@ async function handler(ctx) {
                             .match(/{\n\s+"\[data-gal{2}ery-role=gal{2}ery-placeholder]": {\n\s+"mage(?:\/gal{2}ery){2}".*?}{4}(?:\s+}\n){3}/s)
                     );
 
-                    description = art(path.join(__dirname, 'templates/eshop_hk.art'), {
+                    description = renderEshopHkDescription({
                         attributes,
                         description: $('.description').html(),
                         gallery: gallery['[data-gallery-role=gallery-placeholder]']['mage/gallery/gallery'].data,
@@ -68,7 +67,7 @@ async function handler(ctx) {
                         },
                     });
 
-                    description = art(path.join(__dirname, 'templates/eshop_hk.art'), {
+                    description = renderEshopHkDescription({
                         host: 'ec.nintendo.com',
                         jsonData,
                         priceData: priceData[0],

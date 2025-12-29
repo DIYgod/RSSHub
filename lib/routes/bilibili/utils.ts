@@ -1,12 +1,10 @@
-import path from 'node:path';
-
 import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import type { MediaResult, ResultResponse, SeasonResult } from './types';
 
 // a
@@ -247,21 +245,21 @@ export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
     ) as Promise<SeasonResult>;
 
 /**
- * 使用模板渲染 UGC（用户生成内容）描述。
+ * Render the UGC (user-generated content) description.
  *
- * @param {boolean} embed - 是否嵌入视频。
- * @param {string} img - 要包含在描述中的图片 URL。
- * @param {string} description - UGC 的文本描述。
- * @param {string} [aid] - 可选。UGC 的 aid。
- * @param {string} [cid] - 可选。UGC 的 cid。
- * @param {string} [bvid] - 可选。UGC 的 bvid。
- * @returns {string} 渲染的 UGC 描述。
+ * @param {boolean} embed - Whether to embed the video.
+ * @param {string} img - Image URL to include in the description.
+ * @param {string} description - UGC text description.
+ * @param {string} [aid] - Optional UGC aid.
+ * @param {string} [cid] - Optional UGC cid.
+ * @param {string} [bvid] - Optional UGC bvid.
+ * @returns {string} Rendered UGC description.
  *
- * @see https://player.bilibili.com/ 获取更多信息。
+ * @see https://player.bilibili.com/ for details.
  */
 export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
     // docs: https://player.bilibili.com/
-    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+    const rendered = renderDescription({
         embed,
         ugc: true,
         aid,
@@ -274,20 +272,20 @@ export const renderUGCDescription = (embed: boolean, img: string, description: s
 };
 
 /**
- * 使用模板渲染 OGV（原创视频）描述。
+ * Render the OGV (original video) description.
  *
- * @param {boolean} embed - 是否嵌入视频。
- * @param {string} img - 要包含在描述中的图片 URL。
- * @param {string} description - OGV 的文本描述。
- * @param {string} [seasonId] - 可选。OGV 的季 ID。
- * @param {string} [episodeId] - 可选。OGV 的集 ID。
- * @returns {string} 渲染的 OGV 描述。
+ * @param {boolean} embed - Whether to embed the video.
+ * @param {string} img - Image URL to include in the description.
+ * @param {string} description - OGV text description.
+ * @param {string} [seasonId] - Optional OGV season ID.
+ * @param {string} [episodeId] - Optional OGV episode ID.
+ * @returns {string} Rendered OGV description.
  *
- * @see https://player.bilibili.com/ 获取更多信息。
+ * @see https://player.bilibili.com/ for details.
  */
 export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
     // docs: https://player.bilibili.com/
-    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+    const rendered = renderDescription({
         embed,
         ogv: true,
         seasonId,
