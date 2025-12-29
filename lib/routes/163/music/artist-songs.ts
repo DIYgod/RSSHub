@@ -1,8 +1,7 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
+
+import { renderPlaylistDescription } from '../templates/music/playlist';
 
 export const route: Route = {
     path: '/music/artist/songs/:id',
@@ -42,7 +41,7 @@ async function handler(ctx) {
     const artist = data.songs.find(({ ar }) => ar[0].id === Number.parseInt(id)).ar[0];
     const items = data.songs.map((song) => ({
         title: `${song.name} - ${song.ar.map(({ name }) => name).join(' / ')}`,
-        description: art(path.join(__dirname, '../templates/music/playlist.art'), {
+        description: renderPlaylistDescription({
             singer: song.ar.map(({ name }) => name).join(' / '),
             album: song.al.name,
             picUrl: song.al.picUrl,

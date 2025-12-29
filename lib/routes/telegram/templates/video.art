@@ -1,7 +1,0 @@
-{{ if source }}
-<video src="{{ source }}" controls="controls" poster="{{ poster }}" style="width: 100%"></video>
-{{ else if poster }}
-<blockquote><b>Video is too big</b><br><img src="{{ poster }}"></blockquote>
-{{ else }}
-<blockquote><b>Video is too big</b></blockquote>
-{{ /if }}

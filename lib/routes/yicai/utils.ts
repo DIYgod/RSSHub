@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://www.yicai.com';
 
@@ -21,7 +20,7 @@ const ProcessItems = async (apiUrl, tryGet) => {
         author: item.NewsAuthor || item.NewsSource || item.CreaterName,
         pubDate: timezone(parseDate(item.CreateDate), +8),
         category: [item.ChannelName],
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: {
                 src: item.originPic,
                 alt: item.NewsTitle,

@@ -1,9 +1,0 @@
-<p>
-市场：{{ market }}<br>
-代码：{{ code }}<br>
-名称：{{ name }}<br>
-收盘价：{{ price }}<br>
-涨跌幅：{{ ratio }}<br>
-涨跌额：{{ increase }}<br>
-走势：{{ status }}<br>
-</p>

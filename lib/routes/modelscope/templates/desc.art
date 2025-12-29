@@ -1,9 +1,0 @@
-{{ if coverImage }}
-    <img src="{{ coverImage }}"><br>
-{{ /if }}
-
-{{ if description }}
-    {{ description }}<br>
-{{ /if }}
-
-{{@ md }}

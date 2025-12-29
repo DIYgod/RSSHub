@@ -1,1 +1,0 @@
-<img src="https:{{ item.pic.replace('http:', 'https:') }}">

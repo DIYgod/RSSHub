@@ -37,9 +37,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         return;
     }
 
-    const lastBuildDate = data.lastBuildDate;
-    delete data.lastBuildDate;
-    const etag = etagCalculate(JSON.stringify(data));
+    const { lastBuildDate, ...etagData } = data;
+    const etag = etagCalculate(JSON.stringify(etagData));
 
     ctx.header('ETag', etag);
 

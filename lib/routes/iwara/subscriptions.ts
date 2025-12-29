@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
@@ -8,7 +6,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderSubscriptionImages } from './templates/subscriptions';
 
 const md = MarkdownIt({
     html: true,
@@ -150,9 +149,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let description = art(path.join(__dirname, 'templates/subscriptions.art'), {
-                    images: [item.imageUrl],
-                });
+                let description = renderSubscriptionImages([item.imageUrl]);
 
                 if (item.private === true) {
                     description += 'private';
@@ -173,9 +170,7 @@ async function handler() {
                     },
                 });
 
-                description = art(path.join(__dirname, 'templates/subscriptions.art'), {
-                    images: response.files ? response.files.filter((f) => f.type === 'image')?.map((f) => `https://i.iwara.tv/image/original/${f.id}/${f.name}`) : [item.imageUrl],
-                });
+                description = renderSubscriptionImages(response.files ? response.files.filter((f) => f.type === 'image')?.map((f) => `https://i.iwara.tv/image/original/${f.id}/${f.name}`) : [item.imageUrl]);
 
                 const body = response.body ? md.render(response.body) : '';
                 description += body;
