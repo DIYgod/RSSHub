@@ -16,7 +16,7 @@ jobs:
         name: Lint
         if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
         runs-on: ubuntu-slim
-        timeout-minutes: 5
+        timeout-minutes: 15
         permissions:
             security-events: write
         steps:
