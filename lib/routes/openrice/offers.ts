@@ -1,8 +1,7 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const baseUrl = 'https://www.openrice.com';
 
@@ -60,7 +59,7 @@ async function handler(ctx) {
         const link = baseUrl + item.urlUI;
         const coverImg = item.doorPhotoUI.urls.full ?? '';
         const descriptionText = item.couponType === 0 ? item.poiNameUI : `${item.desc} (${item.startTimeUI} - ${item.expireTimeUI}) [${item.multiplePoiDistrictName}]`;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             description: descriptionText,
             image: coverImg,
         });

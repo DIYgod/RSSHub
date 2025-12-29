@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;
@@ -31,7 +30,7 @@ const cleanUpHTML = (data) => {
         e = $(e);
         if ((e.prop('src') ?? e.prop('_src')) !== undefined) {
             e.parent().replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+                renderDescription({
                     image: {
                         src: (e.prop('src') ?? e.prop('_src')).split(/\?/)[0],
                         width: e.prop('data-w'),
@@ -204,7 +203,7 @@ const fetchItem = async (item) => {
     const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
 
     item.title = data.title ?? item.title;
-    item.description = art(path.join(__dirname, 'templates/description.art'), {
+    item.description = renderDescription({
         image: {
             src: data.pic_path,
         },
@@ -367,7 +366,7 @@ const processItems = async (items, limit, tryGet) => {
                 ...videoItem,
                 title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
                 link,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     image: {
                         src: item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0] ?? undefined,
                     },

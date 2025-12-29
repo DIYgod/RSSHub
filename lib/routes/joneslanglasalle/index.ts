@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,7 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const cleanHtml = (html: string, preservedTags: string[]): string => {
     const $ = load(html);
@@ -54,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $item.text();
             const link: string | undefined = aEl.prop('href');
 
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 intro: aEl.find('p.ti-teaser').text(),
             });
 
@@ -109,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                             if (src) {
                                 $$el.replaceWith(
-                                    art(path.join(__dirname, 'templates/description.art'), {
+                                    renderDescription({
                                         images: [
                                             {
                                                 src,
@@ -139,7 +138,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             })
                             .filter((link): link is { url: string; type: string; content_html: string } => true);
 
-                        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                        const description: string = renderDescription({
                             description: cleanHtml($$('div.page-section').eq(1).html() ?? $$('div.copy-block').html() ?? '', ['div.richtext p', 'h3', 'h4', 'h5', 'h6', 'figure', 'img', 'ul', 'li', 'span', 'b']),
                         });
 

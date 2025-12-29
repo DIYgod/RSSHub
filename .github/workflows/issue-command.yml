@@ -8,7 +8,7 @@ jobs:
     rebase:
         name: Automatic Rebase
         if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
             contents: write
@@ -26,7 +26,7 @@ jobs:
     self-assign:
         name: Self Assign
         if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
             issues: write
@@ -129,7 +129,7 @@ jobs:
               run: cat ${{ github.workspace }}/logs/combined.log
 
             - name: Upload Artifact
-              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
               with:
                   name: logs
                   path: logs

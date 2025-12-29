@@ -30,7 +30,7 @@ jobs:
               uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
             - name: Set up Docker Buildx # needed by `cache-from`
-              uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+              uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
 
             - name: Extract Docker metadata
               id: meta
@@ -49,13 +49,13 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
                   platforms: linux/amd64 # explicit
                   cache-from: |
-                      type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-                      type=gha,scope=docker-release
+                      type=registry,ref=${{ vars.DOCKER_USERNAME }}/rsshub:chromium-bundled
+                      type=gha,scope=docker-release-linux-amd64
                   outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@3809910bc12872edc9b8132f122069ac16cd16ee # v3.7.3
+              uses: actions-cool/issues-helper@e2ff99831a4f13625d35064e2b3dfe65c07a0396 # v3.7.5
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -69,7 +69,7 @@ jobs:
               run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
             - name: Upload Docker image
-              uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
               with:
                   name: docker-image
                   path: rsshub.tar.zst

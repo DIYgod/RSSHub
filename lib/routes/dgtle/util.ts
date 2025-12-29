@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
@@ -8,7 +6,8 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const md = MarkdownIt({
     html: true,
@@ -23,7 +22,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
     items = dataList.slice(0, limit).map((item): DataItem => {
         const title: string = item.title || item.content;
         const image: string | undefined = item.cover;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: image
                 ? [
                       {
@@ -90,7 +89,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                     const $$el = $$(el);
 
                     $$el.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             images: [
                                 {
                                     src: $$el
@@ -103,7 +102,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                     );
                 });
 
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html(),
                 });
 
@@ -127,7 +126,7 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
         const content: string = item.content ? md.render(item.content) : '';
 
         const title: string = $(content).text();
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: item.imgs_url.map((src) => ({
                 src,
             })),

@@ -71,7 +71,7 @@ function parseCurrentEventsTemplate(wikitext: string): string | null {
 
 function stripTemplates(wikitext: string): string {
     // Remove MediaWiki template delimiters {{...}} but keep the content
-    // This prevents conflicts with art-template's {{ }} delimiters in RSS generation
+    // This prevents conflicts with template delimiters during JSX-based rendering
     return wikitext.replaceAll(/\{\{([^}]+)\}\}/g, '$1');
 }
 
@@ -228,7 +228,7 @@ export function wikiToHtml(wikitext: string): string {
     let html = wikitext;
 
     // Apply transformations in order
-    html = stripTemplates(html); // Must be first to prevent art-template conflicts
+    html = stripTemplates(html); // Must be first to prevent template delimiter conflicts
     html = convertWikiLinks(html);
     html = convertExternalLinks(html);
     html = convertTextFormatting(html);

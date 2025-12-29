@@ -1,7 +1,0 @@
-{{ each media }}
-    {{ if $value.video }}
-        <video controls preload="metadata" poster="{{ $value.video.replace('.mp4', '.jpg') }}"><source src="{{ $value.video }}" type="video/mp4"></video>
-    {{ else }}
-        <figure><img src="{{ $value.href }}" alt="{{ $value.title }}"><figcaption>{{ $value.title }}</figcaption></figure>
-    {{ /if }}
-{{ /each }}

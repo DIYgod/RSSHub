@@ -135,7 +135,7 @@ const Index: FC<{
                 <a target="_blank" href="https://github.com/DIYgod/RSSHub/graphs/contributors" className="text-[#F5712C]">
                     Contributors
                 </a>{' '}
-                under MIT License.
+                under AGPL-3.0 License.
             </p>
         </div>
     </Layout>
