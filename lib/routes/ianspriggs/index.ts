@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:category?',
@@ -52,7 +51,7 @@ async function handler(ctx) {
             return {
                 title: item.find('div.work-info').text(),
                 link: item.find('a').prop('href'),
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     images: image?.prop('src')
                         ? [
                               {
@@ -88,7 +87,7 @@ async function handler(ctx) {
                     });
 
                 item.title = content('div.project-title').text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     images,
                     description: content('div.nectar-fancy-ul').html(),
                 });

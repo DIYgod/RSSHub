@@ -1,4 +1,0 @@
-{{ if cover }}
-<img src="{{ cover }}"><br>
-{{ /if }}
-{{ content }}

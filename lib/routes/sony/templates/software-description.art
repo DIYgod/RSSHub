@@ -1,4 +1,0 @@
-<div>
-    <br><br>
-    Release Date: {{ item.pubDate }}
-</div>

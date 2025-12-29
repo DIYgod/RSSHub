@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,7 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
@@ -32,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('div.storyDetails h3 a');
 
             const title: string = $aEl.text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 images:
                     $el.find('a.image img').length > 0
                         ? $el
@@ -83,8 +82,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.story_title h1').text();
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.storytext').html(),
+                    const description: string = renderDescription({
+                        description: $$('div.storytext').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('span.date').first().text().split(/：/).pop();
                     const categories: string[] =

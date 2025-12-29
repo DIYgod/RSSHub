@@ -5,7 +5,7 @@
 
 'Route':
     - changed-files:
-          - any-glob-to-any-file: ['lib/routes/**/*.ts']
+          - any-glob-to-any-file: ['lib/routes/**/*.ts', 'lib/routes/**/*.tsx']
 
 core enhancement:
     - changed-files:

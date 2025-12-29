@@ -6,7 +6,6 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
 import type { PostData } from './types';
 import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
@@ -110,9 +109,9 @@ async function handler(ctx) {
 
         // render description
         const desc = post.desc?.replaceAll('\n', '<br>');
-        let media = art(embed && videoList ? templates.embed : templates.cover, { img, videoList, duration });
-        media = embed && videoList && iframe ? art(templates.iframe, { content: media }) : media; // warp in iframe
-        const description = art(templates.desc, { desc, media });
+        let media = (embed && videoList ? templates.embed : templates.cover)({ img, videoList, duration });
+        media = embed && videoList && iframe ? templates.iframe({ content: media }) : media; // warp in iframe
+        const description = templates.desc({ desc, media });
 
         return {
             title: post.desc.split('\n')[0],

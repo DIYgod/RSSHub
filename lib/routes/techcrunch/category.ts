@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const host = 'https://techcrunch.com';
 export const route: Route = {
@@ -32,7 +31,7 @@ async function handler(ctx) {
         const $ = load(item.content.rendered, null, false);
         return {
             title: item.title.rendered,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 head,
                 rendered: $.html(),
             }),

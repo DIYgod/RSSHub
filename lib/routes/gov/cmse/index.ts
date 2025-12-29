@@ -5,8 +5,9 @@ import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/cmse/*',
@@ -59,7 +60,7 @@ async function handler(ctx) {
                 const detailPubTimeMatches = detailResponse.data.match(/__\$pubtime='(.*?)';var/);
 
                 item.pubDate = detailPubTimeMatches ? timezone(parseDate(detailPubTimeMatches[1]), +8) : item.pubDate;
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     video: content('#con_video').html(),
                     description: content('.TRS_Editor, #content').html(),
                 });

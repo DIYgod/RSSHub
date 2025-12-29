@@ -1,9 +1,8 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import parser from '@/utils/rss-parser';
+
+import { renderDescription } from './templates/description';
 
 const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
@@ -32,11 +31,9 @@ export const handler = async (ctx) => {
         const pdfUrl = Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
 
         const authorString = item.author;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             pdfUrl,
-            siteUrl: item.link,
             kimiUrl,
-            authorString,
             summary: item.summary,
         });
 
