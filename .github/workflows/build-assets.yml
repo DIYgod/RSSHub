@@ -11,7 +11,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         name: Build assets
         timeout-minutes: 5
         permissions:
