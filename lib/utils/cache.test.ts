@@ -73,8 +73,11 @@ describe('cache', () => {
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';
         const cache = (await import('@/utils/cache')).default;
+        await cache.init();
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
+        expect(await cache.globalCache.get('mock2')).toBeNull();
+        expect(cache.globalCache.set('mock2', '2')).toBeNull();
     });
 
     it('throws TTL key', async () => {

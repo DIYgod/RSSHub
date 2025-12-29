@@ -75,4 +75,46 @@ describe('got', () => {
 
         expect(data.cookie).toBe('cookie=test; Domain=rsshub.test; Path=/');
     });
+
+    it('runs beforeRequest hooks', async () => {
+        const hook = vi.fn((options) => {
+            options.headers = {
+                ...options.headers,
+                'x-before-request': '1',
+            };
+        });
+
+        const { data } = await got('http://rsshub.test/headers', {
+            hooks: {
+                beforeRequest: [hook],
+            },
+        });
+
+        expect(hook).toHaveBeenCalledTimes(1);
+        expect(data['x-before-request']).toBe('1');
+    });
+
+    it('appends search params', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.get('http://rsshub.test/query', ({ request }) => {
+                const url = new URL(request.url);
+                return HttpResponse.json({
+                    query: Object.fromEntries(url.searchParams.entries()),
+                });
+            })
+        );
+
+        const { data } = await got('http://rsshub.test/query', {
+            searchParams: {
+                foo: 'bar',
+                baz: 'qux',
+            },
+        });
+
+        expect(data.query).toEqual({
+            foo: 'bar',
+            baz: 'qux',
+        });
+    });
 });
