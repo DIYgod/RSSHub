@@ -7394,6 +7394,16 @@
   },
   "binance.com": {
     "_name": "Binance",
+    "www": [
+      {
+        "title": "Announcement",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:lang/messages/v2/group/announcement"
+        ],
+        "target": "/binance/binance/announcement/all/:lang"
+      }
+    ],
     ".": [
       {
         "title": "Binance数字货币及交易对上新",
@@ -7402,16 +7412,6 @@
           "/:lang/support/announcement"
         ],
         "target": "/binance/launchpool"
-      }
-    ],
-    "www": [
-      {
-        "title": "币安公告",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/zh-CN/messages/v2/group/announcement"
-        ],
-        "target": "/binance/binance/messages/announcement"
       }
     ]
   },

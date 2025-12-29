@@ -1001,14 +1001,12 @@
   "/bilibili/weekly/:embed?": [
     "ttttmr"
   ],
-  "/binance/announcement/:type": [
-    "enpitsulin"
+  "/binance/announcement/:type?/:lang?": [
+    "enpitsulin",
+    "DIYgod"
   ],
   "/binance/launchpool": [
     "zhenlohuang"
-  ],
-  "/binance/messages/announcement": [
-    "DIYgod"
   ],
   "/bing/:routeParams?": [
     "FHYunCai",

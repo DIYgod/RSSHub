@@ -329,9 +329,8 @@ export type RoutePath =
   | `/bilibili/vsearch/:kw/:order?/:embed?/:tid?`
   | `/bilibili/watchlater/:uid/:embed?`
   | `/bilibili/weekly/:embed?`
-  | `/binance/announcement/:type`
+  | `/binance/announcement/:type?/:lang?`
   | `/binance/launchpool`
-  | `/binance/messages/announcement`
   | `/bing/:routeParams?`
   | `/bing/search/:keyword`
   | `/biodiscover/:channel?`
