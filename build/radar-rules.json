@@ -48,6 +48,16 @@
         "target": "/163/exclusive/:id?"
       }
     ],
+    "vip.open": [
+      {
+        "title": "精品课程",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/"
+        ],
+        "target": "/163/open/vip"
+      }
+    ],
     "renjian": [
       {
         "title": "人间",
@@ -68,16 +78,6 @@
           "/"
         ],
         "target": "/163/today"
-      }
-    ],
-    "vip.open": [
-      {
-        "title": "精品课程",
-        "docs": "https://docs.rsshub.app/routes/study",
-        "source": [
-          "/"
-        ],
-        "target": "/163/open/vip"
       }
     ]
   },
@@ -7473,27 +7473,6 @@
   },
   "bit.edu.cn": {
     "_name": "北京理工大学",
-    "rszhaopin": [
-      {
-        "title": "人才招聘",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/bit/rszhaopin"
-      }
-    ],
-    "grd": [
-      {
-        "title": "研究生院招生信息",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/zsgz/zsxx/index.htm",
-          "/"
-        ],
-        "target": "/bit/yjs"
-      }
-    ],
     "cs": [
       {
         "title": "计院通知",
@@ -7514,6 +7493,27 @@
           "/"
         ],
         "target": "/bit/jwc"
+      }
+    ],
+    "rszhaopin": [
+      {
+        "title": "人才招聘",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/bit/rszhaopin"
+      }
+    ],
+    "grd": [
+      {
+        "title": "研究生院招生信息",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zsgz/zsxx/index.htm",
+          "/"
+        ],
+        "target": "/bit/yjs"
       }
     ]
   },
@@ -7569,16 +7569,6 @@
         "target": "/bjfu/grs"
       }
     ],
-    "kyc": [
-      {
-        "title": "科技处通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/bjfu/kjc"
-      }
-    ],
     "it": [
       {
         "title": "信息学院通知",
@@ -7597,6 +7587,16 @@
           "/:type/index.html"
         ],
         "target": "/bjfu/jwc/:type"
+      }
+    ],
+    "kyc": [
+      {
+        "title": "科技处通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/bjfu/kjc"
       }
     ],
     "news": [
@@ -22742,6 +22742,16 @@
     "_name": "湖南农业大学",
     "xky": [
       {
+        "title": "公共管理与法学学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/tzgg_8472",
+          "/:category"
+        ],
+        "target": "/hunau/:category"
+      },
+      {
         "title": "国际交流与合作处、国际教育学院、港澳台事务办公室",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
@@ -22753,16 +22763,6 @@
       },
       {
         "title": "教务处",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/",
-          "/tzgg_8472",
-          "/:category"
-        ],
-        "target": "/hunau/:category"
-      },
-      {
-        "title": "公共管理与法学学院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/",
@@ -22835,6 +22835,26 @@
   },
   "hust.edu.cn": {
     "_name": "华中科技大学",
+    "aia": [
+      {
+        "title": "人工智能和自动化学院新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xyxw.htm",
+          "/"
+        ],
+        "target": "/hust/aia/news"
+      },
+      {
+        "title": "人工智能和自动化学院新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xyxw.htm",
+          "/"
+        ],
+        "target": "/hust/auto/news"
+      }
+    ],
     "gs": [
       {
         "title": "研究生院",
@@ -23632,26 +23652,6 @@
           "/"
         ],
         "target": "/hust/yjs"
-      }
-    ],
-    "aia": [
-      {
-        "title": "人工智能和自动化学院新闻",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/xyxw.htm",
-          "/"
-        ],
-        "target": "/hust/aia/news"
-      },
-      {
-        "title": "人工智能和自动化学院新闻",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/xyxw.htm",
-          "/"
-        ],
-        "target": "/hust/auto/news"
       }
     ]
   },
@@ -26683,17 +26683,6 @@
   },
   "jlu.edu.cn": {
     "_name": "吉林大学",
-    "jwc": [
-      {
-        "title": "教务通知",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/",
-          "/index.htm"
-        ],
-        "target": "/jlu/jwc"
-      }
-    ],
     "ccst": [
       {
         "title": "吉林大学计算机科学与技术学院 - 新闻中心",
@@ -26706,6 +26695,17 @@
           "/xwzx/zsjy.htm"
         ],
         "target": "/jlu/ccst/xwzx/:category"
+      }
+    ],
+    "jwc": [
+      {
+        "title": "教务通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/index.htm"
+        ],
+        "target": "/jlu/jwc"
       }
     ],
     "phy": [
@@ -33413,17 +33413,6 @@
   },
   "nikkei.com": {
     "_name": "The Nikkei 日本経済新聞",
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:category/archive",
-          "/:category"
-        ],
-        "target": "/nikkei/:category"
-      }
-    ],
     "asia": [
       {
         "title": "Nikkei Asia Latest News",
@@ -33456,6 +33445,17 @@
           "/"
         ],
         "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/zh/${params.category}/${params.type.replace(\".html\",\"\")}`}else if(params.category&&!params.type){return`/nikkei/cn/zh/${params.category.replace(\".html\",\"\")}`}else{return`/nikkei/cn/zh`}}"
+      }
+    ],
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category/archive",
+          "/:category"
+        ],
+        "target": "/nikkei/:category"
       }
     ]
   },
@@ -33775,7 +33775,7 @@
         "source": [
           "/publish/$:path(.*)/.(:ext(html|htm))"
         ],
-        "target": "/nmcparams=>{const path2=params.path;const ext=params.ext;const id=path2&&ext?`${path2}/${ext}`:void 0;return`/nmc/publish${id?`/${id}`:\"\"}`}"
+        "target": "/nmcparams=>{const path=params.path;const ext=params.ext;const id=path&&ext?`${path}/${ext}`:void 0;return`/nmc/publish${id?`/${id}`:\"\"}`}"
       },
       {
         "title": "首页 - 卫星云图",
@@ -34649,6 +34649,17 @@
         "target": "/nuist/bulletin/:category"
       }
     ],
+    "lib": [
+      {
+        "title": "Unknown",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/",
+          "/index/tzgg.htm"
+        ],
+        "target": "/nuist/lib"
+      }
+    ],
     "scs": [
       {
         "title": "NUIST CS（南信大计软院）",
@@ -34668,17 +34679,6 @@
           "/419/list.htm"
         ],
         "target": "/nuist/xgc"
-      }
-    ],
-    "lib": [
-      {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/",
-          "/index/tzgg.htm"
-        ],
-        "target": "/nuist/lib"
       }
     ]
   },
@@ -37883,37 +37883,6 @@
   },
   "pku.edu.cn": {
     "_name": "北京大学",
-    "hr": [
-      {
-        "title": "人事处",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/pku/hr/:category?"
-      }
-    ],
-    "nsd": [
-      {
-        "title": "观点 - 国家发展研究院",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/pku/nsd/gd"
-      }
-    ],
-    "admission": [
-      {
-        "title": "研究生招生网",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/zsxx/sszs/index.htm",
-          "/"
-        ],
-        "target": "/pku/admission/sszs"
-      }
-    ],
     "bbs": [
       {
         "title": "北大未名 BBS 全站十大",
@@ -37943,6 +37912,37 @@
           "/"
         ],
         "target": "/pku/cls/lecture"
+      }
+    ],
+    "hr": [
+      {
+        "title": "人事处",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/pku/hr/:category?"
+      }
+    ],
+    "nsd": [
+      {
+        "title": "观点 - 国家发展研究院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/pku/nsd/gd"
+      }
+    ],
+    "admission": [
+      {
+        "title": "研究生招生网",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/zsxx/sszs/index.htm",
+          "/"
+        ],
+        "target": "/pku/admission/sszs"
       }
     ],
     "www.rccp": [
@@ -39869,6 +39869,17 @@
   },
   "scnu.edu.cn": {
     "_name": "华南师范大学",
+    "cs": [
+      {
+        "title": "计算机学院竞赛通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/xueshenggongzuo/chengchangfazhan/kejichuangxin/",
+          "/"
+        ],
+        "target": "/scnu/cs/match"
+      }
+    ],
     "jw": [
       {
         "title": "教务处通知",
@@ -39911,17 +39922,6 @@
           "/"
         ],
         "target": "/scnu/yjs"
-      }
-    ],
-    "cs": [
-      {
-        "title": "计算机学院竞赛通知",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/xueshenggongzuo/chengchangfazhan/kejichuangxin/",
-          "/"
-        ],
-        "target": "/scnu/cs/match"
       }
     ]
   },
@@ -39969,20 +39969,20 @@
     "_name": "华南理工大学",
     "www2": [
       {
-        "title": "研究生院通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/graduate/14562/list.htm"
-        ],
-        "target": "/scut/yjs"
-      },
-      {
         "title": "电子与信息学院 - 新闻速递",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
           "/ee/16285/list.htm"
         ],
         "target": "/scut/seie/news_center"
+      },
+      {
+        "title": "研究生院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/graduate/14562/list.htm"
+        ],
+        "target": "/scut/yjs"
       }
     ]
   },
@@ -40171,17 +40171,6 @@
   },
   "seu.edu.cn": {
     "_name": "东南大学",
-    "seugs": [
-      {
-        "title": "研究生院全部公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/26671/list.htm",
-          "/"
-        ],
-        "target": "/seu/yjs"
-      }
-    ],
     "cse": [
       {
         "title": "计算机技术与工程学院",
@@ -40213,6 +40202,17 @@
           "/"
         ],
         "target": "/seu/radio/academic"
+      }
+    ],
+    "seugs": [
+      {
+        "title": "研究生院全部公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/26671/list.htm",
+          "/"
+        ],
+        "target": "/seu/yjs"
       }
     ],
     "yzb": [
@@ -42991,6 +42991,16 @@
   },
   "swjtu.edu.cn": {
     "_name": "西南交通大学",
+    "gsee": [
+      {
+        "title": "地球科学与工程学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/swjtu/gsee/yjs"
+      }
+    ],
     "jwc": [
       {
         "title": "教务网",
@@ -43045,16 +43055,6 @@
           "/"
         ],
         "target": "/swjtu/xg"
-      }
-    ],
-    "gsee": [
-      {
-        "title": "地球科学与工程学院",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/swjtu/gsee/yjs"
       }
     ]
   },
@@ -43619,40 +43619,15 @@
   },
   "szse.cn": {
     "_name": "深圳证券交易所",
-    ".": [
-      {
-        "title": "问询函件",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/disclosure/supervision/inquire/index.html",
-          "/"
-        ],
-        "target": "/szse/inquire"
-      },
-      {
-        "title": "上市公告 - 可转换债券",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/disclosure/notice/company/index.html",
-          "/"
-        ],
-        "target": "/szse/notice"
-      }
-    ],
-    "listing": [
-      {
-        "title": "创业板项目动态",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/projectdynamic/1/index.html",
-          "/projectdynamic/2/index.html",
-          "/projectdynamic/3/index.html",
-          "/"
-        ],
-        "target": "/szse/projectdynamic/:type?/:stage?/:status?"
-      }
-    ],
     "www": [
+      {
+        "title": "上市公司公告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/disclosure/listed/notice/index.html"
+        ],
+        "target": "/szse/disclosure/listed/notice"
+      },
       {
         "title": "本所业务规则",
         "docs": "https://docs.rsshub.app/routes/finance",
@@ -43924,14 +43899,39 @@
           "/www/lawrules/rule/repeal/rules/index.html"
         ],
         "target": "/szse/rule/repeal/rules"
-      },
+      }
+    ],
+    ".": [
       {
-        "title": "上市公司公告",
+        "title": "问询函件",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/disclosure/listed/notice/index.html"
+          "/disclosure/supervision/inquire/index.html",
+          "/"
         ],
-        "target": "/szse/disclosure/listed/notice"
+        "target": "/szse/inquire"
+      },
+      {
+        "title": "上市公告 - 可转换债券",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/disclosure/notice/company/index.html",
+          "/"
+        ],
+        "target": "/szse/notice"
+      }
+    ],
+    "listing": [
+      {
+        "title": "创业板项目动态",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/projectdynamic/1/index.html",
+          "/projectdynamic/2/index.html",
+          "/projectdynamic/3/index.html",
+          "/"
+        ],
+        "target": "/szse/projectdynamic/:type?/:stage?/:status?"
       }
     ]
   },
@@ -44434,22 +44434,17 @@
       }
     ]
   },
-  "factpaper.cn": {
+  "thepaper.cn": {
     "_name": "澎湃新闻",
     ".": [
       {
-        "title": "明查",
+        "title": "澎湃美数课作品集 - 分类",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
-        "target": "/thepaper/factpaper/:status"
-      }
-    ]
-  },
-  "thepaper.cn": {
-    "_name": "澎湃新闻",
-    ".": [
+        "target": "/thepaper/839studio/:id"
+      },
       {
         "title": "首页头条",
         "docs": "https://docs.rsshub.app/routes/new-media",
@@ -44465,14 +44460,19 @@
           "/"
         ],
         "target": "/thepaper/sidebar"
-      },
+      }
+    ]
+  },
+  "factpaper.cn": {
+    "_name": "澎湃新闻",
+    ".": [
       {
-        "title": "澎湃美数课作品集 - 分类",
+        "title": "明查",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/"
         ],
-        "target": "/thepaper/839studio/:id"
+        "target": "/thepaper/factpaper/:status"
       }
     ]
   },
@@ -45278,16 +45278,6 @@
   },
   "tsinghua.edu.cn": {
     "_name": "清华大学",
-    "www": [
-      {
-        "title": "清华新闻",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/news/:category"
-        ],
-        "target": "/tsinghua(_,url)=>`/tsinghua/news/${new URL(url).pathname.split(\"/\").pop()?.replace(\".htm\",\"\")}`"
-      }
-    ],
     "lib": [
       {
         "title": "图书馆通知公告",
@@ -45328,6 +45318,16 @@
           "/zydt/sy"
         ],
         "target": "/tsinghua/lib/zydt/sy"
+      }
+    ],
+    "www": [
+      {
+        "title": "清华新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/news/:category"
+        ],
+        "target": "/tsinghua(_,url)=>`/tsinghua/news/${new URL(url).pathname.split(\"/\").pop()?.replace(\".htm\",\"\")}`"
       }
     ]
   },
@@ -46964,16 +46964,6 @@
         "target": "/weibo/user/:uid"
       }
     ],
-    "www": [
-      {
-        "title": "博主",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/u/:uid"
-        ],
-        "target": "/weibo/user/:uid"
-      }
-    ],
     "s": [
       {
         "title": "热搜榜",
@@ -46983,13 +46973,23 @@
         ],
         "target": "/weibo/search/hot/:fulltext?"
       }
+    ],
+    "www": [
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/u/:uid"
+        ],
+        "target": "/weibo/user/:uid"
+      }
     ]
   },
   "weibo.cn": {
     "_name": "微博",
     "m": [
       {
-        "title": "博主",
+        "title": "绿洲用户",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/u/:uid",
@@ -46998,7 +46998,7 @@
         "target": "/weibo/user/:uid"
       },
       {
-        "title": "绿洲用户",
+        "title": "博主",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/u/:uid",
@@ -47103,6 +47103,17 @@
   },
   "whu.edu.cn": {
     "_name": "武汉大学",
+    "gs": [
+      {
+        "title": "研究生院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index.htm",
+          "/"
+        ],
+        "target": "/whu/gs"
+      }
+    ],
     "rsgis": [
       {
         "title": "武汉大学遥感信息工程学院",
@@ -47121,17 +47132,6 @@
           "/:type"
         ],
         "target": "/whu/swrh/:type"
-      }
-    ],
-    "gs": [
-      {
-        "title": "研究生院",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/index.htm",
-          "/"
-        ],
-        "target": "/whu/gs"
       }
     ]
   },
@@ -47533,6 +47533,16 @@
         "target": "/xjtu/ee/:id?"
       }
     ],
+    "gs": [
+      {
+        "title": "研究生院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/"
+        ],
+        "target": "/xjtu/gs/tzgg"
+      }
+    ],
     "yz": [
       {
         "title": "研究生招生信息网",
@@ -47551,16 +47561,6 @@
           "/:category"
         ],
         "target": "/xjtuparams=>{const category=params.category;return`/xjtu/zs${category?`/${category}`:\"\"}`}"
-      }
-    ],
-    "gs": [
-      {
-        "title": "研究生院通知公告",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/"
-        ],
-        "target": "/xjtu/gs/tzgg"
       }
     ]
   },
@@ -48456,6 +48456,22 @@
         "target": "/zhihu/collection/:id"
       },
       {
+        "title": "知乎想法热榜",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/zhihu/bookstore/newest"
+        ],
+        "target": "/zhihu/pin/hotlist"
+      },
+      {
+        "title": "用户想法",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/people/:id/pins"
+        ],
+        "target": "/zhihu/people/pins/:id"
+      },
+      {
         "title": "用户文章",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
@@ -48487,22 +48503,6 @@
           "/pub/weekly"
         ],
         "target": "/zhihu/weekly"
-      },
-      {
-        "title": "知乎想法热榜",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/zhihu/bookstore/newest"
-        ],
-        "target": "/zhihu/pin/hotlist"
-      },
-      {
-        "title": "用户想法",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/people/:id/pins"
-        ],
-        "target": "/zhihu/people/pins/:id"
       },
       {
         "title": "xhu - 用户动态",
@@ -48573,7 +48573,7 @@
     ],
     "zhuanlan": [
       {
-        "title": "专栏",
+        "title": "xhu- 专栏",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/:id"
@@ -48581,7 +48581,7 @@
         "target": "/zhihu/zhuanlan/:id"
       },
       {
-        "title": "xhu- 专栏",
+        "title": "专栏",
         "docs": "https://docs.rsshub.app/routes/social-media",
         "source": [
           "/:id"
@@ -48721,16 +48721,6 @@
   },
   "zjut.edu.cn": {
     "_name": "浙江工业大学",
-    "www.news": [
-      {
-        "title": "浙工大新闻",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/:type/list.htm"
-        ],
-        "target": "/zjut/news/:type"
-      }
-    ],
     "cs": [
       {
         "title": "浙江工业大学计算机科学与技术学院、软件学院",
@@ -48749,6 +48739,16 @@
           "/:type/list.htm"
         ],
         "target": "/zjut/jwc/:type"
+      }
+    ],
+    "www.news": [
+      {
+        "title": "浙工大新闻",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/zjut/news/:type"
       }
     ],
     "www": [
