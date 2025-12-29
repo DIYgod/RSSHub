@@ -1,9 +1,7 @@
-import path from 'node:path';
-
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import type { Video } from './types';
 
 export const baseUrl = 'https://javtrailers.com';
@@ -37,9 +35,7 @@ export const getItem = async (item) => {
     const videoInfo: Video = response.video;
     videoInfo.gallery = hdGallery(videoInfo.gallery);
 
-    item.description = art(path.join(__dirname, 'templates/description.art'), {
-        videoInfo,
-    });
+    item.description = renderDescription(videoInfo);
     item.author = videoInfo.casts.map((cast) => `${cast.name} ${cast.jpName}`).join(', ');
     item.category = videoInfo.categories.map((category) => `${category.name}／${category.jpName}／${category.zhName}`);
 

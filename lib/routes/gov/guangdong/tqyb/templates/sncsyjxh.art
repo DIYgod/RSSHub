@@ -1,5 +1,0 @@
-<text>地区： {{ item.cname }} </text>
-<br>
-<text>等级： {{ item.sigtypename }} </text>
-<br>
-<text>发布时间：{{ item.datetime }}</text>

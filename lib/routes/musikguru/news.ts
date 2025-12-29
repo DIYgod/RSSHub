@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,8 +8,9 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
@@ -35,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.find('h5.card-title').text();
             const image: string | undefined = $el.find('img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -75,11 +74,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('div.article h1').text();
-                const description: string | undefined =
-                    item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: ($$('p.lead').html() ?? '') + ($$('div.lead').html() ?? ''),
-                    });
+                const leadHtml = ($$('p.lead').html() ?? '') + ($$('div.lead').html() ?? '');
+                const description: string | undefined = item.description + renderDescription({ description: leadHtml || undefined });
                 const pubDateStr: string | undefined = $$('div.article div.text-muted').text().split(/\sUhr/)?.[0];
                 const image: string | undefined = $$('div.article img').first().attr('src');
                 const upDatedStr: string | undefined = pubDateStr;

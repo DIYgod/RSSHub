@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -7,8 +5,9 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const types = {
     1: {
@@ -246,7 +245,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             })();
 
         const images: string[] = [item.BigImg, item.SmallImg, item.reportpic].filter(Boolean) as string[];
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: images.map((src) => ({
                 src,
                 alt: title,
@@ -350,7 +349,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         (_, index) => `${imageBaseUrl}/${typeObj.imageSlug}/${item.detailId}/${index + 1}.jpg`
                     ),
                 ].filter(Boolean) as string[];
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: images.map((src) => ({
                         src,
                         alt: title,

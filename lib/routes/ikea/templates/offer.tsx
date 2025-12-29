@@ -1,0 +1,17 @@
+import { renderToString } from 'hono/jsx/dom/server';
+import { raw } from 'hono/utils/html';
+
+type OfferData = {
+    img?: string;
+    desc?: string;
+};
+
+const IkeaOffer = ({ img, desc }: OfferData) => (
+    <>
+        {img ? raw(img) : null}
+        <br />
+        {desc ? raw(desc) : null}
+    </>
+);
+
+export const renderOffer = (data: OfferData) => renderToString(<IkeaOffer {...data} />);

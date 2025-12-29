@@ -1,10 +1,13 @@
-import path from 'node:path';
+import { renderCover } from './templates/cover';
+import { renderDesc } from './templates/desc';
+import { renderEmbed } from './templates/embed';
+import { renderIframe } from './templates/iframe';
 
 const templates = {
-    desc: path.join(__dirname, 'templates/desc.art'),
-    cover: path.join(__dirname, 'templates/cover.art'),
-    embed: path.join(__dirname, 'templates/embed.art'),
-    iframe: path.join(__dirname, 'templates/iframe.art'),
+    desc: renderDesc,
+    cover: renderCover,
+    embed: renderEmbed,
+    iframe: renderIframe,
 };
 
 const resolveUrl = (url, tls = true, forceResolve = false) => {

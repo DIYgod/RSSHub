@@ -1,9 +1,8 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderEshopJpDescription } from './templates/eshop-jp';
 
 export const route: Route = {
     path: '/eshop/jp',
@@ -39,9 +38,7 @@ async function handler(ctx) {
         description: 'Nintendo eShop（日服）新上架的游戏',
         item: data.map((item) => ({
             title: item.title,
-            description: art(path.join(__dirname, 'templates/eshop_jp.art'), {
-                item,
-            }),
+            description: renderEshopJpDescription(item),
             link: `https://ec.nintendo.com/JP/ja/titles/${item.id}`,
             pubDate: parseDate(item.pdate),
         })),
