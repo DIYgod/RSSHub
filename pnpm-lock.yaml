@@ -86,8 +86,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       city-timezones:
-        specifier: 1.3.2
-        version: 1.3.2
+        specifier: 1.3.3
+        version: 1.3.3
       cross-env:
         specifier: 10.1.0
         version: 10.1.0
@@ -143,8 +143,8 @@ importers:
         specifier: 0.7.1
         version: 0.7.1
       imapflow:
-        specifier: 1.2.3
-        version: 1.2.3
+        specifier: 1.2.4
+        version: 1.2.4
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -3033,8 +3033,8 @@ packages:
     resolution: {integrity: sha512-Wdy2Igu8OcBpI2pZePZ5oWjPC38tmDVx5WKUXKwlLYkA0ozo85sLsLvkBbBn/sZaSCMFOGZJ14fvW9t5/d7kdA==}
     engines: {node: '>=8'}
 
-  city-timezones@1.3.2:
-    resolution: {integrity: sha512-XztdL/2EWpfmgRIOzrKVOWFp6VdmaD9FNTZPINlez1etIn0mMNn01RMmSfOp6LUP/h1M2ZLX80N1O+WKwhzC+w==}
+  city-timezones@1.3.3:
+    resolution: {integrity: sha512-tyH1Tje3mee1mWkjerhx/8CLOfTJn6A5L6swAqLRceoToj9bvKNkfcKESoxG9rApXBKxKeZQUQbbzYcoRSJbZw==}
 
   cjs-module-lexer@1.4.3:
     resolution: {integrity: sha512-9z8TZaGM1pfswYeXrUpzPrkx8UnWYdhJclsiYMm6x/w5+nN+8Tf/LnAgfLGQCm59qAOxU8WwHEq2vNwF6i4j+Q==}
@@ -4087,8 +4087,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@1.2.3:
-    resolution: {integrity: sha512-gpFiB2Dnbr3/z8wN/BFKhyfG19f8Hh2zFe6nkhTuQiXQR9PgDJ6qDlRQ11uCAZWJxpiSKRkFCM4p5Hyf75Z1NA==}
+  imapflow@1.2.4:
+    resolution: {integrity: sha512-X/eRQeje33uZycfopjwoQKKbya+bBIaqpviOFxhPOD24DXU2hMfXwYe9e8j1+ADwFVgTvKq4G2/ljjZK3Y8mvg==}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -4802,6 +4802,10 @@ packages:
 
   nodemailer@7.0.11:
     resolution: {integrity: sha512-gnXhNRE0FNhD7wPSCGhdNh46Hs6nm+uTyg+Kq0cZukNQiYdnCsoQjodNP9BQVG9XrcK/v6/MgpAPBUFyzh9pvw==}
+    engines: {node: '>=6.0.0'}
+
+  nodemailer@7.0.12:
+    resolution: {integrity: sha512-H+rnK5bX2Pi/6ms3sN4/jRQvYSMltV6vqup/0SFOrxYYY/qoNvhXPlYq3e+Pm9RFJRwrMGbMIwi81M4dxpomhA==}
     engines: {node: '>=6.0.0'}
 
   nopt@7.2.1:
@@ -8978,9 +8982,7 @@ snapshots:
 
   ci-info@4.3.1: {}
 
-  city-timezones@1.3.2:
-    dependencies:
-      lodash: 4.17.21
+  city-timezones@1.3.3: {}
 
   cjs-module-lexer@1.4.3: {}
 
@@ -10212,15 +10214,15 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@1.2.3:
+  imapflow@1.2.4:
     dependencies:
       '@zone-eu/mailsplit': 5.4.8
       encoding-japanese: 2.2.0
-      iconv-lite: 0.7.0
+      iconv-lite: 0.7.1
       libbase64: 1.3.0
       libmime: 5.3.7
       libqp: 2.1.1
-      nodemailer: 7.0.11
+      nodemailer: 7.0.12
       pino: 10.1.0
       socks: 2.8.7
 
@@ -11010,6 +11012,8 @@ snapshots:
   node-releases@2.0.27: {}
 
   nodemailer@7.0.11: {}
+
+  nodemailer@7.0.12: {}
 
   nopt@7.2.1:
     dependencies:

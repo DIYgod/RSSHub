@@ -1,5 +1,6 @@
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import undici from 'undici';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { useCustomHeader } from './fetch';
 
@@ -91,5 +92,16 @@ describe('useCustomHeader', () => {
         }
 
         expect(req.requestHeaders[headerText]).toBeUndefined();
+    });
+});
+
+describe('wrappedFetch', () => {
+    test('throws when fetch fails without proxy retry', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockRejectedValueOnce(new Error('boom'));
+        const { default: wrappedFetch } = await import('./fetch');
+
+        await expect(wrappedFetch('http://example.com')).rejects.toThrow('boom');
+
+        fetchSpy.mockRestore();
     });
 });

@@ -543,6 +543,7 @@ class PageParsers {
                 } else {
                     error('unknown page, probably due to WAF', pageTextShort, url);
                 }
+                /* v8 ignore next */
                 return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
