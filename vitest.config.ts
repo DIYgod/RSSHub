@@ -10,7 +10,7 @@ export default defineConfig({
     test: {
         watch: false,
         coverage: {
-            include: ['lib/**/*.ts'],
+            include: ['lib/**/*.ts', 'lib/**/*.tsx'],
             exclude: ['lib/routes/**', 'lib/routes-deprecated/**'],
         },
         testTimeout: 10000,

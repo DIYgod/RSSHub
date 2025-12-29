@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -8,7 +6,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const appUrl = 'https://app.theinitium.com/';
 const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
@@ -107,7 +106,7 @@ async function fetchAppPage(url: URL) {
     article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
     article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
     article.find('p.has-small-font-size').wrapInner('<small></small>');
-    return art(path.join(__dirname, 'templates/description.art'), {
+    return renderDescription({
         standfirst: $('.pp-header-group__standfirst').html(),
         coverImage: $('.pp-media__image').attr('src'),
         coverCaption: $('.pp-media__caption').html(),
@@ -120,7 +119,7 @@ async function fetchWebPage(url: URL) {
     const $ = load(response);
     const article = $('.ghost-content');
     article.find('.kg-card, .gh-post-upgrade-cta').remove();
-    return art(path.join(__dirname, 'templates/description.art'), {
+    return renderDescription({
         standfirst: $('p.caption1').html(),
         coverImage: $('.post-hero .object-cover').attr('src')?.replace('/size/w30', ''),
         coverCaption: $('.post-hero figcaption').html(),

@@ -83,6 +83,51 @@ window.ip_wording = {
             )
         )
     ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_empty`, () =>
+        HttpResponse.text(
+            `<meta name="description" content="summary" />
+<meta name="author" content="author" />
+<meta property="og:title" content="title" />
+<meta property="og:image" content="https://mmbiz.qpic.cn/rsshub_test/og_img_1/0?wx_fmt=jpeg" />
+<meta property="twitter:card" content="summary" />
+<div class="rich_media_content" id="js_content" style="visibility: hidden;"></div>
+<div id="js_share_source" data-url="https://mp.weixin.qq.com/rsshub_test/original_source"></div>
+<div class="wx_follow_nickname">mpName</div>
+<script type="text/javascript" nonce="000000000">
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";
+</script>`
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_source`, () =>
+        HttpResponse.text(
+            genWeChatMpPage(
+                `original content`,
+                `
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+            )
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_long`, () =>
+        HttpResponse.text(
+            genWeChatMpPage(
+                'long-content-'.repeat(10),
+                `
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+            )
+        )
+    ),
     http.get(`https://mp.weixin.qq.com/rsshub_test/img`, () =>
         HttpResponse.text(
             genWeChatMpPage('fake_description', [

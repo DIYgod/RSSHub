@@ -1,3 +1,0 @@
-<figure><img src="{{ imageURL }}"></figure>
-{{@ metadata }}
-{{@ content }}

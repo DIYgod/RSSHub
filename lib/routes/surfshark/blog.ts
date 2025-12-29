@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,7 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
@@ -43,7 +42,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const image: string | undefined = $el.find('a.dg-article-image img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -113,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('meta[property="og:title"]').attr('content') ?? item.title;
                 const image: string | undefined = $$('div.dg-featured-img-container img').attr('src');
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: image
                         ? [
                               {

@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: ['/lc_report/:id?', '/report/:id?'],
@@ -47,7 +46,7 @@ async function handler(ctx) {
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`front/lc_report/get_report_info/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: {
                 src: item.img_url?.split(/\?/)[0] ?? undefined,
                 alt: item.title,
@@ -69,7 +68,7 @@ async function handler(ctx) {
                 content('img').each((_, el) => {
                     el = content(el);
                     el.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             image: {
                                 src: el.prop('src')?.split(/\?/)[0] ?? undefined,
                                 alt: el.prop('title'),
@@ -79,7 +78,7 @@ async function handler(ctx) {
                 });
 
                 item.title = content('h1').first().text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('div.article-cont').html(),
                 });
                 item.author = content('div.lc-infos a')

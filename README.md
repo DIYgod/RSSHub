@@ -55,7 +55,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ## Author
 
-**RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
+**RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [AGPL-3.0](./LICENSE) License.<br>
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
