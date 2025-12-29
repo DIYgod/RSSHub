@@ -117,4 +117,37 @@ describe('got', () => {
             baz: 'qux',
         });
     });
+
+    it('supports additional http verbs and extend', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.all('http://rsshub.test/method', ({ request }) =>
+                HttpResponse.json({
+                    method: request.method,
+                })
+            )
+        );
+
+        const putResponse = await got.put('http://rsshub.test/method');
+        expect(putResponse.data.method).toBe('PUT');
+
+        const patchResponse = await got.patch('http://rsshub.test/method');
+        expect(patchResponse.data.method).toBe('PATCH');
+
+        const deleteResponse = await got.delete('http://rsshub.test/method');
+        expect(deleteResponse.data.method).toBe('DELETE');
+
+        const headResponse = await got.head('http://rsshub.test/method', {
+            responseType: 'text',
+        });
+        expect(headResponse).toBeUndefined();
+
+        const extended = got.extend({
+            headers: {
+                'x-extended': '1',
+            },
+        });
+        const extendedResponse = await extended.get('http://rsshub.test/headers');
+        expect(extendedResponse.data['x-extended']).toBe('1');
+    });
 });

@@ -32,5 +32,11 @@ describe('helpers', () => {
         expect(parseDuration('59')).toBe(59);
         expect(parseDuration(null)).toBeUndefined();
         expect(parseDuration('1:xx')).toBe(60);
+        const invalid: any = {
+            trim: () => ({
+                replaceAll: () => 'NaN:1',
+            }),
+        };
+        expect(() => parseDuration(invalid)).toThrow('Invalid segment');
     });
 });

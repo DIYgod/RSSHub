@@ -34,6 +34,11 @@ describe('cache', () => {
         expect(await cache.globalCache.get('mock')).toBe('{"mock":1}');
     }, 10000);
 
+    it('memory get returns null before init', async () => {
+        const memory = (await import('@/utils/cache/memory')).default;
+        expect(await memory.get('missing')).toBeNull();
+    });
+
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
         const cache = (await import('@/utils/cache')).default;
@@ -67,7 +72,7 @@ describe('cache', () => {
         const cache = (await import('@/utils/cache')).default;
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
-        await cache.clients.redisClient?.quit();
+        cache.clients.redisClient?.disconnect();
     });
 
     it('no cache', async () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { handler } from '@/api/category/one';
+import { handler, route } from '@/api/category/one';
 import { namespaces } from '@/registry';
 
 const createCtx = (param: Record<string, string>, query: Record<string, any> = {}) =>
@@ -60,5 +60,16 @@ describe('api/category/one', () => {
         for (const ns of Object.values(result)) {
             expect((ns as { lang?: string }).lang).toBe(selectedLang);
         }
+    });
+
+    it('parses categories query string into array', () => {
+        const parsed = route.request?.query?.parse({ categories: 'a,b', lang: 'en' });
+        expect(parsed?.categories).toEqual(['a', 'b']);
+        expect(parsed?.lang).toBe('en');
+    });
+
+    it('returns empty result for unknown categories', () => {
+        const result = handler(createCtx({ category: 'rsshub-unknown-category' }, {}));
+        expect(result).toEqual({});
     });
 });

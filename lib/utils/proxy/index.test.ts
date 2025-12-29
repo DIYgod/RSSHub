@@ -76,4 +76,14 @@ describe('proxy', () => {
         expect(proxy.dispatcher).toBeNull();
         expect(proxy.getCurrentProxy()?.uri).toBe('socks5://proxy.local:1080');
     });
+
+    it('returns null agent for unsupported proxy protocol', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: '',
+            PROXY_URIS: '',
+            PAC_URI: '',
+        });
+
+        expect(proxy.getAgentForProxy({ uri: 'ftp://proxy.local:21' } as any)).toBeNull();
+    });
 });

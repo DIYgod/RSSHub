@@ -17,6 +17,7 @@ describe('multi-proxy', () => {
 
         expect(result.allProxies).toHaveLength(0);
         expect(result.getNextProxy()).toBeNull();
+        expect(() => result.resetProxy('http://inv lid.test')).not.toThrow();
     });
 
     it('rotates proxies, marks inactive, and reactivates after health checks', () => {
@@ -54,5 +55,22 @@ describe('multi-proxy', () => {
             vi.clearAllTimers();
             vi.useRealTimers();
         }
+    });
+
+    it('returns null when proxies become inactive during selection', () => {
+        const result = createMultiProxy(['http://proxy1.local:8080', 'http://proxy2.local:8081'], baseProxyObj);
+
+        for (const proxy of result.allProxies) {
+            let calls = 0;
+            Object.defineProperty(proxy, 'isActive', {
+                configurable: true,
+                get() {
+                    calls += 1;
+                    return calls === 1;
+                },
+            });
+        }
+
+        expect(result.getNextProxy()).toBeNull();
     });
 });
