@@ -1,8 +1,8 @@
 import { createDecipheriv } from 'node:crypto';
 
 import dayjs from 'dayjs';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';

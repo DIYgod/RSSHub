@@ -1,5 +1,5 @@
 import type { CheerioAPI } from 'cheerio';
-import { raw } from 'hono/jsx';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 type ArticleData = {

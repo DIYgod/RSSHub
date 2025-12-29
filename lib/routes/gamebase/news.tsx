@@ -1,8 +1,8 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';

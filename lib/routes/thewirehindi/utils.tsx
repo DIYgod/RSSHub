@@ -1,5 +1,5 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import type { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';

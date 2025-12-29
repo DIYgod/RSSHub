@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 import { FetchError } from 'ofetch';
 
 import type { Route } from '@/types';

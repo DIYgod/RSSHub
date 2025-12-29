@@ -1,6 +1,6 @@
 import zlib from 'node:zlib';
 
-import { raw } from 'hono/jsx';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import got from '@/utils/got';

@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { raw } from 'hono/jsx';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';

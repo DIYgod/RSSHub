@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import { config } from '@/config';
 import type { Route } from '@/types';

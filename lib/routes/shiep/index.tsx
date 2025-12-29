@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import { raw } from 'hono/jsx';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';

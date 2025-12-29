@@ -1,8 +1,8 @@
 import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 
 import type { DataItem } from '@/types';
 import logger from '@/utils/logger';

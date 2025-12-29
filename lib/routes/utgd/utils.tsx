@@ -1,5 +1,5 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-import { raw } from 'hono/utils/html';
 import MarkdownIt from 'markdown-it';
 
 import cache from '@/utils/cache';
