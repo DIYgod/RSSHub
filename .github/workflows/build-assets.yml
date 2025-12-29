@@ -7,6 +7,7 @@ on:
             - master
         paths:
             - 'lib/**/*.ts'
+            - 'lib/**/*.tsx'
 
 jobs:
     build:

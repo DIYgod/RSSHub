@@ -107,9 +107,6 @@ importers:
       destr:
         specifier: 2.0.5
         version: 2.0.5
-      directory-import:
-        specifier: 3.3.2
-        version: 3.3.2
       dotenv:
         specifier: 17.2.3
         version: 17.2.3
@@ -3355,10 +3352,6 @@ packages:
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
-
-  directory-import@3.3.2:
-    resolution: {integrity: sha512-dSApZXgx29qO/6AVigdsoC6HSvaHWinJ4HTRPKrlMAxX71FgPzn/WEWbgM+aB1PlKD9IfSC3Ir2ouYYQR1uy+g==}
-    engines: {node: '>=18.17.0'}
 
   discord-api-types@0.38.37:
     resolution: {integrity: sha512-Cv47jzY1jkGkh5sv0bfHYqGgKOWO1peOrGMkDFM4UmaGMOTgOW8QSexhvixa9sVOiz8MnVOBryWYyw/CEVhj7w==}
@@ -9349,8 +9342,6 @@ snapshots:
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
     dependencies:
       heap: 0.2.7
-
-  directory-import@3.3.2: {}
 
   discord-api-types@0.38.37: {}
 
