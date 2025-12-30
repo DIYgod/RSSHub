@@ -10,7 +10,7 @@ jobs:
         permissions:
             contents: write # for Git to git push
         name: Auto format
-        runs-on: ubuntu-slim
+        runs-on: ubuntu-latest
         timeout-minutes: 15
 
         steps:
