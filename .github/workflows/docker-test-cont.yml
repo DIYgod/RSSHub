@@ -15,13 +15,26 @@ jobs:
         steps:
             - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-            # https://github.com/orgs/community/discussions/25220
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
             - name: Search the PR that triggered this workflow
-              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
               id: source-run-info
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  sourceRunId: ${{ github.event.workflow_run.id }}
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # If the PR is from a fork, prefix it with `<owner-login>:`, otherwise only the PR branch name is relevant:
+                  PR_BRANCH: |-
+                      ${{
+                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
+                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
+                          || github.event.workflow_run.head_branch
+                      }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh pr view --repo "${PR_TARGET_REPO}" "${PR_BRANCH}" \
+                    --json 'number' --jq '"number=\(.number)"' \
+                    >> "${GITHUB_OUTPUT}"
 
             - name: Fetch PR data via GitHub API
               uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
@@ -29,7 +42,7 @@ jobs:
               with:
                   route: GET /repos/{repo}/pulls/{number}
                   repo: ${{ github.repository }}
-                  number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  number: ${{ steps.source-run-info.outputs.number }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -126,18 +139,31 @@ jobs:
             pull-requests: write
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}
         steps:
-            # https://github.com/orgs/community/discussions/25220
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
             - name: Search the PR that triggered this workflow
-              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
               id: source-run-info
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  sourceRunId: ${{ github.event.workflow_run.id }}
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # If the PR is from a fork, prefix it with `<owner-login>:`, otherwise only the PR branch name is relevant:
+                  PR_BRANCH: |-
+                      ${{
+                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
+                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
+                          || github.event.workflow_run.head_branch
+                      }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh pr view --repo "${PR_TARGET_REPO}" "${PR_BRANCH}" \
+                    --json 'number' --jq '"number=\(.number)"' \
+                    >> "${GITHUB_OUTPUT}"
 
             - name: Pull Request Labeler
               uses: actions-cool/issues-helper@e2ff99831a4f13625d35064e2b3dfe65c07a0396 # v3.7.5
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}
                   labels: 'auto: DO NOT merge'
