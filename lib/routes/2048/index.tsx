@@ -93,6 +93,7 @@ async function handler(ctx) {
                         $captcha('form#s18f input')
                             .toArray()
                             .map((el) => [el.attribs.name, el.attribs.value])
+                            .filter(([name, value]) => name != null && value != null)
                     )
                 ).toString(),
                 redirect: 'manual',
