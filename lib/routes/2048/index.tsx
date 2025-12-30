@@ -66,26 +66,58 @@ async function handler(ctx) {
 
     const rootUrl = 'https://hjd2048.com';
     // 获取地址发布页指向的 URL
-    const domainInfo = (await cache.tryGet('2048:domainInfo', async () => {
+    const domainInfo = await cache.tryGet('2048:domainInfo', async () => {
         const response = await ofetch('https://2048.info');
         const $ = load(response);
         const onclickValue = $('.button').first().attr('onclick');
-        const targetUrl = onclickValue.match(/window\.open\('([^']+)'/)[1];
+        const targetUrl = onclickValue?.match(/window\.open\('([^']+)'/)?.[1];
 
         return { url: targetUrl };
-    })) as { url: string };
-    // 获取重定向后的url和safeid
+    });
+    // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
-    const currentUrl = `${redirectResponse.url}thread.php?fid-${id}.html`;
-    const redirectPageContent = load(redirectResponse._data);
-    const safeId =
-        redirectPageContent('script')
-            .text()
-            .match(/var safeid='(.*?)',/)?.[1] ?? '';
+    const redirected = await cache.tryGet(
+        `2048:redirected:${new URL(redirectResponse.url).host}`,
+        async () => {
+            const captchaPage = await ofetch(redirectResponse.url);
+            const $captcha = load(captchaPage);
+
+            const cookieResponse = await ofetch.raw(redirectResponse.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    Cookie: `safe18_tok=${$captcha('form#s18f input[name="tok"]').attr('value') || ''}`,
+                },
+                body: new URLSearchParams(
+                    Object.fromEntries(
+                        $captcha('form#s18f input')
+                            .toArray()
+                            .map((el) => [el.attribs.name, el.attribs.value])
+                            .filter(([name, value]) => name !== null && value !== null)
+                    )
+                ).toString(),
+                redirect: 'manual',
+            });
+
+            const safe18Pass = cookieResponse.headers
+                .getSetCookie()
+                ?.find((cookie) => cookie.startsWith('safe18_pass='))
+                ?.split(';')[0]
+                .split('=')[1];
+
+            return {
+                url: redirectResponse.url,
+                safe18Pass,
+            };
+        },
+        86400, // fixed cookie duration: 24 hours
+        false
+    );
+    const currentUrl = `${redirected.url}thread.php?fid-${id}.html`;
 
     const response = await ofetch.raw(currentUrl, {
         headers: {
-            cookie: `_safe=${safeId}`,
+            cookie: `safe18_pass=${redirected.safe18Pass}`,
         },
     });
 
@@ -115,7 +147,7 @@ async function handler(ctx) {
             cache.tryGet(item.guid, async () => {
                 const detailResponse = await ofetch(item.link, {
                     headers: {
-                        cookie: `_safe=${safeId}`,
+                        cookie: `safe18_pass=${redirected.safe18Pass}`,
                     },
                 });
 
