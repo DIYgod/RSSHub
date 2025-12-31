@@ -20736,7 +20736,7 @@
   "jlwater.com":{ _name:"停水通知",
     ".":[ { title:"南京市",
         docs:"https://docs.rsshub.app/routes/forecast",
-        source:[ "/portal/10000013",
+        source:[ "/portal/10000015",
           "/" ],
         target:"/tingshuitz/nanjing" } ] },
   "sz-water.com.cn":{ _name:"停水通知",

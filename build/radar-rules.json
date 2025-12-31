@@ -44737,7 +44737,7 @@
         "title": "南京市",
         "docs": "https://docs.rsshub.app/routes/forecast",
         "source": [
-          "/portal/10000013",
+          "/portal/10000015",
           "/"
         ],
         "target": "/tingshuitz/nanjing"
