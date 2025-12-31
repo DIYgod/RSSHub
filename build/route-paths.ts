@@ -626,6 +626,7 @@ export type RoutePath =
   | `/cosplaytele/category/:category`
   | `/cosplaytele/popular/:period`
   | `/cosplaytele/tag/:tag`
+  | `/costar/press-releases/:filter{.+}?`
   | `/counter-strike/news/:category?/:language?`
   | `/cpcaauto/news/:type?/:id?`
   | `/cpcey/:type?`

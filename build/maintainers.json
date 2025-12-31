@@ -1887,6 +1887,9 @@
   "/cosplaytele/tag/:tag": [
     "AiraNadih"
   ],
+  "/costar/press-releases/:filter{.+}?": [
+    "nczitzk"
+  ],
   "/counter-strike/news/:category?/:language?": [
     "nczitzk"
   ],
