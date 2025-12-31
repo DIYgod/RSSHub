@@ -142,7 +142,7 @@
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.9.1",
         "youtubei.js": "16.0.1",
-        "zod": "4.2.1"
+        "zod": "4.3.2"
     },
     "devDependencies": {
         "@babel/preset-env": "7.28.5",
@@ -184,7 +184,7 @@
         "eslint-plugin-yml": "1.19.1",
         "fs-extra": "11.3.3",
         "globals": "16.5.0",
-        "got": "14.6.5",
+        "got": "14.6.6",
         "husky": "9.1.7",
         "js-beautify": "1.15.4",
         "lint-staged": "16.2.7",
@@ -195,7 +195,7 @@
         "prettier": "3.7.4",
         "remark-parse": "11.0.0",
         "supertest": "7.1.4",
-        "tsdown": "0.18.3",
+        "tsdown": "0.18.4",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.3",
