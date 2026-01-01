@@ -29,7 +29,7 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
-    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
+    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/stylistic'),
     n.configs['flat/recommended-script'],
     unicorn.configs.recommended,
     {
@@ -167,6 +167,8 @@ export default [
                 },
             ],
 
+            "@typescript-eslint/prefer-for-of": "error",
+
             // unicorn
             'unicorn/consistent-function-scoping': 'warn',
             'unicorn/explicit-length-check': 'off',
@@ -184,6 +186,7 @@ export default [
             'unicorn/no-array-sort': 'warn',
             'unicorn/no-await-expression-member': 'off',
             'unicorn/no-empty-file': 'warn',
+            'unicorn/no-for-loop': 'off',
             'unicorn/no-hex-escape': 'warn',
             'unicorn/no-null': 'off',
             'unicorn/no-object-as-default-parameter': 'warn',
