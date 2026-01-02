@@ -212,8 +212,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const type: number = typeObj.value;
     const id: string | undefined = idObj ? String(idObj.value) : undefined;
 
-    const baseUrl: string = 'https://www.iresearch.com.cn';
-    const imageBaseUrl: string = 'https://pic.iresearch.cn';
+    const baseUrl = 'https://www.iresearch.com.cn';
+    const imageBaseUrl = 'https://pic.iresearch.cn';
     const targetUrl: string = new URL(`report.shtml?type=${type}${id ? `&classId=${id}` : ''}`, baseUrl).href;
     const apiUrl: string = new URL(`api/${typeObj.slug}`, baseUrl).href;
     const apiDetailUrl: string = new URL(`api/${typeObj.detailSlug}`, baseUrl).href;
@@ -282,8 +282,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const medias: Record<string, Record<string, string>> = (() => {
             const result: Record<string, Record<string, string>> = {};
-            const medium: string = 'image';
-            let count: number = 0;
+            const medium = 'image';
+            let count = 0;
 
             for (const media of images) {
                 const url: string | undefined = media;
@@ -293,7 +293,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 count += 1;
-                const key: string = `${medium}${count}`;
+                const key = `${medium}${count}`;
 
                 result[key] = {
                     url,
@@ -377,8 +377,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const medias: Record<string, Record<string, string>> = (() => {
                     const result: Record<string, Record<string, string>> = {};
-                    const medium: string = 'image';
-                    let count: number = 0;
+                    const medium = 'image';
+                    let count = 0;
 
                     for (const media of images) {
                         const url: string | undefined = media;
@@ -388,7 +388,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         }
 
                         count += 1;
-                        const key: string = `${medium}${count}`;
+                        const key = `${medium}${count}`;
 
                         result[key] = {
                             url,

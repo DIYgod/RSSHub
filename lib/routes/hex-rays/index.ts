@@ -56,7 +56,7 @@ async function handler(/* ctx*/): Promise<Data> {
                 item.description = content('.post-body').html();
                 return item;
             })
-        ) as Promise<DataItem>[]
+        ) as Array<Promise<DataItem>>
     );
 
     return {

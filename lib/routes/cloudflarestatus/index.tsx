@@ -13,7 +13,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://www.cloudflarestatus.com';
+    const baseUrl = 'https://www.cloudflarestatus.com';
 
     const response = await ofetch(baseUrl);
     const $: CheerioAPI = load(response);
@@ -32,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const type: string = $el.find('strong').first().text();
             const text: string = $el.find('span.whitespace-pre-wrap').first().text();
 
-            const title: string = `${type ? `${type} - ` : ''}${text}`;
+            const title = `${type ? `${type} - ` : ''}${text}`;
             const description: string | undefined = renderToString(
                 <>
                     {actualTitle ? <h2>{actualTitle}</h2> : null}

@@ -58,7 +58,7 @@ const testFetchArticleFinishArticleItem = async (path: string, { setMpNameAsAuth
 
     const ToBeFinishedArticleItem = { link: httpUrl };
     const expectedFinishedArticleItem = { ...fetchArticleItem };
-    expectedFinishedArticleItem.author = setMpNameAsAuthor ? <string>expectedFinishedArticleItem.mpName : expectedFinishedArticleItem.author;
+    expectedFinishedArticleItem.author = setMpNameAsAuthor ? (expectedFinishedArticleItem.mpName as string) : expectedFinishedArticleItem.author;
     expectedFinishedArticleItem.link = skipLink ? ToBeFinishedArticleItem.link : expectedFinishedArticleItem.link;
 
     const finishedArticleItem = await finishArticleItem(ToBeFinishedArticleItem, setMpNameAsAuthor, skipLink);
@@ -444,13 +444,13 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('request blocked by WAF:');
-            expect((<WeChatMpError>error).message).toContain('/mp/rsshub_test/waf');
-            expect((<WeChatMpError>error).message).toContain('Title');
-            expect((<WeChatMpError>error).message).toContain('环境异常');
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).not.toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('request blocked by WAF:');
+            expect((error as WeChatMpError).message).toContain('/mp/rsshub_test/waf');
+            expect((error as WeChatMpError).message).toContain('Title');
+            expect((error as WeChatMpError).message).toContain('环境异常');
         }
     });
 
@@ -461,12 +461,12 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('unknown page,');
-            expect((<WeChatMpError>error).message).toContain('Title Unknown paragraph');
-            expect((<WeChatMpError>error).message).toContain(unknownPageUrl);
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('unknown page,');
+            expect((error as WeChatMpError).message).toContain('Title Unknown paragraph');
+            expect((error as WeChatMpError).message).toContain(unknownPageUrl);
         }
     });
 
@@ -478,12 +478,12 @@ describe('wechat-mp', () => {
             expect.unreachable('Should throw an error');
         } catch (error) {
             expect(error).toBeInstanceOf(WeChatMpError);
-            expect((<WeChatMpError>error).message).not.toContain('console.log');
-            expect((<WeChatMpError>error).message).not.toContain('.style');
-            expect((<WeChatMpError>error).message).not.toContain('Consider raise an issue');
-            expect((<WeChatMpError>error).message).toContain('deleted by author:');
-            expect((<WeChatMpError>error).message).toContain('Title 该内容已被发布者删除');
-            expect((<WeChatMpError>error).message).toContain(deletedPageUrl);
+            expect((error as WeChatMpError).message).not.toContain('console.log');
+            expect((error as WeChatMpError).message).not.toContain('.style');
+            expect((error as WeChatMpError).message).not.toContain('Consider raise an issue');
+            expect((error as WeChatMpError).message).toContain('deleted by author:');
+            expect((error as WeChatMpError).message).toContain('Title 该内容已被发布者删除');
+            expect((error as WeChatMpError).message).toContain(deletedPageUrl);
         }
     });
 

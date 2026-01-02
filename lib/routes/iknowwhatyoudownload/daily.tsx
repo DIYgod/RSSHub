@@ -47,7 +47,7 @@ async function handler(ctx) {
 
                     const $ = load(response.data);
 
-                    const numStats: { percent: string; desc: string }[] = [];
+                    const numStats: Array<{ percent: string; desc: string }> = [];
                     $('.usePercent').each((_, elem) => {
                         numStats.push({
                             percent: $(elem).text(),

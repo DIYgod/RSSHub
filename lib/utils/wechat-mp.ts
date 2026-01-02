@@ -150,7 +150,7 @@ class ExtractMetadata {
         return (str: string) => {
             const values: string[] = [];
             for (const match of str.matchAll(regExp)) {
-                const value = <string>match.groups?.value;
+                const value = match.groups?.value as string;
                 if (!multiple) {
                     return value;
                 }
@@ -166,7 +166,7 @@ class ExtractMetadata {
     private static doExtract = (metadataToBeExtracted: Record<string, (str: string) => string | string[] | null | undefined>, scriptText: string) => {
         const metadataExtracted: Record<string, string | string[]> = {};
         for (const [key, extractFunc] of Object.entries(metadataToBeExtracted)) {
-            metadataExtracted[key] = <string>extractFunc(scriptText);
+            metadataExtracted[key] = extractFunc(scriptText) as string;
         }
         metadataExtracted._extractedFrom = scriptText;
         return metadataExtracted;
@@ -184,7 +184,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>>this.doExtract(this.commonMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.commonMetadataToBeExtracted, scriptText) as Record<string, string>;
                 const showType = showTypeMapReverse[metadataExtracted.showType];
                 const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
                 metadataExtracted.sourceUrl = metadataExtracted.sourceUrl && fixUrl(metadataExtracted.sourceUrl);
@@ -219,7 +219,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>>this.doExtract(this.audioMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.audioMetadataToBeExtracted, scriptText) as Record<string, string>;
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -235,7 +235,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string[]>>this.doExtract(this.imgMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.imgMetadataToBeExtracted, scriptText) as Record<string, string[]>;
                 if (Array.isArray(metadataExtracted.imgUrls)) {
                     metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
                 }
@@ -353,10 +353,10 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
     // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('iframe.video_iframe[data-src]').each((_, iframe) => {
         const $iframe = $(iframe);
-        const dataSrc = <string>$iframe.attr('data-src');
+        const dataSrc = $iframe.attr('data-src') as string;
         const srcUrlObj = new URL(dataSrc);
         if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
-            const newSrc = genVideoSrc(<string>srcUrlObj.searchParams.get('vid'));
+            const newSrc = genVideoSrc(srcUrlObj.searchParams.get('vid') as string);
             $iframe.attr('src', newSrc);
             $iframe.removeAttr('data-src');
             const width = $iframe.attr('data-w');
@@ -576,7 +576,7 @@ const redirectHelper = async (url: string, maxRedirects: number = 5) => {
         } else if (maxRedirects <= 0) {
             error('too many redirects', url);
         }
-        return await redirectHelper(<string>raw.headers.get('location'), maxRedirects);
+        return await redirectHelper(raw.headers.get('location') as string, maxRedirects);
     }
     return raw;
 };

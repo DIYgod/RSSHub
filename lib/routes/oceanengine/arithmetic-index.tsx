@@ -159,7 +159,7 @@ async function handler(ctx) {
     };
 }
 
-const OceanengineContent = ({ queryListText, queries }: { queryListText: string; queries: { key: string; links: string[] }[] }) => (
+const OceanengineContent = ({ queryListText, queries }: { queryListText: string; queries: Array<{ key: string; links: string[] }> }) => (
     <article>
         <h2>关键词: </h2>
         {queryListText}

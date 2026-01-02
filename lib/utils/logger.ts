@@ -4,7 +4,7 @@ import winston from 'winston';
 
 import { config } from '@/config';
 
-let transports: (typeof winston.transports.File)[] = [];
+let transports: Array<typeof winston.transports.File> = [];
 if (!config.noLogfiles && !process.env.VERCEL) {
     transports = [
         new winston.transports.File({

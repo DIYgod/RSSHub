@@ -29,7 +29,7 @@ async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
     const category = ctx.req.param('category') ?? 'most-bookmarked';
 
-    const urlPath: string = `/${lang}/hongkong/explore/chart/${category}`;
+    const urlPath = `/${lang}/hongkong/explore/chart/${category}`;
     const response = await ofetch(baseUrl + urlPath);
     const $ = load(response);
 

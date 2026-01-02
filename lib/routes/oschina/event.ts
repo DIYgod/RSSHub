@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.oschina.net';
+    const baseUrl = 'https://www.oschina.net';
     const targetUrl: string = new URL(`event?tab=${category}`, baseUrl).href;
     const apiUrl: string = new URL('action/ajax/get_more_event_list', baseUrl).href;
 

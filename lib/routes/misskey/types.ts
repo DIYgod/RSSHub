@@ -35,11 +35,11 @@ export interface MisskeyNote {
     poll?: {
         expiresAt: string | null;
         multiple: boolean;
-        choices: {
+        choices: Array<{
             text: string;
             votes: number;
             isVoted: boolean;
-        }[];
+        }>;
     };
     emojis?: Record<string, string>;
     tags?: string[];

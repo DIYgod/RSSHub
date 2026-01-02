@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywgg/tzgg' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://www.cccmc.org.cn';
+    const baseUrl = 'https://www.cccmc.org.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     let items: DataItem[] = [];
 
-    const regex: RegExp = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
+    const regex = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
 
     items =
         response

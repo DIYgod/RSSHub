@@ -142,7 +142,7 @@ async function handler(ctx) {
         title: string;
         description: string;
         image: string;
-        items: {
+        items: Array<{
             title: string;
             author: string;
             renderData: {
@@ -152,7 +152,7 @@ async function handler(ctx) {
             };
             link: string;
             guid: string;
-        }[];
+        }>;
     };
 
     const items: DataItem[] = data.items.map((item) => ({

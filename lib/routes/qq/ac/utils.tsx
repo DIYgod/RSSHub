@@ -70,7 +70,7 @@ const ProcessItems = async (ctx, currentUrl, time, title) => {
 
 export { mobileRootUrl, ProcessItems, rootUrl };
 
-const QqAcDescription = ({ image, description, chapters }: { image: string; description: string; chapters: { link?: string; title?: string; image?: string }[] }) => (
+const QqAcDescription = ({ image, description, chapters }: { image: string; description: string; chapters: Array<{ link?: string; title?: string; image?: string }> }) => (
     <>
         {image === '' ? null : <img src={image} />}
         {description === '' ? null : <p>{description}</p>}

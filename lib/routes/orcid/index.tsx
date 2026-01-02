@@ -29,22 +29,22 @@ async function handler(ctx) {
     const response = await got(currentUrl);
 
     const items = response.data.groups;
-    const works = [];
+    const works: any[] = [];
     const out = [];
 
     for (const item of items) {
-        for (let j = 0; j < item.works.length; j++) {
-            works.push(item.works[j]);
+        for (const work of item.works) {
+            works.push(work);
         }
     }
 
     works.map((work) => {
         let Str = '';
 
-        for (let l = 0; l < work.workExternalIdentifiers.length; l++) {
-            Str += work.workExternalIdentifiers[l].url
-                ? '<a href="' + work.workExternalIdentifiers[l].url.value + '">' + work.workExternalIdentifiers[l].externalIdentifierType.value + ': ' + work.workExternalIdentifiers[l].externalIdentifierId.value + '</a><br>'
-                : work.workExternalIdentifiers[l].externalIdentifierType.value + ': ' + work.workExternalIdentifiers[l].externalIdentifierId.value + '<br>';
+        for (const identifier of work.workExternalIdentifiers) {
+            Str += identifier.url
+                ? '<a href="' + identifier.url.value + '">' + identifier.externalIdentifierType.value + ': ' + identifier.externalIdentifierId.value + '</a><br>'
+                : identifier.externalIdentifierType.value + ': ' + identifier.externalIdentifierId.value + '<br>';
         }
 
         const info = {

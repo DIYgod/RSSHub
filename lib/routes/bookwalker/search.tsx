@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { filter = 'order=sell_desc' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '24', 10);
 
-    const baseUrl: string = 'https://www.bookwalker.com.tw';
+    const baseUrl = 'https://www.bookwalker.com.tw';
     const targetUrl: string = new URL(`search?${filter}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const price: string = $el.find('h5.bprice').text();
             const authorStr: string = $el.find('h5.booknamesub').text().trim();
 
-            const title: string = `${name} - ${authorStr} ${price}`;
+            const title = `${name} - ${authorStr} ${price}`;
             const image: string | undefined = $el
                 .find('img')
                 .attr('data-src')

@@ -15,8 +15,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'datalist' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'http://www.fangchan.com';
-    const apiBaseUrl: string = 'http://news.fangchan.com';
+    const baseUrl = 'http://www.fangchan.com';
+    const apiBaseUrl = 'http://news.fangchan.com';
     const targetUrl: string = new URL(id.endsWith('/') ? id : `${id}/`, baseUrl).href;
     const apiUrl: string = new URL(`api/${id.endsWith('/') ? id.replace(/\/$/, '') : id}.json`, apiBaseUrl).href;
 
@@ -134,7 +134,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
-    const author: string = '中房网';
+    const author = '中房网';
 
     return {
         title: `${author} - ${$('div.curmbs a').text()}`,

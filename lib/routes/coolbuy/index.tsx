@@ -10,8 +10,8 @@ import ofetch from '@/utils/ofetch';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://coolbuy.com';
-    const imageBaseUrl: string = 'https://mcache.ifanr.cn';
+    const baseUrl = 'https://coolbuy.com';
+    const imageBaseUrl = 'https://mcache.ifanr.cn';
     const apiUrl: string = new URL('api/v1.4/product_preview', baseUrl).href;
 
     const response = await ofetch(apiUrl, {
@@ -77,7 +77,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         );
 
         const linkUrl: string | undefined = item.visit_url;
-        const guid: string = `coolbuy-${item.id}#${item.price}`;
+        const guid = `coolbuy-${item.id}#${item.price}`;
 
         const processedItem: DataItem = {
             title,

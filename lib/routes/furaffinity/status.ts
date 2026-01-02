@@ -42,7 +42,7 @@ async function handler() {
             ? `Status: FA Server Online <br> Guests: ${data.online.guests} <br> Registered: ${data.online.registered} <br> Other: ${data.online.other} <br> Total: ${data.online.total} <br> FA Server Time: ${data.fa_server_time} <br> FA Server Time at: ${data.fa_server_time_at}`
             : 'FA Server Offline';
 
-    const items: { title: string; link: string; description: string }[] = [
+    const items: Array<{ title: string; link: string; description: string }> = [
         {
             title: `Status: ${Object.keys(data)[0]}`,
             link: 'https://www.furaffinity.net/',

@@ -6,7 +6,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const baseUrl: string = 'https://www.app-sales.net';
+const baseUrl = 'https://www.app-sales.net';
 const renderDescription = ({
     images,
     appName,
@@ -20,7 +20,7 @@ const renderDescription = ({
     priceDisco,
     linkUrl,
 }: {
-    images?: { alt?: string; src?: string }[];
+    images?: Array<{ alt?: string; src?: string }>;
     appName?: string;
     appDev?: string;
     appNote?: string;
@@ -150,7 +150,7 @@ const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
             const isHot: boolean = $el.hasClass('sale-hot');
             const isFree: boolean = priceNew?.toLocaleUpperCase() === 'FREE';
 
-            const title: string = `${appName} ${formatPriceChangeTag(priceOld, priceNew, priceDisco)}`;
+            const title = `${appName} ${formatPriceChangeTag(priceOld, priceNew, priceDisco)}`;
             const image: string | undefined = $el.find('div.app-icon img').attr('src');
             const linkUrl: string | undefined = $el.find('div.sale-list-action a').attr('href');
             const description: string | undefined = renderDescription({

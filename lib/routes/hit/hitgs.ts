@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'tzgg' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://hitgs.hit.edu.cn';
+    const baseUrl = 'https://hitgs.hit.edu.cn';
     const targetUrl: string = new URL(`${id}/list.htm`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -94,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {
-                    const enclosureType: string = `application/${enclosureUrl.split(/\./).pop() || 'octet-stream'}`;
+                    const enclosureType = `application/${enclosureUrl.split(/\./).pop() || 'octet-stream'}`;
                     const enclosureTitle: string | undefined = $enclosureEl.attr('sudyfile-attr')?.match(/'title':'(.*?)'/)?.[1];
 
                     processedItem = {

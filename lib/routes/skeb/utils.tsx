@@ -51,7 +51,7 @@ interface Creator {
     deleted_at: string | null;
     tip_acceptable_by: string;
     accept_expiration_days: number;
-    skills: { genre: string }[];
+    skills: Array<{ genre: string }>;
     nc: number;
 }
 

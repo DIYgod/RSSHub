@@ -31,7 +31,7 @@ async function handler(ctx): Promise<Data> {
         },
     });
 
-    const $ = load(<string>html);
+    const $ = load(html as string);
     const items: DataItem[] = $('li')
         .toArray()
         .map((item) => {

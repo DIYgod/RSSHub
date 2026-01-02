@@ -91,7 +91,7 @@ export async function getMangaMetaByIds(ids: string[], needCover: boolean = true
             }
             return data.data;
         }
-    )) as Array<any>;
+    )) as any[];
 
     const languages = [...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean);
 

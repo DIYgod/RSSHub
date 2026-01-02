@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://cursor.com';
+    const baseUrl = 'https://cursor.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;
 
     const response = await ofetch(targetUrl, {
@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): DataItem => {
             const $el: Cheerio<Element> = $(el);
 
-            let version: string = '';
+            let version = '';
             let pubDateStr: string | undefined;
 
             $el.find('div').each((_, div) => {
@@ -47,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = version ? `[${version}] ${titleText}` : titleText;
 
             const linkUrl: string | undefined = linkEl.attr('href');
-            const guid: string = `cursor-changelog-${version || 'unknown'}`;
+            const guid = `cursor-changelog-${version || 'unknown'}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const $h2El = $el.find('h2').first();

@@ -183,7 +183,7 @@ interface Music {
     prevent_download: boolean;
     unshelve_countries: null;
     prevent_item_download_status: number;
-    external_song_info: false[];
+    external_song_info: Array<false>;
     preview_start_time: number;
     preview_end_time: number;
     is_commerce_music: boolean;
@@ -191,7 +191,7 @@ interface Music {
     audition_duration: number;
     shoot_duration: number;
     reason_type: number;
-    artists: false[];
+    artists: Array<false>;
     lyric_short_position: null;
     mute_share: boolean;
     tag_list: null;
@@ -447,16 +447,16 @@ interface LogPb {
 }
 
 interface SuggestWords {
-    suggest_words: {
-        words: {
+    suggest_words: Array<{
+        words: Array<{
             word: string;
             word_id: string;
             info: string;
-        }[];
+        }>;
         scene: string;
         icon_url: string;
         hint_text: string;
-    }[];
+    }>;
 }
 
 interface CommentPermissionInfo {
@@ -661,7 +661,7 @@ interface Aweme {
     comment_list: null;
     author_user_id: number;
     publish_plus_alienation: PublishPlusAlienation;
-    geofencing: false[];
+    geofencing: Array<false>;
     enable_comment_sticker_rec: boolean;
     xigua_base_info: XiguaBaseInfo;
     region: string;
@@ -669,7 +669,7 @@ interface Aweme {
     ref_voice_modify_id_list: null;
     collect_stat: number;
     label_top_text: null;
-    promotions: false[];
+    promotions: Array<false>;
     group_id: string;
     prevent_download: boolean;
     nickname_position: null;
@@ -720,11 +720,11 @@ interface Aweme {
     relation_labels: null;
     mark_largely_following: boolean;
     impression_data: {
-        group_id_list_a: false[];
-        group_id_list_b: false[];
+        group_id_list_a: Array<false>;
+        group_id_list_b: Array<false>;
         similar_id_list_a: number[] | null;
         similar_id_list_b: number[] | null;
-        group_id_list_c: false[];
+        group_id_list_c: Array<false>;
     };
     boost_status: number;
     authentication_token: string;

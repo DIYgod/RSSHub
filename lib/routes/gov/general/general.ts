@@ -177,8 +177,8 @@ const gdgov = async (info, ctx) => {
                     const zcjdlink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idlink.search;
                     const response = await got(zcjdlink);
                     const data = response.data.data;
-                    for (let index = 0; index < data.jie_du_items.length; index++) {
-                        data.jie_du_items[index].jd_content = data.jie_du_items[index].jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
+                    for (const item of data.jie_du_items) {
+                        item.jd_content = item.jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
                     }
 
                     return {

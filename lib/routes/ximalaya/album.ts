@@ -132,7 +132,7 @@ async function handler(ctx) {
     await Promise.all(
         playList.map(async (item) => {
             item.desc = await cache.tryGet(`ximalaya:trackRichInfo:${item.trackId}:${shouldShowNote.toString()}`, async () => {
-                let _desc: string = '';
+                let _desc = '';
                 if (shouldShowNote) {
                     const trackRichInfoApi = `https://mobile.ximalaya.com/mobile-track/richIntro?trackId=${item.trackId}`;
                     const trackRichInfoResponse = await ofetch<RichIntro>(trackRichInfoApi);

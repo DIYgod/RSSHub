@@ -14,7 +14,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywdt/hjyw' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://nnsa.mee.gov.cn';
+    const baseUrl = 'https://nnsa.mee.gov.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -54,7 +54,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('meta[name="ArticleTitle"]').attr('content') ?? item.title;
                 const description: string | undefined = $$('div.Custom_UnionStyle').html() ?? undefined;
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
-                const categoryEls: Cheerio<Element>[] = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
+                const categoryEls: Array<Cheerio<Element>> = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el)?.attr('content') ?? '').filter(Boolean))];
                 const authors: DataItem['author'] = [$$('meta[name="Author"]'), $$('meta[name="author"]'), $$('meta[name="source"]')]
                     .filter((authorEl) => $$(authorEl).attr('content'))

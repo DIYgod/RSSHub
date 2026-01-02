@@ -99,7 +99,7 @@ const ThepaperVideoDetail = ({ videos }: { videos: { url: string; coverUrl: stri
     ></video>
 );
 
-const ThepaperImageDetail = ({ images }: { images: { width?: string | number; src?: string; description?: string }[] }) => (
+const ThepaperImageDetail = ({ images }: { images: Array<{ width?: string | number; src?: string; description?: string }> }) => (
     <>
         {images.map((image) => (
             <>
