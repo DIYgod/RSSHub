@@ -20,7 +20,7 @@ const renderDescription = ({
     priceDisco,
     linkUrl,
 }: {
-    images?: { alt?: string; src?: string }[];
+    images?: Array<{ alt?: string; src?: string }>;
     appName?: string;
     appDev?: string;
     appNote?: string;

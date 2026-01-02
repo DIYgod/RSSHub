@@ -108,7 +108,7 @@ async function handler(ctx: Context): Promise<Data | null> {
             link: $(element).attr('href'),
         }));
 
-    const processedItems: Promise<DataItem>[] = articles
+    const processedItems: Array<Promise<DataItem>> = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
         .map((article: ValidArticle) => {
             if (article.link.startsWith('/')) {

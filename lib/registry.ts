@@ -223,13 +223,13 @@ for (const namespace in namespaces) {
         continue;
     }
 
-    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as [
+    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as Array<[
         string,
         APIRoute & {
             location: string;
             module?: () => Promise<{ apiRoute: APIRoute }>;
         },
-    ][];
+    ]>;
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {

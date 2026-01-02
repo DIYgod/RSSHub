@@ -34,7 +34,7 @@ interface Image {
 
 interface Contributor {
     author: {
-        items: { name: string }[];
+        items: Array<{ name: string }>;
     };
     photographer: {
         items: any[];
@@ -59,7 +59,7 @@ interface RecircMostPopular {
             brandName: string;
             brandSlug: string;
             preamble: string;
-            items: { name: string }[];
+            items: Array<{ name: string }>;
         };
     };
 }

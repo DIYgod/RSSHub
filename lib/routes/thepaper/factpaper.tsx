@@ -84,7 +84,7 @@ async function handler(ctx) {
     };
 }
 
-const FactpaperDescription = ({ content, checkinfo, finalCheckInfo }: { content: string; checkinfo?: { content: string }[]; finalCheckInfo?: { content: string } }) => (
+const FactpaperDescription = ({ content, checkinfo, finalCheckInfo }: { content: string; checkinfo?: Array<{ content: string }>; finalCheckInfo?: { content: string } }) => (
     <>
         <h1>发起求证</h1>
         {raw(content)}

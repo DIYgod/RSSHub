@@ -129,11 +129,11 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: {
+    const imgUrls: Array<{
         url: string;
         width?: number;
         height?: number;
-    }[] = [];
+    }> = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';

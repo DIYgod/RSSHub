@@ -11,13 +11,13 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/refs/heads/master/community-plugins.json')) as {
+    const data = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/refs/heads/master/community-plugins.json')) as Array<{
         id: string;
         name: string;
         author: string;
         description: string;
         repo: string;
-    }[];
+    }>;
     const stats = JSON.parse(await ofetch('https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugin-stats.json')) as {
         [key: string]: {
             downloads: number;

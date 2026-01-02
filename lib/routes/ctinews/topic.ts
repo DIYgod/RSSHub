@@ -71,7 +71,7 @@ async function handler(ctx) {
     ];
 
     const seen = new Set<string>();
-    const dedupedList: { title?: string; link?: string }[] = [];
+    const dedupedList: Array<{ title?: string; link?: string }> = [];
     for (const item of list) {
         const link = item.link || '';
         if (seen.has(link)) {

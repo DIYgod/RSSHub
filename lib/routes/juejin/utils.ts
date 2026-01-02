@@ -139,4 +139,4 @@ export const getTagList = () =>
             },
         });
         return response.data;
-    }) as Promise<{ tag_id: string; tag: Tag }[]>;
+    }) as Promise<Array<{ tag_id: string; tag: Tag }>>;

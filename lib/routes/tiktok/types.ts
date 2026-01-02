@@ -82,7 +82,7 @@ export type Item = {
         shoot_duration: number;
         title: string;
         tt2dsp: {
-            tt_to_dsp_song_infos: {
+            tt_to_dsp_song_infos: Array<{
                 meta_song_id: string;
                 platform: number;
                 song_id: string;
@@ -91,7 +91,7 @@ export type Item = {
                         developer_token: string;
                     };
                 };
-            }[];
+            }>;
         };
     };
     officalItem: boolean; // Not a typo for "officialItem"
@@ -131,7 +131,7 @@ export type Item = {
         };
         VQScore: string;
         bitrate: number;
-        bitrateInfo: {
+        bitrateInfo: Array<{
             Bitrate: number;
             BitrateFPS: number;
             CodecType: string;
@@ -150,12 +150,12 @@ export type Item = {
             };
             QualityType: number;
             VideoExtra: string;
-        }[];
+        }>;
         claInfo: {
             enableAutoCaption: boolean;
             hasOriginalAudio: boolean;
             noCaptionReason?: number;
-            captionInfos?: {
+            captionInfos?: Array<{
                 captionFormat: string;
                 claSubtitleID: string;
                 expire: string;
@@ -170,7 +170,7 @@ export type Item = {
                 url: string;
                 urlList: string[];
                 variant: string;
-            }[];
+            }>;
             captionsType?: number;
             originalLanguageInfo?: {
                 canTranslateRealTimeNoCheck: boolean;
@@ -207,7 +207,7 @@ export type Item = {
             720: string;
             960: string;
         };
-        subtitleInfos?: {
+        subtitleInfos?: Array<{
             Format: string;
             LanguageCodeName: string;
             LanguageID: string;
@@ -216,9 +216,9 @@ export type Item = {
             Url: string;
             UrlExpire: number;
             Version: string;
-        }[];
+        }>;
     };
-    challenges?: {
+    challenges?: Array<{
         coverLarger: string;
         coverMedium: string;
         coverThumb: string;
@@ -228,7 +228,7 @@ export type Item = {
         profileMedium: string;
         profileThumb: string;
         title: string;
-    }[];
+    }>;
     textExtra?: Array<{
         awemeId: string;
         end: number;
@@ -242,19 +242,19 @@ export type Item = {
         userUniqueId?: string;
     }>;
     videoSuggestWordsList?: {
-        video_suggest_words_struct: {
+        video_suggest_words_struct: Array<{
             hint_text: string;
             scene: string;
             words: Array<{
                 word: string;
                 word_id: string;
             }>;
-        }[];
+        }>;
     };
     diversificationId?: number;
-    contents?: {
+    contents?: Array<{
         desc: string;
-        textExtra?: {
+        textExtra?: Array<{
             awemeId: string;
             end: number;
             hashtagName: string;
@@ -265,8 +265,8 @@ export type Item = {
             secUid?: string;
             userId?: string;
             userUniqueId?: string;
-        }[];
-    }[];
+        }>;
+    }>;
     BAInfo?: string;
     adAuthorization?: boolean;
     adLabelVersion?: number;

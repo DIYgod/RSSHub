@@ -100,7 +100,7 @@ async function parseVideo(body: VideoPost['body']) {
 }
 
 async function parseArtile(body: ArticlePost['body']) {
-    let ret: Array<string> = [];
+    let ret: string[] = [];
     for (const b of body.blocks) {
         ret.push('<p>');
 

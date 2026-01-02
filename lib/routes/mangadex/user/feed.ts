@@ -101,7 +101,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Record<string, any>[];
+    )) as Array<Record<string, any>>;
 
     const mangaIds = feed.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
 

@@ -147,6 +147,8 @@ export default [
             'require-await': 'error',
 
             // typescript
+            '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+
             '@typescript-eslint/ban-ts-comment': 'off',
             '@typescript-eslint/consistent-indexed-object-style': 'off', // stylistic
             '@typescript-eslint/consistent-type-definitions': 'off', // stylistic

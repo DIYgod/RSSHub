@@ -52,7 +52,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: (subscriptions.data.filter((i) => !isInbox(i) && !(isFeed(i) && !!i.feeds.errorAt)) as Exclude<Subscription, InboxSubscription>[]).map((subscription) => {
+        item: (subscriptions.data.filter((i) => !isInbox(i) && !(isFeed(i) && !!i.feeds.errorAt)) as Array<Exclude<Subscription, InboxSubscription>>).map((subscription) => {
             if (isList(subscription)) {
                 return {
                     title: subscription.lists.title,
