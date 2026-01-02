@@ -21,7 +21,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
-    const selector: string = 'div.card-panel';
+    const selector = 'div.card-panel';
 
     const items: DataItem[] = await fetchItems($, selector, targetUrl, country, limit);
 

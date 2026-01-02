@@ -15,7 +15,7 @@ const actualParametersDescTable = `
 | \`modeInTitle\`     | \`true\`   | \`true\` or \`false\` Add mode info into feed title.
 `;
 
-const descriptionDoc: string = `
+const descriptionDoc = `
 Subscribe to the new beatmaps on https://osu.ppy.sh/beatmapsets.
 
 #### Parameter Description

@@ -9,7 +9,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const baseUrl: string = 'https://t1.daumcdn.net';
+    const baseUrl = 'https://t1.daumcdn.net';
     const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${lang ?? ''}.html`, baseUrl).href;
 
     const response: string = await ofetch(targetUrl);
@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const headerLine: string | undefined = match[2].trim();
         const description: string | undefined = match[4].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
-        let version: string = 'N/A';
+        let version = 'N/A';
         let pubDateStr: string | undefined = undefined;
 
         // Regex to extract version (e.g., [1.4.20199] or [250514])
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
         }
 
-        const guid: string = `potplayer-${lang}-${version}`;
+        const guid = `potplayer-${lang}-${version}`;
 
         const processedItem: DataItem = {
             title: version,

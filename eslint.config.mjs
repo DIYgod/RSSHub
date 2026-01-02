@@ -152,6 +152,9 @@ export default [
             '@typescript-eslint/consistent-type-definitions': 'off', // stylistic
             '@typescript-eslint/no-empty-function': 'off', // stylistic && tests
             '@typescript-eslint/no-explicit-any': 'off',
+
+            '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true, ignoreProperties: true }],
+
             '@typescript-eslint/no-var-requires': 'off',
 
             '@typescript-eslint/no-unused-expressions': [

@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news-events/latest-news' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const baseUrl: string = 'https://www.semiconductors.org';
+    const baseUrl = 'https://www.semiconductors.org';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

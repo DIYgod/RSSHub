@@ -15,8 +15,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '1', 10);
 
-    const rootUrl: string = 'https://www.ali213.net';
-    const apiRootUrl: string = 'https://mp.ali213.net';
+    const rootUrl = 'https://www.ali213.net';
+    const apiRootUrl = 'https://mp.ali213.net';
     const targetUrl: string = new URL(`/news/zl/${category ? (category.endsWith('/') ? category : `${category}/`) : ''}`, rootUrl).href;
     const apiUrl: string = new URL('ajax/newslist', apiRootUrl).href;
 
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description: string = renderDescription({
                 intro: item.GuideRead ?? '',
             });
-            const guid: string = `ali213-zl-${item.ID}`;
+            const guid = `ali213-zl-${item.ID}`;
             const image: string | undefined = item.PicPath ? `https:${item.PicPath}` : undefined;
 
             const author: DataItem['author'] = item.xiaobian;

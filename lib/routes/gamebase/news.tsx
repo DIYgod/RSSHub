@@ -43,9 +43,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://news.gamebase.com.tw';
+    const baseUrl = 'https://news.gamebase.com.tw';
     const targetUrl: string = new URL(`news${category === 'all' ? '' : `/newslist?type=${category}`}`, baseUrl).href;
-    const apiBaseUrl: string = 'https://api.gamebase.com.tw';
+    const apiBaseUrl = 'https://api.gamebase.com.tw';
     const apiUrl: string = new URL('api/news/getNewsList', apiBaseUrl).href;
 
     const response = await ofetch(apiUrl, {
@@ -69,7 +69,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const linkUrl: string | undefined = item.news_no ? `news/detail/${item.news_no}` : undefined;
                 const categories: string[] = [item.system];
                 const authors: DataItem['author'] = item.nickname;
-                const guid: string = `gamebase-news-${item.news_no}`;
+                const guid = `gamebase-news-${item.news_no}`;
                 const image: string | undefined = item.news_img;
                 const updated: number | string = item.updated ?? pubDate;
 

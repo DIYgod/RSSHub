@@ -14,7 +14,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://www.cbndata.com';
+    const baseUrl = 'https://www.cbndata.com';
     const targetUrl: string = new URL(`information?tag_id=${id}`, baseUrl).href;
     const apiUrl: string = new URL('api/v3/informations', baseUrl).href;
 
@@ -47,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const pubDate: number | string = item.date;
         const linkUrl: string | undefined = item.id ? `information/${item.id}` : undefined;
         const categories: string[] = item.tags;
-        const guid: string = `cbndata-information-${item.id}`;
+        const guid = `cbndata-information-${item.id}`;
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         avatar: undefined,
                     },
                 ];
-                const guid: string = `cbndata-information-${data.id}`;
+                const guid = `cbndata-information-${data.id}`;
                 const image: string | undefined = data.thumbnail_url;
                 const updated: number | string = pubDate;
 
@@ -140,7 +140,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     const tag: string = response.home_tags.find((t: { id: number; name: string }) => String(t.id) === id)?.name ?? '';
-    const title: string = `${tag ? `${tag}-` : ''}${$('title').text().trim()}`;
+    const title = `${tag ? `${tag}-` : ''}${$('title').text().trim()}`;
 
     return {
         title,

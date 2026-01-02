@@ -11,7 +11,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { tag } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://yuanliao.info';
+    const baseUrl = 'https://yuanliao.info';
     const apiUrl: string = new URL('api/discussions', baseUrl).href;
     const targetUrl: string = new URL(tag ? `t/${tag}` : '', baseUrl).href;
 
@@ -58,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
               ]
             : undefined;
-        const guid: string = `yuanliao-${item.id}`;
+        const guid = `yuanliao-${item.id}`;
         const updated: number | string = attributes.lastPostedAt ?? pubDate;
 
         const processedItem: DataItem = {

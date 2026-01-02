@@ -27,8 +27,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
     const params: URLSearchParams = createSearchParams(filters, limit);
 
-    const baseUrl: string = 'https://digitalpolicyalert.org';
-    const apiBaseUrl: string = 'https://api.globaltradealert.org';
+    const baseUrl = 'https://digitalpolicyalert.org';
+    const apiBaseUrl = 'https://api.globaltradealert.org';
     const targetUrl: string = new URL(`activity-tracker?${params.toString()}`, baseUrl).href;
     const apiUrl: string = new URL('dpa/intervention', apiBaseUrl).href;
 

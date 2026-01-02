@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'all' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://asiafruitchina.net';
+    const baseUrl = 'https://asiafruitchina.net';
     const targetUrl: string = new URL(`categories?gspx=${category}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

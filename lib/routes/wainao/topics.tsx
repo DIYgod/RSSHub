@@ -30,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hotspot' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.wainao.me';
+    const baseUrl = 'https://www.wainao.me';
     const targetUrl: string = new URL(`topics/${id}`, baseUrl).href;
     const apiUrl: string = new URL('pf/api/v3/content/fetch/story-feed-sections', baseUrl).href;
 

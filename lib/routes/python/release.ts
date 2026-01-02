@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.python.org';
+    const baseUrl = 'https://www.python.org';
     const targetUrl: string = new URL('downloads', baseUrl).href;
 
     const response = await ofetch(targetUrl);

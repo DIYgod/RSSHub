@@ -142,7 +142,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);
     }
 
-    const baseUrl: string = `https://${language}.bandisoft.com`;
+    const baseUrl = `https://${language}.bandisoft.com`;
     const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -163,7 +163,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
 
             const linkUrl: string = targetUrl;
-            const guid: string = `bandisoft-${id}-${language}-${version}`;
+            const guid = `bandisoft-${id}-${language}-${version}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {

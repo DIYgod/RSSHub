@@ -27,8 +27,8 @@ const renderDescription = (description, images) =>
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://tf.121.com.cn';
-    const imgBaseUrl: string = 'https://wx.121.com.cn';
+    const baseUrl = 'https://tf.121.com.cn';
+    const imgBaseUrl = 'https://wx.121.com.cn';
     const targetUrl: string = new URL('web/weatherLive/', baseUrl).href;
     const apiUrl: string = new URL('weather/weibo/message.js', baseUrl).href;
 
@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             );
             const pubDate: number | string = item.DDatetime;
             const linkUrl: string | undefined = targetUrl;
-            const guid: string = `121-${title}-${pubDate}`;
+            const guid = `121-${title}-${pubDate}`;
             const image: string | undefined = item.Img?.length > 0 ? new URL(`WeChat/data/weiweb/images/lwspic/${item.Img[0]}`, imgBaseUrl).href : undefined;
             const updated: number | string = pubDate;
 

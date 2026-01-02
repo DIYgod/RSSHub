@@ -43,7 +43,7 @@ interface Content {
     entityMap: { [key: string]: Entity };
 }
 
-const imageBaseUrl: string = 'https://image.gcores.com';
+const imageBaseUrl = 'https://image.gcores.com';
 
 const STYLES: Readonly<Record<string, Style>> = {
     BOLD: { fontWeight: 'bold' },
