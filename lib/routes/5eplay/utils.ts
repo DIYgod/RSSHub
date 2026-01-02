@@ -18,8 +18,8 @@ const getAcwScV2ByArg1 = (arg1) => {
         const res: string[] = [];
         for (let i = 0; i < str.length; i++) {
             const cur = str[i];
-            for (const [j, element] of code.entries()) {
-                if (element === i + 1) {
+            for (let j = 0; j < code.length; j++) {
+                if (code[j] === i + 1) {
                     res[j] = cur;
                 }
             }
