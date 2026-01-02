@@ -28,12 +28,10 @@ export interface ArticleDetailResponse {
             subtitle: string;
             content: string;
             editionName: string;
-            picList:
-                | null
-                | Array<{
-                      url: string;
-                      picText: string;
-                  }>;
+            picList: null | Array<{
+                url: string;
+                picText: string;
+            }>;
             periodTime: string;
             author: string;
         };

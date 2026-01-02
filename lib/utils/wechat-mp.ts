@@ -356,7 +356,7 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
         const dataSrc = $iframe.attr('data-src') as string;
         const srcUrlObj = new URL(dataSrc);
         if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
-            const newSrc = genVideoSrc((srcUrlObj.searchParams.get('vid') as string));
+            const newSrc = genVideoSrc(srcUrlObj.searchParams.get('vid') as string);
             $iframe.attr('src', newSrc);
             $iframe.removeAttr('data-src');
             const width = $iframe.attr('data-w');
@@ -576,7 +576,7 @@ const redirectHelper = async (url: string, maxRedirects: number = 5) => {
         } else if (maxRedirects <= 0) {
             error('too many redirects', url);
         }
-        return await redirectHelper((raw.headers.get('location') as string), maxRedirects);
+        return await redirectHelper(raw.headers.get('location') as string, maxRedirects);
     }
     return raw;
 };

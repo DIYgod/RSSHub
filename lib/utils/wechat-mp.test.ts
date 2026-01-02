@@ -58,7 +58,7 @@ const testFetchArticleFinishArticleItem = async (path: string, { setMpNameAsAuth
 
     const ToBeFinishedArticleItem = { link: httpUrl };
     const expectedFinishedArticleItem = { ...fetchArticleItem };
-    expectedFinishedArticleItem.author = setMpNameAsAuthor ? expectedFinishedArticleItem.mpName as string : expectedFinishedArticleItem.author;
+    expectedFinishedArticleItem.author = setMpNameAsAuthor ? (expectedFinishedArticleItem.mpName as string) : expectedFinishedArticleItem.author;
     expectedFinishedArticleItem.link = skipLink ? ToBeFinishedArticleItem.link : expectedFinishedArticleItem.link;
 
     const finishedArticleItem = await finishArticleItem(ToBeFinishedArticleItem, setMpNameAsAuthor, skipLink);
