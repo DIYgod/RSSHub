@@ -34,13 +34,13 @@ export const route: Route = {
 };
 
 interface ThreadIndexResult {
-    ThreadIndex: {
+    ThreadIndex: Array<{
         id: number;
         subject: string;
         created_at: string;
         user: { nickname: string };
         forum: { name: string };
-    }[];
+    }>;
 }
 interface ThreadInfoResult {
     data: {

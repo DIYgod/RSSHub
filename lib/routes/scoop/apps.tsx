@@ -36,8 +36,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { query = 's=2&d=1&n=true&dm=true&o=true' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://scoop.sh';
-    const apiBaseUrl: string = 'https://scoopsearch.search.windows.net';
+    const baseUrl = 'https://scoop.sh';
+    const apiBaseUrl = 'https://scoopsearch.search.windows.net';
     const targetUrl: string = new URL(`/#/apps?${query}`, baseUrl).href;
     const apiUrl: string = new URL('indexes/apps/docs/search', apiBaseUrl).href;
 
@@ -45,7 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    const scriptRegExp: RegExp = /<script type="module" crossorigin src="(.*?)"><\/script>/;
+    const scriptRegExp = /<script type="module" crossorigin src="(.*?)"><\/script>/;
     const scriptUrl: string = scriptRegExp.test(targetResponse) ? new URL(targetResponse.match(scriptRegExp)?.[1], baseUrl).href : '';
 
     if (!scriptUrl) {
@@ -62,8 +62,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new Error('Key not found.');
     }
 
-    const isOffcial: boolean = !query.includes('o=false');
-    const isDistinct: boolean = !query.includes('dm=false');
+    const isOffcial = !query.includes('o=false');
+    const isDistinct = !query.includes('dm=false');
     const sort: string = query.match(/s=(\d+)/)?.[1] ?? '2';
     const desc: string = query.match(/d=(\d+)/)?.[1] ?? '1';
 
@@ -97,7 +97,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = response.value.slice(0, limit).map((item): DataItem => {
         const repositorySplits: string[] = item.Metadata.Repository.split(/\//);
         const repositoryName: string = repositorySplits.slice(-2).join('/');
-        const title: string = `${item.Name} ${item.Version} in ${repositoryName}`;
+        const title = `${item.Name} ${item.Version} in ${repositoryName}`;
         const description: string | undefined = renderToString(<ScoopDescription item={item} />);
         const pubDate: number | string = item.Metadata.Committed;
         const linkUrl: string | undefined = item.Homepage;
@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 avatar: undefined,
             },
         ];
-        const guid: string = `scoop-${item.Name}-${item.Version}-${item.Metadata.Sha}`;
+        const guid = `scoop-${item.Name}-${item.Version}-${item.Metadata.Sha}`;
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -130,7 +130,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    const author: string = 'Scoop';
+    const author = 'Scoop';
 
     return {
         title: `${author} - Apps`,

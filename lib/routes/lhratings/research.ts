@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '1' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://www.lhratings.com';
+    const baseUrl = 'https://www.lhratings.com';
     const targetUrl: string = new URL(`research.html?type=${type}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

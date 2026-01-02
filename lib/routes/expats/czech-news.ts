@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'daily-news' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.expats.cz';
+    const baseUrl = 'https://www.expats.cz';
     const targetUrl: string = new URL(`czech-news/${category}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

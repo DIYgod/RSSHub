@@ -88,7 +88,7 @@ async function handler(ctx) {
 
 const ZhubaiContent = ({ content }: { content: any[] }) => <>{renderNodes(content)}</>;
 
-const renderNodes = (content: any[]): (JSX.Element | string | null)[] =>
+const renderNodes = (content: any[]): Array<JSX.Element | string | null> =>
     content?.map((node) => {
         if (node.text) {
             return node.text;

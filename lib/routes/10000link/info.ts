@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newslists', id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://info.10000link.com';
+    const baseUrl = 'https://info.10000link.com';
     const targetUrl: string = new URL(`${category}.aspx${id ? `?chid=${id}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -109,7 +109,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
-    const author: string = '10000万联网';
+    const author = '10000万联网';
     const title: string = $('h1').contents().first().text();
 
     return {

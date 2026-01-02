@@ -75,7 +75,7 @@ export const route: Route = {
             throw new Error(`Expected '${dataKey}' property not found in pageProps for category: ${category || 'home'}`);
         }
 
-        const rawDataArray: (HomePostItem | NewsDataItem)[] = (() => {
+        const rawDataArray: Array<HomePostItem | NewsDataItem> = (() => {
             const data = (pageProps as any)[dataKey];
             return Array.isArray(data) ? data : [];
         })();

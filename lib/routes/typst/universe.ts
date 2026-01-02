@@ -11,13 +11,13 @@ interface Package {
     name: string;
     version: string;
     entrypoint: string;
-    authors: Array<string>;
+    authors: string[];
     license: string;
     description: string;
     repository: string;
-    keywords: Array<string>;
+    keywords: string[];
     compiler: string;
-    exclude: Array<string>;
+    exclude: string[];
     size: number;
     readme: string;
     updatedAt: number;
@@ -25,7 +25,7 @@ interface Package {
 }
 
 interface Context {
-    an: { exports: Array<Package> };
+    an: { exports: Package[] };
 }
 
 const GITHUBRAW_BASE = 'https://raw.githubusercontent.com';

@@ -22,13 +22,13 @@ export const parseList = async (
     sectionUrl: string
 ): Promise<{
     title: string;
-    resultList: {
+    resultList: Array<{
         title: string;
         description?: string;
         pubDate: Date;
         link: string;
         category?: string[];
-    }[];
+    }>;
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
     const $ = load(pageResponse._data);

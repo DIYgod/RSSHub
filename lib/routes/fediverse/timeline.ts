@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     const items = firstOutbox.orderedItems;
 
-    const itemResolvers = [] as Promise<any>[];
+    const itemResolvers = [] as Array<Promise<any>>;
 
     for (const item of items) {
         if (!['Announce', 'Create', 'Update'].includes(item.type)) {

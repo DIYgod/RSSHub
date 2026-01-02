@@ -43,7 +43,7 @@ interface Content {
     entityMap: { [key: string]: Entity };
 }
 
-const imageBaseUrl: string = 'https://image.gcores.com';
+const imageBaseUrl = 'https://image.gcores.com';
 
 const STYLES: Readonly<Record<string, Style>> = {
     BOLD: { fontWeight: 'bold' },
@@ -167,7 +167,7 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
 
     // Group ranges by offset and length
     const groupedRangesMap = new Map<string, { offset: number; length: number; styles: Style[]; entities: Entity[] }>();
-    const groupedRanges: { offset: number; length: number; styles: Style[]; entities: Entity[] }[] = [];
+    const groupedRanges: Array<{ offset: number; length: number; styles: Style[]; entities: Entity[] }> = [];
 
     for (const range of combinedRanges) {
         const rangeKey = `${range.offset}-${range.length}`;

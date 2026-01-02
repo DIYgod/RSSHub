@@ -35,7 +35,7 @@ const getCookie = (disableConfig = false) => {
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        let waitForRequest: Promise<string> = new Promise((resolve) => {
+        let waitForRequest = new Promise<string>((resolve) => {
             resolve('');
         });
         const { destory } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {

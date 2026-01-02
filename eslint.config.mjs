@@ -29,7 +29,7 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
-    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended'),
+    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/stylistic'),
     n.configs['flat/recommended-script'],
     unicorn.configs.recommended,
     {
@@ -147,8 +147,16 @@ export default [
             'require-await': 'error',
 
             // typescript
+            '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+
             '@typescript-eslint/ban-ts-comment': 'off',
+            '@typescript-eslint/consistent-indexed-object-style': 'off', // stylistic
+            '@typescript-eslint/consistent-type-definitions': 'off', // stylistic
+            '@typescript-eslint/no-empty-function': 'off', // stylistic && tests
             '@typescript-eslint/no-explicit-any': 'off',
+
+            '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true, ignoreProperties: true }],
+
             '@typescript-eslint/no-var-requires': 'off',
 
             '@typescript-eslint/no-unused-expressions': [
@@ -167,6 +175,8 @@ export default [
                 },
             ],
 
+            '@typescript-eslint/prefer-for-of': 'error',
+
             // unicorn
             'unicorn/consistent-function-scoping': 'warn',
             'unicorn/explicit-length-check': 'off',
@@ -184,6 +194,7 @@ export default [
             'unicorn/no-array-sort': 'warn',
             'unicorn/no-await-expression-member': 'off',
             'unicorn/no-empty-file': 'warn',
+            'unicorn/no-for-loop': 'off',
             'unicorn/no-hex-escape': 'warn',
             'unicorn/no-null': 'off',
             'unicorn/no-object-as-default-parameter': 'warn',

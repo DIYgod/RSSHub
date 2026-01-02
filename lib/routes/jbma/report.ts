@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const apiSlug = 'wp-json/wp/v2';
 
-    const baseUrl: string = 'https://jbma.net';
+    const baseUrl = 'https://jbma.net';
     const apiUrl = new URL(`${apiSlug}/report`, baseUrl).href;
     let targetUrl: string = new URL('report/', baseUrl).href;
 
@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
     }
 
-    const mediaMap: Map<number, any> = new Map();
+    const mediaMap = new Map<number, any>();
     if (postIds.length > 0) {
         const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
         const mediaResponse = await ofetch(mediaApiUrl, {

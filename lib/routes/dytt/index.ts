@@ -11,8 +11,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const domain: string = 'www.dydytt.net';
-const baseUrl: string = `https://${domain}`;
+const domain = 'www.dydytt.net';
+const baseUrl = `https://${domain}`;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gndy/dyzz' } = ctx.req.param();
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                     if (enclosureUrl) {
-                        const enclosureType: string = 'application/x-bittorrent';
+                        const enclosureType = 'application/x-bittorrent';
                         const enclosureTitle: string = $enclosureEl.text();
 
                         processedItem = {

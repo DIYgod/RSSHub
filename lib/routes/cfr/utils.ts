@@ -232,7 +232,7 @@ function parseDefault($): DataItem {
 
 function parseLinkData($: CheerioAPI) {
     try {
-        const data = (<LinkData>JSON.parse($('script[type="application/ld+json"]').text()))['@graph'][0];
+        const data = (JSON.parse($('script[type="application/ld+json"]').text()) as LinkData)['@graph'][0];
 
         return {
             title: data.name,

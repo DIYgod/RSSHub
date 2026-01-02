@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'jinritan' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'http://www.banyuetan.org';
+    const baseUrl = 'http://www.banyuetan.org';
     const targetUrl: string = new URL(`byt/${id}/index.html`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

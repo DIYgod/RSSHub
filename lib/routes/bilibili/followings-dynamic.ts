@@ -105,14 +105,14 @@ async function handler(ctx) {
         let imgs = '';
         // 动态图片
         if (data.pictures) {
-            for (let i = 0; i < data.pictures.length; i++) {
-                imgs += `<img src="${data.pictures[i].img_src}">`;
+            for (const pic of data.pictures) {
+                imgs += `<img src="${pic.img_src}">`;
             }
         }
         // 专栏封面
         if (data.image_urls) {
-            for (let i = 0; i < data.image_urls.length; i++) {
-                imgs += `<img src="${data.image_urls[i]}">`;
+            for (const url of data.image_urls) {
+                imgs += `<img src="${url}">`;
             }
         }
         // 视频封面

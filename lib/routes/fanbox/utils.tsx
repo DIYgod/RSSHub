@@ -100,9 +100,8 @@ async function parseVideo(body: VideoPost['body']) {
 }
 
 async function parseArtile(body: ArticlePost['body']) {
-    let ret: Array<string> = [];
-    for (let x = 0; x < body.blocks.length; ++x) {
-        const b = body.blocks[x];
+    let ret: string[] = [];
+    for (const b of body.blocks) {
         ret.push('<p>');
 
         switch (b.type) {

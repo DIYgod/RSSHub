@@ -51,7 +51,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'repositories' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://gitstar-ranking.com';
+    const baseUrl = 'https://gitstar-ranking.com';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -64,7 +64,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
-            const stargazersCount: number = Number($el.find('span.stargazers_count').text()?.trim());
+            const stargazersCount = Number($el.find('span.stargazers_count').text()?.trim());
             const title: string = $el.find('span.hidden-xs').text()?.trim();
             const image: string | undefined = $el.find('img.avatar_image_big').attr('src');
             const language: string | undefined = $el.find('div.repo-language').text()?.trim();
@@ -83,7 +83,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             });
             const linkUrl: string | undefined = $el.attr('href');
             const categories: string[] = language ? [language] : [];
-            const guid: string = `gitstar-ranking-${title}-${stargazersCount}`;
+            const guid = `gitstar-ranking-${title}-${stargazersCount}`;
 
             const processedItem: DataItem = {
                 title: `${title} ⭐${stargazersCount}`,

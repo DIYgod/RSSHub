@@ -15,7 +15,7 @@ import { renderDescription } from './templates/description';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '18', 10);
 
-    const baseUrl: string = 'https://www.dgtle.com';
+    const baseUrl = 'https://www.dgtle.com';
     const targetUrl: string = new URL('video', baseUrl).href;
     const apiUrl: string = new URL('video/list/1', baseUrl).href;
 
@@ -49,7 +49,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 avatar: item.author.avatar_path?.split(/\?/)?.[0],
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
 
         const processedItem: DataItem = {
             title,

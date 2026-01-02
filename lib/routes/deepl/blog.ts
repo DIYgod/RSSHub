@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.deepl.com';
+    const baseUrl = 'https://www.deepl.com';
     const targetUrl: string = new URL(`${lang}/blog`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
