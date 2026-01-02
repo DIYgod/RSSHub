@@ -148,6 +148,9 @@ export default [
 
             // typescript
             '@typescript-eslint/ban-ts-comment': 'off',
+            '@typescript-eslint/consistent-indexed-object-style': 'off', // stylistic
+            '@typescript-eslint/consistent-type-definitions': 'off', // stylistic
+            '@typescript-eslint/no-empty-function': 'off', // stylistic && tests
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-var-requires': 'off',
 
@@ -167,7 +170,7 @@ export default [
                 },
             ],
 
-            "@typescript-eslint/prefer-for-of": "error",
+            '@typescript-eslint/prefer-for-of': 'error',
 
             // unicorn
             'unicorn/consistent-function-scoping': 'warn',
