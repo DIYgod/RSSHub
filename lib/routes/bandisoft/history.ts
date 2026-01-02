@@ -130,13 +130,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const validIds: Set<string> = new Set(idOptions.map((option) => option.value));
+    const validIds = new Set<string>(idOptions.map((option) => option.value));
 
     if (!validIds.has(id)) {
         throw new Error(`Invalid id: ${id}. Allowed values are: ${[...validIds].join(', ')}`);
     }
 
-    const validLanguages: Set<string> = new Set(languageOptions.map((option) => option.value));
+    const validLanguages = new Set<string>(languageOptions.map((option) => option.value));
 
     if (!validLanguages.has(language)) {
         throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);

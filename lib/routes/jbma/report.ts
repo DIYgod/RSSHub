@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
     }
 
-    const mediaMap: Map<number, any> = new Map();
+    const mediaMap = new Map<number, any>();
     if (postIds.length > 0) {
         const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
         const mediaResponse = await ofetch(mediaApiUrl, {

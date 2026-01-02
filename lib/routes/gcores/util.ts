@@ -12,7 +12,7 @@ const baseUrl = 'https://www.gcores.com';
 const imageBaseUrl = 'https://image.gcores.com';
 const audioBaseUrl = 'https://alioss.gcores.com';
 
-const types: Set<string> = new Set(['radios', 'articles', 'news', 'videos', 'talks']);
+const types = new Set<string>(['radios', 'articles', 'news', 'videos', 'talks']);
 
 const processItems = async (limit: number, query: any, apiUrl: string, targetUrl: string): Promise<Data> => {
     const response = await ofetch(apiUrl, {
