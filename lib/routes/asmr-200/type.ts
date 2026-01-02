@@ -43,14 +43,12 @@ export interface Work {
     }>;
     playlistStatus: any;
     price: number;
-    rank:
-        | Array<{
-              category: string;
-              rank: number;
-              rank_date: string;
-              term: string;
-          }>
-        | null;
+    rank: Array<{
+        category: string;
+        rank: number;
+        rank_date: string;
+        term: string;
+    }> | null;
     rate_average_2dp: number | number;
     rate_count: number;
     rate_count_detail: Array<{
