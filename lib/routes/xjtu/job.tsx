@@ -103,7 +103,7 @@ async function handler(ctx) {
     };
 }
 
-const XjtuAttachments = ({ items }: { items: { fileUrl: string; name: string }[] }) => (
+const XjtuAttachments = ({ items }: { items: Array<{ fileUrl: string; name: string }> }) => (
     <>
         {items.map((item) => (
             <>

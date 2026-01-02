@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'produce/fresh-fruits/apples' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.producereport.com';
+    const baseUrl = 'https://www.producereport.com';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);

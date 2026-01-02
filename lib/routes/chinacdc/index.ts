@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zxyw' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '11', 10);
 
-    const rootUrl: string = 'https://www.chinacdc.cn';
+    const rootUrl = 'https://www.chinacdc.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
 
     const response = await ofetch(targetUrl);

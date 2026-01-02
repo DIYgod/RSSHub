@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://windsurf.com';
+    const baseUrl = 'https://windsurf.com';
     const targetUrl: string = new URL('blog', baseUrl).href;
     const apiUrl: string = new URL('api/blog', baseUrl).href;
 

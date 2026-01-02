@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://papers.cool';
+    const baseUrl = 'https://papers.cool';
     const targetUrl: string = new URL(`${id}?show=${limit}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -50,7 +50,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 };
             });
             const doi: string = $el.attr('id') as string;
-            const guid: string = `papers.cool-${doi}`;
+            const guid = `papers.cool-${doi}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             let processedItem: DataItem = {

@@ -8,8 +8,8 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
-const baseUrl: string = 'https://www.tmtpost.com';
-const apiBaseUrl: string = 'https://api.tmtpost.com';
+const baseUrl = 'https://www.tmtpost.com';
+const apiBaseUrl = 'https://api.tmtpost.com';
 const postApiUrl: string = new URL('v1/posts/', apiBaseUrl).href;
 
 const headers = {
@@ -105,7 +105,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                         url: new URL(`user/${author.guid}`, baseUrl).href,
                         avatar: author.avatar,
                     }));
-                    const guid: string = `tmtpost-${data.post_guid}`;
+                    const guid = `tmtpost-${data.post_guid}`;
                     const image: string | undefined = data.images?.[0]?.url;
                     const updated: number | string = data.time_updated;
 
@@ -131,7 +131,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                     const enclosureUrl: string | undefined = data.audio;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `audio/${enclosureUrl.split(/\./).pop()}`;
+                        const enclosureType = `audio/${enclosureUrl.split(/\./).pop()}`;
                         const itunesDuration: string | number | undefined = data.duration;
 
                         processedItem = {
@@ -156,9 +156,9 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                                 continue;
                             }
 
-                            const medium: string = 'image';
+                            const medium = 'image';
                             const count: number = Object.values(medias).filter((m) => m.medium === medium).length + 1;
-                            const key: string = `${medium}${count}`;
+                            const key = `${medium}${count}`;
 
                             medias[key] = {
                                 url,

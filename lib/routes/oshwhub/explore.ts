@@ -47,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://oshwhub.com';
+    const baseUrl = 'https://oshwhub.com';
     const apiUrl: string = new URL('api/project', baseUrl).href;
     const apiTagUrl: string = new URL('api/project_tags', baseUrl).href;
     const targetUrl: string = new URL('explore', baseUrl).href;
@@ -209,7 +209,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = `https://image.lceda.cn${attachment.src}`;
                     const enclosureType: string = attachment.mime;
                     const enclosureTitle: string = attachment.name;
-                    const enclosureLength: number = Number(attachment.size);
+                    const enclosureLength = Number(attachment.size);
 
                     processedItem = {
                         ...processedItem,

@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.oschina.net';
+    const baseUrl = 'https://www.oschina.net';
     const userHostRegex: string = String.raw`https://my\.oschina\.net`;
     const targetUrl: string = new URL(`news/column?columnId=${id}`, baseUrl).href;
 
@@ -104,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             url: $authorEl.attr('href'),
                         };
                     });
-                    const guid: string = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
+                    const guid = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
                     const image: string | undefined = $$('val[data-name="sharePic"]').attr('data-value');
                     const upDatedStr: string | undefined = $$('meta[property="bytedance:updated_time"]').attr('content') || pubDateStr;
 

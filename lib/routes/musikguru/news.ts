@@ -15,7 +15,7 @@ import { renderDescription } from './templates/description';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://musikguru.de';
+    const baseUrl = 'https://musikguru.de';
     const targetUrl: string = new URL('news/', baseUrl).href;
 
     const response = await ofetch(targetUrl);

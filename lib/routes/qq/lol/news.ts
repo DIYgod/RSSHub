@@ -14,8 +14,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 23 } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://lol.qq.com';
-    const apiBaseUrl: string = 'https://apps.game.qq.com';
+    const baseUrl = 'https://lol.qq.com';
+    const apiBaseUrl = 'https://apps.game.qq.com';
     const targetUrl: string = new URL('news/index.shtml', baseUrl).href;
     const apiListUrl: string = new URL('cmc/zmMcnTargetContentList', apiBaseUrl).href;
     const apiInfoUrl: string = new URL('cmc/zmMcnContentInfo', apiBaseUrl).href;
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               },
                           ]
                         : undefined;
-                    const guid: string = `qq-lol-${result.iDocID}`;
+                    const guid = `qq-lol-${result.iDocID}`;
                     const image: string | undefined = result.sIMG ? (result.sIMG.startsWith('http') ? result.sIMG : `https:${result.sIMG}`) : undefined;
                     const updated: number | string = result.sIdxTime ?? pubDate;
 

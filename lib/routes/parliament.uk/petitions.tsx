@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { state = 'all' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const rootUrl: string = 'https://petition.parliament.uk';
+    const rootUrl = 'https://petition.parliament.uk';
     const targetUrl: string = new URL(`petitions?state=${state}`, rootUrl).href;
     const jsonUrl: string = new URL('petitions.json', rootUrl).href;
 

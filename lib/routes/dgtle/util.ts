@@ -14,7 +14,7 @@ const md = MarkdownIt({
     linkify: true,
 });
 
-const baseUrl: string = 'https://www.dgtle.com';
+const baseUrl = 'https://www.dgtle.com';
 
 const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> => {
     let items: DataItem[] = [];
@@ -43,7 +43,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                 avatar: item.user?.avatar_path ?? item.avatar_path,
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -142,7 +142,7 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
                 avatar: item.avatar_path,
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
         const image: string | undefined = item.imgs_url?.[0];
         const updated: number | string = item.updated_at ?? pubDate;
 
@@ -174,10 +174,10 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
                     continue;
                 }
 
-                const medium: string = 'image';
+                const medium = 'image';
 
                 const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                const key: string = `${medium}${count}`;
+                const key = `${medium}${count}`;
 
                 acc[key] = {
                     url,

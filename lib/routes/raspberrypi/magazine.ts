@@ -14,7 +14,7 @@ import { renderDescription } from './templates/description';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const baseUrl: string = 'https://magazine.raspberrypi.com';
+    const baseUrl = 'https://magazine.raspberrypi.com';
     const targetUrl: string = new URL('issues', baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -112,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $$$enclosureEl.attr('href') ? new URL($$$enclosureEl.attr('href') as string, baseUrl).href : undefined;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = 'application/pdf';
+                        const enclosureType = 'application/pdf';
 
                         processedItem = {
                             ...processedItem,

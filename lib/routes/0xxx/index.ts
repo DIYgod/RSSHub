@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://0xxx.ws';
+    const baseUrl = 'https://0xxx.ws';
     const targetUrl: string = new URL(filter ? `?${filter}` : '', baseUrl).href;
 
     const response = await ofetch(targetUrl);

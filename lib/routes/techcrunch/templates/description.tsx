@@ -3,7 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionData = {
     head: {
-        og_image?: { url: string }[];
+        og_image?: Array<{ url: string }>;
     };
     rendered: string;
 };

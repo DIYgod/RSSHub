@@ -5,8 +5,8 @@ export type Result = {
     pagecount: number;
     limit: string;
     total: number;
-    list: Array<Vod>;
-    class?: Array<Class>;
+    list: Vod[];
+    class?: Class[];
 };
 
 export type Class = {

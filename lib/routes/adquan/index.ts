@@ -15,7 +15,7 @@ import { renderDescription } from './templates/description';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.adquan.com';
+    const baseUrl = 'https://www.adquan.com';
     const targetUrl: string = baseUrl;
 
     const response = await ofetch(targetUrl);

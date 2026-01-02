@@ -14,8 +14,8 @@ import { renderDescription } from './templates/description';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://www.eeo.com.cn';
-    const apiUrl: string = 'https://app.eeo.com.cn';
+    const baseUrl = 'https://www.eeo.com.cn';
+    const apiUrl = 'https://app.eeo.com.cn';
     const targetUrl: string = new URL('kuaixun/', baseUrl).href;
 
     const response = await ofetch(apiUrl, {

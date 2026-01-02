@@ -14,7 +14,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.wdfxw.net';
+    const baseUrl = 'https://www.wdfxw.net';
     const targetUrl: string = new URL(`bookfree${id ? `-${id}` : ''}.html`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

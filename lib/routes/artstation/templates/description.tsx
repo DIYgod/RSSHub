@@ -7,11 +7,11 @@ type DescriptionData = {
         src?: string;
         title?: string;
     };
-    assets?: {
+    assets?: Array<{
         asset_type?: string;
         player_embedded?: string;
         image_url?: string;
-    }[];
+    }>;
 };
 
 const ArtstationDescription = ({ description, image, assets }: DescriptionData) => (
