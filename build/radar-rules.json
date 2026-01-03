@@ -37368,8 +37368,7 @@
         "title": "Home",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/:creator",
-          "/cw/:creator"
+          "/:creator"
         ],
         "target": "/patreon/:creator"
       }
