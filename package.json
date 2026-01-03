@@ -195,7 +195,6 @@
         "js-beautify": "1.15.4",
         "lint-staged": "16.2.7",
         "magic-string": "0.30.21",
-        "miniflare": "^4.20251217.0",
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.29",
