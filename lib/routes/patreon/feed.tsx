@@ -99,7 +99,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['patreon.com/:creator'],
+            source: ['patreon.com/:creator', 'www.patreon.com/cw/:creator'],
         },
     ],
     name: 'Home',
@@ -117,6 +117,24 @@ async function handler(ctx) {
         const response = await ofetch(link);
 
         const $ = cheerio.load(response);
+
+        const ogUrl = $('meta[property="og:url"]').attr('content');
+        if (ogUrl?.startsWith(`${baseUrl}/cw/`)) {
+            const ogImage = $('meta[property="og:image"]').attr('content');
+            const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+?)\?/)?.[1];
+            if (creatorId) {
+                return {
+                    id: creatorId,
+                    attributes: {
+                        name: $('meta[property="og:title"]').attr('content'),
+                        creation_name: $('meta[name="description"]').attr('content'),
+                        avatar_photo_url: $('link[rel="preload"][as="image"]').attr('href') || ogImage,
+                    },
+                };
+            }
+            throw new Error('Unable to extract creator ID');
+        }
+
         const nextData = JSON.parse($('#__NEXT_DATA__').text());
         const bootstrapEnvelope = nextData.props.pageProps.bootstrapEnvelope;
 
@@ -189,7 +207,11 @@ async function handler(ctx) {
         title: creatorData.attributes.name,
         description: creatorData.attributes.creation_name,
         link,
-        image: creatorData.attributes.avatar_photo_url,
+        image:
+            creatorData.attributes.avatar_photo_image_urls?.thumbnail_large ||
+            creatorData.attributes.avatar_photo_image_urls?.thumbnail ||
+            creatorData.attributes.avatar_photo_image_urls?.original ||
+            creatorData.attributes.avatar_photo_url,
         item: items,
         allowEmpty: true,
     };
