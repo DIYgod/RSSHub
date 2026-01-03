@@ -4,8 +4,6 @@ import path from 'node:path';
 import type { Plugin } from 'rolldown';
 import { defineConfig } from 'tsdown';
 
-const assetsDir = path.resolve('./assets/build');
-
 // Plugin to automatically resolve .worker.ts files instead of .ts files
 function workerAliasPlugin(): Plugin {
     return {
@@ -90,7 +88,7 @@ export default defineConfig({
         'node:module': path.resolve('./lib/shims/node-module.ts'),
         'dotenv/config': path.resolve('./lib/shims/dotenv-config.ts'),
         '@sentry/node': path.resolve('./lib/shims/sentry-node.ts'),
-        // Routes file with Worker-specific build
-        [path.join(assetsDir, 'routes.js')]: path.join(assetsDir, 'routes-worker.js'),
+        // Routes file with Worker-specific build (match relative import from lib/)
+        '../assets/build/routes.js': path.resolve('./assets/build/routes-worker.js'),
     },
 });
