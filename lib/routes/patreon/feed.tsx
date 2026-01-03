@@ -123,13 +123,10 @@ async function handler(ctx) {
             const ogImage = $('meta[property="og:image"]').attr('content');
             const creatorId = decodeURIComponent(ogImage || '').match(/card-teaser-image\/creator\/(\d+?)\?/)?.[1];
             if (creatorId) {
+                const creator = await ofetch(`${baseUrl}/api/campaigns/${creatorId}`);
                 return {
                     id: creatorId,
-                    attributes: {
-                        name: $('meta[property="og:title"]').attr('content'),
-                        creation_name: $('meta[name="description"]').attr('content'),
-                        avatar_photo_url: $('link[rel="preload"][as="image"]').attr('href') || ogImage,
-                    },
+                    attributes: creator.data.attributes,
                 };
             }
             throw new Error('Unable to extract creator ID');
