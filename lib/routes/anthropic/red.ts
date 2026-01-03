@@ -15,7 +15,7 @@ export const route: Route = {
             source: ['red.anthropic.com'],
         },
     ],
-    name: 'Anthropic Frontier Red Team',
+    name: 'Frontier Red Team',
     maintainers: ['shoeper'],
     handler,
     url: 'red.anthropic.com',
