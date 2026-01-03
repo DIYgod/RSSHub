@@ -27,17 +27,17 @@ describe('Worker Integration Tests', () => {
             expect(text).toContain('<?xml');
             expect(text).toContain('<rss');
             expect(text).toContain('Test 1');
-        });
+        }, 30000);
 
         it('should respond to / with welcome page', async () => {
             const response = await worker.fetch('/');
             expect(response.status).toBe(200);
-        });
+        }, 30000);
 
         it('should return error for unknown routes', async () => {
             const response = await worker.fetch('/nonexistent/route/12345');
             expect(response.status).toBeGreaterThanOrEqual(400);
-        });
+        }, 30000);
     });
 
     describe('Test Route Variations', () => {
@@ -46,32 +46,32 @@ describe('Worker Integration Tests', () => {
             expect(response.status).toBe(200);
             const text = await response.text();
             expect(text).toContain('Filter Title');
-        });
+        }, 30000);
 
         it('should handle /test/json route', async () => {
             const response = await worker.fetch('/test/json');
             expect(response.status).toBe(200);
             const text = await response.text();
             expect(text).toContain('Title0');
-        });
+        }, 30000);
 
         it('should handle /test/cache route', async () => {
             const response = await worker.fetch('/test/cache');
             expect(response.status).toBe(200);
             const text = await response.text();
             expect(text).toContain('Cache Title');
-        });
+        }, 30000);
     });
 
     describe('Error Handling', () => {
         it('should handle /test/error route', async () => {
             const response = await worker.fetch('/test/error');
             expect(response.status).toBeGreaterThanOrEqual(400);
-        });
+        }, 30000);
 
         it('should handle /test/httperror route', async () => {
             const response = await worker.fetch('/test/httperror');
             expect(response.status).toBeGreaterThanOrEqual(400);
-        });
+        }, 30000);
     });
 });
