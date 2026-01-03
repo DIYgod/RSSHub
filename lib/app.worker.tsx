@@ -14,8 +14,22 @@ import mLogger from '@/middleware/logger';
 import template from '@/middleware/template';
 import trace from '@/middleware/trace';
 import registry from '@/registry';
+import { setBrowserBinding } from '@/utils/puppeteer';
 
-const app = new Hono();
+// Define Worker environment bindings
+type Bindings = {
+    BROWSER?: any; // Browser Rendering API binding
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+// Set browser binding for puppeteer
+app.use(async (c, next) => {
+    if (c.env?.BROWSER) {
+        setBrowserBinding(c.env.BROWSER);
+    }
+    await next();
+});
 
 app.use(trimTrailingSlash());
 

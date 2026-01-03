@@ -74,6 +74,9 @@ export default defineConfig({
         'process.env.VERCEL_ENV': JSON.stringify(''),
         'import.meta.dirname': JSON.stringify('/worker'),
         'import.meta.url': JSON.stringify('file:///worker/index.mjs'),
+        // CommonJS compatibility
+        __dirname: JSON.stringify('/worker'),
+        __filename: JSON.stringify('/worker/index.mjs'),
     },
     external: [
         // Exclude non-code files that might be accidentally imported

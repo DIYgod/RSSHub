@@ -12,10 +12,6 @@ const __dirname = getCurrentPath(import.meta.url);
 // Check if building for Worker environment
 const isWorkerBuild = process.env.WORKER_BUILD === 'true';
 
-// Namespaces to include in Worker build (due to size limitations)
-// Start with minimal routes that have fewer dependencies
-const workerNamespaces = new Set(['telegram', 'test']);
-
 // Ignore Redis and remote config in route generation to avoid side effects.
 process.env.REDIS_URL = '';
 process.env.CACHE_TYPE = '';
@@ -49,6 +45,11 @@ const foloAnalysisResult = await loadFoloAnalysis();
 const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
     .toSorted((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
     .slice(0, 150);
+
+// Extract unique namespaces from top 150 routes for Worker build
+const workerNamespaces = new Set(foloAnalysisTop100.map(([routePath]) => routePath.split('/')[1]).filter(Boolean));
+// Always include test namespace for testing
+workerNamespaces.add('test');
 
 const maintainers: Record<string, string[]> = {};
 const radar: {

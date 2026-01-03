@@ -18,6 +18,11 @@ globs = ["dist-worker/**/*.mjs"]
 [observability]
 enabled = true
 
+# Browser Rendering API for puppeteer support
+# Requires Workers Paid plan
+[browser]
+binding = "BROWSER"
+
 # Uncomment to use KV for caching (optional)
 # [[kv_namespaces]]
 # binding = "CACHE"

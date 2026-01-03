@@ -35,10 +35,47 @@ import * as timers_promises from 'node:timers/promises';
 import * as tls from 'node:tls';
 import * as tty from 'node:tty';
 import * as url from 'node:url';
-import { promisify } from 'node:util';
+// eslint-disable-next-line unicorn/import-style -- need full util module for CJS compatibility
+import * as util from 'node:util';
 import * as util_types from 'node:util/types';
 import * as worker_threads from 'node:worker_threads';
 import * as zlib from 'node:zlib';
+
+// VM shim for Cloudflare Workers
+// JSDOM and some other libraries require vm module
+class ScriptShim {
+    private code: string;
+    constructor(code: string) {
+        this.code = code;
+    }
+    runInContext() {
+        throw new Error('vm.Script.runInContext is not supported in Workers');
+    }
+    runInNewContext() {
+        throw new Error('vm.Script.runInNewContext is not supported in Workers');
+    }
+    runInThisContext() {
+        throw new Error('vm.Script.runInThisContext is not supported in Workers');
+    }
+}
+
+const vmShim = {
+    createContext: (sandbox?: object) => sandbox || {},
+    runInContext: () => {
+        throw new Error('vm.runInContext is not supported in Workers');
+    },
+    runInNewContext: () => {
+        throw new Error('vm.runInNewContext is not supported in Workers');
+    },
+    runInThisContext: () => {
+        throw new Error('vm.runInThisContext is not supported in Workers');
+    },
+    Script: ScriptShim,
+    isContext: () => false,
+    compileFunction: () => {
+        throw new Error('vm.compileFunction is not supported in Workers');
+    },
+};
 
 // Create a CJS-compatible events module
 // In CJS, require('events') returns EventEmitter class directly (the default export)
@@ -50,7 +87,7 @@ const builtinModules: Record<string, unknown> = {
     fs,
     path,
 
-    util: { promisify },
+    util,
     stream,
     events: eventsModule,
     buffer,
@@ -80,6 +117,7 @@ const builtinModules: Record<string, unknown> = {
     constants,
     diagnostics_channel,
     console: console_module,
+    vm: vmShim,
     // Also support node: prefix
     'node:fs': fs,
     'node:path': path,
@@ -121,6 +159,7 @@ const builtinModules: Record<string, unknown> = {
     'util/types': util_types,
     'node:timers/promises': timers_promises,
     'timers/promises': timers_promises,
+    'node:vm': vmShim,
 };
 
 export function createRequire(_filename: string | URL) {
