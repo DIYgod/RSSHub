@@ -15,7 +15,7 @@ export default defineConfig({
         },
         testTimeout: 10000,
         setupFiles: ['./lib/setup.test.ts'],
-        exclude: [...configDefaults.exclude, './lib/setup.test.ts'],
+        exclude: [...configDefaults.exclude, './lib/setup.test.ts', '**/*.worker.test.ts'],
         // TODO: workaround for node 25.2
         execArgv: ['--localstorage-file', path.resolve(os.tmpdir(), `vitest-${process.pid}.localstorage`)],
     },
