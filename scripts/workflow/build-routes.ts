@@ -9,6 +9,13 @@ import { getCurrentPath } from '../../lib/utils/helpers';
 
 const __dirname = getCurrentPath(import.meta.url);
 
+// Check if building for Worker environment
+const isWorkerBuild = process.env.WORKER_BUILD === 'true';
+
+// Namespaces to include in Worker build (due to size limitations)
+// Start with minimal routes that have fewer dependencies
+const workerNamespaces = new Set(['telegram', 'test']);
+
 // Ignore Redis and remote config in route generation to avoid side effects.
 process.env.REDIS_URL = '';
 process.env.CACHE_TYPE = '';
@@ -54,12 +61,16 @@ const radar: {
 // Generate route paths type
 const allRoutePaths = new Set<string>();
 
-for (const namespace in namespaces) {
-    let defaultCategory = namespaces[namespace].categories?.[0];
+// Filter namespaces for Worker build
+const namespacesToProcess = isWorkerBuild ? Object.fromEntries(Object.entries(namespaces).filter(([key]) => workerNamespaces.has(key))) : namespaces;
+
+for (const namespace in namespacesToProcess) {
+    const namespaceData = namespacesToProcess[namespace];
+    let defaultCategory = namespaceData.categories?.[0];
     if (!defaultCategory) {
-        for (const path in namespaces[namespace].routes) {
-            if (namespaces[namespace].routes[path].categories) {
-                defaultCategory = namespaces[namespace].routes[path].categories[0];
+        for (const path in namespaceData.routes) {
+            if (namespaceData.routes[path].categories) {
+                defaultCategory = namespaceData.routes[path].categories[0];
                 break;
             }
         }
@@ -67,11 +78,11 @@ for (const namespace in namespaces) {
     if (!defaultCategory) {
         defaultCategory = 'other';
     }
-    for (const path in namespaces[namespace].routes) {
+    for (const path in namespaceData.routes) {
         const realPath = `/${namespace}${path}`;
         allRoutePaths.add(realPath);
-        const data = namespaces[namespace].routes[path];
-        const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
+        const data = namespaceData.routes[path];
+        const categories = data.categories || namespaceData.categories || [defaultCategory];
         if (foloAnalysisTop100.some(([path]) => path === realPath)) {
             categories.push('popular');
         }
@@ -88,7 +99,7 @@ for (const namespace in namespaces) {
                 if (domain) {
                     if (!radar[domain]) {
                         radar[domain] = {
-                            _name: namespaces[namespace].name,
+                            _name: namespaceData.name,
                         };
                     }
                     if (!radar[domain][subdomain]) {
@@ -108,8 +119,8 @@ for (const namespace in namespaces) {
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
-    for (const path in namespaces[namespace].apiRoutes) {
-        const data = namespaces[namespace].apiRoutes[path];
+    for (const path in namespaceData.apiRoutes) {
+        const data = namespaceData.apiRoutes[path];
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
 }
@@ -124,9 +135,15 @@ export type RoutePath =
 ${uniquePaths.map((path) => `  | \`${path}\``).join('\n')};
 `;
 
-fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
-fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/route-paths.ts'), routePathsType);
+// For Worker build, only output routes-worker.js with filtered namespaces
+// For regular build, output all files
+if (isWorkerBuild) {
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespacesToProcess, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
+} else {
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/route-paths.ts'), routePathsType);
+}

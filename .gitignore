@@ -28,6 +28,8 @@ node_modules
 tmp
 dist
 dist-lib
+dist-worker
+.wrangler
 
 Session.vim
 combined.log

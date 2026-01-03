@@ -1,9 +1,8 @@
 import { config } from '@/config';
+import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 
 import type CacheModule from './base';
-import memory from './memory';
-import redis from './redis';
 
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
@@ -13,50 +12,67 @@ const globalCache: {
     set: () => null,
 };
 
-let cacheModule: CacheModule;
+// No-op cache module for Worker or fallback
+const noopCacheModule: CacheModule = {
+    init: () => null,
+    get: () => null,
+    set: () => null,
+    status: {
+        available: false,
+    },
+    clients: {},
+};
 
-if (config.cache.type === 'redis') {
-    cacheModule = redis;
-    cacheModule.init();
-    const { redisClient } = cacheModule.clients;
-    globalCache.get = async (key) => {
-        if (key && cacheModule.status.available && redisClient) {
-            const value = await redisClient.get(key);
-            return value;
-        }
-    };
-    globalCache.set = cacheModule.set;
-} else if (config.cache.type === 'memory') {
-    cacheModule = memory;
-    cacheModule.init();
-    const { memoryCache } = cacheModule.clients;
-    globalCache.get = (key) => {
-        if (key && cacheModule.status.available && memoryCache) {
-            return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
-        }
-    };
-    globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
-        if (key && memoryCache) {
-            return memoryCache.set(key, value, { ttl: maxAge * 1000 });
-        }
-    };
-} else {
-    cacheModule = {
-        init: () => null,
-        get: () => null,
-        set: () => null,
-        status: {
-            available: false,
-        },
-        clients: {},
-    };
-    logger.error('Cache not available, concurrent requests are not limited. This could lead to bad behavior.');
+let cacheModule: CacheModule = noopCacheModule;
+
+// Initialize cache asynchronously for non-Worker environments
+const initCache = async () => {
+    if (isWorker) {
+        // No-op cache for Cloudflare Workers - already set
+        return;
+    }
+
+    if (config.cache.type === 'redis') {
+        const redis = (await import('./redis')).default;
+        cacheModule = redis;
+        cacheModule.init();
+        const { redisClient } = cacheModule.clients;
+        globalCache.get = async (key) => {
+            if (key && cacheModule.status.available && redisClient) {
+                const value = await redisClient.get(key);
+                return value;
+            }
+        };
+        globalCache.set = cacheModule.set;
+    } else if (config.cache.type === 'memory') {
+        const memory = (await import('./memory')).default;
+        cacheModule = memory;
+        cacheModule.init();
+        const { memoryCache } = cacheModule.clients;
+        globalCache.get = (key) => {
+            if (key && cacheModule.status.available && memoryCache) {
+                return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
+            }
+        };
+        globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
+            if (!value || value === 'undefined') {
+                value = '';
+            }
+            if (typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
+            if (key && memoryCache) {
+                return memoryCache.set(key, value, { ttl: maxAge * 1000 });
+            }
+        };
+    } else {
+        logger.error('Cache not available, concurrent requests are not limited. This could lead to bad behavior.');
+    }
+};
+
+// Initialize cache immediately for non-Worker environments
+if (!isWorker) {
+    initCache();
 }
 
 // only give cache string, as the `!` condition tricky
