@@ -5426,6 +5426,16 @@
         ],
         "target": "/anthropic/research"
       }
+    ],
+    "red": [
+      {
+        "title": "Frontier Red Team",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/anthropic/red"
+      }
     ]
   },
   "anytxt.net": {
@@ -37368,7 +37378,8 @@
         "title": "Home",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/:creator"
+          "/:creator",
+          "/cw/:creator"
         ],
         "target": "/patreon/:creator"
       }
