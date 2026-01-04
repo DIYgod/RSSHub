@@ -23,14 +23,58 @@ const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
 
 const __dirname = getCurrentPath(import.meta.url);
 
-const docs = {};
+// Build namespace-centric data structure
+interface NamespaceData {
+    name: string;
+    url?: string;
+    description?: string;
+    zh?: {
+        name?: string;
+        description?: string;
+    };
+    categories: string[];
+    heat: number;
+    routes: Record<string, RouteData>;
+}
 
+interface RouteData {
+    path: string | string[];
+    name: string;
+    url?: string;
+    maintainers: string[];
+    example: string;
+    parameters?: Record<string, any>;
+    description?: string;
+    categories?: string[];
+    features?: Record<string, any>;
+    radar?: any[];
+    view?: number;
+    location?: string;
+    heat: number;
+    topFeeds: any[];
+    zh?: {
+        name?: string;
+        description?: string;
+        parameters?: Record<string, any>;
+    };
+    test?: {
+        code: number;
+        message?: string;
+    };
+}
+
+const namespacesData: Record<string, NamespaceData> = {};
+
+// First pass: build namespace data with all routes
 for (const namespace in namespaces) {
-    let defaultCategory = namespaces[namespace].categories?.[0];
+    const nsData = namespaces[namespace];
+
+    // Determine default category
+    let defaultCategory = nsData.categories?.[0];
     if (!defaultCategory) {
-        for (const path in namespaces[namespace].routes) {
-            if (namespaces[namespace].routes[path].categories) {
-                defaultCategory = namespaces[namespace].routes[path].categories[0];
+        for (const routePath in nsData.routes) {
+            if (nsData.routes[routePath].categories) {
+                defaultCategory = nsData.routes[routePath].categories[0];
                 break;
             }
         }
@@ -38,97 +82,107 @@ for (const namespace in namespaces) {
     if (!defaultCategory) {
         defaultCategory = 'other';
     }
-    for (const path in namespaces[namespace].routes) {
-        const realPath = `/${namespace}${path}`;
-        const data = namespaces[namespace].routes[path];
-        const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
-        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
-            categories.push('popular');
-        }
-        // docs.json
-        for (const category of categories) {
-            if (!docs[category]) {
-                docs[category] = {};
+
+    // Collect all categories for this namespace
+    const nsCategories = new Set<string>(nsData.categories || []);
+
+    // Initialize namespace data
+    namespacesData[namespace] = {
+        name: nsData.name === 'Unknown' ? namespace : nsData.name,
+        url: nsData.url,
+        description: nsData.description,
+        zh: nsData.zh
+            ? {
+                  name: nsData.zh.name,
+                  description: nsData.zh.description,
+              }
+            : undefined,
+        categories: [],
+        heat: 0,
+        routes: {},
+    };
+
+    // Process routes
+    const processedPaths = new Set<string>();
+
+    for (const routePath in nsData.routes) {
+        const realPath = `/${namespace}${routePath}`;
+        const routeData = nsData.routes[routePath];
+
+        // Skip duplicate array paths
+        if (Array.isArray(routeData.path)) {
+            if (processedPaths.has(routeData.path[0])) {
+                continue;
             }
-            if (!docs[category][namespace]) {
-                docs[category][namespace] = {
-                    routes: {},
-                    heat: 0,
-                };
-            }
-            docs[category][namespace].name = namespaces[namespace].name;
-            docs[category][namespace].url = namespaces[namespace].url;
-            docs[category][namespace].description = namespaces[namespace].description;
-            docs[category][namespace].routes[realPath] = {
-                ...data,
-                heat: foloAnalysisResult[realPath]?.subscriptionCount || 0,
-                topFeeds: foloAnalysisResult[realPath]?.topFeeds || [],
-            };
-            docs[category][namespace].heat += foloAnalysisResult[realPath]?.subscriptionCount || 0;
+            processedPaths.add(routeData.path[0]);
         }
+
+        // Determine route categories
+        const routeCategories = routeData.categories || nsData.categories || [defaultCategory];
+
+        // Check if popular
+        const isPopular = foloAnalysisTop100.some(([p]) => p === realPath);
+        if (isPopular && !routeCategories.includes('popular')) {
+            routeCategories.push('popular');
+        }
+
+        // Add categories to namespace
+        for (const cat of routeCategories) {
+            nsCategories.add(cat);
+        }
+
+        // Get test result
+        const test = testResult.find((t) => t.title === realPath);
+        const parsedTest = test
+            ? {
+                  code: test.status === 'passed' ? 0 : 1,
+                  message: test.failureMessages?.[0],
+              }
+            : undefined;
+
+        const heat = foloAnalysisResult[realPath]?.subscriptionCount || 0;
+
+        // Build route data
+        namespacesData[namespace].routes[realPath] = {
+            path: routeData.path,
+            name: routeData.name,
+            url: routeData.url,
+            maintainers: routeData.maintainers,
+            example: routeData.example,
+            parameters: routeData.parameters,
+            description: routeData.description,
+            categories: routeCategories,
+            features: routeData.features,
+            radar: routeData.radar,
+            view: routeData.view,
+            location: routeData.location,
+            heat,
+            topFeeds: foloAnalysisResult[realPath]?.topFeeds || [],
+            zh: routeData.zh
+                ? {
+                      name: routeData.zh.name,
+                      description: routeData.zh.description,
+                      parameters: routeData.zh.parameters,
+                  }
+                : undefined,
+            test: parsedTest,
+        };
+
+        namespacesData[namespace].heat += heat;
     }
+
+    namespacesData[namespace].categories = [...nsCategories];
 }
 
-function generateMd(lang) {
-    const md = {};
-    for (const category in docs) {
-        const nameObj = categories.find((c) => c.link.includes(category));
-        if (!nameObj) {
-            throw new Error(`Category not found: ${category}, please double check your spelling.`);
-        }
+// Generate JSON output
+fs.mkdirSync(path.join(__dirname, '../../assets/build/docs'), { recursive: true });
+fs.writeFileSync(path.join(__dirname, '../../assets/build/docs/routes.json'), JSON.stringify(namespacesData, null, 2));
 
-        md[category] = `# ${`${nameObj.icon} ${nameObj[lang]}`}\n\n`;
-
-        const namespaces = Object.keys(docs[category]).sort((a, b) => {
-            const aname = docs[category][a].heat;
-            const bname = docs[category][b].heat;
-            return bname - aname;
-        });
-        for (const namespace of namespaces) {
-            if (docs[category][namespace].name === 'Unknown') {
-                docs[category][namespace].name = namespace;
-            }
-            md[category] += `## ${docs[category][namespace].name || namespace} ${docs[category][namespace].url ? `<Site url="${docs[category][namespace].url}"/>` : ''}\n\n`;
-            if (docs[category][namespace].description) {
-                md[category] += `${docs[category][namespace].description}\n\n`;
-            }
-
-            const realPaths = Object.keys(docs[category][namespace].routes).sort((a, b) => {
-                const aheat = docs[category][namespace].routes[a].heat;
-                const bheat = docs[category][namespace].routes[b].heat;
-                return bheat - aheat;
-            });
-
-            const processedPaths = new Set();
-
-            for (const realPath of realPaths) {
-                const data = docs[category][namespace].routes[realPath];
-                if (Array.isArray(data.path)) {
-                    if (processedPaths.has(data.path[0])) {
-                        continue;
-                    }
-                    processedPaths.add(data.path[0]);
-                }
-
-                const test = testResult.find((t) => t.title === realPath);
-                const parsedTest = test
-                    ? {
-                          code: test.status === 'passed' ? 0 : 1,
-                          message: test.failureMessages?.[0],
-                      }
-                    : undefined;
-                md[category] += `### ${data.name} ${data.url || docs[category][namespace].url ? `<Site url="${data.url || docs[category][namespace].url}" size="sm" />` : ''}\n\n`;
-                md[category] += `<Route namespace="${namespace}" :data='${JSON.stringify(data).replaceAll(`'`, '&#39;')}' :test='${JSON.stringify(parsedTest)?.replaceAll(`'`, '&#39;')}' />\n\n`;
-                if (data.description) {
-                    md[category] += `${data.description}\n\n`;
-                }
-            }
-        }
-    }
-    fs.mkdirSync(path.join(__dirname, `../../assets/build/docs/${lang}`), { recursive: true });
-    for (const category in md) {
-        fs.writeFileSync(path.join(__dirname, `../../assets/build/docs/${lang}/${category}.md`), md[category]);
-    }
-}
-generateMd('en');
-generateMd('zh');
+// Generate categories data
+const categoriesData = categories.map((cat) => ({
+    id: cat.link.replace('/routes/', ''),
+    icon: cat.icon,
+    en: cat.en,
+    zh: cat.zh,
+}));
+fs.writeFileSync(path.join(__dirname, '../../assets/build/docs/categories.json'), JSON.stringify(categoriesData, null, 2));
