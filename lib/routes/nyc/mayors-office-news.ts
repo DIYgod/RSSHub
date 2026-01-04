@@ -12,8 +12,8 @@ export const route: Route = {
     maintainers: ['hkamran80'],
     example: '/nyc/mayors-office-news/executive-orders/civic-services',
     parameters: {
-        types: 'a comma-separated list of news types. Options: see table. Default: `all`.',
-        categories: 'a comma-separated list of categories. Options: see table. Default: `all`.',
+        types: { description: 'a comma-separated list of news types. Options: see table.', default: 'all' },
+        categories: { description: 'a comma-separated list of categories. Options: see table.', default: 'all' },
     },
     description: `Types
 
