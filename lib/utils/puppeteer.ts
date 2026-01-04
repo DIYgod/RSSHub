@@ -63,6 +63,10 @@ const outPuppeteer = async () => {
 
 export default outPuppeteer;
 
+// No-op in Node.js environment (used by Worker build via alias)
+
+export const setBrowserBinding = (_binding: any) => {};
+
 /**
  * @returns Puppeteer page
  */
