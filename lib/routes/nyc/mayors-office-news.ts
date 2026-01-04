@@ -123,10 +123,23 @@ Categories
             description = `${description} categorized as ${fixedCategories}`;
         }
 
+        // Link
+        let link = 'https://www.nyc.gov/mayors-office/news/?';
+        if (types) {
+            link = `${link}types=${types.replaceAll(',', '&types=')}`;
+        }
+
+        if (categories) {
+            if (types) {
+                link = `${link}&`;
+            }
+            link = `${link}categories=${categories.replaceAll(',', '&categories=')}`;
+        }
+
         return {
             title: `${title ? title + ' | ' : ''}NYC Mayor's Office News`,
             description: `${description} from the NYC Office of the Mayor`,
-            link: 'https://www.nyc.gov/mayors-office/news/?',
+            link,
             item: items,
         };
     },
