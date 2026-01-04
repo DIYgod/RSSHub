@@ -63,15 +63,18 @@ Categories
         const types = typesParam === 'all' ? '' : typesParam;
         const categories = categoriesParam === 'all' ? '' : categoriesParam;
 
+        const baseUrl = 'https://www.nyc.gov';
+
         const data = await ofetch(`https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1&types=${types}&categories=${categories}`);
         const list = data.results.map((item) => {
-            const imageExtension = item.articleImage ? item.articleImage.split('.')[-1] : undefined;
+            const imageUrl = item.articleImage ? baseUrl + item.articleImage : undefined;
+            const imageExtension = item.articleImage ? item.articleImage.split('.')[1] : undefined;
 
             return {
                 title: item.title,
-                link: `https://www.nyc.gov${item.link}`,
+                link: baseUrl + item.link,
                 pubDate: timezone(parseDate(item.articleDate), -5),
-                media: item.articleImage ? { content: { url: item.articleImage, type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` }, thumbnail: { url: item.articleImage } } : undefined,
+                media: item.articleImage ? { content: { url: imageUrl, type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` }, thumbnail: { url: imageUrl } } : undefined,
             };
         });
 
