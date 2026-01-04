@@ -2,31 +2,38 @@
 // This is a simplified version of app-bootstrap.tsx for Cloudflare Workers
 // Heavy middleware and API routes are excluded
 
+import type { KVNamespace } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { trimTrailingSlash } from 'hono/trailing-slash';
 
 import { errorHandler, notFoundHandler } from '@/errors';
 import accessControl from '@/middleware/access-control';
+import cache from '@/middleware/cache';
 import debug from '@/middleware/debug';
 import header from '@/middleware/header';
 import mLogger from '@/middleware/logger';
 import template from '@/middleware/template';
 import trace from '@/middleware/trace';
 import registry from '@/registry';
+import { setKVNamespace } from '@/utils/cache/index.worker';
 import { setBrowserBinding } from '@/utils/puppeteer';
 
 // Define Worker environment bindings
 type Bindings = {
     BROWSER?: any; // Browser Rendering API binding
+    CACHE?: KVNamespace; // KV namespace for caching
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-// Set browser binding for puppeteer
+// Set browser and KV bindings
 app.use(async (c, next) => {
     if (c.env?.BROWSER) {
         setBrowserBinding(c.env.BROWSER);
+    }
+    if (c.env?.CACHE) {
+        setKVNamespace(c.env.CACHE);
     }
     await next();
 });
@@ -48,8 +55,8 @@ app.use(trace);
 // - sentry: @sentry/node
 // - antiHotlink: cheerio
 // - parameter: cheerio, sanitize-html, @postlight/parser
-// - cache: ioredis
 
+app.use(cache);
 app.use(accessControl);
 app.use(debug);
 app.use(template);

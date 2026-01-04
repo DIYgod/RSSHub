@@ -23,15 +23,13 @@ enabled = true
 [browser]
 binding = "BROWSER"
 
-# Uncomment to use KV for caching (optional)
-# [[kv_namespaces]]
-# binding = "CACHE"
-# id = "your-kv-namespace-id"
+# KV namespace for caching (auto-provisioned on first deploy)
+[[kv_namespaces]]
+binding = "CACHE"
 
 [vars]
 # Environment variables can be set here or via wrangler secret
 # DEBUG_INFO = "false"
-# CACHE_TYPE = "memory"
 
 # For production, use wrangler secret put <KEY> to set sensitive values
 # Example secrets:
