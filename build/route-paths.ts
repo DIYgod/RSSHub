@@ -173,7 +173,6 @@ export type RoutePath =
   | `/alternativeto/platform/:name/:routeParams?`
   | `/alternativeto/software/:name/:routeParams?`
   | `/altotrain/:language?`
-  | `/alwayscontrol/news`
   | `/amazfitwatchfaces/:device/:sort/:searchParams?`
   | `/amazon/awsblogs/:locale?`
   | `/amazon/kindle/software-updates`
