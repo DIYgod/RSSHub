@@ -42,6 +42,10 @@ jobs:
               run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
             - name: Build routes
               run: pnpm build
+            - name: Build worker routes
+              run: WORKER_BUILD=true pnpm build:routes
+            - name: Build worker
+              run: pnpm worker-build
             - name: Test all and generate coverage
               run: pnpm run vitest:coverage --reporter=github-actions
               env:

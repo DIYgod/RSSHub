@@ -1,0 +1,40 @@
+name = "rsshub"
+main = "dist-worker/worker.mjs"
+compatibility_date = "2025-06-17"
+compatibility_flags = ["nodejs_compat"]
+
+# Serve static assets from lib/assets
+assets = { directory = "lib/assets" }
+
+# Find additional modules in dist-worker
+[[rules]]
+type = "ESModule"
+globs = ["dist-worker/**/*.mjs"]
+
+# Workers Paid plan is recommended for better performance
+# Free plan has 10ms CPU time limit per request
+# Paid plan has 30s CPU time limit per request
+
+[observability]
+enabled = true
+
+# Browser Rendering API for puppeteer support
+# Requires Workers Paid plan
+[browser]
+binding = "BROWSER"
+
+# Uncomment to use KV for caching (optional)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "your-kv-namespace-id"
+
+[vars]
+# Environment variables can be set here or via wrangler secret
+# DEBUG_INFO = "false"
+# CACHE_TYPE = "memory"
+
+# For production, use wrangler secret put <KEY> to set sensitive values
+# Example secrets:
+# - ACCESS_KEY
+# - GITHUB_ACCESS_TOKEN
+# - etc.
