@@ -65,11 +65,16 @@ Categories
         const categories = categoriesParam === 'all' ? '' : categoriesParam;
 
         const data = await ofetch(`https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1&types=${types}&categories=${categories}`);
-        const list = data.results.map((item) => ({
-            title: item.title,
-            link: `https://www.nyc.gov${item.link}`,
-            pubDate: timezone(parseDate(item.articleDate), -5),
-        }));
+        const list = data.results.map((item) => {
+            const imageExtension = item.articleImage ? item.articleImage.split('.')[-1] : undefined;
+
+            return {
+                title: item.title,
+                link: `https://www.nyc.gov${item.link}`,
+                pubDate: timezone(parseDate(item.articleDate), -5),
+                media: item.articleImage ? { content: { url: item.articleImage, type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` }, thumbnail: { url: item.articleImage } } : undefined,
+            };
+        });
 
         const items = await Promise.all(
             list.map((item) =>
