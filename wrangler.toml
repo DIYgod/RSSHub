@@ -6,6 +6,9 @@ compatibility_flags = ["nodejs_compat"]
 # Serve static assets from lib/assets
 assets = { directory = "lib/assets" }
 
+[build]
+command = "pnpm run worker-build"
+
 # Workers Paid plan is recommended for better performance
 # Free plan has 10ms CPU time limit per request
 # Paid plan has 30s CPU time limit per request
