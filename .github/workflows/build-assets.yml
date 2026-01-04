@@ -60,8 +60,8 @@ jobs:
             - name: Update docs
               if: steps.check-docs-env.outputs.defined == 'true'
               run: |
-                  cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
-                  cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
+                  cp ./assets/build/docs/routes.json ./rsshub-docs/src/public/routes.json
+                  cp ./assets/build/docs/categories.json ./rsshub-docs/src/public/categories.json
                   cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
                   cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
             - name: Commit docs
