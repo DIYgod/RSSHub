@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import FormData from 'form-data';
-import tough from 'tough-cookie';
+import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -46,7 +46,7 @@ async function handler(ctx) {
     const country = ctx.req.param('country') ? ctx.req.param('country').split('-').join(' ') : 'all';
     const type = ctx.req.param('type') ? ctx.req.param('type').split('-').join(' ') : 'all';
 
-    const cookieJar = new tough.CookieJar();
+    const cookieJar = new CookieJar();
     let response = await got({
             method: 'get',
             url: rootUrl,
