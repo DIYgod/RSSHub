@@ -7,10 +7,43 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/mayors-office-news',
+    path: '/mayors-office-news/:types?/:categories?',
     name: "Mayor's Office News",
     maintainers: ['hkamran80'],
-    example: '/nyc/mayors-office-news',
+    example: '/nyc/mayors-office-news/executive-orders/civic-services',
+    parameters: {
+        types: 'a comma-separated list of news types. Options: see table. Default: `all`.',
+        categories: 'a comma-separated list of categories. Options: see table. Default: `all`.',
+    },
+    description: `Types
+
+| Type                | Slug                |
+| ------------------- | ------------------- |
+| Press releases      | press-releases      |
+| Executive orders    | executive-orders    |
+| Public schedule     | public-schedule     |
+| Audio               | audio               |
+| Statements          | statements          |
+| Designation letters | designation-letters |
+| Images              | images              |
+| Video               | video               |
+| All                 | all                 |
+
+Categories
+
+| Category                | Slug                |
+| ----------------------- | ------------------- |
+| Business                | business            |
+| Culture and recreation  | culture-recreation  |
+| Environment             | environment         |
+| Housing and development | housing-development |
+| Social services         | social-services     |
+| Civic services          | civic-services      |
+| Education               | education           |
+| Health                  | health              |
+| Public safety           | public-safety       |
+| Transportation          | transportation      |
+| All                     | all                 |`,
     categories: ['government'],
     features: {
         requireConfig: false,
@@ -26,8 +59,12 @@ export const route: Route = {
             target: '/mayors-office-news',
         },
     ],
-    handler: async () => {
-        const data = await ofetch('https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1');
+    handler: async (ctx) => {
+        const { types: typesParam = 'all', categories: categoriesParam = 'all' } = ctx.req.param();
+        const types = typesParam === 'all' ? '' : typesParam;
+        const categories = categoriesParam === 'all' ? '' : categoriesParam;
+
+        const data = await ofetch(`https://www.nyc.gov/bin/nyc/articlesearch.json?pageSize=10&currentPage=1&types=${types}&categories=${categories}`);
         const list = data.results.map((item) => ({
             title: item.title,
             link: `https://www.nyc.gov${item.link}`,
@@ -53,10 +90,47 @@ export const route: Route = {
             )
         );
 
+        const cleanedTypes = types.replaceAll(',', ', ').replaceAll('-', ' ');
+        const fixedCategories = categories
+            .split(',')
+            .map((category) => fixCategoryName(category))
+            .join(', ')
+            .replaceAll('-', ' ');
+
+        // Title
+        let title = '';
+        if (types) {
+            title = spacedToTitleCase(cleanedTypes);
+        }
+
+        if (categories) {
+            title = types ? `${title} (` : 'All (';
+            title = `${title}${spacedToTitleCase(fixedCategories)})`;
+        }
+
+        // Description
+        let description = '';
+        description = types ? toTitleCase(cleanedTypes) : 'News';
+
+        if (categories) {
+            description = `${description} categorized as ${fixedCategories}`;
+        }
+
         return {
-            title: "NYC Mayor's Office News",
+            title: `${title ? title + ' | ' : ''}NYC Mayor's Office News`,
+            description: `${description} from the NYC Office of the Mayor`,
             link: 'https://www.nyc.gov/mayors-office/news/?',
             item: items,
         };
     },
 };
+
+const fixCategoryName = (categoryName: string) => (categoryName === 'housing-development' || categoryName === 'culture-recreation' ? categoryName.replace('-', ' and ') : categoryName);
+
+const toTitleCase = (s: string) => s[0].toUpperCase() + s.slice(1);
+
+const spacedToTitleCase = (s: string) =>
+    s
+        .split(' ')
+        .map((p) => (p === 'and' ? p : toTitleCase(p)))
+        .join(' ');
