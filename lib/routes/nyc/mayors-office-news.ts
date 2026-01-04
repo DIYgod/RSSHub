@@ -55,8 +55,7 @@ Categories
     },
     radar: [
         {
-            source: ['nyc.gov/', 'nyc.gov/mayors-office/', 'nyc.gov/mayors-office/news/'],
-            target: '/mayors-office-news',
+            source: ['nyc.gov', 'nyc.gov/mayors-office', 'nyc.gov/mayors-office/news/', 'nyc.gov/mayors-office/news/*'],
         },
     ],
     handler: async (ctx) => {
