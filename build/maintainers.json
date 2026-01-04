@@ -516,6 +516,9 @@
   "/altotrain/:language?": [
     "elibroftw"
   ],
+  "/alwayscontrol/news": [
+    "moss-xxh"
+  ],
   "/amazfitwatchfaces/:device/:sort/:searchParams?": [
     "nczitzk"
   ],

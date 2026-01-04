@@ -5157,6 +5157,19 @@
       }
     ]
   },
+  "alwayscontrol.com.cn": {
+    "_name": "Always Control",
+    "www": [
+      {
+        "title": "最新动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/zh-CN/news/list"
+        ],
+        "target": "/alwayscontrol/news"
+      }
+    ]
+  },
   "amazfitwatchfaces.com": {
     "_name": "Amazfitwatchfaces",
     ".": [
