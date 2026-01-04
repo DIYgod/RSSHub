@@ -31,6 +31,11 @@
         "build:lib": "npm run build:routes && tsdown --config ./tsdown-lib.config.ts",
         "build:routes": "cross-env NODE_ENV=dev tsx scripts/workflow/build-routes.ts",
         "vercel-build": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts",
+        "build:routes:worker": "cross-env NODE_ENV=dev WORKER_BUILD=true tsx scripts/workflow/build-routes.ts",
+        "worker-build": "npm run build:routes:worker && tsdown --config ./tsdown-worker.config.ts",
+        "worker-dev": "npm run worker-build && wrangler dev",
+        "worker-deploy": "npm run worker-build && wrangler deploy",
+        "worker-test": "npm run worker-build && vitest run lib/worker.worker.test.ts",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
         "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --write --experimental-cli",
@@ -148,6 +153,8 @@
         "@babel/preset-env": "7.28.5",
         "@babel/preset-typescript": "7.28.5",
         "@bbob/types": "4.3.1",
+        "@cloudflare/puppeteer": "1.0.4",
+        "@cloudflare/workers-types": "4.20260103.0",
         "@eslint/eslintrc": "3.3.3",
         "@eslint/js": "9.39.2",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
@@ -200,6 +207,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.3",
         "vitest": "4.0.9",
+        "wrangler": "4.54.0",
         "yaml-eslint-parser": "1.3.2"
     },
     "packageManager": "pnpm@10.26.0+sha512.3b3f6c725ebe712506c0ab1ad4133cf86b1f4b687effce62a9b38b4d72e3954242e643190fc51fa1642949c735f403debd44f5cb0edd657abe63a8b6a7e1e402",
@@ -221,7 +229,8 @@
             "sleep",
             "unrs-resolver",
             "utf-8-validate",
-            "vue-demi"
+            "vue-demi",
+            "wrangler"
         ],
         "overrides": {
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
