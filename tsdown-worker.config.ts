@@ -86,6 +86,7 @@ export default defineConfig({
     alias: {
         // External dependencies that need Worker-compatible replacements
         'node:module': path.resolve('./lib/shims/node-module.ts'),
+        'node:child_process': path.resolve('./lib/shims/node-child-process.ts'),
         'dotenv/config': path.resolve('./lib/shims/dotenv-config.ts'),
         '@sentry/node': path.resolve('./lib/shims/sentry-node.ts'),
         'xxhash-wasm': path.resolve('./lib/shims/xxhash-wasm.ts'),

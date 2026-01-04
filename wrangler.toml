@@ -9,11 +9,6 @@ assets = { directory = "lib/assets" }
 [build]
 command = "pnpm run worker-build"
 
-# Find additional modules in dist-worker
-[[rules]]
-type = "ESModule"
-globs = ["dist-worker/**/*.mjs"]
-
 # Workers Paid plan is recommended for better performance
 # Free plan has 10ms CPU time limit per request
 # Paid plan has 30s CPU time limit per request

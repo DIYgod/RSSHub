@@ -17,39 +17,7 @@ process.env.REDIS_URL = '';
 process.env.CACHE_TYPE = '';
 process.env.REMOTE_CONFIG = '';
 
-const [{ config }, { namespaces }] = await Promise.all([import('../../lib/config'), import('../../lib/registry')]);
-
-type FoloAnalysis = Record<string, { subscriptionCount: number; topFeeds: any[] }>;
-
-const loadFoloAnalysis = async (): Promise<FoloAnalysis> => {
-    try {
-        const response = await fetch('https://raw.githubusercontent.com/RSSNext/rsshub-docs/refs/heads/main/rsshub-analytics.json', {
-            headers: {
-                'user-agent': config.trueUA,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Unexpected status ${response.status}`);
-        }
-
-        const data = await response.json();
-        return (data?.data as FoloAnalysis) || {};
-    } catch (error) {
-        process.emitWarning(`Failed to fetch rsshub-analytics.json, continuing without popularity data. ${String(error)}`);
-        return {};
-    }
-};
-
-const foloAnalysisResult = await loadFoloAnalysis();
-const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
-    .toSorted((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
-    .slice(0, 150);
-
-// Extract unique namespaces from top 150 routes for Worker build
-const workerNamespaces = new Set(foloAnalysisTop100.map(([routePath]) => routePath.split('/')[1]).filter(Boolean));
-// Always include test namespace for testing
-workerNamespaces.add('test');
+const { namespaces } = await import('../../lib/registry');
 
 const maintainers: Record<string, string[]> = {};
 const radar: {
@@ -62,8 +30,8 @@ const radar: {
 // Generate route paths type
 const allRoutePaths = new Set<string>();
 
-// Filter namespaces for Worker build
-const namespacesToProcess = isWorkerBuild ? Object.fromEntries(Object.entries(namespaces).filter(([key]) => workerNamespaces.has(key))) : namespaces;
+// Use all namespaces for both regular and Worker builds
+const namespacesToProcess = namespaces;
 
 for (const namespace in namespacesToProcess) {
     const namespaceData = namespacesToProcess[namespace];
@@ -84,9 +52,6 @@ for (const namespace in namespacesToProcess) {
         allRoutePaths.add(realPath);
         const data = namespaceData.routes[path];
         const categories = data.categories || namespaceData.categories || [defaultCategory];
-        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
-            categories.push('popular');
-        }
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;

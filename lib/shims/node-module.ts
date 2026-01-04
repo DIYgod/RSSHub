@@ -4,7 +4,6 @@
 import * as assert from 'node:assert';
 import * as async_hooks from 'node:async_hooks';
 import * as buffer from 'node:buffer';
-import * as child_process from 'node:child_process';
 import * as console_module from 'node:console';
 import * as constants from 'node:constants';
 import * as crypto from 'node:crypto';
@@ -74,6 +73,29 @@ const vmShim = {
     isContext: () => false,
     compileFunction: () => {
         throw new Error('vm.compileFunction is not supported in Workers');
+    },
+};
+
+// Child process shim (inline to avoid import cycle)
+const child_process = {
+    execSync: (_command: string): Buffer => Buffer.from(''),
+    exec: () => {
+        throw new Error('exec is not supported in Cloudflare Workers');
+    },
+    spawn: () => {
+        throw new Error('spawn is not supported in Cloudflare Workers');
+    },
+    fork: () => {
+        throw new Error('fork is not supported in Cloudflare Workers');
+    },
+    execFile: () => {
+        throw new Error('execFile is not supported in Cloudflare Workers');
+    },
+    execFileSync: () => {
+        throw new Error('execFileSync is not supported in Cloudflare Workers');
+    },
+    spawnSync: () => {
+        throw new Error('spawnSync is not supported in Cloudflare Workers');
     },
 };
 
