@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { toTitleCase } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -147,10 +148,8 @@ Categories
 
 const fixCategoryName = (categoryName: string) => (categoryName === 'housing-development' || categoryName === 'culture-recreation' ? categoryName.replace('-', ' and ') : categoryName);
 
-const toTitleCase = (s: string) => s[0].toUpperCase() + s.slice(1);
-
 const spacedToTitleCase = (s: string) =>
     s
         .split(' ')
-        .map((p) => (p === 'and' ? p : toTitleCase(p)))
+        .map((part) => toTitleCase(part))
         .join(' ');
