@@ -114,7 +114,7 @@
         "markdown-it": "14.1.0",
         "mixi2": "0.2.2",
         "module-alias": "2.2.3",
-        "narou": "1.2.0",
+        "narou": "2.0.0",
         "notion-to-md": "3.1.9",
         "oauth-1.0a": "2.2.6",
         "ofetch": "1.5.1",
@@ -147,7 +147,7 @@
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.9.1",
         "youtubei.js": "16.0.1",
-        "zod": "4.3.4"
+        "zod": "4.3.5"
     },
     "devDependencies": {
         "@babel/preset-env": "7.28.5",
