@@ -73,7 +73,7 @@ Categories
 
             return {
                 title: item.title,
-                link: baseUrl + item.link,
+                link: baseUrl + item.link.replace('.html', ''),
                 pubDate: timezone(parseDate(item.articleDate), -5),
                 media: item.articleImage ? { content: { url: imageUrl, type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` }, thumbnail: { url: imageUrl } } : undefined,
             };
