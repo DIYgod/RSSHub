@@ -50,7 +50,6 @@ async function handler(ctx: Context): Promise<Data> {
         .map((item) => {
             const handle = $(item).attr('data-app-card-handle-value');
 
-            // const appInfo = $(item).find('div.tw-transition-colors.tw-text-fg-primary + div.tw-self-stretch');
             const appInfo = $(item).find('div.tw-self-stretch').clone();
 
             const rattingMatch = appInfo
@@ -59,14 +58,16 @@ async function handler(ctx: Context): Promise<Data> {
                 .match(/\d\.\d/);
             const rattingCountMatch = appInfo.find('span + span.tw-sr-only').text().match(/\d+/);
 
+            const description = $(item).find(`div.tw-text-fg-secondary:not(.tw-mb-md)`).eq(1).text().trim();
+
             const result: DataItem = {
                 title: $(item).attr('data-app-card-name-value') ?? '',
                 link: `${baseURL}/${handle}`,
-                description: $(item).find(`div.tw-text-fg-tertiary`).first().text().trim(),
+                description,
                 image: $(item).attr('data-app-card-icon-url-value'),
                 _extra: {
                     handle,
-                    description: $(item).find(`div.tw-text-fg-tertiary`).first().text().trim(),
+                    description,
                     built_for_shopify: $(item).find(`span.built-for-shopify-badge`).length > 0,
                     ratting: rattingMatch ? Number.parseFloat(rattingMatch[0]) : 0,
                     ratting_count: rattingCountMatch ? Number(rattingCountMatch[0]) : 0,
