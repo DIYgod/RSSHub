@@ -45,7 +45,6 @@ Categories
 | Public safety           | public-safety       |
 | Transportation          | transportation      |
 | All                     | all                 |`,
-    categories: ['government'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
