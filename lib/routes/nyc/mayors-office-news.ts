@@ -10,6 +10,7 @@ export const route: Route = {
     path: '/mayors-office-news/:types?/:categories?',
     name: "Mayor's Office News",
     maintainers: ['hkamran80'],
+    categories: ['government'],
     example: '/nyc/mayors-office-news/executive-orders/civic-services',
     parameters: {
         types: { description: 'a comma-separated list of news types. Options: see table.', default: 'all' },
