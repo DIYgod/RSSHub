@@ -1,7 +1,7 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'City of New York',
+    name: 'New York City Government',
     url: 'nyc.gov',
     lang: 'en-us',
 };
