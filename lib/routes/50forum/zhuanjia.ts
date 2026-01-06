@@ -21,7 +21,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const rootUrl = 'http://www.50forum.org.cn';
+    const rootUrl = 'https://www.50forum.org.cn';
     const response = await got({
         method: 'get',
         url: `${rootUrl}/portal/list/index.html?id=6`,
