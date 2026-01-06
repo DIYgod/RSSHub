@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/',
     radar: [
         {
-            source: ['https://www.50forum.org.cn/portal/list/index.html?id=6', '50forum.org.cn/'],
+            source: ['www.50forum.org.cn/portal/list/index.html?id=6', '50forum.org.cn/'],
             target: '',
         },
     ],
