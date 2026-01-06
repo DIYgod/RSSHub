@@ -135,7 +135,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 7.0.3
-        version: 7.0.3(tough-cookie@6.0.0)(undici@7.16.0)
+        version: 7.0.3(tough-cookie@6.0.0)(undici@7.18.0)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -266,8 +266,8 @@ importers:
         specifier: 1.6.1
         version: 1.6.1
       undici:
-        specifier: 7.16.0
-        version: 7.16.0
+        specifier: 7.18.0
+        version: 7.18.0
       uuid:
         specifier: 13.0.0
         version: 13.0.0
@@ -433,7 +433,7 @@ importers:
         version: 2.4.3(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.29
-        version: 1.0.29(undici@7.16.0)(utf-8-validate@5.0.10)
+        version: 1.0.29(undici@7.18.0)(utf-8-validate@5.0.10)
       prettier:
         specifier: 3.7.4
         version: 3.7.4
@@ -6098,8 +6098,8 @@ packages:
     resolution: {integrity: sha512-Vqs8HTzjpQXZeXdpsfChQTlafcMQaaIwnGwLam1wudSSjlJeQ3bw1j+TLPePgrCnCpUXx7Ba5Pdpf5OBih62NQ==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.16.0:
-    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
+  undici@7.18.0:
+    resolution: {integrity: sha512-CfPufgPFHCYu0W4h1NiKW9+tNJ39o3kWm7Cm29ET1enSJx+AERfz7A2wAr26aY0SZbYzZlTBQtcHy15o60VZfQ==}
     engines: {node: '>=20.18.1'}
 
   unenv@2.0.0-rc.24:
@@ -6415,6 +6415,18 @@ packages:
 
   ws@8.18.3:
     resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.19.0:
+    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -9408,7 +9420,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.16.0
+      undici: 7.18.0
       whatwg-mimetype: 4.0.0
 
   chownr@3.0.0: {}
@@ -10625,12 +10637,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.16.0):
+  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.18.0):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 6.0.0
     optionalDependencies:
-      undici: 7.16.0
+      undici: 7.18.0
 
   http-proxy-agent@7.0.2:
     dependencies:
@@ -11497,13 +11509,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.29(undici@7.16.0)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.29(undici@7.18.0)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.0.9
       iconv-lite: 0.6.3
       inspector: 0.5.0
       open: 8.4.2
-      undici: 7.16.0
+      undici: 7.18.0
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -11958,7 +11970,7 @@ snapshots:
       debug: 4.4.3
       devtools-protocol: 0.0.1439962
       typed-query-selector: 2.12.0
-      ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      ws: 8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
@@ -12691,7 +12703,7 @@ snapshots:
 
   undici@7.14.0: {}
 
-  undici@7.16.0: {}
+  undici@7.18.0: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
@@ -13027,6 +13039,11 @@ snapshots:
       utf-8-validate: 5.0.10
 
   ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.9
+      utf-8-validate: 5.0.10
+
+  ws@8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     optionalDependencies:
       bufferutil: 4.0.9
       utf-8-validate: 5.0.10
