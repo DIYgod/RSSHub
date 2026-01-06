@@ -116,7 +116,7 @@ async function handler(ctx) {
             }
             return !UNSTABLE_VERSION_REGEX.test(item._version);
         })
-        .sort((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
+        .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
         .slice(0, limit);
 
     return {
