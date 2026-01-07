@@ -9,8 +9,8 @@ import { renderDescription } from './templates/description';
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;
 
-const apiArticleRootUrl = `https://api-article.${domain}`;
-const apiBriefRootUrl = `https://api-brief.${domain}`;
+const apiArticleRootUrl = `https://api-web-article.${domain}`;
+const apiClubRootUrl = `https://api-ms-web-club.${domain}`;
 const apiMemberRootUrl = `https://api-account.${domain}`;
 const apiMomentRootUrl = `https://moment-api.${domain}`;
 const apiSearchRootUrl = `https://search-api.${domain}`;
@@ -111,14 +111,13 @@ const fetchBriefColumnData = async (id) => {
 };
 
 /**
- * Fetches club data for the specified ID and the ID of the default brief column.
+ * Fetches club data for the specified ID.
  *
  * @param {string} id - The ID of the club to fetch data from.
- * @returns {Promise<Object>} data - A promise that resolves to an object containing the fetched data
+ * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
  *                            to be added into `ctx.state.data`.
- * @returns {string} id - the ID of the default brief column.
  */
-const fetchClubData = async (id) => {
+const fetchClubData = async (id: string) => {
     const currentUrl = new URL(`club/${id}.html`, rootUrl).href;
 
     const { data: currentResponse } = await got(currentUrl);
@@ -126,25 +125,48 @@ const fetchClubData = async (id) => {
     const $ = load(currentResponse);
 
     const title = $('title').text();
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href') ?? '', rootUrl).href;
     const author = $('meta[name="author"]').prop('content');
 
+    // Parse club data from __NUXT_DATA__
+    let clubData: Record<string, unknown> | undefined;
+
+    const nuxtDataScript = $('#__NUXT_DATA__').text();
+    if (nuxtDataScript) {
+        try {
+            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
+
+            // Find the fetchData object which contains club info
+            for (const item of nuxtData) {
+                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                    const keys = Object.keys(item);
+                    if (keys.includes('fetchData')) {
+                        const fetchDataIndex = (item as Record<string, number>).fetchData;
+                        if (typeof fetchDataIndex === 'number') {
+                            clubData = resolveNuxtData(nuxtData, fetchDataIndex) as Record<string, unknown>;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch {
+            // Failed to parse Nuxt data
+        }
+    }
+
     return {
-        data: {
-            title,
-            link: currentUrl,
-            description: $('ul.content-item li.content').text().trim(),
-            language: $('html').prop('lang'),
-            image: $('div.header img.img').prop('data-src')?.split(/\?/)[0] ?? undefined,
-            icon,
-            logo: icon,
-            subtitle: title.split(/-/)[0],
-            author,
-            itunes_author: author,
-            itunes_category: 'News',
-            allowEmpty: true,
-        },
-        briefColumnId: currentResponse.match(/"brief_column_id":"(\d+)",/)[1],
+        title,
+        link: currentUrl,
+        description: String(clubData?.format_desc ?? $('meta[name="description"]').prop('content') ?? ''),
+        language: $('html').prop('lang'),
+        image: clubData?.icon_path ? String(clubData.icon_path).split(/\?/)[0] : undefined,
+        icon,
+        logo: icon,
+        subtitle: String(clubData?.name ?? title.split(/-/)[0]),
+        author,
+        itunes_author: author,
+        itunes_category: 'News',
+        allowEmpty: true,
     };
 };
 
@@ -188,7 +210,7 @@ const fetchItem = async (item) => {
     const { data: detailResponse } = await got(item.link);
 
     const state = parseInitialState(detailResponse);
-    const data = state?.briefStoreModule?.brief_detail.brief ?? state?.articleDetail?.articleDetail ?? undefined;
+    const data = state?.articleDetail?.articleDetail;
 
     if (!data) {
         return item;
@@ -203,15 +225,17 @@ const fetchItem = async (item) => {
     const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
 
     item.title = data.title ?? item.title;
+    const preface = data.content_preface ?? data.preface;
+    const content = data.content;
     item.description = renderDescription({
         image: {
             src: data.pic_path,
         },
         video,
         audio,
-        preface: cleanUpHTML(data.content_preface ?? data.preface),
-        summary: data.ai_summary,
-        description: cleanUpHTML(data.content),
+        preface: preface ? cleanUpHTML(preface) : undefined,
+        summary: data.summary,
+        description: content ? cleanUpHTML(content) : undefined,
     });
     item.author = data.user_info?.username ?? item.author;
     item.category = [data.video_article_tag, data.brief_column?.name ?? undefined, data.club_info?.name ?? undefined, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(
@@ -267,16 +291,136 @@ const generateSignature = () => {
 };
 
 /**
+ * Resolves Nuxt 3 data array references recursively.
+ * Nuxt 3 uses a special array format where numbers are references to other array indices.
+ *
+ * @param {unknown[]} arr - The Nuxt data array.
+ * @param {number} index - The index to resolve.
+ * @param {Set<number>} visited - Set of visited indices to prevent infinite loops.
+ * @returns {unknown} - The resolved value.
+ */
+const resolveNuxtData = (arr: unknown[], index: number, visited: Set<number> = new Set()): unknown => {
+    if (visited.has(index)) {
+        return arr[index];
+    }
+    visited.add(index);
+
+    const item = arr[index];
+
+    // Handle ShallowReactive wrapper: ["ShallowReactive", refIndex]
+    if (Array.isArray(item) && item[0] === 'ShallowReactive' && typeof item[1] === 'number') {
+        return resolveNuxtData(arr, item[1], visited);
+    }
+
+    // Handle Reactive wrapper: ["Reactive", refIndex]
+    if (Array.isArray(item) && item[0] === 'Reactive' && typeof item[1] === 'number') {
+        return resolveNuxtData(arr, item[1], visited);
+    }
+
+    // Handle Set wrapper: ["Set"]
+    if (Array.isArray(item) && item[0] === 'Set') {
+        return new Set();
+    }
+
+    // Handle object - resolve all numeric references in values
+    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+        const resolved: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(item)) {
+            resolved[key] = typeof value === 'number' ? resolveNuxtData(arr, value, new Set(visited)) : value;
+        }
+        return resolved;
+    }
+
+    // Handle arrays that are not special wrappers
+    if (Array.isArray(item)) {
+        return item.map((value, i) => {
+            if (typeof value === 'number' && value !== i) {
+                return resolveNuxtData(arr, value, new Set(visited));
+            }
+            return value;
+        });
+    }
+
+    return item;
+};
+
+/**
  * Parses the initial state from the provided data.
+ * Supports both Nuxt 3 (__NUXT_DATA__) format for articles and
+ * window.__INITIAL_STATE__ format for briefs.
  *
  * @param {string} data - The data to parse the initial state from.
  * @returns {Object|undefined} - The parsed initial state object, or undefined if not found.
  */
-const parseInitialState = (data) => {
-    const matches = data.match(/window\.__INITIAL_STATE__=({.*?});\(function\(\)/);
-    if (matches) {
-        return JSON.parse(matches[1]);
+const parseInitialState = (data: string) => {
+    const $ = load(data);
+
+    // Try Nuxt 3 format first (for articles)
+    const nuxtDataScript = $('#__NUXT_DATA__').text();
+    if (nuxtDataScript) {
+        try {
+            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
+
+            // Find the data object which contains articleDetail
+            // The structure is: [["ShallowReactive", 1], {data: 2, ...}, ["ShallowReactive", 3], {articleDetail-xxx: 4}, ...]
+            for (const item of nuxtData) {
+                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                    const articleDetailKey = Object.keys(item).find((key) => key.startsWith('articleDetail-'));
+                    if (articleDetailKey) {
+                        const articleDetailIndex = (item as Record<string, number>)[articleDetailKey];
+                        if (typeof articleDetailIndex === 'number') {
+                            const articleData = resolveNuxtData(nuxtData, articleDetailIndex) as Record<string, unknown>;
+                            if (articleData?.articleDetail) {
+                                return { articleDetail: articleData };
+                            }
+                        }
+                    }
+                }
+            }
+        } catch {
+            // Failed to parse Nuxt data
+        }
     }
+
+    // Try window.__INITIAL_STATE__ format (for briefs)
+    const initialStateMatch = data.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});?\s*\(function\(\)/);
+    if (initialStateMatch?.[1]) {
+        try {
+            const initialState = JSON.parse(initialStateMatch[1]) as Record<string, unknown>;
+            const briefStoreModule = initialState.briefStoreModule as Record<string, unknown> | undefined;
+            const briefDetail = briefStoreModule?.brief_detail as Record<string, unknown> | undefined;
+            const brief = briefDetail?.brief as Record<string, unknown> | undefined;
+
+            if (brief) {
+                // Transform brief data to match the articleDetail structure expected by fetchItem
+                const publisherList = brief.publisher_list as Array<{ username?: string }> | undefined;
+                const briefColumn = briefDetail?.brief_column as Record<string, unknown> | undefined;
+                const clubInfo = briefDetail?.club_info as Record<string, unknown> | undefined;
+
+                return {
+                    articleDetail: {
+                        articleDetail: {
+                            title: brief.title,
+                            content: brief.content,
+                            preface: brief.preface,
+                            dateline: brief.publish_time,
+                            publish_time: brief.publish_time,
+                            audio_info: brief.audio_info,
+                            agreenum: brief.agree_num,
+                            total_comment_num: brief.total_comment_num,
+                            user_info: publisherList?.[0] ? { username: publisherList[0].username } : undefined,
+                            brief_column: briefColumn ? { name: briefColumn.name } : undefined,
+                            club_info: clubInfo ? { name: clubInfo.name } : undefined,
+                            share_info: brief.share_info,
+                        },
+                    },
+                };
+            }
+        } catch {
+            // Failed to parse initial state
+        }
+    }
+
     return;
 };
 
@@ -443,4 +587,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
+export { apiArticleRootUrl, apiClubRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
