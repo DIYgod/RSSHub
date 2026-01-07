@@ -47,6 +47,11 @@ export const route: Route = {
  */
 const UNSTABLE_VERSION_REGEX = /[-_.]?(rc|m|snapshot|alpha|beta|preview|canary)[.\d]*$/i;
 
+/**
+ * Regex to extract date in the format YYYY-MM-DD HH:mm (e.g., 2024-09-22 04:19)
+ */
+const DATE_REGEX = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
+
 async function handler(ctx) {
     const group = ctx.req.param('group');
     const artifact = ctx.req.param('artifact');
@@ -89,7 +94,7 @@ async function handler(ctx) {
             const rawText = element.nextSibling ? (element.nextSibling as any).nodeValue : '';
 
             // Date format: 2024-09-22 04:19
-            const match = rawText.match(/(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+            const match = rawText.match(DATE_REGEX);
             let pubDate: Date | undefined;
             if (match) {
                 pubDate = parseDate(match[1], 'YYYY-MM-DD HH:mm');
