@@ -2030,12 +2030,12 @@
   },
   "50forum.org.cn": {
     "_name": "经济 50 人论坛",
-    ".": [
+    "www": [
       {
         "title": "Unknown",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
-          "/home/article/index/category/zhuanjia.html",
+          "/portal/list/index.html?id=6",
           "/"
         ],
         "target": "/50forum/"
