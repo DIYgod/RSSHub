@@ -10,15 +10,13 @@ export const route: Route = {
     maintainers: ['chrisis58'],
     description: 'Get the latest versions of a Maven artifact from Maven Central Repository.',
     url: 'central.sonatype.com/',
+    categories: ['programming'],
     parameters: {
         group: {
             description: 'The group ID of the Maven artifact (e.g., org.springframework)',
         },
         artifact: {
             description: 'The artifact ID of the Maven artifact (e.g., spring-core)',
-        },
-        stableOnly: {
-            description: '(Query Param) Whether to include only stable releases. Defaults to true.',
         },
     },
     example: '/maven/central/org.springframework/spring-core',
@@ -53,8 +51,6 @@ async function handler(ctx) {
     const group = ctx.req.param('group');
     const artifact = ctx.req.param('artifact');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
-
-    const stableOnly = ctx.req.query('stableOnly') !== 'false';
 
     // (org.springframework, spring-core) -> org/springframework/spring-core
     const identifier = `${group.replaceAll('.', '/')}/${artifact}`;
@@ -99,23 +95,17 @@ async function handler(ctx) {
                 pubDate = parseDate(match[1], 'YYYY-MM-DD HH:mm');
             }
 
+            const category = UNSTABLE_VERSION_REGEX.test(version) ? 'Unstable' : 'Stable';
+
             return {
                 title: `Version ${version} of ${group}:${artifact}`,
                 link: versionUrl,
                 pubDate,
                 description: `Released version ${version} of ${group}:${artifact}.`,
-                _version: version,
+                category: [category],
             };
         })
-        .filter((item) => {
-            if (!item.pubDate) {
-                return false;
-            }
-            if (!stableOnly) {
-                return true;
-            }
-            return !UNSTABLE_VERSION_REGEX.test(item._version);
-        })
+        .filter(Boolean)
         .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
         .slice(0, limit);
 
