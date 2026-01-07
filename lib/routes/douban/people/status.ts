@@ -155,6 +155,49 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         sizeOfAuthorAvatar,
     } = params;
 
+    function prepareImages(imageUrls: Array<string | undefined>) {
+        if (!imageUrls.length) {
+            return '';
+        }
+
+        const imgTags: string[] = [];
+
+        for (const url of imageUrls) {
+            if (!url) {
+                imgTags.push('[无法显示的图片]');
+                continue;
+            }
+
+            const attributes: string[] = [];
+            const styleParts: string[] = [];
+
+            if (widthOfPics >= 0) {
+                attributes.push(`width="${widthOfPics}"`);
+                styleParts.push(`width: ${widthOfPics}px;`);
+            }
+            if (heightOfPics >= 0) {
+                attributes.push(`height="${heightOfPics}"`);
+                styleParts.push(`height: ${heightOfPics}px;`);
+            }
+
+            if (styleParts.length) {
+                attributes.push(`style="${styleParts.join(' ')}"`);
+            }
+            if (readable) {
+                attributes.push('vspace="8"', 'hspace="4"');
+            }
+
+            const imgTag = `<img ${attributes.join(' ')} src="${url}">`;
+            const wrappedImage = addLinkForPics ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${imgTag}</a>` : imgTag;
+
+            imgTags.push(wrappedImage);
+        }
+        if (readable) {
+            return imgTags.join('<br>');
+        }
+        return imgTags.join('');
+    }
+
     const { status, comments } = item;
     const { isFixSuccess, why } = tryFixStatus(status);
     if (!isFixSuccess) {
@@ -269,33 +312,11 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         picsPrefixes.push(picsPrefix);
 
+        const imageUrls: Array<string | undefined> = [];
         for (const image of status.images) {
-            if (!(image.large && image.large.url)) {
-                description += '[无法显示的图片]';
-                continue;
-            }
-
-            if (addLinkForPics) {
-                description += '<a href="' + image.large.url + '" target="_blank" rel="noopener noreferrer">';
-            }
-            if (!readable) {
-                description += '<br>';
-            }
-            let style = '';
-            description += '<img ';
-            if (widthOfPics >= 0) {
-                description += ` width="${widthOfPics}"`;
-                style += `width: ${widthOfPics}px;`;
-            }
-            if (heightOfPics >= 0) {
-                description += `height="${heightOfPics}" `;
-                style += `height: ${heightOfPics}px;`;
-            }
-            description += ` style="${style}" ` + (readable ? 'vspace="8" hspace="4" ' : '') + ' src="' + image.large.url + '">';
-            if (addLinkForPics) {
-                description += '</a>';
-            }
+            imageUrls.push(image?.large?.url);
         }
+        description += prepareImages(imageUrls);
     }
 
     if (status.video_info) {
@@ -353,33 +374,48 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
 
     // card
     if (status.card) {
-        let image;
-        if (status.card.image && (status.card.image.large || status.card.image.normal)) {
-            image = status.card.image.large || status.card.image.normal;
+        if (description) {
+            description += readable
+                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
+                : `<br>`;
+        }
+        if (!status.card.images_block && status.card.image) {
+            description += `<img src="${status.card.image.large.url}" ${readable ? 'vspace="0" hspace="12" align="left" height="75" style="height: 75px;"' : ''} />`;
         }
 
-        description += readable ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">` : `<br>`;
-        if (image) {
-            description += `<img src="${image.url}" ${readable ? 'vspace="0" hspace="12" align="left" height="75" style="height: 75px;"' : ''} />`;
+        // 直接转发 或 带文本转发
+        const isNewReshared = status.activity === '转发小组讨论' || (status.card.type === 'topic' && status.text !== '' && status.activity === '');
+        const isNewStatus = !isNewReshared && status.card.type === 'topic' && status.text === '' && status.activity === '';
+        // 覆盖sharing_url，使得RSS条目链接直接指向位于/topic/的新版动态内容
+        if (isNewStatus) {
+            status.sharing_url = status.card.url;
         }
 
-        if (!status.card.title) {
-            status.card.title = '[空]';
+        const cardContents: string[] = [];
+        if (status.card.title) {
+            let descTitle = `<strong>${status.card.title}</strong>`;
+            if (status.card.url) {
+                descTitle = `<a href="${status.card.url}" target="_blank" rel="noopener noreferrer">${descTitle}</a>`;
+            }
+            cardContents.push(descTitle);
         }
-        if (!status.card.subtitle) {
-            status.card.subtitle = '[空]';
+        if (status.card.subtitle) {
+            const prefix = isNewReshared ? `${status.card.owner_name}：` : '';
+            cardContents.push(prefix + status.card.subtitle);
         }
-        if (!status.card.url) {
-            status.card.url = 'https://www.douban.com';
-        }
-
-        description += `<a href="${status.card.url}" target="_blank" rel="noopener noreferrer"><strong>${status.card.title}</strong><br><small>${status.card.subtitle}</small>`;
         if (status.card.rating) {
-            description += `<br><small>评分：${status.card.rating.value}</small>`;
+            cardContents.push(`评分：${status.card.rating.value}`);
         }
-        description += `</a>`;
+        description += cardContents.join('<br>');
         if (readable) {
             description += `<br clear="both" /><div style="clear: both"></div></blockquote>`;
+        }
+        if (status.card.images_block) {
+            const imageUrls: Array<string | undefined> = [];
+            for (const image of status.card.images_block.images) {
+                imageUrls.push(image.image?.large?.url);
+            }
+            description += prepareImages(imageUrls);
         }
     }
 
