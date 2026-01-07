@@ -102,7 +102,7 @@
         "iconv-lite": "0.7.1",
         "imapflow": "1.2.4",
         "instagram-private-api": "1.46.1",
-        "ioredis": "5.8.2",
+        "ioredis": "5.9.0",
         "ip-regex": "5.0.0",
         "jsdom": "27.0.0",
         "json-bigint": "1.0.0",
@@ -210,7 +210,7 @@
         "wrangler": "4.54.0",
         "yaml-eslint-parser": "1.3.2"
     },
-    "packageManager": "pnpm@10.26.0+sha512.3b3f6c725ebe712506c0ab1ad4133cf86b1f4b687effce62a9b38b4d72e3954242e643190fc51fa1642949c735f403debd44f5cb0edd657abe63a8b6a7e1e402",
+    "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a",
     "engines": {
         "node": "^22.20.0 || ^24"
     },
@@ -226,10 +226,12 @@
             "puppeteer",
             "rebrowser-puppeteer",
             "rolldown",
+            "sharp",
             "sleep",
             "unrs-resolver",
             "utf-8-validate",
             "vue-demi",
+            "workerd",
             "wrangler"
         ],
         "overrides": {
