@@ -5413,6 +5413,9 @@
   "/matters/tags/:tid": [
     "Cerebrater"
   ],
+  "/maven/central/:group/:artifact": [
+    "chrisis58"
+  ],
   "/mckinsey/cn/:category?": [
     "laampui"
   ],

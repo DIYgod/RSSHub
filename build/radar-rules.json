@@ -28985,6 +28985,20 @@
       }
     ]
   },
+  "sonatype.com": {
+    "_name": "Maven",
+    "central": [
+      {
+        "title": "Maven Central Feed",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/artifact/:group/:artifact/:suffix",
+          "/artifact/:group/:artifact"
+        ],
+        "target": "/maven/maven/central/:group/:artifact"
+      }
+    ]
+  },
   "mdpi.com": {
     "_name": "MDPI",
     "www": [
