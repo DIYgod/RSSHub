@@ -105,7 +105,7 @@ async function handler(ctx) {
                 category: [category],
             };
         })
-        .filter(Boolean)
+        .filter((item) => !!item && item.pubDate !== undefined)
         .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
         .slice(0, limit);
 
