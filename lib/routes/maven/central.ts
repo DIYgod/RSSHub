@@ -9,7 +9,7 @@ export const route: Route = {
     name: 'Maven Central Feed',
     maintainers: ['chrisis58'],
     description: 'Get the latest versions of a Maven artifact from Maven Central Repository.',
-    url: 'https://central.sonatype.com/',
+    url: 'central.sonatype.com/',
     parameters: {
         group: {
             description: 'The group ID of the Maven artifact (e.g., org.springframework)',
