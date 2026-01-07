@@ -34761,6 +34761,22 @@
       }
     ]
   },
+  "nyc.gov": {
+    "_name": "New York City Government",
+    ".": [
+      {
+        "title": "Mayor's Office News",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/",
+          "/mayors-office",
+          "/mayors-office/news/",
+          "/mayors-office/news/*"
+        ],
+        "target": "/nyc/mayors-office-news/:types?/:categories?"
+      }
+    ]
+  },
   "nymity.ch": {
     "_name": "nymity",
     "censorbib": [
