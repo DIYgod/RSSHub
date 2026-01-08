@@ -107,7 +107,9 @@
   "/18comic/:category?/:time?/:order?/:keyword?": [
     "nczitzk"
   ],
-  "/18comic/search/:option?/:category?/:keyword?/:time?/:order?": [],
+  "/18comic/search/:option?/:category?/:keyword?/:time?/:order?": [
+    "nczitzk"
+  ],
   "/199it/:category{.+}?": [
     "nczitzk"
   ],
