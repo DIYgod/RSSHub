@@ -10,6 +10,14 @@ export const route: Route = {
     example: '/huxiu/member/2313050',
     categories: ['new-media'],
     parameters: { id: '用户 id，可在对应用户页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
     maintainers: ['nczitzk'],
     handler,
     description: `| TA 的文章 | TA 的 24 小时 |
