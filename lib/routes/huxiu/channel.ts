@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '资讯',
-    maintainers: ['HenryQW', 'nczitzk'],
+    maintainers: ['HenryQW', 'nczitzk', 'TimoYoung'],
     handler,
     description: `| 视频 | 前沿科技 | 车与出行 | 商业消费 | 社会文化 |
 | ---- | -------- | -------- | ---------- | -------- |

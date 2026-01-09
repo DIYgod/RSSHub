@@ -207,7 +207,14 @@ const fetchData = async (url) => {
  * @returns {Promise<Object>} The fetched item data object.
  */
 const fetchItem = async (item) => {
-    const { data: detailResponse } = await got(item.link);
+    let detailResponse: string;
+    try {
+        const response = await got(item.link);
+        detailResponse = response.data;
+    } catch {
+        // Request failed (e.g., 503, connection terminated), return original item
+        return item;
+    }
 
     const state = parseInitialState(detailResponse);
     const data = state?.articleDetail?.articleDetail;

@@ -18,7 +18,7 @@ export const route: Route = {
         supportPodcast: true,
         supportScihub: false,
     },
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'TimoYoung'],
     handler,
     description: `更多源流请参见 [源流](https://www.huxiu.com/club)`,
 };

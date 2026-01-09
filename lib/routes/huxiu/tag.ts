@@ -18,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '标签',
-    maintainers: ['xyqfer', 'HenryQW', 'nczitzk'],
+    maintainers: ['xyqfer', 'HenryQW', 'nczitzk', 'TimoYoung'],
     handler,
     description: `更多标签请参见 [标签](https://www.huxiu.com/tags)`,
 };
@@ -28,7 +28,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
     const apiUrl = new URL('/v3/tag/articleList', apiArticleRootUrl).href;
-    const currentUrl = new URL(`tags/${id}.html`, rootUrl).href;
+    const currentUrl = new URL(`tag/${id}.html`, rootUrl).href;
 
     const { data: response } = await got.post(apiUrl, {
         form: {
