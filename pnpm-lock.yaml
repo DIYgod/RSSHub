@@ -149,8 +149,8 @@ importers:
         specifier: 1.46.1
         version: 1.46.1
       ioredis:
-        specifier: 5.9.0
-        version: 5.9.0
+        specifier: 5.9.1
+        version: 5.9.1
       ip-regex:
         specifier: 5.0.0
         version: 5.0.0
@@ -4376,8 +4376,8 @@ packages:
       re2:
         optional: true
 
-  ioredis@5.9.0:
-    resolution: {integrity: sha512-T3VieIilNumOJCXI9SDgo4NnF6sZkd6XcmPi6qWtw4xqbt8nNz/ZVNiIH1L9puMTSHZh1mUWA4xKa2nWPF4NwQ==}
+  ioredis@5.9.1:
+    resolution: {integrity: sha512-BXNqFQ66oOsR82g9ajFFsR8ZKrjVvYCLyeML9IvSMAsP56XH2VXBdZjmI11p65nXXJxTEt1hie3J2QeFJVgrtQ==}
     engines: {node: '>=12.22.0'}
 
   ip-address@10.1.0:
@@ -10467,7 +10467,7 @@ snapshots:
     dependencies:
       basic-ftp: 5.0.5
       data-uri-to-buffer: 6.0.2
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -10811,7 +10811,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ioredis@5.9.0:
+  ioredis@5.9.1:
     dependencies:
       '@ioredis/commands': 1.5.0
       cluster-key-slot: 1.1.2
