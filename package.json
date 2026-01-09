@@ -201,7 +201,7 @@
         "node-network-devtools": "1.0.29",
         "prettier": "3.7.4",
         "remark-parse": "11.0.0",
-        "supertest": "7.1.4",
+        "supertest": "7.2.2",
         "tsdown": "0.18.4",
         "typescript": "5.9.3",
         "unified": "11.0.5",
