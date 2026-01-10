@@ -4,6 +4,7 @@ import { load } from 'cheerio';
 import type { DataItem } from '@/types';
 import type cache from '@/utils/cache';
 import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://sbdji.cc';
@@ -45,7 +46,9 @@ export const fetchArticle = async (url: string, cacheTryGet: typeof cache.tryGet
     const fullUrl = url.startsWith('http') ? url : `${rootUrl}${url}`;
 
     const item = await cacheTryGet(fullUrl, async () => {
-        const response = await got(fullUrl);
+        const response = await got(fullUrl, {
+            headerGeneratorOptions: PRESETS.MODERN_IOS,
+        });
         const $ = load(response.data);
 
         const content = $('.article-content').html() || '';
@@ -64,7 +67,9 @@ export const fetchNewsList = async (category: string, limit: number) => {
         url = `${rootUrl}/category/${category}`;
     }
 
-    const response = await got(url);
+    const response = await got(url, {
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
+    });
     const $ = load(response.data);
 
     const items = $('.excerpt')
