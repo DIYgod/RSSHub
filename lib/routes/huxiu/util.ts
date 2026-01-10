@@ -9,8 +9,8 @@ import { renderDescription } from './templates/description';
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;
 
-const apiArticleRootUrl = `https://api-article.${domain}`;
-const apiBriefRootUrl = `https://api-brief.${domain}`;
+const apiArticleRootUrl = `https://api-web-article.${domain}`;
+const apiClubRootUrl = `https://api-ms-web-club.${domain}`;
 const apiMemberRootUrl = `https://api-account.${domain}`;
 const apiMomentRootUrl = `https://moment-api.${domain}`;
 const apiSearchRootUrl = `https://search-api.${domain}`;
@@ -66,59 +66,13 @@ const cleanUpHTML = (data) => {
 };
 
 /**
- * Fetch brief column data for the specified ID.
+ * Fetches club data for the specified ID.
  *
- * @param {string} url - The ID of the brief column to fetch data from.
+ * @param {string} id - The ID of the club to fetch data from.
  * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
  *                            to be added into `ctx.state.data`.
  */
-const fetchBriefColumnData = async (id) => {
-    const apiBriefColumnUrl = new URL('briefColumn/detail', apiBriefRootUrl).href;
-
-    const {
-        data: { data },
-    } = await got.post(apiBriefColumnUrl, {
-        form: {
-            platform: 'www',
-            brief_column_id: id,
-        },
-    });
-
-    const currentUrl = new URL(`club/${data.club_id}.html`, rootUrl).href;
-
-    const { data: currentResponse } = await got(currentUrl);
-
-    const $ = load(currentResponse);
-
-    const subtitle = `${data.name}-${data.sub_name}`;
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
-    const author = $('meta[name="author"]').prop('content');
-
-    return {
-        title: `${subtitle}-${author}`,
-        link: currentUrl,
-        description: data.summary,
-        language: $('html').prop('lang'),
-        image: data.head_img,
-        icon,
-        logo: icon,
-        subtitle,
-        author,
-        itunes_author: author,
-        itunes_category: 'News',
-        allowEmpty: true,
-    };
-};
-
-/**
- * Fetches club data for the specified ID and the ID of the default brief column.
- *
- * @param {string} id - The ID of the club to fetch data from.
- * @returns {Promise<Object>} data - A promise that resolves to an object containing the fetched data
- *                            to be added into `ctx.state.data`.
- * @returns {string} id - the ID of the default brief column.
- */
-const fetchClubData = async (id) => {
+const fetchClubData = async (id: string) => {
     const currentUrl = new URL(`club/${id}.html`, rootUrl).href;
 
     const { data: currentResponse } = await got(currentUrl);
@@ -126,25 +80,48 @@ const fetchClubData = async (id) => {
     const $ = load(currentResponse);
 
     const title = $('title').text();
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href') ?? '', rootUrl).href;
     const author = $('meta[name="author"]').prop('content');
 
+    // Parse club data from __NUXT_DATA__
+    let clubData: Record<string, unknown> | undefined;
+
+    const nuxtDataScript = $('#__NUXT_DATA__').text();
+    if (nuxtDataScript) {
+        try {
+            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
+
+            // Find the fetchData object which contains club info
+            for (const item of nuxtData) {
+                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                    const keys = Object.keys(item);
+                    if (keys.includes('fetchData')) {
+                        const fetchDataIndex = (item as Record<string, number>).fetchData;
+                        if (typeof fetchDataIndex === 'number') {
+                            clubData = resolveNuxtData(nuxtData, fetchDataIndex) as Record<string, unknown>;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch {
+            // Failed to parse Nuxt data
+        }
+    }
+
     return {
-        data: {
-            title,
-            link: currentUrl,
-            description: $('ul.content-item li.content').text().trim(),
-            language: $('html').prop('lang'),
-            image: $('div.header img.img').prop('data-src')?.split(/\?/)[0] ?? undefined,
-            icon,
-            logo: icon,
-            subtitle: title.split(/-/)[0],
-            author,
-            itunes_author: author,
-            itunes_category: 'News',
-            allowEmpty: true,
-        },
-        briefColumnId: currentResponse.match(/"brief_column_id":"(\d+)",/)[1],
+        title,
+        link: currentUrl,
+        description: String(clubData?.format_desc ?? $('meta[name="description"]').prop('content') ?? ''),
+        language: $('html').prop('lang'),
+        image: clubData?.icon_path ? String(clubData.icon_path).split(/\?/)[0] : undefined,
+        icon,
+        logo: icon,
+        subtitle: String(clubData?.name ?? title.split(/-/)[0]),
+        author,
+        itunes_author: author,
+        itunes_category: 'News',
+        allowEmpty: true,
     };
 };
 
@@ -179,16 +156,31 @@ const fetchData = async (url) => {
 };
 
 /**
+ * Builds category array from article data.
+ *
+ * @param {Object} data - The article data.
+ * @returns {string[]} - Array of category names.
+ */
+const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
+
+/**
  * Fetches item data.
  *
  * @param {Object} item - The item to fetch data for.
  * @returns {Promise<Object>} The fetched item data object.
  */
 const fetchItem = async (item) => {
-    const { data: detailResponse } = await got(item.link);
+    let detailResponse: string;
+    try {
+        const response = await got(item.link);
+        detailResponse = response.data;
+    } catch {
+        // Request failed (e.g., 503, connection terminated), return original item
+        return item;
+    }
 
     const state = parseInitialState(detailResponse);
-    const data = state?.briefStoreModule?.brief_detail.brief ?? state?.articleDetail?.articleDetail ?? undefined;
+    const data = state?.articleDetail?.articleDetail;
 
     if (!data) {
         return item;
@@ -202,32 +194,27 @@ const fetchItem = async (item) => {
 
     const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
 
-    item.title = data.title ?? item.title;
-    item.description = renderDescription({
-        image: {
-            src: data.pic_path,
-        },
-        video,
-        audio,
-        preface: cleanUpHTML(data.content_preface ?? data.preface),
-        summary: data.ai_summary,
-        description: cleanUpHTML(data.content),
-    });
-    item.author = data.user_info?.username ?? item.author;
-    item.category = [data.video_article_tag, data.brief_column?.name ?? undefined, data.club_info?.name ?? undefined, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(
-        Boolean
-    );
-    item.pubDate = parseDate(data.dateline ?? data.publish_time, 'X');
-    item.upvote = data.agreenum ?? item.upvote;
-    item.comments = data.commentnum ?? data.total_comment_num ?? item.comments;
-
-    item.upvote = Number.parseInt(item.upvote, 10);
-    item.comments = Number.parseInt(item.comments, 10);
+    const preface = data.content_preface ?? data.preface;
+    const content = data.content;
 
     return {
         ...audioItem,
         ...videoItem,
         ...item,
+        title: data.title ?? item.title,
+        description: renderDescription({
+            image: { src: data.pic_path },
+            video,
+            audio,
+            preface: preface ? cleanUpHTML(preface) : undefined,
+            summary: data.summary,
+            description: content ? cleanUpHTML(content) : undefined,
+        }),
+        author: data.user_info?.username ?? item.author,
+        category: buildCategories(data),
+        pubDate: parseDate(data.dateline ?? data.publish_time, 'X'),
+        upvotes: Number.parseInt(data.agreenum ?? item.upvotes ?? 0, 10),
+        comments: Number.parseInt(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0, 10),
     };
 };
 
@@ -267,16 +254,136 @@ const generateSignature = () => {
 };
 
 /**
+ * Resolves Nuxt 3 data array references recursively.
+ * Nuxt 3 uses a special array format where numbers are references to other array indices.
+ *
+ * @param {unknown[]} arr - The Nuxt data array.
+ * @param {number} index - The index to resolve.
+ * @param {Set<number>} visited - Set of visited indices to prevent infinite loops.
+ * @returns {unknown} - The resolved value.
+ */
+const resolveNuxtData = (arr: unknown[], index: number, visited: Set<number> = new Set()): unknown => {
+    if (visited.has(index)) {
+        return arr[index];
+    }
+    visited.add(index);
+
+    const item = arr[index];
+
+    // Handle ShallowReactive wrapper: ["ShallowReactive", refIndex]
+    if (Array.isArray(item) && item[0] === 'ShallowReactive' && typeof item[1] === 'number') {
+        return resolveNuxtData(arr, item[1], visited);
+    }
+
+    // Handle Reactive wrapper: ["Reactive", refIndex]
+    if (Array.isArray(item) && item[0] === 'Reactive' && typeof item[1] === 'number') {
+        return resolveNuxtData(arr, item[1], visited);
+    }
+
+    // Handle Set wrapper: ["Set"]
+    if (Array.isArray(item) && item[0] === 'Set') {
+        return new Set();
+    }
+
+    // Handle object - resolve all numeric references in values
+    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+        const resolved: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(item)) {
+            resolved[key] = typeof value === 'number' ? resolveNuxtData(arr, value, new Set(visited)) : value;
+        }
+        return resolved;
+    }
+
+    // Handle arrays that are not special wrappers
+    if (Array.isArray(item)) {
+        return item.map((value, i) => {
+            if (typeof value === 'number' && value !== i) {
+                return resolveNuxtData(arr, value, new Set(visited));
+            }
+            return value;
+        });
+    }
+
+    return item;
+};
+
+/**
  * Parses the initial state from the provided data.
+ * Supports both Nuxt 3 (__NUXT_DATA__) format for articles and
+ * window.__INITIAL_STATE__ format for briefs.
  *
  * @param {string} data - The data to parse the initial state from.
  * @returns {Object|undefined} - The parsed initial state object, or undefined if not found.
  */
-const parseInitialState = (data) => {
-    const matches = data.match(/window\.__INITIAL_STATE__=({.*?});\(function\(\)/);
-    if (matches) {
-        return JSON.parse(matches[1]);
+const parseInitialState = (data: string) => {
+    const $ = load(data);
+
+    // Try Nuxt 3 format first (for articles)
+    const nuxtDataScript = $('#__NUXT_DATA__').text();
+    if (nuxtDataScript) {
+        try {
+            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
+
+            // Find the data object which contains articleDetail
+            // The structure is: [["ShallowReactive", 1], {data: 2, ...}, ["ShallowReactive", 3], {articleDetail-xxx: 4}, ...]
+            for (const item of nuxtData) {
+                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                    const articleDetailKey = Object.keys(item).find((key) => key.startsWith('articleDetail-'));
+                    if (articleDetailKey) {
+                        const articleDetailIndex = (item as Record<string, number>)[articleDetailKey];
+                        if (typeof articleDetailIndex === 'number') {
+                            const articleData = resolveNuxtData(nuxtData, articleDetailIndex) as Record<string, unknown>;
+                            if (articleData?.articleDetail) {
+                                return { articleDetail: articleData };
+                            }
+                        }
+                    }
+                }
+            }
+        } catch {
+            // Failed to parse Nuxt data
+        }
     }
+
+    // Try window.__INITIAL_STATE__ format (for briefs)
+    const initialStateMatch = data.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});?\s*\(function\(\)/);
+    if (initialStateMatch?.[1]) {
+        try {
+            const initialState = JSON.parse(initialStateMatch[1]) as Record<string, unknown>;
+            const briefStoreModule = initialState.briefStoreModule as Record<string, unknown> | undefined;
+            const briefDetail = briefStoreModule?.brief_detail as Record<string, unknown> | undefined;
+            const brief = briefDetail?.brief as Record<string, unknown> | undefined;
+
+            if (brief) {
+                // Transform brief data to match the articleDetail structure expected by fetchItem
+                const publisherList = brief.publisher_list as Array<{ username?: string }> | undefined;
+                const briefColumn = briefDetail?.brief_column as Record<string, unknown> | undefined;
+                const clubInfo = briefDetail?.club_info as Record<string, unknown> | undefined;
+
+                return {
+                    articleDetail: {
+                        articleDetail: {
+                            title: brief.title,
+                            content: brief.content,
+                            preface: brief.preface,
+                            dateline: brief.publish_time,
+                            publish_time: brief.publish_time,
+                            audio_info: brief.audio_info,
+                            agreenum: brief.agree_num,
+                            total_comment_num: brief.total_comment_num,
+                            user_info: publisherList?.[0] ? { username: publisherList[0].username } : undefined,
+                            brief_column: briefColumn ? { name: briefColumn.name } : undefined,
+                            club_info: clubInfo ? { name: clubInfo.name } : undefined,
+                            share_info: brief.share_info,
+                        },
+                    },
+                };
+            }
+        } catch {
+            // Failed to parse initial state
+        }
+    }
+
     return;
 };
 
@@ -322,6 +429,106 @@ const processAudioInfo = (info) => {
 };
 
 /**
+ * Resolves item identifiers (guid and link) based on item type.
+ *
+ * @param {Object} item - The item to resolve identifiers for.
+ * @returns {Object|null} - Object with guid and link, or null if invalid item.
+ */
+const resolveItemIdentifiers = (item): { guid: string; link: string } | null => {
+    if (item.object_type === 8) {
+        return {
+            guid: `huxiu-moment-${item.object_id}`,
+            link: item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href,
+        };
+    }
+
+    if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
+        const briefId = item.brief_id ?? item.aid;
+        return {
+            guid: `huxiu-brief-${briefId}`,
+            link: new URL(`brief/${briefId}.html`, rootUrl).href,
+        };
+    }
+
+    if (item.aid) {
+        return {
+            guid: `huxiu-article-${item.aid}`,
+            link: new URL(`article/${item.aid}.html`, rootUrl).href,
+        };
+    }
+
+    return null;
+};
+
+/**
+ * Extracts count information from item.
+ *
+ * @param {Object} item - The item to extract counts from.
+ * @returns {Object} - Object with upvotes, downvotes, and comments.
+ */
+const extractCounts = (item) => ({
+    upvotes: Number.parseInt(item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0, 10),
+    downvotes: Number.parseInt(item.count_info?.disagree ?? 0, 10),
+    comments: Number.parseInt(item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0, 10),
+});
+
+/**
+ * Extracts author from item using various possible fields.
+ *
+ * @param {Object} item - The item to extract author from.
+ * @returns {string|undefined} - The author name or undefined.
+ */
+const extractAuthor = (item) => item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author;
+
+/**
+ * Extracts image source from item.
+ *
+ * @param {Object} item - The item to extract image from.
+ * @returns {string|undefined} - The image URL or undefined.
+ */
+const extractImageSrc = (item) => item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0];
+
+/**
+ * Maps a single item to a processed item object.
+ *
+ * @param {Object} item - The raw item to process.
+ * @returns {Object|string} - The processed item or empty string if invalid.
+ */
+const mapItem = (item) => {
+    const identifiers = resolveItemIdentifiers(item);
+    if (!identifiers) {
+        return '';
+    }
+
+    const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(item.audio_info);
+
+    if (Object.keys(audioItem).length !== 0) {
+        audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;
+    }
+
+    const { processed: video, processedItem: videoItem = {} } = processVideoInfo(item.video_info);
+    const counts = extractCounts(item);
+    const timestamp = item.publish_time ?? item.dateline;
+
+    return {
+        ...audioItem,
+        ...videoItem,
+        title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
+        link: identifiers.link,
+        description: renderDescription({
+            image: { src: extractImageSrc(item) },
+            audio,
+            video,
+            summary: item.summary ?? item.content ?? item.preface,
+        }),
+        author: extractAuthor(item),
+        guid: identifiers.guid,
+        pubDate: timestamp ? parseDate(timestamp, 'X') : undefined,
+        ...counts,
+    };
+};
+
+/**
  * Process the item list and return the resulting array.
  *
  * @param {Object[]} items - The items to process.
@@ -330,71 +537,22 @@ const processAudioInfo = (info) => {
  * @returns {Promise<Object[]>} - A promise that resolves to an array of processed items.
  */
 const processItems = async (items, limit, tryGet) => {
-    items = items
-        .map((item) => {
-            let guid = '';
-            let link = '';
-
-            if (item.object_type === 8) {
-                guid = `huxiu-moment-${item.object_id}`;
-                link = item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href;
-            } else if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
-                item.brief_id = item.brief_id ?? item.aid;
-                guid = `huxiu-brief-${item.brief_id}`;
-                link = new URL(`brief/${item.brief_id}.html`, rootUrl).href;
-            } else if (item.aid) {
-                guid = `huxiu-article-${item.aid}`;
-                link = new URL(`article/${item.aid}.html`, rootUrl).href;
-            } else {
-                return '';
-            }
-
-            const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(item.audio_info);
-
-            if (Object.keys(audioItem).length !== 0) {
-                audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;
-            }
-
-            const { processed: video, processedItem: videoItem = {} } = processVideoInfo(item.video_info);
-
-            const upvotes = item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0;
-            const downvotes = item.count_info?.disagree ?? 0;
-            const comments = item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0;
-
-            return {
-                ...audioItem,
-                ...videoItem,
-                title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
-                link,
-                description: renderDescription({
-                    image: {
-                        src: item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0] ?? undefined,
-                    },
-                    audio,
-                    video,
-                    summary: item.summary ?? item.content ?? item.preface,
-                }),
-                author: item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author,
-                guid,
-                pubDate: (item.publish_time ?? item.dateline) ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
-                upvotes: Number.parseInt(upvotes, 10),
-                downvotes: Number.parseInt(downvotes, 10),
-                comments: Number.parseInt(comments, 10),
-            };
-        })
+    const processedItems = items
+        .map((item) => mapItem(item))
         .filter(Boolean)
         .slice(0, limit);
 
     return await Promise.all(
-        items.map((item) =>
+        processedItems.map((item) =>
             tryGet(item.guid, async () => {
-                if (!new RegExp(domain, 'i').test(new URL(item.link).hostname)) {
+                const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
+                const isMoment = item.guid.startsWith('huxiu-moment');
+
+                if (isExternalLink || isMoment) {
                     return item;
-                } else if (!item.guid.startsWith('huxiu-moment')) {
-                    return await fetchItem(item);
                 }
 
-                return item;
+                return await fetchItem(item);
             })
         )
     );
@@ -443,4 +601,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
+export { apiArticleRootUrl, apiClubRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
