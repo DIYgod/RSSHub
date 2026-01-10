@@ -156,6 +156,14 @@ const fetchData = async (url) => {
 };
 
 /**
+ * Builds category array from article data.
+ *
+ * @param {Object} data - The article data.
+ * @returns {string[]} - Array of category names.
+ */
+const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
+
+/**
  * Fetches item data.
  *
  * @param {Object} item - The item to fetch data for.
@@ -186,34 +194,27 @@ const fetchItem = async (item) => {
 
     const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
 
-    item.title = data.title ?? item.title;
     const preface = data.content_preface ?? data.preface;
     const content = data.content;
-    item.description = renderDescription({
-        image: {
-            src: data.pic_path,
-        },
-        video,
-        audio,
-        preface: preface ? cleanUpHTML(preface) : undefined,
-        summary: data.summary,
-        description: content ? cleanUpHTML(content) : undefined,
-    });
-    item.author = data.user_info?.username ?? item.author;
-    item.category = [data.video_article_tag, data.brief_column?.name ?? undefined, data.club_info?.name ?? undefined, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(
-        Boolean
-    );
-    item.pubDate = parseDate(data.dateline ?? data.publish_time, 'X');
-    item.upvote = data.agreenum ?? item.upvote;
-    item.comments = data.commentnum ?? data.total_comment_num ?? item.comments;
-
-    item.upvote = Number.parseInt(item.upvote, 10);
-    item.comments = Number.parseInt(item.comments, 10);
 
     return {
         ...audioItem,
         ...videoItem,
         ...item,
+        title: data.title ?? item.title,
+        description: renderDescription({
+            image: { src: data.pic_path },
+            video,
+            audio,
+            preface: preface ? cleanUpHTML(preface) : undefined,
+            summary: data.summary,
+            description: content ? cleanUpHTML(content) : undefined,
+        }),
+        author: data.user_info?.username ?? item.author,
+        category: buildCategories(data),
+        pubDate: parseDate(data.dateline ?? data.publish_time, 'X'),
+        upvotes: Number.parseInt(data.agreenum ?? item.upvotes ?? 0, 10),
+        comments: Number.parseInt(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0, 10),
     };
 };
 
@@ -428,6 +429,106 @@ const processAudioInfo = (info) => {
 };
 
 /**
+ * Resolves item identifiers (guid and link) based on item type.
+ *
+ * @param {Object} item - The item to resolve identifiers for.
+ * @returns {Object|null} - Object with guid and link, or null if invalid item.
+ */
+const resolveItemIdentifiers = (item): { guid: string; link: string } | null => {
+    if (item.object_type === 8) {
+        return {
+            guid: `huxiu-moment-${item.object_id}`,
+            link: item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href,
+        };
+    }
+
+    if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
+        const briefId = item.brief_id ?? item.aid;
+        return {
+            guid: `huxiu-brief-${briefId}`,
+            link: new URL(`brief/${briefId}.html`, rootUrl).href,
+        };
+    }
+
+    if (item.aid) {
+        return {
+            guid: `huxiu-article-${item.aid}`,
+            link: new URL(`article/${item.aid}.html`, rootUrl).href,
+        };
+    }
+
+    return null;
+};
+
+/**
+ * Extracts count information from item.
+ *
+ * @param {Object} item - The item to extract counts from.
+ * @returns {Object} - Object with upvotes, downvotes, and comments.
+ */
+const extractCounts = (item) => ({
+    upvotes: Number.parseInt(item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0, 10),
+    downvotes: Number.parseInt(item.count_info?.disagree ?? 0, 10),
+    comments: Number.parseInt(item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0, 10),
+});
+
+/**
+ * Extracts author from item using various possible fields.
+ *
+ * @param {Object} item - The item to extract author from.
+ * @returns {string|undefined} - The author name or undefined.
+ */
+const extractAuthor = (item) => item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author;
+
+/**
+ * Extracts image source from item.
+ *
+ * @param {Object} item - The item to extract image from.
+ * @returns {string|undefined} - The image URL or undefined.
+ */
+const extractImageSrc = (item) => item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0];
+
+/**
+ * Maps a single item to a processed item object.
+ *
+ * @param {Object} item - The raw item to process.
+ * @returns {Object|string} - The processed item or empty string if invalid.
+ */
+const mapItem = (item) => {
+    const identifiers = resolveItemIdentifiers(item);
+    if (!identifiers) {
+        return '';
+    }
+
+    const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(item.audio_info);
+
+    if (Object.keys(audioItem).length !== 0) {
+        audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;
+    }
+
+    const { processed: video, processedItem: videoItem = {} } = processVideoInfo(item.video_info);
+    const counts = extractCounts(item);
+    const timestamp = item.publish_time ?? item.dateline;
+
+    return {
+        ...audioItem,
+        ...videoItem,
+        title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
+        link: identifiers.link,
+        description: renderDescription({
+            image: { src: extractImageSrc(item) },
+            audio,
+            video,
+            summary: item.summary ?? item.content ?? item.preface,
+        }),
+        author: extractAuthor(item),
+        guid: identifiers.guid,
+        pubDate: timestamp ? parseDate(timestamp, 'X') : undefined,
+        ...counts,
+    };
+};
+
+/**
  * Process the item list and return the resulting array.
  *
  * @param {Object[]} items - The items to process.
@@ -436,71 +537,22 @@ const processAudioInfo = (info) => {
  * @returns {Promise<Object[]>} - A promise that resolves to an array of processed items.
  */
 const processItems = async (items, limit, tryGet) => {
-    items = items
-        .map((item) => {
-            let guid = '';
-            let link = '';
-
-            if (item.object_type === 8) {
-                guid = `huxiu-moment-${item.object_id}`;
-                link = item.url || new URL(`moment/${item.object_id}.html`, rootUrl).href;
-            } else if (item.brief_id || /huxiu\.com\/brief\//.test(item.url)) {
-                item.brief_id = item.brief_id ?? item.aid;
-                guid = `huxiu-brief-${item.brief_id}`;
-                link = new URL(`brief/${item.brief_id}.html`, rootUrl).href;
-            } else if (item.aid) {
-                guid = `huxiu-article-${item.aid}`;
-                link = new URL(`article/${item.aid}.html`, rootUrl).href;
-            } else {
-                return '';
-            }
-
-            const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(item.audio_info);
-
-            if (Object.keys(audioItem).length !== 0) {
-                audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;
-            }
-
-            const { processed: video, processedItem: videoItem = {} } = processVideoInfo(item.video_info);
-
-            const upvotes = item.count_info?.agree ?? item.count_info?.favtimes ?? item.agree_num ?? 0;
-            const downvotes = item.count_info?.disagree ?? 0;
-            const comments = item.count_info?.total_comment_num ?? item.count_info?.commentnum ?? item.total_comment_num ?? item.commentnum ?? 0;
-
-            return {
-                ...audioItem,
-                ...videoItem,
-                title: (item.title ?? item.summary ?? item.content)?.replaceAll(/<\/?(?:em|br)?>/g, ''),
-                link,
-                description: renderDescription({
-                    image: {
-                        src: item.origin_pic_path ?? item.pic_path ?? item.big_pic_path?.split(/\?/)[0] ?? undefined,
-                    },
-                    audio,
-                    video,
-                    summary: item.summary ?? item.content ?? item.preface,
-                }),
-                author: item.user_info?.username ?? item.brief_column?.name ?? item.author_info?.username ?? item.author,
-                guid,
-                pubDate: (item.publish_time ?? item.dateline) ? parseDate(item.publish_time ?? item.dateline, 'X') : undefined,
-                upvotes: Number.parseInt(upvotes, 10),
-                downvotes: Number.parseInt(downvotes, 10),
-                comments: Number.parseInt(comments, 10),
-            };
-        })
+    const processedItems = items
+        .map((item) => mapItem(item))
         .filter(Boolean)
         .slice(0, limit);
 
     return await Promise.all(
-        items.map((item) =>
+        processedItems.map((item) =>
             tryGet(item.guid, async () => {
-                if (!new RegExp(domain, 'i').test(new URL(item.link).hostname)) {
+                const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
+                const isMoment = item.guid.startsWith('huxiu-moment');
+
+                if (isExternalLink || isMoment) {
                     return item;
-                } else if (!item.guid.startsWith('huxiu-moment')) {
-                    return await fetchItem(item);
                 }
 
-                return item;
+                return await fetchItem(item);
             })
         )
     );
@@ -549,4 +601,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { apiArticleRootUrl, apiClubRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
+export { apiArticleRootUrl, apiClubRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
