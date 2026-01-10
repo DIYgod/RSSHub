@@ -1,16 +1,29 @@
-import type { CheerioAPI, Element } from 'cheerio';
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
-import type cache from '@/utils/cache';
-import got from '@/utils/got';
-import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
+import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://sbdji.cc';
 
-export const parseListItem = (item: Element): DataItem => {
-    const $: CheerioAPI = load(item);
+const puppeteerGet = (url, cache) =>
+    cache.tryGet(url, async () => {
+        const browser = await puppeteer();
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            request.resourceType() === 'document' ? request.continue() : request.abort();
+        });
+        await page.goto(url, {
+            waitUntil: 'domcontentloaded',
+        });
+        const html = await page.evaluate(() => document.documentElement.innerHTML);
+        await browser.close();
+        return html;
+    });
+
+export const parseListItem = (item: cheerio.AnyNode): DataItem => {
+    const $ = load(item);
     const title = $('h2 > a').attr('title') || $('h2 > a').text();
     const link = $('h2 > a').attr('href');
     const description = $('.note').text();
@@ -46,10 +59,8 @@ export const fetchArticle = async (url: string, cacheTryGet: typeof cache.tryGet
     const fullUrl = url.startsWith('http') ? url : `${rootUrl}${url}`;
 
     const item = await cacheTryGet(fullUrl, async () => {
-        const response = await got(fullUrl, {
-            headerGeneratorOptions: PRESETS.MODERN_IOS,
-        });
-        const $ = load(response.data);
+        const html = await puppeteerGet(fullUrl, cacheTryGet);
+        const $ = load(html);
 
         const content = $('.article-content').html() || '';
 
@@ -67,10 +78,8 @@ export const fetchNewsList = async (category: string, limit: number) => {
         url = `${rootUrl}/category/${category}`;
     }
 
-    const response = await got(url, {
-        headerGeneratorOptions: PRESETS.MODERN_IOS,
-    });
-    const $ = load(response.data);
+    const html = await puppeteerGet(url, cache.tryGet);
+    const $ = load(html);
 
     const items = $('.excerpt')
         .slice(0, limit)
