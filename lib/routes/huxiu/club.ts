@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/club/:id',
     name: '源流',
     categories: ['new-media'],
-    example: '/huxiu/club/2029',
+    example: '/huxiu/club/1161',
     parameters: { id: '源流 id，可在对应源流页 URL 中找到' },
     features: {
         requireConfig: false,
@@ -20,7 +20,7 @@ export const route: Route = {
     },
     maintainers: ['nczitzk', 'TimoYoung'],
     handler,
-    description: `更多源流请参见 [源流](https://www.huxiu.com/club)`,
+    description: '更多源流请参见 [源流](https://www.huxiu.com/club)',
 };
 
 async function handler(ctx) {

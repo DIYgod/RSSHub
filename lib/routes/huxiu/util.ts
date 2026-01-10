@@ -66,51 +66,6 @@ const cleanUpHTML = (data) => {
 };
 
 /**
- * Fetch brief column data for the specified ID.
- *
- * @param {string} url - The ID of the brief column to fetch data from.
- * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
- *                            to be added into `ctx.state.data`.
- */
-const fetchBriefColumnData = async (id) => {
-    const apiBriefColumnUrl = new URL('briefColumn/detail', apiBriefRootUrl).href;
-
-    const {
-        data: { data },
-    } = await got.post(apiBriefColumnUrl, {
-        form: {
-            platform: 'www',
-            brief_column_id: id,
-        },
-    });
-
-    const currentUrl = new URL(`club/${data.club_id}.html`, rootUrl).href;
-
-    const { data: currentResponse } = await got(currentUrl);
-
-    const $ = load(currentResponse);
-
-    const subtitle = `${data.name}-${data.sub_name}`;
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
-    const author = $('meta[name="author"]').prop('content');
-
-    return {
-        title: `${subtitle}-${author}`,
-        link: currentUrl,
-        description: data.summary,
-        language: $('html').prop('lang'),
-        image: data.head_img,
-        icon,
-        logo: icon,
-        subtitle,
-        author,
-        itunes_author: author,
-        itunes_category: 'News',
-        allowEmpty: true,
-    };
-};
-
-/**
  * Fetches club data for the specified ID.
  *
  * @param {string} id - The ID of the club to fetch data from.
