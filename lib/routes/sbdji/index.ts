@@ -63,8 +63,8 @@ ${Object.entries(categories)
         // Fetch full content for each article
         result.item = await Promise.all(
             result.item.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const article = await fetchArticle(item.link, () => Promise.resolve(item));
+                cache.tryGet(`sbdji:article:${item.link}`, async () => {
+                    const article = await fetchArticle(item.link);
                     return {
                         ...item,
                         description: article.description || item.description,

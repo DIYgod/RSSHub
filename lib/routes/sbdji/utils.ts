@@ -7,21 +7,20 @@ import puppeteer from '@/utils/puppeteer';
 
 const rootUrl = 'https://sbdji.cc';
 
-const puppeteerGet = (url, cache) =>
-    cache.tryGet(url, async () => {
-        const browser = await puppeteer();
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
-        });
-        await page.goto(url, {
-            waitUntil: 'domcontentloaded',
-        });
-        const html = await page.evaluate(() => document.documentElement.innerHTML);
-        await browser.close();
-        return html;
+const puppeteerGet = async (url: string) => {
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+    });
+    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    await browser.close();
+    return html;
+};
 
 export const parseListItem = (item: cheerio.AnyNode): DataItem => {
     const $ = load(item);
@@ -56,11 +55,11 @@ export const parseListItem = (item: cheerio.AnyNode): DataItem => {
     };
 };
 
-export const fetchArticle = async (url: string, cacheTryGet: typeof cache.tryGet) => {
+export const fetchArticle = async (url: string) => {
     const fullUrl = url.startsWith('http') ? url : `${rootUrl}${url}`;
 
-    const item = await cacheTryGet(fullUrl, async () => {
-        const html = await puppeteerGet(fullUrl, cacheTryGet);
+    const item = await cache.tryGet(`sbdji:article:${fullUrl}`, async () => {
+        const html = await puppeteerGet(fullUrl);
         const $ = load(html);
 
         const content = $('.article-content').html() || '';
@@ -79,7 +78,7 @@ export const fetchNewsList = async (category: string, limit: number) => {
         url = `${rootUrl}/category/${category}`;
     }
 
-    const html = await puppeteerGet(url, cache.tryGet);
+    const html = await puppeteerGet(url);
     const $ = load(html);
 
     const items = $('.excerpt')
