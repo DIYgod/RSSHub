@@ -46,12 +46,18 @@ function processNewsList($: CheerioInstance, $newsList: CheerioSelection, items:
         } else if ($child.hasClass('news-item') && currentDateStr) {
             const $link = $child.find('h2 a');
             const title = $link.text().trim();
-            const link = $link.attr('href') || '';
+            const link = $link.attr('href');
             const description = $child.find('p.text-muted').html() || '';
+
+            // 跳过没有有效 link 的条目
+            if (!link) {
+                return;
+            }
 
             items.push({
                 title,
                 link,
+                guid: link,
                 description,
                 pubDate: currentPubDate,
                 author: 'AI工具集',
