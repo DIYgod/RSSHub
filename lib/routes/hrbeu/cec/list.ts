@@ -45,7 +45,11 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const bigTitle = $('div.column-news-box').find('h2.column-title').text().replaceAll(/[\s·]/g, '').trim();
+    const bigTitle = $('div.column-news-box')
+        .find('h2.column-title')
+        .text()
+        .replaceAll(/[\s·]/g, '')
+        .trim();
 
     const list = $('a.column-news-item')
         .toArray()

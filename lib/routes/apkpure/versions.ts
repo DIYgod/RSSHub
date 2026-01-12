@@ -54,7 +54,13 @@ async function handler(ctx) {
                 title: ver.find('.ver-item-n').text(),
                 description: ver.html(),
                 link: `${baseUrl}${ver.find('a').attr('href')}`,
-                pubDate: parseDate(ver.find('.update-on').text().replaceAll(/年|月/g, '-').replace('日', '')),
+                pubDate: parseDate(
+                    ver
+                        .find('.update-on')
+                        .text()
+                        .replaceAll(/年|月/g, '-')
+                        .replace('日', '')
+                ),
             };
         });
 

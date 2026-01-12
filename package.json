@@ -9,12 +9,15 @@
     "bugs": {
         "url": "https://github.com/DIYgod/RSSHub/issues"
     },
+    "license": "AGPL-3.0",
+    "author": "DIYgod",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/DIYgod/RSSHub.git"
     },
-    "license": "AGPL-3.0",
-    "author": "DIYgod",
+    "files": [
+        "dist-lib"
+    ],
     "type": "module",
     "exports": {
         ".": {
@@ -22,9 +25,6 @@
             "import": "./dist-lib/pkg.mjs"
         }
     },
-    "files": [
-        "dist-lib"
-    ],
     "scripts": {
         "build": "npm run build:routes && tsdown",
         "build:docs": "npm run build:routes && tsx scripts/workflow/build-docs.ts",
@@ -38,8 +38,8 @@
         "worker-test": "npm run worker-build && vitest run lib/worker.worker.test.ts",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
-        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --write --experimental-cli",
-        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && prettier . --check --experimental-cli",
+        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && oxfmt .",
+        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && oxfmt . --check",
         "format:staged": "lint-staged",
         "lint": "eslint --cache . --concurrency auto",
         "prepare": "husky || true",
@@ -51,15 +51,6 @@
         "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
         "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
         "vitest:watch": "cross-env NODE_ENV=test vitest --watch"
-    },
-    "lint-staged": {
-        "!(*.ts|*.tsx|*.js|*.yml)": [
-            "prettier --write --ignore-unknown"
-        ],
-        "*.{ts,tsx,js,yml}": [
-            "eslint --cache --fix --concurrency auto",
-            "prettier --write --ignore-unknown"
-        ]
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
@@ -118,7 +109,7 @@
         "notion-to-md": "3.1.9",
         "oauth-1.0a": "2.2.6",
         "ofetch": "1.5.1",
-        "otplib": "12.0.1",
+        "otplib": "13.0.2",
         "p-map": "7.0.4",
         "pac-proxy-agent": "7.2.0",
         "proxy-chain": "2.7.0",
@@ -199,10 +190,10 @@
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.29",
-        "prettier": "3.7.4",
+        "oxfmt": "0.24.0",
         "remark-parse": "11.0.0",
         "supertest": "7.2.2",
-        "tsdown": "0.18.4",
+        "tsdown": "0.19.0",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.4",
@@ -210,10 +201,19 @@
         "wrangler": "4.58.0",
         "yaml-eslint-parser": "1.3.2"
     },
-    "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a",
+    "lint-staged": {
+        "!(*.ts|*.tsx|*.js|*.yml)": [
+            "oxfmt --no-error-on-unmatched-pattern"
+        ],
+        "*.{ts,tsx,js,yml}": [
+            "eslint --cache --fix --concurrency auto",
+            "oxfmt --no-error-on-unmatched-pattern"
+        ]
+    },
     "engines": {
         "node": "^22.20.0 || ^24"
     },
+    "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",

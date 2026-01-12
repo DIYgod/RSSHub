@@ -1,4 +1,4 @@
-import { authenticator } from 'otplib';
+import { generate } from 'otplib';
 import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
 import { CookieJar } from 'tough-cookie';
 
@@ -41,7 +41,7 @@ async function login({ username, password, authenticationSecret }) {
         (await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]'))?.click();
         if (authenticationSecret) {
             await page.waitForSelector('input[inputmode="numeric"]');
-            const token = authenticator.generate(authenticationSecret);
+            const token = await generate({ secret: authenticationSecret });
             await page.type('input[inputmode="numeric"]', token);
             (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
         }

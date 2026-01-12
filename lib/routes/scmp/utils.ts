@@ -37,8 +37,11 @@ export const renderHTML = (node) => {
                     ? Object.keys(node.attribs)
                           .map((key) => `${key}="${node.attribs[key]}"`)
                           .join(' ')
-                    : `url="${node.url}"` // for leading
-            }><figcaption>${node.attribs?.title ?? node.title}</figcaption></figure>`;
+                    : `url="${node.url}"`
+            }><figcaption>${
+                // for leading
+                node.attribs?.title ?? node.title
+            }</figcaption></figure>`;
         case 'em':
         case 'h3':
         case 'li':
