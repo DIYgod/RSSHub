@@ -28,24 +28,24 @@ export const route: Route = {
     handler,
     description: `| 榜单 / 集合        | 路由                          |
 | ------------------ | ----------------------------- |
-| 实时热门书影音     | subject\_real\_time\_hotest   |
-| 影院热映           | movie\_showing                |
-| 实时热门电影       | movie\_real\_time\_hotest     |
-| 实时热门电视       | tv\_real\_time\_hotest        |
-| 一周口碑电影榜     | movie\_weekly\_best           |
-| 华语口碑剧集榜     | tv\_chinese\_best\_weekly     |
-| 全球口碑剧集榜     | tv\_global\_best\_weekly      |
-| 国内口碑综艺榜     | show\_chinese\_best\_weekly   |
-| 国外口碑综艺榜     | show\_global\_best\_weekly    |
-| 热播新剧国产剧     | tv\_domestic                  |
-| 热播新剧欧美剧     | tv\_american                  |
-| 热播新剧日剧       | tv\_japanese                  |
-| 热播新剧韩剧       | tv\_korean                    |
-| 热播新剧动画       | tv\_animation                 |
-| 虚构类小说热门榜   | book\_fiction\_hot\_weekly    |
-| 非虚构类小说热门榜 | book\_nonfiction\_hot\_weekly |
-| 热门单曲榜         | music\_single                 |
-| 华语新碟榜         | music\_chinese                |
+| 实时热门书影音     | subject_real_time_hotest   |
+| 影院热映           | movie_showing                |
+| 实时热门电影       | movie_real_time_hotest     |
+| 实时热门电视       | tv_real_time_hotest        |
+| 一周口碑电影榜     | movie_weekly_best           |
+| 华语口碑剧集榜     | tv_chinese_best_weekly     |
+| 全球口碑剧集榜     | tv_global_best_weekly      |
+| 国内口碑综艺榜     | show_chinese_best_weekly   |
+| 国外口碑综艺榜     | show_global_best_weekly    |
+| 热播新剧国产剧     | tv_domestic                  |
+| 热播新剧欧美剧     | tv_american                  |
+| 热播新剧日剧       | tv_japanese                  |
+| 热播新剧韩剧       | tv_korean                    |
+| 热播新剧动画       | tv_animation                 |
+| 虚构类小说热门榜   | book_fiction_hot_weekly    |
+| 非虚构类小说热门榜 | book_nonfiction_hot_weekly |
+| 热门单曲榜         | music_single                 |
+| 华语新碟榜         | music_chinese                |
 | ...                | ...                           |
 
 | 额外参数 | 含义                   | 接受的值 | 默认值 |

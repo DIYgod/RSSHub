@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['oppilate'],
     handler,
-    description: `en\_us
+    description: `en_us
 
 | World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
 | ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |

@@ -34,6 +34,8 @@ async function handler(ctx) {
         case 'online':
             orderTitle = '人气直播';
             break;
+        default:
+            throw new Error(`Unknown order: ${order}`);
     }
 
     const nameResponse = await got({

@@ -43,6 +43,8 @@ async function handler(ctx) {
             title = '学生资讯';
             path = '1659';
             break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
     const base = 'http://ceai.njnu.edu.cn/Item/List.asp?ID=' + path;
 

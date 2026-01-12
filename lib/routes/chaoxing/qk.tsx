@@ -25,7 +25,7 @@ export const route: Route = {
     description: `::: tip
   全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
 
-  如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=\&mags=6b5c39b3dd84352be512e29df0297437\&isort=20\&from=space)，其 URL 为 \`http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437\`。\`6b5c39b3dd84352be512e29df0297437\` 即为期刊 id，所得路由为 [\`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437\`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
+  如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=&mags=6b5c39b3dd84352be512e29df0297437&isort=20&from=space)，其 URL 为 \`http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437\`。\`6b5c39b3dd84352be512e29df0297437\` 即为期刊 id，所得路由为 [\`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437\`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
 :::
 
 ::: warning

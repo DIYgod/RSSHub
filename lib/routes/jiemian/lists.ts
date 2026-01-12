@@ -87,7 +87,7 @@ export const route: Route = {
 
 | [正午](https://www.jiemian.com/lists/53.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) |
 | --------------------------------------------- | ------------------------------------------------------ |
-| 53                                            | video/lists/195\_1                                     |
+| 53                                            | video/lists/195_1                                     |
 
 #### [快报](https://www.jiemian.com/lists/4.html)
 

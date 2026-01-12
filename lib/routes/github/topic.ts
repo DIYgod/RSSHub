@@ -32,7 +32,7 @@ export const route: Route = {
 | \`o\`       | Sorting Order    | \`asc\`, \`desc\`                                                                                                                   |
 | \`s\`       | Sorting Criteria | \`stars\`, \`forks\`, \`updated\`                                                                                                     |
 
-  For instance, the \`/github/topics/framework/l=php&o=desc&s=stars\` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php\&o=desc\&s=stars).`,
+  For instance, the \`/github/topics/framework/l=php&o=desc&s=stars\` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php&o=desc&s=stars).`,
 };
 
 async function handler(ctx) {

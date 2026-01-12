@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
     description: `| 热门话题 | 科技动态 | 医疗产业 | 财经快讯           |
 | -------- | -------- | -------- | ------------------ |
-|          | news     | medical  | financial\_express |`,
+|          | news     | medical  | financial_express |`,
 };
 
 async function handler(ctx) {

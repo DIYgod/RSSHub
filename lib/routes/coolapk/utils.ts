@@ -9,7 +9,7 @@ const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问',
 
 const getRandomDEVICE_ID = () => {
     let id = [10, 6, 6, 6, 14];
-    id = id.map((i) => Math.random().toString(36).substring(2, i));
+    id = id.map((i) => Math.random().toString(36).slice(2, i));
     return id.join('-');
 };
 

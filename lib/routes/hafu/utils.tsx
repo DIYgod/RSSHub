@@ -104,7 +104,7 @@ async function ggtzParse(ctx, $) {
 
                     author = header.slice(0, index - 2) || '';
 
-                    const date = header.substring(index + 3, index + 19);
+                    const date = header.slice(index + 3, index + 19);
                     pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
                 } else {
                     const date = $(item).find('a[class=c269582_date]').text();

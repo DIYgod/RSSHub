@@ -60,6 +60,8 @@ async function handler(ctx) {
         case '3':
             nav_name = '唱片';
             break;
+        default:
+            throw new Error(`Unknown nav: ${nav}`);
     }
 
     return {

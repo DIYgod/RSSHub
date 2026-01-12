@@ -144,23 +144,23 @@ export const route: Route = {
     url: 'bse.cn/',
     description: `| 本所要闻        | 人才招聘 | 采购信息 | 业务通知   |
 | --------------- | -------- | -------- | ---------- |
-| important\_news | recruit  | purchase | news\_list |
+| important_news | recruit  | purchase | news_list |
 
 | 法律法规  | 公开征求意见    | 部门规章         | 发行融资   |
 | --------- | --------------- | ---------------- | ---------- |
-| law\_list | public\_opinion | regulation\_list | fxrz\_list |
+| law_list | public_opinion | regulation_list | fxrz_list |
 
 | 持续监管   | 交易管理   | 市场管理   | 上市委会议公告  |
 | ---------- | ---------- | ---------- | --------------- |
-| cxjg\_list | jygl\_list | scgl\_list | meeting\_notice |
+| cxjg_list | jygl_list | scgl_list | meeting_notice |
 
 | 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
 | ------------------ | ------------------ | ------------------ |
-| meeting\_result    | meeting\_change    | bgcz\_notice       |
+| meeting_result    | meeting_change    | bgcz_notice       |
 
 | 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核           | 注册结果      |
 | ---------------------- | ---------------------- | ------------------ | ------------- |
-| bgcz\_result           | bgcz\_change           | termination\_audit | audit\_result |`,
+| bgcz_result           | bgcz_change           | termination_audit | audit_result |`,
 };
 
 async function handler(ctx) {
@@ -187,7 +187,7 @@ async function handler(ctx) {
 
     let items = [];
 
-    switch (nodes[category].type) {
+    switch (type) {
         case '/info/listse':
             items = data.data.content.map((item) => ({
                 title: item.title,
@@ -205,6 +205,9 @@ async function handler(ctx) {
                 pubDate: parseDate(item.pubDate.time),
             }));
             break;
+
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     return {
