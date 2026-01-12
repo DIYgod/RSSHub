@@ -52,16 +52,40 @@ function getArg(type) {
 
 export const route: Route = {
     path: '/oa_news/:type?',
+    categories: ['university'],
+    example: '/gdut/oa_news/notice',
+    parameters: {
+        type: '可选通知类型，留空则获取所有分类',
+    },
+    feature: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['oas.gdut.edu.cn/seeyon'],
             target: '/oa_news/',
         },
     ],
-    name: '校内新闻网',
+    name: '通知公文网',
     maintainers: ['jim-kirisame', 'GamerNoTitle', 'Richard-Zheng'],
     handler,
     url: 'oas.gdut.edu.cn/seeyon',
+    description: `学校可能会因为 IP 来源非学校而做出一定的限制，建议在校内网络环境下使用 RSS 阅读器订阅。
+
+| 类型 | 参数 | 可能需要校内访问 |
+| ---- | ---- | ---------------- |
+| 部处简讯 | department | 是 |
+| 学院简讯 | academy | 是 |
+| 校内通知 | notice | 是 |
+| 公示公告 | announcement | 是 |
+| 招标结果 | tender_result | 否 |
+| 招标公告 | tender_invite | 否 |
+`,
 };
 
 async function handler(ctx) {
