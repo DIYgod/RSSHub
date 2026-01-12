@@ -1,5 +1,3 @@
-import { URL } from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
