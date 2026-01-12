@@ -4505,9 +4505,6 @@
   "/infoq/topic/:id": [
     "brilon"
   ],
-  "/informedainews/zh-Hans/docs/:type": [
-    "guicaiyue"
-  ],
   "/informs/:category?": [
     "Fatpandac"
   ],

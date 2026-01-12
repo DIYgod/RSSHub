@@ -1475,7 +1475,6 @@ export type RoutePath =
   | `/infoq/presentations/:conference?`
   | `/infoq/recommend`
   | `/infoq/topic/:id`
-  | `/informedainews/zh-Hans/docs/:type`
   | `/informs/:category?`
   | `/infzm/:id`
   | `/infzm/hot`
