@@ -185,8 +185,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       narou:
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.0.1
+        version: 2.0.1
       notion-to-md:
         specifier: 3.1.9
         version: 3.1.9
@@ -2124,12 +2124,15 @@ packages:
 
   '@otplib/plugin-crypto@12.0.1':
     resolution: {integrity: sha512-qPuhN3QrT7ZZLcLCyKOSNhuijUi9G5guMRVrxq63r9YNOxxQjPm59gVxLM+7xGnHnM6cimY57tuKsjK7y9LM1g==}
+    deprecated: Please upgrade to v13 of otplib. Refer to otplib docs for migration paths
 
   '@otplib/plugin-thirty-two@12.0.1':
     resolution: {integrity: sha512-MtT+uqRso909UkbrrYpJ6XFjj9D+x2Py7KjTO9JDPhL0bJUYVu5kFP4TFZW4NFAywrAtFRxOVY261u0qwb93gA==}
+    deprecated: Please upgrade to v13 of otplib. Refer to otplib docs for migration paths
 
   '@otplib/preset-default@12.0.1':
     resolution: {integrity: sha512-xf1v9oOJRyXfluBhMdpOkr+bsE+Irt+0D5uHtvg6x1eosfmHCsCC6ej/m7FXiWqdo0+ZUI6xSKDhJwc8yfiOPQ==}
+    deprecated: Please upgrade to v13 of otplib. Refer to otplib docs for migration paths
 
   '@otplib/preset-v11@12.0.1':
     resolution: {integrity: sha512-9hSetMI7ECqbFiKICrNa4w70deTUfArtwXykPUvSHWOdzOlfa9ajglu7mNCntlvxycTiOAXkQGwjQCzzDEMRMg==}
@@ -5020,8 +5023,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     hasBin: true
 
-  narou@2.0.0:
-    resolution: {integrity: sha512-4JXcSUUa02IlEFBGfb9I4RNIVAFAGWgPjIgvBtYrZfbGRZs5GVuob1UKpuYRL6wQGbqDUG4u5eBzhgJGZmyZ/Q==}
+  narou@2.0.1:
+    resolution: {integrity: sha512-0r4oi944Q5G8zoGLsodpfZglz8l878jlb1jbe23z8d04j7ne83NK89L3D/KPbcGfJ5q/1X31g97KT9Z2racv4Q==}
     engines: {node: '>=16.0.0', pnpm: '>=8'}
 
   natural-compare@1.4.0:
@@ -11540,7 +11543,7 @@ snapshots:
 
   napi-postinstall@0.3.4: {}
 
-  narou@2.0.0: {}
+  narou@2.0.1: {}
 
   natural-compare@1.4.0: {}
 
