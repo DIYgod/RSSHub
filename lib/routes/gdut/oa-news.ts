@@ -14,32 +14,26 @@ const typeMap = {
     department: {
         id: '-288156881891407086',
         name: '部处简讯',
-        publish: false,
     },
     academy: {
         id: '-6133000885854714423',
         name: '学院简讯',
-        publish: false,
     },
     notice: {
         id: '2945931106835317958',
         name: '校内通知',
-        publish: false,
     },
     announcement: {
         id: '906433874899913754',
         name: '公示公告',
-        publish: false,
     },
     tender_result: {
         id: '-1226046021292568614',
         name: '招标结果',
-        publish: true,
     },
     tender_invite: {
         id: '-3656117696093796045',
         name: '招标公告',
-        publish: true,
     },
 };
 
