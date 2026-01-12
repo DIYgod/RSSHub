@@ -433,17 +433,10 @@ importers:
         version: 2.4.3(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.29
-<<<<<<< HEAD
-        version: 1.0.29(undici@7.16.0)(utf-8-validate@5.0.10)
+        version: 1.0.29(undici@7.18.2)(utf-8-validate@5.0.10)
       oxfmt:
         specifier: 0.19.0
         version: 0.19.0
-=======
-        version: 1.0.29(undici@7.18.2)(utf-8-validate@5.0.10)
-      prettier:
-        specifier: 3.7.4
-        version: 3.7.4
->>>>>>> master
       remark-parse:
         specifier: 11.0.0
         version: 11.0.0
@@ -2150,7 +2143,6 @@ packages:
   '@oxc-project/types@0.107.0':
     resolution: {integrity: sha512-QFDRbYfV2LVx8tyqtyiah3jQPUj1mK2+RYwxyFWyGoys6XJnwTdlzO6rdNNHOPorHAu5Uo34oWRKcvNpbJarmQ==}
 
-<<<<<<< HEAD
   '@oxfmt/darwin-arm64@0.19.0':
     resolution: {integrity: sha512-FfNpn3ximwbBZCaS8WL2vAXcFuQFQgvv/brO6D1WdmL4pnFOgfBIpFfkeFnKfdmdpxtg9O0wF8NTcdw5Iyl2Bg==}
     cpu: [arm64]
@@ -2191,12 +2183,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@paralleldrive/cuid2@2.2.2':
-    resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
-=======
   '@paralleldrive/cuid2@2.3.1':
     resolution: {integrity: sha512-XO7cAxhnTZl0Yggq6jOgjiOHhbgcO4NqFqwSmQpjK3b6TEE6Uj/jfSk6wzYyemh3+I0sHirKSetjQwn5cZktFw==}
->>>>>>> master
 
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
@@ -8410,7 +8398,6 @@ snapshots:
 
   '@oxc-project/types@0.107.0': {}
 
-<<<<<<< HEAD
   '@oxfmt/darwin-arm64@0.19.0':
     optional: true
 
@@ -8435,10 +8422,7 @@ snapshots:
   '@oxfmt/win32-x64@0.19.0':
     optional: true
 
-  '@paralleldrive/cuid2@2.2.2':
-=======
   '@paralleldrive/cuid2@2.3.1':
->>>>>>> master
     dependencies:
       '@noble/hashes': 1.8.0
 
