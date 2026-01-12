@@ -72,7 +72,7 @@ async function handler(ctx) {
     return {
         title: newsTitle,
         link: newsLink,
-        description: '温州大学' + ' - ' + newsTitle,
+        description: `温州大学 - ${newsTitle}`,
         item: list.toArray().map(async (item) => {
             const $ = load(item);
             const $a1 = $('li>a');
