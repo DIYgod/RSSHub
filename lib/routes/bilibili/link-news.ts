@@ -34,6 +34,8 @@ async function handler(ctx) {
         case 'wh':
             productTitle = '相簿';
             break;
+        default:
+            throw new Error(`Unknown product: ${product}`);
     }
 
     const response = await got({

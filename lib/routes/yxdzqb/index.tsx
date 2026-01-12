@@ -39,7 +39,7 @@ export const route: Route = {
     url: 'yxdzqb.com/',
     description: `| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-| discount       | popular            | popular\_cn            | low            | low\_cn                |`,
+| discount       | popular            | popular_cn            | low            | low_cn                |`,
 };
 
 async function handler(ctx) {

@@ -71,9 +71,11 @@ async function handler(ctx) {
 
     const items = data.hits.map((item) => {
         const { pageURL, tags, user } = item;
+        const lastSlashIndex = pageURL.lastIndexOf('/');
+        const secondLastSlashIndex = pageURL.lastIndexOf('/', lastSlashIndex - 1);
         return {
             title: pageURL
-                .substring(pageURL.lastIndexOf('/', pageURL.lastIndexOf('/') - 1) + 1, pageURL.lastIndexOf('/'))
+                .slice(secondLastSlashIndex + 1, lastSlashIndex)
                 .replace(/(-\d+)$/, '')
                 .replaceAll('-', ' '),
             description: renderToString(<PixabayImage item={item} />),

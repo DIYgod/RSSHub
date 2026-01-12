@@ -63,6 +63,8 @@ const utils = {
             case 'en':
                 customFormat = dayjs(t, formatEnDate, true).isValid() ? formatEnDate : dayjs(t, formatEnDateTime, true).isValid() ? formatEnDateTime : undefined;
                 break;
+            default:
+            // empty
         }
 
         if (o) {

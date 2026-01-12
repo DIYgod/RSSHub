@@ -1,5 +1,3 @@
-import * as url from 'node:url';
-
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
@@ -10,7 +8,7 @@ const ProcessFeed = async (list, cache) => {
 
     const items = await Promise.all(
         list.map(async (e) => {
-            const link = url.resolve(host, e);
+            const link = new URL(e, host).href;
 
             const single = await cache.tryGet(link, async () => {
                 const response = await got.get(link);
