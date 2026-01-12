@@ -49,7 +49,7 @@ export const route: Route = {
     categories: ['university'],
     example: '/gdut/oa_news/notice',
     parameters: {
-        type: '可选通知类型，留空则获取所有分类',
+        type: '通知类型，留空则获取所有分类',
     },
     feature: {
         requireConfig: false,
@@ -114,7 +114,7 @@ async function handler(ctx) {
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
-        pubDate: timezone(parseDate(item.publishDate1), +8),
+        pubDate: timezone(parseDate(item.publishDate), +8),
         author: item.publishUserDepart,
         category: item.typeName,
     }));
