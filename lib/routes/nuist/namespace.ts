@@ -10,7 +10,7 @@ export const namespace: Namespace = {
 
 以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
 
-获得 URL 中的**分域名**和**栏目编号（可选）**：https\://\`bulletin\`.nuist.edu.cn/\`791\`/list.htm
+获得 URL 中的**分域名**和**栏目编号（可选）**：https://\`bulletin\`.nuist.edu.cn/\`791\`/list.htm
 
 将其替换到 RSS 路由地址中即可：
 

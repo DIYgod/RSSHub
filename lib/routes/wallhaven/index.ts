@@ -32,7 +32,7 @@ export const route: Route = {
     description: `::: tip
   Subscribe pages starting with \`https://wallhaven.cc/search\`, fill the text after \`?\` as \`filter\` in the route. The following is an example:
 
-  The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)
+  The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
 :::`,
 };
 

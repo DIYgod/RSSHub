@@ -127,19 +127,19 @@ export const route: Route = {
 
 | 气温距平（最近10天）                                                 | 气温距平（最近20天）                                                 | 气温距平（最近30天）                                                 | 气温距平（最近90天）                                                 | 最低气温距平（最近30天）                                           |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [glbtmeana10\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana10_) | [glbtmeana20\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana20_) | [glbtmeana30\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana30_) | [glbtmeana90\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana90_) | [glbtmina30\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmina30_) |
+| [glbtmeana10_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana10_) | [glbtmeana20_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana20_) | [glbtmeana30_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana30_) | [glbtmeana90_](https://rsshub.app/ncc-cma/cmdp/image/glbtmeana90_) | [glbtmina30_](https://rsshub.app/ncc-cma/cmdp/image/glbtmina30_) |
 
 | 最低气温距平（最近90天）                                           | 最高气温距平（最近30天）                                           | 最高气温距平（最近90天）                                           |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| [glbtmina90\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmina90_) | [glbtmaxa30\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmaxa30_) | [glbtmaxa90\_](https://rsshub.app/ncc-cma/cmdp/image/glbtmaxa90_) |
+| [glbtmina90_](https://rsshub.app/ncc-cma/cmdp/image/glbtmina90_) | [glbtmaxa30_](https://rsshub.app/ncc-cma/cmdp/image/glbtmaxa30_) | [glbtmaxa90_](https://rsshub.app/ncc-cma/cmdp/image/glbtmaxa90_) |
 
 | 降水量（最近10天）                                               | 降水量（最近20天）                                               | 降水量（最近30天）                                               | 降水量（最近90天）                                               | 降水距平百分率（最近10天）                                         |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [glbrain10\_](https://rsshub.app/ncc-cma/cmdp/image/glbrain10_) | [glbrain20\_](https://rsshub.app/ncc-cma/cmdp/image/glbrain20_) | [glbrain30\_](https://rsshub.app/ncc-cma/cmdp/image/glbrain30_) | [glbrain90\_](https://rsshub.app/ncc-cma/cmdp/image/glbrain90_) | [glbraina10\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina10_) |
+| [glbrain10_](https://rsshub.app/ncc-cma/cmdp/image/glbrain10_) | [glbrain20_](https://rsshub.app/ncc-cma/cmdp/image/glbrain20_) | [glbrain30_](https://rsshub.app/ncc-cma/cmdp/image/glbrain30_) | [glbrain90_](https://rsshub.app/ncc-cma/cmdp/image/glbrain90_) | [glbraina10_](https://rsshub.app/ncc-cma/cmdp/image/glbraina10_) |
 
 | 降水距平百分率（最近20天）                                         | 降水距平百分率（最近30天）                                         | 降水距平百分率（最近90天）                                         |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| [glbraina20\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina20_) | [glbraina30\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina30_) | [glbraina90\_](https://rsshub.app/ncc-cma/cmdp/image/glbraina90_) |
+| [glbraina20_](https://rsshub.app/ncc-cma/cmdp/image/glbraina20_) | [glbraina30_](https://rsshub.app/ncc-cma/cmdp/image/glbraina30_) | [glbraina90_](https://rsshub.app/ncc-cma/cmdp/image/glbraina90_) |
 
     `,
     categories: ['forecast'],
