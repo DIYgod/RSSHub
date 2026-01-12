@@ -10,7 +10,6 @@ import timezone from '@/utils/timezone';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {
-    // publish 表示是否公网可访问，否则需要校园网才能看到
     department: {
         id: '-288156881891407086',
         name: '部处简讯',
