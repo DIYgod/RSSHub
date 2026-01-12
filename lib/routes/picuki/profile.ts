@@ -1,14 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
+import { renderUserEmbed } from '@/routes/tiktok/templates/user';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { getPuppeteerPage } from '@/utils/puppeteer';
-import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/profile/:id/:type?/:functionalFlag?',
@@ -144,7 +142,7 @@ async function handler(ctx) {
         title: string;
         description: string;
         image: string;
-        items: {
+        items: Array<{
             title: string;
             author: string;
             renderData: {
@@ -154,12 +152,12 @@ async function handler(ctx) {
             };
             link: string;
             guid: string;
-        }[];
+        }>;
     };
 
     const items: DataItem[] = data.items.map((item) => ({
         ...item,
-        description: art(path.join(__dirname, '../tiktok/templates/user.art'), {
+        description: renderUserEmbed({
             poster: item.renderData.poster,
             source: item.renderData.source,
             useIframe,

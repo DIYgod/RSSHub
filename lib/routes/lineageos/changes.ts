@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://download.lineageos.org';
+    const baseUrl = 'https://download.lineageos.org';
     const targetUrl: string = new URL('changes', baseUrl).href;
     const apiUrl: string = new URL('api/v2/changes', baseUrl).href;
 

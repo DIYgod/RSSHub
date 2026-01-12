@@ -1,15 +1,13 @@
-import path from 'node:path';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
 import type { HasType, SearchGuildMessagesParams } from './discord-api';
 import { baseUrl, getGuild, searchGuildMessages, VALID_HAS_TYPES } from './discord-api';
+import { renderDescription } from './templates/message';
 
 export const route: Route = {
     path: '/search/:guildId/:routeParams',
@@ -82,7 +80,7 @@ async function handler(ctx) {
 
     const messages = searchResult.messages.flat().map((message) => ({
         title: message.content.split('\n')[0] || '(no content)',
-        description: art(path.join(__dirname, 'templates/message.art'), { message, guildInfo }),
+        description: renderDescription({ message, guildInfo }),
         author: message.author.global_name ?? message.author.username,
         pubDate: parseDate(message.timestamp),
         updated: message.edited_timestamp ? parseDate(message.edited_timestamp) : undefined,

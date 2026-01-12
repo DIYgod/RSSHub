@@ -1,14 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
 import locations from './locations';
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?',
@@ -278,15 +276,15 @@ async function handler(ctx) {
                         }
 
                         content(this).append(
-                            art(path.join(__dirname, 'templates/description.art'), {
+                            renderDescription({
                                 video: videos[i].match(/source: '(https:\/\/video\.zcool\.cn\/.*)'/)[1],
                             })
                         );
                     });
                 }
 
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: item.link.includes('article') ? content('.articleContentWrapper').html() : content('.workShowBox').parent().html(),
+                item.description = renderDescription({
+                    description: item.link.includes('article') ? (content('.articleContentWrapper').html() ?? undefined) : (content('.workShowBox').parent().html() ?? undefined),
                 });
 
                 return item;

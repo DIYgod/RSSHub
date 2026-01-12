@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'xwdt/gzdt' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '17', 10);
 
-    const baseUrl: string = 'https://www.samrdprc.org.cn';
+    const baseUrl = 'https://www.samrdprc.org.cn';
     const targetUrl: string = new URL(id.endsWith('/') ? id : `${id}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

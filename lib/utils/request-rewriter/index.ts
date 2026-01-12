@@ -7,11 +7,11 @@ import fetch from '@/utils/request-rewriter/fetch';
 import getWrappedGet from '@/utils/request-rewriter/get';
 
 Object.defineProperties(globalThis, {
-    fetch: { value: fetch },
-    Headers: { value: Headers },
-    FormData: { value: FormData },
-    Request: { value: Request },
-    Response: { value: Response },
+    fetch: { value: fetch, writable: true, configurable: true },
+    Headers: { value: Headers, writable: true, configurable: true },
+    FormData: { value: FormData, writable: true, configurable: true },
+    Request: { value: Request, writable: true, configurable: true },
+    Response: { value: Response, writable: true, configurable: true },
 });
 
 http.get = getWrappedGet(http.get);

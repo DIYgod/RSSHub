@@ -21,17 +21,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jlwater.com/portal/10000013', 'jlwater.com/'],
+            source: ['jlwater.com/portal/10000015', 'jlwater.com/'],
         },
     ],
     name: '南京市',
-    maintainers: ['ocleo1'],
+    maintainers: ['ocleo1', 'pseudoyu'],
     handler,
-    url: 'jlwater.com/portal/10000013',
+    url: 'jlwater.com/portal/10000015',
 };
 
 async function handler() {
-    const url = `${HOME_PAGE}portal/10000013`;
+    const url = `${HOME_PAGE}portal/10000015`;
     const response = await got(url);
 
     const data = response.data;

@@ -1,9 +1,22 @@
-import { describe, expect, it } from 'vitest';
-
-import { init, request } from './pkg';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('pkg', () => {
+    beforeEach(() => {
+        vi.resetModules();
+    });
+
+    afterEach(() => {
+        delete process.env.IS_PACKAGE;
+        delete process.env.UA;
+    });
+
+    it('requires init before request', async () => {
+        const { request } = await import('./pkg');
+        await expect(request('/test/1')).rejects.toThrow('RSSHub not initialized. Please call init() first.');
+    });
+
     it('config', async () => {
+        const { init } = await import('./pkg');
         await init({
             UA: 'mock',
         });
@@ -12,6 +25,8 @@ describe('pkg', () => {
     });
 
     it('request', async () => {
+        const { init, request } = await import('./pkg');
+        await init();
         const data = await request('/test/1');
         expect(data).toMatchObject({
             atomlink: 'http://localhost/test/1',
@@ -61,9 +76,62 @@ describe('pkg', () => {
 
     it('error', async () => {
         try {
+            const { init, request } = await import('./pkg');
+            await init();
             await request('/test/error');
         } catch (error) {
             expect(error).toBe('Error test');
         }
+    });
+
+    it('registerRoute adds custom routes and namespaces', async () => {
+        const { init, registerRoute, request } = await import('./pkg');
+        await init();
+
+        await registerRoute(
+            'custom',
+            {
+                path: '/hello',
+                name: 'Custom Hello',
+                handler: () => ({
+                    title: 'Custom',
+                    link: 'https://example.com',
+                    item: [
+                        {
+                            title: 'Entry',
+                            link: 'https://example.com/entry',
+                        },
+                    ],
+                    allowEmpty: true,
+                }),
+            },
+            {
+                name: 'Custom Namespace',
+                url: 'https://example.com',
+                lang: 'en',
+            }
+        );
+
+        const data = await request('/custom/hello');
+        expect(data.title).toBe('Custom');
+
+        const { namespaces } = await import('./registry');
+        expect(namespaces.custom?.name).toBe('Custom Namespace');
+        expect(namespaces.custom?.routes['/hello']).toBeDefined();
+    });
+
+    it('registerRoute supports handlers that return Response', async () => {
+        const { init, registerRoute } = await import('./pkg');
+        await init();
+
+        await registerRoute('custom-response', {
+            path: '/hello',
+            name: 'Custom Response',
+            handler: () => new Response('ok'),
+        });
+
+        const app = (await import('@/app')).default;
+        const response = await app.request('/custom-response/hello');
+        expect(await response.text()).toBe('ok');
     });
 });

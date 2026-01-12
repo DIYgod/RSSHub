@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category } = ctx.req.param();
@@ -32,7 +31,7 @@ export const handler = async (ctx) => {
             const src = item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -71,7 +70,7 @@ export const handler = async (ctx) => {
 
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         images: banner
                             ? [
                                   {

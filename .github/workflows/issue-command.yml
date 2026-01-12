@@ -8,7 +8,7 @@ jobs:
     rebase:
         name: Automatic Rebase
         if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
             contents: write
@@ -26,7 +26,7 @@ jobs:
     self-assign:
         name: Self Assign
         if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
             issues: write

@@ -1,9 +1,8 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { fallback, queryToFloat, queryToInteger } from '@/utils/readable-social';
-import { art } from '@/utils/render';
+
+import { renderListDescription } from '../templates/list-description';
 
 export const route: Route = {
     path: '/list/:type?/:routeParams?',
@@ -95,7 +94,7 @@ async function handler(ctx) {
             .map((item) => {
                 const title = item.title;
                 const link = item.url;
-                const description = art(path.join(__dirname, '../templates/list_description.art'), {
+                const description = renderListDescription({
                     ranking_value: item.ranking_value,
                     title,
                     original_title: item.original_title,

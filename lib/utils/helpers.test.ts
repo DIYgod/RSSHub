@@ -1,10 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
-import { getRouteNameFromPath, getSearchParamsString, parseDuration } from '@/utils/helpers';
+import { getCurrentPath, getRouteNameFromPath, getSearchParamsString, parseDuration } from '@/utils/helpers';
 
 describe('helpers', () => {
     it('getRouteNameFromPath', () => {
         expect(getRouteNameFromPath('/test/1')).toBe('test');
+        expect(getRouteNameFromPath('/')).toBeNull();
+    });
+
+    it('getCurrentPath', () => {
+        const expected = import.meta.dirname;
+        expect(getCurrentPath(import.meta.url)).toBe(expected);
     });
 
     it('getSearchParamsString', () => {
@@ -24,5 +30,13 @@ describe('helpers', () => {
         expect(parseDuration('01:01')).toBe(61);
         expect(parseDuration('00:01')).toBe(1);
         expect(parseDuration('59')).toBe(59);
+        expect(parseDuration(null)).toBeUndefined();
+        expect(parseDuration('1:xx')).toBe(60);
+        const invalid: any = {
+            trim: () => ({
+                replaceAll: () => 'NaN:1',
+            }),
+        };
+        expect(() => parseDuration(invalid)).toThrow('Invalid segment');
     });
 });

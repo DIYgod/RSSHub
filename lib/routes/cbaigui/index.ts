@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderFigure } from './templates/figure';
 import { apiSlug, GetFilterId, rootUrl } from './utils';
 
 export const route: Route = {
@@ -53,7 +51,7 @@ async function handler(ctx) {
             const height = image.prop('data-rawheight');
 
             content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+                renderFigure({
                     src,
                     width,
                     height,
@@ -70,7 +68,7 @@ async function handler(ctx) {
             const height = image.prop('height');
 
             content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+                renderFigure({
                     src,
                     width,
                     height,

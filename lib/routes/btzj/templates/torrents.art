@@ -1,5 +1,0 @@
-<table>
-{{ each torrents torrent }}
-<tr><td>{{ torrent }}</td></tr>
-{{ /each }}
-</table>

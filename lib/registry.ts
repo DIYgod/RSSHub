@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
-import { directoryImport } from 'directory-import';
 import type { Handler } from 'hono';
 import { Hono } from 'hono';
 import { routePath } from 'hono/route';
@@ -12,6 +11,8 @@ import index from '@/routes/index';
 import metrics from '@/routes/metrics';
 import robotstxt from '@/routes/robots.txt';
 import type { APIRoute, Namespace, Route } from '@/types';
+import { directoryImport } from '@/utils/directory-import';
+import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
@@ -73,7 +74,7 @@ if (config.isPackage) {
         default:
             modules = directoryImport({
                 targetDirectoryPath: path.join(__dirname, './routes'),
-                importPattern: /\.ts$/,
+                importPattern: /\.tsx?$/,
             }) as typeof modules;
     }
 }
@@ -223,13 +224,15 @@ for (const namespace in namespaces) {
         continue;
     }
 
-    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as [
-        string,
-        APIRoute & {
-            location: string;
-            module?: () => Promise<{ apiRoute: APIRoute }>;
-        },
-    ][];
+    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as Array<
+        [
+            string,
+            APIRoute & {
+                location: string;
+                module?: () => Promise<{ apiRoute: APIRoute }>;
+            },
+        ]
+    >;
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
@@ -258,7 +261,7 @@ if (config.debugInfo) {
     // Only enable tracing in debug mode
     app.get('/metrics', metrics);
 }
-if (!config.isPackage && !process.env.VERCEL_ENV) {
+if (!config.isPackage && !process.env.VERCEL_ENV && !isWorker) {
     app.use(
         '/*',
         serveStatic({

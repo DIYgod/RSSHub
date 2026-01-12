@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
 import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr } from './util';
 
 export const handler = async (ctx) => {
@@ -46,7 +44,7 @@ export const handler = async (ctx) => {
             const imgEl = el.find('img');
 
             el.replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+                renderDescription({
                     images: imgEl
                         ? [
                               {
@@ -65,7 +63,7 @@ export const handler = async (ctx) => {
 
         $$('h1').parent().remove();
 
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             images: image
                 ? [
                       {

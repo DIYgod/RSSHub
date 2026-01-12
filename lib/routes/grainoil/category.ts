@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category, id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'http://load.grainoil.com.cn';
+    const baseUrl = 'http://load.grainoil.com.cn';
     const targetUrl: string = new URL(`${category}/${id}.jspx`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

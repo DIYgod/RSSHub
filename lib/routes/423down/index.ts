@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
@@ -37,7 +36,7 @@ export const handler = async (ctx) => {
 
             const title = item.find('h2').text();
             const image = item.find('a.pic img').prop('src');
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -79,11 +78,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.meta-tit a').text();
-                const description =
-                    item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.entry').html(),
-                    });
+                const description = item.description + renderDescription({ description: $$('div.entry').html() });
 
                 item.title = title;
                 item.description = description;

@@ -1,7 +1,0 @@
-{{ i.content }}
-{{ if i.pictures }}
-    <br>
-    {{ each i.pictures p }}
-        <img src="{{ p }}">
-    {{ /each }}
-{{ /if }}

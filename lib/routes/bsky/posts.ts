@@ -1,12 +1,11 @@
-import path from 'node:path';
 import querystring from 'node:querystring';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderPost } from './templates/post';
 import { getAuthorFeed, getProfile, resolveHandle } from './utils';
 
 export const route: Route = {
@@ -59,7 +58,7 @@ async function handler(ctx) {
 
     const items = authorFeed.feed.map(({ post }) => ({
         title: post.record.text.split('\n')[0],
-        description: art(path.join(__dirname, 'templates/post.art'), {
+        description: renderPost({
             text: post.record.text.replaceAll('\n', '<br>'),
             embed: post.embed,
             // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled

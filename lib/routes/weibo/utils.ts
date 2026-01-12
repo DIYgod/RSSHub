@@ -27,7 +27,7 @@ const weiboUtils = {
     getCookies: (() => {
         const url = 'https://m.weibo.cn/';
         const coolingDownMessage = `Cooling down before new visitor Cookies from ${url} may be fetched`;
-        let coolingDown: boolean = false;
+        let coolingDown = false;
 
         return async (renew: any = false) => {
             if (config.weibo.cookies) {
@@ -91,7 +91,7 @@ const weiboUtils = {
         };
     })(),
     tryWithCookies: (() => {
-        let errors: number = 0;
+        let errors = 0;
         const verifier = (resp: any): void => {
             if (resp?.data?.ok === -100) {
                 throw new RenewWeiboCookiesError(`Cookies expired. Msg: ${resp?.data?.msg || ''} ${resp?.data?.url || ''}`);
