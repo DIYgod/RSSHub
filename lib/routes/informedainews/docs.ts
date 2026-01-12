@@ -44,7 +44,7 @@ async function handler(ctx) {
             // 找到第一个')'字符的位置
             const end = text.indexOf(')');
             // 从第一个'('到第一个')'之间的子字符串就是日期
-            const date = text.substring(start + 1, end);
+            const date = text.slice(start + 1, end);
             return {
                 title: text,
                 link: `https://informedainews.com${a.attr('href')}`,

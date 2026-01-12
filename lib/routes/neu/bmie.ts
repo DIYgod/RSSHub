@@ -84,11 +84,11 @@ async function handler(ctx) {
 
                 const info = $($('.ny_con p')[1]).text();
                 const s = info.search(/\d{4}-\d{2}-\d{2}/);
-                const date = info.substring(s, s + 10);
+                const date = info.slice(s, s + 10);
 
                 const au_start = info.indexOf('作者：') + 3;
                 const au_end = info.lastIndexOf('|');
-                const auhor = info.substring(au_start, au_end).trim();
+                const auhor = info.slice(au_start, au_end).trim();
                 $('.entry')
                     .find('span')
                     .each(function () {
