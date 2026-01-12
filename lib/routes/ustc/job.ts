@@ -56,6 +56,8 @@ async function handler(ctx) {
                     return 'get';
                 case 'Doublechoice':
                     return 'post';
+                default:
+                    throw new Error(`Unknown category: ${category}`);
             }
         })(),
 
@@ -69,6 +71,8 @@ async function handler(ctx) {
                     return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&pagesize=20&pageindex=1&action=bookinglist2&kind=2`;
                 case 'joblist2':
                     return `${apiRootUrl}/API/Web/index10358.ashx?action=joblist2&pagesize=50&pageindex=1&rand=${rand}&keyword=`;
+                default:
+                    throw new Error(`Unknown category: ${category}`);
             }
         })(),
 
@@ -85,6 +89,8 @@ async function handler(ctx) {
                         action: 'recruitlist',
                         rand,
                     };
+                default:
+                    throw new Error(`Unknown category: ${category}`);
             }
         })(),
 
@@ -135,6 +141,8 @@ async function handler(ctx) {
                                 return 'get';
                             case 'Doublechoice':
                                 return 'post';
+                            default:
+                                throw new Error(`Unknown category: ${category}`);
                         }
                     })(),
 
@@ -148,6 +156,8 @@ async function handler(ctx) {
                                 return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=binfo&rid=${item.title}&rand=${rand}`;
                             case 'joblist2':
                                 return `${apiRootUrl}/API/Web/index10358.ashx?rd=${rand}&action=jobinfo2&jid=${item.title}&rand=${rand}`;
+                            default:
+                                throw new Error(`Unknown category: ${category}`);
                         }
                     })(),
 
@@ -165,6 +175,8 @@ async function handler(ctx) {
                                     rid: item.ID,
                                     rand,
                                 };
+                            default:
+                                throw new Error(`Unknown category: ${category}`);
                         }
                     })(),
 
@@ -180,6 +192,8 @@ async function handler(ctx) {
                             return item.title;
                         case 'joblist2':
                             return detailResponse.data.JobName;
+                        default:
+                            throw new Error(`Unknown category: ${category}`);
                     }
                 })();
 
@@ -207,6 +221,8 @@ async function handler(ctx) {
 
                         case 'joblist2':
                             return detailResponse.data.PostionDesc;
+                        default:
+                            throw new Error(`Unknown category: ${category}`);
                     }
                 })();
 

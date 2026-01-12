@@ -201,6 +201,9 @@ async function handler(ctx) {
                 description: `${item.buyable_lowest_plan.description ? `<p>${item.buyable_lowest_plan.description}</p>` : ''}<img src="${item.thumb ? item.thumb.main : item.thumb_micro}">`,
             }));
             break;
+
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     return {

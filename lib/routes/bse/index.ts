@@ -187,7 +187,7 @@ async function handler(ctx) {
 
     let items = [];
 
-    switch (nodes[category].type) {
+    switch (type) {
         case '/info/listse':
             items = data.data.content.map((item) => ({
                 title: item.title,
@@ -205,6 +205,9 @@ async function handler(ctx) {
                 pubDate: parseDate(item.pubDate.time),
             }));
             break;
+
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     return {

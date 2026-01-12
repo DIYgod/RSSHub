@@ -42,6 +42,9 @@ async function handler(ctx) {
         case 'xstz':
             title = '学生通知';
             path = 'xstz.htm';
+            break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
     const base = 'http://jwc.njnu.edu.cn/index/' + path;
 
