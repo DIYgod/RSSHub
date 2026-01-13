@@ -45,18 +45,12 @@ async function handler(ctx) {
         form: {
             requestParamStr: '{"pageSize":7,"pageNumber":1}',
         },
-        https: {
-            rejectUnauthorized: false,
-        },
     });
 
     const menuid = getTzgg.data.data.find((item) => item.menutitle === arr[subpath]).menuid;
     const { data } = await got.post(`${baseUrl}/xsfw/sys/jyxtgktapp/modules/jywzManage/getMhcxWzData.do`, {
         form: {
             requestParamStr: `{"pageSize":4,"pageNumber":1,"LMDM":${menuid}}`,
-        },
-        https: {
-            rejectUnauthorized: false,
         },
     });
     const list = data.data.map((item) => ({
@@ -74,18 +68,11 @@ async function handler(ctx) {
                     form: {
                         requestParamStr: `{"WID":${item.guid}}`,
                     },
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
 
                 let attachments = '';
                 if (response.data.data[0].FJ) {
-                    const attachmentData = await got(`${baseUrl}/xsfw/sys/emapcomponent/file/getUploadedAttachment.do?fileToken=${response.data.data[0].FJ}`, {
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const attachmentData = await got(`${baseUrl}/xsfw/sys/emapcomponent/file/getUploadedAttachment.do?fileToken=${response.data.data[0].FJ}`);
                     attachments = renderToString(<XjtuAttachments items={attachmentData.data.items} />);
                 }
 

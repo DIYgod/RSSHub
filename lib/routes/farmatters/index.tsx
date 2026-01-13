@@ -65,9 +65,6 @@ async function handler(ctx) {
 
     const { data: response } = await got(apiUrl, {
         searchParams,
-        https: {
-            rejectUnauthorized: false,
-        },
     });
 
     const items = response.data.list.slice(0, limit).map((item) => ({
@@ -89,11 +86,7 @@ async function handler(ctx) {
         pubDate: timezone(parseDate(item.createdAt), +8),
     }));
 
-    const { data: currentResponse } = await got(currentUrl, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const { data: currentResponse } = await got(currentUrl);
 
     const $ = load(currentResponse);
 

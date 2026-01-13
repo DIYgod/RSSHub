@@ -32,11 +32,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.nsfc.gov.cn';
     const currentUrl = new URL((/\/more$/.test(thePath) ? `${thePath}.htm` : thePath) || 'publish/portal0/tab442/', rootUrl).href;
 
-    const { data: response } = await got(currentUrl, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const { data: response } = await got(currentUrl);
 
     const $ = load(response);
 
@@ -57,11 +53,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link, {
-                    https: {
-                        rejectUnauthorized: false,
-                    },
-                });
+                const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
 

@@ -16,7 +16,6 @@ const loadDetail = async (link) => {
         form: {
             interfaceUrl: link,
         },
-        https: { rejectUnauthorized: false },
     });
 
     return JSON.parse(response.data);
@@ -120,7 +119,6 @@ async function handler(ctx) {
         form: {
             interfaceUrl: `${host}/${type}.json?page=0`,
         },
-        https: { rejectUnauthorized: false },
     });
 
     const list = JSON.parse(response.data).map((item) => ({

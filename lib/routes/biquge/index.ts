@@ -42,13 +42,8 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const response = await got(currentUrl, {
         responseType: 'buffer',
-        https: {
-            rejectUnauthorized: false,
-        },
     });
 
     const isGBK = /charset="?'?gb/i.test(response.data.toString());
@@ -86,13 +81,8 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
+                const detailResponse = await got(item.link, {
                     responseType: 'buffer',
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
 
                 const content = load(iconv.decode(detailResponse.data, encoding));

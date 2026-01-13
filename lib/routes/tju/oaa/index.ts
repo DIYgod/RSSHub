@@ -112,7 +112,7 @@ async function handler(ctx) {
                         return cache.tryGet(item.link, async () => {
                             let detailResponse = null;
                             try {
-                                detailResponse = await got(item.link, { https: { rejectUnauthorized: false } });
+                                detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.description = content('.v_news_content').html();
                             } catch {

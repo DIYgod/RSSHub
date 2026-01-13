@@ -9,11 +9,7 @@ import got from '@/utils/got'; // 自订的 got
  * @returns {Promise<string|string>} 页面内容，为符合RSS规范的HTML
  */
 async function getPageItem(selector, pageUrl) {
-    const response = await got({
-        method: 'get',
-        url: pageUrl,
-        https: { rejectUnauthorized: false },
-    });
+    const response = await got(pageUrl);
     const $ = load(response.data);
     const page = $(selector);
     return page ? page.html() : '无法获取内容';
@@ -29,11 +25,7 @@ async function getPageItem(selector, pageUrl) {
  * @returns {Promise<{date, pageInfo: string, title: (*|jQuery|string)}|{date: string, pageInfo: string, title: string}>} 页面内容、标题、日期
  */
 async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, dateHander = (date) => date) {
-    const response = await got({
-        method: 'get',
-        url: pageUrl,
-        https: { rejectUnauthorized: false },
-    });
+    const response = await got(pageUrl);
     const $ = load(response.data);
     const page = $(selector);
     const date = dateHander($(dateSelector).text());

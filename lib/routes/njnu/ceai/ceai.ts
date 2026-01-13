@@ -48,13 +48,7 @@ async function handler(ctx) {
     }
     const base = 'http://ceai.njnu.edu.cn/Item/List.asp?ID=' + path;
 
-    const response = await got({
-        method: 'get',
-        url: base,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(base);
 
     const $ = load(response.data);
 
