@@ -31,11 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const base = utils.langBase(ctx.req.param('lang'));
     const url = `${base}/archive.php`;
-    const res = await got.get(url, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const res = await got(url);
     const info = utils.fetchAllCharacters(res.data, base);
 
     return {

@@ -52,11 +52,7 @@ const authorDetail = (el) => {
 
 const detailPage = (link, cache) =>
     cache.tryGet(link, async () => {
-        const result = await got(link, {
-            https: {
-                rejectUnauthorized: false,
-            },
-        });
+        const result = await got(link);
         const $ = load(result.data);
         const title = $('.row .panel-heading h2').text().trim(); // Get first title
         const desc = $('.character-description p').text().trim();

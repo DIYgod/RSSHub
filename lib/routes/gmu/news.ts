@@ -66,11 +66,7 @@ export async function handler(ctx: Context) {
     const baseUrl = 'https://gmu.cn';
     const link = `${baseUrl}${newsType.url}`;
 
-    const response = await got(link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
 
     const $ = load(response.data);
     const list = $('.list ul li');
@@ -97,11 +93,7 @@ export async function handler(ctx: Context) {
             // Use cache.tryGet to cache the article content
             return await cache.tryGet(`gmu:news:${fullLink}`, async () => {
                 try {
-                    const contentResponse = await got(fullLink, {
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const contentResponse = await got(fullLink);
                     const content = load(contentResponse.data);
 
                     // 获取新闻内容

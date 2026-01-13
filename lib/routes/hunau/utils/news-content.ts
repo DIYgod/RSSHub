@@ -7,11 +7,7 @@ import timezone from '@/utils/timezone';
 async function newsContent(link, department = '') {
     try {
         // 异步请求文章
-        const { data: response } = await got(link, {
-            https: {
-                rejectUnauthorized: false,
-            },
-        });
+        const { data: response } = await got(link);
         // 加载文章内容
         const $ = load(response);
         let reg = /\d{4}(?:\/\d{2}){2}/;
