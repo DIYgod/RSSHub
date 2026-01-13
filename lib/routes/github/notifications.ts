@@ -58,8 +58,6 @@ async function handler(ctx) {
         };
     });
 
-    const allowEmpty = items.length === 0;
-
     ctx.set('json', {
         title: 'Github Notifications',
         item: notifications,
@@ -76,6 +74,6 @@ async function handler(ctx) {
         title: 'Github Notifications',
         link: 'https://github.com/notifications',
         item: items,
-        allowEmpty,
+        allowEmpty: true,
     };
 }
