@@ -23,7 +23,7 @@ export const route: Route = {
     handler,
     description: `| 交易通知     | 政策规定             | 业务通知          |
 | ------------ | -------------------- | ----------------- |
-| zonghezixun3 | zhengceguiding\_list | yewutongzhi\_list |`,
+| zonghezixun3 | zhengceguiding_list | yewutongzhi_list |`,
 };
 
 async function handler(ctx) {

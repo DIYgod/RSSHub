@@ -1,5 +1,3 @@
-import * as url from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -78,7 +76,7 @@ async function handler(ctx) {
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
-                link: url.resolve(rootUrl, title.attr('href')),
+                link: new URL(title.attr('href'), rootUrl).href,
                 pubDate: date.toUTCString(),
             };
         });

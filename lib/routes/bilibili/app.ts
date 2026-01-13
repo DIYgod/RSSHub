@@ -27,7 +27,7 @@ export const route: Route = {
     handler,
     description: `| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版            |
 | ------- | --------- | ---------- | ------ | ---------------- |
-| android | iphone    | ipad       | win    | android\_tv\_yst |`,
+| android | iphone    | ipad       | win    | android_tv_yst |`,
 };
 
 async function handler(ctx) {

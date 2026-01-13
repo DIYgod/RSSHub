@@ -20,7 +20,7 @@ export const route: Route = {
     name: 'Software',
     maintainers: ['JimenezLi'],
     handler,
-    description: `For some URL like [https://sourceforge.net/directory/artificial-intelligence/windows/](https://sourceforge.net/directory/artificial-intelligence/windows/), it is equal to [https://sourceforge.net/directory/?topic=artificial-intelligence\&os=windows"](https://sourceforge.net/directory/?topic=artificial-intelligence\&os=windows), thus subscribing to \`/sourceforge/topic=artificial-intelligence&os=windows\`.
+    description: `For some URL like [https://sourceforge.net/directory/artificial-intelligence/windows/](https://sourceforge.net/directory/artificial-intelligence/windows/), it is equal to [https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows"](https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows), thus subscribing to \`/sourceforge/topic=artificial-intelligence&os=windows\`.
 
   URL params can duplicate, such as \`/sourceforge/topic=artificial-intelligence&os=windows&os=linux\`.`,
 };

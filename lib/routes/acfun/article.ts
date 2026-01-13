@@ -11,27 +11,27 @@ const baseUrl = 'https://www.acfun.cn';
 const categoryMap = {
     184: {
         title: '二次元画师',
-        realmId: 'realmId=18' + '&realmId=14' + '&realmId=51',
+        realmId: 'realmId=18&realmId=14&realmId=51',
     },
     110: {
         title: '综合',
-        realmId: 'realmId=5' + '&realmId=22' + '&realmId=28' + '&realmId=3' + '&realmId=4',
+        realmId: 'realmId=5&realmId=22&realmId=28&realmId=3&realmId=4',
     },
     73: {
         title: '生活情感',
-        realmId: 'realmId=50' + '&realmId=25' + '&realmId=34' + '&realmId=7' + '&realmId=6' + '&realmId=17' + '&realmId=1' + '&realmId=2' + '&realmId=49',
+        realmId: 'realmId=50&realmId=25&realmId=34&realmId=7&realmId=6&realmId=17&realmId=1&realmId=2&realmId=49',
     },
     164: {
         title: '游戏',
-        realmId: 'realmId=8' + '&realmId=53' + '&realmId=52' + '&realmId=11' + '&realmId=43' + '&realmId=44' + '&realmId=45' + '&realmId=46' + '&realmId=47',
+        realmId: 'realmId=8&realmId=53&realmId=52&realmId=11&realmId=43&realmId=44&realmId=45&realmId=46&realmId=47',
     },
     74: {
         title: '动漫文化',
-        realmId: 'realmId=13' + '&realmId=31' + '&realmId=48',
+        realmId: 'realmId=13&realmId=31&realmId=48',
     },
     75: {
         title: '漫画文学',
-        realmId: 'realmId=15' + '&realmId=23' + '&realmId=16',
+        realmId: 'realmId=15&realmId=23&realmId=16',
     },
 };
 const sortTypeEnum = new Set(['createTime', 'lastCommentTime', 'hotScore']);
@@ -106,13 +106,7 @@ async function handler(ctx) {
 
     const url = `${baseUrl}/v/list${categoryId}/index.htm`;
     const response = await got.post(
-        `${baseUrl}/rest/pc-direct/article/feed` +
-            '?cursor=first_page' +
-            '&onlyOriginal=false' +
-            '&limit=10' +
-            `&sortType=${sortType}` +
-            `&timeRange=${sortType === 'hotScore' ? timeRange : 'all'}` +
-            `&${categoryMap[categoryId].realmId}`,
+        `${baseUrl}/rest/pc-direct/article/feed?cursor=first_page&onlyOriginal=false&limit=10&sortType=${sortType}&timeRange=${sortType === 'hotScore' ? timeRange : 'all'}&${categoryMap[categoryId].realmId}`,
         {
             headers: {
                 referer: url,

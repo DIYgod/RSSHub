@@ -117,6 +117,9 @@ async function handler(ctx) {
             break;
         case 'intcreditcard':
             bankname = '境外信用卡';
+            break;
+        default:
+            throw new Error(`Unknown bank: ${bank}`);
     }
 
     const response = await got.get(target, {
