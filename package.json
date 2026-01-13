@@ -109,7 +109,7 @@
         "notion-to-md": "3.1.9",
         "oauth-1.0a": "2.2.6",
         "ofetch": "1.5.1",
-        "otplib": "13.0.2",
+        "otplib": "13.1.0",
         "p-map": "7.0.4",
         "pac-proxy-agent": "7.2.0",
         "proxy-chain": "2.7.0",
@@ -167,8 +167,8 @@
         "@types/node": "25.0.7",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
-        "@typescript-eslint/eslint-plugin": "8.52.0",
-        "@typescript-eslint/parser": "8.52.0",
+        "@typescript-eslint/eslint-plugin": "8.53.0",
+        "@typescript-eslint/parser": "8.53.0",
         "@vercel/nft": "1.2.0",
         "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.37",
@@ -213,7 +213,7 @@
     "engines": {
         "node": "^22.20.0 || ^24"
     },
-    "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a",
+    "packageManager": "pnpm@10.28.0",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",
