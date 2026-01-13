@@ -10,80 +10,75 @@ import timezone from '@/utils/timezone';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {
-    news: {
-        id: '-4899485396563308862',
-        name: '校内简讯',
-        publish: false,
+    department: {
+        id: '-288156881891407086',
+        name: '部处简讯',
+    },
+    academy: {
+        id: '-6133000885854714423',
+        name: '学院简讯',
     },
     notice: {
-        id: '5854888065150372255',
+        id: '2945931106835317958',
         name: '校内通知',
-        publish: false,
     },
     announcement: {
-        id: '5821359576359193913',
+        id: '906433874899913754',
         name: '公示公告',
-        publish: false,
     },
     tender_result: {
         id: '-1226046021292568614',
         name: '招标结果',
-        publish: true,
     },
     tender_invite: {
         id: '-3656117696093796045',
         name: '招标公告',
-        publish: true,
     },
 };
 
 function getArg(type) {
-    return type.publish
-        ? JSON.stringify([
-              {
-                  pageSize: '20',
-                  pageNo: 1,
-                  listType: '1',
-                  spaceType: '',
-                  spaceId: '',
-                  typeId: type.id,
-                  condition: 'publishDepartment',
-                  textfield1: '',
-                  textfield2: '',
-                  myNews: '',
-              },
-          ])
-        : JSON.stringify([
-              {
-                  pageSize: '20',
-                  pageNo: 1,
-                  listType: '1',
-                  spaceType: '2',
-                  spaceId: '',
-                  typeId: '',
-                  condition: 'publishDepartment',
-                  textfield1: '',
-                  textfield2: '',
-                  myNews: '',
-                  fragmentId: type.id,
-                  ordinal: '0',
-                  panelValue: 'designated_value',
-              },
-          ]);
+    return JSON.stringify([
+        { page: 1, size: 50 },
+        { subject: '', departmentName: '', newsType: type ? type.id : '', startDate: '', endDate: '', canLogin: 'true' },
+    ]);
 }
 
 export const route: Route = {
     path: '/oa_news/:type?',
+    categories: ['university'],
+    example: '/gdut/oa_news/notice',
+    parameters: {
+        type: '通知类型，留空则获取所有分类',
+    },
+    feature: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['oas.gdut.edu.cn/seeyon'],
             target: '/oa_news/',
         },
     ],
-    name: 'Unknown',
-    maintainers: ['jim-kirisame'],
+    name: '通知公文网',
+    maintainers: ['jim-kirisame', 'GamerNoTitle', 'Richard-Zheng'],
     handler,
     url: 'oas.gdut.edu.cn/seeyon',
+    description: `学校可能会因为 IP 来源非学校而做出一定的限制，建议在校内网络环境下使用 RSS 阅读器订阅。
+
+| 类型 | 参数 | 可能需要校内访问 |
+| ---- | ---- | ---------------- |
+| 部处简讯 | department | 是 |
+| 学院简讯 | academy | 是 |
+| 校内通知 | notice | 是 |
+| 公示公告 | announcement | 是 |
+| 招标结果 | tender_result | 否 |
+| 招标公告 | tender_invite | 否 |
+`,
 };
 
 async function handler(ctx) {
@@ -96,30 +91,29 @@ async function handler(ctx) {
 
     // 获取cookie
     const cookieJar = new CookieJar();
-    await got(site + '/main.do', {
+    await got(site + '/ggIP.do?method=portalSeachMore&subject=&departmentName=&newsType=&startDate=&endDate=', {
         cookieJar,
     });
 
     // 获取文章列表
-    const listUrl = '/ajax.do?method=ajaxAction&managerName=newsDataManager';
+    const listUrl = '/ajax.do?method=ajaxAction&managerName=ggManager&rnd=1';
     const resp = await got.post(site + listUrl, {
         cookieJar,
         form: {
-            managerMethod: 'findListDatas',
+            managerMethod: 'kkFindListDatas',
             arguments: getArg(type),
         },
     });
-
-    if (!resp.data.list) {
-        throw new Error('文章列表获取失败，可能是被临时限制了访问，请稍后重试');
+    if (!resp.data.data) {
+        throw new Error('文章列表获取失败，可能是被临时限制了访问，请稍后重试\n' + JSON.stringify(resp.data));
     }
 
     // 构造文章数组
-    const articles = resp.data.list.map((item) => ({
+    const articles = resp.data.data.map((item) => ({
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
-        pubDate: timezone(parseDate(item.publishDate1), +8),
+        pubDate: timezone(parseDate(item.publishDate), +8),
         author: item.publishUserDepart,
         category: item.typeName,
     }));
@@ -215,9 +209,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `广东工业大学新闻通知网 - ` + type.name,
+        title: `广东工业大学通知公文网 - ` + type.name,
         link: site,
-        description: `广东工业大学新闻通知网`,
+        description: `广东工业大学通知公文网`,
         item: results,
     };
 }
