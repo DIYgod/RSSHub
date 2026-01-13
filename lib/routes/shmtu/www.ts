@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 const host = 'https://www.shmtu.edu.cn';
 
 async function loadContent(link) {
-    const response = await got.get(link, { https: { rejectUnauthorized: false } });
+    const response = await got(link);
     const $ = load(response.data);
 
     return $('article').html();
@@ -59,7 +59,6 @@ async function handler(ctx) {
         headers: {
             Referer: host,
         },
-        https: { rejectUnauthorized: false },
     });
 
     const $ = load(response.data);

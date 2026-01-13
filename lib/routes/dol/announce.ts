@@ -66,11 +66,7 @@ async function handler(ctx) {
 
     result.link = `${baseUrl}/index.php?${new URLSearchParams(queryParams).toString()}`;
 
-    const { data: response } = await got(result.link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const { data: response } = await got(result.link);
     const $ = load(response);
 
     result.item = $('div#div table tbody tr:not([class])')

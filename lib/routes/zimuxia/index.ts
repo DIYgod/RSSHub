@@ -30,14 +30,9 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.zimuxia.cn';
     const currentUrl = `${rootUrl}/我们的作品`;
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const response = await got(currentUrl, {
         searchParams: {
             cat: category ?? undefined,
-        },
-        https: {
-            rejectUnauthorized: false,
         },
     });
 
@@ -57,13 +52,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                    https: {
-                        rejectUnauthorized: false,
-                    },
-                });
+                const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 const links = detailResponse.data.match(/<a href="magnet:(.*?)" target="_blank">磁力下载<\/a>/g);
