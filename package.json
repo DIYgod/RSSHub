@@ -145,7 +145,7 @@
         "@babel/preset-typescript": "7.28.5",
         "@bbob/types": "4.3.1",
         "@cloudflare/puppeteer": "1.0.4",
-        "@cloudflare/workers-types": "4.20260113.0",
+        "@cloudflare/workers-types": "4.20260114.0",
         "@eslint/eslintrc": "3.3.3",
         "@eslint/js": "9.39.2",
         "@microsoft/eslint-formatter-sarif": "3.1.0",
