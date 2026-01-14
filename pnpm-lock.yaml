@@ -206,8 +206,8 @@ importers:
         specifier: 7.2.0
         version: 7.2.0
       proxy-chain:
-        specifier: 2.7.0
-        version: 2.7.0
+        specifier: 2.7.1
+        version: 2.7.1
       puppeteer-real-browser:
         specifier: 1.4.4
         version: 1.4.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -5475,8 +5475,8 @@ packages:
     resolution: {integrity: sha512-TmatMXdr2KlRiA2CyDu8GqR8EjahTG3aY3nXjdzFyoZbmB8hrBsTyMezhULIXKnC0jpfjlmiZ3+EaCzoInSu/A==}
     engines: {node: '>= 14'}
 
-  proxy-chain@2.7.0:
-    resolution: {integrity: sha512-1zAxsRfcgmaIwg8rV22AAjee+WDJYekbUSLDmYNUjkOmedQCXZ9hlITi1JrRERvoZIYiU7vayRlB3kLoWbNyMg==}
+  proxy-chain@2.7.1:
+    resolution: {integrity: sha512-LtXu0miohJYrHWJxv8wA6EoGreRcX1hxKb7qlE1pMFH+BXE7bqMvpyhzR/JvR6M5SzYKzyHFpvfmYJrZeMtwAg==}
     engines: {node: '>=14'}
 
   proxy-from-env@1.1.0:
@@ -12174,7 +12174,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  proxy-chain@2.7.0:
+  proxy-chain@2.7.1:
     dependencies:
       socks: 2.8.7
       socks-proxy-agent: 8.0.5
