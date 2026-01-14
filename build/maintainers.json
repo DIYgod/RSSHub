@@ -5067,6 +5067,9 @@
   "/lala/": [
     "cnkmmk"
   ],
+  "/lancedb/blog/:category?": [
+    "HUSTERGS"
+  ],
   "/landiannews/category/:slug": [
     "cscnk52"
   ],

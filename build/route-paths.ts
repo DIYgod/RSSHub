@@ -1661,6 +1661,7 @@ export type RoutePath =
   | `/kyodonews/:language?/:keyword?`
   | `/laimanhua/:id`
   | `/lala/`
+  | `/lancedb/blog/:category?`
   | `/landiannews/`
   | `/landiannews/category/:slug`
   | `/landiannews/tag/:slug`

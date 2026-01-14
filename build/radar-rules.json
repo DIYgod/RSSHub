@@ -27751,6 +27751,20 @@
       }
     ]
   },
+  "lancedb.com": {
+    "_name": "LanceDB",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/blog",
+          "/blog/category/:category"
+        ],
+        "target": "/lancedb/blog/:category"
+      }
+    ]
+  },
   "landiannews.com": {
     "_name": "蓝点网",
     "www": [
