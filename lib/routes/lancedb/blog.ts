@@ -49,7 +49,7 @@ export const route: Route = {
     maintainers: ['HUSTERGS'],
     example: '/lancedb/blog',
     parameters: {
-        category: 'Optional category, e.g. engineering, announcement',
+        category: 'filter blog post by category, return all posts if not specified',
     },
     description: undefined,
     categories: ['programming'],
