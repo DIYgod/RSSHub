@@ -46,19 +46,18 @@ export const route: Route = {
 async function handler(ctx) {
     const isEnglish = ctx.req.param('lang') !== 'zh';
 
-    const data = await ofetch('https://docs.rsshub.app/routes.json');
+    const data = await ofetch<NamespacesType>('https://docs.rsshub.app/routes.json');
 
-    const items = Object.entries(JSON.parse(data)).flatMap(([namespace, namespaceData]: [string, unknown]) => {
-        const ns = namespaceData as NamespacesType[string];
-        return Object.entries(ns.routes).map(([routePath, routeData]) => ({
-            title: `${ns.name} - ${routeData.name}`,
+    const items = Object.entries(data).flatMap(([namespace, namespaceData]) =>
+        Object.entries(namespaceData.routes).map(([routePath, routeData]) => ({
+            title: `${namespaceData.name} - ${routeData.name}`,
             description: routeData.description ? md.render(routeData.description) : '',
-            link: `https://docs.rsshub.app/${isEnglish ? '' : '/zh'}routes/${namespace}`,
+            link: `https://docs.rsshub.app/${isEnglish ? '' : 'zh/'}routes/${namespace}`,
             category: routeData.categories,
             guid: `/${namespace}${routePath === '/' ? '' : routePath}`,
             author: routeData.maintainers.join(', '),
-        }));
-    });
+        }))
+    );
 
     return {
         title: isEnglish ? 'RSSHub has new routes' : 'RSSHub 有新路由啦',
