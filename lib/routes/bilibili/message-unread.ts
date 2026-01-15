@@ -209,17 +209,6 @@ async function handler(ctx) {
         });
     }
 
-    // If no unread messages, show a summary
-    if (items.length === 0) {
-        items.push({
-            title: '暂无未读消息',
-            description: '<p>你当前没有未读消息</p>',
-            link: 'https://message.bilibili.com/',
-            pubDate: now,
-            guid: `bilibili-unread-none-${uid}-${now.toISOString().split('T')[0]}`,
-        });
-    }
-
     return {
         title: `${name} 的 B站未读消息`,
         link: 'https://message.bilibili.com/',
