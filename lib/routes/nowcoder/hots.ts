@@ -6,7 +6,7 @@ export const route: Route = {
     categories: ['bbs'],
     example: '/nowcoder/hots/1?limit=20',
     parameters: {
-        type: '热榜类型, `1` 指热议话题, `2`全站热贴, 默认为热议话题',
+        type: '热榜类型，`1` 指热议话题，`2` 指全站热贴，默认为 `1`',
     },
     features: {
         requireConfig: false,
@@ -22,10 +22,7 @@ export const route: Route = {
         },
     ],
     name: '牛客热榜',
-    description: `牛客热榜,包括热议话题和全站热贴
-可选参数：
-- limit: 返回列表大小（query 参数，默认 20）
-    `,
+    description: '牛客热榜，包括热议话题和全站热贴',
     maintainers: ['xia0ne'],
     handler,
     url: 'nowcoder.com/',
@@ -50,7 +47,7 @@ async function handler(ctx) {
             description: '牛客网-热议话题',
             item: data.map((item) => ({
                 title: item.content,
-                description: `<img src=${item.numberIcon}>`,
+                description: `<img src="${item.numberIcon}" alt="rank">`,
                 link: `https://www.nowcoder.com/creation/subject/${item.uuid}`,
             })),
         };
@@ -58,7 +55,7 @@ async function handler(ctx) {
         link = `https://gw-c.nowcoder.com/api/sparta/hot-search/top-hot-pc?size=${size}&_=${Date.now()}&t=`;
         const responseBody = (await got.get(link)).data;
         if (responseBody.code !== 0) {
-            throw new Error(`接口错误，错误代码:${responseBody.code},错误原因:${responseBody.msg}`);
+            throw new Error(`接口错误，错误代码: ${responseBody.code}，错误原因: ${responseBody.msg}`);
         }
         const data = responseBody.data.result;
         return {
