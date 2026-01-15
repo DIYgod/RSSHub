@@ -257,7 +257,7 @@ for (const namespace in namespaces) {
 app.get('/', index);
 app.get('/healthz', healthz);
 app.get('/robots.txt', robotstxt);
-if (config.debugInfo) {
+if (config.debugInfo !== 'false') {
     // Only enable tracing in debug mode
     app.get('/metrics', metrics);
 }
