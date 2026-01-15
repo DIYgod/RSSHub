@@ -381,7 +381,7 @@ fragment PostsNodeFragment on Post {
     const items = posts.edges.map(({ node }: { node: PostNode }) => ({
         title: node.title,
         description: renderToString(<DiggDescription node={node.pm} />),
-        link: `${baseUrl}/${node._id.replace(`-`, '/')}/${node.slug}`,
+        link: `${baseUrl}/${node._id.replaceAll('-', '/')}/${node.slug}`,
         pubDate: parseDate(node.createdDate),
         author: node.author.username,
     }));
