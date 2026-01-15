@@ -748,6 +748,7 @@ export type RoutePath =
   | `/dianping/user/:id`
   | `/diariofruticola/filtro/:filter{.+}`
   | `/diershoubing/news`
+  | `/digg/community/:community`
   | `/digitalcameraworld/news`
   | `/digitalpolicyalert/activity-tracker/:filters?`
   | `/dingshao/share/:shortId`

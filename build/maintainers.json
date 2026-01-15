@@ -2251,6 +2251,9 @@
   "/diershoubing/news": [
     "wushijishan"
   ],
+  "/digg/community/:community": [
+    "TonyRL"
+  ],
   "/digitalcameraworld/news": [
     "EthanWng97"
   ],
