@@ -191,7 +191,7 @@ async function handler(ctx) {
                 });
                 return res.data || {};
             },
-            300 // Cache for 5 minutes
+            config.cache.routeExpire
         );
         userCards = userCardsResponse as Record<string, UserInfo>;
     }
