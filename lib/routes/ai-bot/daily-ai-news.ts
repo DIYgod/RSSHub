@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 type CheerioInstance = ReturnType<typeof load>;
 type CheerioSelection = ReturnType<CheerioInstance>;
@@ -30,49 +31,55 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
     ctx.prevMonth = month;
     ctx.prevDay = day;
 
-    return new Date(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T08:00:00+08:00`);
+    // 使用 parseDate 解析，固定时间为 08:00 北京时间
+    return parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} 08:00:00 +08:00`);
 }
 
-function processNewsList($: CheerioInstance, $newsList: CheerioSelection, items: DataItem[], ctx: DateContext): void {
-    let currentDateStr = '';
+function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: DateContext): DataItem[] {
     let currentPubDate: Date | undefined;
 
-    $newsList.children().each((_, child) => {
-        const $child = $(child);
+    return $newsList
+        .children()
+        .toArray()
+        .flatMap((child) => {
+            const $child = $(child);
 
-        if ($child.hasClass('news-date')) {
-            currentDateStr = $child.text().trim();
-            currentPubDate = parseDateString(currentDateStr, ctx);
-        } else if ($child.hasClass('news-item') && currentDateStr) {
-            const $link = $child.find('h2 a');
-            const title = $link.text().trim();
-            const link = $link.attr('href');
-            const description = $child.find('p.text-muted').html() || '';
-
-            // 跳过没有有效 link 的条目
-            if (!link) {
-                return;
+            if ($child.hasClass('news-date')) {
+                currentPubDate = parseDateString($child.text().trim(), ctx);
+                return [];
             }
 
-            items.push({
-                title,
-                link,
-                guid: link,
-                description,
-                pubDate: currentPubDate,
-                author: 'AI工具集',
-            });
-        } else if ($child.hasClass('news-list')) {
-            processNewsList($, $child, items, ctx);
-        }
-    });
+            if ($child.hasClass('news-item') && currentPubDate) {
+                const $link = $child.find('h2 a');
+                const title = $link.text().trim();
+                const link = $link.attr('href');
+                const description = $child.find('p.text-muted').html() || '';
+
+                if (!link) {
+                    return [];
+                }
+
+                return {
+                    title,
+                    link,
+                    guid: link,
+                    description,
+                    pubDate: currentPubDate,
+                    author: 'AI工具集',
+                };
+            }
+
+            if ($child.hasClass('news-list')) {
+                return processNewsList($, $child, ctx);
+            }
+
+            return [];
+        });
 }
 
 async function handler(): Promise<Data> {
     const response = await ofetch('https://ai-bot.cn/daily-ai-news/');
     const $ = load(response);
-
-    const items: DataItem[] = [];
     const $firstNewsList = $('.news-list').first();
 
     const dateCtx: DateContext = {
@@ -81,7 +88,7 @@ async function handler(): Promise<Data> {
         prevDay: 0,
     };
 
-    processNewsList($, $firstNewsList, items, dateCtx);
+    const items = processNewsList($, $firstNewsList, dateCtx);
 
     return {
         title: '每日AI资讯 | AI工具集',
