@@ -306,6 +306,12 @@ export type RoutePath =
   | `/bilibili/mall/new/:category?`
   | `/bilibili/manga/followings/:uid/:limits?`
   | `/bilibili/manga/update/:comicid`
+  | `/bilibili/message/at/:uid`
+  | `/bilibili/message/like/:uid`
+  | `/bilibili/message/reply/:uid`
+  | `/bilibili/message/sessions/:uid`
+  | `/bilibili/message/system/:uid`
+  | `/bilibili/message/unread/:uid`
   | `/bilibili/partion/:tid/:embed?`
   | `/bilibili/partion/ranking/:tid/:days?/:embed?`
   | `/bilibili/platform/:area?/:p_type?/:uid?`
