@@ -93,7 +93,7 @@
         "iconv-lite": "0.7.2",
         "imapflow": "1.2.6",
         "instagram-private-api": "1.46.1",
-        "ioredis": "5.9.1",
+        "ioredis": "5.9.2",
         "ip-regex": "5.0.0",
         "jsdom": "27.0.0",
         "json-bigint": "1.0.0",
@@ -164,7 +164,7 @@
         "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "25.0.8",
+        "@types/node": "25.0.9",
         "@types/sanitize-html": "2.16.0",
         "@types/supertest": "6.0.3",
         "@typescript-eslint/eslint-plugin": "8.53.0",
@@ -198,7 +198,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.4",
         "vitest": "4.0.9",
-        "wrangler": "4.59.1",
+        "wrangler": "4.59.2",
         "yaml-eslint-parser": "1.3.2"
     },
     "lint-staged": {
