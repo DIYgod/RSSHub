@@ -3674,6 +3674,20 @@
       }
     ]
   },
+  "ai-bot.cn": {
+    "_name": "AI工具集",
+    ".": [
+      {
+        "title": "每日AI资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/daily-ai-news",
+          "/daily-ai-news/"
+        ],
+        "target": "/ai-bot/daily-ai-news"
+      }
+    ]
+  },
   "aibase.com": {
     "_name": "AIbase",
     "www": [
