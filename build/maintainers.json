@@ -955,6 +955,24 @@
   "/bilibili/manga/update/:comicid": [
     "hoilc"
   ],
+  "/bilibili/message/at/:uid": [
+    "pilgrimlyieu"
+  ],
+  "/bilibili/message/like/:uid": [
+    "pilgrimlyieu"
+  ],
+  "/bilibili/message/reply/:uid": [
+    "pilgrimlyieu"
+  ],
+  "/bilibili/message/sessions/:uid": [
+    "pilgrimlyieu"
+  ],
+  "/bilibili/message/system/:uid": [
+    "pilgrimlyieu"
+  ],
+  "/bilibili/message/unread/:uid": [
+    "pilgrimlyieu"
+  ],
   "/bilibili/video/page/:bvid/:embed?": [
     "sxzz"
   ],
