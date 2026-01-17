@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 type CheerioInstance = ReturnType<typeof load>;
 type CheerioSelection = ReturnType<CheerioInstance>;
@@ -31,8 +32,8 @@ function parseDateString(dateStr: string, ctx: DateContext): Date | undefined {
     ctx.prevMonth = month;
     ctx.prevDay = day;
 
-    // 使用 parseDate 解析，固定时间为 08:00 北京时间
-    return parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} 08:00:00 +08:00`);
+    // 网站只提供日期，不提供时间，使用 timezone 处理时区
+    return timezone(parseDate(`${ctx.currentYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`), 8);
 }
 
 function processNewsList($: CheerioInstance, $newsList: CheerioSelection, ctx: DateContext): DataItem[] {
