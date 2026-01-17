@@ -27,7 +27,7 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const list = $('a[class^="ArticleList_cardLink__"]')
+    const list = $('a[class*="ArticleList"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
@@ -44,7 +44,7 @@ async function handler() {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                const content = $('div[class^="Body_body__"]');
+                const content = $('div[class*="Body"]');
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
@@ -56,7 +56,7 @@ async function handler() {
                     }
                 });
 
-                item.pubDate = parseDate($('p[class*="HeroEngineering_date__"]').text().trim().replaceAll('Published ', ''));
+                item.pubDate = parseDate($('div[class*="date"]').text().trim().replaceAll('Published ', ''));
                 item.description = content.html();
 
                 return item;
