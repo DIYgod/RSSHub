@@ -3442,6 +3442,17 @@
         "target": "/agora0/pen0"
       }
     ],
+    "mrinalxdev": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/mrinalxblogs/blogs/blog.html",
+          "/mrinalxblogs/"
+        ],
+        "target": "/mrinalxdev/blog"
+      }
+    ],
     "njuferret": [
       {
         "title": "Blogs",
