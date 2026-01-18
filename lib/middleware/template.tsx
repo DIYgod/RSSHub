@@ -65,6 +65,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     item.author = collapseWhitespace(item.author) || '';
                 } else if (typeof item.author === 'object' && item.author !== null) {
                     for (const a of item.author) {
+                        if (typeof a.name !== 'string') {
+                            throw new TypeError('Iterable `item.author` must have `name` property of type string for each element.');
+                        }
                         a.name = collapseWhitespace(a.name) || '';
                     }
                     if (outputType !== 'json') {
