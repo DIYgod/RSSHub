@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { authorization } = config.discord;
+    const { authorization } = config.discord || {};
     if (!authorization) {
         throw new ConfigNotFoundError('Discord RSS is disabled due to the lack of authorization config');
     }
