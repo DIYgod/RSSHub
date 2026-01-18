@@ -2287,9 +2287,6 @@
   "/discord/channel/:channelId": [
     "TonyRL"
   ],
-  "/discord/quests": [
-    "TonyRL"
-  ],
   "/discord/search/:guildId/:routeParams": [
     "NekoAria"
   ],

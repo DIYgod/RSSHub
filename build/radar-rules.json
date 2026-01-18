@@ -14765,14 +14765,6 @@
           "/channels/:guildId/:channelId"
         ],
         "target": "/discord/channel/:channelId"
-      },
-      {
-        "title": "Quests",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/quest-home"
-        ],
-        "target": "/discord/quests"
       }
     ]
   },
