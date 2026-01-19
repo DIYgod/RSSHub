@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { getPuppeteerPage } from '@/utils/puppeteer';
@@ -16,81 +15,84 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
-    const html = await cache.tryGet('perplexity:changelog:index', async () => {
-        const { page, destory } = await getPuppeteerPage(targetUrl, {
-            onBeforeLoad: async (page) => {
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
-                });
-            },
-        });
-        const content = await page.evaluate(() => document.documentElement.innerHTML);
-        await destory();
-        return content;
+    const { page, destory } = await getPuppeteerPage(targetUrl, {
+        onBeforeLoad: async (page) => {
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' ? request.continue() : request.abort();
+            });
+        },
     });
+    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    await destory();
 
     const $ = load(html);
     const language = $('html').attr('lang') ?? 'en';
 
-    const items: DataItem[] = [];
     const seenLinks = new Set<string>();
 
-    $('a[href*="./changelog/"]').each((_, elem) => {
-        const $link = $(elem);
-        const href = $link.attr('href');
+    const items = $('a[href^="./changelog/"]')
+        .toArray()
+        .map((elem) => {
+            const $link = $(elem);
+            const href = $link.attr('href');
 
-        if (!href || !href.startsWith('./changelog/')) {
-            return;
-        }
+            if (!href || !href.startsWith('./changelog/')) {
+                return null;
+            }
 
-        const fullLink = href.startsWith('http') ? href : `${baseUrl}${href.replace('./', '/')}`;
+            const fullLink = href.startsWith('http') ? href : `${baseUrl}${href.replace('./', '/')}`;
 
-        if (seenLinks.has(fullLink)) {
-            return;
-        }
+            if (seenLinks.has(fullLink)) {
+                return null;
+            }
 
-        const $title = $link.find('[data-framer-name="Title"] p').first();
-        const title = $title.text().trim();
+            const $title = $link.find('[data-framer-name="Title"] p').first();
+            const title = $title.text().trim();
 
-        if (!title) {
-            return;
-        }
+            if (!title) {
+                return null;
+            }
 
-        const $category = $link.find('[data-framer-name="Category"] p').first();
-        const dateText = $category.text().trim();
+            const $category = $link.find('[data-framer-name="Category"] p').first();
+            const dateText = $category.text().trim();
 
-        const $summary = $link.find('p.framer-text.framer-styles-preset-16bzrdu').first();
-        const summary = $summary.text().trim();
+            let $summary = $link.find('[data-framer-name="Description"] p, [data-framer-name="Summary"] p').first();
+            if (!$summary.length) {
+                $summary = $link.find('p.framer-text').not($title).not($category).first();
+            }
+            const summary = $summary.text().trim();
 
-        seenLinks.add(fullLink);
+            seenLinks.add(fullLink);
 
-        let pubDate: Date | undefined;
-        if (dateText) {
-            const dateMatch = dateText.match(/(\d{2})\.(\d{2})\.(\d{2})/) || dateText.match(/(\d{4})\.(\d{2})\.(\d{2})/);
-            if (dateMatch) {
-                const [, year, month, day] = dateMatch;
-                const fullYear = year.length === 2 ? `20${year}` : year;
-                pubDate = parseDate(`${fullYear}-${month}-${day}`);
+            let pubDate: Date | undefined;
+            if (dateText) {
+                // Format: MM.DD.YY or MM.DD.YYYY (e.g., 12.12.24 = December 12, 2024)
+                const dateMatch = dateText.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
+                if (dateMatch) {
+                    const [, month, day, year] = dateMatch;
+                    const fullYear = year.length === 2 ? `20${year}` : year;
+                    pubDate = parseDate(`${fullYear}-${month}-${day}`);
+                } else {
+                    pubDate = parseDate(dateText);
+                }
             } else {
-                pubDate = parseDate(dateText);
+                const dateMatch = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,\s*\d{4}/);
+                if (dateMatch) {
+                    pubDate = parseDate(dateMatch[0]);
+                }
             }
-        } else {
-            const dateMatch = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,\s*\d{4}/);
-            if (dateMatch) {
-                pubDate = parseDate(dateMatch[0]);
-            }
-        }
 
-        items.push({
-            title,
-            description: summary,
-            link: fullLink,
-            pubDate,
-            guid: `perplexity-changelog-${fullLink}`,
-            id: `perplexity-changelog-${fullLink}`,
-        });
-    });
+            return {
+                title,
+                description: summary,
+                link: fullLink,
+                pubDate,
+                guid: `perplexity-changelog-${fullLink}`,
+                id: `perplexity-changelog-${fullLink}`,
+            } as DataItem;
+        })
+        .filter((item): item is DataItem => item !== null);
 
     return {
         title: $('title').text() || 'Perplexity Changelog',
@@ -107,7 +109,7 @@ export const route: Route = {
     path: '/changelog',
     name: 'Changelog',
     url: 'www.perplexity.ai',
-    maintainers: ['sisyphus'],
+    maintainers: ['xbot'],
     handler,
     example: '/perplexity/changelog',
     description: 'Subscribe to Perplexity changelog for latest updates and releases.',
