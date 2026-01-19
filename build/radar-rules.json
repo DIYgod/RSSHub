@@ -37630,6 +37630,19 @@
       }
     ]
   },
+  "perplexity.ai": {
+    "_name": "Perplexity",
+    "www": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/changelog"
+        ],
+        "target": "/perplexity/changelog"
+      }
+    ]
+  },
   "phoronix.com": {
     "_name": "Phoronix",
     ".": [
