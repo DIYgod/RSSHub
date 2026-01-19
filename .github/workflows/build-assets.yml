@@ -7,12 +7,13 @@ on:
             - master
         paths:
             - 'lib/**/*.ts'
+            - 'lib/**/*.tsx'
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         name: Build assets
-        timeout-minutes: 5
+        timeout-minutes: 10
         permissions:
             contents: write
         steps:
@@ -21,7 +22,7 @@ jobs:
             - name: Install pnpm
               uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
             - name: Use Node.js Active LTS
-              uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+              uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
               with:
                   node-version: lts/*
                   cache: 'pnpm'
@@ -59,8 +60,8 @@ jobs:
             - name: Update docs
               if: steps.check-docs-env.outputs.defined == 'true'
               run: |
-                  cp -r ./assets/build/docs/en/* ./rsshub-docs/src/routes
-                  cp -r ./assets/build/docs/zh/* ./rsshub-docs/src/zh/routes
+                  cp ./assets/build/docs/routes.json ./rsshub-docs/src/public/routes.json
+                  cp ./assets/build/docs/categories.json ./rsshub-docs/src/public/categories.json
                   cp ./lib/types.ts ./rsshub-docs/.vitepress/theme/types.ts
                   cp ./scripts/workflow/data.ts ./rsshub-docs/.vitepress/config/data.ts
             - name: Commit docs

@@ -39,7 +39,7 @@ export const namespace: Namespace = {
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
-[https://rsshub.app/weibo/user/1642909335/readable=1\&authorNameBold=1\&showAuthorInTitle=1\&showAuthorInDesc=1\&showAuthorAvatarInDesc=1\&showEmojiForRetweet=1\&showRetweetTextInTitle=0\&addLinkForPics=1\&showTimestampInDescription=1\&showTimestampInDescription=1\&heightOfPics=150](https://rsshub.app/weibo/user/1642909335/readable=1\&authorNameBold=1\&showAuthorInTitle=1\&showAuthorInDesc=1\&showAuthorAvatarInDesc=1\&showEmojiForRetweet=1\&showRetweetTextInTitle=0\&addLinkForPics=1\&showTimestampInDescription=1\&showTimestampInDescription=1\&heightOfPics=150)
+[https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150](https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150)
 
 的效果为
 

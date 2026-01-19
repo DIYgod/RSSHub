@@ -36,7 +36,7 @@ export const route: Route = {
     handler,
     description: `| 推荐            | 股票  | 基金 | 新股       | 研报     |
 | --------------- | ----- | ---- | ---------- | -------- |
-| web\_home\_page | stock | fund | new\_stock | research |`,
+| web_home_page | stock | fund | new_stock | research |`,
 };
 
 async function handler(ctx) {

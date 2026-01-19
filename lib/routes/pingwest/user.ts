@@ -80,6 +80,8 @@ async function handler(ctx) {
         case 'state':
             item = utils.statusListParser($);
             break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     const typeToLabel = {

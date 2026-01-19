@@ -1,11 +1,11 @@
-import path from 'node:path';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderImages } from '../templates/images';
+import { renderVideo } from '../templates/video';
 
 const baseUrl = 'https://www.instagram.com';
 const COOKIE_URL = baseUrl;
@@ -134,8 +134,8 @@ const getTagsFeed = (tag, cookieJar) =>
     );
 
 const renderGuestItems = (items) => {
-    const renderVideo = (node, summary) =>
-        art(path.join(__dirname, '../templates/video.art'), {
+    const renderVideoItem = (node, summary) =>
+        renderVideo({
             summary,
             image: node.display_url,
             video: {
@@ -144,8 +144,8 @@ const renderGuestItems = (items) => {
                 width: node.dimensions.width,
             },
         });
-    const renderImages = (node, summary) =>
-        art(path.join(__dirname, '../templates/images.art'), {
+    const renderImagesItem = (node, summary) =>
+        renderImages({
             summary,
             images: [{ url: node.display_url, height: node.dimensions.height, width: node.dimensions.width }],
         });
@@ -164,9 +164,9 @@ const renderGuestItems = (items) => {
                               const _type = node.__typename;
                               switch (_type) {
                                   case 'GraphVideo':
-                                      return renderVideo(node, i === 0 ? summary : '');
+                                      return renderVideoItem(node, i === 0 ? summary : '');
                                   case 'GraphImage':
-                                      return renderImages(node, i === 0 ? summary : '');
+                                      return renderImagesItem(node, i === 0 ? summary : '');
                                   default:
                                       throw new Error(`Instagram: Unhandled carousel type: ${_type}`);
                               }
@@ -175,10 +175,10 @@ const renderGuestItems = (items) => {
                     : renderImages(node, summary);
                 break;
             case 'GraphVideo':
-                description = renderVideo(node, summary);
+                description = renderVideoItem(node, summary);
                 break;
             case 'GraphImage':
-                description = renderImages(node, summary);
+                description = renderImagesItem(node, summary);
                 break;
             default:
                 throw new Error(`Instagram: Unhandled feed type: ${type}`);

@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: ['/xhsxw', '/whxw'],
@@ -56,7 +55,7 @@ async function handler(ctx) {
     let items = response.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.publishUrl, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             images:
                 item.shareImages?.map((i) => ({
                     src: i.imageUrl,
@@ -78,7 +77,7 @@ async function handler(ctx) {
 
                     const content = load(detailResponse);
 
-                    item.description += art(path.join(__dirname, 'templates/description.art'), {
+                    item.description += renderDescription({
                         description: content('#detailContent').html(),
                     });
                 } catch {

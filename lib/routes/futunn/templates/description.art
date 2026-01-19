@@ -1,6 +1,0 @@
-{{ if pic }}
-<img src="{{ pic }}">
-{{ /if }}
-{{ if abs }}
-<p>{{ abs }}</p>
-{{ /if }}

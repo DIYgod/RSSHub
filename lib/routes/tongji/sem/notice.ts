@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const url = `https://sem.tongji.edu.cn/semch/category/frontpage/${subType.has(type) ? type : 'notice'}`;
 
-    const results: { title: string; link: string; pubDate: Date }[] = await getNotifByPage(url);
+    const results: Array<{ title: string; link: string; pubDate: Date }> = await getNotifByPage(url);
 
     const resultsWithContent = await Promise.all(results.map((item) => cache.tryGet(item.link, () => getArticle(item))));
 

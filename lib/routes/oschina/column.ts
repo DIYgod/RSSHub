@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,14 +8,15 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.oschina.net';
+    const baseUrl = 'https://www.oschina.net';
     const userHostRegex: string = String.raw`https://my\.oschina\.net`;
     const targetUrl: string = new URL(`news/column?columnId=${id}`, baseUrl).href;
 
@@ -34,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.title').text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 intro: $el.find('div.description p.line-clamp').text(),
             });
             const pubDateStr: string | undefined = $el.find('inddiv.item').contents().last().text().trim();
@@ -84,7 +83,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     $$('.ad-wrap').remove();
 
                     const title: string = $$('h1.article-box__title').text();
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         description: $$('div.content').html(),
                     });
                     const pubDateEl: Element = $$('div.article-box__meta div.item-list div.item')
@@ -105,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             url: $authorEl.attr('href'),
                         };
                     });
-                    const guid: string = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
+                    const guid = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
                     const image: string | undefined = $$('val[data-name="sharePic"]').attr('data-value');
                     const upDatedStr: string | undefined = $$('meta[property="bytedance:updated_time"]').attr('content') || pubDateStr;
 

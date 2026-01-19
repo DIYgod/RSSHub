@@ -70,7 +70,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.site_url,
             pubData: item.last_modified_header,
-            description: 'Feed URL: ' + `<a href=${item.feed_url}>${item.feed_url}</a>`,
+            description: `Feed URL: <a href=${item.feed_url}>${item.feed_url}</a>`,
         });
     }
 

@@ -42,11 +42,11 @@ export interface ArticleDetail {
         name_ja: string;
     };
     description: string;
-    content: {
+    content: Array<{
         page_no: number;
         contents: Content[];
         text: string;
-    }[];
+    }>;
     mainCategories: Category;
     publishedAt: string;
     subCategories: Category[];
@@ -63,7 +63,7 @@ export interface ArticleDetail {
         offset: number;
         page: number;
         limit: number;
-        results: {
+        results: Array<{
             id: string;
             article_type: string;
             main_category_ids: string[];
@@ -91,27 +91,27 @@ export interface ArticleDetail {
             tweet_id: string;
             game_ids: string[];
             author_ids: string[];
-        }[];
+        }>;
     };
-    authors: {
+    authors: Array<{
         id: number;
         icon_url: string;
         name_ja: string;
         description: string;
         relate_urls: any[];
-    }[];
+    }>;
     redirectUrl: string;
     copyright: string;
-    relatedLinks: {
+    relatedLinks: Array<{
         title: string;
         description: null;
         url: string;
         article: any[];
-    }[];
+    }>;
     isToc: boolean;
-    items: {
+    items: Array<{
         status: string;
         item_id: string;
         item_type: string;
-    }[];
+    }>;
 }

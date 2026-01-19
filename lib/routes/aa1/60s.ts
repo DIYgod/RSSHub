@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
     const apiSlug = 'wp-json/wp/v2';
-    const baseUrl: string = 'https://60s.aa1.cn';
+    const baseUrl = 'https://60s.aa1.cn';
 
     const apiUrl = new URL(`${apiSlug}/posts`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/categories`, baseUrl).href;

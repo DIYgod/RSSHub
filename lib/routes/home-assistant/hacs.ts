@@ -20,7 +20,7 @@ async function handler() {
                 return Object.values(response);
             })
         )
-    ).flat() as {
+    ).flat() as Array<{
         manifest: {
             name: string;
         };
@@ -32,7 +32,7 @@ async function handler() {
         topics?: string[];
         last_updated: string;
         last_fetched: number;
-    }[];
+    }>;
 
     return {
         title: 'HACS Repositories',

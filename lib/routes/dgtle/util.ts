@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
@@ -8,14 +6,15 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
 
-const baseUrl: string = 'https://www.dgtle.com';
+const baseUrl = 'https://www.dgtle.com';
 
 const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> => {
     let items: DataItem[] = [];
@@ -23,7 +22,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
     items = dataList.slice(0, limit).map((item): DataItem => {
         const title: string = item.title || item.content;
         const image: string | undefined = item.cover;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: image
                 ? [
                       {
@@ -44,7 +43,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                 avatar: item.user?.avatar_path ?? item.avatar_path,
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -90,7 +89,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                     const $$el = $$(el);
 
                     $$el.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             images: [
                                 {
                                     src: $$el
@@ -103,7 +102,7 @@ const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> =
                     );
                 });
 
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     description: $$('div.whale_news_detail-daily-content, div#articleContent, div.forum-viewthread-article-box').html(),
                 });
 
@@ -127,7 +126,7 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
         const content: string = item.content ? md.render(item.content) : '';
 
         const title: string = $(content).text();
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: item.imgs_url.map((src) => ({
                 src,
             })),
@@ -143,7 +142,7 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
                 avatar: item.avatar_path,
             },
         ];
-        const guid: string = `dgtle-${item.id}`;
+        const guid = `dgtle-${item.id}`;
         const image: string | undefined = item.imgs_url?.[0];
         const updated: number | string = item.updated_at ?? pubDate;
 
@@ -175,10 +174,10 @@ const ProcessFeedItems = (limit: number, dataList: any, $: CheerioAPI): DataItem
                     continue;
                 }
 
-                const medium: string = 'image';
+                const medium = 'image';
 
                 const count: number = Object.values(acc).filter((m) => m.medium === medium).length + 1;
-                const key: string = `${medium}${count}`;
+                const key = `${medium}${count}`;
 
                 acc[key] = {
                     url,

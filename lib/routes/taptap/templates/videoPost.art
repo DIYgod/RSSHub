@@ -1,2 +1,0 @@
-<p>Preview</p>
-<p><img src="{{@ previewUrl }}" /></p>

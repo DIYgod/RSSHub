@@ -1,6 +1,0 @@
-{{ if head.og_image }}
-{{ each head.og_image img }}
-<img src="{{ img.url.split('?')[0] }}">
-{{ /each }}
-{{ /if }}
-{{@ rendered }}

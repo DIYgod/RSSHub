@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
@@ -10,7 +8,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const originOptions = [
     {
@@ -39,49 +38,16 @@ const findNamesByUuids = (data: any[], uuids: string[]): string[] => {
     return uuids.flatMap((uuid) => allItems.filter((item) => item.uuid === uuid || item.name === uuid).map((item) => item.name)).filter(Boolean);
 };
 
-const escapeHTML = (input) => {
-    if (input === undefined) {
-        return '';
-    }
-    const str = String(input);
-    const escapeMap = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-    };
-    return str.replaceAll(/[&<>"']/g, (char) => escapeMap[char] || char);
-};
-
-const formatObject = (obj) => {
-    if (typeof obj !== 'object' || obj === null) {
-        return escapeHTML(obj);
-    }
-
-    let result = '';
-    for (const key in obj) {
-        if (obj[key] !== null && obj[key] !== '') {
-            result += `<div><strong>${escapeHTML(key)}:</strong> ${escapeHTML(obj[key])}</div>`;
-        }
-    }
-
-    return result || '<em>无数据</em>';
-};
-
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
 
-art.defaults.imports.escapeHTML = escapeHTML;
-art.defaults.imports.formatObject = formatObject;
-
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://oshwhub.com';
+    const baseUrl = 'https://oshwhub.com';
     const apiUrl: string = new URL('api/project', baseUrl).href;
     const apiTagUrl: string = new URL('api/project_tags', baseUrl).href;
     const targetUrl: string = new URL('explore', baseUrl).href;
@@ -109,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = response.result.lists.slice(0, limit).map((item): DataItem => {
         const title: string = item.name;
         const image: string | undefined = item.thumb?.startsWith('https:') ? item.thumb : `https:${item.thumb}`;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: image
                 ? [
                       {
@@ -196,7 +162,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const attachments = result.attachments;
 
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: image
                         ? [
                               {
@@ -243,7 +209,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = `https://image.lceda.cn${attachment.src}`;
                     const enclosureType: string = attachment.mime;
                     const enclosureTitle: string = attachment.name;
-                    const enclosureLength: number = Number(attachment.size);
+                    const enclosureLength = Number(attachment.size);
 
                     processedItem = {
                         ...processedItem,

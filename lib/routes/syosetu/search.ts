@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Context } from 'hono';
 import type { Genre, NovelTypeParam, Order, SearchParams } from 'narou';
 import { GenreNotation, NarouNovelFetch, R18Site, SearchBuilder, SearchBuilderR18 } from 'narou';
@@ -8,8 +6,8 @@ import queryString from 'query-string';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
 
@@ -136,10 +134,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = result.values.map((novel) => ({
         title: novel.title,
         link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: art(path.join(__dirname, 'templates/description.art'), {
-            novel,
-            genreText: GenreNotation[novel.genre],
-        }),
+        description: renderDescription({ novel, genreText: GenreNotation[novel.genre] }),
         // Skip pubDate - search results prioritize search sequence over timestamps
         // pubDate: novel.general_lastup,
         author: novel.writer,

@@ -1,8 +1,0 @@
-{{ if postImages }}
-    {{ each postImages img }}
-        <img src="{{ img.file_url }}"><br>
-    {{ /each }}
-{{ /if }}
-{{ if body }}
-    {{@ body }}
-{{ /if }}
