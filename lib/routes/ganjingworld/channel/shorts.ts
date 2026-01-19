@@ -39,29 +39,29 @@ async function handler(ctx) {
     const parsed: ApiResponse = await ofetch<ApiResponse>(apiUrl);
     if (parsed.data.list.length === 0) {
         throw new Error('No shorts found for this channel. Please make sure the channel ID is correct and that the channel contains shorts.');
-    } else {
-        const title = parsed.data.list[0].channel.name;
-        const items = parsed.data.list.map((item) => {
-            const pubDate = new Date(item.time_scheduled);
-            const videoUrl = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
-            const posterUrl = item.poster_url || '';
-            const description = item.description;
-            if (videoUrl) {
-                item.description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>`;
-            }
-
-            return {
-                title: item.title,
-                link: `https://www.ganjingworld.com/video/${item.id}`,
-                pubDate,
-                description,
-            };
-        });
-        return {
-            title,
-            link: url,
-            description: `Short videos from Channel ${title}`,
-            item: items,
-        };
     }
+    const title = parsed.data.list[0].channel.name;
+    const items = parsed.data.list.map((item) => {
+        const pubDate = new Date(item.time_scheduled);
+        const videoUrl = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
+        const posterUrl = item.poster_url || item.image_auto_url || '';
+
+        let description = item.description || '';
+        if (videoUrl) {
+            description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>${description}`;
+        }
+
+        return {
+            title: item.title,
+            link: `https://www.ganjingworld.com/video/${item.id}`,
+            pubDate,
+            description,
+        };
+    });
+    return {
+        title,
+        link: url,
+        description: `Short videos from Channel ${title}`,
+        item: items,
+    };
 }

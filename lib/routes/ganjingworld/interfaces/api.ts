@@ -7,14 +7,16 @@ export interface ApiResponse {
 
 export interface ListItem {
     title: string;
-    description: string;
+    description?: string;
     id: string;
     time_scheduled: number;
     channel: Channel;
     poster_url: string;
+    image_auto_url?: string;
     video_url: string;
-    text: string;
+    text?: string;
     media: Media[];
+    watch_count?: number;
 }
 export interface Channel {
     icon: string;

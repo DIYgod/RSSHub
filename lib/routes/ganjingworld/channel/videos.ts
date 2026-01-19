@@ -37,22 +37,25 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const url = `https://www.ganjingworld.com/channel/${id}`;
     const apiUrl = `https://gw.ganjingworld.com/v1.1/content/get-by-channel?lang=zh-TW&start_key=&channel_id=${id}&page_size=24&content_type=AllVideo&query=basic%2Ctranslations%2Cwatch_count&visibility=public&mode=ready`;
+    // const apiUrl = `https://gw.ganjingworld.com/v1.1/content/get-by-channel?lang=zh-TW&start_key=&channel_id=1eiqjdnq7go1OPYtIbLDVMpM61ok0c&page_size=24&content_type=AllVideo&query=basic%2Ctranslations%2Cwatch_count&visibility=public&mode=ready`;
 
     const parsed: ApiResponse = await ofetch<ApiResponse>(apiUrl);
-    const title = parsed.data.list[0].channel.name;
+    const title = parsed.data.list.length > 0 ? parsed.data.list[0].channel.name : 'Ganjing World Channel';
     const items = parsed.data.list.map((item) => {
         const pubDate = new Date(item.time_scheduled);
         const videoUrl = item.video_url || (item.media.length > 0 ? item.media[0].url : '');
-        const posterUrl = item.poster_url || '';
+        const posterUrl = item.poster_url || item.image_auto_url || '';
+
+        let description = item.description || '';
         if (videoUrl) {
-            item.description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>`;
+            description = `<video controls src="${videoUrl}" poster="${posterUrl}" style="max-width: 100%;"></video><br/>${description}`;
         }
 
         return {
             title: item.title,
             link: `https://www.ganjingworld.com/video/${item.id}`,
             pubDate,
-            description: item.description,
+            description,
         };
     });
 
