@@ -1,0 +1,36 @@
+name = "rsshub-container"
+main = "dist-container/container.mjs"
+compatibility_date = "2026-01-16"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "pnpm run container-build"
+
+[observability]
+enabled = true
+
+# Container configuration
+[[containers]]
+class_name = "RSSHubContainer"
+image = "./Dockerfile"
+max_instances = 20
+instance_type = "standard-1"
+image_vars = { PUPPETEER_SKIP_DOWNLOAD = "0" }
+
+# Durable Object binding for the container
+[[durable_objects.bindings]]
+name = "RSSHUB_CONTAINER"
+class_name = "RSSHubContainer"
+
+# Required migration for Durable Objects with SQLite
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RSSHubContainer"]
+
+# KV namespace for container environment variables
+[[kv_namespaces]]
+binding = "CONFIG"
+
+# Example: Set env vars in KV using wrangler CLI:
+# wrangler kv:key put --namespace-id=rsshub-container-config "GITHUB_ACCESS_TOKEN" "your-token"
+# wrangler kv:key put --namespace-id=rsshub-container-config "ACCESS_KEY" "your-key"
