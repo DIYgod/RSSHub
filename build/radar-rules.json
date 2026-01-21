@@ -8299,6 +8299,19 @@
       }
     ]
   },
+  "bvisness.me": {
+    "_name": "Ben Visness",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/bvisness/blog"
+      }
+    ]
+  },
   "byau.edu.cn": {
     "_name": "黑龙江八一农垦大学",
     "xinwen": [
