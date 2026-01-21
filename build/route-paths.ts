@@ -2516,6 +2516,7 @@ export type RoutePath =
   | `/skebetter/manga/:order`
   | `/sketis/isabelle-dev/blog/:blog`
   | `/skysports/news/:team`
+  | `/slashdot/:section?`
   | `/slowmist/:type?`
   | `/smartlink/:site`
   | `/smashingmagazine/:category?`

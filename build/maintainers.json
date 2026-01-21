@@ -7711,6 +7711,9 @@
   "/skysports/news/:team": [
     "nczitzk"
   ],
+  "/slashdot/:section?": [
+    "TonyRL"
+  ],
   "/slowmist/:type?": [
     "AtlasQuan"
   ],
