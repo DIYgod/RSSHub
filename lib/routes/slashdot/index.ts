@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { InvalidParameterError } from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -48,7 +49,7 @@ async function handler(ctx) {
     const { section } = ctx.req.param();
 
     if (section && !isValidHost(section)) {
-        throw new Error('Invalid section name');
+        throw new InvalidParameterError('Invalid section name');
     }
 
     const link = section ? `https://${section}.slashdot.org` : 'https://slashdot.org';
