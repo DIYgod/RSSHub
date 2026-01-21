@@ -74,8 +74,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.9.34
-        version: 0.9.34(hono@4.11.4)
+        specifier: 0.9.35
+        version: 0.9.35(hono@4.11.4)
       '@sentry/node':
         specifier: 10.35.0
         version: 10.35.0
@@ -300,8 +300,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0
       '@cloudflare/puppeteer':
-        specifier: 1.0.4
-        version: 1.0.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 1.0.5
+        version: 1.0.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cloudflare/workers-types':
         specifier: 4.20260120.0
         version: 4.20260120.0
@@ -462,8 +462,8 @@ importers:
         specifier: 4.0.9
         version: 4.0.9(@types/debug@4.1.12)(@types/node@25.0.9)(jiti@2.6.1)(jsdom@27.0.0(bufferutil@4.0.9)(postcss@8.5.6)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2)
       wrangler:
-        specifier: 4.59.2
-        version: 4.59.2(@cloudflare/workers-types@4.20260120.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        specifier: 4.59.3
+        version: 4.59.3(@cloudflare/workers-types@4.20260120.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       yaml-eslint-parser:
         specifier: 1.3.2
         version: 1.3.2
@@ -1114,8 +1114,8 @@ packages:
     resolution: {integrity: sha512-SIOD2DxrRRwQ+jgzlXCqoEFiKOFqaPjhnNTGKXSRLvp1HiOvapLaFG2kEr9dYQTYe8rKrd9uvDUzmAITeNyaHQ==}
     engines: {node: '>=18.0.0'}
 
-  '@cloudflare/puppeteer@1.0.4':
-    resolution: {integrity: sha512-I7vh9Er1hQ/7OnOL/NEPaiR0alRQ62wEWstyizilmr69AcRqvu+ufNlTc3A2uXREEvFBZ6TFajdcrBbh78/mtA==}
+  '@cloudflare/puppeteer@1.0.5':
+    resolution: {integrity: sha512-sKVtc9eTe+ulDqFGk1AcU1cgw3fuLvT75eqHDApvE1d/ZTesBD/r2Iey6elQ9uq/jBj0SjEOM1GVYi0Rojzeaw==}
     engines: {node: '>=18'}
 
   '@cloudflare/unenv-preset@2.10.0':
@@ -1127,32 +1127,32 @@ packages:
       workerd:
         optional: true
 
-  '@cloudflare/workerd-darwin-64@1.20260114.0':
-    resolution: {integrity: sha512-HNlsRkfNgardCig2P/5bp/dqDECsZ4+NU5XewqArWxMseqt3C5daSuptI620s4pn7Wr0ZKg7jVLH0PDEBkA+aA==}
+  '@cloudflare/workerd-darwin-64@1.20260116.0':
+    resolution: {integrity: sha512-0LF2jR/5bfCIMYsqtCXHqaZRlXEMgnz4NzG/8KVmHROlKb06SJezYYoNKw+7s6ji4fgi1BcYAJBmWbC4nzMbqw==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-arm64@1.20260114.0':
-    resolution: {integrity: sha512-qyE1UdFnAlxzb+uCfN/d9c8icch7XRiH49/DjoqEa+bCDihTuRS7GL1RmhVIqHJhb3pX3DzxmKgQZBDBL83Inw==}
+  '@cloudflare/workerd-darwin-arm64@1.20260116.0':
+    resolution: {integrity: sha512-a9OHts4jMoOkPedc4CnuHPeo9XRG3VCMMgr0ER5HtSfEDRQhh7MwIuPEmqI27KKrYj+DeoCazIgbp3gW9bFTAg==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
 
-  '@cloudflare/workerd-linux-64@1.20260114.0':
-    resolution: {integrity: sha512-Z0BLvAj/JPOabzads2ddDEfgExWTlD22pnwsuNbPwZAGTSZeQa3Y47eGUWyHk+rSGngknk++S7zHTGbKuG7RRg==}
+  '@cloudflare/workerd-linux-64@1.20260116.0':
+    resolution: {integrity: sha512-nCMy7D7BeH/feGiD7C5Z1LG19Wvs3qmHSRe3cwz6HYRQHdDXUHTjXwEVid7Vejf9QFNe3iAn49Sy/h2XY2Rqeg==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-arm64@1.20260114.0':
-    resolution: {integrity: sha512-kPUmEtUxUWlr9PQ64kuhdK0qyo8idPe5IIXUgi7xCD7mDd6EOe5J7ugDpbfvfbYKEjx4DpLvN2t45izyI/Sodw==}
+  '@cloudflare/workerd-linux-arm64@1.20260116.0':
+    resolution: {integrity: sha512-Hve4ciPI69aIzwfSD12PVZJoEnKIkdR3Vd0w8rD1hDVxk75xAA65KqVYf5qW+8KOYrYkU3pg7hBTMjeyDF//IQ==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
 
-  '@cloudflare/workerd-windows-64@1.20260114.0':
-    resolution: {integrity: sha512-MJnKgm6i1jZGyt2ZHQYCnRlpFTEZcK2rv9y7asS3KdVEXaDgGF8kOns5u6YL6/+eMogfZuHRjfDS+UqRTUYIFA==}
+  '@cloudflare/workerd-windows-64@1.20260116.0':
+    resolution: {integrity: sha512-7QA6OTXQtBdszkXw3rzxpkk1RoINZJY1ADQjF0vFNAbVXD1VEXLZnk0jc505tqARI8w/0DdVjaJszqL7K5k00w==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
@@ -2594,8 +2594,8 @@ packages:
     resolution: {integrity: sha512-aXXRF4sCaiGZIRpZ1MUcnl8y0Q9pPG1VXqQMWacVWDh6zQN9cuayTC/TbODzWeldp50sgJ1E8MpHvpeV7CEF9g==}
     engines: {node: '>=20'}
 
-  '@scalar/hono-api-reference@0.9.34':
-    resolution: {integrity: sha512-UNvyIlESDBws9ofAfO2R5v6qX4vp5rks1dY3n1SoOgxmDj4O+0k/oO7c6vFDyaDBjXokBMbW1V13mNYdkIaINQ==}
+  '@scalar/hono-api-reference@0.9.35':
+    resolution: {integrity: sha512-+/PUAfZc0fBDgcZ57nnBrR+2CpVyfO//trmsrTyHxxmWxGR4pjL7YPExn24HxULLdWE0mVg+klNsrC4oUem0Aw==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4.10.3
@@ -3154,8 +3154,13 @@ packages:
   aws4@1.13.2:
     resolution: {integrity: sha512-lHe62zvbTB5eEABUVi/AwVh0ZKY9rMMDhmm+eeyuuUQbQ3+J+fONVQOZyj+DdrvD4BY33uYniyRJ4UJIaSKAfw==}
 
-  b4a@1.6.7:
-    resolution: {integrity: sha512-OnAYlL5b7LEkALw87fUVafQw5rVR9RjwGd4KUwNQ6DrrNmaVaUCgLipfVlzrPQ4tWOR9P0IXGNOx50jYCCdSJg==}
+  b4a@1.7.3:
+    resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
+    peerDependencies:
+      react-native-b4a: '*'
+    peerDependenciesMeta:
+      react-native-b4a:
+        optional: true
 
   babel-plugin-polyfill-corejs2@0.4.14:
     resolution: {integrity: sha512-Co2Y9wX854ts6U8gAAPXfn0GmAyctHuK8n0Yhfjd6t30g7yvKjspvvOo9yG+z52PZRgFErt7Ka2pYnXCjLKEpg==}
@@ -3178,11 +3183,16 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  bare-events@2.6.1:
-    resolution: {integrity: sha512-AuTJkq9XmE6Vk0FJVNq5QxETrSA/vKHarWVBG5l/JbdCL1prJemiyJqUS0jrlXO0MftuPq4m3YVYhoNc5+aE/g==}
+  bare-events@2.8.2:
+    resolution: {integrity: sha512-riJjyv1/mHLIPX4RwiK+oW9/4c3TEUeORHKefKAKnZ5kyslbN+HXowtbaVEqt4IMUB7OXlfixcs6gsFeo/jhiQ==}
+    peerDependencies:
+      bare-abort-controller: '*'
+    peerDependenciesMeta:
+      bare-abort-controller:
+        optional: true
 
-  bare-fs@4.2.0:
-    resolution: {integrity: sha512-oRfrw7gwwBVAWx9S5zPMo2iiOjxyiZE12DmblmMQREgcogbNO0AFaZ+QBxxkEXiPspcpvO/Qtqn8LabUx4uYXg==}
+  bare-fs@4.5.2:
+    resolution: {integrity: sha512-veTnRzkb6aPHOvSKIOy60KzURfBdUflr5VReI+NSaPL6xf+XLdONQgZgpYvUuZLVQ8dCqxpBAudaOM1+KpAUxw==}
     engines: {bare: '>=1.16.0'}
     peerDependencies:
       bare-buffer: '*'
@@ -3190,8 +3200,8 @@ packages:
       bare-buffer:
         optional: true
 
-  bare-os@3.6.1:
-    resolution: {integrity: sha512-uaIjxokhFidJP+bmmvKSgiMzj2sV5GPHaZVAIktcxcpCyBFFWO+YlikVAdhmUo2vYFvFhOXIAlldqV29L8126g==}
+  bare-os@3.6.2:
+    resolution: {integrity: sha512-T+V1+1srU2qYNBmJCXZkUY5vQ0B4FSlL3QDROnKQYOqeiQR8UbjNHlPa+TIbM4cuidiN9GaTaOZgSEgsvPbh5A==}
     engines: {bare: '>=1.14.0'}
 
   bare-path@3.0.0:
@@ -3207,6 +3217,9 @@ packages:
         optional: true
       bare-events:
         optional: true
+
+  bare-url@2.3.2:
+    resolution: {integrity: sha512-ZMq4gd9ngV5aTMa5p9+UfY0b3skwhHELaDkhEHetMdX0LRkW9kzaym4oo/Eh+Ghm0CCDuMTsRIGM/ytUc1ZYmw==}
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -4057,6 +4070,9 @@ packages:
 
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
+
+  events-universal@1.0.1:
+    resolution: {integrity: sha512-LUd5euvbMLpwOF8m6ivPCbhQeSiYVNb8Vs0fQ8QjXo0JTkEHpz8pxdQf0gStltaPpw0Cca8b39KxvK9cfKRiAw==}
 
   execa@8.0.1:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
@@ -5044,8 +5060,8 @@ packages:
     resolution: {integrity: sha512-e5ISH9xMYU0DzrT+jl8q2ze9D6eWBto+I8CNpe+VI+K2J/F/k3PdkdTdz4wvGVH4NTpo+NRYTVIuMQEMMcsLqg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  miniflare@4.20260114.0:
-    resolution: {integrity: sha512-QwHT7S6XqGdQxIvql1uirH/7/i3zDEt0B/YBXTYzMfJtVCR4+ue3KPkU+Bl0zMxvpgkvjh9+eCHhJbKEqya70A==}
+  miniflare@4.20260116.0:
+    resolution: {integrity: sha512-fCU1thOdiKfcauYp/gAchhesOTqTPy3K7xY6g72RiJ2xkna18QJ3Mh5sgDmnqlOEqSW9vpmYeK8vd/aqkrtlUA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -5882,8 +5898,8 @@ packages:
   stream-length@1.0.2:
     resolution: {integrity: sha512-aI+qKFiwoDV4rsXiS7WRoCt+v2RX1nUj17+KJC5r2gfh5xoSJIfP6Y3Do/HtvesFcTSWthIuJ3l1cvKQY/+nZg==}
 
-  streamx@2.22.1:
-    resolution: {integrity: sha512-znKXEBxfatz2GBNK02kRnCXjV+AA4kjZIUxeWSr3UGirZMJfTE9uiwKHobnbgxWyL/JWro8tTq+vOqAK1/qbSA==}
+  streamx@2.23.0:
+    resolution: {integrity: sha512-kn+e44esVfn2Fa/O0CPFcex27fjIL6MkVae0Mm6q+E6f0hWv578YCERbv+4m02cjxvDsPKLnmxral/rR6lBMAg==}
 
   strict-event-emitter@0.5.1:
     resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
@@ -6236,10 +6252,6 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
-  undici@7.14.0:
-    resolution: {integrity: sha512-Vqs8HTzjpQXZeXdpsfChQTlafcMQaaIwnGwLam1wudSSjlJeQ3bw1j+TLPePgrCnCpUXx7Ba5Pdpf5OBih62NQ==}
-    engines: {node: '>=20.18.1'}
-
   undici@7.18.2:
     resolution: {integrity: sha512-y+8YjDFzWdQlSE9N5nzKMT3g4a5UBX1HKowfdXh0uvAnTaqqwqB92Jt4UXBAeKekDs5IaDKyJFR4X1gYVCgXcw==}
     engines: {node: '>=20.18.1'}
@@ -6503,17 +6515,17 @@ packages:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
-  workerd@1.20260114.0:
-    resolution: {integrity: sha512-kTJ+jNdIllOzWuVA3NRQRvywP0T135zdCjAE2dAUY1BFbxM6fmMZV8BbskEoQ4hAODVQUfZQmyGctcwvVCKxFA==}
+  workerd@1.20260116.0:
+    resolution: {integrity: sha512-tVdBes3qkZKm9ntrgSDlvKzk4g2mcMp4bNM1+UgZMpTesb0x7e59vYYcKclbSNypmVkdLWpEc2TOpO0WF/rrZw==}
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.59.2:
-    resolution: {integrity: sha512-Z4xn6jFZTaugcOKz42xvRAYKgkVUERHVbuCJ5+f+gK+R6k12L02unakPGOA0L0ejhUl16dqDjKe4tmL9sedHcw==}
+  wrangler@4.59.3:
+    resolution: {integrity: sha512-zl+nqoGzWJ4K+NEMjy4GiaIi9ix59FkOzd7UsDb8CQADwy3li1DSNAzHty/BWYa3ZvMxr/G4pogMBb5vcSrNvQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
-      '@cloudflare/workers-types': ^4.20260114.0
+      '@cloudflare/workers-types': ^4.20260116.0
     peerDependenciesMeta:
       '@cloudflare/workers-types':
         optional: true
@@ -7563,37 +7575,39 @@ snapshots:
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
-  '@cloudflare/puppeteer@1.0.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+  '@cloudflare/puppeteer@1.0.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@puppeteer/browsers': 2.2.4
       debug: 4.4.3
       devtools-protocol: 0.0.1299070
-      ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      ws: 8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
       - bufferutil
+      - react-native-b4a
       - supports-color
       - utf-8-validate
 
-  '@cloudflare/unenv-preset@2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260114.0)':
+  '@cloudflare/unenv-preset@2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260116.0)':
     dependencies:
       unenv: 2.0.0-rc.24
     optionalDependencies:
-      workerd: 1.20260114.0
+      workerd: 1.20260116.0
 
-  '@cloudflare/workerd-darwin-64@1.20260114.0':
+  '@cloudflare/workerd-darwin-64@1.20260116.0':
     optional: true
 
-  '@cloudflare/workerd-darwin-arm64@1.20260114.0':
+  '@cloudflare/workerd-darwin-arm64@1.20260116.0':
     optional: true
 
-  '@cloudflare/workerd-linux-64@1.20260114.0':
+  '@cloudflare/workerd-linux-64@1.20260116.0':
     optional: true
 
-  '@cloudflare/workerd-linux-arm64@1.20260114.0':
+  '@cloudflare/workerd-linux-arm64@1.20260116.0':
     optional: true
 
-  '@cloudflare/workerd-windows-64@1.20260114.0':
+  '@cloudflare/workerd-windows-64@1.20260116.0':
     optional: true
 
   '@cloudflare/workers-types@4.20260120.0': {}
@@ -8701,7 +8715,9 @@ snapshots:
       tar-fs: 3.1.1
       yargs: 17.7.2
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
+      - react-native-b4a
       - supports-color
 
   '@puppeteer/browsers@2.2.4':
@@ -8715,7 +8731,9 @@ snapshots:
       unbzip2-stream: 1.4.3
       yargs: 17.7.2
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
+      - react-native-b4a
       - supports-color
 
   '@puppeteer/browsers@2.6.1':
@@ -8729,7 +8747,9 @@ snapshots:
       unbzip2-stream: 1.4.3
       yargs: 17.7.2
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
+      - react-native-b4a
       - supports-color
 
   '@quansync/fs@1.0.0':
@@ -8874,7 +8894,7 @@ snapshots:
 
   '@scalar/helpers@0.2.8': {}
 
-  '@scalar/hono-api-reference@0.9.34(hono@4.11.4)':
+  '@scalar/hono-api-reference@0.9.35(hono@4.11.4)':
     dependencies:
       '@scalar/core': 0.3.32
       hono: 4.11.4
@@ -9490,7 +9510,7 @@ snapshots:
 
   aws4@1.13.2: {}
 
-  b4a@1.6.7: {}
+  b4a@1.7.3: {}
 
   babel-plugin-polyfill-corejs2@0.4.14(@babel/core@7.28.3):
     dependencies:
@@ -9520,29 +9540,41 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  bare-events@2.6.1:
-    optional: true
+  bare-events@2.8.2: {}
 
-  bare-fs@4.2.0:
+  bare-fs@4.5.2:
     dependencies:
-      bare-events: 2.6.1
+      bare-events: 2.8.2
       bare-path: 3.0.0
-      bare-stream: 2.7.0(bare-events@2.6.1)
+      bare-stream: 2.7.0(bare-events@2.8.2)
+      bare-url: 2.3.2
+      fast-fifo: 1.3.2
+    transitivePeerDependencies:
+      - bare-abort-controller
+      - react-native-b4a
     optional: true
 
-  bare-os@3.6.1:
+  bare-os@3.6.2:
     optional: true
 
   bare-path@3.0.0:
     dependencies:
-      bare-os: 3.6.1
+      bare-os: 3.6.2
     optional: true
 
-  bare-stream@2.7.0(bare-events@2.6.1):
+  bare-stream@2.7.0(bare-events@2.8.2):
     dependencies:
-      streamx: 2.22.1
+      streamx: 2.23.0
     optionalDependencies:
-      bare-events: 2.6.1
+      bare-events: 2.8.2
+    transitivePeerDependencies:
+      - bare-abort-controller
+      - react-native-b4a
+    optional: true
+
+  bare-url@2.3.2:
+    dependencies:
+      bare-path: 3.0.0
     optional: true
 
   base64-js@1.5.1: {}
@@ -10515,6 +10547,12 @@ snapshots:
 
   eventemitter3@5.0.1: {}
 
+  events-universal@1.0.1:
+    dependencies:
+      bare-events: 2.8.2
+    transitivePeerDependencies:
+      - bare-abort-controller
+
   execa@8.0.1:
     dependencies:
       cross-spawn: 7.0.6
@@ -10727,7 +10765,7 @@ snapshots:
     dependencies:
       basic-ftp: 5.0.5
       data-uri-to-buffer: 6.0.2
-      debug: 4.4.1
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -11675,12 +11713,12 @@ snapshots:
 
   mimic-response@4.0.0: {}
 
-  miniflare@4.20260114.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+  miniflare@4.20260116.0(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       sharp: 0.34.5
-      undici: 7.14.0
-      workerd: 1.20260114.0
+      undici: 7.18.2
+      workerd: 1.20260116.0
       ws: 8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       youch: 4.1.0-beta.10
       zod: 3.25.76
@@ -12205,10 +12243,12 @@ snapshots:
       xvfb: 0.4.0
     transitivePeerDependencies:
       - '@types/puppeteer'
+      - bare-abort-controller
       - bare-buffer
       - bufferutil
       - puppeteer
       - puppeteer-core
+      - react-native-b4a
       - supports-color
       - utf-8-validate
 
@@ -12261,8 +12301,10 @@ snapshots:
       typed-query-selector: 2.12.0
       ws: 8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
       - bufferutil
+      - react-native-b4a
       - supports-color
       - utf-8-validate
 
@@ -12275,8 +12317,10 @@ snapshots:
       typed-query-selector: 2.12.0
       ws: 8.19.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
       - bufferutil
+      - react-native-b4a
       - supports-color
       - utf-8-validate
 
@@ -12289,8 +12333,10 @@ snapshots:
       puppeteer-core: rebrowser-puppeteer-core@24.8.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
       - bufferutil
+      - react-native-b4a
       - supports-color
       - typescript
       - utf-8-validate
@@ -12648,12 +12694,14 @@ snapshots:
     dependencies:
       bluebird: 2.11.0
 
-  streamx@2.22.1:
+  streamx@2.23.0:
     dependencies:
+      events-universal: 1.0.1
       fast-fifo: 1.3.2
       text-decoder: 1.2.3
-    optionalDependencies:
-      bare-events: 2.6.1
+    transitivePeerDependencies:
+      - bare-abort-controller
+      - react-native-b4a
 
   strict-event-emitter@0.5.1: {}
 
@@ -12752,16 +12800,21 @@ snapshots:
       pump: 3.0.3
       tar-stream: 3.1.7
     optionalDependencies:
-      bare-fs: 4.2.0
+      bare-fs: 4.5.2
       bare-path: 3.0.0
     transitivePeerDependencies:
+      - bare-abort-controller
       - bare-buffer
+      - react-native-b4a
 
   tar-stream@3.1.7:
     dependencies:
-      b4a: 1.6.7
+      b4a: 1.7.3
       fast-fifo: 1.3.2
-      streamx: 2.22.1
+      streamx: 2.23.0
+    transitivePeerDependencies:
+      - bare-abort-controller
+      - react-native-b4a
 
   tar@7.5.2:
     dependencies:
@@ -12795,7 +12848,9 @@ snapshots:
 
   text-decoder@1.2.3:
     dependencies:
-      b4a: 1.6.7
+      b4a: 1.7.3
+    transitivePeerDependencies:
+      - react-native-b4a
 
   text-hex@1.0.0: {}
 
@@ -13001,8 +13056,6 @@ snapshots:
   undici-types@6.21.0: {}
 
   undici-types@7.16.0: {}
-
-  undici@7.14.0: {}
 
   undici@7.18.2: {}
 
@@ -13269,24 +13322,24 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
-  workerd@1.20260114.0:
+  workerd@1.20260116.0:
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20260114.0
-      '@cloudflare/workerd-darwin-arm64': 1.20260114.0
-      '@cloudflare/workerd-linux-64': 1.20260114.0
-      '@cloudflare/workerd-linux-arm64': 1.20260114.0
-      '@cloudflare/workerd-windows-64': 1.20260114.0
+      '@cloudflare/workerd-darwin-64': 1.20260116.0
+      '@cloudflare/workerd-darwin-arm64': 1.20260116.0
+      '@cloudflare/workerd-linux-64': 1.20260116.0
+      '@cloudflare/workerd-linux-arm64': 1.20260116.0
+      '@cloudflare/workerd-windows-64': 1.20260116.0
 
-  wrangler@4.59.2(@cloudflare/workers-types@4.20260120.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+  wrangler@4.59.3(@cloudflare/workers-types@4.20260120.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
-      '@cloudflare/unenv-preset': 2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260114.0)
+      '@cloudflare/unenv-preset': 2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260116.0)
       blake3-wasm: 2.1.5
       esbuild: 0.27.0
-      miniflare: 4.20260114.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      miniflare: 4.20260116.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.24
-      workerd: 1.20260114.0
+      workerd: 1.20260116.0
     optionalDependencies:
       '@cloudflare/workers-types': 4.20260120.0
       fsevents: 2.3.3
