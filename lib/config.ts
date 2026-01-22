@@ -219,6 +219,7 @@ type ConfigEnvKeys =
     | 'XIAOYUZHOU_ID'
     | 'XIAOYUZHOU_TOKEN'
     | 'XIAOHONGSHU_COOKIE'
+    | 'XIAOHONGSHU_PROXY'
     | 'XIMALAYA_TOKEN'
     | 'XSIJISHE_COOKIE'
     | 'XSIJISHE_USER_AGENT'
@@ -637,6 +638,7 @@ export type Config = {
     };
     xiaohongshu: {
         cookie?: string;
+        proxy?: string;
     };
     ximalaya: {
         token?: string;
@@ -1115,6 +1117,7 @@ const calculateValue = () => {
         },
         xiaohongshu: {
             cookie: envs.XIAOHONGSHU_COOKIE,
+            proxy: envs.XIAOHONGSHU_PROXY,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
