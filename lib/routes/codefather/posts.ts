@@ -1,4 +1,3 @@
-import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -12,12 +11,12 @@ const sortFieldMap: Record<string, { field: string; name: string }> = {
 };
 
 export const route: Route = {
-    path: '/posts/:sort?/:category?',
+    path: '/posts/:category?/:sort?',
     categories: ['programming'],
-    example: '/codefather/posts/hot',
+    example: '/codefather/posts',
     parameters: {
-        sort: '排序方式，可选 `hot`（热门）、`new`（最新）、`recommend`（推荐），默认为 `hot`',
         category: '分类，可选 `交流`、`学习`、`项目`、`资源`、`经验`，默认为全部',
+        sort: '排序方式，可选 `new`（最新）、`hot`（热门）、`recommend`（推荐），默认为 `new`',
     },
     features: {
         requireConfig: false,
@@ -30,7 +29,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.codefather.cn/', 'www.codefather.cn'],
-            target: '/posts/hot',
+            target: '/posts',
         },
     ],
     name: '帖子',
@@ -40,10 +39,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const sort = ctx.req.param('sort') || 'hot';
     const category = ctx.req.param('category');
+    const sort = ctx.req.param('sort') || 'new';
 
-    const sortConfig = sortFieldMap[sort] || sortFieldMap.hot;
+    const sortConfig = sortFieldMap[sort] || sortFieldMap.new;
 
     const requestBody: Record<string, unknown> = {
         current: 1,
@@ -60,7 +59,6 @@ async function handler(ctx) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'User-Agent': config.trueUA,
         },
         body: requestBody,
     });
@@ -77,10 +75,10 @@ async function handler(ctx) {
         const user = (item.user as Record<string, unknown>) || {};
         const tags = (item.tags as Array<{ tagName: string }>) || [];
 
-        // 构建描述内容
+        // Build description content
         let description = `<p>${content.replaceAll('\n', '<br>')}</p>`;
 
-        // 添加图片
+        // Add images
         if (pictureList.length > 0) {
             description += '<div>';
             for (const pic of pictureList) {
@@ -89,16 +87,15 @@ async function handler(ctx) {
             description += '</div>';
         }
 
-        // 添加统计信息
-        description += `<p><small>👍 ${item.thumbNum} | 👁 ${item.viewNum} | 💬 ${item.commentNum}</small></p>`;
-
         return {
-            title: content.split('\n')[0].slice(0, 100) || '无标题',
+            title: content.split('\n')[0] || '无标题',
             link: `https://www.codefather.cn/post/${item.id}`,
             description,
             pubDate: parseDate(item.createTime as number),
             author: user.userName as string,
             category: [item.category as string, ...tags.map((t) => t.tagName)].filter(Boolean),
+            upvotes: item.thumbNum as number,
+            comments: item.commentNum as number,
         };
     });
 

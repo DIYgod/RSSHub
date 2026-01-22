@@ -1,4 +1,3 @@
-import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,7 +38,6 @@ async function handler(ctx) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'User-Agent': config.trueUA,
         },
         body: {
             current: 1,
@@ -62,20 +60,16 @@ async function handler(ctx) {
         const tags = (item.tags as string[]) || [];
         const bestComment = item.bestComment as Record<string, unknown> | undefined;
 
-        // 构建描述内容
-        let description = `<h3>${title}</h3>`;
-        description += `<div>${content.replaceAll('\n', '<br>')}</div>`;
+        // Build description content
+        let description = `<div>${content.replaceAll('\n', '<br>')}</div>`;
 
-        // 添加最佳回答
+        // Add best answer
         if (bestComment) {
             const answerUser = (bestComment.user as Record<string, unknown>) || {};
             description += '<hr><h4>💡 最佳回答</h4>';
             description += `<p><strong>${answerUser.userName || '匿名'}</strong>：</p>`;
-            description += `<p>${((bestComment.plainTextDescription as string) || '').slice(0, 500)}...</p>`;
+            description += `<p>${(bestComment.plainTextDescription as string) || ''}</p>`;
         }
-
-        // 添加统计信息
-        description += `<p><small>👍 ${item.thumbNum} | 👁 ${item.viewNum} | 💬 ${item.commentNum}</small></p>`;
 
         return {
             title,
@@ -84,6 +78,8 @@ async function handler(ctx) {
             pubDate: parseDate(item.createTime as number),
             author: user.userName as string,
             category: tags,
+            upvotes: item.thumbNum as number,
+            comments: item.commentNum as number,
         };
     });
 
