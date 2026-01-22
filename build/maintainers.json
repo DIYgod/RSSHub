@@ -1819,6 +1819,12 @@
   "/cockroachlabs/blog/:category?": [
     "CookiePieWw"
   ],
+  "/codefather/posts/:category?/:sort?": [
+    "JackyST0"
+  ],
+  "/codefather/questions/:sort?": [
+    "JackyST0"
+  ],
   "/codeforces/contests": [
     "Fatpandac"
   ],
@@ -8606,6 +8612,9 @@
   ],
   "/tynu/": [
     "2PoL"
+  ],
+  "/typeless/changelog": [
+    "TonyRL"
   ],
   "/typora/changelog/dev": [
     "nczitzk"

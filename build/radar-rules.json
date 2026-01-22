@@ -12311,6 +12311,29 @@
       }
     ]
   },
+  "codefather.cn": {
+    "_name": "编程导航",
+    "www": [
+      {
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/",
+          "/"
+        ],
+        "target": "/codefather/posts"
+      },
+      {
+        "title": "问答",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/qa",
+          "/"
+        ],
+        "target": "/codefather/questions"
+      }
+    ]
+  },
   "codeforces.com": {
     "_name": "Codeforces",
     "www": [
@@ -45770,6 +45793,21 @@
           "/"
         ],
         "target": "/tynu/"
+      }
+    ]
+  },
+  "typeless.com": {
+    "_name": "Typeless",
+    "www": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/help/release-notes/*",
+          "/help/release-notes",
+          "/"
+        ],
+        "target": "/typeless/changelog"
       }
     ]
   },

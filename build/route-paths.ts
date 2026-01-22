@@ -603,6 +603,8 @@ export type RoutePath =
   | `/cnu/physics`
   | `/cnu/smkxxy`
   | `/cockroachlabs/blog/:category?`
+  | `/codefather/posts/:category?/:sort?`
+  | `/codefather/questions/:sort?`
   | `/codeforces/contests`
   | `/codeforces/recent-actions/:minrating?`
   | `/cognition/blog`
@@ -2800,6 +2802,7 @@ export type RoutePath =
   | `/txks/news`
   | `/txrjy/fornumtopic/:channel?`
   | `/tynu/`
+  | `/typeless/changelog`
   | `/typora/changelog`
   | `/typora/changelog/dev`
   | `/typst/universe`
