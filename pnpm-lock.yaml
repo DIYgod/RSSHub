@@ -135,7 +135,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 7.0.3
-        version: 7.0.3(tough-cookie@6.0.0)(undici@7.18.2)
+        version: 7.0.3(tough-cookie@6.0.0)(undici@7.19.0)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -266,8 +266,8 @@ importers:
         specifier: 1.6.3
         version: 1.6.3
       undici:
-        specifier: 7.18.2
-        version: 7.18.2
+        specifier: 7.19.0
+        version: 7.19.0
       uuid:
         specifier: 13.0.0
         version: 13.0.0
@@ -436,7 +436,7 @@ importers:
         version: 2.4.3(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.29
-        version: 1.0.29(undici@7.18.2)(utf-8-validate@5.0.10)
+        version: 1.0.29(undici@7.19.0)(utf-8-validate@5.0.10)
       oxfmt:
         specifier: 0.26.0
         version: 0.26.0
@@ -6265,6 +6265,10 @@ packages:
     resolution: {integrity: sha512-y+8YjDFzWdQlSE9N5nzKMT3g4a5UBX1HKowfdXh0uvAnTaqqwqB92Jt4UXBAeKekDs5IaDKyJFR4X1gYVCgXcw==}
     engines: {node: '>=20.18.1'}
 
+  undici@7.19.0:
+    resolution: {integrity: sha512-Heho1hJD81YChi+uS2RkSjcVO+EQLmLSyUlHyp7Y/wFbxQaGb4WXVKD073JytrjXJVkSZVzoE2MCSOKugFGtOQ==}
+    engines: {node: '>=20.18.1'}
+
   unenv@2.0.0-rc.24:
     resolution: {integrity: sha512-i7qRCmY42zmCwnYlh9H2SvLEypEFGye5iRmEMKjcGi7zk9UquigRjFtTLz0TYqr0ZGLZhaMHl/foy1bZR+Cwlw==}
 
@@ -9776,7 +9780,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.18.2
+      undici: 7.19.0
       whatwg-mimetype: 4.0.0
 
   chownr@3.0.0: {}
@@ -10995,12 +10999,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.18.2):
+  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.19.0):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 6.0.0
     optionalDependencies:
-      undici: 7.18.2
+      undici: 7.19.0
 
   http-proxy-agent@7.0.2:
     dependencies:
@@ -11864,13 +11868,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.29(undici@7.18.2)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.29(undici@7.19.0)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.0.9
       iconv-lite: 0.6.3
       inspector: 0.5.0
       open: 8.4.2
-      undici: 7.18.2
+      undici: 7.19.0
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -13086,6 +13090,8 @@ snapshots:
   undici-types@7.16.0: {}
 
   undici@7.18.2: {}
+
+  undici@7.19.0: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
