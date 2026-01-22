@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '郑大新闻网',
-    maintainers: ['misty'],
+    maintainers: ['amandus1990'],
     handler,
     description: `| 要问速递 | 教学科研 | 基层动态 | 媒体郑大 |
 | -------- | -------- | -------- | -------- |
@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const type_dict = {
+    const typeDict = {
         ywsd: [
             '要闻速递', // 分类名称
             'https://news.zzu.edu.cn/ywsd.htm', // 郑大新闻网链接
@@ -42,7 +42,7 @@ async function handler(ctx) {
     };
 
     // 获取页面内容
-    const response = await got(type_dict[type][1]);
+    const response = await got(typeDict[type][1]);
     const $ = load(response.data);
 
     // 解析页面内容并提取文章信息
@@ -52,7 +52,7 @@ async function handler(ctx) {
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('h3 a').first();
-            const link = new URL($link.attr('href'), type_dict[type][1]).href;
+            const link = new URL($link.attr('href'), typeDict[type][1]).href;
             const title = $link.attr('title') || $link.text().trim();
 
             // 尝试获取发布时间
@@ -69,12 +69,9 @@ async function handler(ctx) {
             };
         });
 
-    // 保留结构以便将来扩展，当前直接返回列表项
-    const items = list.map((item) => item);
-
     return {
-        title: `郑大新闻网-${type_dict[type][0]}`,
-        link: type_dict[type][1],
-        item: items,
+        title: `郑大新闻网-${typeDict[type][0]}`,
+        link: typeDict[type][1],
+        item: list,
     };
 }
