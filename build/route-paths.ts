@@ -2800,6 +2800,7 @@ export type RoutePath =
   | `/txks/news`
   | `/txrjy/fornumtopic/:channel?`
   | `/tynu/`
+  | `/typeless/changelog`
   | `/typora/changelog`
   | `/typora/changelog/dev`
   | `/typst/universe`

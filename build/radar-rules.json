@@ -45773,6 +45773,21 @@
       }
     ]
   },
+  "typeless.com": {
+    "_name": "Typeless",
+    "www": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/help/release-notes/*",
+          "/help/release-notes",
+          "/"
+        ],
+        "target": "/typeless/changelog"
+      }
+    ]
+  },
   "typora.io": {
     "_name": "Typora",
     "support": [
