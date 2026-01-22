@@ -24,7 +24,7 @@ export const route: Route = {
     name: '郑大新闻网',
     maintainers: ['amandus1990'],
     handler,
-    description: `| 要问速递 | 教学科研 | 基层动态 | 媒体郑大 |
+    description: `| 要闻速递 | 教学科研 | 基层动态 | 媒体郑大 |
 | -------- | -------- | -------- | -------- |
 | ywsd     | jxky     | jcdt     | mtzd     |`,
 };
@@ -48,7 +48,7 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.new-item')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 15)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('h3 a').first();

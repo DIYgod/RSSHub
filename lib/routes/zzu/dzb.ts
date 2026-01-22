@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwzx: [
-            '新闻资讯', // 分类名称
-            'https://www5.zzu.edu.cn/dzb/index/xwzx.htm',
-        ],
+        xwzx: ['新闻资讯', 'https://www5.zzu.edu.cn/dzb/index/xwzx.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/dzb/index/tzgg.htm'],
     };
 

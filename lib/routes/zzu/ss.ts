@@ -46,7 +46,7 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.list_notice > a')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 10)
         .map((element) => {
             const $element = $(element);
             const link = new URL($element.attr('href'), typeDict[type][1]).href;

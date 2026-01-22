@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwkd: [
-            '新闻快递', // 分类名称
-            'https://www5.zzu.edu.cn/jwc/index/xwkd.htm',
-        ],
+        xwkd: ['新闻快递', 'https://www5.zzu.edu.cn/jwc/index/xwkd.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/jwc/index/tzgg.htm'],
     };
 
@@ -46,12 +43,12 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('ul.list li')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 15)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a.tit').first();
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.text().trim();
 
             // 获取发布时间
             const pubDateText = $element.find('span').last().text().trim();

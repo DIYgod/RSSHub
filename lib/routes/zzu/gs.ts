@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwzx: [
-            '新闻资讯', // 分类名称
-            'https://gs.zzu.edu.cn/index/yjsyxw.htm',
-        ],
+        xwzx: ['新闻资讯', 'https://gs.zzu.edu.cn/index/yjsyxw.htm'],
         tzgg: ['通知公告', 'https://gs.zzu.edu.cn/index/yjsygg.htm'],
     };
 
@@ -51,10 +48,10 @@ async function handler(ctx) {
             const $element = $(element);
             const $link = $element.find('a').first();
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.text().trim();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').text().trim();
+            const pubDateText = $element.find('span').text().trim().replaceAll(/[[\]]/g, '');
 
             return {
                 title,

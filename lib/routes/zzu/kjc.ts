@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwzx: [
-            '新闻资讯', // 分类名称
-            'https://www7.zzu.edu.cn/kjc/index/kydt.htm',
-        ],
+        xwzx: ['新闻资讯', 'https://www7.zzu.edu.cn/kjc/index/kydt.htm'],
         tzgg: ['通知公告', 'https://www7.zzu.edu.cn/kjc/index/tzgg.htm'],
     };
 
@@ -46,7 +43,7 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.list_guild')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 14)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();

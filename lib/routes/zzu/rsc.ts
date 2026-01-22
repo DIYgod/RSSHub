@@ -47,7 +47,7 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.list_guild')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 14)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();

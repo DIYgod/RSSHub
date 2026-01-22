@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hhttps://www5.zzu.edu.cn/tzhb/index/:type.htm'],
+            source: ['https://www5.zzu.edu.cn/tzhb/index/:type.htm'],
         },
     ],
     name: '郑大党委统战部',
@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        gzdt: [
-            '工作动态', // 分类名称
-            'https://www5.zzu.edu.cn/tzhb/index/gzdt.htm',
-        ],
+        gzdt: ['工作动态', 'https://www5.zzu.edu.cn/tzhb/index/gzdt.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/tzhb/index/tzgg1.htm'],
     };
 
@@ -46,7 +43,7 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.main_conR li')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 15)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();

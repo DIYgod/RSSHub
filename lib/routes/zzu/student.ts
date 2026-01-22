@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwzx: [
-            '新闻资讯', // 分类名称
-            'https://www5.zzu.edu.cn/student/xwzx.htm',
-        ],
+        xwzx: ['新闻资讯', 'https://www5.zzu.edu.cn/student/xwzx.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/student/tzgg.htm'],
     };
 
@@ -46,20 +43,21 @@ async function handler(ctx) {
     // 解析页面内容并提取文章信息
     const list = $('.part-list ul li')
         .toArray()
-        .slice(0, 20)
+        .slice(0, 10)
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a').first();
             const link = new URL($link.attr('href'), typeDict[type][1]).href;
             const title = $link.find('span').text().trim();
 
-            // 获取发布时间
+            // 获取发布时间 (格式: yyyy年mm月dd日)
             const pubDateText = $element.find('em').text().trim();
+            const pubDate = pubDateText ? new Date(pubDateText.replace(/年(\d+)月(\d+)日/, '$1-$2-$3')) : null;
 
             return {
                 title,
                 link,
-                pubDate: pubDateText || null,
+                pubDate,
             };
         });
 
