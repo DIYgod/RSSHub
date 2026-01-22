@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { getPuppeteerPage } from '@/utils/puppeteer';
@@ -93,6 +94,66 @@ export const handler = async (ctx: Context): Promise<Data> => {
             } as DataItem;
         })
         .filter((item): item is DataItem => item !== null);
+
+    await Promise.all(
+        items.slice(0, limit).map((item) =>
+            item.link
+                ? cache.tryGet(item.link, async () => {
+                      logger.http(`Fetching full content for ${item.link!}`);
+
+                      const { page: contentPage, destory: contentDestory } = await getPuppeteerPage(item.link!, {
+                          onBeforeLoad: async (page) => {
+                              await page.setRequestInterception(true);
+                              page.on('request', (request) => {
+                                  request.resourceType() === 'document' ? request.continue() : request.abort();
+                              });
+                          },
+                      });
+
+                      const contentHtml = await contentPage.evaluate(() => document.documentElement.innerHTML);
+                      await contentDestory();
+
+                      const $content = load(contentHtml);
+
+                      // Find the main article content - RichTextContainer with substantial text
+                      // Look for elements with framer-text class containing actual content
+                      const contentContainers = $content('div[data-framer-component-type="RichTextContainer"]');
+                      let fullContent = '';
+
+                      for (const container of contentContainers.toArray()) {
+                          const $container = $content(container);
+                          const textContent = $container.text();
+                          // Check if this container has substantial article content (not just nav/footer)
+                          if (textContent.length > 200 && !textContent.includes('© Copyright')) {
+                              fullContent = $container.html()?.trim() || '';
+                              break;
+                          }
+                      }
+
+                      if (!fullContent) {
+                          // Fallback: find any RichTextContainer with h2 or substantial paragraphs
+                          const fallback = $content('div[data-framer-component-type="RichTextContainer"]')
+                              .filter((_, el) => {
+                                  const $el = $content(el);
+                                  return $el.find('h2.framer-text').length > 0 || $el.find('p.framer-text').length > 0;
+                              })
+                              .first();
+                          fullContent = fallback.length ? fallback.html()?.trim() || '' : '';
+                      }
+
+                      if (fullContent) {
+                          const $temp = load(fullContent);
+                          $temp('div[data-framer-name="Image"]').remove();
+                          fullContent = $temp.html() || '';
+                      }
+
+                      item.description = fullContent || item.description;
+
+                      return item;
+                  })
+                : Promise.resolve(item)
+        )
+    );
 
     return {
         title: $('title').text() || 'Perplexity Changelog',
