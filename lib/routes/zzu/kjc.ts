@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www7.zzu.edu.cn/kjc/'],
+            source: ['www7.zzu.edu.cn/kjc/'],
         },
     ],
     name: '郑大科研院',

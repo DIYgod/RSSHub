@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.zzu.edu.cn/:type.htm'],
+            source: ['news.zzu.edu.cn/'],
         },
     ],
     name: '郑大新闻网',

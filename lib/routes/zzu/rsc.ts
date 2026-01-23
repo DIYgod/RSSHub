@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www5.zzu.edu.cn/rsc/'],
+            source: ['www5.zzu.edu.cn/rsc/'],
         },
     ],
     name: '郑大人事部',

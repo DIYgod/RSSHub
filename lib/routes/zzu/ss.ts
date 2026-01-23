@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www5.zzu.edu.cn/ss/'],
+            source: ['www5.zzu.edu.cn/ss/'],
         },
     ],
     name: '郑大社科院',
@@ -32,10 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
     const typeDict = {
-        xwzx: [
-            '新闻资讯', // 分类名称
-            'https://www5.zzu.edu.cn/ss/index/skxw.htm',
-        ],
+        xwzx: ['新闻资讯', 'https://www5.zzu.edu.cn/ss/index/skxw.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/ss/index/tzgg.htm'],
     };
 
@@ -52,10 +49,20 @@ async function handler(ctx) {
             const link = new URL($element.attr('href'), typeDict[type][1]).href;
             const title = $element.find('h3').text().trim();
 
-            // 获取发布时间 (格式: MM-DD，需要补全年份)
+            // 获取发布时间
+            // xwzx: 格式为 MM-DD，需要补全年份
+            // tzgg: 格式为 yyyy-mm-dd，直接使用
             const pubDateText = $element.find('time').text().trim();
-            const currentYear = new Date().getFullYear();
-            const pubDate = pubDateText ? `${currentYear}-${pubDateText}` : null;
+            let pubDate = null;
+
+            if (pubDateText) {
+                if (type === 'xwzx') {
+                    const currentYear = new Date().getFullYear();
+                    pubDate = `${currentYear}-${pubDateText}`;
+                } else {
+                    pubDate = pubDateText;
+                }
+            }
 
             return {
                 title,

@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www5.zzu.edu.cn/zcycwb/'],
+            source: ['www5.zzu.edu.cn/zcycwb/'],
         },
     ],
     name: '郑大资产与财务部',

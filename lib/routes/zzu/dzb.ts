@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://www5.zzu.edu.cn/dzb/index/:type.htm'],
+            source: ['www5.zzu.edu.cn/dzb/'],
         },
     ],
     name: '郑大党政办',
