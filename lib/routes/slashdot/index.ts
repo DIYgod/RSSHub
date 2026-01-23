@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import { InvalidParameterError } from '@/errors/types/invalid-parameter';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
