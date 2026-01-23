@@ -42,7 +42,7 @@ importers:
         version: 1.19.9(hono@4.11.5)
       '@hono/zod-openapi':
         specifier: 1.2.0
-        version: 1.2.0(hono@4.11.5)(zod@4.3.5)
+        version: 1.2.0(hono@4.11.5)(zod@4.3.6)
       '@notionhq/client':
         specifier: 5.7.0
         version: 5.7.0
@@ -284,8 +284,8 @@ importers:
         specifier: 16.0.1
         version: 16.0.1
       zod:
-        specifier: 4.3.5
-        version: 4.3.5
+        specifier: 4.3.6
+        version: 4.3.6
     devDependencies:
       '@babel/preset-env':
         specifier: 7.28.6
@@ -303,8 +303,8 @@ importers:
         specifier: 1.0.5
         version: 1.0.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@cloudflare/workers-types':
-        specifier: 4.20260122.0
-        version: 4.20260122.0
+        specifier: 4.20260123.0
+        version: 4.20260123.0
       '@eslint/eslintrc':
         specifier: 3.3.3
         version: 3.3.3
@@ -411,8 +411,8 @@ importers:
         specifier: 11.3.3
         version: 11.3.3
       globals:
-        specifier: 17.0.0
-        version: 17.0.0
+        specifier: 17.1.0
+        version: 17.1.0
       got:
         specifier: 14.6.6
         version: 14.6.6
@@ -463,7 +463,7 @@ importers:
         version: 4.0.9(@types/debug@4.1.12)(@types/node@25.0.10)(jiti@2.6.1)(jsdom@27.0.0(bufferutil@4.0.9)(postcss@8.5.6)(utf-8-validate@5.0.10))(msw@2.4.3(typescript@5.9.3))(tsx@4.21.0)(yaml@2.8.2)
       wrangler:
         specifier: 4.59.3
-        version: 4.59.3(@cloudflare/workers-types@4.20260122.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+        version: 4.59.3(@cloudflare/workers-types@4.20260123.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       yaml-eslint-parser:
         specifier: 1.3.2
         version: 1.3.2
@@ -1157,8 +1157,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20260122.0':
-    resolution: {integrity: sha512-ktjHXwjsjxFqsnCb9YQj9l12i6yfK5klBggKddogQ4KT3GCaU3Kq6IAkd4bGZSZrgwwbCkhAuhTzz4a3llA97g==}
+  '@cloudflare/workers-types@4.20260123.0':
+    resolution: {integrity: sha512-pQccZ8IDLFKkvdKBXZRPkbMtWtS7vVz1giJGkAAZ5cZH2RHK5Bs6p1OoVZA8Z2Sry8Q0tZbZ5Yjud4R7SrG3KQ==}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -4315,8 +4315,8 @@ packages:
     resolution: {integrity: sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ==}
     engines: {node: '>=18'}
 
-  globals@17.0.0:
-    resolution: {integrity: sha512-gv5BeD2EssA793rlFWVPMMCqefTlpusw6/2TbAVMy0FzcG8wKJn4O+NqJ4+XWmmwrayJgw5TzrmWjFgmz1XPqw==}
+  globals@17.1.0:
+    resolution: {integrity: sha512-8HoIcWI5fCvG5NADj4bDav+er9B9JMj2vyL2pI8D0eismKyUvPLTSs+Ln3wqhwcp306i73iyVnEKx3F6T47TGw==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -6707,8 +6707,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.3.5:
-    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
 snapshots:
 
@@ -6745,10 +6745,10 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@asteasolutions/zod-to-openapi@8.2.0(zod@4.3.5)':
+  '@asteasolutions/zod-to-openapi@8.2.0(zod@4.3.6)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 4.3.5
+      zod: 4.3.6
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -7623,7 +7623,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260116.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20260122.0': {}
+  '@cloudflare/workers-types@4.20260123.0': {}
 
   '@colors/colors@1.6.0': {}
 
@@ -7933,18 +7933,18 @@ snapshots:
     dependencies:
       hono: 4.11.5
 
-  '@hono/zod-openapi@1.2.0(hono@4.11.5)(zod@4.3.5)':
+  '@hono/zod-openapi@1.2.0(hono@4.11.5)(zod@4.3.6)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 8.2.0(zod@4.3.5)
-      '@hono/zod-validator': 0.7.6(hono@4.11.5)(zod@4.3.5)
+      '@asteasolutions/zod-to-openapi': 8.2.0(zod@4.3.6)
+      '@hono/zod-validator': 0.7.6(hono@4.11.5)(zod@4.3.6)
       hono: 4.11.5
       openapi3-ts: 4.5.0
-      zod: 4.3.5
+      zod: 4.3.6
 
-  '@hono/zod-validator@0.7.6(hono@4.11.5)(zod@4.3.5)':
+  '@hono/zod-validator@0.7.6(hono@4.11.5)(zod@4.3.6)':
     dependencies:
       hono: 4.11.5
-      zod: 4.3.5
+      zod: 4.3.6
 
   '@humanfs/core@0.19.1': {}
 
@@ -8936,7 +8936,7 @@ snapshots:
       '@scalar/helpers': 0.2.8
       nanoid: 5.1.6
       type-fest: 5.4.1
-      zod: 4.3.5
+      zod: 4.3.6
 
   '@scure/base@2.0.0': {}
 
@@ -10851,7 +10851,7 @@ snapshots:
 
   globals@16.5.0: {}
 
-  globals@17.0.0: {}
+  globals@17.1.0: {}
 
   globrex@0.1.2: {}
 
@@ -13364,7 +13364,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260116.0
       '@cloudflare/workerd-windows-64': 1.20260116.0
 
-  wrangler@4.59.3(@cloudflare/workers-types@4.20260122.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10):
+  wrangler@4.59.3(@cloudflare/workers-types@4.20260123.0)(bufferutil@4.0.9)(utf-8-validate@5.0.10):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@cloudflare/unenv-preset': 2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260116.0)
@@ -13375,7 +13375,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260116.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20260122.0
+      '@cloudflare/workers-types': 4.20260123.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
@@ -13531,4 +13531,4 @@ snapshots:
 
   zod@3.25.76: {}
 
-  zod@4.3.5: {}
+  zod@4.3.6: {}
