@@ -3186,4 +3186,17 @@ export type RoutePath =
   | `/zuvio/student5/boards`
   | `/zxcs/novel/:type`
   | `/zyshow*`
-  | `/zyw/hot/:site?`;
+  | `/zyw/hot/:site?`
+  | `/zzu/dwzzb/:type`
+  | `/zzu/dzb/:type`
+  | `/zzu/gs/:type`
+  | `/zzu/jwc/:type`
+  | `/zzu/kjc/:type`
+  | `/zzu/news/:type`
+  | `/zzu/rsc/:type`
+  | `/zzu/ss/:type`
+  | `/zzu/student/:type`
+  | `/zzu/tzhb/:type`
+  | `/zzu/xbx/:type`
+  | `/zzu/xuan/:type`
+  | `/zzu/zcycwb/:type`;
