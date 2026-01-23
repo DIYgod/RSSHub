@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
-    const { page, destory } = await getPuppeteerPage(targetUrl, {
+    const { page, destory, browser } = await getPuppeteerPage(targetUrl, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -24,9 +24,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             });
         },
     });
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
-    await destory();
 
+    const html = await page.evaluate(() => document.documentElement.innerHTML);
     const $ = load(html);
     const language = $('html').attr('lang') ?? 'en';
 
@@ -95,71 +94,53 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
         .filter((item): item is DataItem => item !== null);
 
-    await Promise.all(
-        items.slice(0, limit).map((item) =>
-            item.link
-                ? cache.tryGet(item.link, async () => {
-                      logger.http(`Fetching full content for ${item.link!}`);
+    // Fetch full content for each item using the same browser session
+    const resultItems = await Promise.all(
+        items.slice(0, limit).map(async (item) => {
+            if (!item.link) {
+                return item;
+            }
+            return await cache.tryGet(item.link, async () => {
+                logger.http(`Fetching full content for ${item.link!}`);
 
-                      const { page: contentPage, destory: contentDestory } = await getPuppeteerPage(item.link!, {
-                          onBeforeLoad: async (page) => {
-                              await page.setRequestInterception(true);
-                              page.on('request', (request) => {
-                                  request.resourceType() === 'document' ? request.continue() : request.abort();
-                              });
-                          },
-                      });
+                // Create a new page in the same browser session
+                const contentPage = await browser.newPage();
 
-                      const contentHtml = await contentPage.evaluate(() => document.documentElement.innerHTML);
-                      await contentDestory();
+                // Set request interception for this page
+                await contentPage.setRequestInterception(true);
+                contentPage.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
 
-                      const $content = load(contentHtml);
+                // Navigate to the item link
+                await contentPage.goto(item.link!, { waitUntil: 'domcontentloaded' });
 
-                      // Find the main article content - RichTextContainer with substantial text
-                      // Look for elements with framer-text class containing actual content
-                      const contentContainers = $content('div[data-framer-component-type="RichTextContainer"]');
-                      let fullContent = '';
+                const contentHtml = await contentPage.evaluate(() => document.documentElement.innerHTML);
+                await contentPage.close();
 
-                      for (const container of contentContainers.toArray()) {
-                          const $container = $content(container);
-                          const textContent = $container.text();
-                          // Check if this container has substantial article content (not just nav/footer)
-                          if (textContent.length > 200 && !textContent.includes('© Copyright')) {
-                              fullContent = $container.html()?.trim() || '';
-                              break;
-                          }
-                      }
+                const $content = load(contentHtml);
 
-                      if (!fullContent) {
-                          // Fallback: find any RichTextContainer with h2 or substantial paragraphs
-                          const fallback = $content('div[data-framer-component-type="RichTextContainer"]')
-                              .filter((_, el) => {
-                                  const $el = $content(el);
-                                  return $el.find('h2.framer-text').length > 0 || $el.find('p.framer-text').length > 0;
-                              })
-                              .first();
-                          fullContent = fallback.length ? fallback.html()?.trim() || '' : '';
-                      }
+                // Find the main article content - RichTextContainer with substantial text
+                // Look for elements with framer-text class containing actual content
+                const contentContainer = $content('div#main > div > div > div[data-framer-component-type="RichTextContainer"]').first();
+                const fullContent = contentContainer.html()?.trim() || '';
 
-                      if (fullContent) {
-                          const $temp = load(fullContent);
-                          $temp('div[data-framer-name="Image"]').remove();
-                          fullContent = $temp.html() || '';
-                      }
-
-                      item.description = fullContent || item.description;
-
-                      return item;
-                  })
-                : Promise.resolve(item)
-        )
+                return {
+                    ...item,
+                    description: fullContent || item.description,
+                };
+            });
+        })
     );
+
+    // Close the browser session after all requests are done
+    await destory();
 
     return {
         title: $('title').text() || 'Perplexity Changelog',
         description: $('meta[name="description"], meta[property="og:description"]').first().attr('content') || 'Latest updates and changes from Perplexity',
         link: targetUrl,
-        item: items.slice(0, limit),
+        item: resultItems,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         language: language as 'en',
