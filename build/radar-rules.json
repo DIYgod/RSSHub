@@ -29047,6 +29047,38 @@
       }
     ]
   },
+  "maoyan.com": {
+    "_name": "猫眼电影",
+    "piaofang": [
+      {
+        "title": "实时票房榜",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/dashboard"
+        ],
+        "target": "/maoyan/box"
+      }
+    ],
+    "www": [
+      {
+        "title": "即将上映",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/films?showType=2",
+          "/films"
+        ],
+        "target": "/maoyan/coming"
+      },
+      {
+        "title": "正在热映",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/films?showType=1"
+        ],
+        "target": "/maoyan/hot"
+      }
+    ]
+  },
   "mashiro.best": {
     "_name": "Mashiro's Baumkuchen",
     ".": [
