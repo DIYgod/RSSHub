@@ -42,9 +42,8 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const list = $('.NewsList li')
+    const list = $('.NewsList li:not(.b)')
         .toArray()
-        .filter((item) => $(item).find('a').length > 0)
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
@@ -74,7 +73,7 @@ async function handler(ctx) {
                     ...item,
                     author,
                     pubDate: pubDate ? timezone(parseDate(pubDate), +8) : item.pubDate,
-                    description: $$('.view-content').html() || $$('.article-content').html() || $$('.TRS_UEDITOR').html(),
+                    description: $$('.trs_editor_view').html() || $$('.TRS_UEDITOR').html(),
                 };
             })
         )
