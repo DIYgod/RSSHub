@@ -72,7 +72,6 @@ async function handler() {
             <p>上座率：${movie.avgSeatView}</p>
             <p>场均人次：${movie.avgShowView}</p>
         `,
-        author: movie.movieInfo.releaseInfo,
     }));
 
     return {
