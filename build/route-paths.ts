@@ -1175,6 +1175,7 @@ export type RoutePath =
   | `/gov/gaozhou/*`
   | `/gov/guangdong/tqyb/sncsyjxh`
   | `/gov/guangdong/tqyb/tfxtq`
+  | `/gov/guizhou/jyt/tzgg`
   | `/gov/gz/:channel/:category`
   | `/gov/hainan/iitb/tzgg`
   | `/gov/hangzhou/zwfw`

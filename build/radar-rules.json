@@ -19391,6 +19391,20 @@
       }
     ]
   },
+  "guizhou.gov.cn": {
+    "_name": "深圳市罗湖区人民政府",
+    "jyt": [
+      {
+        "title": "贵州省教育厅 - 通知公告",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zwgk/tzgg/",
+          "/zwgk/tzgg/index.html"
+        ],
+        "target": "/gov/guizhou/jyt/tzgg"
+      }
+    ]
+  },
   "hangzhou.gov.cn": {
     "_name": "深圳市罗湖区人民政府",
     ".": [
