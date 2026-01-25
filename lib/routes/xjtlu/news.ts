@@ -6,6 +6,10 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const categories = {
+    all: {
+        en: { name: 'All', path: 'about/news/all-news' },
+        zh: { name: '全部', path: 'about/news/all-news' },
+    },
     anniversary: {
         en: { name: 'XJTLU 20th Anniversary', path: 'news/xjtlu-20th-anniversary-en' },
         zh: { name: '西浦20周年', path: 'news/xjtlu-20th-anniversary' },
@@ -42,26 +46,22 @@ const categories = {
 
 const handler = async (ctx) => {
     const lang = ctx.req.param('lang') ?? 'en';
-    const category = ctx.req.param('category');
+    const category = ctx.req.param('category') ?? 'all';
 
     // Validate language parameter
     if (lang !== 'en' && lang !== 'zh') {
         throw new Error('Invalid language parameter. Use "en" or "zh".');
     }
 
+    // Validate category parameter
+    if (!categories[category]) {
+        throw new Error(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
+    }
+
     // Build the list URL based on category
     const baseUrl = `https://www.xjtlu.edu.cn/${lang}`;
-    let listUrl: string;
-
-    if (!category || category === 'all') {
-        listUrl = `${baseUrl}/about/news/all-news`;
-    } else {
-        if (!categories[category]) {
-            throw new Error(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
-        }
-        const categoryPath = categories[category][lang].path;
-        listUrl = `${baseUrl}/${categoryPath}`;
-    }
+    const categoryPath = categories[category][lang].path;
+    const listUrl = `${baseUrl}/${categoryPath}`;
 
     // Fetch the news list page
     const response = await ofetch(listUrl);
@@ -114,7 +114,7 @@ const handler = async (ctx) => {
         )
     );
 
-    const categoryTitle = !category || category === 'all' ? (lang === 'en' ? 'All News' : '全部新闻') : categories[category][lang].name;
+    const categoryTitle = categories[category][lang].name;
     const iconUrl = 'https://www.xjtlu.edu.cn/favicon.ico';
 
     return {
@@ -159,7 +159,6 @@ export const route: Route = {
 
 | Category | English Name | Chinese Name |
 | -------- | ------------ | ------------ |
-| \`all\` | All News | 全部新闻 |
 ${Object.entries(categories)
     .map(([key, value]) => `| \`${key}\` | ${value.en.name} | ${value.zh.name} |`)
     .join('\n')}`,
