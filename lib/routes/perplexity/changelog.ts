@@ -47,12 +47,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 return null;
             }
 
-            const $title = $link.find('[data-framer-name="Title"] p').first();
-            const title = $title.text().trim();
-
-            if (!title) {
-                return null;
-            }
+            const $title = $link.find('[data-framer-name="Title"]').first();
+            // Fallback: extract title from URL slug
+            const title = $title.text().trim() || href.replace('./changelog/', '').replaceAll('-', ' ');
 
             const $category = $link.find('[data-framer-name="Category"] p').first();
             const dateText = $category.text().trim();
