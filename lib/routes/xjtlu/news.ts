@@ -118,7 +118,7 @@ const handler = async (ctx) => {
     const iconUrl = 'https://www.xjtlu.edu.cn/favicon.ico';
 
     return {
-        title: `XJTLU ${lang === 'en' ? 'News' : '新闻'} - ${categoryTitle}`,
+        title: `XJTLU ${categoryTitle}${lang === 'en' ? ' News' : '新闻'}`,
         link: listUrl,
         description: lang === 'en' ? "Official news from Xi'an Jiaotong-Liverpool University" : '西交利物浦大学官方新闻',
         image: iconUrl,
