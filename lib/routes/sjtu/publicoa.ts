@@ -27,7 +27,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '上海交通大学公文系统',
-    maintainers: [''],
+    maintainers: ['dzx-dzx'],
     handler,
     description: `需要用户认证`,
 };
