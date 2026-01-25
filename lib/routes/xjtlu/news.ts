@@ -148,7 +148,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.xjtlu.edu.cn/:lang/about/news/all-news', 'www.xjtlu.edu.cn/:lang/news', 'www.xjtlu.edu.cn/:lang/news/:category*'],
+            source: ['www.xjtlu.edu.cn/:lang/about/news/all-news', 'www.xjtlu.edu.cn/:lang/news'],
             target: '/news/:lang',
         },
     ],
