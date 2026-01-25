@@ -1,29 +1,24 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 
-import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-
-dayjs.extend(isSameOrBefore);
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/chatgpt/release-notes',
     categories: ['program-update'],
     example: '/openai/chatgpt/release-notes',
-    parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     name: 'ChatGPT - Release Notes',
-    maintainers: [],
+    maintainers: ['xbot'],
     handler,
 };
 
@@ -33,81 +28,118 @@ async function handler() {
     const cacheIn = await cache.tryGet(
         articleUrl,
         async () => {
-            const returns = [];
-
-            const pageResponse = await got({
-                method: 'get',
-                url: articleUrl,
+            const browser = await puppeteer();
+            const page = await browser.newPage();
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
             });
+            await page.goto(articleUrl, {
+                waitUntil: 'domcontentloaded',
+            });
+            const html = await page.evaluate(() => document.documentElement.innerHTML);
+            await page.close();
 
-            const $ = load(pageResponse.data);
-            const page = JSON.parse($('script#__NEXT_DATA__').text()); // 页面貌似是用 Next 渲染的，有现成的 JSON 数据可以直接 parse，而避免用 cheerio 去解析主体内容的 HTML
+            const $ = load(html);
+            const articleContent = $('.article-content');
 
-            const feedTitle = page.props.pageProps.articleContent.title;
-            const feedDesc = page.props.pageProps.articleContent.description;
-            const $author = page.props.pageProps.articleContent.author;
-            const authorName = $author.name;
+            if (articleContent.length === 0) {
+                throw new Error('Failed to find article content. Possible Cloudflare protection.');
+            }
 
-            const $blocks = page.props.pageProps.articleContent.blocks;
+            const feedTitle = $('h1').first().text();
+            const feedDesc = 'ChatGPT Release Notes';
 
-            const anchorDay = dayjs();
-            let heading = null,
-                articleObj = {};
-            let year = anchorDay.year();
-            let prevMonth = -1;
+            // Find h1 elements with dates inside article-content
+            const items: DataItem[] = [];
 
-            for (const block of $blocks) {
-                const text = (block.text || '').trim();
-                if (!text) {
-                    continue;
+            articleContent.find('h1').each((_, element) => {
+                const $h1 = $(element);
+                const text = $h1.text().trim();
+
+                // Skip the title h1 (contains "ChatGPT — Release Notes")
+                if (!/\w+\s+\d+[stndrh]*,\s+\d{4}/i.test(text)) {
+                    return;
                 }
-                if (block.type === 'subheading') {
-                    if (heading !== null) {
-                        articleObj.description = articleObj.description.trim().replaceAll('\n', '<br/>');
-                        returns.push(articleObj);
-                        articleObj = {};
+
+                const dateMatch = text.match(/(\w+\s+\d+[stndrh]*,\s+\d{4})/i);
+                let pubDate: Date | undefined;
+                if (dateMatch) {
+                    const dateStr = dateMatch[1];
+                    const parsedDate = dayjs(dateStr, ['MMMM Do, YYYY', 'MMMM D, YYYY'], 'en');
+                    if (parsedDate.isValid()) {
+                        pubDate = parsedDate.toDate();
                     }
+                }
 
-                    heading = text;
+                const titleText = text;
+                let description = '';
 
-                    articleObj.title = heading;
-                    articleObj.author = authorName;
-                    articleObj.category = 'ChatGPT';
-                    articleObj.link = articleUrl + '#' + block.idAttribute;
-                    articleObj.guid = articleUrl + '#' + block.idAttribute;
-                    articleObj.description = '';
+                $h1.nextUntil('h1').each((_, sib) => {
+                    const $sib = $(sib);
+                    const tagName = sib.tagName.toLowerCase();
 
-                    // 目前 ChatGPT Release Notes 页面并没有写入年份，所以只能靠猜
-                    // 当前的正则表达式只支持 (月份英文+空格+日期数字) 的格式
-                    const matchesPubDate = heading.match(/\((\w+\s+\d{1,2})\)$/);
-                    // 实现：当年度交替时，年份减去 1
-                    if (matchesPubDate !== null) {
-                        const curMonth = 1 + 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',').indexOf(matchesPubDate[1].slice(0, 3));
-                        if (prevMonth !== -1 && prevMonth < curMonth) {
-                            year--; // 年度交替：上一个月份数小于当前月份数；但排除 prevMonth==-1 的初始化情况
+                    switch (tagName) {
+                        case 'h2':
+                        case 'h3':
+                        case 'h4':
+                        case 'h5':
+                        case 'h6':
+                            description += `<${tagName}>${$sib.html()?.trim() || ''}</${tagName}>`;
+                            break;
+
+                        case 'ul':
+                        case 'ol': {
+                            const listItems = $sib
+                                .find('li')
+                                .toArray()
+                                .map((li) => {
+                                    const $li = $(li);
+                                    const liHtml = $li.html()?.trim();
+                                    return liHtml ? `<li>${liHtml}</li>` : null;
+                                })
+                                .filter(Boolean);
+                            if (listItems.length > 0) {
+                                description += `<${tagName}>${listItems.join('')}</${tagName}>`;
+                            }
+                            break;
                         }
 
-                        prevMonth = curMonth;
-                        const pubDay = dayjs(`${matchesPubDate[1]}, ${year}`, ['MMMM D, YYYY', 'MMM D, YYYY'], 'en', true);
-                        // 从 ISO（GMT）时间的字符串（使用字符串替换的方式）替换成 US/Pacific PST 时区的表达
-                        articleObj.pubDate = dayjs(pubDay.toISOString().replace(/\.\d{3}Z$/, '-08:00'));
+                        case 'p': {
+                            const pHtml = $sib.html()?.trim();
+                            if (pHtml) {
+                                description += `<p>${pHtml}</p>`;
+                            }
+                            break;
+                        }
 
-                        const linkAnchor = pubDay.format('YYYY_MM_DD');
-                        articleObj.guid = articleUrl + '#' + linkAnchor;
+                        case 'br':
+                            description += '<br>';
+                            break;
+
+                        default: {
+                            const html = $sib.html()?.trim();
+                            if (html) {
+                                description += html;
+                            }
+                        }
                     }
-                } else {
-                    articleObj.description += block.text.trim() + '\n\n';
-                }
-            }
+                });
 
-            if (heading !== null) {
-                articleObj.description = articleObj.description.trim().replaceAll('\n', '<br/>');
-                returns.push(articleObj);
-            }
+                items.push({
+                    guid: `${articleUrl}#${pubDate ? pubDate.getTime() : titleText}`,
+                    title: titleText,
+                    link: articleUrl,
+                    pubDate,
+                    description,
+                });
+            });
 
-            return { feedTitle, feedDesc, items: returns };
+            await browser.close();
+
+            return { feedTitle, feedDesc, items };
         },
-        config.cache.routeExpire,
+        86400,
         false
     );
 
