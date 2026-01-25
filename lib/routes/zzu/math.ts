@@ -24,9 +24,9 @@ export const route: Route = {
     name: '郑大数学与统计学院',
     maintainers: ['amandus1990'],
     handler,
-    description: `| 学院新闻 | 通知公告 | 学术报告 | 党工团学 |
+    description: `| 学院新闻 | 通知公告 | 党工团学 | 学术报告 |
 | -------- | -------- | -------- | -------- |
-| xyxw     | tzgg     | xsbg     | dgtx     |`,
+| xyxw     | tzgg     | dgtx     | xsbg     |`,
 };
 
 async function handler(ctx) {
@@ -34,8 +34,8 @@ async function handler(ctx) {
     const typeDict = {
         xyxw: ['学院新闻', 'https://www5.zzu.edu.cn/math/index/xyxw.htm'],
         tzgg: ['通知公告', 'https://www5.zzu.edu.cn/math/index/tzgg.htm'],
-        xsbg: ['学术报告', 'https://www5.zzu.edu.cn/math/index/xsbg.htm'],
         dgtx: ['党工团学', 'https://www5.zzu.edu.cn/math/index/dgtx.htm'],
+        xsbg: ['学术报告', 'https://www5.zzu.edu.cn/math/index/xsbg.htm'],
     };
 
     // 获取页面内容
