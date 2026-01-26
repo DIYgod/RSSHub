@@ -447,8 +447,8 @@ importers:
         specifier: 7.2.2
         version: 7.2.2
       tsdown:
-        specifier: 0.20.0-beta.1
-        version: 0.20.0-beta.1(synckit@0.11.11)(typescript@5.9.3)
+        specifier: 0.20.0-beta.2
+        version: 0.20.0-beta.2(synckit@0.11.11)(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -6250,8 +6250,8 @@ packages:
       typescript:
         optional: true
 
-  tsdown@0.20.0-beta.1:
-    resolution: {integrity: sha512-F/A0vGKG8/8XSKMxQtHCeRHpI2jlpKQLQ8sEDKh3XXWZjAXyz5pjHosJvsL5NEv+9ZtcQZEw0xEzPgfJSAWgdg==}
+  tsdown@0.20.0-beta.2:
+    resolution: {integrity: sha512-HoZt4jKulm3pPqh1lke/+D+48Rnv5l7cLkPp5ZxbpDUxh+viESsItQzRXVo0lbQMO7TXoZF4hC6gIpEZoZs0aQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -13157,7 +13157,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  tsdown@0.20.0-beta.1(synckit@0.11.11)(typescript@5.9.3):
+  tsdown@0.20.0-beta.2(synckit@0.11.11)(typescript@5.9.3):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
