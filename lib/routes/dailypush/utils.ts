@@ -42,27 +42,21 @@ function extractAuthor(article: ReturnType<CheerioAPI>): string | undefined {
  * Extract categories/tags from article element
  */
 function extractCategories(article: ReturnType<CheerioAPI>, $: CheerioAPI): string[] {
-    const categories: string[] = [];
-    article.find('a[href^="/"]').each((_, tagEl) => {
-        const tagElement = $(tagEl);
-        const tagHref = tagElement.attr('href');
-        const tagText = tagElement.text().trim();
+    return article
+        .find('a[href^="/"]')
+        .toArray()
+        .map((tagEl) => {
+            const tagElement = $(tagEl);
+            const tagHref = tagElement.attr('href');
+            const tagText = tagElement.text().trim();
 
-        // Skip summary/stats links and navigation
-        if (
-            tagHref &&
-            tagText &&
-            !tagHref.includes('article/') &&
-            !tagHref.includes('Summary') &&
-            tagText.length < 50 &&
-            !/^(Summary|stats|About|Tags|Toggle|Trending|Latest|Previous|Next)$/i.test(tagText) &&
-            !categories.includes(tagText)
-        ) {
-            categories.push(tagText);
-        }
-    });
-
-    return categories;
+            // Skip summary/stats links and navigation
+            if (tagHref && tagText && !tagHref.includes('article/') && !tagHref.includes('Summary') && tagText.length < 50 && !/^(Summary|stats|About|Tags|Toggle|Trending|Latest|Previous|Next)$/i.test(tagText)) {
+                return tagText;
+            }
+            return null;
+        })
+        .filter((tagText): tagText is string => tagText !== null);
 }
 
 /**
@@ -154,17 +148,13 @@ function parseArticle(article: ReturnType<CheerioAPI>, $: CheerioAPI, baseUrl: s
  * Parse all articles from the page
  */
 export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
-    const list: ArticleItem[] = [];
-
-    $('article').each((_, articleEl) => {
-        const article = $(articleEl);
-        const parsed = parseArticle(article, $, baseUrl);
-        if (parsed) {
-            list.push(parsed);
-        }
-    });
-
-    return list;
+    return $('article')
+        .toArray()
+        .map((articleEl) => {
+            const article = $(articleEl);
+            return parseArticle(article, $, baseUrl);
+        })
+        .filter((parsed): parsed is ArticleItem => parsed !== null);
 }
 
 /**
