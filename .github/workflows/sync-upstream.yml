@@ -1,0 +1,37 @@
+name: Sync upstream
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout custom branch
+        uses: actions/checkout@v4
+        with:
+          ref: custom
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/DIYgod/RSSHub.git
+          git fetch upstream master --tags
+
+      - name: Merge upstream into custom
+        run: |
+          git merge --no-edit upstream/master
+
+      - name: Push back to custom
+        run: |
+          git push origin custom
+
