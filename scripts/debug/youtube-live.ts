@@ -1,53 +1,72 @@
 /* eslint-disable no-console */
-import { load } from 'cheerio';
+type ChannelMetadata = { externalId?: string; title?: string };
+type YtInitialData = { metadata?: { channelMetadataRenderer?: ChannelMetadata } };
 
-import { config } from '@/config';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+const extractMetaContent = (html: string, itemprop: string) => {
+    const pattern = new RegExp(`<meta[^>]+itemprop="${itemprop}"[^>]+content="([^"]+)"`, 'i');
+    const match = html.match(pattern);
+    return match?.[1];
+};
 
-import utils from '../../lib/routes/youtube/utils';
+const extractYtInitialData = (html: string) => {
+    const match = html.match(/ytInitialData = ({.*?});/s);
+    if (!match?.[1]) {
+        return {};
+    }
+    try {
+        return JSON.parse(match[1]) as YtInitialData;
+    } catch {
+        return {};
+    }
+};
 
-const getChannelInfoFromPage = (html: string) => {
-    const $ = load(html);
-    const metaChannelId = $('meta[itemprop="identifier"]').attr('content');
-    const metaChannelName = $('meta[itemprop="name"]').attr('content');
+const fetchJson = async (url: string) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+};
 
-    let ytChannelId;
-    let ytChannelName;
+const pickApiKey = () =>
+    process.env.YOUTUBE_KEY?.split(',')
+        .map((key) => key.trim())
+        .filter(Boolean) ?? [];
 
-    const ytInitialDataMatch = $('script')
-        .text()
-        .match(/ytInitialData = ({.*?});/);
-
-    if (ytInitialDataMatch?.[1]) {
-        try {
-            const ytInitialData = JSON.parse(ytInitialDataMatch[1]) as { metadata?: { channelMetadataRenderer?: { externalId?: string; title?: string } } };
-            ytChannelId = ytInitialData.metadata?.channelMetadataRenderer?.externalId;
-            ytChannelName = ytInitialData.metadata?.channelMetadataRenderer?.title;
-        } catch {
-            // Ignore JSON parse errors for debugging output.
-        }
+const fetchWithKeys = async (buildUrl: (key: string) => string) => {
+    const keys = pickApiKey();
+    if (!keys.length) {
+        return null;
     }
 
-    return {
-        metaChannelId,
-        metaChannelName,
-        ytChannelId,
-        ytChannelName,
-    };
+    try {
+        return await Promise.any(keys.map((key) => fetchJson(buildUrl(key))));
+    } catch {
+        return null;
+    }
 };
+
+const getChannelWithUsername = (username: string) => fetchWithKeys((key) => `https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=${encodeURIComponent(username)}&key=${key}`);
+
+const getLive = (channelId: string) => fetchWithKeys((key) => `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${encodeURIComponent(channelId)}&eventType=live&type=video&key=${key}`);
 
 const run = async () => {
     const [username] = process.argv.slice(2);
 
     if (!username) {
-        console.error('Usage: pnpm tsx scripts/debug/youtube-live.ts <username>');
+        console.error('Usage: node scripts/debug/youtube-live.ts <username>');
         process.exit(1);
     }
 
     const link = `https://www.youtube.com/${username}`;
-    const response = await got(link);
-    const { metaChannelId, metaChannelName, ytChannelId, ytChannelName } = getChannelInfoFromPage(response.data);
+    const response = await fetch(link);
+    const html = await response.text();
+
+    const metaChannelId = extractMetaContent(html, 'identifier');
+    const metaChannelName = extractMetaContent(html, 'name');
+    const ytInitialData = extractYtInitialData(html);
+    const ytChannelId = ytInitialData.metadata?.channelMetadataRenderer?.externalId;
+    const ytChannelName = ytInitialData.metadata?.channelMetadataRenderer?.title;
 
     console.log('Page meta channelId:', metaChannelId);
     console.log('Page meta channelName:', metaChannelName);
@@ -58,9 +77,9 @@ const run = async () => {
     let channelName = metaChannelName;
 
     if (!channelId) {
-        if (config.youtube?.key) {
-            const channelResponse = await utils.getChannelWithUsername(username, 'snippet', cache);
-            const channelInfo = channelResponse?.data?.items?.[0];
+        if (pickApiKey().length) {
+            const channelResponse = await getChannelWithUsername(username);
+            const channelInfo = channelResponse?.items?.[0];
             channelId = channelInfo?.id;
             channelName = channelInfo?.snippet?.title;
         } else {
@@ -72,8 +91,8 @@ const run = async () => {
     console.log('Resolved channelName (original fallback):', channelName);
 
     if (channelId) {
-        const liveResponse = await utils.getLive(channelId, cache);
-        const liveItems = liveResponse?.data?.items ?? [];
+        const liveResponse = await getLive(channelId);
+        const liveItems = liveResponse?.items ?? [];
         console.log('Live items:', liveItems.length);
         if (liveItems[0]) {
             console.log('First live videoId:', liveItems[0].id?.videoId);
