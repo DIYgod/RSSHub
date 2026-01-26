@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const BASE_URL = 'https://dailypush.dev';
+export const BASE_URL = 'https://www.dailypush.dev/';
 
 export interface ArticleItem {
     title: string;
