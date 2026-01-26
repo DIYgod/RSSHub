@@ -197,8 +197,8 @@ importers:
         specifier: 1.5.1
         version: 1.5.1
       otplib:
-        specifier: 13.1.1
-        version: 13.1.1
+        specifier: 13.2.1
+        version: 13.2.1
       p-map:
         specifier: 7.0.4
         version: 7.0.4
@@ -2227,23 +2227,23 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
 
-  '@otplib/core@13.1.1':
-    resolution: {integrity: sha512-K7167w5T5fBtI7FCTrcTyqHPNEKIvyBHFACvJGXci60V30Rt4VDsRHWw/LYtOZRbUqJbPH9orn4N10dYRVi3bw==}
+  '@otplib/core@13.2.1':
+    resolution: {integrity: sha512-IyfHvYNCyipDxhmJdcUUvUeT3Hz84/GgM6G2G6BTEmnAKPzNA7U0kYGkxKZWY9h23W94RJk4qiClJRJN5zKGvg==}
 
-  '@otplib/hotp@13.1.1':
-    resolution: {integrity: sha512-2Zht/w3kb9Cv/BPNWC/KvFspztFae38BlteW4KQOn1U+jBj02EMpO3V75OaLGFyz3ZCWzYdLoTRhMkVDCVklDw==}
+  '@otplib/hotp@13.2.1':
+    resolution: {integrity: sha512-iRKqvj0TnemtXXtEswzBX50Z0yMNa0lH9PSdr5N4CJc1mDEuUmFFZQqnu3PfA3fPd3WeAU+mHgmK/xq18+K1QA==}
 
-  '@otplib/plugin-base32-scure@13.1.1':
-    resolution: {integrity: sha512-PAKmU60DOQyfwSP6VDcwP5wRO3GYCC8UgH0+J2wY2XI5OetHDPv27wNjBibE1iO7NMwCnUf1pv0rsTVE5TR9ew==}
+  '@otplib/plugin-base32-scure@13.2.1':
+    resolution: {integrity: sha512-vnA2qqgJ/FbFbDNGOLAS8dKfCsJFXwFsZKYklE8yl2INkCOUR0vbVdJ2TVmufzC8R1RRZHW+cDR20ACgc9XFYg==}
 
-  '@otplib/plugin-crypto-noble@13.1.1':
-    resolution: {integrity: sha512-MbgmPWGzhlUG+Jq4sX1UHgdNVEcXqinZy9GUtu2iotHRya815oBVwkiviM/y2qorxuCOIMNTAArD6jKlVv/qiQ==}
+  '@otplib/plugin-crypto-noble@13.2.1':
+    resolution: {integrity: sha512-Dxjmt4L+5eDWJf5EvbcMp+fxcliyKoB9N9sNQq/vuVAUvq+KiqpiiCQZ/wHyrN0ArB0NdevtK1KByyAq080ldg==}
 
-  '@otplib/totp@13.1.1':
-    resolution: {integrity: sha512-Bbr8C3fLQeUIiAU5sBltPIvPTsGOCmTBln2TjU8wt36nnWMK1p7SsV+VeAk4VYEsGCc4W/ds4M0Pbx4gJMt88A==}
+  '@otplib/totp@13.2.1':
+    resolution: {integrity: sha512-LzDzAAK3w8rspF3urBnWjOlxso1SCGxX9Pnu/iy+HkC0y0HgiLsW7jhkr2hJ3u4cyBdL/tOKUhhELwsjyvunwQ==}
 
-  '@otplib/uri@13.1.1':
-    resolution: {integrity: sha512-UMdz/41JIKPLw6/VeExc3MJaCHZYEZXlF5WVyhtWT5nfzQKAcgp6HI8Tar0lDN+lXXKCjbGwlyCKOWCMAISNXg==}
+  '@otplib/uri@13.2.1':
+    resolution: {integrity: sha512-ssYnfiUrFTs/rPRUW8h59m0MVLYOC+UKk7tVGYgtG15lLaLBrNBQjM2YFanuzn9Jm4iv9JxiNG7TRkwcnyR09A==}
 
   '@oxc-project/types@0.107.0':
     resolution: {integrity: sha512-QFDRbYfV2LVx8tyqtyiah3jQPUj1mK2+RYwxyFWyGoys6XJnwTdlzO6rdNNHOPorHAu5Uo34oWRKcvNpbJarmQ==}
@@ -5306,8 +5306,8 @@ packages:
     resolution: {integrity: sha512-bOj3L1ypm++N+n7CEbbe473A414AB7z+amKYshRb//iuL3MpdDCLhPnw6aVTdKB9g5ZRVHIEp8eUln6L2NUStg==}
     engines: {node: '>=0.4.0'}
 
-  otplib@13.1.1:
-    resolution: {integrity: sha512-cjNU7ENJPwqNK7Qesl6P357B0WB4XmbptHCsGzy14jYcRmQyNwkvl0eT0nzUX0c1djrkOFVIHtNp3Px1vDIpfw==}
+  otplib@13.2.1:
+    resolution: {integrity: sha512-Cft9h/m34LtvnoB2TjP1E1E6v0biwcUntl6U4e+HgWrTa0bpwmb+u/D9gLFA+U6/ztlvrult0811Bu30nUVUuA==}
 
   outvariant@1.4.3:
     resolution: {integrity: sha512-+Sl2UErvtsoajRDKCE5/dBz4DIvHXQQnAxtQTF04OJxY0+DyZXSo5P5Bb7XYWOh81syohlYL24hbDwxedPUJCA==}
@@ -8586,32 +8586,32 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 2.5.0(@opentelemetry/api@1.9.0)
 
-  '@otplib/core@13.1.1': {}
+  '@otplib/core@13.2.1': {}
 
-  '@otplib/hotp@13.1.1':
+  '@otplib/hotp@13.2.1':
     dependencies:
-      '@otplib/core': 13.1.1
-      '@otplib/uri': 13.1.1
+      '@otplib/core': 13.2.1
+      '@otplib/uri': 13.2.1
 
-  '@otplib/plugin-base32-scure@13.1.1':
+  '@otplib/plugin-base32-scure@13.2.1':
     dependencies:
-      '@otplib/core': 13.1.1
+      '@otplib/core': 13.2.1
       '@scure/base': 2.0.0
 
-  '@otplib/plugin-crypto-noble@13.1.1':
+  '@otplib/plugin-crypto-noble@13.2.1':
     dependencies:
       '@noble/hashes': 2.0.1
-      '@otplib/core': 13.1.1
+      '@otplib/core': 13.2.1
 
-  '@otplib/totp@13.1.1':
+  '@otplib/totp@13.2.1':
     dependencies:
-      '@otplib/core': 13.1.1
-      '@otplib/hotp': 13.1.1
-      '@otplib/uri': 13.1.1
+      '@otplib/core': 13.2.1
+      '@otplib/hotp': 13.2.1
+      '@otplib/uri': 13.2.1
 
-  '@otplib/uri@13.1.1':
+  '@otplib/uri@13.2.1':
     dependencies:
-      '@otplib/core': 13.1.1
+      '@otplib/core': 13.2.1
 
   '@oxc-project/types@0.107.0': {}
 
@@ -11971,14 +11971,14 @@ snapshots:
 
   options@0.0.6: {}
 
-  otplib@13.1.1:
+  otplib@13.2.1:
     dependencies:
-      '@otplib/core': 13.1.1
-      '@otplib/hotp': 13.1.1
-      '@otplib/plugin-base32-scure': 13.1.1
-      '@otplib/plugin-crypto-noble': 13.1.1
-      '@otplib/totp': 13.1.1
-      '@otplib/uri': 13.1.1
+      '@otplib/core': 13.2.1
+      '@otplib/hotp': 13.2.1
+      '@otplib/plugin-base32-scure': 13.2.1
+      '@otplib/plugin-crypto-noble': 13.2.1
+      '@otplib/totp': 13.2.1
+      '@otplib/uri': 13.2.1
 
   outvariant@1.4.3: {}
 
