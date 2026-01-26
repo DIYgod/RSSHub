@@ -19,7 +19,7 @@ export const route: Route = {
             {
                 name: 'YOUTUBE_KEY',
                 description:
-                    'YouTube API Key (enable [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com)), support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                    'YouTube API Key (enable YouTube Data API v3), support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/), [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com)',
             },
         ],
         requirePuppeteer: false,
