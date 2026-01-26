@@ -169,7 +169,7 @@ export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<D
             cache.tryGet(item.dailyPushUrl!, async () => {
                 // If we have a dailypush article URL, fetch it for the longer summary
                 try {
-                    const articleResponse = await ofetch(item.dailyPushUrl!, { responseType: 'text' });
+                    const articleResponse = await ofetch(item.dailyPushUrl!);
                     const $ = load(articleResponse);
 
                     // Find the longer summary/description on the article page
