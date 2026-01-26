@@ -3017,6 +3017,7 @@ export type RoutePath =
   | `/xinpianchang/:params?`
   | `/xinpianchang/discover/:params?`
   | `/xinpianchang/rank/:category?`
+  | `/xjtlu/news/:lang?/:category?`
   | `/xjtu/2yuan/news/:id?`
   | `/xjtu/dean/:subpath{.+}`
   | `/xjtu/dyyy/:path{.+}`

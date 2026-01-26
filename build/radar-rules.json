@@ -47875,6 +47875,20 @@
       }
     ]
   },
+  "xjtlu.edu.cn": {
+    "_name": "Xi'an Jiaotong-Liverpool University",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:lang/about/news/all-news",
+          "/:lang/news"
+        ],
+        "target": "/xjtlu/news/:lang"
+      }
+    ]
+  },
   "xjtu.edu.cn": {
     "_name": "西安交通大学",
     "ee": [
