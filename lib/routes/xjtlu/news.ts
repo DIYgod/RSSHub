@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -50,12 +51,12 @@ const handler = async (ctx) => {
 
     // Validate language parameter
     if (lang !== 'en' && lang !== 'zh') {
-        throw new Error('Invalid language parameter. Use "en" or "zh".');
+        throw new InvalidParameterError('Invalid language parameter. Use "en" or "zh".');
     }
 
     // Validate category parameter
     if (!categories[category]) {
-        throw new Error(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
+        throw new InvalidParameterError(`Invalid category: ${category}. Please refer to the category table in the documentation.`);
     }
 
     // Build the list URL based on category
