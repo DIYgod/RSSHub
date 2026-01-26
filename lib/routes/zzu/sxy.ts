@@ -71,7 +71,7 @@ function parseXyxwList($, typeDict, type) {
             return {
                 title,
                 link,
-                pubDate: pubDateText || null,
+                pubDate: pubDateText,
                 description,
             };
         });
