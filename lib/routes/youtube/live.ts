@@ -1,7 +1,9 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -32,6 +34,35 @@ export const route: Route = {
     handler,
 };
 
+const getChannelInfoFromPage = ($: CheerioAPI) => {
+    const metaChannelId = $('meta[itemprop="identifier"]').attr('content');
+    const metaChannelName = $('meta[itemprop="name"]').attr('content');
+
+    if (metaChannelId || metaChannelName) {
+        return { channelId: metaChannelId, channelName: metaChannelName };
+    }
+
+    const ytInitialDataMatch = $('script')
+        .text()
+        .match(/ytInitialData = ({.*?});/);
+    let ytInitialData: { metadata?: { channelMetadataRenderer?: { externalId?: string; title?: string } } } = {};
+
+    if (ytInitialDataMatch?.[1]) {
+        try {
+            ytInitialData = JSON.parse(ytInitialDataMatch[1]);
+        } catch {
+            ytInitialData = {};
+        }
+    }
+
+    const metadataRenderer = ytInitialData.metadata?.channelMetadataRenderer;
+
+    return {
+        channelId: metadataRenderer?.externalId,
+        channelName: metadataRenderer?.title,
+    };
+};
+
 async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
         throw new ConfigNotFoundError('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
@@ -45,21 +76,31 @@ async function handler(ctx) {
     const link = `https://www.youtube.com/${username}`;
     const response = await got(link);
     const $ = load(response.data);
-    channelId = $('meta[itemprop="identifier"]').attr('content');
-    channelName = $('meta[itemprop="name"]').attr('content');
+    ({ channelId, channelName } = getChannelInfoFromPage($));
 
     if (!channelId) {
-        const channelInfo = (await utils.getChannelWithUsername(username, 'snippet', cache)).data.items[0];
+        if (username.startsWith('@')) {
+            throw new NotFoundError(`The channel ${link} does not exist.`);
+        }
+
+        const channelResponse = await utils.getChannelWithUsername(username, 'snippet', cache);
+        const channelInfo = channelResponse?.data?.items?.[0];
+
+        if (!channelInfo) {
+            throw new NotFoundError(`The channel ${link} does not exist.`);
+        }
+
         channelId = channelInfo.id;
         channelName = channelInfo.snippet.title;
     }
 
-    const data = (await utils.getLive(channelId, cache)).data.items;
+    const liveResponse = await utils.getLive(channelId, cache);
+    const data = liveResponse?.data?.items ?? [];
 
     return {
         title: `${channelName || username}'s Live Status`,
         link: `https://www.youtube.com/channel/${channelId}`,
-        description: `$${channelName || username}'s live streaming status`,
+        description: `${channelName || username}'s live streaming status`,
         item: data.map((item) => {
             const snippet = item.snippet;
             const liveVideoId = item.id.videoId;
