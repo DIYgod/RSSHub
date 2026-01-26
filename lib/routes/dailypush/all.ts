@@ -42,7 +42,7 @@ async function handler(ctx) {
     const { sort = '' } = ctx.req.param();
     const url = sort ? `${BASE_URL}/${sort}` : BASE_URL;
 
-    const response = await ofetch(url, { responseType: 'text' });
+    const response = await ofetch(url);
     const $ = load(response);
 
     const list = parseArticles($, BASE_URL);

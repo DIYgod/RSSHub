@@ -43,7 +43,7 @@ async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
     const url = `${BASE_URL}/${tag}/${sort}`;
 
-    const response = await ofetch(url, { responseType: 'text' });
+    const response = await ofetch(url);
     const $ = load(response);
 
     const list = parseArticles($, BASE_URL);
