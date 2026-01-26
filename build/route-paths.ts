@@ -2105,6 +2105,7 @@ export type RoutePath =
   | `/onehu/`
   | `/onet/news`
   | `/oo-software/changelog/:id`
+  | `/openai/chatgpt-atlas/release-notes`
   | `/openai/chatgpt/release-notes`
   | `/openai/cookbook`
   | `/openai/news`

@@ -6436,6 +6436,9 @@
   "/oo-software/changelog/:id": [
     "nczitzk"
   ],
+  "/openai/chatgpt-atlas/release-notes": [
+    "xbot"
+  ],
   "/openai/chatgpt/release-notes": [],
   "/openai/cookbook": [
     "liyaozhong"
