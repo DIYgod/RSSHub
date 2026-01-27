@@ -62,29 +62,6 @@ export const route: Route = {
         const firstPost = $('article.message-body.js-selectToQuote').first();
         const content = firstPost.find('.bbWrapper').html() || '';
 
-        // Process images to use full URLs
-        // Site uses lazy loading - real URL is in data-src, src contains SVG placeholder
-        const $content = load(content);
-        $content('img').each((_, img) => {
-            const $img = $content(img);
-            const dataSrc = $img.attr('data-src');
-            const src = dataSrc || $img.attr('src');
-
-            if (src && !src.startsWith('data:')) {
-                if (src.startsWith('http')) {
-                    $img.attr('src', src);
-                } else {
-                    $img.attr('src', `${baseUrl}${src}`);
-                }
-            } else if (dataSrc) {
-                $img.attr('src', dataSrc);
-            }
-
-            // Clean up lazy loading attributes
-            $img.removeAttr('data-src');
-            $img.removeClass('lazyload');
-        });
-
         // Get post date
         const postDate = $('time.u-dt').first().attr('datetime');
 
@@ -109,7 +86,7 @@ export const route: Route = {
                     title,
                     link,
                     guid,
-                    description: $content.html() || '',
+                    description: content,
                     pubDate,
                     category: tags,
                 },
