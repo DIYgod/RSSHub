@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
-    const url = `${BASE_URL}/tag/${tag}/${sort}`;
+    const url = `${BASE_URL}/${tag}/${sort}`;
 
     const response = await ofetch(url);
     const $ = load(response);
