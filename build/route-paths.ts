@@ -699,6 +699,8 @@ export type RoutePath =
   | `/daily/squads/:squads/:innerSharedContent?`
   | `/daily/upvoted/:period?/:innerSharedContent?/:dateSort?`
   | `/daily/user/:userId/:innerSharedContent?`
+  | `/dailypush/:sort?`
+  | `/dailypush/tag/:tag/:sort?`
   | `/damai/activity/:city/:category/:subcategory/:keyword?`
   | `/dangdang/notice/:type?`
   | `/daoxuan/`
@@ -3198,10 +3200,12 @@ export type RoutePath =
   | `/zzu/gs/:type`
   | `/zzu/jwc/:type`
   | `/zzu/kjc/:type`
+  | `/zzu/math/:type`
   | `/zzu/news/:type`
   | `/zzu/rsc/:type`
   | `/zzu/ss/:type`
   | `/zzu/student/:type`
+  | `/zzu/sxy/:type`
   | `/zzu/tzhb/:type`
   | `/zzu/xbx/:type`
   | `/zzu/xuan/:type`
