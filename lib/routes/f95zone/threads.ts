@@ -93,10 +93,13 @@ export const route: Route = {
             .toArray()
             .map((tag) => $(tag).text().trim());
 
-        // Extract date from title [yyyy-mm-dd] for guid
+        // Extract update date from title [yyyy-mm-dd] for tracking updates
         const dateMatch = title.match(/\[(\d{4}-\d{2}-\d{2})\]/);
         const updateDate = dateMatch ? dateMatch[1] : '';
+        // Use date in guid so RSS readers treat updates as new items
         const guid = updateDate ? `${link}#${updateDate}` : link;
+        // Use extracted date for pubDate, fallback to post date if not found
+        const pubDate = updateDate ? new Date(updateDate) : postDate;
 
         return {
             title: `F95zone - ${title}`,
@@ -107,7 +110,7 @@ export const route: Route = {
                     link,
                     guid,
                     description: $content.html() || '',
-                    pubDate: postDate,
+                    pubDate,
                     category: tags,
                 },
             ],
