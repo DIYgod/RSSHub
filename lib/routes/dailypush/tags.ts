@@ -6,9 +6,9 @@ import ofetch from '@/utils/ofetch';
 import { BASE_URL, enhanceItemsWithSummaries, parseArticles } from './utils';
 
 export const route: Route = {
-    path: '/:tag/:sort?',
+    path: '/tag/:tag/:sort?',
     categories: ['programming'],
-    example: '/dailypush/backend/trending',
+    example: '/dailypush/tag/backend/trending',
     parameters: {
         tag: { description: 'Tag name' },
         sort: {
@@ -31,7 +31,7 @@ export const route: Route = {
     radar: [
         {
             source: ['dailypush.dev/:tag/trending', 'dailypush.dev/:tag/latest', 'dailypush.dev/:tag'],
-            target: '/:tag',
+            target: '/tag/:tag/:sort?',
         },
     ],
     name: 'Tag',
@@ -41,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
-    const url = `${BASE_URL}/${tag}/${sort}`;
+    const url = `${BASE_URL}/tag/${tag}/${sort}`;
 
     const response = await ofetch(url);
     const $ = load(response);
