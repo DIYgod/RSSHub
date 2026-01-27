@@ -102,6 +102,7 @@ type ConfigEnvKeys =
     | 'EH_STAR'
     | 'EH_IMG_PROXY'
     | `EMAIL_CONFIG_${string}`
+    | 'F95ZONE_COOKIE'
     | 'FANBOX_SESSION_ID'
     | 'FANFOU_CONSUMER_KEY'
     | 'FANFOU_CONSUMER_SECRET'
@@ -391,6 +392,9 @@ export type Config = {
     };
     email: {
         config: Record<string, string | undefined>;
+    };
+    f95zone: {
+        cookie?: string;
     };
     fanbox: {
         session?: string;
@@ -870,6 +874,9 @@ const calculateValue = () => {
         },
         email: {
             config: email_config,
+        },
+        f95zone: {
+            cookie: envs.F95ZONE_COOKIE,
         },
         fanbox: {
             session: envs.FANBOX_SESSION_ID,
