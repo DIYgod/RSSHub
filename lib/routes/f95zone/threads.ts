@@ -63,14 +63,26 @@ export const route: Route = {
         const content = firstPost.find('.bbWrapper').html() || '';
 
         // Process images to use full URLs
+        // Site uses lazy loading - real URL is in data-src, src contains SVG placeholder
         const $content = load(content);
         $content('img').each((_, img) => {
-            const src = $content(img).attr('src') || $content(img).attr('data-src');
-            if (src && !src.startsWith('http')) {
-                $content(img).attr('src', `${baseUrl}${src}`);
-            } else if (src) {
-                $content(img).attr('src', src);
+            const $img = $content(img);
+            const dataSrc = $img.attr('data-src');
+            const src = dataSrc || $img.attr('src');
+
+            if (src && !src.startsWith('data:')) {
+                if (src.startsWith('http')) {
+                    $img.attr('src', src);
+                } else {
+                    $img.attr('src', `${baseUrl}${src}`);
+                }
+            } else if (dataSrc) {
+                $img.attr('src', dataSrc);
             }
+
+            // Clean up lazy loading attributes
+            $img.removeAttr('data-src');
+            $img.removeClass('lazyload');
         });
 
         // Get post date
@@ -81,6 +93,11 @@ export const route: Route = {
             .toArray()
             .map((tag) => $(tag).text().trim());
 
+        // Extract date from title [yyyy-mm-dd] for guid
+        const dateMatch = title.match(/\[(\d{4}-\d{2}-\d{2})\]/);
+        const updateDate = dateMatch ? dateMatch[1] : '';
+        const guid = updateDate ? `${link}#${updateDate}` : link;
+
         return {
             title: `F95zone - ${title}`,
             link,
@@ -88,6 +105,7 @@ export const route: Route = {
                 {
                     title,
                     link,
+                    guid,
                     description: $content.html() || '',
                     pubDate: postDate,
                     category: tags,
