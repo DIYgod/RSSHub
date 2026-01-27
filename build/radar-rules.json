@@ -49256,6 +49256,14 @@
         "target": "/zzu/jwc/:type"
       },
       {
+        "title": "郑大数学与统计学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/math/"
+        ],
+        "target": "/zzu/math/:type"
+      },
+      {
         "title": "郑大人事部",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
@@ -49278,6 +49286,14 @@
           "/student/"
         ],
         "target": "/zzu/student/:type"
+      },
+      {
+        "title": "郑大商学院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/sxy/"
+        ],
+        "target": "/zzu/sxy/:type"
       },
       {
         "title": "郑大党委统战部",
