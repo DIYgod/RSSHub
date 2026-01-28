@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,20 +9,20 @@ const rootUrl = 'https://bulletin.nuist.edu.cn';
 
 // 建立新版官网的文件名映射表
 const map = {
-    'default': 'index.htm',      // 首页/全部
-    'wjgg': 'wjgg.htm',          // 文件公告
-    'zbxx': 'zbxx.htm',          // 招标信息
-    'xsbg': 'xsbg.htm',          // 学术报告
-    'dzsw': 'dzsw.htm',          // 党政事务
-    'jxks': 'jxks.htm',          // 教学考试
-    'hytz2': 'hytz2.htm',          // 会议通知
-    'zzrs': 'zzrs.htm',          // 组织人事
-    'kyxx': 'kyxx.htm',          // 科研信息
-    'zsjy': 'zsjy.htm',          // 招生就业
-    'cxcy': 'cxcy.htm',          // 创新创业
-    'xyhd': 'xyhd.htm',          // 校园活动
-    'xydt': 'xydt.htm',          // 学院动态
-    'ztjz': 'ztjz.htm',          // 专题讲座
+    default: 'index.htm', // 首页/全部
+    wjgg: 'wjgg.htm', // 文件公告
+    zbxx: 'zbxx.htm', // 招标信息
+    xsbg: 'xsbg.htm', // 学术报告
+    dzsw: 'dzsw.htm', // 党政事务
+    jxks: 'jxks.htm', // 教学考试
+    hytz2: 'hytz2.htm', // 会议通知
+    zzrs: 'zzrs.htm', // 组织人事
+    kyxx: 'kyxx.htm', // 科研信息
+    zsjy: 'zsjy.htm', // 招生就业
+    cxcy: 'cxcy.htm', // 创新创业
+    xyhd: 'xyhd.htm', // 校园活动
+    xydt: 'xydt.htm', // 学院动态
+    ztjz: 'ztjz.htm', // 专题讲座
 };
 
 export const route: Route = {
@@ -79,10 +80,10 @@ async function handler(ctx) {
             const title = item.attr('title') || item.text().trim();
             const href = item.attr('href');
             const linkUrl = new URL(href, rootUrl).href;
-            const allText = parent.text(); 
+            const allText = parent.text();
             const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
-            
+
             return {
                 title,
                 link: linkUrl,
