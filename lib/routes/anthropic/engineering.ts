@@ -1,49 +1,49 @@
-import { load } from "cheerio";
-import pMap from "p-map";
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from "@/types";
-import cache from "@/utils/cache";
-import ofetch from "@/utils/ofetch";
-import { parseDate } from "@/utils/parse-date";
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: "/engineering",
-    categories: ["programming"],
-    example: "/anthropic/engineering",
+    path: '/engineering',
+    categories: ['programming'],
+    example: '/anthropic/engineering',
     parameters: {},
     radar: [
         {
-            source: ["www.anthropic.com/engineering", "www.anthropic.com"],
+            source: ['www.anthropic.com/engineering', 'www.anthropic.com'],
         },
     ],
-    name: "Engineering",
-    maintainers: ["TonyRL"],
+    name: 'Engineering',
+    maintainers: ['TonyRL'],
     handler,
-    url: "www.anthropic.com/engineering",
+    url: 'www.anthropic.com/engineering',
 };
 
 async function handler(ctx) {
-    const baseUrl = "https://www.anthropic.com";
+    const baseUrl = 'https://www.anthropic.com';
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query("limit")
-        ? Number.parseInt(ctx.req.query("limit"), 10)
+    const limit = ctx.req.query('limit')
+        ? Number.parseInt(ctx.req.query('limit'), 10)
         : 20;
 
     const list: DataItem[] = $('a[class*="cardLink"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
-            const href = $e.attr("href") ?? "";
-            const fullLink = href.startsWith("http")
+            const href = $e.attr('href') ?? '';
+            const fullLink = href.startsWith('http')
                 ? href
                 : `${baseUrl}${href}`;
             const pubDateText = $e.find('div[class*="date"]').text().trim();
             const pubDate = parseDate(pubDateText);
-            const title = $e.find("h2, h3").text().trim();
+            const title = $e.find('h2, h3').text().trim();
 
-            if (!title || !href || href === "#") {
+            if (!title || !href || href === '#') {
                 return null;
             }
 
@@ -65,14 +65,14 @@ async function handler(ctx) {
 
                 const content = $('article > div > div[class*="__body"]');
 
-                content.find("img").each((_, e) => {
+                content.find('img').each((_, e) => {
                     const $e = $(e);
-                    $e.removeAttr("style srcset");
-                    const src = $e.attr("src");
+                    $e.removeAttr('style srcset');
+                    const src = $e.attr('src');
                     const params = new URLSearchParams(src);
-                    const newSrc = params.get("/_next/image?url");
+                    const newSrc = params.get('/_next/image?url');
                     if (newSrc) {
-                        $e.attr("src", newSrc);
+                        $e.attr('src', newSrc);
                     }
                 });
 
@@ -84,9 +84,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: "Anthropic Engineering",
+        title: 'Anthropic Engineering',
         link,
-        description: "Latest engineering posts from Anthropic",
+        description: 'Latest engineering posts from Anthropic',
         image: `${baseUrl}/images/icons/apple-touch-icon.png`,
         item: items,
     };

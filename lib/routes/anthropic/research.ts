@@ -1,27 +1,27 @@
-import { load } from "cheerio";
+import { load } from 'cheerio';
 
-import type { Route } from "@/types";
-import ofetch from "@/utils/ofetch";
-import { parseDate } from "@/utils/parse-date";
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: "/research",
-    categories: ["programming"],
-    example: "/anthropic/research",
+    path: '/research',
+    categories: ['programming'],
+    example: '/anthropic/research',
     parameters: {},
     radar: [
         {
-            source: ["www.anthropic.com/research", "www.anthropic.com"],
+            source: ['www.anthropic.com/research', 'www.anthropic.com'],
         },
     ],
-    name: "Research",
-    maintainers: ["ttttmr"],
+    name: 'Research',
+    maintainers: ['ttttmr'],
     handler,
-    url: "www.anthropic.com/research",
+    url: 'www.anthropic.com/research',
 };
 
 async function handler() {
-    const link = "https://www.anthropic.com/research";
+    const link = 'https://www.anthropic.com/research';
     const response = await ofetch(link);
     const $ = load(response);
 
@@ -30,10 +30,10 @@ async function handler() {
         .map((el) => {
             const $el = $(el);
             const title = $el.find('[class*="title"]').text().trim();
-            const href = $el.attr("href");
+            const href = $el.attr('href');
             const pubDateText = $el.find('[class*="date"]').text().trim();
 
-            if (!title || !href || href === "#") {
+            if (!title || !href || href === '#') {
                 return null;
             }
 
@@ -46,9 +46,9 @@ async function handler() {
         .filter((item): item is Exclude<typeof item, null> => item !== null);
 
     return {
-        title: "Anthropic Research",
+        title: 'Anthropic Research',
         link,
-        description: "Latest research from Anthropic",
+        description: 'Latest research from Anthropic',
         item: items,
     };
 }
