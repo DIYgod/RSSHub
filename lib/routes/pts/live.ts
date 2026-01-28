@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderLive } from './templates/live';
 
 export const route: Route = {
     path: '/live/:id',
@@ -57,7 +56,7 @@ async function handler(ctx) {
 
                 item.title = data.title;
                 item.pubDate = parseDate(data.updatedDate);
-                item.description = art(path.join(__dirname, 'templates/live.art'), {
+                item.description = renderLive({
                     images: data.content.filter((d) => d.type === 'img').map((i) => `${imageRootUrl}/${i.imgFileUrl}`),
                     texts: data.content.filter((d) => d.type === 'text').map((t) => t.content),
                 });

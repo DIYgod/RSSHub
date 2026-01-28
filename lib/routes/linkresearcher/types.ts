@@ -46,7 +46,7 @@ export interface ThesesDetailResponse {
     link: string;
     onlineTime: number;
     original: boolean;
-    paperList: {
+    paperList: Array<{
         authors: string[];
         checkname: string;
         doi: string;
@@ -59,11 +59,11 @@ export interface ThesesDetailResponse {
         title: string;
         translateSummary: string;
         type: string;
-    }[];
-    relevant: {
+    }>;
+    relevant: Array<{
         timestamp: number;
         type: string;
-    }[];
+    }>;
     source: {
         sourceId: string;
         sourceName: string;
@@ -84,10 +84,10 @@ export interface InformationDetailResponse {
     id: string;
     onlineTime: number;
     original: boolean;
-    relevant: {
+    relevant: Array<{
         timestamp: number;
         type: string;
-    }[];
+    }>;
     source: {
         sourceId: string;
         sourceName: string;

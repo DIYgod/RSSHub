@@ -1,8 +1,7 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
+
+import { renderPlaylistDescription } from '../templates/music/playlist';
 
 export const route: Route = {
     path: '/music/artist/:id',
@@ -42,7 +41,7 @@ async function handler(ctx) {
             const singer = item.artists.length === 1 ? item.artists[0].name : item.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
             return {
                 title: `${item.name} - ${singer}`,
-                description: art(path.join(__dirname, '../templates/music/playlist.art'), {
+                description: renderPlaylistDescription({
                     singer,
                     album: item.name,
                     date: new Date(item.publishTime).toLocaleDateString(),

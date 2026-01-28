@@ -1,72 +1,86 @@
-import { load } from 'cheerio';
-import pMap from 'p-map';
+import { load } from "cheerio";
+import pMap from "p-map";
 
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import type { DataItem, Route } from "@/types";
+import cache from "@/utils/cache";
+import ofetch from "@/utils/ofetch";
+import { parseDate } from "@/utils/parse-date";
 
 export const route: Route = {
-    path: '/engineering',
-    categories: ['programming'],
-    example: '/anthropic/engineering',
+    path: "/engineering",
+    categories: ["programming"],
+    example: "/anthropic/engineering",
+    parameters: {},
     radar: [
         {
-            source: ['www.anthropic.com/engineering', 'www.anthropic.com'],
+            source: ["www.anthropic.com/engineering", "www.anthropic.com"],
         },
     ],
-    name: 'Engineering',
-    maintainers: ['TonyRL'],
+    name: "Engineering",
+    maintainers: ["TonyRL"],
     handler,
-    url: 'www.anthropic.com/engineering',
+    url: "www.anthropic.com/engineering",
 };
 
-async function handler() {
-    const baseUrl = 'https://www.anthropic.com';
+async function handler(ctx) {
+    const baseUrl = "https://www.anthropic.com";
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
+    const limit = ctx.req.query("limit")
+        ? Number.parseInt(ctx.req.query("limit"), 10)
+        : 20;
 
-    const list = $('a[class*="ArticleList"]')
+    const list: DataItem[] = $('a[class*="cardLink"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
+            const href = $e.attr("href") ?? "";
+            const fullLink = href.startsWith("http")
+                ? href
+                : `${baseUrl}${href}`;
+            const pubDateText = $e.find('div[class*="date"]').text().trim();
+            const pubDate = parseDate(pubDateText);
             return {
-                title: $e.find('h2, h3').text().trim(),
-                link: `${baseUrl}${$e.attr('href')}`,
+                title: $e.find("h2, h3").text().trim(),
+                link: fullLink,
+                pubDate,
             };
-        });
+        })
+        .filter((item) => item.title && item.link)
+        .slice(0, limit);
 
     const items = await pMap(
         list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('div[class*="Body"]');
-                content.find('img').each((_, e) => {
+                const content = $('article > div > div[class*="__body"]');
+
+                content.find("img").each((_, e) => {
                     const $e = $(e);
-                    $e.removeAttr('style srcset');
-                    const src = $e.attr('src');
+                    $e.removeAttr("style srcset");
+                    const src = $e.attr("src");
                     const params = new URLSearchParams(src);
-                    const newSrc = params.get('/_next/image?url');
+                    const newSrc = params.get("/_next/image?url");
                     if (newSrc) {
-                        $e.attr('src', newSrc);
+                        $e.attr("src", newSrc);
                     }
                 });
 
-                item.pubDate = parseDate($('div[class*="date"]').text().trim().replaceAll('Published ', ''));
-                item.description = content.html();
+                item.description = content.html() ?? undefined;
 
                 return item;
             }),
-        { concurrency: 5 }
+        { concurrency: 5 },
     );
 
     return {
-        title: 'Anthropic Engineering',
+        title: "Anthropic Engineering",
         link,
+        description: "Latest engineering posts from Anthropic",
         image: `${baseUrl}/images/icons/apple-touch-icon.png`,
         item: items,
     };

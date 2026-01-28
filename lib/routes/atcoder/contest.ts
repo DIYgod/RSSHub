@@ -23,7 +23,7 @@ export const route: Route = {
     handler,
     description: `Rated Range
 
-| ABC Class (Rated for \~1999) | ARC Class (Rated for \~2799) | AGC Class (Rated for \~9999) |
+| ABC Class (Rated for ~1999) | ARC Class (Rated for ~2799) | AGC Class (Rated for ~9999) |
 | ---------------------------- | ---------------------------- | ---------------------------- |
 | 1                            | 2                            | 3                            |
 

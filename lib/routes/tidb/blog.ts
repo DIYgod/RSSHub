@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://tidb.net';
+    const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
     const targetResponse = await ofetch(targetUrl);
 
@@ -156,7 +156,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined;
-                const guid: string = `tidb-blog-${detailResponse.slug}`;
+                const guid = `tidb-blog-${detailResponse.slug}`;
                 const updated: number | string = detailResponse.lastModifiedAt ?? pubDate;
 
                 const processedItem: DataItem = {

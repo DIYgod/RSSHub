@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/desc';
 
 const md = MarkdownIt({
     html: true,
@@ -66,7 +65,7 @@ async function handler(ctx) {
                 const { data } = await got(`${baseUrl}/api/v1/studio${item.slug}`);
 
                 const content = data.Data.ReadMeContent;
-                item.description = art(path.join(__dirname, 'templates/desc.art'), {
+                item.description = renderDescription({
                     coverImage: item.coverImage,
                     description: item.description,
                     md: md.render(content),

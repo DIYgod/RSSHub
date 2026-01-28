@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import { destr } from 'destr';
 
@@ -7,7 +5,12 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderAudioMedia } from './templates/audio-media';
+import { renderChartMedia } from './templates/chart-media';
+import { renderImageFigure } from './templates/image-figure';
+import { renderLedeMedia } from './templates/lede-media';
+import { renderVideoMedia } from './templates/video-media';
 
 const rootUrl = 'https://www.bloomberg.com/feeds';
 const idSel = 'script[id^="article-info"][type="application/json"], script[class^="article-info"][type="application/json"], script#dvz-config';
@@ -183,7 +186,7 @@ const parseVideoPage = async (res, api, item) => {
             title: video_story.headline.text || item.title,
             link: video_story.url || item.link,
             guid: `bloomberg:${video_story.id}`,
-            description: art(path.join(__dirname, 'templates/video_media.art'), desc),
+            description: renderVideoMedia(desc),
             pubDate: parseDate(video_story.publishedAt) || item.pubDate,
             media: {
                 content: { url: video_story.video?.thumbnail.url || '' },
@@ -267,7 +270,7 @@ const processLedeMedia = async (story_json) => {
             src: story_json.ledeImageUrl,
             video: kind === 'video' && (await processVideo(story_json.ledeAttachment.bmmrId)),
         };
-        return art(path.join(__dirname, 'templates/lede_media.art'), { media });
+        return renderLedeMedia(media);
     } else if (story_json.lede) {
         const lede = story_json.lede;
         const image = {
@@ -276,7 +279,7 @@ const processLedeMedia = async (story_json) => {
             caption: lede.caption?.replaceAll(capRegex, '') ?? '',
             credit: lede.credit?.replaceAll(capRegex, '') ?? '',
         };
-        return art(path.join(__dirname, 'templates/image_figure.art'), image);
+        return renderImageFigure(image);
     } else if (story_json.imageAttachments) {
         const attachment = Object.values(story_json.imageAttachments)[0];
         if (attachment) {
@@ -286,7 +289,7 @@ const processLedeMedia = async (story_json) => {
                 caption: attachment.caption?.replaceAll(capRegex, '') ?? '',
                 credit: attachment.credit?.replaceAll(capRegex, '') ?? '',
             };
-            return art(path.join(__dirname, 'templates/image_figure.art'), image);
+            return renderImageFigure(image);
         }
         return '';
     } else if (story_json.type === 'Lede') {
@@ -299,7 +302,7 @@ const processLedeMedia = async (story_json) => {
             credit: props.credit?.replaceAll(capRegex, '') ?? '',
             src: props.url,
         };
-        return art(path.join(__dirname, 'templates/lede_media.art'), { media });
+        return renderLedeMedia(media);
     }
 };
 
@@ -340,12 +343,12 @@ const processBody = async (body_html, story_json) => {
                     credit: (episode.credits.map((c) => c.name).join(', ') ?? []) || ($(e).find('[class$="credit"]').html()?.trim() ?? ''),
                 };
             }
-            new_figure = art(path.join(__dirname, 'templates/audio_media.art'), audio);
+            new_figure = renderAudioMedia(audio);
         } else if (imageType === 'video') {
             if (story_json.videoAttachments) {
                 const attachment = story_json.videoAttachments[$(e).data('id')];
                 const video = await processVideo(attachment.bmmrId);
-                new_figure = art(path.join(__dirname, 'templates/video_media.art'), video);
+                new_figure = renderVideoMedia(video);
             }
         } else if (imageType === 'photo' || imageType === 'image' || type === 'image') {
             let src, alt;
@@ -360,7 +363,7 @@ const processBody = async (body_html, story_json) => {
             const caption = $(e).find('[class$="text"], .caption, .photo-essay__text').html()?.trim() ?? '';
             const credit = $(e).find('[class$="credit"], .credit, .photo-essay__source').html()?.trim() ?? '';
             const image = { src, alt, caption, credit };
-            new_figure = art(path.join(__dirname, 'templates/image_figure.art'), image);
+            new_figure = renderImageFigure(image);
         }
         $(new_figure).insertAfter(e);
         $(e).remove();
@@ -502,7 +505,7 @@ const nodeRenderers = {
                     chartAlt: e.alt,
                     fallback: e.src,
                 };
-                return art(path.join(__dirname, 'templates/chart_media.art'), { chart });
+                return renderChartMedia({ chart });
             }
             const image = {
                 alt: node.data.attachment?.footnote || '',
@@ -510,14 +513,14 @@ const nodeRenderers = {
                 credit: node.data.attachment?.source || '',
                 src: node.data.chart?.fallback || '',
             };
-            return art(path.join(__dirname, 'templates/image_figure.art'), image);
+            return renderImageFigure(image);
         }
         if (t === 'photo') {
             const h = node.data;
             let img = '';
             if (h.attachment) {
                 const image = { src: h.photo?.src, alt: h.photo?.alt, caption: h.photo?.caption, credit: h.photo?.credit };
-                img = art(path.join(__dirname, 'templates/image_figure.art'), image);
+                img = renderImageFigure(image);
             }
             if (h.link && h.link.destination && h.link.destination.web) {
                 const href = h.link.destination.web;
@@ -530,7 +533,7 @@ const nodeRenderers = {
             const id = h.attachment?.id;
             if (id) {
                 const desc = await processVideo(id, h.attachment?.title);
-                return art(path.join(__dirname, 'templates/video_media.art'), desc);
+                return renderVideoMedia(desc);
             }
         }
         if (t === 'audio' && node.data.attachment) {
@@ -545,7 +548,7 @@ const nodeRenderers = {
                     caption: P,
                     credit: '',
                 };
-                return art(path.join(__dirname, 'templates/audio_media.art'), audio);
+                return renderAudioMedia(audio);
             }
         }
         return '';

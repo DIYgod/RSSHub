@@ -85,10 +85,10 @@ export interface AppNovelSeriesDetail {
 
 export interface AppNovelSeries {
     novel_series_detail: AppNovelSeriesDetail;
-    novels: {
+    novels: Array<{
         id: string;
         title: string;
         create_date: Date;
         user: AppUser;
-    }[];
+    }>;
 }

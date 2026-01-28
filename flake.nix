@@ -47,7 +47,7 @@
                           'if (process.env.BUILD_ROUTES_MODE) {
     modules = directoryImport({
         targetDirectoryPath: path.join(__dirname, "./routes"),
-        importPattern: /\.ts$/,
+        importPattern: /\.tsx?$/,
     }) as typeof modules;
 } else if (config.isPackage)'
         '';

@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(<string>ctx.req.query('limit')) : 20;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string) : 20;
 
     const list =
         type === 'home'

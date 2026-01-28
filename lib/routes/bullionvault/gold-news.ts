@@ -13,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://bullionvault.com';
+    const baseUrl = 'https://bullionvault.com';
     const targetUrl: string = new URL(`gold-news${category ? `/${category}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);

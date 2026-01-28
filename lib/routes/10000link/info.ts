@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,13 +8,14 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'newslists', id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://info.10000link.com';
+    const baseUrl = 'https://info.10000link.com';
     const targetUrl: string = new URL(`${category}.aspx${id ? `?chid=${id}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -33,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('dd h1 a');
 
             const title: string = $aEl.attr('title') ?? $aEl.text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 intro: $el.find('dd.title_l').text(),
             });
             const pubDateStr: string | undefined = $el.find('span.ymd_w').text();
@@ -78,15 +77,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const title: string = $$('div.entity_title h1 a').text();
                     const image: string | undefined = $$('div.entity_thumb img.img-responsive').attr('src');
 
-                    const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
-                        images: image
-                            ? [
-                                  {
-                                      src: image,
-                                      alt: title,
-                                  },
-                              ]
-                            : undefined,
+                    const description: string | undefined = renderDescription({
                         description: $$('div.entity_content').html(),
                     });
                     const pubDateStr: string | undefined = detailResponse.match(/var\stime\s=\s"(.*?)";/)?.[1];
@@ -118,7 +109,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
-    const author: string = '10000万联网';
+    const author = '10000万联网';
     const title: string = $('h1').contents().first().text();
 
     return {

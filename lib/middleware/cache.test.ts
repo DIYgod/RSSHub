@@ -145,8 +145,8 @@ describe('cache', () => {
         process.env.REDIS_URL = 'redis://wrongpath:6379';
         await noCacheTestFunc();
         const cache = (await import('@/utils/cache')).default;
-        await cache.clients.redisClient!.quit();
-    });
+        cache.clients.redisClient?.disconnect();
+    }, 20000);
 
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';

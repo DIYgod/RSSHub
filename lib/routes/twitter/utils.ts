@@ -1,12 +1,10 @@
-import URL from 'node:url';
-
 import { TwitterApi } from 'twitter-api-v2';
 
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
-const getQueryParams = (url) => URL.parse(url, true).query;
+const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
     let m = null;
@@ -153,7 +151,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         if (widthOfPics <= 0 && heightOfPics <= 0) {
                             content += `width="${media.sizes.large.w}" height="${media.sizes.large.h}" `;
                         }
-                        content += ` style="${style}" ` + `${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
+                        content += ` style="${style}" ${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
                         if (addLinkForPics) {
                             content += `</a>`;
                         }
@@ -519,4 +517,10 @@ export const keepOnlyMedia = function (tweets) {
     return excluded;
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet, keepOnlyMedia };
+export default {
+    ProcessFeed,
+    getAppClient,
+    parseRouteParams,
+    excludeRetweet,
+    keepOnlyMedia,
+};

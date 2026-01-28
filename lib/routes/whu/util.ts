@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const domain = 'whu.edu.cn';
 
@@ -48,11 +47,11 @@ const getItemDetail = async (item, rootUrl) => {
 
         // Missing the `src` properties for the images.
         // The `src` property should be replaced with the value of `orisrc` to show the image.
-        // Replace images in the content with custom art template.
+        // Replace images in the content with custom JSX template.
         content('p.vsbcontent_img').each(function () {
             const image = content(this).find('img');
             content(this).replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+                renderDescription({
                     image: {
                         src: new URL(image.prop('orisrc'), rootUrl).href,
                         width: image.prop('width'),
@@ -63,11 +62,11 @@ const getItemDetail = async (item, rootUrl) => {
 
         // Missing the `src` properties for the videos.
         // The `src` property should be replaced with the value of `vurl` to play the video.
-        // Replace videos in the content with custom art template.
+        // Replace videos in the content with custom JSX template.
         content('script[name="_videourl"]').each(function () {
             const video = content(this);
             video.replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+                renderDescription({
                     video: {
                         src: new URL(video.prop('vurl').split('?')[0], rootUrl).href,
                         width: content(video).prop('vwidth'),
@@ -99,7 +98,7 @@ const getItemDetail = async (item, rootUrl) => {
         const meta = processMeta(detailResponse);
 
         item.title = getMeta(meta, 'ArticleTitle') ?? item.title;
-        item.description = art(path.join(__dirname, 'templates/description.art'), {
+        item.description = renderDescription({
             description,
             attachments,
         });

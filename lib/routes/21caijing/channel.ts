@@ -45,9 +45,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const domain: string = 'm.21jingji.com';
-    const baseUrl: string = `https://${domain}`;
-    const staticBaseUrl: string = 'https://static.21jingji.com';
+    const domain = 'm.21jingji.com';
+    const baseUrl = `https://${domain}`;
+    const staticBaseUrl = 'https://static.21jingji.com';
     const menuUrl: string = new URL('m/webMenu.json', staticBaseUrl).href;
 
     const menuResponse = await ofetch(menuUrl);
@@ -97,7 +97,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const authors: DataItem['author'] = [...new Set([item.mp?.name, item.author, item.editor, item.source].filter(Boolean))].map((name) => ({
                 name,
             }));
-            const guid: string = `21jingji-${item.id}`;
+            const guid = `21jingji-${item.id}`;
             const image: string | undefined = item.image ?? item.thumb ?? item.listthumb;
             const updated: number | string = item.updatetime;
 

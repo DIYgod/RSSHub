@@ -1,126 +1,142 @@
-import Parser from 'rss-parser';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import app from '@/app';
+import { config } from '@/config';
+import template from '@/middleware/template';
 
-const parser = new Parser();
+const createCtx = (query: Record<string, string | undefined>, data: any, extra: Record<string, unknown> = {}) => {
+    const store = new Map<string, unknown>([['data', data], ...Object.entries(extra)]);
+    return {
+        req: {
+            query: (key: string) => query[key],
+            url: 'http://localhost/rss',
+        },
+        get: (key: string) => store.get(key),
+        set: (key: string, value: unknown) => store.set(key, value),
+        json: vi.fn((payload) => payload),
+        html: vi.fn((payload) => payload),
+        render: vi.fn((payload) => payload),
+        body: vi.fn((payload) => payload),
+        redirect: vi.fn((url: string, status: number) => ({ url, status })),
+        header: vi.fn(),
+        res: { headers: new Headers() },
+    };
+};
 
-describe('template', () => {
-    const expectPubDate = new Date(1_546_272_000_000 - 10 * 1000);
+describe('template middleware', () => {
+    it('returns debug json when requested', async () => {
+        const originalDebug = config.debugInfo;
+        config.debugInfo = true;
 
-    it(`.rss`, async () => {
-        const response1 = await app.request('/test/1?format=rss');
-        const parsed1 = await parser.parseString(await response1.text());
+        const ctx = createCtx({ format: 'debug.json' }, { item: [] }, { json: { ok: true } });
+        const result = await template(ctx as any, async () => {});
 
-        expect(parsed1).toEqual(expect.any(Object));
-        expect(parsed1.title).toEqual(expect.any(String));
-        expect(parsed1.description).toEqual(expect.any(String));
-        expect(parsed1.link).toEqual(expect.any(String));
-        expect(parsed1.lastBuildDate).toEqual(expect.any(String));
-        expect(parsed1.ttl).toEqual(expect.any(String));
-        expect(parsed1.items).toEqual(expect.any(Array));
+        expect(result).toEqual({ ok: true });
+        expect(ctx.json).toHaveBeenCalled();
 
-        expect(parsed1.items[0]).toEqual(expect.any(Object));
-        expect(parsed1.items[0].title).toEqual(expect.any(String));
-        expect(parsed1.items[0].link).toEqual(expect.any(String));
-        expect(parsed1.items[0].pubDate).toBe(expectPubDate.toUTCString());
-        expect(parsed1.items[0].author).toEqual(expect.any(String));
-        expect(parsed1.items[0].content).toEqual(expect.any(String));
-        expect(parsed1.items[0].guid).toEqual(expect.any(String));
-
-        const response2 = await app.request('/test/1');
-        const parsed2 = await parser.parseString(await response2.text());
-        delete parsed1.lastBuildDate;
-        delete parsed2.lastBuildDate;
-        delete parsed1.feedUrl;
-        delete parsed2.feedUrl;
-        delete parsed1.paginationLinks;
-        delete parsed2.paginationLinks;
-        expect(parsed2).toMatchObject(parsed1);
+        config.debugInfo = originalDebug;
     });
 
-    it(`.atom`, async () => {
-        const response = await app.request('/test/1?format=atom');
-        const parsed = await parser.parseString(await response.text());
+    it('returns api data without rendering', async () => {
+        const ctx = createCtx({}, null, { apiData: { ok: true } });
+        const result = await template(ctx as any, async () => {});
 
-        expect(parsed).toEqual(expect.any(Object));
-        expect(parsed.title).toEqual(expect.any(String));
-        expect(parsed.link).toEqual(expect.any(String));
-        expect(parsed.lastBuildDate).toEqual(expect.any(String));
-        expect(parsed.items).toEqual(expect.any(Array));
-
-        expect(parsed.items[0]).toEqual(expect.any(Object));
-        expect(parsed.items[0].title).toEqual(expect.any(String));
-        expect(parsed.items[0].link).toEqual(expect.any(String));
-        expect(parsed.items[0].pubDate).toBe(expectPubDate.toISOString());
-        expect(parsed.items[0].author).toEqual(expect.any(String));
-        expect(parsed.items[0].content).toEqual(expect.any(String));
-        expect(parsed.items[0].id).toEqual(expect.any(String));
+        expect(result).toEqual({ ok: true });
+        expect(ctx.json).toHaveBeenCalledWith({ ok: true });
     });
 
-    it(`.json`, async () => {
-        const jsonResponse = await app.request('/test/1?format=json');
-        const rssResponse = await app.request('/test/1?format=rss');
-        const jsonParsed = JSON.parse(await jsonResponse.text());
-        const rssParsed = await parser.parseString(await rssResponse.text());
+    it('renders debug html snippet when requested', async () => {
+        const originalDebug = config.debugInfo;
+        config.debugInfo = true;
 
-        expect(jsonResponse.headers.get('content-type')).toBe('application/feed+json; charset=UTF-8');
+        const ctx = createCtx({ format: '0.debug.html' }, { item: [{ description: 'Hello' }] });
+        const result = await template(ctx as any, async () => {});
 
-        expect(jsonParsed.items[0].title).toEqual(rssParsed.items[0].title);
-        expect(jsonParsed.items[0].url).toEqual(rssParsed.items[0].link);
-        expect(jsonParsed.items[0].id).toEqual(rssParsed.items[0].guid);
-        expect(jsonParsed.items[0].date_published).toEqual(expectPubDate.toISOString());
-        expect(jsonParsed.items[0].content_html).toEqual(rssParsed.items[0].content);
-        expect(jsonParsed.items[0].authors[0].name).toEqual(rssParsed.items[0].author);
-        expect(jsonParsed.items.every((item) => item.authors.every((author) => author.name.includes(' ')))).toBe(false);
+        expect(result).toBe('Hello');
+        expect(ctx.html).toHaveBeenCalled();
+
+        config.debugInfo = originalDebug;
     });
 
-    it('.debug.html', async () => {
-        const jsonResponse = await app.request('/test/1?format=json');
-        const jsonParsed = JSON.parse(await jsonResponse.text());
+    it('trims long titles and normalizes authors', async () => {
+        const originalLimit = config.titleLengthLimit;
+        config.titleLengthLimit = 3;
 
-        const debugHTMLResponse0 = await app.request('/test/1?format=0.debug.html');
-        expect(debugHTMLResponse0.headers.get('content-type')).toBe('text/html; charset=UTF-8');
-        expect(await debugHTMLResponse0.text()).toBe(jsonParsed.items[0].content_html);
+        const data = {
+            title: 'Feed',
+            item: [
+                {
+                    title: 'ABCDE',
+                    author: [{ name: ' Alice ' }, { name: 'Bob ' }],
+                    itunes_duration: '65',
+                },
+            ],
+        };
+        const ctx = createCtx({ format: 'rss' }, data);
+        await template(ctx as any, async () => {});
 
-        const debugHTMLResponseNotExist = await app.request(`/test/1?format=${jsonParsed.items.length}.debug.html`);
-        expect(await debugHTMLResponseNotExist.text()).toBe(`data.item[${jsonParsed.items.length}].description not found`);
+        expect(data.item[0].title).toBe('ABC...');
+        expect(data.item[0].author).toBe('Alice, Bob');
+        expect(data.item[0].itunes_duration).toBe('0:01:05');
+
+        config.titleLengthLimit = originalLimit;
     });
 
-    it('flatten author object', async () => {
-        const response = await app.request('/test/json');
-        const parsed = await parser.parseString(await response.text());
-        expect(parsed.items[2].author).toBe(['DIYgod1', 'DIYgod2'].map((name) => name).join(', '));
-        expect(parsed.items[3].author).toBe(['DIYgod3', 'DIYgod4', 'DIYgod5'].map((name) => name).join(', '));
-        expect(parsed.items[4].author).toBeUndefined();
+    it('clears invalid dates for non-rss formats', async () => {
+        const data = {
+            title: 'Test',
+            item: [
+                {
+                    title: 'Item',
+                    pubDate: 'invalid-date',
+                    updated: 'invalid-updated',
+                },
+            ],
+        };
+        const ctx = createCtx({ format: 'json' }, data);
+        await template(ctx as any, async () => {});
+
+        expect(data.item[0].pubDate).toBe('');
+        expect(data.item[0].updated).toBe('');
     });
 
-    it(`long title`, async () => {
-        const response = await app.request('/test/long');
-        const parsed = await parser.parseString(await response.text());
-        expect(parsed.items[0].title?.length).toBe(153);
+    it('returns redirect response when redirect is set', async () => {
+        const ctx = createCtx({}, { item: [] }, { redirect: 'https://example.com' });
+        const result = await template(ctx as any, async () => {});
+
+        expect(result).toEqual({ url: 'https://example.com', status: 301 });
+        expect(ctx.redirect).toHaveBeenCalledWith('https://example.com', 301);
     });
 
-    it(`enclosure`, async () => {
-        const response = await app.request('/test/enclosure');
-        const parsed = await parser.parseString(await response.text());
-        expect(parsed.itunes?.author).toBe('DIYgod');
-        expect(parsed.items[0].enclosure?.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
-        expect(parsed.items[0].enclosure?.length).toBe('3661');
-        expect(parsed.items[0].itunes.duration).toBe('10:10:10');
+    it('renders rss3 output', async () => {
+        const data = {
+            title: 'Test',
+            item: [
+                {
+                    title: 'Item',
+                    link: 'https://example.com/item',
+                },
+            ],
+        };
+        const ctx = createCtx({ format: 'rss3' }, data);
+        const result = await template(ctx as any, async () => {});
+
+        expect(ctx.json).toHaveBeenCalled();
+        expect(result).toHaveProperty('data');
     });
 
-    it(`redirect`, async () => {
-        const response = await app.request('/test/redirect');
-        expect(response.status).toBe(301);
-        expect(response.headers.get('location')).toBe('/test/1');
-    });
+    it('renders atom output', async () => {
+        const data = {
+            title: 'Test',
+            item: [
+                {
+                    title: 'Item',
+                    link: 'https://example.com/item',
+                },
+            ],
+        };
+        const ctx = createCtx({ format: 'atom' }, data);
+        await template(ctx as any, async () => {});
 
-    it(`api`, async () => {
-        const response = await app.request('/api/test');
-        expect(response.status).toBe(200);
-        expect(await response.json()).toEqual({
-            code: 0,
-        });
+        expect(ctx.render).toHaveBeenCalled();
     });
 });

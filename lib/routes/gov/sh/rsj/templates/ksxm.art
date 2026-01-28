@@ -1,7 +1,0 @@
-<text>考试项目名称：{{ name }} </text>
-<br>
-<text>考试类别：{{ type }} </text>
-<br>
-<text>考试日期：{{ date }} </text>
-<br>
-<text>报名起止日期：{{ registrationDeadline }} </text>

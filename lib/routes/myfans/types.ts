@@ -48,12 +48,12 @@ export interface Post {
     liked: boolean;
     likes_count: number;
     user: UserProfile;
-    post_images: {
+    post_images: Array<{
         file_url: string;
         square_thumbnail_url: string;
         raw_image_height: number;
         raw_image_width: number;
-    }[];
+    }>;
     visible: boolean;
     publish_end_at: null;
     published_at: string;
@@ -66,7 +66,7 @@ export interface Post {
         amount: number;
         auto_message_body: string;
     } | null;
-    plans: {
+    plans: Array<{
         id: string;
         product_name: string;
         monthly_price: number;
@@ -81,7 +81,7 @@ export interface Post {
             limited_number: null;
             status: string;
         } | null;
-    }[];
+    }>;
     video_processing: boolean | null;
     video_duration: {
         hours: string | null;
