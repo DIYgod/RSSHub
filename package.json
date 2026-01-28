@@ -118,7 +118,7 @@
         "puppeteer-real-browser": "1.4.4",
         "query-string": "9.3.1",
         "rate-limiter-flexible": "9.0.1",
-        "re2js": "1.2.0",
+        "re2js": "1.2.1",
         "rebrowser-puppeteer": "24.8.1",
         "rfc4648": "1.5.4",
         "rss-parser": "3.13.0",
