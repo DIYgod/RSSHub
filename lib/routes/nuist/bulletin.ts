@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -68,7 +69,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('category') || 'default';
     const info = map[type] || map.default;
-    
+
     const link = `${rootUrl}/${info.file}`;
 
     const response = await got(link);
@@ -78,11 +79,11 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const item = $(element);
-            
+
             // 从内部找 a 标签
             const a = item.find('a').first();
             const href = a.attr('href');
-            
+
             if (!href) {
                 return null;
             }
@@ -91,7 +92,7 @@ async function handler(ctx) {
             const linkUrl = new URL(href, rootUrl).href;
 
             // 从 li 的文本中提取
-            const allText = item.text(); 
+            const allText = item.text();
             const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
 
