@@ -135,7 +135,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 7.0.3
-        version: 7.0.3(tough-cookie@6.0.0)(undici@7.19.1)
+        version: 7.0.3(tough-cookie@6.0.0)(undici@7.19.2)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -218,8 +218,8 @@ importers:
         specifier: 9.0.1
         version: 9.0.1
       re2js:
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.1
+        version: 1.2.1
       rebrowser-puppeteer:
         specifier: 24.8.1
         version: 24.8.1(bufferutil@4.0.9)(typescript@5.9.3)(utf-8-validate@5.0.10)
@@ -233,8 +233,8 @@ importers:
         specifier: 2.17.0
         version: 2.17.0
       simplecc-wasm:
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.1.1
+        version: 1.1.1
       socks-proxy-agent:
         specifier: 8.0.5
         version: 8.0.5
@@ -266,8 +266,8 @@ importers:
         specifier: 1.6.3
         version: 1.6.3
       undici:
-        specifier: 7.19.1
-        version: 7.19.1
+        specifier: 7.19.2
+        version: 7.19.2
       uuid:
         specifier: 13.0.0
         version: 13.0.0
@@ -436,7 +436,7 @@ importers:
         version: 2.4.3(typescript@5.9.3)
       node-network-devtools:
         specifier: 1.0.29
-        version: 1.0.29(undici@7.19.1)(utf-8-validate@5.0.10)
+        version: 1.0.29(undici@7.19.2)(utf-8-validate@5.0.10)
       oxfmt:
         specifier: 0.27.0
         version: 0.27.0
@@ -5638,8 +5638,8 @@ packages:
   rate-limiter-flexible@9.0.1:
     resolution: {integrity: sha512-sO+QdoGPCxroi4VkO2FIVjfUGuexhRkBc9ROHqu5eVEEz+oPHzQqvCc25ajFfMUBosbNGb6qpNa8xmxH9YNZsg==}
 
-  re2js@1.2.0:
-    resolution: {integrity: sha512-IoeSIsrlUnaCBHCez7SAJvTB6Z6zb45aFgXs0q2owmnJZTXstbGhXqq4Ix+TV4jgtR5KcYa0NePNb5tF7V/SLg==}
+  re2js@1.2.1:
+    resolution: {integrity: sha512-pMQCWm/GsGambkqCl0l02SZUUd5yQ4u8D72K90TJWHMALuYg8BWCdcfXdXIvEQYGEM8K9QrxYAFtVgeQ+LZKFw==}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -5871,8 +5871,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simplecc-wasm@1.1.0:
-    resolution: {integrity: sha512-0nmH9WrzxpI8GOZkltH0NKAlcPe42rXek01noMSdelCmj8RYSL06SDDG/YWhvVTbMcuN1fq5imOeXpUJmhbcPQ==}
+  simplecc-wasm@1.1.1:
+    resolution: {integrity: sha512-NHBvSBlnOk7nqiNKvNpG/3DqD4XBkls3CqmTl4t3At4v7N9z1HO2t9g7vK//0o33zcgVOKE59vFcyCcgCuw6zQ==}
 
   sleep@6.1.0:
     resolution: {integrity: sha512-Z1x4JjJxsru75Tqn8F4tnOFeEu3HjtITTsumYUiuz54sGKdISgLCek9AUlXlVVrkhltRFhNUsJDJE76SFHTDIQ==}
@@ -6062,6 +6062,7 @@ packages:
   tar@7.5.6:
     resolution: {integrity: sha512-xqUeu2JAIJpXyvskvU3uvQW8PAmHrtXp2KDuMJwQqW8Sqq0CaZBAQ+dKS3RBXVhU4wC5NjAdKrmh84241gO9cA==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   telegram@2.26.22:
     resolution: {integrity: sha512-EIj7Yrjiu0Yosa3FZ/7EyPg9s6UiTi/zDQrFmR/2Mg7pIUU+XjAit1n1u9OU9h2oRnRM5M+67/fxzQluZpaJJg==}
@@ -6317,8 +6318,8 @@ packages:
     resolution: {integrity: sha512-y+8YjDFzWdQlSE9N5nzKMT3g4a5UBX1HKowfdXh0uvAnTaqqwqB92Jt4UXBAeKekDs5IaDKyJFR4X1gYVCgXcw==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.19.1:
-    resolution: {integrity: sha512-Gpq0iNm5M6cQWlyHQv9MV+uOj1jWk7LpkoE5vSp/7zjb4zMdAcUD+VL5y0nH4p9EbUklq00eVIIX/XcDHzu5xg==}
+  undici@7.19.2:
+    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
     engines: {node: '>=20.18.1'}
 
   unenv@2.0.0-rc.24:
@@ -9846,7 +9847,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.19.1
+      undici: 7.19.2
       whatwg-mimetype: 4.0.0
 
   chownr@3.0.0: {}
@@ -11057,12 +11058,12 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.19.1):
+  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.19.2):
     dependencies:
       agent-base: 7.1.4
       tough-cookie: 6.0.0
     optionalDependencies:
-      undici: 7.19.1
+      undici: 7.19.2
 
   http-proxy-agent@7.0.2:
     dependencies:
@@ -11922,13 +11923,13 @@ snapshots:
     dependencies:
       write-file-atomic: 1.3.4
 
-  node-network-devtools@1.0.29(undici@7.19.1)(utf-8-validate@5.0.10):
+  node-network-devtools@1.0.29(undici@7.19.2)(utf-8-validate@5.0.10):
     dependencies:
       bufferutil: 4.0.9
       iconv-lite: 0.6.3
       inspector: 0.5.0
       open: 8.4.2
-      undici: 7.19.1
+      undici: 7.19.2
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - utf-8-validate
@@ -12366,7 +12367,7 @@ snapshots:
 
   rate-limiter-flexible@9.0.1: {}
 
-  re2js@1.2.0: {}
+  re2js@1.2.1: {}
 
   readable-stream@3.6.2:
     dependencies:
@@ -12699,7 +12700,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simplecc-wasm@1.1.0: {}
+  simplecc-wasm@1.1.1: {}
 
   sleep@6.1.0:
     dependencies:
@@ -13145,7 +13146,7 @@ snapshots:
 
   undici@7.18.2: {}
 
-  undici@7.19.1: {}
+  undici@7.19.2: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
