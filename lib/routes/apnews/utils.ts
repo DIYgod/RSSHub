@@ -45,7 +45,7 @@ export function fetchArticle(item) {
                 description: $('div.RichTextStoryBody').html() || $(':is(.VideoLead, .VideoPage-pageSubHeading)').html(),
                 category: [...(section ? [section] : []), ...(ldjson.keywords ?? [])],
                 guid: $("meta[name='brightspot.contentId']").attr('content'),
-                author: ldjson.author?.map((e) => e.mainEntity),
+                author: ldjson.author?.map((e) => e.mainEntity).filter(Boolean),
             };
         } else {
             // Live
