@@ -1,28 +1,25 @@
 import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseTitle = '南信大信息公告栏';
 const rootUrl = 'https://bulletin.nuist.edu.cn';
-
-// 建立新版官网的文件名映射表
 const map = {
-    default: 'index.htm', // 首页/全部
-    wjgg: 'wjgg.htm', // 文件公告
-    zbxx: 'zbxx.htm', // 招标信息
-    xsbg: 'xsbg.htm', // 学术报告
-    dzsw: 'dzsw.htm', // 党政事务
-    jxks: 'jxks.htm', // 教学考试
-    hytz2: 'hytz2.htm', // 会议通知
-    zzrs: 'zzrs.htm', // 组织人事
-    kyxx: 'kyxx.htm', // 科研信息
-    zsjy: 'zsjy.htm', // 招生就业
-    cxcy: 'cxcy.htm', // 创新创业
-    xyhd: 'xyhd.htm', // 校园活动
-    xydt: 'xydt.htm', // 学院动态
-    ztjz: 'ztjz.htm', // 专题讲座
+    default: { file: 'index.htm', title: '全部' },
+    wjgg: { file: 'wjgg.htm', title: '文件公告' },
+    zbxx: { file: 'zbxx.htm', title: '招标信息' },
+    xsbg: { file: 'xsbg.htm', title: '学术报告' },
+    dzsw: { file: 'dzsw.htm', title: '党政事务' },
+    jxks: { file: 'jxks.htm', title: '教学考试' },
+    hytz: { file: 'hytz.htm', title: '会议通知' },
+    zzrs: { file: 'zzrs.htm', title: '组织人事' },
+    kyxx: { file: 'kyxx.htm', title: '科研信息' },
+    zsjy: { file: 'zsjy.htm', title: '招生就业' },
+    cxcy: { file: 'cxcy.htm', title: '创新创业' },
+    xyhd: { file: 'xyhd.htm', title: '校园活动' },
+    xydt: { file: 'xydt.htm', title: '学院动态' },
+    ztjz: { file: 'ztjz.htm', title: '专题讲座' },
 };
 
 export const route: Route = {
@@ -42,8 +39,8 @@ export const route: Route = {
         {
             source: ['bulletin.nuist.edu.cn/:filename'],
             target: (params) => {
-                const filename = params.filename.replace('.htm', '');
-                return `/bulletin/${filename === 'index' ? '' : filename}`;
+                const filename = params.filename.replace(/\.htm$/i, '');
+                return filename === 'index' ? '/bulletin' : `/bulletin/${filename}`;
             },
         },
     ],
@@ -67,20 +64,27 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') || 'default';
-    const filename = map[category] || 'index.htm';
-    const link = `${rootUrl}/${filename}`;
+    const type = ctx.req.param('category') || 'default';
+    const info = map[type] || map.default;
+    const link = `${rootUrl}/${info.file}`;
+
     const response = await got(link);
     const $ = load(response.data);
+
     const list = $('a[href*="content.jsp"]')
         .toArray()
         .map((element) => {
             const item = $(element);
+            const href = item.attr('href');
+            if (!href) {
+                return null;
+            }
+
             const parent = item.closest('li, tr');
             const title = item.attr('title') || item.text().trim();
-            const href = item.attr('href');
             const linkUrl = new URL(href, rootUrl).href;
-            const allText = parent.text();
+
+            const allText = parent.text(); 
             const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
 
@@ -88,13 +92,16 @@ async function handler(ctx) {
                 title,
                 link: linkUrl,
                 pubDate,
-                category: map[category] ? category : '全部',
+                // 使用 map 中的中文标题作为分类
+                category: info.title,
             };
         })
-        .filter((item) => item.title && item.pubDate);
+        // 过滤掉 null (href不存在的情况) 和无效条目
+        .filter((item) => item && item.title && item.pubDate);
 
     return {
-        title: `${baseTitle} - ${category === 'default' ? '全部' : category}`,
+        // 标题现在会显示：南信大信息公告栏 - 科研信息
+        title: `${baseTitle} - ${info.title}`,
         link,
         item: list,
     };
