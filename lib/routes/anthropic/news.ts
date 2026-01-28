@@ -1,47 +1,63 @@
-import { load } from 'cheerio';
-import pMap from 'p-map';
+import { load } from "cheerio";
+import pMap from "p-map";
 
-import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import type { DataItem, Route } from "@/types";
+import cache from "@/utils/cache";
+import ofetch from "@/utils/ofetch";
 
 export const route: Route = {
-    path: '/news',
-    categories: ['programming'],
-    example: '/anthropic/news',
+    path: "/news",
+    categories: ["programming"],
+    example: "/anthropic/news",
     parameters: {},
     radar: [
         {
-            source: ['www.anthropic.com/news', 'www.anthropic.com'],
+            source: ["www.anthropic.com/news", "www.anthropic.com"],
         },
     ],
-    name: 'News',
-    maintainers: ['etShaw-zh', 'goestav'],
+    name: "News",
+    maintainers: ["etShaw-zh", "goestav"],
     handler,
-    url: 'www.anthropic.com/news',
+    url: "www.anthropic.com/news",
 };
 
 async function handler(ctx) {
-    const link = 'https://www.anthropic.com/news';
+    const link = "https://www.anthropic.com/news";
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query("limit")
+        ? Number.parseInt(ctx.req.query("limit"), 10)
+        : 20;
 
     const list: DataItem[] = $('a[class*="PublicationList"]')
         .toArray()
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('span[class*="title"]').text().trim() || $el.find('h3, h4').text().trim();
-            const href = $el.attr('href') ?? '';
-            const pubDate = $el.find('time[class*="date"]').text().trim() || $el.find('p.detail-m.agate').text().trim();
-            const fullLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
+            const title =
+                $el.find('span[class*="title"]').text().trim() ||
+                $el.find("h3, h4").text().trim();
+            const href = $el.attr("href") ?? "";
+            const pubDate =
+                $el.find('time[class*="date"]').text().trim() ||
+                $el.find("p.detail-m.agate").text().trim();
+            const fullLink = href.startsWith("http")
+                ? href
+                : `https://www.anthropic.com${href}`;
+
+            if (!title || !href || href === "#") {
+                return null;
+            }
+
             return {
                 title,
                 link: fullLink,
                 pubDate,
             };
-        });
+        })
+        .filter(
+            (item): item is Exclude<typeof item, null> => item !== null,
+        ) as DataItem[];
 
     const out = await pMap(
         list,
@@ -50,7 +66,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('#main-content');
+                const content = $("#main-content");
 
                 // Remove meaningless information (heading, sidebar, quote carousel, footer and codeblock controls)
                 $(`
@@ -62,14 +78,14 @@ async function handler(ctx) {
                     [class^="CodeBlock_controls"]
                 `).remove();
 
-                content.find('img').each((_, e) => {
+                content.find("img").each((_, e) => {
                     const $e = $(e);
-                    $e.removeAttr('style srcset');
-                    const src = $e.attr('src');
+                    $e.removeAttr("style srcset");
+                    const src = $e.attr("src");
                     const params = new URLSearchParams(src);
-                    const newSrc = params.get('/_next/image?url');
+                    const newSrc = params.get("/_next/image?url");
                     if (newSrc) {
-                        $e.attr('src', newSrc);
+                        $e.attr("src", newSrc);
                     }
                 });
 
@@ -77,13 +93,13 @@ async function handler(ctx) {
 
                 return item;
             }),
-        { concurrency: 5 }
+        { concurrency: 5 },
     );
 
     return {
-        title: 'Anthropic News',
+        title: "Anthropic News",
         link,
-        description: 'Latest news from Anthropic',
+        description: "Latest news from Anthropic",
         item: out,
     };
 }

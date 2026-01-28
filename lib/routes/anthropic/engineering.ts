@@ -41,14 +41,20 @@ async function handler(ctx) {
                 : `${baseUrl}${href}`;
             const pubDateText = $e.find('div[class*="date"]').text().trim();
             const pubDate = parseDate(pubDateText);
+            const title = $e.find("h2, h3").text().trim();
+
+            if (!title || !href || href === "#") {
+                return null;
+            }
+
             return {
-                title: $e.find("h2, h3").text().trim(),
+                title,
                 link: fullLink,
                 pubDate,
             };
         })
-        .filter((item) => item.title && item.link)
-        .slice(0, limit);
+        .filter((item): item is Exclude<typeof item, null> => item !== null)
+        .slice(0, limit) as DataItem[];
 
     const items = await pMap(
         list,
