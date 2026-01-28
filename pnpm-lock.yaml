@@ -233,8 +233,8 @@ importers:
         specifier: 2.17.0
         version: 2.17.0
       simplecc-wasm:
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.1.1
+        version: 1.1.1
       socks-proxy-agent:
         specifier: 8.0.5
         version: 8.0.5
@@ -5871,8 +5871,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simplecc-wasm@1.1.0:
-    resolution: {integrity: sha512-0nmH9WrzxpI8GOZkltH0NKAlcPe42rXek01noMSdelCmj8RYSL06SDDG/YWhvVTbMcuN1fq5imOeXpUJmhbcPQ==}
+  simplecc-wasm@1.1.1:
+    resolution: {integrity: sha512-NHBvSBlnOk7nqiNKvNpG/3DqD4XBkls3CqmTl4t3At4v7N9z1HO2t9g7vK//0o33zcgVOKE59vFcyCcgCuw6zQ==}
 
   sleep@6.1.0:
     resolution: {integrity: sha512-Z1x4JjJxsru75Tqn8F4tnOFeEu3HjtITTsumYUiuz54sGKdISgLCek9AUlXlVVrkhltRFhNUsJDJE76SFHTDIQ==}
@@ -6062,6 +6062,7 @@ packages:
   tar@7.5.6:
     resolution: {integrity: sha512-xqUeu2JAIJpXyvskvU3uvQW8PAmHrtXp2KDuMJwQqW8Sqq0CaZBAQ+dKS3RBXVhU4wC5NjAdKrmh84241gO9cA==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   telegram@2.26.22:
     resolution: {integrity: sha512-EIj7Yrjiu0Yosa3FZ/7EyPg9s6UiTi/zDQrFmR/2Mg7pIUU+XjAit1n1u9OU9h2oRnRM5M+67/fxzQluZpaJJg==}
@@ -12699,7 +12700,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simplecc-wasm@1.1.0: {}
+  simplecc-wasm@1.1.1: {}
 
   sleep@6.1.0:
     dependencies:
