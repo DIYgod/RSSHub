@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -84,7 +85,7 @@ async function handler(ctx) {
             const title = item.attr('title') || item.text().trim();
             const linkUrl = new URL(href, rootUrl).href;
 
-            const allText = parent.text(); 
+            const allText = parent.text();
             const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
 
