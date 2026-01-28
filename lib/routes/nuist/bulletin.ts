@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseTitle = '南信大信息公告栏';
 const rootUrl = 'https://bulletin.nuist.edu.cn';
+
+// 映射表保留，用于 fallback 和处理 index.htm
 const map = {
     default: { file: 'index.htm', title: '全部' },
     wjgg: { file: 'wjgg.htm', title: '文件公告' },
@@ -41,7 +42,7 @@ export const route: Route = {
             source: ['bulletin.nuist.edu.cn/:filename'],
             target: (params) => {
                 const filename = params.filename.replace(/\.htm$/i, '');
-                return filename === 'index' ? '/bulletin' : `/bulletin/${filename}`;
+                return `/nuist${filename === 'index' ? '/bulletin' : `/bulletin/${filename}`}`;
             },
         },
     ],
@@ -67,41 +68,51 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('category') || 'default';
     const info = map[type] || map.default;
+    
     const link = `${rootUrl}/${info.file}`;
 
     const response = await got(link);
     const $ = load(response.data);
 
-    const list = $('a[href*="content.jsp"]')
+    const list = $('li.news')
         .toArray()
         .map((element) => {
             const item = $(element);
-            const href = item.attr('href');
+            
+            // 从内部找 a 标签
+            const a = item.find('a').first();
+            const href = a.attr('href');
+            
             if (!href) {
                 return null;
             }
 
-            const parent = item.closest('li, tr');
-            const title = item.attr('title') || item.text().trim();
+            const title = a.attr('title') || a.text().trim();
             const linkUrl = new URL(href, rootUrl).href;
 
-            const allText = parent.text();
+            // 从 li 的文本中提取
+            const allText = item.text(); 
             const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
+
+            // 尝试从 .wjj 提取分类，如果提取不到则回退到 map 中的标题
+            const categoryText = item.find('.wjj').attr('title') || item.find('.wjj').text().trim();
+            const category = categoryText || info.title;
+
+            // 提取作者：从 .arti_bm a 中提取
+            const author = item.find('.arti_bm a').text().trim();
 
             return {
                 title,
                 link: linkUrl,
                 pubDate,
-                // 使用 map 中的中文标题作为分类
-                category: info.title,
+                author,
+                category,
             };
         })
-        // 过滤掉 null (href不存在的情况) 和无效条目
         .filter((item) => item && item.title && item.pubDate);
 
     return {
-        // 标题现在会显示：南信大信息公告栏 - 科研信息
         title: `${baseTitle} - ${info.title}`,
         link,
         item: list,
