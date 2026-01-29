@@ -27,18 +27,14 @@ async function handler(ctx) {
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit')
-        ? Number.parseInt(ctx.req.query('limit'), 10)
-        : 20;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const list: DataItem[] = $('a[class*="cardLink"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
             const href = $e.attr('href') ?? '';
-            const fullLink = href.startsWith('http')
-                ? href
-                : `${baseUrl}${href}`;
+            const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
             const pubDateText = $e.find('div[class*="date"]').text().trim();
             const pubDate = parseDate(pubDateText);
             const title = $e.find('h2, h3').text().trim();
@@ -76,11 +72,21 @@ async function handler(ctx) {
                     }
                 });
 
+                // If pubDate is not available from list page, extract from detail page
+                if (!item.pubDate || Number.isNaN(item.pubDate.getTime())) {
+                    const pubDateText = $('p[class*="date"]')
+                        .text()
+                        .trim()
+                        .replace(/^Published\s+/, '');
+                    if (pubDateText) {
+                        item.pubDate = parseDate(pubDateText);
+                    }
+                }
                 item.description = content.html() ?? undefined;
 
                 return item;
             }),
-        { concurrency: 5 },
+        { concurrency: 5 }
     );
 
     return {
