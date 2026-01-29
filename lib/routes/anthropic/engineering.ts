@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/engineering',
@@ -26,23 +27,34 @@ async function handler(ctx) {
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit')
+        ? Number.parseInt(ctx.req.query('limit'), 10)
+        : 20;
 
     const list: DataItem[] = $('a[class*="cardLink"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
             const href = $e.attr('href') ?? '';
-            const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const pubDate = $e.find('div[class*="date"]').text().trim();
+            const fullLink = href.startsWith('http')
+                ? href
+                : `${baseUrl}${href}`;
+            const pubDateText = $e.find('div[class*="date"]').text().trim();
+            const pubDate = parseDate(pubDateText);
+            const title = $e.find('h2, h3').text().trim();
+
+            if (!title || !href || href === '#') {
+                return null;
+            }
+
             return {
-                title: $e.find('h2, h3').text().trim(),
+                title,
                 link: fullLink,
                 pubDate,
             };
         })
-        .filter((item) => item.title && item.link)
-        .slice(0, limit);
+        .filter((item): item is Exclude<typeof item, null> => item !== null)
+        .slice(0, limit) as DataItem[];
 
     const items = await pMap(
         list,
@@ -68,7 +80,7 @@ async function handler(ctx) {
 
                 return item;
             }),
-        { concurrency: 5 }
+        { concurrency: 5 },
     );
 
     return {

@@ -25,23 +25,39 @@ async function handler(ctx) {
     const link = 'https://www.anthropic.com/news';
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit')
+        ? Number.parseInt(ctx.req.query('limit'), 10)
+        : 20;
 
-    const list: DataItem[] = $('.contentFadeUp a')
+    const list: DataItem[] = $('a[class*="PublicationList"]')
         .toArray()
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('h3').text().trim();
+            const title =
+                $el.find('span[class*="title"]').text().trim() ||
+                $el.find('h3, h4').text().trim();
             const href = $el.attr('href') ?? '';
-            const pubDate = $el.find('p.detail-m.agate').text().trim() || $el.find('div[class^="PostList_post-date__"]').text().trim(); // legacy selector used roughly before Jan 2025
-            const fullLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
+            const pubDate =
+                $el.find('time[class*="date"]').text().trim() ||
+                $el.find('p.detail-m.agate').text().trim();
+            const fullLink = href.startsWith('http')
+                ? href
+                : `https://www.anthropic.com${href}`;
+
+            if (!title || !href || href === '#') {
+                return null;
+            }
+
             return {
                 title,
                 link: fullLink,
                 pubDate,
             };
-        });
+        })
+        .filter(
+            (item): item is Exclude<typeof item, null> => item !== null,
+        ) as DataItem[];
 
     const out = await pMap(
         list,
@@ -77,7 +93,7 @@ async function handler(ctx) {
 
                 return item;
             }),
-        { concurrency: 5 }
+        { concurrency: 5 },
     );
 
     return {
