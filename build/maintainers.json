@@ -6267,7 +6267,8 @@
     "Blank0120"
   ],
   "/nuist/bulletin/:category?": [
-    "gylidian"
+    "gylidian",
+    "QianYu-u"
   ],
   "/nuist/cas/:category?": [
     "gylidian"

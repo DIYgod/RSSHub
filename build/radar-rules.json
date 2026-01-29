@@ -34912,9 +34912,9 @@
         "title": "南信大信息公告栏",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/:category/list.htm"
+          "/:filename"
         ],
-        "target": "/nuist/bulletin/:category"
+        "target": "/nuistparams=>{const filename=params.filename.replace(/\\.htm$/i,\"\");return`/nuist${filename===\"index\"?\"/bulletin\":`/bulletin/${filename}`}`}"
       }
     ],
     "lib": [
