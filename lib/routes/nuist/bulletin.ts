@@ -5,29 +5,31 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseTitle = '南信大信息公告栏';
-const baseUrl = 'https://bulletin.nuist.edu.cn';
+const rootUrl = 'https://bulletin.nuist.edu.cn';
+
+// 映射表保留，用于 fallback 和处理 index.htm
 const map = {
-    791: '全部',
-    792: '文件公告',
-    xsbgw: '学术报告',
-    779: '招标信息',
-    780: '会议通知',
-    781: '党政事务',
-    782: '组织人事',
-    783: '科研信息',
-    784: '招生就业',
-    785: '教学考试',
-    786: '专题讲座',
-    788: '校园活动',
-    789: '学院动态',
-    qt: '其他',
+    default: { file: 'index.htm', title: '全部' },
+    wjgg: { file: 'wjgg.htm', title: '文件公告' },
+    zbxx: { file: 'zbxx.htm', title: '招标信息' },
+    xsbg: { file: 'xsbg.htm', title: '学术报告' },
+    dzsw: { file: 'dzsw.htm', title: '党政事务' },
+    jxks: { file: 'jxks.htm', title: '教学考试' },
+    hytz: { file: 'hytz.htm', title: '会议通知' },
+    zzrs: { file: 'zzrs.htm', title: '组织人事' },
+    kyxx: { file: 'kyxx.htm', title: '科研信息' },
+    zsjy: { file: 'zsjy.htm', title: '招生就业' },
+    cxcy: { file: 'cxcy.htm', title: '创新创业' },
+    xyhd: { file: 'xyhd.htm', title: '校园活动' },
+    xydt: { file: 'xydt.htm', title: '学院动态' },
+    ztjz: { file: 'ztjz.htm', title: '专题讲座' },
 };
 
 export const route: Route = {
     path: '/bulletin/:category?',
     categories: ['university'],
-    example: '/nuist/bulletin/791',
-    parameters: { category: '默认为 `791`' },
+    example: '/nuist/bulletin/wjgg',
+    parameters: { category: '分类名，默认为 `default` (全部)，支持 wjgg, kyxx 等拼音缩写' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -38,20 +40,26 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bulletin.nuist.edu.cn/:category/list.htm'],
-            target: '/bulletin/:category',
+            source: ['bulletin.nuist.edu.cn/:filename'],
+            target: (params) => {
+                const filename = params.filename.replace(/\.htm$/i, '');
+                return `/nuist${filename === 'index' ? '/bulletin' : `/bulletin/${filename}`}`;
+            },
         },
     ],
     name: '南信大信息公告栏',
-    maintainers: ['gylidian'],
+    maintainers: ['gylidian', 'QianYu-u'],
     handler,
-    description: `| 全部 | 文件公告 | 学术报告 | 招标信息 | 会议通知 | 党政事务 | 组织人事 |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 791  | 792      | xsbgw    | 779      | 780      | 781      | 782      |
-
-| 科研信息 | 招生就业 | 教学考试 | 专题讲座 | 校园活动 | 学院动态 | 其他 |
-| -------- | -------- | -------- | -------- | -------- | -------- | ---- |
-| 783      | 784      | 785      | 786      | 788      | 789      | qt   |
+    description: `
+| 参数 | 含义 |
+| :--- | :--- |
+| default | 全部 |
+| wjgg | 文件公告 |
+| kyxx | 科研信息 |
+| zbxx | 招标信息 |
+| jxks | 教学考试 |
+| dzsw | 党政事务 |
+| ... | (支持官网对应栏目的拼音简写) |
 
 ::: warning
   全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
@@ -59,38 +67,55 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = Object.hasOwn(map, ctx.req.param('category')) ? ctx.req.param('category') : '791';
-    const link = `${baseUrl}/${category}/list.htm`;
+    const type = ctx.req.param('category') || 'default';
+    const info = map[type] || map.default;
+
+    const link = `${rootUrl}/${info.file}`;
 
     const response = await got(link);
     const $ = load(response.data);
-    const list = $('.news_list').find('.news');
 
-    return {
-        title: baseTitle + (category === '791' ? '' : ':' + map[category]),
-        link,
-        item: list.toArray().map((item) => {
-            item = $(item);
+    const list = $('li.news')
+        .toArray()
+        .map((element) => {
+            const item = $(element);
 
-            if (category === 'xsbgw') {
-                const itemXsTitle = item.find('.xs_title .btt a');
-                return {
-                    title: itemXsTitle.text(),
-                    author: item.find('.xs_bgr').text(),
-                    category: '学术报告',
-                    pubDate: parseDate(item.find('.xs_date').text()),
-                    link: new URL(itemXsTitle.attr('href'), baseUrl).href,
-                };
+            // 从内部找 a 标签
+            const a = item.find('.btt a').first();
+            const href = a.attr('href');
+
+            if (!href) {
+                return null;
             }
 
-            const itemTitle = item.find('.news_title');
+            const title = a.attr('title') || a.text().trim();
+            const linkUrl = new URL(href, rootUrl).href;
+
+            // 从 li 的文本中提取
+            const allText = item.text();
+            const dateMatch = allText.match(/(\d{4}-\d{2}-\d{2})/);
+            const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
+
+            // 尝试从 .wjj 提取分类，如果提取不到则回退到 map 中的标题
+            const categoryText = item.find('.wjj a').attr('title') || item.find('.wjj a').text().trim();
+            const category = categoryText || info.title;
+
+            // 提取作者：从 .arti_bm a 中提取
+            const author = item.find('.arti_bm a').text().trim();
+
             return {
-                title: [itemTitle.find('.zdtb img').length > 0 ? '[顶]' : '', itemTitle.find('.btt').text()].join(' '),
-                author: item.find('.news_org').text(),
-                category: itemTitle.find('.wjj').text(),
-                pubDate: parseDate(item.find('.news_date').text()),
-                link: new URL(itemTitle.find('.btt a').attr('href'), baseUrl).href,
+                title,
+                link: linkUrl,
+                pubDate,
+                author,
+                category,
             };
-        }),
+        })
+        .filter((item) => item && item.title && item.pubDate);
+
+    return {
+        title: `${baseTitle} - ${info.title}`,
+        link,
+        item: list,
     };
 }
