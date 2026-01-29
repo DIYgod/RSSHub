@@ -57,8 +57,13 @@ async function handler() {
                         }
                     }
 
-                    const content = $h1
-                        .nextUntil('h1')
+                    const $nextSiblings = $h1.nextUntil('h1');
+                    const $firstH2 = $nextSiblings.filter('h2').first();
+                    const firstH2Text = $firstH2.text().trim();
+
+                    const title = firstH2Text || text;
+
+                    const content = $nextSiblings
                         .toArray()
                         .map((el) => $(el).prop('outerHTML'))
                         .join('');
@@ -66,7 +71,7 @@ async function handler() {
 
                     return {
                         guid: `${articleUrl}#${pubDate ? pubDate.getTime() : text}`,
-                        title: text,
+                        title,
                         link: articleUrl,
                         pubDate,
                         description,
