@@ -97,7 +97,7 @@ async function handler(ctx) {
             const pubDate = dateMatch ? parseDate(dateMatch[1]) : null;
 
             // 尝试从 .wjj 提取分类，如果提取不到则回退到 map 中的标题
-            const categoryText = item.find('.wjj').attr('title') || item.find('.wjj').text().trim();
+            const categoryText = item.find('.wjj a').attr('title') || item.find('.wjj a').text().trim();
             const category = categoryText || info.title;
 
             // 提取作者：从 .arti_bm a 中提取
