@@ -182,7 +182,7 @@
         "eslint-plugin-n": "17.23.2",
         "eslint-plugin-simple-import-sort": "12.1.1",
         "eslint-plugin-unicorn": "62.0.0",
-        "eslint-plugin-yml": "1.19.1",
+        "eslint-plugin-yml": "3.0.0",
         "fs-extra": "11.3.3",
         "globals": "17.2.0",
         "got": "14.6.6",
