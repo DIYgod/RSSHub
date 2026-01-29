@@ -6446,7 +6446,9 @@
   "/openai/chatgpt-atlas/release-notes": [
     "xbot"
   ],
-  "/openai/chatgpt/release-notes": [],
+  "/openai/chatgpt/release-notes": [
+    "xbot"
+  ],
   "/openai/cookbook": [
     "liyaozhong"
   ],
