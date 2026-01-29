@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -25,7 +27,7 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const items = $('a[class*="PublicationList"]')
+    const list = $('a[class*="PublicationList"]')
         .toArray()
         .map((el) => {
             const $el = $(el);
@@ -44,6 +46,42 @@ async function handler() {
             };
         })
         .filter((item): item is Exclude<typeof item, null> => item !== null);
+
+    const items = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
+                const $ = load(response);
+
+                const content = $('#main-content');
+
+                // Remove meaningless information (heading, sidebar, footer)
+                content.find('[class*="PostDetail"][class*="hero"]').remove();
+                content.find('[class*="PostDetail"][class*="header"]').remove();
+                content.find('[class*="LandingPageSection"]').remove();
+                content.find('[class*="socialShare"]').remove();
+                content.find('header, footer').remove();
+
+                content.find('img').each((_, e) => {
+                    const $e = $(e);
+                    $e.removeAttr('style srcset');
+                    const src = $e.attr('src');
+                    if (src) {
+                        const params = new URLSearchParams(src);
+                        const newSrc = params.get('/_next/image?url');
+                        if (newSrc) {
+                            $e.attr('src', newSrc);
+                        }
+                    }
+                });
+
+                item.description = content.html() ?? undefined;
+
+                return item;
+            }),
+        { concurrency: 5 }
+    );
 
     return {
         title: 'Anthropic Research',

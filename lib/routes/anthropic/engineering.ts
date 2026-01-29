@@ -36,7 +36,6 @@ async function handler(ctx) {
             const href = $e.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
             const pubDateText = $e.find('div[class*="date"]').text().trim();
-            const pubDate = parseDate(pubDateText);
             const title = $e.find('h2, h3').text().trim();
 
             if (!title || !href || href === '#') {
@@ -46,7 +45,7 @@ async function handler(ctx) {
             return {
                 title,
                 link: fullLink,
-                pubDate,
+                pubDate: pubDateText || undefined,
             };
         })
         .filter((item): item is Exclude<typeof item, null> => item !== null)
@@ -72,12 +71,9 @@ async function handler(ctx) {
                     }
                 });
 
-                // If pubDate is not available from list page, extract from detail page
-                if (!item.pubDate || Number.isNaN(item.pubDate.getTime())) {
-                    const pubDateText = $('p[class*="date"]')
-                        .text()
-                        .trim()
-                        .replace(/^Published\s+/, '');
+                // Always try to extract pubDate from detail page if not available
+                if (!item.pubDate) {
+                    const pubDateText = $('div[class*="date"]').text().trim();
                     if (pubDateText) {
                         item.pubDate = parseDate(pubDateText);
                     }
