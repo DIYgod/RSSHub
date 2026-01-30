@@ -5,18 +5,15 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/post/:threadTitle/:threadId',
+    path: '/post/:thread',
     name: 'Post',
     maintainers: ['wsmbsbbz'],
-    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko/84596',
+    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596',
     categories: ['game'],
     description: 'Track updates to the first post of a thread. Uses the date in title [yyyy-mm-dd] for update detection.',
     parameters: {
-        threadTitle: {
-            description: 'Thread title slug, can be found in the URL. e.g. `vicineko-collection-2025-06-14-vicineko`',
-        },
-        threadId: {
-            description: 'Thread ID, can be found in the URL. e.g. `84596`',
+        thread: {
+            description: 'Thread slug with ID, can be found in the URL. e.g. `vicineko-collection-2025-06-14-vicineko.84596`',
         },
     },
     features: {
@@ -36,14 +33,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['f95zone.to/threads/:threadTitle.:threadId/*'],
-            target: '/post/:threadTitle/:threadId',
+            source: ['f95zone.to/threads/:thread/*'],
+            target: '/post/:thread',
         },
     ],
     handler: async (ctx) => {
-        const { threadTitle, threadId } = ctx.req.param();
+        const { thread } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
-        const link = `${baseUrl}/threads/${threadTitle}.${threadId}/`;
+        const link = `${baseUrl}/threads/${thread}/`;
         const cookie = config.f95zone.cookie;
 
         const response = await ofetch(link, {
