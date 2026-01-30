@@ -92,7 +92,7 @@ async function handler(ctx) {
 
                     item.title = $('meta[name="ArticleTitle"]').prop('content') || item.title;
                     item.description = $('#detailContent').html() || $('div.article-content').html() || item.description;
-                    item.category = [...new Set([...(item.category ?? []), ...($('meta[name="keywords"]').attr('conetnt')?.split(/,/) ?? [])])];
+                    item.category = [...new Set([...(item.category ?? []), ...($('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
                     const detailPubDate = $('meta[name="PubDate"]').prop('content');
                     item.pubDate = detailPubDate ? timezone(parseDate(detailPubDate), +8) : item.pubDate;
                 } catch {
