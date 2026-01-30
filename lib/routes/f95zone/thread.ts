@@ -10,10 +10,10 @@ export const route: Route = {
     maintainers: ['wsmbsbbz'],
     example: '/f95zone/thread/ubermation-collection-2026-01-19-uebermation-uebermation.231247',
     categories: ['game'],
-    description: 'Track all posts/replies in a thread. Only fetches the last few pages to get recent posts.',
+    description: 'Track all replies in a thread. Only fetches the last 3 pages to get recent posts.',
     parameters: {
         thread: {
-            description: 'Thread slug with ID, can be found in the URL. e.g. `ubermation-collection-2026-01-19-uebermation-uebermation.231247`',
+            description: 'Thread slug with ID, can be copied from browser URL after `/threads/`',
         },
     },
     features: {
@@ -54,10 +54,6 @@ export const route: Route = {
         const $firstPage = load(firstPageResponse);
 
         const threadTitleText = $firstPage('h1.p-title-value').text().trim();
-
-        // Extract author/creator name from thread title (last bracketed part, e.g. [ViciNeko])
-        const authorMatch = threadTitleText.match(/\[([^\]]+)\](?:\s*$)/);
-        const threadAuthor = authorMatch ? authorMatch[1] : threadTitleText;
 
         // Get total pages from pagination
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
@@ -134,8 +130,8 @@ export const route: Route = {
                 const postNumberLink = $article.find('a[href*="/post-"]').filter((_, el) => $(el).text().trim().startsWith('#'));
                 const postNumber = postNumberLink.first().text().trim().replace('#', '') || postId;
 
-                // Create clear title: [time] [thread author] #number by [post author]
-                const itemTitle = `[${formattedDate}] [${threadAuthor}] #${postNumber} by ${author}`;
+                // Create clear title: #number by [post author] at [time]
+                const itemTitle = `#${postNumber} by ${author}` + (formattedDate ? ` (${formattedDate})` : '');
 
                 posts.push({
                     title: itemTitle,
@@ -179,7 +175,7 @@ export const route: Route = {
         });
 
         return {
-            title: `F95zone Posts - ${threadTitleText}`,
+            title: `[F95zone] ${threadTitleText}`,
             link: threadLink,
             item: allPosts,
         };

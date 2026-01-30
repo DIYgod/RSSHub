@@ -5,15 +5,18 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/post/:thread',
+    path: '/post/:thread/:postId',
     name: 'Post',
     maintainers: ['wsmbsbbz'],
-    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596',
+    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596/post-1893498',
     categories: ['game'],
-    description: 'Track updates to the first post of a thread. Uses the date in title [yyyy-mm-dd] for update detection.',
+    description: 'Track content changes of a specific post. When the post content is updated, a new item will be generated. If the thread title contains a date `[yyyy-mm-dd]`, it will be used for update detection.',
     parameters: {
         thread: {
-            description: 'Thread slug with ID, can be found in the URL. e.g. `vicineko-collection-2025-06-14-vicineko.84596`',
+            description: 'Thread slug with ID',
+        },
+        postId: {
+            description: 'Post ID with `post-` prefix, copy from browser URL and replace `#` with `/`',
         },
     },
     features: {
@@ -38,9 +41,10 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
-        const { thread } = ctx.req.param();
+        const { thread, postId } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
-        const link = `${baseUrl}/threads/${thread}/`;
+
+        const link = `${baseUrl}/threads/${thread}/#${postId}`;
         const cookie = config.f95zone.cookie;
 
         const response = await ofetch(link, {
@@ -56,9 +60,18 @@ export const route: Route = {
         // Get thread title
         const title = $('h1.p-title-value').text().trim();
 
-        // Get the first post content (main post)
-        const firstPost = $('article.message-body.js-selectToQuote').first();
-        const content = firstPost.find('.bbWrapper').html() || '';
+        // Get the target post by postId
+        const targetPost = $(`article[data-content="${postId}"]`);
+
+        // Get post content from the target post
+        const postBody = targetPost.find('article.message-body.js-selectToQuote');
+        const content = postBody.find('.bbWrapper').html() || '';
+
+        // Get post author
+        const author = targetPost.attr('data-author') || '';
+
+        // Get post date from the target post
+        const postDate = targetPost.find('time.u-dt').first().attr('datetime');
 
         // Process images: clean up lazy loading, use original URLs, remove duplicates
         const $content = load(content);
@@ -90,9 +103,6 @@ export const route: Route = {
             }
         });
 
-        // Get post date
-        const postDate = $('time.u-dt').first().attr('datetime');
-
         // Extract tags
         const tags = $('a.tagItem')
             .toArray()
@@ -107,15 +117,16 @@ export const route: Route = {
         const pubDate = updateDate ? new Date(updateDate) : postDate;
 
         return {
-            title: `F95zone - ${title}`,
+            title: `[F95zone] ${title}`,
             link,
             item: [
                 {
-                    title: `[Post Updated] ${title}`,
+                    title: updateDate ? `[${updateDate}] ${title}` : title,
                     link,
                     guid,
                     description: $content.html() || '',
                     pubDate,
+                    author,
                     category: tags,
                 },
             ],
