@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import { processContent } from './utils';
 
@@ -78,7 +79,7 @@ export const route: Route = {
                         link: postLink,
                         guid: postLink,
                         description: processContent(content),
-                        pubDate: postDate,
+                        pubDate: postDate ? parseDate(postDate) : undefined,
                         author,
                     };
                 });
