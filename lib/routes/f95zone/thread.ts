@@ -4,6 +4,8 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
+import { processContent } from './utils';
+
 export const route: Route = {
     path: '/thread/:thread',
     name: 'Thread',
@@ -59,40 +61,6 @@ export const route: Route = {
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
 
-        // Process images: clean up lazy loading, use original URLs, remove duplicates
-        const processImages = (html: string): string => {
-            const $content = load(html);
-
-            // Remove noscript tags (contain duplicate images)
-            $content('noscript').remove();
-
-            const seenImages = new Set<string>();
-            $content('img').each((_, img) => {
-                const $img = $content(img);
-                const $parent = $img.parent('a');
-
-                // Get original image URL: parent href > data-src > src (remove /thumb/)
-                let src = $parent.attr('href') || $img.attr('data-src') || $img.attr('src') || '';
-                src = src.replace('/thumb/', '/');
-
-                // Remove placeholder or duplicate images
-                if (!src || src.startsWith('data:') || seenImages.has(src)) {
-                    $img.remove();
-                    return;
-                }
-
-                seenImages.add(src);
-                $img.attr('src', src).removeAttr('data-src').removeClass('lazyload');
-
-                // Unwrap from parent <a> tag
-                if ($parent.length) {
-                    $parent.replaceWith($img);
-                }
-            });
-
-            return $content.html() || '';
-        };
-
         // Extract posts from a page
         const extractPosts = ($: ReturnType<typeof load>): DataItem[] => {
             const posts: DataItem[] = [];
@@ -121,7 +89,7 @@ export const route: Route = {
 
                 // Get post content
                 const content = $article.find('article.message-body .bbWrapper').html() || '';
-                const processedContent = processImages(content);
+                const processedDescription = processContent(content);
 
                 // Get post link
                 const postLink = `${threadLink}post-${postId}`;
@@ -137,7 +105,7 @@ export const route: Route = {
                     title: itemTitle,
                     link: postLink,
                     guid: postLink,
-                    description: processedContent,
+                    description: processedDescription,
                     pubDate: postDate,
                     author,
                 });

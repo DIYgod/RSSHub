@@ -4,6 +4,8 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
+import { processContent } from './utils';
+
 export const route: Route = {
     path: '/post/:thread/:postId',
     name: 'Post',
@@ -73,35 +75,8 @@ export const route: Route = {
         // Get post date from the target post
         const postDate = targetPost.find('time.u-dt').first().attr('datetime');
 
-        // Process images: clean up lazy loading, use original URLs, remove duplicates
-        const $content = load(content);
-
-        // Remove noscript tags (contain duplicate images)
-        $content('noscript').remove();
-
-        const seenImages = new Set<string>();
-        $content('img').each((_, img) => {
-            const $img = $content(img);
-            const $parent = $img.parent('a');
-
-            // Get original image URL: parent href > data-src > src (remove /thumb/)
-            let src = $parent.attr('href') || $img.attr('data-src') || $img.attr('src') || '';
-            src = src.replace('/thumb/', '/');
-
-            // Remove placeholder or duplicate images
-            if (!src || src.startsWith('data:') || seenImages.has(src)) {
-                $img.remove();
-                return;
-            }
-
-            seenImages.add(src);
-            $img.attr('src', src).removeAttr('data-src').removeClass('lazyload');
-
-            // Unwrap from parent <a> tag
-            if ($parent.length) {
-                $parent.replaceWith($img);
-            }
-        });
+        // Process and sanitize content
+        const processedContent = processContent(content);
 
         // Extract tags
         const tags = $('a.tagItem')
@@ -111,8 +86,8 @@ export const route: Route = {
         // Extract update date from title [yyyy-mm-dd] for tracking updates
         const dateMatch = title.match(/\[(\d{4}-\d{2}-\d{2})\]/);
         const updateDate = dateMatch ? dateMatch[1] : '';
-        // Use date in guid so RSS readers treat updates as new items
-        const guid = updateDate ? `${link}#${updateDate}` : link;
+        // Use underscore separator for guid to distinguish updates
+        const guid = updateDate ? `${link}_${updateDate}` : link;
         // Use extracted date for pubDate, fallback to post date if not found
         const pubDate = updateDate ? new Date(updateDate) : postDate;
 
@@ -121,10 +96,10 @@ export const route: Route = {
             link,
             item: [
                 {
-                    title: updateDate ? `[${updateDate}] ${title}` : title,
+                    title: `[Updated] ${title}`,
                     link,
                     guid,
-                    description: $content.html() || '',
+                    description: processedContent,
                     pubDate,
                     author,
                     category: tags,
