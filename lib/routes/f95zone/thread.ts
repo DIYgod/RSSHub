@@ -67,19 +67,40 @@ export const route: Route = {
         const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
 
         // Process images helper function
+        // Replace lazy-loaded src with data-src and thumbnail URLs with original URLs
         const processImages = (html: string): string => {
             const $content = load(html);
             $content('img').each((_, img) => {
                 const $img = $content(img);
                 const dataSrc = $img.attr('data-src');
-                const src = $img.attr('src');
+                let src = $img.attr('src');
 
                 if (dataSrc) {
-                    $img.attr('src', dataSrc);
+                    src = dataSrc;
                     $img.removeAttr('data-src');
                 } else if (src?.startsWith('data:')) {
                     $img.remove();
                     return;
+                }
+
+                // Check if parent <a> has original image URL (not thumbnail)
+                const $parent = $img.parent('a');
+                const parentHref = $parent.attr('href');
+                if (parentHref && parentHref.includes('attachments.f95zone.to') && !parentHref.includes('/thumb/')) {
+                    // Use the original image URL from parent link
+                    src = parentHref;
+                } else if (src && src.includes('/thumb/')) {
+                    // Remove /thumb/ from URL to get original image
+                    src = src.replace('/thumb/', '/');
+                }
+
+                if (src) {
+                    $img.attr('src', src);
+                }
+
+                // Remove parent <a> tag, keep only <img>
+                if ($parent.length && $parent.attr('target') === '_blank') {
+                    $parent.replaceWith($img);
                 }
 
                 $img.removeClass('lazyload');

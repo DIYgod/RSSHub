@@ -64,20 +64,41 @@ export const route: Route = {
         const content = firstPost.find('.bbWrapper').html() || '';
 
         // Process images: replace lazy-loaded src with data-src and clean up
+        // Also replace thumbnail URLs with original image URLs
         const $content = load(content);
         $content('img').each((_, img) => {
             const $img = $content(img);
             const dataSrc = $img.attr('data-src');
-            const src = $img.attr('src');
+            let src = $img.attr('src');
 
             if (dataSrc) {
                 // Use data-src as the real image URL
-                $img.attr('src', dataSrc);
+                src = dataSrc;
                 $img.removeAttr('data-src');
             } else if (src?.startsWith('data:')) {
                 // Remove placeholder images without data-src
                 $img.remove();
                 return;
+            }
+
+            // Check if parent <a> has original image URL (not thumbnail)
+            const $parent = $img.parent('a');
+            const parentHref = $parent.attr('href');
+            if (parentHref && parentHref.includes('attachments.f95zone.to') && !parentHref.includes('/thumb/')) {
+                // Use the original image URL from parent link
+                src = parentHref;
+            } else if (src && src.includes('/thumb/')) {
+                // Remove /thumb/ from URL to get original image
+                src = src.replace('/thumb/', '/');
+            }
+
+            if (src) {
+                $img.attr('src', src);
+            }
+
+            // Remove parent <a> tag, keep only <img>
+            if ($parent.length && $parent.attr('target') === '_blank') {
+                $parent.replaceWith($img);
             }
 
             // Clean up lazy loading attributes
