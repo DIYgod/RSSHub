@@ -70,6 +70,7 @@ export const route: Route = {
         // Replace lazy-loaded src with data-src and thumbnail URLs with original URLs
         const processImages = (html: string): string => {
             const $content = load(html);
+            const seenImages = new Set<string>();
             $content('img').each((_, img) => {
                 const $img = $content(img);
                 const dataSrc = $img.attr('data-src');
@@ -95,6 +96,12 @@ export const route: Route = {
                 }
 
                 if (src) {
+                    // Remove duplicate images
+                    if (seenImages.has(src)) {
+                        $img.remove();
+                        return;
+                    }
+                    seenImages.add(src);
                     $img.attr('src', src);
                 }
 
