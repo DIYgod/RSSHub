@@ -27,7 +27,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tiktok.com/:user'],
+            source: ['www.tiktok.com/:user'],
             target: '/user/:user',
         },
     ],
