@@ -8404,6 +8404,9 @@
   "/tiddlywiki/releases": [
     "p3psi-boo"
   ],
+  "/tiktok/live/:user": [
+    "TonyRL"
+  ],
   "/tiktok/user/:user/:iframe?": [
     "TonyRL"
   ],

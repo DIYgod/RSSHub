@@ -45052,7 +45052,15 @@
   },
   "tiktok.com": {
     "_name": "TikTok",
-    ".": [
+    "www": [
+      {
+        "title": "Live",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user/live"
+        ],
+        "target": "/tiktok/live/:user"
+      },
       {
         "title": "User",
         "docs": "https://docs.rsshub.app/routes/social-media",
