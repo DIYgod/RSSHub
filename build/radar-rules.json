@@ -20888,12 +20888,12 @@
     "_name": "深圳市罗湖区人民政府",
     ".": [
       {
-        "title": "发展规划司",
+        "title": "司工作进展",
         "docs": "https://docs.rsshub.app/routes/government",
         "source": [
-          "/sjzz/ghs/"
+          "/sjzz/:bureau/index.htm"
         ],
-        "target": "/gov/nea/sjzz/ghs"
+        "target": "/gov/nea/sjzz/:bureau"
       }
     ]
   },
