@@ -12,18 +12,16 @@ export const route: Route = {
     maintainers: ['wsmbsbbz'],
     example: '/f95zone/thread/ubermation-collection-2026-01-19-uebermation-uebermation.231247',
     categories: ['game'],
-    description: 'Track all replies in a thread. Only fetches the last 3 pages to get recent posts.',
+    description: 'Track all replies in a thread. Only fetches the last 3 pages.',
     parameters: {
-        thread: {
-            description: 'Thread slug with ID, can be copied from browser URL after `/threads/`',
-        },
+        thread: 'Thread slug with ID, copy from browser URL after `/threads/`',
     },
     features: {
         requireConfig: [
             {
                 name: 'F95ZONE_COOKIE',
                 optional: true,
-                description: 'F95zone cookie, can be obtained from browser developer tools.',
+                description: 'F95zone cookie for accessing restricted content.',
             },
         ],
         requirePuppeteer: false,
@@ -43,99 +41,61 @@ export const route: Route = {
         const { thread } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
         const threadLink = `${baseUrl}/threads/${thread}/`;
-        const cookie = config.f95zone.cookie;
 
         const headers = {
             referer: baseUrl,
             'user-agent': config.trueUA,
-            ...(cookie ? { cookie } : {}),
+            ...(config.f95zone.cookie ? { cookie: config.f95zone.cookie } : {}),
         };
 
-        // Fetch first page to get thread title and total pages
         const firstPageResponse = await ofetch(threadLink, { headers });
         const $firstPage = load(firstPageResponse);
+        const title = $firstPage('h1.p-title-value').text().trim();
 
-        const threadTitleText = $firstPage('h1.p-title-value').text().trim();
-
-        // Get total pages from pagination
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
 
-        // Extract posts from a page
-        const extractPosts = ($: ReturnType<typeof load>): DataItem[] => {
-            const posts: DataItem[] = [];
+        const extractPosts = ($: ReturnType<typeof load>): DataItem[] =>
+            $('article.message')
+                .toArray()
+                .flatMap((article) => {
+                    const $article = $(article);
+                    const postId = $article.attr('data-content')?.replace('post-', '');
+                    if (!postId) {
+                        return [];
+                    }
 
-            $('article.message').each((_, article) => {
-                const $article = $(article);
+                    const author = $article.find('.message-name a').text().trim();
+                    const postDate = $article.find('time.u-dt').attr('datetime');
+                    const content = $article.find('.bbWrapper').html() || '';
+                    const postLink = `${threadLink}post-${postId}`;
 
-                // Get post ID from data-content attribute
-                const postId = $article.attr('data-content')?.replace('post-', '') || '';
-                if (!postId) {
-                    return;
-                }
+                    // Get post number from the attribution list (e.g., "#717")
+                    const postNumber = $article.find('.message-attribution-opposite--list li:last-child a').text().trim().replace('#', '') || postId;
 
-                // Get author
-                const author = $article.find('.message-name a').text().trim();
-
-                // Get post date
-                const postDate = $article.find('time.u-dt').attr('datetime');
-
-                // Format date to readable format (YYYY-MM-DD HH:mm)
-                let formattedDate = '';
-                if (postDate) {
-                    const date = new Date(postDate);
-                    formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                }
-
-                // Get post content
-                const content = $article.find('article.message-body .bbWrapper').html() || '';
-                const processedDescription = processContent(content);
-
-                // Get post link
-                const postLink = `${threadLink}post-${postId}`;
-
-                // Get post number (floor number) from the post link
-                const postNumberLink = $article.find('a[href*="/post-"]').filter((_, el) => $(el).text().trim().startsWith('#'));
-                const postNumber = postNumberLink.first().text().trim().replace('#', '') || postId;
-
-                // Create clear title: #number by [post author] at [time]
-                const itemTitle = `#${postNumber} by ${author}` + (formattedDate ? ` (${formattedDate})` : '');
-
-                posts.push({
-                    title: itemTitle,
-                    link: postLink,
-                    guid: postLink,
-                    description: processedDescription,
-                    pubDate: postDate,
-                    author,
+                    return {
+                        title: `#${postNumber} by ${author}`,
+                        link: postLink,
+                        guid: postLink,
+                        description: processContent(content),
+                        pubDate: postDate,
+                        author,
+                    };
                 });
-            });
 
-            return posts;
-        };
-
-        // Collect posts from last few pages (newest posts)
         const allPosts: DataItem[] = [];
+        const startPage = Math.max(1, totalPages - 2);
 
-        // Only fetch last 3 pages to get recent posts (avoid fetching all pages)
-        const maxPagesToFetch = 3;
-        const startPage = Math.max(1, totalPages - maxPagesToFetch + 1);
-
-        // Fetch from last page backwards
         for (let page = totalPages; page >= startPage; page--) {
             if (page === 1) {
-                // Use already fetched first page
                 allPosts.push(...extractPosts($firstPage));
             } else {
-                const pageUrl = `${threadLink}page-${page}`;
                 // eslint-disable-next-line no-await-in-loop
-                const pageResponse = await ofetch(pageUrl, { headers });
-                const $page = load(pageResponse);
-                allPosts.push(...extractPosts($page));
+                const pageResponse = await ofetch(`${threadLink}page-${page}`, { headers });
+                allPosts.push(...extractPosts(load(pageResponse)));
             }
         }
 
-        // Sort by post number (newest first)
         allPosts.sort((a, b) => {
             const numA = Number.parseInt(a.title?.match(/#(\d+)/)?.[1] || '0', 10);
             const numB = Number.parseInt(b.title?.match(/#(\d+)/)?.[1] || '0', 10);
@@ -143,7 +103,7 @@ export const route: Route = {
         });
 
         return {
-            title: `[F95zone] ${threadTitleText}`,
+            title: `[F95zone] ${title}`,
             link: threadLink,
             item: allPosts,
         };
