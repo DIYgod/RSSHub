@@ -160,7 +160,7 @@ async function fetchArticleDetail(item: DataItem): Promise<DataItem> {
         return item;
     }
 
-    return cache.tryGet(item.link, async () => {
+    return await cache.tryGet(item.link, async () => {
         const detailResponse = await ofetch(item.link!);
         const content = load(detailResponse);
         const preElement = content('pre');
