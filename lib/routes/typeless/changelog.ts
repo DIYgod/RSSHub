@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://www.typeless.com';
-    const platforms = ['macos', 'windows', 'ios'];
+    const platforms = ['macos', 'windows', 'ios', 'android'];
 
     const decompressedData = await Promise.all(
         platforms.map(async (platform) => {
@@ -50,8 +50,8 @@ async function handler() {
                 const changelogData = JSON.parse(decompressed);
 
                 return {
-                    appPlatform: pageProps.appPlatform,
-                    decompressedData: changelogData[pageProps.staticKey] || changelogData.en,
+                    appPlatform: pageProps.platform,
+                    decompressedData: Object.values(changelogData).map((item) => item.en),
                 };
             });
         })
