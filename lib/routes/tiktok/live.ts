@@ -15,7 +15,7 @@ export const route: Route = {
     parameters: { user: 'User ID, including @' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -52,13 +52,24 @@ async function handler(ctx) {
 
     const { user: userInfo, liveRoom } = liveRoomUserInfo;
 
+    const status = liveRoom.status;
+    let title: string;
+
+    switch (status) {
+        case 2:
+            title = liveRoom.title || `${userInfo.nickname}'s going live now!`;
+            break;
+        case 4:
+            title = `${userInfo.nickname} is not live currently.`;
+            break;
+        default:
+            title = `${userInfo.nickname}'s live status is unknown (status ${status}).`;
+            break;
+    }
+
     const items = [
         {
-            title:
-                liveRoom.status === 2
-                    ? liveRoom.title || `${userInfo.nickname}'s going live now!`
-                    : // === 4
-                      `${userInfo.nickname} is not live currently.`,
+            title,
             pubDate: parseDate(liveRoom.startTime, 'X'),
             author: userInfo.nickname,
             link,
