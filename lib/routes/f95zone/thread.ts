@@ -58,6 +58,10 @@ export const route: Route = {
 
         const threadTitleText = $firstPage('h1.p-title-value').text().trim();
 
+        // Extract author/creator name from thread title (last bracketed part, e.g. [ViciNeko])
+        const authorMatch = threadTitleText.match(/\[([^\]]+)\](?:\s*$)/);
+        const threadAuthor = authorMatch ? authorMatch[1] : threadTitleText;
+
         // Get total pages from pagination
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
@@ -102,6 +106,13 @@ export const route: Route = {
                 // Get post date
                 const postDate = $article.find('time.u-dt').attr('datetime');
 
+                // Format date to readable format (YYYY-MM-DD HH:mm)
+                let formattedDate = '';
+                if (postDate) {
+                    const date = new Date(postDate);
+                    formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                }
+
                 // Get post content
                 const content = $article.find('article.message-body .bbWrapper').html() || '';
                 const processedContent = processImages(content);
@@ -109,11 +120,15 @@ export const route: Route = {
                 // Get post link
                 const postLink = `${threadLink}post-${postId}`;
 
-                // Get post number (floor number)
-                const postNumber = $article.find('a[href*="/post-"]').text().trim().replace('#', '');
+                // Get post number (floor number) from the post link
+                const postNumberLink = $article.find('a[href*="/post-"]').filter((_, el) => $(el).text().trim().startsWith('#'));
+                const postNumber = postNumberLink.first().text().trim().replace('#', '') || postId;
+
+                // Create clear title: [time] [thread author] #number by [post author]
+                const itemTitle = `[${formattedDate}] [${threadAuthor}] #${postNumber} by ${author}`;
 
                 posts.push({
-                    title: `#${postNumber} by ${author}`,
+                    title: itemTitle,
                     link: postLink,
                     guid: postLink,
                     description: processedContent,

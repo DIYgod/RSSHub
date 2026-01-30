@@ -105,7 +105,7 @@ export const route: Route = {
             link,
             item: [
                 {
-                    title,
+                    title: `[Post Updated] ${title}`,
                     link,
                     guid,
                     description: $content.html() || '',
