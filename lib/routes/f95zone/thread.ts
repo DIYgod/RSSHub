@@ -66,52 +66,37 @@ export const route: Route = {
         const lastPageLink = $firstPage('ul.pageNav-main li.pageNav-page:last-child a').attr('href');
         const totalPages = lastPageLink ? Number.parseInt(lastPageLink.match(/page-(\d+)/)?.[1] || '1', 10) : 1;
 
-        // Process images helper function
-        // Replace lazy-loaded src with data-src and thumbnail URLs with original URLs
+        // Process images: clean up lazy loading, use original URLs, remove duplicates
         const processImages = (html: string): string => {
             const $content = load(html);
+
+            // Remove noscript tags (contain duplicate images)
+            $content('noscript').remove();
+
             const seenImages = new Set<string>();
             $content('img').each((_, img) => {
                 const $img = $content(img);
-                const dataSrc = $img.attr('data-src');
-                let src = $img.attr('src');
+                const $parent = $img.parent('a');
 
-                if (dataSrc) {
-                    src = dataSrc;
-                    $img.removeAttr('data-src');
-                } else if (src?.startsWith('data:')) {
+                // Get original image URL: parent href > data-src > src (remove /thumb/)
+                let src = $parent.attr('href') || $img.attr('data-src') || $img.attr('src') || '';
+                src = src.replace('/thumb/', '/');
+
+                // Remove placeholder or duplicate images
+                if (!src || src.startsWith('data:') || seenImages.has(src)) {
                     $img.remove();
                     return;
                 }
 
-                // Check if parent <a> has original image URL (not thumbnail)
-                const $parent = $img.parent('a');
-                const parentHref = $parent.attr('href');
-                if (parentHref && parentHref.includes('attachments.f95zone.to') && !parentHref.includes('/thumb/')) {
-                    // Use the original image URL from parent link
-                    src = parentHref;
-                } else if (src && src.includes('/thumb/')) {
-                    // Remove /thumb/ from URL to get original image
-                    src = src.replace('/thumb/', '/');
-                }
+                seenImages.add(src);
+                $img.attr('src', src).removeAttr('data-src').removeClass('lazyload');
 
-                if (src) {
-                    // Remove duplicate images
-                    if (seenImages.has(src)) {
-                        $img.remove();
-                        return;
-                    }
-                    seenImages.add(src);
-                    $img.attr('src', src);
-                }
-
-                // Remove parent <a> tag, keep only <img>
-                if ($parent.length && $parent.attr('target') === '_blank') {
+                // Unwrap from parent <a> tag
+                if ($parent.length) {
                     $parent.replaceWith($img);
                 }
-
-                $img.removeClass('lazyload');
             });
+
             return $content.html() || '';
         };
 
