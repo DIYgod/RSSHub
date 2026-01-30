@@ -5,11 +5,12 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: '/threads/:threadTitle/:threadId',
-    name: 'Thread',
+    path: '/post/:threadTitle/:threadId',
+    name: 'Post',
     maintainers: ['wsmbsbbz'],
-    example: '/f95zone/threads/vicineko-collection-2025-06-14-vicineko/84596',
+    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko/84596',
     categories: ['game'],
+    description: 'Track updates to the first post of a thread. Uses the date in title [yyyy-mm-dd] for update detection.',
     parameters: {
         threadTitle: {
             description: 'Thread title slug, can be found in the URL. e.g. `vicineko-collection-2025-06-14-vicineko`',
@@ -36,7 +37,7 @@ export const route: Route = {
     radar: [
         {
             source: ['f95zone.to/threads/:threadTitle.:threadId/*'],
-            target: '/threads/:threadTitle/:threadId',
+            target: '/post/:threadTitle/:threadId',
         },
     ],
     handler: async (ctx) => {
