@@ -59,7 +59,7 @@ const parseTuwenFromRaw = (raw) =>
                 return `<a href="${i.url}" target="_blank" rel="noopener">${i.title}</a>`;
             default:
                 logger.debug(`Unknown tuwen type: ${i.type}`);
-                return 'Unkown type';
+                return 'Unknown type';
         }
     });
 
