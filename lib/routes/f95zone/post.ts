@@ -33,12 +33,6 @@ export const route: Route = {
         supportScihub: false,
         nsfw: true,
     },
-    radar: [
-        {
-            source: ['f95zone.to/threads/:thread/*'],
-            target: '/post/:thread',
-        },
-    ],
     handler: async (ctx) => {
         const { thread, postId } = ctx.req.param();
         const baseUrl = 'https://f95zone.to';
