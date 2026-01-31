@@ -124,7 +124,7 @@ async function handler(ctx) {
     const blogListCategory = await getBlogListCategory();
     const config = blogListCategory.find((item) => item.id.toString() === category) ?? blogListCategory[0];
 
-    const response = await ofetch(`${baseUrl}/ApiHomeNew/${config.apiPath}`, {
+    const response = await ofetch(`${baseUrl}/ApiHomeNew${config.apiPath}`, {
         query: {
             page: 1,
             pageSize: limit,

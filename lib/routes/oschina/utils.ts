@@ -23,7 +23,7 @@ export const getBlogListCategory = () =>
                     name: item.name,
                     description,
                     logo: item.logo_url,
-                    apiPath: 'homeListByBlogTime',
+                    apiPath: '/homeListByBlogTime',
                 };
             }),
             {
