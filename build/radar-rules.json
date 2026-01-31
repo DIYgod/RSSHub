@@ -31990,6 +31990,24 @@
         ],
         "target": "/mit/hanlab/blog"
       }
+    ],
+    "scratch": [
+      {
+        "title": "Scratch User Comments",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/users/:username/"
+        ],
+        "target": "/mit/scratch/user-comments/:username"
+      },
+      {
+        "title": "Scratch User Projects",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/users/:username/projects/"
+        ],
+        "target": "/mit/scratch/user-projects/:username"
+      }
     ]
   },
   "miui.com": {

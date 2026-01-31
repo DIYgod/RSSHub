@@ -1855,6 +1855,8 @@ export type RoutePath =
   | `/misskon/tag/:tag`
   | `/misskon/top/:k`
   | `/mit/hanlab/blog`
+  | `/mit/scratch/user-comments/:username`
+  | `/mit/scratch/user-projects/:username`
   | `/mittrchina/:type?`
   | `/miui/community/user/:uid`
   | `/miui/firmware/:device/:type?/:region?`
