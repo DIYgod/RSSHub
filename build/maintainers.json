@@ -6507,8 +6507,9 @@
   "/oschina/topic/:topic": [
     "loveely7"
   ],
-  "/oschina/u/:uid": [],
-  "/oschina/user/:id": [],
+  "/oschina/u/:uid": [
+    "dxmpalb"
+  ],
   "/oshwhub/explore/:type?/:origin?/:projectTag{.+}?": [
     "tylinux",
     "nczitzk"

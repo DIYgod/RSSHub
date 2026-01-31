@@ -35271,9 +35271,9 @@
         "title": "资讯",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
-          "/news/:category"
+          "/"
         ],
-        "target": "/oschina/news/:category"
+        "target": "/oschina/news"
       },
       {
         "title": "问答主题",
@@ -35286,20 +35286,13 @@
     ],
     "my": [
       {
-        "title": "数字型账号用户博客",
+        "title": "用户博客",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
-          "/u/:uid"
+          "/u/:uid",
+          "/:uid"
         ],
         "target": "/oschina/u/:uid"
-      },
-      {
-        "title": "数字型账号用户博客",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/u/:uid"
-        ],
-        "target": "/oschina/user/:id"
       }
     ]
   },
