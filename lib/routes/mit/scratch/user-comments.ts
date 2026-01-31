@@ -5,9 +5,9 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/user-comments/:username',
+    path: '/scratch/user-comments/:username',
     categories: ['social-media'],
-    example: '/scratch/user-comments/skota11',
+    example: '/mit/scratch/user-comments/skota11',
     parameters: { username: 'Scratch username' },
     features: {
         requireConfig: false,
@@ -20,7 +20,7 @@ export const route: Route = {
     radar: [
         {
             source: ['scratch.mit.edu/users/:username/'],
-            target: '/user-comments/:username',
+            target: '/scratch/user-comments/:username',
         },
     ],
     name: 'Scratch User Comments',

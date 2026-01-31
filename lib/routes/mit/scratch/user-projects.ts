@@ -3,9 +3,9 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/user-projects/:username',
+    path: '/scratch/user-projects/:username',
     categories: ['social-media'],
-    example: '/scratch/user-projects/abee',
+    example: '/mit/scratch/user-projects/abee',
     parameters: { username: 'Scratch username' },
     features: {
         requireConfig: false,
@@ -18,7 +18,7 @@ export const route: Route = {
     radar: [
         {
             source: ['scratch.mit.edu/users/:username/projects/'],
-            target: '/user-projects/:username',
+            target: '/scratch/user-projects/:username',
         },
     ],
     name: 'Scratch User Projects',
@@ -34,12 +34,11 @@ export const route: Route = {
         const data = await ofetch(apiUrl);
 
         const items = data.map((item) => {
-            // Description と Instructions を結合。HTMLタグは含まずプレーンテキストのみ。
-            const descriptionText = [item.instructions ? `Instructions:\n${item.instructions}` : '', item.description ? `Notes and Credits:\n${item.description}` : ''].filter(Boolean).join('\n\n');
+            const parts = [item.instructions ? `Instructions:<br>${item.instructions}` : '', item.description ? `Notes and Credits:<br>${item.description}` : ''].filter(Boolean);
+            const descriptionText = parts.join('<br><br>').replaceAll('\n', '<br>');
 
             return {
                 title: item.title,
-                // 本文（プレーンテキスト）
                 description: descriptionText,
                 // 公開日（共有日時）
                 pubDate: parseDate(item.history.shared),
