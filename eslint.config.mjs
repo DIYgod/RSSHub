@@ -8,7 +8,7 @@ import n from 'eslint-plugin-n';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
-import yamlParser from 'yaml-eslint-parser';
+import * as yamlParser from 'yaml-eslint-parser';
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
 const __dirname = import.meta.dirname;
