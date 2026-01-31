@@ -27,7 +27,8 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 - [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | A browser extension that can help you quickly discover and subscribe to the RSS and RSSHub of current websites.
 - [RSSBud](https://github.com/Cay-Zhang/RSSBud) | RSSHub Radar for iOS platform, designed specifically for mobile ecosystem optimization.
 - [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | RSSHub Radar for Android platform built with Flutter.
-- [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast
+- [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast.
+- [Awesome RSSHub Routes](https://github.com/JackyST0/awesome-rsshub-routes) | Curated list of RSS feeds and RSSHub routes.
 
 ## Contribute
 
