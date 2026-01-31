@@ -327,6 +327,7 @@ export default [
     },
     {
         files: ['**/*.yaml', '**/*.yml'],
+        ignores: ['pnpm-lock.yaml'],
         language: 'yml/yaml',
         rules: {
             'lines-around-comment': [
