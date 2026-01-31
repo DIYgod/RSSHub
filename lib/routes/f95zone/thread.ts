@@ -13,7 +13,13 @@ export const route: Route = {
     maintainers: ['wsmbsbbz'],
     example: '/f95zone/thread/ubermation-collection-2026-01-19-uebermation-uebermation.231247',
     categories: ['game'],
-    description: 'Track all replies in a thread. Only fetches the last 3 pages.',
+    description: `Track all replies in a thread. Only fetches the last 3 pages.
+
+URL format: \`https://f95zone.to/threads/{thread}/\` → use \`{thread}\` as the parameter.
+
+Example: \`https://f95zone.to/threads/ubermation-collection-2026-01-19.231247/\` → \`/f95zone/thread/ubermation-collection-2026-01-19.231247\`
+
+Note: If you want to track a specific post's content changes (e.g., first post with download links), use the \`/f95zone/post\` route instead.`,
     parameters: {
         thread: 'Thread slug with ID, copy from browser URL after `/threads/`',
     },
