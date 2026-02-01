@@ -16,9 +16,11 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
         .toArray()
         .map((item) => {
             item = $(item);
+            const href = item.find(titleSelector).attr('href') || '';
+            const link = href.startsWith('http') ? href : new URL(href, host).href;
             return {
                 title: item.find(titleSelector).attr('title'),
-                link: host + item.find(titleSelector).attr('href'),
+                link,
                 pubDate: timezone(parseDate(item.find(dateSelector).text(), 'YYYY-MM-DD'), +8),
             };
         });
