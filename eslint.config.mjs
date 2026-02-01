@@ -7,8 +7,8 @@ import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
+import eslintPluginYml from 'eslint-plugin-yml';
 import globals from 'globals';
-import yamlParser from 'yaml-eslint-parser';
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
 const __dirname = import.meta.dirname;
@@ -29,9 +29,10 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
     },
-    ...compat.extends('eslint:recommended', 'plugin:yml/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/stylistic'),
+    ...compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/stylistic'),
     n.configs['flat/recommended-script'],
     unicorn.configs.recommended,
+    ...eslintPluginYml.configs.recommended,
     {
         plugins: {
             '@stylistic': stylistic,
@@ -316,15 +317,6 @@ export default [
                     ignores: [],
                 },
             ],
-
-            'yml/quotes': [
-                'error',
-                {
-                    prefer: 'single',
-                },
-            ],
-
-            'yml/no-empty-mapping-value': 'off',
         },
     },
     {
@@ -335,16 +327,30 @@ export default [
     },
     {
         files: ['**/*.yaml', '**/*.yml'],
-
-        languageOptions: {
-            parser: yamlParser,
-        },
-
+        ignores: ['pnpm-lock.yaml'],
+        language: 'yml/yaml',
         rules: {
             'lines-around-comment': [
                 'error',
                 {
                     beforeBlockComment: false,
+                },
+            ],
+
+            'yml/indent': [
+                'error',
+                4,
+                {
+                    indicatorValueIndent: 2,
+                },
+            ],
+
+            'yml/no-empty-mapping-value': 'off',
+
+            'yml/quotes': [
+                'error',
+                {
+                    prefer: 'single',
                 },
             ],
         },
