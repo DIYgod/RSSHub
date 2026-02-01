@@ -113,7 +113,7 @@ async function handler(ctx) {
 
         const username = $('.profile-info .username').text().trim();
 
-        const items = $('.posts-video .posts__video-item')
+        const items = $('.posts-video .posts__video-item .posts__video-item-a')
             .toArray()
             .map((item) => {
                 const $item = $(item);
