@@ -20,12 +20,11 @@ type PostType = 'home' | 'gold' | 'threadsearch' | 'search';
 export const route: Route = {
     path: '/:id?/:type?/:keyword?',
     url: 'cool18.com',
-    example: '/bbs4 or /global/search/keyword',
+    example: 'cool18.com/bbs4',
     parameters: {
         id: 'the name of the bbs, use `global` for site-wide search',
-        type: 'the type of the post. Can be `home`, `gold`, `threadsearch` or `search`. Default: `home`',
+        type: 'the type of the post. Can be `home`, `gold`, `threadsearch`. Default: `home`',
         keyword: 'the keyword to search.',
-        pageSize: 'the number of posts to fetch. If the type is not in search, you can type any words. Default: 10',
     },
     categories: ['bbs'],
     radar: [
@@ -47,7 +46,7 @@ export const route: Route = {
  */
 function buildUrl(rootUrl: string, type: PostType, keyword: string | undefined, isGlobal: boolean): string {
     if (isGlobal && (type === 'search' || type === 'threadsearch')) {
-        return `https://www.cool18.com/search.php?keyword=${encodeURIComponent(keyword || '')}&sa=全成人区搜索`;
+        return `${rootUrl}/search.php?keyword=${encodeURIComponent(keyword || '')}&sa=全成人区搜索`;
     }
 
     const params = {
@@ -136,7 +135,12 @@ function extractGlobalSearchList($: CheerioAPI, limit: number): DataItem[] {
             const href = $link.attr('href') || '';
 
             const $pElements = $link.find('p');
-            const category = $pElements.filter('.lf').first().text().trim().replaceAll(/[【】]/g, '');
+            const category = $pElements
+                .filter('.lf')
+                .first()
+                .text()
+                .trim()
+                .replaceAll(/[【】]/g, '');
             const title = $pElements.filter('.lf').eq(1).text().trim();
             const dateText = $pElements.filter('.lr').text().trim();
 
@@ -146,6 +150,36 @@ function extractGlobalSearchList($: CheerioAPI, limit: number): DataItem[] {
                 pubDate: parseDate(dateText, 'YYYY-MM-DD HH:mm'),
                 author: '',
                 category: category ? [category] : [],
+                description: '',
+            };
+        })
+        .filter((item) => item.link && item.title);
+}
+
+/**
+ * 从 gold 页面提取精华帖子列表
+ */
+function extractGoldList($: CheerioAPI, rootUrl: string, limit: number): DataItem[] {
+    const selector = '.section .post-list .post-item';
+    const elements = $(selector);
+
+    return elements
+        .slice(0, limit)
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const $link = $item.find('a').first();
+            const href = $link.attr('href') || '';
+            const title = $link.text().trim();
+
+            const cleanTitle = title.replace(/^\.\s+/, '');
+
+            return {
+                title: cleanTitle,
+                link: href.startsWith('http') ? href : `${rootUrl}/${href}`,
+                pubDate: undefined,
+                author: '',
+                category: ['精华'],
                 description: '',
             };
         })
@@ -194,12 +228,25 @@ async function handler(ctx: Context) {
     const limit = limitQuery ? Number.parseInt(limitQuery as string, 10) : 20;
 
     let list: DataItem[];
+
     if (isGlobal && (postType === 'search' || postType === 'threadsearch')) {
         list = extractGlobalSearchList($, limit);
-    } else if (postType === 'home') {
-        list = extractHomeList($, rootUrl, limit);
     } else {
-        list = extractHtmlList($, rootUrl, limit);
+        switch (postType) {
+            case 'home':
+                list = extractHomeList($, rootUrl, limit);
+                break;
+            case 'gold':
+                list = extractGoldList($, rootUrl, limit);
+                break;
+            case 'threadsearch':
+            case 'search':
+                list = extractHtmlList($, rootUrl, limit);
+                break;
+            default:
+                list = extractHtmlList($, rootUrl, limit);
+                break;
+        }
     }
 
     const items = await Promise.all(list.map((item) => fetchArticleDetail(item)));
@@ -210,4 +257,3 @@ async function handler(ctx: Context) {
         item: items,
     };
 }
-
