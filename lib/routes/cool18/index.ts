@@ -20,7 +20,7 @@ type PostType = 'home' | 'gold' | 'threadsearch' | 'search';
 export const route: Route = {
     path: '/:id?/:type?/:keyword?',
     url: 'cool18.com',
-    example: 'cool18.com/bbs4',
+    example: '/cool18/bbs4',
     parameters: {
         id: 'the name of the bbs, use `global` for site-wide search',
         type: 'the type of the post. Can be `home`, `gold`, `threadsearch`. Default: `home`',
