@@ -15,6 +15,7 @@ query getAeonEssay($slug: String!) {
         updatedAt
         authors { name authorBio }
         audioUrl
+        image { url alt caption }
         body
     }
 }`;
@@ -56,15 +57,10 @@ const renderEssayDescription = ({ banner, authorsBio, content }) =>
             {banner?.url ? (
                 <figure>
                     <img src={banner.url} alt={banner.alt} />
-                    {banner.caption ? <figcaption>{banner.caption}</figcaption> : null}
+                    {banner.caption ? <figcaption>{raw(banner.caption)}</figcaption> : null}
                 </figure>
             ) : null}
-            {authorsBio ? (
-                <blockquote>
-                    {authorsBio}
-                    <br />
-                </blockquote>
-            ) : null}
+            {authorsBio ? raw(authorsBio) : null}
             {content ? raw(content) : null}
         </>
     );
@@ -105,7 +101,7 @@ export const getData = async (list) => {
                     const banner = data.image;
                     capture('p.pullquote').remove();
 
-                    const authorsBio = data.authors.map((author) => `<blockquote><p>${author.name}${author.authorBio.replaceAll(/^<p>/g, ' ')}</p></blockquote><br />`).join('');
+                    const authorsBio = '<hr />' + data.authors.map((author) => `<p>${author.name}${author.authorBio.replaceAll(/^<p>/g, ' ')}`).join('') + '<hr /><br />';
 
                     item.description = renderEssayDescription({ banner, authorsBio, content: capture.html() });
                 }
