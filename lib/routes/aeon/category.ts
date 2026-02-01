@@ -39,7 +39,7 @@ export const route: Route = {
 
 const ENDPOINT = 'https://api.aeonmedia.co/graphql';
 const LIST_BY_SECTION = /* GraphQL */ `
-query getAeonArticlesBySection($section: String!, $sortField: ArticleSortEnum = published_at, $afterCursor: String, \$tag: String) {
+query getAeonArticlesBySection($section: String!, $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
   section(site: aeon, slug: $section) {
     slug
     title
