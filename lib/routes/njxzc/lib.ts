@@ -52,7 +52,7 @@ async function handler() {
             const link = href.startsWith('http') ? href : new URL(href, host).href;
             const day = $item.find('.tm-1').text().trim();
             const yearMonth = $item.find('.tm-2').text().trim();
-            const dateStr = `${yearMonth}-${day.padStart(2, '0')}`;
+            const dateStr = `${yearMonth}-${day}`;
             return {
                 title: $item.find('.btt-4').text().trim(),
                 link,
@@ -64,18 +64,14 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                if (!response || (response.status >= 300 && response.status < 400)) {
-                    return {
-                        ...item,
-                        description: '该通知无法直接预览，请点击原文链接↑查看',
-                    };
-                }
                 const $ = load(response);
 
                 if ($('.wp_error_msg').length > 0) {
                     item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
                 } else if ($('.wp_pdf_player').length > 0) {
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
+                    const pdfSrc = $('.wp_pdf_player').attr('pdfsrc') || '';
+                    const pdfUrl = pdfSrc.startsWith('http') ? pdfSrc : new URL(pdfSrc, host).href;
+                    item.description = `<a href="${pdfUrl}">附件下载</a>`;
                 } else {
                     const contentHtml = $('.wp_articlecontent').html();
                     if (contentHtml) {
