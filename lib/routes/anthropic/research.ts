@@ -27,77 +27,75 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
 
-    // self.__next_f.push
-    const regexp = /self\.__next_f\.push\((.+)\)/;
-    const textList: string[] = [];
-    for (const e of $('script').toArray()) {
-        const $e = $(e);
-        const text = $e.text();
-        const match = regexp.exec(text);
-        if (match) {
-            let data;
-            try {
-                data = JSON.parse(match[1]);
-                if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
-                    textList.push(data[1]);
-                }
-            } catch {
-                // ignore
-            }
-        }
-    }
+    const list = $('a[class*="PublicationList"]')
+        .toArray()
+        .map((el) => {
+            const $el = $(el);
+            const title = $el.find('[class*="title"]').text().trim();
+            const href = $el.attr('href');
+            const pubDateText = $el.find('[class*="date"]').text().trim();
 
-    const partRegex = /^([0-9a-zA-Z]+):([0-9a-zA-Z]+)?(\[.*)$/;
-    const fd = textList
-        .join('')
-        .split('\n')
-        .map((d) => {
-            const matchPart = partRegex.exec(d);
-            if (matchPart) {
-                return {
-                    id: matchPart[1],
-                    tag: matchPart[2],
-                    data: JSON.parse(matchPart[3]),
-                };
+            if (!title || !href || href === '#') {
+                return null;
             }
+
             return {
-                id: '',
-                tag: '',
-                data: d,
+                title,
+                link: `https://www.anthropic.com${href}`,
+                pubDate: parseDate(pubDateText),
             };
-        });
-
-    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
-    const tabPages = sections.flatMap((section) => section?.tabPages ?? []).filter((tabPage) => tabPage?.label === 'Overview');
-    const publicationSections = tabPages.flatMap((tabPage) => tabPage.sections).filter((section) => section?.title === 'Publications');
-    const posts = publicationSections
-        .flatMap((section) => section?.posts ?? [])
-        .map((post) => ({
-            title: post.title,
-            link: `https://www.anthropic.com/research/${post.slug.current}`,
-            pubDate: parseDate(post.publishedOn),
-        }));
+        })
+        .filter((item): item is Exclude<typeof item, null> => item !== null);
 
     const items = await pMap(
-        posts,
+        list,
         (item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('div[class*="PostDetail_post-detail__"]');
-                content.find('img').each((_, e) => {
-                    const $e = $(e);
-                    $e.removeAttr('style srcset');
-                    const src = $e.attr('src');
-                    const params = new URLSearchParams(src);
-                    const newSrc = params.get('/_next/image?url');
-                    if (newSrc) {
-                        $e.attr('src', newSrc);
+                // Extract only the actual article content without page wrapper markup
+                const contentElements = $('[class*="post-text"], [class*="post-heading"], [class*="post-section"], [class*="post-subsection"], [class*="post-footnote"], figure[class*="imageWithCaption"]');
+
+                // Process and clean each element
+                contentElements.each((_, el) => {
+                    const $el = $(el);
+                    // Remove all CSS module class names, keep only semantic classes
+                    const classAttr = $el.attr('class');
+                    if (classAttr) {
+                        // Keep only simple semantic classes, remove CSS module hashes
+                        const cleanClasses = classAttr
+                            .split(/\s+/)
+                            .filter((c) => !c.includes('__') && !c.includes('-module-'))
+                            .join(' ');
+                        if (cleanClasses) {
+                            $el.attr('class', cleanClasses);
+                        } else {
+                            $el.removeAttr('class');
+                        }
                     }
                 });
 
-                item.description = content.html();
+                // Process images
+                contentElements.find('img').each((_, e) => {
+                    const $e = $(e);
+                    $e.removeAttr('style srcset loading decoding data-nimg class');
+                    const src = $e.attr('src');
+                    if (src) {
+                        const params = new URLSearchParams(src);
+                        const newSrc = params.get('/_next/image?url');
+                        if (newSrc) {
+                            $e.attr('src', newSrc);
+                        }
+                    }
+                });
+
+                // Build clean HTML
+                item.description =
+                    contentElements
+                        .toArray()
+                        .map((el) => $.html(el))
+                        .join('\n') || undefined;
 
                 return item;
             }),
