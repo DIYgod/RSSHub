@@ -39458,6 +39458,19 @@
       }
     ]
   },
+  "quantamagazine.org": {
+    "_name": "Quanta Magazine",
+    ".": [
+      {
+        "title": "Archive",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/quantamagazine/archive"
+      }
+    ]
+  },
   "questn.com": {
     "_name": "QuestN",
     "app": [

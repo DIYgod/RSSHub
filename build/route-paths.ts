@@ -2310,6 +2310,7 @@ export type RoutePath =
   | `/qqorw/:category?`
   | `/qstheory/:category?`
   | `/qstheory/magazine/:magazine`
+  | `/quantamagazine/archive`
   | `/questmobile/report/:industry?/:label?`
   | `/questn/community/:communityUrl`
   | `/questn/events/:filter?`
