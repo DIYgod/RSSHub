@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const urlRoot = 'https://publicoa.sjtu.edu.cn';
 
@@ -36,7 +37,7 @@ const cookieJar = new CookieJar();
 
 async function handler() {
     if (!config.sjtu?.JAAuthCookie) {
-        throw 'JAAuthCookie needs to be set to use this route.';
+        throw new ConfigNotFoundError('JAAuthCookie needs to be set to use this route.');
     }
 
     cookieJar.setCookieSync(`JAAuthCookie=${config.sjtu.JAAuthCookie}; Domain=.jaccount.sjtu.edu.cn; Path=/`, 'https://jaccount.sjtu.edu.cn');
