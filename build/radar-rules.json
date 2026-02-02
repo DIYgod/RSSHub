@@ -18391,6 +18391,29 @@
       }
     ]
   },
+  "gitkraken.com": {
+    "_name": "GitKraken",
+    "help": [
+      {
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/gitkraken-desktop/current/"
+        ],
+        "target": "/gitkraken/release-note"
+      }
+    ],
+    "www": [
+      {
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/gitkraken/release-note"
+      }
+    ]
+  },
   "gitpod.io": {
     "_name": "Gitpod",
     ".": [

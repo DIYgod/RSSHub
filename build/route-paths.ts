@@ -1120,6 +1120,7 @@ export type RoutePath =
   | `/github/user/followers/:user`
   | `/github/user_event/:username/:types?`
   | `/github/wiki/:user/:repo/:page?`
+  | `/gitkraken/release-note`
   | `/gitpod/blog`
   | `/gitpod/changelog`
   | `/gitstar-ranking/:category?`

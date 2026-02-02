@@ -3455,6 +3455,9 @@
   "/github/wiki/:user/:repo/:page?": [
     "TonyRL"
   ],
+  "/gitkraken/release-note": [
+    "TonyRL"
+  ],
   "/gitpod/blog": [
     "TonyRL"
   ],
