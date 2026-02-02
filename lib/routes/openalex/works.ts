@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://api.openalex.org';
 
@@ -68,12 +67,14 @@ export const handler = async (ctx) => {
                 const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
                 const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
 
+                const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
+
                 return {
                     title: work.title || 'Untitled',
                     link: doiUrl,
                     description: abstract,
                     author: authors,
-                    pubDate: parseDate(work.publication_date),
+                    pubDate,
                     guid: cacheKey,
                     category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
                 };
