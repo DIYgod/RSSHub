@@ -29,12 +29,7 @@ const filterTypeMap = {
 };
 
 export const handler = async (ctx) => {
-    const { type, journals, ids } = ctx.req.param();
-
-    // Validate type
-    if (!filterTypeMap[type]) {
-        throw new Error(`Invalid type: ${type}. Must be one of: ${Object.keys(filterTypeMap).join(', ')}`);
-    }
+    const { journals, type, ids } = ctx.req.param();
 
     // Get date 14 days ago (2 weeks)
     const twoWeeksAgo = new Date();
@@ -42,11 +37,18 @@ export const handler = async (ctx) => {
     const twoWeeksAgoStr = twoWeeksAgo.toISOString().split('T')[0];
 
     // Build filter parameters
-    const journalFilter = journals; // Already pipe-separated
-    const typeField = filterTypeMap[type];
-    const typeFilter = ids; // Already pipe-separated
+    const filters = [`publication_date:>${twoWeeksAgoStr}`, 'has_abstract:true', `primary_location.source.id:${journals}`];
 
-    const filter = `publication_date:>${twoWeeksAgoStr},${typeField}:${typeFilter},has_abstract:true,primary_location.source.id:${journalFilter}`;
+    // Add type filter if provided
+    if (type && ids) {
+        if (!filterTypeMap[type]) {
+            throw new Error(`Invalid type: ${type}. Must be one of: ${Object.keys(filterTypeMap).join(', ')}`);
+        }
+        const typeField = filterTypeMap[type];
+        filters.push(`${typeField}:${ids}`);
+    }
+
+    const filter = filters.join(',');
 
     const apiUrl = `${rootUrl}/works`;
     const response = await ofetch(apiUrl, {
@@ -57,34 +59,29 @@ export const handler = async (ctx) => {
         },
     });
 
-    const items = await Promise.all(
-        response.results.map((work) => {
-            const doi = work.doi || work.id;
-            const cacheKey = `${doi}-${work.updated_date}`;
+    const items = response.results.map((work) => {
+        const doi = work.doi || work.id;
+        const cacheKey = `${doi}-${work.updated_date}`;
 
-            return cache.tryGet(cacheKey, () => {
-                const abstract = reconstructAbstract(work.abstract_inverted_index);
-                const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
-                const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
+        const abstract = reconstructAbstract(work.abstract_inverted_index);
+        const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
+        const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
 
-                const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
+        const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
 
-                return {
-                    title: work.title || 'Untitled',
-                    link: doiUrl,
-                    description: abstract,
-                    author: authors,
-                    pubDate,
-                    guid: cacheKey,
-                    category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
-                };
-            });
-        })
-    );
+        return {
+            title: work.title || 'Untitled',
+            link: doiUrl,
+            description: abstract,
+            author: authors,
+            pubDate,
+            guid: cacheKey,
+            category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
+        };
+    });
 
     // Get journal and filter type names for title
     const journalIdArray = journals.split('|');
-    const filterIdArray = ids.split('|');
 
     let feedTitle = 'OpenAlex Works';
     try {
@@ -92,67 +89,79 @@ export const handler = async (ctx) => {
         const journalNames = await Promise.all(journalIdArray.map((id) => getJournalName(id)));
         const journalPart = journalNames.join(', ');
 
-        // Get up to 3 filter names, then show "Compiled" if more
-        let filterPart;
-        if (filterIdArray.length <= 3) {
-            const filterNames = await Promise.all(filterIdArray.map((id) => getFilterName(type, id)));
-            filterPart = filterNames.join(', ');
+        // Build title with optional filter part
+        if (type && ids) {
+            const filterIdArray = ids.split('|');
+            // Get up to 3 filter names, then show "Compiled" if more
+            let filterPart;
+            if (filterIdArray.length <= 3) {
+                const filterNames = await Promise.all(filterIdArray.map((id) => getFilterName(type, id)));
+                filterPart = filterNames.join(', ');
+            } else {
+                filterPart = 'Compiled';
+            }
+            feedTitle = `OpenAlex: ${journalPart} | ${filterPart}`;
         } else {
-            filterPart = 'Compiled';
+            feedTitle = `OpenAlex: ${journalPart}`;
         }
-
-        feedTitle = `OpenAlex: ${journalPart} | ${filterPart}`;
     } catch {
         // Fallback to default title
     }
 
+    const description = type && ids ? `Recent publications from OpenAlex filtered by ${type} (last 2 weeks)` : 'Recent publications from OpenAlex (last 2 weeks)';
+
     return {
         title: feedTitle,
         link: 'https://openalex.org',
-        description: `Recent publications from OpenAlex filtered by ${type} (last 2 weeks)`,
+        description,
         item: items,
     };
 };
 
-// Helper functions to get names
+// Helper functions to get names (cached)
 async function getJournalName(journalId: string): Promise<string> {
-    try {
-        const response = await ofetch(`${rootUrl}/sources/${journalId}`);
-        return response.display_name || journalId;
-    } catch {
-        return journalId;
-    }
+    return await cache.tryGet(`openalex:journal:${journalId}`, async () => {
+        try {
+            const response = await ofetch(`${rootUrl}/sources/${journalId}`);
+            return response.display_name || journalId;
+        } catch {
+            return journalId;
+        }
+    });
 }
 
 async function getFilterName(type: string, id: string): Promise<string> {
-    try {
-        const endpoint = type === 'subfield' ? 'subfields' : type === 'topic' ? 'topics' : type === 'field' ? 'fields' : 'domains';
-        const response = await ofetch(`${rootUrl}/${endpoint}/${id}`);
-        return response.display_name || id;
-    } catch {
-        return id;
-    }
+    return await cache.tryGet(`openalex:${type}:${id}`, async () => {
+        try {
+            const endpoint = type === 'subfield' ? 'subfields' : type === 'topic' ? 'topics' : type === 'field' ? 'fields' : 'domains';
+            const response = await ofetch(`${rootUrl}/${endpoint}/${id}`);
+            return response.display_name || id;
+        } catch {
+            return id;
+        }
+    });
 }
 
 export const route: Route = {
-    path: '/:type/:journals/:ids',
+    path: '/:journals/:type?/:ids?',
     name: 'Works',
     url: 'openalex.org',
     maintainers: ['emdoe'],
     handler,
-    example: '/openalex/subfield/s64187185/2604',
+    example: '/openalex/s64187185/subfield/2604',
     parameters: {
-        type: 'Filter type: subfield, topic, field, or domain',
         journals: 'Pipe-separated journal source IDs (e.g., s64187185|s123456789)',
-        ids: 'Pipe-separated filter IDs matching the type (e.g., 2604|2605 for subfields)',
+        type: 'Optional filter type: subfield, topic, field, or domain',
+        ids: 'Optional pipe-separated filter IDs matching the type (e.g., 2604|2605 for subfields)',
     },
-    description: `Get recent scientific publications from OpenAlex filtered by journal and topic classification (last 2 weeks).
+    description: `Get recent scientific publications from OpenAlex filtered by journal and optionally by topic classification (last 2 weeks).
 
 Examples:
-- /openalex/subfield/s64187185/2604 - Filter by subfield
-- /openalex/topic/s64187185|s123456/T10001|T10002 - Filter by topic with multiple journals
-- /openalex/field/s64187185/19 - Filter by field
-- /openalex/domain/s64187185/1 - Filter by domain`,
+- /openalex/s64187185 - All works from a journal (no topic filter)
+- /openalex/s64187185/subfield/2604 - Filter by subfield
+- /openalex/s64187185|s123456/topic/T10001|T10002 - Filter by topic with multiple journals
+- /openalex/s64187185/field/19 - Filter by field
+- /openalex/s64187185/domain/1 - Filter by domain`,
     categories: ['journal'],
 
     features: {
@@ -167,7 +176,7 @@ Examples:
     radar: [
         {
             source: ['openalex.org/works'],
-            target: '/:type/:journals/:ids',
+            target: '/:journals/:type?/:ids?',
         },
     ],
 };
