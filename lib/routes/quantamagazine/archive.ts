@@ -22,7 +22,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
 
         const noBS = cap.replaceAll(/\\([^nu])/g, '$1');
         const removeNL = noBS.replaceAll(String.raw`\n`, '');
-        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4}?)/g, (_omit, s) => String.fromCharCode(Number.parseInt(s, 16)));
+        const caption = removeNL.replaceAll(/\\u(\d{1,3}[a-z]\d?|\d{4}?)/g, (_omit, s) => String.fromCodePoint(Number.parseInt(s, 16)));
 
         return `<figure>${img}<figcaption>${caption}</figcaption></figure>`;
     });
