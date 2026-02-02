@@ -6469,6 +6469,9 @@
   "/openai/research": [
     "yuguorui"
   ],
+  "/openalex/:journals/:type?/:ids?": [
+    "emdoe"
+  ],
   "/openrice/:lang/hongkong/explore/chart/:category": [
     "after9"
   ],
