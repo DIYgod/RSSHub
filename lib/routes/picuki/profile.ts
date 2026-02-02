@@ -124,7 +124,7 @@ async function handler(ctx) {
                     author: username,
                     renderData: {
                         poster: img.attr('src'),
-                        source: $item.find('.popup-open').data('source'),
+                        source: `${baseUrl}/player/${videoId}`,
                         id: videoId,
                     },
                     link: `${baseUrl}/media/${videoId}`,
