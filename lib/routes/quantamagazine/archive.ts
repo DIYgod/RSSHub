@@ -66,27 +66,15 @@ export const handler = async (ctx) => {
         query: {
             per_page: limit,
             page: 1,
-            _fields: 'id,slug,date,link,author,title',
+            _embed: 'author',
         },
     });
 
     const items = await Promise.all(
         posts.map((item) =>
             cache.tryGet(item.link, async () => {
-                // Fetch author information from WordPress API
-                let authorName = '';
-                if (item.author) {
-                    try {
-                        const authorData = await ofetch(`${rootUrl}/wp-json/wp/v2/users/${item.author}`, {
-                            query: {
-                                _fields: 'name',
-                            },
-                        });
-                        authorName = authorData.name;
-                    } catch {
-                        // Ignore if author fetch fails
-                    }
-                }
+                // Get author name from embedded data
+                const authorName = item._embedded?.author?.[0]?.name || '';
 
                 // Fetch full article content from the page
                 const response = await ofetch(item.link, {
