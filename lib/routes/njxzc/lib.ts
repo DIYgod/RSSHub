@@ -68,23 +68,24 @@ async function handler() {
 
                 if ($('.wp_error_msg').length > 0) {
                     item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
-                } else if ($('.wp_pdf_player').length > 0) {
-                    const pdfSrc = $('.wp_pdf_player').attr('pdfsrc') || '';
-                    const pdfUrl = pdfSrc.startsWith('http') ? pdfSrc : new URL(pdfSrc, host).href;
-                    item.description = `<a href="${pdfUrl}">附件下载</a>`;
                 } else {
-                    const contentHtml = $('.wp_articlecontent').html();
-                    if (contentHtml) {
-                        const $content = load(contentHtml);
-                        $content('a').each(function () {
-                            const a = $(this);
-                            const href = a.attr('href');
-                            if (href && !href.startsWith('http')) {
-                                a.attr('href', new URL(href, host).href);
-                            }
-                        });
-                        item.description = $content.html() || '';
-                    }
+                    const $content = $('.wp_articlecontent');
+                    // Convert wp_pdf_player iframes to download links
+                    $content.find('.wp_pdf_player').each(function () {
+                        const $iframe = $(this);
+                        const pdfSrc = $iframe.attr('pdfsrc') || '';
+                        const pdfUrl = pdfSrc.startsWith('http') ? pdfSrc : new URL(pdfSrc, host).href;
+                        $iframe.replaceWith(`<p><a href="${pdfUrl}">附件下载</a></p>`);
+                    });
+                    // Fix relative URLs
+                    $content.find('a').each(function () {
+                        const $a = $(this);
+                        const href = $a.attr('href');
+                        if (href && !href.startsWith('http')) {
+                            $a.attr('href', new URL(href, host).href);
+                        }
+                    });
+                    item.description = $content.html() || '';
                     const title = $('.arti_title').text().trim();
                     if (title) {
                         item.title = title;
