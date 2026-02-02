@@ -96,9 +96,7 @@ export const handler = async (ctx) => {
 
                 // Remove unnecessary elements
                 $('.header-spacer, .scale1.mha, .post__title__author-date, .post__aside--divider').remove();
-                $('.hide-on-print, .post__aside__pullquote, aside.post__sidebar.hide').each((_, element) => {
-                    $(element).remove();
-                });
+                $('.hide-on-print, .post__aside__pullquote, aside.post__sidebar.hide, nav[data-glide-el]').remove();
                 $('.post__footer, .post__title__author-date').remove();
                 // Remove video placeholder images (the poster is already in the video element)
                 $('.iframe-placeholder').remove();
