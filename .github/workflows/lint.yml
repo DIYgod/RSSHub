@@ -27,9 +27,14 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
             - run: pnpm i
+            - name: Install ESLint SARIF formatter
+              # https://github.com/microsoft/sarif-js-sdk/issues/91 unncessary deps on eslint@8
+              run: |
+                  wget https://raw.githubusercontent.com/microsoft/sarif-js-sdk/refs/heads/main/packages/eslint-formatter-sarif/sarif.js -O node_modules/sarif.cjs
+                  pnpm i -D utf8 lodash jschardet
             - name: Lint
               run: pnpm run lint
-                  --format @microsoft/eslint-formatter-sarif
+                  --format node_modules/sarif.cjs
                   --output-file eslint-results.sarif
               continue-on-error: true
             - name: Upload analysis results to GitHub
