@@ -101,7 +101,19 @@ export const getData = async (list) => {
                     const banner = data.image;
                     capture('p.pullquote').remove();
 
-                    const authorsBio = '<hr />' + data.authors.map((author) => `<p>${author.name}${author.authorBio.replaceAll(/^<p>/g, ' ')}`).join('') + '<hr /><br />';
+                    const authorsBio = renderToString(
+                        <>
+                            <hr />
+                            {data.authors.map((author) => (
+                                <p>
+                                    {author.name}
+                                    {raw(author.authorBio.replaceAll(/^<p>/g, ' '))}
+                                </p>
+                            ))}
+                            <hr />
+                            <br />
+                        </>
+                    );
 
                     item.description = renderEssayDescription({ banner, authorsBio, content: capture.html() });
                 }
