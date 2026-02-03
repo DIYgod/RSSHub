@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import puppeteer from '@/utils/puppeteer';
 
-import { baseUrl, getItem, headers, parseList } from './utils';
+import { baseUrl, getItem, parseList, puppeteerFetch } from './utils';
 
 export const route: Route = {
     path: '/studios/:studio',
@@ -19,19 +19,21 @@ export const route: Route = {
     handler,
     features: {
         nsfw: true,
+        requirePuppeteer: true,
     },
 };
 
 async function handler(ctx) {
     const { studio } = ctx.req.param();
 
-    const response = await ofetch(`${baseUrl}/api/studios/${studio}?page=0`, {
-        headers,
-    });
+    const browser = await puppeteer();
+    const response = await puppeteerFetch(`${baseUrl}/api/studios/${studio}?page=0`, browser);
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, browser))));
+
+    await browser.close();
 
     return {
         title: `${response.studio.hotDvdIds?.join(' ') ?? response.studio.name} Jav Online | Japanese Adult Video - JavTrailers.com`,
