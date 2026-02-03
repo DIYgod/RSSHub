@@ -98,12 +98,6 @@ Note: If you want to track a specific post's content changes (e.g., first post w
             allPosts.push(...extractPosts(load(lastPageResponse)));
         }
 
-        allPosts.sort((a, b) => {
-            const numA = Number.parseInt(a.title?.match(/#(\d+)/)?.[1] || '0', 10);
-            const numB = Number.parseInt(b.title?.match(/#(\d+)/)?.[1] || '0', 10);
-            return numB - numA;
-        });
-
         return {
             title: `[F95zone] ${title}`,
             link: threadLink,
