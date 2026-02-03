@@ -48,7 +48,6 @@ Note: This route does not support Radar auto-detection because the post ID is in
         const response = await ofetch(link, {
             headers: {
                 referer: baseUrl,
-                'user-agent': config.trueUA,
                 ...(config.f95zone.cookie ? { cookie: config.f95zone.cookie } : {}),
             },
         });
