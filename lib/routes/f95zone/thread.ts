@@ -13,7 +13,7 @@ export const route: Route = {
     maintainers: ['wsmbsbbz'],
     example: '/f95zone/thread/ubermation-collection-2026-01-19-uebermation-uebermation.231247',
     categories: ['game'],
-    description: `Track all replies in a thread. Only fetches the last 3 pages.
+    description: `Track replies in a thread. Fetches the first page and the last page.
 
 URL format: \`https://f95zone.to/threads/{thread}/\` → use \`{thread}\` as the parameter.
 
@@ -89,17 +89,13 @@ Note: If you want to track a specific post's content changes (e.g., first post w
                     };
                 });
 
-        const allPosts: DataItem[] = [];
-        const startPage = Math.max(1, totalPages - 2);
+        // Extract posts from the first page
+        const allPosts: DataItem[] = [...extractPosts($firstPage)];
 
-        for (let page = totalPages; page >= startPage; page--) {
-            if (page === 1) {
-                allPosts.push(...extractPosts($firstPage));
-            } else {
-                // eslint-disable-next-line no-await-in-loop
-                const pageResponse = await ofetch(`${threadLink}page-${page}`, { headers });
-                allPosts.push(...extractPosts(load(pageResponse)));
-            }
+        // Fetch the last page if there are multiple pages
+        if (totalPages > 1) {
+            const lastPageResponse = await ofetch(`${threadLink}page-${totalPages}`, { headers });
+            allPosts.push(...extractPosts(load(lastPageResponse)));
         }
 
         allPosts.sort((a, b) => {
