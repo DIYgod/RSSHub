@@ -17,7 +17,7 @@ export const route: Route = {
 
 URL format: \`https://f95zone.to/threads/{thread}/\` → use \`{thread}\` as the parameter.
 
-Example: \`https://f95zone.to/threads/ubermation-collection-2026-01-19.231247/\` → \`/f95zone/thread/ubermation-collection-2026-01-19.231247\`
+Example: \`https://f95zone.to/threads/ubermation-collection-2026-01-19-uebermation-uebermation.231247/\` → \`/f95zone/thread/ubermation-collection-2026-01-19-uebermation-uebermation.231247\`
 
 Note: If you want to track a specific post's content changes (e.g., first post with download links), use the \`/f95zone/post\` route instead.`,
     parameters: {

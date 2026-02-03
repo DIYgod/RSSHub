@@ -11,13 +11,13 @@ export const route: Route = {
     path: '/post/:thread/:postId',
     name: 'Post',
     maintainers: ['wsmbsbbz'],
-    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596/post-1893498',
+    example: '/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596/post-5909830',
     categories: ['game'],
     description: `Track content changes of a specific post. Uses the date \`[yyyy-mm-dd]\` in title for update detection.
 
 URL format: \`https://f95zone.to/threads/{thread}/#post-{id}\` → replace \`#\` with \`/\` to get \`/f95zone/post/{thread}/post-{id}\`
 
-Example: \`https://f95zone.to/threads/vicineko-collection.84596/#post-1893498\` → \`/f95zone/post/vicineko-collection.84596/post-1893498\`
+Example: \`https://f95zone.to/threads/vicineko-collection-2025-06-14-vicineko.84596/#post-5909830\` → \`/f95zone/post/vicineko-collection-2025-06-14-vicineko.84596/post-5909830\`
 
 Note: This route does not support Radar auto-detection because the post ID is in the URL hash (after \`#\`), which cannot be extracted by Radar. You need to manually construct the subscription URL.`,
     parameters: {
