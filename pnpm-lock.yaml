@@ -182,8 +182,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       module-alias:
-        specifier: 2.2.3
-        version: 2.2.3
+        specifier: 2.3.3
+        version: 2.3.3
       narou:
         specifier: 2.0.1
         version: 2.0.1
@@ -4467,8 +4467,8 @@ packages:
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
 
-  module-alias@2.2.3:
-    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
+  module-alias@2.3.3:
+    resolution: {integrity: sha512-vN8YITf48QuzKHiWGGFRnf+kM8xcFtUZ5Ba9FeiVkzwp1RS09nIwX7Ac7wWa5gfvyDhwF5Cy/7/21hqG0rqgUQ==}
 
   module-details-from-path@1.0.4:
     resolution: {integrity: sha512-EGWKgxALGMgzvxYF1UyGTy0HXX/2vHLkw6+NvDKW2jypWbHpjQuj4UMcqQWXHERJhVGKikolT06G3bcKe4fi7w==}
@@ -10122,7 +10122,7 @@ snapshots:
 
   mockdate@3.0.5: {}
 
-  module-alias@2.2.3: {}
+  module-alias@2.3.3: {}
 
   module-details-from-path@1.0.4: {}
 
