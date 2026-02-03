@@ -16444,6 +16444,19 @@
       }
     ]
   },
+  "f95zone.to": {
+    "_name": "F95zone",
+    ".": [
+      {
+        "title": "Thread",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/threads/:thread/*"
+        ],
+        "target": "/f95zone/thread/:thread"
+      }
+    ]
+  },
   "famitsu.com": {
     "_name": "ファミ通",
     "www": [

@@ -2893,6 +2893,12 @@
   "/f-droid/apprelease/:app": [
     "garywill"
   ],
+  "/f95zone/post/:thread/:postId": [
+    "wsmbsbbz"
+  ],
+  "/f95zone/thread/:thread": [
+    "wsmbsbbz"
+  ],
   "/famitsu/category/:category?": [
     "TonyRL"
   ],

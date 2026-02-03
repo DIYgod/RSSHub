@@ -942,6 +942,8 @@ export type RoutePath =
   | `/everia/tag/:tag`
   | `/expats/czech-news/:category?`
   | `/f-droid/apprelease/:app`
+  | `/f95zone/post/:thread/:postId`
+  | `/f95zone/thread/:thread`
   | `/famitsu/category/:category?`
   | `/fanbox/:creator`
   | `/fangchan/list/:id?`
