@@ -32,6 +32,7 @@ async function handler(ctx) {
     const isTopic = /^\d+$/.test(id);
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
+    // The API used by the website when hitting "看更多內容"
     const { data: response } = await got({
         method: 'post',
         url: `https://www.cna.com.tw/cna2018api/api/${isTopic ? 'WTopic' : 'WNewsList'}`,
