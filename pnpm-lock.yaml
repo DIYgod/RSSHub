@@ -181,9 +181,6 @@ importers:
       mixi2:
         specifier: 0.2.2
         version: 0.2.2
-      module-alias:
-        specifier: 2.2.3
-        version: 2.2.3
       narou:
         specifier: 2.0.1
         version: 2.0.1
@@ -4466,9 +4463,6 @@ packages:
 
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
-
-  module-alias@2.2.3:
-    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
 
   module-details-from-path@1.0.4:
     resolution: {integrity: sha512-EGWKgxALGMgzvxYF1UyGTy0HXX/2vHLkw6+NvDKW2jypWbHpjQuj4UMcqQWXHERJhVGKikolT06G3bcKe4fi7w==}
@@ -10121,8 +10115,6 @@ snapshots:
       protobufjs: 7.5.3
 
   mockdate@3.0.5: {}
-
-  module-alias@2.2.3: {}
 
   module-details-from-path@1.0.4: {}
 
