@@ -2,6 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/xiaohongshu/:user_id',
@@ -89,12 +90,14 @@ async function handler(ctx) {
 }
 
 async function getNoteLink(noteId, cookie) {
-    const response = await got({
-        method: 'get',
-        url: 'https://xhsapi.huitun.com/note/noteUrl?noteId=' + noteId,
-        headers: {
-            Cookie: cookie,
-        },
+    return await cache.tryGet(`huitun:notelink:${noteId}`, async () => {
+        const response = await got({
+            method: 'get',
+            url: 'https://xhsapi.huitun.com/note/noteUrl?noteId=' + noteId,
+            headers: {
+                Cookie: cookie,
+            },
+        });
+        return JSON.parse(response.body).extData;
     });
-    return JSON.parse(response.body).extData;
 }
