@@ -72,7 +72,7 @@ async function handler(ctx) {
         const onclickValue = $('.button').first().attr('onclick');
         const targetUrl = onclickValue?.match(/window\.open\('([^']+)'/)?.[1];
 
-        return { url: targetUrl };
+        return { url: new URL(targetUrl, 'https://2048.info').href };
     });
     // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
