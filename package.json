@@ -197,7 +197,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.0.5",
         "vitest": "4.0.9",
-        "wrangler": "4.61.1",
+        "wrangler": "4.62.0",
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
