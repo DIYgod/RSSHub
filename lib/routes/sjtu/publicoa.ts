@@ -1,11 +1,11 @@
 import { CookieJar } from 'tough-cookie';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const urlRoot = 'https://publicoa.sjtu.edu.cn';
 
@@ -53,7 +53,7 @@ async function handler() {
             getPublicOAList().catch(async (error) => {
                 if (error.response?.status === 401) {
                     let requestUrl = urlRoot;
-                    while (true) {
+                    for (let iteration = 10; iteration > 0; iteration--) {
                         // eslint-disable-next-line no-await-in-loop
                         const res = await ofetch.raw(requestUrl, {
                             headers: {
@@ -78,6 +78,7 @@ async function handler() {
                     }
                     return await getPublicOAList();
                 }
+                throw error;
             })
         );
     });
