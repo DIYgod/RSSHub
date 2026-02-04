@@ -122,6 +122,7 @@ type ConfigEnvKeys =
     | 'INITIUM_USERNAME'
     | 'INITIUM_PASSWORD'
     | 'INITIUM_BEARER_TOKEN'
+    | 'INITIUM_MEMBER_COOKIE'
     | 'IG_USERNAME'
     | 'IG_PASSWORD'
     | 'IG_PROXY'
@@ -438,6 +439,7 @@ export type Config = {
         username?: string;
         password?: string;
         bearertoken?: string;
+        memberCookie?: string;
     };
     instagram: {
         username?: string;
@@ -920,6 +922,7 @@ const calculateValue = () => {
             username: envs.INITIUM_USERNAME,
             password: envs.INITIUM_PASSWORD,
             bearertoken: envs.INITIUM_BEARER_TOKEN,
+            memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {
             username: envs.IG_USERNAME,
