@@ -2,23 +2,36 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { config } from '@/config';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const getBuildId = () =>
-    cache.tryGet(
-        'aeon:buildId',
-        async () => {
-            const response = await ofetch('https://aeon.co');
-            const $ = load(response);
-            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-            return nextData.buildId;
-        },
-        config.cache.routeExpire,
-        false
-    );
+const ENDPOINT = 'https://api.aeonmedia.co/graphql';
+
+const ESSAY = /* GraphQL */ `
+query getAeonEssay($slug: String!) {
+    essay(slug: $slug) {
+        publishedAt
+        updatedAt
+        authors { name authorBio }
+        audioUrl
+        image { url alt caption }
+        body
+    }
+}`;
+
+const VIDEO = /* GraphQL */ `
+query getAeonVideo($slug: String!, $site: SiteEnum!) {
+    video(slug: $slug, site: $site) {
+        publishedAt
+        updatedAt
+        authors { name authorBio }
+        hoster
+        hosterId
+        credits
+        description
+    }
+}`;
 
 const renderVideoDescription = (article) => {
     let video = article.hosterId;
@@ -44,7 +57,7 @@ const renderEssayDescription = ({ banner, authorsBio, content }) =>
             {banner?.url ? (
                 <figure>
                     <img src={banner.url} alt={banner.alt} />
-                    {banner.caption ? <figcaption>{banner.caption}</figcaption> : null}
+                    {banner.caption ? <figcaption>{raw(banner.caption)}</figcaption> : null}
                 </figure>
             ) : null}
             {authorsBio ? raw(authorsBio) : null}
@@ -52,54 +65,55 @@ const renderEssayDescription = ({ banner, authorsBio, content }) =>
         </>
     );
 
-const getData = async (list) => {
+const getJSON = (slug, site) => {
+    const query = site ? VIDEO : ESSAY;
+    const variables = site ? { slug, site } : { slug };
+    const operationName = site ? 'getAeonVideo' : 'getAeonEssay';
+    return ofetch(ENDPOINT, {
+        method: 'POST',
+        body: {
+            operationName,
+            query,
+            variables,
+        },
+    });
+};
+
+export const getData = async (list) => {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const buildId = await getBuildId();
-                const response = await ofetch(`https://aeon.co/_next/data/${buildId}/${item.type}s/${item.slug}.json?id=${item.slug}`);
+                const res = await getJSON(item.slug, item.type === 'video' ? 'aeon' : null);
 
-                const data = response.pageProps.article;
-                const type = data.type.toLowerCase();
-
+                const data = res.data[item.type];
                 item.pubDate = parseDate(data.publishedAt);
 
-                if (type === 'video') {
+                if (item.type === 'video') {
                     item.description = renderVideoDescription(data);
                 } else {
-                    if (data.audio?.id) {
-                        const response = await ofetch('https://api.aeonmedia.co/graphql', {
-                            method: 'POST',
-                            body: {
-                                query: `query getAudio($audioId: ID!) {
-                                    audio(id: $audioId) {
-                                        id
-                                        streamUrl
-                                    }
-                                }`,
-                                variables: {
-                                    audioId: data.audio.id,
-                                },
-                                operationName: 'getAudio',
-                            },
-                        });
-
+                    if (data.audioUrl) {
                         delete item.image;
-                        item.enclosure_url = response.data.audio.streamUrl;
+                        item.enclosure_url = data.audioUrl;
                         item.enclosure_type = 'audio/mpeg';
                     }
-
-                    // Besides, it seems that the method based on __NEXT_DATA__
-                    // does not include the information of the two-column
-                    // images in the article body,
-                    // e.g. https://aeon.co/essays/how-to-mourn-a-forest-a-lesson-from-west-papua .
-                    // But that's very rare.
 
                     const capture = load(data.body, null, false);
                     const banner = data.image;
                     capture('p.pullquote').remove();
 
-                    const authorsBio = data.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
+                    const authorsBio = renderToString(
+                        <>
+                            <hr />
+                            {data.authors.map((author) => (
+                                <p>
+                                    {author.name}
+                                    {raw(author.authorBio.replaceAll(/^<p>/g, ' '))}
+                                </p>
+                            ))}
+                            <hr />
+                            <br />
+                        </>
+                    );
 
                     item.description = renderEssayDescription({ banner, authorsBio, content: capture.html() });
                 }
@@ -111,5 +125,3 @@ const getData = async (list) => {
 
     return items;
 };
-
-export { getData };

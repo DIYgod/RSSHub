@@ -12,8 +12,8 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
+        antiCrawler: true,
+        supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },
@@ -23,19 +23,19 @@ export const route: Route = {
         },
     ],
     name: '资讯',
-    maintainers: ['HenryQW', 'nczitzk'],
+    maintainers: ['HenryQW', 'nczitzk', 'TimoYoung'],
     handler,
-    description: `| 视频 | 车与出行 | 年轻一代 | 十亿消费者 | 前沿科技 |
+    description: `| 视频 | 前沿科技 | 车与出行 | 商业消费 | 社会文化 |
 | ---- | -------- | -------- | ---------- | -------- |
-| 10   | 21       | 106      | 103        | 105      |
+| 10   | 105    | 21    | 103        | 106     |
 
-| 财经 | 娱乐淘金 | 医疗健康 | 文化教育 | 出海 |
-| ---- | -------- | -------- | -------- | ---- |
-| 115  | 22       | 111      | 113      | 114  |
+| 金融财经 | 出海 | 国际热点 | 游戏娱乐 | 健康 |
+| -------- | ---- | -------- | -------- | ---- |
+| 115      | 114  | 107      | 22       | 118  |
 
-| 金融地产 | 企业服务 | 创业维艰 | 社交通讯 | 全球热点 | 生活腔调 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 102      | 110      | 2        | 112      | 107      | 4        |`,
+| 书影音 | 医疗 | 3C数码 | 观点 | 其他 |
+| ------ | ---- | ------ | ---- | ---- |
+| 119    | 120  | 121    | 122  | 123  |`,
     url: 'huxiu.com/article',
 };
 
@@ -43,13 +43,13 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
-    const apiUrl = new URL(`web/${id ? 'channel' : 'article'}/articleList`, apiArticleRootUrl).href;
+    const apiUrl = new URL(`web/channel/articleListV1`, apiArticleRootUrl).href;
     const currentUrl = new URL(id ? `channel/${id}.html` : 'article', rootUrl).href;
 
     const { data: response } = await got.post(apiUrl, {
         form: {
             platform: 'www',
-            channel_id: id,
+            channel_id: id || '0',
             pagesize: limit,
         },
     });

@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import logger from '@/utils/logger';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
@@ -9,7 +10,7 @@ const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问',
 
 const getRandomDEVICE_ID = () => {
     let id = [10, 6, 6, 6, 14];
-    id = id.map((i) => Math.random().toString(36).substring(2, i));
+    id = id.map((i) => Math.random().toString(36).slice(2, i));
     return id.join('-');
 };
 
@@ -41,20 +42,24 @@ const getHeaders = () => ({
 
 const parseTuwenFromRaw = (raw) =>
     raw.map((i) => {
-        if (i.type === 'text') {
-            const output = i.message
-                .split('\n')
-                .filter((t) => t !== '')
-                .map((t) => `<p>${t}</p>`)
-                .join('');
-            return output;
-        } else if (i.type === 'image') {
-            return `<div class="img-container" style="text-align: center;">
+        switch (i.type) {
+            case 'text': {
+                const output = i.message
+                    .split('\n')
+                    .filter((t) => t !== '')
+                    .map((t) => `<p>${t}</p>`)
+                    .join('');
+                return output;
+            }
+            case 'image':
+                return `<div class="img-container" style="text-align: center;">
                 <img src="${i.url}">
                 <p class="image-caption" style="text-align: center;">${i.description}</p></div>`;
-        } else {
-            // console.log(i);
-            return `Unkown type`;
+            case 'shareUrl':
+                return `<a href="${i.url}" target="_blank" rel="noopener">${i.title}</a>`;
+            default:
+                logger.debug(`Unknown tuwen type: ${i.type}`);
+                return 'Unknown type';
         }
     });
 

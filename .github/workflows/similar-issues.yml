@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-slim
         steps:
             - name: Check out repository
-              uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
             - name: Prepare prompt variables
               id: prepare_input
@@ -32,7 +32,7 @@ jobs:
 
             - name: Find similar issues with AI (MCP)
               id: inference
-              uses: actions/ai-inference@334892bb203895caaed82ec52d23c1ed9385151e # v2.0.4
+              uses: actions/ai-inference@a6101c89c6feaecc585efdd8d461f18bb7896f20 # v2.0.5
               with:
                   prompt-file: ./.github/prompts/similar_issues.prompt.yml
                   input: |

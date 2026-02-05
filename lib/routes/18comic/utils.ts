@@ -14,7 +14,7 @@ const defaultDomain = 'jmcomic1.me';
 // list of address: https://jmcomic2.bet
 const allowDomain = new Set(['18comic.vip', '18comic.org', 'jmcomic.me', 'jmcomic1.me', 'jm-comic3.art', 'jm-comic.club', 'jm-comic2.ark']);
 
-const apiDomain = 'www.cdnblackmyth.club';
+const apiDomain = 'www.cdnhth.cc';
 
 const getRootUrl = (domain) => {
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(domain)) {

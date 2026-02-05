@@ -16,18 +16,10 @@ const toSize = (raw) => {
     return matches[3] === 'GB' ? matches[1] * 1024 : matches[1];
 };
 
-const renderDescription = ({ info, videoSrc, videoPreview, magnets, thumbs }) =>
+const renderDescription = ({ info, magnets, thumbs }) =>
     renderToString(
         <>
             {info ? raw(info) : null}
-            <br />
-            {videoSrc ? <a href={videoSrc}>觀看完整影片</a> : null}
-            <br />
-            {videoPreview ? (
-                <video controls>
-                    <source src={videoPreview} type="video/mp4" />
-                </video>
-            ) : null}
             <br />
             <h4>磁力連結投稿</h4>
             <table>
@@ -157,7 +149,7 @@ async function handler(ctx) {
                         }),
                 };
 
-                let magnets, videoSrc, videoPreview;
+                let magnets;
 
                 // To fetch magnets.
 
@@ -203,24 +195,6 @@ async function handler(ctx) {
                     // no-empty
                 }
 
-                // If the video is not western, go fetch preview.
-
-                if (!isWestern) {
-                    try {
-                        const avgleResponse = await got({
-                            method: 'get',
-                            url: `https://api.avgle.com/v1/jav/${item.guid}/0`,
-                        });
-
-                        // full video
-                        videoSrc = avgleResponse.data.response.videos[0]?.embedded_url ?? '';
-                        // video preview
-                        videoPreview = avgleResponse.data.response.videos[0]?.preview_video_url ?? '';
-                    } catch {
-                        // no-empty
-                    }
-                }
-
                 item.author = cacheIn.author;
                 item.title = cacheIn.title;
                 item.category = cacheIn.category;
@@ -228,8 +202,6 @@ async function handler(ctx) {
                     info: cacheIn.info,
                     thumbs: cacheIn.thumbs,
                     magnets,
-                    videoSrc,
-                    videoPreview,
                 });
 
                 return item;

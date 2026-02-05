@@ -61,7 +61,7 @@ jobs:
                   echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
             - name: Checkout
-              uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
             - name: Extract repository name
               id: repo-name
@@ -74,13 +74,13 @@ jobs:
               uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
 
             - name: Log in to Docker Hub
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
               with:
                   username: ${{ vars.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Log in to the Container registry
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
               with:
                   registry: ghcr.io
                   username: ${{ github.actor }}
@@ -118,7 +118,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (ordinary version)
-              uses: actions/attest-build-provenance@00014ed6ed5efc5b1ab7f7f34a39eb55d41aa4f8 # v3.1.0
+              uses: actions/attest-build-provenance@96278af6caaf10aea03fd8d33a09a777ca52d62f # v3.2.0
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -173,7 +173,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (Chromium-bundled version)
-              uses: actions/attest-build-provenance@00014ed6ed5efc5b1ab7f7f34a39eb55d41aa4f8 # v3.1.0
+              uses: actions/attest-build-provenance@96278af6caaf10aea03fd8d33a09a777ca52d62f # v3.2.0
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -207,13 +207,13 @@ jobs:
               uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
 
             - name: Log in to Docker Hub
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
               with:
                   username: ${{ vars.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Log in to the Container registry
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+              uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
               with:
                   registry: ghcr.io
                   username: ${{ github.actor }}
@@ -277,7 +277,7 @@ jobs:
         if: needs.check-env.outputs.check-docker == 'true'
         timeout-minutes: 5
         steps:
-            - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
             - name: Docker Hub Description
               uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0

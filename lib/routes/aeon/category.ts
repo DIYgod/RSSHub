@@ -1,8 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
-import { getBuildId, getData } from './utils';
+import { getData } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
@@ -38,32 +37,79 @@ export const route: Route = {
     handler,
 };
 
+const ENDPOINT = 'https://api.aeonmedia.co/graphql';
+const LIST_BY_SECTION = /* GraphQL */ `
+query getAeonArticlesBySection($section: String!, $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
+  section(site: aeon, slug: $section) {
+    slug
+    title
+    metaDescription
+  }
+  articles(
+    site: aeon
+    section: $section
+    status: [published]
+    tag: $tag
+    sort: {field: $sortField, order: desc}
+    after: $afterCursor
+    first: 24
+  ) {
+    nodes {
+      slug
+      ...aeonArticleCardFragment
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+
+fragment aeonArticleCardFragment on Article {
+  id
+  title
+  slug
+  type
+  standfirstLong
+  authors { name }
+  image { url }
+  primaryTopic { title }
+  section { slug }
+}
+`;
+
 async function handler(ctx) {
     const category = ctx.req.param('category').toLowerCase();
     const url = `https://aeon.co/category/${category}`;
-    const buildId = await getBuildId();
-    const response = await ofetch(`https://aeon.co/_next/data/${buildId}/${category}.json`);
+    const response = await ofetch(ENDPOINT, {
+        method: 'POST',
+        body: {
+            operationName: 'getAeonArticlesBySection',
+            query: LIST_BY_SECTION,
+            variables: {
+                section: category,
+            },
+        },
+    });
 
-    const section = response.pageProps.section;
-
-    const list = section.articles.edges.map(({ node }) => ({
+    const list = response.data.articles.nodes.map((node) => ({
         title: node.title,
         description: node.standfirstLong,
-        author: node.authors.map((author) => author.displayName).join(', '),
+        author: node.authors.map((author) => author.name).join(', '),
         link: `https://aeon.co/${node.type}s/${node.slug}`,
-        pubDate: parseDate(node.createdAt),
-        category: [node.section.title, ...node.topics.map((topic) => topic.title)],
+        category: node.primaryTopic.title,
         image: node.image.url,
         type: node.type,
+        section: node.section.slug,
         slug: node.slug,
     }));
 
     const items = await getData(list);
 
     return {
-        title: `AEON | ${section.title}`,
+        title: `AEON | ${response.data.section.title}`,
         link: url,
-        description: section.metaDescription,
+        description: response.data.section.metaDescription,
         item: items,
     };
 }

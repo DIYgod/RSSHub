@@ -202,6 +202,9 @@ async function handler(ctx) {
             case 'three-month':
                 startTime = dayjs().subtract(90, 'd').startOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
                 break;
+
+            default:
+                throw new Error(`Unknown time: ${time}`);
         }
         searchUrl += `&publishedAt=${startTime}Z&publishedAt=${endTime}Z`;
     }

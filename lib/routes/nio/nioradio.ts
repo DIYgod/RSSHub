@@ -1,5 +1,3 @@
-import { URLSearchParams } from 'node:url';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';

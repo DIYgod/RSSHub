@@ -31,7 +31,7 @@ export const route: Route = {
 
 | English | 中文简体 | 中文繁體 |
 | ------- | -------- | -------- |
-| english | chs      | tc\_chi  |`,
+| english | chs      | tc_chi  |`,
 };
 
 async function handler(ctx) {

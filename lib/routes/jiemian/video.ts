@@ -11,9 +11,9 @@ export const route: Route = {
     handler,
     description: `| [界面 Vnews](https://www.jiemian.com/video/lists/258_1.html) | [直播](https://www.jiemian.com/videoLive/lists_1.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) | [面谈](https://www.jiemian.com/video/lists/111_1.html) | [品牌创酷](https://www.jiemian.com/video/lists/226_1.html) | [番 茄社](https://www.jiemian.com/video/lists/567_1.html) |
 | ------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------- | --------------------------------------------------------- |
-| 258\_1                                                       | videoLive/lists\_1                                     | 195\_1                                                 | 111\_1                                                 | 226\_1                                                     | 567\_1                                                    |
+| 258_1                                                       | videoLive/lists_1                                     | 195_1                                                 | 111_1                                                 | 226_1                                                     | 567_1                                                    |
 
 | [商业微史记](https://www.jiemian.com/video/lists/882_1.html) |
 | ------------------------------------------------------------ |
-| 882\_1                                                       |`,
+| 882_1                                                       |`,
 };

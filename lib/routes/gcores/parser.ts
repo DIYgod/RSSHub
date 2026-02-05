@@ -196,9 +196,9 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
     let lastOffset = 0;
 
     for (const range of groupedRanges) {
-        resultParts.push(text.substring(lastOffset, range.offset));
+        resultParts.push(text.slice(lastOffset, range.offset));
 
-        let styledText = text.substring(range.offset, range.offset + range.length);
+        let styledText = text.slice(range.offset, range.offset + range.length);
 
         if (range.styles.length > 0) {
             const combinedStyle: Style = {};

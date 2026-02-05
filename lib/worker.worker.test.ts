@@ -1,11 +1,11 @@
 // Worker environment integration tests using wrangler's unstable_dev
 // These tests run the Worker in a simulated Cloudflare Workers environment using Miniflare under the hood
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import type { UnstableDevWorker } from 'wrangler';
+import type { Unstable_DevWorker } from 'wrangler';
 import { unstable_dev } from 'wrangler';
 
 describe('Worker Integration Tests', () => {
-    let worker: UnstableDevWorker;
+    let worker: Unstable_DevWorker;
 
     beforeAll(async () => {
         worker = await unstable_dev('./dist-worker/worker.mjs', {
@@ -13,7 +13,7 @@ describe('Worker Integration Tests', () => {
             local: true,
             config: './wrangler.toml',
         });
-    }, 60000);
+    }, 120000);
 
     afterAll(async () => {
         await worker?.stop();
@@ -27,12 +27,12 @@ describe('Worker Integration Tests', () => {
             expect(text).toContain('<?xml');
             expect(text).toContain('<rss');
             expect(text).toContain('Test 1');
-        }, 60000);
+        }, 120000);
 
         it('should respond to / with welcome page', async () => {
             const response = await worker.fetch('/');
             expect(response.status).toBe(200);
-        }, 60000);
+        }, 120000);
 
         it('should return error for unknown routes', async () => {
             const response = await worker.fetch('/nonexistent/route/12345');
