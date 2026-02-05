@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -97,9 +96,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
-        headers: {
-            'User-Agent': config.trueUA,
-        },
     });
 
     const $ = load(response.data);
