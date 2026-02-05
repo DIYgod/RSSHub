@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/price-adjustment/:category',
-    categories: ['social-media', 'traditional-media'],
+    categories: ['other'],
     example: '/ccmn/price-adjustment/copper',
     parameters: {
         category: {
