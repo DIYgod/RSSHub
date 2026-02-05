@@ -57,6 +57,7 @@ async function handler(ctx) {
     const out = list.map((item) => {
         const head = item.yoast_head_json;
         const $ = load(item.content.rendered, null, false);
+        $('.primis-ad, .article-ad, .editorskit-no-mobile').remove();
         // lazyload images
         $('img').each((_, e) => {
             e = $(e);
