@@ -9989,6 +9989,75 @@
       }
     ]
   },
+  "ccmn.cn": {
+    "_name": "长江有色网",
+    "copper": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/copper"
+      }
+    ],
+    "alu": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/alu"
+      }
+    ],
+    "zn": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/zn"
+      }
+    ],
+    "sn": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/sn"
+      }
+    ],
+    "pb": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/pb"
+      }
+    ],
+    "ni": [
+      {
+        "title": "调价动态",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:suffix",
+          "/:suffix/:subsuffix"
+        ],
+        "target": "/ccmn/price-adjustment/ni"
+      }
+    ]
+  },
   "91wllm.com": {
     "_name": "华中师范大学",
     "ccnu": [
