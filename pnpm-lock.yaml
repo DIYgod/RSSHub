@@ -104,8 +104,8 @@ importers:
         specifier: 2.0.5
         version: 2.0.5
       dotenv:
-        specifier: 17.2.3
-        version: 17.2.3
+        specifier: 17.2.4
+        version: 17.2.4
       entities:
         specifier: 7.0.1
         version: 7.0.1
@@ -3207,8 +3207,8 @@ packages:
     resolution: {integrity: sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==}
     engines: {node: '>=10'}
 
-  dotenv@17.2.3:
-    resolution: {integrity: sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==}
+  dotenv@17.2.4:
+    resolution: {integrity: sha512-mudtfb4zRB4bVvdj0xRo+e6duH1csJRM8IukBqfTRvHotn9+LBXB8ynAidP9zHqoRC/fsllXgk4kCKlR21fIhw==}
     engines: {node: '>=12'}
 
   dotenv@6.2.0:
@@ -8585,7 +8585,7 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
-  dotenv@17.2.3: {}
+  dotenv@17.2.4: {}
 
   dotenv@6.2.0: {}
 
