@@ -1419,6 +1419,7 @@ export type RoutePath =
   | `/huggingface/daily-papers/:cycle?/:voteFliter?`
   | `/huggingface/models/:group`
   | `/huijin-inv/news`
+  | `/huitun/xiaohongshu/:user_id`
   | `/hunanpea/rsks/:guid`
   | `/hunau/gfxy/:category?/:page?`
   | `/hunau/ied/:type?/:category?/:page?`
