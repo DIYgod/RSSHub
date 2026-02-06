@@ -98,6 +98,10 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
         if (article.length === 0) {
             return null;
         }
+        // If paywall CTA present, cookie didn't work — fall back to Ghost preview
+        if (article.find('.gh-post-upgrade-cta').length > 0) {
+            return null;
+        }
         return article.html();
     } catch (error) {
         logger.warn(`Failed to scrape Initium article: ${url}`, error);
