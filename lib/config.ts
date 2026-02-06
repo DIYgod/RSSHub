@@ -119,9 +119,6 @@ type ConfigEnvKeys =
     | 'HEFENG_KEY'
     | 'HEFENG_API_HOST'
     | 'INFZM_COOKIE'
-    | 'INITIUM_USERNAME'
-    | 'INITIUM_PASSWORD'
-    | 'INITIUM_BEARER_TOKEN'
     | 'INITIUM_MEMBER_COOKIE'
     | 'IG_USERNAME'
     | 'IG_PASSWORD'
@@ -919,9 +916,6 @@ const calculateValue = () => {
             cookie: envs.INFZM_COOKIE,
         },
         initium: {
-            username: envs.INITIUM_USERNAME,
-            password: envs.INITIUM_PASSWORD,
-            bearertoken: envs.INITIUM_BEARER_TOKEN,
             memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {

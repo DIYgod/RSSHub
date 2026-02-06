@@ -8,6 +8,9 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+// Strip '-zh-hans' suffix from display names for cleanliness
+const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');
+
 const GHOST_API_BASE = 'https://theinitium.com/ghost/api/content';
 const GHOST_CONTENT_KEY = 'a44a0409c222328d39e2c75293';
 
@@ -87,7 +90,6 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
         const response = await ofetch(url, {
             headers: {
                 Cookie: cookie,
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
             },
             parseResponse: (txt) => txt,
         });
@@ -96,11 +98,7 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
         if (article.length === 0) {
             return null;
         }
-        const html = article.html();
-        if (html && html.length > 500) {
-            return html;
-        }
-        return null;
+        return article.html();
     } catch (error) {
         logger.warn(`Failed to scrape Initium article: ${url}`, error);
         return null;
@@ -112,9 +110,6 @@ async function postsToItems(posts: GhostPost[]) {
 
     const items = await Promise.all(
         posts.map(async (post) => {
-            // Ghost uses '-zh-hans' suffixed names for simplified Chinese variants
-            // e.g. author "端传媒编辑部-zh-hans", tag "國際-zh-hans" — strip for clean display
-            const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');
             const authors = post.authors?.map((a) => stripLangSuffix(a.name)) ?? [];
             const categories = post.tags?.filter((t) => t.visibility === 'public').map((t) => stripLangSuffix(t.name)) ?? [];
 
@@ -122,7 +117,7 @@ async function postsToItems(posts: GhostPost[]) {
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
-                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire, false)) as string | null;
+                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire)) as string | null;
                 if (fullHtml) {
                     description = fullHtml;
                 }
@@ -209,8 +204,6 @@ export const processFeed = async (model: string, ctx: Context) => {
     const items = await postsToItems(data.posts);
 
     // Try to get a nice display name from the first post's relevant tag/author
-    // Strip '-zh-hans' suffix from display names for cleanliness
-    const cleanName = (name: string) => name.replace(/-zh-hans$/i, '');
     let displayName = feedName;
     if (data.posts.length > 0) {
         switch (model) {
@@ -220,7 +213,7 @@ export const processFeed = async (model: string, ctx: Context) => {
                     const langTag = language === 'zh-hans' ? `${baseTag}-zh-hans` : baseTag;
                     const matchedTag = data.posts[0].tags?.find((t) => t.slug === langTag || t.slug === baseTag);
                     if (matchedTag) {
-                        displayName = cleanName(matchedTag.name);
+                        displayName = stripLangSuffix(matchedTag.name);
                     }
                 } else {
                     displayName = '最新';
@@ -232,7 +225,7 @@ export const processFeed = async (model: string, ctx: Context) => {
                 const langTag = language === 'zh-hans' ? `${type}-zh-hans` : type;
                 const matchedTag = data.posts[0].tags?.find((t) => t.slug === langTag || t.slug === type);
                 if (matchedTag) {
-                    displayName = cleanName(matchedTag.name);
+                    displayName = stripLangSuffix(matchedTag.name);
                 }
 
                 break;
@@ -241,7 +234,7 @@ export const processFeed = async (model: string, ctx: Context) => {
                 const authorSlug = language === 'zh-hans' ? `${type}-zh-hans` : type;
                 const matchedAuthor = data.posts[0].authors?.find((a) => a.slug === authorSlug || a.slug === type);
                 if (matchedAuthor) {
-                    displayName = cleanName(matchedAuthor.name);
+                    displayName = stripLangSuffix(matchedAuthor.name);
                 }
 
                 break;
