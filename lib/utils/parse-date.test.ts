@@ -54,6 +54,7 @@ describe('parseRelativeDate', () => {
         it('handles vague quantifiers (x / 几)', () => {
             // "几" maps to 3
             expect(p('几分钟前')).toBe(NOW_TIMESTAMP - 3 * minute);
+            expect(p('幾分鐘前')).toBe(NOW_TIMESTAMP - 3 * minute);
             expect(p('数秒前')).toBe(NOW_TIMESTAMP - 3 * second);
 
             // "x" maps to 3
@@ -79,6 +80,7 @@ describe('parseRelativeDate', () => {
             expect(p('in 10m')).toBe(NOW_TIMESTAMP + 10 * minute);
             expect(p('2 hours later')).toBe(NOW_TIMESTAMP + 2 * hour);
             expect(p('10分钟后')).toBe(NOW_TIMESTAMP + 10 * minute);
+            expect(p('10 分鐘後')).toBe(NOW_TIMESTAMP + 10 * minute);
         });
 
         it('handles mixed units', () => {
@@ -101,6 +103,7 @@ describe('parseRelativeDate', () => {
             // Strict past rule: If input weekday is Same as today, go back 1 week.
             expect(p('Monday')).toBe(PREVIOUS_MONDAY);
             expect(p('周一')).toBe(PREVIOUS_MONDAY);
+            expect(p('星期一')).toBe(PREVIOUS_MONDAY);
         });
 
         it('handles "Monday 3pm" (Strict Past)', () => {
@@ -145,6 +148,8 @@ describe('parseRelativeDate', () => {
             expect(p('昨晚8点')).toBe(YESTERDAY_START + 20 * hour);
             // "周五下午3点" -> Last Friday 15:00
             expect(p('周五下午3点')).toBe(LAST_FRIDAY + 15 * hour);
+            // https://github.com/DIYgod/RSSHub/issues/20878
+            expect(p('昨天 23:01')).toBe(YESTERDAY_START + 23 * hour + 1 * minute);
         });
 
         it('handles 12am / 12pm edge cases', () => {

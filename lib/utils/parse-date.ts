@@ -40,7 +40,7 @@ interface UnitPattern {
 
 // === Pre-compiled Regular Expressions ===
 
-const REGEX_JUST_NOW = /^(?:just\s?now|刚刚)$/i;
+const REGEX_JUST_NOW = /^(?:just\s?now|刚刚|剛剛)$/i;
 const REGEX_AGO = /(.*)(?:ago|[之以]?前)$/i;
 const REGEX_IN = /^(?:in\s*)(.*)|(.*)(?:\s*later|\s*after|[之以]?[后後])$/i;
 const REGEX_STICKY_AMPM = /(\d+)\s*(a|p)m$/i;
