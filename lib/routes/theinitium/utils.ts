@@ -189,16 +189,22 @@ export const processFeed = async (model: string, ctx: Context) => {
     }
 
     const cacheKey = `theinitium:ghost:${model}:${type}:${language}`;
-    const data = (await cache.tryGet(cacheKey, async () => {
-        const params: Record<string, string> = {
-            include: 'tags,authors',
-            limit: '20',
-        };
-        if (filter) {
-            params.filter = filter;
-        }
-        return await ghostFetch('posts', params);
-    })) as GhostResponse;
+    // Use routeExpire (5 min default) and refresh=false so cache actually expires
+    const data = (await cache.tryGet(
+        cacheKey,
+        async () => {
+            const params: Record<string, string> = {
+                include: 'tags,authors',
+                limit: '20',
+            };
+            if (filter) {
+                params.filter = filter;
+            }
+            return await ghostFetch('posts', params);
+        },
+        config.cache.routeExpire,
+        false
+    )) as GhostResponse;
 
     const items = await postsToItems(data.posts);
 
