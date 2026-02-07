@@ -8217,6 +8217,9 @@
   "/tass/:category?": [
     "TonyRL"
   ],
+  "/tctmd/conference-news": [
+    "ChuYinan2023"
+  ],
   "/techcrunch/category/:categoryId": [
     "MilliumOrion"
   ],

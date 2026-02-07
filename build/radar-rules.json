@@ -44570,6 +44570,19 @@
       }
     ]
   },
+  "tctmd.com": {
+    "_name": "TCTMD",
+    "www": [
+      {
+        "title": "Conference News",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/news/conference-news"
+        ],
+        "target": "/tctmd/conference-news"
+      }
+    ]
+  },
   "techcrunch.com": {
     "_name": "TechCrunch",
     ".": [

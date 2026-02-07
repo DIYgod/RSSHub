@@ -2676,6 +2676,7 @@ export type RoutePath =
   | `/taptap/review/:id/:order?/:lang?`
   | `/taptap/topic/:id/:type?/:sort?/:lang?`
   | `/tass/:category?`
+  | `/tctmd/conference-news`
   | `/techcrunch/category/:categoryId`
   | `/techcrunch/news`
   | `/techflowpost/`
