@@ -31,6 +31,12 @@ export const route: Route = {
     maintainers: ['OtacodeZ'],
     handler,
     description: `订阅河南省交通运输厅的news_box更新`,
+    rader: [
+        {
+            source: ['jtyst.henan.gov.cn/:fSeg/:sSeg', 'jtyst.henan.gov.cn/:fSeg/:sSeg/tSeg'],
+            target: '/:fSeg?/:sSeg?/:tSeg?',
+        },
+    ],
 };
 
 async function handler(ctx) {
