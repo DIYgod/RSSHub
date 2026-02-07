@@ -3,9 +3,10 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/:fSeg?/:sSeg?/:tSeg?',
+    path: '/:fSeg/:sSeg/:tSeg?',
     categories: ['government'],
     example: '/jtystHenan/zc/zdgk/zcwj',
     parameters: {
@@ -31,7 +32,7 @@ export const route: Route = {
     maintainers: ['OtacodeZ'],
     handler,
     description: `订阅河南省交通运输厅的news_box更新`,
-    rader: [
+    radar: [
         {
             source: ['jtyst.henan.gov.cn/:fSeg/:sSeg', 'jtyst.henan.gov.cn/:fSeg/:sSeg/tSeg'],
             target: '/:fSeg?/:sSeg?/:tSeg?',
@@ -62,7 +63,7 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href') ?? '',
-                pubDate: parseDate(item.find('span').text()),
+                pubDate: timezone(parseDate(item.find('span').text()), +8),
             };
         });
 
