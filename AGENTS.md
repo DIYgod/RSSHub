@@ -78,7 +78,7 @@
 
 35. **Avoid Dynamic Hashes**: If an API requires a hash that changes across builds, extract it dynamically from the webpage rather than hardcoding it.
 
-36. **User-Agent**: Use RSSHub's default [User-Agent](https://github.com/DIYgod/RSSHub/blob/master/lib/config.ts#L741) (`config.ua`) for realistic browser headers. Use `config.trueUA` only if the target site specifically requires identification as RSSHub.
+36. **User-Agent**: Use RSSHub's built-in [User-Agent](https://github.com/DIYgod/RSSHub/blob/master/lib/config.ts#L494) (`config.trueUA`) when making requests that need realistic browser headers.
 
 ### Media and Enclosures
 

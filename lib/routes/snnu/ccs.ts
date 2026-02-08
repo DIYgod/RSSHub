@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -56,7 +57,11 @@ export const route: Route = {
         };
 
         const configTarget = urlMap[type] || urlMap.tzgg;
-        const response = await ofetch(configTarget.url);
+        const response = await ofetch(configTarget.url, {
+            headers: {
+                'user-agent': config.trueUA,
+            },
+        });
         const $ = load(response);
         const list = $('.lunwen dl dd').toArray().slice(0, 10);
 
@@ -71,7 +76,11 @@ export const route: Route = {
 
                 return cache.tryGet(link, async () => {
                     try {
-                        const detailResponse = await ofetch(link);
+                        const detailResponse = await ofetch(link, {
+                            headers: {
+                                'user-agent': config.trueUA,
+                            },
+                        });
                         const $$ = load(detailResponse);
                         const description = $$('.v_news_content').html() || $$('#vsb_content').html() || '';
 
