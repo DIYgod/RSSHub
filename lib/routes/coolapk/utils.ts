@@ -1,18 +1,16 @@
+import crypto from 'node:crypto';
+
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import logger from '@/utils/logger';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问', 11: '回答', 12: '图文', 15: '二手', 17: '观点', 20: '交易动态' };
 
-const getRandomDEVICE_ID = () => {
-    let id = [10, 6, 6, 6, 14];
-    id = id.map((i) => Math.random().toString(36).slice(2, i));
-    return id.join('-');
-};
+const getRandomDEVICE_ID = () => crypto.randomUUID();
 
 const get_app_token = () => {
     const DEVICE_ID = getRandomDEVICE_ID();
@@ -87,10 +85,10 @@ const parseDynamic = async (item) => {
             if (item.issummary) {
                 // 需要爬内容
                 description = await cache.tryGet(itemUrl, async () => {
-                    const result = await got(itemUrl, {
+                    const result = await ofetch(itemUrl, {
                         headers: getHeaders(),
                     });
-                    const message = `<p>` + result.data.data?.message.split('\n').join('<br>') + `</p>`;
+                    const message = `<p>` + result.data?.message.split('\n').join('<br>') + `</p>`;
                     const picArr = item.picArr.filter(Boolean).map((i) => `<img src="${i}">`); // 若无图片，item.picArr=[""]
                     return message + picArr.join('');
                 });
@@ -120,15 +118,19 @@ const parseDynamic = async (item) => {
         case 12:
             title = item.title;
             description = await cache.tryGet(itemUrl, async () => {
-                const result = await got(itemUrl, {
+                const result = await ofetch(itemUrl, {
                     headers: getHeaders(),
                 });
 
-                const raw = JSON.parse(result.data.data.message_raw_output);
+                if (!result.data) {
+                    return result.message;
+                }
+
+                const raw = JSON.parse(result.data.message_raw_output);
 
                 const tags = parseTuwenFromRaw(raw);
 
-                return `<img src="${result.data.data.pic}"><hr>` + tags.join('');
+                return `<img src="${result.data.pic}"><hr>` + tags.join('');
             });
             break;
 
