@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -30,11 +29,7 @@ export const route: Route = {
     ],
     handler: async () => {
         const url = 'https://newyjs.snnu.edu.cn/tzgg1.htm';
-        const response = await ofetch(url, {
-            headers: {
-                'user-agent': config.trueUA,
-            },
-        });
+        const response = await ofetch(url);
         const $ = load(response);
         const list = $('.n_bt li').toArray().slice(0, 10);
 
@@ -49,11 +44,7 @@ export const route: Route = {
 
                 return cache.tryGet(link, async () => {
                     try {
-                        const detailResponse = await ofetch(link, {
-                            headers: {
-                                'user-agent': config.trueUA,
-                            },
-                        });
+                        const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
                         const description = $$('.v_news_content').html() || $$('#vsb_content').html() || '';
 
