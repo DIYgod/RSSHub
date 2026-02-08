@@ -7805,6 +7805,15 @@
   "/smzdm/ranking/:rank_type/:rank_id/:hour": [
     "DIYgod"
   ],
+  "/snnu/ccs/:type?": [
+    "alterkeyy"
+  ],
+  "/snnu/": [
+    "alterkeyy"
+  ],
+  "/snnu/yjs": [
+    "alterkeyy"
+  ],
   "/snowpeak/us/new-arrivals": [
     "EthanWng97"
   ],

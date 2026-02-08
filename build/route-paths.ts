@@ -2544,6 +2544,9 @@ export type RoutePath =
   | `/smzdm/keyword/:keyword`
   | `/smzdm/product/:id`
   | `/smzdm/ranking/:rank_type/:rank_id/:hour`
+  | `/snnu/`
+  | `/snnu/ccs/:type?`
+  | `/snnu/yjs`
   | `/snowpeak/us/new-arrivals`
   | `/sobooks/:category?`
   | `/sobooks/date/:date?`
