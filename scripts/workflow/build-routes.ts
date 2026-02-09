@@ -101,6 +101,10 @@ export type RoutePath =
 ${uniquePaths.map((path) => `  | \`${path}\``).join('\n')};
 `;
 
+// Ensure output directory exists
+const buildDir = path.join(__dirname, '../../assets/build');
+fs.mkdirSync(buildDir, { recursive: true });
+
 // For Worker build, only output routes-worker.js with filtered namespaces
 // For regular build, output all files
 if (isWorkerBuild) {
