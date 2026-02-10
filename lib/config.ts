@@ -204,10 +204,12 @@ type ConfigEnvKeys =
     | 'TUMBLR_CLIENT_ID'
     | 'TUMBLR_CLIENT_SECRET'
     | 'TUMBLR_REFRESH_TOKEN'
-    | 'TWITTER_USERNAME'
-    | 'TWITTER_PASSWORD'
-    | 'TWITTER_AUTHENTICATION_SECRET'
-    | 'TWITTER_PHONE_OR_EMAIL'
+    | 'TWITTER_CONSUMER_KEY'
+    | 'TWITTER_CONSUMER_SECRET'
+    // | 'TWITTER_USERNAME'
+    // | 'TWITTER_PASSWORD'
+    // | 'TWITTER_AUTHENTICATION_SECRET'
+    // | 'TWITTER_PHONE_OR_EMAIL'
     | 'TWITTER_AUTH_TOKEN'
     | 'TWITTER_THIRD_PARTY_API'
     | 'UESTC_BBS_COOKIE'
@@ -617,10 +619,12 @@ export type Config = {
         refreshToken?: string;
     };
     twitter: {
-        username?: string[];
-        password?: string[];
-        authenticationSecret?: string[];
-        phoneOrEmail?: string[];
+        consumerKey?: string;
+        consumerSecret?: string;
+        // username?: string[];
+        // password?: string[];
+        // authenticationSecret?: string[];
+        // phoneOrEmail?: string[];
         authToken?: string[];
         thirdPartyApi?: string;
     };
@@ -1102,10 +1106,12 @@ const calculateValue = () => {
             refreshToken: envs.TUMBLR_REFRESH_TOKEN,
         },
         twitter: {
-            username: envs.TWITTER_USERNAME?.split(','),
-            password: envs.TWITTER_PASSWORD?.split(','),
-            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
-            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
+            consumerKey: envs.TWITTER_CONSUMER_KEY,
+            consumerSecret: envs.TWITTER_CONSUMER_SECRET,
+            // username: envs.TWITTER_USERNAME?.split(','),
+            // password: envs.TWITTER_PASSWORD?.split(','),
+            // authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            // phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
             thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
