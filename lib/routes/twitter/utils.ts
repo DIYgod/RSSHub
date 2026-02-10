@@ -1,6 +1,3 @@
-import { TwitterApi } from 'twitter-api-v2';
-
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
@@ -440,32 +437,6 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     });
 };
 
-let getAppClient = () => null;
-
-if (config.twitter.consumer_key && config.twitter.consumer_secret) {
-    const consumer_keys = config.twitter.consumer_key.split(',');
-    const consumer_secrets = config.twitter.consumer_secret.split(',');
-    const T = {};
-    let count = 0;
-    let index = -1;
-
-    for (const [i, consumer_key] of consumer_keys.entries()) {
-        const consumer_secret = consumer_secrets[i];
-        if (consumer_key && consumer_secret) {
-            T[i] = new TwitterApi({
-                appKey: consumer_key,
-                appSecret: consumer_secret,
-            }).readOnly;
-            count = i + 1;
-        }
-    }
-
-    getAppClient = () => {
-        index++;
-        return T[index % count].appLogin();
-    };
-}
-
 const parseRouteParams = (routeParams) => {
     let count, include_replies, include_rts, only_media;
     let force_web_api = false;
@@ -519,7 +490,6 @@ export const keepOnlyMedia = function (tweets) {
 
 export default {
     ProcessFeed,
-    getAppClient,
     parseRouteParams,
     excludeRetweet,
     keepOnlyMedia,
