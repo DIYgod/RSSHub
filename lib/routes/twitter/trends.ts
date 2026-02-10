@@ -2,7 +2,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 
-import utils from './utils';
+import { getAppClient } from './api/developer-api/api';
 
 export const route: Route = {
     path: '/trends/:woeid?',
@@ -23,11 +23,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
+    if (!config.twitter || !config.twitter.consumerKey || !config.twitter.consumerSecret) {
         throw new ConfigNotFoundError('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const woeid = ctx.req.param('woeid') ?? 1; // Global information is available by using 1 as the WOEID
-    const client = await utils.getAppClient();
+    const client = await getAppClient();
     const data = await client.v1.get('trends/place.json', { id: woeid });
     const [{ trends }] = data;
 
