@@ -916,6 +916,7 @@ export type RoutePath =
   | `/ehentai/search/:params?/:page?/:routeParams?`
   | `/ehentai/tag/:tag/:page?/:routeParams?`
   | `/ekantipur/:channel?`
+  | `/elamigos/games`
   | `/elasticsearch-cn/:params?`
   | `/elecfans/article/:atype`
   | `/elecfans/soft/:atype`

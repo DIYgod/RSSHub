@@ -2814,6 +2814,9 @@
   "/ekantipur/:channel?": [
     "maniche04"
   ],
+  "/elamigos/games": [
+    "Kylon92"
+  ],
   "/elasticsearch-cn/:params?": [
     "nczitzk"
   ],
