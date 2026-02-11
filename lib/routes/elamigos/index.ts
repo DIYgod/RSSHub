@@ -89,46 +89,22 @@ function extractGames($: any, limit: number, baseUrl: string): Array<{ title: st
                 return;
             }
             arrivedAtGameSection = true;
-            let anyGameUpdated = false;
             // Found H1 date, fill all empty Games with the new Date.
             for (const game of games) {
                 if (game.pubDate === null || game.pubDate.trim() === '') {
                     game.pubDate = text;
-                    anyGameUpdated = true;
                 }
             }
-            if (games.length >= limit && !anyGameUpdated) {
-                return false;
-            } // We are done Parsing. Exit and Continue.
-        }
-
-        if (games.length >= limit) {
-            return;
-        } // We have reached the limit. Do not add new Entries, however we need to keep looping to get the Date for the Last Games
-        if ((tagName === 'h3' || tagName === 'h5') && arrivedAtGameSection) {
+        } else if ((tagName === 'h3' || tagName === 'h5') && arrivedAtGameSection) {
             const link = $elem.find('a[href]').first();
-            if (!link.length) {
+            if (!link.length || games.length >= limit) {
                 return;
             }
 
             const href = link.attr('href');
-
-            if (!href?.includes('data/') || href.includes('how2download') || href.includes('Contact')) {
-                return;
-            }
-
-            let title = '';
-            $elem.contents().each((_, node) => {
-                if (node.nodeType === 3) {
-                    title += node.nodeValue;
-                }
-            });
-            title = title.trim().replace(/\s+ElAmigos\s*$/i, '');
-
-            if (title && games.length < limit) {
-                const fullLink = href.startsWith('http') ? href : `${baseUrl}/${href.replace(/^\//, '')}`;
-                games.push({ title, link: fullLink, pubDate: null });
-            }
+            const title = $elem.text().replaceAll('DOWNLOAD', '').trim();
+            const fullLink = href.startsWith('http') ? href : `${baseUrl}/${href.replace(/^\//, '')}`;
+            games.push({ title, link: fullLink, pubDate: null });
         }
     });
 
@@ -188,7 +164,7 @@ function processGameItem(game: { title: string; link: string; pubDate: string | 
                 });
 
                 const newestDate = extractLatestDate(pageHtml);
-
+                // If the Data Page has a newer Date than what we got from the Main Page, we take it instead.
                 let finalPublishDate: Date | null = null;
                 if (game.pubDate) {
                     finalPublishDate = toNeutralDate(game.pubDate, true);
