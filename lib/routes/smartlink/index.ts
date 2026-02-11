@@ -66,9 +66,7 @@ async function handler(ctx) {
     const site = ctx.req.param('site');
     const link = `https://smartlink.bio/api/instagram/${site}/posts`;
     const data = await ofetch(link);
-    // the API returns text/plain as MIME type
-    // Parse the JSON string into an array
-    const parsedData = JSON.parse(data);
+    const parsedData = data;
     const items = parsedData.map((item) => ({
         title: getTitle(item),
         link: item.smartlink.split('?')[0],
