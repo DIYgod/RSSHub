@@ -189,7 +189,7 @@
         "mockdate": "3.0.5",
         "msw": "2.4.3",
         "node-network-devtools": "1.0.29",
-        "oxfmt": "0.28.0",
+        "oxfmt": "0.31.0",
         "remark-parse": "11.0.0",
         "supertest": "7.2.2",
         "tsdown": "0.20.0",
