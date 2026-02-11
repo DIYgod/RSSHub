@@ -5,12 +5,10 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/games/:limit?',
+    path: '/games',
     categories: ['game'],
     example: '/elamigos/games',
-    parameters: {
-        limit: 'Number of games to fetch (default: 40, min: 20, max: 50)',
-    },
+    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -25,7 +23,7 @@ export const route: Route = {
             target: '/games',
         },
     ],
-    name: 'ElAmigos Releases',
+    name: 'Releases',
     maintainers: ['Kylon92'],
     handler,
     description: 'Latest game releases from ElAmigos',
@@ -56,7 +54,7 @@ function toNeutralDate(input: string, appendDay: boolean = false): Date {
 }
 
 function parseLimit(ctx: any): number {
-    const rawLimit = ctx.req.param('limit');
+    const rawLimit = ctx.req.query('limit');
     const limit_min = 20;
     const limit_max = 50;
     let limit = 40;
@@ -149,52 +147,40 @@ function sanitizeHtml(pageHtml: string): string {
         .replaceAll(/body\s*\{\s*margin-top:\s*1em;\s*\}/gi, '')
         .trim();
 
-    return contentHtml.slice(0, 8000);
+    return contentHtml;
 }
 
 function processGameItem(game: { title: string; link: string; pubDate: string | null }): Promise<DataItem> {
     const cacheKey = `elamigos:${game.link}`;
 
-    return cache.tryGet(
-        cacheKey,
-        async () => {
-            try {
-                const { data: pageHtml } = await got(game.link, {
-                    timeout: 15000,
-                });
+    return cache.tryGet(cacheKey, async () => {
+        try {
+            const { data: pageHtml } = await got(game.link);
 
-                const newestDate = extractLatestDate(pageHtml);
-                // If the Data Page has a newer Date than what we got from the Main Page, we take it instead.
-                let finalPublishDate: Date | null = null;
-                if (game.pubDate) {
-                    finalPublishDate = toNeutralDate(game.pubDate, true);
-                }
-
-                if (finalPublishDate === null || (newestDate !== null && newestDate > finalPublishDate)) {
-                    finalPublishDate = newestDate;
-                }
-
-                if (finalPublishDate === null) {
-                    finalPublishDate = new Date();
-                }
-
-                const contentHtml = sanitizeHtml(pageHtml);
-
-                return {
-                    title: game.title,
-                    link: game.link,
-                    pubDate: finalPublishDate.toUTCString(),
-                    description: contentHtml,
-                } as DataItem;
-            } catch {
-                return {
-                    title: game.title,
-                    link: game.link,
-                    pubDate: new Date(),
-                    description: `<p>View game page: <a href="${game.link}">${game.link}</a></p>`,
-                } as DataItem;
+            const newestDate = extractLatestDate(pageHtml);
+            // If the Data Page has a newer Date than what we got from the Main Page, we take it instead.
+            let finalPublishDate: Date | null = null;
+            if (game.pubDate) {
+                finalPublishDate = toNeutralDate(game.pubDate, true);
             }
-        },
-        12 * 60 * 60 // Cache for 12 hours. Data Pages are very static, can probably increase to 24hrs if need be.
-    );
+
+            if (finalPublishDate === null || (newestDate !== null && newestDate > finalPublishDate)) {
+                finalPublishDate = newestDate;
+            }
+            const contentHtml = sanitizeHtml(pageHtml);
+
+            return {
+                title: game.title,
+                link: game.link,
+                pubDate: finalPublishDate === null ? undefined : finalPublishDate.toUTCString(),
+                description: contentHtml,
+            } as DataItem;
+        } catch {
+            return {
+                title: game.title,
+                link: game.link,
+                description: `<p>View game page: <a href="${game.link}">${game.link}</a></p>`,
+            } as DataItem;
+        }
+    });
 }
