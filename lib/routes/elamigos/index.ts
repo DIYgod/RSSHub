@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: any) {
-    const limit = parseLimit(ctx);
+    const limit = Number(ctx.req.query('limit')) || 40;
     const baseUrl = 'https://elamigos.site';
 
     const { data: html } = await got(baseUrl);
@@ -51,21 +51,6 @@ function toNeutralDate(input: string, appendDay: boolean = false): Date {
     const [day, month, year] = input.split('.').map(Number);
     const baseDate = new Date(Date.UTC(year, month - 1, day));
     return appendDay ? new Date(baseDate.getTime() + 24 * 60 * 60 * 1000) : baseDate;
-}
-
-function parseLimit(ctx: any): number {
-    const rawLimit = ctx.req.query('limit');
-    const limit_min = 20;
-    const limit_max = 50;
-    let limit = 40;
-
-    if (rawLimit) {
-        const parsed = Number.parseInt(rawLimit, 10);
-        if (!Number.isNaN(parsed)) {
-            limit = Math.max(limit_min, Math.min(limit_max, parsed));
-        }
-    }
-    return limit;
 }
 
 function extractGames($: any, limit: number, baseUrl: string): Array<{ title: string; link: string; pubDate: string | null }> {
