@@ -30,31 +30,48 @@ export const route: Route = {
     handler,
     description: 'Latest game releases from ElAmigos',
 };
+
+async function handler(ctx: any) {
+    const limit = parseLimit(ctx);
+    const baseUrl = 'https://elamigos.site';
+
+    const { data: html } = await got(baseUrl);
+    const $ = load(html);
+
+    const games = extractGames($, limit, baseUrl);
+    const items = await Promise.all(games.map((game) => processGameItem(game)));
+
+    return {
+        title: 'ElAmigos - Latest Games',
+        link: baseUrl,
+        description: `Latest game releases from ElAmigos (${items.length} entries)`,
+        item: items,
+    };
+}
+
 function toNeutralDate(input: string, appendDay: boolean = false): Date {
     const [day, month, year] = input.split('.').map(Number);
     const baseDate = new Date(Date.UTC(year, month - 1, day));
     return appendDay ? new Date(baseDate.getTime() + 24 * 60 * 60 * 1000) : baseDate;
 }
 
-async function handler(ctx) {
-    // Parse and validate limit parameter
+function parseLimit(ctx: any): number {
     const rawLimit = ctx.req.param('limit');
-    let limit = 40; // 40 should be enough as default, 25 can be too low as they sometimes add games at the middle/end of the current week.
     const limit_min = 20;
     const limit_max = 50;
+    let limit = 40;
+
     if (rawLimit) {
         const parsed = Number.parseInt(rawLimit, 10);
         if (!Number.isNaN(parsed)) {
             limit = Math.max(limit_min, Math.min(limit_max, parsed));
         }
     }
+    return limit;
+}
 
-    const baseUrl = 'https://elamigos.site';
+function extractGames($: any, limit: number, baseUrl: string): Array<{ title: string; link: string; pubDate: string | null }> {
     const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
-
-    const { data: html } = await got(baseUrl);
-
-    const $ = load(html);
     const games: Array<{ title: string; link: string; pubDate: string | null }> = [];
     let arrivedAtGameSection = false;
 
@@ -115,84 +132,93 @@ async function handler(ctx) {
         }
     });
 
-    // Fetch Description from the Data Page, 1 HTTP Request per Item
-    const items = await Promise.all(
-        games.map((game) => {
-            const cacheKey = `elamigos:${game.link}`;
+    return games;
+}
 
-            return cache.tryGet(
-                cacheKey,
-                async () => {
-                    try {
-                        const { data: pageHtml } = await got(game.link, {
-                            timeout: 15000,
-                        });
+function extractLatestDate(pageHtml: string): Date | null {
+    const dateMatches = pageHtml.match(/\b\d{2}\.\d{2}\.\d{4}\b/g) || [];
+    const uniqueDates = [...new Set(dateMatches)];
 
-                        // Find all dd.mm.yyyy dates (removed capturing groups, not needed)
-                        const dateMatches: string[] = pageHtml.match(/\b\d{2}\.\d{2}\.\d{4}\b/g) || [];
-                        const uniqueDates = [...new Set(dateMatches)];
+    let newestDate: Date | null = null;
 
-                        let newestDate: Date | null = null;
+    for (const dateStr of uniqueDates) {
+        const parsedDate = toNeutralDate(dateStr);
+        if (newestDate === null || parsedDate > newestDate) {
+            newestDate = parsedDate;
+        }
+    }
 
-                        for (const dateStr of uniqueDates) {
-                            const parsedDate = toNeutralDate(dateStr);
-                            if (newestDate === null || parsedDate > newestDate) {
-                                newestDate = parsedDate;
-                            }
-                        }
+    return newestDate;
+}
 
-                        const $page = load(pageHtml);
-                        let contentHtml = $page('body').html() || '';
+function sanitizeHtml(pageHtml: string): string {
+    const $page = load(pageHtml);
 
-                        // Clean up scripts/styles for safety and better UI
-                        contentHtml = contentHtml
-                            .replaceAll(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-                            .replaceAll(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-                            .replaceAll(/<link[^>]*>/gi, '')
-                            .replaceAll(/<nav\b[^>]*>[\s\S]*?<\/nav>/gi, '')
-                            .replaceAll(/on\w+="[^"]*"/g, '')
-                            .replaceAll(/body\s*\{\s*margin-top:\s*1em;\s*\}/gi, '')
-                            .replaceAll(/^\s*[\r\n]/gm, '') // Remove empty lines
-                            .trim()
-                            .slice(0, 8000);
+    $page('script, style, link, nav').remove();
 
-                        // We try to find a more accurate Publish Date on the Data Page.
-                        // If we find a newer Date than what we extraced from the Main Page, we take it.
-                        let finalPublishDate: Date | null = null;
-                        if (game.pubDate) {
-                            finalPublishDate = toNeutralDate(game.pubDate, true);
-                        }
-                        if (finalPublishDate === null || (newestDate !== null && newestDate > finalPublishDate)) {
-                            finalPublishDate = newestDate;
-                        }
-                        if (finalPublishDate === null) {
-                            finalPublishDate = new Date();
-                        }
+    $page('*').each((_: number, elem: any) => {
+        if (elem.attribs) {
+            const attributes = Object.keys(elem.attribs);
+            for (const attr of attributes) {
+                if (attr.toLowerCase().startsWith('on')) {
+                    $page(elem).removeAttr(attr);
+                }
+            }
+        }
+    });
 
-                        return {
-                            title: game.title,
-                            link: game.link,
-                            pubDate: finalPublishDate.toUTCString(),
-                            description: contentHtml,
-                        } as DataItem;
-                    } catch {
-                        return {
-                            title: game.title,
-                            link: game.link,
-                            pubDate: new Date(),
-                            description: `<p>View game page: <a href="${game.link}">${game.link}</a></p>`,
-                        } as DataItem;
-                    }
-                },
-                12 * 60 * 60
-            ); // Cache for 12 hours. Data Pages are very static, can probably increase to 24hrs if need be.
-        })
+    let contentHtml = $page('body').html() || '';
+    contentHtml = contentHtml
+        .replaceAll(/^\s*[\r\n]/gm, '')
+        .replaceAll(/body\s*\{\s*margin-top:\s*1em;\s*\}/gi, '')
+        .trim();
+
+    return contentHtml.slice(0, 8000);
+}
+
+function processGameItem(game: { title: string; link: string; pubDate: string | null }): Promise<DataItem> {
+    const cacheKey = `elamigos:${game.link}`;
+
+    return cache.tryGet(
+        cacheKey,
+        async () => {
+            try {
+                const { data: pageHtml } = await got(game.link, {
+                    timeout: 15000,
+                });
+
+                const newestDate = extractLatestDate(pageHtml);
+
+                let finalPublishDate: Date | null = null;
+                if (game.pubDate) {
+                    finalPublishDate = toNeutralDate(game.pubDate, true);
+                }
+
+                if (finalPublishDate === null || (newestDate !== null && newestDate > finalPublishDate)) {
+                    finalPublishDate = newestDate;
+                }
+
+                if (finalPublishDate === null) {
+                    finalPublishDate = new Date();
+                }
+
+                const contentHtml = sanitizeHtml(pageHtml);
+
+                return {
+                    title: game.title,
+                    link: game.link,
+                    pubDate: finalPublishDate.toUTCString(),
+                    description: contentHtml,
+                } as DataItem;
+            } catch {
+                return {
+                    title: game.title,
+                    link: game.link,
+                    pubDate: new Date(),
+                    description: `<p>View game page: <a href="${game.link}">${game.link}</a></p>`,
+                } as DataItem;
+            }
+        },
+        12 * 60 * 60 // Cache for 12 hours. Data Pages are very static, can probably increase to 24hrs if need be.
     );
-
-    return {
-        title: 'ElAmigos - Latest Games',
-        link: baseUrl,
-        description: `Latest game releases from ElAmigos (${games.length} entries)`,
-        item: items as DataItem[],
-    };
 }
