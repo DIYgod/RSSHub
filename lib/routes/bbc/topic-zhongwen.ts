@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { renderArticleContent } from './render';
+import { renderArticleContent } from './utils';
 
 export const route: Route = {
     path: '/zhongwen/topics/:topic/:variant?',

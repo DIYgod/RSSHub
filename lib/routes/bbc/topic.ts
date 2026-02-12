@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { renderArticleContent } from './render';
+import { extractSportContent, renderArticleContent } from './utils';
 
 export const route: Route = {
     path: '/topics/:topic',
@@ -51,20 +51,15 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 if (item.link.startsWith('https://www.bbc.com/sport/')) {
-                    const article = $('article[class*="-ArticleWrapper"]');
-                    article.find('[data-block="headline"], [data-block="byline"], [data-block="metadata"], [data-block="topicList"]').remove();
-                    article.find('.visually-hidden, [class*="-LinkIconContainer"], [class*="-MetadataStripContainer"], [class*="-LogoIconWrapper"]').remove();
-                    article.find('noscript').remove();
-                    article.find('*').removeAttr('class');
-
-                    item.description = article.html();
+                    const { category, description } = extractSportContent($, item);
+                    item.category = category;
+                    item.description = description;
                 } else {
                     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
                     const pageProps = nextData.props.pageProps;
                     const articleData = pageProps.page[pageProps.pageKey];
 
                     item.category = [...new Set([...(item.category || []), ...articleData.topics.map((t) => t.title)])];
-
                     item.description = renderArticleContent(articleData.contents);
                 }
 
