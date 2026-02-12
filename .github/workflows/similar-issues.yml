@@ -18,12 +18,10 @@ jobs:
             issues: write
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 1
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
             - name: Set up Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
 
             - name: Install opencode
               run: curl -fsSL https://opencode.ai/install | bash
