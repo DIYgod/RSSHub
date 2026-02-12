@@ -18,12 +18,12 @@ Only report **clear and actionable** violations in changed lines/files. Do not r
 
 ## Data Handling and Feed Quality
 
-10. Use `ctx.cache.tryGet()` for detail fetching in loops; cache processed result instead of raw HTML.
+10. Use `cache.tryGet()` (from `@/utils/cache`) for detail fetching in loops; cache processed result instead of raw HTML.
 11. `description` should contain article content only; do not duplicate `title`, `author`, `pubDate`, or tags.
 12. Extract tags/categories into `category` field.
 13. Use `parseDate()` for date fields when source provides time.
 14. Do not set fake dates (`new Date()` fallback) when source has no valid time.
-15. Keep each item `link` unique and human-readable (not raw API endpoint).
+15. Keep each item `link` unique; feed-level `link` should be human-readable (not raw API endpoint).
 16. Do not trim/truncate title/content manually.
 
 ## API and Requesting
@@ -32,14 +32,14 @@ Only report **clear and actionable** violations in changed lines/files. Do not r
 18. Fetch first page only; do not add custom pagination behavior.
 19. Use common parameter `limit` instead of custom limit/query filtering.
 20. Prefer path parameters over custom query parameters for route config.
-21. Use RSSHub built-in UA behavior; avoid unnecessary hardcoded UA/Host unless required.
+21. Use RSSHub built-in UA behavior; when browser-like headers are needed, use `config.trueUA` instead of hardcoded UA strings.
 
 ## Code Style and Maintainability
 
 22. Use `camelCase` naming.
 23. Use `import type { ... }` for type-only imports.
 24. Keep imports sorted.
-25. Use `art-template` for custom HTML rendering patterns used by RSSHub.
+25. Use JSX-based rendering (`renderToString` and template components) for custom HTML rendering patterns used by RSSHub.
 26. Avoid unnecessary changes outside PR scope.
 
 ## Reporting Format
