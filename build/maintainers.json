@@ -7706,6 +7706,9 @@
   "/sina/finance/china/:lid?": [
     "yubinbai"
   ],
+  "/sina/finance/rollnews/:lid?": [
+    "betterandbetterii"
+  ],
   "/sina/finance/stock/usstock/:cids?": [
     "TonyRL"
   ],

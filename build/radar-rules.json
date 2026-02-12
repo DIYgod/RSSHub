@@ -41664,6 +41664,15 @@
         "target": "/sina/finance/china"
       },
       {
+        "title": "财经－滚动新闻",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/roll",
+          "/"
+        ],
+        "target": "/sina/finance/rollnews"
+      },
+      {
         "title": "美股",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
