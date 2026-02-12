@@ -35,7 +35,7 @@ export const route: Route = {
     radar: [
         {
             source: ['jtyst.henan.gov.cn/:fSeg/:sSeg', 'jtyst.henan.gov.cn/:fSeg/:sSeg/tSeg'],
-            target: '/:fSeg?/:sSeg?/:tSeg?',
+            target: '/:fSeg/:sSeg/:tSeg?',
         },
     ],
 };
@@ -55,7 +55,7 @@ async function handler(ctx) {
     const response = await ofetch(currentUrl);
     const $ = load(response);
 
-    const items = $('div.news_box li') // $('div.main_list ul.news_list li')
+    const items = $('div.news_box li')
         .toArray()
         .map((item) => {
             item = $(item);
