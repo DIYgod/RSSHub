@@ -68,11 +68,8 @@ async function handler(ctx) {
         });
 
     return {
-        // 源标题
         title: `河南省交通运输厅${fUrl}${sUrl}${tUrl}`,
-        // 源链接
         link: currentUrl,
-        // 源文章
         item: items,
     };
 }
