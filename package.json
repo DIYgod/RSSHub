@@ -195,7 +195,7 @@
         "tsdown": "0.20.0",
         "typescript": "5.9.3",
         "unified": "11.0.5",
-        "vite-tsconfig-paths": "6.1.0",
+        "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.0.9",
         "wrangler": "4.64.0",
         "yaml-eslint-parser": "2.0.0"
