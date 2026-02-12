@@ -1,0 +1,311 @@
+import { raw } from 'hono/html';
+import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
+
+type BlockAttribute = 'bold' | 'italic';
+
+type BlockModel = {
+    blocks?: Block[];
+    text?: string;
+    timestamp?: number;
+    listType?: string;
+    listStyle?: string;
+    locator?: string;
+    originCode?: string;
+    width?: number;
+    height?: number;
+    copyrightHolder?: string;
+    attributes?: BlockAttribute[];
+    imageUrl?: string;
+    imageCopyright?: string;
+    oembed?: {
+        html: string;
+    };
+};
+
+type Block = {
+    type?: string;
+    model?: BlockModel;
+    blocks?: Block[];
+    items?: Block[];
+};
+
+const applyAttributes = (content: JSX.Element | string, attributes?: BlockAttribute[]): JSX.Element | string => {
+    let result: JSX.Element | string = content;
+    for (const attribute of attributes ?? []) {
+        switch (attribute) {
+            case 'bold':
+                result = <strong>{result}</strong>;
+                break;
+
+            case 'italic':
+                result = <em>{result}</em>;
+                break;
+
+            default:
+                throw new Error(`Unhandled attribute: ${attribute}`);
+        }
+    }
+    return result;
+};
+
+const extractText = (blocks?: Block[]): string => {
+    if (!blocks?.length) {
+        return '';
+    }
+
+    return blocks
+        .map((block) => {
+            if (block.type === 'fragment') {
+                return block.model?.text ?? '';
+            }
+
+            if (block.model?.text) {
+                return block.model.text;
+            }
+
+            return extractText(block.model?.blocks ?? block.blocks ?? block.items);
+        })
+        .join('');
+};
+
+const renderInlineBlocks = (blocks?: Block[]): Array<JSX.Element | string> => {
+    if (!blocks?.length) {
+        return [];
+    }
+
+    return blocks.flatMap((block) => {
+        if (block.type === 'fragment') {
+            const text = block.model?.text ?? '';
+            if (!text) {
+                return [];
+            }
+
+            return [applyAttributes(text, block.model?.attributes)];
+        }
+
+        if (block.model?.blocks || block.blocks || block.items) {
+            return renderInlineBlocks(block.model?.blocks ?? block.blocks ?? block.items);
+        }
+
+        if (block.model?.text) {
+            return [block.model.text];
+        }
+
+        return [];
+    });
+};
+
+const renderList = (block: Block, key: string): JSX.Element | null => {
+    const items = block.model?.blocks ?? block.blocks ?? block.items;
+    if (!items?.length) {
+        return null;
+    }
+
+    const listItems = items.map((item, index) => {
+        const content = item.type === 'listItem' ? renderInlineBlocks(item.model?.blocks ?? item.blocks ?? item.items) : renderInlineBlocks(item.model?.blocks ?? item.blocks ?? item.items);
+        const fallback = item.model?.text ? [item.model.text] : [];
+        return <li key={`${key}-item-${index}`}>{content.length ? content : fallback}</li>;
+    });
+
+    const listType = block.model?.listType ?? block.model?.listStyle ?? block.type;
+    if (listType === 'ordered' || listType === 'orderedList') {
+        return <ol key={key}>{listItems}</ol>;
+    }
+
+    return <ul key={key}>{listItems}</ul>;
+};
+
+const renderParagraph = (blocks?: Block[], keyPrefix = 'paragraph'): JSX.Element[] => {
+    if (!blocks?.length) {
+        return [];
+    }
+
+    return blocks.flatMap((block, index) => {
+        const key = `${keyPrefix}-${index}`;
+        switch (block.type) {
+            case 'paragraph': {
+                const content = renderInlineBlocks(block.model?.blocks ?? block.blocks ?? block.items);
+                const fallbackText = block.model?.text;
+                if (!content.length && !fallbackText) {
+                    return [];
+                }
+
+                return [<p key={key}>{content.length ? content : fallbackText}</p>];
+            }
+            case 'subheading':
+            case 'heading':
+                return [<h2 key={key}>{extractText(block.model?.blocks ?? block.blocks ?? block.items)}</h2>];
+            case 'list':
+            case 'unorderedList':
+            case 'orderedList': {
+                const list = renderList(block, key);
+                return list ? [list] : [];
+            }
+            default:
+                return renderParagraph(block.model?.blocks ?? block.blocks ?? block.items, key);
+        }
+    });
+};
+
+const findBlocksByType = (blocks: Block[] | undefined, type: string): Block[] => {
+    // console.log('Finding blocks of type:', type, 'in blocks:', blocks);
+    if (!blocks?.length) {
+        return [];
+    }
+
+    const matches: Block[] = [];
+    for (const block of blocks) {
+        if (block.type === type) {
+            matches.push(block);
+        }
+
+        matches.push(...findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, type));
+    }
+
+    return matches;
+};
+
+const buildImageUrl = (model?: BlockModel): string | undefined => {
+    if (!model?.locator || !model.originCode) {
+        return undefined;
+    }
+
+    return `https://ichef.bbci.co.uk/news/1536/${model.originCode}/${model.locator}`;
+};
+
+const renderFigure = (key: string, src: string, altText: string, width?: number, height?: number, caption?: string, copyrightHolder?: string): JSX.Element => (
+    <figure key={key}>
+        <img src={src} alt={altText} width={width} height={height} />
+        {caption || copyrightHolder ? (
+            <figcaption>
+                {copyrightHolder}
+                {caption ? ` / ${caption}` : ''}
+            </figcaption>
+        ) : null}
+    </figure>
+);
+
+const renderImage = (block: Block, index: number): JSX.Element | null => {
+    const altTextBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'altText')[0];
+    const captionBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'caption')[0];
+    const rawImageBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'rawImage')[0];
+
+    const altText = extractText(altTextBlock?.model?.blocks ?? altTextBlock?.blocks ?? altTextBlock?.items).trim();
+    const caption = extractText(captionBlock?.model?.blocks ?? captionBlock?.blocks ?? captionBlock?.items).trim();
+    const imageModel = rawImageBlock?.model ?? block.model;
+    const src = buildImageUrl(imageModel);
+
+    if (!src) {
+        return null;
+    }
+
+    const copyrightHolder = imageModel?.copyrightHolder?.trim();
+
+    return renderFigure(`image-${index}`, src, altText, imageModel?.width, imageModel?.height, caption, copyrightHolder);
+};
+
+const renderVideo = (block: Block, index: number): JSX.Element | null => {
+    const altTextBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'altText')[0];
+    const captionBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'caption')[0];
+    const mediaMetadataBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'mediaMetadata')[0];
+    const aresMediaBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'aresMedia')[0];
+    const aresMediaMetadata = aresMediaBlock ? (aresMediaBlock.model?.blocks ?? aresMediaBlock.blocks ?? aresMediaBlock.items)?.[0] : undefined;
+
+    const altText = extractText(altTextBlock?.model?.blocks ?? altTextBlock?.blocks ?? altTextBlock?.items).trim();
+    const caption = extractText(captionBlock?.model?.blocks ?? captionBlock?.blocks ?? captionBlock?.items).trim();
+
+    let src: string | undefined;
+    let sourceText: string | undefined;
+    let width: number | undefined;
+    let height: number | undefined;
+
+    if (mediaMetadataBlock?.model?.imageUrl) {
+        src = mediaMetadataBlock.model.imageUrl;
+        sourceText = mediaMetadataBlock.model.imageCopyright;
+    } else if (aresMediaMetadata?.model?.imageUrl) {
+        src = `https://${aresMediaMetadata.model.imageUrl.replace('/$recipe/', '/800xn/')}`;
+        sourceText = aresMediaMetadata.model.imageCopyright;
+    }
+
+    if (!src) {
+        return null;
+    }
+
+    return renderFigure(`video-${index}`, src, altText, width, height, caption, sourceText);
+};
+
+const renderSocial = (block: Block, index: number): JSX.Element | null => {
+    const aresOEmbedBlock = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'aresOEmbed')[0];
+    const oembedHtml = aresOEmbedBlock?.model?.oembed?.html;
+
+    if (!oembedHtml) {
+        return null;
+    }
+
+    return <div key={`social-${index}`}>{raw(oembedHtml)}</div>;
+};
+
+const renderEmbedImages = (block: Block, index: number): JSX.Element | null => {
+    const imageBlocks = findBlocksByType(block.model?.blocks ?? block.blocks ?? block.items, 'image');
+
+    if (!imageBlocks?.length) {
+        return null;
+    }
+
+    let largestImage: Block | null = null;
+    let maxWidth = 0;
+
+    for (const imageBlock of imageBlocks) {
+        const rawImageBlock = findBlocksByType(imageBlock.model?.blocks ?? imageBlock.blocks ?? imageBlock.items, 'rawImage')[0];
+        const width = rawImageBlock?.model?.width;
+
+        if (width && width > maxWidth) {
+            maxWidth = width;
+            largestImage = imageBlock;
+        }
+    }
+
+    if (!largestImage) {
+        return null;
+    }
+
+    return renderImage(largestImage, index);
+};
+
+const renderBlock = (block: Block, index: number): JSX.Element | JSX.Element[] | null => {
+    switch (block.type) {
+        case 'image':
+            return renderImage(block, index);
+        case 'video':
+            return renderVideo(block, index);
+        case 'text':
+            return renderParagraph(block.model?.blocks ?? block.blocks ?? block.items, `text-${index}`);
+        case 'subheadline': {
+            const text = extractText(block.model?.blocks ?? block.blocks ?? block.items).trim();
+            return text ? <h2 key={`subheadline-${index}`}>{text}</h2> : null;
+        }
+        case 'social':
+            return renderSocial(block, index);
+        case 'embedImages':
+            return renderEmbedImages(block, index);
+        case 'headline':
+        case 'timestamp':
+        case 'byline':
+        case 'advertisement':
+        case 'embed':
+        case 'disclaimer':
+        case 'continueReading':
+        case 'mpu':
+        case 'wsoj':
+        case 'relatedContent':
+        case 'links':
+        case 'visuallyHiddenHeadline':
+        case 'fauxHeadline':
+            return null;
+        default:
+            return renderParagraph(block.model?.blocks ?? block.blocks ?? block.items, `block-${index}`);
+    }
+};
+
+export const renderArticleContent = (content: Block[]): string => renderToString(<>{content.flatMap((block, index) => renderBlock(block, index)).filter((node) => node !== null)}</>);
