@@ -1,0 +1,96 @@
+name: pr-review
+
+on:
+    pull_request_target:
+        types: [opened, reopened, synchronize, ready_for_review]
+    workflow_dispatch:
+        inputs:
+            pr_number:
+                description: Pull request number to review manually
+                required: true
+                type: number
+
+jobs:
+    review-pr:
+        if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+            - name: Set up Bun
+              uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
+
+            - name: Install opencode
+              run: curl -fsSL https://opencode.ai/install | bash
+
+            - name: Review PR with rules
+              env:
+                  OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
+                  PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+                  OPENCODE_PERMISSION: |
+                      {
+                        "bash": {
+                          "*": "deny",
+                          "gh auth*": "allow",
+                          "gh pr*": "allow",
+                          "gh api*": "allow"
+                        },
+                        "webfetch": "deny"
+                      }
+              run: |
+                  if [ -z "$PR_NUMBER" ]; then
+                    echo "pr_number is required"
+                    exit 1
+                  fi
+
+                  RULES=$(cat .github/prompts/pr_review_rules.md)
+
+                  opencode run -m ${{ vars.OPENCODE_MODEL }} "A pull request has been created or updated in this repository.
+
+                  Pull request number:
+                  $PR_NUMBER
+
+                  Repository:
+                  $GITHUB_REPOSITORY
+
+                  Your task:
+                  1. Use GitHub CLI commands to inspect this PR's metadata and code changes.
+                  2. Review only based on the following rules.
+                  3. Report only clear and actionable violations from changed files.
+                  4. If no clear violations are found, do not comment.
+
+                  Review rules:
+                  $RULES
+
+                  Required behavior:
+                  - Keep feedback concise and grouped by rule.
+                  - Include file path and a concrete fix suggestion for each issue.
+                  - Ignore uncertain or low-confidence findings.
+                  - Avoid duplicate comments.
+
+                  Comment protocol:
+                  - Use marker: <!-- pr-auto-review -->
+                  - Check existing comments in issue comments for this marker.
+                  - If a marker comment exists, update it with latest findings.
+                  - Otherwise create a new PR comment.
+                  - If there are no findings and marker comment exists, edit marker comment to a short pass status.
+
+                  Suggested comment format:
+                  <!-- pr-auto-review -->
+                  ## Auto Review
+                  - [Rule] file: issue + suggestion
+
+                  For no findings:
+                  <!-- pr-auto-review -->
+                  ## Auto Review
+                  No clear rule violations found in the current diff.
+
+                  Use only gh commands and repository data."
