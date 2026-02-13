@@ -394,7 +394,7 @@ export const fetchBbcContent = async (link: string, item) => {
             return extractArticleWithInitialData($, item);
         case pathname.startsWith('/sounds/play') || pathname.startsWith('/news/live'):
             return {
-                description: item.content,
+                description: item.content ?? item.description ?? '',
             };
         case pathname.startsWith('/zhongwen/articles/'): {
             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
