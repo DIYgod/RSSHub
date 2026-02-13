@@ -206,6 +206,8 @@ type ConfigEnvKeys =
     | 'TUMBLR_REFRESH_TOKEN'
     | 'TWITTER_CONSUMER_KEY'
     | 'TWITTER_CONSUMER_SECRET'
+    | 'TWITTER_ACCESS_TOKEN'
+    | 'TWITTER_ACCESS_SECRET'
     // | 'TWITTER_USERNAME'
     // | 'TWITTER_PASSWORD'
     // | 'TWITTER_AUTHENTICATION_SECRET'
@@ -621,6 +623,8 @@ export type Config = {
     twitter: {
         consumerKey?: string;
         consumerSecret?: string;
+        accessToken?: string;
+        accessSecret?: string;
         // username?: string[];
         // password?: string[];
         // authenticationSecret?: string[];
@@ -1108,6 +1112,8 @@ const calculateValue = () => {
         twitter: {
             consumerKey: envs.TWITTER_CONSUMER_KEY,
             consumerSecret: envs.TWITTER_CONSUMER_SECRET,
+            accessToken: envs.TWITTER_ACCESS_TOKEN,
+            accessSecret: envs.TWITTER_ACCESS_SECRET,
             // username: envs.TWITTER_USERNAME?.split(','),
             // password: envs.TWITTER_PASSWORD?.split(','),
             // authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
