@@ -1,8 +1,9 @@
 name: pr-review
 
 on:
-    pull_request_target:
-        types: [opened, reopened, synchronize, ready_for_review]
+    workflow_run:
+        workflows: [PR - Docker build test]
+        types: [completed]
     workflow_dispatch:
         inputs:
             pr_number:
@@ -12,7 +13,7 @@ on:
 
 jobs:
     review-pr:
-        if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+        if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
         runs-on: ubuntu-latest
         timeout-minutes: 10
         permissions:
@@ -22,6 +23,59 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
+            - name: Search the PR that triggered this workflow
+              if: github.event_name != 'workflow_dispatch'
+              id: source-run-info
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  PR_BRANCH: |-
+                      ${{
+                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
+                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
+                          || github.event.workflow_run.head_branch
+                      }}
+              run: |
+                  gh pr view --repo "${PR_TARGET_REPO}" "${PR_BRANCH}" \
+                    --json 'number' --jq '"number=\(.number)"' \
+                    >> "${GITHUB_OUTPUT}"
+
+            - name: Check PR author
+              if: github.event_name != 'workflow_dispatch'
+              id: check-pr-author
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  PR_NUMBER: ${{ steps.source-run-info.outputs.number }}
+              run: |
+                  AUTHOR=$(gh pr view --repo "${PR_TARGET_REPO}" "${PR_NUMBER}" --json author --jq '.author.login')
+                  echo "author=${AUTHOR}" >> "${GITHUB_OUTPUT}"
+                  if [[ "${AUTHOR}" == "dependabot[bot]" || "${AUTHOR}" == "dependabot" ]]; then
+                    echo "skip=true" >> "${GITHUB_OUTPUT}"
+                  else
+                    echo "skip=false" >> "${GITHUB_OUTPUT}"
+                  fi
+
+            - name: Comment on failed Docker build
+              if: github.event_name != 'workflow_dispatch' && github.event.workflow_run.conclusion == 'failure' && steps.check-pr-author.outputs.skip == 'false'
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  PR_NUMBER: ${{ steps.source-run-info.outputs.number }}
+              run: |
+                  gh pr comment --repo "${PR_TARGET_REPO}" "${PR_NUMBER}" --body "<!-- pr-auto-review -->
+                  ## Auto Review
+                  ⚠️ PR review will proceed after the Docker image can be successfully built.
+
+                  Please fix the Docker build test issues first."
+
+            - name: Exit if Dependabot or Docker build failed
+              if: github.event_name != 'workflow_dispatch' && (steps.check-pr-author.outputs.skip == 'true' || github.event.workflow_run.conclusion == 'failure')
+              run: |
+                  echo "Skipping PR review: Dependabot PR or Docker build failed"
+                  exit 0
 
             - name: Set up Bun
               uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
@@ -34,7 +88,7 @@ jobs:
                   OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   GITHUB_REPOSITORY: ${{ github.repository }}
-                  PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+                  PR_NUMBER: ${{ steps.source-run-info.outputs.number || inputs.pr_number }}
                   OPENCODE_PERMISSION: |
                       {
                         "bash": {
