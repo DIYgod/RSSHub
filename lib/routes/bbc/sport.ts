@@ -42,7 +42,7 @@ async function handler(ctx) {
             description: item.description,
             link: `https://www.bbc.com${item.url}`,
             pubDate: item.lastPublished ? parseDate(item.lastPublished) : undefined,
-            image: item.image.src.replace('/480/', '/1536/'),
+            image: item.image?.src.replace('/480/', '/1536/'),
         }));
 
     const items = await Promise.all(

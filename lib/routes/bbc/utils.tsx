@@ -121,7 +121,7 @@ const renderList = (block: Block, key: string): JSX.Element | null => {
     }
 
     const listItems = items.map((item, index) => {
-        const content = item.type === 'listItem' ? renderInlineBlocks(item.model?.blocks ?? item.blocks ?? item.items) : renderInlineBlocks(item.model?.blocks ?? item.blocks ?? item.items);
+        const content = renderInlineBlocks(item.model?.blocks ?? item.blocks ?? item.items);
         const fallback = item.model?.text ? [item.model.text] : [];
         return <li key={`${key}-item-${index}`}>{content.length ? content : fallback}</li>;
     });
@@ -372,10 +372,12 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
 
     const initialData = extractInitialData($);
     const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
+    const topics = Array.isArray(article?.topics) ? article.topics : [];
+    const blocks = article?.content?.model?.blocks;
 
     return {
-        category: [...new Set([...(item.category || []), ...article.topics.map((t) => t.title)])],
-        description: renderArticleContent(article.content.model.blocks),
+        category: [...new Set([...(item.category || []), ...topics.map((t) => t.title)])],
+        description: blocks ? renderArticleContent(blocks) : item.content,
     };
 };
 
@@ -398,9 +400,11 @@ export const fetchBbcContent = async (link: string, item) => {
             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
             const pageData = nextData.props.pageProps.pageData;
             const metadata = pageData.metadata;
+            const aboutLabels = metadata.tags?.about?.map((t) => t.thingLabel) ?? [];
+            const topicNames = metadata.topics?.map((t) => t.topicName) ?? [];
 
             return {
-                category: [...new Set([...metadata.tags.about.map((t) => t.thingLabel), ...metadata.topics.map((t) => t.topicName)])],
+                category: [...new Set([...aboutLabels, ...topicNames])],
                 description: renderArticleContent(pageData.content.model.blocks),
             };
         }
@@ -410,7 +414,12 @@ export const fetchBbcContent = async (link: string, item) => {
             const articleData = pageProps.page[pageProps.pageKey];
 
             return {
-                category: [...new Set([...(item.category || []), ...articleData.topics.map((t) => t.title)])],
+                category: [
+                    ...new Set([
+                        ...(item.category || []),
+                        ...(articleData.topics?.map((t) => t.title) ?? []),
+                    ]),
+                ],
                 description: renderArticleContent(articleData.contents),
             };
         }
