@@ -6,4 +6,5 @@ export default defineConfig({
     shims: true,
     clean: true,
     copy: ['lib/assets'],
+    inlineOnly: false,
 });
