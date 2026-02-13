@@ -107,7 +107,7 @@ jobs:
 
             - name: Build and push Docker image (ordinary version)
               id: build-and-push
-              uses: docker/build-push-action@601a80b39c9405e50806ae38af30926f9d957c47 # v6.19.1
+              uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
               with:
                   context: .
                   tags: ${{ steps.image-name-ordinary.outputs.tags }}
@@ -160,7 +160,7 @@ jobs:
 
             - name: Build and push Docker image (Chromium-bundled version)
               id: build-and-push-chromium
-              uses: docker/build-push-action@601a80b39c9405e50806ae38af30926f9d957c47 # v6.19.1
+              uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
               with:
                   context: .
                   build-args: PUPPETEER_SKIP_DOWNLOAD=0
