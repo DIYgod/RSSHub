@@ -9,7 +9,7 @@ Only report **clear and actionable** violations in changed lines/files. Do not r
 1. `example` must start with `/` and be a working RSSHub route path.
 2. Route name must not repeat namespace name.
 3. In radar rules, `source` must be a relative host/path (no `https://`, no hash/query matching).
-4. In radar rules, `target` must match the route path and declared params.
+4. In radar rules, `target` may be empty; if present, it must match the route path and its parameters.
 5. Namespace `url` should not include protocol prefix.
 6. Use a single category in `categories`.
 7. `parameters` keys must match real path parameters.
