@@ -279,6 +279,9 @@ export type RoutePath =
   | `/bast*`
   | `/bbc/:site?/:channel?`
   | `/bbc/learningenglish/:channel?`
+  | `/bbc/sport/:sport`
+  | `/bbc/topics/:topic`
+  | `/bbc/zhongwen/topics/:topic/:variant?`
   | `/bbcnewslabs/news`
   | `/bc3ts/post/list/:sort?`
   | `/bdys/:caty?/:type?/:area?/:year?/:order?`

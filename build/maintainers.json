@@ -844,6 +844,15 @@
   "/bbc/learningenglish/:channel?": [
     "Blank0120"
   ],
+  "/bbc/sport/:sport": [
+    "TonyRL"
+  ],
+  "/bbc/zhongwen/topics/:topic/:variant?": [
+    "TonyRL"
+  ],
+  "/bbc/topics/:topic": [
+    "TonyRL"
+  ],
   "/bbcnewslabs/news": [
     "elxy"
   ],

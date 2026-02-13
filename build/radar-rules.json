@@ -7134,6 +7134,35 @@
       }
     ]
   },
+  "bbc.com": {
+    "_name": "BBC",
+    "www": [
+      {
+        "title": "Sport",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/sport/:sport"
+        ],
+        "target": "/bbc/sport/:sport"
+      },
+      {
+        "title": "Topics - BBC News 中文",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/zhongwen/topics/:topic/:variant"
+        ],
+        "target": "/bbc/zhongwen/topics/:topic/:variant?"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news/topics/:topic"
+        ],
+        "target": "/bbc/topics/:topic"
+      }
+    ]
+  },
   "bbcnewslabs.co.uk": {
     "_name": "BBC News Labs",
     ".": [
