@@ -166,6 +166,19 @@
               '';
             };
 
+            environmentFiles = mkOption {
+              type = types.listOf types.path;
+              default = [ ];
+              example = literalExpression ''
+                [ config.sops.secrets.rsshub.path ]
+              '';
+              description = ''
+                Environment variables stored in files for RSSHub.
+                It can be used for secrets like agenix, sops-nix, etc.
+                See https://docs.rsshub.app/deploy/config for available options.
+              '';
+            };
+
             redis = {
               enable = mkOption {
                 type = types.bool;
@@ -238,7 +251,7 @@
                   User = cfg.user;
                   Group = cfg.group;
                   WorkingDirectory = cfg.dataDir;
-                  EnvironmentFile = environmentFile;
+                  EnvironmentFile = [environmentFile] ++ cfg.environmentFiles;
                   ExecStart = "${cfg.package}/bin/rsshub";
                   Restart = "on-failure";
                   RestartSec = "5s";
