@@ -7,4 +7,5 @@ export default defineConfig({
     dts: true,
     copy: ['lib/assets'],
     outDir: 'dist-lib',
+    inlineOnly: false,
 });

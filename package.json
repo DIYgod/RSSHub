@@ -192,7 +192,7 @@
         "oxfmt": "0.32.0",
         "remark-parse": "11.0.0",
         "supertest": "7.2.2",
-        "tsdown": "0.20.0",
+        "tsdown": "0.20.3",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
