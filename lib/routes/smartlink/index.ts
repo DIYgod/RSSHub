@@ -12,7 +12,10 @@ function parseTitle(smartlinkUrl: string): string {
         const dateIndex = pathSegments.findIndex((segment) => dateRegex.test(segment));
 
         // Use the segment after the date if found, otherwise use the last path segment
-        const titleSlug = dateIndex !== -1 && dateIndex < pathSegments.length - 1 ? pathSegments[dateIndex + 1] : pathSegments.at(-1) || '';
+        let titleSlug = dateIndex !== -1 && dateIndex < pathSegments.length - 1 ? pathSegments[dateIndex + 1] : pathSegments.at(-1) || '';
+
+        // Remove .html/.htm extension if present
+        titleSlug = titleSlug.replace(/\.(html?|htm)$/i, '');
 
         // Convert hyphens to spaces and capitalize each word
         return toTitleCase(titleSlug.replaceAll('-', ' '));
