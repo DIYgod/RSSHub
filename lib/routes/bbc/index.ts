@@ -1,11 +1,8 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 
-import { extractSportContent, renderArticleContent } from './utils';
+import { fetchBbcContent } from './utils';
 
 export const route: Route = {
     path: '/:site?/:channel?',
@@ -77,37 +74,7 @@ async function handler(ctx) {
                         linkURL.hostname = 'www.bbc.co.uk';
                     }
 
-                    const response = await ofetch(linkURL.href, {
-                        retryStatusCodes: [403],
-                    });
-
-                    const $ = load(response);
-
-                    const path = linkURL.pathname;
-
-                    let description, category;
-
-                    switch (true) {
-                        case path.startsWith('/sport'): {
-                            const { category: sportCategory, description: sportDescription } = extractSportContent($, item);
-                            category = sportCategory;
-                            description = sportDescription;
-                            break;
-                        }
-                        case path.startsWith('/sounds/play'):
-                            description = item.content;
-                            break;
-                        case path.startsWith('/news/live'):
-                            description = item.content;
-                            break;
-                        default: {
-                            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                            const pageProps = nextData.props.pageProps;
-                            const articleData = pageProps.page[pageProps.pageKey];
-
-                            description = renderArticleContent(articleData.contents);
-                        }
-                    }
+                    const { category, description } = await fetchBbcContent(linkURL.href, item);
 
                     return {
                         title: item.title || '',

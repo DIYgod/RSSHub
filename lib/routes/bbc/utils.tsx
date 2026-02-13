@@ -1,7 +1,10 @@
 import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
+
+import ofetch from '@/utils/ofetch';
 
 type BlockAttribute = 'bold' | 'italic';
 
@@ -348,7 +351,7 @@ const renderBlock = (block: Block, index: number): JSX.Element | JSX.Element[] |
     }
 };
 
-export const renderArticleContent = (content: Block[]): string => renderToString(<>{content.flatMap((block, index) => renderBlock(block, index)).filter((node) => node !== null)}</>);
+const renderArticleContent = (content: Block[]): string => renderToString(<>{content.flatMap((block, index) => renderBlock(block, index)).filter((node) => node !== null)}</>);
 
 export const extractInitialData = ($: CheerioAPI): any => {
     const initialDataText = JSON.parse(
@@ -360,7 +363,7 @@ export const extractInitialData = ($: CheerioAPI): any => {
     return JSON.parse(initialDataText);
 };
 
-export const extractSportContent = ($: CheerioAPI, item) => {
+const extractArticleWithInitialData = ($: CheerioAPI, item) => {
     if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/')) {
         return {
             description: item.content,
@@ -373,5 +376,53 @@ export const extractSportContent = ($: CheerioAPI, item) => {
     return {
         category: [...new Set([...(item.category || []), ...article.topics.map((t) => t.title)])],
         description: renderArticleContent(article.content.model.blocks),
+    };
+};
+
+export const fetchBbcContent = async (link: string, item) => {
+    const response = await ofetch.raw(link, {
+        retryStatusCodes: [403],
+    });
+    const $ = load(response._data);
+    const { hostname, pathname } = new URL(response.url);
+
+    switch (true) {
+        case hostname === 'www.bbc.co.uk':
+        case pathname.startsWith('/sport'):
+            return extractArticleWithInitialData($, item);
+        case pathname.startsWith('/sounds/play') || pathname.startsWith('/news/live'):
+            return {
+                description: item.content,
+            };
+        case pathname.startsWith('/zhongwen/articles/'): {
+            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+            const pageData = nextData.props.pageProps.pageData;
+            const metadata = pageData.metadata;
+
+            return {
+                category: [...new Set([...metadata.tags.about.map((t) => t.thingLabel), ...metadata.topics.map((t) => t.topicName)])],
+                description: renderArticleContent(pageData.content.model.blocks),
+            };
+        }
+        case pathname.startsWith('/news/'): {
+            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+            const pageProps = nextData.props.pageProps;
+            const articleData = pageProps.page[pageProps.pageKey];
+
+            return {
+                category: [...new Set([...(item.category || []), ...articleData.topics.map((t) => t.title)])],
+                description: renderArticleContent(articleData.contents),
+            };
+        }
+        default:
+            break;
+    }
+
+    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+    const pageProps = nextData.props.pageProps;
+    const articleData = pageProps.page[pageProps.pageKey];
+
+    return {
+        description: renderArticleContent(articleData.contents),
     };
 };

@@ -5,14 +5,14 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { renderArticleContent } from './utils';
+import { fetchBbcContent } from './utils';
 
 export const route: Route = {
     path: '/zhongwen/topics/:topic/:variant?',
     name: 'Topics - BBC News 中文',
     maintainers: ['TonyRL'],
     handler,
-    example: '/bbc/zhongwen/topics/c77jz3md4rwt',
+    example: '/bbc/zhongwen/topics/ckr7mn6r003t',
     parameters: {
         topic: 'The topic ID to fetch news for, can be found in the URL.',
         variant: {
@@ -52,16 +52,10 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const { category, description } = await fetchBbcContent(item.link, item);
 
-                const $ = load(response);
-                const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                const pageData = nextData.props.pageProps.pageData;
-                const metadata = pageData.metadata;
-
-                item.category = [...new Set([...metadata.tags.about.map((t) => t.thingLabel), ...metadata.topics.map((t) => t.topicName)])];
-
-                item.description = renderArticleContent(pageData.content.model.blocks);
+                item.category = category;
+                item.description = description;
 
                 return item;
             })

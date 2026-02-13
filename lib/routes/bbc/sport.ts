@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { extractInitialData, extractSportContent } from './utils';
+import { extractInitialData, fetchBbcContent } from './utils';
 
 export const route: Route = {
     path: '/sport/:sport',
@@ -34,7 +34,7 @@ async function handler(ctx) {
     const initialData = extractInitialData($);
     const { page } = initialData.stores.metadata;
 
-    const list = Object.values(initialData.data)
+    const list: DataItem[] = Object.values(initialData.data)
         .filter((d) => d.name === 'hierarchical-promo-collection' && d.props.title !== 'Elsewhere on the BBC')
         .flatMap((d) => d.data.promos)
         .map((item) => ({
@@ -47,11 +47,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
+            cache.tryGet(item.link!, async () => {
+                const { category, description } = await fetchBbcContent(item.link!, item);
 
-                const { category, description } = extractSportContent($, item);
                 item.category = category;
                 item.description = description;
 
