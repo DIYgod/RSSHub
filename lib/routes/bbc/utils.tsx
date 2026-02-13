@@ -340,7 +340,8 @@ const renderBlock = (block: Block, index: number): JSX.Element | JSX.Element[] |
         case 'visuallyHiddenHeadline':
         case 'fauxHeadline': // #endregion
         case 'metadata': // #region /sports
-        case 'topicList': // #endregion
+        case 'topicList':
+        case 'promoList': // #endregion
             return null;
         default:
             return renderParagraph(block.model?.blocks ?? block.blocks ?? block.items, `block-${index}`);
@@ -349,19 +350,24 @@ const renderBlock = (block: Block, index: number): JSX.Element | JSX.Element[] |
 
 export const renderArticleContent = (content: Block[]): string => renderToString(<>{content.flatMap((block, index) => renderBlock(block, index)).filter((node) => node !== null)}</>);
 
-export const extractSportContent = ($: CheerioAPI, item) => {
-    if (item.link.includes('/live/')) {
-        return {
-            description: item.content,
-        };
-    }
-
+export const extractInitialData = ($: CheerioAPI): any => {
     const initialDataText = JSON.parse(
         $('script:contains("window.__INITIAL_DATA__")')
             .text()
             .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '{}'
     );
-    const initialData = JSON.parse(initialDataText);
+
+    return JSON.parse(initialDataText);
+};
+
+export const extractSportContent = ($: CheerioAPI, item) => {
+    if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/')) {
+        return {
+            description: item.content,
+        };
+    }
+
+    const initialData = extractInitialData($);
     const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
 
     return {
