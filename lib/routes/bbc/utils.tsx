@@ -414,12 +414,7 @@ export const fetchBbcContent = async (link: string, item) => {
             const articleData = pageProps.page[pageProps.pageKey];
 
             return {
-                category: [
-                    ...new Set([
-                        ...(item.category || []),
-                        ...(articleData.topics?.map((t) => t.title) ?? []),
-                    ]),
-                ],
+                category: [...new Set([...(item.category || []), ...(articleData.topics?.map((t) => t.title) ?? [])])],
                 description: renderArticleContent(articleData.contents),
             };
         }
