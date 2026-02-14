@@ -1,4 +1,4 @@
-import Parser from '@postlight/parser';
+import Parser from '@jocmp/mercury-parser';
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
