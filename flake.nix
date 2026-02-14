@@ -12,11 +12,11 @@
       # Helper to define the RSSHub package
       makeRSSHub = pkgs:
         let
-          pnpm = pkgs.pnpm_9;
+          pnpm = pkgs.pnpm_10;
           deps = pnpm.fetchDeps {
             pname = "rsshub";
             src = ./.;
-            hash = "sha256-ErMPvlOIDqn03s2P+tzbQbYPZFEax5P61O1DJputvo4=";
+            hash = "sha256-QG1cIkZh+qBA5Dipt0iDLuQpEOI45wdFhuG/CTcRVU8=";
             fetcherVersion = 2;
           };
         in
