@@ -28,8 +28,8 @@ async function handler(ctx) {
     const response = await ofetch('https://api.thepaper.cn/contentapi/cont/pph/gov', {
         method: 'POST',
         body: {
-            pageNum: 1,
-            pageSize: pageSize,
+            "pageNum": 1,
+            "pageSize": pageSize,
             pphId,
         },
     });
