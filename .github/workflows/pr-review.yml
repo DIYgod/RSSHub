@@ -52,7 +52,7 @@ jobs:
               run: |
                   AUTHOR=$(gh pr view --repo "${PR_TARGET_REPO}" "${PR_NUMBER}" --json author --jq '.author.login')
                   echo "author=${AUTHOR}" >> "${GITHUB_OUTPUT}"
-                  if [[ "${AUTHOR}" == "dependabot[bot]" || "${AUTHOR}" == "dependabot" ]]; then
+                  if [[ "${AUTHOR}" == "dependabot[bot]" || "${AUTHOR}" == "app/dependabot" ]]; then
                     echo "skip=true" >> "${GITHUB_OUTPUT}"
                   else
                     echo "skip=false" >> "${GITHUB_OUTPUT}"
