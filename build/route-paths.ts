@@ -2737,6 +2737,7 @@ export type RoutePath =
   | `/thepaper/channel/:id`
   | `/thepaper/factpaper/:status?`
   | `/thepaper/featured`
+  | `/thepaper/gov/:pphId`
   | `/thepaper/list/:id`
   | `/thepaper/sidebar/:sec?`
   | `/thepaper/user/:pphId`
