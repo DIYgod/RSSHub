@@ -59,7 +59,7 @@ jobs:
                   fi
 
             - name: Comment on failed Docker build
-              if: github.event_name != 'workflow_dispatch' && github.event.workflow_run.conclusion == 'failure' && steps.check-pr-author.outputs.skip == 'false'
+              if: github.event_name != 'workflow_dispatch' && github.event.workflow_run.conclusion == 'failure'
               env:
                   GH_TOKEN: ${{ github.token }}
                   PR_TARGET_REPO: ${{ github.repository }}
@@ -71,19 +71,16 @@ jobs:
 
                   Please fix the Docker build test issues first."
 
-            - name: Exit if Dependabot or Docker build failed
-              if: github.event_name != 'workflow_dispatch' && (steps.check-pr-author.outputs.skip == 'true' || github.event.workflow_run.conclusion == 'failure')
-              run: |
-                  echo "Skipping PR review: Dependabot PR or Docker build failed"
-                  exit 0
-
             - name: Set up Bun
+              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
               uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2.1.2
 
             - name: Install opencode
+              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
               run: curl -fsSL https://opencode.ai/install | bash
 
             - name: Review PR with rules
+              if: github.event_name == 'workflow_dispatch' || (steps.check-pr-author.outputs.skip != 'true' && github.event.workflow_run.conclusion != 'failure')
               env:
                   OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
