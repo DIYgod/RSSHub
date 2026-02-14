@@ -54,7 +54,7 @@ app.use(trace);
 // Heavy middleware excluded in Worker build:
 // - sentry: @sentry/node
 // - antiHotlink: cheerio
-// - parameter: cheerio, sanitize-html, @postlight/parser
+// - parameter: cheerio, sanitize-html, @jocmp/mercury-parser
 
 app.use(cache);
 app.use(accessControl);
