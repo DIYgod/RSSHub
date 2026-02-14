@@ -6,7 +6,12 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 
-const appClients: TwitterApiReadOnly[] = [];
+interface ClientWrapper {
+    client: TwitterApiReadOnly;
+    isUserAuth: boolean;
+}
+
+const appClients: ClientWrapper[] = [];
 let index = -1;
 
 const init = () => {
@@ -19,18 +24,37 @@ const init = () => {
 
     const consumerKeys = config.twitter.consumerKey.split(',');
     const consumerSecrets = config.twitter.consumerSecret.split(',');
+    const accessTokens = config.twitter.accessToken?.split(',') || [];
+    const accessSecrets = config.twitter.accessSecret?.split(',') || [];
 
     for (const [index, consumerKey] of consumerKeys.entries()) {
         const consumerSecret = consumerSecrets[index];
+        const accessToken = accessTokens[index];
+        const accessSecret = accessSecrets[index];
+
         if (!consumerKey || !consumerSecret) {
             continue;
         }
-        appClients.push(
-            new TwitterApi({
-                appKey: consumerKey,
-                appSecret: consumerSecret,
-            }).readOnly
-        );
+
+        if (accessToken && accessSecret) {
+            appClients.push({
+                client: new TwitterApi({
+                    appKey: consumerKey,
+                    appSecret: consumerSecret,
+                    accessToken,
+                    accessSecret,
+                }).readOnly,
+                isUserAuth: true,
+            });
+        } else {
+            appClients.push({
+                client: new TwitterApi({
+                    appKey: consumerKey,
+                    appSecret: consumerSecret,
+                }).readOnly,
+                isUserAuth: false,
+            });
+        }
     }
 };
 
@@ -40,7 +64,10 @@ export const getAppClient = async () => {
         throw new ConfigNotFoundError('Twitter API is not configured');
     }
     index += 1;
-    return await appClients[index % appClients.length].appLogin();
+
+    const currentWrapper = appClients[index % appClients.length];
+
+    return currentWrapper.isUserAuth ? currentWrapper.client : await currentWrapper.client.appLogin();
 };
 
 const mapUserToLegacy = (user: Record<string, any>) =>
