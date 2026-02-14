@@ -24,8 +24,8 @@ const init = () => {
 
     const consumerKeys = config.twitter.consumerKey.split(',');
     const consumerSecrets = config.twitter.consumerSecret.split(',');
-    const accessTokens = config.twitter.accessToken.split(',');
-    const accessSecrets = config.twitter.accessSecret.split(',');
+    const accessTokens = config.twitter.accessToken?.split(',') || [];
+    const accessSecrets = config.twitter.accessSecret?.split(',') || [];
 
     for (const [index, consumerKey] of consumerKeys.entries()) {
         const consumerSecret = consumerSecrets[index];
