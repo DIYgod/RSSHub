@@ -3,8 +3,9 @@ import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 export const BASE_URL = 'https://www.dailypush.dev';
 
@@ -17,6 +18,26 @@ export interface ArticleItem {
     description?: string;
     articleUrl: string;
     dailyPushUrl?: string;
+}
+
+/**
+ * Fetch HTML from a URL using getPuppeteerPage (document requests only).
+ */
+export async function fetchHtmlWithPuppeteer(url: string): Promise<string> {
+    logger.http(`Requesting ${url}`);
+    const { page, destory } = await getPuppeteerPage(url, {
+        onBeforeLoad: async (page) => {
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' ? request.continue() : request.abort();
+            });
+        },
+    });
+    try {
+        return await page.content();
+    } finally {
+        await destory();
+    }
 }
 
 /**
@@ -234,12 +255,10 @@ export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<D
     const enhancedItems: DataItem[] = await Promise.all(
         itemsWithUrl.map((item) =>
             cache.tryGet(item.dailyPushUrl!, async () => {
-                // If we have a dailypush article URL, fetch it for the longer summary
                 try {
-                    const articleResponse = await ofetch(item.dailyPushUrl!);
+                    const articleResponse = await fetchHtmlWithPuppeteer(item.dailyPushUrl!);
                     const $ = load(articleResponse);
 
-                    // Find the longer summary/description on the article page
                     const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
 
                     if (summary.length > 0 && summary.text().trim()) {
@@ -254,6 +273,5 @@ export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<D
         )
     );
 
-    // Include items without dailyPushUrl as-is
     return [...enhancedItems, ...itemsWithoutUrl];
 }
