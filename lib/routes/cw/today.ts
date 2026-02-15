@@ -28,11 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const browser = await puppeteer();
-
-    const { $, items } = await parsePage('today', browser, ctx);
-
-    await browser.close();
+    const { $, items } = await parsePage('today', ctx);
 
     return {
         title: $('head title').text(),

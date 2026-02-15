@@ -4,6 +4,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import { getCookies, setCookies } from '@/utils/puppeteer-utils';
 
 let cookie;
@@ -29,18 +30,11 @@ const pathMap = {
     },
 };
 
-const getCookie = async (browser, tryGet) => {
+const getCookie = async (tryGet) => {
     if (!cookie) {
         cookie = await tryGet('cw:cookie', async () => {
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
-            });
             logger.http(`Requesting ${baseUrl}/user/get/cookie-bar`);
-            await page.goto(`${baseUrl}/user/get/cookie-bar`, {
-                waitUntil: 'domcontentloaded',
-            });
+            const { page } = (await getPuppeteerPage(`${baseUrl}/user/get/cookie-bar`));
             cookie = await getCookies(page);
             await page.close();
             return cookie;
@@ -49,17 +43,13 @@ const getCookie = async (browser, tryGet) => {
     return cookie;
 };
 
-const parsePage = async (path, browser, ctx) => {
+const parsePage = async (path, ctx) => {
     const pageUrl = `${baseUrl}${pathMap[path].pageUrl(ctx.req.param('channel'))}`;
 
-    const cookie = await getCookie(browser, cache.tryGet);
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
-    });
-    await setCookies(page, cookie, 'cw.com.tw');
     logger.http(`Requesting ${pageUrl}`);
+    const cookie = await getCookie(cache.tryGet);
+    const { page, browser } = await getPuppeteerPage(pageUrl, { noGoto: true });
+    await setCookies(page, cookie, 'cw.com.tw');
     await page.goto(pageUrl, {
         waitUntil: 'domcontentloaded',
     });
@@ -70,7 +60,7 @@ const parsePage = async (path, browser, ctx) => {
     const $ = load(response);
 
     const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
-    const items = await parseItems(list, browser, cache.tryGet);
+    const items = await parseItems(list, browser.userAgent(), cache.tryGet);
 
     return { $, items };
 };
@@ -88,14 +78,14 @@ const parseList = ($, limit) =>
         })
         .slice(0, limit);
 
-const parseItems = (list, browser, tryGet) =>
+const parseItems = (list, ua, tryGet) =>
     Promise.all(
-        list.map((item) =>
-            tryGet(item.link, async () => {
+        list.map(async (item) =>
+            await tryGet(item.link, async () => {
                 const response = await ofetch(item.link, {
                     headers: {
-                        Cookie: await getCookie(browser, tryGet),
-                        'User-Agent': browser.userAgent(),
+                        Cookie: await getCookie(tryGet),
+                        'User-Agent': ua,
                     },
                 });
                 const $ = load(response);
