@@ -86,7 +86,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const url = `${host}index/${cate}.htm`;
 
-    const { page, destory, browser } = await getPuppeteerPage(url, {
+    const { page, destroy, browser } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
             await page.setUserAgent(headers['User-Agent']);
@@ -102,7 +102,7 @@ async function handler(ctx) {
     const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
 
     const response = await page.content();
-    await destory();
+    await destroy();
 
     const $ = load(response);
 
