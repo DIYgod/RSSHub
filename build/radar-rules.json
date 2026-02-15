@@ -4833,12 +4833,13 @@
   },
   "ainvest.com": {
     "_name": "AInvest",
-    ".": [
+    "www": [
       {
         "title": "Latest Article",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news"
+          "/news/articles-latest/",
+          "/"
         ],
         "target": "/ainvest/article"
       },
@@ -4846,7 +4847,7 @@
         "title": "Latest News",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/news"
+          "/news/"
         ],
         "target": "/ainvest/news"
       }
