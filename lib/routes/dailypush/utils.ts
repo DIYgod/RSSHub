@@ -252,26 +252,28 @@ export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<D
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems: DataItem[] = await Promise.all(
-        itemsWithUrl.map((item) =>
-            cache.tryGet(item.dailyPushUrl!, async () => {
-                try {
-                    const articleResponse = await fetchHtmlWithPuppeteer(item.dailyPushUrl!);
-                    const $ = load(articleResponse);
+    const enhancedItems: DataItem[] = [];
+    // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
+    for (const item of itemsWithUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const enhanced = await cache.tryGet(item.dailyPushUrl!, async () => {
+            try {
+                const articleResponse = await fetchHtmlWithPuppeteer(item.dailyPushUrl!);
+                const $ = load(articleResponse);
 
-                    const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
 
-                    if (summary.length > 0 && summary.text().trim()) {
-                        item.description = summary.text().trim();
-                    }
-                } catch {
-                    // If fetching article page fails, keep the original description
+                if (summary.length > 0 && summary.text().trim()) {
+                    item.description = summary.text().trim();
                 }
+            } catch {
+                // If fetching article page fails, keep the original description
+            }
 
-                return item;
-            })
-        )
-    );
+            return item;
+        });
+        enhancedItems.push(enhanced);
+    }
 
     return [...enhancedItems, ...itemsWithoutUrl];
 }
