@@ -85,7 +85,7 @@ async function handler(ctx) {
             });
         } catch (error) {
             if (error.status === 403) {
-                const { page, destory } = await getPuppeteerPage(profileUrl, {
+                const { page, destroy } = await getPuppeteerPage(profileUrl, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                         await page.setRequestInterception(true);
@@ -96,7 +96,7 @@ async function handler(ctx) {
                 });
                 await page.waitForSelector('.content');
                 response = await page.content();
-                await destory();
+                await destroy();
             } else {
                 throw new NotFoundError(error.message);
             }

@@ -42,7 +42,7 @@ async function handler(ctx) {
     const { sort = '' } = ctx.req.param();
     const url = sort ? `${BASE_URL}/${sort}` : BASE_URL;
 
-    const { page, destory } = await getPuppeteerPage(url, {
+    const { page, destroy } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -65,6 +65,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await destory();
+        await destroy();
     }
 }

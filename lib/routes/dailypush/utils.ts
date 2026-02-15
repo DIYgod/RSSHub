@@ -25,7 +25,7 @@ export interface ArticleItem {
  */
 export async function fetchHtmlWithPuppeteer(url: string): Promise<string> {
     logger.http(`Requesting ${url}`);
-    const { page, destory } = await getPuppeteerPage(url, {
+    const { page, destroy } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -36,7 +36,7 @@ export async function fetchHtmlWithPuppeteer(url: string): Promise<string> {
     try {
         return await page.content();
     } finally {
-        await destory();
+        await destroy();
     }
 }
 

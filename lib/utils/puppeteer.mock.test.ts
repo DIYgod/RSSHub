@@ -69,7 +69,7 @@ describe('getPuppeteerPage (mocked)', () => {
         expect(endpoint).toContain('stealth=true');
         expect(onBeforeLoad).toHaveBeenCalled();
 
-        await result.destory();
+        await result.destroy();
         expect(browser.close).toHaveBeenCalled();
 
         delete process.env.PUPPETEER_WS_ENDPOINT;
