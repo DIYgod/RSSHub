@@ -29,6 +29,7 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 - [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | RSSHub Radar for Android platform built with Flutter.
 - [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast.
 - [Awesome RSSHub Routes](https://github.com/JackyST0/awesome-rsshub-routes) | Curated list of RSS feeds and RSSHub routes.
+- [Dashboard](https://github.com/Rozhovetskyi/Dashboard) | Lightweight, customizable, client - side RSS feeds dashboard.
 
 ## Contribute
 
