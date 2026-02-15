@@ -18,9 +18,6 @@ updates:
           # https://github.com/yoimiya-kokomi/Miao-Yunzai/pull/515 https://github.com/zhangfisher/flex-tools/commit/09b565dfe6e2932bb829613ddbe09f6d0acbccd4
           - dependency-name: art-template
             versions: ['>=4.13.3']
-          # no longer includes KJUR.crypto.Cipher for RSA
-          - dependency-name: jsrsasign
-            versions: ['>=11.0.0']
           # pin jsdom to avoid `Error: require() of ES Module` issue caused by parse5 v8
           # https://github.com/jsdom/jsdom/issues/3959
           - dependency-name: jsdom

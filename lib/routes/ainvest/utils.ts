@@ -1,69 +1,54 @@
-import crypto from 'node:crypto';
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
-import CryptoJS from 'crypto-js';
-import { hextob64, KEYUTIL, KJUR } from 'jsrsasign';
+const contentStreamUrl = 'https://news.ainvest.com/news-w-ds-hxcmp-content-stream/content_stream/api/stream_item/v1/query_content_stream';
+const contentPageUrl = 'https://news.ainvest.com/content-page/v1/page';
 
-const publicKey =
-    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCARnxLlrhTK28bEV7s2IROjT73KLSjfqpKIvV8L+Yhe4BrF0Ut4oOH728HZlbSF0C3N0vXZjLAFesoS4v1pYOjVCPXl920Lh2seCv82m0cK78WMGuqZTfA44Nv7JsQMHC3+J6IZm8YD53ft2d8mYBFgKektduucjx8sObe7eRyoQIDAQAB';
+const normalizeItem = (item) => ({
+    title: item.title,
+    link: item.h5_url,
+    pubDate: parseDate(item.ctime, 'X'),
+    category: item.content_tags.map((tag) => tag.name),
+    author: item.author_name,
+    image: item.cover_image,
+    seoKey: item.seo_key,
+});
 
-const randomString = (length: number) => {
-    if (length > 32) {
-        throw new Error('Max length is 32.');
-    }
-    return uuidv4().replaceAll('-', '').slice(0, length);
+export const fetchContentStream = (streamId, limit) =>
+    cache.tryGet(
+        `ainvest:news:${streamId}:${limit}`,
+        async () => {
+            const response = await ofetch(contentStreamUrl, {
+                query: {
+                    lang: 'en',
+                    pageSize: limit,
+                    stream_id: streamId,
+                    page: 1,
+                },
+            });
+            return response.data.list;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+export const fetchContentItems = async (streamIds, limit) => {
+    const streams = await Promise.all(streamIds.map((streamId) => fetchContentStream(streamId, limit)));
+    const list = streams.flat().map((item) => normalizeItem(item));
+
+    return Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(`${contentPageUrl}/${item.seoKey}`);
+                const { data } = response;
+
+                item.description = data.pageInfo.structuredContent.map((c) => c.content).join('');
+                item.image = data.contentInfo.coverImage;
+
+                return item;
+            })
+        )
+    );
 };
-
-const uuidv4 = () => crypto.randomUUID();
-
-/**
- * @param {string} str
- * @returns {CryptoJS.lib.WordArray}
- */
-const MD5 = (str) => CryptoJS.MD5(str);
-
-const encryptAES = (data, key) => {
-    if (typeof key === 'string') {
-        key = MD5(key);
-    }
-    return CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), key, {
-        mode: CryptoJS.mode.ECB,
-        padding: CryptoJS.pad.Pkcs7,
-    }).toString();
-};
-
-const decryptAES = (data, key) => {
-    if (typeof key === 'string') {
-        key = MD5(key);
-    }
-    return CryptoJS.AES.decrypt(data, key, {
-        mode: CryptoJS.mode.ECB,
-        padding: CryptoJS.pad.Pkcs7,
-    }).toString(CryptoJS.enc.Utf8);
-};
-
-const encryptRSA = (data) => {
-    // Original code:
-    // var n = new JSEncrypt();
-    // n.setPublicKey(pubKey);
-    // return n.encrypt(message);
-    // Note: Server will reject the public key if it's encrypted using crypto.publicEncrypt().
-    let pubKey = `-----BEGIN PUBLIC KEY-----${publicKey}-----END PUBLIC KEY-----`;
-    pubKey = KEYUTIL.getKey(pubKey);
-    return hextob64(KJUR.crypto.Cipher.encrypt(data, pubKey));
-};
-
-const getHeaders = (key) => {
-    const fingerPrint = uuidv4();
-
-    return {
-        'content-type': 'application/json',
-        'ovse-trace': uuidv4(),
-        callertype: 'USER',
-        fingerprint: encryptAES(fingerPrint, MD5(key)),
-        onetimeskey: encryptRSA(key),
-        timestamp: encryptAES(Date.now(), key),
-        referer: 'https://www.ainvest.com/',
-    };
-};
-
-export { decryptAES, encryptAES, getHeaders, randomString };
