@@ -59,7 +59,7 @@
         "@bbob/plugin-helper": "4.3.1",
         "@bbob/preset-html5": "4.3.1",
         "@hono/node-server": "1.19.9",
-        "@hono/zod-openapi": "1.2.1",
+        "@hono/zod-openapi": "1.2.2",
         "@jocmp/mercury-parser": "3.0.2",
         "@notionhq/client": "5.9.0",
         "@opentelemetry/api": "1.9.0",
