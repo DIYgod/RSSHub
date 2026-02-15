@@ -60,7 +60,8 @@ const parsePage = async (path, ctx) => {
     const $ = load(response);
 
     const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
-    const items = await parseItems(list, browser.userAgent(), cache.tryGet);
+    const ua = await browser.userAgent();
+    const items = await parseItems(list, ua, cache.tryGet);
 
     return { $, items };
 };
