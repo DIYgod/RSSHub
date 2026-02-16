@@ -159,7 +159,7 @@
         "@types/js-beautify": "1.14.3",
         "@types/jsdom": "27.0.0",
         "@types/json-bigint": "1.0.4",
-        "@types/jsrsasign": "10.5.13",
+        "@types/jsrsasign": "10.5.15",
         "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
