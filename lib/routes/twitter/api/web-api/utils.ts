@@ -285,6 +285,9 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                 filteredEntries.push(entry);
             } else if (entryId.startsWith('profile-grid-0-tweet-')) {
                 filteredEntries.push(entry);
+            } else if (entryId.startsWith('profile-conversation-')) {
+                // Also include tweet thread
+                filteredEntries.push(entry);
             }
             if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
                 filteredEntries.push(...entry.content.items);
@@ -294,11 +297,39 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of filteredEntries) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
+            const tweetCandidates: any[] = [];
+
             let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }
             if (tweet) {
+                tweetCandidates.push(tweet);
+            }
+
+            logger.debug(`entry.entryId: ${entry.entryId}`)
+
+            const itemTweets = content?.items
+                ?.map((i) => i?.item?.itemContent?.tweet_results?.result)
+                .filter(Boolean);
+	
+            if (itemTweets?.length > 0) {
+                logger.debug("Found a tweet thread")
+                for (let t of itemTweets) {
+                    if (t?.tweet) {
+                        t = t.tweet;
+                    }
+                    if (t) {
+                        tweetCandidates.push(t);
+                    }
+                }
+            }
+
+            if (tweetCandidates.length === 0) {
+                logger.debug(`Cannot find any item for the entry: ${entry}`)
+            }
+
+            for (const tweet of tweetCandidates) {
                 const retweet = tweet.legacy?.retweeted_status_result?.result;
                 for (const t of [tweet, retweet]) {
                     if (!t?.legacy) {
@@ -338,6 +369,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         t.legacy.entities.urls = tmp.entity_set.urls;
                         t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
                         t.legacy.full_text = tmp.text;
+                        logger.debug(`t.legacy.full_text: ${t.legacy.full_text.substring(0,100)}`)
                     }
                 }
                 const legacy = tweet.legacy;
