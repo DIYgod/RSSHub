@@ -296,6 +296,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     }
     for (const entry of filteredEntries) {
         if (entry.entryId) {
+            logger.debug(`entry.entryId: ${entry.entryId}`);
             const content = entry.content || entry.item;
             const tweetCandidates: any[] = [];
 
@@ -307,14 +308,12 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                 tweetCandidates.push(tweet);
             }
 
-            logger.debug(`entry.entryId: ${entry.entryId}`)
-
             const itemTweets = content?.items
                 ?.map((i) => i?.item?.itemContent?.tweet_results?.result)
                 .filter(Boolean);
 	
             if (itemTweets?.length > 0) {
-                logger.debug("Found a tweet thread")
+                logger.debug('Found a tweet thread');
                 for (let t of itemTweets) {
                     if (t?.tweet) {
                         t = t.tweet;
@@ -326,7 +325,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
             }
 
             if (tweetCandidates.length === 0) {
-                logger.debug(`Cannot find any item for the entry: ${entry}`)
+                logger.debug(`Cannot find any item for the entry: ${entry}`);
             }
 
             for (const tweet of tweetCandidates) {
@@ -369,7 +368,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         t.legacy.entities.urls = tmp.entity_set.urls;
                         t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
                         t.legacy.full_text = tmp.text;
-                        logger.debug(`t.legacy.full_text: ${t.legacy.full_text.substring(0,100)}`)
+                        logger.debug(`t.legacy.full_text: ${t.legacy.full_text.slice(0,100)}`);
                     }
                 }
                 const legacy = tweet.legacy;
