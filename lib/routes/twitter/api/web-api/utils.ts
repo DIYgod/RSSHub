@@ -311,7 +311,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
             const itemTweets = content?.items
                 ?.map((i) => i?.item?.itemContent?.tweet_results?.result)
                 .filter(Boolean);
-	
+
             if (itemTweets?.length > 0) {
                 logger.debug('Found a tweet thread');
                 for (let t of itemTweets) {
@@ -368,7 +368,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                         t.legacy.entities.urls = tmp.entity_set.urls;
                         t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
                         t.legacy.full_text = tmp.text;
-                        logger.debug(`t.legacy.full_text: ${t.legacy.full_text.slice(0,100)}`);
+                        logger.debug(`t.legacy.full_text: ${t.legacy.full_text.slice(0, 100)}`);
                     }
                 }
                 const legacy = tweet.legacy;
