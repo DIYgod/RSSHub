@@ -336,8 +336,8 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       '@types/jsrsasign':
-        specifier: 10.5.13
-        version: 10.5.13
+        specifier: 10.5.15
+        version: 10.5.15
       '@types/mailparser':
         specifier: 3.4.6
         version: 3.4.6
@@ -2119,8 +2119,8 @@ packages:
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
-  '@types/jsrsasign@10.5.13':
-    resolution: {integrity: sha512-vvVHLrXxoUZgBWTcJnTMSC4FAQcG2loK7N1Uy20I3nr/aUhetbGdfuwSzXkrMoll2RoYKW0IcMIN0I0bwMwVMQ==}
+  '@types/jsrsasign@10.5.15':
+    resolution: {integrity: sha512-3stUTaSRtN09PPzVWR6aySD9gNnuymz+WviNHoTb85dKu+BjaV4uBbWWGykBBJkfwPtcNZVfTn2lbX00U+yhpQ==}
 
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
@@ -5129,6 +5129,7 @@ packages:
   tar@7.5.7:
     resolution: {integrity: sha512-fov56fJiRuThVFXD6o6/Q354S7pnWMJIVlDBYijsTNx6jKSE4pvrDTs6lUnmGvNyfJwFQQwWy3owKz1ucIhveQ==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   telegram@2.26.22:
     resolution: {integrity: sha512-EIj7Yrjiu0Yosa3FZ/7EyPg9s6UiTi/zDQrFmR/2Mg7pIUU+XjAit1n1u9OU9h2oRnRM5M+67/fxzQluZpaJJg==}
@@ -7323,7 +7324,7 @@ snapshots:
     dependencies:
       '@types/node': 25.2.3
 
-  '@types/jsrsasign@10.5.13': {}
+  '@types/jsrsasign@10.5.15': {}
 
   '@types/linkify-it@5.0.0': {}
 
