@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import utils from './utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/characters/:lang?',
@@ -30,11 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const base = utils.langBase(ctx.req.param('lang'));
-    const res = await got.get(base, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const res = await got(base);
     const info = utils.fetchAllCharacters(res.data, base);
 
     const details = await Promise.all(info.map((e) => utils.detailPage(e.detailPage, cache)));

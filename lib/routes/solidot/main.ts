@@ -1,15 +1,16 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio'; // html parser
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
-
 // params:
 // type: subject type
-
 import got from '@/utils/got'; // get web content
-import { load } from 'cheerio'; // html parser
-import get_article from './_article';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import get_article from './_article';
 
 export const route: Route = {
     path: '/:type?',

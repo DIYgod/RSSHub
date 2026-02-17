@@ -1,19 +1,20 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'all' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://www.cbndata.com';
+    const baseUrl = 'https://www.cbndata.com';
     const targetUrl: string = new URL(`information?tag_id=${id}`, baseUrl).href;
     const apiUrl: string = new URL('api/v3/informations', baseUrl).href;
 
@@ -33,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const image: string | undefined = item.image;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             images: image
                 ? [
                       {
@@ -46,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const pubDate: number | string = item.date;
         const linkUrl: string | undefined = item.id ? `information/${item.id}` : undefined;
         const categories: string[] = item.tags;
-        const guid: string = `cbndata-information-${item.id}`;
+        const guid = `cbndata-information-${item.id}`;
         const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
@@ -94,7 +95,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = data.title;
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         description: data.content,
                     });
                 const pubDate: number | string = data.date;
@@ -107,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         avatar: undefined,
                     },
                 ];
-                const guid: string = `cbndata-information-${data.id}`;
+                const guid = `cbndata-information-${data.id}`;
                 const image: string | undefined = data.thumbnail_url;
                 const updated: number | string = pubDate;
 
@@ -139,7 +140,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     const tag: string = response.home_tags.find((t: { id: number; name: string }) => String(t.id) === id)?.name ?? '';
-    const title: string = `${tag ? `${tag}-` : ''}${$('title').text().trim()}`;
+    const title = `${tag ? `${tag}-` : ''}${$('title').text().trim()}`;
 
     return {
         title,

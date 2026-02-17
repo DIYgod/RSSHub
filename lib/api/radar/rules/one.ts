@@ -1,7 +1,9 @@
-import { namespaces } from '@/registry';
+import type { RouteHandler } from '@hono/zod-openapi';
+import { createRoute, z } from '@hono/zod-openapi';
 import { parse } from 'tldts';
-import { RadarDomain } from '@/types';
-import { z, createRoute, RouteHandler } from '@hono/zod-openapi';
+
+import { namespaces } from '@/registry';
+import type { RadarDomain } from '@/types';
 
 const radar: {
     [domain: string]: RadarDomain;
@@ -69,4 +71,4 @@ const handler: RouteHandler<typeof route> = (ctx) => {
     return ctx.json(radar[domain]);
 };
 
-export { route, handler };
+export { handler, route };

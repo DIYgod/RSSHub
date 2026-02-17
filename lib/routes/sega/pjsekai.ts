@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import * as cheerio from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import timezone from '@/utils/timezone';
+
 export const route: Route = {
     path: '/pjsekai/news',
     categories: ['game'],

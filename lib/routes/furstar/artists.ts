@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import utils from './utils';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/artists/:lang?',
@@ -31,11 +33,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const base = utils.langBase(ctx.req.param('lang'));
-    const res = await got.get(base, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const res = await got(base);
     const $ = load(res.data);
     const artists = $('.filter-item')
         .toArray()

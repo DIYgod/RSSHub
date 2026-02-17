@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { header, processImage, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/topic/:topicId/:isTop?',

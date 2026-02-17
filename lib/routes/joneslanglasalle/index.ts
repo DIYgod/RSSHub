@@ -1,15 +1,15 @@
-import path from 'node:path';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
 
 const cleanHtml = (html: string, preservedTags: string[]): string => {
     const $ = load(html);
@@ -36,7 +36,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     // default limit is 12
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const rootUrl: string = 'https://www.joneslanglasalle.com.cn';
+    const rootUrl = 'https://www.joneslanglasalle.com.cn';
     const targetUrl: string = new URL(`${lang}/${category}`, rootUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -53,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $item.text();
             const link: string | undefined = aEl.prop('href');
 
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 intro: aEl.find('p.ti-teaser').text(),
             });
 
@@ -108,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                             if (src) {
                                 $$el.replaceWith(
-                                    art(path.join(__dirname, 'templates/description.art'), {
+                                    renderDescription({
                                         images: [
                                             {
                                                 src,
@@ -138,7 +138,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             })
                             .filter((link): link is { url: string; type: string; content_html: string } => true);
 
-                        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                        const description: string = renderDescription({
                             description: cleanHtml($$('div.page-section').eq(1).html() ?? $$('div.copy-block').html() ?? '', ['div.richtext p', 'h3', 'h4', 'h5', 'h6', 'figure', 'img', 'ul', 'li', 'span', 'b']),
                         });
 

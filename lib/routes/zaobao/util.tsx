@@ -1,11 +1,13 @@
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import { renderToString } from 'hono/jsx/dom/server';
 import { base32 } from 'rfc4648';
-import Zaobao from './zaobao';
+
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import Zaobao from './zaobao';
 
 const baseUrl = 'https://www.zaobao.com';
 export const logo = 'https://www.zaobao.com.sg/favicon.ico';
@@ -20,13 +22,13 @@ export const parseList = async (
     sectionUrl: string
 ): Promise<{
     title: string;
-    resultList: {
+    resultList: Array<{
         title: string;
         description?: string;
         pubDate: Date;
         link: string;
         category?: string[];
-    }[];
+    }>;
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
     const $ = load(pageResponse._data);
@@ -57,28 +59,23 @@ export const parseList = async (
                 let $1 = load(response._data);
 
                 let title, pubDate, category, images;
-                const jsonText = $1('head script[type="application/ld+json"]')
+                const jsonText = $1('script[type="application/ld+json"]')
                     .text()
                     .replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
                 const ldJson = JSON.parse(jsonText);
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
-                    const hydrationData = JSON.parse(
-                        JSON.parse(
-                            `"${
-                                $1('script:contains("__staticRouterHydrationData")')
-                                    .text()
-                                    .match(/__staticRouterHydrationData = JSON.parse\("(.*)"\);/)?.[1]
-                            }"`
-                        )
-                    );
-                    const article = hydrationData.loaderData['0-0'].context.payload.article;
+                    const ldJson = JSON.parse($1('#seo-article-page').text());
+                    const article = ldJson['@graph'].find((item) => item['@type'] === 'NewsArticle');
                     title = article.headline;
-                    pubDate = parseDate(article.create_time, 'X');
-                    category = article.tags.map((t) => t.name);
-                    $1 = load(article.body_cn, null, false);
-                    images = article.images;
+                    pubDate = parseDate(article.datePublished);
+                    category = $1('meta[name="keywords"]')
+                        .attr('content')
+                        ?.split(',')
+                        .map((s) => s.trim());
+                    $1 = load($1('.articleBody').html(), null, false);
+                    images = [{ url: article.image.url }];
                 } else {
                     title = ldJson.headline;
                     pubDate = parseDate(ldJson.datePublished);

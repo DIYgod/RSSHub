@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
-
-import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import puppeteer from '@/utils/puppeteer';
-import logger from '@/utils/logger';
-import cache from '@/utils/cache';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/user/:id',

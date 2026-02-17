@@ -1,11 +1,15 @@
+import 'dayjs/locale/fr.js';
+
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
+import type { Context } from 'hono';
+
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { Cheerio, load } from 'cheerio';
-import dayjs from 'dayjs';
-import 'dayjs/locale/fr.js';
-import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import type { Context } from 'hono';
+
 dayjs.extend(localizedFormat);
 
 export const route: Route = {

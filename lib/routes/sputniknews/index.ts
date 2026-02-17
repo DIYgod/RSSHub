@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const languages = {
@@ -63,7 +64,7 @@ export const route: Route = {
 
 | 新闻 | 中国  | 俄罗斯 | 国际            | 俄中关系                 | 评论    |
 | ---- | ----- | ------ | --------------- | ------------------------ | ------- |
-| news | china | russia | category\_guoji | russia\_china\_relations | opinion |
+| news | china | russia | category_guoji | russia_china_relations | opinion |
 
   Language
 

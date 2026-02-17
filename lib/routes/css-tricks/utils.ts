@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 export const rootUrl = 'https://css-tricks.com';

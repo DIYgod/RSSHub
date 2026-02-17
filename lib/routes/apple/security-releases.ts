@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/security-releases';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = 'en-us' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://support.apple.com';
+    const baseUrl = 'https://support.apple.com';
     const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -36,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const titleEl: Cheerio<Element> = $el.find('td').first();
             const title: string = titleEl.contents().first().text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/security-releases.art'), {
+            const description: string | undefined = renderDescription({
                 headers,
                 infos: $el
                     .find('td')
@@ -81,7 +82,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/security-releases.art'), {
+                    renderDescription({
                         description: $$('div#sections').html(),
                     });
                 const pubDateStr: string | undefined = detailResponse.match(/publish_date:\s"(\d{8})",/, '')?.[1];

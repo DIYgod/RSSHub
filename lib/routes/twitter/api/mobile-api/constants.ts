@@ -83,4 +83,4 @@ const bearerToken = 'Bearer AAAAAAAAAAAAAAAAAAAAAFXzAwAAAAAAMHCxpeSDG1gLNLghVe8d
 
 const guestActivateUrl = baseUrl + '/1.1/guest/activate.json';
 
-export { baseUrl, consumerKey, consumerSecret, gqlMap, gqlFeatures, timelineParams, bearerToken, guestActivateUrl };
+export { baseUrl, bearerToken, consumerKey, consumerSecret, gqlFeatures, gqlMap, guestActivateUrl, timelineParams };

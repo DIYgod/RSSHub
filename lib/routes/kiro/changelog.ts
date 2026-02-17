@@ -1,17 +1,18 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://kiro.dev';
+    const baseUrl = 'https://kiro.dev';
     const targetUrl: string = new URL('changelog/', baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -26,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
-            const title: string = `${$el.parent().find('span').text()} ${$el.find('h3').text()}`;
+            const title = `${$el.parent().find('span').text()} ${$el.find('h3').text()}`;
             const description: string | undefined = $el.parent().parent().find('div.prose').html() ?? undefined;
             const pubDateStr: string | undefined = $el.parent().parent().parent().find('time').text();
             const linkUrl: string | undefined = $el.attr('href');
@@ -58,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = `${$$('article span').first().text()} ${$$('article h3').text()}`;
+                const title = `${$$('article span').first().text()} ${$$('article h3').text()}`;
                 const description: string | undefined = $$('div.prose').html() ?? undefined;
                 const pubDateStr: string | undefined = $$('time').text();
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');

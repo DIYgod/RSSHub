@@ -1,10 +1,10 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-import { type Context } from 'hono';
 
 type MainIdsResult = {
     name: string | undefined;
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '2', key } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.jl1mall.com';
+    const baseUrl = 'https://www.jl1mall.com';
     const targetUrl: string = new URL('forum', baseUrl).href;
     const apiUrl: string = new URL(`postApi/${type === 'recommend' ? 'recommend' : 'post'}/getPostData`, baseUrl).href;
     const apiRacerUrl: string = new URL('postApi/racer/getRacerList', baseUrl).href;
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
               ]
             : undefined;
-        const guid: string = `jl1mall-${item.postId}`;
+        const guid = `jl1mall-${item.postId}`;
         const image: string | undefined = item.pictureLink;
         const updated: number | string = pubDate;
 
@@ -118,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    const title: string = '星林社区';
+    const title = '星林社区';
 
     return {
         title: name ? `${title} - ${name}` : title,

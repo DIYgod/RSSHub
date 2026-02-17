@@ -1,10 +1,11 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+import { Cookie, CookieJar } from 'tough-cookie';
+
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { CookieJar, Cookie } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
 const owner = '中央纪委国家监委网站';
@@ -88,4 +89,4 @@ const parseArticle = async (item) => {
     });
 };
 
-export { rootUrl, parseNewsList, parseArticle };
+export { parseArticle, parseNewsList, rootUrl };

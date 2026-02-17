@@ -1,9 +1,10 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 import { baseUrl, fetchItems } from './util';
 
@@ -20,7 +21,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
-    const selector: string = 'div.card-panel';
+    const selector = 'div.card-panel';
 
     const items: DataItem[] = await fetchItems($, selector, targetUrl, country, limit);
 

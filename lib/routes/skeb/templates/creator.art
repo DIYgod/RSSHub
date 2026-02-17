@@ -1,8 +1,0 @@
-{{ if avatarUrl }}
-    <img src="{{ avatarUrl }}" />
-{{ /if }}
-<p>委託狀況（Accepting Commissions）：{{ acceptingCommissions }}</p>
-<p>NSFW：{{ nsfwAcceptable }}</p>
-{{ if skills }}
-    <p>類型（Genre）：{{ skills }}</p>
-{{ /if }}

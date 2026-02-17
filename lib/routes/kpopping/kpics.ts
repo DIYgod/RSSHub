@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://kpopping.com';
+    const baseUrl = 'https://kpopping.com';
     const targetUrl: string = new URL(`kpics${filter ? `/${filter}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -30,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('figcaption section').text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 images: $el.find('a.picture img').attr('src')
                     ? [
                           {
@@ -73,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('h1').contents().first().text();
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         description: $$('div.pics').first().html(),
                     });
                     const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
@@ -120,8 +121,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             continue;
                         }
 
-                        const medium: string = 'image';
-                        const key: string = `${medium}${imageCount++}`;
+                        const medium = 'image';
+                        const key = `${medium}${imageCount++}`;
 
                         medias[key] = {
                             url,

@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import cache from '@/utils/cache';
 import pMap from 'p-map';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderComic } from './template/comic';
 
 export const route: Route = {
     path: '/update',
@@ -60,9 +61,7 @@ export const route: Route = {
                     });
 
                     const chapterData = chapterResponse.data;
-                    const description = art(path.join(__dirname, 'template/comic.art'), {
-                        contents: chapterData.chapterInfo.page_url || [],
-                    });
+                    const description = renderComic(chapterData.chapterInfo.page_url || []);
 
                     return {
                         title: `[${item.status}] | ${item.name} - ${item.last_update_chapter_name}`,

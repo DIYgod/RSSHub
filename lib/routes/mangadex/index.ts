@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { getMangaDetails } from './_feed';
 
 export const route: Route = {

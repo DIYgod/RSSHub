@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import util from './utils';
-import iconv from 'iconv-lite';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com.cn';
@@ -115,6 +117,9 @@ async function handler(ctx) {
             break;
         case 'intcreditcard':
             bankname = '境外信用卡';
+            break;
+        default:
+            throw new Error(`Unknown bank: ${bank}`);
     }
 
     const response = await got.get(target, {

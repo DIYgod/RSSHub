@@ -1,10 +1,12 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { puppeteerGet, renderDesc } from './utils';
+
 import { config } from '@/config';
-import { isValidHost } from '@/utils/valid-host';
-import puppeteer from '@/utils/puppeteer';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
+import puppeteer from '@/utils/puppeteer';
+import { isValidHost } from '@/utils/valid-host';
+
+import { puppeteerGet, renderDesc } from './utils';
 
 const handler = async (ctx) => {
     const pub = ctx.req.param('pub');

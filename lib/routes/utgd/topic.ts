@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { rootUrl, apiRootUrl, parseResult, parseArticle } from './utils';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { apiRootUrl, parseArticle, parseResult, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic?',

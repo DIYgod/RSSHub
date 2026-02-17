@@ -1,8 +1,9 @@
-import { Data, Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.zjut.edu.cn/';

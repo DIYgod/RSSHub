@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
@@ -69,7 +69,14 @@ export const handler = async (ctx) => {
                             title,
                             pubDate,
                             link: new URL(i.prop('href'), item.link).href,
-                            category: [current, i.closest('div.class-box').find('div.title-box span').text().replaceAll(/【|】/g, '') || undefined].filter(Boolean),
+                            category: [
+                                current,
+                                i
+                                    .closest('div.class-box')
+                                    .find('div.title-box span')
+                                    .text()
+                                    .replaceAll(/【|】/g, '') || undefined,
+                            ].filter(Boolean),
                             author,
                             guid,
                             id: guid,

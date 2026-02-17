@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { rootUrl, apiSearchRootUrl, generateSignature, processItems, fetchData } from './util';
+import { apiSearchRootUrl, fetchData, generateSignature, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -12,8 +12,8 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
+        antiCrawler: true,
+        supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },

@@ -1,4 +1,4 @@
-import { DataItem } from '@/types';
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 

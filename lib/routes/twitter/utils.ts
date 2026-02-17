@@ -1,10 +1,7 @@
-import URL from 'node:url';
-import { config } from '@/config';
-import { TwitterApi } from 'twitter-api-v2';
-import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { parseDate } from '@/utils/parse-date';
+import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
-const getQueryParams = (url) => URL.parse(url, true).query;
+const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
     let m = null;
@@ -151,7 +148,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         if (widthOfPics <= 0 && heightOfPics <= 0) {
                             content += `width="${media.sizes.large.w}" height="${media.sizes.large.h}" `;
                         }
-                        content += ` style="${style}" ` + `${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
+                        content += ` style="${style}" ${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
                         if (addLinkForPics) {
                             content += `</a>`;
                         }
@@ -440,32 +437,6 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     });
 };
 
-let getAppClient = () => null;
-
-if (config.twitter.consumer_key && config.twitter.consumer_secret) {
-    const consumer_keys = config.twitter.consumer_key.split(',');
-    const consumer_secrets = config.twitter.consumer_secret.split(',');
-    const T = {};
-    let count = 0;
-    let index = -1;
-
-    for (const [i, consumer_key] of consumer_keys.entries()) {
-        const consumer_secret = consumer_secrets[i];
-        if (consumer_key && consumer_secret) {
-            T[i] = new TwitterApi({
-                appKey: consumer_key,
-                appSecret: consumer_secret,
-            }).readOnly;
-            count = i + 1;
-        }
-    }
-
-    getAppClient = () => {
-        index++;
-        return T[index % count].appLogin();
-    };
-}
-
 const parseRouteParams = (routeParams) => {
     let count, include_replies, include_rts, only_media;
     let force_web_api = false;
@@ -517,4 +488,9 @@ export const keepOnlyMedia = function (tweets) {
     return excluded;
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet, keepOnlyMedia };
+export default {
+    ProcessFeed,
+    parseRouteParams,
+    excludeRetweet,
+    keepOnlyMedia,
+};

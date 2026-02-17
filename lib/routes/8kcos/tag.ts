@@ -1,9 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { SUB_NAME_PREFIX, SUB_URL } from './const';
+
 import loadArticle from './article';
+import { SUB_NAME_PREFIX, SUB_URL } from './const';
+
 export const route: Route = {
     path: '/tag/:tag',
     categories: ['picture'],

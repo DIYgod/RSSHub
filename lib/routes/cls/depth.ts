@@ -1,14 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { rootUrl, getSearchParams } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { renderDepthDescription } from './templates/depth';
+import { getSearchParams, rootUrl } from './utils';
 
 const categories = {
     1000: '头条',
@@ -89,9 +88,7 @@ async function handler(ctx) {
                 const articleDetail = nextData.props.initialState.detail.articleDetail;
 
                 item.author = articleDetail.author?.name ?? item.author ?? '';
-                item.description = art(path.join(__dirname, 'templates/depth.art'), {
-                    articleDetail,
-                });
+                item.description = renderDepthDescription(articleDetail);
 
                 return item;
             })

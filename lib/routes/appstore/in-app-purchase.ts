@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
 import { appstoreBearerToken } from '@/routes/apple/utils';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/iap/:country/:id',

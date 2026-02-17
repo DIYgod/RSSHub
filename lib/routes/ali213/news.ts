@@ -1,22 +1,22 @@
-import path from 'node:path';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const rootUrl: string = 'https://www.ali213.net';
+    const rootUrl = 'https://www.ali213.net';
     const targetUrl: string = new URL(`news/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -40,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const intro: string = $item.find('div.lone_f_r_t').text();
 
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 images: imageEl
                     ? [
                           {
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                     media[mediaType] = { url: mediaUrl };
 
                                     pEl.replaceWith(
-                                        art(path.join(__dirname, 'templates/description.art'), {
+                                        renderDescription({
                                             images: [
                                                 {
                                                     src: mediaUrl,
@@ -113,7 +113,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             });
                         }
 
-                        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                        const description: string = renderDescription({
                             description: $$('div#Content').html() ?? '',
                         });
 

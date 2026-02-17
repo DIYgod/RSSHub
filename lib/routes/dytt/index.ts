@@ -1,17 +1,18 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import cache from '@/utils/cache';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 import iconv from 'iconv-lite';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-
-const domain: string = 'www.dydytt.net';
-const baseUrl: string = `https://${domain}`;
+const domain = 'www.dydytt.net';
+const baseUrl = `https://${domain}`;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gndy/dyzz' } = ctx.req.param();
@@ -100,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                     if (enclosureUrl) {
-                        const enclosureType: string = 'application/x-bittorrent';
+                        const enclosureType = 'application/x-bittorrent';
                         const enclosureTitle: string = $enclosureEl.text();
 
                         processedItem = {

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -61,6 +62,8 @@ async function handler(ctx) {
             id = 'zwgk/zcjd';
             name = '政策解读';
             break;
+        default:
+            throw new Error(`Unknown category: ${ctx.req.param('category')}`);
     }
 
     const res = await got(`${host}/${id}/`);
@@ -110,6 +113,8 @@ async function handler(ctx) {
                                     author: content('.author').text().trim() === '本网' ? '茂名市茂南区人民政府网' : content('.author').text().trim(),
                                 };
                         }
+                    default:
+                        throw new Error(`Unknown host: ${url.host}`);
                 }
             });
         })

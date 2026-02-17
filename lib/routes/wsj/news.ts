@@ -1,8 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseArticle } from './utils';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { parseArticle } from './utils';
+
 const hostMap = {
     'en-us': 'https://www.wsj.com',
     'zh-cn': 'https://cn.wsj.com/zh-hans',
@@ -24,7 +27,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['oppilate'],
     handler,
-    description: `en\_us
+    description: `en_us
 
 | World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
 | ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |

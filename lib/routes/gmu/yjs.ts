@@ -1,9 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import type { Route } from '@/types';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const sections = {
     zsgz: {
@@ -96,11 +97,7 @@ export async function handler(ctx: Context) {
     const baseUrl = 'https://yjs.gmu.cn';
     const link = baseUrl + path;
 
-    const response = await got(link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
 
     const $ = load(response.data);
 
@@ -133,11 +130,7 @@ export async function handler(ctx: Context) {
             // Use cache.tryGet to cache the article content
             return await cache.tryGet(`gmu:yjs:${fullLink}`, async () => {
                 try {
-                    const contentResponse = await got(fullLink, {
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const contentResponse = await got(fullLink);
                     const content = load(contentResponse.data);
 
                     // 获取新闻内容

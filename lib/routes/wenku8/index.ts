@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const cateUrlMap = {
     lastupdate: 'https://www.wenku8.net/modules/article/toplist.php?sort=lastupdate',

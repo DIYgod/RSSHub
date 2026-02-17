@@ -21,54 +21,52 @@ export interface Work {
     duration: number;
     has_subtitle: boolean;
     id: number;
-    language_editions: {
+    language_editions: Array<{
         display_order: number;
         edition_id: number;
         edition_type: string;
         label: string;
         lang: string;
         workno: string;
-    }[];
+    }>;
     mainCoverUrl: string;
     name: string;
     nsfw: boolean;
     original_workno: null | string;
-    other_language_editions_in_db: {
+    other_language_editions_in_db: Array<{
         id: number;
         is_original: boolean;
         lang: string;
         source_id: string;
         source_type: string;
         title: string;
-    }[];
+    }>;
     playlistStatus: any;
     price: number;
-    rank:
-        | {
-              category: string;
-              rank: number;
-              rank_date: string;
-              term: string;
-          }[]
-        | null;
+    rank: Array<{
+        category: string;
+        rank: number;
+        rank_date: string;
+        term: string;
+    }> | null;
     rate_average_2dp: number | number;
     rate_count: number;
-    rate_count_detail: {
+    rate_count_detail: Array<{
         count: number;
         ratio: number;
         review_point: number;
-    }[];
+    }>;
     release: string;
     review_count: number;
     samCoverUrl: string;
     source_id: string;
     source_type: string;
     source_url: string;
-    tags: {
+    tags: Array<{
         i18n: any;
         id: number;
         name: string;
-    }[];
+    }>;
     category: string;
     thumbnailCoverUrl: string;
     title: string;
@@ -87,10 +85,10 @@ export interface Work {
         translation_bonus_langs: string[];
     };
     userRating: null;
-    vas: {
+    vas: Array<{
         id: string;
         name: string;
-    }[];
+    }>;
     cv: string;
     work_attributes: string;
 }

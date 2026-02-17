@@ -1,8 +1,10 @@
-import { Data, Route } from '@/types';
-import timezone from '@/utils/timezone';
-import { CheerioAPI, load } from 'cheerio';
-import { Context } from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import timezone from '@/utils/timezone';
 
 async function handler(ctx: Context): Promise<Data> {
     const catagory = ctx.req.param('category') ?? 'all';

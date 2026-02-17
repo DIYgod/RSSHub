@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/zhongchou/:category?/:sort?/:status?',
@@ -32,7 +33,7 @@ export const route: Route = {
 
 | 最新上线  | 金额最高   | 评论最多     |
 | --------- | ---------- | ------------ |
-| top\_time | top\_money | top\_comment |
+| top_time | top_money | top_comment |
 
   状态
 

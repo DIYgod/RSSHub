@@ -3,17 +3,17 @@ name: Ignore dependabot on forks
 on: pull_request
 
 jobs:
-  dependabot-fork:
-    if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    name: Ignore dependabot on forks
-    timeout-minutes: 5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+    dependabot-fork:
+        if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
+        runs-on: ubuntu-slim
+        name: Ignore dependabot on forks
+        timeout-minutes: 5
+        steps:
+            - name: Checkout
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Comment Dependabot PR
-        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
-        with:
-          message: '@dependabot ignore this dependency'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Comment Dependabot PR
+              uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
+              with:
+                  message: '@dependabot ignore this dependency'
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

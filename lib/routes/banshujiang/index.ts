@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'http://banshujiang.cn';
+    const baseUrl = 'http://banshujiang.cn';
     const targetUrl: string = new URL(`${category ? 'e_books' : `category/${category}`}/page/1`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -32,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text().trim();
             const image: string | undefined = $el.find('meta[property="og:image"]').attr('content') ?? $el.find('img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -82,7 +83,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('div.ebook-title').text().trim();
                 const image: string | undefined = $$('div.span6 img').attr('src');
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: image
                         ? [
                               {

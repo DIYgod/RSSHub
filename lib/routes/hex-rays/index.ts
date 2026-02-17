@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -55,7 +56,7 @@ async function handler(/* ctx*/): Promise<Data> {
                 item.description = content('.post-body').html();
                 return item;
             })
-        ) as Promise<DataItem>[]
+        ) as Array<Promise<DataItem>>
     );
 
     return {

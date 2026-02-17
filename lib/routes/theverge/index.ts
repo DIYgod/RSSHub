@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
-import { load } from 'cheerio';
-import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { renderHeader } from './templates/header';
 
 const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
 
@@ -108,7 +109,7 @@ async function handler(ctx) {
                 const nextData = JSON.parse($('script#__NEXT_DATA__').text());
                 const node = nextData.props.pageProps.hydration.responses.find((x) => x.operationName === 'PostLayoutQuery' || x.operationName === 'StreamLayoutQuery').data.node;
 
-                let description = art(path.join(__dirname, 'templates/header.art'), {
+                let description = renderHeader({
                     featuredImage: node.featuredImage,
                     ledeMediaData: node.ledeMediaData,
                 });
@@ -120,7 +121,7 @@ async function handler(ctx) {
                         .map(({ node: n }) => {
                             let d =
                                 `<h2><a href="${n.permalink}">${n.promo.headline || n.title}</a></h2>` +
-                                art(path.join(__dirname, 'templates/header.art'), {
+                                renderHeader({
                                     ledeMediaData: n.ledeMediaData,
                                 });
                             switch (n.__typename) {

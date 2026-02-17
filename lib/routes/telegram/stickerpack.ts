@@ -1,8 +1,9 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/stickerpack/:name',

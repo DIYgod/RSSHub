@@ -1,7 +1,12 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
+import got from '@/utils/got';
+
 export async function getFullText(item) {
+    if (item.link.startsWith('https://www.youtube.com/')) {
+        return item;
+    }
+
     const detailResponse = await got({
         method: 'get',
         url: item.link,

@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
-import { Context } from 'hono';
-import { parseDate } from '@/utils/parse-date';
-import { renderDesc, getAPIKeys } from './utils';
-
-import got from '@/utils/got';
+import type { Context } from 'hono';
 import queryString from 'query-string';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { getAPIKeys, renderDesc } from './utils';
 
 export const route: Route = {
     path: '/post/:tags?/:quality?',

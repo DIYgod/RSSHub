@@ -1,16 +1,17 @@
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://www.ifanr.com';
-    const apiBaseUrl: string = 'https://sso.ifanr.com';
+    const baseUrl = 'https://www.ifanr.com';
+    const apiBaseUrl = 'https://sso.ifanr.com';
     const targetUrl: string = new URL('digest', baseUrl).href;
     const apiUrl: string = new URL('api/v5/wp/buzz', apiBaseUrl).href;
 
@@ -29,8 +30,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const title: string = item.post_title;
         const description: string = item.post_content;
         const pubDate: number | string = item.created_at;
-        const linkUrl: string = `digest/${item.post_id}`;
-        const guid: string = `ifanr-digest-${item.post_id}`;
+        const linkUrl = `digest/${item.post_id}`;
+        const guid = `ifanr-digest-${item.post_id}`;
         const updated: number | string = item.updated_at ?? pubDate;
 
         const processedItem: DataItem = {

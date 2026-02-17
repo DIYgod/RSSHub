@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/search/:option?/:category?/:keyword?/:time?/:order?',
@@ -32,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: '搜索',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'jmcomic.group/',
     description: `::: tip
@@ -70,7 +70,7 @@ async function handler(ctx) {
                 result.pubDate = new Date(apiResult.addtime * 1000);
                 result.category = apiResult.tags.map((tag) => tag);
                 result.author = apiResult.author.map((a) => a).join(', ');
-                result.description = art(path.join(__dirname, 'templates/description.art'), {
+                result.description = renderDescription({
                     introduction: apiResult.description,
                     images: [
                         `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,

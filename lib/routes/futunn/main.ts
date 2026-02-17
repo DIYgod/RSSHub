@@ -1,22 +1,32 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: ['/highlights', '/main', '/'],
-    name: 'Unknown',
-    maintainers: [],
+    path: ['/main', '/'],
+    categories: ['finance'],
+    example: '/futunn/main',
+    features: {
+        supportRadar: true,
+    },
+    radar: [
+        {
+            source: ['news.futunn.com/main', 'news.futunn.com/:lang/main'],
+            target: '/main',
+        },
+    ],
+    name: '要闻',
+    maintainers: ['Wsine', 'nczitzk', 'kennyfong19931'],
     handler,
-    url: 'news.futunn.com/main',
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 48;
 
     const rootUrl = 'https://news.futunn.com';
     const currentUrl = `${rootUrl}/main`;
@@ -32,8 +42,8 @@ async function handler(ctx) {
         link: item.url.split('?')[0],
         author: item.source,
         pubDate: parseDate(item.timestamp * 1000),
-        description: art(path.join(__dirname, 'templates/description.art'), {
-            abs: item.abs,
+        description: renderDescription({
+            abs: item.abstract,
             pic: item.pic,
         }),
     }));
@@ -58,7 +68,7 @@ async function handler(ctx) {
                     item.category = [
                         ...content('.news__from-topic__title')
                             .toArray()
-                            .map((a) => content(a).text()),
+                            .map((a) => content(a).text().trim()),
                         ...content('#relatedStockWeb .stock-name')
                             .toArray()
                             .map((s) => content(s).text().trim()),
@@ -71,7 +81,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: 'Futubull - Headlines',
+        title: '富途牛牛 - 要闻',
         link: currentUrl,
         item: items,
     };

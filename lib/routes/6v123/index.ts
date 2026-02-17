@@ -1,21 +1,22 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+import iconv from 'iconv-lite';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import iconv from 'iconv-lite';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
 
-    const encoding: string = 'gb2312';
+    const encoding = 'gb2312';
 
-    const baseUrl: string = 'https://www.hao6v.me';
+    const baseUrl = 'https://www.hao6v.me';
     const targetUrl: string = new URL(category.startsWith('gvod') ? `${category}.html` : category, baseUrl).href;
 
     const response = await ofetch(targetUrl, {
@@ -38,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 .text()
                 .replaceAll(/(\[|\])/g, '');
             const linkUrl: string | undefined = $el.find('a').attr('href');
-            const guid: string = `${linkUrl}#${title}`;
+            const guid = `${linkUrl}#${title}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
@@ -100,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {
-                    const enclosureType: string = 'application/x-bittorrent';
+                    const enclosureType = 'application/x-bittorrent';
                     const enclosureTitle: string = $enclosureEl.text();
 
                     processedItem = {

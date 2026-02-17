@@ -1,19 +1,20 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://www.gaoyu.me';
+    const baseUrl = 'https://www.gaoyu.me';
     const targetUrl: string = new URL('blog', baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -37,7 +38,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('p.text-neutral-900').text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 intro: $el.find('p.text-neutral-600').last().html(),
             });
             const pubDateStr: string | undefined = $el.find('p.text-neutral-600').first().text();
@@ -74,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('h1.title').text();
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         description: $$('article.prose').html(),
                     });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');

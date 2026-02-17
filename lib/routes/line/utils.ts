@@ -1,8 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import logger from '@/utils/logger';
+
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'https://today.line.me';
 
 const parseList = (items) =>
@@ -53,4 +55,4 @@ const parseItems = (list) =>
         )
     );
 
-export { baseUrl, parseList, parseItems };
+export { baseUrl, parseItems, parseList };

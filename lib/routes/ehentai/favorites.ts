@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import EhAPI from './ehapi';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import EhAPI from './ehapi';
 
 export const route: Route = {
     path: '/favorites/:favcat?/:order?/:page?/:routeParams?',

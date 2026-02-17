@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { fetchSearchItems, fetchItemDetail, formatItemDetail, MercariSort, MercariOrder, MercariStatus } from './util';
+
+import { fetchItemDetail, fetchSearchItems, formatItemDetail, MercariOrder, MercariSort, MercariStatus } from './util';
 
 export const route: Route = {
     path: '/search/:query',
@@ -86,7 +87,7 @@ async function handler(ctx) {
     const { keyword, sort, order, status, options } = parseSearchQuery(queryString);
     const searchItems = (await fetchSearchItems(sort, order, status, keyword, options)).items;
 
-    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
+    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
 
     return {
         title: `${keyword} の検索結果`,

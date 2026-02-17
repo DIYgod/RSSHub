@@ -28,9 +28,9 @@ export interface DutiesParty extends BaseParty {
     fb_name: string;
     fb_time: string;
     fb_type: string;
-    labelInfo: {
+    labelInfo: Array<{
         name: string;
-    }[];
+    }>;
     progress: string;
     strategy: string;
     team_composition: string;
@@ -56,7 +56,7 @@ export interface NoviceNetworkParty extends BaseParty {
     weekday_time: string;
     weekend_time: string;
     style: string[];
-    styleInfo: { style: string; pic_url: string }[];
+    styleInfo: Array<{ style: string; pic_url: string }>;
     detail_mask: string;
 }
 
@@ -70,7 +70,7 @@ export interface RolePlayParty extends BaseParty {
     rp_area_name: string;
     rp_group_name: string;
     rp_name: string;
-    rp_type: ('0' | '1' | '2' | '3')[]; // 0: 无 RP 元素, 1: 轻 RP 元素, 2: 中 RP 元素, 3: 重 RP 元素
+    rp_type: Array<'0' | '1' | '2' | '3'>; // 0: 无 RP 元素, 1: 轻 RP 元素, 2: 中 RP 元素, 3: 重 RP 元素
     create_time: DateFormat;
     cover_pic: string;
 }
@@ -85,9 +85,9 @@ export interface FreeCompanyParty extends BaseParty {
     guild_id: string;
     guild_name: string;
     guild_tag: string;
-    labelInfo: {
+    labelInfo: Array<{
         name: string;
-    }[];
+    }>;
     detail_mask: string;
     active_member_num: number;
     target_recruit_num: number;

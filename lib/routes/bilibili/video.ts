@@ -1,11 +1,14 @@
-import { Route, ViewType } from '@/types';
+import type { Context } from 'hono';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDuration } from '@/utils/helpers';
 import logger from '@/utils/logger';
-import type { Context } from 'hono';
+
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/video/:uid/:embed?',

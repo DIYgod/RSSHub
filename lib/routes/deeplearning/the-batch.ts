@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
@@ -27,7 +27,7 @@ export const handler = async (ctx) => {
 
     let items = posts.slice(0, limit).map((item) => {
         const title = item.title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             images: item.feature_image
                 ? [
                       {
@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
                 });
 
                 const title = post.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     images: post.feature_image
                         ? [
                               {

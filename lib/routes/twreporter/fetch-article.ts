@@ -1,7 +1,8 @@
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderImage } from './templates/image';
+import { renderYouTube } from './templates/youtube';
 
 export default async function fetch(slug: string) {
     const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;
@@ -30,11 +31,14 @@ export default async function fetch(slug: string) {
         authors += '；' + photographers;
     }
 
-    const bannerImage = post.hero_image.resized_targets.desktop.url;
+    // Prioritize hero_image, but fall back to og_image if it's missing
+    const imageSource = post.hero_image ?? post.og_image;
+    const bannerImage = imageSource?.resized_targets.desktop.url;
     const caption = post.leading_image_description;
-    const bannerDescription = post.hero_image.description;
+    const bannerDescription = imageSource?.description ?? '';
     const ogDescription = post.og_description;
-    const banner = art(path.join(__dirname, 'templates/image.art'), { image: bannerImage, description: bannerDescription, caption });
+    // Only render the banner if we successfully found an image URL
+    const banner = imageSource ? renderImage({ image: bannerImage, description: bannerDescription, caption }) : '';
 
     function format(type, content) {
         let block = '';
@@ -42,7 +46,7 @@ export default async function fetch(slug: string) {
             switch (type) {
                 case 'image':
                 case 'slideshow':
-                    block = content.map((image) => art(path.join(__dirname, 'templates/image.art'), { image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
+                    block = content.map((image) => renderImage({ image: image.desktop.url, description: image.description, caption: image.description })).join('<br>');
 
                     break;
 
@@ -70,7 +74,7 @@ export default async function fetch(slug: string) {
                 case 'youtube': {
                     const video = content[0].youtubeId;
                     const id = video.split('?')[0];
-                    block = art(path.join(__dirname, 'templates/youtube.art'), { video: id });
+                    block = renderYouTube({ video: id });
 
                     break;
                 }

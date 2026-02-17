@@ -1,10 +1,9 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
+import { renderDescription } from '../templates/description';
 import { parseArticle } from '../utils';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/app/reporter/:id',
@@ -33,7 +32,7 @@ async function handler(ctx) {
 
     const list = response.data.list.map((item) => ({
         title: '【' + item.media_nickname + '】' + item.title,
-        description: art(path.join(__dirname, '../templates/description.art'), {
+        description: renderDescription({
             thumb: item.titleimg,
             description: item.summary,
         }),

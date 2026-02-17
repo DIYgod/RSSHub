@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '7', 10);
 
-    const baseUrl: string = 'http://www.ccg.org.cn';
+    const baseUrl = 'http://www.ccg.org.cn';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -31,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.find('h5').text();
             const image: string | undefined = $el.find('div.huodong-img img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -40,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                intro: $el.find('p').html(),
+                intro: $el.find('p').html() || undefined,
             });
             const pubDateStr: string | undefined = $el.find('span').text();
             const linkUrl: string | undefined = $el.find('a').attr('href');
@@ -80,8 +81,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 $$('div.pinpai-page h3').remove();
                 $$('div.pinpai-page span.time').remove();
 
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.pinpai-page').html(),
+                const description: string | undefined = renderDescription({
+                    description: $$('div.pinpai-page').html() || undefined,
                 });
 
                 const upDatedStr: string | undefined = pubDateStr;

@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { rootUrl, ProcessItem } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { getWafTokenId, ProcessItem, rootUrl } from './utils';
 
 const categories = {
     24: {
@@ -70,9 +70,13 @@ async function handler(ctx) {
 
     const currentUrl = category === '24' ? rootUrl : `${rootUrl}/hot-list/catalog`;
 
+    const wafTokenId = await getWafTokenId();
     const response = await got({
         method: 'get',
         url: currentUrl,
+        headers: {
+            Cookie: `_waftokenid=${wafTokenId}`,
+        },
     });
 
     const data = getProperty(JSON.parse(response.data.match(/window.initialState=({.*})/)[1]), categories[category].key);

@@ -1,5 +1,7 @@
 import { LRUCache } from 'lru-cache';
+
 import { config } from '@/config';
+
 import type CacheModule from './base';
 
 const status = { available: false };

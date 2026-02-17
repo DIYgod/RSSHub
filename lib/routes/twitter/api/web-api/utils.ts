@@ -1,14 +1,16 @@
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { baseUrl, gqlFeatures, bearerToken, gqlMap, thirdPartySupportedAPI } from './constants';
-import { config } from '@/config';
+import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import { CookieAgent, CookieClient } from 'http-cookie-agent/undici';
-import { ProxyAgent } from 'undici';
+import { Client, ProxyAgent } from 'undici';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
+
+import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
 import login from './login';
 
 let authTokenIndex = 0;
@@ -23,7 +25,7 @@ const token2Cookie = async (token) => {
     try {
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
               })
             : new CookieAgent({ cookies: { jar } });
@@ -110,7 +112,7 @@ export const twitterGot = async (
         const jar = CookieJar.deserializeSync(cookie as any);
         const agent = proxy.proxyUri
             ? new ProxyAgent({
-                  factory: (origin, opts) => new CookieClient(origin as string, { ...opts, cookies: { jar } }),
+                  factory: (origin, opts) => new Client(origin as string, opts).compose(HttpCookieAgentCookie({ jar })),
                   uri: proxy.proxyUri,
               })
             : new CookieAgent({ cookies: { jar } });
@@ -232,6 +234,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             const { data } = await ofetch(`${config.twitter.thirdPartyApi}${gqlMap[endpoint]}`, {
                 method: 'GET',
                 params,
+                headers: {
+                    'accept-encoding': 'gzip',
+                },
             });
             return data;
         }
@@ -265,8 +270,9 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
     const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return moduleItems || entries || [];
+    return gridEntries || moduleItems || entries || [];
 };
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {

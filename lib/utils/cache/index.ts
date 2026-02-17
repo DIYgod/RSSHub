@@ -1,8 +1,10 @@
 import { config } from '@/config';
-import redis from './redis';
-import memory from './memory';
-import type CacheModule from './base';
+import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
+
+import type CacheModule from './base';
+import memory from './memory';
+import redis from './redis';
 
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
@@ -14,7 +16,18 @@ const globalCache: {
 
 let cacheModule: CacheModule;
 
-if (config.cache.type === 'redis') {
+if (isWorker) {
+    // No-op cache for Cloudflare Workers
+    cacheModule = {
+        init: () => null,
+        get: () => null,
+        set: () => null,
+        status: {
+            available: false,
+        },
+        clients: {},
+    };
+} else if (config.cache.type === 'redis') {
     cacheModule = redis;
     cacheModule.init();
     const { redisClient } = cacheModule.clients;

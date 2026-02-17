@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/chongqing/gzw/:category{.+}?',
@@ -22,7 +23,7 @@ export const route: Route = {
     ],
     description: `| 通知公告  | 国企资讯 | 国企简介 | 国企招聘 |
 | --------- | -------- | -------- | -------- |
-| tzgg\_191 | gqdj     | gqjj     | gqzp     |`,
+| tzgg_191 | gqdj     | gqjj     | gqzp     |`,
 };
 
 async function handler(ctx) {

@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { TITLE, HOST } from './const';
-import { fetchBrandInfo } from './service';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { HOST, TITLE } from './const';
+import { fetchBrandInfo } from './service';
 
 export const route: Route = {
     path: '/brand/:id',

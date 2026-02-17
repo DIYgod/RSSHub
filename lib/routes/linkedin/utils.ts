@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import { Job } from './models';
 import dayjs from 'dayjs';
+
+import { Job } from './models';
 
 /**
  * Constants
@@ -138,7 +139,16 @@ function parseCompanyPosts($) {
         .toArray() // Convert the Cheerio object to a plain array
         .map((elem) => {
             const elemHtml = $(elem);
-            const link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+            let link = elemHtml.find('a.main-feed-card__overlay-link').attr('href');
+
+            // Reposts don't have an overlay link — construct URL from the activity URN
+            if (!link) {
+                const activityUrn = elemHtml.find('article[data-activity-urn]').attr('data-activity-urn');
+                if (activityUrn) {
+                    link = `https://www.linkedin.com/feed/update/${activityUrn}`;
+                }
+            }
+
             const text = elemHtml.find('p.attributed-text-segment-list__content').text().trim();
             const date = parseRelativeShorthandDate(elemHtml.find('time').text().trim());
 
@@ -184,17 +194,17 @@ function parseRelativeShorthandDate(shorthand) {
 }
 
 export {
-    parseCompanyPosts,
-    parseCompanyName,
-    parseParamsToSearchParams,
-    parseParamsToString,
-    parseJobDetail,
-    parseJobSearch,
-    parseRouteParam,
     BASE_URL,
-    JOB_TYPES,
-    JOB_TYPES_QUERY_KEY,
     EXP_LEVELS,
     EXP_LEVELS_QUERY_KEY,
+    JOB_TYPES,
+    JOB_TYPES_QUERY_KEY,
     KEYWORDS_QUERY_KEY,
+    parseCompanyName,
+    parseCompanyPosts,
+    parseJobDetail,
+    parseJobSearch,
+    parseParamsToSearchParams,
+    parseParamsToString,
+    parseRouteParam,
 };

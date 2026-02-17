@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
-    const baseUrl: string = 'https://www.eeo.com.cn';
-    const apiUrl: string = 'https://app.eeo.com.cn';
+    const baseUrl = 'https://www.eeo.com.cn';
+    const apiUrl = 'https://app.eeo.com.cn';
     const targetUrl: string = new URL('kuaixun/', baseUrl).href;
 
     const response = await ofetch(apiUrl, {
@@ -37,7 +38,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     items = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string | undefined = renderDescription({
             intro: item.description,
             description: item.content,
         });
@@ -84,8 +85,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('h1').first().text() || $$('h2.title').text() || item.title;
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.xx_boxsing, div#mainBody').html(),
+                    renderDescription({
+                        description: $$('div.xx_boxsing, div#mainBody').html() || undefined,
                     });
                 const pubDateStr: string | undefined = $$('h1').next().find('span').first().text() || $$('div.from').text();
                 const authors: DataItem['author'] = $$('h1').next().contents().first().text() || $$('span.showMoreAuthor').text() || item.author;

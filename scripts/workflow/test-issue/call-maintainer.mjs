@@ -1,5 +1,5 @@
-import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
@@ -125,7 +125,7 @@ export default async function callMaintainer({ github, context, core }) {
         if (main.length > 0) {
             const pingStr = main
                 .map((e) => {
-                    if (e in dndUsernames) {
+                    if (dndUsernames.has(e)) {
                         return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
                     }
                     return `@${e}`;

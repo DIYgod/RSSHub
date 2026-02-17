@@ -1,6 +1,8 @@
-import { Route, Data, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
 import { parseItems } from './utils';
 
 export const route: Route = {
@@ -25,7 +27,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const { id } = ctx.req.param();
     const html = await ofetch(`https://javtiful.com/actress/${id}`);
-    const $ = load(<string>html);
+    const $ = load(html as string);
     const items: DataItem[] = $('section .card:not(:has(.bg-danger))')
         .toArray()
         .map((item) => parseItems($(item)));

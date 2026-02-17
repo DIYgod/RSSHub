@@ -1,19 +1,20 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const baseUrl: string = 'https://magazine.raspberrypi.com';
+    const baseUrl = 'https://magazine.raspberrypi.com';
     const targetUrl: string = new URL('issues', baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -33,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text()?.trim();
             const image: string | undefined = $el.find('div.o-media__fixed a.c-link img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -81,8 +82,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const title: string = $$('h1.rspec-issue__heading').text().split(/-/).pop()?.trim() ?? item.title;
                     const description: string | undefined =
                         item.description +
-                        art(path.join(__dirname, 'templates/description.art'), {
-                            description: $$('div.rspec-issue__description').html(),
+                        renderDescription({
+                            description: $$('div.rspec-issue__description').html() || undefined,
                         });
                     const pubDateStr: string | undefined = $$('time.rspec-issue__publication-month').attr('datetime');
                     const image: string | undefined = $$('img.c-figure__image').attr('src');
@@ -111,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $$$enclosureEl.attr('href') ? new URL($$$enclosureEl.attr('href') as string, baseUrl).href : undefined;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = 'application/pdf';
+                        const enclosureType = 'application/pdf';
 
                         processedItem = {
                             ...processedItem,

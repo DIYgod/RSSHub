@@ -1,6 +1,8 @@
-import { config } from '@/config';
 import Redis from 'ioredis';
+
+import { config } from '@/config';
 import logger from '@/utils/logger';
+
 import type CacheModule from './base';
 
 const status = { available: false };

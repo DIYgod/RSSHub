@@ -1,11 +1,12 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll("'", '&quot;')?.replaceAll("'", '&#039;') ?? text;
 
@@ -65,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://tidb.net';
+    const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
     const targetResponse = await ofetch(targetUrl);
 
@@ -155,7 +156,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined;
-                const guid: string = `tidb-blog-${detailResponse.slug}`;
+                const guid = `tidb-blog-${detailResponse.slug}`;
                 const updated: number | string = detailResponse.lastModifiedAt ?? pubDate;
 
                 const processedItem: DataItem = {

@@ -1,10 +1,11 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 const createSearchParams = (queryString: string, limit: number = 30): URLSearchParams => {
     const params = new URLSearchParams(queryString);
@@ -26,8 +27,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
     const params: URLSearchParams = createSearchParams(filters, limit);
 
-    const baseUrl: string = 'https://digitalpolicyalert.org';
-    const apiBaseUrl: string = 'https://api.globaltradealert.org';
+    const baseUrl = 'https://digitalpolicyalert.org';
+    const apiBaseUrl = 'https://api.globaltradealert.org';
     const targetUrl: string = new URL(`activity-tracker?${params.toString()}`, baseUrl).href;
     const apiUrl: string = new URL('dpa/intervention', apiBaseUrl).href;
 

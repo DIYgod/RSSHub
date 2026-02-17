@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -65,11 +66,7 @@ async function handler(ctx) {
 
     result.link = `${baseUrl}/index.php?${new URLSearchParams(queryParams).toString()}`;
 
-    const { data: response } = await got(result.link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const { data: response } = await got(result.link);
     const $ = load(response);
 
     result.item = $('div#div table tbody tr:not([class])')

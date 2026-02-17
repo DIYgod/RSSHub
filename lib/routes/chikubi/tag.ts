@@ -1,4 +1,5 @@
-import { Route, Data } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { getBySlug, getPostsBy } from './utils';
 
 export const route: Route = {

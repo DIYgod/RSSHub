@@ -1,8 +1,9 @@
 // Warning: The author still knows nothing about javascript!
 
-import { getNotifList, getArticle } from './_utils';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+
+import { getArticle, getNotifList } from './_utils';
 
 export const route: Route = {
     path: '/scupi',

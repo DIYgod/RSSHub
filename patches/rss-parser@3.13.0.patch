@@ -1,0 +1,48 @@
+diff --git a/lib/parser.js b/lib/parser.js
+index 2852b5f9249a59adf8f51f3451181ac2c994bc54..50e16ca0a97c98d7048122d5427fe467058485fb 100644
+--- a/lib/parser.js
++++ b/lib/parser.js
+@@ -3,6 +3,7 @@ const http = require('http');
+ const https = require('https');
+ const xml2js = require('xml2js');
+ const url = require('url');
++const zlib = require('zlib');
+ 
+ const fields = require('./fields');
+ const utils = require('./utils');
+@@ -88,14 +89,27 @@ class Parser {
+           return reject(new Error("Status code " + res.statusCode))
+         }
+         let encoding = utils.getEncodingFromContentType(res.headers['content-type']);
+-        res.setEncoding(encoding);
+-        res.on('data', (chunk) => {
+-          xml += chunk;
+-        });
+-        res.on('end', () => {
+-          return this.parseString(xml).then(resolve, reject);
+-        });
+-      })
++        const contentEncoding = (res.headers['content-encoding'] || '').toLowerCase();
++        if (contentEncoding === 'gzip') {
++          const gunzip = zlib.createGunzip();
++          const chunks = [];
++          gunzip.on('data', (chunk) => chunks.push(chunk));
++          gunzip.on('end', () => {
++            const decompressed = Buffer.concat(chunks).toString(encoding);
++            return this.parseString(decompressed).then(resolve, reject);
++          });
++          gunzip.on('error', reject);
++          res.pipe(gunzip);
++        } else {
++          res.setEncoding(encoding);
++          res.on('data', (chunk) => {
++            xml += chunk;
++          });
++          res.on('end', () => {
++            return this.parseString(xml).then(resolve, reject);
++          });
++        }
++      });
+       req.on('error', reject);
+       timeout = setTimeout(() => {
+         return reject(new Error("Request timed out after " + this.options.timeout + "ms"));

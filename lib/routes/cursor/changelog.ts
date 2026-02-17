@@ -1,16 +1,17 @@
-import { type Data, type DataItem, type Route, ViewType, type Language } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://cursor.com';
+    const baseUrl = 'https://cursor.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;
 
     const response = await ofetch(targetUrl, {
@@ -27,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): DataItem => {
             const $el: Cheerio<Element> = $(el);
 
-            let version: string = '';
+            let version = '';
             let pubDateStr: string | undefined;
 
             $el.find('div').each((_, div) => {
@@ -46,7 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = version ? `[${version}] ${titleText}` : titleText;
 
             const linkUrl: string | undefined = linkEl.attr('href');
-            const guid: string = `cursor-changelog-${version || 'unknown'}`;
+            const guid = `cursor-changelog-${version || 'unknown'}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const $h2El = $el.find('h2').first();

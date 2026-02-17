@@ -1,8 +1,11 @@
-import { ViewType, type Data, type Route } from '@/types';
 import type { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
-import type { FeedSubscription, FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 import { parse } from 'tldts';
+
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import type { FeedSubscription, FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 
 export const route: Route = {
     name: 'User subscriptions',
@@ -49,7 +52,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: (<Exclude<Subscription, InboxSubscription>[]>subscriptions.data.filter((i) => !isInbox(i) && !(isFeed(i) && !!i.feeds.errorAt))).map((subscription) => {
+        item: (subscriptions.data.filter((i) => !isInbox(i) && !(isFeed(i) && !!i.feeds.errorAt)) as Array<Exclude<Subscription, InboxSubscription>>).map((subscription) => {
             if (isList(subscription)) {
                 return {
                     title: subscription.lists.title,

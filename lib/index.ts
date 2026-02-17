@@ -1,11 +1,13 @@
-import { serve } from '@hono/node-server';
-import logger from '@/utils/logger';
-import { getLocalhostAddress } from '@/utils/common-utils';
-import { config } from '@/config';
-import app from '@/app';
-import os from 'node:os';
 import cluster from 'node:cluster';
+import os from 'node:os';
 import process from 'node:process';
+
+import { serve } from '@hono/node-server';
+
+import app from '@/app';
+import { config } from '@/config';
+import { getLocalhostAddress } from '@/utils/common-utils';
+import logger from '@/utils/logger';
 
 const port = config.connect.port;
 const hostIPList = getLocalhostAddress();

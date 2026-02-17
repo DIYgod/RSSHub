@@ -1,5 +1,5 @@
-import got from '@/utils/got';
 import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/dynamic/:uid?',

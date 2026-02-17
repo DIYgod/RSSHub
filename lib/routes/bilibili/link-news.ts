@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -34,6 +34,8 @@ async function handler(ctx) {
         case 'wh':
             productTitle = '相簿';
             break;
+        default:
+            throw new Error(`Unknown product: ${product}`);
     }
 
     const response = await got({

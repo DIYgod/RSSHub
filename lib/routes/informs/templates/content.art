@@ -1,3 +1,0 @@
-<strong> {{ author }} </strong>
-<br>
-{{@ content }}

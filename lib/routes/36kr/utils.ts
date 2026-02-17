@@ -1,20 +1,20 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
-const rootUrl = 'https://www.36kr.com';
+import { solveWafChallenge } from '@/routes/juejin/utils';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
-const ProcessItem = (item, tryGet) =>
+export const rootUrl = 'https://www.36kr.com';
+
+export const ProcessItem = (item, tryGet) =>
     tryGet(item.link, async () => {
-        const detailResponse = await got({
-            method: 'get',
-            url: item.link,
-        });
+        const detailResponse = await ofetch(item.link);
 
-        const cipherTextList = detailResponse.data.match(/{"state":"(.*)","isEncrypt":true}/) ?? [];
+        const cipherTextList = detailResponse.match(/{"state":"(.*)","isEncrypt":true}/) ?? [];
 
         if (cipherTextList.length === 0) {
-            const $ = load(detailResponse.body);
+            const $ = load(detailResponse);
             item.description = $('div.articleDetailContent').html();
         } else {
             const key = CryptoJS.enc.Utf8.parse('efabccee-b754-4c');
@@ -32,4 +32,33 @@ const ProcessItem = (item, tryGet) =>
         return item;
     });
 
-export { rootUrl, ProcessItem };
+export const getWafTokenId = () =>
+    cache.tryGet(
+        '36kr:_waftokenid',
+        async () => {
+            const captchaResponse = await ofetch(rootUrl);
+
+            const $ = load(captchaResponse);
+            const payload = $('script')
+                .text()
+                .match(/atob\('(.*?)'\)\),/)?.[1];
+            const response = solveWafChallenge(payload);
+
+            const tokenIdResponse = await ofetch.raw(rootUrl, {
+                headers: {
+                    Cookie: `_wafchallengeid=${response};`,
+                },
+                redirect: 'manual',
+            });
+
+            const _wafTokenId = tokenIdResponse.headers
+                .getSetCookie()
+                .find((cookie) => cookie.startsWith('_waftokenid='))
+                ?.split(';')[0]
+                .split('=')[1];
+
+            return _wafTokenId as string;
+        },
+        300, // server-provided value
+        false
+    );

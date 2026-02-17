@@ -1,7 +1,8 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import got from '@/utils/got';
 import LZString from 'lz-string';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 let baseUrl = '';

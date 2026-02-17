@@ -1,5 +1,7 @@
-import { getSubPath } from '@/utils/common-utils';
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 // 来人拯救一下啊( >﹏<。)
 // 待做功能：
 // 1. 传入和处理
@@ -10,7 +12,6 @@ import cache from '@/utils/cache';
 //         [] 示例1: http://www.dianbai.gov.cn/ywdt/dbyw/content/post_1091433.html
 // 4. 处理网站功能
 //        [] hdjlpt 互动交流
-
 // 使用方法
 // import { gdgov } from '../general/general';
 //
@@ -36,13 +37,12 @@ import cache from '@/utils/cache';
 //     };
 //     await gdgov(info, ctx);
 // };
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { art } from '@/utils/render';
 import { finishArticleItem } from '@/utils/wechat-mp';
+
+import { renderZcjdpt } from './templates/zcjdpt';
 
 const gdgov = async (info, ctx) => {
     const path = getSubPath(ctx)
@@ -177,14 +177,14 @@ const gdgov = async (info, ctx) => {
                     const zcjdlink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idlink.search;
                     const response = await got(zcjdlink);
                     const data = response.data.data;
-                    for (let index = 0; index < data.jie_du_items.length; index++) {
-                        data.jie_du_items[index].jd_content = data.jie_du_items[index].jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
+                    for (const item of data.jie_du_items) {
+                        item.jd_content = item.jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
                     }
 
                     return {
                         link,
                         title: data.art_title,
-                        description: art(path.join(__dirname, 'templates/zcjdpt.art'), data),
+                        description: renderZcjdpt(data),
                         pubDate: timezone(parseDate(data.pub_time), +8),
                         author: /(本|本网|本站)/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };

@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { defaultDomain, renderDescription } from './utils';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/category/:caty',

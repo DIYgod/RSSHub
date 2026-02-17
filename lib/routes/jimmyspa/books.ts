@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { art } from '@/utils/render';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import path from 'node:path';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/books/:language',
@@ -71,7 +73,7 @@ async function handler(ctx) {
                 const publishDateMatch = bookInfoWrap.match(/<span>(首次出版|First Published|初版)<\/span>\s*<span class="num">([^<]+)<\/span>/);
                 const publishDate = publishDateMatch ? parseDate(publishDateMatch[2] + '-02') : '';
 
-                const renderedDescription = art(path.join(__dirname, 'templates/description.art'), {
+                const renderedDescription = renderDescription({
                     images: bookImageUrl
                         ? [
                               {

@@ -1,7 +1,8 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/dailyselection',
@@ -32,10 +33,10 @@ async function handler() {
     let sort = 0;
     let addtime = '';
 
-    for (let i = 0; i < data.data.album.length; i++) {
-        if (Number.parseInt(data.data.album[i].ds) === 1) {
-            sort = data.data.album[i].sort;
-            addtime = data.data.album[i].addtime;
+    for (const album of data.data.album) {
+        if (Number.parseInt(album.ds) === 1) {
+            sort = album.sort;
+            addtime = album.addtime;
             break;
         }
     }

@@ -1,7 +1,0 @@
-{{ if youTube }}
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{ youTube }}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-{{ else if img }}
-<img src="{{ img }}">
-{{ else if video }}
-<video src="{{ video }}" controls></video>
-{{ /if }}

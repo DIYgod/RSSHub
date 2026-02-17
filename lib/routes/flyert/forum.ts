@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import iconv from 'iconv-lite';
-import { load } from 'cheerio';
-import { rootUrl, parseArticleList, parsePostList, parseArticle, parsePost } from './util';
+
+import { parseArticle, parseArticleList, parsePost, parsePostList, rootUrl } from './util';
 
 export const handler = async (ctx) => {
     const { params } = ctx.req.param();
