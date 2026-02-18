@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
 
-    let categories = [];
+    let categories: DataItem[];
     let categoryName = '最新消息';
     if (!isLatest) {
         categories = await getCategories(cache.tryGet);

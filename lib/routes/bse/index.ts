@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -185,7 +185,7 @@ async function handler(ctx) {
 
     const data = JSON.parse(response.data.match(/null\(\[({.*})]\)/)[1]);
 
-    let items = [];
+    let items: DataItem[];
 
     switch (type) {
         case '/info/listse':

@@ -39,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { gchannel = 'paimai' } = ctx.req.param();
-    let channelName = '';
+    let channelName: string;
     let link = '';
 
     switch (gchannel) {

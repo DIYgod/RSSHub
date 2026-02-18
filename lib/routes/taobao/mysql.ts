@@ -19,10 +19,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
     let count = 0;
 
-    items = await Promise.all(
+    let items: DataItem[] = await Promise.all(
         $('h3 a.main')
             .toArray()
             .map(async (monthlyEl): Promise<Element[] | undefined> => {

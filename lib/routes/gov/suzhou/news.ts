@@ -58,10 +58,10 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'https://www.suzhou.gov.cn';
     const uid = ctx.req.param('uid');
-    let url = '';
-    let title = '';
+    let url: string;
+    let title: string;
     let apiUrl = '';
-    let items = [];
+    let items: DataItem[];
     switch (uid) {
         case 'szyw':
         case 'news':

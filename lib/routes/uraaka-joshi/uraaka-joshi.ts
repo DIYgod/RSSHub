@@ -38,7 +38,7 @@ async function handler() {
         }
     });
 
-    let html = '';
+    let html: string;
     try {
         await page.goto(link, {
             waitUntil: 'domcontentloaded',

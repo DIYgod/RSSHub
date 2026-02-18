@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
@@ -63,7 +63,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let language = '';
+    let language: string;
     let path = getSubPath(ctx);
 
     if (/^\/cn\/(cn|zh)/.test(path)) {
@@ -81,8 +81,8 @@ async function handler(ctx) {
 
     let officialFeed;
 
-    let items = [],
-        $;
+    let items: DataItem[];
+    let $;
 
     if (isOfficialRSS) {
         officialFeed = await parser.parseURL(currentUrl);

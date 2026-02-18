@@ -49,7 +49,7 @@ async function handler() {
             const path = item.find('.news_title').children().attr('href');
             const itemUrl = path.startsWith('https') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (path.startsWith('https')) {
                     description = itemTitle;
                 } else {

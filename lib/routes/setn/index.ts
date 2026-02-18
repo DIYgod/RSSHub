@@ -120,7 +120,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                let head = {};
+                let head: Record<string, unknown>;
                 try {
                     head = JSON.parse(content('script[type="application/ld+json"]').first().text());
                 } catch {

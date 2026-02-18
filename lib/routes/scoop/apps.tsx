@@ -92,9 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.value.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.value.slice(0, limit).map((item): DataItem => {
         const repositorySplits: string[] = item.Metadata.Repository.split(/\//);
         const repositoryName: string = repositorySplits.slice(-2).join('/');
         const title = `${item.Name} ${item.Version} in ${repositoryName}`;

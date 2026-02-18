@@ -116,7 +116,7 @@ async function handler(ctx) {
                     case 'tju-news':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
+                            let detailResponse: null;
                             try {
                                 delete item.type;
                                 detailResponse = await got(item.link);

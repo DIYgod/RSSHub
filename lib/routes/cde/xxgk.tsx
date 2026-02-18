@@ -81,7 +81,7 @@ async function handler(ctx) {
     });
 
     const items = data.data.records.map((item) => {
-        let description = '';
+        let description: string;
         switch (category) {
             case 'priorityApproval':
                 description = renderToString(<PriorityApprovalTable item={item} />);

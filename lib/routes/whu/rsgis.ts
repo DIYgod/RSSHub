@@ -255,7 +255,7 @@ export const route: Route = {
 `,
     handler: async (ctx: Context) => {
         const { type = 'index', sub = 'all' } = ctx.req.param();
-        let itemList: DataItem[] = [];
+        let itemList: DataItem[];
         switch (type) {
             case 'index':
                 itemList = await handleIndex();

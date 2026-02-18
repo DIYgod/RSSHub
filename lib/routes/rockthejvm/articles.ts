@@ -23,9 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     $('footer').remove();
 
-    let items: DataItem[] = [];
-
-    items = $('h2')
+    let items: DataItem[] = $('h2')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -88,7 +88,7 @@ async function handler(ctx) {
 
     const $ = load(indexData);
 
-    let items: any[] = [];
+    let items: DataItem[];
 
     // 新闻-视频首页特殊处理
     if (column === 'xw' && subColumn === 'SP' && !category) {

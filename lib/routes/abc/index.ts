@@ -40,7 +40,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.abc.net.au';
     const apiUrl = new URL('news-web/api/loader/channelrefetch', rootUrl).href;
 
-    let currentUrl = '';
+    let currentUrl: string;
     let documentId;
 
     if (Number.isNaN(category)) {

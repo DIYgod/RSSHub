@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     const channel_name = channel_info_response.data.title;
     const data = response.data.items;
-    let nav_name = '';
+    let nav_name: string;
 
     switch (nav) {
         case 'hot':
