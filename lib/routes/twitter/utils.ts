@@ -4,7 +4,7 @@ import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-socia
 const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
-    let m = null;
+    let m: RegExpMatchArray | null;
     if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/media\/[^/:]+)\.(jpg|jpeg|gif|png|bmp|webp)(:\w+)?$/i))) {
         let format = m[2];
         if (m[2] === 'jpeg') {

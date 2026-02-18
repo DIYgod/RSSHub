@@ -17,7 +17,7 @@ export default async function fetch(slug: string) {
     }
 
     // For `photography`, if it exists
-    let photographers = '';
+    let photographers: string;
     if (post.photographers) {
         photographers = post.photographers
             .map((photographer) => {

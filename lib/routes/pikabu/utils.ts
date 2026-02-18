@@ -19,7 +19,7 @@ const fixVideo = (element) => {
         .attr('style')
         .match(/url\((.+)\);/)[1];
     const dataType = element.attr('data-type');
-    let videoHtml = '';
+    let videoHtml: string;
 
     if (dataType === 'video') {
         const videoId = element.attr('data-source').match(/\/embed\/(.+)$/)[1];

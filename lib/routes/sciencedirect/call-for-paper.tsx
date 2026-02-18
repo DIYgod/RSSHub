@@ -42,7 +42,7 @@ async function handler(ctx) {
     try {
         data = JSON.parse(JSON.parse(scriptJSON));
     } catch (error: any) {
-        throw new Error(`Failed to parse embedded script JSON: ${error.message}`);
+        throw new Error(`Failed to parse embedded script JSON: ${error.message}`, { cause: error });
     }
 
     const cfpList = data?.callsForPapers?.list || [];

@@ -21,9 +21,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('meta[http-equiv="Content-Language"]').attr('content') ?? 'zh-cn';
 
-    let items: DataItem[] = [];
-
-    items = $('ul.camWholeBoxUl li')
+    let items: DataItem[] = $('ul.camWholeBoxUl li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

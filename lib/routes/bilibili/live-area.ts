@@ -26,7 +26,7 @@ async function handler(ctx) {
     const areaID = ctx.req.param('areaID');
     const order = ctx.req.param('order');
 
-    let orderTitle = '';
+    let orderTitle: string;
     switch (order) {
         case 'live_time':
             orderTitle = '最新开播';
@@ -47,7 +47,7 @@ async function handler(ctx) {
     });
 
     let parentTitle = '';
-    let parentID = '';
+    let parentID: string;
     let areaTitle = '';
     let areaLink = '';
 

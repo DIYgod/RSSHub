@@ -30,8 +30,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let id = '';
-    let name = '';
+    let id: string;
+    let name: string;
 
     switch (ctx.req.param('category')) {
         case 'zwgk':

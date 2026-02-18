@@ -23,9 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('div.bty_tbtj_list ul.clearFix li')
+    let items: DataItem[] = $('div.bty_tbtj_list ul.clearFix li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

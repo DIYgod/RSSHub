@@ -398,7 +398,7 @@ async function handler(ctx) {
         };
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        throw new Error(`Failed to fetch Wikipedia current events: ${message}`);
+        throw new Error(`Failed to fetch Wikipedia current events: ${message}`, { cause: error });
     }
 }
 function determineDates(includeToday: any) {

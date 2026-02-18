@@ -26,8 +26,8 @@ function format(article) {
     const type = article.type.toLowerCase();
 
     let block = '';
-    let banner = '';
-    let authorsBio = '';
+    let banner: string;
+    let authorsBio: string;
 
     switch (type) {
         case 'film':
@@ -89,8 +89,7 @@ const getData = async (list) => {
                         })
                 );
 
-                let authors = '';
-                authors = article.type === 'film' ? article.creditsShort : article.authors.map((author) => author.name).join(', ');
+                const authors: string = article.type === 'film' ? article.creditsShort : article.authors.map((author) => author.name).join(', ');
 
                 item.description = capture.html();
                 item.author = authors;

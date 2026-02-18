@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -65,7 +65,7 @@ async function handler(ctx) {
     const response = await got(url);
     const data = response.data;
 
-    let items = {};
+    let items: DataItem[];
 
     if (category) {
         const newsFilteredByCategory = data.filter((item) => item.category === categories[category]);

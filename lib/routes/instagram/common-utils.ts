@@ -9,7 +9,7 @@ const renderItems = (items) =>
         // Content
         const summary = item.caption?.text ?? '';
 
-        let description = '';
+        let description: string;
         switch (productType) {
             case 'carousel_container': {
                 const images = item.carousel_media.map((i) => ({

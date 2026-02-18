@@ -116,10 +116,9 @@ async function handler(ctx) {
                     case 'tju-news':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
                                 delete item.type;
-                                detailResponse = await got(item.link);
+                                const detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.pubDate = timezone(
                                     parseDate(

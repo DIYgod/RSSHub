@@ -29,14 +29,13 @@ export const route: Route = {
 async function handler(ctx) {
     const baseUrl = 'https://www.nikkei.com';
     const { category, article_type = 'paid' } = ctx.req.param();
-    let url = '';
-    url = category === 'news' ? `${baseUrl}/news/category/` : `${baseUrl}/${category}/archive/`;
+    const url = category === 'news' ? `${baseUrl}/news/category/` : `${baseUrl}/${category}/archive/`;
 
     const response = await got(url);
     const data = response.data;
     const $ = load(data);
 
-    let categoryName = '';
+    let categoryName: string;
     const listSelector = $('[class^="container_"]  [class^="default_"]:has(article)');
     const paidSelector = 'img[class^="icon_"]';
 

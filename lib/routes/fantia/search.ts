@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -163,7 +163,7 @@ async function handler(ctx) {
         },
     });
 
-    let items = {};
+    let items: DataItem[];
 
     switch (type) {
         case 'fanclubs':

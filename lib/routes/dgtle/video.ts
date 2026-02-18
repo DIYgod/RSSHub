@@ -25,9 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(apiUrl);
 
-    let items: DataItem[] = [];
-
-    items = response.data.list.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.list.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const image: string | undefined = item.cover?.split(/\?/)?.[0];
         const description: string | undefined = renderDescription({

@@ -55,7 +55,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    let url = '';
+    let url: string;
     let categoryName = '';
     const categoryTable = {
         1: 'PC',
@@ -126,7 +126,7 @@ async function handler(ctx) {
         async (item) => {
             item.description = await cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link);
-                let component = '';
+                let component: string;
                 const urlReg = /window\.lazySizesConfig/g;
 
                 let pubInfo;

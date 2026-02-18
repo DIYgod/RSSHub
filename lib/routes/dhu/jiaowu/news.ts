@@ -60,7 +60,7 @@ async function handler(ctx) {
                 return await cache.tryGet(url, async () => {
                     // fetch article content
                     // some contents are only available for internal network
-                    let description = '';
+                    let description: string;
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);

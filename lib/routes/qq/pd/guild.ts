@@ -56,7 +56,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
     const sortType = sortMap[sort];
 
-    let url = '';
+    let url: string;
     let body = {};
     let headers = {};
 
