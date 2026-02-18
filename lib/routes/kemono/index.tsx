@@ -412,6 +412,6 @@ async function handler(ctx) {
             item: items,
         };
     } catch (error) {
-        throw new Error(`Failed to fetch data from Kemono: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        throw new Error(`Failed to fetch data from Kemono: ${error instanceof Error ? error.message : 'Unknown error'}`, { cause: error });
     }
 }

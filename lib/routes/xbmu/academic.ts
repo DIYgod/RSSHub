@@ -70,7 +70,7 @@ const handler: Route['handler'] = async () => {
             id: 'https://rsshub.app/xbmu/academic',
         };
     } catch (error) {
-        throw new Error(`Error fetching academic information: ${error}`);
+        throw new Error(`Error fetching academic information: ${error}`, { cause: error });
     }
 };
 
