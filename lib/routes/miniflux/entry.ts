@@ -164,14 +164,14 @@ async function handler(ctx) {
         if (limit && queryLimit) {
             if (limit >= queryLimit) {
                 const eachLimit = Number.parseInt(queryLimit / feedsList.length);
-                limit = eachLimit ?? 1;
+                limit = eachLimit || 1;
             }
             parameters += `&limit=${limit}`;
         } else if (limit) {
             parameters += `&limit=${limit}`;
         } else if (queryLimit) {
             const eachLimit = Number.parseInt(queryLimit / feedsList.length);
-            limit = eachLimit ?? 1;
+            limit = eachLimit || 1;
             parameters += `&limit=${limit}`;
         }
 
