@@ -285,7 +285,7 @@ const fetchFromMercari = async function fetchFromMercari<T>(url: string, data: a
     try {
         return await ofetch<T>(url, options);
     } catch (error) {
-        throw new Error(`API request failed: ${error}`);
+        throw new Error(`API request failed: ${error}`, { cause: error });
     }
 };
 

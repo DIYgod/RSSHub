@@ -193,7 +193,7 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
     const ridEnglish = zone[1].english;
 
     let apiBase = 'https://api.bilibili.com/x/web-interface/ranking/v2';
-    let apiParams = '';
+    let apiParams: string;
 
     switch (ridType) {
         case 'x/rid':

@@ -29,9 +29,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = response.data.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string = renderDescription({
             intro: item.summary,

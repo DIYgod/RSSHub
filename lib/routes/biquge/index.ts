@@ -60,7 +60,7 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
 
-            let link = '';
+            let link: string;
             const url = item.attr('href');
             if (url.startsWith('http')) {
                 link = url;

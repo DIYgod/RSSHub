@@ -16,14 +16,14 @@ async function handler(ctx) {
         .filter((item) => item !== '');
     let pathstartat = 0;
     let defaultPath = '';
-    let list_element = '';
+    let list_element: string;
     let list_include = 'site';
-    let title_element = '';
+    let title_element: string;
     let title_match = '(.*)';
-    let description_element = '';
-    let authorisme = '';
-    let pubDate_element = '';
-    let pubDate_match = '';
+    let description_element: string;
+    let authorisme: string;
+    let pubDate_element: string;
+    let pubDate_match: string;
     // let pubDate_format = undefined;
     switch (path[1]) {
         case 'www':

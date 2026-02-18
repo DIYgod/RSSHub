@@ -33,7 +33,7 @@ async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
     const size = Number.isFinite(limit) && limit > 0 ? limit : 20;
 
-    let link = '';
+    let link: string;
     if (type === '1') {
         link = `https://gw-c.nowcoder.com/api/sparta/subject/hot-subject?limit=${size}&_=${Date.now()}&t=`;
         const responseBody = (await got.get(link)).data;

@@ -83,9 +83,9 @@ async function handler(ctx) {
         }
         $('img').css('max-width', '100%');
 
-        let title = '';
-        let link = '';
-        let author = '';
+        let title: string;
+        let link: string;
+        let author: string;
         let pubDate: Date;
 
         switch (item.type) {

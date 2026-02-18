@@ -25,12 +25,8 @@ async function handler(ctx) {
     const nationalData = areaTree?.[0];
     const provinceList = nationalData?.children;
 
-    let todayConfirm = 0;
-    let totalNowConfirm = 0;
-    let totalConfirm = 0;
-    let totalDead = 0;
-    let coronavirusData = {};
-    let placeName = '';
+    let coronavirusData: Record<string, unknown>;
+    let placeName: string;
 
     if (!province || province === '中国' || province === '全国') {
         // 没有传参则取全国
@@ -51,10 +47,10 @@ async function handler(ctx) {
     if (!coronavirusData) {
         throw new InvalidParameterError(`未找到 ${placeName} 的疫情数据，请检查输入的省市名称是否正确`);
     }
-    todayConfirm = coronavirusData.today?.confirm;
-    totalNowConfirm = coronavirusData.total?.nowConfirm;
-    totalConfirm = coronavirusData.total?.confirm;
-    totalDead = coronavirusData.total?.dead;
+    const todayConfirm = coronavirusData.today?.confirm;
+    const totalNowConfirm = coronavirusData.total?.nowConfirm;
+    const totalConfirm = coronavirusData.total?.confirm;
+    const totalDead = coronavirusData.total?.dead;
     const pubDate = parseDate(coronavirusData.total?.mtime || lastUpdateTime);
 
     const title = `${placeName} - 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪`;

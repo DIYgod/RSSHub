@@ -159,7 +159,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
             let title = `${dynamic.character_name}@${dynamic.group_name} ${dynamic.mask_content}`;
             let link: string | undefined;
             let description: string | undefined;
-            let detail: PostDetail | DutiesPartyDetail | FreeCompanyPartyDetail | NoviceNetworkParty | null = null;
+            let detail: PostDetail | DutiesPartyDetail | FreeCompanyPartyDetail | NoviceNetworkParty | null;
 
             switch (dynamic.from) {
                 case DynamicSource.Post:

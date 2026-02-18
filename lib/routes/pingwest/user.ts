@@ -71,7 +71,7 @@ async function handler(ctx) {
     });
     const $ = load(response.data.data.list);
 
-    let item = [];
+    let item: DataItem[];
     const needFullText = option === 'fulltext';
     switch (type) {
         case 'article':

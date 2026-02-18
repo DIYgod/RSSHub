@@ -79,7 +79,7 @@ export async function fetchThread(
                 };
             }
         }
-        return await fetchThread(tid, options, ++retry);
+        return await fetchThread(tid, options, retry + 1);
     }
 
     return {

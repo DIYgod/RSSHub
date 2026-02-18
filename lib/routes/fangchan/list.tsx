@@ -31,9 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.data.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string = renderToString(item.zhaiyao ? <blockquote>{item.zhaiyao}</blockquote> : null);
         const pubDate: number | string = item.createtime;

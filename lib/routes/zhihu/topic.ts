@@ -62,7 +62,7 @@ async function handler(ctx) {
     const items = response.data.map(({ target: item }) => {
         const type = item.type;
         let title = '';
-        let description = '';
+        let description: string;
         let link = '';
         let pubDate: Date;
         let author = '';

@@ -20,11 +20,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
     const regex = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
 
-    items =
+    let items: DataItem[] =
         response
             .match(regex)
             ?.slice(0, limit)

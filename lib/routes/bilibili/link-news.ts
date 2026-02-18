@@ -22,7 +22,7 @@ export const route: Route = {
 async function handler(ctx) {
     const product = ctx.req.param('product');
 
-    let productTitle = '';
+    let productTitle: string;
 
     switch (product) {
         case 'live':

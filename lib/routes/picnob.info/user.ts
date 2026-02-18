@@ -42,7 +42,7 @@ export const route: Route = {
 const renderVideo = (video, poster) => `<video controls poster="${poster}"><source src="${video}" type="video/mp4"></video>`;
 const renderImage = (src) => `<img src="${src}">`;
 const renderDescription = (type: Post['postType'], item: Post | Story) => {
-    let media = '';
+    let media: string;
     switch (type) {
         case 'carousel':
             media = item.albumItems

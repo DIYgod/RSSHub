@@ -33,7 +33,7 @@ async function handler(ctx) {
     const originDomain = 'https://www.gov.cn';
     let url = '';
     let title = '';
-    let list = '';
+    let list: string;
     switch (uid) {
         case 'bm':
             url = `${originDomain}/lianbo/bumen/index.htm`;

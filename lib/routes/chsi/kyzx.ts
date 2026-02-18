@@ -53,7 +53,7 @@ async function handler(ctx) {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (itemUrl) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);

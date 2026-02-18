@@ -182,7 +182,7 @@ async function handler(ctx) {
     }
     // 时间范围
     if (time !== 'all' && ['one-day', 'week', 'month', 'three-month'].includes(time)) {
-        let startTime = '';
+        let startTime: string;
         const endTime = dayjs().endOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
 
         // 过去24小时-day 最近一周-week 最近一个月-month 最近三个月three-month

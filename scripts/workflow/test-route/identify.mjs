@@ -10,7 +10,7 @@ export default async function identify({ github, context, core }, body, number, 
     const bodyNoCmts = body?.replaceAll(/<!--[\S\s]*?-->/g, '');
     const m = bodyNoCmts?.match(/```routes\s+([\S\s]*?)```/);
     core.debug(`match: ${m}`);
-    let routes = null;
+    let routes;
 
     const issueFacts = {
         owner: context.repo.owner,

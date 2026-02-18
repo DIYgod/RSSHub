@@ -17,9 +17,7 @@ const md = MarkdownIt({
 const baseUrl = 'https://www.dgtle.com';
 
 const ProcessItems = async (limit: number, dataList: any): Promise<DataItem[]> => {
-    let items: DataItem[] = [];
-
-    items = dataList.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = dataList.slice(0, limit).map((item): DataItem => {
         const title: string = item.title || item.content;
         const image: string | undefined = item.cover;
         const description: string | undefined = renderDescription({

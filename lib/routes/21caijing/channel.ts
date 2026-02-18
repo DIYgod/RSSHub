@@ -85,9 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = JSON.parse(response)
+    let items: DataItem[] = JSON.parse(response)
         .slice(0, limit)
         .map((item): DataItem => {
             const title: string = item.title;

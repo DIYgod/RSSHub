@@ -140,7 +140,7 @@ async function handler(ctx: Context) {
         };
     } catch (error: any) {
         if (error?.response?.statusCode === 404) {
-            throw new Error(`${error.message}: Project ${id} not found`);
+            throw new Error(`${error.message}: Project ${id} not found`, { cause: error });
         }
         throw error;
     }

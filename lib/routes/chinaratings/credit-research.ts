@@ -20,9 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.contRight ul.list li')
+    let items: DataItem[] = $('div.contRight ul.list li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

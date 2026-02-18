@@ -50,7 +50,7 @@ async function handler(ctx) {
                 }
             });
 
-            let html = '';
+            let html: string;
             try {
                 await page.goto(link, {
                     waitUntil: 'domcontentloaded',

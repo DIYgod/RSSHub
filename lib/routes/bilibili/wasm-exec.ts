@@ -319,7 +319,7 @@
 
                     // func resetMemoryDataView()
                     'runtime.resetMemoryDataView': (sp) => {
-                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-useless-assignment
                         sp >>>= 0;
                         this.mem = new DataView(this._inst.exports.mem.buffer);
                     },

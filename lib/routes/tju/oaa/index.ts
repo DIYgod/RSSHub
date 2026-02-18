@@ -110,9 +110,8 @@ async function handler(ctx) {
                     case 'tju-oaa':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
-                                detailResponse = await got(item.link);
+                                const detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.description = content('.v_news_content').html();
                             } catch {

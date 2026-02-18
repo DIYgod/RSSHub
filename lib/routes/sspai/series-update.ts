@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         response.data.data.map(async (item) => {
-            let description = '';
+            let description: string;
             if (item.probation) {
                 const res = await got(`https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`);
                 description = res.data.data.body;
