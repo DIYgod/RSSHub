@@ -239,8 +239,6 @@ const renderVideo = (block: Block, index: number): JSX.Element | null => {
 
     let src: string | undefined;
     let sourceText: string | undefined;
-    let width: number | undefined;
-    let height: number | undefined;
 
     if (mediaMetadataBlock?.model?.imageUrl) {
         src = mediaMetadataBlock.model.imageUrl;
@@ -254,7 +252,7 @@ const renderVideo = (block: Block, index: number): JSX.Element | null => {
         return null;
     }
 
-    return renderFigure(`video-${index}`, src, altText, width, height, caption, sourceText);
+    return renderFigure(`video-${index}`, src, altText, undefined, undefined, caption, sourceText);
 };
 
 const renderMedia = (block: Block, index: number): JSX.Element | null => {
