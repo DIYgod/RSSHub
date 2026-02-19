@@ -1,15 +1,16 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/vimeo/category/documentary/staffpicks',
     parameters: {
@@ -77,7 +78,7 @@ async function handler(ctx) {
         description: feedDescription,
         item: vimeojs.map((item) => ({
             title: item.name,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 videoUrl: item.uri.replace(`/videos`, ''),
                 vdescription: item.description || '',
             }),

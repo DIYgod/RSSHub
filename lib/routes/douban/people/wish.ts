@@ -1,9 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
+
 import { load } from 'cheerio';
-import got from '@/utils/got';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
 export const route: Route = {
     path: '/people/:userid/wish/:routeParams?',
     categories: ['social-media'],

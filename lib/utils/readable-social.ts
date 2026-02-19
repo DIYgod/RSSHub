@@ -39,4 +39,18 @@ const queryToInteger = (s) => {
     return Number.parseInt(s);
 };
 
-export { fallback, queryToBoolean, queryToInteger };
+const queryToFloat = (s) => {
+    if (s === undefined || s === null) {
+        return s;
+    }
+    if (Array.isArray(s)) {
+        if (s.length === 0) {
+            return;
+        }
+        s = s[0];
+    }
+    s = s.toString();
+    return Number.parseFloat(s);
+};
+
+export { fallback, queryToBoolean, queryToFloat, queryToInteger };

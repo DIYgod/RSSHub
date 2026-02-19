@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/panewslab/news',
     radar: [
         {

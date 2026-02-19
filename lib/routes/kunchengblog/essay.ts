@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import { SourceMapConsumer } from 'source-map';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/essay',
@@ -47,7 +48,7 @@ async function handler(ctx) {
     const items = await SourceMapConsumer.with(response, null, (consumer) =>
         consumer.sources
             .filter((s) => /routes\/essays/.test(s))
-            .reverse()
+            .toReversed()
             .slice(0, limit)
             .map((item) => {
                 const source = consumer.sourceContentFor(item).replaceAll(/\s\n/g, '');

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'http://www.nifd.cn';
@@ -61,6 +62,22 @@ async function handler(ctx) {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.qrd-content').html();
+
+                const $enclosureEl = content('div.report-bottom a').first();
+                const enclosureUrl = $enclosureEl.attr('href');
+
+                if (enclosureUrl) {
+                    const enclosureItem = {
+                        enclosure_url: new URL(enclosureUrl, rootUrl).href,
+                        enclosure_type: `application/${enclosureUrl.split(/\./).pop() ?? 'pdf'}`,
+                        enclosure_title: $enclosureEl.prev().text(),
+                    };
+
+                    item = {
+                        ...item,
+                        ...enclosureItem,
+                    };
+                }
 
                 return item;
             })

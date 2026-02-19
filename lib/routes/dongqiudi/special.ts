@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/special/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dongqiudi/special/41',
     parameters: { id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配' },
     radar: [

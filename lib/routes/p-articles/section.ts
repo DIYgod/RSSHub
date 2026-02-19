@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { rootUrl, ProcessFeed } from './utils';
+import ofetch from '@/utils/ofetch';
+
+import { ProcessFeed, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/section/:section',

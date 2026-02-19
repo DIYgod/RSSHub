@@ -1,9 +1,12 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { header, getSignedHeader, processImage } from './utils';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { Articles, Profile } from './types';
+
+import type { Articles, Profile } from './types';
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/posts/:usertype/:id',
@@ -11,7 +14,13 @@ export const route: Route = {
     example: '/zhihu/posts/people/frederchen',
     parameters: { usertype: '作者 id，可在用户主页 URL 中找到', id: '用户类型usertype，参考用户主页的URL。目前有两种，见下表' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -36,17 +45,18 @@ async function handler(ctx) {
     const usertype = ctx.req.param('usertype');
 
     const userProfile = await cache.tryGet(`zhihu:posts:profile:${id}`, async () => {
-        const userAPIPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}?${new URLSearchParams({
-            include: 'allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics',
-        })}`;
+        const userAPIPath = `/${usertype === 'people' ? 'people' : 'org'}/${id}`;
 
-        return await ofetch<Profile>(`https://www.zhihu.com${userAPIPath}`, {
+        const result = await ofetch(`https://www.zhihu.com${userAPIPath}`, {
             headers: {
                 ...header,
                 ...(await getSignedHeader(`https://www.zhihu.com/${usertype}/${id}/`, userAPIPath)),
                 Referer: `https://www.zhihu.com/${usertype}/${id}/`,
             },
         });
+        const $ = load(result);
+        const data = JSON.parse($('#js-initialData').text());
+        return data?.initialState?.entities?.users[id] as Profile;
     });
 
     const apiPath = `/api/v4/${usertype === 'people' ? 'members' : 'org'}/${id}/articles?${new URLSearchParams({
@@ -80,7 +90,7 @@ async function handler(ctx) {
         title: `${userProfile.name} 的知乎文章`,
         link: `https://www.zhihu.com/${usertype}/${id}/posts`,
         description: userProfile.headline,
-        image: userProfile.avatar_url.split('?')[0],
+        image: userProfile.avatarUrl.split('?')[0],
         // banner: userData?.coverUrl?.split('?')[0],
         item: items,
     };

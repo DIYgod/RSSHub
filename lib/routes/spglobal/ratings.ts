@@ -1,6 +1,7 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/ratings/:language?',
@@ -38,7 +39,7 @@ export const route: Route = {
 | ru | Русский |
 | ar | العربية |
     `,
-    maintainers: ['FYLSen'],
+    maintainers: ['Cedaric'],
     handler,
 };
 

@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/matrix',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/matrix',
     parameters: {},
     features: {

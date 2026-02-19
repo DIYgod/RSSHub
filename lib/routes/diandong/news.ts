@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://webapi.diandong.com';
@@ -19,7 +20,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/news/:cate?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/diandong/news',
     parameters: { cate: '分类，见下表，默认为推荐' },
     features: {

@@ -1,9 +1,10 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
     path: '/readlist/:listid',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Articles,
     example: '/bilibili/readlist/25611',
     parameters: { listid: '文集 id, 可在专栏文集 URL 中找到' },

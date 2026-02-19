@@ -7,6 +7,6 @@ export const namespace: Namespace = {
 | Key          | Meaning                                                                         | Accepted keys  | Default value |
 | ------------ | ------------------------------------------------------------------------------- | -------------- | ------------- |
 | bittorrent   | Whether include a link to the latest torrent                                    | 0/1/true/false | false         |
-| embed\_thumb | Whether the cover image is embedded in the RSS feed rather than given as a link | 0/1/true/false | false         |`,
+| embed_thumb | Whether the cover image is embedded in the RSS feed rather than given as a link | 0/1/true/false | false         |`,
     lang: 'en',
 };

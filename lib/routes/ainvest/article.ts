@@ -1,7 +1,5 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import { getHeaders, randomString, encryptAES, decryptAES } from './utils';
+import { fetchContentItems } from '@/routes/ainvest/utils';
+import type { Route } from '@/types';
 
 export const route: Route = {
     path: '/article',
@@ -18,49 +16,22 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ainvest.com/news'],
+            source: ['www.ainvest.com/news/articles-latest/', 'www.ainvest.com'],
         },
     ],
     name: 'Latest Article',
     maintainers: ['TonyRL'],
     handler,
-    url: 'ainvest.com/news',
+    url: 'www.ainvest.com/news/articles-latest/',
 };
 
 async function handler(ctx) {
-    const key = randomString(16);
-
-    const { data: response } = await got.post('https://api.ainvest.com/gw/socialcenter/v1/edu/article/listArticle', {
-        headers: getHeaders(key),
-        searchParams: {
-            timestamp: Date.now(),
-        },
-        data: encryptAES(
-            JSON.stringify({
-                batch: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30,
-                startId: null,
-                tags: {
-                    in: ['markettrends', 'premarket', 'companyinsights', 'macro'],
-                    and: ['web', 'creationplatform'],
-                },
-            }),
-            key
-        ),
-    });
-
-    const { data } = JSON.parse(decryptAES(response, key));
-
-    const items = data.map((item) => ({
-        title: item.title,
-        description: item.content,
-        link: item.sourceUrl,
-        pubDate: parseDate(item.postDate, 'x'),
-        category: [item.nickName, ...item.tags.map((tag) => tag.code)],
-    }));
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const items = await fetchContentItems([109], limit);
 
     return {
         title: 'AInvest - Latest Articles',
-        link: 'https://www.ainvest.com/news',
+        link: 'https://www.ainvest.com/news/articles-latest/',
         language: 'en',
         item: items,
     };

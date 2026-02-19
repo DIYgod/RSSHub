@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { parseList, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { parseItem, parseList } from './utils';
 
 const channelMap = {
     calendar: 'pac',
@@ -12,7 +13,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/column/:channel',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/guokr/column/calendar',
     parameters: { channel: '专栏类别' },
     radar: [

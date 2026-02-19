@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
@@ -31,7 +32,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

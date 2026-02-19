@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/user/:id',
@@ -54,7 +55,7 @@ async function handler(ctx) {
     let items = $('item')
         .slice(-limit)
         .toArray()
-        .reverse()
+        .toReversed()
         .map((item) => {
             item = $(item);
 

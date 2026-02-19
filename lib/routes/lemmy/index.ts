@@ -1,16 +1,18 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({ html: true });
-import { config } from '@/config';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/:community/:sort?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/lemmy/technology@lemmy.world/Hot',
     parameters: {
         community: 'Lemmmy community, for example technology@lemmy.world',
@@ -92,11 +94,16 @@ async function handler(ctx) {
         const post = e.post;
         const creator = e.creator;
         const counts = e.counts;
-        const item = {};
-        item.title = post.name;
-        item.author = creator.name;
-        item.pubDate = parseDate(post.published);
-        item.link = post.ap_id;
+        const item = {
+            title: post.name,
+            author: creator.name,
+            pubDate: parseDate(post.published),
+            link: post.ap_id,
+            description: '',
+            comments: 0,
+            upvotes: 0,
+            downvotes: 0,
+        };
         const url = post.url;
         const urlContent = url ? `<p><a href="${url}">${url}</a></p>` : '';
         const body = post.body ? md.render(post.body) : '';

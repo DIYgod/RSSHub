@@ -1,11 +1,12 @@
-import { Route, DataItem } from '@/types';
 import { config } from '@/config';
-import got from '@/utils/got';
-import wait from '@/utils/wait';
-import cache from '@/utils/cache';
-import { fetchArticle } from '@/utils/wechat-mp';
+import CaptchaError from '@/errors/types/captcha';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import wait from '@/utils/wait';
+import { fetchArticle } from '@/utils/wechat-mp';
 
 let cacheIndex = 0;
 
@@ -31,6 +32,9 @@ async function handler(ctx) {
     }
     if (ctx.req.param('id') === 'invalid-parameter-error') {
         throw new InvalidParameterError('Test invalid parameter error');
+    }
+    if (ctx.req.param('id') === 'captcha-error') {
+        throw new CaptchaError('Test captcha error');
     }
     if (ctx.req.param('id') === 'redirect') {
         ctx.set('redirect', '/test/1');
@@ -416,6 +420,6 @@ async function handler(ctx) {
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description:
-            ctx.req.param('id') === 'complicated' ? '<img src="http://mock.com/DIYgod/DIYgod/RSSHub">' : (ctx.req.param('id') === 'multimedia' ? '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video>' : 'A test route for RSSHub'),
+            ctx.req.param('id') === 'complicated' ? '<img src="http://mock.com/DIYgod/DIYgod/RSSHub">' : ctx.req.param('id') === 'multimedia' ? '<video src="http://mock.com/DIYgod/DIYgod/RSSHub"></video>' : 'A test route for RSSHub',
     };
 }

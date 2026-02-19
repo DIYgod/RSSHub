@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import util from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
 const news_url = 'https://www.nintendoswitch.com.cn';
 
 export const route: Route = {

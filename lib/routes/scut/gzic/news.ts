@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/gzic/news',
@@ -41,7 +42,12 @@ async function handler() {
             return {
                 title: item.find('.li-img a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(pubDate.text().replaceAll(/年|月/g, '-').replaceAll('日', '')),
+                pubDate: parseDate(
+                    pubDate
+                        .text()
+                        .replaceAll(/年|月/g, '-')
+                        .replaceAll('日', '')
+                ),
                 itunes_item_image: `${baseUrl}${item.find('.li-img img').attr('src')}`,
             };
         });

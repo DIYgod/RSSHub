@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { ssoUrl, notesUrl } from '../utils';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderNote } from '../templates/note';
+import { notesUrl, ssoUrl } from '../utils';
 
 export const route: Route = {
     path: '/notes/:lang?/note/:id',
@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     const items = data.data.map((item) => ({
         title: item.content,
-        description: art(path.join(__dirname, '../templates/note.art'), {
+        description: renderNote({
             content: item.content,
             picture: item.picture,
         }),

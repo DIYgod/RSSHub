@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 const host = 'https://guangdiu.com';
@@ -23,7 +24,7 @@ export const route: Route = {
     maintainers: ['Fatpandac'],
     handler,
     description: `::: tip
-  海外折扣: [\`/guangdiu/k=daily&c=us\`](https://rsshub.app/guangdiu/k=daily\&c=us)
+  海外折扣: [\`/guangdiu/k=daily&c=us\`](https://rsshub.app/guangdiu/k=daily&c=us)
 :::`,
 };
 

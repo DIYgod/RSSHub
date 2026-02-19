@@ -1,9 +1,10 @@
-import { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:section?',
@@ -93,7 +94,7 @@ async function handler(ctx: Context) {
     const $ = load(data);
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
-    const itemsTemp: { title: string; link: string; pubDate: Date }[] =
+    const itemsTemp: Array<{ title: string; link: string; pubDate: Date }> =
         ssrData?.appContext?.initialProps?.sectionData?.articleList?.items?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
             link: `${baseUrl}/zh-hans/help/${item.slug}`,

@@ -1,12 +1,13 @@
-import { Route, ViewType } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['picture', 'popular'],
+    categories: ['picture'],
     view: ViewType.Pictures,
     example: '/fantia/user/3498',
     parameters: { id: 'User id, can be found in user profile URL' },
@@ -17,6 +18,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

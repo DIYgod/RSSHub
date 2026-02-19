@@ -1,12 +1,15 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
+
 const host = 'https://www.gq.com';
 export const route: Route = {
     path: '/news',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/gq/news',
     parameters: {},

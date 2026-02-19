@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ani/new_anime',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Videos,
     example: '/gamer/ani/new_anime',
     parameters: {},

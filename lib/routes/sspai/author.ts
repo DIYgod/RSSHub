@@ -1,5 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +22,7 @@ async function getUserId(slug) {
 
 export const route: Route = {
     path: '/author/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/author/796518',
     parameters: { id: '作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容' },
     features: {

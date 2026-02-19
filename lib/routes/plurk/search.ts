@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import dayjs from 'dayjs';
+
 import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/plurk/search/FGO',
     parameters: { keyword: 'Search keyword' },
     features: {

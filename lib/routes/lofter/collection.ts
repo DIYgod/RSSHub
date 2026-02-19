@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/collection/:collectionID',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/lofter/collection/552041',
     parameters: { collectionID: 'Lofter collection ID, can be found in the share URL' },
     features: {

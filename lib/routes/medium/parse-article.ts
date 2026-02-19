@@ -1,8 +1,8 @@
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 async function parse(url, cookie = '') {
     const { data } = await got(url, {

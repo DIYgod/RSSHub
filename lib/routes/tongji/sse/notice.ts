@@ -1,14 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // html parser
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
-
 // params:
 // type: notification type
-
 import got from '@/utils/got'; // get web content
-import { load } from 'cheerio'; // html parser
-import getArticle from './_article';
 import { parseDate } from '@/utils/parse-date';
+
+import getArticle from './_article';
 
 export const route: Route = {
     path: '/sse/:type?',

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const siteUrl = 'https://xxgk.dhu.edu.cn';
 const baseUrl = 'https://xxgk.dhu.edu.cn/1737/list.htm';
@@ -50,7 +51,7 @@ async function handler() {
                 return await cache.tryGet(url, async () => {
                     // fetch article content
                     // some contents are only available for internal network
-                    let description = '';
+                    let description: string;
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);

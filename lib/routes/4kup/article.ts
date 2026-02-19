@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+
 import { parseDate } from '@/utils/parse-date';
-import { WPPost } from './types';
+
+import type { WPPost } from './types';
 
 const processLazyImages = ($) => {
     $('a.thumb-photo').each((_, elem) => {

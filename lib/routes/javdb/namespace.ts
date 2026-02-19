@@ -6,7 +6,7 @@ export const namespace: Namespace = {
     description: `::: tip
 JavDB 有多个备用域名，本路由默认使用永久域名 \`https://javdb.com\` ，若该域名无法访问，可以通过在路由最后加上 \`?domain=<域名>\` 指定路由访问的域名。如指定备用域名为 \`https://javdb36.com\`，则在所有 JavDB 路由最后加上 \`?domain=javdb36.com\` 即可，此时路由为 [\`/javdb?domain=javdb36.com\`](https://rsshub.app/javdb?domain=javdb36.com)
 
-如果加入了 **分類** 参数，直接在分類参数后加入 \`?domain=<域名>\` 即可。如指定分類 URL 为 \`https://javdb.com/tags?c2=5&c10=1\` 并指定备用域名为 \`https://javdb36.com\`，即在 \`/javdb/tags/c2=5&c10=1\` 最后加上 \`?domain=javdb36.com\`，此时路由为 [\`/javdb/tags/c2=5&c10=1?domain=javdb36.com\`](https://rsshub.app/javdb/tags/c2=5\&c10=1?domain=javdb36.com)
+如果加入了 **分類** 参数，直接在分類参数后加入 \`?domain=<域名>\` 即可。如指定分類 URL 为 \`https://javdb.com/tags?c2=5&c10=1\` 并指定备用域名为 \`https://javdb36.com\`，即在 \`/javdb/tags/c2=5&c10=1\` 最后加上 \`?domain=javdb36.com\`，此时路由为 [\`/javdb/tags/c2=5&c10=1?domain=javdb36.com\`](https://rsshub.app/javdb/tags/c2=5&c10=1?domain=javdb36.com)
 
 **排行榜**、**搜索**、**演員**、**片商** 参数同适用于 **分類** 参数的上述规则
 :::

@@ -1,21 +1,21 @@
-import path from 'node:path';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const baseUrl: string = 'https://www.scientificamerican.com';
+    const baseUrl = 'https://www.scientificamerican.com';
     const targetUrl: string = new URL(`podcast${id ? `/${id}` : 's'}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -24,13 +24,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const data: string | undefined = response.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
     const parsedData = data ? JSON.parse(data.replaceAll('\\\\', '\\')) : undefined;
 
-    let items: DataItem[] = [];
-
-    items = parsedData
+    let items: DataItem[] = parsedData
         ? parsedData.initialData.props.results.slice(0, limit).map((item): DataItem => {
               const title: string = item.title;
               const image: string | undefined = item.image_url;
-              const description: string = art(path.join(__dirname, 'templates/description.art'), {
+              const description: string = renderDescription({
                   images: image
                       ? [
                             {
@@ -51,7 +49,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   url: author.url ? new URL(author.url, baseUrl).href : undefined,
                   avatar: author.picture_file,
               }));
-              const guid: string = `-${item.id}`;
+              const guid = `-${item.id}`;
               const updated: number | string = item.release_date ?? pubDate;
 
               let processedItem: DataItem = {
@@ -77,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
               const enclosureUrl: string | undefined = item.media_url;
 
               if (enclosureUrl) {
-                  const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                  const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                   processedItem = {
                       ...processedItem,
@@ -113,7 +111,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = articleData.title;
                     const image: string | undefined = articleData.image_url;
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         images: image
                             ? [
                                   {
@@ -134,7 +132,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         url: author.url ? new URL(author.url, baseUrl).href : undefined,
                         avatar: author.picture_file,
                     }));
-                    const guid: string = `scientificamerican-${articleData.id}`;
+                    const guid = `scientificamerican-${articleData.id}`;
                     const updated: number | string = articleData.updated_at_date_time ?? pubDate;
 
                     let processedItem: DataItem = {
@@ -159,7 +157,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = articleData.media_url;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                        const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                         processedItem = {
                             ...processedItem,
@@ -205,7 +203,7 @@ export const route: Route = {
     parameters: {
         id: 'ID, see below',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，where the URL is \`https://www.scientificamerican.com/podcast/science-quickly/\`, extract the part \`https://www.scientificamerican.com/podcast/\` to the end, which is \`science-quickly\`, and use it as the parameter to fill in. Therefore, the route will be [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly).
 :::
 
@@ -255,7 +253,7 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
         parameters: {
             id: 'ID，见下表',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，网址为 \`https://www.scientificamerican.com/podcast/science-quickly/\`，请截取 \`https://www.scientificamerican.com/podcast/\` 到末尾 \`/\` 的部分 \`science-quickly\` 作为 \`id\` 参数填入，此时目标路由为 [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly)。
 :::
 

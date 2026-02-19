@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -6,7 +6,7 @@ import fetch from './fetch-article';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/twreporter/category/world',
     parameters: { category: 'Category' },
     features: {

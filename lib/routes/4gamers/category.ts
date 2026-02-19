@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseList, parseItem, getCategories } from './utils';
+
+import { getCategories, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: ['/', '/category/:category'],
@@ -32,10 +33,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
 
-    let categories = [];
     let categoryName = '最新消息';
     if (!isLatest) {
-        categories = await getCategories(cache.tryGet);
+        const categories = await getCategories(cache.tryGet);
         categoryName = categories.find((c) => c.id === Number.parseInt(category)).name;
     }
 

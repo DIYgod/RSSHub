@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { config } from '@/config';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/c/:username/:embed?',

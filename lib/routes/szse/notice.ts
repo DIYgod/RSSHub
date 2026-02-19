@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import * as url from 'node:url';
+
 const host = 'http://www.szse.cn/';
 export const route: Route = {
     path: '/notice',
@@ -69,7 +70,7 @@ async function handler() {
         list.map(async (info) => {
             const title = info.title;
             const date = info.date;
-            const itemUrl = url.resolve(host, info.link);
+            const itemUrl = new URL(info.link, host).href;
             const cacheIn = await cache.get(itemUrl);
             if (cacheIn) {
                 return JSON.parse(cacheIn);

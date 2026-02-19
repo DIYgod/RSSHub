@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
-import { getArchive, getCategories, parseList, parseItem } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { getArchive, getCategories, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/news/:region/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/yahoo/news/hk/world',
     parameters: {
         region: 'Region, `hk/tw/au/ca/fr/malaysia/nz/sg/uk/en(us)`, the part represented by the asterisk (*) in *.news.yahoo.com',

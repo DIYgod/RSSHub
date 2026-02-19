@@ -1,7 +1,8 @@
-import { Data, DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import { processItems, fetchData } from './utils';
 import { config } from '@/config';
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { fetchData, processItems } from './utils';
 
 export const route: Route = {
     path: '/illust/:type',
@@ -15,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Illust',
     maintainers: ['SnowAgar25'],

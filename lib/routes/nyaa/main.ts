@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import { config } from '@/config';
 import Parser from 'rss-parser';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 
 export const route: Route = {
     path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],

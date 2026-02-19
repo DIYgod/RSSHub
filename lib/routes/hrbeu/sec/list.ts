@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const rootUrl = 'http://sec.hrbeu.edu.cn';
 
 export const route: Route = {
@@ -41,7 +43,11 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]').find('div [portletmode=simpleColumnAttri]').text().replaceAll(/[\s·]/g, '').trim();
+    const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]')
+        .find('div [portletmode=simpleColumnAttri]')
+        .text()
+        .replaceAll(/[\s·]/g, '')
+        .trim();
 
     const list = $('li.list_item')
         .toArray()

@@ -1,17 +1,19 @@
-import * as entities from 'entities';
-import { load, type CheerioAPI } from 'cheerio';
+import Parser from '@jocmp/mercury-parser';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { simplecc } from 'simplecc-wasm';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { RE2JS } from 're2js';
-import markdownit from 'markdown-it';
+import * as entities from 'entities';
+import type { MiddlewareHandler } from 'hono';
 import { convert } from 'html-to-text';
+import markdownit from 'markdown-it';
+import { RE2JS } from 're2js';
 import sanitizeHtml from 'sanitize-html';
-import { MiddlewareHandler } from 'hono';
+import { simplecc } from 'simplecc-wasm';
+
+import { config } from '@/config';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import Parser from '@postlight/parser';
-import { Data, DataItem } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const md = markdownit({
     html: true,
@@ -80,7 +82,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         // sort items
         if (ctx.req.query('sorted') !== 'false') {
-            data.item = data.item.sort((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+            data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
         const handleItem = (item: DataItem) => {
@@ -152,7 +154,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     resolveRelativeLink($, elem, 'poster', baseUrl);
                 });
                 $('img, iframe').each((_, elem) => {
-                    $(elem).attr('referrerpolicy', 'no-referrer');
+                    if (!$(elem).attr('referrerpolicy')) {
+                        $(elem).attr('referrerpolicy', 'no-referrer');
+                    }
                 });
 
                 item.description = $('body').html() + '' + (config.suffix || '');

@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/geekdaily',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/rebase/geekdaily',
     radar: [
         {

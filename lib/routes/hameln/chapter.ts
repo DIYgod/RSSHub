@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -49,7 +50,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
             };
         })
-        .sort((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
+        .toSorted((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
         .slice(0, limit);
 
     const item_list = await Promise.all(

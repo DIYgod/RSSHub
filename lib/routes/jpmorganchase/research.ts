@@ -1,7 +1,8 @@
-import { Data, DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const base = 'https://www.jpmorganchase.com';
@@ -68,7 +69,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
 
     return cache.tryGet(url, async () => {
         let authors: string[] = [];
-        let description: string = '';
+        let description = '';
         let category: string[] = [];
         let articleDate: string = entry.date;
         const pageContent: string = await ofetch(url);

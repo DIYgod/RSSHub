@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
+
 import { gdgov } from '../general/general';
 
 export const route: Route = {
@@ -15,14 +16,14 @@ async function handler(ctx) {
         .filter((item) => item !== '');
     let pathstartat = 0;
     let defaultPath = '';
-    let list_element = '';
+    let list_element: string;
     let list_include = 'site';
-    let title_element = '';
+    let title_element: string;
     let title_match = '(.*)';
-    let description_element = '';
-    let authorisme = '';
-    let pubDate_element = '';
-    let pubDate_match = '';
+    let description_element: string;
+    let authorisme: string;
+    let pubDate_element: string;
+    let pubDate_match: string;
     // let pubDate_format = undefined;
     switch (path[1]) {
         case 'www':
@@ -97,6 +98,8 @@ async function handler(ctx) {
                         case undefined:
                             list_element = '#d11_li ul a[href*="content"], .two-o ul a[href*="content"]';
                             break;
+                        default:
+                            break;
                     }
                     break;
                 case 'zwgk':
@@ -109,9 +112,15 @@ async function handler(ctx) {
                                 case undefined:
                                     list_element = '.swiper-slide a, .bt a, .zcjdlist a';
                                     break;
+                                default:
+                                    break;
                             }
                             break;
+                        default:
+                            break;
                     }
+                    break;
+                default:
                     break;
             }
             title_element = '#ScDetailTitle';
@@ -142,7 +151,11 @@ async function handler(ctx) {
                         case undefined:
                             list_element = '.zw-news-list a';
                             break;
+                        default:
+                            break;
                     }
+                    break;
+                default:
                     break;
             }
             title_element = '.title';
@@ -168,6 +181,8 @@ async function handler(ctx) {
                         break;
                     case 'xwzx':
                         list_element = '.news_title li a, .news_title_ li a';
+                        break;
+                    default:
                         break;
                 }
             }
@@ -232,6 +247,8 @@ async function handler(ctx) {
                     case 'zwxx':
                         list_element = '.marqueetop a, .gud-file ul li a, .dyn-box ul li a, .org-list a';
                         break;
+                    default:
+                        break;
                 }
             }
             title_element = '.pre-box h3';
@@ -285,6 +302,8 @@ async function handler(ctx) {
                     if (path[3] !== undefined) {
                         list_element = '.img a';
                     }
+                    break;
+                default:
                     break;
             }
             title_element = '.bt';
@@ -364,6 +383,8 @@ async function handler(ctx) {
             pubDate_element = '.HTime';
             pubDate_match = '发布日期：(.*)   点击率';
             break;
+        default:
+            throw new Error(`Unknown path[1]: ${path[1]}`);
     }
     const info = {
         pathstartat,

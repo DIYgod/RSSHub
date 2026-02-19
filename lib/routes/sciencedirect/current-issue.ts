@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import sanitizeHtml from 'sanitize-html';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/journal/:id/current',
@@ -76,8 +76,14 @@ async function handler(ctx) {
                     },
                 });
 
-                item.description = response.data[0].abstracts[0].html ?? '';
-
+                const abstracts = response.data?.[0]?.abstracts ?? [];
+                item.description =
+                    abstracts.length === 0
+                        ? ''
+                        : abstracts
+                              .map((abs) => abs?.html ?? '')
+                              .filter(Boolean)
+                              .join('<br/><br/>');
                 return item;
             })
         )

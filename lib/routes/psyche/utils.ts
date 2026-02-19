@@ -1,8 +1,10 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderEssay } from './templates/essay';
+import { renderVideo } from './templates/video';
 
 const getImageById = async (id) => {
     const response = await ofetch('https://api.aeonmedia.co/graphql', {
@@ -24,12 +26,12 @@ function format(article) {
     const type = article.type.toLowerCase();
 
     let block = '';
-    let banner = '';
-    let authorsBio = '';
+    let banner: string;
+    let authorsBio: string;
 
     switch (type) {
         case 'film':
-            block = art(path.join(__dirname, 'templates/video.art'), { article });
+            block = renderVideo(article);
 
             break;
 
@@ -48,7 +50,7 @@ function format(article) {
                 })
                 .join('');
 
-            block = art(path.join(__dirname, 'templates/essay.art'), { banner, authorsBio, content });
+            block = renderEssay({ banner, authorsBio, content });
 
             break;
         }
@@ -58,7 +60,7 @@ function format(article) {
 
             const capture = load(article.body);
             capture('p.pullquote').remove();
-            block = art(path.join(__dirname, 'templates/essay.art'), { banner, authorsBio, content: capture.html() });
+            block = renderEssay({ banner, authorsBio, content: capture.html() });
 
             break;
         }
@@ -87,8 +89,7 @@ const getData = async (list) => {
                         })
                 );
 
-                let authors = '';
-                authors = article.type === 'film' ? article.creditsShort : article.authors.map((author) => author.name).join(', ');
+                const authors: string = article.type === 'film' ? article.creditsShort : article.authors.map((author) => author.name).join(', ');
 
                 item.description = capture.html();
                 item.author = authors;

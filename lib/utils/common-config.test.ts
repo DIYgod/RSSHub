@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import configUtils, { transElemText, replaceParams, getProp } from '@/utils/common-config';
+
+import configUtils, { getProp, replaceParams, transElemText } from '@/utils/common-config';
 
 describe('index', () => {
     it('transElemText', () => {

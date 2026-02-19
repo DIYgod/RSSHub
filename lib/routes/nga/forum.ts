@@ -1,14 +1,15 @@
-import { Route, ViewType } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
 const X_UA = 'NGA_skull/6.0.5(iPhone10,3;iOS 12.0.1)';
 
 export const route: Route = {
     path: '/forum/:fid/:recommend?',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     view: ViewType.Articles,
     example: '/nga/forum/489',
     parameters: { fid: '分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用', recommend: '是否只显示精华主题, 留空为否, 任意值为是' },

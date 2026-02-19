@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { processFeed } from './utils';
 
 const handler = (ctx) => processFeed('author', ctx);
@@ -19,5 +20,5 @@ export const route: Route = {
     ],
     handler,
     example: '/theinitium/author/ninghuilulu/zh-hans',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
 };

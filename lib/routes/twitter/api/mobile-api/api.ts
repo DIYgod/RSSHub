@@ -1,13 +1,15 @@
-import { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } from './constants';
-import { config } from '@/config';
-import logger from '@/utils/logger';
-import OAuth from 'oauth-1.0a';
 import CryptoJS from 'crypto-js';
+import OAuth from 'oauth-1.0a';
 import queryString from 'query-string';
-import { getToken } from './token';
-import cache from '@/utils/cache';
+
+import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+
+import { baseUrl, consumerKey, consumerSecret, gqlFeatures, gqlMap } from './constants';
+import { getToken } from './token';
 
 const twitterGot = async (url, params) => {
     const token = await getToken();
@@ -280,7 +282,7 @@ const getUserTweets = async (id, params = {}) => {
             return !idSet.has(id_str) && idSet.add(id_str) && tweet;
         }) // deduplicate
         .filter(Boolean) // remove null
-        .sort((a, b) => (b.id_str || b.conversation_id_str) - (a.id_str || a.conversation_id_str)) // desc
+        .toSorted((a, b) => (b.id_str || b.conversation_id_str) - (a.id_str || a.conversation_id_str)) // desc
         .slice(0, 20);
     cache.set(cacheKey, JSON.stringify(tweets));
     return tweets;

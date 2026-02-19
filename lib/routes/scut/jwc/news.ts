@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import querystring from 'node:querystring';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import * as url from 'node:url';
-import querystring from 'node:querystring';
 
 const baseUrl = 'http://jw.scut.edu.cn';
 const refererUrl = baseUrl + '/dist/';
@@ -33,7 +33,7 @@ const generateArticlePubDate = (createDateStr) => {
 
 const isRedirectPage = (data) => !!data.link;
 
-const resolveRelativeUrl = (html) => html.replaceAll('src="/', `src="${url.resolve(baseUrl, '.')}`).replaceAll('href="/', `href="${url.resolve(baseUrl, '.')}`);
+const resolveRelativeUrl = (html) => html.replaceAll('src="/', `src="${new URL('.', baseUrl).href}`).replaceAll('href="/', `href="${new URL('.', baseUrl).href}`);
 
 const apiSuccessAssert = (data) => {
     if (!data.success) {

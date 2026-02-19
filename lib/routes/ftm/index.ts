@@ -1,13 +1,13 @@
-import { Route } from '@/types';
-
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/ftm',
     parameters: {},
     name: '文章',

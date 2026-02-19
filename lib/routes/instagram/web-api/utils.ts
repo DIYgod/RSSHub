@@ -1,12 +1,14 @@
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderImages } from '../templates/images';
+import { renderVideo } from '../templates/video';
 
 const baseUrl = 'https://www.instagram.com';
-const COOKIE_URL = 'https://instagram.com';
+const COOKIE_URL = baseUrl;
 
 const getCSRFTokenFromJar = async (cookieJar) => {
     const cookieString = await cookieJar.getCookieString(COOKIE_URL);
@@ -14,45 +16,52 @@ const getCSRFTokenFromJar = async (cookieJar) => {
 };
 
 const getHeaders = async (cookieJar) => ({
-    'X-ASBD-ID': 198387,
-    'X-CSRFToken': await getCSRFTokenFromJar(cookieJar),
-    'X-IG-App-ID': 936_619_743_392_459,
-    'X-IG-WWW-Claim': undefined,
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'x-asbd-id': 359341,
+    'x-csrftoken': await getCSRFTokenFromJar(cookieJar),
+    'x-ig-app-id': 936_619_743_392_459,
+    'x-ig-www-claim': '0',
 });
 
-const checkLogin = async (cookieJar, cache) => {
-    const response = await got.post(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
+const checkLogin = async (cookieJar) => {
+    const response = await ofetch(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
         // cookieJar,
         headers: {
-            cookie: await cookieJar.getCookieString(COOKIE_URL),
-            ...(await getHeaders(cookieJar)),
-            'X-IG-WWW-Claim': '0',
+            'content-type': 'application/x-www-form-urlencoded',
+            cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
+            ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+            // 'X-IG-WWW-Claim': '0',
         },
+        method: 'POST',
     });
 
-    const wwwClaimV2 = response.headers['x-ig-set-www-claim'];
+    // const wwwClaimV2 = response.headers['x-ig-set-www-claim'];
 
-    if (wwwClaimV2) {
-        cache.set('instagram:wwwClaimV2', wwwClaimV2);
-    }
+    // if (wwwClaimV2) {
+    //     cache.set('instagram:wwwClaimV2', wwwClaimV2);
+    // }
 
-    return Boolean(response.data.status === 'ok');
+    return Boolean(response.status === 'ok');
 };
 
-const getUserInfo = async (username, cookieJar, cache) => {
+const getUserInfo = async (username, cookieJar) => {
     let webProfileInfo;
     let id = await cache.get(`instagram:getIdByUsername:${username}`);
     let userInfoCache = await cache.get(`instagram:userInfo:${id}`);
+    userInfoCache = userInfoCache && typeof userInfoCache === 'string' ? JSON.parse(userInfoCache) : userInfoCache;
 
     if (!userInfoCache) {
         try {
-            const response = await got(`${baseUrl}/api/v1/users/web_profile_info/`, {
-                cookieJar,
+            const response = await ofetch.raw(`${baseUrl}/api/v1/users/web_profile_info/`, {
+                // cookieJar,
                 headers: {
-                    ...(await getHeaders(cookieJar)),
-                    'X-IG-WWW-Claim': (await cache.get('instagram:wwwClaimV2')) ?? undefined,
+                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
+                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    // 'X-IG-WWW-Claim': (await cache.get('instagram:wwwClaimV2')) ?? undefined,
                 },
-                searchParams: {
+                query: {
                     username,
                 },
             });
@@ -60,7 +69,7 @@ const getUserInfo = async (username, cookieJar, cache) => {
                 throw new ConfigNotFoundError('Invalid cookie');
             }
 
-            webProfileInfo = response.data.data.user;
+            webProfileInfo = response._data.data.user;
             id = webProfileInfo.id;
 
             await cache.set(`instagram:getIdByUsername:${username}`, id, 31_536_000); // 1 year since it will never change
@@ -73,24 +82,22 @@ const getUserInfo = async (username, cookieJar, cache) => {
         }
     }
 
-    userInfoCache = typeof userInfoCache === 'string' ? JSON.parse(userInfoCache) : userInfoCache;
-
     return userInfoCache || webProfileInfo;
 };
 
-const getUserFeedItems = (id, username, cookieJar, cache) =>
+const getUserFeedItems = (id, username, cookieJar) =>
     cache.tryGet(
         `instagram:feed:${id}`,
         async () => {
-            const response = await got(`${baseUrl}/api/v1/feed/user/${username}/username/`, {
+            const response = await ofetch.raw(`${baseUrl}/api/v1/feed/user/${username}/username/`, {
                 // cookieJar,
                 headers: {
-                    cookie: await cookieJar.getCookieString(COOKIE_URL),
-                    ...(await getHeaders(cookieJar)),
+                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
+                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
                     // 401 Unauthorized if cookie does not match with IP
-                    'X-IG-WWW-Claim': await cache.get('instagram:wwwClaimV2'),
+                    // 'X-IG-WWW-Claim': await cache.get('instagram:wwwClaimV2'),
                 },
-                searchParams: {
+                query: {
                     count: 30,
                 },
             });
@@ -99,59 +106,36 @@ const getUserFeedItems = (id, username, cookieJar, cache) =>
                 Please also check if your account is being blocked by Instagram.`);
             }
 
-            return response.data.items;
+            return response._data.items;
         },
         config.cache.routeExpire,
         false
     );
 
-const getTagsFeedItems = (tag, tab, cookieJar, tryGet) =>
-    tryGet(
+const getTagsFeed = (tag, cookieJar) =>
+    cache.tryGet(
         `instagram:tags:${tag}`,
         async () => {
-            const response = await got(`${baseUrl}/api/v1/tags/web_info/`, {
+            const response = await ofetch(`${baseUrl}/api/v1/tags/web_info/`, {
                 // cookieJar, cookieJar is behaving weirdly here, so we use cookie header instead
                 headers: {
-                    cookie: await cookieJar.getCookieString(COOKIE_URL),
-                    ...(await getHeaders(cookieJar)),
+                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
+                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
                 },
-                searchParams: {
+                query: {
                     tag_name: tag,
                 },
             });
 
-            return response.data.data[tab].sections.flatMap((section) => section.layout_content.medias.map((media) => media.media));
+            return response.data;
         },
         config.cache.routeExpire,
         false
     );
 
-const getLoggedOutTagsFeedItems = async (tag, cookieJar) => {
-    const response = await got(`${baseUrl}/api/v1/tags/logged_out_web_info/`, {
-        // cookieJar, cookieJar is behaving weirdly here, so we use cookie header instead
-        headers: {
-            cookie: await cookieJar.getCookieString(COOKIE_URL),
-            ...(await getHeaders(cookieJar)),
-            'X-IG-WWW-Claim': '0',
-        },
-        searchParams: {
-            tag_name: tag,
-        },
-    });
-
-    const cookies = response.headers['set-cookie'];
-    if (cookies) {
-        for await (const cookie of cookies) {
-            await cookieJar.setCookie(cookie, COOKIE_URL);
-        }
-    }
-
-    return response.data.data.hashtag;
-};
-
 const renderGuestItems = (items) => {
-    const renderVideo = (node, summary) =>
-        art(path.join(__dirname, '../templates/video.art'), {
+    const renderVideoItem = (node, summary) =>
+        renderVideo({
             summary,
             image: node.display_url,
             video: {
@@ -160,8 +144,8 @@ const renderGuestItems = (items) => {
                 width: node.dimensions.width,
             },
         });
-    const renderImages = (node, summary) =>
-        art(path.join(__dirname, '../templates/images.art'), {
+    const renderImagesItem = (node, summary) =>
+        renderImages({
             summary,
             images: [{ url: node.display_url, height: node.dimensions.height, width: node.dimensions.width }],
         });
@@ -170,7 +154,7 @@ const renderGuestItems = (items) => {
         const type = node.__typename;
         const summary = node.edge_media_to_caption.edges[0]?.node.text ?? '';
 
-        let description = '';
+        let description: string;
         switch (type) {
             // carousel, can include GraphVideo and GraphImage
             case 'GraphSidecar':
@@ -180,9 +164,9 @@ const renderGuestItems = (items) => {
                               const _type = node.__typename;
                               switch (_type) {
                                   case 'GraphVideo':
-                                      return renderVideo(node, i === 0 ? summary : '');
+                                      return renderVideoItem(node, i === 0 ? summary : '');
                                   case 'GraphImage':
-                                      return renderImages(node, i === 0 ? summary : '');
+                                      return renderImagesItem(node, i === 0 ? summary : '');
                                   default:
                                       throw new Error(`Instagram: Unhandled carousel type: ${_type}`);
                               }
@@ -191,10 +175,10 @@ const renderGuestItems = (items) => {
                     : renderImages(node, summary);
                 break;
             case 'GraphVideo':
-                description = renderVideo(node, summary);
+                description = renderVideoItem(node, summary);
                 break;
             case 'GraphImage':
-                description = renderImages(node, summary);
+                description = renderImagesItem(node, summary);
                 break;
             default:
                 throw new Error(`Instagram: Unhandled feed type: ${type}`);
@@ -212,4 +196,4 @@ const renderGuestItems = (items) => {
     });
 };
 
-export { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems };
+export { baseUrl, checkLogin, COOKIE_URL, getTagsFeed, getUserFeedItems, getUserInfo, renderGuestItems };

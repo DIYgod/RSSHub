@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
 import { baseUrl, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dcfever/news',
     parameters: { type: '分類，預設為所有新聞' },
     name: '新聞中心',

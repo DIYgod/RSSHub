@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl: string = 'https://p-articles.com';
+const rootUrl = 'https://p-articles.com';
 
 const ProcessFeed = (info, data) => {
     // const $ = cheerio.load(data);
@@ -18,4 +19,4 @@ const ProcessFeed = (info, data) => {
     return info;
 };
 
-export { rootUrl, ProcessFeed };
+export { ProcessFeed, rootUrl };

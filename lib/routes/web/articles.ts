@@ -1,4 +1,5 @@
 import type { Data, Route } from '@/types';
+
 import { fetchItems } from './utils';
 
 export const route: Route = {

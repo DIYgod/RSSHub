@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getConfig } from './utils';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { getConfig } from './utils';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',

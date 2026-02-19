@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/shouts/:username',
     name: 'Shouts',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/shouts/fender',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: { username: 'Username, can find in userpage' },
@@ -16,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

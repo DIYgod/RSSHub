@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.pconline.com.cn';
@@ -110,7 +111,7 @@ export const handler = async (ctx) => {
 
 export const route: Route = {
     path: '/focus/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/pconline/focus',
     parameters: {
         category: {

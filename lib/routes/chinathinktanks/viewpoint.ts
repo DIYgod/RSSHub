@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { CookieJar } from 'tough-cookie';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://www.chinathinktanks.org.cn';

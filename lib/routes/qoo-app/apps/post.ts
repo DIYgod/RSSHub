@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { appsUrl, newsUrl, fixImg } from '../utils';
+
+import { appsUrl, fixImg, newsUrl } from '../utils';
 
 export const route: Route = {
     path: '/apps/:lang?/post/:id',

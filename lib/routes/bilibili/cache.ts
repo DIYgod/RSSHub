@@ -1,16 +1,27 @@
+import { load } from 'cheerio';
+import { JSDOM } from 'jsdom';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+
+import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
-import { load } from 'cheerio';
-import { config } from '@/config';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
-import { JSDOM } from 'jsdom';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
-const disableConfigCookie = false;
+import utils from './utils';
 
-const getCookie = () => {
-    if (!disableConfigCookie && Object.keys(config.bilibili.cookies).length > 0) {
+const subtitleLimiter = new RateLimiterMemory({
+    points: 5,
+    duration: 1,
+    execEvenly: true,
+});
+
+const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
+    maxQueueSize: 4800,
+});
+
+const getCookie = (disableConfig = false) => {
+    if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
         // Update b_lsid in cookies
         for (const key of Object.keys(config.bilibili.cookies)) {
             const cookie = config.bilibili.cookies[key];
@@ -20,29 +31,30 @@ const getCookie = () => {
             }
         }
 
-        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];
+        return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
     }
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        const browser = await puppeteer({
-            stealth: true,
+        let waitForRequest = new Promise<string>((resolve) => {
+            resolve('');
         });
-        const page = await browser.newPage();
-        const waitForRequest = new Promise<string>((resolve) => {
-            page.on('requestfinished', async (request) => {
-                if (request.url() === 'https://api.bilibili.com/x/internal/gaia-gateway/ExClimbWuzhi') {
-                    const cookies = await page.cookies();
-                    let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-
-                    cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
-                    resolve(cookieString);
-                }
-            });
+        const { destory } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
+            onBeforeLoad: (page) => {
+                waitForRequest = new Promise<string>((resolve) => {
+                    page.on('requestfinished', async (request) => {
+                        if (request.url() === 'https://api.bilibili.com/x/web-interface/nav') {
+                            const cookies = await page.cookies();
+                            let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+                            cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, `b_lsid=${utils.lsid()}`);
+                            resolve(cookieString);
+                        }
+                    });
+                });
+            },
         });
-        await page.goto('https://space.bilibili.com/1/dynamic');
         const cookieString = await waitForRequest;
         logger.debug(`Got bilibili cookie: ${cookieString}`);
-        await browser.close();
+        await destory();
         return cookieString;
     });
 };
@@ -79,7 +91,7 @@ const getWbiVerifyString = () => {
         });
         const imgUrl = navResponse.data.wbi_img.img_url;
         const subUrl = navResponse.data.wbi_img.sub_url;
-        const r = imgUrl.substring(imgUrl.lastIndexOf('/') + 1, imgUrl.length).split('.')[0] + subUrl.substring(subUrl.lastIndexOf('/') + 1, subUrl.length).split('.')[0];
+        const r = imgUrl.slice(imgUrl.lastIndexOf('/') + 1).split('.')[0] + subUrl.slice(subUrl.lastIndexOf('/') + 1).split('.')[0];
         // const { body: spaceResponse } = await got('https://space.bilibili.com/1', {
         //     headers: {
         //         Referer: 'https://www.bilibili.com/',
@@ -148,11 +160,11 @@ const getUsernameAndFaceFromUID = async (uid) => {
         if (nameResponse.data.name) {
             name = nameResponse.data.name;
             face = nameResponse.data.face;
+            cache.set(nameKey, nameResponse.data.name);
+            cache.set(faceKey, nameResponse.data.face);
         } else {
             logger.error(`Error when visiting /x/space/wbi/acc/info: ${JSON.stringify(nameResponse)}`);
         }
-        cache.set(nameKey, name);
-        cache.set(faceKey, face);
     }
     return [name, face];
 };
@@ -201,8 +213,94 @@ const getCidFromId = (aid, pid, bvid) => {
         const { data } = await got(`https://api.bilibili.com/x/web-interface/view?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
             referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
         });
-        return data.data.pages[pid - 1].cid;
+        return data?.data?.pages[pid - 1]?.cid;
     });
+};
+
+interface SubtitleEntry {
+    from: number;
+    to: number;
+    sid: number;
+    content: string;
+    music: number;
+}
+
+function secondsToSrtTime(seconds: number): string {
+    const date = new Date(seconds * 1000);
+    const hh = String(date.getUTCHours()).padStart(2, '0');
+    const mm = String(date.getUTCMinutes()).padStart(2, '0');
+    const ss = String(date.getUTCSeconds()).padStart(2, '0');
+    const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
+    return `${hh}:${mm}:${ss},${ms}`;
+}
+
+function convertJsonToSrt(body: SubtitleEntry[]): string {
+    return body
+        .map((item, index) => {
+            const start = secondsToSrtTime(item.from);
+            const end = secondsToSrtTime(item.to);
+            return `${index + 1}\n${start} --> ${end}\n${item.content}\n`;
+        })
+        .join('\n');
+}
+
+const getVideoSubtitle = async (
+    bvid: string
+): Promise<
+    Array<{
+        content: string;
+        lan_doc: string;
+    }>
+> => {
+    if (!bvid) {
+        return [];
+    }
+
+    const cid = await getCidFromId(undefined, 1, bvid);
+    if (!cid) {
+        return [];
+    }
+
+    return cache.tryGet(`bili-video-subtitle-${bvid}`, async () => {
+        await subtitleLimiterQueue.removeTokens(1);
+
+        const getSubtitleData = async (cookie: string) => {
+            const response = await got(`https://api.bilibili.com/x/player/wbi/v2?bvid=${bvid}&cid=${cid}`, {
+                headers: {
+                    Referer: `https://www.bilibili.com/video/${bvid}`,
+                    Cookie: cookie,
+                },
+            });
+            return response;
+        };
+
+        const cookie = await getCookie();
+        const response = await getSubtitleData(cookie);
+        const subtitles = response?.data?.data?.subtitle?.subtitles || [];
+
+        return await Promise.all(
+            subtitles.map(async (subtitle) => {
+                const url = `https:${subtitle.subtitle_url}`;
+                const subtitleData = await cache.tryGet(url, async () => {
+                    const subtitleResponse = await got(url);
+                    return convertJsonToSrt(subtitleResponse?.data?.body || []);
+                });
+                return {
+                    content: subtitleData,
+                    lan_doc: subtitle.lan_doc,
+                };
+            })
+        );
+    });
+};
+
+const getVideoSubtitleAttachment = async (bvid: string) => {
+    const subtitles = await getVideoSubtitle(bvid);
+    return subtitles.map((subtitle) => ({
+        url: `data:text/plain;charset=utf-8,${encodeURIComponent(subtitle.content)}`,
+        mime_type: 'text/srt',
+        title: `字幕 - ${subtitle.lan_doc}`,
+    }));
 };
 
 const getAidFromBvid = async (bvid) => {
@@ -286,4 +384,6 @@ export default {
     getAidFromBvid,
     getArticleDataFromCvid,
     getRenderData,
+    getVideoSubtitle,
+    getVideoSubtitleAttachment,
 };

@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
-import cache from '@/utils/cache';
-import NotFoundError from '@/errors/types/not-found';
-import ofetch from '@/utils/ofetch';
 import { JSDOM } from 'jsdom';
 import { JSONPath } from 'jsonpath-plus';
 
-const profileUrl = (user: string) => `https://www.threads.net/@${user}`;
-const threadUrl = (code: string) => `https://www.threads.net/t/${code}`;
+import NotFoundError from '@/errors/types/not-found';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
+const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
 
 const USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
 
@@ -78,10 +79,14 @@ const getUserId = (user: string): Promise<string> =>
             throw new NotFoundError('User ID not found');
         })
         .then((result): string => {
-            if (!result || typeof result !== 'string') {
-                throw new TypeError('Invalid user ID type');
+            if (result) {
+                if (typeof result === 'string') {
+                    return result;
+                } else if (typeof result === 'number') {
+                    return result.toString();
+                }
             }
-            return result;
+            throw new TypeError('Invalid user ID type');
         });
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
@@ -163,4 +168,4 @@ const buildContent = (item, options) => {
     return { title, description };
 };
 
-export { profileUrl, threadUrl, extractTokens, getUserId, buildContent };
+export { buildContent, extractTokens, getUserId, profileUrl, threadUrl };

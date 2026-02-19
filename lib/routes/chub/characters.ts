@@ -1,14 +1,17 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/characters',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/chub/characters',
     name: 'Characters',
     maintainers: ['flameleaf'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {

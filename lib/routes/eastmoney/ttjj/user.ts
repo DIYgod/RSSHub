@@ -1,4 +1,5 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -6,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ttjj/user/:uid',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.SocialMedia,
     example: '/eastmoney/ttjj/user/6551094298949188',
     parameters: { uid: '用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到' },

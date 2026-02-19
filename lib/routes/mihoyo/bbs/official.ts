@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderOfficialDescription } from '../templates/official';
 
 // 游戏id
 const GITS_MAP = {
@@ -85,11 +85,7 @@ const getPostContent = async (row, default_gid = '2') => {
         const author = fullRow?.user?.nickname || '';
         const content = fullRow?.post?.content || '';
         const tags = fullRow?.topics?.map((item) => item.name) || [];
-        const description = art(path.join(__dirname, '../templates/official.art'), {
-            hasCover: post.has_cover,
-            coverList: row.cover_list,
-            content,
-        });
+        const description = renderOfficialDescription(post.has_cover, row.cover_list, content);
         return {
             // 文章标题
             title: post.subject,

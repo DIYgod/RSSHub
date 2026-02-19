@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 const BASE_URL = 'https://www.txks.org.cn/index/work.html';
 

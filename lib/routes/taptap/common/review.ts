@@ -1,6 +1,7 @@
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getRootUrl, appDetail, X_UA } from '../utils';
+
+import { appDetail, getRootUrl, X_UA } from '../utils';
 
 /*
 const sortMap = {

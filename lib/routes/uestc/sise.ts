@@ -1,9 +1,10 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
-import puppeteer from '@/utils/puppeteer';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import puppeteer from '@/utils/puppeteer';
 
 const baseUrl = 'https://sise.uestc.edu.cn/';
 
@@ -66,7 +67,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('type not supported');
     }
 
-    const browser = await puppeteer({ stealth: true });
+    const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

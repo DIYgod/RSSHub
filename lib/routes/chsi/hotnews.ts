@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://yz.chsi.com.cn';
@@ -40,7 +41,7 @@ async function handler() {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 let itemDate;
                 if (path) {
                     const result = await got(itemUrl);

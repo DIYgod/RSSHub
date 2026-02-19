@@ -1,8 +1,9 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://nzmz.xyz';
 
@@ -142,9 +143,8 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
                 guid,
                 title,
                 link: i.link,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     ...i.description,
-
                     categories,
                     downLinks,
                 }),
@@ -157,4 +157,4 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
         });
 };
 
-export { rootUrl, getItems, getItemInfo, processItems };
+export { getItemInfo, getItems, processItems, rootUrl };

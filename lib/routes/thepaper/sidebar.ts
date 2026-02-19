@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
+import utils from './utils';
 
 const sections = {
     hotNews: '澎湃热榜',
@@ -17,7 +18,7 @@ export const route: Route = {
         },
     ],
     name: '侧边栏',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepaper/sidebar',
     parameters: { sec: '侧边栏 id，可选 `hotNews` 即 澎湃热榜、`financialInformationNews` 即 澎湃财讯、`morningEveningNews` 即 早晚报，默认为 `hotNews`' },
     maintainers: ['bigfei'],

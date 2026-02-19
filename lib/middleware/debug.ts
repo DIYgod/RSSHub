@@ -1,4 +1,6 @@
-import { MiddlewareHandler } from 'hono';
+import type { MiddlewareHandler } from 'hono';
+import { routePath } from 'hono/route';
+
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
@@ -17,11 +19,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     {
         const debug = getDebugInfo();
-        const hasMatchedRoute = ctx.req.routePath !== '/*';
-        if (!debug.routes[ctx.req.routePath] && hasMatchedRoute) {
-            debug.routes[ctx.req.routePath] = 0;
+        const rPath = routePath(ctx);
+        const hasMatchedRoute = rPath !== '/*';
+        if (!debug.routes[rPath] && hasMatchedRoute) {
+            debug.routes[rPath] = 0;
         }
-        hasMatchedRoute && debug.routes[ctx.req.routePath]++;
+        hasMatchedRoute && debug.routes[rPath]++;
 
         if (ctx.res.headers.get('RSSHub-Cache-Status')) {
             debug.hitCache++;

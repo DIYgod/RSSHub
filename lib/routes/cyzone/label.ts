@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { rootUrl, apiRootUrl, processItems, getInfo } from './util';
+
+import { apiRootUrl, getInfo, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/label/:name',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/cyzone/label/创业邦周报',
     parameters: { name: '标签名称，可在对应标签页 URL 中找到' },
     features: {

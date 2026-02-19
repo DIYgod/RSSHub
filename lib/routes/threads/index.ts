@@ -1,13 +1,16 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { threadUrl, profileUrl, extractTokens, getUserId, buildContent } from './utils';
 import { JSDOM } from 'jsdom';
 import { JSONPath } from 'jsonpath-plus';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { buildContent, extractTokens, getUserId, profileUrl, threadUrl } from './utils';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/threads/zuck',
     parameters: {

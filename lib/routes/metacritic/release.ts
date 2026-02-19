@@ -1,6 +1,7 @@
-import got from '@/utils/got';
-import { toTitleCase } from '@/utils/common-utils';
 import { load } from 'cheerio';
+
+import { toTitleCase } from '@/utils/common-utils';
+import got from '@/utils/got';
 
 const handler = async (ctx) => {
     let type = 'new-releases';
@@ -16,6 +17,9 @@ const handler = async (ctx) => {
         case 'all':
             type = 'available';
             title = 'All Releases';
+            break;
+        default:
+            // defaults to 'new-releases'
             break;
     }
 

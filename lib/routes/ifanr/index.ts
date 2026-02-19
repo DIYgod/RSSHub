@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/index',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     view: ViewType.Articles,
     example: '/ifanr/index',
     parameters: {},

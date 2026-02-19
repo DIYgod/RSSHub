@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -11,7 +11,7 @@ const PATH_LIST = {
 
 export const route: Route = {
     path: '/category/:name',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/ifanr/category/早报',
     parameters: {
         name: {

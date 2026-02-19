@@ -1,10 +1,11 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/ajmide/10603594',
     parameters: { id: '播客 id，可以从播客页面 URL 中找到' },

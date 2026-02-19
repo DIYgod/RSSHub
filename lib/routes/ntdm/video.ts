@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { rootUrl } from './utils';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/video/:id',
@@ -47,7 +49,7 @@ async function handler(ctx) {
                 link: `${rootUrl}${a.attr('href')}`,
             };
         })
-        .reverse();
+        .toReversed();
     return {
         title: `NT动漫 - ${dmtitle}`,
         link: `${rootUrl}/video/${id}.html`,

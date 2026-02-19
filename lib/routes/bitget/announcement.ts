@@ -1,10 +1,13 @@
-import { DataItem, Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import { BitgetResponse } from './type';
-import { parseDate } from '@/utils/parse-date';
+
 import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import type { BitgetResponse } from './type';
 
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
@@ -139,7 +142,7 @@ const findTypeLabel = (type: string) => {
 
 export const route: Route = {
     path: '/announcement/:type/:lang?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/bitget/announcement/all/zh-CN',
     parameters: {

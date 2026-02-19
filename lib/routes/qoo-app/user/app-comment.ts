@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { userUrl, appsUrl } from '../utils';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderComment } from '../templates/comment';
+import { appsUrl, userUrl } from '../utils';
 
 export const route: Route = {
     path: '/user/:lang?/appComment/:uid',
@@ -43,7 +43,7 @@ async function handler(ctx) {
     const items = data.list.map((item) => ({
         title: `${username} ▶ ${item.app.name}`,
         link: `${appsUrl}/comment-detail/${item.comment.id}`,
-        description: art(path.join(__dirname, '../templates/comment.art'), {
+        description: renderComment({
             rating: item.score,
             text: item.comment.content,
         }),

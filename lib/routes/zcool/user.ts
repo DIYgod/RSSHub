@@ -1,15 +1,18 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { extractArticle, extractWork } from './utils';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { extractArticle, extractWork } from './utils';
 
 export const route: Route = {
     path: '/user/:uid',
-    categories: ['design', 'popular'],
+    categories: ['design'],
     view: ViewType.Pictures,
     example: '/zcool/user/baiyong',
     parameters: { uid: '个性域名前缀或者用户ID' },

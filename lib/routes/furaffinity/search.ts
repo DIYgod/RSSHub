@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/search/:query/:mode?/:routeParams?',
     name: 'Search',
     url: 'furaffinity.net',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/furaffinity/search/protogen/nsfw',
     maintainers: ['TigerCubDen', 'SkyNetX007'],
     parameters: {
@@ -20,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

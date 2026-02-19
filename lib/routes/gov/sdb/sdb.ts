@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { gdgov } from '../general/general';
 
 export const route: Route = {

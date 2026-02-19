@@ -1,13 +1,10 @@
-import URL from 'node:url';
-import { config } from '@/config';
-import { TwitterApi } from 'twitter-api-v2';
-import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { parseDate } from '@/utils/parse-date';
+import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
-const getQueryParams = (url) => URL.parse(url, true).query;
+const getQueryParams = (url) => Object.fromEntries(new URL(url).searchParams.entries());
 const getOriginalImg = (url) => {
     // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
-    let m = null;
+    let m: RegExpMatchArray | null;
     if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/media\/[^/:]+)\.(jpg|jpeg|gif|png|bmp|webp)(:\w+)?$/i))) {
         let format = m[2];
         if (m[2] === 'jpeg') {
@@ -67,6 +64,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.get('heightOfPics')), -1),
         sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.get('sizeOfAuthorAvatar')), 48),
         sizeOfQuotedAuthorAvatar: fallback(params.sizeOfQuotedAuthorAvatar, queryToInteger(routeParams.get('sizeOfQuotedAuthorAvatar')), 24),
+        mediaNumber: fallback(params.mediaNumber, queryToInteger(routeParams.get('mediaNumber')), false),
     };
 
     params = mergedParams;
@@ -85,7 +83,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         addLinkForPics,
         showTimestampInDescription,
         showQuotedInTitle,
-
+        mediaNumber,
         widthOfPics,
         heightOfPics,
         sizeOfAuthorAvatar,
@@ -116,6 +114,8 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
     const formatMedia = (item) => {
         let img = '';
         if (item.extended_entities) {
+            const mediaCount = item.extended_entities.media.length;
+            let index = 1;
             for (const media of item.extended_entities.media) {
                 // https://developer.x.com/en/docs/tweets/data-dictionary/overview/extended-entities-object
                 let content = '';
@@ -148,7 +148,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         if (widthOfPics <= 0 && heightOfPics <= 0) {
                             content += `width="${media.sizes.large.w}" height="${media.sizes.large.h}" `;
                         }
-                        content += ` style="${style}" ` + `${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
+                        content += ` style="${style}" ${readable ? 'hspace="4" vspace="8"' : ''} src="${originalImg}">`;
                         if (addLinkForPics) {
                             content += `</a>`;
                         }
@@ -156,6 +156,11 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
 
                 img += content;
+
+                if (mediaNumber) {
+                    img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                    index++;
+                }
             }
         }
 
@@ -246,7 +251,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 quote += formatMedia(quoteData);
                 picsPrefix += generatePicsPrefix(quoteData);
-                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : (showSymbolForRetweetAndReply ? ' RT ' : '');
+                quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
                 if (readable) {
@@ -272,21 +277,21 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         // Make title
         let title = '';
         if (showAuthorInTitle) {
-            title += originalItem.user.name + ': ';
+            title += originalItem.user?.name + ': ';
         }
         const isRetweet = originalItem !== item;
         const isQuote = item.is_quote_status;
         if (!isRetweet && (!isQuote || showRetweetTextInTitle)) {
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
+                title += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
             }
             title += replaceBreak(originalItem.full_text);
         }
         if (isRetweet) {
-            title += showEmojiForRetweetAndReply ? '🔁 ' : (showSymbolForRetweetAndReply ? 'RT ' : '');
+            title += showEmojiForRetweetAndReply ? '🔁 ' : showSymbolForRetweetAndReply ? 'RT ' : '';
             title += item.user.name + ': ';
             if (item.in_reply_to_screen_name) {
-                title += showEmojiForRetweetAndReply ? ' ↩️ ' : (showSymbolForRetweetAndReply ? ' Re ' : '');
+                title += showEmojiForRetweetAndReply ? ' ↩️ ' : showSymbolForRetweetAndReply ? ' Re ' : '';
             }
             title += replaceBreak(item.full_text);
         }
@@ -296,7 +301,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         if (showAuthorAsTitleOnly) {
-            title = originalItem.user.name;
+            title = originalItem.user?.name;
         }
 
         // Make description
@@ -308,12 +313,12 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (showAuthorInDesc) {
                 if (readable) {
                     description += '<small>';
-                    description += `<a href='https://x.com/${originalItem.user.screen_name}' target='_blank' rel='noopener noreferrer'>`;
+                    description += `<a href='https://x.com/${originalItem.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
                 }
                 if (authorNameBold) {
                     description += `<strong>`;
                 }
-                description += originalItem.user.name;
+                description += originalItem.user?.name;
                 if (authorNameBold) {
                     description += `</strong>`;
                 }
@@ -322,16 +327,16 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 }
                 description += '&ensp;';
             }
-            description += showEmojiForRetweetAndReply ? '🔁' : (showSymbolForRetweetAndReply ? 'RT' : '');
+            description += showEmojiForRetweetAndReply ? '🔁' : showSymbolForRetweetAndReply ? 'RT' : '';
             if (!showAuthorInDesc) {
                 description += '&ensp;';
                 if (readable) {
-                    description += `<a href='https://x.com/${item.user.screen_name}' target='_blank' rel='noopener noreferrer'>`;
+                    description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
                 }
                 if (authorNameBold) {
                     description += `<strong>`;
                 }
-                description += item.user.name;
+                description += item.user?.name;
                 if (authorNameBold) {
                     description += `</strong>`;
                 }
@@ -346,7 +351,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
         if (showAuthorInDesc) {
             if (readable) {
-                description += `<a href='https://x.com/${item.user.screen_name}' target='_blank' rel='noopener noreferrer'>`;
+                description += `<a href='https://x.com/${item.user?.screen_name}' target='_blank' rel='noopener noreferrer'>`;
             }
 
             if (showAuthorAvatarInDesc) {
@@ -355,7 +360,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (authorNameBold) {
                 description += `<strong>`;
             }
-            description += item.user.name;
+            description += item.user?.name;
             if (authorNameBold) {
                 description += `</strong>`;
             }
@@ -365,7 +370,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             description += `:&ensp;`;
         }
         if (item.in_reply_to_screen_name) {
-            description += showEmojiForRetweetAndReply ? '↩️ ' : (showSymbolForRetweetAndReply ? 'Re ' : '');
+            description += showEmojiForRetweetAndReply ? '↩️ ' : showSymbolForRetweetAndReply ? 'Re ' : '';
         }
 
         description += item.full_text;
@@ -385,16 +390,16 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         }
 
         const link =
-            originalItem.user.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
-                ? `https://x.com/${originalItem.user.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
-                : `https://x.com/${item.user.screen_name}/status/${item.id_str || item.conversation_id_str}`;
+            originalItem.user?.screen_name && (originalItem.id_str || originalItem.conversation_id_str)
+                ? `https://x.com/${originalItem.user?.screen_name}/status/${originalItem.id_str || originalItem.conversation_id_str}`
+                : `https://x.com/${item.user?.screen_name}/status/${item.id_str || item.conversation_id_str}`;
         return {
             title,
             author: [
                 {
-                    name: originalItem.user.name,
-                    url: `https://x.com/${originalItem.user.screen_name}`,
-                    avatar: originalItem.user.profile_image_url_https,
+                    name: originalItem.user?.name,
+                    url: `https://x.com/${originalItem.user?.screen_name}`,
+                    avatar: originalItem.user?.profile_image_url_https,
                 },
             ],
             description,
@@ -406,7 +411,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                 (isRetweet && {
                     links: [
                         {
-                            url: `https://x.com/${item.user?.screen_name}/status/${item.conversation_id_str}`,
+                            url: `https://x.com/${item.user?.screen_name || userScreenName}/status/${item.conversation_id_str}`,
                             type: 'repost',
                         },
                     ],
@@ -431,32 +436,6 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         };
     });
 };
-
-let getAppClient = () => null;
-
-if (config.twitter.consumer_key && config.twitter.consumer_secret) {
-    const consumer_keys = config.twitter.consumer_key.split(',');
-    const consumer_secrets = config.twitter.consumer_secret.split(',');
-    const T = {};
-    let count = 0;
-    let index = -1;
-
-    for (const [i, consumer_key] of consumer_keys.entries()) {
-        const consumer_secret = consumer_secrets[i];
-        if (consumer_key && consumer_secret) {
-            T[i] = new TwitterApi({
-                appKey: consumer_key,
-                appSecret: consumer_secret,
-            }).readOnly;
-            count = i + 1;
-        }
-    }
-
-    getAppClient = () => {
-        index++;
-        return T[index % count].appLogin();
-    };
-}
 
 const parseRouteParams = (routeParams) => {
     let count, include_replies, include_rts, only_media;
@@ -509,4 +488,9 @@ export const keepOnlyMedia = function (tweets) {
     return excluded;
 };
 
-export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet, keepOnlyMedia };
+export default {
+    ProcessFeed,
+    parseRouteParams,
+    excludeRetweet,
+    keepOnlyMedia,
+};

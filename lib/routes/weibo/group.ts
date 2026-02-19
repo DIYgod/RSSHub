@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import got from '@/utils/got';
+
 import { config } from '@/config';
-import weiboUtils from './utils';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import weiboUtils from './utils';
 
 export const route: Route = {
     path: '/group/:gid/:gname?/:routeParams?',
@@ -67,9 +69,8 @@ async function handler(ctx) {
                 url: `https://m.weibo.cn/feed/group?gid=${gid}`,
                 headers: {
                     Referer: `https://m.weibo.cn/`,
-                    'MWeibo-Pwa': 1,
-                    'X-Requested-With': 'XMLHttpRequest',
                     Cookie: config.weibo.cookies,
+                    ...weiboUtils.apiHeaders,
                 },
             });
             return _r.data.data;

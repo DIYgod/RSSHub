@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -19,7 +20,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/information/:channel?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hellobtc/information/latest',
     parameters: { channel: '类型，可填 `latest` 和 `application` 及最新和应用，默认为最新' },
     features: {

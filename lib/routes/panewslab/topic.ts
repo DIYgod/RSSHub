@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/panewslab/topic/1629365774078402',
     parameters: { id: '专题 id，可在地址栏 URL 中找到' },
     features: {

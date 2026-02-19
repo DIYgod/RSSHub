@@ -1,6 +1,6 @@
 // Description: QQ PD utils
 
-import { Feed, FeedImage, FeedPattern, FeedFontProps, FeedPatternData } from './types';
+import type { Feed, FeedFontProps, FeedImage, FeedPattern, FeedPatternData } from './types';
 
 const patternTypeMap = {
     1: 'text',
@@ -37,7 +37,7 @@ function parseText(text: string, props: FeedFontProps | undefined): string {
 }
 
 function parseDataItem(item: FeedPatternData, texts: string[], images: { [id: string]: FeedImage }): string {
-    let imageId = '';
+    let imageId: string;
     switch (patternTypeMap[item.type] || undefined) {
         case 'text':
             return parseText(texts.shift() ?? '', item.props);

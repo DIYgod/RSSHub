@@ -1,17 +1,17 @@
-'Route: deprecated':
-- changed-files:
-  - any-glob-to-any-file: ['lib/router.js']
-  - all-globs-to-any-file: ['lib/routes-deprecated/**/*.js', '!lib/routes-deprecated/index.js']
+'route: deprecated':
+    - changed-files:
+          - any-glob-to-any-file: ['lib/router.js']
+          - all-globs-to-any-file: ['lib/routes-deprecated/**/*.js', '!lib/routes-deprecated/index.js']
 
 'Route':
-- changed-files:
-  - any-glob-to-any-file: ['lib/routes/**/*.ts']
+    - changed-files:
+          - any-glob-to-any-file: ['lib/routes/**/*.ts', 'lib/routes/**/*.tsx']
 
 core enhancement:
-- changed-files:
-  - any-glob-to-any-file: ['lib/routes/index.ts']
-  - all-globs-to-any-file: ['lib/**', '!lib/config.ts', '!lib/router.js', '!lib/routes/**', '!lib/routes-deprecated/**']
+    - changed-files:
+          - any-glob-to-any-file: ['lib/routes/index.ts']
+          - all-globs-to-any-file: ['lib/**', '!lib/config.ts', '!lib/router.js', '!lib/routes/**', '!lib/routes-deprecated/**']
 
 dependencies:
-- changed-files:
-  - any-glob-to-any-file: ['package.json', 'pnpm-lock.yaml', 'yarn.lock']
+    - changed-files:
+          - any-glob-to-any-file: ['package.json', 'pnpm-lock.yaml', 'yarn.lock']

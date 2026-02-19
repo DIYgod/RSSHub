@@ -1,11 +1,12 @@
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import dayjs from 'dayjs';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://www.dlsite.com';
 
@@ -15,12 +16,10 @@ const defaultFilters = {
     per_page: 100,
 };
 
-const formatDate = (date, format) => dayjs(date).format(format);
-
 const addFilters = (url, filters) => {
     const keys = Object.keys(filters);
     const filterStr = keys.map((k) => `/${k}/${filters[k]}`).join('');
-    const newUrl = url.replaceAll(new RegExp(`(/${keys.join(String.raw`/\w+|/`)}/\\w+)`, 'g'), '');
+    const newUrl = url.replaceAll(new RegExp(String.raw`(/${keys.join(String.raw`/\w+|/`)}/\w+)`, 'g'), '');
     return `${newUrl}${/=/.test(newUrl) ? '' : '/='}${filterStr}`;
 };
 
@@ -44,8 +43,6 @@ const getDetails = async (works) => {
 };
 
 const ProcessItems = async (ctx) => {
-    art.defaults.imports.formatDate = formatDate;
-
     const subPath = getSubPath(ctx) === '/' ? '/home/new' : getSubPath(ctx);
 
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
@@ -147,7 +144,7 @@ const ProcessItems = async (ctx) => {
             author: authors.map((a) => a.name).join(' / '),
             category: [...workCategories.map((i) => i.text), ...workGenres.map((i) => i.text), ...searchTags.map((i) => i.text), ...nameTags.map((i) => i.text)],
             guid: `dlsite-${guid}`,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 detail,
                 images,
                 authors,
@@ -156,7 +153,6 @@ const ProcessItems = async (ctx) => {
                 updatedDate,
                 pubDate,
                 workCategories,
-                workGenres,
                 searchTags,
                 description,
             }),

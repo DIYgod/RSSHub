@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const categories = {
     news: 0,
@@ -12,7 +14,7 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/finviz',
     parameters: {

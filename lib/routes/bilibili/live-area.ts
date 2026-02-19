@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -26,7 +26,7 @@ async function handler(ctx) {
     const areaID = ctx.req.param('areaID');
     const order = ctx.req.param('order');
 
-    let orderTitle = '';
+    let orderTitle: string;
     switch (order) {
         case 'live_time':
             orderTitle = '最新开播';
@@ -34,6 +34,8 @@ async function handler(ctx) {
         case 'online':
             orderTitle = '人气直播';
             break;
+        default:
+            throw new Error(`Unknown order: ${order}`);
     }
 
     const nameResponse = await got({
@@ -45,7 +47,7 @@ async function handler(ctx) {
     });
 
     let parentTitle = '';
-    let parentID = '';
+    let parentID: string;
     let areaTitle = '';
     let areaLink = '';
 

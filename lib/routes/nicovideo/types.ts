@@ -52,3 +52,30 @@ export interface VideoItem {
     series: null;
     essential: Essential;
 }
+
+export type Mylist = {
+    id: number;
+    name: string;
+    description: string;
+    decoratedDescriptionHtml: string;
+    defaultSortKey: string;
+    defaultSortOrder: string;
+    items: MylistItem[];
+    totalItemCount: number;
+    hasNext: boolean;
+    isPublic: boolean;
+    owner: Owner;
+    hasInvisibleItems: boolean;
+    followerCount: number;
+    isFollowing: boolean;
+};
+
+type MylistItem = {
+    itemId: number;
+    watchId: string;
+    description: string;
+    decoratedDescriptionHtml: string;
+    addedAt: string;
+    status: string;
+    video: Essential;
+};

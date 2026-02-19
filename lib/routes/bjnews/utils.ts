@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 
 export function fetchArticle(item) {
     return cache.tryGet(item.link, async () => {

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/citations/:id',
-    categories: ['journal', 'popular'],
+    categories: ['journal'],
     example: '/google/citations/mlmE4JMAAAAJ',
     parameters: { id: 'N' },
     features: {

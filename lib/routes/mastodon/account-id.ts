@@ -1,11 +1,13 @@
-import { Route, ViewType } from '@/types';
-import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/account_id/:site/:account_id/statuses/:only_media?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/mastodon/account_id/mas.to/109300507275095341/statuses/false',
     parameters: {

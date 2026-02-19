@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getRollNewsList, parseRollNewsList, parseArticle } from '../utils';
+
+import { getRollNewsList, parseArticle, parseRollNewsList } from '../utils';
 
 export const route: Route = {
     path: '/finance/china/:lid?',

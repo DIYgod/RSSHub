@@ -1,11 +1,13 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     example: '/yilinzazhi',
     radar: [

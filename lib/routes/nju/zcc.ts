@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 export const route: Route = {
     path: '/zcc',
     categories: ['university'],
@@ -42,7 +44,7 @@ async function handler() {
 
             const start = script.indexOf('[');
             const end = script.lastIndexOf(']');
-            const t = JSON.parse(script.substring(start, end + 1));
+            const t = JSON.parse(script.slice(start, end + 1));
 
             // only read first page
             return t[0].infolist.map((item) => ({

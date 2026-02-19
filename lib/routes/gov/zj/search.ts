@@ -1,8 +1,10 @@
-import { Route, DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { DataItem, Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
 export const route: Route = {
     path: '/zj/search/:websiteid?/:word/:cateid?',
     categories: ['government'],

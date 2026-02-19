@@ -1,9 +1,10 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import logger from '@/utils/logger';
 
 export async function handler(ctx) {
     const { category, topic } = ctx.req.param();
@@ -20,7 +21,7 @@ export async function handler(ctx) {
     const { data: response } = await got(link);
     const $ = load(response);
 
-    const listItems = $('div.col-lg-6 div.list-news')
+    const listItems = $('div.list-news')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -36,14 +37,23 @@ export async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.itunes_item_image = $('div.article-img img').attr('src');
-                item.category = $('div.tags ul li')
+
+                const itunes_item_image = $('div.article-img img').attr('src');
+                const category = $('div.tags ul li')
                     .toArray()
                     .map((item) => $(item).find('a').text());
-                const time = $('p.dna-update').text().split('Updated:')[1];
-                item.pubDate = timezone(parseDate(time, 'MMMDD,YYYY,hh:mmA'), +5.5);
-                item.author = 'DNA Web Team';
-                item.description = $('div.article-description')
+                // Process date
+                const timeText = $('p.dna-update').text();
+                const dateMatch = timeText.match(/Updated\s*:\s*([\w\s,:\d]+?)(?:\s*\||$)/);
+                let time = dateMatch ? dateMatch[1].trim() : '';
+                time = time.replace(/\s+IST$/, '');
+                const pubDate = timezone(parseDate(time), +5.5);
+                // Get author information
+                const authorMeta = $('meta[name="author"]').attr('content');
+                const author = authorMeta || 'DNA Web Team';
+
+                // Process description
+                const description = $('div.article-description')
                     .clone()
                     .children('div')
                     .remove()
@@ -51,7 +61,16 @@ export async function handler(ctx) {
                     .toArray()
                     .map((element) => $(element).html())
                     .join('');
-                return item;
+
+                // Return all properties at once
+                return {
+                    ...item,
+                    itunes_item_image,
+                    category,
+                    pubDate,
+                    author,
+                    description,
+                };
             })
         )
     );

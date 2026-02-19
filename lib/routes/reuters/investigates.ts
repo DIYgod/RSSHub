@@ -1,12 +1,14 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/investigates',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/reuters/investigates',
     parameters: {},

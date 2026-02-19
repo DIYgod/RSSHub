@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import routes from './routes';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import routes from './routes';
 
 export const route: Route = {
     path: '/:type?/:category?/:subCategory?',
@@ -39,7 +41,7 @@ async function handler(ctx) {
     const route = category === '' ? '' : `/${category}${subCategory === '' ? '' : `/${subCategory}`}`;
 
     const rootUrl = `https://${type === '' ? 'www' : 'list'}.oilchem.net`;
-    const currentUrl = `${rootUrl}${type === '' ? '/1/' : (type === 'list' ? route : `/${routes[`/${type}${route}`]}`)}`;
+    const currentUrl = `${rootUrl}${type === '' ? '/1/' : type === 'list' ? route : `/${routes[`/${type}${route}`]}`}`;
 
     const response = await got({
         method: 'get',

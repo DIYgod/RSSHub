@@ -1,9 +1,11 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
+import { load } from 'cheerio'; // html parser
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio'; // html parser
+import parser from '@/utils/rss-parser';
 
 export const handler = async (ctx): Promise<Data> => {
     const feed = await parser.parseURL('https://feed.iplaysoft.com');

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/series/:series',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/grist/series/best-of-grist',
     parameters: { series: 'Find in the URL which has /series/' },
     features: {

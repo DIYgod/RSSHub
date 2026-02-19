@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -46,9 +47,10 @@ async function handler(ctx) {
     const list = [];
     for (const selector of selectors) {
         $(selector).each((_, e) => {
-            const item = {};
-            item.title = $(e).find('h2 a span').first().text();
-            item.link = $(e).find('h2 a').first().attr('href');
+            const item = {
+                title: $(e).find('h2 a span').first().text(),
+                link: $(e).find('h2 a').first().attr('href'),
+            };
             list.push(item);
         });
     }

@@ -1,6 +1,8 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import { EpisodeResult } from './types';
+
+import type { EpisodeResult } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -11,7 +13,7 @@ export const route: Route = {
         embed: '默认为开启内嵌视频, 任意值为关闭',
     },
     example: '/bilibili/bangumi/media/9192',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     maintainers: ['DIYgod', 'nuomi1'],
     handler,

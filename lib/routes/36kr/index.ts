@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { rootUrl, ProcessItem } from './utils';
+import { ProcessItem, rootUrl } from './utils';
 
 const shortcuts = {
     '/information': '/information/web_news',
@@ -18,7 +19,7 @@ const shortcuts = {
 
 export const route: Route = {
     path: '/:category/:subCategory?/:keyword?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/36kr/newsflashes',
     parameters: {
         category: '分类，必填项',

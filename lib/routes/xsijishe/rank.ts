@@ -1,17 +1,19 @@
+import { load } from 'cheerio';
+
+import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { config } from '@/config';
-import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
+
+import { puppeteerGet } from './utils';
 
 const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/rank/:type',
-    categories: ['bbs', 'popular'],
+    categories: ['bbs'],
     example: '/xsijishe/rank/weekly',
     parameters: {
         type: {
@@ -38,6 +40,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '排行榜',
     maintainers: ['akynazh', 'AiraNadih'],
@@ -67,7 +70,7 @@ async function handler(ctx) {
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         Cookie: config.xsijishe.cookie,
-        'User-Agent': config.xsijishe.user_agent,
+        'User-Agent': config.xsijishe.userAgent,
     };
 
     const resp = await got(url, {

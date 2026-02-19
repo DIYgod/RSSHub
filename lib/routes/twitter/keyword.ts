@@ -1,23 +1,25 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
 import api from './api';
 import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {
         requireConfig: [
-            {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
+            // {
+            //     name: 'TWITTER_USERNAME',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_PASSWORD',
+            //     description: 'Please see above for details.',
+            // },
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',

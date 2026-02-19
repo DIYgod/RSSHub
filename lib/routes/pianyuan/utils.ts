@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
-import got from '@/utils/got';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import got from '@/utils/got';
+
 const security_key = 'pianyuan-security_session_verify';
 const PHPSESSID_key = 'pianyuan-PHPSESSID';
 const loginauth_key = 'pianyuan-py_loginauth';

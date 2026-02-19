@@ -1,14 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/devlog/:user/:id',
@@ -36,6 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const user = ctx.req.param('user') ?? '';
     const id = ctx.req.param('id') ?? '';
+    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
     if (!isValidHost(user)) {
         throw new InvalidParameterError('Invalid user');
     }
@@ -51,6 +52,7 @@ async function handler(ctx) {
 
     let items = $('.title')
         .toArray()
+        .slice(0, limit)
         .map((item) => {
             item = $(item);
 
@@ -71,12 +73,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.author = detailResponse.data.match(/"author":{".*?","name":"(.*?)"/)[1];
-                item.pubDate = parseDate(detailResponse.data.match(/"datePublished":"(.*?)"/)[1]);
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                const infoJson = content('script[type="application/ld+json"]:contains("@type":"BlogPosting")');
+                const info = JSON.parse(content(infoJson).text());
+                item.author = info.author.name;
+                item.pubDate = info.datePublished;
+                item.description = renderDescription({
                     images: content('.post_image')
                         .toArray()
-                        .map((i) => content(i).attr('src')),
+                        .map((e) => content(e).attr('src')),
                     description: content('.post_body').html(),
                 });
 

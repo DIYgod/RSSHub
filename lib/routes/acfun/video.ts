@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -15,7 +17,7 @@ export const route: Route = {
     parameters: {
         uid: '用户 UID',
     },
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     example: '/acfun/user/video/6102',
     view: ViewType.Videos,
     maintainers: ['wdssmq'],

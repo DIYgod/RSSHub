@@ -1,13 +1,16 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import path from 'node:path';
+
 import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 const md = MarkdownIt({
     html: true,
     breaks: true,
 });
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import path from 'node:path';
 export const route: Route = {
     path: '/dailyquestion/solution/en',
     radar: [
@@ -149,8 +152,8 @@ async function handler() {
             return pngList.map((v) => `![pic](${path.resolve(`/problems/${questionTitle}/solution/`, v.image)})`).join('\n');
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
-        for (const [i, element] of matched.entries()) {
-            s = s.replace(element, strs[i]);
+        for (let i = 0; i < matched.length; i++) {
+            s = s.replace(matched[i], strs[i]);
         }
         return s;
     };
@@ -195,8 +198,8 @@ async function handler() {
             return code.map((c) => `###${c.langSlug}\n\r \`\`\`${c.langSlug}\n ${c.code}\n\`\`\``).join('\n\r');
         };
         const strs = await Promise.all(matched.map((v) => fn(v)));
-        for (const [i, element] of matched.entries()) {
-            s = s.replace(element, strs[i]);
+        for (let i = 0; i < matched.length; i++) {
+            s = s.replace(matched[i], strs[i]);
         }
         return s;
     };

@@ -1,4 +1,4 @@
-import { type Config } from '@/config';
+import type { Config } from '@/config';
 import logger from '@/utils/logger';
 
 const possibleProtocol = ['http', 'https', 'ftp', 'file', 'data'];

@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { renderComment } from '../templates/comment';
 import { appsUrl } from '../utils';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/apps/:lang?/comment/:id',
@@ -48,7 +48,7 @@ async function handler(ctx) {
             return {
                 title: `${author} ▶ ${item.find('.qoo-clearfix .name a').eq(1).text()}`,
                 link: item.find('a.bg-click-wrap').attr('href'),
-                description: art(path.join(__dirname, '../templates/comment.art'), {
+                description: renderComment({
                     rating: item.find('.qoo-rating-bar').text().trim(),
                     text: item.find('.text-view').html(),
                 }),

@@ -1,0 +1,26 @@
+name: 'Clean up GHCR Packages'
+
+on:
+    schedule:
+        - cron: '0 0 * * 0'
+    workflow_dispatch:
+
+jobs:
+    cleanup:
+        runs-on: ubuntu-slim
+        permissions:
+            packages: write
+            contents: read
+        steps:
+            - name: Delete old container versions (30+ days)
+              uses: dataaxiom/ghcr-cleanup-action@cd0cdb900b5dbf3a6f2cc869f0dbb0b8211f50c4 # v1.0.16
+              with:
+                  dry-run: false
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  package: rsshub
+                  older-than: 30 days
+                  keep-n-tagged: 5
+                  delete-untagged: true
+                  delete-ghost-images: true
+                  delete-orphaned-images: true
+                  delete-partial-images: true

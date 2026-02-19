@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 
 const XIAOYUZHOU_ITEMS = 'xiaoyuzhou_items';
 
@@ -57,7 +57,7 @@ const ProcessFeed = async () => {
     return playList.map((item) => {
         const title = item.episode.title + ' - ' + item.episode.podcast.title;
         const eid = item.episode.eid;
-        const itunes_item_image = item.episode.image ? item.episode.image.picUrl : (item.episode.podcast.image ? item.episode.podcast.image.picUrl : '');
+        const itunes_item_image = item.episode.image ? item.episode.image.picUrl : item.episode.podcast.image ? item.episode.podcast.image.picUrl : '';
         const link = `https://www.xiaoyuzhoufm.com/episode/${eid}`;
         const pubDate = item.pubDate;
         const itunes_duration = item.episode.duration;

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { baseUrl as rootUrl, parseList, parseItems } from './utils';
+
+import { baseUrl as rootUrl, parseItems, parseList } from './utils';
 
 export const route: Route = {
     path: '/today/:edition?/:tab?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/line/today',
     parameters: { edition: 'Edition, see below, Taiwan by default', tab: 'Tag, can be found in URL, `top` by default' },
     radar: [

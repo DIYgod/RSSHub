@@ -1,18 +1,20 @@
-import { Route, ViewType } from '@/types';
-import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { getDataByUsername as getDataByUsernameGoogle } from './api/google';
+import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
 import { callApi } from './utils';
 
 export const route: Route = {
     path: '/user/:username/:routeParams?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.Videos,
     example: '/youtube/user/@JFlaMusic',
     parameters: {
         username: 'YouTuber handle with @',
         routeParams: 'Extra parameters, see the table below',
     },
-    description: `:::tip Parameter
+    description: `::: tip Parameter
 | Name       | Description                                                                         | Default |
 | ---------- | ----------------------------------------------------------------------------------- | ------- |
 | embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
@@ -34,7 +36,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.youtube.com/user/:username', 'www.youtube.com/:username'],
+            source: ['www.youtube.com/user/:username', 'www.youtube.com/:username', 'www.youtube.com/:username/videos'],
             target: '/user/:username',
         },
     ],
@@ -57,10 +59,12 @@ async function handler(ctx) {
     const filterShortsStr = params.get('filterShorts');
     const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
 
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const data = await callApi({
         googleApi: getDataByUsernameGoogle,
         youtubeiApi: getDataByUsernameYoutubei,
-        params: { username, embed, filterShorts },
+        params: { username, embed, filterShorts, isJsonFeed },
     });
 
     return data;

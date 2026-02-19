@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const categories = {
     zhengce: '政策',
@@ -65,7 +65,7 @@ async function handler(ctx) {
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.extra.topic_url,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             images:
                 item.extra.thumbnails_pics.length > 0
                     ? item.extra.thumbnails_pics.map((p) => ({
@@ -93,7 +93,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('section.js-article-content').html() || content('div.js-article').html(),
                 });
                 item.category = content('section.js-article-tag_state_1 a span')

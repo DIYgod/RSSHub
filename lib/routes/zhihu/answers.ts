@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { header, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header } from './utils';
 
 export const route: Route = {
     path: '/people/answers/:id',
@@ -9,7 +10,13 @@ export const route: Route = {
     example: '/zhihu/people/answers/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

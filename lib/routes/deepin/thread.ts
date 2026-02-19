@@ -1,6 +1,6 @@
-import { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,13 +34,13 @@ export const route: Route = {
 };
 
 interface ThreadIndexResult {
-    ThreadIndex: {
+    ThreadIndex: Array<{
         id: number;
         subject: string;
         created_at: string;
         user: { nickname: string };
         forum: { name: string };
-    }[];
+    }>;
 }
 interface ThreadInfoResult {
     data: {

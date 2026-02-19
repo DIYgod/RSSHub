@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { host, acw_sc__v2, parseList, parseItems } from './utils';
+
+import { acw_sc__v2, host, parseItems, parseList } from './utils';
 
 export const route: Route = {
     path: '/user/:name',

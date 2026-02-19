@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const renderHTML = (node) => {
     if (!node) {
@@ -36,8 +37,11 @@ export const renderHTML = (node) => {
                     ? Object.keys(node.attribs)
                           .map((key) => `${key}="${node.attribs[key]}"`)
                           .join(' ')
-                    : `url="${node.url}"` // for leading
-            }><figcaption>${node.attribs?.title ?? node.title}</figcaption></figure>`;
+                    : `url="${node.url}"`
+            }><figcaption>${
+                // for leading
+                node.attribs?.title ?? node.title
+            }</figcaption></figure>`;
         case 'em':
         case 'h3':
         case 'li':

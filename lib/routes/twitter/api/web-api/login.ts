@@ -1,9 +1,10 @@
-import { authenticator } from 'otplib';
-import logger from '@/utils/logger';
-import cache from '@/utils/cache';
-import { RateLimiterMemory, RateLimiterRedis, RateLimiterQueue } from 'rate-limiter-flexible';
-import puppeteer from '@/utils/puppeteer';
+import { generate } from 'otplib';
+import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
 import { CookieJar } from 'tough-cookie';
+
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 
 const loginLimiter = cache.clients.redisClient
     ? new RateLimiterRedis({
@@ -28,9 +29,7 @@ async function login({ username, password, authenticationSecret }) {
         await loginLimiterQueue.removeTokens(1);
 
         const cookieJar = new CookieJar();
-        const browser = await puppeteer({
-            stealth: true,
-        });
+        const browser = await puppeteer();
         const page = await browser.newPage();
         await page.goto('https://x.com/i/flow/login');
         await page.waitForSelector('input[autocomplete="username"]');
@@ -42,7 +41,7 @@ async function login({ username, password, authenticationSecret }) {
         (await page.waitForSelector('button[data-testid="LoginForm_Login_Button"]'))?.click();
         if (authenticationSecret) {
             await page.waitForSelector('input[inputmode="numeric"]');
-            const token = authenticator.generate(authenticationSecret);
+            const token = await generate({ secret: authenticationSecret });
             await page.type('input[inputmode="numeric"]', token);
             (await page.waitForSelector('button[data-testid="ocfEnterTextNextButton"]'))?.click();
         }

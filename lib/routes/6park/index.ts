@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/index/:id?/:type?/:keyword?',
@@ -32,7 +33,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://club.6parkbbs.com';
     const indexUrl = `${rootUrl}/${id}/index.php`;
-    const currentUrl = `${indexUrl}${type === '' || keyword === '' ? '' : (type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&${type}=${keyword}&submit=${type === 'type' ? '查询' : '栏目搜索'}`)}`;
+    const currentUrl = `${indexUrl}${type === '' || keyword === '' ? '' : type === 'gold' ? '?app=forum&act=gold' : `?action=search&act=threadsearch&app=forum&${type}=${keyword}&submit=${type === 'type' ? '查询' : '栏目搜索'}`}`;
 
     const response = await got({
         method: 'get',

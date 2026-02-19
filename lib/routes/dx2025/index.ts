@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type?/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dx2025',
     parameters: { type: '内容类别，见下表，默认为空', category: '行业分类，见下表，默认为空' },
     features: {

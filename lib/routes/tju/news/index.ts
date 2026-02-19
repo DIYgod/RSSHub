@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -115,10 +116,9 @@ async function handler(ctx) {
                     case 'tju-news':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
                                 delete item.type;
-                                detailResponse = await got(item.link);
+                                const detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.pubDate = timezone(
                                     parseDate(

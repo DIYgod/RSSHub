@@ -1,14 +1,14 @@
 import { load } from 'cheerio';
+
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import * as url from 'node:url';
 
 const ProcessFeed = async (list, cache) => {
     const host = 'https://www.leiphone.com';
 
     const items = await Promise.all(
         list.map(async (e) => {
-            const link = url.resolve(host, e);
+            const link = new URL(e, host).href;
 
             const single = await cache.tryGet(link, async () => {
                 const response = await got.get(link);

@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.dlsite.com';
 const infos = {
@@ -53,7 +55,7 @@ const infos = {
 
 export const route: Route = {
     path: '/new/:type',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/dlsite/new/home',
     parameters: {
@@ -69,6 +71,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Current Release',
     maintainers: ['cssxsh'],

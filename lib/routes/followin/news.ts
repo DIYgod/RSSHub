@@ -1,11 +1,13 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { baseUrl, favicon, getBuildId, parseList, parseItem } from './utils';
+
+import { baseUrl, favicon, getBuildId, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/followin/news',
     parameters: {
@@ -49,7 +51,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
     return {
-        title: `${lang === 'en' ? 'News' : (lang === 'vi' ? 'Bản tin' : '快讯')} - Followin`,
+        title: `${lang === 'en' ? 'News' : lang === 'vi' ? 'Bản tin' : '快讯'} - Followin`,
         link: `${baseUrl}/${lang}/news`,
         image: favicon,
         language: lang,

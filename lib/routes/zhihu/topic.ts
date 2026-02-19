@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { header, processImage, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/topic/:topicId/:isTop?',
@@ -10,7 +11,12 @@ export const route: Route = {
     example: '/zhihu/topic/19828946',
     parameters: { topicId: '话题 id', isTop: '仅精华，默认为否，其他值为是' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -33,10 +39,11 @@ async function handler(ctx) {
     const link = `https://www.zhihu.com/topic/${topicId}/${isTop ? 'top-answers' : 'newest'}`;
 
     const topicMeta = await cache.tryGet(`zhihu:topic:${topicId}`, async () => {
-        const { data: response } = await got(`https://www.zhihu.com/api/v4/topics/${topicId}/intro`, {
-            searchParams: {
-                include: 'content.meta.content.photos',
-            },
+        const url = `https://www.zhihu.com/topic/${topicId}`;
+        const apiPath = `/api/v4/topics/${topicId}/intro?include=content.meta.content.photos`;
+        const signedHeader = await getSignedHeader(url, apiPath);
+        const { data: response } = await got('https://www.zhihu.com' + apiPath, {
+            headers: signedHeader,
         });
         return response;
     });
@@ -55,7 +62,7 @@ async function handler(ctx) {
     const items = response.data.map(({ target: item }) => {
         const type = item.type;
         let title = '';
-        let description = '';
+        let description: string;
         let link = '';
         let pubDate: Date;
         let author = '';

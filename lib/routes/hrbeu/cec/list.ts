@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const rootUrl = 'http://cec.hrbeu.edu.cn';
 
 export const route: Route = {
@@ -43,7 +45,11 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const bigTitle = $('div.column-news-box').find('h2.column-title').text().replaceAll(/[\s·]/g, '').trim();
+    const bigTitle = $('div.column-news-box')
+        .find('h2.column-title')
+        .text()
+        .replaceAll(/[\s·]/g, '')
+        .trim();
 
     const list = $('a.column-news-item')
         .toArray()

@@ -1,17 +1,19 @@
-import { Route, ViewType } from '@/types';
+import * as cheerio from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
+import xxhash from 'xxhash-wasm';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
-import xxhash from 'xxhash-wasm';
-import sanitizeHtml from 'sanitize-html';
 
 const link = 'https://www.economist.com/the-world-in-brief';
 
 export const route: Route = {
     path: '/espresso',
-    categories: ['traditional-media', 'popular'],
+    categories: ['traditional-media'],
     view: ViewType.Articles,
     example: '/economist/espresso',
     parameters: {},

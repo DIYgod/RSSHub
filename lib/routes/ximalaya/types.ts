@@ -66,3 +66,51 @@ export interface RichIntro {
     ret: number;
     richIntro: string;
 }
+
+interface SubscriptInfo {
+    albumSubscriptValue: number;
+    url: string;
+}
+
+export interface Album {
+    anchorUid: number;
+    albumStatus: number;
+    showApplyFinishBtn: boolean;
+    showEditBtn: boolean;
+    showTrackManagerBtn: boolean;
+    showInformBtn: boolean;
+    cover: string;
+    albumTitle: string;
+    updateDate: string;
+    createDate: string;
+    playCount: number;
+    isPaid: boolean;
+    isFinished: number;
+    isSubscribe: boolean;
+    richIntro: string;
+    shortIntro: string;
+    detailRichIntro: string;
+    isPublic: boolean;
+    hasBuy: boolean;
+    vipType: number;
+    canCopyText: boolean;
+    subscribeCount: number;
+    sellingPoint: object;
+    personalDescription: string;
+    bigshotRecommend: string;
+    outline: string;
+    customTitle: string;
+    produceTeam: string;
+    recommendReason: string;
+    subscriptInfo: SubscriptInfo;
+    albumSubscript: number;
+    tags: string[];
+    categoryId: number;
+    ximiVipFreeType: number;
+    joinXimi: boolean;
+    freeExpiredTime: number;
+    categoryTitle: string;
+    anchorName: string;
+    albumSeoTitle: string;
+    visibleStatus: number;
+}

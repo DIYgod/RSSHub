@@ -1,17 +1,20 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
-import { config } from '@/config';
 import MarkdownIt from 'markdown-it';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
 });
-import queryString from 'query-string';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/issue/:user/:repo/:state?/:labels?',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     view: ViewType.Notifications,
     example: '/github/issue/DIYgod/RSSHub/open',
     parameters: {

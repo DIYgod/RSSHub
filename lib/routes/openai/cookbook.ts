@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
@@ -29,7 +30,7 @@ async function handler() {
         const response = await ofetch(currentUrl);
         const $ = load(response);
 
-        let items = $('[class="min-h-[90vh]"] .grid a')
+        let items = $('[class="min-h-[90vh] mt-4"] .grid a')
             .toArray()
             .map((element) => {
                 const $element = $(element);

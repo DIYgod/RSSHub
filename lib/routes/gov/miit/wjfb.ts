@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.miit.gov.cn';
@@ -71,7 +72,7 @@ async function handler(ctx) {
 
                 item.description = content('#con_con')
                     .html()
-                    .replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2' + '$3');
+                    ?.replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2$3');
 
                 return item;
             })

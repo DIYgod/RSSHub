@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 const noticeUrl = 'https://www.teach.ustc.edu.cn/category/notice';
 const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchange: '交流' };
 

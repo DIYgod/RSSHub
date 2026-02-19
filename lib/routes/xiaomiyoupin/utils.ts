@@ -1,5 +1,4 @@
-import { art } from '@/utils/render';
-import path from 'node:path';
+import { renderGoods } from './templates/goods';
 
 const parseModule = (floors, module_key) => floors.find((floor) => floor.module_key === module_key);
 
@@ -10,9 +9,9 @@ const parseFloorItem = (floor) =>
             title: i.name,
             link: i.jump_url,
             guid: `xiaomiyoupin:${i.gid}`,
-            description: art(path.join(__dirname, 'templates/goods.art'), i),
+            description: renderGoods(i),
             pubDate: (i.start || i.start_time) * 1000,
         };
     });
 
-export { parseModule, parseFloorItem };
+export { parseFloorItem, parseModule };

@@ -1,9 +1,10 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
     path: '/ani/anime/:sn',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Videos,
     example: '/gamer/ani/anime/36868',
     parameters: { sn: '動畫 sn，在 URL 可以找到' },

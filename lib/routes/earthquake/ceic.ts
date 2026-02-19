@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -77,7 +77,7 @@ async function handler(ctx) {
 
     const response = await got(api);
     const data = response.data.replace(/,"page":"(.*?)","num":/, ',"num":');
-    let json = JSON.parse(data.substring(1, data.length - 1)).shuju;
+    let json = JSON.parse(data.slice(1, -1)).shuju;
     if (json.length > 20) {
         json = json.slice(0, 20);
     }

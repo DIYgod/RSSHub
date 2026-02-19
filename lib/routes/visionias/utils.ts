@@ -1,10 +1,12 @@
-import { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+import { renderDescriptionSub } from './templates/description-sub';
 
 export const baseUrl = 'https://visionias.in';
 
@@ -29,7 +31,7 @@ export async function extractNews(item, selector) {
         if (shortArticles.length !== 0) {
             const items = shortArticles.toArray().map((element) => {
                 const mainDiv = $$(element);
-                const title = mainDiv.find('a > div > h1').text().trim();
+                const title = mainDiv.find('a > div > h2').text().trim();
                 const id = mainDiv.find('a').attr('href');
                 const htmlContent = extractArticle(mainDiv.html());
                 const innerTags = mainDiv
@@ -37,7 +39,7 @@ export async function extractNews(item, selector) {
                     ?.nextAll('li')
                     .toArray()
                     .map((tag) => $$(tag).text());
-                const description = art(path.join(__dirname, `templates/description.art`), {
+                const description = renderDescription({
                     heading: title,
                     articleContent: htmlContent,
                 });
@@ -53,7 +55,7 @@ export async function extractNews(item, selector) {
             return items;
         } else if (sections.length === 0) {
             const htmlContent = extractArticle(mainGroup.html());
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 heading,
                 articleContent: htmlContent,
             });
@@ -71,13 +73,13 @@ export async function extractNews(item, selector) {
                 const mainDiv = $$(element);
                 const title = mainDiv.find('a > div > h2').text().trim();
                 const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
-                const description = art(path.join(__dirname, `templates/description-sub.art`), {
+                const description = renderDescriptionSub({
                     heading: title,
                     articleContent: htmlContent,
                 });
                 return { description };
             });
-            const description = art(path.join(__dirname, `templates/description.art`), {
+            const description = renderDescription({
                 heading,
                 subItems: items,
             });
@@ -94,7 +96,7 @@ export async function extractNews(item, selector) {
     });
 }
 
-function extractArticle(articleDiv, selectorString: string = '#article-content') {
+function extractArticle(articleDiv, selectorString: string = 'div.ck-content') {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
     const articleContent = articleDiv$.find(String(selectorString));

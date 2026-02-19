@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/topic/250',
     parameters: { id: '专题 id，可在专题主页URL中找到' },
     features: {

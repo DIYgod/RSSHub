@@ -1,10 +1,10 @@
-import { Route } from '@/types';
-import { NewsInfo, NewsDetail } from './types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import type { NewsDetail, NewsInfo } from './types';
 import { sign } from './utils';
 
 export const route: Route = {
@@ -25,7 +25,7 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://www.jingzhengu.com';
 
-    const payload: Map<string, any> = new Map([
+    const payload = new Map<string, any>([
         ['pageNo', 1],
         ['middleware', String(Date.now())],
     ]);
@@ -49,7 +49,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const payload: Map<string, any> = new Map([
+                const payload = new Map<string, any>([
                     ['id', item.id],
                     ['middleware', String(Date.now())],
                 ]);

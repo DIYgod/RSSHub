@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import * as cheerio from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import timezone from '@/utils/timezone';
+
 export const route: Route = {
     path: '/pjsekai/news',
     categories: ['game'],
@@ -33,8 +35,8 @@ async function handler() {
     const posts = response.data || [];
     const list = await Promise.all(
         posts.map(async (post) => {
-            let link = '';
-            let description = '';
+            let link: string;
+            let description: string;
             const guid = post.displayOrder.toString() + post.id.toString(); // 双ID
             if (post.path.startsWith('information/')) {
                 // information 公告

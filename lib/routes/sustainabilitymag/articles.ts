@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import oftech from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/articles',
@@ -31,7 +32,7 @@ export const route: Route = {
 const findLargestImgKey = (images) =>
     Object.keys(images)
         .filter((key) => key.startsWith('inline_free_') || key.startsWith('hero_landscape_'))
-        .sort((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
+        .toSorted((a, b) => Number.parseInt(b.split('_')[2]) - Number.parseInt(a.split('_')[2]))[0];
 
 const renderFigure = (url, caption) => `<figure><img src="${url}" alt="${caption}" /><figcaption>${caption}</figcaption></figure>`;
 
@@ -47,7 +48,7 @@ const render = (widgets) =>
                     return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
                 case 'inlineVideo':
                     return w.provider === 'youtube'
-                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen></iframe>`
+                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`
                         : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
                 case 'inlineImage':
                     return w.inlineImageImages

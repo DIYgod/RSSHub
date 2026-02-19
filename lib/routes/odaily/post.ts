@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 import { rootUrl } from './utils';
 
 const titles = {
@@ -19,7 +21,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily',
     parameters: { id: 'id，见下表，默认为最新' },
     features: {

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 
@@ -32,7 +33,7 @@ export const route: Route = {
     handler,
     description: `|   政策解读   |   最新文件   | 公告公示 |      教育部简报     |     教育要闻     |
 | :----------: | :----------: | :------: | :-----------------: | :--------------: |
-| policy\_anal | newest\_file |  notice  | edu\_ministry\_news | edu\_focus\_news |`,
+| policy_anal | newest_file |  notice  | edu_ministry_news | edu_focus_news |`,
 };
 
 async function handler(ctx) {

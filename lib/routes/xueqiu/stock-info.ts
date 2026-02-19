@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import queryString from 'query-string';
-import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
+
 import { parseToken } from '@/routes/xueqiu/cookies';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/stock_info/:id/:type?',

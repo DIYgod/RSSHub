@@ -1,6 +1,7 @@
-import { MiddlewareHandler } from 'hono';
-import { getPath } from '@/utils/helpers';
+import type { MiddlewareHandler } from 'hono';
+
 import { config } from '@/config';
+import { getPath } from '@/utils/helpers';
 import { tracer } from '@/utils/otel';
 
 const middleware: MiddlewareHandler = async (ctx, next) => {

@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/odaily/newsflash',
     parameters: {},
     features: {

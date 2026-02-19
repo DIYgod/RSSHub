@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -6,7 +6,7 @@ const host = 'https://chaping.cn';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/chaping/newsflash',
     parameters: {},
     features: {

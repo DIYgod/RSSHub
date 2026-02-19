@@ -1,6 +1,5 @@
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import * as url from 'node:url';
 
 const host = 'https://github.com';
 
@@ -38,7 +37,7 @@ async function handler(ctx) {
     }
 
     const suffix = 'search?o='.concat(order, '&q=', encodeURIComponent(query), '&s=', sort, '&type=Repositories');
-    const link = url.resolve(host, suffix);
+    const link = new URL(suffix, host).href;
     const response = await ofetch(link, {
         headers: {
             accept: 'application/json',

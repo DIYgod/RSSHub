@@ -1,12 +1,14 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/gelonghui/keyword/早报',
     parameters: { keyword: '搜索关键字' },

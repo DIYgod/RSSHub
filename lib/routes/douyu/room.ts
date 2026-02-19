@@ -1,5 +1,5 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/room/:id',
@@ -31,49 +31,35 @@ async function handler(ctx) {
     let item;
     let room_thumb;
     try {
-        const response = await got({
-            method: 'get',
-            url: `https://www.douyu.com/betard/${id}`,
-        });
+        const response = await ofetch(`https://www.douyu.com/betard/${id}`);
 
-        if (!response.data.room) {
+        if (!response.room) {
             throw new Error('Invalid response');
         }
 
-        data = response.data.room;
+        data = response.room;
         room_thumb = data.room_pic;
 
         if (data.show_status === 1) {
-            item =
-                data.videoLoop === 1
-                    ? [
-                          {
-                              title: `视频轮播: ${data.room_name}`,
-                              pubDate: new Date(data.show_time * 1000).toUTCString(),
-                              guid: data.show_time,
-                              link: `https://www.douyu.com/${id}`,
-                          },
-                      ]
-                    : [
-                          {
-                              title: `开播: ${data.room_name}`,
-                              pubDate: new Date(data.show_time * 1000).toUTCString(),
-                              guid: data.show_time,
-                              link: `https://www.douyu.com/${id}`,
-                          },
-                      ];
+            item = [
+                {
+                    title: `${data.videoLoop === 1 ? '视频轮播' : '开播'}: ${data.room_name}`,
+                    pubDate: new Date(data.show_time * 1000).toUTCString(),
+                    guid: data.show_time,
+                    link: `https://www.douyu.com/${id}`,
+                    description: `<img src="${room_thumb}">`,
+                },
+            ];
         }
         // make a fallback to the old api
     } catch {
-        const response = await got({
-            method: 'get',
-            url: `http://open.douyucdn.cn/api/RoomApi/room/${id}`,
+        const response = await ofetch(`http://open.douyucdn.cn/api/RoomApi/room/${id}`, {
             headers: {
                 Referer: `https://www.douyu.com/${id}`,
             },
         });
 
-        data = response.data.data;
+        data = response.data;
         room_thumb = data.room_thumb;
 
         if (data.online !== 0) {

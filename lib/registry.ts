@@ -1,43 +1,86 @@
-import type { Namespace, Route } from '@/types';
-import { directoryImport } from 'directory-import';
-import { Hono, type Handler } from 'hono';
 import path from 'node:path';
-import { serveStatic } from '@hono/node-server/serve-static';
-import { config } from '@/config';
 
-import index from '@/routes/index';
+import { serveStatic } from '@hono/node-server/serve-static';
+import type { Handler } from 'hono';
+import { Hono } from 'hono';
+import { routePath } from 'hono/route';
+
+import { config } from '@/config';
 import healthz from '@/routes/healthz';
-import robotstxt from '@/routes/robots.txt';
+import index from '@/routes/index';
 import metrics from '@/routes/metrics';
+import robotstxt from '@/routes/robots.txt';
+import type { APIRoute, Namespace, Route } from '@/types';
+import { directoryImport } from '@/utils/directory-import';
+import { isWorker } from '@/utils/is-worker';
+import logger from '@/utils/logger';
 
 const __dirname = import.meta.dirname;
 
+function isSafeRoutes(routes: RoutesType): boolean {
+    return Object.values(routes).every((route: Route) => !route.features?.nsfw);
+}
+
+function safeNamespaces(namespaces: NamespacesType): NamespacesType {
+    const safe: NamespacesType = {};
+
+    for (const [key, value] of Object.entries(namespaces)) {
+        if (value.routes === null || value.routes === undefined || isSafeRoutes(value.routes)) {
+            safe[key] = value;
+        }
+    }
+    return safe;
+}
+
 let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
-let namespaces: Record<
+
+type RoutesType = Record<
+    string,
+    Route & {
+        location: string;
+    }
+>;
+
+export type NamespacesType = Record<
     string,
     Namespace & {
-        routes: Record<
+        routes: RoutesType;
+        apiRoutes: Record<
             string,
-            Route & {
+            APIRoute & {
                 location: string;
             }
         >;
     }
-> = {};
+>;
 
-switch (process.env.NODE_ENV) {
-    case 'production':
-        namespaces = (await import('../assets/build/routes.js')).default;
-        break;
-    case 'test':
-        // @ts-expect-error
-        namespaces = await import('../assets/build/routes.json');
-        break;
-    default:
-        modules = directoryImport({
-            targetDirectoryPath: path.join(__dirname, './routes'),
-            importPattern: /\.ts$/,
-        }) as typeof modules;
+let namespaces: NamespacesType = {};
+
+if (config.isPackage) {
+    namespaces = (await import('../assets/build/routes.js')).default;
+} else {
+    switch (process.env.NODE_ENV || process.env.VERCEL_ENV) {
+        case 'production':
+            namespaces = (await import('../assets/build/routes.js')).default;
+            break;
+        case 'test':
+            // @ts-expect-error
+            namespaces = await import('../assets/build/routes.json');
+            if (namespaces.default) {
+                // @ts-ignore
+                namespaces = namespaces.default;
+            }
+            break;
+        default:
+            modules = directoryImport({
+                targetDirectoryPath: path.join(__dirname, './routes'),
+                importPattern: /\.tsx?$/,
+            }) as typeof modules;
+    }
+}
+
+if (config.feature.disable_nsfw) {
+    namespaces = safeNamespaces(namespaces);
 }
 
 if (Object.keys(modules).length) {
@@ -48,6 +91,9 @@ if (Object.keys(modules).length) {
               }
             | {
                   namespace: Namespace;
+              }
+            | {
+                  apiRoute: APIRoute;
               };
         const namespace = module.split(/[/\\]/)[1];
         if ('namespace' in content) {
@@ -63,6 +109,7 @@ if (Object.keys(modules).length) {
                 namespaces[namespace] = {
                     name: namespace,
                     routes: {},
+                    apiRoutes: {},
                 };
             }
             if (Array.isArray(content.route.path)) {
@@ -75,6 +122,27 @@ if (Object.keys(modules).length) {
             } else {
                 namespaces[namespace].routes[content.route.path] = {
                     ...content.route,
+                    location: module.split(/[/\\]/).slice(2).join('/'),
+                };
+            }
+        } else if ('apiRoute' in content) {
+            if (!namespaces[namespace]) {
+                namespaces[namespace] = {
+                    name: namespace,
+                    routes: {},
+                    apiRoutes: {},
+                };
+            }
+            if (Array.isArray(content.apiRoute.path)) {
+                for (const path of content.apiRoute.path) {
+                    namespaces[namespace].apiRoutes[path] = {
+                        ...content.apiRoute,
+                        location: module.split(/[/\\]/).slice(2).join('/'),
+                    };
+                }
+            } else {
+                namespaces[namespace].apiRoutes[content.apiRoute.path] = {
+                    ...content.apiRoute,
                     location: module.split(/[/\\]/).slice(2).join('/'),
                 };
             }
@@ -94,7 +162,7 @@ const sortRoutes = (
         }
     >
 ) =>
-    Object.entries(routes).sort(([pathA], [pathB]) => {
+    Object.entries(routes).toSorted(([pathA], [pathB]) => {
         const segmentsA = pathA.split('/');
         const segmentsB = pathB.split('/');
         const lenA = segmentsA.length;
@@ -126,6 +194,7 @@ for (const namespace in namespaces) {
 
     for (const [path, routeData] of sortedRoutes) {
         const wrappedHandler: Handler = async (ctx) => {
+            logger.debug(`Matched route: ${routePath(ctx)}`);
             if (!ctx.get('data')) {
                 if (typeof routeData.handler !== 'function') {
                     if (process.env.NODE_ENV === 'test') {
@@ -136,7 +205,49 @@ for (const namespace in namespaces) {
                         routeData.handler = route.handler;
                     }
                 }
-                ctx.set('data', await routeData.handler(ctx));
+                const response = await routeData.handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
+            }
+        };
+        subApp.get(path, wrappedHandler);
+    }
+}
+
+for (const namespace in namespaces) {
+    const subApp = app.basePath(`/api/${namespace}`);
+
+    const namespaceData = namespaces[namespace];
+    if (!namespaceData || !namespaceData.apiRoutes) {
+        continue;
+    }
+
+    const sortedRoutes = Object.entries(namespaceData.apiRoutes) as Array<
+        [
+            string,
+            APIRoute & {
+                location: string;
+                module?: () => Promise<{ apiRoute: APIRoute }>;
+            },
+        ]
+    >;
+
+    for (const [path, routeData] of sortedRoutes) {
+        const wrappedHandler: Handler = async (ctx) => {
+            if (!ctx.get('apiData')) {
+                if (typeof routeData.handler !== 'function') {
+                    if (process.env.NODE_ENV === 'test') {
+                        const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = apiRoute.handler;
+                    } else if (routeData.module) {
+                        const { apiRoute } = await routeData.module();
+                        routeData.handler = apiRoute.handler;
+                    }
+                }
+                const data = await routeData.handler(ctx);
+                ctx.set('apiData', data);
             }
         };
         subApp.get(path, wrappedHandler);
@@ -146,16 +257,18 @@ for (const namespace in namespaces) {
 app.get('/', index);
 app.get('/healthz', healthz);
 app.get('/robots.txt', robotstxt);
-if (config.debugInfo) {
+if (config.debugInfo !== 'false') {
     // Only enable tracing in debug mode
     app.get('/metrics', metrics);
 }
-app.use(
-    '/*',
-    serveStatic({
-        root: './lib/assets',
-        rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
-    })
-);
+if (!config.isPackage && !process.env.VERCEL_ENV && !isWorker) {
+    app.use(
+        '/*',
+        serveStatic({
+            root: path.join(__dirname, 'assets'),
+            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
+        })
+    );
+}
 
 export default app;

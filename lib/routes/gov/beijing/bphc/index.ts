@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -32,7 +32,7 @@ async function handler(ctx) {
     const defaultPath = 'announcement';
 
     const pathname = getSubPath(ctx).replaceAll(/(^\/beijing\/bphc|\/$)/g, '');
-    const key = pathname === '' ? defaultPath : (pathname.endsWith('/') ? pathname.slice(0, -1) : pathname);
+    const key = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
     const obj = mapping[key];
     const currentUrl = `${rootUrl}${obj.list}`;
 

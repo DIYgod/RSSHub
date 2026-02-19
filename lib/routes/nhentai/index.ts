@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getSimple, getDetails, getTorrents } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { getDetails, getSimple, getTorrents } from './util';
 
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
@@ -16,6 +17,7 @@ export const route: Route = {
     features: {
         antiCrawler: true,
         supportBT: true,
+        nsfw: true,
     },
     radar: [
         {

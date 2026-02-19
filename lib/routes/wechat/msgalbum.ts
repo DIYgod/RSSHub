@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {

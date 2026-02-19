@@ -1,5 +1,9 @@
-import { Route } from '@/types';
-import { defaultDomain, getRootUrl, ProcessItems } from './utils';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
 
 export const route: Route = {
     path: '/search/:option?/:category?/:keyword?/:time?/:order?',
@@ -19,6 +23,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -27,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: '搜索',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
     url: 'jmcomic.group/',
     description: `::: tip
@@ -40,11 +45,52 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const keyword = ctx.req.param('keyword') ?? '';
     const time = ctx.req.param('time') ?? 'a';
-    const order = ctx.req.param('order') ?? 'mr';
     const { domain = defaultDomain } = ctx.req.query();
     const rootUrl = getRootUrl(domain);
-
+    let order = ctx.req.param('order') ?? 'mr';
     const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
-    return await ProcessItems(ctx, currentUrl, rootUrl);
+    let apiUrl = getApiUrl();
+    order = time === 'a' ? order : `${order}_${time}`;
+    apiUrl = `${apiUrl}/search?search_query=${keyword}&o=${order}`;
+    const apiResult = await processApiItems(apiUrl);
+    let filteredItemsByCategory = apiResult.content;
+    // Filter items by category if not 'all'
+    if (category !== 'all') {
+        filteredItemsByCategory = apiResult.content.filter((item) => item.category.title === apiMapCategory(category));
+    }
+    filteredItemsByCategory = filteredItemsByCategory.slice(0, limit);
+    const results = await Promise.all(
+        filteredItemsByCategory.map((item) =>
+            cache.tryGet(`18comic:search:${item.id}`, async () => {
+                const result = { title: item.name, link: `${rootUrl}/album/${item.id}`, guid: `18comic:/album/${item.id}`, updated: parseDate(item.update_at) };
+                const apiUrl = `${getApiUrl()}/album?id=${item.id}`;
+                const apiResult = await processApiItems(apiUrl);
+                result.pubDate = new Date(apiResult.addtime * 1000);
+                result.category = apiResult.tags.map((tag) => tag);
+                result.author = apiResult.author.map((a) => a).join(', ');
+                result.description = renderDescription({
+                    introduction: apiResult.description,
+                    images: [
+                        `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                        // 取得的预览图片会被分割排序，所以先只取封面图
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00001.webp`,
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00002.webp`,
+                        // `https://cdn-msp3.${domain}/media/photos/${item.id}/00003.webp`,
+                    ],
+                    cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                    category: result.category,
+                });
+                return result;
+            })
+        )
+    );
+
+    return {
+        title: `Search Results For '${keyword}' - 禁漫天堂`,
+        link: currentUrl.replace(/\?$/, ''),
+        item: results,
+        allowEmpty: true,
+    };
 }

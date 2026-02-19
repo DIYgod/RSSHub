@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import got from '@/utils/got';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
+import timezone from '@/utils/timezone';
+
+const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
 
 export const route: Route = {
     path: '/',
@@ -26,7 +28,7 @@ async function handler() {
     const html = await cache.tryGet(
         targetUrl,
         async () => {
-            const browser = await puppeteer({ stealth: true });
+            const browser = await puppeteer();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {

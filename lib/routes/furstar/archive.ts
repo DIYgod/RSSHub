@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/archive/:lang?',
@@ -30,11 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const base = utils.langBase(ctx.req.param('lang'));
     const url = `${base}/archive.php`;
-    const res = await got.get(url, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const res = await got(url);
     const info = utils.fetchAllCharacters(res.data, base);
 
     return {

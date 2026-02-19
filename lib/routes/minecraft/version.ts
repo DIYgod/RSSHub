@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { Context } from 'hono';
 
 export const route: Route = {
     path: '/version/:versionType?/:linkType?',

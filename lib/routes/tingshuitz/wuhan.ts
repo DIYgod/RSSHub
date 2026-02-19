@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'https://www.whwater.com';
 
 export const route: Route = {

@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/stars/:user/:repo',
-    categories: ['programming', 'popular'],
+    categories: ['programming'],
     example: '/github/stars/DIYgod/RSSHub',
     view: ViewType.Notifications,
     parameters: { user: 'GitHub username', repo: 'GitHub repo name' },
@@ -61,7 +62,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = response.data.data.repository.stargazers.edges.reverse();
+    const data = response.data.data.repository.stargazers.edges.toReversed();
 
     return {
         allowEmpty: true,

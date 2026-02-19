@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.
@@ -29,7 +29,7 @@ const parseTree = (tree, result = []) => {
 
 export const route: Route = {
     path: '/report/:industry?/:label?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/questmobile/report',
     parameters: { industry: '行业，见下表，默认为 `-1`，即全部行业', label: '标签，见下表，默认为 `-1`，即全部标签' },
     features: {
@@ -173,7 +173,7 @@ async function handler(ctx) {
     const labels = parseTree(labelTree);
 
     const industryObj = industry ? industries.find((i) => i.key === industry || i.value === industry) : undefined;
-    const labelObj = label ? labels.find((i) => i.key === label || i.value === label) : (industryObj ? undefined : labels.find((i) => i.key === industry || i.value === industry));
+    const labelObj = label ? labels.find((i) => i.key === label || i.value === label) : industryObj ? undefined : labels.find((i) => i.key === industry || i.value === industry);
 
     const industryId = industryObj?.key ?? -1;
     const labelId = labelObj?.key ?? -1;
@@ -193,7 +193,7 @@ async function handler(ctx) {
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`research/report/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: {
                 src: item.coverImgUrl,
                 alt: item.title,
@@ -216,7 +216,7 @@ async function handler(ctx) {
                 content('div.text div.daoyu').remove();
 
                 item.title = content('div.title h1').text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('div.text').html(),
                 });
                 item.author = content('div.source')

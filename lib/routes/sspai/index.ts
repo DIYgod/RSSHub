@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/index',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     view: ViewType.Articles,
     example: '/sspai/index',
     parameters: {},
@@ -23,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '首页',
-    maintainers: ['HenryQW'],
+    maintainers: ['HenryQW', 'cscnk52'],
     handler,
     url: 'sspai.com/index',
 };
@@ -46,6 +47,9 @@ async function handler() {
                 const banner = articleData.promote_image;
                 if (banner) {
                     description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
+                }
+                if (articleData.body_extends) {
+                    description += articleData.body_extends.map((bodyExtendsItem) => `<h2>${bodyExtendsItem.title}</h2>${bodyExtendsItem.body}`).join('');
                 }
                 description += articleData.body;
 

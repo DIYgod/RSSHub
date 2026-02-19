@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://jw.dhu.edu.cn';
 
@@ -59,7 +60,7 @@ async function handler(ctx) {
                 return await cache.tryGet(url, async () => {
                     // fetch article content
                     // some contents are only available for internal network
-                    let description = '';
+                    let description: string;
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);

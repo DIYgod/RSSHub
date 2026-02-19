@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/top_news/:id?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dongqiudi/top_news/1',
     parameters: { id: '类别 id，不填默认头条新闻' },
     features: {

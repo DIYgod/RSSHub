@@ -1,9 +1,10 @@
-import type { DataItem, Route } from '@/types';
 import { load } from 'cheerio';
+import day from 'dayjs';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
-import day from 'dayjs';
 
 const handler: Route['handler'] = async () => {
     const data = await ofetch('https://notion.so/releases', {

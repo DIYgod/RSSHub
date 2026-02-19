@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/character/:id/:order?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Pictures,
     example: '/hpoi/items/character/1035374',
     parameters: {

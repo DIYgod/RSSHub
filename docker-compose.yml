@@ -3,23 +3,35 @@ services:
         # two ways to enable puppeteer:
         # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
         # * (consumes more disk space and memory) leave everything unchanged
-        image: diygod/rsshub
+        image: diygod/rsshub # or ghcr.io/diygod/rsshub
         restart: always
         ports:
-            - "1200:1200"
+            - '1200:1200'
         environment:
             NODE_ENV: production
             CACHE_TYPE: redis
-            REDIS_URL: "redis://redis:6379/"
-            PUPPETEER_WS_ENDPOINT: "ws://browserless:3000" # marked
+            REDIS_URL: 'redis://redis:6379/'
+            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000' # marked
+            PUPPETEER_REAL_BROWSER_SERVICE: 'http://real-browser:3000' # marked
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:1200/healthz"]
+            test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
             interval: 30s
             timeout: 10s
             retries: 3
         depends_on:
             - redis
             - browserless # marked
+
+    real-browser:
+        image: ghcr.io/hyoban/puppeteer-real-browser-hono
+        restart: always
+        ports:
+            - '3001:3000'
+        healthcheck:
+            test: ['CMD', 'curl', '-f', 'http://localhost:3000']
+            interval: 30s
+            timeout: 10s
+            retries: 3
 
     browserless: # marked
         image: browserless/chrome # marked
@@ -28,11 +40,11 @@ services:
             core: # marked
                 hard: 0 # marked
                 soft: 0 # marked
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"]
-            interval: 30s
-            timeout: 10s
-            retries: 3
+        healthcheck: # marked
+            test: ['CMD', 'curl', '-f', 'http://localhost:3000/pressure'] # marked
+            interval: 30s # marked
+            timeout: 10s # marked
+            retries: 3 # marked
 
     redis:
         image: redis:alpine
@@ -40,7 +52,7 @@ services:
         volumes:
             - redis-data:/data
         healthcheck:
-            test: ["CMD", "redis-cli", "ping"]
+            test: ['CMD', 'redis-cli', 'ping']
             interval: 30s
             timeout: 10s
             retries: 5

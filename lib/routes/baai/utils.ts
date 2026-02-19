@@ -1,8 +1,9 @@
-import ofetch from '@/utils/ofetch';
 import { destr } from 'destr';
+
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import cache from '@/utils/cache';
 
 const baseUrl = 'https://hub.baai.ac.cn';
 const eventUrl = 'https://event.baai.ac.cn';
@@ -39,4 +40,4 @@ const parseEventDetail = async (item) => {
     return data.data.ac_desc + data.data.ac_desc_two;
 };
 
-export { baseUrl, eventUrl, apiHost, getTagsData, parseItem, parseEventDetail };
+export { apiHost, baseUrl, eventUrl, getTagsData, parseEventDetail, parseItem };

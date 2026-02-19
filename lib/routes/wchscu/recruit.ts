@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const handler = async () => {
     const rootUrl = 'https:///www.wchscu.cn';

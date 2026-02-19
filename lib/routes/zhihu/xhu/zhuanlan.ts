@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import auth from './auth';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import auth from './auth';
 
 export const route: Route = {
     path: '/xhu/zhuanlan/:id',
@@ -65,9 +67,9 @@ async function handler(ctx) {
                 description = $.html();
             }
 
-            let title = '';
-            let link = '';
-            let author = '';
+            let title: string;
+            let link: string;
+            let author: string;
             let pubDate;
 
             // The xhu api only get items of type article.

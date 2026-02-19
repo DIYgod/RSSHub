@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
 // import { parseRelativeDate } from '@/utils/parse-date';
 import { baseUrl, parseTradeItem } from './utils';
 
 export const route: Route = {
     path: '/trading/search/:keyword/:mainCat?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dcfever/trading/search/Sony',
     parameters: { keyword: '關鍵字', mainCat: '主要分類 ID，見上表' },
     name: '二手市集 - 物品搜尋',

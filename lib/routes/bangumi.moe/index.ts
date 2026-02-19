@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 

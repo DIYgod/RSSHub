@@ -1,13 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { Cookie, CookieJar } from 'tough-cookie';
+import { describe, expect, it, vi } from 'vitest';
+
+import { config } from '@/config';
+import got from '@/utils/got';
 
 describe('got', () => {
-    it('headers', async () => {
+    it('no ua headers', async () => {
         const { data } = await got('http://rsshub.test/headers');
-        expect(data['user-agent']).toBe(config.ua);
+        expect(data['user-agent']).toBeUndefined();
     });
 
     it('retry', async () => {
@@ -52,7 +53,7 @@ describe('got', () => {
     });
 
     it('buffer-get', async () => {
-        const response = await got.get('http://example.com', {
+        const response = await got.get('http://rsshub.test/headers', {
             responseType: 'buffer',
         });
         expect(response.body instanceof Buffer).toBe(true);
@@ -73,5 +74,80 @@ describe('got', () => {
         });
 
         expect(data.cookie).toBe('cookie=test; Domain=rsshub.test; Path=/');
+    });
+
+    it('runs beforeRequest hooks', async () => {
+        const hook = vi.fn((options) => {
+            options.headers = {
+                ...options.headers,
+                'x-before-request': '1',
+            };
+        });
+
+        const { data } = await got('http://rsshub.test/headers', {
+            hooks: {
+                beforeRequest: [hook],
+            },
+        });
+
+        expect(hook).toHaveBeenCalledTimes(1);
+        expect(data['x-before-request']).toBe('1');
+    });
+
+    it('appends search params', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.get('http://rsshub.test/query', ({ request }) => {
+                const url = new URL(request.url);
+                return HttpResponse.json({
+                    query: Object.fromEntries(url.searchParams.entries()),
+                });
+            })
+        );
+
+        const { data } = await got('http://rsshub.test/query', {
+            searchParams: {
+                foo: 'bar',
+                baz: 'qux',
+            },
+        });
+
+        expect(data.query).toEqual({
+            foo: 'bar',
+            baz: 'qux',
+        });
+    });
+
+    it('supports additional http verbs and extend', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(
+            http.all('http://rsshub.test/method', ({ request }) =>
+                HttpResponse.json({
+                    method: request.method,
+                })
+            )
+        );
+
+        const putResponse = await got.put('http://rsshub.test/method');
+        expect(putResponse.data.method).toBe('PUT');
+
+        const patchResponse = await got.patch('http://rsshub.test/method');
+        expect(patchResponse.data.method).toBe('PATCH');
+
+        const deleteResponse = await got.delete('http://rsshub.test/method');
+        expect(deleteResponse.data.method).toBe('DELETE');
+
+        const headResponse = await got.head('http://rsshub.test/method', {
+            responseType: 'text',
+        });
+        expect(headResponse).toBeUndefined();
+
+        const extended = got.extend({
+            headers: {
+                'x-extended': '1',
+            },
+        });
+        const extendedResponse = await extended.get('http://rsshub.test/headers');
+        expect(extendedResponse.data['x-extended']).toBe('1');
     });
 });

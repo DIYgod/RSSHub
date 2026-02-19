@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import got from '@/utils/got';
+
+import { renderArticle } from './templates/article';
 
 const parseArticle = async (item) => {
     if (/\.blog\.caixin\.com$/.test(new URL(item.link).hostname)) {
@@ -11,7 +12,7 @@ const parseArticle = async (item) => {
 
         const $ = load(response);
 
-        item.description = art(path.join(__dirname, 'templates/article.art'), {
+        item.description = renderArticle({
             item,
             $,
         });

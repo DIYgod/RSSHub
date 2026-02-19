@@ -1,8 +1,9 @@
-import { DataItem } from '@/types';
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 
 export const rootUrl = 'https://www.30secondsofcode.org';
 
@@ -48,7 +49,6 @@ async function processItem({ link: articleLink, date }) {
             category: tags,
             image: `${rootUrl}${image}`,
             banner: `${rootUrl}${image}`,
-            language: 'en-us',
         } as DataItem;
     });
 }

@@ -1,8 +1,9 @@
-import { describe, expect, it, afterAll } from 'vitest';
-import supertest from 'supertest';
-import server from '@/index';
 import { load } from 'cheerio';
+import supertest from 'supertest';
+import { afterAll, describe, expect, it } from 'vitest';
+
 import { config } from '@/config';
+import server from '@/index';
 
 const request = supertest(server);
 
@@ -55,6 +56,14 @@ describe('invalid-parameter-error', () => {
     }, 20000);
 });
 
+describe('captcha-error', () => {
+    it(`captcha-error`, async () => {
+        const response = await request.get('/test/captcha-error');
+        expect(response.status).toBe(503);
+        expect(response.text).toMatch('CaptchaError: Test captcha error');
+    }, 20000);
+});
+
 describe('route throws an error', () => {
     it('route path error should have path mounted', async () => {
         await request.get('/test/error');
@@ -67,19 +76,21 @@ describe('route throws an error', () => {
             const value = $(item).find('.debug-value').html()?.trim();
             switch (key) {
                 case 'Request Amount:':
-                    expect(value).toBe('11');
+                    expect(value).toBe('12');
                     break;
                 case 'Hot Routes:':
-                    expect(value).toBe('8 /test/:id/:params?<br>');
+                    expect(value).toBe('9 /test/:id/:params?<br>');
                     break;
                 case 'Hot Paths:':
-                    expect(value).toBe('2 /test/error<br>2 /test/slow<br>2 /test/slow4<br>1 /test/httperror<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>1 /<br>');
+                    expect(value).toBe(
+                        '2 /test/error<br>2 /test/slow<br>2 /test/slow4<br>1 /test/httperror<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /test/captcha-error<br>1 /thisDoesNotExist<br>1 /<br>'
+                    );
                     break;
                 case 'Hot Error Routes:':
-                    expect(value).toBe('5 /test/:id/:params?<br>');
+                    expect(value).toBe('6 /test/:id/:params?<br>');
                     break;
                 case 'Hot Error Paths:':
-                    expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow4<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /thisDoesNotExist<br>');
+                    expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow4<br>1 /test/config-not-found-error<br>1 /test/invalid-parameter-error<br>1 /test/captcha-error<br>1 /thisDoesNotExist<br>');
                     break;
                 default:
             }

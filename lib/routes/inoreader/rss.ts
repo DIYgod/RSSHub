@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:user/:tag',
-    categories: ['reading', 'popular'],
+    categories: ['reading'],
     view: ViewType.Articles,
     example: '/inoreader/rss/1005137674/user-favorites',
     parameters: { user: 'user id, the interger after user/ in the example URL', tag: 'tag, the string after tag/ in the example URL' },

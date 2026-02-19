@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import { parseDate } from '@/utils/parse-date';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://news.163.com';
 
@@ -135,7 +136,7 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response.data, 'gbk'));
 
     const list = $('div.tabContents')
-        .eq(timeRange[time].index + (category === 'whole' ? (type === 'click' ? -1 : 2) : (type === 'click' ? 0 : 2)))
+        .eq(timeRange[time].index + (category === 'whole' ? (type === 'click' ? -1 : 2) : type === 'click' ? 0 : 2))
         .find('table tbody tr td a')
         .toArray()
         .map((item) => {

@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
 
-import { rootUrl, buildApiUrl, processItems } from './util';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { buildApiUrl, processItems, rootUrl } from './util';
 
 export const handler = async (ctx) => {
     const { id } = ctx.req.param();
@@ -189,7 +189,7 @@ export const route: Route = {
 | [法律](https://top.aibase.com/discover/138-139) | [138-139](https://rsshub.app/aibase/discover/138-139) |
 </details>
     `,
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
 
     features: {
         requireConfig: false,

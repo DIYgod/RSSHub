@@ -1,12 +1,14 @@
-import { DataItem, Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/podcast/:id',
-    categories: ['multimedia', 'popular'],
+    categories: ['multimedia'],
     view: ViewType.Audios,
     example: '/xiaoyuzhou/podcast/6021f949a789fca4eff4492c',
     parameters: { id: '播客 id 或单集 id，可以在小宇宙播客的 URL 中找到' },

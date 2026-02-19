@@ -62,7 +62,7 @@ const post = async (requestPath: string, accessToken = md5(Date.now().toString()
 };
 
 function sortBy(items: any[], key: string) {
-    return items.sort((a, b) => {
+    return items.toSorted((a, b) => {
         if (a[key] < b[key]) {
             return -1;
         }
@@ -84,4 +84,4 @@ function uniqBy(items: any[], key: string) {
     });
 }
 
-export { post, getAccessToken, uuid, sortBy, uniqBy };
+export { getAccessToken, post, sortBy, uniqBy, uuid };

@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import utils from './utils';
 
 export const route: Route = {
     path: '/user/:uid/:type?/:option?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/pingwest/user/7781550877/article',
     parameters: { uid: '用户id, 可从用户主页中得到', type: '内容类型, 默认为`article`', option: '参数' },
     features: {
@@ -69,7 +71,7 @@ async function handler(ctx) {
     });
     const $ = load(response.data.data.list);
 
-    let item = [];
+    let item: DataItem[];
     const needFullText = option === 'fulltext';
     switch (type) {
         case 'article':
@@ -78,6 +80,8 @@ async function handler(ctx) {
         case 'state':
             item = utils.statusListParser($);
             break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     const typeToLabel = {

@@ -1,13 +1,14 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/qbitai/category/资讯',
     parameters: { category: '分类名，见下表' },
     features: {

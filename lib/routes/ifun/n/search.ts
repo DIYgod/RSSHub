@@ -1,10 +1,10 @@
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { author, language, rootUrl, processItems } from './util';
+import { author, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { keywords } = ctx.req.param();

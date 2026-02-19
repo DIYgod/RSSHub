@@ -1,5 +1,7 @@
 import { CookieJar } from 'tough-cookie';
+
 import got from '@/utils/got';
+
 const cookieJar = new CookieJar();
 
 async function doGot(num, host, link) {
@@ -17,7 +19,7 @@ async function doGot(num, host, link) {
             throw new Error('api error');
         }
         cookieJar.setCookieSync(match[1], host);
-        return doGot(++num, host, link);
+        return doGot(num + 1, host, link);
     }
     return data;
 }

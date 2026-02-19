@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/eastmoney/search/web3',
     parameters: { keyword: '关键词，可以设置为自己需要检索的关键词' },

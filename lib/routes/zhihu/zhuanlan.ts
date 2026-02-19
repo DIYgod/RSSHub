@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { getSignedHeader, header } from './utils';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header } from './utils';
 
 export const route: Route = {
     path: '/zhuanlan/:id',
@@ -10,7 +12,12 @@ export const route: Route = {
     example: '/zhihu/zhuanlan/googledevelopers',
     parameters: { id: '专栏 id，可在专栏主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -47,7 +54,7 @@ async function handler(ctx) {
 
     const pinnedRes = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v4/columns/${id}/pinned-items`,
+        url: `https://www.zhihu.com/api/v4/columns/${id}/pinned-items/v2`,
         headers: {
             ...header,
             ...signedHeader,
@@ -76,9 +83,9 @@ async function handler(ctx) {
         }
         $('img').css('max-width', '100%');
 
-        let title = '';
-        let link = '';
-        let author = '';
+        let title: string;
+        let link: string;
+        let author: string;
         let pubDate: Date;
 
         switch (item.type) {

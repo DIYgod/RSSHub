@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -45,7 +46,7 @@ async function handler(ctx) {
         link,
         description: `视频 ${name} 的视频选集列表`,
         item: data
-            .sort((a, b) => b.page - a.page)
+            .toSorted((a, b) => b.page - a.page)
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
             .map((item) => ({
                 title: item.part,

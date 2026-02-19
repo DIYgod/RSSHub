@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 const baseUrl = 'https://www.openrice.com';
 
 export const route: Route = {

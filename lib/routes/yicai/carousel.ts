@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { rootUrl, fetchFullArticles } from './utils';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { fetchFullArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/carousel',

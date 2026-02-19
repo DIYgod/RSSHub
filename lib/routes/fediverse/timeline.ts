@@ -1,15 +1,15 @@
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route, ViewType } from '@/types';
-
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/timeline/:account',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/fediverse/timeline/Mastodon@mastodon.social',
     parameters: { account: 'username@domain' },
@@ -80,7 +80,7 @@ async function handler(ctx) {
 
     const items = firstOutbox.orderedItems;
 
-    const itemResolvers = [] as Promise<any>[];
+    const itemResolvers = [] as Array<Promise<any>>;
 
     for (const item of items) {
         if (!['Announce', 'Create', 'Update'].includes(item.type)) {

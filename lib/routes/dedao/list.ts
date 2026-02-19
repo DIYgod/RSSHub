@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/list/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dedao/list/年度日更',
     parameters: { category: '分类名，默认为年度日更' },
     features: {

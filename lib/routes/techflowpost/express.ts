@@ -1,12 +1,14 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/express',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/techflowpost/express',
     radar: [

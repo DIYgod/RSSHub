@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -27,7 +28,7 @@ export const route: Route = {
     description: `| Sort            | Description    |
 | --------------- | -------------- |
 | today           | Daily installs |
-| total\_installs | Total installs |
+| total_installs | Total installs |
 | ratings         | Ratings        |
 | created         | Created date   |
 | updated         | Updated date   |

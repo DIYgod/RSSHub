@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/series/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/sspai/series/77',
     parameters: { id: '专栏 id' },
     features: {
@@ -34,7 +34,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         response.data.data.map(async (item) => {
-            let description = '';
+            let description: string;
             if (item.probation) {
                 const res = await got(`https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`);
                 description = res.data.data.body;

@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'Cursor',
-    url: 'www.cursor.com',
+    url: 'cursor.com',
     description: '',
     lang: 'en',
 };

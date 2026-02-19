@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const sorts = {
@@ -66,7 +66,7 @@ async function handler(ctx) {
         link: `${rootUrl}/repository/${item.item_id}`,
         pubDate: parseDate(item.updated_at),
         name: `${item.author}/${item.name}`,
-        summary: item.summary,
+        description: item.summary,
         language: item.primary_lang,
     }));
 

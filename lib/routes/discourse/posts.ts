@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import { getConfig } from './utils';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
+
+import { getConfig } from './utils';
 
 export const route: Route = {
     path: '/:configId/posts',

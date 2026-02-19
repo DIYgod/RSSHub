@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
     path: '/player_news/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dongqiudi/player_news/50000339',
     parameters: { id: '球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到' },
     radar: [

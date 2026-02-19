@@ -1,10 +1,12 @@
-import { DataItem } from '@/types';
+import { load } from 'cheerio';
+import type { NarouSearchResult } from 'narou';
+import { NarouNovelFetch, SearchBuilder, SearchBuilderR18 } from 'narou';
+
+import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { config } from '@/config';
-import { NarouNovelFetch, NarouSearchResult, SearchBuilder, SearchBuilderR18 } from 'narou';
 
 export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; novel: NarouSearchResult }> {
     const api = new NarouNovelFetch();

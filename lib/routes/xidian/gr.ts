@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://gr.xidian.edu.cn';
@@ -230,9 +231,6 @@ async function handler(ctx) {
         headers: {
             referer: baseUrl,
         },
-        https: {
-            rejectUnauthorized: false,
-        },
     });
 
     const $ = load(response.data);
@@ -267,9 +265,6 @@ async function handler(ctx) {
                     const detailResponse = await got(item.link, {
                         headers: {
                             referer: url,
-                        },
-                        https: {
-                            rejectUnauthorized: false,
                         },
                     });
                     const content = load(detailResponse.data);

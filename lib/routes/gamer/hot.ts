@@ -1,13 +1,15 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hot/:bsn',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/gamer/hot/47157',
     parameters: { bsn: '板塊 id，在 URL 可以找到' },
@@ -19,13 +21,13 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '熱門推薦',
-    maintainers: ['nczitzk', 'TonyRL'],
+    name: '本板推薦',
+    maintainers: ['nczitzk', 'TonyRL', 'kennyfong19931'],
     handler,
 };
 
 async function handler(ctx) {
-    const rootUrl = `https://forum.gamer.com.tw/A.php?bsn=${ctx.req.param('bsn')}`;
+    const rootUrl = `https://forum.gamer.com.tw/B.php?bsn=${ctx.req.param('bsn')}`;
     const response = await got({
         url: rootUrl,
         headers: {
@@ -34,12 +36,12 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('div.FM-abox2A a.FM-abox2B')
+    const list = $('div.popular__card-list div.popular__card-img a')
         .toArray()
         .map((item) => {
             item = $(item);
             return {
-                link: `https:${item.attr('href')}`,
+                link: item.attr('href'),
             };
         });
 

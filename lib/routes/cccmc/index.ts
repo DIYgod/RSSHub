@@ -1,29 +1,28 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywgg/tzgg' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://www.cccmc.org.cn';
+    const baseUrl = 'https://www.cccmc.org.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
+    const regex = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
 
-    const regex: RegExp = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
-
-    items =
+    let items: DataItem[] =
         response
             .match(regex)
             ?.slice(0, limit)
@@ -117,7 +116,7 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `ywgg/tzgg`，即通知公告，可在对应分类页 URL 中找到, Category, `ywgg/tzgg`，即通知公告  by default',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [综合政策](https://www.cccmc.org.cn/zcfg/zhzc/)，网址为 \`https://www.cccmc.org.cn/zcfg/zhzc/\`，请截取 \`https://www.cccmc.org.cn/\` 到末尾的部分 \`zcfg/zhzc\` 作为 \`category\` 参数填入，此时目标路由为 [\`/cccmc/zcfg/zhzc\`](https://rsshub.app/cccmc/zcfg/zhzc)。
 :::
 

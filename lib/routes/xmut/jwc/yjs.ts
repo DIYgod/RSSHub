@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const xmut = 'https://yjs.xmut.edu.cn';
 
 export const route: Route = {
@@ -18,9 +20,6 @@ async function handler(ctx) {
     const res = await got(url, {
         headers: {
             referer: xmut,
-        },
-        https: {
-            rejectUnauthorized: false,
         },
     });
     const $ = load(res.data);
@@ -40,9 +39,6 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link, {
                     headers: {
                         referer: xmut,
-                    },
-                    https: {
-                        rejectUnauthorized: false,
                     },
                 });
                 const $item = load(detailResponse.data);

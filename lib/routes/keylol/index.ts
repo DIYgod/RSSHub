@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { config } from '@/config';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-import queryString from 'query-string';
+import timezone from '@/utils/timezone';
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
 const header = {

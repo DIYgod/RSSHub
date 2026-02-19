@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.iwara.tv';
 const apiRootUrl = 'https://api.iwara.tv';
@@ -37,17 +37,48 @@ const parseThumbnail = (type, item) => {
 };
 
 export const route: Route = {
-    path: '/users/:username?/:type?',
-    name: 'Unknown',
+    path: '/users/:username/:type?',
+    example: '/iwara/users/kelpie/video',
+    parameters: {
+        username: 'username, can find in userpage',
+        type: 'content type, can be video or image, default is video',
+    },
+    name: 'User',
     maintainers: ['Fatpandac'],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
-    const username = ctx.req.param('username');
-    const id = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => (await got(`${apiRootUrl}/profile/${username}`)).data.user.id);
-    const type = ctx.req.param('type') ?? 'video';
-    const items = (await cache.tryGet(`${apiUrlMap[type]}?user=${id}`, async () => (await got(`${apiUrlMap[type]}?user=${id}`)).data.results, config.cache.routeExpire, false)).map((item) => ({
+    const { username, type = 'video' } = ctx.req.param();
+
+    const profile = await cache.tryGet(`${apiRootUrl}/profile/${username}`, async () => {
+        const response = await ofetch(`${apiRootUrl}/profile/${username}`, {
+            headers: {
+                'user-agent': config.trueUA,
+            },
+        });
+        return response.user;
+    });
+
+    const id = profile.id;
+    const list = await cache.tryGet(
+        `${apiUrlMap[type]}?user=${id}`,
+        async () => {
+            const response = await ofetch(`${apiUrlMap[type]}?user=${id}`, {
+                headers: {
+                    'user-agent': config.trueUA,
+                },
+            });
+            return response.results;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+    const items = list.map((item) => ({
         title: item.title,
         author: username,
         link: `${rootUrl}/${type}/${item.id}/${item.slug}`,

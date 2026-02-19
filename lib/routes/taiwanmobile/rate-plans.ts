@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/rate-plans',

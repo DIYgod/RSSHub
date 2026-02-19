@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://jwc.njit.edu.cn';
@@ -30,13 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'jx';
     const link = host + '/index/' + type + '.htm';
-    const response = await got({
-        method: 'get',
-        url: link,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.body);
 
     const urlList = $('body')
@@ -58,13 +53,7 @@ async function handler(ctx) {
             itemUrl = new URL(itemUrl, host).href;
             if (itemUrl.includes('.htm')) {
                 return cache.tryGet(itemUrl, async () => {
-                    const response = await got({
-                        method: 'get',
-                        url: itemUrl,
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const response = await got(itemUrl);
                     if (response.redirectUrls.length !== 0) {
                         const single = {
                             title: titleList[index],

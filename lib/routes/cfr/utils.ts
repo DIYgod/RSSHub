@@ -1,9 +1,12 @@
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import ofetch from '@/utils/ofetch';
+
 import type { DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 import type { LinkData, VideoSetup } from './types';
 
 export function getDataItem(href: string) {
@@ -229,7 +232,7 @@ function parseDefault($): DataItem {
 
 function parseLinkData($: CheerioAPI) {
     try {
-        const data = (<LinkData>JSON.parse($('script[type="application/ld+json"]').text()))['@graph'][0];
+        const data = (JSON.parse($('script[type="application/ld+json"]').text()) as LinkData)['@graph'][0];
 
         return {
             title: data.name,
@@ -247,7 +250,7 @@ function getVideoIframe($ele: Cheerio<Element>) {
         if (youtubeSource) {
             const videoId = youtubeSource.src.match(/\?v=([^&]+)/)?.[1];
             if (videoId) {
-                return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
+                return `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" width="640" height="360" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
             }
         }
     }

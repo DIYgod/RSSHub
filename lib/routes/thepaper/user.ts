@@ -1,12 +1,13 @@
-import { Route } from '@/types';
 import * as cheerio from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:pphId',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/thepaper/user/4221423',
     parameters: { pphId: '澎湃号 id，可在澎湃号页 URL 中找到' },
     name: '澎湃号',

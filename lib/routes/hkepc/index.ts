@@ -1,14 +1,16 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { baseUrl, categoryMap } from './data';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/hkepc/news',
     parameters: { category: '分类，见下表，默认为最新消息' },
     features: {

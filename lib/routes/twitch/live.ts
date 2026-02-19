@@ -1,4 +1,5 @@
-import { Route, ViewType } from '@/types';
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -7,7 +8,7 @@ const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 
 export const route: Route = {
     path: '/live/:login',
-    categories: ['live', 'popular'],
+    categories: ['live'],
     view: ViewType.Notifications,
     example: '/twitch/live/riotgames',
     parameters: { login: 'Twitch username' },
@@ -40,7 +41,7 @@ async function handler(ctx) {
                 extensions: {
                     persistedQuery: {
                         version: 1,
-                        sha256Hash: 'c3ea5a669ec074a58df5c11ce3c27093fa38534c94286dc14b68a25d5adcbf55',
+                        sha256Hash: 'fea4573a7bf2644f5b3f2cbbdcbee0d17312e48d2e55f080589d053aad353f11',
                     },
                 },
                 variables: {
@@ -53,11 +54,12 @@ async function handler(ctx) {
                 extensions: {
                     persistedQuery: {
                         version: 1,
-                        sha256Hash: '059c4653b788f5bdb2f5a2d2a24b0ddc3831a15079001a3d927556a96fb0517f',
+                        sha256Hash: 'b57f9b910f8cd1a4659d894fe7550ccc81ec9052c01e438b290fd66a040b9b93',
                     },
                 },
                 variables: {
                     channelLogin: login,
+                    includeIsDJ: true,
                 },
             },
             {
@@ -72,20 +74,37 @@ async function handler(ctx) {
                     channelLogin: login,
                 },
             },
+            {
+                operationName: 'ChannelRoot_AboutPanel',
+                variables: {
+                    channelLogin: login,
+                    skipSchedule: true,
+                    includeIsDJ: true,
+                },
+                extensions: {
+                    persistedQuery: {
+                        version: 1,
+                        sha256Hash: '0df42c4d26990ec1216d0b815c92cc4a4a806e25b352b66ac1dd91d5a1d59b80',
+                    },
+                },
+            },
         ],
     });
 
     const channelShellData = response.data[0].data;
     const streamMetadataData = response.data[1].data;
     const realtimeStreamTagListData = response.data[2].data;
+    const channelRootAboutPanelData = response.data[3].data;
+    const { userOrError } = channelShellData;
+    const { user } = channelRootAboutPanelData;
 
-    if (!channelShellData.userOrError.id) {
-        throw new Error(channelShellData.userOrError.__typename);
+    if (!userOrError.id) {
+        throw new Error(userOrError.__typename);
     }
 
-    const displayName = channelShellData.userOrError.displayName;
+    const displayName = userOrError.displayName;
 
-    const liveItem = [];
+    const liveItem: DataItem[] = [];
 
     if (streamMetadataData.user.stream) {
         liveItem.push({
@@ -101,7 +120,9 @@ async function handler(ctx) {
 
     return {
         title: `Twitch - ${displayName} - Live`,
+        description: user.description,
         link: `https://www.twitch.tv/${login}`,
+        image: user.profileImageURL,
         item: liveItem,
         allowEmpty: true,
     };

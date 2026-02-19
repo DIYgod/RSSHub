@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { rootUrl, apiRootUrl, parseResult, parseArticle } from './utils';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { apiRootUrl, parseArticle, parseResult, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/utgd/topic/在线阅读专栏',
     parameters: { topic: '专题，默认为在线阅读专栏' },
     features: {

@@ -1,7 +1,9 @@
-import { Route, Data, DataItem } from '@/types';
-import { fetchNovelInfo, fetchChapterContent } from './utils';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { NovelType } from 'narou';
+
+import type { Data, DataItem, Route } from '@/types';
+
+import { fetchChapterContent, fetchNovelInfo } from './utils';
 
 export const route: Route = {
     path: '/:ncode',
@@ -72,7 +74,7 @@ async function handler(ctx: Context): Promise<Data> {
 
             const item = await fetchChapterContent(chapterUrl, chapterNumber);
             return item;
-        }).reverse()
+        }).toReversed()
     );
 
     return {

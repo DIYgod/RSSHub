@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/:type',
@@ -48,6 +49,6 @@ async function handler(ctx) {
                     link: item.find('.cept-tt').attr('href'),
                 };
             })
-            .reverse(),
+            .toReversed(),
     };
 }

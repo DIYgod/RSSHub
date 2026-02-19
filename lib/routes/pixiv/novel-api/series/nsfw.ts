@@ -1,13 +1,15 @@
-import got from '../../pixiv-got';
-import { maskHeader } from '../../constants';
-import { getNSFWNovelContent } from '../content/nsfw';
-import pixivUtils from '../../utils';
-import { AppNovelSeries, SeriesDetail, SeriesFeed } from './types';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { getToken } from '../../token';
-import { config } from '@/config';
-import cache from '@/utils/cache';
 import queryString from 'query-string';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
+
+import { maskHeader } from '../../constants';
+import got from '../../pixiv-got';
+import { getToken } from '../../token';
+import pixivUtils from '../../utils';
+import { getNSFWNovelContent } from '../content/nsfw';
+import type { AppNovelSeries, SeriesDetail, SeriesFeed } from './types';
 
 const baseUrl = 'https://www.pixiv.net';
 

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import getComments from './comments';
-import getFromAPI from './offcial-subject-api';
-import getEps from './ep';
-import { queryToBoolean } from '@/utils/readable-social';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { queryToBoolean } from '@/utils/readable-social';
+
+import getComments from './comments';
+import getEps from './ep';
+import getFromAPI from './offcial-subject-api';
 
 export const route: Route = {
     path: '/subject/:id/:type?/:showOriginalName?',

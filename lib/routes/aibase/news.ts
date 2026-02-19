@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { rootUrl, buildApiUrl } from './util';
+
+import { buildApiUrl, rootUrl } from './util';
 
 export const route: Route = {
     path: '/news',
@@ -58,7 +60,7 @@ export const route: Route = {
     },
     example: '/aibase/news',
     description: '获取 AI 资讯列表',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,

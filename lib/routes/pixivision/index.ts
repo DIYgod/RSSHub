@@ -1,13 +1,16 @@
-import { Route, DataItem, Data, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import { processContent } from './utils';
 
 export const route: Route = {
     path: '/:lang/:category?',
-    categories: ['anime', 'popular'],
+    categories: ['anime'],
     view: ViewType.Articles,
     example: '/pixivision/zh-tw',
     parameters: { lang: 'Language', category: 'Category' },

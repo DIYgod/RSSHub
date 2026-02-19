@@ -1,12 +1,13 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/user/:name?',
-    categories: ['social-media', 'popular'],
+    categories: ['social-media'],
     example: '/lofter/user/i',
     view: ViewType.Articles,
     parameters: { name: 'Lofter user name, can be found in the URL' },

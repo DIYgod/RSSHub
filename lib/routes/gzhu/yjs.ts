@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,11 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const link = 'https://yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm';
-    const response = await got(link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.data);
     const list = $('.picnews_cont li');
 

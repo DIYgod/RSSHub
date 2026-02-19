@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.techpowerup.com';
 
@@ -48,7 +49,7 @@ const parseReviews = async ($, item) => {
     if (nextPages.length) {
         const pages = await Promise.all(
             nextPages.map(async (url) => {
-                const { data: response } = await got(url, {
+                const response = await ofetch(url, {
                     headers,
                 });
                 const $ = load(response);
@@ -73,4 +74,4 @@ const parseReviews = async ($, item) => {
     item.description = content.html();
 };
 
-export { baseUrl, headers, fixImages, hdImage, parseReviews, removeFigureStyle, removeResponsiveStyle };
+export { baseUrl, fixImages, hdImage, headers, parseReviews, removeFigureStyle, removeResponsiveStyle };

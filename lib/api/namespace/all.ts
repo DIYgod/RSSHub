@@ -1,5 +1,7 @@
+import type { RouteHandler } from '@hono/zod-openapi';
+import { createRoute } from '@hono/zod-openapi';
+
 import { namespaces } from '@/registry';
-import { createRoute, RouteHandler } from '@hono/zod-openapi';
 
 const route = createRoute({
     method: 'get',
@@ -14,4 +16,4 @@ const route = createRoute({
 
 const handler: RouteHandler<typeof route> = (ctx) => ctx.json(namespaces);
 
-export { route, handler };
+export { handler, route };

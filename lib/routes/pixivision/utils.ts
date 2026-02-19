@@ -1,4 +1,5 @@
-import { CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+
 import { config } from '@/config';
 
 const multiImagePrompt = {
@@ -81,6 +82,6 @@ export function processContent($: CheerioAPI, lang: string): string {
     return (
         $('.am__body')
             .html()
-            ?.replace(/https:\/\/i\.pximg\.net/g, config.pixiv.imgProxy || '') || ''
+            ?.replaceAll('https://i.pximg.net', config.pixiv.imgProxy || '') || ''
     );
 }

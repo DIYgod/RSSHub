@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:label?', // 路由路径
@@ -15,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '短篇', // 源名称
     maintainers: ['Lyunvy'], // 维护者

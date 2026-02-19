@@ -1,8 +1,11 @@
 .DS_Store
 .cursorrules
-.env*
+.devenv
+.direnv
+.env
 .eslintcache
 .idea
+.pre-commit-config.yaml
 .log
 .now
 .roomodes
@@ -24,6 +27,9 @@ memory-bank/
 node_modules
 tmp
 dist
+dist-lib
+dist-worker
+.wrangler
 
 Session.vim
 combined.log
@@ -34,3 +40,5 @@ package-lock.json
 # pnpm-lock.yaml
 yarn.lock
 yarn-error.log
+
+dist-container

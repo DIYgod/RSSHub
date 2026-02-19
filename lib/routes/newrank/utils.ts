@@ -1,7 +1,8 @@
-import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
-import got from '@/utils/got';
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import md5 from '@/utils/md5';
+
 const newrank_cookie_token = 'newrank_cookie_token';
 const query_count = 'newrank_cookie_count';
 const max_query_count = 30;

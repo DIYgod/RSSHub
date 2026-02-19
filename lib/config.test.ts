@@ -1,4 +1,4 @@
-import { describe, expect, it, afterEach, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 afterEach(() => {
     vi.resetModules();
@@ -93,7 +93,9 @@ describe('config', () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 
         const { config } = await import('./config');
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        expect(config.ua).toBe('test');
+        await vi.waitFor(() => {
+            expect(config.ua).toBe('test');
+        });
+        delete process.env.REMOTE_CONFIG;
     });
 });

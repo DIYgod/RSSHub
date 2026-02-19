@@ -1,6 +1,10 @@
-import { Route, ViewType } from '@/types';
-import { rootUrl, parseNewsList, parseArticle } from './utils';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
+import { parseArticle, parseNewsList, rootUrl } from './utils';
+
 const siteTitleMapping = {
     '/': 'News',
     bpol: 'Politics',
@@ -18,7 +22,7 @@ const siteTitleMapping = {
 
 export const route: Route = {
     path: '/:site?',
-    categories: ['finance', 'popular'],
+    categories: ['finance'],
     view: ViewType.Articles,
     example: '/bloomberg/bbiz',
     parameters: {

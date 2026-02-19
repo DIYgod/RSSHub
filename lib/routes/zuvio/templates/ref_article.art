@@ -1,8 +1,0 @@
-引用自：
-<a href="{{ ref_article.id }}">
-  <img src="{{ ref_article.user_icon }}">
-  <div>{{ ref_article.university }} {{ ref_article.user_name }} {{ ref_article.board_name }}</div>
-  <div>{{ ref_article.title }}</div>
-  <div>{{ ref_article.abstract }}</div>
-</a>
-<hr>

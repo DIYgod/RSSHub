@@ -1,19 +1,18 @@
-import { type Data, type DataItem } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, load } from 'cheerio';
-import path from 'node:path';
-
 import { parseContent } from './parser';
+import { renderDescription } from './templates/description';
 
-const baseUrl: string = 'https://www.gcores.com';
-const imageBaseUrl: string = 'https://image.gcores.com';
-const audioBaseUrl: string = 'https://alioss.gcores.com';
+const baseUrl = 'https://www.gcores.com';
+const imageBaseUrl = 'https://image.gcores.com';
+const audioBaseUrl = 'https://alioss.gcores.com';
 
-const types: Set<string> = new Set(['radios', 'articles', 'news', 'videos', 'talks']);
+const types = new Set<string>(['radios', 'articles', 'news', 'videos', 'talks']);
 
 const processItems = async (limit: number, query: any, apiUrl: string, targetUrl: string): Promise<Data> => {
     const response = await ofetch(apiUrl, {
@@ -32,9 +31,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
     const included = response.included;
     const data = [...response.data, ...included].filter((item) => types.has(item.type));
 
-    let items: DataItem[] = [];
-
-    items = data?.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = data?.slice(0, limit).map((item): DataItem => {
         const attributes = item.attributes;
         const relationships = item.relationships;
 
@@ -62,7 +59,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
               ]
             : undefined;
 
-        const guid: string = `gcores-${item.id}`;
+        const guid = `gcores-${item.id}`;
         const image: string | undefined = (attributes.cover ?? attributes.thumb) ? new URL(attributes.cover ?? attributes.thumb, imageBaseUrl).href : undefined;
         const updated: number | string = pubDate;
 
@@ -112,7 +109,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
             };
         }
 
-        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string = renderDescription({
             images: attributes.cover
                 ? [
                       {
@@ -170,4 +167,4 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
     };
 };
 
-export { baseUrl, imageBaseUrl, audioBaseUrl, processItems };
+export { audioBaseUrl, baseUrl, imageBaseUrl, processItems };

@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { isValidHost } from '@/utils/valid-host';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:region?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/liveuamap',
     parameters: { region: 'region 热点地区，默认为`ukraine`，其他选项见liveuamap.com的三级域名' },
     features: {

@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getList, parseList, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { getList, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/news/list/:region/:listId',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/yahoo/news/list/hk/09fcf7b0-0ab2-11e8-bf1f-4d52d4f79454',
     parameters: { region: '`hk`, `tw`', listId: '見下表' },
     features: {

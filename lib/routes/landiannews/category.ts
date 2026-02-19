@@ -1,5 +1,7 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
-import { fetchNewsItems, fetchCategory } from './utils';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+
+import { fetchCategory, fetchNewsItems } from './utils';
 
 export const handler = async (ctx): Promise<Data> => {
     const slug = ctx.req.param('slug');
@@ -7,7 +9,7 @@ export const handler = async (ctx): Promise<Data> => {
     const { id, name } = await fetchCategory(slug);
 
     const rootUrl = 'https://www.landiannews.com/';
-    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed&categories=${id}`;
+    const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed=author,wp:term&categories=${id}`;
 
     const items: DataItem[] = await fetchNewsItems(postApiUrl);
 

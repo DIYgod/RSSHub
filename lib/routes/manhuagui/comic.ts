@@ -1,7 +1,8 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import got from '@/utils/got';
 import LZString from 'lz-string';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 let baseUrl = '';
@@ -20,7 +21,7 @@ const getChapters = ($) => {
         if (!nextEle) {
             return;
         }
-        for (const ul of $(nextEle).children('ul').toArray().reverse()) {
+        for (const ul of $(nextEle).children('ul').toArray().toReversed()) {
             for (const li of $(ul).children('li').toArray()) {
                 const a = $(li).children('a');
                 // 通过操作发布时间来对章节进行排序,如果是刚刚更新的单行本或者番外,保留最新更新时间
@@ -55,6 +56,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {

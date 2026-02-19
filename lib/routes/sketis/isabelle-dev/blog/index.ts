@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const source = [
@@ -44,7 +45,7 @@ export const route: Route = {
     handler: async (ctx) => {
         const baseUrl = 'https://isabelle-dev.sketis.net';
         const { blog } = ctx.req.param();
-        const blogName = blog === '1' ? 'News' : (blog === '2' ? 'Release' : 'UNKNOWN');
+        const blogName = blog === '1' ? 'News' : blog === '2' ? 'Release' : 'UNKNOWN';
         const url = `${baseUrl}/phame/blog/view/${blog}/`;
         const response = await ofetch(url);
         const $ = load(response);

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import utils from './utils';
 import got from '@/utils/got';
+
+import utils from './utils';
 
 const rootURL = 'https://jiuye.swjtu.edu.cn/career';
 

@@ -1,11 +1,13 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
 const host = 'https://www.digitalcameraworld.com';
 export const route: Route = {
     path: '/news',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/digitalcameraworld/news',
     parameters: {},
     features: {

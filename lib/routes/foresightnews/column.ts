@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
+import type { Route } from '@/types';
+
+import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/foresightnews/column/1',
     parameters: { id: '专栏 id, 可在对应专栏页 URL 中找到' },
     features: {

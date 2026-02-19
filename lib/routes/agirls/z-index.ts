@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import { baseUrl, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/agirls/app',
     parameters: { category: '分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分' },
     features: {
