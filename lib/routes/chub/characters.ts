@@ -1,8 +1,9 @@
+import MarkdownIt from 'markdown-it';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
     breaks: true,
     html: true,
@@ -24,7 +25,7 @@ export const route: Route = {
 
 function convertUndefinedToString(value: any): string {
     return value === undefined ? '' : value.toString();
-};
+}
 
 async function handler() {
     const hostURL = 'https://www.chub.ai/characters';
