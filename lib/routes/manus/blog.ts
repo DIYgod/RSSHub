@@ -67,21 +67,17 @@ async function handler() {
         throw new Error('Failed to parse blogList from RSC data');
     }
 
-    const list: Array<DataItem & { _contentUrl?: string }> = [];
-    for (const group of blogList.groups) {
-        if (group.blogs) {
-            for (const blog of group.blogs) {
-                list.push({
-                    title: blog.title,
-                    link: `https://manus.im/blog/${blog.recordUid}`,
-                    pubDate: new Date(blog.createdAt.seconds * 1000),
-                    description: blog.desc,
-                    category: [group.kindName],
-                    _contentUrl: blog.contentUrl, // temporary property for fetching full content
-                });
-            }
-        }
-    }
+    const list: Array<DataItem & { _contentUrl?: string }> = blogList.groups.flatMap(
+        (group) =>
+            group.blogs?.map((blog) => ({
+                title: blog.title,
+                link: `https://manus.im/blog/${blog.recordUid}`,
+                pubDate: new Date(blog.createdAt.seconds * 1000),
+                description: blog.desc,
+                category: [group.kindName],
+                _contentUrl: blog.contentUrl,
+            })) ?? []
+    );
 
     const items: DataItem[] = await Promise.all(
         list.map(
