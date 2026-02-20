@@ -44,8 +44,8 @@ importers:
         specifier: 1.2.2
         version: 1.2.2(hono@4.11.10)(zod@4.3.6)
       '@jocmp/mercury-parser':
-        specifier: 3.0.2
-        version: 3.0.2
+        specifier: 3.0.3
+        version: 3.0.3
       '@notionhq/client':
         specifier: 5.9.0
         version: 5.9.0
@@ -1150,8 +1150,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.0.2':
-    resolution: {integrity: sha512-HPWiJpt05UUTtPka4SITY0T2y0hl8+SyA73T4L173fdt2cBmfIgwM8rilsfmWQOeQfsTiNkVWol1erP5Tsc+sw==}
+  '@jocmp/mercury-parser@3.0.3':
+    resolution: {integrity: sha512-3kkhQlEDKUTKF+VtS5nwmL0McKekzaVqC7tsN8/kSf+xvSJnvvq4JT4R6JkzLGAa/9LzSpHmVXXC3C/DW3SFLg==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -6496,7 +6496,7 @@ snapshots:
     dependencies:
       minipass: 7.1.2
 
-  '@jocmp/mercury-parser@3.0.2':
+  '@jocmp/mercury-parser@3.0.3':
     dependencies:
       '@babel/runtime-corejs2': 7.28.6
       cheerio: 1.2.0
