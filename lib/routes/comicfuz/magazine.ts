@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
@@ -36,8 +37,8 @@ export const route: Route = {
 
         try{
             browser = await puppeteer();
-        }catch (e: any) {
-            throw new Error(`[ComicFuz] browser error: ${e.message}`);
+        }catch (error: any) {
+            throw new Error(`[ComicFuz] browser error: ${error.message}`);
         }
 
         const page = await browser.newPage();
@@ -52,11 +53,11 @@ export const route: Route = {
             await page.goto(openurl, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
             const nextData = await page.evaluate(() => {
-                const element = document.getElementById('__NEXT_DATA__');
+                const element = document.querySelector('#__NEXT_DATA__');
                 if (element && element.textContent) {
                     try {
                         return JSON.parse(element.textContent);
-                    } catch (e) {
+                    } catch {
                         return null;
                     }
                 }
@@ -73,11 +74,11 @@ export const route: Route = {
             let magazineDescription = 'null'; // 简介
             try {
                 await page.waitForSelector('[class*="magazine_issue_detail_introduction__description__"]', { timeout: 6000 });
-                const descriptionText = await page.$eval('[class*="magazine_issue_detail_introduction__description__"]', el => el.textContent);
+                const descriptionText = await page.$eval('[class*="magazine_issue_detail_introduction__description__"]', (el) => el.textContent);
                 if (descriptionText) {
                     magazineDescription = descriptionText.trim();
                 }
-            } catch (e) {
+            } catch {
                 // console.log('[ComicFuz] Manga Description: null'); // 没找到输出null
             }
 
