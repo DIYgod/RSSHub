@@ -4,6 +4,7 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/engineering',
@@ -34,15 +35,21 @@ async function handler(ctx) {
             const $e = $(element);
             const href = $e.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const pubDate = $e.find('div[class*="date"]').text().trim();
+            const pubDateText = $e.find('div[class*="date"]').text().trim();
+            const title = $e.find('h2, h3').text().trim();
+
+            if (!title || !href || href === '#') {
+                return null;
+            }
+
             return {
-                title: $e.find('h2, h3').text().trim(),
+                title,
                 link: fullLink,
-                pubDate,
+                pubDate: pubDateText || undefined,
             };
         })
-        .filter((item) => item.title && item.link)
-        .slice(0, limit);
+        .filter((item): item is Exclude<typeof item, null> => item !== null)
+        .slice(0, limit) as DataItem[];
 
     const items = await pMap(
         list,
@@ -64,6 +71,13 @@ async function handler(ctx) {
                     }
                 });
 
+                // Always try to extract pubDate from detail page if not available
+                if (!item.pubDate) {
+                    const pubDateText = $('div[class*="date"]').text().trim();
+                    if (pubDateText) {
+                        item.pubDate = parseDate(pubDateText);
+                    }
+                }
                 item.description = content.html() ?? undefined;
 
                 return item;
