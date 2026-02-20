@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
@@ -36,7 +34,7 @@ export const route: Route = {
         try{
             browser = await puppeteer();
         }catch (error: any) {
-            throw new Error(`[ComicFuz] browser error: ${error.message}`);
+            throw new Error(`[ComicFuz] browser error: ${error.message}`, { cause: error });
         }
 
         const page = await browser.newPage();
@@ -123,7 +121,7 @@ export const route: Route = {
                 const fullTitle = `${chapter.chapterMainName}${chapter.chapterSubName ? ` - ${chapter.chapterSubName}` : ''}`;
 
                 return {
-                    title: `${fullTitle}`,
+                    title: fullTitle,
                     link: `${baseurl}/manga/viewer/${chapter.chapterId}`,
                     description: `
                         ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}

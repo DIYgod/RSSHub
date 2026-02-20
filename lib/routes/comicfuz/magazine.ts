@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
@@ -38,7 +36,7 @@ export const route: Route = {
         try{
             browser = await puppeteer();
         }catch (error: any) {
-            throw new Error(`[ComicFuz] browser error: ${error.message}`);
+            throw new Error(`[ComicFuz] browser error: ${error.message}`, { cause: error });
         }
 
         const page = await browser.newPage();
