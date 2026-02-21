@@ -11,8 +11,8 @@ export const route: Route = {
     parameters: { id: 'ComicFuz中对应的漫画id' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false, // 已经移除 puppeteer 依赖
-        antiCrawler: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
