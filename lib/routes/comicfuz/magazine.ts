@@ -88,7 +88,11 @@ export const route: Route = {
             };
         });
 
-        items.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+        items.sort((a, b) => {
+            const timeA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+            const timeB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+            return timeB - timeA;
+        });
 
         return {
             title: `COMIC FUZ - ${magazineTitle}`,
