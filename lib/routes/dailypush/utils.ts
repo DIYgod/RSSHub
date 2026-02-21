@@ -5,7 +5,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import puppeteer from '@/utils/puppeteer';
 
 export const BASE_URL = 'https://www.dailypush.dev';
 
@@ -18,26 +18,6 @@ export interface ArticleItem {
     description?: string;
     articleUrl: string;
     dailyPushUrl?: string;
-}
-
-/**
- * Fetch HTML from a URL using getPuppeteerPage (document requests only).
- */
-export async function fetchHtmlWithPuppeteer(url: string): Promise<string> {
-    logger.http(`Requesting ${url}`);
-    const { page, destroy } = await getPuppeteerPage(url, {
-        onBeforeLoad: async (page) => {
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
-            });
-        },
-    });
-    try {
-        return await page.content();
-    } finally {
-        await destroy();
-    }
 }
 
 /**
@@ -246,34 +226,49 @@ export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
 }
 
 /**
- * Enhance items with full summaries from dailypush article pages
+ * Enhance items with full summaries from dailypush article pages.
+ * Reuses a single browser instance; opens a new tab per URL (document requests only).
  */
 export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
+    const browser = await puppeteer();
     const enhancedItems: DataItem[] = [];
-    // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
-    for (const item of itemsWithUrl) {
-        // eslint-disable-next-line no-await-in-loop
-        const enhanced = await cache.tryGet(item.dailyPushUrl!, async () => {
-            try {
-                const articleResponse = await fetchHtmlWithPuppeteer(item.dailyPushUrl!);
-                const $ = load(articleResponse);
 
-                const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+    try {
+        // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
+        for (const item of itemsWithUrl) {
+            // eslint-disable-next-line no-await-in-loop
+            const enhanced = await cache.tryGet(item.dailyPushUrl!, async () => {
+                const page = await browser.newPage();
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
 
-                if (summary.length > 0 && summary.text().trim()) {
-                    item.description = summary.text().trim();
+                try {
+                    logger.http(`Requesting ${item.dailyPushUrl}`);
+                    await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
+                    const html = await page.content();
+                    const $ = load(html);
+                    const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                    if (summary.length > 0 && summary.text().trim()) {
+                        item.description = summary.text().trim();
+                    }
+                } catch {
+                    // If fetching article page fails, keep the original description
+                } finally {
+                    await page.close();
                 }
-            } catch {
-                // If fetching article page fails, keep the original description
-            }
 
-            return item;
-        });
-        enhancedItems.push(enhanced);
+                return item;
+            });
+            enhancedItems.push(enhanced);
+        }
+
+        return [...enhancedItems, ...itemsWithoutUrl];
+    } finally {
+        await browser.close();
     }
-
-    return [...enhancedItems, ...itemsWithoutUrl];
 }
