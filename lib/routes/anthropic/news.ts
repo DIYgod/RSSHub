@@ -25,20 +25,20 @@ async function handler(ctx) {
     const link = 'https://www.anthropic.com/news';
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
-    const list: DataItem[] = $('.contentFadeUp a')
+    const list: DataItem[] = $('[class^="PublicationList-module-scss-module__"][class$="__list"] a')
         .toArray()
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('h3').text().trim();
+            const title = $el.find('[class*="__title"]').text().trim();
             const href = $el.attr('href') ?? '';
-            const pubDate = $el.find('p.detail-m.agate').text().trim() || $el.find('div[class^="PostList_post-date__"]').text().trim(); // legacy selector used roughly before Jan 2025
-            const fullLink = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
+            const pubDate = $el.find('time').text().trim();
+            const link = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
                 title,
-                link: fullLink,
+                link,
                 pubDate,
             };
         });
@@ -52,15 +52,7 @@ async function handler(ctx) {
 
                 const content = $('#main-content');
 
-                // Remove meaningless information (heading, sidebar, quote carousel, footer and codeblock controls)
-                $(`
-                    [class^="PostDetail_post-heading"],
-                    [class^="ArticleDetail_sidebar-container"],
-                    [class^="QuoteCarousel_carousel-controls"],
-                    [class^="PostDetail_b-social-share"],
-                    [class^="LandingPageSection_root"],
-                    [class^="CodeBlock_controls"]
-                `).remove();
+                $('[class$="__header"], [class$="__socialShare"], [class*="__carousel-controls"], [class^="LandingPageSection-module-scss-module__"]').remove();
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);
