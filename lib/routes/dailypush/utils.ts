@@ -1,11 +1,11 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Browser } from 'rebrowser-puppeteer';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
 
 export const BASE_URL = 'https://www.dailypush.dev';
 
@@ -227,51 +227,43 @@ export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
 
 /**
  * Enhance items with full summaries from dailypush article pages.
- * Reuses a single browser instance; opens a new tab per URL (document requests only).
+ * Uses the provided browser; opens a new tab per URL (document requests only). Caller must close the browser.
  */
-export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<DataItem[]> {
+export async function enhanceItemsWithSummaries(browser: Browser, items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const browser = await puppeteer();
+    const enhancedItems: DataItem[] = [];
 
-    try {
-        // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
-        let chain: Promise<DataItem[]> = Promise.resolve([]);
-        for (const item of itemsWithUrl) {
-            chain = chain.then((acc) =>
-                cache
-                    .tryGet(item.dailyPushUrl!, async () => {
-                        const page = await browser.newPage();
-                        await page.setRequestInterception(true);
-                        page.on('request', (request) => {
-                            request.resourceType() === 'document' ? request.continue() : request.abort();
-                        });
+    // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
+    for (const item of itemsWithUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const enhanced = await cache.tryGet(item.dailyPushUrl!, async () => {
+            const page = await browser.newPage();
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                request.resourceType() === 'document' ? request.continue() : request.abort();
+            });
 
-                        try {
-                            logger.http(`Requesting ${item.dailyPushUrl}`);
-                            await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
-                            const html = await page.content();
-                            const $ = load(html);
-                            const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
-                            if (summary.length > 0 && summary.text().trim()) {
-                                item.description = summary.text().trim();
-                            }
-                        } catch {
-                            // If fetching article page fails, keep the original description
-                        } finally {
-                            await page.close();
-                        }
+            try {
+                logger.http(`Requesting ${item.dailyPushUrl}`);
+                await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
+                const html = await page.content();
+                const $ = load(html);
+                const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                if (summary.length > 0 && summary.text().trim()) {
+                    item.description = summary.text().trim();
+                }
+            } catch {
+                // If fetching article page fails, keep the original description
+            } finally {
+                await page.close();
+            }
 
-                        return item;
-                    })
-                    .then((enhanced) => [...acc, enhanced])
-            );
-        }
-        const enhancedItems = await chain;
-
-        return [...enhancedItems, ...itemsWithoutUrl];
-    } finally {
-        await browser.close();
+            return item;
+        });
+        enhancedItems.push(enhanced);
     }
+
+    return [...enhancedItems, ...itemsWithoutUrl];
 }

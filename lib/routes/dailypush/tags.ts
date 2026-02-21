@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import puppeteer from '@/utils/puppeteer';
 
 import { BASE_URL, enhanceItemsWithSummaries, parseArticles } from './utils';
 
@@ -43,20 +43,21 @@ async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
     const url = `${BASE_URL}/${tag}/${sort}`;
 
-    const { page, destroy } = await getPuppeteerPage(url, {
-        onBeforeLoad: async (page) => {
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
-            });
-        },
-    });
+    const browser = await puppeteer();
     try {
-        const html = await page.content();
-        const $ = load(html);
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            request.resourceType() === 'document' ? request.continue() : request.abort();
+        });
 
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        const html = await page.content();
+        await page.close();
+
+        const $ = load(html);
         const list = parseArticles($, BASE_URL);
-        const items = await enhanceItemsWithSummaries(list);
+        const items = await enhanceItemsWithSummaries(browser, list);
 
         const pageTitle = $('title').text() || `DailyPush - ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
 
@@ -66,6 +67,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await destroy();
+        await browser.close();
     }
 }
