@@ -2,7 +2,7 @@ import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const puppeteerGet = async (url) => {
     let data;
-    const { destory } = await getPuppeteerPage(url, {
+    const { destroy } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -13,7 +13,7 @@ const puppeteerGet = async (url) => {
             });
         },
     });
-    await destory();
+    await destroy();
     return data;
 };
 

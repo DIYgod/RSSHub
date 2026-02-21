@@ -38,7 +38,7 @@ const getCookie = (disableConfig = false) => {
         let waitForRequest = new Promise<string>((resolve) => {
             resolve('');
         });
-        const { destory } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
+        const { destroy } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
                     page.on('requestfinished', async (request) => {
@@ -54,7 +54,7 @@ const getCookie = (disableConfig = false) => {
         });
         const cookieString = await waitForRequest;
         logger.debug(`Got bilibili cookie: ${cookieString}`);
-        await destory();
+        await destroy();
         return cookieString;
     });
 };
