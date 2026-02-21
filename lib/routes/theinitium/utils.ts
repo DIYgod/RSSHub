@@ -1,168 +1,258 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
+// Strip '-zh-hans' suffix from display names for cleanliness
+const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');
 
-export const processFeed = async (model: string, ctx: Context) => {
-    // model是channel/tag/etc.，而type是latest/feature/quest-academy这些一级栏目/标签/作者名的slug名。如果是追踪的话，那就是model是follow，type是articles。
-    const type = ctx.req.param('type') ?? 'latest';
-    const language = ctx.req.param('language') ?? 'zh-hans';
-    let listUrl;
-    let listLink;
-    switch (model) {
-        case 'author':
-            listUrl = `https://api.theinitium.com/api/v2/author/?language=${language}&slug=${type}`;
-            listLink = `https://theinitium.com/author/${type}/`;
-            break;
-        case 'follow':
-            listUrl = `https://api.theinitium.com/api/v2/user/follows/${type}/?language=${language}`;
-            listLink = `https://theinitium.com/follow/`;
-            break;
-        case 'channel':
-            listUrl = `https://api.theinitium.com/api/v2/channel/articles/?language=${language}&slug=${type}`;
-            listLink = `https://theinitium.com/channel/${type}/`;
-            break;
-        case 'tags':
-            listUrl = `https://api.theinitium.com/api/v2/tag/articles/?language=${language}&slug=${type}`;
-            listLink = `https://theinitium.com/tags/${type}/`;
-            break;
-        default:
-            throw new InvalidParameterError('wrong model');
+const GHOST_API_BASE = 'https://theinitium.com/ghost/api/content';
+const GHOST_CONTENT_KEY = 'a44a0409c222328d39e2c75293';
+
+// Old channel slugs → Ghost tag slugs mapping
+const CHANNEL_TAG_MAP: Record<string, string> = {
+    latest: '', // no filter = latest
+    whatsnew: 'whatsnew',
+    'news-brief': 'whatsnew',
+    opinion: 'opinion',
+    international: 'international',
+    mainland: 'mainland',
+    hongkong: 'hong-kong',
+    taiwan: 'taiwan',
+    technology: 'technology',
+    feature: 'report',
+    report: 'report',
+    'daily-brief': 'daily-brief',
+    weekly: 'weekly',
+};
+
+// Ghost uses a language-based tagging system:
+//   - zh-hant (Traditional Chinese): uses base tag slug, e.g. "whatsnew", with internal tag #zh-hant
+//   - zh-hans (Simplified Chinese): uses suffixed tag slug, e.g. "whatsnew-zh-hans", with internal tag #zh-hans
+// When no language is specified, we return all posts (both zh-hans and zh-hant mixed).
+function applyLanguageToTagSlug(tagSlug: string, language: string): string {
+    if (language === 'zh-hans') {
+        return `${tagSlug}-zh-hans`;
     }
+    // zh-hant uses the base slug
+    return tagSlug;
+}
 
-    const key = {
-        email: config.initium.username,
-        password: config.initium.password,
+interface GhostPost {
+    id: string;
+    uuid: string;
+    slug: string;
+    title: string;
+    html: string;
+    feature_image?: string;
+    feature_image_caption?: string;
+    custom_excerpt?: string;
+    published_at: string;
+    updated_at: string;
+    url: string;
+    excerpt?: string;
+    access: boolean;
+    visibility?: string;
+    authors?: Array<{ name: string; slug: string }>;
+    tags?: Array<{ name: string; slug: string; visibility: string }>;
+    primary_author?: { name: string; slug: string };
+    primary_tag?: { name: string; slug: string };
+}
+
+interface GhostResponse {
+    posts: GhostPost[];
+    meta: {
+        pagination: {
+            page: number;
+            limit: number;
+            pages: number;
+            total: number;
+        };
     };
-    const body = JSON.stringify(key);
+}
 
-    let token;
-    const cacheIn = await cache.get('initium:token');
-    if (cacheIn) {
-        token = cacheIn;
-    } else if (config.initium.bearertoken) {
-        token = config.initium.bearertoken;
-        cache.set('initium:token', config.initium.bearertoken);
-    } else if (key.email === undefined) {
-        token = TOKEN;
-    } else {
-        const login = await got.post(`https://api.theinitium.com/api/v2/auth/login/?language=${language}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Connection: 'keep-alive',
-                Authorization: TOKEN,
-            },
-            body,
-        });
-
-        token = 'token ' + login.data.token;
-        cache.set('initium:token', token);
+async function ghostFetch(endpoint: string, params: Record<string, string> = {}): Promise<any> {
+    const url = new URL(`${GHOST_API_BASE}/${endpoint}/`);
+    url.searchParams.set('key', GHOST_CONTENT_KEY);
+    for (const [k, v] of Object.entries(params)) {
+        url.searchParams.set(k, v);
     }
+    return await ofetch(url.href);
+}
 
-    const headers = {
-        Accept: '*/*',
-        Connection: 'keep-alive',
-        Authorization: token,
-    };
-
-    let response;
+async function scrapeFullArticle(url: string, cookie: string): Promise<string | null> {
     try {
-        response = await got(listUrl, {
-            headers,
+        const response = await ofetch(url, {
+            headers: {
+                Cookie: cookie,
+            },
+            parseResponse: (txt) => txt,
         });
-    } catch (error) {
-        if (error instanceof FetchError && error.statusCode === 401) {
-            // 401 说明 token 过期了，将它删掉
-            await cache.set('initium:token', '');
+        const $ = load(response);
+        const article = $('article');
+        if (article.length === 0) {
+            return null;
         }
-        throw error;
+        // If paywall CTA present, cookie didn't work — fall back to Ghost preview
+        if (article.find('.gh-post-upgrade-cta').length > 0) {
+            return null;
+        }
+        return article.html();
+    } catch (error) {
+        logger.warn(`Failed to scrape Initium article: ${url}`, error);
+        return null;
     }
+}
 
-    const name = response.data.name || (response.data[model] && response.data[model].name) || '追踪';
-    // 从v1直升的channel和tags里面是digests，v2新增的author和follow出来都是results
-    const articles = response.data.results ?? response.data.digests;
-    // 如果model=author，那就是avatar；否则都是cover，要么就没封面
-    const image = response.data[model] && (response.data[model].cover || response.data[model].avatar);
-
-    const getFullText = (slug) =>
-        cache.tryGet(`theinitium:${slug}:${language}`, async () => {
-            let content = '';
-            const { data } = await got(`https://api.theinitium.com/api/v2/article/detail/?language=${language}&slug=${slug}`, {
-                headers,
-            });
-
-            if (data.lead.length) {
-                content += '<p>「' + data.lead + '」</p>';
-            }
-            if (data.byline.length) {
-                content += '<p>' + data.byline + '</p>';
-            }
-            if (data.content) {
-                content += data.content.replace('<figure class="advertisement"/><br/>', '').replaceAll(/(?:<br>){2}-{11}<br>.*$/g, '');
-            } else if (data.type === 'html') {
-                // 有时候编辑部会漏录入文章信息…………扶额。所以加这一个判断，如果确实是普通html文章，但又没有内容，说明是漏了，后面还要给guid手动加个标记，以便阅读器事后重抓。
-                content += '内容为空，请稍后再来';
-            } else if (data.type === 'web') {
-                // 有时候文章并非普通html文章，而是带有互动内容等，表现为type为web，并且content里没有内容。我们也尽力抓点东西下来。
-                // 或许可能还有其他未知情况，等碰到了再说吧。先这样留空也不碍事。
-                const nonhtmlcontent = await got(data.web.url);
-                const webcontent = load(nonhtmlcontent.body).html();
-                content += webcontent;
-            }
-            if (data.paywall_enabled) {
-                const google_bot_ua =
-                    'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.92 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
-                const accept_language = language + ';q=0.9';
-                const pay_part = await got(`https://theinitium.com/article/${slug}/`, {
-                    headers: {
-                        'user-agent': google_bot_ua,
-                        'accept-language': accept_language,
-                    },
-                });
-                const $ = load(pay_part.body);
-                const pay_content = $('div.paywall').html();
-                if (pay_content) {
-                    content += pay_content.replace('<meta itemprop="isAccessibleForFree" content="false">', '');
-                }
-            }
-            return content;
-        });
+async function postsToItems(posts: GhostPost[]) {
+    const memberCookie = config.initium?.memberCookie;
 
     const items = await Promise.all(
-        articles
-            .filter((a) => a.article)
-            .slice(0, token === TOKEN ? 25 : articles.length)
-            .map(async (item) => {
-                item.article.date = parseDate(item.article.date);
-                item.article.updated = parseDate(item.article.updated);
-                const description = await getFullText(item.article.slug);
-                return {
-                    title: item.article.headline,
-                    author: item.article.authors.length > 0 ? item.article.authors.map((x) => x.name).toString() : item.article.byline,
-                    category: item.article.channels.filter((x) => !x.homepage).map((x) => x.name),
-                    description,
-                    link: new URL(item.article.url, 'https://theinitium.com').href,
-                    pubDate: item.article.date,
-                    updated: item.article.updated,
-                    // 如果遇到编辑部漏录入情况，则给uuid做个手脚，以便阅读器到时重抓。
-                    guid: description.endsWith('内容为空，请稍后再来') ? item.article.uuid + '-I-am-empty' : item.article.uuid,
-                };
-            })
+        posts.map(async (post) => {
+            const authors = post.authors?.map((a) => stripLangSuffix(a.name)) ?? [];
+            const categories = post.tags?.filter((t) => t.visibility === 'public').map((t) => stripLangSuffix(t.name)) ?? [];
+
+            let description = post.html;
+
+            // For paid articles with truncated content, scrape full text if cookie available
+            if (!post.access && memberCookie) {
+                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire)) as string | null;
+                if (fullHtml) {
+                    description = fullHtml;
+                }
+            }
+
+            return {
+                title: post.title,
+                author: authors.join(', ') || post.primary_author?.name || '',
+                category: categories,
+                description,
+                link: post.url,
+                pubDate: parseDate(post.published_at),
+                updated: parseDate(post.updated_at),
+                guid: post.uuid,
+                banner: post.feature_image ?? undefined,
+            };
+        })
     );
 
+    return items;
+}
+
+export const processFeed = async (model: string, ctx: Context) => {
+    const type = ctx.req.param('type') ?? 'latest';
+    const language = ctx.req.param('language') ?? '';
+
+    let filter = '';
+    let listLink = '';
+    let feedName = '';
+
+    switch (model) {
+        case 'channel': {
+            const baseTag = CHANNEL_TAG_MAP[type] ?? type;
+            if (baseTag === '') {
+                // "latest" = no tag filter, but we can still filter by language via internal tag
+                if (language === 'zh-hans' || language === 'zh-hant') {
+                    filter = `tag:hash-${language}`;
+                }
+            } else {
+                const tagSlug = language ? applyLanguageToTagSlug(baseTag, language) : baseTag;
+                filter = `tag:${tagSlug}`;
+            }
+            listLink = type === 'latest' ? 'https://theinitium.com/latest/' : `https://theinitium.com/tag/${baseTag}/`;
+            feedName = type;
+            break;
+        }
+        case 'tags': {
+            const tagSlug = language ? applyLanguageToTagSlug(type, language) : type;
+            filter = `tag:${tagSlug}`;
+            listLink = `https://theinitium.com/tag/${type}/`;
+            feedName = type;
+            break;
+        }
+        case 'author': {
+            // Author slugs also have -zh-hans suffixed versions for simplified Chinese
+            const authorSlug = language === 'zh-hans' ? `${type}-zh-hans` : type;
+            filter = `author:${authorSlug}`;
+            listLink = `https://theinitium.com/author/${type}/`;
+            feedName = type;
+            break;
+        }
+        default:
+            throw new InvalidParameterError(`Unsupported model: ${model}`);
+    }
+
+    const cacheKey = `theinitium:ghost:${model}:${type}:${language}`;
+    // Use routeExpire (5 min default) and refresh=false so cache actually expires
+    const data = (await cache.tryGet(
+        cacheKey,
+        async () => {
+            const params: Record<string, string> = {
+                include: 'tags,authors',
+                limit: '20',
+            };
+            if (filter) {
+                params.filter = filter;
+            }
+            return await ghostFetch('posts', params);
+        },
+        config.cache.routeExpire,
+        false
+    )) as GhostResponse;
+
+    const items = await postsToItems(data.posts);
+
+    // Try to get a nice display name from the first post's relevant tag/author
+    let displayName = feedName;
+    if (data.posts.length > 0) {
+        switch (model) {
+            case 'channel': {
+                const baseTag = CHANNEL_TAG_MAP[type] ?? type;
+                if (baseTag) {
+                    const langTag = language === 'zh-hans' ? `${baseTag}-zh-hans` : baseTag;
+                    const matchedTag = data.posts[0].tags?.find((t) => t.slug === langTag || t.slug === baseTag);
+                    if (matchedTag) {
+                        displayName = stripLangSuffix(matchedTag.name);
+                    }
+                } else {
+                    displayName = '最新';
+                }
+
+                break;
+            }
+            case 'tags': {
+                const langTag = language === 'zh-hans' ? `${type}-zh-hans` : type;
+                const matchedTag = data.posts[0].tags?.find((t) => t.slug === langTag || t.slug === type);
+                if (matchedTag) {
+                    displayName = stripLangSuffix(matchedTag.name);
+                }
+
+                break;
+            }
+            case 'author': {
+                const authorSlug = language === 'zh-hans' ? `${type}-zh-hans` : type;
+                const matchedAuthor = data.posts[0].authors?.find((a) => a.slug === authorSlug || a.slug === type);
+                if (matchedAuthor) {
+                    displayName = stripLangSuffix(matchedAuthor.name);
+                }
+
+                break;
+            }
+            default:
+            // Do nothing
+        }
+    }
+
     return {
-        title: `端传媒 - ${name}`,
+        title: `端傳媒 - ${displayName}`,
         link: listLink,
-        icon: 'https://theinitium.com/misc/about/logo192.png',
+        icon: 'https://theinitium.com/favicon.ico',
+        language: language === 'zh-hans' ? 'zh-CN' : 'zh-TW',
         item: items,
-        image,
     };
 };

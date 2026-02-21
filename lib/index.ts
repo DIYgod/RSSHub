@@ -34,7 +34,7 @@ if (config.enableCluster) {
         logger.info(`Worker ${process.pid} is running`);
         serve({
             fetch: app.fetch,
-            hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
+            hostname: config.listenInaddrAny ? '0.0.0.0' : '127.0.0.1',
             port,
             serverOptions: {
                 maxHeaderSize: 1024 * 32,
@@ -52,7 +52,7 @@ if (config.enableCluster) {
 
     server = serve({
         fetch: app.fetch,
-        hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
+        hostname: config.listenInaddrAny ? '0.0.0.0' : '127.0.0.1',
         port,
         serverOptions: {
             maxHeaderSize: 1024 * 32,
