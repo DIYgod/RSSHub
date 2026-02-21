@@ -233,37 +233,39 @@ export async function enhanceItemsWithSummaries(browser: Browser, items: Article
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems: DataItem[] = [];
-
     // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
+    let chain: Promise<DataItem[]> = Promise.resolve([]);
     for (const item of itemsWithUrl) {
-        // eslint-disable-next-line no-await-in-loop
-        const enhanced = await cache.tryGet(item.dailyPushUrl!, async () => {
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
-            });
+        chain = chain.then((acc) =>
+            cache
+                .tryGet(item.dailyPushUrl!, async () => {
+                    const page = await browser.newPage();
+                    await page.setRequestInterception(true);
+                    page.on('request', (request) => {
+                        request.resourceType() === 'document' ? request.continue() : request.abort();
+                    });
 
-            try {
-                logger.http(`Requesting ${item.dailyPushUrl}`);
-                await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
-                const html = await page.content();
-                const $ = load(html);
-                const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
-                if (summary.length > 0 && summary.text().trim()) {
-                    item.description = summary.text().trim();
-                }
-            } catch {
-                // If fetching article page fails, keep the original description
-            } finally {
-                await page.close();
-            }
+                    try {
+                        logger.http(`Requesting ${item.dailyPushUrl}`);
+                        await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
+                        const html = await page.content();
+                        const $ = load(html);
+                        const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                        if (summary.length > 0 && summary.text().trim()) {
+                            item.description = summary.text().trim();
+                        }
+                    } catch {
+                        // If fetching article page fails, keep the original description
+                    } finally {
+                        await page.close();
+                    }
 
-            return item;
-        });
-        enhancedItems.push(enhanced);
+                    return item;
+                })
+                .then((enhanced) => [...acc, enhanced])
+        );
     }
+    const enhancedItems = await chain;
 
     return [...enhancedItems, ...itemsWithoutUrl];
 }
