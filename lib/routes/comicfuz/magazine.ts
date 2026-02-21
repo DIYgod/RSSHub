@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -36,7 +37,7 @@ export const route: Route = {
             headers: {
                 'Referer': 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                'User-Agent': config.trueUA,
             },
         });
 
@@ -81,7 +82,7 @@ export const route: Route = {
                 <p>截止日期: ${item.endDate || '无'}</p>
                 ${item.longDescription ? `<p>${item.longDescription}</p>` : ''}
                 `,
-                pubDate: rawDate ? parseDate(rawDate, 'YYYY/MM/DD') : new Date(),
+                pubDate: rawDate ? parseDate(rawDate, 'YYYY/MM/DD') : undefined,
                 guid: `comicfuz-magazine-id-${item.magazineIssueId}`,
                 category: [statusText],
             };
