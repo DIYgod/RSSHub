@@ -28,11 +28,11 @@ export const route: Route = {
 
     handler: async (ctx) => {
         const { id } = ctx.req.param();
-        const baseurl = 'https://comic-fuz.com';
-        const openurl = `${baseurl}/manga/${id}`;
-        const imgurl = `https://img.comic-fuz.com`;
+        const baseUrl = 'https://comic-fuz.com';
+        const openUrl = `${baseUrl}/manga/${id}`;
+        const imgUrl = `https://img.comic-fuz.com`;
 
-        const response = await ofetch(openurl, {
+        const response = await ofetch(openUrl, {
             headers: {
                 'Referer': 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
@@ -65,7 +65,7 @@ export const route: Route = {
             const pointInfo = chapter.pointConsumption;
             const amount = pointInfo?.amount || 0;
 
-            let statusText = 'undefined';
+            let statusText = '';
             if (pointInfo && Object.keys(pointInfo).length === 0) {
                 statusText = '无料';
             } else if (amount > 0) {
@@ -74,20 +74,23 @@ export const route: Route = {
 
             let thumb = chapter.thumbnailUrl;
             if (thumb && thumb.startsWith('/')) {
-                thumb = `${imgurl}${thumb}`;
+                thumb = `${imgUrl}${thumb}`;
+            }
+            if (thumb) {
+                thumb = thumb.replace(/&amp;/g, '&');
             }
 
             const fullTitle = `${chapter.chapterMainName}${chapter.chapterSubName ? ` - ${chapter.chapterSubName}` : ''}`;
 
             return {
                 title: fullTitle,
-                link: `${baseurl}/manga/viewer/${chapter.chapterId}`,
+                link: `${baseUrl}/manga/viewer/${chapter.chapterId}`,
                 description: `
                     ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}
                     ${amount > 0 ? `<p>价格: ${amount} 金币/铜币</p>` : ''}
                 `,
                 guid: `comicfuz-comic-id-${chapter.chapterId}`,
-                category: statusText ? [statusText] : [],
+                category: statusText,
                 author: mangaAuthor,
                 pubDate: chapter.updatedDate ? parseDate(chapter.updatedDate, 'YYYY/MM/DD') : undefined,
                 upvotes: chapter.numberOfLikes || 0,
@@ -97,7 +100,7 @@ export const route: Route = {
 
         return {
             title: `COMIC FUZ - ${mangaTitle}`,
-            link: openurl,
+            link: openUrl,
             description: mangaDescription,
             item: items,
             language: 'ja',

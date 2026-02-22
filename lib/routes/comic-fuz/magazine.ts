@@ -28,11 +28,11 @@ export const route: Route = {
 
     handler: async (ctx) => {
         const { id } = ctx.req.param();
-        const baseurl = 'https://comic-fuz.com';
-        const openurl = `${baseurl}/magazine/${id}`;
-        const imgurl = `https://img.comic-fuz.com`;
+        const baseUrl = 'https://comic-fuz.com';
+        const openUrl = `${baseUrl}/magazine/${id}`;
+        const imgUrl = `https://img.comic-fuz.com`;
 
-        const response = await ofetch(openurl, {
+        const response = await ofetch(openUrl, {
             headers: {
                 'Referer': 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
@@ -65,14 +65,17 @@ export const route: Route = {
 
             let thumb = item.thumbnailUrl;
             if (thumb && thumb.startsWith('/')) {
-                thumb = `${imgurl}${thumb}`;
+                thumb = `${imgUrl}${thumb}`;
+            }
+            if (thumb) {
+                thumb = thumb.replace(/&amp;/g, '&');
             }
 
             const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '').trim() : '';
 
             return {
                 title: `${magazineTitle} - ${item.magazineIssueName}`,
-                link: `${baseurl}/magazine/viewer/${item.magazineIssueId}`,
+                link: `${baseUrl}/magazine/viewer/${item.magazineIssueId}`,
                 description: `
                 ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}
                 <p>价格: ${amount} 金币/银币</p>
@@ -88,7 +91,7 @@ export const route: Route = {
 
         return {
             title: `COMIC FUZ - ${magazineTitle}`,
-            link: openurl,
+            link: openUrl,
             description: magazineDescription,
             item: items,
             language: 'ja',
