@@ -19,10 +19,14 @@ function ensureAppInitialized(app: Hono | null): asserts app is Hono {
 }
 
 export async function init(conf?: ConfigEnv) {
-    setConfig({
-        IS_PACKAGE: true,
-        ...conf,
-    });
+    setConfig(
+        Object.assign(
+            {
+                IS_PACKAGE: true,
+            },
+            conf
+        )
+    );
     app = (await import('@/app')).default;
 }
 
