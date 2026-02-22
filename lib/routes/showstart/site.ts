@@ -39,5 +39,6 @@ async function handler(ctx: Context): Promise<Data> {
         description: siteInfo.address,
         link: HOST,
         item: activityList,
+        allowEmpty: true,
     };
 }
