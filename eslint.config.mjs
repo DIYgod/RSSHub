@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import { defineConfig } from 'eslint/config';
 import github from 'eslint-plugin-github';
 import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
@@ -14,7 +15,7 @@ import globals from 'globals';
 
 const SOURCE_FILES_GLOB = '**/*.?([cm])[jt]s?(x)';
 
-export default [
+export default defineConfig([
     // {
     //     plugins: {
     //         '@rsshub/nsfw-flag': nsfwFlagPlugin,
@@ -26,20 +27,17 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', 'dist', 'dist-lib', 'dist-worker'],
     },
-    js.configs.recommended,
-    ...typescriptEslint.configs['flat/recommended'],
-    ...typescriptEslint.configs['flat/stylistic'],
-    n.configs['flat/recommended-script'],
-    unicorn.configs.recommended,
     {
         files: [SOURCE_FILES_GLOB],
         plugins: {
             '@stylistic': stylistic,
             '@typescript-eslint': typescriptEslint,
+            js,
             github,
             n,
             unicorn,
         },
+        extends: [js.configs.recommended, typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script'], unicorn.configs.recommended],
 
         languageOptions: {
             globals: {
@@ -388,4 +386,4 @@ export default [
             ],
         },
     },
-];
+]);
