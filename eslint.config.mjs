@@ -32,8 +32,8 @@ export default defineConfig([
         plugins: {
             '@stylistic': stylistic,
             '@typescript-eslint': typescriptEslint,
-            js,
             github,
+            js,
             n,
             unicorn,
         },
