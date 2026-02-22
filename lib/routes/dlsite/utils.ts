@@ -133,12 +133,7 @@ const ProcessItems = async (ctx) => {
         images = images.length === 0 ? [detail.work_image] : images;
 
         return {
-            title: `${
-                discountRate
-                    ? `${discountRate}% OFF
-                        ${` ${discountEndDate ? `${dayjs(discountEndDate).format('YYYY-MM-DD HH:mm')} まで` : ''}`}`
-                    : ' '
-            }${title}`,
+            title: `${discountRate ? `${discountRate}% OFF ${discountEndDate ? `${dayjs(discountEndDate).format('YYYY-MM-DD HH:mm')} まで` : ''}` : ' '}${title}`,
             link,
             pubDate,
             author: authors.map((a) => a.name).join(' / '),
