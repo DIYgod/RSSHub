@@ -46,6 +46,7 @@ async function handler() {
             // Full HTML for the item content
             article.find('h2').first().remove(); // remove title
             article.find('b').first().remove(); // remove date
+            article.find('.sr-only').remove(); // remove sr-only elements
 
             return {
                 title,
