@@ -12,6 +12,8 @@ import globals from 'globals';
 
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
+const SOURCE_FILES_GLOB = '**/*.?([cm])[jt]s?(x)';
+
 export default [
     // {
     //     plugins: {
@@ -22,18 +24,30 @@ export default [
     //     },
     // },
     {
-        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', '**/babel.config.js', 'scripts/docker/minify-docker.js', 'dist', 'dist-lib'],
+        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', 'dist', 'dist-lib', 'dist-worker'],
     },
-    js.configs.recommended,
-    ...typescriptEslint.configs['flat/recommended'],
-    ...typescriptEslint.configs['flat/stylistic'],
-    n.configs['flat/recommended-script'],
-    unicorn.configs.recommended,
     {
+        ...js.configs.recommended,
+        ...n.configs['flat/recommended-script'],
+        ...unicorn.configs.recommended,
+        files: [SOURCE_FILES_GLOB],
+    },
+    ...typescriptEslint.configs['flat/recommended'].map((config) => ({
+        ...config,
+        files: [SOURCE_FILES_GLOB],
+    })),
+    ...typescriptEslint.configs['flat/stylistic'].map((config) => ({
+        ...config,
+        files: [SOURCE_FILES_GLOB],
+    })),
+    {
+        files: [SOURCE_FILES_GLOB],
         plugins: {
-            github,
             '@stylistic': stylistic,
             '@typescript-eslint': typescriptEslint,
+            github,
+            n,
+            unicorn,
         },
 
         languageOptions: {
@@ -330,7 +344,7 @@ export default [
         },
     },
     {
-        files: ['**/*.?([cm])[jt]s?(x)'],
+        files: [SOURCE_FILES_GLOB],
         plugins: {
             'simple-import-sort': simpleImportSort,
             'import-x': importX,
