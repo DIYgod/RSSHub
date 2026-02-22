@@ -26,20 +26,11 @@ export default [
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', 'dist', 'dist-lib', 'dist-worker'],
     },
-    {
-        ...js.configs.recommended,
-        ...n.configs['flat/recommended-script'],
-        ...unicorn.configs.recommended,
-        files: [SOURCE_FILES_GLOB],
-    },
-    ...typescriptEslint.configs['flat/recommended'].map((config) => ({
-        ...config,
-        files: [SOURCE_FILES_GLOB],
-    })),
-    ...typescriptEslint.configs['flat/stylistic'].map((config) => ({
-        ...config,
-        files: [SOURCE_FILES_GLOB],
-    })),
+    js.configs.recommended,
+    ...typescriptEslint.configs['flat/recommended'],
+    ...typescriptEslint.configs['flat/stylistic'],
+    n.configs['flat/recommended-script'],
+    unicorn.configs.recommended,
     {
         files: [SOURCE_FILES_GLOB],
         plugins: {
