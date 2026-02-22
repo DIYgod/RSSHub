@@ -41,5 +41,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `${TITLE} - ${tags}`,
         link: HOST,
         item: items,
+        allowEmpty: true,
     };
 }
