@@ -246,7 +246,6 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
-            "js-beautify@1.15.4>glob": "^10.5.0",
             "object.assign": "npm:@nolyfill/object.assign@^1",
             "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
             "object.groupby": "npm:@nolyfill/object.groupby@^1",

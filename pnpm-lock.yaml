@@ -5,6 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  array-includes: npm:@nolyfill/array-includes@^1
+  array.prototype.findlastindex: npm:@nolyfill/array.prototype.findlastindex@^1
+  array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1
+  array.prototype.flatmap: npm:@nolyfill/array.prototype.flatmap@^1
   difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
   es-set-tostringtag: npm:@nolyfill/es-set-tostringtag@^1
   google-play-scraper>got: ^14.6.4
@@ -12,21 +16,16 @@ overrides:
   google-play-scraper>tough-cookie: ^6.0.0
   hasown: npm:@nolyfill/hasown@^1
   is-core-module: npm:@nolyfill/is-core-module@^1
-  js-beautify@1.15.4>glob: ^10.5.0
-  rss-parser@3.13.0>entities: ^7.0.0
-  rss-parser@3.13.0>xml2js: ^0.6.2
-  safe-buffer: npm:@nolyfill/safe-buffer@^1
-  safer-buffer: npm:@nolyfill/safer-buffer@^1
-  side-channel: npm:@nolyfill/side-channel@^1
-  array-includes: npm:@nolyfill/array-includes@^1
-  array.prototype.findlastindex: npm:@nolyfill/array.prototype.findlastindex@^1
-  array.prototype.flat: npm:@nolyfill/array.prototype.flat@^1
-  array.prototype.flatmap: npm:@nolyfill/array.prototype.flatmap@^1
   object.assign: npm:@nolyfill/object.assign@^1
   object.fromentries: npm:@nolyfill/object.fromentries@^1
   object.groupby: npm:@nolyfill/object.groupby@^1
   object.values: npm:@nolyfill/object.values@^1
+  rss-parser@3.13.0>entities: ^7.0.0
+  rss-parser@3.13.0>xml2js: ^0.6.2
+  safe-buffer: npm:@nolyfill/safe-buffer@^1
   safe-regex-test: npm:@nolyfill/safe-regex-test@^1
+  safer-buffer: npm:@nolyfill/safer-buffer@^1
+  side-channel: npm:@nolyfill/side-channel@^1
   string.prototype.includes: npm:@nolyfill/string.prototype.includes@^1
   string.prototype.trimend: npm:@nolyfill/string.prototype.trimend@^1
 
