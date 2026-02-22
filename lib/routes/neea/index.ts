@@ -49,7 +49,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(time), +8),
             };
             const other = await loadContent(String(itemUrl));
-            return Object.assign({}, single, other);
+            return { ...single, ...other };
         })
     );
     return {
