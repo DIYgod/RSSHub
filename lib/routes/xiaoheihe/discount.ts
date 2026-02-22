@@ -104,23 +104,21 @@ async function handler(ctx) {
                     }
                 }
             }
-        } else {
-            if (item.price) {
-                description += `平台: ${platformInfo.desc}<br/>`;
-                if (item.heybox_price) {
-                    description += `当前价格: ${item.price.current} ${getHeyboxPriceDesc(item.heybox_price)} ${getLowestDesc(item.price, item.heybox_price.super_lowest)}<br/>`;
-                } else if (item.price.current) {
-                    description += `当前价格: ${item.price.current} ${getLowestDesc(item.price)}<br/>`;
-                }
-                if (item.price.initial) {
-                    description += `原价: ${item.price.initial}<br/>`;
-                }
-                if (item.price.discount && item.price.discount > 0) {
-                    description += `折扣力度: ${getDiscountDesc(item.price.discount)}<br/>`;
-                }
-                if (item.price.deadline_date) {
-                    description += `截止时间: ${item.price.deadline_date}<br/>`;
-                }
+        } else if (item.price) {
+            description += `平台: ${platformInfo.desc}<br/>`;
+            if (item.heybox_price) {
+                description += `当前价格: ${item.price.current} ${getHeyboxPriceDesc(item.heybox_price)} ${getLowestDesc(item.price, item.heybox_price.super_lowest)}<br/>`;
+            } else if (item.price.current) {
+                description += `当前价格: ${item.price.current} ${getLowestDesc(item.price)}<br/>`;
+            }
+            if (item.price.initial) {
+                description += `原价: ${item.price.initial}<br/>`;
+            }
+            if (item.price.discount && item.price.discount > 0) {
+                description += `折扣力度: ${getDiscountDesc(item.price.discount)}<br/>`;
+            }
+            if (item.price.deadline_date) {
+                description += `截止时间: ${item.price.deadline_date}<br/>`;
             }
         }
         if (item.score) {
