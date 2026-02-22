@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,7 +36,6 @@ export const route: Route = {
             headers: {
                 'Referer': 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
-                'User-Agent': config.trueUA,
             },
         });
 
@@ -55,9 +53,9 @@ export const route: Route = {
             throw new Error('无法解析页面 Props 数据');
         }
 
-        const magazineTitle = pageProps.magazineName || 'null';
+        const magazineTitle = pageProps.magazineName || '';
 
-        const magazineDescription = pageProps.pickupMagazineIssue?.longDescription || 'null';
+        const magazineDescription = pageProps.pickupMagazineIssue?.longDescription || '';
 
         const issues = pageProps.magazineIssues || [];
 
@@ -66,8 +64,8 @@ export const route: Route = {
             const statusText = amount > 0 ? '付费' : '无料';
 
             let thumb = item.thumbnailUrl;
-            if (thumb && !thumb.startsWith('http')) {
-                thumb = `${imgurl}${thumb.startsWith('/') ? '' : '/'}${thumb}`;
+            if (thumb && thumb.startsWith('/')) {
+                thumb = `${imgurl}${thumb}`;
             }
 
             const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '').trim() : '';
@@ -86,12 +84,6 @@ export const route: Route = {
                 guid: `comicfuz-magazine-id-${item.magazineIssueId}`,
                 category: [statusText],
             };
-        });
-
-        items.sort((a, b) => {
-            const timeA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
-            const timeB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
-            return timeB - timeA;
         });
 
         return {

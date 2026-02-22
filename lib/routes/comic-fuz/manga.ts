@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -31,12 +30,12 @@ export const route: Route = {
         const { id } = ctx.req.param();
         const baseurl = 'https://comic-fuz.com';
         const openurl = `${baseurl}/manga/${id}`;
+        const imgurl = `https://img.comic-fuz.com`;
 
         const response = await ofetch(openurl, {
             headers: {
                 'Referer': 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
-                'User-Agent': config.trueUA,
             },
         });
 
@@ -55,23 +54,18 @@ export const route: Route = {
         }
 
         const mangaTitle = $('title').text().trim();
-        const mangaAuthor = pageProps.authorships?.map((item: any) => item.author?.authorName).join(', ') || 'null';
-        const mangaDescription = pageProps.manga?.longDescription || 'null';
+        const mangaAuthor = pageProps.authorships?.map((item: any) => item.author?.authorName).join(', ') || '';
+        const mangaDescription = pageProps.manga?.longDescription || '';
 
         const chapterGroups = pageProps.chapters || [];
 
-        const allChapters: any[] = [];
-        for (const group of chapterGroups) {
-            if (group.chapters && Array.isArray(group.chapters)) {
-                allChapters.push(...group.chapters);
-            }
-        }
+        const allChapters = chapterGroups.flatMap((group: any) => group.chapters || []);
 
         const items = allChapters.map((chapter: any) => {
             const pointInfo = chapter.pointConsumption;
             const amount = pointInfo?.amount || 0;
 
-            let statusText = 'null';
+            let statusText = 'undefined';
             if (pointInfo && Object.keys(pointInfo).length === 0) {
                 statusText = '无料';
             } else if (amount > 0) {
@@ -79,8 +73,8 @@ export const route: Route = {
             }
 
             let thumb = chapter.thumbnailUrl;
-            if (thumb && !thumb.startsWith('http')) {
-                thumb = `${baseurl}${thumb.startsWith('/') ? '' : '/'}${thumb}`;
+            if (thumb && thumb.startsWith('/')) {
+                thumb = `${imgurl}${thumb}`;
             }
 
             const fullTitle = `${chapter.chapterMainName}${chapter.chapterSubName ? ` - ${chapter.chapterSubName}` : ''}`;
@@ -90,20 +84,15 @@ export const route: Route = {
                 link: `${baseurl}/manga/viewer/${chapter.chapterId}`,
                 description: `
                     ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}
-                    <p>💬 ${chapter.numberOfComments || 0} | ❤️ ${chapter.numberOfLikes || 0}</p>
                     ${amount > 0 ? `<p>价格: ${amount} 金币/铜币</p>` : ''}
                 `,
                 guid: `comicfuz-comic-id-${chapter.chapterId}`,
-                category: [statusText],
+                category: statusText ? [statusText] : [],
                 author: mangaAuthor,
                 pubDate: chapter.updatedDate ? parseDate(chapter.updatedDate, 'YYYY/MM/DD') : undefined,
+                upvotes: chapter.numberOfLikes || 0,
+                comments: chapter.numberOfComments || 0,
             };
-        });
-
-        items.sort((a, b) => {
-            const timeA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
-            const timeB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
-            return timeB - timeA;
         });
 
         return {
