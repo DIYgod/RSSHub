@@ -67,9 +67,6 @@ export const route: Route = {
             if (thumb && thumb.startsWith('/')) {
                 thumb = `${imgUrl}${thumb}`;
             }
-            if (thumb) {
-                thumb = thumb.replaceAll('&amp;', '&');
-            } // 加这一行
 
             const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '').trim() : '';
 

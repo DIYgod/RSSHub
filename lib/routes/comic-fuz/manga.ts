@@ -76,9 +76,6 @@ export const route: Route = {
             if (thumb && thumb.startsWith('/')) {
                 thumb = `${imgUrl}${thumb}`;
             }
-            if (thumb) {
-                thumb = thumb.replaceAll('&amp;', '&');
-            } // 加这一行
 
             const fullTitle = `${chapter.chapterMainName}${chapter.chapterSubName ? ` - ${chapter.chapterSubName}` : ''}`;
 
