@@ -68,7 +68,7 @@ export const route: Route = {
                 thumb = `${imgUrl}${thumb}`;
             }
             if (thumb) {
-                thumb = thumb.replace(/&amp;/g, '&');
+                thumb = thumb.replaceAll('&amp;', '&');
             }
 
             const rawDate = item.updatedDate ? item.updatedDate.replace(/\s*発売/, '').trim() : '';

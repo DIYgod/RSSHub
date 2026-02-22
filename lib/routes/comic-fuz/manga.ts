@@ -77,7 +77,7 @@ export const route: Route = {
                 thumb = `${imgUrl}${thumb}`;
             }
             if (thumb) {
-                thumb = thumb.replace(/&amp;/g, '&');
+                thumb = thumb.replaceAll('&amp;', '&');
             }
 
             const fullTitle = `${chapter.chapterMainName}${chapter.chapterSubName ? ` - ${chapter.chapterSubName}` : ''}`;
