@@ -29,6 +29,9 @@ type ComingSoonResponse = {
     start?: number;
     total?: number;
     subjects?: ComingSoonSubject[];
+    msg?: string;
+    message?: string;
+    reason?: string;
 };
 
 const signRequest = async (url: string, ts: string, method = 'GET'): Promise<string> => {
@@ -95,6 +98,17 @@ const renderDescription = (subject: { intro?: string; wish_count?: number | stri
     return lines.join('\n\n');
 };
 
+const buildFetchError = (error: unknown): Error => {
+    const status = (error as { response?: { status?: number } })?.response?.status;
+    if (status === 429) {
+        return new Error('Douban 请求过于频繁（429）。请稍后重试，或降低请求频率。');
+    }
+    if (status === 403) {
+        return new Error('Douban 拒绝访问（403），可能触发反爬策略。请稍后重试。');
+    }
+    return new Error('Douban 数据请求失败，可能触发反爬或限频，请稍后重试。');
+};
+
 export const route: Route = {
     path: '/tv/coming/:routeParams?',
     categories: ['social-media'],
@@ -147,22 +161,35 @@ async function handler(ctx) {
     const data = (await cache.tryGet(
         cacheKey,
         async () => {
-            const response = await got({
-                method: 'get',
-                url: apiUrl,
-                searchParams,
-                headers: {
-                    Accept: 'application/json',
-                    'User-Agent': apiClientUa,
-                },
-            });
-            return response.data as ComingSoonResponse;
+            try {
+                const response = await got({
+                    method: 'get',
+                    url: apiUrl,
+                    searchParams,
+                    headers: {
+                        Accept: 'application/json',
+                        'User-Agent': apiClientUa,
+                    },
+                });
+                return response.data as ComingSoonResponse;
+            } catch (error) {
+                throw buildFetchError(error);
+            }
         },
         4 * 60 * 60
     )) as ComingSoonResponse;
+
+    if (!Array.isArray(data.subjects)) {
+        const details = data.msg || data.message || data.reason;
+        throw new Error(`Douban 返回数据结构异常，可能触发反爬或限频。${details ? `上游信息：${details}` : ''}`);
+    }
+    if (data.subjects.length === 0) {
+        throw new Error('Douban 返回空数据，可能触发反爬或限频。请稍后重试。');
+    }
+
     const subscriptionCount = data.count ?? 0;
     const total = data.total ?? 0;
-    const sortedSubjects = (data.subjects ?? []).toSorted((a, b) => {
+    const sortedSubjects = data.subjects.toSorted((a, b) => {
         if (sortby === 'time') {
             const timeDiff = getSortTimestamp(a.pubdate) - getSortTimestamp(b.pubdate);
             if (timeDiff !== 0) {
