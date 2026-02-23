@@ -620,6 +620,8 @@ export type RoutePath =
   | `/collabo-cafe/`
   | `/collabo-cafe/category/:category`
   | `/collabo-cafe/tag/:tag`
+  | `/comic-fuz/magazine/:id`
+  | `/comic-fuz/manga/:id`
   | `/comicat/search/:keyword`
   | `/comicskingdom/:name`
   | `/commonhealth/`
