@@ -30,12 +30,7 @@
         "build:docs": "npm run build:routes && tsx scripts/workflow/build-docs.ts",
         "build:lib": "npm run build:routes && tsdown --config ./tsdown-lib.config.ts",
         "build:routes": "cross-env NODE_ENV=dev tsx scripts/workflow/build-routes.ts",
-        "vercel-build": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts",
         "build:routes:worker": "cross-env NODE_ENV=dev WORKER_BUILD=true tsx scripts/workflow/build-routes.ts",
-        "worker-build": "npm run build:routes:worker && tsdown --config ./tsdown-worker.config.ts",
-        "worker-dev": "npm run worker-build && wrangler dev",
-        "worker-deploy": "npm run worker-build && wrangler deploy",
-        "worker-test": "npm run worker-build && vitest run lib/worker.worker.test.ts",
         "container-build": "tsdown --config ./tsdown-container.config.ts",
         "container-deploy": "npm run container-build && wrangler deploy --config wrangler-container.toml --containers-rollout=immediate",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
@@ -49,10 +44,15 @@
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
         "start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' node dist/index.mjs",
         "test": "npm run format:check && npm run vitest:coverage",
+        "vercel-build": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts",
         "vitest": "cross-env NODE_ENV=test vitest",
         "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
         "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
-        "vitest:watch": "cross-env NODE_ENV=test vitest --watch"
+        "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
+        "worker-build": "npm run build:routes:worker && tsdown --config ./tsdown-worker.config.ts",
+        "worker-deploy": "npm run worker-build && wrangler deploy",
+        "worker-dev": "npm run worker-build && wrangler dev",
+        "worker-test": "npm run worker-build && vitest run lib/worker.worker.test.ts"
     },
     "dependencies": {
         "@bbob/html": "4.3.1",
@@ -174,6 +174,7 @@
         "domhandler": "5.0.3",
         "eslint": "10.0.0",
         "eslint-nibble": "9.1.1",
+        "eslint-plugin-github": "6.0.0",
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-n": "17.24.0",
         "eslint-plugin-simple-import-sort": "12.1.1",
@@ -212,7 +213,7 @@
     "engines": {
         "node": "^22.20.0 || ^24"
     },
-    "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
+    "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",
@@ -234,6 +235,10 @@
             "wrangler"
         ],
         "overrides": {
+            "array-includes": "npm:@nolyfill/array-includes@^1",
+            "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
+            "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
+            "array.prototype.flatmap": "npm:@nolyfill/array.prototype.flatmap@^1",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
             "google-play-scraper>got": "^14.6.4",
@@ -241,12 +246,18 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
-            "js-beautify@1.15.4>glob": "^10.5.0",
+            "object.assign": "npm:@nolyfill/object.assign@^1",
+            "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
+            "object.groupby": "npm:@nolyfill/object.groupby@^1",
+            "object.values": "npm:@nolyfill/object.values@^1",
             "rss-parser@3.13.0>entities": "^7.0.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
+            "safe-regex-test": "npm:@nolyfill/safe-regex-test@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1"
+            "side-channel": "npm:@nolyfill/side-channel@^1",
+            "string.prototype.includes": "npm:@nolyfill/string.prototype.includes@^1",
+            "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
         },
         "patchedDependencies": {
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"

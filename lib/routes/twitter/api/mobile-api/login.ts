@@ -49,7 +49,7 @@ const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Reco
         headers,
         json: {
             flow_token: flowToken,
-            subtask_inputs: [Object.assign({ subtask_id: subtaskId }, subtaskInput)],
+            subtask_inputs: [{ subtask_id: subtaskId, ...subtaskInput }],
         },
     });
 
