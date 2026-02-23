@@ -250,6 +250,7 @@
             "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
             "object.groupby": "npm:@nolyfill/object.groupby@^1",
             "object.values": "npm:@nolyfill/object.values@^1",
+            "request>form-data": "^2.5.5",
             "rss-parser@3.13.0>entities": "^7.0.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
