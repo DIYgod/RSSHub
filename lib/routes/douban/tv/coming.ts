@@ -1,3 +1,6 @@
+import { webcrypto } from 'node:crypto';
+
+import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -39,8 +42,8 @@ const signRequest = async (url: string, ts: string, method = 'GET'): Promise<str
     const rawSign = `${method.toUpperCase()}&${encodeURIComponent(urlPath)}&${ts}`;
     const keyData = new TextEncoder().encode(apiSecret);
     const messageData = new TextEncoder().encode(rawSign);
-    const key = await globalThis.crypto.subtle.importKey('raw', keyData, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
-    const signature = await globalThis.crypto.subtle.sign('HMAC', key, messageData);
+    const key = await webcrypto.subtle.importKey('raw', keyData, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
+    const signature = await webcrypto.subtle.sign('HMAC', key, messageData);
     return Buffer.from(signature).toString('base64');
 };
 
@@ -87,15 +90,13 @@ const getWishCount = (wishCount?: number | string): number => {
 };
 
 const renderDescription = (subject: { intro?: string; wish_count?: number | string }): string => {
-    const lines = [];
     const wishCount = getWishCount(subject.wish_count);
-    if (wishCount > 0) {
-        lines.push(`想看人数：${wishCount}，`);
+    const wishCountText = wishCount > 0 ? `想看人数：${wishCount}` : '';
+    const introText = subject.intro ?? '';
+    if (wishCountText && introText) {
+        return `${wishCountText}，${introText}`;
     }
-    if (subject.intro) {
-        lines.push(subject.intro);
-    }
-    return lines.join('\n\n');
+    return wishCountText || introText;
 };
 
 const buildFetchError = (error: unknown): Error => {
@@ -110,10 +111,13 @@ const buildFetchError = (error: unknown): Error => {
 };
 
 export const route: Route = {
-    path: '/tv/coming/:routeParams?',
+    path: '/tv/coming/:sortBy?/:count?',
     categories: ['social-media'],
     example: '/douban/tv/coming',
-    parameters: { routeParams: '额外参数；支持 sortby（hot/time）、count（条目数量）' },
+    parameters: {
+        sortBy: '排序方式，可选，支持 `hot` 或 `time`，默认 `hot`',
+        count: '请求上游返回数量，可选，正整数，默认 `10`',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -125,24 +129,23 @@ export const route: Route = {
     name: '即将播出的剧集',
     maintainers: ['honue'],
     handler,
-    description: `| 额外参数 | 含义             | 接受的值 | 默认值 |
+    description: `| 路径参数 | 含义             | 接受的值 | 默认值 |
 | -------- | ---------------- | -------- | ------ |
-| sortby   | 排序方式         | hot/time | hot    |
+| sortBy   | 排序方式         | hot/time | hot    |
 | count    | 请求上游返回数量 | 正整数   | 10     |
 
-  用例：\`/douban/tv/coming/sortby=hot&count=10\`
+  用例：\`/douban/tv/coming/hot/10\`
 
 ::: tip
-  服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortby\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
+  服务端请求固定使用 \`sortby=hot\` 拉取数据，再按 \`sortBy\` 参数在本地重排；条目数量可通过 \`count\` 调整，仍可叠加 RSSHub 通用参数 \`limit\`。
 :::`,
 };
 
 async function handler(ctx) {
-    const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
-    const sortbyParam = (routeParams.sortby as string) || ctx.req.query('sortby');
-    const countParam = (routeParams.count as string) || ctx.req.query('count');
+    const sortByParam = ctx.req.param('sortBy');
+    const countParam = ctx.req.param('count');
 
-    const sortby = sortbyParam === 'time' ? 'time' : 'hot';
+    const sortBy = sortByParam === 'time' ? 'time' : 'hot';
     const rawCount = Number.parseInt(countParam || '', 10);
     const requestCount = Number.isNaN(rawCount) || rawCount <= 0 ? 10 : rawCount;
 
@@ -176,7 +179,7 @@ async function handler(ctx) {
                 throw buildFetchError(error);
             }
         },
-        4 * 60 * 60
+        config.cache.routeExpire
     )) as ComingSoonResponse;
 
     if (!Array.isArray(data.subjects)) {
@@ -190,7 +193,7 @@ async function handler(ctx) {
     const subscriptionCount = data.count ?? 0;
     const total = data.total ?? 0;
     const sortedSubjects = data.subjects.toSorted((a, b) => {
-        if (sortby === 'time') {
+        if (sortBy === 'time') {
             const timeDiff = getSortTimestamp(a.pubdate) - getSortTimestamp(b.pubdate);
             if (timeDiff !== 0) {
                 return timeDiff;
@@ -206,11 +209,11 @@ async function handler(ctx) {
     return {
         title: '豆瓣剧集-即将播出',
         link: 'https://movie.douban.com/tv/',
-        description: `即将播出的剧集，请求参数: count=${subscriptionCount}, total=${total}, sortby=${sortby}, request_count=${requestCount}`,
+        description: `即将播出的剧集，请求参数: count=${subscriptionCount}, total=${total}, sortBy=${sortBy}, requestCount=${requestCount}`,
         item: sortedSubjects.map((subject) => {
             const link = subject.url || subject.sharing_url || `https://movie.douban.com/subject/${subject.id}/`;
             const category = subject.card_subtitle ? [subject.card_subtitle] : (subject.genres ?? []);
-            const pubDate = sortby === 'time' ? getPubDate(subject.pubdate) : undefined;
+            const pubDate = sortBy === 'time' ? getPubDate(subject.pubdate) : undefined;
             return {
                 title: subject.title,
                 category: category.length > 0 ? category : undefined,
