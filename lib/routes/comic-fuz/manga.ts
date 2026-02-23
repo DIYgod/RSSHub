@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/manga/:id',
     categories: ['anime'],
-    example: '/comicfuz/manga/218',
+    example: '/comic-fuz/manga/218',
     parameters: { id: 'ComicFuz中对应的漫画id' },
     features: {
         requireConfig: false,
@@ -34,7 +34,7 @@ export const route: Route = {
 
         const response = await ofetch(openUrl, {
             headers: {
-                'Referer': 'https://comic-fuz.com/',
+                Referer: 'https://comic-fuz.com/',
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
             },
         });
