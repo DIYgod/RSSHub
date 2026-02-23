@@ -100,7 +100,7 @@
         "jsdom": "27.0.0",
         "json-bigint": "1.0.0",
         "jsonpath-plus": "10.4.0",
-        "jsrsasign": "11.1.0",
+        "jsrsasign": "11.1.1",
         "lru-cache": "11.2.6",
         "lz-string": "1.5.0",
         "mailparser": "3.9.3",
