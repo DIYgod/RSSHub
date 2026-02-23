@@ -23,7 +23,7 @@ export const route: Route = {
             target: '/magazine/:id',
         },
     ],
-    name: 'ComicFuz杂志详情',
+    name: '杂志详情',
     maintainers: ['xiaobailoves'],
 
     handler: async (ctx) => {
