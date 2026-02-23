@@ -2,13 +2,13 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import { defineConfig } from 'eslint/config';
 import github from 'eslint-plugin-github';
 import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import eslintPluginYml from 'eslint-plugin-yml';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
 // import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
@@ -52,12 +52,7 @@ export default defineConfig([
 
         rules: {
             // #region possible problems
-            'array-callback-return': [
-                'error',
-                {
-                    allowImplicit: true,
-                },
-            ],
+            'array-callback-return': ['error', { allowImplicit: true }],
 
             'no-await-in-loop': 'error',
             'no-control-regex': 'off',
@@ -71,12 +66,7 @@ export default defineConfig([
             'dot-notation': 'error',
             eqeqeq: 'error',
 
-            'default-case': [
-                'warn',
-                {
-                    commentPattern: '^no default$',
-                },
-            ],
+            'default-case': ['warn', { commentPattern: '^no default$' }],
 
             'default-case-last': 'error',
             'no-console': 'error',
@@ -158,26 +148,8 @@ export default defineConfig([
             '@typescript-eslint/no-explicit-any': 'off',
 
             '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true, ignoreProperties: true }],
-
-            '@typescript-eslint/no-var-requires': 'off',
-
-            '@typescript-eslint/no-unused-expressions': [
-                'error',
-                {
-                    allowShortCircuit: true,
-                    allowTernary: true,
-                },
-            ],
-
-            '@typescript-eslint/no-unused-vars': [
-                'error',
-                {
-                    args: 'after-used',
-                    argsIgnorePattern: '^_',
-                },
-            ],
-
-            '@typescript-eslint/prefer-for-of': 'error',
+            '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+            '@typescript-eslint/no-unused-vars': ['error', { args: 'after-used', argsIgnorePattern: '^_' }],
             // #endregion
 
             // #region unicorn
@@ -199,18 +171,15 @@ export default defineConfig([
             'unicorn/no-empty-file': 'warn',
             'unicorn/no-for-loop': 'off',
             'unicorn/no-hex-escape': 'warn',
+            'unicorn/no-nested-ternary': 'off',
             'unicorn/no-null': 'off',
             'unicorn/no-object-as-default-parameter': 'warn',
-            'unicorn/no-nested-ternary': 'off',
             'unicorn/no-process-exit': 'off',
             'unicorn/no-useless-switch-case': 'off',
 
-            'unicorn/no-useless-undefined': [
-                'error',
-                {
-                    checkArguments: false,
-                },
-            ],
+            'unicorn/no-useless-undefined': ['error', { checkArguments: false }],
+
+            'unicorn/number-literal-case': 'off',
 
             'unicorn/numeric-separators-style': [
                 'warn',
@@ -244,13 +213,7 @@ export default defineConfig([
             'unicorn/prefer-import-meta-properties': 'warn',
             'unicorn/prefer-module': 'off',
 
-            'unicorn/prefer-number-properties': [
-                'error',
-                {
-                    checkInfinity: false,
-                    checkNaN: false,
-                },
-            ],
+            'unicorn/prefer-number-properties': ['error', { checkInfinity: false, checkNaN: false }],
 
             'unicorn/prefer-spread': 'warn',
             'unicorn/prefer-string-slice': 'warn',
@@ -266,7 +229,6 @@ export default defineConfig([
             'unicorn/prevent-abbreviations': 'off',
             'unicorn/switch-case-braces': ['error', 'avoid'],
             'unicorn/text-encoding-identifier-case': 'off',
-            'unicorn/number-literal-case': 'off',
             // #endregion
 
             // #region stylistic
@@ -278,12 +240,7 @@ export default defineConfig([
             '@stylistic/keyword-spacing': 'off',
             '@stylistic/linebreak-style': 'error',
 
-            '@stylistic/lines-around-comment': [
-                'error',
-                {
-                    beforeBlockComment: false,
-                },
-            ],
+            '@stylistic/lines-around-comment': ['error', { beforeBlockComment: false }],
 
             '@stylistic/no-multiple-empty-lines': 'error',
             '@stylistic/no-trailing-spaces': 'error',
@@ -298,19 +255,13 @@ export default defineConfig([
 
             // #region node specific rules
             'n/no-extraneous-require': 'error',
-
             'n/no-deprecated-api': 'warn',
             'n/no-missing-import': 'off',
             'n/no-missing-require': 'off',
             'n/no-process-exit': 'off',
             'n/no-unpublished-import': 'off',
 
-            'n/no-unpublished-require': [
-                'error',
-                {
-                    allowModules: ['tosource'],
-                },
-            ],
+            'n/no-unpublished-require': ['error', { allowModules: ['tosource'] }],
 
             'n/no-unsupported-features/node-builtins': [
                 'error',
@@ -341,7 +292,7 @@ export default defineConfig([
         rules: {
             'sort-imports': 'off',
             'import-x/order': 'off',
-            'simple-import-sort/imports': 'error',
+            // 'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
 
             'import-x/first': 'error',
@@ -361,29 +312,13 @@ export default defineConfig([
         },
         language: 'yml/yaml',
         rules: {
-            'lines-around-comment': [
-                'error',
-                {
-                    beforeBlockComment: false,
-                },
-            ],
+            'lines-around-comment': ['error', { beforeBlockComment: false }],
 
-            'yml/indent': [
-                'error',
-                4,
-                {
-                    indicatorValueIndent: 2,
-                },
-            ],
+            'yml/indent': ['error', 4, { indicatorValueIndent: 2 }],
 
             'yml/no-empty-mapping-value': 'off',
 
-            'yml/quotes': [
-                'error',
-                {
-                    prefer: 'single',
-                },
-            ],
+            'yml/quotes': ['error', { prefer: 'single' }],
         },
     },
 ]);
