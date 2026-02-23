@@ -172,7 +172,7 @@
         "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.39",
         "domhandler": "5.0.3",
-        "eslint": "10.0.0",
+        "eslint": "10.0.1",
         "eslint-nibble": "9.1.1",
         "eslint-plugin-github": "6.0.0",
         "eslint-plugin-import-x": "4.16.1",
