@@ -10,8 +10,8 @@
         "es2026": true,
         "node": true
     },
-    "plugins": ["typescript", "node", "unicorn"],
-    "jsPlugins": ["@stylistic/eslint-plugin", "eslint-plugin-github"],
+    "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
+    "jsPlugins": ["@stylistic/eslint-plugin", { "name": "js-import-x", "specifier": "eslint-plugin-import-x" }, { "name": "n", "specifier": "eslint-plugin-n" }, "./eslint-plugins/no-then.js", "./eslint-plugins/nsfw-flag.js"],
     "rules": {
         // #region --- ESLint js/recommended possible problems ---
         "constructor-super": "error",
@@ -61,7 +61,8 @@
         "use-isnan": "error",
         "valid-typeof": "error",
         // #endregion
-        // #region --- suggestions ---
+
+        // #region --- ESLint js/recommended suggestions ---
         "no-case-declarations": "error",
         "no-delete-var": "error",
         "no-empty": "error",
@@ -103,6 +104,7 @@
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/triple-slash-reference": "error",
         // #endregion
+
         // #region --- TypeScript flat/stylistic ---
         "@typescript-eslint/adjacent-overload-signatures": "error",
         // "@typescript-eslint/array-type": "error",
@@ -120,24 +122,22 @@
         "@typescript-eslint/prefer-function-type": "error",
         // #endregion
 
-        // #region --- eslint-plugin-n ---
-        // handled by eslint
-        // "node/no-exports-assign": "error",
-        // "n/hashbang": "error",
+        // #region --- n flat/recommended-script ---
+        "n/hashbang": "error",
         // "n/no-deprecated-api": "error",
-        // "n/no-exports-assign": "error",
-        // "n/no-extraneous-import": "error",
+        "node/no-exports-assign": "error",
+        "n/no-extraneous-import": "error",
         // "n/no-extraneous-require": "error",
         // "n/no-missing-import": "error",
         // "n/no-missing-require": "error",
         // "n/no-process-exit": "error",
-        // "n/no-unpublished-bin": "error",
+        "n/no-unpublished-bin": "error",
         // "n/no-unpublished-import": "error",
         // "n/no-unpublished-require": "error",
-        // "n/no-unsupported-features/es-builtins": "error",
-        // "n/no-unsupported-features/es-syntax": "error",
+        "n/no-unsupported-features/es-builtins": "error",
+        "n/no-unsupported-features/es-syntax": "error",
         // "n/no-unsupported-features/node-builtins": "error",
-        // "n/process-exit-as-throw": "error",
+        "n/process-exit-as-throw": "error",
         // #endregion
 
         // #region --- unicorn ---
@@ -425,7 +425,7 @@
         "unicorn/text-encoding-identifier-case": "off",
         // #endregion
 
-        // #region -- stylistic ---
+        // #region --- stylistic ---
         "@stylistic/arrow-parens": "error",
         "@stylistic/arrow-spacing": "error",
         "@stylistic/comma-spacing": "error",
@@ -447,8 +447,22 @@
         "@stylistic/spaced-comment": "error",
         // #endregion
 
-        // #region --- node specific rules ---
-        /**
+        // #region --- import sorting ---
+        // oxfmt also handles import sorting
+        "sort-imports": "off",
+        "import-x/order": "off",
+        // "simple-import-sort/imports": "error",
+        // "simple-import-sort/exports": "error",
+
+        "import-x/first": "error",
+        "js-import-x/newline-after-import": "error", // oxc native not yet implemented
+        "no-duplicate-imports": "off",
+        "import-x/no-duplicates": "error",
+
+        "@typescript-eslint/consistent-type-imports": "error",
+        // #endregion
+
+        // #region --- n ---
         "n/no-extraneous-require": "error",
         "n/no-deprecated-api": "warn",
         "n/no-missing-import": "off",
@@ -466,11 +480,13 @@
                 "ignores": []
             }
         ],
-        */
         // #endregion
 
         // github
-        "github/no-then": "warn"
+        "github/no-then": "warn",
+
+        // rsshub
+        "@rsshub/nsfw-flag/add-nsfw-flag": "error"
     },
     "overrides": [
         {
@@ -480,42 +496,5 @@
                 "@typescript-eslint/no-require-imports": "off"
             }
         }
-        // handled by oxfmt sortImports
-        // {
-        //     "files": ["**/*.?([cm])[jt]s?(x)"],
-        //     "jsPlugins": ["eslint-plugin-simple-import-sort"],
-        //     "plugins": ["eslint", "import", "typescript"],
-        //     "rules": {
-        //         "sort-imports": "off",
-        //         "simple-import-sort/imports": "error",
-        //         "simple-import-sort/exports": "error",
-        //         "import-x/first": "error",
-        //         "no-duplicate-imports": "off",
-        //         "import-x/no-duplicates": "error",
-        //         "@typescript-eslint/consistent-type-imports": "error",
-        //         "import-x/consistent-type-specifier-style": ["error", "prefer-top-level"]
-        //     }
-        // },
-        // handled in eslint
-        // {
-        //     "files": ["**/*.yaml", "**/*.yml"],
-        //     "jsPlugins": ["eslint-plugin-yml"],
-        //     "rules": {
-        //         "yml/indent": [
-        //             "error",
-        //             4,
-        //             {
-        //                 "indicatorValueIndent": 2
-        //             }
-        //         ],
-        //         "yml/no-empty-mapping-value": "off",
-        //         "yml/quotes": [
-        //             "error",
-        //             {
-        //                 "prefer": "single"
-        //             }
-        //         ]
-        //     }
-        // }
     ]
 }

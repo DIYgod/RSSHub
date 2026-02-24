@@ -2,28 +2,28 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import github from 'eslint-plugin-github';
-import { importX } from 'eslint-plugin-import-x';
+// import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
+// import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import eslintPluginYml from 'eslint-plugin-yml';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
-// import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
+import github from './eslint-plugins/no-then.js';
+import nsfwFlagPlugin from './eslint-plugins/nsfw-flag.js';
 
 const SOURCE_FILES_GLOB = '**/*.?([cm])[jt]s?(x)';
 
 export default defineConfig([
-    // {
-    //     plugins: {
-    //         '@rsshub/nsfw-flag': nsfwFlagPlugin,
-    //     },
-    //     rules: {
-    //         '@rsshub/nsfw-flag/add-nsfw-flag': 'error',
-    //     },
-    // },
+    {
+        plugins: {
+            '@rsshub/nsfw-flag': nsfwFlagPlugin,
+        },
+        rules: {
+            '@rsshub/nsfw-flag/add-nsfw-flag': 'error',
+        },
+    },
     {
         ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', 'dist', 'dist-lib', 'dist-worker'],
     },
@@ -37,7 +37,7 @@ export default defineConfig([
             n,
             unicorn,
         },
-        extends: [js.configs.recommended, typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script'], unicorn.configs.recommended],
+        // extends: [js.configs.recommended, typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script'], unicorn.configs.recommended],
 
         languageOptions: {
             globals: {
@@ -50,45 +50,49 @@ export default defineConfig([
             sourceType: 'module',
         },
 
+        linterOptions: {
+            reportUnusedDisableDirectives: false,
+        },
+
         rules: {
             // #region possible problems
-            'array-callback-return': ['error', { allowImplicit: true }],
+            // 'array-callback-return': ['error', { allowImplicit: true }],
 
-            'no-await-in-loop': 'error',
-            'no-control-regex': 'off',
-            'no-prototype-builtins': 'off',
+            // 'no-await-in-loop': 'error',
+            // 'no-control-regex': 'off',
+            // 'no-prototype-builtins': 'off',
             // #endregion
 
             // #region suggestions
-            'arrow-body-style': 'error',
-            'block-scoped-var': 'error',
-            curly: 'error',
-            'dot-notation': 'error',
-            eqeqeq: 'error',
+            // 'arrow-body-style': 'error',
+            // 'block-scoped-var': 'error',
+            // curly: 'error',
+            // 'dot-notation': 'error',
+            // eqeqeq: 'error',
 
-            'default-case': ['warn', { commentPattern: '^no default$' }],
+            // 'default-case': ['warn', { commentPattern: '^no default$' }],
 
-            'default-case-last': 'error',
-            'no-console': 'error',
-            'no-eval': 'error',
-            'no-extend-native': 'error',
-            'no-extra-label': 'error',
+            // 'default-case-last': 'error',
+            // 'no-console': 'error',
+            // 'no-eval': 'error',
+            // 'no-extend-native': 'error',
+            // 'no-extra-label': 'error',
 
-            'no-implicit-coercion': [
-                'error',
-                {
-                    boolean: false,
-                    number: false,
-                    string: false,
-                    disallowTemplateShorthand: true,
-                },
-            ],
+            // 'no-implicit-coercion': [
+            //     'error',
+            //     {
+            //         boolean: false,
+            //         number: false,
+            //         string: false,
+            //         disallowTemplateShorthand: true,
+            //     },
+            // ],
 
-            'no-implicit-globals': 'error',
-            'no-labels': 'error',
-            'no-lonely-if': 'error',
-            'no-multi-str': 'error',
-            'no-new-func': 'error',
+            // 'no-implicit-globals': 'error',
+            // 'no-labels': 'error',
+            // 'no-lonely-if': 'error',
+            // 'no-multi-str': 'error',
+            // 'no-new-func': 'error',
 
             'no-restricted-syntax': [
                 'error',
@@ -118,27 +122,28 @@ export default defineConfig([
                 },
             ],
 
-            'no-unneeded-ternary': 'error',
-            'no-useless-computed-key': 'error',
-            'no-useless-concat': 'warn',
-            'no-useless-rename': 'error',
-            'no-var': 'error',
-            'object-shorthand': 'error',
-            'prefer-arrow-callback': 'error',
-            'prefer-const': 'error',
-            'prefer-object-has-own': 'error',
+            // 'no-unneeded-ternary': 'error',
+            // 'no-useless-computed-key': 'error',
+            // 'no-useless-concat': 'warn',
+            // 'no-useless-rename': 'error',
+            // 'no-var': 'error',
+            // 'object-shorthand': 'error',
+            // 'prefer-arrow-callback': 'error',
+            // 'prefer-const': 'error',
+            // 'prefer-object-has-own': 'error',
 
-            'prefer-regex-literals': [
-                'error',
-                {
-                    disallowRedundantWrapping: true,
-                },
-            ],
+            // 'prefer-regex-literals': [
+            //     'error',
+            //     {
+            //         disallowRedundantWrapping: true,
+            //     },
+            // ],
 
-            'require-await': 'error',
+            // 'require-await': 'error',
             // #endregion
 
             // #region typescript
+            /*
             '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
 
             '@typescript-eslint/ban-ts-comment': 'off',
@@ -150,9 +155,11 @@ export default defineConfig([
             '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true, ignoreProperties: true }],
             '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
             '@typescript-eslint/no-unused-vars': ['error', { args: 'after-used', argsIgnorePattern: '^_' }],
+            */
             // #endregion
 
             // #region unicorn
+            /*
             'unicorn/consistent-function-scoping': 'warn',
             'unicorn/explicit-length-check': 'off',
 
@@ -229,9 +236,11 @@ export default defineConfig([
             'unicorn/prevent-abbreviations': 'off',
             'unicorn/switch-case-braces': ['error', 'avoid'],
             'unicorn/text-encoding-identifier-case': 'off',
+            */
             // #endregion
 
             // #region stylistic
+            /*
             '@stylistic/arrow-parens': 'error',
             '@stylistic/arrow-spacing': 'error',
             '@stylistic/comma-spacing': 'error',
@@ -251,9 +260,11 @@ export default defineConfig([
             '@stylistic/space-infix-ops': 'error',
             '@stylistic/space-unary-ops': 'error',
             '@stylistic/spaced-comment': 'error',
+            */
             // #endregion
 
             // #region node specific rules
+            /*
             'n/no-extraneous-require': 'error',
             'n/no-deprecated-api': 'warn',
             'n/no-missing-import': 'off',
@@ -271,10 +282,11 @@ export default defineConfig([
                     ignores: [],
                 },
             ],
+            */
             // #endregion
 
             // github
-            'github/no-then': 'warn',
+            // 'github/no-then': 'warn',
         },
     },
     {
@@ -284,25 +296,26 @@ export default defineConfig([
         },
     },
     {
+        /*
         files: [SOURCE_FILES_GLOB],
         plugins: {
             'simple-import-sort': simpleImportSort,
             'import-x': importX,
         },
         rules: {
-            'sort-imports': 'off',
-            'import-x/order': 'off',
+            // 'sort-imports': 'off',
+            // 'import-x/order': 'off',
             // 'simple-import-sort/imports': 'error',
-            'simple-import-sort/exports': 'error',
+            // 'simple-import-sort/exports': 'error',
 
-            'import-x/first': 'error',
-            'import-x/newline-after-import': 'error',
-            'no-duplicate-imports': 'off',
-            'import-x/no-duplicates': 'error',
+            // 'import-x/first': 'error',
+            // 'import-x/newline-after-import': 'error',
+            // 'no-duplicate-imports': 'off',
+            // 'import-x/no-duplicates': 'error',
 
-            '@typescript-eslint/consistent-type-imports': 'error',
-            'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
-        },
+            // '@typescript-eslint/consistent-type-imports': 'error',
+            // 'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+        },*/
     },
     {
         files: ['**/*.yaml', '**/*.yml'],

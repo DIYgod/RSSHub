@@ -149,6 +149,7 @@
         "@cloudflare/workers-types": "4.20260302.0",
         "@eslint/eslintrc": "3.3.3",
         "@eslint/js": "10.0.1",
+        "@oxlint/plugins": "1.50.0",
         "@stylistic/eslint-plugin": "5.9.0",
         "@types/aes-js": "3.1.4",
         "@types/babel__preset-env": "7.10.0",
@@ -175,7 +176,6 @@
         "domhandler": "5.0.3",
         "eslint": "10.0.1",
         "eslint-nibble": "9.1.1",
-        "eslint-plugin-github": "6.0.0",
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-n": "17.24.0",
         "eslint-plugin-simple-import-sort": "12.1.1",
@@ -215,7 +215,7 @@
     "engines": {
         "node": "^22.20.0 || ^24"
     },
-    "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
+    "packageManager": "pnpm@10.30.2+sha512.36cdc707e7b7940a988c9c1ecf88d084f8514b5c3f085f53a2e244c2921d3b2545bc20dd4ebe1fc245feec463bb298aecea7a63ed1f7680b877dc6379d8d0cb4",
     "pnpm": {
         "onlyBuiltDependencies": [
             "bufferutil",
@@ -237,10 +237,6 @@
             "wrangler"
         ],
         "overrides": {
-            "array-includes": "npm:@nolyfill/array-includes@^1",
-            "array.prototype.findlastindex": "npm:@nolyfill/array.prototype.findlastindex@^1",
-            "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
-            "array.prototype.flatmap": "npm:@nolyfill/array.prototype.flatmap@^1",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
             "google-play-scraper>got": "^14.6.4",
@@ -248,19 +244,12 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
-            "object.assign": "npm:@nolyfill/object.assign@^1",
-            "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
-            "object.groupby": "npm:@nolyfill/object.groupby@^1",
-            "object.values": "npm:@nolyfill/object.values@^1",
             "request>form-data": "^2.5.5",
             "rss-parser@3.13.0>entities": "^7.0.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
-            "safe-regex-test": "npm:@nolyfill/safe-regex-test@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1",
-            "string.prototype.includes": "npm:@nolyfill/string.prototype.includes@^1",
-            "string.prototype.trimend": "npm:@nolyfill/string.prototype.trimend@^1"
+            "side-channel": "npm:@nolyfill/side-channel@^1"
         },
         "patchedDependencies": {
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
