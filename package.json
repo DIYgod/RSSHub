@@ -145,7 +145,7 @@
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.1.0",
         "@cloudflare/puppeteer": "1.0.6",
-        "@cloudflare/workers-types": "4.20260302.0",
+        "@cloudflare/workers-types": "4.20260303.0",
         "@eslint/eslintrc": "3.3.4",
         "@eslint/js": "10.0.1",
         "@stylistic/eslint-plugin": "5.9.0",
