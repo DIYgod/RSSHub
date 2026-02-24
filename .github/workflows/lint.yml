@@ -15,7 +15,7 @@ jobs:
     eslint-warning:
         name: Lint
         if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-        runs-on: ubuntu-slim
+        runs-on: ubuntu-latest
         timeout-minutes: 15
         permissions:
             security-events: write

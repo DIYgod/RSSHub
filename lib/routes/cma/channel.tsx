@@ -104,7 +104,7 @@ async function handler(ctx) {
                       $(
                           $('div.col-xs-8 span')
                               .toArray()
-                              .find((a) => $(a).text().startsWith('来源'))
+                              .findLast((a) => $(a).text().startsWith('来源'))
                       )
                           ?.text()
                           ?.split(/：/)

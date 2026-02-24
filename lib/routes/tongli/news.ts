@@ -53,7 +53,7 @@ async function handler(ctx) {
                 const { data: res } = await got(item.link);
                 const $ = cheerio.load(res);
 
-                if (item.link.startsWith('https://tonglinv.pixnet.net')) {
+                if (item.link.startsWith('https://tonglinv.pixnet.net/')) {
                     item.description = $('.article-content-inner').html();
                 } else if (/^https?:\/\/blog\.xuite\.net\//.test(item.link)) {
                     item.description = $('#content_all').html();

@@ -47,28 +47,26 @@ async function handler() {
     items = items.filter((item) => item.availableSizes.length !== 0);
 
     const list = items.map((item) => {
+        const imgUrl = JSON.parse(item.imageUrls).front;
+        const originalPrice = getUSDPrice(item.originalPrice);
+        const regearPrice = item.priceRange[0] === item.priceRange[1] ? getUSDPrice(item.priceRange[0]) : `${getUSDPrice(item.priceRange[0])} - ${getUSDPrice(item.priceRange[1])}`;
         const data = {
             title: item.displayTitle,
             link: item.pdpLink.url,
-            imgUrl: JSON.parse(item.imageUrls).front,
-            availableSizes: item.availableSizes,
-            color: item.color,
-            originalPrice: getUSDPrice(item.originalPrice),
-            regearPrice: item.priceRange[0] === item.priceRange[1] ? getUSDPrice(item.priceRange[0]) : `${getUSDPrice(item.priceRange[0])} - ${getUSDPrice(item.priceRange[1])}`,
             description: renderToString(
                 <div>
                     Available Sizes:&nbsp;
-                    {data.availableSizes.map((size) => (
+                    {item.availableSizes.map((size) => (
                         <>{size}&nbsp;</>
                     ))}
                     <br />
-                    Color: {data.color}
+                    Color: {item.color}
                     <br />
-                    Original Price: {data.originalPrice}
+                    Original Price: {originalPrice}
                     <br />
-                    Regear Price: {data.regearPrice}
+                    Regear Price: {regearPrice}
                     <br />
-                    <img src={data.imgUrl} />
+                    <img src={imgUrl} />
                     <br />
                     <br />
                 </div>
@@ -81,10 +79,6 @@ async function handler() {
         title: 'Arcteryx - Regear - New Arrivals',
         link: url,
         description: 'Arcteryx - Regear - New Arrivals',
-        item: list.map((item) => ({
-            title: item.title,
-            link: item.link,
-            description: item.description,
-        })),
+        item: list,
     };
 }
