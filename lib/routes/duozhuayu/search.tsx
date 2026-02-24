@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import aesjs from 'aes-js';
 import { renderToString } from 'hono/jsx/dom/server';
 

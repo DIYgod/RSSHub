@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 const text_tag = {
     LINE_BREAK: 0,
     INLINE_CODE: 1,

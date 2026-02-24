@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import md5 from '@/utils/md5';
 
 const SALT = '1Ftjv0bfpVmqbE38';

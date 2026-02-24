@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';

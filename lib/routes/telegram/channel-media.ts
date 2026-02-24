@@ -68,7 +68,7 @@ function sortThumb(thumb: Api.TypePhotoSize) {
 }
 
 function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
-    thumbs = [...thumbs].sort((a, b) => sortThumb(a) - sortThumb(b));
+    thumbs = [...thumbs].toSorted((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
 
