@@ -27,21 +27,20 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
             - run: pnpm i
-            - name: Install ESLint SARIF formatter
-              # https://github.com/microsoft/sarif-js-sdk/issues/91 unncessary deps on eslint@8
-              run: |
-                  wget https://raw.githubusercontent.com/microsoft/sarif-js-sdk/refs/heads/main/packages/eslint-formatter-sarif/sarif.js -O node_modules/sarif.cjs
-                  pnpm i -D utf8 lodash jschardet
+            # - name: Install ESLint SARIF formatter
+            #   # https://github.com/microsoft/sarif-js-sdk/issues/91 unncessary deps on eslint@8
+            #   run: |
+            #       wget https://raw.githubusercontent.com/microsoft/sarif-js-sdk/refs/heads/main/packages/eslint-formatter-sarif/sarif.js -O node_modules/sarif.cjs
+            #       pnpm i -D utf8 lodash jschardet
             - name: Lint
               run: pnpm run lint
-                  --format node_modules/sarif.cjs
-                  --output-file eslint-results.sarif
+                  --format=github
               continue-on-error: true
-            - name: Upload analysis results to GitHub
-              uses: github/codeql-action/upload-sarif@v4
-              with:
-                  sarif_file: eslint-results.sarif
-                  wait-for-processing: true
+            # - name: Upload analysis results to GitHub
+            #   uses: github/codeql-action/upload-sarif@v4
+            #   with:
+            #       sarif_file: eslint-results.sarif
+            #       wait-for-processing: true
 
     # https://github.com/amannn/action-semantic-pull-request
     title-lint:

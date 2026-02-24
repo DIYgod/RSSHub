@@ -35,11 +35,11 @@
         "container-deploy": "npm run container-build && wrangler deploy --config wrangler-container.toml --containers-rollout=immediate",
         "dev": "cross-env NODE_ENV=dev NODE_OPTIONS='--max-http-header-size=32768' tsx watch --inspect --clear-screen=false lib/index.ts",
         "dev:cache": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' tsx watch --clear-screen=false lib/index.ts",
-        "format": "eslint --cache --fix \"**/*.{ts,tsx,js,yml}\" --concurrency auto && oxfmt .",
-        "format:check": "eslint --cache \"**/*.{ts,tsx,js,yml}\" --concurrency auto && oxfmt . --check",
+        "eslint": "eslint --cache . --concurrency auto",
+        "format": "oxlint --fix \"**/*.{ts,tsx,js,yml}\" && oxfmt .",
+        "format:check": "oxlint \"**/*.{ts,tsx,js,yml}\" && oxfmt . --check",
         "format:staged": "lint-staged",
-        "lint": "eslint --cache . --concurrency auto",
-        "oxlint": "oxlint",
+        "lint": "oxlint .",
         "prepare": "husky || true",
         "prepublishOnly": "npm run build:lib",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
@@ -208,6 +208,7 @@
             "oxfmt --no-error-on-unmatched-pattern"
         ],
         "*.{ts,tsx,js,yml}": [
+            "oxlint --fix",
             "eslint --cache --fix --concurrency auto",
             "oxfmt --no-error-on-unmatched-pattern"
         ]
