@@ -66,7 +66,7 @@ async function handler(ctx) {
 }
 
 const renderDescription = (item): string => {
-    const fullText = item.metadata?.full_text ? item.metadata.full_text.replaceAll(/\n/gm, '<br>') : '';
+    const fullText = item.metadata?.full_text ? item.metadata.full_text.replaceAll('\n', '<br>') : '';
     const firstComment = item.comments?.length ? item.comments[0].text.slice(0, 100) : '';
 
     return renderToString(

@@ -55,26 +55,25 @@ async function handler() {
             color: item.color,
             originalPrice: getUSDPrice(item.originalPrice),
             regearPrice: item.priceRange[0] === item.priceRange[1] ? getUSDPrice(item.priceRange[0]) : `${getUSDPrice(item.priceRange[0])} - ${getUSDPrice(item.priceRange[1])}`,
-            description: '',
+            description: renderToString(
+                <div>
+                    Available Sizes:&nbsp;
+                    {data.availableSizes.map((size) => (
+                        <>{size}&nbsp;</>
+                    ))}
+                    <br />
+                    Color: {data.color}
+                    <br />
+                    Original Price: {data.originalPrice}
+                    <br />
+                    Regear Price: {data.regearPrice}
+                    <br />
+                    <img src={data.imgUrl} />
+                    <br />
+                    <br />
+                </div>
+            ),
         };
-        data.description = renderToString(
-            <div>
-                Available Sizes:&nbsp;
-                {data.availableSizes.map((size) => (
-                    <>{size}&nbsp;</>
-                ))}
-                <br />
-                Color: {data.color}
-                <br />
-                Original Price: {data.originalPrice}
-                <br />
-                Regear Price: {data.regearPrice}
-                <br />
-                <img src={data.imgUrl} />
-                <br />
-                <br />
-            </div>
-        );
         return data;
     });
 

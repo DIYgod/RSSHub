@@ -5,6 +5,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';

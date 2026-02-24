@@ -136,7 +136,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                     content_html: $$el.find('div.content-card__body').html(),
                                 };
                             })
-                            .filter((link): link is { url: string; type: string; content_html: string } => true);
+                            .filter((_link): _link is { url: string; type: string; content_html: string } => true);
 
                         const description: string = renderDescription({
                             description: cleanHtml($$('div.page-section').eq(1).html() ?? $$('div.copy-block').html() ?? '', ['div.richtext p', 'h3', 'h4', 'h5', 'h6', 'figure', 'img', 'ul', 'li', 'span', 'b']),

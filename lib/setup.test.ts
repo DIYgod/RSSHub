@@ -266,11 +266,7 @@ Unknown paragraph
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
-    http.get(`http://rsshub.test/headers`, ({ request }) =>
-        HttpResponse.json({
-            ...Object.fromEntries(request.headers.entries()),
-        })
-    ),
+    http.get(`http://rsshub.test/headers`, ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
     http.post(`http://rsshub.test/form-post`, async ({ request }) => {
         const formData = await request.formData();
         return HttpResponse.json({

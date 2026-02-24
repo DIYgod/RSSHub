@@ -30,7 +30,7 @@ async function handler(ctx) {
     }
 
     const rootUrl = 'https://www.nsfc.gov.cn';
-    const currentUrl = new URL((/\/more$/.test(thePath) ? `${thePath}.htm` : thePath) || 'publish/portal0/tab442/', rootUrl).href;
+    const currentUrl = new URL((thePath.endsWith('/more') ? `${thePath}.htm` : thePath) || 'publish/portal0/tab442/', rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

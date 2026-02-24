@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { renderArticle } from './templates/article';
 
 const parseArticle = async (item) => {
-    if (/\.blog\.caixin\.com$/.test(new URL(item.link).hostname)) {
+    if (new URL(item.link).hostname.endsWith('.blog.caixin.com')) {
         return parseBlogArticle(item);
     } else {
         const { data: response } = await got(item.link);

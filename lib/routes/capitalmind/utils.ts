@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
 export const baseUrl = 'https://www.capitalmind.in';

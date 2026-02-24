@@ -49,7 +49,7 @@
         "no-sparse-arrays": "error",
         "no-this-before-super": "error",
         "no-unassigned-vars": "error",
-        "no-undef": "error",
+        // "no-undef": "error",
         "no-unexpected-multiline": "error",
         "no-unreachable": "error",
         "no-unsafe-finally": "error",
@@ -285,6 +285,7 @@
         "no-await-in-loop": "error",
         "no-control-regex": "off",
         "no-prototype-builtins": "off",
+        "no-undef": "off", // typescript/eslint-recommended, ts(2552)
         // #endregion
 
         // #region --- suggestions ---

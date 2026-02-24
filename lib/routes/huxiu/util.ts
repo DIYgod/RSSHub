@@ -262,7 +262,7 @@ const generateSignature = () => {
  * @param {Set<number>} visited - Set of visited indices to prevent infinite loops.
  * @returns {unknown} - The resolved value.
  */
-const resolveNuxtData = (arr: unknown[], index: number, visited: Set<number> = new Set()): unknown => {
+const resolveNuxtData = (arr: unknown[], index: number, visited = new Set<number>()): unknown => {
     if (visited.has(index)) {
         return arr[index];
     }
