@@ -179,7 +179,8 @@ async function handler(ctx) {
                 throw buildFetchError(error);
             }
         },
-        config.cache.routeExpire
+        config.cache.routeExpire,
+        false
     )) as ComingSoonResponse;
 
     if (!Array.isArray(data.subjects)) {
