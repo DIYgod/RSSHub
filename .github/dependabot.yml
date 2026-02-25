@@ -23,6 +23,10 @@ updates:
           - dependency-name: jsdom
             versions: ['>=27.0.1']
       groups:
+          cloudflare:
+              patterns:
+                  - '@cloudflare/*'
+                  - 'wrangler'
           eslint:
               patterns:
                   - 'eslint'
@@ -30,6 +34,12 @@ updates:
           opentelemetry:
               patterns:
                   - '@opentelemetry/*'
+          oxc:
+              patterns:
+                  - '@oxlint/*'
+                  - 'oxfmt'
+                  - 'oxlint'
+                  - 'oxlint-tsgolint'
           typescript-eslint:
               patterns:
                   - '@typescript-eslint/*'

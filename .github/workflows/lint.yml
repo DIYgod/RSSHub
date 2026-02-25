@@ -42,6 +42,10 @@ jobs:
               with:
                   sarif_file: eslint-results.sarif
                   wait-for-processing: true
+            - name: Upload Artifact
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              with:
+                  path: eslint-results.sarif
 
     # https://github.com/amannn/action-semantic-pull-request
     title-lint:
