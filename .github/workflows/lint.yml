@@ -31,7 +31,7 @@ jobs:
               run: pnpm i -g checkstyle-to-sarif
             - name: Lint
               run: pnpm exec oxlint
-                  --format=checkstyle | checkstyle-to-sarif --output oxlint-results.sarif
+                  --format=checkstyle | checkstyle-to-sarif > oxlint-results.sarif
               continue-on-error: true
             - name: Upload analysis results to GitHub
               uses: github/codeql-action/upload-sarif@v4

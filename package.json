@@ -71,8 +71,8 @@
         "@opentelemetry/sdk-trace-base": "2.5.1",
         "@opentelemetry/semantic-conventions": "1.39.0",
         "@rss3/sdk": "0.0.25",
-        "@scalar/hono-api-reference": "0.9.44",
-        "@sentry/node": "10.39.0",
+        "@scalar/hono-api-reference": "0.9.45",
+        "@sentry/node": "10.40.0",
         "aes-js": "3.1.2",
         "cheerio": "1.2.0",
         "city-timezones": "1.3.3",
@@ -146,7 +146,7 @@
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.1.0",
         "@cloudflare/puppeteer": "1.0.6",
-        "@cloudflare/workers-types": "4.20260303.0",
+        "@cloudflare/workers-types": "4.20260304.0",
         "@eslint/eslintrc": "3.3.4",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.50.0",
@@ -200,7 +200,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.0.9",
-        "wrangler": "4.68.0",
+        "wrangler": "4.68.1",
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
