@@ -2520,6 +2520,9 @@
   "/douban/people/:userid/wish/:routeParams?": [
     "exherb"
   ],
+  "/douban/tv/coming/:sortBy?/:count?": [
+    "honue"
+  ],
   "/douyin/hashtag/:cid/:routeParams?": [
     "TonyRL"
   ],

@@ -837,6 +837,7 @@ export type RoutePath =
   | `/douban/replied/:uid`
   | `/douban/replies/:uid`
   | `/douban/topic/:id/:sort?`
+  | `/douban/tv/coming/:sortBy?/:count?`
   | `/douyin/hashtag/:cid/:routeParams?`
   | `/douyin/live/:rid`
   | `/douyin/user/:uid/:routeParams?`
