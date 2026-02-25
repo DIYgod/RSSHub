@@ -877,6 +877,9 @@
   "/bestblogs/feeds/:category?": [
     "zhenlohuang"
   ],
+  "/bestblogs/newsletter": [
+    "occam-7"
+  ],
   "/bestofjs/rankings/monthly": [
     "ztkuaikuai"
   ],

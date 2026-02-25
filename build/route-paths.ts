@@ -290,6 +290,7 @@ export type RoutePath =
   | `/bellroy/new-releases`
   | `/bendibao/news/:city`
   | `/bestblogs/feeds/:category?`
+  | `/bestblogs/newsletter`
   | `/bestofjs/rankings/monthly`
   | `/bfl/announcements`
   | `/bgmlist/onair/:lang?`
