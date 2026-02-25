@@ -27,20 +27,17 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
             - run: pnpm i
-            # - name: Install ESLint SARIF formatter
-            #   # https://github.com/microsoft/sarif-js-sdk/issues/91 unncessary deps on eslint@8
-            #   run: |
-            #       wget https://raw.githubusercontent.com/microsoft/sarif-js-sdk/refs/heads/main/packages/eslint-formatter-sarif/sarif.js -O node_modules/sarif.cjs
-            #       pnpm i -D utf8 lodash jschardet
+            - name: Install Checkstyle to SARIF converter
+              run: pnpm i -g checkstyle-to-sarif
             - name: Lint
-              run: pnpm run lint
-                  --format=github
+              run: pnpm exec oxlint
+                  --format=checkstyle | checkstyle-to-sarif --output oxlint-results.sarif
               continue-on-error: true
-            # - name: Upload analysis results to GitHub
-            #   uses: github/codeql-action/upload-sarif@v4
-            #   with:
-            #       sarif_file: eslint-results.sarif
-            #       wait-for-processing: true
+            - name: Upload analysis results to GitHub
+              uses: github/codeql-action/upload-sarif@v4
+              with:
+                  sarif_file: oxlint-results.sarif
+                  wait-for-processing: true
 
     # https://github.com/amannn/action-semantic-pull-request
     title-lint:
