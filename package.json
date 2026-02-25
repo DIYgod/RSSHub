@@ -70,7 +70,7 @@
         "@opentelemetry/sdk-trace-base": "2.5.1",
         "@opentelemetry/semantic-conventions": "1.39.0",
         "@rss3/sdk": "0.0.25",
-        "@scalar/hono-api-reference": "0.9.44",
+        "@scalar/hono-api-reference": "0.9.45",
         "@sentry/node": "10.39.0",
         "aes-js": "3.1.2",
         "cheerio": "1.2.0",
