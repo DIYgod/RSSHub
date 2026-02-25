@@ -362,7 +362,7 @@ export const extractInitialData = ($: CheerioAPI): any => {
 };
 
 const extractArticleWithInitialData = ($: CheerioAPI, item) => {
-    if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/')) {
+    if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/') || item.link.includes('/sounds/play/')) {
         return {
             description: item.content,
         };
