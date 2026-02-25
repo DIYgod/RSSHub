@@ -355,7 +355,7 @@ export const extractInitialData = ($: CheerioAPI): any => {
     const initialDataText = JSON.parse(
         $('script:contains("window.__INITIAL_DATA__")')
             .text()
-            .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '{}'
+            .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '"{}"'
     );
 
     return JSON.parse(initialDataText);
@@ -369,6 +369,12 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
     }
 
     const initialData = extractInitialData($);
+    if (!initialData || !initialData.data) {
+        return {
+            description: item.content,
+        };
+    }
+
     const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
     const topics = Array.isArray(article?.topics) ? article.topics : [];
     const blocks = article?.content?.model?.blocks;
