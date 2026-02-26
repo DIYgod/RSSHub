@@ -5,19 +5,17 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/board/:board/:routeParams?',
+    path: '/catalog/:board/:routeParams?',
     categories: ['social-media'],
-    example: '/4chan/board/lgbt',
+    example: '/4chan/catalog/g',
     parameters: { board: '4chan board' },
-    // features: {
-    //     requireConfig: [
-    //     ],
-    //     requirePuppeteer: false,
-    //     antiCrawler: false,
-    //     supportBT: false,
-    //     supportPodcast: false,
-    //     supportScihub: false,
-    // },
+    features: {
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     name: 'Latest posts from 4chan board',
     maintainers: ['heisenshark'],
     handler,
@@ -52,37 +50,56 @@ function renderPost(post: ChanPost, board: string) {
         case '.jpg':
         case '.png':
         case '.gif':
-            media = <img width={post.w} height={post.h} style="" src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} referrerpolicy="no-referrer" />;
-            break;
-        case '.pdf':
-            media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} width="100%" height="500px"></embed>;
-            break;
-        case '.swf':
-        case '.webm':
-            // media = (<video controls width={post.w}>
-            //     <source src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} type="video/webm" />
-            // </video>);
             media = (
                 <>
                     <br />
-                    <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop="" class="full-image" controls=""></video>
+                    <img width={post.w} height={post.h} style="" src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} referrerpolicy="no-referrer" />
+                    <br />
+                </>
+            );
+            break;
+        case '.pdf':
+            media = (
+                <>
+                    <br />
+                    <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} width="100%" height="500px"></embed>
+                    <br />
+                </>
+            );
+            break;
+        case '.swf':
+            media = (
+                <>
+                    <br />
+                    <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} type="application/x-shockwave-flash" width={post.w} height={post.h} />
+                    <br />
+                </>
+            );
+            break;
+        case '.webm':
+            media = (
+                <>
+                    <br />
+                    <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls class="full-image"></video>
+                    <br />
                 </>
             );
             break;
         default:
             break;
     }
-    const description = post.com + renderToString(media);
-    return description;
+    const description = post.com ?? '';
+    const renderedPost = description + renderToString(media) + (post.last_replies?.map((n) => '<div class="post reply">' + renderPost(n, board)).reduce((acc, n) => acc + n, '') ?? '') + '</div>';
+    return renderedPost;
 }
 
 interface ChanPost {
-    no: number; // positive
-    resto: number; // 0 | positive
-    sticky?: number; // 1 | undefined
-    closed?: number; // 1 | undefined
-    now: string; // date
-    time: number; // unix time
+    no: number;
+    resto: number;
+    sticky?: number;
+    closed?: number;
+    now: string;
+    time: number;
     name: string;
     trip?: string;
     id?: string;
@@ -91,7 +108,7 @@ interface ChanPost {
     country_name?: string;
     sub?: string;
     com?: string;
-    tim?: number; // unix time + microtime, always with image
+    tim?: number;
     filename: string;
     ext: '.jpg' | '.png' | '.gif' | '.pdf' | '.swf' | '.webm';
     fsize: number;
