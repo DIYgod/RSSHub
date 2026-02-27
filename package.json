@@ -165,7 +165,7 @@
         "@types/module-alias": "2.0.4",
         "@types/node": "25.3.2",
         "@types/sanitize-html": "2.16.0",
-        "@types/supertest": "6.0.3",
+        "@types/supertest": "7.2.0",
         "@typescript-eslint/eslint-plugin": "8.56.1",
         "@typescript-eslint/parser": "8.56.1",
         "@vercel/nft": "1.3.2",
