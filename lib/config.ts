@@ -236,6 +236,7 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_ID'
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
+    | 'YOUTUBE_VIDEO_EMBED_URL'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -675,6 +676,7 @@ export type Config = {
         clientId?: string;
         clientSecret?: string;
         refreshToken?: string;
+        videoEmbedUrl?: string;
     };
     zhihu: {
         cookies?: string;
@@ -1164,6 +1166,7 @@ const calculateValue = () => {
             clientId: envs.YOUTUBE_CLIENT_ID,
             clientSecret: envs.YOUTUBE_CLIENT_SECRET,
             refreshToken: envs.YOUTUBE_REFRESH_TOKEN,
+            videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
         },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,
