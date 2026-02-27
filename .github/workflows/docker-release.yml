@@ -132,7 +132,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/ordinary/${digest#sha256:}"
 
             - name: Upload digest (ordinary version)
-              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
               with:
                   name: digests-ordinary-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/ordinary/*
@@ -187,7 +187,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/chromium/${digest#sha256:}"
 
             - name: Upload digest (Chromium-bundled version)
-              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
               with:
                   name: digests-chromium-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/chromium/*
