@@ -20,7 +20,7 @@ const handler = async (ctx: Context) => {
 
 export const route: Route = {
     path: '/:board/catalog/:routeParams?',
-    categories: ['social-media'],
+    categories: ['bbs'],
     example: '/4chan/g/catalog',
     parameters: {
         board: '4chan board',
@@ -37,8 +37,8 @@ export const route: Route = {
     maintainers: ['heisenshark'],
     radar: [
         {
-            source: ['boards.4chan.org'],
-            target: '/4chan/:board/catalog',
+            source: ['boards.4chan.org/:board/'],
+            target: '/:board/catalog',
         },
     ],
     description: `Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for Tweets
