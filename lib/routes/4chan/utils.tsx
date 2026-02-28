@@ -18,7 +18,6 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
     const transformedData = data.flatMap((page) => page.threads);
     return transformedData.map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
-        category: undefined,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
         link: `/${board}/thread/${thread.no}`,
         pubDate: new Date(thread.time * 1000).toUTCString(),
