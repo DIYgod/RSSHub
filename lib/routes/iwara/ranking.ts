@@ -54,7 +54,7 @@ export const route: Route = {
         rating: 'Rating, can be all, general, ecchi, default is ecchi',
     },
     name: 'Ranking',
-    maintainers: ['Fatpandac', 'FeCCC'],
+    maintainers: ['CaoMeiYouRen233'],
     handler,
     features: {
         nsfw: true,
