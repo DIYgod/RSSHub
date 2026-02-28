@@ -14,7 +14,7 @@ const parseParams = (routeParams: string) => {
     return viewOptions;
 };
 
-function processCatalog({ data, board, viewOptions }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions }) {
+const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions }) => {
     const transformedData = data.flatMap((page) => page.threads);
     return transformedData.map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
@@ -24,9 +24,9 @@ function processCatalog({ data, board, viewOptions }: { data: CatalogApiReturn; 
         pubDate: new Date(thread.time * 1000),
         title: stripHTML(thread.sub ?? thread.com ?? ''),
     }));
-}
+};
 
-function renderPost({ post, board, viewOptions }: { post: ChanPost; board: string; viewOptions: ViewOptions }) {
+const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: string; viewOptions: ViewOptions }) => {
     let media = <></>;
     switch (post.ext) {
         case '.jpg':
@@ -65,7 +65,7 @@ function renderPost({ post, board, viewOptions }: { post: ChanPost; board: strin
         </>
     );
     return renderedPost;
-}
+};
 
 const stripHTML = (html: string) => load(html).text().trim();
 
