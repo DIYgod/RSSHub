@@ -1,10 +1,9 @@
-import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import sanitizeHtml from 'sanitize-html';
 
 import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
 
 const parseParams = (routeParams: string) => {
     const parsed = new URLSearchParams(routeParams);
@@ -21,9 +20,9 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
     return transformedData.map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
-        link: `/${board}/thread/${thread.no}`,
-        pubDate: timezone(parseDate(thread.time * 1000), +1),
-        title: stripHTML(thread.sub ?? thread.com ?? ''),
+        link: `http://boards.4chan.org/${board}/thread/${thread.no}`,
+        pubDate: parseDate(thread.time * 1000),
+        title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>')[0] ?? '', { allowedTags: [] }),
     }));
 };
 
@@ -33,7 +32,7 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
         case '.jpg':
         case '.png':
         case '.gif':
-            media = <img width={post.w} height={post.h} style="" src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} referrerpolicy="no-referrer" />;
+            media = <img width={post.w} height={post.h} style="" src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} />;
             break;
         case '.pdf':
             media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} width="100%" height="500px"></embed>;
@@ -46,6 +45,14 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
             break;
         default:
             break;
+    }
+    if (post.spoiler) {
+        media = (
+            <details open={viewOptions.revealSpoilers}>
+                <summary>Spoiler</summary>
+                {media}
+            </details>
+        );
     }
     media = (
         <>
@@ -67,8 +74,6 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
     );
     return renderedPost;
 };
-
-const stripHTML = (html: string) => load(html).text().trim();
 
 type CatalogApiReturn = Array<{ page: number; threads: ChanPost[] }>;
 type ViewOptions = ReturnType<typeof parseParams>;
@@ -116,4 +121,4 @@ interface ChanPost {
 }
 
 export type { CatalogApiReturn, ChanPost, ViewOptions };
-export { parseParams, processCatalog, renderPost, stripHTML };
+export { parseParams, processCatalog, renderPost };

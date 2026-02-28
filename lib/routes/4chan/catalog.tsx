@@ -13,7 +13,7 @@ const handler = async (ctx: Context) => {
 
     return {
         title: `4chan's /${board}/`,
-        link: `https://boards.4chan.org/`,
+        link: `https://boards.4chan.org/${board}/catalog`,
         item: processCatalog({ data, board, viewOptions }),
     };
 };
@@ -37,7 +37,7 @@ export const route: Route = {
     maintainers: ['heisenshark'],
     radar: [
         {
-            source: ['boards.4chan.org/:board'],
+            source: ['boards.4chan.org'],
             target: '/:board/catalog',
         },
     ],
