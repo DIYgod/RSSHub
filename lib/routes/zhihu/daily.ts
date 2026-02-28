@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -13,7 +11,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -30,34 +28,27 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch('https://daily.zhihu.com/');
-
-    const $ = load(response);
+    // The v7 /stories/latest requires login; use v4 which is publicly accessible
+    const listResponse = await ofetch('https://daily.zhihu.com/api/4/stories/latest');
+    const stories = listResponse.stories ?? [];
 
     const items = await Promise.all(
-        $('.box')
-            .toArray()
-            .map(async (item) => {
-                item = $(item);
-                const linkElem = item.find('.link-button');
-                const storyUrl = 'https://daily.zhihu.com/api/7' + linkElem.attr('href');
+        stories.map(async (story: { id: number; title: string; image?: string }) => {
+            const storyUrl = `https://daily.zhihu.com/api/4/story/${story.id}`;
 
-                // Fetch full story content
-                const storyJson = await cache.tryGet(storyUrl, async () => {
-                    const response = await ofetch(storyUrl);
-                    return response;
-                });
+            const storyJson = await cache.tryGet(storyUrl, async () => {
+                const response = await ofetch(storyUrl);
+                return response;
+            });
 
-                const storyTitle = storyJson.title;
-                const storyContent = storyJson.body;
-
-                return {
-                    title: storyTitle,
-                    description: storyContent,
-                    link: storyJson.url,
-                    pubDate: parseDate(storyJson.publish_time, 'X'),
-                };
-            })
+            return {
+                title: storyJson.title ?? story.title,
+                description: storyJson.body ?? '',
+                link: storyJson.share_url ?? `https://daily.zhihu.com/story/${story.id}`,
+                pubDate: parseDate(storyJson.publish_time, 'X'),
+                image: storyJson.image ?? story.image,
+            };
+        })
     );
 
     return {
