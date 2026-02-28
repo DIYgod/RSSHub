@@ -1,8 +1,8 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const rootUrl = 'https://www.iwara.tv';
 const apiRootUrl = 'https://apiq.iwara.tv';
@@ -57,6 +57,7 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen233'],
     handler,
     features: {
+        requirePuppeteer: true,
         nsfw: true,
     },
     radar: [
@@ -76,35 +77,43 @@ export const route: Route = {
 async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
 
-    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}`;
-    const query = {
-        sort,
-        rating,
-        limit: ctx.req.query('limit') || 32,
-    };
-    const response = await cache.tryGet(
+    const limit = ctx.req.query('limit') || 32;
+    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
+
+    const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
-        async () =>
-            await ofetch(url, {
-                query,
-                headers: {
-                    origin: 'https://www.iwara.tv',
-                    referer: 'https://www.iwara.tv/',
-                    userAgent: config.ua,
+        async () => {
+            const { page, destory } = await getPuppeteerPage(url, {
+                onBeforeLoad: async (page) => {
+                    await page.setRequestInterception(true);
+                    page.on('request', (request) => {
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
+                    });
                 },
-            }),
+                gotoConfig: {
+                    waitUntil: 'networkidle0',
+                },
+            });
+
+            try {
+                const content = await page.evaluate(() => document.querySelector('pre')?.textContent || document.body.textContent);
+                const response = JSON.parse(content || '{}');
+
+                return response.results.map((item) => ({
+                    title: item.title,
+                    author: item.user.name,
+                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}/${item.slug || ''}`,
+                    category: item.tags?.map((i) => i.id) || [],
+                    description: parseThumbnail(type, item),
+                    pubDate: parseDate(item.createdAt),
+                }));
+            } finally {
+                await destory();
+            }
+        },
         config.cache.routeExpire,
         false
     );
-
-    const items = response.results.map((item) => ({
-        title: item.title,
-        author: item.user.name,
-        link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}/${item.slug || ''}`,
-        category: item.tags?.map((i) => i.id) || [],
-        description: parseThumbnail(type, item),
-        pubDate: parseDate(item.createdAt),
-    }));
 
     return {
         title: `Iwara Ranking - ${typeMap[type]} - ${sortMap[sort]} - ${ratingMap[rating]}`,
