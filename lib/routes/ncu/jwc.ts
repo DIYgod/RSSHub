@@ -1,7 +1,7 @@
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got'; // 自订的 got
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -19,52 +19,59 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.ncu.edu.cn/', 'jwc.ncu.edu.cn/jwtz/index.htm'],
+            source: ['jwc.ncu.edu.cn/', 'jwc.ncu.edu.cn/Notices.jsp'],
         },
     ],
     name: '教务通知',
-    maintainers: ['ywh555hhh'],
+    maintainers: ['ywh555hhh','jixiuweilan'],
     handler,
-    url: 'jwc.ncu.edu.cn/',
+    url: 'jwc.ncu.edu.cn',
 };
 
 async function handler() {
     const baseUrl = 'https://jwc.ncu.edu.cn';
-    const response = await got(baseUrl);
-    const $ = load(response.body);
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
+    const targetUrl = `${baseUrl}/Notices.jsp?urltype=tree.TreeTempUrl&wbtreeid=1541`;
 
-    const list = $('.box3 .inner ul.img-list li');
+    const response = await got(targetUrl, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        },
+    });
+    const $ = load(response.body);
+
+    const list = $('div.space-y-2 div.group');
+
+    const items = list
+        .toArray()
+        .map((item) => {
+            const el = $(item);
+            const linkEl = el.find('a').first();
+
+            const title = linkEl.find('span.text-gray-700').text().trim() || linkEl.text().trim();
+            const rawLink = linkEl.attr('href');
+            const link = rawLink ? new URL(rawLink, baseUrl).href : '';
+
+            const dateText = el
+                .find('.font-mono span')
+                .filter((_, e) => {
+                    const cls = $(e).attr('class') || '';
+                    return cls.includes('md:inline') || cls.includes('md\\:inline');
+                })
+                .text()
+                .trim();
+
+            return {
+                title,
+                link,
+                pubDate: parseDate(dateText, 'YYYY-MM-DD'),
+            };
+        })
+        .filter((item) => item.title && item.link);
 
     return {
-        title: '南昌大学教务处',
-        link: baseUrl,
-        description: '南昌大学教务处',
-
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const el = $(item);
-                const linkEl = el.find('a');
-                const date = el.text().split('】')[0].replace('【', '').trim();
-                const title = linkEl.attr('title');
-                const link = `${baseUrl}/${linkEl.attr('href')}`;
-
-                const newsDate = parseDate(date, 'MM-DD');
-                const newsMonth = newsDate.getMonth() + 1;
-
-                // If the news month is greater than the current month, subtract 1 from the year
-                const year = newsMonth > currentMonth ? currentYear - 1 : currentYear;
-
-                newsDate.setFullYear(year);
-
-                return {
-                    title,
-                    link,
-                    pubDate: newsDate,
-                };
-            }),
+        title: '南昌大学教务处 - 通知公告',
+        link: targetUrl,
+        description: '南昌大学教务处通知公告',
+        item: items,
     };
 }
