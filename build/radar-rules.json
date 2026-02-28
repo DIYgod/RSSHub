@@ -1931,6 +1931,19 @@
       }
     ]
   },
+  "4chan.org": {
+    "_name": "4chan",
+    "boards": [
+      {
+        "title": "Board's catalog",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:board/"
+        ],
+        "target": "/4chan/:board/catalog"
+      }
+    ]
+  },
   "4gamers.com.tw": {
     "_name": "4Gamers",
     "www": [

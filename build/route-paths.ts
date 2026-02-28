@@ -57,6 +57,7 @@ export type RoutePath =
   | `/3dmgame/news/:category?`
   | `/3kns/:filters?/:order?`
   | `/423down/:category{.+}?`
+  | `/4chan/:board/catalog/:routeParams?`
   | `/4gamers/`
   | `/4gamers/category/:category`
   | `/4gamers/tag/:tag`
