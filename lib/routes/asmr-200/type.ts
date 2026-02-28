@@ -49,7 +49,7 @@ export interface Work {
         rank_date: string;
         term: string;
     }> | null;
-    rate_average_2dp: number | number;
+    rate_average_2dp: number;
     rate_count: number;
     rate_count_detail: Array<{
         count: number;

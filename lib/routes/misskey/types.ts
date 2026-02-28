@@ -105,7 +105,7 @@ interface MisskeyFile {
     thumbnailUrl: string | null;
     comment: string | null;
     folderId: string | null;
-    folder?: unknown | null;
+    folder?: unknown;
     userId: string | null;
     user?: MisskeyUser | null;
 }
