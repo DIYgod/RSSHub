@@ -102,7 +102,7 @@ async function handler(ctx) {
                 return response.results.map((item) => ({
                     title: item.title,
                     author: item.user.name,
-                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}/${item.slug || ''}`,
+                    link: `${rootUrl}/${type === 'video' ? 'video' : 'image'}/${item.id}${item.slug ? `/${item.slug}` : ''}`,
                     category: item.tags?.map((i) => i.id) || [],
                     description: parseThumbnail(type, item),
                     pubDate: parseDate(item.createdAt),
