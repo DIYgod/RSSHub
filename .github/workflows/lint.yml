@@ -30,7 +30,7 @@ jobs:
             - name: Install oxlint to SARIF converter
               run: pnpm i -g oxlint-json-to-sarif
             - name: Lint
-              run: pnpm exec oxlint
+              run: pnpm exec oxlint --type-aware
                   --format=json | oxlint-json-to-sarif > oxlint-results.sarif
               continue-on-error: true
             - name: Upload analysis results to GitHub

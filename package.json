@@ -209,7 +209,7 @@
             "oxfmt --no-error-on-unmatched-pattern"
         ],
         "*.{ts,tsx,js,yml}": [
-            "oxlint --fix",
+            "oxlint --type-aware --fix",
             "eslint --cache --fix --concurrency auto",
             "oxfmt --no-error-on-unmatched-pattern"
         ]
