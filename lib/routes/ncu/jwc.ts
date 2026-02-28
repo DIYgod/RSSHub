@@ -1,5 +1,6 @@
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 
+import config from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +35,7 @@ async function handler() {
 
     const response = await got(targetUrl, {
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'User-Agent': config.trueUA,
         },
     });
     const $ = load(response.body);
