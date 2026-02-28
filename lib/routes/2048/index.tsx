@@ -169,7 +169,7 @@ async function handler(ctx) {
 
                 const downloadLink = content('#read_tpc').first().find('a').last();
                 const copyLink = content('#copytext')?.first()?.text();
-                if (downloadLink?.text()?.startsWith('http') && /bt\.azvmw\.com$/.test(new URL(downloadLink.text()).hostname)) {
+                if (new URL(downloadLink.text()).hostname === 'bt.azvmw.com') {
                     const torrentResponse = await ofetch(downloadLink.text());
 
                     const torrent = load(torrentResponse);

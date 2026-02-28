@@ -1,3 +1,5 @@
+// oxlint-disable unicorn/prefer-math-trunc
+// oxlint-disable no-unused-vars
 /* eslint-disable prefer-rest-params */
 /* eslint-disable default-case */
 /* eslint-disable unicorn/consistent-function-scoping */

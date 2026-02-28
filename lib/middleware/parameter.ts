@@ -97,7 +97,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.link) {
                 let baseUrl = data.link;
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 item.link = new URL(item.link, baseUrl).href;
@@ -109,7 +109,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 let baseUrl = item.link || data.link;
 
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 $('script').remove();

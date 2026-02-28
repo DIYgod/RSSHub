@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';

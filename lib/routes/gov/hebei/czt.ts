@@ -46,7 +46,7 @@ async function handler(ctx) {
 
             return {
                 title: item.text(),
-                link: `${rootUrl}${/^\.\.\/\.\./.test(item.attr('href')) ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
+                link: `${rootUrl}${item.attr('href').startsWith('../..') ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
             };
         });
 

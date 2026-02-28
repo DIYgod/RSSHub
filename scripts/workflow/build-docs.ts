@@ -18,7 +18,7 @@ const foloAnalysis = await (
 ).json();
 const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
 const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
-    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
+    .toSorted((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
     .slice(0, 150);
 
 const __dirname = getCurrentPath(import.meta.url);

@@ -41,7 +41,7 @@ async function handler(ctx) {
             return {
                 title: item.text(),
                 pubDate: parseDate(pubDate),
-                link: /\.html$/.test(link) ? link : `${link}#${pubDate}`,
+                link: link.endsWith('.html') ? link : `${link}#${pubDate}`,
             };
         });
 

@@ -72,7 +72,7 @@ async function handler(ctx) {
 
     const items = data.map((item) => {
         let enclosure_url = item.playUrlHigh ?? item.playUrlLow;
-        enclosure_url = /\.m3u8$/.test(enclosure_url) ? item.downloadUrl : enclosure_url;
+        enclosure_url = enclosure_url.endsWith('.m3u8') ? item.downloadUrl : enclosure_url;
         const file_ext = new URL(enclosure_url).pathname.split('.').pop();
         const enclosure_type = file_ext ? `audio/${audio_types[file_ext]}` : '';
 
