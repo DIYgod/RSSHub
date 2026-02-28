@@ -118,7 +118,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (ordinary version)
-              uses: actions/attest-build-provenance@96278af6caaf10aea03fd8d33a09a777ca52d62f # v3.2.0
+              uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -132,7 +132,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/ordinary/${digest#sha256:}"
 
             - name: Upload digest (ordinary version)
-              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
               with:
                   name: digests-ordinary-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/ordinary/*
@@ -173,7 +173,7 @@ jobs:
                   outputs: type=image,compression=zstd,force-compression=true,push-by-digest=true,name-canonical=true,push=true
 
             - name: Attest (Chromium-bundled version)
-              uses: actions/attest-build-provenance@96278af6caaf10aea03fd8d33a09a777ca52d62f # v3.2.0
+              uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
               with:
                   subject-name: |
                       ${{ vars.DOCKER_USERNAME }}/${{ steps.repo-name.outputs.repo-name }}
@@ -187,7 +187,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/chromium/${digest#sha256:}"
 
             - name: Upload digest (Chromium-bundled version)
-              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
               with:
                   name: digests-chromium-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/chromium/*
@@ -220,7 +220,7 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Download digests (ordinary version)
-              uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+              uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
               with:
                   path: ${{ runner.temp }}/digests/ordinary
                   pattern: digests-ordinary-*
@@ -246,7 +246,7 @@ jobs:
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
             - name: Download digests (Chromium-bundled version)
-              uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+              uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
               with:
                   path: ${{ runner.temp }}/digests/chromium
                   pattern: digests-chromium-*

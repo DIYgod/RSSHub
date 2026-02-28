@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { getSignedHeader, header } from './utils';
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/people/answers/:id',
@@ -53,10 +53,9 @@ async function handler(ctx) {
     const data = response.data.data;
     const items = data.map((item) => {
         const title = item.question.title;
-        // let description = processImage(detail.content);
         const url = `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`;
         const author = item.author.name;
-        const description = item.content;
+        const description = processImage(item.content);
 
         return {
             title,
