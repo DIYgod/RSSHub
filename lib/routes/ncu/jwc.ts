@@ -1,7 +1,7 @@
-import { load } from 'cheerio';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -23,9 +23,9 @@ export const route: Route = {
         },
     ],
     name: '教务通知',
-    maintainers: ['ywh555hhh','jixiuweilan'],
+    maintainers: ['ywh555hhh', 'jixiuweilan'],
     handler,
-    url: 'jwc.ncu.edu.cn',
+    url: 'jwc.ncu.edu.cn/',
 };
 
 async function handler() {
@@ -55,7 +55,7 @@ async function handler() {
                 .find('.font-mono span')
                 .filter((_, e) => {
                     const cls = $(e).attr('class') || '';
-                    return cls.includes('md:inline') || cls.includes('md\\:inline');
+                    return cls.includes('md:inline') || cls.includes(String.raw`md\:inline`);
                 })
                 .text()
                 .trim();
