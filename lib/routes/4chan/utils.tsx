@@ -2,7 +2,9 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
+import timezone from '@/utils/timezone';
 
 const parseParams = (routeParams: string) => {
     const parsed = new URLSearchParams(routeParams);
@@ -20,7 +22,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
         author: `${thread.name} ${thread.trip ?? thread.no}`,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
         link: `/${board}/thread/${thread.no}`,
-        pubDate: new Date(thread.time * 1000).toUTCString(),
+        pubDate: timezone(parseDate(thread.time * 1000), +1),
         title: stripHTML(thread.sub ?? thread.com ?? ''),
     }));
 };
