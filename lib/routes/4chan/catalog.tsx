@@ -22,7 +22,10 @@ export const route: Route = {
     path: '/:board/catalog/:routeParams?',
     categories: ['social-media'],
     example: '/4chan/g/catalog',
-    parameters: { board: '4chan board' },
+    parameters: {
+        board: '4chan board',
+        routeParams: 'extra parameters, see the table above',
+    },
     features: {
         requirePuppeteer: false,
         antiCrawler: false,
@@ -30,20 +33,19 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Latest posts from 4chan board',
+    name: "Board's catalog",
     maintainers: ['heisenshark'],
-    handler,
     radar: [
         {
             source: ['boards.4chan.org/:board'],
             target: '/:board',
         },
     ],
-
     description: `Specify options (in the format of query string) in parameter \`routeParams\` to control some extra features for Tweets
 | Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |
 | \`showReplyCount\`            | Show number of replies of each thread in catalog | \`0\`/\`1\`/\`true\`/\`false\` | \`false\` |
 | \`showLastReplies\`            | Show last 5 replies of each thread | \`0\`/\`1\`/\`true\`/\`false\` | \`false\` |
 | \`revealSpoilers\`            | Don't wrap images tagged as spoilers | \`0\`/\`1\`/\`true\`/\`false\` | \`false\` |`,
+    handler,
 };

@@ -21,7 +21,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
         category: undefined,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
         link: `/${board}/thread/${thread.no}`,
-        pubDate: new Date(thread.time * 1000),
+        pubDate: new Date(thread.time * 1000).toUTCString(),
         title: stripHTML(thread.sub ?? thread.com ?? ''),
     }));
 };
