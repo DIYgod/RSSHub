@@ -20,7 +20,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
     return transformedData.map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
-        link: `http://boards.4chan.org/${board}/thread/${thread.no}`,
+        link: `https://boards.4chan.org/${board}/thread/${thread.no}`,
         pubDate: parseDate(thread.time * 1000),
         title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>')[0] ?? '', { allowedTags: [] }),
     }));
