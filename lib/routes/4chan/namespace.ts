@@ -5,4 +5,5 @@ export const namespace: Namespace = {
     url: '4chan.org',
     categories: ['social-media'],
     lang: 'en',
+    description: '',
 };

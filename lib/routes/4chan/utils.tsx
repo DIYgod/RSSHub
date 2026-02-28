@@ -48,13 +48,17 @@ function renderPost({ post, board, viewOptions }: { post: ChanPost; board: strin
     }
     media = (
         <>
-            {' '}
-            <br /> {media} <br />{' '}
+            <br /> {media} <br />
         </>
     );
     const renderedPost = (
         <>
-            {post.last_replies && viewOptions.includeReplyCount && <small>{post.replies} 💬</small>}
+            {post.last_replies && viewOptions.includeReplyCount && (
+                <>
+                    <small>{post.replies} 💬</small>
+                    <br />
+                </>
+            )}
             {raw(post.com ?? '')}
             {media}
             {viewOptions.includeLastReplies && post.last_replies?.map((n) => <div className="post reply">{renderPost({ post: n, board, viewOptions })}</div>)}
