@@ -27,11 +27,11 @@ jobs:
                   node-version: lts/*
                   cache: 'pnpm'
             - run: pnpm i
-            - name: Install Checkstyle to SARIF converter
-              run: pnpm i -g checkstyle-to-sarif
+            - name: Install oxlint to SARIF converter
+              run: pnpm i -g oxlint-json-to-sarif
             - name: Lint
               run: pnpm exec oxlint
-                  --format=checkstyle | checkstyle-to-sarif > oxlint-results.sarif
+                  --format=json | oxlint-json-to-sarif > oxlint-results.sarif
               continue-on-error: true
             - name: Upload analysis results to GitHub
               uses: github/codeql-action/upload-sarif@v4
