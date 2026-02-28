@@ -1,6 +1,6 @@
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 
-import config from '@/config';
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
