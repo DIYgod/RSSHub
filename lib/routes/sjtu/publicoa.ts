@@ -18,7 +18,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'JAAuthCookie',
-                description: 'JAAuthCookie, 登陆后提取自jaccount.sjtu.edu.cn',
+                description: '登录 jaccount.sjtu.edu.cn 后的 JAAuthCookie 值，可在浏览器开发工具的 Cookie 中找到',
             },
         ],
         requirePuppeteer: false,
