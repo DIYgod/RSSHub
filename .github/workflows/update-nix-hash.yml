@@ -1,0 +1,86 @@
+name: Update Nix Hash
+
+on:
+    pull_request:
+        paths:
+            - 'pnpm-lock.yaml'
+    push:
+        branches:
+            - master
+        paths:
+            - 'pnpm-lock.yaml'
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    update-hash:
+        # Only run on the upstream repo, not forks
+        if: github.repository_owner == 'DIYgod'
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - name: Checkout
+              uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  ref: ${{ github.head_ref || github.ref }}
+
+            - name: Install Nix
+              uses: cachix/install-nix-action@v27
+              with:
+                  nix_path: nixpkgs=channel:nixos-unstable
+
+            - name: Update Nix flake hash
+              id: update-hash
+              run: |
+                  set -e
+
+                  # Extract current hash
+                  CURRENT_HASH=$(grep -oP 'hash = "sha256-\K[^"]+' flake.nix || echo "")
+                  echo "Current hash: sha256-$CURRENT_HASH"
+
+                  # Set temporary invalid hash to trigger error
+                  sed -i 's/hash = "sha256-[^"]*";/hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";/' flake.nix
+
+                  # Build and capture the correct hash from error message
+                  NEW_HASH=$(nix build .# 2>&1 | grep "got:" | awk '{print $2}' | sed 's/sha256-//' || echo "")
+
+                  if [ -z "$NEW_HASH" ]; then
+                      echo "Failed to get new hash, hash may already be correct"
+                      git checkout flake.nix
+                      echo "hash_changed=false" >> $GITHUB_OUTPUT
+                      exit 0
+                  fi
+
+                  # Update with correct hash
+                  sed -i "s/hash = \"sha256-[^\"]*\";/hash = \"sha256-$NEW_HASH\";/" flake.nix
+
+                  if [ "$CURRENT_HASH" = "$NEW_HASH" ]; then
+                      echo "Hash unchanged"
+                      echo "hash_changed=false" >> $GITHUB_OUTPUT
+                  else
+                      echo "Hash updated from sha256-$CURRENT_HASH to sha256-$NEW_HASH"
+                      echo "hash_changed=true" >> $GITHUB_OUTPUT
+                      echo "new_hash=sha256-$NEW_HASH" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Commit and push if changed
+              if: steps.update-hash.outputs.hash_changed == 'true'
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git add flake.nix
+                  git commit -m "chore(nix): update dependencies hash to ${{ steps.update-hash.outputs.new_hash }}"
+                  git push
+
+            - name: Comment on PR
+              if: github.event_name == 'pull_request' && steps.update-hash.outputs.hash_changed == 'true'
+              uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
+              with:
+                  message: |
+                      🤖 Automatically updated Nix flake hash to match `pnpm-lock.yaml` changes.
+
+                      New hash: `${{ steps.update-hash.outputs.new_hash }}`
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
