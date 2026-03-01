@@ -4,14 +4,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 
-const rootUrl = 'https://www.iwara.tv';
-const apiRootUrl = 'https://apiq.iwara.tv';
-const imageRootUrl = 'https://i.iwara.tv';
-
-const typeMap = {
-    video: 'Videos',
-    image: 'Images',
-};
+import { apiqRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const sortMap = {
     date: 'Latest',
@@ -25,24 +18,6 @@ const ratingMap = {
     all: 'All',
     general: 'General',
     ecchi: 'Ecchi',
-};
-
-const parseThumbnail = (type, item) => {
-    if (type === 'image') {
-        return item.thumbnail ? `<img src="${imageRootUrl}/image/original/${item.thumbnail.id}/${item.thumbnail.name}">` : '';
-    }
-
-    if (item.embedUrl === null) {
-        return item.file ? `<img src="${imageRootUrl}/image/original/${item.file.id}/thumbnail-${String(item.thumbnail).padStart(2, '0')}.jpg">` : '';
-    }
-
-    // regex borrowed from https://stackoverflow.com/a/3726073
-    const match = /https?:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(&(amp;)?[\w=?]*)?/.exec(item.embedUrl);
-    if (match) {
-        return `<img src="${imageRootUrl}/image/embed/original/youtube/${match[1]}">`;
-    }
-
-    return '';
 };
 
 export const route: Route = {
@@ -78,7 +53,7 @@ async function handler(ctx) {
     const { type = 'video', sort = 'date', rating = 'ecchi' } = ctx.req.param();
 
     const limit = ctx.req.query('limit') || 32;
-    const url = `${apiRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
+    const url = `${apiqRootUrl}/${type === 'video' ? 'videos' : 'images'}?sort=${sort}&rating=${rating}&limit=${limit}`;
 
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
