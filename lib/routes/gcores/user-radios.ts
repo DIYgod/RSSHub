@@ -11,6 +11,74 @@ import { parseContent } from './parser';
 import { renderDescription } from './templates/description';
 import { baseUrl, imageBaseUrl } from './util';
 
+const buildAuthors = (relationships: any, included: any[]): DataItem['author'] => {
+    const authorObj = relationships?.user?.data;
+    const authorIncluded = authorObj ? included.find((i) => i.type === authorObj.type && i.id === authorObj.id) : undefined;
+
+    return authorIncluded
+        ? [
+              {
+                  name: authorIncluded.attributes?.nickname,
+                  url: authorIncluded.id ? new URL(`users/${authorIncluded.id}`, baseUrl).href : undefined,
+                  avatar: authorIncluded.thumb ? new URL(authorIncluded.thumb, imageBaseUrl).href : undefined,
+              },
+          ]
+        : undefined;
+};
+
+const buildEnclosure = (attributes: any, relationships: any, included: any[], image: string | undefined, title: string | undefined) => {
+    const mediaAttrs = included.find((i) => i.id === relationships.media?.data?.id)?.attributes;
+
+    let enclosureUrl: string | undefined;
+    let enclosureType: string | undefined;
+
+    if (attributes['speech-path']) {
+        enclosureUrl = new URL(`uploads/audio/${attributes['speech-path']}`, 'https://alioss.gcores.com').href;
+        enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+    } else if (mediaAttrs && mediaAttrs.audio) {
+        enclosureUrl = mediaAttrs.audio;
+        enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
+    }
+
+    if (!enclosureUrl) {
+        return {};
+    }
+
+    const enclosureLength: number = attributes.duration ? Number(attributes.duration) : 0;
+
+    return {
+        enclosure_url: enclosureUrl,
+        enclosure_type: enclosureType,
+        enclosure_title: title,
+        enclosure_length: enclosureLength,
+        itunes_duration: enclosureLength,
+        itunes_item_image: image,
+    };
+};
+
+const buildDescription = (attributes: any, title: string | undefined, enclosureUrl?: string, enclosureType?: string) =>
+    renderDescription({
+        images: attributes.cover
+            ? [
+                  {
+                      src: new URL(attributes.cover, imageBaseUrl).href,
+                      alt: title,
+                  },
+              ]
+            : undefined,
+        audios:
+            enclosureType?.startsWith('audio') && enclosureUrl
+                ? [
+                      {
+                          src: enclosureUrl,
+                          type: enclosureType,
+                      },
+                  ]
+                : undefined,
+        intro: attributes.desc || attributes.excerpt,
+        description: attributes.content ? parseContent(JSON.parse(attributes.content)) : undefined,
+    });
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
@@ -55,99 +123,32 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const attributes = item.attributes;
         const relationships = item.relationships;
 
-        const title: string = attributes.title;
+        const title = attributes.title;
         const pubDate: number | string = attributes['published-at'];
-        const linkUrl: string = `radios/${item.id}`;
-
-        const authorObj = relationships?.user?.data;
-        const authorIncluded = authorObj ? included.find((i) => i.type === authorObj.type && i.id === authorObj.id) : undefined;
-        const authors: DataItem['author'] = authorIncluded
-            ? [
-                  {
-                      name: authorIncluded.attributes?.nickname,
-                      url: authorIncluded.id ? new URL(`users/${authorIncluded.id}`, baseUrl).href : undefined,
-                      avatar: authorIncluded.thumb ? new URL(authorIncluded.thumb, imageBaseUrl).href : undefined,
-                  },
-              ]
-            : undefined;
-
-        const guid: string = `gcores-${item.id}`;
+        const linkUrl = new URL(`radios/${item.id}`, baseUrl).href;
         const image: string | undefined = (attributes.cover ?? attributes.thumb) ? new URL(attributes.cover ?? attributes.thumb, imageBaseUrl).href : undefined;
+        const authors = buildAuthors(relationships, included);
+        const enclosure = buildEnclosure(attributes, relationships, included, image, title);
+        const description = buildDescription(attributes, title, enclosure.enclosure_url, enclosure.enclosure_type);
 
-        let processedItem: DataItem = {
-            title,
+        return {
+            title: title ?? $(description).text(),
             pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: new URL(linkUrl, baseUrl).href,
+            link: linkUrl,
             author: authors,
-            guid,
-            id: guid,
+            guid: `gcores-${item.id}`,
+            id: `gcores-${item.id}`,
             image,
             banner: image,
             updated: pubDate ? parseDate(pubDate) : undefined,
             language,
-        };
-
-        // 处理音频
-        let enclosureUrl: string | undefined;
-        let enclosureType: string | undefined;
-
-        const mediaAttrs = included.find((i) => i.id === relationships.media?.data?.id)?.attributes;
-
-        if (attributes['speech-path']) {
-            enclosureUrl = new URL(`uploads/audio/${attributes['speech-path']}`, 'https://alioss.gcores.com').href;
-            enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
-        } else if (mediaAttrs && mediaAttrs.audio) {
-            enclosureUrl = mediaAttrs.audio;
-            enclosureType = `audio/${enclosureUrl?.split(/\./).pop()}`;
-        }
-
-        if (enclosureUrl) {
-            const enclosureLength: number = attributes.duration ? Number(attributes.duration) : 0;
-
-            processedItem = {
-                ...processedItem,
-                enclosure_url: enclosureUrl,
-                enclosure_type: enclosureType,
-                enclosure_title: title,
-                enclosure_length: enclosureLength,
-                itunes_duration: enclosureLength,
-                itunes_item_image: image,
-            };
-        }
-
-        const description: string = renderDescription({
-            images: attributes.cover
-                ? [
-                      {
-                          src: new URL(attributes.cover, imageBaseUrl).href,
-                          alt: title,
-                      },
-                  ]
-                : undefined,
-            audios:
-                enclosureType?.startsWith('audio') && enclosureUrl
-                    ? [
-                          {
-                              src: enclosureUrl,
-                              type: enclosureType,
-                          },
-                      ]
-                    : undefined,
-            intro: attributes.desc || attributes.excerpt,
-            description: attributes.content ? parseContent(JSON.parse(attributes.content)) : undefined,
-        });
-
-        processedItem = {
-            ...processedItem,
-            title: title ?? $(description).text(),
             description,
             content: {
                 html: description,
                 text: description,
             },
+            ...enclosure,
         };
-
-        return processedItem;
     });
 
     return {

@@ -59,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
               ]
             : undefined;
 
-        const guid: string = `gcores-${item.type}-${item.id}`;
+        const guid = `gcores-${item.type}-${item.id}`;
         const image: string | undefined = (attributes.cover ?? attributes.thumb) ? new URL(attributes.cover ?? attributes.thumb, imageBaseUrl).href : undefined;
 
         const description: string = renderDescription({
