@@ -329,8 +329,8 @@ async function handler(ctx) {
             link: `https://www.reuters.com${section_id}`,
             item: items,
         };
-    } catch (error) {
-        if (!(error?.name === "FetchError")) throw error;
+    } catch (error: any) {
+        if (!(error?.name === 'FetchError')) throw error;
         // Fallback to arc outboundfeeds if API fails
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 
