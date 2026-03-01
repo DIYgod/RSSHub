@@ -1542,6 +1542,7 @@ export type RoutePath =
   | `/ithome/tag/:name`
   | `/ithome/tw/feeds/:category`
   | `/ithome/zt/:id?`
+  | `/iwara/ranking/:type?/:sort?/:rating?`
   | `/iwara/subscriptions`
   | `/iwara/users/:username/:type?`
   | `/ixigua/user/video/:uid/:disableEmbed?`

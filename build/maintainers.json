@@ -4719,6 +4719,9 @@
   "/iwara/users/:username/:type?": [
     "Fatpandac"
   ],
+  "/iwara/ranking/:type?/:sort?/:rating?": [
+    "CaoMeiYouRen233"
+  ],
   "/iwara/subscriptions": [
     "FeCCC"
   ],
