@@ -9,14 +9,18 @@ import { SUB_NAME_PREFIX, SUB_URL } from './const';
 
 export const route: Route = {
     path: '/cat/:cat{.+}?',
+    parameters: {
+        cat: '默认值为 `8kasianidol`，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为 /8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f。',
+    },
+    example: '/8kcos/cat/8kasianidol',
     radar: [
         {
             source: ['8kcosplay.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '分类',
+    maintainers: ['KotoriK'],
     handler,
     url: '8kcosplay.com/',
     features: {
