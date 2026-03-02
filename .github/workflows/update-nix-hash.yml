@@ -1,9 +1,6 @@
 name: Update Nix Hash
 
 on:
-    pull_request:
-        paths:
-            - 'pnpm-lock.yaml'
     push:
         branches:
             - master
@@ -12,7 +9,6 @@ on:
 
 permissions:
     contents: write
-    pull-requests: write
 
 jobs:
     update-hash:
@@ -25,7 +21,6 @@ jobs:
               uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  ref: ${{ github.head_ref || github.ref }}
 
             - name: Install Nix
               uses: cachix/install-nix-action@v27
@@ -70,17 +65,7 @@ jobs:
               if: steps.update-hash.outputs.hash_changed == 'true'
               run: |
                   git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
                   git add flake.nix
                   git commit -m "chore(nix): update dependencies hash to ${{ steps.update-hash.outputs.new_hash }}"
                   git push
-
-            - name: Comment on PR
-              if: github.event_name == 'pull_request' && steps.update-hash.outputs.hash_changed == 'true'
-              uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
-              with:
-                  message: |
-                      🤖 Automatically updated Nix flake hash to match `pnpm-lock.yaml` changes.
-
-                      New hash: `${{ steps.update-hash.outputs.new_hash }}`
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
