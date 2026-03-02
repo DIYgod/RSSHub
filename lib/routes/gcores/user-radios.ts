@@ -82,35 +82,18 @@ const buildDescription = (attributes: any, title: string | undefined, enclosureU
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
-    const excludeAlbums = ctx.req.query('exclude_albums') ?? '';
 
     const targetUrl = new URL(`users/${id}/content?tab=radios`, baseUrl).href;
     const apiUrl = new URL(`gapi/v1/users/${id}/radios`, baseUrl).href;
 
-    // 如果需要排除专辑，获取更多数据以确保过滤后仍有足够的项目
-    const fetchLimit = excludeAlbums ? Math.min(limit * 3, 100) : limit;
-
     const query = {
-        'page[limit]': fetchLimit,
+        'page[limit]': limit,
         sort: '-published-at',
-        include: excludeAlbums ? 'user,media,albums' : 'user,media',
+        include: 'user,media,albums',
     };
 
     const response = await ofetch(apiUrl, { query });
-    let data = response.data;
-
-    // 如果需要排除专辑，先过滤
-    if (excludeAlbums) {
-        const excludeAlbumIds = new Set(excludeAlbums.split(',').map((aid) => aid.trim()));
-        data = data.filter((item) => {
-            const albumsData = item.relationships?.albums?.data || [];
-            // 如果这个播客不属于任何一个要排除的专辑，就保留
-            return !albumsData.some((album) => excludeAlbumIds.has(album.id));
-        });
-    }
-
-    // 限制数量
-    data = data.slice(0, limit);
+    const data = response.data;
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
@@ -131,11 +114,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const enclosure = buildEnclosure(attributes, relationships, included, image, title);
         const description = buildDescription(attributes, title, enclosure.enclosure_url, enclosure.enclosure_type);
 
+        const albumNames = (relationships?.albums?.data || []).map((album) => included.find((i) => i.type === album.type && i.id === album.id)?.attributes?.title).filter(Boolean);
+
         return {
             title: title ?? $(description).text(),
             pubDate: pubDate ? parseDate(pubDate) : undefined,
             link: linkUrl,
             author: authors,
+            category: albumNames.length > 0 ? albumNames : undefined,
             guid: `gcores-${item.id}`,
             id: `gcores-${item.id}`,
             image,
@@ -174,15 +160,9 @@ export const route: Route = {
         id: {
             description: '用户 ID，可在用户主页 URL 中找到',
         },
-        exclude_albums: {
-            description: '要排除的专辑 ID，多个用逗号分隔，可在专辑页面 URL 中找到',
-            default: '',
-        },
     },
     description: `::: tip
 若订阅用户 [这样重这样轻](https://www.gcores.com/users/31418) 发布的播客，网址为 \`https://www.gcores.com/users/31418\`，请截取 \`https://www.gcores.com/users/\` 之后的部分 \`31418\` 作为 \`id\` 参数填入，此时目标路由为 [\`/gcores/users/31418/radios\`](https://rsshub.app/gcores/users/31418/radios)。
-
-若要排除特定专辑的播客，可以添加 \`exclude_albums\` 参数。例如排除蜉蝣天地（专辑 ID 为 332），路由为 \`/gcores/users/31418/radios?exclude_albums=332\`。支持排除多个专辑，用逗号分隔，如 \`?exclude_albums=332,123\`。
 :::
 `,
     categories: ['game'],
