@@ -44,10 +44,15 @@ async function handler(ctx) {
         title: `${SUB_NAME_PREFIX}-${$('span[property=name]:not(.hide)').text()}`,
         link: url,
         item: await Promise.all(
-            (limit ? itemRaw.slice(0, limit) : itemRaw).map((e) => {
-                const { href } = load(e)('h2 > a')[0].attribs;
-                return cache.tryGet(href, () => loadArticle(href));
-            })
+            (limit ? itemRaw.slice(0, limit) : itemRaw)
+                .map((e) => {
+                    const linkEl = load(e)('h3.item-title > a')[0];
+                    if (!linkEl?.attribs?.href) {
+                        return null;
+                    }
+                    return cache.tryGet(linkEl.attribs.href, () => loadArticle(linkEl.attribs.href));
+                })
+                .filter(Boolean)
         ),
     };
 }
