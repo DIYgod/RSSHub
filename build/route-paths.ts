@@ -91,7 +91,7 @@ export type RoutePath =
   | `/81/81rc/:category{.+}?`
   | `/8264/list/:id?`
   | `/8kcos/`
-  | `/8kcos/cat/:cat{.+}?`
+  | `/8kcos/cat/:cat?`
   | `/8kcos/tag/:tag`
   | `/8world*`
   | `/91porn/:lang?`
