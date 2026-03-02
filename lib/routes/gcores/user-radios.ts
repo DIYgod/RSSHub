@@ -198,7 +198,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gcores.com/users/:id/content', 'www.gcores.com/users/:id'],
-            target: '/gcores/users/:id/radios',
+            target: '/users/:id/radios',
         },
     ],
     view: ViewType.Audios,
