@@ -135,7 +135,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gcores.com/users/:id/talks'],
-            target: '/gcores/users/:id/talks',
+            target: '/users/:id/talks',
         },
     ],
     view: ViewType.SocialMedia,
