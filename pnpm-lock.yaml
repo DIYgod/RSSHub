@@ -44,8 +44,8 @@ importers:
         specifier: 1.2.2
         version: 1.2.2(hono@4.12.3)(zod@4.3.6)
       '@jocmp/mercury-parser':
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.0.4
+        version: 3.0.4
       '@notionhq/client':
         specifier: 5.11.0
         version: 5.11.0
@@ -1146,8 +1146,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.0.3':
-    resolution: {integrity: sha512-3kkhQlEDKUTKF+VtS5nwmL0McKekzaVqC7tsN8/kSf+xvSJnvvq4JT4R6JkzLGAa/9LzSpHmVXXC3C/DW3SFLg==}
+  '@jocmp/mercury-parser@3.0.4':
+    resolution: {integrity: sha512-DbsDWjpbDKB0vP2tlAOl6DVHy9I+CIxaY5kK3YNzHhJuf2f29DXFQW4EJVZqsov2VPypqiS48O5bCbQxCYgWNQ==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -6575,14 +6575,14 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jocmp/mercury-parser@3.0.3':
+  '@jocmp/mercury-parser@3.0.4':
     dependencies:
       '@babel/runtime-corejs2': 7.28.6
       cheerio: 1.2.0
       dayjs: 1.11.19
       difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
-      iconv-lite: 0.6.3
+      iconv-lite: 0.7.2
       postman-request: 2.88.1-postman.48
       string-direction: 0.1.2
       turndown: 7.2.2
