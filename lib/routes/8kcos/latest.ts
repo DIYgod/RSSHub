@@ -1,18 +1,11 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 
-import loadArticle from './article';
-import { SUB_NAME_PREFIX, SUB_URL } from './const';
-
-const url = SUB_URL;
+import { getPosts, SUB_NAME_PREFIX, SUB_URL } from './utils';
 
 export const route: Route = {
     path: '/',
     categories: ['picture'],
-    example: '/8kcos/',
+    example: '/8kcos',
     parameters: {},
     features: {
         requireConfig: false,
@@ -26,7 +19,6 @@ export const route: Route = {
     radar: [
         {
             source: ['8kcosplay.com/'],
-            target: '',
         },
     ],
     name: '最新',
@@ -36,24 +28,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit'));
-    const response = await got(url);
-    const itemRaw = load(response.body)('ul.post-loop li.item').toArray();
+    const limit = Number.parseInt(ctx.req.query('limit') ?? 10, 10);
+    const items = await getPosts(limit);
     return {
         title: `${SUB_NAME_PREFIX}-最新`,
-        link: url,
-        item:
-            response.body &&
-            (await Promise.all(
-                (limit ? itemRaw.slice(0, limit) : itemRaw)
-                    .map((e) => {
-                        const linkEl = load(e)('h3.item-title > a')[0];
-                        if (!linkEl?.attribs?.href) {
-                            return null;
-                        }
-                        return cache.tryGet(linkEl.attribs.href, () => loadArticle(linkEl.attribs.href));
-                    })
-                    .filter(Boolean)
-            )),
+        link: SUB_URL,
+        item: items,
     };
 }
