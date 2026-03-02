@@ -44,7 +44,7 @@ const buildEnclosure = (attributes: any, relationships: any, included: any[], im
         return {};
     }
 
-    const enclosureLength: number = attributes.duration ? Number(attributes.duration) : 0;
+    const enclosureLength = attributes.duration ? Number(attributes.duration) : 0;
 
     return {
         enclosure_url: enclosureUrl,
@@ -81,11 +81,11 @@ const buildDescription = (attributes: any, title: string | undefined, enclosureU
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
-    const excludeAlbums: string = ctx.req.query('exclude_albums') ?? '';
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const excludeAlbums = ctx.req.query('exclude_albums') ?? '';
 
-    const targetUrl: string = new URL(`users/${id}/content?tab=radios`, baseUrl).href;
-    const apiUrl: string = new URL(`gapi/v1/users/${id}/radios`, baseUrl).href;
+    const targetUrl = new URL(`users/${id}/content?tab=radios`, baseUrl).href;
+    const apiUrl = new URL(`gapi/v1/users/${id}/radios`, baseUrl).href;
 
     // 如果需要排除专辑，获取更多数据以确保过滤后仍有足够的项目
     const fetchLimit = excludeAlbums ? Math.min(limit * 3, 100) : limit;
@@ -167,7 +167,7 @@ export const route: Route = {
     path: '/users/:id/radios',
     name: '用户播客',
     url: 'www.gcores.com',
-    maintainers: [],
+    maintainers: ['DzmingLi'],
     handler,
     example: '/gcores/users/31418/radios',
     parameters: {

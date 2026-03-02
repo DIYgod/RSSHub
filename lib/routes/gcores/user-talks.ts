@@ -13,10 +13,10 @@ import { baseUrl, imageBaseUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const targetUrl: string = new URL(`users/${id}/talks`, baseUrl).href;
-    const apiUrl: string = new URL(`gapi/v1/users/${id}/talks`, baseUrl).href;
+    const targetUrl = new URL(`users/${id}/talks`, baseUrl).href;
+    const apiUrl = new URL(`gapi/v1/users/${id}/talks`, baseUrl).href;
 
     // 获取更多数据以确保过滤后仍有足够的项目
     const fetchLimit = Math.min(limit * 2, 100);
@@ -62,7 +62,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const guid = `gcores-${item.type}-${item.id}`;
         const image: string | undefined = (attributes.cover ?? attributes.thumb) ? new URL(attributes.cover ?? attributes.thumb, imageBaseUrl).href : undefined;
 
-        const description: string = renderDescription({
+        const description = renderDescription({
             images: attributes.cover
                 ? [
                       {
@@ -110,7 +110,7 @@ export const route: Route = {
     path: '/users/:id/talks',
     name: '用户动态',
     url: 'www.gcores.com',
-    maintainers: [],
+    maintainers: ['DzmingLi'],
     handler,
     example: '/gcores/users/31418/talks',
     parameters: {
