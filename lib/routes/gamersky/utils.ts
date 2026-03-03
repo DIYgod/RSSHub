@@ -60,7 +60,7 @@ export const getUserArticleList = async (userId: string) => {
         })}`,
         {
             parseResponse: (txt) =>
-                JSON.parse(txt.substring(1, txt.length - 2)),
+                JSON.parse(txt.slice(1, txt.length - 2)),
         },
     );
     return response.body;
