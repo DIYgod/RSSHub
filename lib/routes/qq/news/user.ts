@@ -57,7 +57,7 @@ async function handler(ctx) {
 
     if (detail) {
         news = await Promise.all(
-            response.newslist.map(async (item) =>
+            response.newslist.map((item) =>
                 cache.tryGet(item.id, async () => {
                     const description =
                         item.articletype === "0"
