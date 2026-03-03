@@ -3339,6 +3339,12 @@
   "/gcores/topics/recommend": [
     "nczitzk"
   ],
+  "/gcores/users/:id/radios": [
+    "DzmingLi"
+  ],
+  "/gcores/users/:id/talks": [
+    "DzmingLi"
+  ],
   "/gcores/videos": [
     "nczitzk"
   ],

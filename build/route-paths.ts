@@ -1081,6 +1081,8 @@ export type RoutePath =
   | `/gcores/tags/:id/:tab?`
   | `/gcores/topics/:id/recommend`
   | `/gcores/topics/recommend`
+  | `/gcores/users/:id/radios`
+  | `/gcores/users/:id/talks`
   | `/gcores/videos`
   | `/gdsrx/:id?`
   | `/gdufs/news`
