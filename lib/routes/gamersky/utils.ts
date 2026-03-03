@@ -101,28 +101,27 @@ export const getUserArticleList = async (userId: string) => {
             jsondata: JSON.stringify({ pageIndex: 1, pageSize: 20, userId }),
         })}`,
         {
-            parseResponse: (txt) =>
-                JSON.parse(txt.slice(1, -2)),
-        },
+            parseResponse: (txt) => JSON.parse(txt.slice(1, -2)),
+        }
     );
     return response.body;
 };
 
 export const parseUserArticleList = (body: string) => {
     const $ = load(body);
-    const list = $(".cmt-list");
-    const info = list.find(".uname").first();
+    const list = $('.cmt-list');
+    const info = list.find('.uname').first();
     return {
         uname: info.text(),
-        link: info.attr("href"),
+        link: info.attr('href'),
         list: list.toArray().map((item) => {
             const e = $(item);
-            const title = e.find(".qzcmt-content-tit a");
+            const title = e.find('.qzcmt-content-tit a');
             return {
                 title: title.text(),
-                link: title.attr("href"),
-                pubDate: parseDate(e.attr("data-time")!),
-                description: e.find(".qzcmt-content-txt span").text(),
+                link: title.attr('href'),
+                pubDate: parseDate(e.attr('data-time')!),
+                description: e.find('.qzcmt-content-txt span').text(),
             };
         }) as DataItem[],
     };
@@ -132,7 +131,7 @@ export const getUserArticle = (item: DataItem) =>
     cache.tryGet(item.link!, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
-        item.description = $(".qzcmt-content-txt").html() || item.description;
+        item.description = $('.qzcmt-content-txt').html() || item.description;
         return item;
     });
 
