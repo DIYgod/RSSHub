@@ -5783,6 +5783,19 @@
       }
     ]
   },
+  "aschmelyun.com": {
+    "_name": "Andrew Schmelyun",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/aschmelyun/blog"
+      }
+    ]
+  },
   "asiafruitchina.net": {
     "_name": "亚洲水果",
     ".": [
