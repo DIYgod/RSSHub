@@ -33,8 +33,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ["https://news.qq.com/omn/author/:uid"],
-            target: "/news/:uid",
+            source: ["news.qq.com/omn/author/:uid"],
+            target: "/qq/news/:uid",
         },
     ],
     name: "用户主页列表",
