@@ -13,6 +13,8 @@ export const route: Route = {
     categories: ['government'],
     example: '/meritalk/articles',
     parameters: { nums: 'Page views' },
+    description: `It is recommended that the number of nums is less than or equal to 3,
+    otherwise it may trigger Cloudflare anti-bot protection.`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,10 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    // radar: {
-    //     source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
-    //     target: '/issue/:user/:repo',
-    // },
+    radar: [
+        {
+            source: ['meritalk.com/articles/'],
+            target: '/articles',
+        },
+    ],
     name: 'Latest Articles',
     maintainers: ['superguyDiluc'],
     handler,
@@ -34,56 +38,38 @@ async function handler(ctx: Context) {
     const baseUrl = 'https://www.meritalk.com';
     const nums = Number.parseInt(ctx.req.param('nums')) || 1;
     const urls = Array.from({ length: nums }, (_, i) => `${baseUrl}/articles/page/${i + 1}/`);
-
-    // const { data: response } = await got(baseUrl);
-    // const $ = load(response);
-
-    // const list = $('div.news-block-sm')
-    //     .toArray()
-    //     .map((item) => {
-    //         const $item = $(item);
-    //         const a = $item.find('.news-block-title a');
-    //         const link = a.attr('href');
-    //         if (!link) {
-    //             throw new Error('The link might have changed.');
-    //         }
-    //         return {
-    //             title: a.text().trim(),
-    //             link: link,
-    //             pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
-    //             category: $item
-    //                 .find('.category-header-name a')
-    //                 .toArray()
-    //                 .map((elem) => $(elem).text()),
-    //             description: '',
-    //         };
-    //     });
+    const DELAY = 300;
 
     const lists = await Promise.all(
-        urls.map(async (url) => {
-            const { data: response } = await got(url);
-            const $ = load(response);
+        urls.map(async (url, index) => {
+            await new Promise((resolve) => setTimeout(resolve, index * DELAY));
+            try {
+                const { data: response } = await got(url);
+                const $ = load(response);
+                const items: any[] = [];
 
-            return $('div.news-block-sm')
-                .toArray()
-                .map((item) => {
+                $('div.news-block-sm').each((_, item) => {
                     const $item = $(item);
                     const a = $item.find('.news-block-title a');
                     const link = a.attr('href');
-                    if (!link) {
-                        throw new Error('The link might have changed.');
+                    if (link) {
+                        items.push({
+                            title: a.text().trim(),
+                            link: link,
+                            pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
+                            category: $item
+                                .find('.category-header-name a')
+                                .toArray()
+                                .map((elem) => $(elem).text()),
+                            description: '',
+                        });
                     }
-                    return {
-                        title: a.text().trim(),
-                        link: link,
-                        pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
-                        category: $item
-                            .find('.category-header-name a')
-                            .toArray()
-                            .map((elem) => $(elem).text()),
-                        description: '',
-                    };
                 });
+
+                return items;
+            } catch {
+                return [];
+            }
         })
     );
 
