@@ -12,10 +12,17 @@ interface idNameMap {
     nodeId: string;
     suffix?: string;
 }
+
 interface ArticleList {
     status: string;
     totalPages: number;
     body: string;
+}
+
+interface UserArticleList {
+    status: string;
+    body: string;
+    total: number;
 }
 
 export const getArticleList = async (nodeId) => {
@@ -87,6 +94,47 @@ export const getArticle = (item) =>
         item.description = content.html() || item.description;
         return item satisfies DataItem;
     }) as Promise<DataItem>;
+
+export const getUserArticleList = async (userId: string) => {
+    const response = await ofetch<UserArticleList>(
+        `https://i.gamersky.com/u/api/v2/GetUserContent?${new URLSearchParams({
+            jsondata: JSON.stringify({ pageIndex: 1, pageSize: 20, userId }),
+        })}`,
+        {
+            parseResponse: (txt) =>
+                JSON.parse(txt.slice(1, -2)),
+        },
+    );
+    return response.body;
+};
+
+export const parseUserArticleList = (body: string) => {
+    const $ = load(body);
+    const list = $(".cmt-list");
+    const info = list.find(".uname").first();
+    return {
+        uname: info.text(),
+        link: info.attr("href"),
+        list: list.toArray().map((item) => {
+            const e = $(item);
+            const title = e.find(".qzcmt-content-tit a");
+            return {
+                title: title.text(),
+                link: title.attr("href"),
+                pubDate: parseDate(e.attr("data-time")!),
+                description: e.find(".qzcmt-content-txt span").text(),
+            };
+        }) as DataItem[],
+    };
+};
+
+export const getUserArticle = (item: DataItem) =>
+    cache.tryGet(item.link!, async () => {
+        const response = await ofetch(item.link!);
+        const $ = load(response);
+        item.description = $(".qzcmt-content-txt").html() || item.description;
+        return item;
+    });
 
 export function mdTableBuilder(data: idNameMap[]) {
     const table = '|' + data.map((item) => `${item.type}|`).join('') + '\n|' + Array.from({ length: data.length }).fill('---|').join('') + '\n|' + data.map((item) => `${item.name}|`).join('') + '\n';
