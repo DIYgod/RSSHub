@@ -9,7 +9,8 @@ import got from '@/utils/got';
 const baseURL = 'https://freecomputerbooks.com/';
 
 async function cheerioLoad(url) {
-    return load((await got(url)).data);
+    const response = await got(url);
+    return load(response.data);
 }
 
 export const route: Route = {

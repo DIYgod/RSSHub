@@ -11,7 +11,14 @@
         "node": true
     },
     "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
-    "jsPlugins": ["@stylistic/eslint-plugin", { "name": "js-import-x", "specifier": "eslint-plugin-import-x" }, { "name": "n", "specifier": "eslint-plugin-n" }, "./eslint-plugins/no-then.js", "./eslint-plugins/nsfw-flag.js"],
+    "jsPlugins": [
+        "@stylistic/eslint-plugin",
+        { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
+        { "name": "n", "specifier": "eslint-plugin-n" },
+        "eslint-plugin-simple-import-sort",
+        "./eslint-plugins/no-then.js",
+        "./eslint-plugins/nsfw-flag.js"
+    ],
     "rules": {
         // #region --- ESLint js/recommended possible problems ---
         "constructor-super": "error",
@@ -463,11 +470,11 @@
         // oxfmt also handles import sorting
         "sort-imports": "off",
         "import-x/order": "off",
-        // "simple-import-sort/imports": "error",
-        // "simple-import-sort/exports": "error",
+        "simple-import-sort/imports": "error", // oxc doesn't sort named imports yet https://github.com/oxc-project/oxc/issues/13610
+        "simple-import-sort/exports": "error",
 
         "import-x/first": "error",
-        "js-import-x/newline-after-import": "error", // oxc native not yet implemented
+        "import-x-js/newline-after-import": "error", // oxc native not yet implemented
         "no-duplicate-imports": "off",
         "import-x/no-duplicates": "error",
 

@@ -68,7 +68,8 @@ export const route: Route = {
             items = await Promise.all(
                 items.map((item) =>
                     cache.tryGet(item.link!, async () => {
-                        const $ = load(await $get(item.link!));
+                        const html = await $get(item.link!);
+                        const $ = load(html);
                         item.description = $trim($('.text1[width="95%"] b').html()!);
                         return item;
                     })

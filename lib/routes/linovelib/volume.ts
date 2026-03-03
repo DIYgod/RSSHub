@@ -22,7 +22,8 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const { id } = ctx.req.param();
     const link = `https://www.linovelib.com/novel/${id}/catalog`;
-    const $ = load((await got(link)).data);
+    const response = await got(link);
+    const $ = load(response.data);
     return {
         title: `${$('.book-meta h1').text()} - 哔哩轻小说`,
         link,

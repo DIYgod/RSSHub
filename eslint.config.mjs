@@ -123,6 +123,10 @@ export default defineConfig([
                     selector: 'CallExpression[callee.property.name="catch"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]',
                     message: 'Usage of .catch(() => {}) is not allowed. Please handle the error appropriately.',
                 },
+                {
+                    selector: 'CallExpression[callee.name="load"] AwaitExpression > CallExpression',
+                    message: 'Do not use await in call expressions. Extract the result into a variable first.',
+                },
             ],
             /*
             'no-unneeded-ternary': 'error',

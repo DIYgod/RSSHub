@@ -36,7 +36,8 @@ async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 12;
 
     const link = getLink(category);
-    const $ = load(await get(link));
+    const html = await get(link);
+    const $ = load(html);
     const title = $('head>title').text();
     const description = $('head>meta[name="description"]').attr('content');
     const image = $('head>link[rel="apple-touch-icon"]').attr('href');

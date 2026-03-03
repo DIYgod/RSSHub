@@ -28,7 +28,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const $ = load(await ofetch(NEWS_LINK));
+    const html = await ofetch(NEWS_LINK);
+    const $ = load(html);
     const items = await Promise.all(
         $('.list__side_border li')
             .toArray()
@@ -43,7 +44,8 @@ async function handler() {
                         pubDate: timezone(parseDate($item.find('p span').first().text()), +9),
                         category: [category],
                         description: await cache.tryGet(link, async () => {
-                            const $detail = load(await ofetch(link));
+                            const detailHtml = await ofetch(link);
+                            const $detail = load(detailHtml);
                             return $detail('.contents_area__inner').html()!;
                         }),
                     } as DataItem;

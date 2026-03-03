@@ -62,7 +62,8 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
-                    const $ = load(await ofetch(item.link!));
+                    const html = await ofetch(item.link!);
+                    const $ = load(html);
                     const content = $('.list_cont');
 
                     item.title = content.find('.title').text();
