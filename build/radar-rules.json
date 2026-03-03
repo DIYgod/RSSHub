@@ -33346,8 +33346,7 @@
         "title": "教务通知",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
-          "/",
-          "/jwtz/index.htm"
+          "/"
         ],
         "target": "/ncu/jwc"
       }
