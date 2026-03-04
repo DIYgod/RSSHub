@@ -26,7 +26,7 @@ describe('GET /api/route/status', () => {
     it('returns 404 when cache is cold', async () => {
         mockHas.mockResolvedValue(false);
 
-        const response = await api.request('/route/status?path=/github/comments/DIYgod/RSSHub/20768');
+        const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
         expect(response.status).toBe(404);
 
         const data = await response.json();
@@ -44,7 +44,7 @@ describe('GET /api/route/status', () => {
             })
         );
 
-        const response = await api.request('/route/status?path=/github/comments/DIYgod/RSSHub/20768');
+        const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
         expect(response.status).toBe(200);
 
         const data = await response.json();
@@ -57,7 +57,7 @@ describe('GET /api/route/status', () => {
         (cacheModule.status as { available: boolean }).available = false;
 
         try {
-            const response = await api.request('/route/status?path=/github/comments/DIYgod/RSSHub/20768');
+            const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
             expect(response.status).toBe(503);
 
             const data = await response.json();
