@@ -38,8 +38,8 @@ importers:
         specifier: 4.3.1
         version: 4.3.1
       '@hono/node-server':
-        specifier: 1.19.9
-        version: 1.19.9(hono@4.12.3)
+        specifier: 1.19.10
+        version: 1.19.10(hono@4.12.3)
       '@hono/zod-openapi':
         specifier: 1.2.2
         version: 1.2.2(hono@4.12.3)(zod@4.3.6)
@@ -878,8 +878,8 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
 
-  '@hono/node-server@1.19.9':
-    resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
+  '@hono/node-server@1.19.10':
+    resolution: {integrity: sha512-hZ7nOssGqRgyV3FVVQdfi+U4q02uB23bpnYpdvNXkYTRRyWx84b7yf1ans+dnJ/7h41sGL3CeQTfO+ZGxuO+Iw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
@@ -6355,7 +6355,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@hono/node-server@1.19.9(hono@4.12.3)':
+  '@hono/node-server@1.19.10(hono@4.12.3)':
     dependencies:
       hono: 4.12.3
 
