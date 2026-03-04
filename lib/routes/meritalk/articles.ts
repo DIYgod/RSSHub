@@ -11,8 +11,8 @@ import { renderDescription } from './templates/description';
 export const route: Route = {
     path: '/articles/:nums?',
     categories: ['government'],
-    example: '/meritalk/articles',
-    parameters: { nums: 'Page views' },
+    example: '/meritalk/articles/2',
+    parameters: { nums: 'Number of pages' },
     description: `It is recommended that the number of nums is less than or equal to 3,
     otherwise it may trigger Cloudflare anti-bot protection.`,
     features: {
@@ -74,9 +74,11 @@ async function handler(ctx: Context) {
     );
 
     const list = lists.flat();
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string) : 30;
+    const limitedList = list.slice(0, limit);
 
     let items = await Promise.all(
-        list.map((item) =>
+        limitedList.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
