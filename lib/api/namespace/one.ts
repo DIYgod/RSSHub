@@ -16,13 +16,14 @@ const ParamsSchema = z.object({
 const route = createRoute({
     method: 'get',
     path: '/namespace/{namespace}',
+    description: 'Information about a namespace',
     tags: ['Namespace'],
     request: {
         params: ParamsSchema,
     },
     responses: {
         200: {
-            description: 'Information about a namespace',
+            description: 'Namespace registry data for a namespace',
         },
     },
 });
