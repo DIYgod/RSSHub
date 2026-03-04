@@ -8,9 +8,11 @@ import redis from './redis';
 
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
+    has: (key: string) => Promise<boolean> | boolean;
     set: (key: string, value?: string | Record<string, any>, maxAge?: number) => any;
 } = {
     get: () => null,
+    has: () => false,
     set: () => null,
 };
 
@@ -21,6 +23,7 @@ if (isWorker) {
     cacheModule = {
         init: () => null,
         get: () => null,
+        has: () => false,
         set: () => null,
         status: {
             available: false,
@@ -37,6 +40,13 @@ if (isWorker) {
             return value;
         }
     };
+    globalCache.has = async (key) => {
+        if (key && cacheModule.status.available && redisClient) {
+            const result = await redisClient.exists(key);
+            return result > 0;
+        }
+        return false;
+    };
     globalCache.set = cacheModule.set;
 } else if (config.cache.type === 'memory') {
     cacheModule = memory;
@@ -46,6 +56,12 @@ if (isWorker) {
         if (key && cacheModule.status.available && memoryCache) {
             return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
         }
+    };
+    globalCache.has = (key) => {
+        if (key && cacheModule.status.available && memoryCache) {
+            return memoryCache.has(key);
+        }
+        return false;
     };
     globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
         if (!value || value === 'undefined') {
@@ -62,6 +78,7 @@ if (isWorker) {
     cacheModule = {
         init: () => null,
         get: () => null,
+        has: () => false,
         set: () => null,
         status: {
             available: false,
