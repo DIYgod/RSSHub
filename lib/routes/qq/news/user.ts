@@ -1,7 +1,6 @@
 import type { DataItem, Route } from "@/types";
 import cache from "@/utils/cache";
 import ofetch from "@/utils/ofetch";
-import { parseDate } from "@/utils/parse-date";
 import { load } from "cheerio";
 
 interface NewsItem {
@@ -10,7 +9,7 @@ interface NewsItem {
     articletype: string;
     longtitle: string;
     url: string;
-    time: string;
+    timestamp: number;
     abstract: string;
     miniProShareImage: string;
 }
@@ -52,7 +51,8 @@ async function handler(ctx) {
         description: `<p>${item.abstract}</p><img src="${item.miniProShareImage}" />`,
         guid: item.id,
         link: item.url,
-        pubDate: parseDate(item.time),
+        author: item.uinnick,
+        pubDate: item.timestamp,
     }) satisfies DataItem);
 
     if (detail) {
@@ -61,14 +61,15 @@ async function handler(ctx) {
                 cache.tryGet(item.id, async () => {
                     const description =
                         item.articletype === "0"
-                            ? load(await ofetch(item.url))(".rich_media_content").html()!
+                            ? load(await ofetch(`https://news.qq.com/rain/a/${item.id}`))(".rich_media_content").html()!
                             : `<p>${item.abstract}</p><img src="${item.miniProShareImage}" /><h4>文章包含非文本内容，请在浏览器中打开查看</h4>`;
                     return {
                         title: item.longtitle,
                         description,
                         guid: item.id,
                         link: item.url,
-                        pubDate: parseDate(item.time),
+                        author: item.uinnick,
+                        pubDate: item.timestamp,
                     } satisfies DataItem;
                 }),
             ),
