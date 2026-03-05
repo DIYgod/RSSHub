@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -31,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx: Context) {
+async function handler() {
     const baseUrl = 'https://www.meritalk.com/articles';
 
     const { data: response } = await got(baseUrl);
@@ -43,14 +42,9 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const a = $item.find('.news-block-title a');
             const link = a.attr('href');
-
-            if (!link) {
-                return null;
-            }
-
             return {
                 title: a.text().trim(),
-                link: link,
+                link: link as string,
                 pubDate: parseDate($item.find('time[datetime]').attr('datetime') as string),
                 category: $item
                     .find('.category-header-name a')
@@ -58,16 +52,12 @@ async function handler(ctx: Context) {
                     .map((elem) => $(elem).text()),
                 description: '',
             };
-        })
-        .filter((item) => item !== null);
-
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit') as string, 10) : 30;
-    const itemsToFetch = list.slice(0, limit);
+        });
 
     const items = await Promise.all(
-        itemsToFetch.map((item) =>
-            cache.tryGet(item!.link, async () => {
-                const { data: response } = await got(item!.link);
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 const featuredImage = $('.single-featured-image').first().html() || '';
@@ -82,12 +72,9 @@ async function handler(ctx: Context) {
         )
     );
 
-    const validItems = items.filter((item) => item !== null) as any[];
-    validItems.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
-
     return {
         title: 'News – MeriTalk',
         link: 'https://www.meritalk.com/articles/',
-        item: validItems,
+        item: items,
     };
 }
