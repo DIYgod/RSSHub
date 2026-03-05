@@ -52,7 +52,7 @@ async function handler(ctx) {
         guid: item.id,
         link: item.url,
         author: item.uinnick,
-        pubDate: item.timestamp,
+        pubDate: item.timestamp * 1000,
     }) satisfies DataItem);
 
     if (detail) {
@@ -69,7 +69,7 @@ async function handler(ctx) {
                         guid: item.id,
                         link: item.url,
                         author: item.uinnick,
-                        pubDate: item.timestamp,
+                        pubDate: item.timestamp * 1000,
                     } satisfies DataItem;
                 }),
             ),
