@@ -4,6 +4,7 @@ import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const BASE_URL = new URL('https://openai.com');
 
@@ -60,7 +61,7 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
 
             return cache.tryGet(`openai:news:${id}`, async () => {
                 const title = $(element).find('title').text();
-                const pubDate = $(element).find('pubDate').text();
+                const pubDate = parseDate($(element).find('pubDate').text());
                 const link = $(element).find('link').text();
 
                 const { content, categories, author } = await fetchArticleDetails(link);
