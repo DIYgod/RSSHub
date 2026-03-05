@@ -1838,6 +1838,7 @@ export type RoutePath =
   | `/melonbooks/search/:query?`
   | `/mercari/:sort/:order/:status/:keyword`
   | `/mercari/search/:query`
+  | `/meritalk/articles`
   | `/meta/ai/blog`
   | `/metacritic/:type?/:sort?/:filter?`
   | `/meteoblue/weathernews`

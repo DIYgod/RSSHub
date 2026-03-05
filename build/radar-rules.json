@@ -31928,6 +31928,19 @@
       }
     ]
   },
+  "meritalk.com": {
+    "_name": "MeriTalk",
+    ".": [
+      {
+        "title": "Latest Articles",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/articles/"
+        ],
+        "target": "/meritalk/articles"
+      }
+    ]
+  },
   "meta.com": {
     "_name": "Meta",
     "ai": [
