@@ -1,6 +1,7 @@
 import type { DataItem, Route } from "@/types";
 import cache from "@/utils/cache";
 import ofetch from "@/utils/ofetch";
+import { parseDate } from "@/utils/parse-date";
 import { load } from "cheerio";
 
 interface NewsItem {
@@ -52,7 +53,7 @@ async function handler(ctx) {
         guid: item.id,
         link: item.url,
         author: item.uinnick,
-        pubDate: item.timestamp * 1000,
+        pubDate: parseDate(item.timestamp * 1000),
     }) satisfies DataItem);
 
     if (detail) {
@@ -69,7 +70,7 @@ async function handler(ctx) {
                         guid: item.id,
                         link: item.url,
                         author: item.uinnick,
-                        pubDate: item.timestamp * 1000,
+                        pubDate: parseDate(item.timestamp * 1000),
                     } satisfies DataItem;
                 }),
             ),
