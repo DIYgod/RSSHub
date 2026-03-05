@@ -251,7 +251,14 @@
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1"
+            "side-channel": "npm:@nolyfill/side-channel@^1",
+            "ws@<1.1.1": ">=1.1.1",
+            "ws@>=0.2.6 <1.1.5": ">=1.1.5",
+            "ws@<1.0.1": ">=1.0.1",
+            "tough-cookie@<4.1.3": ">=4.1.3",
+            "minimatch@>=9.0.0 <9.0.6": ">=9.0.6",
+            "minimatch@>=9.0.0 <9.0.7": ">=9.0.7",
+            "qs@<6.14.1": ">=6.14.1"
         },
         "patchedDependencies": {
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
