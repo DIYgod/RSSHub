@@ -1,8 +1,9 @@
+import { load } from "cheerio";
+
 import type { DataItem, Route } from "@/types";
 import cache from "@/utils/cache";
 import ofetch from "@/utils/ofetch";
 import { parseDate } from "@/utils/parse-date";
-import { load } from "cheerio";
 
 interface NewsItem {
     id: string;
@@ -21,7 +22,7 @@ export const route: Route = {
     example: "/qq/news/8QMZ2X5a5YUeujw=",
     parameters: {
         uid: "用户 ID, 用户主页 URL 中的最后一段部分",
-        detail: "是否抓取全文，该值只要不为空就抓取全文返回，否则只返回标题",
+        detail: "是否抓取全文，该值只要不为空就抓取全文返回，否则只返回摘要",
     },
     features: {
         requireConfig: false,
