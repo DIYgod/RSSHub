@@ -10,7 +10,7 @@ import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/articles',
-    categories: ['government'],
+    categories: ['new-media'],
     example: '/meritalk/articles',
     features: {
         requireConfig: false,
