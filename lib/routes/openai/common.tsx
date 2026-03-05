@@ -10,8 +10,9 @@ export const BASE_URL = new URL('https://openai.com');
 
 /** Fetch the details of an article. */
 export const fetchArticleDetails = async (url: string) => {
-    const page = await ofetch(url);
-    const $ = load(page);
+    const response = await ofetch.raw(url);
+    const redirectedUrl = response.url;
+    const $ = load(response._data);
 
     const $article = $('#main article');
 
@@ -38,6 +39,7 @@ export const fetchArticleDetails = async (url: string) => {
         categories,
         image: $('meta[property="og:image"]').attr('content'),
         author: authors.join(', ') || undefined,
+        link: redirectedUrl,
     };
 };
 
@@ -64,12 +66,12 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
                 const pubDate = parseDate($(element).find('pubDate').text());
                 const link = $(element).find('link').text();
 
-                const { content, categories, author } = await fetchArticleDetails(link);
+                const { content, categories, author, link: redirectedLink } = await fetchArticleDetails(link);
 
                 return {
                     guid: id,
                     title,
-                    link,
+                    link: redirectedLink,
                     pubDate,
                     description: content,
                     category: categories,
