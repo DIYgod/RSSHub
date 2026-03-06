@@ -9,8 +9,8 @@ const getEpisodes = (obj: any) => obj?.result || obj?.items || (Array.isArray(ob
 export const route: Route = {
     path: '/manga/:id',
     categories: ['anime'],
-    example: '/manga/KC_006778_S',
-    parameters: { id: 'カドコミ(Kadocomi)中对应的作品 workCode，例如 KC_006778_S' },
+    example: '/comic-walker/manga/KC_006778_S',
+    parameters: { id: 'カドコミ(Kadocomi)中对应的作品workCode，例如 KC_006778_S' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['comic-walker.com/detail/:id', 'kadocomi.jp/detail/:id'],
-            target: '/manga/:id',
+            target: '/comic-walker/manga/:id',
         },
     ],
     name: 'カドコミ(Kadocomi)漫画详情',
@@ -32,7 +32,6 @@ export const route: Route = {
         const { id } = ctx.req.param();
         const baseUrl = 'https://comic-walker.com';
 
-        // 加上 episodeType=first 参数以确保 SSR 渲染时会把章节列表打包进 HTML
         const fetchUrl = `${baseUrl}/detail/${id}?episodeType=first`;
         const openUrl = `${baseUrl}/detail/${id}`;
 
@@ -40,7 +39,6 @@ export const route: Route = {
             headers: {
                 Referer: baseUrl,
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
             },
         });
 
@@ -124,7 +122,6 @@ export const route: Route = {
                 pubDate: currentPubDate,
             };
         });
-
         return {
             title: `Kadocomi - ${mangaTitle}`,
             link: openUrl,
