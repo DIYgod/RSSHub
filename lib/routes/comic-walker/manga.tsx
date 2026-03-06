@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { renderToString } from '@/utils/render';
 
 const getEpisodes = (obj: any) => obj?.result || obj?.items || (Array.isArray(obj) ? obj : []);
 
