@@ -108,17 +108,10 @@ export const route: Route = {
             return {
                 title: fullTitle,
                 link: `${baseUrl}/detail/${id}/episodes/${chapter.code}`,
-                description: renderToString(
-                    <>
-                        {thumb ? (
-                            <>
-                                <img src={thumb} style={{ maxWidth: '100%' }} />
-                                <br />
-                            </>
-                        ) : null}
-                        <p>类型: {epType}</p>
-                    </>
-                ),
+                description: `
+                    ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}
+                    <p>类型: ${epType}</p>
+                `,
                 guid: `Kadocomi-manga-${chapter.code}`,
                 category: epType,
                 author: mangaAuthor,
