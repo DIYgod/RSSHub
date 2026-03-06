@@ -52,10 +52,7 @@ export const route: Route = {
         const nextData = JSON.parse(nextDataText);
         const queries = nextData.props?.pageProps?.dehydratedState?.queries || [];
 
-        const workQuery = queries.find((q: any) =>
-            q.queryKey?.includes('/api/contents/details/work') ||
-            (Array.isArray(q.queryKey) && q.queryKey.some((k: any) => typeof k === 'string' && k.includes('work')))
-        );
+        const workQuery = queries.find((q: any) => q.queryKey?.includes('/api/contents/details/work') || (Array.isArray(q.queryKey) && q.queryKey.some((k: any) => typeof k === 'string' && k.includes('work'))));
 
         if (!workQuery || !workQuery.state?.data) {
             throw new Error('无法在 HTML 缓存中提取核心数据对象');
@@ -84,9 +81,7 @@ export const route: Route = {
             }
         }
 
-        const allChapters = [...episodesMap.values()].toSorted(
-            (a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0)
-        );
+        const allChapters = [...episodesMap.values()].toSorted((a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0));
 
         if (allChapters.length === 0) {
             throw new Error(` HTML 缓存中无章节!`);
