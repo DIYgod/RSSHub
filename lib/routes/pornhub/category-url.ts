@@ -42,14 +42,15 @@ async function handler(ctx) {
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
+    const showImages = !!ctx.req.query('img');
     const items = $('#videoCategory .videoBox')
         .toArray()
-        .map((e) => parseItems($(e)));
+        .map((e) => parseItems($(e), showImages));
 
     return {
         title: $('title').first().text(),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as any,
         item: items,
     };
 }

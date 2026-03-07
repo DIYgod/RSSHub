@@ -83,17 +83,19 @@ async function handler(ctx): Promise<Data> {
     let $ = load(response);
     let items;
 
+    const showImages = !!ctx.req.query('img');
+
     if ($('.withBio').length === 0) {
         link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
         const { data: response } = await got(link, { headers });
         $ = load(response);
         items = $('#mostRecentVideosSection .videoBox')
             .toArray()
-            .map((e) => parseItems($(e)));
+            .map((e) => parseItems($(e), showImages));
     } else {
         items = $('#pornstarsVideoSection .videoBox')
             .toArray()
-            .map((e) => parseItems($(e)));
+            .map((e) => parseItems($(e), showImages));
     }
 
     return {
@@ -101,7 +103,7 @@ async function handler(ctx): Promise<Data> {
         description: $('section.aboutMeSection').text().trim(),
         link,
         image: $('#getAvatar').attr('src'),
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as any,
         item: items,
     };
 }

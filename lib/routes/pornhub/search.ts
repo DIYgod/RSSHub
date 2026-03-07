@@ -30,10 +30,12 @@ async function handler(ctx) {
     const currentUrl = `${defaultDomain}/webmasters/search?search=${keyword}`;
     const response = await got(currentUrl);
 
+    const showImages = !!ctx.req.query('img');
+
     const list = response.data.videos.map((item) => ({
         title: item.title,
         link: item.url,
-        description: renderDescription({ thumbs: item.thumbs }),
+        description: renderDescription({ thumbs: item.thumbs }, showImages),
         pubDate: parseDate(item.publish_date),
         category: [...new Set([...item.tags.map((t) => t.tag_name), ...item.categories.map((c) => c.category)])],
     }));

@@ -38,16 +38,17 @@ async function handler(ctx): Promise<Data> {
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
+    const showImages = !!ctx.req.query('img');
     const items = $('#mostRecentVideosSection .videoBox')
         .toArray()
-        .map((e) => parseItems($(e)));
+        .map((e) => parseItems($(e), showImages));
 
     return {
         title: $('h1').first().text(),
         description: $('section.aboutMeSection').text().trim(),
         link,
         image: $('#getAvatar').attr('src'),
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as any,
         item: items,
     };
 }
