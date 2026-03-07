@@ -59,7 +59,6 @@ export const route: Route = {
                     title: `${title} - ${price}`,
                     link,
                     description: `<img src="${image}"><br>Price: ${price}`,
-                    category: 'shopping',
                 };
             })
             .filter(Boolean);
