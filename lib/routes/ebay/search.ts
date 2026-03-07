@@ -1,7 +1,8 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 
 export const route: Route = {
     path: '/search/:keywords',
@@ -41,7 +42,7 @@ export const route: Route = {
             .map((item) => {
                 const $item = $(item);
                 const titleElement = $item.find('.s-item__title, .s-card__title, .s-item__title--has-tags');
-                const title = titleElement.text().replace(/^New Listing/i, '').trim();
+                const title = titleElement.text().replace(/^New Listing/i, '');
                 const link = $item.find('.s-item__link, .s-card__link').attr('href');
                 const price = $item.find('.s-item__price, .s-card__price').text().trim();
                 const image =

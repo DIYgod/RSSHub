@@ -1,4 +1,3 @@
-import { CheerioAPI, Element } from 'cheerio';
 
 /**
  * Transforms an eBay image URL to prefer WebP format if it's a JPG/JPEG.
