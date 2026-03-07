@@ -10,7 +10,7 @@ const headers = {
     hasVisited: 1,
 };
 
-const renderDescription = (data): string =>
+const renderDescription = (data, showImages = false): string =>
     renderToString(
         <>
             {data.previewVideo ? (
@@ -18,9 +18,12 @@ const renderDescription = (data): string =>
                     <source src={data.previewVideo} type="video/webm" />
                 </video>
             ) : null}
-            {data.thumbs?.map((thumb, index) => (
-                <img key={`${thumb.src}-${index}`} src={thumb.src} />
-            ))}
+            {showImages &&
+                (data.thumbs ? (
+                    data.thumbs.map((thumb, index) => <img key={`${thumb.src}-${index}`} src={thumb.src} />)
+                ) : (
+                    <img src={data.poster} />
+                ))}
         </>
     );
 const extractDateFromImageUrl = (imageUrl) => {
@@ -28,13 +31,16 @@ const extractDateFromImageUrl = (imageUrl) => {
     return matchResult ? matchResult.slice(1, 3).join('') : null;
 };
 
-const parseItems = (e) => ({
+const parseItems = (e, showImages = false) => ({
     title: e.find('span.title a').text().trim(),
     link: defaultDomain + e.find('span.title a').attr('href'),
-    description: renderDescription({
-        poster: e.find('img').data('mediumthumb'),
-        previewVideo: e.find('img').data('mediabook'),
-    }),
+    description: renderDescription(
+        {
+            poster: e.find('img').data('mediumthumb'),
+            previewVideo: e.find('img').data('mediabook'),
+        },
+        showImages
+    ),
     author: e.find('.usernameWrap a').text(),
     pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))).toDate() || parseRelativeDate(e.find('.added').text()),
 });

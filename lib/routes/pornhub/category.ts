@@ -8,11 +8,11 @@ import { parseDate } from '@/utils/parse-date';
 import { defaultDomain, renderDescription } from './utils';
 
 export const route: Route = {
-    path: '/category/:caty',
+    path: '/category/:caty/:img?',
     categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/category/popular-with-women',
-    parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)' },
+    parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)', img: 'show images, set to `img=1` to enable' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('caty');
+    const { caty: category, img } = ctx.req.param();
 
     const categories = await cache.tryGet('pornhub:categories', async () => {
         const { data } = await got(`${defaultDomain}/webmasters/categories`);
@@ -52,10 +52,12 @@ async function handler(ctx) {
         throw new Error(response.message);
     }
 
+    const showImages = img === 'img=1';
+
     const list = response.videos.map((item) => ({
         title: item.title,
         link: item.url,
-        description: renderDescription({ thumbs: item.thumbs }),
+        description: renderDescription({ thumbs: item.thumbs }, showImages),
         pubDate: parseDate(item.publish_date),
         category: [...new Set([...item.tags.map((t) => t.tag_name), ...item.categories.map((c) => c.category)])],
     }));
