@@ -8,10 +8,10 @@ import { isValidHost } from '@/utils/valid-host';
 import { getRadarDomin, headers, parseItems } from './utils';
 
 export const route: Route = {
-    path: '/users/:username/:language?',
+    path: '/users/:username/:language?/:img?',
     categories: ['multimedia'],
     example: '/pornhub/users/pornhubmodels',
-    parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`' },
+    parameters: { language: 'language, see below. defaults to `www` (English)', username: 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`', img: 'show images, set to `img=1` to enable' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const { language = 'www', username } = ctx.req.param();
+    const { language = 'www', username, img } = ctx.req.param();
     const link = `https://${language}.pornhub.com/users/${username}/videos`;
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
@@ -36,7 +36,7 @@ async function handler(ctx): Promise<Data> {
 
     const { data: response } = await got(link, { headers });
     const $ = load(response);
-    const showImages = !!ctx.req.query('img');
+    const showImages = img === 'img=1';
     const items = $('.videoUList .videoBox')
         .toArray()
         .map((e) => parseItems($(e), showImages));

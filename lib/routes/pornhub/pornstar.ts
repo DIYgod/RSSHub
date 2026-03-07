@@ -9,7 +9,7 @@ import { isValidHost } from '@/utils/valid-host';
 import { getRadarDomin, headers, parseItems } from './utils';
 
 export const route: Route = {
-    path: '/pornstar/:username/:language?/:sort?',
+    path: '/pornstar/:username/:language?/:sort?/:img?',
     categories: ['multimedia'],
     view: ViewType.Videos,
     example: '/pornhub/pornstar/june-liu/www/mr',
@@ -18,7 +18,7 @@ export const route: Route = {
             description: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`',
         },
         language: {
-            description: 'language',
+            description: 'language, defaults to `www` (English)',
             options: [
                 { value: 'www', label: 'English' },
                 { value: 'de', label: 'Deutsch' },
@@ -36,7 +36,7 @@ export const route: Route = {
             default: 'www',
         },
         sort: {
-            description: 'sorting method, leave empty for `Best`',
+            description: 'sorting method, defaults to `mr` (Most Recent)',
             options: [
                 {
                     label: 'Most Recent',
@@ -56,6 +56,7 @@ export const route: Route = {
                 },
             ],
         },
+        img: 'show images, set to `img=1` to enable',
     },
     features: {
         requireConfig: false,
@@ -73,7 +74,7 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const { language = 'www', username, sort = 'mr' } = ctx.req.param();
+    const { language = 'www', username, sort = 'mr', img } = ctx.req.param();
     let link = `https://${language}.pornhub.com/pornstar/${username}?o=${sort}`;
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');
@@ -83,7 +84,7 @@ async function handler(ctx): Promise<Data> {
     let $ = load(response);
     let items;
 
-    const showImages = !!ctx.req.query('img');
+    const showImages = img === 'img=1';
 
     if ($('.withBio').length === 0) {
         link = `https://${language}.pornhub.com/pornstar/${username}/videos?o=${sort}`;
