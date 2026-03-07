@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
-import type { Route } from '@/types';
 
 export const route: Route = {
     path: '/search/:keywords',

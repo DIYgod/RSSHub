@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
-import ofetch from '@/utils/ofetch';
 import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: ['/usr/:username', '/user/:username'],
