@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: ['/usr/:username', '/user/:username'],
     categories: ['shopping'],
-    example: '/ebay/usr/m.trotters',
+    example: '/usr/m.trotters',
     parameters: { username: 'Username of the seller' },
     features: {
         requireConfig: false,
@@ -19,7 +19,7 @@ export const route: Route = {
     radar: [
         {
             source: ['ebay.com/usr/:username'],
-            target: '/user/:username',
+            target: '/ebay/user/:username',
         },
     ],
     name: 'User Listings',

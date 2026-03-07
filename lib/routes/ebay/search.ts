@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/search/:keywords',
     categories: ['shopping'],
-    example: '/ebay/search/sodimm+ddr4+16gb',
+    example: '/search/sodimm+ddr4+16gb',
     parameters: { keywords: 'Keywords for search' },
     features: {
         requireConfig: false,
@@ -22,7 +22,7 @@ export const route: Route = {
             source: ['ebay.com/sch/i.html'],
             target: (params, url) => {
                 const searchKeywords = new URL(url).searchParams.get('_nkw');
-                return `/search/${searchKeywords}`;
+                return `/ebay/search/${searchKeywords}`;
             },
         },
     ],
@@ -59,7 +59,7 @@ export const route: Route = {
                     title: `${title} - ${price}`,
                     link,
                     description: `<img src="${image}"><br>Price: ${price}`,
-                    category: 'eBay Search',
+                    category: 'shopping',
                 };
             })
             .filter(Boolean);
