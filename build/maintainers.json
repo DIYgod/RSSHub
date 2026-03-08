@@ -6890,25 +6890,25 @@
   "/podwise/explore/:type": [
     "lyling"
   ],
-  "/pornhub/category_url/:url?/:language?": [
+  "/pornhub/category_url/:url?/:language?/:img?": [
     "I2IMk",
     "queensferryme"
   ],
-  "/pornhub/category/:caty": [
+  "/pornhub/category/:caty/:img?": [
     "nczitzk"
   ],
-  "/pornhub/model/:username/:language?/:sort?": [
+  "/pornhub/model/:username/:language?/:sort?/:img?": [
     "I2IMk",
     "queensferryme"
   ],
-  "/pornhub/pornstar/:username/:language?/:sort?": [
+  "/pornhub/pornstar/:username/:language?/:sort?/:img?": [
     "I2IMk",
     "queensferryme"
   ],
-  "/pornhub/search/:keyword": [
+  "/pornhub/search/:keyword/:img?": [
     "nczitzk"
   ],
-  "/pornhub/users/:username/:language?": [
+  "/pornhub/users/:username/:language?/:img?": [
     "I2IMk",
     "queensferryme"
   ],
