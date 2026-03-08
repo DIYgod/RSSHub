@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/search/:keywords',
     categories: ['shopping'],
-    example: '/search/sodimm+ddr4+16gb',
+    example: '/ebay/search/sodimm+ddr4+16gb',
     parameters: { keywords: 'Keywords for search' },
     features: {
         requireConfig: false,
@@ -32,12 +32,10 @@ export const route: Route = {
         const { keywords } = ctx.req.param();
         const url = `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(keywords)}&_sop=10&_ipg=240`;
 
-        logger.info(`Fetching eBay search results: ${url}`);
         const response = await ofetch(url);
-        logger.info(`eBay response status: ${response instanceof Response ? response.status : 'unknown'}`);
         const $ = load(response);
 
-        const items = $('.s-item, .s-card, .s-item__wrapper.clearfix')
+        const items = $('.srp-results')
             .toArray()
             .map((item) => {
                 const $item = $(item);
@@ -55,10 +53,13 @@ export const route: Route = {
                     return null;
                 }
 
+                const cleanedLink = new URL(link);
+                cleanedLink.search = '';
+
                 return {
                     title: `${title} - ${price}`,
-                    link,
-                    description: `<img src="${image}"><br>Price: ${price}`,
+                    link: cleanedLink.toString(),
+                    description: `<img src="${image?.replace(/\.jpe?g$/i, '.webp')}"><br>Price: ${price}`,
                 };
             })
             .filter(Boolean);

@@ -4,9 +4,9 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: ['/usr/:username', '/user/:username'],
+    path: ['/user/:username'],
     categories: ['shopping'],
-    example: '/usr/m.trotters',
+    example: '/ebay/user/m.trotters',
     parameters: { username: 'Username of the seller' },
     features: {
         requireConfig: false,
@@ -19,7 +19,7 @@ export const route: Route = {
     radar: [
         {
             source: ['ebay.com/usr/:username'],
-            target: '/ebay/user/:username',
+            target: '/user/:username',
         },
     ],
     name: 'User Listings',
@@ -44,10 +44,13 @@ export const route: Route = {
                     return null;
                 }
 
+                const cleanedLink = new URL(link);
+                cleanedLink.search = '';
+
                 return {
                     title: `${title} - ${price}`,
-                    link,
-                    description: `<img src="${image}"><br>Price: ${price}`,
+                    link: cleanedLink.toString(),
+                    description: `<img src="${image?.replace(/\.jpe?g$/i, '.webp')}"><br>Price: ${price}`,
                     author: username,
                 };
             })
