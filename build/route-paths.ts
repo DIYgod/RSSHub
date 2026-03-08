@@ -2325,6 +2325,7 @@ export type RoutePath =
   | `/qq/kg/:userId`
   | `/qq/kg/reply/:playId`
   | `/qq/lol/news/:category?`
+  | `/qq/news/:uid/:detail?`
   | `/qq/pd/guild/:id/:sub?/:sort?`
   | `/qq/weread/:category`
   | `/qq88/:category?`

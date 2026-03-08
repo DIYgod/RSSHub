@@ -7116,6 +7116,9 @@
   "/qq/lol/news/:category?": [
     "nczitzk"
   ],
+  "/qq/news/:uid/:detail?": [
+    "hualiong"
+  ],
   "/qq/pd/guild/:id/:sub?/:sort?": [
     "mobyw"
   ],
