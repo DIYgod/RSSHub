@@ -120,7 +120,7 @@ export default {
             return v as T;
         } else {
             const value = await getValueFunc();
-            cacheModule.set(key, value, maxAge);
+            cacheModule.set(key, JSON.stringify(value), maxAge);
 
             return value;
         }
