@@ -18,12 +18,7 @@ const renderDescription = (data, showImages = false): string =>
                     <source src={data.previewVideo} type="video/webm" />
                 </video>
             ) : null}
-            {showImages &&
-                (data.thumbs ? (
-                    data.thumbs.map((thumb, index) => <img key={`${thumb.src}-${index}`} src={thumb.src} />)
-                ) : (
-                    <img src={data.poster} />
-                ))}
+            {showImages && (data.thumbs ? data.thumbs.map((thumb, index) => <img key={`${thumb.src}-${index}`} src={thumb.src} />) : <img src={data.poster} />)}
         </>
     );
 const extractDateFromImageUrl = (imageUrl) => {
