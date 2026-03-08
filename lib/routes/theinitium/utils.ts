@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 // Strip '-zh-hans' suffix from display names for cleanliness
 const stripLangSuffix = (name: string) => name.replace(/-zh-hans$/i, '');
 
-const GHOST_API_BASE = 'https://theinitium.com/ghost/api/content';
+const GHOST_API_BASE = 'https://production-initium-media.ghost.io/ghost/api/content';
 const GHOST_CONTENT_KEY = 'a44a0409c222328d39e2c75293';
 
 // Old channel slugs → Ghost tag slugs mapping

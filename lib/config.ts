@@ -158,6 +158,7 @@ type ConfigEnvKeys =
     | 'MOX_COOKIE'
     | 'NCM_COOKIES'
     | 'NEWRANK_COOKIE'
+    | 'NEUREALITY_COOKIE'
     | 'NGA_PASSPORT_UID'
     | 'NGA_PASSPORT_CID'
     | 'NHENTAI_USERNAME'
@@ -433,9 +434,6 @@ export type Config = {
         cookie?: string;
     };
     initium: {
-        username?: string;
-        password?: string;
-        bearertoken?: string;
         memberCookie?: string;
     };
     instagram: {
@@ -516,6 +514,9 @@ export type Config = {
         cookies?: string;
     };
     newrank: {
+        cookie?: string;
+    };
+    neureality: {
         cookie?: string;
     };
     nga: {
@@ -997,6 +998,9 @@ const calculateValue = () => {
         },
         newrank: {
             cookie: envs.NEWRANK_COOKIE,
+        },
+        neureality: {
+            cookie: envs.NEUREALITY_COOKIE,
         },
         nga: {
             uid: envs.NGA_PASSPORT_UID,
