@@ -37,7 +37,8 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `${TITLE} - ${siteInfo.name}`,
         description: siteInfo.address,
-        link: HOST,
+        link: `${HOST}/venue/${siteId}`,
         item: activityList,
+        allowEmpty: true,
     };
 }

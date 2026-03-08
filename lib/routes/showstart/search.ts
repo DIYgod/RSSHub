@@ -64,43 +64,49 @@ async function handler(ctx: Context): Promise<Data> {
                 title: `${TITLE} - 搜演出 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchActivityList({ keyword }),
+                allowEmpty: true,
             };
         case 'artist':
             return {
                 title: `${TITLE} - 搜艺人 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchPerformerList({ searchKeyword: keyword }),
+                allowEmpty: true,
             };
         case 'site':
             return {
                 title: `${TITLE} - 搜场地 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchSiteList({ searchKeyword: keyword }),
+                allowEmpty: true,
             };
         case 'brand':
             return {
                 title: `${TITLE} - 搜厂牌 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchBrandList({ searchKeyword: keyword }),
+                allowEmpty: true,
             };
         case 'city':
             return {
                 title: `${TITLE} - 搜城市 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchCityList(keyword),
+                allowEmpty: true,
             };
         case 'style':
             return {
                 title: `${TITLE} - 搜风格 - ${keyword || '全部'}`,
                 link: HOST,
                 item: await fetchStyleList(keyword),
+                allowEmpty: true,
             };
         default:
             return {
                 title: `${TITLE} - 搜演出 - ${type || '全部'}`,
                 link: HOST,
-                allowEmpty: true,
                 item: await fetchActivityList({ keyword: type }),
+                allowEmpty: true,
             };
     }
 }
