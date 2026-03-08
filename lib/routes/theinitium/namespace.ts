@@ -1,12 +1,20 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: '端传媒',
+    name: 'The Initium',
     url: 'theinitium.com',
-    description: `通过提取文章全文，以提供比官方源更佳的阅读体验。
+    description: `:::tip
+Set the environment variable \`INITIUM_MEMBER_COOKIE\` to get the full text of paid articles. After logging in to theinitium.com, copy the Cookie from the browser developer tools.
 
-::: warning
-付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
+Old environment variables \`INITIUM_USERNAME\`, \`INITIUM_PASSWORD\`, and \`INITIUM_BEARER_TOKEN\` are no longer used since the site migrated to Ghost CMS.
 :::`,
-    lang: 'zh-HK',
+
+    zh: {
+        name: '端傳媒',
+        description: `:::tip
+设置环境变量 \`INITIUM_MEMBER_COOKIE\` 可获取付费文章全文。登录 theinitium.com 后，从浏览器开发者工具中复制 Cookie。
+
+旧的环境变量 \`INITIUM_USERNAME\`、\`INITIUM_PASSWORD\` 和 \`INITIUM_BEARER_TOKEN\` 已不再使用（网站已迁移至 Ghost CMS）。
+:::`,
+    },
 };
