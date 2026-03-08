@@ -109,6 +109,57 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
     }
 }
 
+/**
+ * Clean Ghost Koenig editor card HTML for RSS consumption.
+ * Strips kg-* wrapper divs, converts bookmark cards to simple links,
+ * removes callout markup, etc.
+ */
+function cleanGhostHtml(html: string): string {
+    const $ = load(html, null, false);
+
+    // Convert kg-bookmark-card to a simple link
+    $('a.kg-bookmark-container, a.kg-bookmark-card').each((_, el) => {
+        const $el = $(el);
+        const href = $el.attr('href') || '';
+        const title = $el.find('.kg-bookmark-title').text().trim();
+        const desc = $el.find('.kg-bookmark-description').text().trim();
+        const replacement = title ? `<p><a href="${href}">${title}</a>${desc ? ` — ${desc}` : ''}</p>` : `<p><a href="${href}">${href}</a></p>`;
+        $el.replaceWith(replacement);
+    });
+
+    // Convert kg-callout-card: keep text, strip wrapper
+    $('.kg-callout-card').each((_, el) => {
+        const $el = $(el);
+        const text = $el.find('.kg-callout-text').html() || $el.html() || '';
+        $el.replaceWith(`<blockquote>${text}</blockquote>`);
+    });
+
+    // Convert kg-toggle-card: heading + content
+    $('.kg-toggle-card').each((_, el) => {
+        const $el = $(el);
+        const heading = $el.find('.kg-toggle-heading-text').text().trim();
+        const content = $el.find('.kg-toggle-content').html() || '';
+        $el.replaceWith(`${heading ? `<p><strong>${heading}</strong></p>` : ''}${content}`);
+    });
+
+    // Unwrap remaining kg-card divs (keep inner content)
+    $('.kg-card').each((_, el) => {
+        const $el = $(el);
+        $el.replaceWith($el.html() || '');
+    });
+
+    // Remove figure wrapping around bookmark cards that we already replaced
+    $('figure.kg-bookmark-card').each((_, el) => {
+        const $el = $(el);
+        $el.replaceWith($el.html() || '');
+    });
+
+    // Strip members-only paywall markers
+    $('p:contains("<!--members-only-->")').remove();
+
+    return $.html();
+}
+
 async function postsToItems(posts: GhostPost[]) {
     const memberCookie = config.initium?.memberCookie;
 
@@ -117,13 +168,13 @@ async function postsToItems(posts: GhostPost[]) {
             const authors = post.authors?.map((a) => stripLangSuffix(a.name)) ?? [];
             const categories = post.tags?.filter((t) => t.visibility === 'public').map((t) => stripLangSuffix(t.name)) ?? [];
 
-            let description = post.html;
+            let description = post.html ? cleanGhostHtml(post.html) : post.html;
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
                 const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire)) as string | null;
                 if (fullHtml) {
-                    description = fullHtml;
+                    description = cleanGhostHtml(fullHtml);
                 }
             }
 
