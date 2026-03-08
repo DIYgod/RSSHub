@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import puppeteer from '@/utils/puppeteer';
 
 import { BASE_URL, enhanceItemsWithSummaries, parseArticles } from './utils';
 
@@ -21,7 +21,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -42,17 +42,30 @@ async function handler(ctx) {
     const { sort = '' } = ctx.req.param();
     const url = sort ? `${BASE_URL}/${sort}` : BASE_URL;
 
-    const response = await ofetch(url);
-    const $ = load(response);
+    const browser = await puppeteer();
+    try {
+        const page = await browser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            request.resourceType() === 'document' ? request.continue() : request.abort();
+        });
 
-    const list = parseArticles($, BASE_URL);
-    const items = await enhanceItemsWithSummaries(list);
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        const html = await page.content();
+        await page.close();
 
-    const pageTitle = $('title').text() || 'DailyPush - All';
+        const $ = load(html);
+        const list = parseArticles($, BASE_URL);
+        const items = await enhanceItemsWithSummaries(browser, list);
 
-    return {
-        title: pageTitle,
-        link: url,
-        item: items,
-    };
+        const pageTitle = $('title').text() || 'DailyPush - All';
+
+        return {
+            title: pageTitle,
+            link: url,
+            item: items,
+        };
+    } finally {
+        await browser.close();
+    }
 }

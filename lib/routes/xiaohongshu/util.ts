@@ -63,7 +63,7 @@ const getUser = (url, cache) =>
             }
 
             // Use puppeteer
-            const { page, destory } = await getPuppeteerPage(url, {
+            const { page, destroy } = await getPuppeteerPage(url, {
                 onBeforeLoad: async (page) => {
                     await page.setRequestInterception(true);
                     page.on('request', (request) => {
@@ -107,7 +107,7 @@ const getUser = (url, cache) =>
 
                 return { userPageData, notes, collect };
             } finally {
-                await destory();
+                await destroy();
             }
         },
         config.cache.routeExpire,
