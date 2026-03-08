@@ -95,5 +95,7 @@ export default defineConfig({
         // routes.json is only used in test environment, but rolldown still tries to resolve it
         '../assets/build/routes.json': path.resolve('./assets/build/routes-worker.js'),
     },
-    inlineOnly: false,
+    deps: {
+        onlyAllowBundle: false,
+    },
 });

@@ -63,7 +63,8 @@ async function handler(ctx: Context): Promise<Data> {
 
     const link = `${bbsOrigin}/forum.php?${params.toString()}`;
 
-    const $ = load(await ofetch<string>(link, { headers }));
+    const html = await ofetch<string>(link, { headers });
+    const $ = load(html);
 
     const title = $('title').text().replace(' -  百合会 -  Powered by Discuz!', '');
 

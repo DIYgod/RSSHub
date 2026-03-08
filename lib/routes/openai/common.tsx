@@ -1,25 +1,29 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const BASE_URL = new URL('https://openai.com');
 
 /** Fetch the details of an article. */
 export const fetchArticleDetails = async (url: string) => {
-    const page = await ofetch(url);
-    const $ = load(page);
+    // Ensure trailing slash to avoid 301 redirect
+    const normalizedUrl = url.endsWith('/') ? url : `${url}/`;
+    const html = await ofetch(normalizedUrl, { responseType: 'text' });
+    const $ = load(html);
 
     const $article = $('#main article');
 
     const categories = $('h1')
         .prev()
         .find('a[href]')
+        .toArray()
+        .map((element) => $(element).text());
+
+    const authors = $('[data-testid="author-list"] a')
         .toArray()
         .map((element) => $(element).text());
 
@@ -35,11 +39,13 @@ export const fetchArticleDetails = async (url: string) => {
         // Categories can be found on https://openai.com/news/ and https://openai.com/research/index/
         categories,
         image: $('meta[property="og:image"]').attr('content'),
+        author: authors.join(', ') || undefined,
+        link: normalizedUrl,
     };
 };
 
 /** Fetch all articles from OpenAI's RSS feed. */
-export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
+export const fetchArticles = async (limit: number, category?: string): Promise<DataItem[]> => {
     const page = await ofetch('https://openai.com/news/rss.xml', {
         responseType: 'text',
         headers: { 'User-Agent': config.ua },
@@ -47,95 +53,32 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
 
     const $ = load(page, { xml: true });
 
+    let items = $('item').toArray();
+    if (category) {
+        items = items.filter((element) => $(element).find('category').text() === category);
+    }
+
     return Promise.all(
-        $('item')
-            .toArray()
-            .slice(0, limit)
-            .map<Promise<DataItem>>((element) => {
-                const id = $(element).find('guid').text();
+        items.slice(0, limit).map<Promise<DataItem>>((element) => {
+            const id = $(element).find('guid').text();
 
-                return cache.tryGet(`openai:news:${id}`, async () => {
-                    const title = $(element).find('title').text();
-                    const pubDate = $(element).find('pubDate').text();
-                    const link = $(element).find('link').text();
+            return cache.tryGet(`openai:news:${id}`, async () => {
+                const title = $(element).find('title').text();
+                const pubDate = parseDate($(element).find('pubDate').text());
+                const link = $(element).find('link').text();
 
-                    const { content, categories } = await fetchArticleDetails(link);
+                const { content, categories, author, link: articleLink } = await fetchArticleDetails(link);
 
-                    return {
-                        guid: id,
-                        title,
-                        link,
-                        pubDate,
-                        description: content,
-                        category: categories,
-                    } as DataItem;
-                }) as Promise<DataItem>;
-            })
+                return {
+                    guid: id,
+                    title,
+                    link: articleLink,
+                    pubDate,
+                    description: content,
+                    category: categories,
+                    author,
+                } as DataItem;
+            }) as Promise<DataItem>;
+        })
     );
 };
-
-const getApiUrl = async () => {
-    const blogRootUrl = 'https://openai.com/blog';
-
-    // Find API base URL
-    const initResponse = await got({
-        method: 'get',
-        url: blogRootUrl,
-    });
-
-    const apiBaseUrl = initResponse.data
-        .toString()
-        .match(/(?<=TWILL_API_BASE:").+?(?=")/)[0]
-        .replaceAll(String.raw`\u002F`, '/');
-
-    return new URL(apiBaseUrl);
-};
-
-const parseArticle = (ctx, rootUrl, attributes) =>
-    cache.tryGet(attributes.slug, async () => {
-        const textUrl = `${rootUrl}/${attributes.slug}`;
-        const detailResponse = await got({
-            method: 'get',
-            url: textUrl,
-        });
-        let content = load(detailResponse.data);
-
-        const authors = content('[aria-labelledby="metaAuthorsHeading"] > li > a > span > span')
-            .toArray()
-            .map((entry) => content(entry).text())
-            .join(', ');
-
-        // Leave out comments
-        const comments = content('*')
-            .contents()
-            .filter(function () {
-                return this.nodeType === 8;
-            });
-        comments.remove();
-
-        content = content('#content');
-
-        const imageSrc = attributes.seo.ogImageSrc;
-        const imageAlt = attributes.seo.ogImageAlt;
-
-        const article = renderToString(
-            <>
-                <img src={imageSrc ?? ''} alt={imageAlt ?? ''} />
-                {raw(content.toString())}
-            </>
-        );
-
-        // Not all article has tags
-        attributes.tags = attributes.tags || [];
-
-        return {
-            title: attributes.title,
-            author: authors,
-            description: article,
-            pubDate: attributes.createdAt,
-            category: attributes.tags.map((tag) => tag.title),
-            link: textUrl,
-        };
-    });
-
-export { getApiUrl, parseArticle };
