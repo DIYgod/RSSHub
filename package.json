@@ -166,7 +166,7 @@
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
         "@types/node": "25.3.5",
-        "@types/sanitize-html": "2.16.0",
+        "@types/sanitize-html": "2.16.1",
         "@types/supertest": "7.2.0",
         "@typescript-eslint/eslint-plugin": "8.56.1",
         "@typescript-eslint/parser": "8.56.1",
