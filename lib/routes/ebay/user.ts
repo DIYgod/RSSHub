@@ -18,7 +18,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ebay.com/usr/:username'],
+            source: ['ebay.com/usr/'],
             target: '/user/:username',
         },
     ],

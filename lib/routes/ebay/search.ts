@@ -35,7 +35,7 @@ export const route: Route = {
         const response = await ofetch(url);
         const $ = load(response);
 
-        const items = $('.srp-results .s-item, .srp-results .s-card, .s-item, .s-card')
+        const items = $('.srp-results .s-item, .srp-results .s-card, .s-card')
             .toArray()
             .map((item) => {
                 const $item = $(item);
