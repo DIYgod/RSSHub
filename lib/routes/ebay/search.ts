@@ -35,19 +35,16 @@ export const route: Route = {
         const response = await ofetch(url);
         const $ = load(response);
 
-        const items = $('.srp-results')
+        const items = $('.srp-results .s-item, .srp-results .s-card, .s-item, .s-card')
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 const titleElement = $item.find('.s-item__title, .s-card__title, .s-item__title--has-tags');
-                const title = titleElement.text().replace(/^New Listing/i, '');
+                const title = titleElement.text().replace(/^new listing/i, '').trim();
                 const link = $item.find('.s-item__link, .s-card__link').attr('href');
                 const price = $item.find('.s-item__price, .s-card__price').text().trim();
-                const image =
-                    $item.find('.s-item__image-img img, img.s-item__image-img').attr('src') ||
-                    $item.find('.s-item__image-wrapper img').attr('src') ||
-                    $item.find('.s-card__image-img img').attr('src') ||
-                    $item.find('.s-item__image img').attr('src');
+                const imageElement = $item.find('.s-item__image-img img, img.s-item__image-img, .s-item__image-wrapper img, .s-card__image-img img, .s-item__image img, .s-card__link img');
+                const image = imageElement.attr('data-src') || imageElement.attr('src');
 
                 if (!title || !link || title.toLowerCase().includes('shop on ebay') || price === '') {
                     return null;
