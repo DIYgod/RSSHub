@@ -89,19 +89,13 @@ export const route: Route = {
             throw new Error('HTML 缓存中无章节!');
         }
 
-        const maxAllowedTime = Date.now();
-
         const items = allChapters.map((chapter: any) => {
             const epType = chapter.type === 'normal' ? '正篇' : '特别篇/PR';
             const isReadStatus = chapter.isActive ? '' : ' (未解锁/仍需等待)';
             const fullTitle = `${chapter.title}${chapter.subTitle ? ` - ${chapter.subTitle}` : ''}${isReadStatus}`;
             const thumb = chapter.originalThumbnail || chapter.thumbnail;
 
-            let currentPubDate = chapter.updateDate ? parseDate(chapter.updateDate) : undefined;
-
-            if (currentPubDate && currentPubDate.getTime() > maxAllowedTime) {
-                currentPubDate = new Date(maxAllowedTime);
-            }
+            const currentPubDate = chapter.updateDate ? parseDate(chapter.updateDate) : undefined;
 
             return {
                 title: fullTitle,
