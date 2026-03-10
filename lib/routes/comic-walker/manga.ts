@@ -21,8 +21,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['comic-walker.com/detail/:id', 'kadocomi.jp/detail/:id'],
-            target: '/comic-walker/manga/:id',
+            source: ['comic-walker.com/detail/:id'],
+            target: '/manga/:id',
         },
     ],
     name: 'カドコミ(Kadocomi)漫画详情',
@@ -35,7 +35,7 @@ export const route: Route = {
         const fetchUrl = `${baseUrl}/detail/${id}?episodeType=first`;
         const openUrl = `${baseUrl}/detail/${id}`;
 
-        const response = await ofetch(fetchUrl, {
+        const response = await ofetch<string>(fetchUrl, {
             headers: {
                 Referer: baseUrl,
                 'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
@@ -74,20 +74,22 @@ export const route: Route = {
         const latestEpisodes = getEpisodes(data.latestEpisodes);
         const extraEpisodes = getEpisodes(data.episodes);
 
-        const episodesMap = new Map();
-        for (const ep of [...firstEpisodes, ...latestEpisodes, ...extraEpisodes]) {
-            if (ep && ep.code) {
-                episodesMap.set(ep.code, ep);
-            }
-        }
-
-        const allChapters = [...episodesMap.values()].toSorted((a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0));
+        const seenCodes = new Set<string>();
+        const allChapters = [...firstEpisodes, ...latestEpisodes, ...extraEpisodes]
+            .filter((ep) => {
+                if (ep?.code && !seenCodes.has(ep.code)) {
+                    seenCodes.add(ep.code);
+                    return true;
+                }
+                return false;
+            })
+            .sort((a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0));
 
         if (allChapters.length === 0) {
-            throw new Error(` HTML 缓存中无章节!`);
+            throw new Error('HTML 缓存中无章节!');
         }
 
-        let maxAllowedTime = Date.now();
+        const maxAllowedTime = Date.now();
 
         const items = allChapters.map((chapter: any) => {
             const epType = chapter.type === 'normal' ? '正篇' : '特别篇/PR';
@@ -97,11 +99,8 @@ export const route: Route = {
 
             let currentPubDate = chapter.updateDate ? parseDate(chapter.updateDate) : undefined;
 
-            if (currentPubDate) {
-                if (currentPubDate.getTime() > maxAllowedTime) {
-                    currentPubDate = new Date(maxAllowedTime - 1000);
-                }
-                maxAllowedTime = currentPubDate.getTime();
+            if (currentPubDate && currentPubDate.getTime() > maxAllowedTime) {
+                currentPubDate = new Date(maxAllowedTime);
             }
 
             return {
@@ -109,7 +108,6 @@ export const route: Route = {
                 link: `${baseUrl}/detail/${id}/episodes/${chapter.code}`,
                 description: `
                     ${thumb ? `<img src="${thumb}" style="max-width: 100%;"><br>` : ''}
-                    <p>类型: ${epType}</p>
                 `,
                 guid: `Kadocomi-manga-${chapter.code}`,
                 category: epType,
@@ -117,6 +115,7 @@ export const route: Route = {
                 pubDate: currentPubDate,
             };
         });
+
         return {
             title: `Kadocomi - ${mangaTitle}`,
             link: openUrl,
