@@ -83,7 +83,7 @@ export const route: Route = {
                 }
                 return false;
             })
-            .sort((a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0));
+            .toSorted((a: any, b: any) => (b.internal?.episodeNo || 0) - (a.internal?.episodeNo || 0));
 
         if (allChapters.length === 0) {
             throw new Error('HTML 缓存中无章节!');
