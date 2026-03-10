@@ -20,8 +20,8 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '山东大学研究生招生信息网',
-    maintainers: ['yanbot-team'],
+    name: '山东大学',
+    maintainers: ['niuyi1017'],
     handler,
     description: `| 通知公告 | 招生拓展 | 政策文件 | 
 | -------- | -------- |-------- |
@@ -35,7 +35,7 @@ async function handler(ctx) {
     const response = await got(pageUrl);
     const $ = load(response.data);
     const typeName = $('.nyrtit .tit').text() || '研究生招生信息网';
-    let item = $('.txtList li')
+    let list = $('.txtList li')
         .toArray()
         .map((element) => {
             const $element = $(element);
@@ -52,8 +52,8 @@ async function handler(ctx) {
             };
         });
 
-    item = await Promise.all(
-        item.map((item) =>
+    list = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
@@ -79,6 +79,6 @@ async function handler(ctx) {
         title: `山东大学研究生招生信息网 - ${typeName}`,
         description: $('title').text(),
         link: pageUrl,
-        item,
+        item: list,
     };
 }
