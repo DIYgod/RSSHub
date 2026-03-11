@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: 'Blog',
-    maintainers: ['zhenlong-huang'],
+    maintainers: ['zhenlohuang'],
     handler,
     url: 'claude.com/blog',
 };
