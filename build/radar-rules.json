@@ -11741,6 +11741,19 @@
       }
     ]
   },
+  "claude.com": {
+    "_name": "Claude",
+    "code": [
+      {
+        "title": "Code Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/docs/en/changelog"
+        ],
+        "target": "/claude/code/changelog"
+      }
+    ]
+  },
   "cline.bot": {
     "_name": "cline",
     ".": [
