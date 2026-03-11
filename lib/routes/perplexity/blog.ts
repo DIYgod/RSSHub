@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
-    example: 'https://www.perplexity.ai/hub/announcing-comet-plus-launch-partners',
+    example: '/perplexity/blog',
     url: 'perplexity.ai',
     categories: ['blog'],
     parameters: {},
@@ -19,11 +19,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.perplexity.ai'],
-            target: '/hub',
+            source: ['www.perplexity.ai/hub'],
+            target: '/blog',
         },
     ],
-    name: 'Perplexity Blog',
+    name: 'Blog',
     maintainers: ['seeyangzhi'],
     handler,
     description: "Perplexity Blog - Explore Perplexity's blog for articles, announcements, product updates, and tips to optimize your experience. Stay informed and make the most of Perplexity.",
@@ -49,7 +49,6 @@ async function handler() {
         waitUntil: 'domcontentloaded',
     });
 
-    await page.goto(rootUrl);
     // retrieve the HTML content of the page
     const response = await page.content();
 
@@ -58,8 +57,8 @@ async function handler() {
     const items: DataItem[] = [];
     const seenLinks = new Set<string>();
 
-    // Get featured card first
-    const featuredCard = $('[data-framer-name="Featured Card Tablet"] [data-framer-name="Content"] a[href^="./hub/blog/"]').first();
+    // Get featured card first (updated selector per site changes)
+    const featuredCard = $('[data-framer-name="Featured article"] [data-framer-name="Content"] a[href^="./hub/blog/"]').first();
     if (featuredCard.length > 0) {
         const link = new URL(String(featuredCard.attr('href')), rootUrl).href;
         const title = featuredCard.find('h4').text().trim() || featuredCard.text().trim();
@@ -110,8 +109,8 @@ async function handler() {
 
     items.push(...notFeaturedItems);
 
-    page.close();
-    browser.close();
+    await page.close();
+    await browser.close();
 
     return {
         title: 'Perplexity',
