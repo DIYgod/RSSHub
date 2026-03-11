@@ -54,7 +54,7 @@ const handler = async (ctx: Context): Promise<Data> => {
 
 export const route: Route = {
     path: '/code/changelog',
-    name: 'Claude Code Changelog',
+    name: 'Code Changelog',
     url: 'code.claude.com',
     maintainers: ['rmaced0'],
     handler,
