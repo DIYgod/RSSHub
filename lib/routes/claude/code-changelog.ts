@@ -59,7 +59,7 @@ export const route: Route = {
     maintainers: ['rmaced0'],
     handler,
     example: '/claude/code/changelog',
-    categories: ['programming'],
+    categories: ['program-update'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
