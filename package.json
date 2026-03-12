@@ -124,7 +124,7 @@
         "rss-parser": "3.13.0",
         "sanitize-html": "2.17.1",
         "simplecc-wasm": "1.1.1",
-        "socks-proxy-agent": "8.0.5",
+        "socks-proxy-agent": "9.0.0",
         "source-map": "0.7.6",
         "telegram": "2.26.22",
         "title": "4.0.1",
