@@ -40,6 +40,11 @@ updates:
                   - 'oxfmt'
                   - 'oxlint'
                   - 'oxlint-tsgolint'
+          proxy-agent:
+              patterns:
+                  - 'https-proxy-agent'
+                  - 'pac-proxy-agent'
+                  - 'socks-proxy-agent'
           typescript-eslint:
               patterns:
                   - '@typescript-eslint/*'

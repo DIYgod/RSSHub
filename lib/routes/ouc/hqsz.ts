@@ -1,4 +1,4 @@
-import CryptoJS from 'crypto-js/crypto-js';
+import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
