@@ -92,28 +92,24 @@ function normalizePhotoLists($, content) {
             .children('li')
             .toArray()
             .flatMap((item) => {
-                const html = deduplicateImages($, $(item));
+                const photoItem = $(item);
+                photoItem.find('img.for_sp').remove();
+                photoItem.find('img').each((__, image) => {
+                    const img = $(image);
+                    const src = img.attr('src');
+                    if (!src) {
+                        img.remove();
+                        return;
+                    }
+
+                    img.attr('src', new URL(src, ORIGIN).href);
+                    img.removeAttr('class');
+                });
+
+                const html = photoItem.html();
                 return hasMeaningfulHtml(html) ? [`<div>${html!.trim()}</div>`] : [];
             });
 
         list.replaceWith(items.join('<br /><br />'));
     });
-}
-
-function deduplicateImages($, container) {
-    const seen = new Set<string>();
-    container.find('img').each((_, element) => {
-        const img = $(element);
-        const src = img.attr('src');
-        if (!src || seen.has(src)) {
-            img.remove();
-            return;
-        }
-
-        seen.add(src);
-        img.attr('src', new URL(src, ORIGIN).href);
-        img.removeAttr('class');
-    });
-
-    return container.html();
 }
