@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -40,7 +42,7 @@ export const route: Route = {
     handler,
     description: `| 全部 | 影视资讯 | 收视快报 | 人人影评  | 人人剧评  | 新剧评测    | 片单推荐 |
 | ---- | -------- | -------- | --------- | --------- | ----------- | -------- |
-|      | news     | report   | m\_review | t\_review | new\_review | recom    |`,
+|      | news     | report   | m_review | t_review | new_review | recom    |`,
 };
 
 async function handler(ctx) {

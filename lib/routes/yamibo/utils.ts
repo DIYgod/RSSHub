@@ -1,9 +1,10 @@
+import type { Cheerio, Element } from 'cheerio';
+import { JSDOM } from 'jsdom';
+
+import { config } from '@/config';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { JSDOM } from 'jsdom';
-import type { Cheerio, Element } from 'cheerio';
 
 export const bbsOrigin = 'https://bbs.yamibo.com';
 
@@ -78,7 +79,7 @@ export async function fetchThread(
                 };
             }
         }
-        return await fetchThread(tid, options, ++retry);
+        return await fetchThread(tid, options, retry + 1);
     }
 
     return {

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got
-import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 
 export const route: Route = {
     path: '/:channel?',
@@ -30,7 +31,7 @@ export const route: Route = {
 
 | समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
 | ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
-| news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |`,
+| news | business | opinion | sports | national | entertainment | photo_feature | feature | world | blog |`,
 };
 
 async function handler(ctx) {

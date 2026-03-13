@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const FQDN = 'feedback.remnote.com';
 const apiGateway = 'https://gateway.hellonext.co';
 

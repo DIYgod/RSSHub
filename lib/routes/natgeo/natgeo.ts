@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -9,12 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 async function loadContent(link) {
     const data = await ofetch(link);
     const $ = load(data);
-    const dtStr = $('.content-title-area')
-        .find('h6')
-        .first()
-        .text()
-        .replaceAll(/&nbsp;/gi, ' ')
-        .trim();
+    const dtStr = $('.content-title-area').find('h6').first().text().replaceAll('&nbsp;', ' ').trim();
 
     $('.splide__arrows, .slide-control, [class^="ad-"], style').remove();
 

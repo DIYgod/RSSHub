@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -45,7 +46,7 @@ async function handler(ctx) {
 
             return {
                 title: item.text(),
-                link: `${rootUrl}${/^\.\.\/\.\./.test(item.attr('href')) ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
+                link: `${rootUrl}${item.attr('href').startsWith('../..') ? item.attr('href').replace(/^\.\.\/\.\./, '') : `/xwdt/${category}${item.attr('href').replace(/^\./, '')}`}`,
             };
         });
 

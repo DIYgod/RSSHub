@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import { decode } from 'iconv-lite';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/volume/:id',
@@ -25,7 +26,8 @@ export const route: Route = {
 async function handler(ctx) {
     const aid = Number.parseInt(ctx.req.param('id'));
     const link = `https://www.wenku8.net/novel/${Math.floor(aid / 1000)}/${aid}/index.htm`;
-    const $ = load(await get(link));
+    const html = await get(link);
+    const $ = load(html);
     const vid = $('.vcss').last().parent().next().find('a')[0].attribs.href.replace('.htm', '');
     const volumeUrl = `https://dl.wenku8.com/packtxt.php?aid=${aid}&vid=${vid}&charset=gbk`;
     const lastestChapters = $('.vcss')

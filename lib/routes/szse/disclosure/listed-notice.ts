@@ -1,10 +1,12 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 function isValidDate(dateString: string): boolean {
     // 正则表达式检查格式：YYYY-MM-DD
@@ -49,8 +51,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         // 如果只提供了开始日期，则将结束日期设置为开始日期
         queries.endDate = queries.beginDate;
     }
-    const baseUrl: string = 'https://www.szse.cn';
-    const staticBaseUrl: string = 'https://disc.static.szse.cn';
+    const baseUrl = 'https://www.szse.cn';
+    const staticBaseUrl = 'https://disc.static.szse.cn';
     const apiUrl: string = new URL('api/disc/announcement/annList', baseUrl).href;
     const targetUrl: string = new URL(`disclosure/listed/notice${category}`, baseUrl).href;
 
@@ -75,7 +77,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const pubDate: number | string = item.publishTime;
             const linkUrl: string | undefined = `disclosure/listed/bulletinDetail/index.html?${item.id}`;
             const categories: string[] = [...new Set([...item.secCode, ...item.secName, item.bigCategoryId, item.bigIndustryCode, item.smallCategoryId].filter(Boolean))];
-            const guid: string = `szse-${item.id}`;
+            const guid = `szse-${item.id}`;
             const updated: number | string = item.publishTime;
 
             let processedItem: DataItem = {
@@ -92,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const enclosureUrl: string | undefined = new URL(`download${item.attachPath}`, staticBaseUrl).href;
 
             if (enclosureUrl) {
-                const enclosureType: string = `application/${item.attachFormat}`;
+                const enclosureType = `application/${item.attachFormat}`;
 
                 processedItem = {
                     ...processedItem,

@@ -1,9 +1,0 @@
-{{@ detail_mask }}
-
-<div>
-  {{ if weekday_time && weekend_time }}
-  <p>活跃时间：工作日&nbsp;{{ weekday_time }}&nbsp;&nbsp;&nbsp;&nbsp;休息日&nbsp;{{ weekend_time }}</p>
-  {{ /if }}
-  <p>游戏风格：{{ styles }}</p>
-  <p>招募区服：{{ target }}</p>
-</div>

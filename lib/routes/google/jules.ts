@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -45,6 +46,7 @@ async function handler() {
             // Full HTML for the item content
             article.find('h2').first().remove(); // remove title
             article.find('b').first().remove(); // remove date
+            article.find('.sr-only').remove(); // remove sr-only elements
 
             return {
                 title,

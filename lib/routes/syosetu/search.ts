@@ -1,12 +1,15 @@
-import { Route, Data } from '@/types';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import { Context } from 'hono';
-import { Genre, GenreNotation, NarouNovelFetch, NovelTypeParam, Order, R18Site, SearchBuilder, SearchBuilderR18, SearchParams } from 'narou';
+import type { Context } from 'hono';
+import type { Genre, NovelTypeParam, Order, SearchParams } from 'narou';
+import { GenreNotation, NarouNovelFetch, R18Site, SearchBuilder, SearchBuilderR18 } from 'narou';
+import type { Join } from 'narou/util/type';
 import queryString from 'query-string';
-import { Join } from 'narou/util/type';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { SyosetuSub, NarouSearchParams, syosetuSubToJapanese } from './types/search';
+import type { Data, Route } from '@/types';
+
+import { renderDescription } from './templates/description';
+import type { NarouSearchParams } from './types/search';
+import { SyosetuSub, syosetuSubToJapanese } from './types/search';
 
 export const route: Route = {
     path: '/search/:sub/:query',
@@ -50,37 +53,37 @@ function mapToSearchParams(query: string, limit: number): SearchParams {
     const searchParams: SearchParams = {
         gzip: 5,
         lim: limit,
+
+        word: setIfExists(params.word),
+        notword: setIfExists(params.notword),
+
+        title: setIfExists(params.title),
+        ex: setIfExists(params.ex),
+        keyword: setIfExists(params.keyword),
+        wname: setIfExists(params.wname),
+
+        sasie: setIfExists(params.sasie),
+        iszankoku: setIfExists(params.iszankoku),
+        isbl: setIfExists(params.isbl),
+        isgl: setIfExists(params.isgl),
+        istensei: setIfExists(params.istensei),
+        istenni: setIfExists(params.istenni),
+
+        stop: setIfExists(params.stop),
+        notzankoku: setIfExists(params.notzankoku),
+        notbl: setIfExists(params.notbl),
+        notgl: setIfExists(params.notgl),
+        nottensei: setIfExists(params.nottensei),
+        nottenni: setIfExists(params.nottenni),
+
+        minlen: setIfExists(params.minlen),
+        maxlen: setIfExists(params.maxlen),
+
+        type: setIfExists(params.type as NovelTypeParam),
+        order: setIfExists(params.order as Order),
+        genre: setIfExists(params.genre as Join<Genre> | Genre),
+        nocgenre: setIfExists(params.nocgenre as Join<R18Site> | R18Site),
     };
-
-    searchParams.word = setIfExists(params.word);
-    searchParams.notword = setIfExists(params.notword);
-
-    searchParams.title = setIfExists(params.title);
-    searchParams.ex = setIfExists(params.ex);
-    searchParams.keyword = setIfExists(params.keyword);
-    searchParams.wname = setIfExists(params.wname);
-
-    searchParams.sasie = setIfExists(params.sasie);
-    searchParams.iszankoku = setIfExists(params.iszankoku);
-    searchParams.isbl = setIfExists(params.isbl);
-    searchParams.isgl = setIfExists(params.isgl);
-    searchParams.istensei = setIfExists(params.istensei);
-    searchParams.istenni = setIfExists(params.istenni);
-
-    searchParams.stop = setIfExists(params.stop);
-    searchParams.notzankoku = setIfExists(params.notzankoku);
-    searchParams.notbl = setIfExists(params.notbl);
-    searchParams.notgl = setIfExists(params.notgl);
-    searchParams.nottensei = setIfExists(params.nottensei);
-    searchParams.nottenni = setIfExists(params.nottenni);
-
-    searchParams.minlen = setIfExists(params.minlen);
-    searchParams.maxlen = setIfExists(params.maxlen);
-
-    searchParams.type = setIfExists(params.type as NovelTypeParam);
-    searchParams.order = setIfExists(params.order as Order);
-    searchParams.genre = setIfExists(params.genre as Join<Genre> | Genre);
-    searchParams.nocgenre = setIfExists(params.nocgenre as Join<R18Site> | R18Site);
 
     if (params.mintime || params.maxtime) {
         searchParams.time = `${params.mintime || ''}-${params.maxtime || ''}`;
@@ -131,10 +134,7 @@ async function handler(ctx: Context): Promise<Data> {
     const items = result.values.map((novel) => ({
         title: novel.title,
         link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
-        description: art(path.join(__dirname, 'templates/description.art'), {
-            novel,
-            genreText: GenreNotation[novel.genre],
-        }),
+        description: renderDescription({ novel, genreText: GenreNotation[novel.genre] }),
         // Skip pubDate - search results prioritize search sequence over timestamps
         // pubDate: novel.general_lastup,
         author: novel.writer,

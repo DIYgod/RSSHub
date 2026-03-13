@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -36,4 +37,4 @@ const parseItem = async (item) => {
     return item;
 };
 
-export { baseUrl, parseList, parseItem };
+export { baseUrl, parseItem, parseList };

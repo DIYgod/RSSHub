@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { baseURL, puppeteerGet } from './utils';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { baseURL, puppeteerGet } from './utils';
 
 export const route: Route = {
     path: '/software/:name/:routeParams?',

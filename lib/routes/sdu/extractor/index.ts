@@ -1,7 +1,7 @@
-import news from './wh/news';
-import view from './view';
 import sdrj from './sdrj';
+import view from './view';
 import jwc from './wh/jwc';
+import news from './wh/news';
 
 const index = (link) => {
     if (link.startsWith('https://xinwen.wh.sdu.edu.cn/')) {

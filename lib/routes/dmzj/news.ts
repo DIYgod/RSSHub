@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -34,7 +35,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const url = `https://news.dmzj.com/${ctx.req.param('category') || ''}`;
-    const $ = load((await got(url)).data);
+    const response = await got(url);
+    const $ = load(response.data);
     return {
         title: $('title').text(),
         link: url,

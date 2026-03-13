@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({
     html: true,
     breaks: true,

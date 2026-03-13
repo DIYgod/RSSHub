@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
@@ -35,7 +35,8 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const content = load(await ofetch(item.link));
+                const html = await ofetch(item.link);
+                const content = load(html);
                 const ldjson = JSON.parse(content('[type="application/ld+json"]:not([data-schema])').text());
 
                 item.pubDate = parseDate(ldjson.datePublished);

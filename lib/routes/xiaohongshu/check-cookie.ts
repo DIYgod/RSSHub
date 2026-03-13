@@ -1,4 +1,5 @@
-import { APIRoute } from '@/types';
+import type { APIRoute } from '@/types';
+
 import { checkCookie } from './util';
 
 export const apiRoute: APIRoute = {

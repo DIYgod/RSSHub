@@ -1,17 +1,18 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'trending' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
-    const baseUrl: string = 'https://indianexpress.com';
+    const baseUrl = 'https://indianexpress.com';
     const apiUrl = new URL(`${apiSlug}/article`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/ie_section`, baseUrl).href;
 
@@ -39,9 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = response.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
         const title: string = item.title?.rendered ?? item.title;
         const description: string | undefined = item.content.rendered;
         const pubDate: number | string = item.date_gmt;

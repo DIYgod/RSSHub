@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/show/:id',

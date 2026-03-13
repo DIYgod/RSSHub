@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/topics/:topic?',
@@ -70,6 +71,7 @@ async function handler(ctx) {
                 const pubDate = head.datePublished;
                 const descriptionDom = $('div[data-cy=storyWrapper]');
                 descriptionDom.find('div[class=share]').remove();
+                descriptionDom.find('div[class^="textToSpeech"]').remove();
                 const description = descriptionDom.html();
 
                 return { title, author, pubDate, description, link };

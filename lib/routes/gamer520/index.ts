@@ -1,8 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { Context } from 'hono';
 
 export const route: Route = {
     path: '/:category?/:order?',

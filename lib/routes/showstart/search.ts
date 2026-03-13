@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { TITLE, HOST } from './const';
-import { fetchActivityList, fetchPerformerList, fetchSiteList, fetchBrandList, fetchCityList, fetchStyleList } from './service';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { HOST, TITLE } from './const';
+import { fetchActivityList, fetchBrandList, fetchCityList, fetchPerformerList, fetchSiteList, fetchStyleList } from './service';
 
 export const route: Route = {
     path: '/search/:type/:keyword?',

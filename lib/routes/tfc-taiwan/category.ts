@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { baseUrl, parsePost, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, parseItem, parsePost } from './utils';
 
 const handler = async (ctx) => {
     const { category } = ctx.req.param();

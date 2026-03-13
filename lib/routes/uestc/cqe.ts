@@ -1,8 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const baseUrl = 'https://cqe.uestc.edu.cn/';
 

@@ -1,8 +1,10 @@
-import type { Data, Route } from '@/types';
-import { INDEX_URL, LOGO_URL, REQUIRE_CONFIG } from './constant';
 import type { Context } from 'hono';
-import { checkConfig, generateDynamicFeeds } from './utils';
+
+import type { Data, Route } from '@/types';
+
 import { getFollowDynamicList } from './api';
+import { INDEX_URL, LOGO_URL, REQUIRE_CONFIG } from './constant';
+import { checkConfig, generateDynamicFeeds } from './utils';
 
 export const route: Route = {
     path: '/ff14risingstones/timeline',

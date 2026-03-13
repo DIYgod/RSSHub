@@ -1,12 +1,12 @@
-import { Route, DataItem } from '@/types';
 import { config } from '@/config';
-import got from '@/utils/got';
-import wait from '@/utils/wait';
-import cache from '@/utils/cache';
-import { fetchArticle } from '@/utils/wechat-mp';
+import CaptchaError from '@/errors/types/captcha';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import CaptchaError from '@/errors/types/captcha';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import wait from '@/utils/wait';
+import { fetchArticle } from '@/utils/wechat-mp';
 
 let cacheIndex = 0;
 

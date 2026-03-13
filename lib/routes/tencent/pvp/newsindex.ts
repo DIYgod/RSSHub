@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const map = new Map([
     ['rm', { name: '热门', channelid: 1760 }],
     ['xw', { name: '新闻', channelid: 1761 }],

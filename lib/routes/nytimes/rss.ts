@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:cat?',
@@ -45,7 +47,7 @@ async function handler(ctx) {
         item: await Promise.all(
             rss.items.map((e) =>
                 cache.tryGet(e.link, async () => {
-                    const res = await ofetch(e.link, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referrer: 'https://www.google.com/' });
+                    const res = await ofetch(e.link, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referer: 'https://www.google.com/' });
 
                     const $ = load(res);
 

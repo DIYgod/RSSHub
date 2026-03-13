@@ -1,5 +1,5 @@
 import { Api, TelegramClient } from 'telegram';
-import { UserAuthParams } from 'telegram/client/auth';
+import type { UserAuthParams } from 'telegram/client/auth';
 import { StringSession } from 'telegram/sessions/index.js';
 
 import { config } from '@/config';

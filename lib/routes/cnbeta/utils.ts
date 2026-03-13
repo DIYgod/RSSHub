@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.cnbeta.com.tw';
 
@@ -24,4 +25,4 @@ const ProcessItems = (items, limit, tryGet) =>
         )
     );
 
-export { rootUrl, ProcessItems };
+export { ProcessItems, rootUrl };

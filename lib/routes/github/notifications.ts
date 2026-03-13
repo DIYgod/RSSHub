@@ -1,10 +1,10 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const apiUrl = 'https://api.github.com';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/notifications',
@@ -31,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
-        throw new ConfigNotFoundError('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
+        throw new ConfigNotFoundError('GitHub notification RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
     const headers = {
         Accept: 'application/vnd.github.v3+json',
@@ -74,5 +74,6 @@ async function handler(ctx) {
         title: 'Github Notifications',
         link: 'https://github.com/notifications',
         item: items,
+        allowEmpty: true,
     };
 }

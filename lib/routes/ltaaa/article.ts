@@ -1,28 +1,27 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.ltaaa.cn';
+    const baseUrl = 'https://www.ltaaa.cn';
     const targetUrl: string = new URL('article', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('ul.wlist li')
+    let items: DataItem[] = $('ul.wlist li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -31,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('div.li-title a');
 
             const title: string = $aEl.text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 intro: $el.find('div.dbody p').first().text(),
             });
             const pubDateStr: string | undefined = $el.find('i.icon-time').next().text().trim();
@@ -107,7 +106,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     $$('div.post-param, div.post-title, div.post-keywords').remove();
                     $$('div.attitude, div.clear').remove();
 
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         description: $$('div.post-body').html(),
                     });
 

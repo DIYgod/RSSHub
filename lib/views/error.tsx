@@ -1,7 +1,7 @@
 import type { FC } from 'hono/jsx';
 
+import { gitDate, gitHash } from '@/utils/git-hash';
 import { Layout } from '@/views/layout';
-import { gitHash, gitDate } from '@/utils/git-hash';
 
 const Index: FC<{
     requestPath: string;
@@ -135,7 +135,7 @@ const Index: FC<{
                 <a target="_blank" href="https://github.com/DIYgod/RSSHub/graphs/contributors" className="text-[#F5712C]">
                     Contributors
                 </a>{' '}
-                under MIT License.
+                under AGPL-3.0 License.
             </p>
         </div>
     </Layout>

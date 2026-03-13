@@ -1,10 +1,13 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import parser from '@/utils/rss-parser';
-import utils from './utils';
-import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
+import parser from '@/utils/rss-parser';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/:lang?',

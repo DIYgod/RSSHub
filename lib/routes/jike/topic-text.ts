@@ -1,5 +1,7 @@
-import { Route } from '@/types';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+
 import { constructTopicEntry } from './utils';
 
 export const route: Route = {

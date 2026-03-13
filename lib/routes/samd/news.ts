@@ -1,9 +1,10 @@
-import { Route, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
 
 const dict = { '434': '行业资讯', '436': '协会动态', '438': '重要通知', '440': '政策法规' };
 
@@ -50,7 +51,8 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
-                    const $ = load(await ofetch(item.link!));
+                    const html = await ofetch(item.link!);
+                    const $ = load(html);
 
                     const content = $('.content');
                     item.author = content.find('.author span').text();

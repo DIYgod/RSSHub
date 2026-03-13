@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const baseUrl = 'https://sehuatang.org/';
 

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -113,9 +114,8 @@ async function handler(ctx) {
                     case 'tju-yzb':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
-                                detailResponse = await got(item.link, { responseType: 'buffer' });
+                                const detailResponse = await got(item.link, { responseType: 'buffer' });
                                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
                                 content('.font_18_b').remove();
                                 content('.font_grey_en').remove();

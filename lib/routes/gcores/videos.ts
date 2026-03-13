@@ -1,6 +1,7 @@
-import { type Data, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
-import { type Context } from 'hono';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 

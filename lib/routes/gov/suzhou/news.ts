@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/suzhou/news/:uid',
@@ -57,10 +58,10 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'https://www.suzhou.gov.cn';
     const uid = ctx.req.param('uid');
-    let url = '';
-    let title = '';
+    let url: string;
+    let title: string;
     let apiUrl = '';
-    let items = [];
+    let items: DataItem[];
     switch (uid) {
         case 'szyw':
         case 'news':

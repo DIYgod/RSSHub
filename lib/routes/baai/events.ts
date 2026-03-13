@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
+import { apiHost, baseUrl, parseEventDetail, parseItem } from './utils';
 
 export const route: Route = {
     path: '/hub/events',

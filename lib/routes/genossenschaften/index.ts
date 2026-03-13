@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
 import type { Data, DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const FEED_TITLE = 'Genossenschaften.immo' as const;
 const FEED_LOGO = 'https://genossenschaften.immo/static/gimmo/img/favicon/favicon-128x128.png' as const;

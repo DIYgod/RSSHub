@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { baseUrl, getBuildId, parseList, parseItem } from './utils';
+
+import { baseUrl, getBuildId, parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/kol/:kolId/:lang?',

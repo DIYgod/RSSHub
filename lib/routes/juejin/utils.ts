@@ -1,9 +1,12 @@
-import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import crypto from 'node:crypto';
+
+import * as cheerio from 'cheerio';
+
 import cache from '@/utils/cache';
-import { Category, Collection, Tag } from './types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Category, Collection, Tag } from './types';
 
 const b64tou8a = (str) => Uint8Array.from(Buffer.from(str, 'base64'));
 const b64tohex = (str) => Buffer.from(str, 'base64').toString('hex');
@@ -14,7 +17,12 @@ const s256 = (s1: Uint8Array, s2: string) => {
     return sha.digest('hex');
 };
 
-const solveWafChallenge = (cs) => {
+/**
+ * Solve _wafchallengeid
+ * @param cs - base64 encoded challenge string {"v":{"a":"...", "b":"timestamp", "c":"..."}, "s":"..."}
+ * @returns base64 encoded solved challenge string {"v":{"a":"...", "b":"timestamp", "c":"..."}, "s":"...", "d":"solution"}
+ */
+export const solveWafChallenge = (cs: string) => {
     const c = JSON.parse(Buffer.from(cs, 'base64').toString());
     const prefix = b64tou8a(c.v.a);
     const expect = b64tohex(c.v.c);
@@ -136,4 +144,4 @@ export const getTagList = () =>
             },
         });
         return response.data;
-    }) as Promise<{ tag_id: string; tag: Tag }[]>;
+    }) as Promise<Array<{ tag_id: string; tag: Tag }>>;

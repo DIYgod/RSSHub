@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 const baseUrl = 'https://www.cast.org.cn';
 
 async function parsePage(html: string) {
@@ -86,7 +88,7 @@ async function handler(ctx) {
 
     const $ = load(indexData);
 
-    let items: any[] = [];
+    let items: DataItem[];
 
     // 新闻-视频首页特殊处理
     if (column === 'xw' && subColumn === 'SP' && !category) {

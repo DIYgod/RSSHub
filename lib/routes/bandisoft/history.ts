@@ -1,11 +1,12 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 const idOptions = [
     {
@@ -129,19 +130,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const validIds: Set<string> = new Set(idOptions.map((option) => option.value));
+    const validIds = new Set<string>(idOptions.map((option) => option.value));
 
     if (!validIds.has(id)) {
         throw new Error(`Invalid id: ${id}. Allowed values are: ${[...validIds].join(', ')}`);
     }
 
-    const validLanguages: Set<string> = new Set(languageOptions.map((option) => option.value));
+    const validLanguages = new Set<string>(languageOptions.map((option) => option.value));
 
     if (!validLanguages.has(language)) {
         throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);
     }
 
-    const baseUrl: string = `https://${language}.bandisoft.com`;
+    const baseUrl = `https://${language}.bandisoft.com`;
     const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -162,7 +163,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
 
             const linkUrl: string = targetUrl;
-            const guid: string = `bandisoft-${id}-${language}-${version}`;
+            const guid = `bandisoft-${id}-${language}-${version}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {

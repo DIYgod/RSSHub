@@ -1,4 +1,4 @@
-import {
+import type {
     CollectibleApproval,
     CollectibleBurn,
     CollectibleMint,
@@ -20,9 +20,9 @@ import {
     SocialRevise,
     SocialReward,
     SocialShare,
+    StakerProfitSnapshot,
     StakeStaking,
     StakeTransaction,
-    StakerProfitSnapshot,
     TransactionApproval,
     TransactionBridge,
     TransactionBurn,
@@ -30,6 +30,7 @@ import {
     TransactionMint,
     TransactionTransfer,
 } from '@rss3/sdk';
+
 export type RSS3DataModels = {
     CollectibleApproval: CollectibleApproval;
     CollectibleBurn: CollectibleBurn;

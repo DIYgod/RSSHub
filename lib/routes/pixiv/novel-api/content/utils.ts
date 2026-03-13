@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+
+import logger from '@/utils/logger';
+
 import getIllustDetail from '../../api/get-illust-detail';
 import pixivUtils from '../../utils';
-import logger from '@/utils/logger';
 
 export function convertPixivProtocolExtended(caption: string): string {
     const protocolMap = new Map([
@@ -129,6 +131,6 @@ export async function parseNovelContent(content: string, images: Record<string, 
 
         return $content.html() || '';
     } catch (error) {
-        throw new Error(`Error parsing novel content: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`Error parsing novel content: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
     }
 }

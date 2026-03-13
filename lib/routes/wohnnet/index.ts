@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
 import type { Data, DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const FEED_TITLE = 'wohnnet.at' as const;
 const FEED_LOGO = 'https://www.wohnnet.at/media/images/wohnnet/icon_192_192.png' as const;

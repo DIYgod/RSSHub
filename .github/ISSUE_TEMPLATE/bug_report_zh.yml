@@ -3,88 +3,88 @@ description: 早起的小可爱有虫抓
 labels: ['RSS bug']
 
 body:
-  - type: markdown
-    attributes:
-      value: |
-        请确保已阅读 [文档](https://docs.rsshub.app) 内相关部分，并按照模版提供信息，否则 issue 将被立即关闭。
-        由于部分源网站反爬缘故，演示地址一些 RSS 会返回 status code 403 或 fetch failed，该问题不是 RSSHub 所致，请勿提交 issue。
+    - type: markdown
+      attributes:
+          value: |
+              请确保已阅读 [文档](https://docs.rsshub.app) 内相关部分，并按照模版提供信息，否则 issue 将被立即关闭。
+              由于部分源网站反爬缘故，演示地址一些 RSS 会返回 status code 403 或 fetch failed，该问题不是 RSSHub 所致，请勿提交 issue。
 
-  - type: textarea
-    id: routes
-    attributes:
-      label: 路由地址
-      description: 不包含参数，复制文档路由参数，一行一个，不要重复。如果和路由没有关系，请写 `NOROUTE`
-      placeholder: /someroute/:type?
-      render: routes
-    validations:
-      required: true
-
-  - type: textarea
-    id: fullroutes
-    attributes:
-      label: 完整路由地址
-      description: 包含所有必选与可选参数，一行一个，可以有重复路由不同参数（如果需要）
-      placeholder: /routes/1234?some_extension=mode
-      render: fullroutes
-    validations:
-      required: true
-
-  - type: input
-    id: docs-link
-    attributes:
-      label: 相关文档
-      description: 相关文档地址
-      placeholder: https://docs.rsshub.app/...
-    validations:
-      required: true
-
-  - type: textarea
-    id: what-expected
-    attributes:
-      label: 预期是什么？
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual-happened
-    attributes:
-      label: 实际发生了什么？
-    validations:
-      required: true
-
-  - type: dropdown
-    id: deployment
-    attributes:
-      label: 部署
-      multiple: false
-      options:
-        - 自建
-        - RSSHub 演示 (https://rsshub.app)
-    validations:
-      required: true
-
-  - type: input
-    id: deploy-info
-    attributes:
-      label: 部署相关信息
-      description: |
-        请提供您的操作系统、node 版本、（如果适用） docker 版本和环境变量。
-        请确保您部署的是 [主线 master 分支](https://github.com/DIYgod/RSSHub/tree/master) 最新版 RSSHub。
-      placeholder: 'OS: Linux, Node: v10.15.3, Docker: v19.03.13'
-
-  - type: textarea
-    id: logs
-    attributes:
-      label: 额外信息
-      description: 日志、报错等
-      render: shell
-    validations:
-      required: true
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: 这不是重复的 issue
-      options:
-        - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保该错误尚未被报告。
+    - type: textarea
+      id: routes
+      attributes:
+          label: 路由地址
+          description: 不包含参数，复制文档路由参数，一行一个，不要重复。如果和路由没有关系，请写 `NOROUTE`
+          placeholder: /someroute/:type?
+          render: routes
+      validations:
           required: true
+
+    - type: textarea
+      id: fullroutes
+      attributes:
+          label: 完整路由地址
+          description: 包含所有必选与可选参数，一行一个，可以有重复路由不同参数（如果需要）
+          placeholder: /routes/1234?some_extension=mode
+          render: fullroutes
+      validations:
+          required: true
+
+    - type: input
+      id: docs-link
+      attributes:
+          label: 相关文档
+          description: 相关文档地址
+          placeholder: https://docs.rsshub.app/...
+      validations:
+          required: true
+
+    - type: textarea
+      id: what-expected
+      attributes:
+          label: 预期是什么？
+      validations:
+          required: true
+
+    - type: textarea
+      id: actual-happened
+      attributes:
+          label: 实际发生了什么？
+      validations:
+          required: true
+
+    - type: dropdown
+      id: deployment
+      attributes:
+          label: 部署
+          multiple: false
+          options:
+              - 自建
+              - RSSHub 演示 (https://rsshub.app)
+      validations:
+          required: true
+
+    - type: input
+      id: deploy-info
+      attributes:
+          label: 部署相关信息
+          description: |
+              请提供您的操作系统、node 版本、（如果适用） docker 版本和环境变量。
+              请确保您部署的是 [主线 master 分支](https://github.com/DIYgod/RSSHub/tree/master) 最新版 RSSHub。
+          placeholder: 'OS: Linux, Node: v10.15.3, Docker: v19.03.13'
+
+    - type: textarea
+      id: logs
+      attributes:
+          label: 额外信息
+          description: 日志、报错等
+          render: shell
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: 这不是重复的 issue
+          options:
+              - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保该错误尚未被报告。
+                required: true

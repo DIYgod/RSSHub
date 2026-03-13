@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import getToken from '../_access';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import getToken from '../_access';
 import constants from '../_constants';
-import { getFilteredLanguages } from '../_profile';
 import { getMangaMetaByIds } from '../_feed';
+import { getFilteredLanguages } from '../_profile';
 import { toQueryString } from '../_utils';
 
 const DEFAULT_LIMIT = 25;
@@ -130,7 +131,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Record<string, any>[];
+    )) as Array<Record<string, any>>;
 
     const mangaIds = feed.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
 

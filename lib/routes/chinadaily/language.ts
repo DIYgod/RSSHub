@@ -1,30 +1,29 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'thelatest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://language.chinadaily.com.cn';
+    const baseUrl = 'https://language.chinadaily.com.cn';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.gy_box, ul.content_list li')
+    let items: DataItem[] = $('div.gy_box, ul.content_list li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -34,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const image: string | undefined = $el.find('a.gy_box_img img, a.a_img img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -124,8 +123,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const description: string | undefined =
                         item.description +
-                        art(path.join(__dirname, 'templates/description.art'), {
-                            description: $$('div#Content').html(),
+                        renderDescription({
+                            description: $$('div#Content').html() ?? undefined,
                         });
 
                     processedItem = {

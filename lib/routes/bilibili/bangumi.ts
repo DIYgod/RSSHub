@@ -1,6 +1,8 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import { EpisodeResult } from './types';
+
+import type { EpisodeResult } from './types';
 import utils from './utils';
 
 export const route: Route = {

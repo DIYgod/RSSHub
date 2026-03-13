@@ -1,4 +1,5 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -47,11 +48,10 @@ async function handler() {
                 if (banner) {
                     description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
                 }
-                description += articleData.body;
-
                 if (articleData.body_extends) {
                     description += articleData.body_extends.map((bodyExtendsItem) => `<h2>${bodyExtendsItem.title}</h2>${bodyExtendsItem.body}`).join('');
                 }
+                description += articleData.body;
 
                 return {
                     title: item.title.trim(),

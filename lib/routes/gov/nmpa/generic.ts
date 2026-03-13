@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import { finishArticleItem } from '@/utils/wechat-mp';
+
 import { config } from '@/config';
-const baseUrl = 'https://www.nmpa.gov.cn';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+import { finishArticleItem } from '@/utils/wechat-mp';
+
+const baseUrl = 'https://www.nmpa.gov.cn';
 
 export const route: Route = {
     path: '/nmpa/*',
@@ -45,7 +47,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         data.items.map((item) => {
-            if (/^https:\/\/www\.nmpa\.gov\.cn\//.test(item.link)) {
+            if (item.link.startsWith('https://www.nmpa.gov.cn/')) {
                 return cache.tryGet(item.link, async () => {
                     const { data: html } = await got(item.link);
                     const $ = load(html);
@@ -53,7 +55,7 @@ async function handler(ctx) {
                     item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8);
                     return item;
                 });
-            } else if (/^https:\/\/mp\.weixin\.qq\.com\//.test(item.link)) {
+            } else if (item.link.startsWith('https://mp.weixin.qq.com/')) {
                 return finishArticleItem(item);
             } else {
                 return item;

@@ -1,15 +1,18 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils, { getLiveUrl, getVideoUrl } from './utils';
-import { parseDate } from '@/utils/parse-date';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
-import cacheIn from './cache';
-import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
-import { parseDuration } from '@/utils/helpers';
+
 import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDuration } from '@/utils/helpers';
+import { parseDate } from '@/utils/parse-date';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import cacheIn from './cache';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -126,11 +129,11 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: {
+    const imgUrls: Array<{
         url: string;
         width?: number;
         height?: number;
-    }[] = [];
+    }> = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
@@ -259,6 +262,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
 };
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -421,7 +425,7 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
-                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
 
                 return {
                     title: title || originalDescription,

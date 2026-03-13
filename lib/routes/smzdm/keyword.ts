@@ -1,11 +1,14 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/keyword/:keyword',

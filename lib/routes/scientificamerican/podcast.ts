@@ -1,36 +1,34 @@
-import path from 'node:path';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const baseUrl: string = 'https://www.scientificamerican.com';
+    const baseUrl = 'https://www.scientificamerican.com';
     const targetUrl: string = new URL(`podcast${id ? `/${id}` : 's'}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language: string = $('html').attr('lang') ?? 'en';
     const data: string | undefined = response.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-    const parsedData = data ? JSON.parse(data.replaceAll('\\\\', '\\')) : undefined;
+    const parsedData = data ? JSON.parse(data.replaceAll(String.raw`\\`, '\\')) : undefined;
 
-    let items: DataItem[] = [];
-
-    items = parsedData
+    let items: DataItem[] = parsedData
         ? parsedData.initialData.props.results.slice(0, limit).map((item): DataItem => {
               const title: string = item.title;
               const image: string | undefined = item.image_url;
-              const description: string = art(path.join(__dirname, 'templates/description.art'), {
+              const description: string = renderDescription({
                   images: image
                       ? [
                             {
@@ -51,7 +49,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   url: author.url ? new URL(author.url, baseUrl).href : undefined,
                   avatar: author.picture_file,
               }));
-              const guid: string = `-${item.id}`;
+              const guid = `-${item.id}`;
               const updated: number | string = item.release_date ?? pubDate;
 
               let processedItem: DataItem = {
@@ -77,7 +75,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
               const enclosureUrl: string | undefined = item.media_url;
 
               if (enclosureUrl) {
-                  const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                  const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                   processedItem = {
                       ...processedItem,
@@ -103,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link);
 
                     const detailData: string | undefined = detailResponse.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll('\\\\', '\\')) : undefined;
+                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll(String.raw`\\`, '\\')) : undefined;
 
                     if (!parsedDetailData) {
                         return item;
@@ -113,7 +111,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = articleData.title;
                     const image: string | undefined = articleData.image_url;
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         images: image
                             ? [
                                   {
@@ -134,7 +132,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         url: author.url ? new URL(author.url, baseUrl).href : undefined,
                         avatar: author.picture_file,
                     }));
-                    const guid: string = `scientificamerican-${articleData.id}`;
+                    const guid = `scientificamerican-${articleData.id}`;
                     const updated: number | string = articleData.updated_at_date_time ?? pubDate;
 
                     let processedItem: DataItem = {
@@ -159,7 +157,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = articleData.media_url;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                        const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                         processedItem = {
                             ...processedItem,

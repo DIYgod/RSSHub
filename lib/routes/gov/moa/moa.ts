@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 const hostUrl = 'http://www.moa.gov.cn/';
@@ -246,7 +247,7 @@ function dealLink(element, url) {
     // host 不同的是外部文章，outside
     // url 里带 govpublic 的都是公示文章，govpublic
     // 其他的都算普通文章，normal
-    let pageType = null;
+    let pageType: string;
     if (host === hostUrlObj.host) {
         pageType = href.includes('gk') || href.includes('govpublic') ? 'govpublic' : 'normal';
     } else {

@@ -1,9 +1,11 @@
-import { Data, Route, ViewType } from '@/types';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
 import { getNSFWUserNovels } from './novel-api/user-novels/nsfw';
 import { getSFWUserNovels } from './novel-api/user-novels/sfw';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/novels/:id/:full_content?',

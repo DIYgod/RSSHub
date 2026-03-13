@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
-import g_encrypt from './execlib/x-zse-96-v3';
-import md5 from '@/utils/md5';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
+
+import g_encrypt from './execlib/x-zse-96-v3';
 
 export const header = {
     'x-api-version': '3.0.91',
@@ -70,8 +72,24 @@ export const getSignedHeader = async (url: string, apiPath: string) => {
         const xzse93 = '101_3_3.0';
         const f = `${xzse93}+${apiPath}+${dc0}`;
         const xzse96 = '2.0_' + g_encrypt(md5(f));
+
+        // If __zse_ck is absent from ZHIHU_COOKIES, fetch it automatically from
+        // Zhihu's public static JS. The value is site-wide (not user-specific)
+        // and requires no login, but it expires and must be kept up to date.
+        let cookieStr = config.zhihu.cookies;
+        if (!getCookieValueByKey('__zse_ck')) {
+            const zseCk = await cache.tryGet('zhihu:zse_ck', async () => {
+                const response = await ofetch.raw('https://static.zhihu.com/zse-ck/v3.js');
+                const script = await response._data.text();
+                return script.match(/__g\.ck\|\|"([\w+/=\\]*?)",_=/)?.[1] || '';
+            });
+            if (zseCk) {
+                cookieStr = `${cookieStr}; __zse_ck=${zseCk}`;
+            }
+        }
+
         return {
-            cookie: config.zhihu.cookies,
+            cookie: cookieStr,
             'x-zse-96': xzse96,
             'x-app-za': 'OS=Web',
             'x-zse-93': xzse93,

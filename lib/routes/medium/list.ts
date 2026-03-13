@@ -1,10 +1,10 @@
-import { Route } from '@/types';
 import { config } from '@/config';
-
-import parseArticle from './parse-article.js';
-import { getUserCatalogMainContentQuery } from './graphql.js';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
 import InvalidParameterError from '@/errors/types/invalid-parameter.js';
+import type { Route } from '@/types';
+
+import { getUserCatalogMainContentQuery } from './graphql.js';
+import parseArticle from './parse-article.js';
 
 export const route: Route = {
     path: '/list/:user/:catalogId',

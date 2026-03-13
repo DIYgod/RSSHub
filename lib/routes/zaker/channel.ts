@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import * as cheerio from 'cheerio';
-import { baseUrl, fetchItem, getSafeLineCookieWithData, parseList } from './utils';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { baseUrl, fetchItem, getSafeLineCookieWithData, parseList } from './utils';
 
 export const route: Route = {
     path: '/channel/:id?',

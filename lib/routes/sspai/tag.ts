@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,6 +52,13 @@ async function handler(ctx) {
                 if (banner) {
                     description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
                 }
+
+                if (articleData.body_extends) {
+                    for (const ext of articleData.body_extends) {
+                        description += ext.body;
+                    }
+                }
+
                 description += articleData.body;
 
                 return {

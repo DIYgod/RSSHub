@@ -1,6 +1,6 @@
-import ofetch from '@/utils/ofetch';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 
 export const getToken = () =>
     cache.tryGet(

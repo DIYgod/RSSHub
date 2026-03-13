@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
-import { processImage } from './utils';
-import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { processImage } from './utils';
 
 export const route: Route = {
     path: '/timeline',

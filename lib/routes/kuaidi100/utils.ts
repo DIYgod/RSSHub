@@ -1,5 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 const wwwid_key = 'kuaidi100-wwwid';
 const csrf_key = 'kuaidi100-csrf';
 const globacsrftoken_key = 'kuaidi100-globacsrftoken';

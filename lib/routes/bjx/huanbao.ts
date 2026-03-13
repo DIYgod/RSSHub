@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/huanbao',

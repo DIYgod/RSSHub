@@ -1,13 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { rootUrl, getSearchParams } from './utils';
+import { renderDescription } from './templates/description';
+import { getSearchParams, rootUrl } from './utils';
 
 export const handler = async (ctx) => {
     const { id = '1103' } = ctx.req.param();
@@ -24,7 +23,7 @@ export const handler = async (ctx) => {
 
     let items = response.data.slice(0, limit).map((item) => {
         const title = item.article_title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             intro: item.article_brief,
         });
         const guid = `cls-${item.article_id}`;
@@ -62,7 +61,7 @@ export const handler = async (ctx) => {
                 }
 
                 const title = data.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     images: data.images.map((i) => ({
                         src: i,
                         alt: title,
@@ -76,7 +75,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = parseDate(data.ctime, 'X');
-                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]) ?? [])].filter(Boolean);
+                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]))].filter(Boolean);
                 item.author = data.author?.name ?? item.author;
                 item.guid = guid;
                 item.id = guid;

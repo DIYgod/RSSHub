@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import { commonHandler } from './category';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+
+import { commonHandler } from './category';
 
 export const route: Route = {
     path: '/tag/:topic',

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { SUB_NAME_PREFIX, SUB_URL } from './const';
+
 import loadArticle from './article';
-import { WPPost } from './types';
+import { SUB_NAME_PREFIX, SUB_URL } from './const';
+import type { WPPost } from './types';
 
 export const route: Route = {
     path: '/tag/:tag',

@@ -1,5 +1,0 @@
-<span>{{comment}} Type: {{type}} Price: {{price}}</span>
-{{ if image }}
-    <img src={{image}} />
-{{ /if }}
-{{@ description }}

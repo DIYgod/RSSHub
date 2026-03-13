@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as url from 'node:url';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const host = 'https://www.douban.com/explore/column/';
 export const route: Route = {
@@ -13,7 +13,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const link = url.resolve(host, id);
+    const link = new URL(id, host).href;
     const response = await got.get(link);
     const $ = load(response.data);
     const title = $('div.h1').text();

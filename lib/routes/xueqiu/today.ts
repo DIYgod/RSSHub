@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { parseToken } from '@/routes/xueqiu/cookies';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { parseToken } from '@/routes/xueqiu/cookies';
 
 export const route: Route = {
     path: '/today',

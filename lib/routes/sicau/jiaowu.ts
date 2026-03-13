@@ -1,10 +1,11 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import { Language } from '@/routes/kurogames/wutheringwaves/constants';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { Language } from '@/routes/kurogames/wutheringwaves/constants';
 
 const $get = async (url: string, encoding = 'gb2312') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 const $trim = (str: string) => {
@@ -67,7 +68,8 @@ export const route: Route = {
             items = await Promise.all(
                 items.map((item) =>
                     cache.tryGet(item.link!, async () => {
-                        const $ = load(await $get(item.link!));
+                        const html = await $get(item.link!);
+                        const $ = load(html);
                         item.description = $trim($('.text1[width="95%"] b').html()!);
                         return item;
                     })

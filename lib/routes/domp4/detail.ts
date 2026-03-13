@@ -1,8 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { decodeCipherText, composeMagnetUrl, getUrlType, ensureDomain } from './utils';
+import { composeMagnetUrl, decodeCipherText, ensureDomain, getUrlType } from './utils';
 
 // 兼容没有 script 标签的情况，直接解析 dom
 function getDomList($, detailUrl) {

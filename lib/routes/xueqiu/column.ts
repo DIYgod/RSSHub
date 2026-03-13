@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { JSDOM } from 'jsdom';
 import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';
 

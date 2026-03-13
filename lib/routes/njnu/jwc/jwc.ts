@@ -1,7 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import { ProcessFeed } from './utils';
 
 export const route: Route = {
@@ -40,16 +42,13 @@ async function handler(ctx) {
         case 'xstz':
             title = '学生通知';
             path = 'xstz.htm';
+            break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
     const base = 'http://jwc.njnu.edu.cn/index/' + path;
 
-    const response = await got({
-        method: 'get',
-        url: base,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(base);
 
     const $ = load(response.data);
 

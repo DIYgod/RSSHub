@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
 import Parser from 'rss-parser';
+import { describe, expect, it, vi } from 'vitest';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';

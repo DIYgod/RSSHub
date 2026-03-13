@@ -1,9 +1,12 @@
+import querystring from 'node:querystring';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { queryToBoolean } from '@/utils/readable-social';
-import querystring from 'node:querystring';
+
 import utils from './utils';
 
 export const route: Route = {

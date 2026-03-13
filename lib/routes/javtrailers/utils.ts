@@ -1,9 +1,8 @@
-import { Video } from './types';
-
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
+import type { Video } from './types';
 
 export const baseUrl = 'https://javtrailers.com';
 export const headers = {
@@ -28,17 +27,31 @@ export const parseList = (videos) =>
         contentId: item.contentId,
     }));
 
-export const getItem = async (item) => {
-    const response = await ofetch(`${baseUrl}/api/video/${item.contentId}`, {
-        headers,
+export const puppeteerFetch = async (url: string, browser) => {
+    const page = await browser.newPage();
+    await page.setExtraHTTPHeaders(headers);
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
     });
+
+    logger.http(`Requesting ${url}`);
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+    const apiResponse = await page.evaluate(() => document.body.textContent || '');
+    const response = JSON.parse(apiResponse);
+    await page.close();
+
+    return response;
+};
+
+export const getItem = async (item, browser) => {
+    const response = await puppeteerFetch(`${baseUrl}/api/video/${item.contentId}`, browser);
 
     const videoInfo: Video = response.video;
     videoInfo.gallery = hdGallery(videoInfo.gallery);
 
-    item.description = art(path.join(__dirname, 'templates/description.art'), {
-        videoInfo,
-    });
+    item.description = renderDescription(videoInfo);
     item.author = videoInfo.casts.map((cast) => `${cast.name} ${cast.jpName}`).join(', ');
     item.category = videoInfo.categories.map((category) => `${category.name}／${category.jpName}／${category.zhName}`);
 

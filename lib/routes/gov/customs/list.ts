@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { host, puppeteerGet } from './utils';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import puppeteer from '@/utils/puppeteer';
+import timezone from '@/utils/timezone';
+
+import { host, puppeteerGet } from './utils';
 
 export const route: Route = {
     path: '/customs/list/:gchannel?',
@@ -37,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { gchannel = 'paimai' } = ctx.req.param();
-    let channelName = '';
+    let channelName: string;
     let link = '';
 
     switch (gchannel) {

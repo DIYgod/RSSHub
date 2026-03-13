@@ -1,7 +1,9 @@
-import type { Data, Route } from '@/types';
 import type { Context } from 'hono';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, Route } from '@/types';
+
 import type { TopicsResponse, UserInfoResponse } from './types';
 import { customFetch, generateTopicDataItem } from './utils';
 

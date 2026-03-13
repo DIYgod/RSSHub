@@ -3,39 +3,38 @@ description: 提交新的功能需求
 labels: ['RSS enhancement']
 
 body:
+    - type: markdown
+      attributes:
+          value: |
+              请确保 [文档](https://docs.rsshub.app) 和 [Issue](https://github.com/DIYgod/RSSHub/issues) 中没有相关内容及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)，并按照模版提供信息，
+              否则 issue 将被立即关闭。
 
-  - type: markdown
-    attributes:
-      value: |
-        请确保 [文档](https://docs.rsshub.app) 和 [Issue](https://github.com/DIYgod/RSSHub/issues) 中没有相关内容及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)，并按照模版提供信息，
-        否则 issue 将被立即关闭。
-
-  - type: textarea
-    id: feature
-    attributes:
-      label: 这是一个什么样的功能？
-      placeholder: 请描述你想看到的功能。
-    validations:
-      required: true
-
-  - type: textarea
-    id: problem
-    attributes:
-      label: 这个功能可以解决什么问题？
-      placeholder: 请描述该功能解决的问题。
-    validations:
-      required: true
-
-  - type: textarea
-    id: description
-    attributes:
-      label: 额外描述
-      placeholder: 任何补充说明。
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: 这不是重复的功能请求和 RSS 提案
-      options:
-        - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保这项功能尚未被请求及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)。
+    - type: textarea
+      id: feature
+      attributes:
+          label: 这是一个什么样的功能？
+          placeholder: 请描述你想看到的功能。
+      validations:
           required: true
+
+    - type: textarea
+      id: problem
+      attributes:
+          label: 这个功能可以解决什么问题？
+          placeholder: 请描述该功能解决的问题。
+      validations:
+          required: true
+
+    - type: textarea
+      id: description
+      attributes:
+          label: 额外描述
+          placeholder: 任何补充说明。
+
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: 这不是重复的功能请求和 RSS 提案
+          options:
+              - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保这项功能尚未被请求及不是 [新的 RSS 提案](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_zh.yml)。
+                required: true

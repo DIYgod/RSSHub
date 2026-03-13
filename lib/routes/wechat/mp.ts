@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -22,7 +23,7 @@ export const route: Route = {
     handler,
     description: `只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 \`https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4\`，\`biz\` 为 \`MzA3MDM3NjE5NQ==\`，\`hid\` 为 \`4\`。
 
-  有些页面里会有分栏， \`cid\` 可以通过元素选择器选中栏目查看\`data-index\`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==\&hid=4)里的 \`京都职人\` 栏目的 \`cid\` 为 \`0\`，\`文艺时光\` 栏目的 \`cid\` 为 \`2\`。如果不清楚的话最左边的栏目为\`0\`，其右方栏目依次递增 \`1\`。`,
+  有些页面里会有分栏， \`cid\` 可以通过元素选择器选中栏目查看\`data-index\`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4)里的 \`京都职人\` 栏目的 \`cid\` 为 \`0\`，\`文艺时光\` 栏目的 \`cid\` 为 \`2\`。如果不清楚的话最左边的栏目为\`0\`，其右方栏目依次递增 \`1\`。`,
 };
 
 async function handler(ctx) {

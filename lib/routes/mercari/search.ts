@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { fetchSearchItems, fetchItemDetail, formatItemDetail, MercariSort, MercariOrder, MercariStatus } from './util';
+
+import { fetchItemDetail, fetchSearchItems, formatItemDetail, MercariOrder, MercariSort, MercariStatus } from './util';
 
 export const route: Route = {
     path: '/search/:query',
@@ -18,9 +19,16 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search',
-    maintainers: ['yana9i, Tsuyumi25'],
+    maintainers: ['yana9i', 'Tsuyumi25'],
     url: 'jp.mercari.com',
     handler,
+    description: `::: warning
+此路由僅支援 \`jp.mercari.com\`，不支援 \`tw.mercari.com\` 和 \`hk.mercari.com\`。
+
+**注意：** 不同站點的查詢參數格式不同
+- 日本: \`keyword=シャツ&order=desc&sort=created_time&status=on_sale\`
+- 台灣: \`keyword=シャツ&sort=new&status=in-stock&availability=1\`
+:::`,
 };
 
 function parseSearchQuery(queryString: string) {
@@ -79,7 +87,7 @@ async function handler(ctx) {
     const { keyword, sort, order, status, options } = parseSearchQuery(queryString);
     const searchItems = (await fetchSearchItems(sort, order, status, keyword, options)).items;
 
-    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
+    const items = await Promise.all(searchItems.map((item) => cache.tryGet(`mercari:${item.id}:${item.updated}`, async () => await fetchItemDetail(item.id, item.itemType).then((detail) => formatItemDetail(detail)))));
 
     return {
         title: `${keyword} の検索結果`,

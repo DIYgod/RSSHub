@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { getDataByUsername as getDataByUsernameGoogle } from './api/google';
+import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
 import { callApi } from './utils';
 
 export const route: Route = {
@@ -57,10 +59,12 @@ async function handler(ctx) {
     const filterShortsStr = params.get('filterShorts');
     const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
 
+    const isJsonFeed = ctx.req.query('format') === 'json';
+
     const data = await callApi({
         googleApi: getDataByUsernameGoogle,
         youtubeiApi: getDataByUsernameYoutubei,
-        params: { username, embed, filterShorts },
+        params: { username, embed, filterShorts, isJsonFeed },
     });
 
     return data;

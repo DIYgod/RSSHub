@@ -84,4 +84,4 @@ function uniqBy(items: any[], key: string) {
     });
 }
 
-export { post, getAccessToken, uuid, sortBy, uniqBy };
+export { getAccessToken, post, sortBy, uniqBy, uuid };

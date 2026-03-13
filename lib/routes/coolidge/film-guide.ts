@@ -1,8 +1,9 @@
-import { type Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { renderDescription } from './templates/description';
 
 const handler = async () => {
     const link = 'https://coolidge.org/film-guide';
@@ -20,7 +21,7 @@ const handler = async () => {
     const absoluteCover = cover ? new URL(cover, link).href : undefined;
     const absoluteItemLink = itemLink ? new URL(itemLink, link).href : undefined;
 
-    const rendered = art(path.join(__dirname, 'templates/description.art'), {
+    const rendered = renderDescription({
         image: absoluteCover,
         intro: description,
     });

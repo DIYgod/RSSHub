@@ -1,6 +1,7 @@
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 const articleApiRootUrl = 'https://www.lifeweek.com.cn/api/article';
 
 async function getRssItem(item, articleLink) {

@@ -1,7 +1,8 @@
-import { Route, ViewType } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
 const X_UA = 'NGA_skull/6.0.5(iPhone10,3;iOS 12.0.1)';

@@ -1,4 +1,0 @@
-<p>{{ item.brief }}</p>
-<p>时长：{{ item.length }}</p>
-<p><img src="{{ item.image }}"></p>
-<p><a href="{{ item.url }}">在线观看</a></p>

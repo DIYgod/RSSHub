@@ -1,10 +1,11 @@
-import { type Data, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
@@ -12,7 +13,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const apiSlug = 'wp-json/wp/v2';
 
-    const baseUrl: string = 'https://jbma.net';
+    const baseUrl = 'https://jbma.net';
     const apiUrl = new URL(`${apiSlug}/report`, baseUrl).href;
     let targetUrl: string = new URL('report/', baseUrl).href;
 
@@ -53,7 +54,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = $('html').attr('lang') ?? 'ja';
 
     const postIds: number[] = [];
-    const regExp = new RegExp(`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\\?p=\\d+$`);
+    const regExp = new RegExp(String.raw`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\?p=\d+$`);
 
     for (const item of response.slice(0, limit)) {
         const linkUrl: string | undefined = item.link;
@@ -62,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
     }
 
-    const mediaMap: Map<number, any> = new Map();
+    const mediaMap = new Map<number, any>();
     if (postIds.length > 0) {
         const mediaApiUrl = new URL(`${apiSlug}/media`, baseUrl).href;
         const mediaResponse = await ofetch(mediaApiUrl, {
