@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -17,74 +17,86 @@ export const route: Route = {
         },
     ],
     name: 'Research',
-    maintainers: ['ttttmr', 'zlx'],
+    maintainers: ['ttttmr', 'zj1123581321'],
     handler,
     url: 'www.anthropic.com/research',
 };
 
-async function handler(ctx) {
-    const baseUrl = 'https://www.anthropic.com';
-    const link = `${baseUrl}/research`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
-
+async function handler() {
+    const link = 'https://www.anthropic.com/research';
     const response = await ofetch(link);
     const $ = load(response);
 
-    const seen = new Set<string>();
-    const list: DataItem[] = [];
-
-    // Featured items and publication list items share the same link pattern
-    $('a[href^="/research/"]').each((_, el) => {
-        const $el = $(el);
-        const href = $el.attr('href') ?? '';
-
-        // Skip non-article links
-        if (!href || href === '/research' || href.includes('/team/') || href.endsWith('#')) {
-            return;
+    // self.__next_f.push
+    const regexp = /self\.__next_f\.push\((.+)\)/;
+    const textList: string[] = [];
+    for (const e of $('script').toArray()) {
+        const $e = $(e);
+        const text = $e.text();
+        const match = regexp.exec(text);
+        if (match) {
+            let data;
+            try {
+                data = JSON.parse(match[1]);
+                if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
+                    textList.push(data[1]);
+                }
+            } catch {
+                // ignore
+            }
         }
+    }
 
-        const fullLink = `${baseUrl}${href}`;
-        if (seen.has(fullLink)) {
-            return;
-        }
+    const partRegex = /^([0-9a-zA-Z]+):([0-9a-zA-Z]+)?(\[.*)$/;
+    const fd = textList
+        .join('')
+        .split('\n')
+        .map((d) => {
+            const matchPart = partRegex.exec(d);
+            if (matchPart) {
+                return {
+                    id: matchPart[1],
+                    tag: matchPart[2],
+                    data: JSON.parse(matchPart[3]),
+                };
+            }
+            return {
+                id: '',
+                tag: '',
+                data: d,
+            };
+        });
 
-        const title = $el.find('h2, h4, [class*="__title"]').first().text().trim();
-        const dateText = $el.find('time').text().trim();
-        const category = $el.find('span').first().text().trim();
-
-        if (title) {
-            seen.add(fullLink);
-            list.push({
-                title,
-                link: fullLink,
-                pubDate: dateText ? parseDate(dateText) : undefined,
-                category: category ? [category] : [],
-            });
-        }
-    });
+    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
+    const publicationSections = sections.filter((section) => section?.title === 'Publications');
+    const posts = publicationSections
+        .flatMap((section) => section?.posts ?? [])
+        .map((post) => ({
+            title: post.title,
+            link: `https://www.anthropic.com/research/${post.slug.current}`,
+            pubDate: parseDate(post.publishedOn),
+        }));
 
     const items = await pMap(
-        list.slice(0, limit),
+        posts,
         (item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
-                const content = $('article');
+                const content = $('div[class*="PostDetail_post-detail__"]');
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
                     const src = $e.attr('src');
-                    if (src) {
-                        const params = new URLSearchParams(src);
-                        const newSrc = params.get('/_next/image?url');
-                        if (newSrc) {
-                            $e.attr('src', newSrc);
-                        }
+                    const params = new URLSearchParams(src);
+                    const newSrc = params.get('/_next/image?url');
+                    if (newSrc) {
+                        $e.attr('src', newSrc);
                     }
                 });
 
-                item.description = content.html() ?? undefined;
+                item.description = content.html();
 
                 return item;
             }),
