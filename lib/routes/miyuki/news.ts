@@ -8,13 +8,7 @@ import timezone from '@/utils/timezone';
 
 const ORIGIN = 'https://www.miyuki.jp';
 const NEWS_LINK = `${ORIGIN}/s/y10/news/list`;
-const DETAIL_HEADER_SELECTOR = [
-    '.pc__news_detail__title',
-    '.pc__news_detail__title__japanese',
-    '.news_detail__date',
-    '.news_detail__title',
-    '.news_detail__ganre',
-].join(', ');
+const DETAIL_HEADER_SELECTOR = ['.pc__news_detail__title', '.pc__news_detail__title__japanese', '.news_detail__date', '.news_detail__title', '.news_detail__ganre'].join(', ');
 
 export const route: Route = {
     path: '/news',
@@ -82,7 +76,12 @@ async function getDescription(link: string) {
 }
 
 function hasMeaningfulHtml(html?: string | null) {
-    return Boolean(html?.replaceAll(/<br\s*\/?>/g, '').replaceAll('&nbsp;', '').trim());
+    return Boolean(
+        html
+            ?.replaceAll(/<br\s*\/?>/g, '')
+            .replaceAll('&nbsp;', '')
+            .trim()
+    );
 }
 
 function normalizePhotoLists($, content) {
