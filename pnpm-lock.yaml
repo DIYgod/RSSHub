@@ -135,7 +135,7 @@ importers:
         version: 9.0.5
       http-cookie-agent:
         specifier: 7.0.3
-        version: 7.0.3(tough-cookie@6.0.0)(undici@7.22.0)
+        version: 7.0.3(tough-cookie@6.0.1)(undici@7.22.0)
       https-proxy-agent:
         specifier: 7.0.6
         version: 7.0.6
@@ -251,8 +251,8 @@ importers:
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3
       tough-cookie:
-        specifier: 6.0.0
-        version: 6.0.0
+        specifier: 6.0.1
+        version: 6.0.1
       tsx:
         specifier: 4.21.0
         version: 4.21.0
@@ -5454,8 +5454,8 @@ packages:
     resolution: {integrity: sha512-Loo5UUvLD9ScZ6jh8beX1T6sO1w2/MpCRpEP7V280GKMVUQ0Jzar2U3UJPsrdbziLEMMhu3Ujnq//rhiFuIeag==}
     engines: {node: '>=6'}
 
-  tough-cookie@6.0.0:
-    resolution: {integrity: sha512-kXuRi1mtaKMrsLUxz3sQYvVl37B0Ns6MzfrtV5DvJceE9bPyspOqk9xxv7XbZWcfLWbFmm997vl83qUWVJA64w==}
+  tough-cookie@6.0.1:
+    resolution: {integrity: sha512-LktZQb3IeoUWB9lqR5EWTHgW/VTITCXg4D21M+lvybRVdylLrRMnqaIONLVb5mav8vM19m44HIcGq4qASeu2Qw==}
     engines: {node: '>=16'}
 
   tr46@0.0.3:
@@ -9226,7 +9226,7 @@ snapshots:
       got: 14.6.6
       memoizee: 0.4.17
       ramda: 0.32.0
-      tough-cookie: 6.0.0
+      tough-cookie: 6.0.1
     transitivePeerDependencies:
       - supports-color
 
@@ -9338,10 +9338,10 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-cookie-agent@7.0.3(tough-cookie@6.0.0)(undici@7.22.0):
+  http-cookie-agent@7.0.3(tough-cookie@6.0.1)(undici@7.22.0):
     dependencies:
       agent-base: 7.1.4
-      tough-cookie: 6.0.0
+      tough-cookie: 6.0.1
     optionalDependencies:
       undici: 7.22.0
 
@@ -9609,7 +9609,7 @@ snapshots:
       rrweb-cssom: 0.8.0
       saxes: 6.0.0
       symbol-tree: 3.2.4
-      tough-cookie: 6.0.0
+      tough-cookie: 6.0.1
       w3c-xmlserializer: 5.0.0
       webidl-conversions: 8.0.1
       whatwg-encoding: 3.1.1
@@ -11246,7 +11246,7 @@ snapshots:
       universalify: 0.2.0
       url-parse: 1.5.10
 
-  tough-cookie@6.0.0:
+  tough-cookie@6.0.1:
     dependencies:
       tldts: 7.0.25
 
