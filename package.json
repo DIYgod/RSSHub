@@ -133,6 +133,7 @@
         "undici": "6.22.0",
         "uuid": "13.0.0",
         "winston": "3.18.3",
+        "ws": "^8.0.0",
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.9.1",
         "youtubei.js": "15.1.1",
