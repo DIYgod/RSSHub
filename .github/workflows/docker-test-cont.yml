@@ -97,6 +97,32 @@ jobs:
                     -p 1200:1200 \
                     rsshub:latest
 
+            - name: Wait for RSSHub startup
+              if: (env.TEST_CONTINUE)
+              env:
+                  TEST_BASEURL: http://localhost:1200
+              run: |
+                  set -euo pipefail
+                  healthcheck_url="$TEST_BASEURL/healthz"
+
+                  for _ in $(seq 1 30); do
+                      if curl --silent --show-error --fail "$healthcheck_url" >/dev/null; then
+                          exit 0
+                      fi
+
+                      if [ "$(docker inspect -f '{{.State.Status}}' rsshub 2>/dev/null)" != 'running' ]; then
+                          docker logs rsshub || true
+                          echo "rsshub container exited before becoming ready"
+                          exit 1
+                      fi
+
+                      sleep 1
+                  done
+
+                  docker logs rsshub || true
+                  echo "Timed out waiting for RSSHub health check: $healthcheck_url"
+                  exit 1
+
             - name: Generate feedback
               if: (env.TEST_CONTINUE)
               id: generate-feedback
