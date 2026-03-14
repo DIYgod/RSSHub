@@ -18,26 +18,45 @@ const galleryControlSelector = '.paddlenav, .paddlenav-arrow, .paddlenav-arrow-n
 const videoCaptionContainerSelector = '.video-description';
 const mediaCaptionContainerSelector = '.image-description, .gallery-caption, .video-description';
 const videoControlSelector = '.nr-av-control';
+const dangerousProtocols = new Set(['javascript:', 'vbscript:']);
 
 const normalizeText = (text: string) => text.replaceAll(/\s+/g, ' ').trim();
 
 const getMediaCaptionPrefix = ($, element) => ($(element).is(videoCaptionContainerSelector) ? '视频说明：' : '图片说明：');
 
 const resolveUrl = (url: string, pageUrl: string) => {
-    if (
-        url.startsWith('#') ||
-        url.startsWith('data:') ||
-        url.startsWith('mailto:') ||
-        url.startsWith('tel:') ||
-        url.startsWith('javascript:')
-    ) {
+    const trimmedUrl = url.trim();
+
+    if (trimmedUrl.startsWith('#')) {
         return url;
     }
 
     try {
-        return new URL(url, pageUrl).href;
+        const resolvedUrl = new URL(trimmedUrl, pageUrl);
+
+        if (dangerousProtocols.has(resolvedUrl.protocol)) {
+            return;
+        }
+
+        return resolvedUrl.href;
     } catch {
         return url;
+    }
+};
+
+const setResolvedAttribute = ($, element, attributeName: string, pageUrl: string) => {
+    const attributeValue = $(element).attr(attributeName);
+
+    if (!attributeValue) {
+        return;
+    }
+
+    const resolvedValue = resolveUrl(attributeValue, pageUrl);
+
+    if (resolvedValue) {
+        $(element).attr(attributeName, resolvedValue);
+    } else {
+        $(element).removeAttr(attributeName);
     }
 };
 
@@ -51,7 +70,13 @@ const resolveSrcset = (srcset: string, pageUrl: string) =>
                 return '';
             }
 
-            return [resolveUrl(url, pageUrl), ...descriptors].join(' ');
+            const resolvedUrl = resolveUrl(url, pageUrl);
+
+            if (!resolvedUrl) {
+                return '';
+            }
+
+            return [resolvedUrl, ...descriptors].join(' ');
         })
         .filter(Boolean)
         .join(', ');
@@ -142,24 +167,12 @@ const absolutizeArticleNode = ($, node, pageUrl: string, bodyTexts: Set<string>)
     $node
         .find('a[href]')
         .addBack('a[href]')
-        .each((_, element) => {
-            const href = $(element).attr('href');
-
-            if (href) {
-                $(element).attr('href', resolveUrl(href, pageUrl));
-            }
-        });
+        .each((_, element) => setResolvedAttribute($, element, 'href', pageUrl));
 
     $node
         .find('img[src], source[src], video[src]')
         .addBack('img[src], source[src], video[src]')
-        .each((_, element) => {
-            const src = $(element).attr('src');
-
-            if (src) {
-                $(element).attr('src', resolveUrl(src, pageUrl));
-            }
-        });
+        .each((_, element) => setResolvedAttribute($, element, 'src', pageUrl));
 
     $node
         .find('img[srcset], source[srcset]')
@@ -175,13 +188,7 @@ const absolutizeArticleNode = ($, node, pageUrl: string, bodyTexts: Set<string>)
     $node
         .find('video[poster]')
         .addBack('video[poster]')
-        .each((_, element) => {
-            const poster = $(element).attr('poster');
-
-            if (poster) {
-                $(element).attr('poster', resolveUrl(poster, pageUrl));
-            }
-        });
+        .each((_, element) => setResolvedAttribute($, element, 'poster', pageUrl));
 };
 
 const extractArticleDescription = ($, pageUrl: string) => {
