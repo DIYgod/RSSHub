@@ -33,7 +33,7 @@ interface Paper {
     id: string;
     summary: string;
     upvotes: number;
-    authors: { name: string }[];
+    authors: Array<{ name: string }>;
 }
 
 interface DailyPaperItem {
@@ -81,6 +81,7 @@ async function handler(ctx) {
         .toSorted((a, b) => b.upvotes - a.upvotes);
 
     return {
+        allowEmpty: true,
         title: 'Huggingface Daily Papers',
         link: 'https://huggingface.co/papers',
         item: items,

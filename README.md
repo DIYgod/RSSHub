@@ -27,7 +27,8 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 - [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | A browser extension that can help you quickly discover and subscribe to the RSS and RSSHub of current websites.
 - [RSSBud](https://github.com/Cay-Zhang/RSSBud) | RSSHub Radar for iOS platform, designed specifically for mobile ecosystem optimization.
 - [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | RSSHub Radar for Android platform built with Flutter.
-- [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast
+- [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast.
+- [Awesome RSSHub Routes](https://github.com/JackyST0/awesome-rsshub-routes) | Curated list of RSS feeds and RSSHub routes.
 
 ## Contribute
 
@@ -55,7 +56,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ## Author
 
-**RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
+**RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [AGPL-3.0](./LICENSE) License.<br>
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)

@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/group/:id/:sort?',
@@ -56,7 +55,7 @@ async function handler(ctx) {
         title: item.title,
         link: `${rootUrl}/p/${item.post_id}`,
         pubDate: timezone(parseDate(item.created_at_std), +8),
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             content: item.describe,
             images: item.imglist.map((i) => ({
                 size: i.size,

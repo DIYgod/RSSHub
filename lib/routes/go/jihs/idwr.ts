@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { year = new Date().getFullYear() } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://id-info.jihs.go.jp';
+    const baseUrl = 'https://id-info.jihs.go.jp';
     const targetUrl: string = new URL(`surveillance/idwr/jp/idwr/${year}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const enclosureUrl: string | undefined = linkUrl ? new URL(linkUrl, targetUrl).href : undefined;
 
             if (enclosureUrl) {
-                const enclosureType: string = `application/${enclosureUrl.split(/\./).pop()}`;
+                const enclosureType = `application/${enclosureUrl.split(/\./).pop()}`;
                 const enclosureTitle: string = $enclosureEl.text();
 
                 processedItem = {

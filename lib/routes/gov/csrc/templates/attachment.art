@@ -1,3 +1,0 @@
-{{ each attachments a }}
-    <a href="{{ a.filePath.startsWith('/') ? `http://www.csrc.gov.cn${a.filePath}` : a.filePath }}">{{ a.fileName }}</a>
-{{ /each }}

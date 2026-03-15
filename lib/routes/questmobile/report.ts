@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.
@@ -194,7 +193,7 @@ async function handler(ctx) {
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`research/report/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: {
                 src: item.coverImgUrl,
                 alt: item.title,
@@ -217,7 +216,7 @@ async function handler(ctx) {
                 content('div.text div.daoyu').remove();
 
                 item.title = content('div.title h1').text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('div.text').html(),
                 });
                 item.author = content('div.source')

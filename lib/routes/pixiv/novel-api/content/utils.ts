@@ -131,6 +131,6 @@ export async function parseNovelContent(content: string, images: Record<string, 
 
         return $content.html() || '';
     } catch (error) {
-        throw new Error(`Error parsing novel content: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`Error parsing novel content: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
     }
 }

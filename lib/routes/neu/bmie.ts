@@ -45,19 +45,19 @@ export const route: Route = {
 | ----------------------- | ---------- |
 | news                    | 学院新闻   |
 | academic                | 学术科研   |
-| talent\_development     | 人才培养   |
-| international\_exchange | 国际交流   |
+| talent_development     | 人才培养   |
+| international_exchange | 国际交流   |
 | announcement            | 通知公告   |
-| undergraduate\_dev      | 本科生培养 |
-| postgraduate\_dev       | 研究生培养 |
-| undergraduate\_recruit  | 本科生招募 |
-| postgraduate\_recruit   | 研究生招募 |
-| CPC\_build              | 党的建设   |
-| CPC\_work               | 党委工作   |
-| union\_work             | 工会工作   |
-| CYL\_work               | 共青团工作 |
-| security\_management    | 安全管理   |
-| alumni\_style           | 校友风采   |`,
+| undergraduate_dev      | 本科生培养 |
+| postgraduate_dev       | 研究生培养 |
+| undergraduate_recruit  | 本科生招募 |
+| postgraduate_recruit   | 研究生招募 |
+| CPC_build              | 党的建设   |
+| CPC_work               | 党委工作   |
+| union_work             | 工会工作   |
+| CYL_work               | 共青团工作 |
+| security_management    | 安全管理   |
+| alumni_style           | 校友风采   |`,
 };
 
 async function handler(ctx) {
@@ -84,11 +84,11 @@ async function handler(ctx) {
 
                 const info = $($('.ny_con p')[1]).text();
                 const s = info.search(/\d{4}-\d{2}-\d{2}/);
-                const date = info.substring(s, s + 10);
+                const date = info.slice(s, s + 10);
 
                 const au_start = info.indexOf('作者：') + 3;
                 const au_end = info.lastIndexOf('|');
-                const auhor = info.substring(au_start, au_end).trim();
+                const auhor = info.slice(au_start, au_end).trim();
                 $('.entry')
                     .find('span')
                     .each(function () {

@@ -1,8 +1,0 @@
-<div>
-    <img src="{{ avatar }}" />
-    {{ if link !== null }}
-    <a href="{{ link }}">{{name}}</a>
-    {{ else }}
-    <a href="#">{{name}}</a>
-    {{ /if }}
-</div>

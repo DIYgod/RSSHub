@@ -25,8 +25,8 @@ export const route: Route = {
 async function handler(ctx) {
     const platform = ctx.req.param('platform');
 
-    let title = '';
-    let link = '';
+    let title: string;
+    let link: string;
     if (platform === 'iOS') {
         title = 'iOS SDK 历史变更';
         link = 'https://wiki.connect.qq.com/ios_sdk历史变更';

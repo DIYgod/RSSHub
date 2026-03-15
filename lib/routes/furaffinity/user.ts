@@ -104,7 +104,7 @@ async function handler(ctx) {
     Favorite Animal: ${favorites_animal} <br> Favorite Website: ${favorites_website} <br> Favorite Food: ${favorites_food} <br> <br> Contact Information: <br> ${contact_result}
     Watchers Count: ${watchers_count} <br> Watching Count: ${watching_count} `;
 
-    const items: { title: string; link: string; description: string }[] = [
+    const items: Array<{ title: string; link: string; description: string }> = [
         {
             title: `${data.name}'s User Profile`,
             link: `https://www.furaffinity.net/user/${username}`,

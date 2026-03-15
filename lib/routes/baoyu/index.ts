@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
@@ -17,7 +17,7 @@ export const route: Route = {
     ],
     url: 'baoyu.io/',
     name: 'Blog',
-    maintainers: ['liyaozhong'],
+    maintainers: ['liyaozhong', 'Circloud'],
     handler,
     description: '宝玉 - 博客文章',
 };
@@ -26,15 +26,16 @@ async function handler() {
     const rootUrl = 'https://baoyu.io';
     const feedUrl = `${rootUrl}/feed.xml`;
 
-    const feed = await parser.parseURL(feedUrl);
+    const response = await ofetch(feedUrl);
+    const feed = await parser.parseString(response);
 
     const items = await Promise.all(
         feed.items.map((item) => {
             const link = item.link;
 
             return cache.tryGet(link as string, async () => {
-                const response = await got(link);
-                const $ = load(response.data);
+                const response = await ofetch(link as string);
+                const $ = load(response);
 
                 const container = $('.container');
                 const content = container.find('.prose').html() || '';

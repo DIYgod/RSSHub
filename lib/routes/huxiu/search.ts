@@ -12,8 +12,8 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
+        antiCrawler: true,
+        supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },

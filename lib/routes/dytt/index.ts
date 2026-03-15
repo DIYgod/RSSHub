@@ -11,8 +11,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const domain: string = 'www.dydytt.net';
-const baseUrl: string = `https://${domain}`;
+const domain = 'www.dydytt.net';
+const baseUrl = `https://${domain}`;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gndy/dyzz' } = ctx.req.param();
@@ -26,9 +26,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(iconv.decode(Buffer.from(response), 'gb2312'));
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.co_content8 ul table')
+    let items: DataItem[] = $('div.co_content8 ul table')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -101,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                     if (enclosureUrl) {
-                        const enclosureType: string = 'application/x-bittorrent';
+                        const enclosureType = 'application/x-bittorrent';
                         const enclosureTitle: string = $enclosureEl.text();
 
                         processedItem = {

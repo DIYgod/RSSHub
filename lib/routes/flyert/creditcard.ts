@@ -58,7 +58,7 @@ export const route: Route = {
 async function handler(ctx) {
     const bank = ctx.req.param('bank');
     const target = `${host}/forum-${bank}-1.html`;
-    let bankname = '';
+    let bankname: string;
 
     switch (bank) {
         case 'creditcard':
@@ -117,6 +117,9 @@ async function handler(ctx) {
             break;
         case 'intcreditcard':
             bankname = '境外信用卡';
+            break;
+        default:
+            throw new Error(`Unknown bank: ${bank}`);
     }
 
     const response = await got.get(target, {

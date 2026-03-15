@@ -55,16 +55,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = `https://${category ? `${category}.` : ''}ynet.com`;
+    const baseUrl = `https://${category ? `${category}.` : ''}ynet.com`;
     const targetUrl: string = new URL(`list/${id}.html`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('li.cfix')
+    let items: DataItem[] = $('li.cfix')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

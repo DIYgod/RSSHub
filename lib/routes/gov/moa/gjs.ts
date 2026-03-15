@@ -14,16 +14,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gzdt' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'http://www.gjs.moa.gov.cn';
+    const baseUrl = 'http://www.gjs.moa.gov.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('ul#div li')
+    let items: DataItem[] = $('ul#div li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -86,7 +84,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `application/${enclosureUrl.split('.').pop()}`;
+                        const enclosureType = `application/${enclosureUrl.split('.').pop()}`;
                         const enclosureTitle: string = $enclosureEl.text();
 
                         processedItem = {
@@ -106,7 +104,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
-    const author: string = '中华人民共和国农业农村部国际合作司';
+    const author = '中华人民共和国农业农村部国际合作司';
     const description: string = $('meta[name="ColumnName"]').attr('content') ?? '';
 
     return {

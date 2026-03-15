@@ -1,5 +1,0 @@
-{{ if img }}
-<img src="{{ img }}">
-<br>
-{{ /if }}
-{{ brief }}

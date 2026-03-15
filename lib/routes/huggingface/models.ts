@@ -92,15 +92,13 @@ async function handler(ctx) {
                         if (/^https?:\/\//i.test(src)) {
                             // 已经是完整 URL
                             $e.attr('src', src);
-                        } else {
+                        } else if (src.startsWith('/')) {
                             // 处理以 / 开头的绝对路径
-                            if (src.startsWith('/')) {
-                                $e.attr('src', `${item.link}/resolve/main/` + src);
-                            } else {
-                                // 处理相对路径（如 ./images/pic.png 或 images/pic.png）
-                                const baseUrl = item.link + '/resolve/main/';
-                                $e.attr('src', baseUrl + src.replace(/^\.\//, ''));
-                            }
+                            $e.attr('src', `${item.link}/resolve/main/` + src);
+                        } else {
+                            // 处理相对路径（如 ./images/pic.png 或 images/pic.png）
+                            const baseUrl = item.link + '/resolve/main/';
+                            $e.attr('src', baseUrl + src.replace(/^\.\//, ''));
                         }
                     });
                     item.description = $Out.html();

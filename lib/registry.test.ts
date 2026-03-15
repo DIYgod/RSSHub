@@ -44,6 +44,9 @@ describe('registry', () => {
         vi.stubEnv('DISABLE_NSFW', 'true');
 
         const { namespaces } = await import('./registry');
+        const routesModule = await import('../assets/build/routes.json');
+        const rawNamespaces = (routesModule.default ?? routesModule) as Record<string, { routes?: Record<string, { features?: { nsfw?: boolean } }> }>;
+        const nsfwNamespaces = Object.entries(rawNamespaces).filter(([, namespace]) => Object.values(namespace.routes ?? {}).some((route) => route.features?.nsfw));
 
         // All routes in all namespaces should not have nsfw features
         for (const ns of Object.values(namespaces)) {
@@ -51,7 +54,10 @@ describe('registry', () => {
                 expect(route.features?.nsfw).not.toBe(true);
             }
         }
-        expect(namespaces['2048']).toBeUndefined();
+        expect(nsfwNamespaces.length).toBeGreaterThan(0);
+        for (const [key] of nsfwNamespaces) {
+            expect(namespaces[key]).toBeUndefined();
+        }
     });
 
     it('namespaces includes NSFW routes when DISABLE_NSFW=false', async () => {

@@ -4,7 +4,7 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export async function getNotifByPage(url): Promise<{ title: string; link: string; pubDate: Date }[]> {
+export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Date }>> {
     const pageUrl: string = url;
 
     try {

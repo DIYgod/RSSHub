@@ -35,8 +35,8 @@ async function handler() {
     const posts = response.data || [];
     const list = await Promise.all(
         posts.map(async (post) => {
-            let link = '';
-            let description = '';
+            let link: string;
+            let description: string;
             const guid = post.displayOrder.toString() + post.id.toString(); // 双ID
             if (post.path.startsWith('information/')) {
                 // information 公告

@@ -2,7 +2,7 @@
 
 import crypto from 'node:crypto';
 
-import { authenticator } from 'otplib';
+import { generate } from 'otplib';
 import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
 import { v5 as uuidv5 } from 'uuid';
 
@@ -49,7 +49,7 @@ const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Reco
         headers,
         json: {
             flow_token: flowToken,
-            subtask_inputs: [Object.assign({ subtask_id: subtaskId }, subtaskInput)],
+            subtask_inputs: [{ subtask_id: subtaskId, ...subtaskInput }],
         },
     });
 
@@ -91,7 +91,7 @@ const flowTasks = {
         });
     },
     async LoginTwoFactorAuthChallenge({ flowToken, authenticationSecret }) {
-        const token = authenticator.generate(authenticationSecret);
+        const token = await generate({ secret: authenticationSecret });
         return await postTask(flowToken, 'LoginTwoFactorAuthChallenge', {
             enter_text: {
                 suggestion_id: null,

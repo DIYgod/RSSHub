@@ -13,18 +13,16 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywgg/tzgg' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://www.cccmc.org.cn';
+    const baseUrl = 'https://www.cccmc.org.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
+    const regex = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
 
-    const regex: RegExp = /\{url:'(.*)',title:'(.*)',time:'(.*)'\},/g;
-
-    items =
+    let items: DataItem[] =
         response
             .match(regex)
             ?.slice(0, limit)

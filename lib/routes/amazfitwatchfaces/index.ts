@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,22 +8,21 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { device, sort, searchParams } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://amazfitwatchfaces.com';
+    const baseUrl = 'https://amazfitwatchfaces.com';
     const targetUrl: string = new URL(`${device}/${sort}${searchParams ? `?${searchParams}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = $('div.wf-panel')
+    let items: DataItem[] = $('div.wf-panel')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -33,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.prop('title');
             const image: string | undefined = $el.find('img.wf-img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -88,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('div.page-title h1').text();
                     const image: string | undefined = $$('img#watchface-preview').attr('src');
-                    const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string | undefined = renderDescription({
                         images: image
                             ? [
                                   {
@@ -97,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.unicodebidi').html(),
+                        description: $$('div.unicodebidi').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('i.fa-calendar').parent().find('span').text();
                     const linkUrl: string | undefined = $$('.title').attr('href');

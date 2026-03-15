@@ -31,11 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const base = utils.langBase(ctx.req.param('lang'));
-    const res = await got.get(base, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const res = await got(base);
     const info = utils.fetchAllCharacters(res.data, base);
 
     const details = await Promise.all(info.map((e) => utils.detailPage(e.detailPage, cache)));

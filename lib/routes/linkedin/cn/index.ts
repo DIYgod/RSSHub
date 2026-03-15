@@ -31,7 +31,7 @@ export const route: Route = {
 | \`period\`   | 发布时间                                          | \`1/7/30\`                                                | 空      |
 
   例如：
-  [\`/linkedin/cn/jobs/Software?location=shanghai&period=1\`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作
+  [\`/linkedin/cn/jobs/Software?location=shanghai&period=1\`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai&period=1): 查找所有在上海的今日发布的所有 Software 工作
 
   **为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**`,
 };

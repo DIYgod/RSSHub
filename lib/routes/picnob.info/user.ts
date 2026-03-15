@@ -6,6 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import wait from '@/utils/wait';
 
 import type { Post, Profile, Pull, Status, Story } from './types';
 
@@ -42,7 +43,7 @@ export const route: Route = {
 const renderVideo = (video, poster) => `<video controls poster="${poster}"><source src="${video}" type="video/mp4"></video>`;
 const renderImage = (src) => `<img src="${src}">`;
 const renderDescription = (type: Post['postType'], item: Post | Story) => {
-    let media = '';
+    let media: string;
     switch (type) {
         case 'carousel':
             media = item.albumItems
@@ -105,7 +106,7 @@ async function handler(ctx) {
         }
         if (attempt < 9) {
             // eslint-disable-next-line no-await-in-loop
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await wait(3000);
         }
     }
 

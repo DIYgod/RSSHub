@@ -16,9 +16,11 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
         .toArray()
         .map((item) => {
             item = $(item);
+            const href = item.find(titleSelector).attr('href') || '';
+            const link = href.startsWith('http') ? href : new URL(href, host).href;
             return {
                 title: item.find(titleSelector).attr('title'),
-                link: host + item.find(titleSelector).attr('href'),
+                link,
                 pubDate: timezone(parseDate(item.find(dateSelector).text(), 'YYYY-MM-DD'), +8),
             };
         });
@@ -27,29 +29,28 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                if (!response || (response.status >= 300 && response.status < 400)) {
-                    return {
-                        ...item,
-                        description: '该通知无法直接预览，请点击原文链接↑查看',
-                    };
-                }
                 const $ = load(response);
 
                 if ($('.wp_error_msg').length > 0) {
                     item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
-                } else if ($('.wp_pdf_player').length > 0) {
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
                 } else {
-                    const contentHtml = $(contentSelector.content).html();
-                    const $content = load(contentHtml);
-                    $content('a').each(function () {
-                        const a = $(this);
-                        const href = a.attr('href');
+                    const $content = $(contentSelector.content);
+                    // Convert wp_pdf_player iframes to download links
+                    $content.find('.wp_pdf_player').each(function () {
+                        const $iframe = $(this);
+                        const pdfSrc = $iframe.attr('pdfsrc') || '';
+                        const pdfUrl = pdfSrc.startsWith('http') ? pdfSrc : new URL(pdfSrc, host).href;
+                        $iframe.replaceWith(`<p><a href="${pdfUrl}">附件下载</a></p>`);
+                    });
+                    // Fix relative URLs
+                    $content.find('a').each(function () {
+                        const $a = $(this);
+                        const href = $a.attr('href');
                         if (href && !href.startsWith('http')) {
-                            a.attr('href', new URL(href, host).href);
+                            $a.attr('href', new URL(href, host).href);
                         }
                     });
-                    item.description = $content.html();
+                    item.description = $content.html() || '';
                     item.title = $(contentSelector.title).text();
                     const dateText = $(contentSelector.date).text().replace('编辑：', '').replace('发布日期：', '').replace('发布时间：', '');
                     item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), +8);

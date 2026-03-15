@@ -27,8 +27,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
     const params: URLSearchParams = createSearchParams(filters, limit);
 
-    const baseUrl: string = 'https://digitalpolicyalert.org';
-    const apiBaseUrl: string = 'https://api.globaltradealert.org';
+    const baseUrl = 'https://digitalpolicyalert.org';
+    const apiBaseUrl = 'https://api.globaltradealert.org';
     const targetUrl: string = new URL(`activity-tracker?${params.toString()}`, baseUrl).href;
     const apiUrl: string = new URL('dpa/intervention', apiBaseUrl).href;
 
@@ -40,9 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = response.results.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.latest_event?.description ?? undefined;
         const pubDate: number | string = item.latest_event?.date;
