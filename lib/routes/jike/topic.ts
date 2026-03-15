@@ -32,7 +32,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['web.okjike.com/topic/:id'],
+            source: ['web.okjike.com/topic/:id', 'm.okjike.com/topics/:id'],
             target: '/topic/:id',
         },
     ],

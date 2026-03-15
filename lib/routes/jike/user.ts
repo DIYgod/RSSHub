@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['web.okjike.com/u/:uid'],
+            source: ['web.okjike.com/u/:uid', 'm.okjike.com/users/:uid'],
             target: '/user/:uid',
         },
     ],

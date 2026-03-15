@@ -19,7 +19,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['web.okjike.com/topic/:id'],
+            source: ['web.okjike.com/topic/:id', 'm.okjike.com/topics/:id'],
+            target: '/topic/text/:id',
         },
     ],
     name: '圈子 - 纯文字',
