@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -29,6 +29,9 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
     handler,
+    parameters: {
+        category: 'Category name, e.g., Research, Tutorials',
+    },
 };
 
 const splitAuthors = (text: string | undefined): DataItem['author'] => {
