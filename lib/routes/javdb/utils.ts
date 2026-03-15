@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
+const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
 const ProcessItems = async (ctx, currentUrl, title) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
