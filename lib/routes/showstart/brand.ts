@@ -41,5 +41,6 @@ async function handler(ctx: Context): Promise<Data> {
         description: brand.content,
         link: `${HOST}/host/${brand.id}`,
         item: brand.activityList,
+        allowEmpty: true,
     };
 }
