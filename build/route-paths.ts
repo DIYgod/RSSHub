@@ -616,7 +616,7 @@ export type RoutePath =
   | `/codefather/questions/:sort?`
   | `/codeforces/contests`
   | `/codeforces/recent-actions/:minrating?`
-  | `/cognition/blog`
+  | `/cognition/blog/:category?`
   | `/cohere/blog`
   | `/coindesk/consensus-magazine`
   | `/coindesk/news`
