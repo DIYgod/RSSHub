@@ -31,8 +31,8 @@ export const namespace: Namespace = {
 | displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                                |
 | displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
 | displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
-| showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 \`[表情名]\`                  | 0/1/true/false | true                                |
-| showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
+| showEmojiInDescription     | 是否展示正文和评论中的微博表情，关闭则替换为 \`[表情名]\`            | 0/1/true/false | true                                |
+| showLinkIconInDescription  | 是否展示正文和评论中的链接图标                                     | 0/1/true/false | true                                |
 | preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
 | showRetweeted              | 是否显示转发的微博                                                 | 0/1/true/false | true                               |
 | showBloggerIcons           | 是否显示评论中博主的标志，只在显示热门评论时有效                                           | 0/1/true/false | false                               |
