@@ -7,18 +7,15 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const { topic } = ctx.req.param();
+    const { topic, locale } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
     const baseUrl = 'https://cursor.com';
-    const path = topic ? `/blog/topic/${topic}` : '/blog';
+    const localeSegment = locale ? `/${locale}` : '';
+    const path = topic ? `${localeSegment}/blog/topic/${topic}` : `${localeSegment}/blog`;
     const targetUrl = new URL(path, baseUrl).href;
 
-    const html = await ofetch(targetUrl, {
-        headers: {
-            cookie: 'NEXT_LOCALE=en',
-        },
-    });
+    const html = await ofetch(targetUrl);
     const $ = load(html);
 
     const main = $('#main').last(); // there are two main tags before hydration
@@ -56,12 +53,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/blog/:topic?',
+    path: ['/blog/:topic?', '/:locale/blog/:topic?'],
     name: 'Blog',
     url: 'cursor.com',
     maintainers: ['johan456789'],
     example: '/cursor/blog',
     parameters: {
+        locale: 'Optional locale prefix in URL',
         topic: 'Optional topic: product | research | company | news',
     },
     description: undefined,
@@ -77,8 +75,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['cursor.com/blog', 'cursor.com/blog/topic/:topic'],
+            source: ['cursor.com/blog'],
+            target: '/blog',
+        },
+        {
+            source: ['cursor.com/blog/topic/:topic'],
             target: '/blog/:topic',
+        },
+        {
+            source: ['cursor.com/:locale/blog'],
+            target: '/:locale/blog',
+        },
+        {
+            source: ['cursor.com/:locale/blog/topic/:topic'],
+            target: '/:locale/blog/:topic',
         },
     ],
     view: ViewType.Articles,
