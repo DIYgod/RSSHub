@@ -34,11 +34,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://bioone.org';
     const currentUrl = `${rootUrl}/journals/${journal}/current`;
-    const response = await got(currentUrl, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
 
@@ -56,11 +52,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link, {
-                    https: {
-                        rejectUnauthorized: false,
-                    },
-                });
+                const detailResponse = await got(item.link);
 
                 const content = load(detailResponse.data);
 

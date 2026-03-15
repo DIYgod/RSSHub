@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     name: 'IEEE Author Articles',
@@ -86,10 +85,4 @@ async function handler(ctx) {
         item: items,
         image,
     };
-}
-
-function renderDescription(item: { title: string; authors: string; abstract: string; doi: string }) {
-    return art(path.join(__dirname, 'templates/description.art'), {
-        item,
-    });
 }

@@ -77,7 +77,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                let desc = '';
+                let desc: string;
                 try {
                     const response = await got(item.link);
                     desc = load(response.data)('div.wp_articlecontent').html();

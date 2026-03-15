@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
-    const baseUrl: string = 'https://indianexpress.com';
+    const baseUrl = 'https://indianexpress.com';
     const apiUrl = new URL(`${apiSlug}/article`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/ie_section`, baseUrl).href;
 
@@ -40,9 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = response.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
         const title: string = item.title?.rendered ?? item.title;
         const description: string | undefined = item.content.rendered;
         const pubDate: number | string = item.date_gmt;

@@ -1,3 +1,0 @@
-<h2>{{ title }}</h2>{{ if journalTitle }}<h3>{{ journalTitle }}</h3>{{ /if }}
-<span>{{ if publicationDate.year }}{{ publicationDate.year }}{{ /if }}{{ if publicationDate.month }}-{{ publicationDate.month }}{{ /if }}{{ if publicationDate.day }}-{{ publicationDate.day }}{{ /if }} | {{ workType }}</span><br>
-<span>{{@ Str }}</span><span>Source: {{ sourceName }}</span>

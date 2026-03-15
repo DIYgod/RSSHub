@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,22 +8,21 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
-    const baseUrl: string = 'https://0xxx.ws';
+    const baseUrl = 'https://0xxx.ws';
     const targetUrl: string = new URL(filter ? `?${filter}` : '', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = $('table#home-table tr:not(.gore)')
+    let items: DataItem[] = $('table#home-table tr:not(.gore)')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -38,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('td.title').text();
             const image: string | undefined = $el.find('a.screenshot').attr('rel');
 
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -88,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const description: string | undefined =
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         images: $$('div.thumbs img')
                             .toArray()
                             .map((i) => {

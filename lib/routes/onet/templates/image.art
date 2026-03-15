@@ -1,9 +1,0 @@
-<figure>
-    <img src="{{ url }}" alt="{{ alt }}">
-    <figcation>
-        {{if caption }}
-            <cite>{{ caption }}</cite> -
-        {{/if}}
-        {{ author }}
-    </figcation>
-</figure>

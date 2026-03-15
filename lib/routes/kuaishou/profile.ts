@@ -67,7 +67,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
-    const resData = (await promise.catch((error) => error)) as Array<any>;
+    const resData = (await promise.catch((error) => error)) as any[];
 
     await browser.close();
     const data: Data = {

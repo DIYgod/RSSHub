@@ -41,7 +41,7 @@ async function handler() {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 let itemDate;
                 if (path) {
                     const result = await got(itemUrl);

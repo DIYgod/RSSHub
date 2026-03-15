@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/blog/:language?',
@@ -71,20 +70,16 @@ async function handler(ctx) {
                 content('img').each(function () {
                     const image = (content(this).attr('srcset') ?? content(this).attr('src')).split('?w=')[0];
 
-                    content(this).replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
-                            image,
-                        })
-                    );
+                    content(this).replaceWith(renderDescription({ image }));
                 });
 
                 item.title = detail.title;
                 item.author = detail.author.name;
                 item.pubDate = parseDate(detail.pubDate, 'MMMM YYYY');
                 item.category = [...(detail.tags?.map((t) => t.title) ?? []), ...(detail.category?.map((c) => c.title) ?? [])];
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    header: content('header[data-csk-entry-type="blog"]').html(),
-                    description: content('div[data-csk-entry-type="blog"] div[data-testid="Text-root"]').html(),
+                item.description = renderDescription({
+                    header: content('header[data-csk-entry-type="blog"]').html() ?? undefined,
+                    description: content('div[data-csk-entry-type="blog"] div[data-testid="Text-root"]').html() ?? undefined,
                 });
 
                 return item;

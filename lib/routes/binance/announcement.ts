@@ -1,18 +1,29 @@
-import * as cheerio from 'cheerio';
-
-import type { DataItem, Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { AnnouncementCatalog, AnnouncementsConfig } from './types';
-
-interface AnnouncementFragment {
-    reactRoot: [{ id: 'Fragment'; children: { id: string; props: object }[]; props: object }];
+interface ArticleItem {
+    code: string;
+    title: string;
+    releaseDate: number;
 }
 
-const ROUTE_PARAMETERS_CATALOGID_MAPPING = {
+interface CatalogItem {
+    catalogId: number;
+    catalogName: string;
+    articles: ArticleItem[];
+}
+
+interface ArticleListResponse {
+    code: string;
+    data: {
+        catalogs: CatalogItem[];
+    } | null;
+}
+
+const TYPE_CATALOG_ID_MAP: Record<string, number> = {
     'new-cryptocurrency-listing': 48,
     'latest-binance-news': 49,
     'latest-activities': 93,
@@ -23,126 +34,108 @@ const ROUTE_PARAMETERS_CATALOGID_MAPPING = {
     delisting: 161,
 };
 
-function assertAnnouncementsConfig(playlist: unknown): playlist is AnnouncementFragment {
-    if (!playlist || typeof playlist !== 'object') {
-        return false;
-    }
-    if (!('reactRoot' in (playlist as { reactRoot: unknown[] }))) {
-        return false;
-    }
-    if (!Array.isArray((playlist as { reactRoot: unknown[] }).reactRoot)) {
-        return false;
-    }
-    if ((playlist as { reactRoot: { id: string }[] }).reactRoot?.[0]?.id !== 'Fragment') {
-        return false;
-    }
-    return true;
-}
+const LANGUAGE_ALIASES: Record<string, string> = {
+    'en-US': 'en',
+    zh: 'zh-CN',
+};
 
-function assertAnnouncementsConfigList(props: unknown): props is { config: { list: AnnouncementsConfig[] } } {
-    if (!props || typeof props !== 'object') {
-        return false;
-    }
-    if (!('config' in props)) {
-        return false;
-    }
-    if (!('list' in (props.config as { list: AnnouncementsConfig[] }))) {
-        return false;
-    }
-    return true;
-}
+const normalizeLanguage = (lang?: string) => (lang ? (LANGUAGE_ALIASES[lang] ?? lang) : 'zh-CN');
+
+const isLanguageCode = (lang: string) => {
+    const normalized = normalizeLanguage(lang);
+    return normalized === 'en' || normalized === 'zh-CN';
+};
 
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.binance.com';
-    const announcementCategoryUrl = `${baseUrl}/support/announcement`;
-    const { type } = ctx.req.param<'/binance/announcement/:type'>();
-    const language = ctx.req.header('Accept-Language');
+    const rawType = ctx.req.param('type');
+    const rawLang = ctx.req.param('lang');
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
+
+    let type = rawType;
+    let language = normalizeLanguage(rawLang);
+
+    if (!rawLang && rawType && isLanguageCode(rawType)) {
+        language = normalizeLanguage(rawType);
+        type = undefined;
+    }
+
+    if (type === 'all') {
+        type = undefined;
+    }
+
+    let catalogId: number | undefined;
+    if (type) {
+        const mappedCatalogId = TYPE_CATALOG_ID_MAP[type];
+        if (!mappedCatalogId) {
+            throw new Error(`${type} is not supported`);
+        }
+        catalogId = mappedCatalogId;
+    }
+
+    const pageUrl = `${baseUrl}/${language}/messages/v2/group/announcement`;
+    const listUrl = new URL(`${baseUrl}/bapi/apex/v1/public/apex/cms/article/list/query`);
+    listUrl.searchParams.set('type', '1');
+    listUrl.searchParams.set('pageNo', '1');
+    listUrl.searchParams.set('pageSize', String(pageSize));
+    if (catalogId) {
+        listUrl.searchParams.set('catalogId', String(catalogId));
+    }
+
     const headers = {
-        Referer: baseUrl,
-        'Accept-Language': language ?? 'en-US,en;q=0.9',
+        Referer: pageUrl,
+        'Accept-Language': language,
+        'User-Agent': config.trueUA,
+        lang: language,
     };
-    const announcementsConfig = (await cache.tryGet(`binance:announcements:${language}`, async () => {
-        const announcementRes = await ofetch<string>(announcementCategoryUrl, { headers });
-        const $ = cheerio.load(announcementRes);
 
-        const appData = JSON.parse($('#__APP_DATA').text());
+    const response = (await ofetch<ArticleListResponse>(listUrl.toString(), { headers })) as ArticleListResponse;
+    const catalogs = response.data?.catalogs ?? [];
 
-        const announcements = Object.values(appData.appState.loader.dataByRouteId as Record<string, object>).find((value) => 'playlist' in value) as { playlist: unknown };
-
-        if (!assertAnnouncementsConfig(announcements.playlist)) {
-            throw new Error('Get announcement config failed');
-        }
-
-        const listConfigProps = announcements.playlist.reactRoot[0].children.find((i) => i.id === 'TopicCardList')?.props;
-
-        if (!assertAnnouncementsConfigList(listConfigProps)) {
-            throw new Error("Can't get announcement config list");
-        }
-
-        return listConfigProps.config.list;
-    })) as AnnouncementsConfig[];
-
-    const announcementCatalogId = ROUTE_PARAMETERS_CATALOGID_MAPPING[type];
-
-    if (!announcementCatalogId) {
-        throw new Error(`${type} is not supported`);
-    }
-
-    const targetItem = announcementsConfig.find((i) => i.url.includes(`c-${announcementCatalogId}`));
-
-    if (!targetItem) {
-        throw new Error('Unexpected announcements config');
-    }
-
-    const link = new URL(targetItem.url, baseUrl).toString();
-
-    const response = await ofetch<string>(link, { headers });
-
-    const $ = cheerio.load(response);
-    const appData = JSON.parse($('#__APP_DATA').text());
-
-    const values = Object.values(appData.appState.loader.dataByRouteId as Record<string, object>);
-    const catalogs = values.find((value) => 'catalogs' in value) as { catalogs: AnnouncementCatalog[] };
-    const catalog = catalogs.catalogs.find((catalog) => catalog.catalogId === announcementCatalogId);
-
-    const item = await Promise.all(
-        catalog!.articles.map((i) => {
-            const link = `${announcementCategoryUrl}/${i.code}`;
-            const item = {
-                title: i.title,
-                link,
-                description: i.title,
-                pubDate: parseDate(i.releaseDate),
-            } as DataItem;
-            return cache.tryGet(`binance:announcement:${i.code}:${language}`, async () => {
-                const res = await ofetch(link, { headers });
-                const $ = cheerio.load(res);
-                const descriptionEl = $('#support_article > div').first();
-                descriptionEl.find('style').remove();
-                item.description = descriptionEl.html() ?? '';
-                return item;
-            }) as Promise<DataItem>;
-        })
+    const itemsWithDate = catalogs.flatMap((catalog) =>
+        catalog.articles.map((article) => ({
+            title: article.title,
+            link: `${baseUrl}/${language}/support/announcement/${article.code}`,
+            pubDate: parseDate(article.releaseDate),
+            category: catalog.catalogName ? [catalog.catalogName] : undefined,
+            releaseDate: article.releaseDate,
+        }))
     );
 
+    const item = itemsWithDate
+        .toSorted((a, b) => b.releaseDate - a.releaseDate)
+        .slice(0, pageSize)
+        .map(({ releaseDate: _releaseDate, ...rest }) => rest);
+
+    const catalogName = catalogId ? catalogs.find((catalog) => catalog.catalogId === catalogId)?.catalogName : undefined;
+    const title = catalogName ? `Binance Announcement - ${catalogName}` : 'Binance Announcement';
+
     return {
-        title: targetItem.title,
-        link,
-        description: targetItem.description,
+        title,
+        link: pageUrl,
+        description: 'Announcement list from Binance message center.',
         item,
     };
 };
 
 export const route: Route = {
-    path: '/announcement/:type',
+    path: '/announcement/:type?/:lang?',
     categories: ['finance'],
     view: ViewType.Articles,
     example: '/binance/announcement/new-cryptocurrency-listing',
+    radar: [
+        {
+            source: ['www.binance.com/:lang/messages/v2/group/announcement'],
+            target: '/binance/announcement/all/:lang',
+        },
+    ],
     parameters: {
         type: {
-            description: 'Binance Announcement type',
-            default: 'new-cryptocurrency-listing',
+            description: 'Announcement type. Omit for all categories.',
+            default: 'all',
             options: [
+                { value: 'all', label: 'All' },
                 { value: 'new-cryptocurrency-listing', label: 'New Cryptocurrency Listing' },
                 { value: 'latest-binance-news', label: 'Latest Binance News' },
                 { value: 'latest-activities', label: 'Latest Activities' },
@@ -153,20 +146,17 @@ export const route: Route = {
                 { value: 'delisting', label: 'Delisting' },
             ],
         },
+        lang: {
+            description: 'Language code for the messages page.',
+            default: 'zh-CN',
+            options: [
+                { value: 'zh-CN', label: 'Simplified Chinese' },
+                { value: 'en', label: 'English' },
+            ],
+        },
     },
     name: 'Announcement',
-    description: `
-Type category
-
- - new-cryptocurrency-listing => New Cryptocurrency Listing
- - latest-binance-news        => Latest Binance News
- - latest-activities          => Latest Activities
- - new-fiat-listings          => New Fiat Listings
- - api-updates                => API Updates
- - crypto-airdrop             => Crypto Airdrop
- - wallet-maintenance-updates => Wallet Maintenance Updates
- - delisting                  => Delisting
-`,
-    maintainers: ['enpitsulin'],
+    description: 'Announcement list from Binance message center with language and type selection.',
+    maintainers: ['enpitsulin', 'DIYgod'],
     handler,
 };

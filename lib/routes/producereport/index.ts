@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,22 +8,21 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'produce/fresh-fruits/apples' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.producereport.com';
+    const baseUrl = 'https://www.producereport.com';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = $('table.views-table tbody tr')
+    let items: DataItem[] = $('table.views-table tbody tr')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -39,7 +36,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 ?.replace(/styles\/thumbnail\/public/, '')
                 ?.split(/\?/)?.[0];
 
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -85,7 +82,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('meta[property="og:title"]').attr('content') ?? item.title;
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
 
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: image
                         ? [
                               {
@@ -94,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               },
                           ]
                         : undefined,
-                    description: $$('div[property="content:encoded"]').html(),
+                    description: $$('div[property="content:encoded"]').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('div.pane-node-created').text()?.trim();
                 const categoryEls: Element[] = $$('div.pane-node-field-topics a').toArray();

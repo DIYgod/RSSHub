@@ -14,16 +14,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'association-news' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'http://www.ccagm.org.cn';
+    const baseUrl = 'http://www.ccagm.org.cn';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('ul.news_list li a')
+    let items: DataItem[] = $('ul.news_list li a')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

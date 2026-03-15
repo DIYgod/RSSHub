@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderIndexDescription } from './templates/index';
 import { domainValidation } from './utils';
 
 export const route: Route = {
@@ -71,7 +69,7 @@ async function handler(ctx) {
                 const $ = load(data);
 
                 item.pubDate = parseDate($('.title-yakov').eq(0).text(), 'YYYY-MM-DD');
-                item.description = art(path.join(__dirname, 'templates/index.art'), {
+                item.description = renderIndexDescription({
                     link: item.link,
                     poster: item.poster,
                 });

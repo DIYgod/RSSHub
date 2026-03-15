@@ -13,7 +13,7 @@ function fixUrl(itemLink, baseUrl) {
     // 处理相对链接
     if (itemLink) {
         if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-            baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+            baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
         }
         itemLink = new URL(itemLink, baseUrl).href;
     }

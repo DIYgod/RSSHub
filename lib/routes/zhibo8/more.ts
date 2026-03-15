@@ -46,10 +46,10 @@ async function handler(ctx) {
 
     const rootUrl = 'https://news.zhibo8.cc';
 
-    let list,
-        apiUrl = '',
-        currentUrl = '',
-        response;
+    let list;
+    let apiUrl: string;
+    let currentUrl: string;
+    let response;
 
     if (category === 'nba' || category === 'zuqiu') {
         currentUrl = `${rootUrl}/${category}/more.htm`;

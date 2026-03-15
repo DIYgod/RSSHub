@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.stcn.com';
+    const baseUrl = 'https://www.stcn.com';
     const targetUrl: string = new URL('article/list/kx.html', baseUrl).href;
     const apiUrl: string = new URL('article/list.html', baseUrl).href;
 
@@ -30,9 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = response.data.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string = item.content;
         const pubDate: number | string = item.time;

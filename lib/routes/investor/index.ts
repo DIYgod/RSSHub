@@ -13,16 +13,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'home/zxdt' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://www.investor.org.cn';
+    const baseUrl = 'https://www.investor.org.cn';
     const targetUrl: string = new URL(id.endsWith('/') ? id : `${id}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('div.right_content_item a')
+    let items: DataItem[] = $('div.right_content_item a')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

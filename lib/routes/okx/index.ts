@@ -94,7 +94,7 @@ async function handler(ctx: Context) {
     const $ = load(data);
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
-    const itemsTemp: { title: string; link: string; pubDate: Date }[] =
+    const itemsTemp: Array<{ title: string; link: string; pubDate: Date }> =
         ssrData?.appContext?.initialProps?.sectionData?.articleList?.items?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
             link: `${baseUrl}/zh-hans/help/${item.slug}`,

@@ -1,4 +1,0 @@
-<figure>
-<picture><img src={{ src }} alt={{ alt }}></picture>
-<figurecaption>{{ alt }}</figurecaption>
-</figure>
