@@ -1,9 +1,10 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Browser } from 'rebrowser-puppeteer';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 export const BASE_URL = 'https://www.dailypush.dev';
@@ -225,35 +226,46 @@ export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
 }
 
 /**
- * Enhance items with full summaries from dailypush article pages
+ * Enhance items with full summaries from dailypush article pages.
+ * Uses the provided browser; opens a new tab per URL (document requests only). Caller must close the browser.
  */
-export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<DataItem[]> {
+export async function enhanceItemsWithSummaries(browser: Browser, items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems: DataItem[] = await Promise.all(
-        itemsWithUrl.map((item) =>
-            cache.tryGet(item.dailyPushUrl!, async () => {
-                // If we have a dailypush article URL, fetch it for the longer summary
-                try {
-                    const articleResponse = await ofetch(item.dailyPushUrl!);
-                    const $ = load(articleResponse);
+    // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
+    let chain: Promise<DataItem[]> = Promise.resolve([]);
+    for (const item of itemsWithUrl) {
+        chain = chain.then((acc) =>
+            cache
+                .tryGet(item.dailyPushUrl!, async () => {
+                    const page = await browser.newPage();
+                    await page.setRequestInterception(true);
+                    page.on('request', (request) => {
+                        request.resourceType() === 'document' ? request.continue() : request.abort();
+                    });
 
-                    // Find the longer summary/description on the article page
-                    const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
-
-                    if (summary.length > 0 && summary.text().trim()) {
-                        item.description = summary.text().trim();
+                    try {
+                        logger.http(`Requesting ${item.dailyPushUrl}`);
+                        await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
+                        const html = await page.content();
+                        const $ = load(html);
+                        const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                        if (summary.length > 0 && summary.text().trim()) {
+                            item.description = summary.text().trim();
+                        }
+                    } catch {
+                        // If fetching article page fails, keep the original description
+                    } finally {
+                        await page.close();
                     }
-                } catch {
-                    // If fetching article page fails, keep the original description
-                }
 
-                return item;
-            })
-        )
-    );
+                    return item;
+                })
+                .then((enhanced) => [...acc, enhanced])
+        );
+    }
+    const enhancedItems = await chain;
 
-    // Include items without dailyPushUrl as-is
     return [...enhancedItems, ...itemsWithoutUrl];
 }

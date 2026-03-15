@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
-    const { page, destory, browser } = await getPuppeteerPage(targetUrl, {
+    const { page, destroy, browser } = await getPuppeteerPage(targetUrl, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -131,7 +131,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     // Close the browser session after all requests are done
-    await destory();
+    await destroy();
 
     return {
         title: $('title').text() || 'Perplexity Changelog',

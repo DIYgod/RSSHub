@@ -61,7 +61,7 @@ const weiboUtils = {
                     logger.info(`Fetching visitor Cookies from ${url}`);
                 }
                 let times = 0;
-                const { page, destory } = await getPuppeteerPage(url, {
+                const { page, destroy } = await getPuppeteerPage(url, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                         await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);
@@ -82,7 +82,7 @@ const weiboUtils = {
                     gotoConfig: { waitUntil: 'networkidle0' },
                 });
                 const cookies: string = await getCookies(page, 'weibo.cn');
-                await destory();
+                await destroy();
                 if (times < 2 || !cookies) {
                     throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
                 }
