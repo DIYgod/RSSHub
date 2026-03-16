@@ -30,7 +30,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['konachan.com/post', 'konachan.net/post'],
+            source: ['konachan.com/post'],
+        },
+        {
+            source: ['konachan.net/post'],
         },
     ],
     name: 'Popular Recent Posts',

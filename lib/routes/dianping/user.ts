@@ -23,7 +23,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['dianping.com/member/:id', 'm.dianping.com/userprofile/:id'],
+            source: ['dianping.com/member/:id'],
+            target: '/dianping/user/:id',
+        },
+        {
+            source: ['m.dianping.com/userprofile/:id'],
             target: '/dianping/user/:id',
         },
     ],
