@@ -1,16 +1,8 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "framework": "hono",
-    "outputDirectory": "src",
-    "functions": {
-        "src/server.mjs": {
-            "includeFiles": "./src/templates/**/*.art"
-        }
-    },
-    "rewrites": [
-        {
-            "source": "/favicon.ico",
-            "destination": "/favicon.png"
-        }
-    ]
+  "version": 2,
+  "build": {
+    "env": {
+      "NODE_VERSION": "20.x"
+    }
+  }
 }
