@@ -96,6 +96,6 @@ export default defineConfig({
         '../assets/build/routes.json': path.resolve('./assets/build/routes-worker.js'),
     },
     deps: {
-        onlyAllowBundle: false,
+        onlyBundle: false,
     },
 });

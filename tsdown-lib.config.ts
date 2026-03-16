@@ -8,6 +8,6 @@ export default defineConfig({
     copy: ['lib/assets'],
     outDir: 'dist-lib',
     deps: {
-        onlyAllowBundle: false,
+        onlyBundle: false,
     },
 });

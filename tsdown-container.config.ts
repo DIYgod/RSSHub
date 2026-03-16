@@ -14,6 +14,6 @@ export default defineConfig({
     },
     external: ['@cloudflare/containers'],
     deps: {
-        onlyAllowBundle: false,
+        onlyBundle: false,
     },
 });
