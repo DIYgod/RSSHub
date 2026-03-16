@@ -195,7 +195,7 @@
         "node-network-devtools": "1.0.29",
         "oxfmt": "0.40.0",
         "oxlint": "1.55.0",
-        "oxlint-tsgolint": "0.16.0",
+        "oxlint-tsgolint": "0.17.0",
         "remark-parse": "11.0.0",
         "supertest": "7.2.2",
         "tsdown": "0.21.3",
