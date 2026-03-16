@@ -7,6 +7,6 @@ export default defineConfig({
     clean: true,
     copy: ['lib/assets'],
     deps: {
-        onlyAllowBundle: false,
+        onlyBundle: false,
     },
 });
