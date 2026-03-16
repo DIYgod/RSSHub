@@ -24,6 +24,10 @@ export const route: Route = {
             source: ['web.okjike.com/u/:uid'],
             target: '/user/:uid',
         },
+        {
+            source: ['m.okjike.com/users/:uid'],
+            target: '/user/:uid',
+        },
     ],
     name: '用户动态',
     maintainers: ['DIYgod', 'prnake'],
