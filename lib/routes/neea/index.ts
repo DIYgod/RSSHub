@@ -125,11 +125,18 @@ export const route: Route = {
     features: {
         supportRadar: true,
     },
-    radar: Object.entries(typeDic).map(([type, value]) => ({
-        title: `${value.title}动态`,
-        source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/local/${type}`,
-    })),
+    radar: Object.entries(typeDic).flatMap(([type, value]) => [
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.edu.cn`],
+            target: `/local/${type}`,
+        },
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.cn`],
+            target: `/local/${type}`,
+        },
+    ]),
     handler,
     description: `|              | 考试项目                      | type     |
 | ------------ | ----------------------------- | -------- |
