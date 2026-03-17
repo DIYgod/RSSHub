@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import type { Item } from 'rss-parser';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -115,9 +114,7 @@ const formatMediaDescriptions = ($, node) => {
             return;
         }
 
-        const figcaption = $('<figcaption></figcaption>').html(
-            captions.map((caption) => `<small><em>${getMediaCaptionPrefix($, element)}${caption}</em></small>`).join('<br>')
-        );
+        const figcaption = $('<figcaption></figcaption>').html(captions.map((caption) => `<small><em>${getMediaCaptionPrefix($, element)}${caption}</em></small>`).join('<br>'));
 
         description.replaceWith(figcaption);
     });
@@ -229,12 +226,7 @@ const extractArticleDescription = ($, pageUrl: string) => {
 
 const fetchArticle = (item: Item & { link: string }) =>
     cache.tryGet(item.link, async () => {
-        const response = await ofetch(item.link, {
-            headers: {
-                'User-Agent': config.trueUA,
-            },
-            parseResponse: (text) => text,
-        });
+        const response = await ofetch(item.link);
         const $ = load(response);
         const category = $('.category-eyebrow__category').first().text();
         const fallbackDate = $('.category-eyebrow__date').first().text();
@@ -257,9 +249,6 @@ const fetchArticle = (item: Item & { link: string }) =>
 async function handler(ctx) {
     const limit = Math.max(Number.parseInt(ctx.req.query('limit') ?? '', 10) || defaultLimit, 1);
     const feedResponse = await ofetch(feedUrl, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
         parseResponse: (text) => text,
     });
     const feed = await parser.parseString(feedResponse);
@@ -282,7 +271,7 @@ async function handler(ctx) {
 
 export const route: Route = {
     path: '/newsroom',
-    name: 'Apple Newsroom (中国大陆)',
+    name: 'Newsroom (中国大陆)',
     url: 'www.apple.com.cn/newsroom',
     maintainers: ['LinxHex'],
     example: '/apple/newsroom',
@@ -306,7 +295,7 @@ export const route: Route = {
     view: ViewType.Articles,
     zh: {
         path: '/newsroom',
-        name: 'Apple Newsroom (中国大陆)',
+        name: '新闻中心（中国大陆）',
         url: 'www.apple.com.cn/newsroom',
         maintainers: ['LinxHex'],
         example: '/apple/newsroom',
