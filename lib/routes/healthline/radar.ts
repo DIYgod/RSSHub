@@ -1,12 +1,12 @@
 export default {
     'healthline.com': {
         _name: 'Healthline',
-        nutrition: [
+        '.': [
             {
-                title: 'Nutrition Articles',
+                title: 'Healthline Articles',
                 docs: 'https://rsshub.app/healthline/nutrition',
-                source: ['/nutrition'],
-                target: '/nutrition',
+                source: ['/'],
+                target: '/',
             },
         ],
     },

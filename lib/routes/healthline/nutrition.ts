@@ -18,8 +18,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['healthline.com/:category'],
-            target: '/:category',
+            source: ['healthline.com/'],
+            target: '/',
         },
     ],
     name: 'Healthline',
@@ -32,6 +32,7 @@ export default handler;
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'nutrition';
+    const limit = ctx.req.query('limit') || 20;
     const baseUrl = 'https://www.healthline.com';
     const url = `${baseUrl}/${category}`;
 
@@ -62,7 +63,7 @@ async function handler(ctx) {
             const href = $el.attr('href');
             const title = $el.text().trim();
             return {
-                title: title.length > 10 ? title : undefined,
+                title,
                 link: href?.startsWith('http') ? href : `${baseUrl}${href}`,
             };
         })
@@ -70,9 +71,7 @@ async function handler(ctx) {
 
     const uniqueList = list.filter((item, index, self) => index === self.findIndex((t) => t.link === item.link));
 
-    // For now, return the list without full article content (to avoid too many browser launches)
-    // In production, you might want to cache this better
-    const items = uniqueList.slice(0, 20).map((item) => ({
+    const items = uniqueList.slice(0, Number(limit)).map((item) => ({
         title: item.title,
         link: item.link,
         guid: item.link,

@@ -1,6 +1,6 @@
 export default {
-    name: 'Healthline',
+    name: 'Healthline Articles',
     description: 'Healthline Nutrition',
-    url: 'https://www.healthline.com',
+    url: 'www.healthline.com',
     timezone: 'America/Los_Angeles',
 } as namespace;
