@@ -1,0 +1,87 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import puppeteer from '@/utils/puppeteer';
+
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/healthline/nutrition',
+    parameters: { category: 'Category, nutrition by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['healthline.com/:category'],
+            target: '/:category',
+        },
+    ],
+    name: 'Healthline',
+    maintainers: ['maqiu'],
+    handler,
+    url: 'healthline.com',
+};
+
+export default handler;
+
+async function handler(ctx) {
+    const category = ctx.req.param('category') || 'nutrition';
+    const baseUrl = 'https://www.healthline.com';
+    const url = `${baseUrl}/${category}`;
+
+    const browser = await puppeteer();
+    const page = await browser.newPage();
+
+    // Set realistic browser headers
+    await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+    });
+
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+
+    const content = await page.content();
+    await browser.close();
+
+    const $ = load(content);
+
+    // Find all article links
+    const list = $('a[href*="/' + category + '/"]')
+        .filter((_, el) => {
+            const href = $(el).attr('href');
+            return href && href.match(new RegExp(`/${category}/[a-z0-9-]+$`));
+        })
+        .toArray()
+        .map((el) => {
+            const $el = $(el);
+            const href = $el.attr('href');
+            const title = $el.text().trim();
+            return {
+                title: title.length > 10 ? title : undefined,
+                link: href?.startsWith('http') ? href : `${baseUrl}${href}`,
+            };
+        })
+        .filter((item) => item.title);
+
+    const uniqueList = list.filter((item, index, self) => index === self.findIndex((t) => t.link === item.link));
+
+    // For now, return the list without full article content (to avoid too many browser launches)
+    // In production, you might want to cache this better
+    const items = uniqueList.slice(0, 20).map((item) => ({
+        title: item.title,
+        link: item.link,
+        guid: item.link,
+    }));
+
+    return {
+        title: `Healthline - ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+        link: url,
+        item: items,
+        description: 'Healthline Nutrition articles',
+    };
+}
