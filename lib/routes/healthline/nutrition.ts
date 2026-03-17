@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['/'],
+            source: ['healthline.com/'],
             target: '/nutrition',
         },
     ],
