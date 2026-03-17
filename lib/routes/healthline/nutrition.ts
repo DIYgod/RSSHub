@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
@@ -19,13 +20,13 @@ export const route: Route = {
     radar: [
         {
             source: ['healthline.com/'],
-            target: '/',
+            target: '/nutrition',
         },
     ],
     name: 'Healthline',
     maintainers: ['maqiu'],
     handler,
-    url: 'healthline.com',
+    url: 'www.healthline.com',
 };
 
 export default handler;
@@ -71,11 +72,37 @@ async function handler(ctx) {
 
     const uniqueList = list.filter((item, index, self) => index === self.findIndex((t) => t.link === item.link));
 
-    const items = uniqueList.slice(0, Number(limit)).map((item) => ({
-        title: item.title,
-        link: item.link,
-        guid: item.link,
-    }));
+    // Fetch article details to get pubDate
+    const items = await Promise.all(
+        uniqueList.slice(0, Number(limit)).map(async (item) => {
+            try {
+                const articleResponse = await fetch(item.link, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                    },
+                });
+                const articleHtml = await articleResponse.text();
+                const $article = load(articleHtml);
+
+                // Try to get publish date
+                const dateStr = $article('meta[property="article:published_time"]').attr('content') || $article('time').attr('datetime');
+                const pubDate = dateStr ? parseDate(dateStr) : undefined;
+
+                return {
+                    title: item.title,
+                    link: item.link,
+                    guid: item.link,
+                    pubDate,
+                };
+            } catch {
+                return {
+                    title: item.title,
+                    link: item.link,
+                    guid: item.link,
+                };
+            }
+        })
+    );
 
     return {
         title: `Healthline - ${category.charAt(0).toUpperCase() + category.slice(1)}`,
