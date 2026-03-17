@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
 
+import config from '@/config';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
@@ -40,7 +42,6 @@ async function handler(ctx) {
     const browser = await puppeteer();
     const page = await browser.newPage();
 
-    // Set realistic browser headers
     await page.setExtraHTTPHeaders({
         'Accept-Language': 'en-US,en;q=0.9',
     });
@@ -52,7 +53,6 @@ async function handler(ctx) {
 
     const $ = load(content);
 
-    // Find all article links
     const list = $('a[href*="/' + category + '/"]')
         .filter((_, el) => {
             const href = $(el).attr('href');
@@ -72,35 +72,36 @@ async function handler(ctx) {
 
     const uniqueList = list.filter((item, index, self) => index === self.findIndex((t) => t.link === item.link));
 
-    // Fetch article details to get pubDate
     const items = await Promise.all(
         uniqueList.slice(0, Number(limit)).map(async (item) => {
-            try {
-                const articleResponse = await fetch(item.link, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-                    },
-                });
-                const articleHtml = await articleResponse.text();
-                const $article = load(articleHtml);
+            const cached = await cache.tryGet(item.link, async () => {
+                try {
+                    const articleResponse = await fetch(item.link, {
+                        headers: {
+                            'User-Agent': config.trueUA,
+                        },
+                    });
+                    const articleHtml = await articleResponse.text();
+                    const $article = load(articleHtml);
 
-                // Try to get publish date
-                const dateStr = $article('meta[property="article:published_time"]').attr('content') || $article('time').attr('datetime');
-                const pubDate = dateStr ? parseDate(dateStr) : undefined;
+                    const dateStr = $article('meta[property="article:published_time"]').attr('content') || $article('time').attr('datetime');
+                    const pubDate = dateStr ? parseDate(dateStr) : undefined;
 
-                return {
-                    title: item.title,
-                    link: item.link,
-                    guid: item.link,
-                    pubDate,
-                };
-            } catch {
-                return {
-                    title: item.title,
-                    link: item.link,
-                    guid: item.link,
-                };
-            }
+                    return {
+                        title: item.title,
+                        link: item.link,
+                        guid: item.link,
+                        pubDate,
+                    };
+                } catch {
+                    return {
+                        title: item.title,
+                        link: item.link,
+                        guid: item.link,
+                    };
+                }
+            });
+            return cached;
         })
     );
 
