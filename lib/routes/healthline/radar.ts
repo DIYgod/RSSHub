@@ -6,7 +6,7 @@ export default {
                 title: 'Healthline Articles',
                 docs: 'https://rsshub.app/healthline/nutrition',
                 source: ['/'],
-                target: '/',
+                target: '/nutrition',
             },
         ],
     },
