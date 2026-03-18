@@ -51,6 +51,7 @@ async function handler(ctx: Context) {
     const $ = load(html);
 
     const items: DataItem[] = [];
+
     const seenLinks = new Set<string>();
 
     // Step 1: Extract featured article using data-framer-name attribute
@@ -68,8 +69,6 @@ async function handler(ctx: Context) {
     }
 
     // Step 2: Extract regular articles using data-framer-name="Article Card"
-    // The Article Card IS the anchor tag itself (has href directly)
-    // Deduplication is needed because server-rendered HTML may contain duplicates
     for (const element of $('[data-framer-name="Article Card"]').toArray()) {
         const $card = $(element);
         const href = $card.attr('href');
@@ -81,7 +80,6 @@ async function handler(ctx: Context) {
 
         const link = new URL(href, rootUrl).href;
 
-        // Skip duplicates (server-rendered HTML may have duplicate Article Cards)
         if (seenLinks.has(link)) {
             continue;
         }
@@ -128,51 +126,46 @@ async function handler(ctx: Context) {
 
                 const $content = load(contentHtml);
 
-                // Extract pubDate for featured article
-                let pubDate: Date | undefined = item.pubDate;
+                let pubDate: string | number | Date | undefined = item.pubDate;
                 if (!pubDate) {
-                    $content('p').each((_, el) => {
-                        const text = $content(el).text().trim();
-                        if (text === 'Published on') {
-                            const dateText = $content(el).parent().next().find('p').first().text().trim();
-                            if (dateText) {
-                                pubDate = parseDate(dateText);
-                            }
-                            return false;
-                        }
-                    });
+                    const timeEl = $content('time[datetime]').first();
+                    if (timeEl.length) {
+                        pubDate = parseDate(timeEl.attr('datetime')!);
+                    }
                 }
 
-                // Extract article description from paragraphs
-                // The article content is in <p> tags after the h1 heading
+                $content('script, style, noscript').remove();
+
                 let description: string | undefined;
+                const contentArea = $content('[data-framer-name="Content"]');
+                if (contentArea.length) {
+                    const contentParts: string[] = [];
 
-                // Find the h1 heading (article title)
-                const h1 = $content('h1').first();
-                if (h1.length) {
-                    // Get all paragraphs that come after the h1 and are substantial (>50 chars)
-                    const allParagraphs = $content('p');
-                    const contentParagraphs: string[] = [];
-
-                    allParagraphs.each((_, el) => {
-                        const text = $content(el).text().trim();
-                        // Skip metadata paragraphs
-                        if (text === 'Written by' || text === 'Published on' || text.includes('Perplexity Team')) {
+                    contentArea.find('h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure, pre').each((_, el) => {
+                        const $el = $content(el);
+                        const text = $el.text().trim();
+                        if (!text) {
                             return;
                         }
-                        // Skip very short text and links
-                        if (text.length < 50) {
+
+                        if (text === 'Written by' || text === 'Published on' || text === 'Perplexity Team') {
                             return;
                         }
-                        contentParagraphs.push(text);
-                        // Stop after collecting 3 good paragraphs
-                        if (contentParagraphs.length >= 3) {
+
+                        if ($el.find('time').length > 0) {
+                            return;
+                        }
+
+                        // Stop before sharing/footer section
+                        if (/^Share this (article|post)$/i.test(text)) {
                             return false;
                         }
+
+                        contentParts.push($el.prop('outerHTML') ?? '');
                     });
 
-                    if (contentParagraphs.length > 0) {
-                        description = contentParagraphs.join(' ');
+                    if (contentParts.length > 0) {
+                        description = contentParts.join('');
                     }
                 }
 
