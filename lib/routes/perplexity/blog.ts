@@ -140,11 +140,12 @@ async function handler(ctx: Context) {
                 const contentArea = $content('[data-framer-name="Content"]');
                 if (contentArea.length) {
                     const contentParts: string[] = [];
+                    const seenText = new Set<string>();
 
                     contentArea.find('h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure, pre').each((_, el) => {
                         const $el = $content(el);
                         const text = $el.text().trim();
-                        if (!text) {
+                        if (!text || seenText.has(text)) {
                             return;
                         }
 
@@ -161,6 +162,7 @@ async function handler(ctx: Context) {
                             return false;
                         }
 
+                        seenText.add(text);
                         contentParts.push(text);
                     });
 
