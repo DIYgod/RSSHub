@@ -1,0 +1,38 @@
+name: Fork Sync Upstream
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-main:
+    if: github.repository == 'ZHA30/RSSHub'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync main with upstream/master
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git remote add upstream https://github.com/DIYgod/RSSHub.git
+          git fetch upstream master
+
+          if [ "$(git rev-parse HEAD)" = "$(git rev-parse upstream/master)" ]; then
+            echo 'No new commits in upstream/master. Nothing to sync.'
+            exit 0
+          fi
+
+          git rebase upstream/master
+          git push --force-with-lease origin main
