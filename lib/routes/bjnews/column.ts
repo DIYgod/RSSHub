@@ -31,7 +31,7 @@ async function handler(ctx) {
         guid: e.uuid,
         pubDate: timezone(parseDate(e.row.publish_time), +8),
         updated: timezone(parseDate(e.row.update_time), +8),
-        link: `https://www.bjnews.com.cn/detail/${e.uuid}.html`,
+        link: `https://m.bjnews.com.cn/detail/${e.uuid}.html`,
     }));
 
     const out = await Promise.all(list.map((item) => fetchArticle(item)));
