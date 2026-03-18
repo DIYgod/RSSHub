@@ -1,5 +1,6 @@
 .DS_Store
 .cursorrules
+.codex/
 .devenv
 .direnv
 .env
@@ -15,6 +16,7 @@
 .yarn
 .yarnrc.yml
 .pnp*
+.worktrees/
 
 *.swp
 *.iml
@@ -42,3 +44,4 @@ yarn.lock
 yarn-error.log
 
 dist-container
+.gitignore
