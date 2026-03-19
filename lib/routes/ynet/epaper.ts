@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { PRESETS } from '@/utils/header-generator';
+import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -12,6 +11,10 @@ import timezone from '@/utils/timezone';
 const rootUrl = 'https://epaper.ynet.com';
 const calendarUrl = 'https://cal.ynet.com/showCalendar2.php';
 const calendarMonthOffsets = [0, -1, -2];
+const browserHeaders = {
+    ...generateHeaders(PRESETS.MODERN_WINDOWS_CHROME),
+    Referer: rootUrl,
+};
 
 type Page = {
     title: string;
@@ -41,11 +44,7 @@ const fetchPage = async (url: string) => {
     const request = (targetUrl: string) =>
         ofetch<string, 'text'>(targetUrl, {
             responseType: 'text',
-            headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
-            headers: {
-                'User-Agent': config.trueUA,
-                Referer: rootUrl,
-            },
+            headers: browserHeaders,
         });
 
     try {
