@@ -4,12 +4,13 @@ import pMap from 'p-map';
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl = 'http://epaper.ynet.com';
-const calendarUrl = 'http://cal.ynet.com/showCalendar2.php';
+const rootUrl = 'https://epaper.ynet.com';
+const calendarUrl = 'https://cal.ynet.com/showCalendar2.php';
 const calendarMonthOffsets = [0, -1, -2];
 
 type Page = {
@@ -29,13 +30,37 @@ type Issue = {
     issueUrl: string;
 };
 
-const fetchPage = (url: string) =>
-    ofetch<string, 'text'>(url, {
-        responseType: 'text',
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+const swapProtocol = (url: string) => {
+    const urlObject = new URL(url);
+    urlObject.protocol = urlObject.protocol === 'https:' ? 'http:' : 'https:';
+
+    return urlObject.href;
+};
+
+const fetchPage = async (url: string) => {
+    const request = (targetUrl: string) =>
+        ofetch<string, 'text'>(targetUrl, {
+            responseType: 'text',
+            headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+            headers: {
+                'User-Agent': config.trueUA,
+                Referer: rootUrl,
+            },
+        });
+
+    try {
+        return await request(url);
+    } catch (error) {
+        const status = (error as { response?: { status?: number } }).response?.status;
+        const urlObject = new URL(url);
+
+        if (status !== 403 || urlObject.hostname !== 'epaper.ynet.com') {
+            throw error;
+        }
+
+        return request(swapProtocol(url));
+    }
+};
 
 const resolveRelativeUrl = (url: string, baseUrl: string) => {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('mailto:') || url.startsWith('javascript:') || url.startsWith('#')) {
@@ -64,7 +89,7 @@ const normalizeIssueUrl = (url: string) => {
     const urlObject = new URL(url, rootUrl);
 
     if (urlObject.hostname === 'epaper.ynet.com') {
-        urlObject.protocol = 'http:';
+        urlObject.protocol = 'https:';
     }
 
     return urlObject.href;
