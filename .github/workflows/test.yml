@@ -67,9 +67,6 @@ jobs:
                     - name: bundled Chromium
                       dependency: ''
                       environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
-                    - name: Chromium from Ubuntu
-                      dependency: chromium-browser
-                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
                     - name: Chrome from Google
                       dependency: google-chrome-stable
                       environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
@@ -90,12 +87,8 @@ jobs:
             - name: Build routes
               run: pnpm build
               env: ${{ fromJSON(matrix.chromium.environment) }}
-            - name: Install Chromium
-              if: ${{ matrix.chromium.dependency != '' }}
-              # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-              # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-              # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
-              # which provides up-to-date native packages.
+            - name: Install Chrome from Google
+              if: ${{ matrix.chromium.dependency == 'google-chrome-stable' }}
               run: |
                   set -eux
                   curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
@@ -107,7 +100,9 @@ jobs:
             - name: Test puppeteer
               run: |
                   set -eux
-                  export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+                  if [ -n "${{ matrix.chromium.dependency }}" ]; then
+                      export CHROMIUM_EXECUTABLE_PATH="$(command -v "${{ matrix.chromium.dependency }}")"
+                  fi
                   pnpm run vitest puppeteer
               env: ${{ fromJSON(matrix.chromium.environment) }}
 
