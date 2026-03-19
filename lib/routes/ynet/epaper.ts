@@ -8,8 +8,9 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl = 'https://epaper.ynet.com';
-const rootPageUrl = `${rootUrl}/paperindex.htm`;
+const rootUrl = 'http://epaper.ynet.com';
+const calendarUrl = 'http://cal.ynet.com/showCalendar2.php';
+const calendarMonthOffsets = [0, -1, -2];
 
 type Page = {
     title: string;
@@ -21,6 +22,11 @@ type Article = {
     link: string;
     category: string[];
     issueDateText: string;
+};
+
+type Issue = {
+    issueDateText: string;
+    issueUrl: string;
 };
 
 const fetchPage = (url: string) =>
@@ -46,16 +52,22 @@ const extractFounderField = (html: string, field: string) => {
     return value || undefined;
 };
 
-const extractIssuePath = (html: string) => {
-    const $ = load(html);
-    const refreshContent = $('meta[http-equiv="REFRESH"], meta[http-equiv="refresh"]').attr('content');
-    const issuePath = refreshContent?.match(/URL=(.+)$/i)?.[1]?.trim() ?? html.match(/URL=([^"' >]+)/i)?.[1]?.trim();
+const getCalendarMonthKey = (date: Date) => `${date.getFullYear()}${date.getMonth() + 1}`;
 
-    if (!issuePath) {
-        throw new Error('无法从电子报首页识别最新刊期，请稍后重试。');
+const getCalendarMonthDate = (offset: number) => {
+    const chinaNow = timezone(new Date(), +8);
+
+    return new Date(chinaNow.getFullYear(), chinaNow.getMonth() + offset, 1);
+};
+
+const normalizeIssueUrl = (url: string) => {
+    const urlObject = new URL(url, rootUrl);
+
+    if (urlObject.hostname === 'epaper.ynet.com') {
+        urlObject.protocol = 'http:';
     }
 
-    return issuePath;
+    return urlObject.href;
 };
 
 const extractIssueDateText = (issuePath: string) => {
@@ -66,6 +78,60 @@ const extractIssueDateText = (issuePath: string) => {
     }
 
     return `${match[1]}-${match[2]}`;
+};
+
+const parseCalendarIssues = ($: ReturnType<typeof load>): Issue[] => {
+    const seenLinks = new Set<string>();
+
+    return $('a[href*="node_1331.htm"]')
+        .toArray()
+        .map((element) => {
+            const href = $(element).attr('href');
+
+            if (!href) {
+                return null;
+            }
+
+            const issueUrl = normalizeIssueUrl(href);
+
+            if (seenLinks.has(issueUrl)) {
+                return null;
+            }
+
+            seenLinks.add(issueUrl);
+
+            return {
+                issueDateText: extractIssueDateText(issueUrl),
+                issueUrl,
+            };
+        })
+        .filter((issue): issue is Issue => issue !== null);
+};
+
+const getLatestIssue = async () => {
+    const issues = (
+        await pMap(
+            calendarMonthOffsets.map((offset) => getCalendarMonthDate(offset)),
+            async (monthDate) => {
+                const monthKey = getCalendarMonthKey(monthDate);
+                const calendarHtml = await cache.tryGet(`ynet:epaper:calendar:${monthKey}`, () => fetchPage(`${calendarUrl}?ym=${monthKey}`));
+                const $ = load(calendarHtml);
+
+                return parseCalendarIssues($);
+            },
+            { concurrency: calendarMonthOffsets.length }
+        )
+    )
+        .flat()
+        .toSorted((a, b) => a.issueDateText.localeCompare(b.issueDateText));
+
+    const latestIssue = issues.at(-1);
+
+    if (!latestIssue) {
+        throw new Error('无法从电子报月历中识别最新刊期，请稍后重试。');
+    }
+
+    return latestIssue;
 };
 
 const parsePageList = ($: ReturnType<typeof load>, baseUrl: string): Page[] => {
@@ -169,11 +235,8 @@ const extractDetail = (html: string, baseUrl: string, fallbackTitle: string, fal
 };
 
 async function handler(ctx) {
-    const rootHtml = await fetchPage(rootPageUrl);
-    const issuePath = extractIssuePath(rootHtml);
-    const issueDateText = extractIssueDateText(issuePath);
-    const issueUrl = new URL(issuePath, rootPageUrl).href;
-    const issueHtml = await fetchPage(issueUrl);
+    const { issueDateText, issueUrl } = await getLatestIssue();
+    const issueHtml = await cache.tryGet(issueUrl, () => fetchPage(issueUrl));
     const issuePage = load(issueHtml);
     const pages = parsePageList(issuePage, issueUrl);
 
@@ -233,7 +296,7 @@ export const route: Route = {
     radar: [
         {
             source: ['epaper.ynet.com/'],
-            target: '/epaper',
+            target: '/ynet/epaper',
         },
     ],
     name: '北京青年报电子版',
