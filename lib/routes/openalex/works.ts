@@ -59,26 +59,50 @@ export const handler = async (ctx) => {
         },
     });
 
-    const items = response.results.map((work) => {
-        const doi = work.doi || work.id;
-        const cacheKey = `${doi}-${work.updated_date}`;
+    const seenTitleKeys = new Set<string>();
 
-        const abstract = reconstructAbstract(work.abstract_inverted_index);
-        const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
-        const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
+    const items = response.results
+        .filter((work) => {
+            const abstract = reconstructAbstract(work.abstract_inverted_index).trim();
+            if (!abstract) {
+                return false;
+            }
 
-        const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
+            // Exclude likely news/briefing entries that usually do not have institution metadata.
+            return work.authorships?.some((authorship) => authorship.institutions?.length > 0) ?? false;
+        })
+        .map((work) => {
+            const abstract = reconstructAbstract(work.abstract_inverted_index);
+            const authors = work.authorships?.map((a) => a.author.display_name).join(', ') || '';
+            const doiUrl = work.doi ? `https://doi.org/${work.doi.replace('https://doi.org/', '')}` : work.id;
+            const normalizedTitle = (work.title || 'Untitled').trim().toLowerCase();
 
-        return {
-            title: work.title || 'Untitled',
-            link: doiUrl,
-            description: abstract,
-            author: authors,
-            pubDate,
-            guid: cacheKey,
-            category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
-        };
-    });
+            const pubDate = work.publication_date ? new Date(work.publication_date) : undefined;
+
+            return {
+                title: work.title || 'Untitled',
+                link: doiUrl,
+                description: abstract,
+                author: authors,
+                pubDate,
+                // OpenAlex id is immutable and stable across metadata updates.
+                guid: work.id,
+                normalizedTitle,
+                category: work.primary_topic?.subfield?.display_name ? [work.primary_topic.subfield.display_name] : [],
+            };
+        })
+        .filter((item) => {
+            const day = item.pubDate instanceof Date ? item.pubDate.toISOString().split('T')[0] : '';
+            const titleKey = `${item.normalizedTitle}::${day}`;
+            if (seenTitleKeys.has(titleKey)) {
+                return false;
+            }
+            seenTitleKeys.add(titleKey);
+            return true;
+        })
+        .map(({ normalizedTitle: _normalizedTitle, ...item }) => ({
+            ...item,
+        }));
 
     // Get journal and filter type names for title
     const journalIdArray = journals.split('|');
