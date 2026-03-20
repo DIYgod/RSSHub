@@ -206,6 +206,7 @@ export type RoutePath =
   | `/apple/apps/update/:country/:id/:platform?`
   | `/apple/design`
   | `/apple/exchange_repair/:country?`
+  | `/apple/newsroom`
   | `/apple/podcast/:id/:region?`
   | `/apple/security-releases/:language?`
   | `/appleinsider/:category?`
@@ -2200,6 +2201,7 @@ export type RoutePath =
   | `/people/liuyan/:id/:state?`
   | `/people/xjpjh/:keyword?/:year?`
   | `/peopo/topic/:topicId?`
+  | `/perplexity/blog`
   | `/perplexity/changelog`
   | `/phoronix/:category?/:topic?`
   | `/pianyivps/`

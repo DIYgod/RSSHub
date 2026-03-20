@@ -625,6 +625,9 @@
     "HenryQW",
     "kt286"
   ],
+  "/apple/newsroom": [
+    "LinxHex"
+  ],
   "/apple/podcast/:id/:region?": [
     "Acring"
   ],
@@ -6720,6 +6723,9 @@
   ],
   "/people/xjpjh/:keyword?/:year?": [],
   "/peopo/topic/:topicId?": [],
+  "/perplexity/blog": [
+    "seeyangzhi"
+  ],
   "/perplexity/changelog": [
     "xbot"
   ],

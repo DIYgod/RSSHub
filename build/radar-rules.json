@@ -5575,6 +5575,20 @@
       }
     ]
   },
+  "apple.com.cn": {
+    "_name": "Apple",
+    "www": [
+      {
+        "title": "Newsroom (中国大陆)",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/newsroom",
+          "/newsroom/:year/:month/:slug"
+        ],
+        "target": "/apple/newsroom"
+      }
+    ]
+  },
   "appleinsider.com": {
     "_name": "AppleInsider",
     ".": [
@@ -38074,6 +38088,14 @@
   "perplexity.ai": {
     "_name": "Perplexity",
     "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/hub"
+        ],
+        "target": "/perplexity/blog"
+      },
       {
         "title": "Changelog",
         "docs": "https://docs.rsshub.app/routes/program-update",
