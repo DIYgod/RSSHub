@@ -75,6 +75,25 @@ describe('config', () => {
         delete process.env.DISCOURSE_CONFIG_34;
     });
 
+    it('lingowhale session', async () => {
+        process.env.LINGOWHALE_SESSION = JSON.stringify({
+            uid: 'uid-1',
+            bId: 'bid-1',
+            authToken: 'auth-1',
+            accessToken: 'access-1',
+        });
+
+        const { config } = await import('./config');
+        expect(config.lingowhale).toMatchObject({
+            uid: 'uid-1',
+            bId: 'bid-1',
+            authToken: 'auth-1',
+            accessToken: 'access-1',
+        });
+
+        delete process.env.LINGOWHALE_SESSION;
+    });
+
     it('no random ua', async () => {
         process.env.NO_RANDOM_UA = '1';
 

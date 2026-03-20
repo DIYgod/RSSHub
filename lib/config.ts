@@ -132,6 +132,10 @@ type ConfigEnvKeys =
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
+    | 'LINGOWHALE_SESSION'
+    | 'LINGOWHALE_ACCESS_TOKEN'
+    | 'LINGOWHALE_AUTH_TOKEN'
+    | 'LINGOWHALE_B_ID'
     | 'SECURITY_KEY'
     | 'LOFTER_COOKIE'
     | 'LORIENTLEJOUR_TOKEN'
@@ -470,6 +474,12 @@ export type Config = {
     lastfm: {
         api_key?: string;
     };
+    lingowhale: {
+        uid?: string;
+        accessToken?: string;
+        authToken?: string;
+        bId?: string;
+    };
     lightnovel: {
         cookie?: string;
     };
@@ -712,6 +722,7 @@ const calculateValue = () => {
     const discuz_cookies: Record<string, string | undefined> = {};
     const medium_cookies: Record<string, string | undefined> = {};
     const discourse_config: Record<string, string | undefined> = {};
+    const lingowhaleSession = envs.LINGOWHALE_SESSION ? JSON.parse(envs.LINGOWHALE_SESSION) : undefined;
 
     for (const name in envs) {
         if (name.startsWith('BILIBILI_COOKIE_')) {
@@ -960,6 +971,12 @@ const calculateValue = () => {
         },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
+        },
+        lingowhale: {
+            uid: lingowhaleSession?.uid,
+            accessToken: lingowhaleSession?.accessToken ?? envs.LINGOWHALE_ACCESS_TOKEN,
+            authToken: lingowhaleSession?.authToken ?? envs.LINGOWHALE_AUTH_TOKEN,
+            bId: lingowhaleSession?.bId ?? envs.LINGOWHALE_B_ID,
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
