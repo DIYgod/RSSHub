@@ -1,6 +1,9 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
+import type { LeaderboardEntry } from './types';
+import { DATA_API } from './types';
+
 export const route: Route = {
     path: '/leaderboard/:category?/:timePeriod?',
     categories: ['finance'],
@@ -25,28 +28,15 @@ export const route: Route = {
     },
     name: 'Leaderboard',
     url: 'polymarket.com',
-    maintainers: ['heki'],
+    maintainers: ['heqi201255'],
     handler,
 };
-
-const API_BASE = 'https://data-api.polymarket.com';
-
-interface LeaderboardEntry {
-    rank: string;
-    proxyWallet: string;
-    userName?: string;
-    vol?: number;
-    pnl?: number;
-    profileImage?: string;
-    xUsername?: string;
-    verifiedBadge?: boolean;
-}
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'OVERALL';
     const timePeriod = ctx.req.param('timePeriod') || 'DAY';
 
-    const data = await ofetch<LeaderboardEntry[]>(`${API_BASE}/v1/leaderboard`, {
+    const data = await ofetch<LeaderboardEntry[]>(`${DATA_API}/v1/leaderboard`, {
         query: {
             category,
             timePeriod,
@@ -56,11 +46,11 @@ async function handler(ctx) {
     });
 
     const items = data.map((entry) => ({
-        title: `#${entry.rank} ${entry.userName || entry.proxyWallet.slice(0, 8) + '...'}`,
+        title: `#${entry.rank} ${entry.userName || entry.proxyWallet}`,
         description: `
             <p><strong>Rank:</strong> #${entry.rank}</p>
-            <p><strong>PnL:</strong> $${Number(entry.pnl || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Volume:</strong> $${Number(entry.vol || 0).toLocaleString()}</p>
+            <p><strong>PnL:</strong> $${Number(entry.pnl).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p><strong>Volume:</strong> $${Number(entry.vol).toLocaleString()}</p>
             ${entry.xUsername ? `<p><strong>X:</strong> @${entry.xUsername}</p>` : ''}
             ${entry.verifiedBadge ? '<p>✅ Verified</p>' : ''}
             ${entry.profileImage ? `<img src="${entry.profileImage}" alt="${entry.userName || 'Trader'}" style="max-width: 100px; border-radius: 50%;">` : ''}

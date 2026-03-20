@@ -2,15 +2,15 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import type { Activity, PublicProfile } from './types';
+import { DATA_API, GAMMA_API } from './types';
+
 export const route: Route = {
     path: '/user/:address',
     categories: ['finance'],
     example: '/polymarket/user/0x7c3db723f1d4d8cb9c550095203b686cb11e5c6b',
     parameters: {
-        address: {
-            description: 'Wallet address (0x...)',
-            required: true,
-        },
+        address: 'Wallet address (0x...)',
     },
     features: {
         requireConfig: false,
@@ -22,38 +22,9 @@ export const route: Route = {
     },
     name: 'User Activity',
     url: 'polymarket.com',
-    maintainers: ['heki'],
+    maintainers: ['heqi201255'],
     handler,
 };
-
-const GAMMA_API = 'https://gamma-api.polymarket.com';
-const DATA_API = 'https://data-api.polymarket.com';
-
-interface Activity {
-    timestamp: number;
-    type: 'TRADE' | 'SPLIT' | 'MERGE' | 'REDEEM' | 'REWARD' | 'CONVERSION' | 'MAKER_REBATE';
-    size?: number;
-    usdcSize?: number;
-    price?: number;
-    side?: 'BUY' | 'SELL';
-    outcomeIndex?: number;
-    title?: string;
-    slug?: string;
-    eventSlug?: string;
-    outcome?: string;
-    icon?: string;
-    transactionHash?: string;
-    name?: string;
-    pseudonym?: string;
-}
-
-interface PublicProfile {
-    name?: string;
-    pseudonym?: string;
-    bio?: string;
-    proxyWallet?: string;
-    profileImage?: string;
-}
 
 async function handler(ctx) {
     const address = ctx.req.param('address');
@@ -83,7 +54,7 @@ async function handler(ctx) {
         // Activity not found, continue with empty array
     }
 
-    const displayName = profile?.name || profile?.pseudonym || activity[0]?.name || activity[0]?.pseudonym || address.slice(0, 8) + '...' + address.slice(-4);
+    const displayName = profile?.name || profile?.pseudonym || address;
 
     const items = activity.map((act) => {
         const typeEmoji: Record<string, string> = {

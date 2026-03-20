@@ -1,15 +1,15 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
+import type { Position, PublicProfile } from './types';
+import { DATA_API, GAMMA_API } from './types';
+
 export const route: Route = {
     path: '/positions/:address',
     categories: ['finance'],
     example: '/polymarket/positions/0x7c3db723f1d4d8cb9c550095203b686cb11e5c6b',
     parameters: {
-        address: {
-            description: 'Wallet address (0x...)',
-            required: true,
-        },
+        address: 'Wallet address (0x...)',
     },
     features: {
         requireConfig: false,
@@ -21,34 +21,9 @@ export const route: Route = {
     },
     name: 'User Positions',
     url: 'polymarket.com',
-    maintainers: ['heki'],
+    maintainers: ['heqi201255'],
     handler,
 };
-
-const DATA_API = 'https://data-api.polymarket.com';
-const GAMMA_API = 'https://gamma-api.polymarket.com';
-
-interface Position {
-    conditionId: string;
-    size: number;
-    avgPrice: number;
-    currentValue: number;
-    cashPnl: number;
-    percentPnl: number;
-    curPrice: number;
-    title?: string;
-    slug?: string;
-    eventSlug?: string;
-    outcome?: string;
-    outcomeIndex?: number;
-    icon?: string;
-    endDate?: string;
-}
-
-interface PublicProfile {
-    name?: string;
-    pseudonym?: string;
-}
 
 async function handler(ctx) {
     const address = ctx.req.param('address');
@@ -78,7 +53,7 @@ async function handler(ctx) {
         // Positions not found, continue with empty array
     }
 
-    const displayName = profile?.name || profile?.pseudonym || address.slice(0, 8) + '...' + address.slice(-4);
+    const displayName = profile?.name || profile?.pseudonym || address;
 
     const items = positions.map((pos) => ({
         title: pos.title || `Position #${pos.conditionId.slice(0, 8)}`,
@@ -89,7 +64,7 @@ async function handler(ctx) {
             <p><strong>Current Price:</strong> $${Number(pos.curPrice).toFixed(4)}</p>
             <p><strong>Current Value:</strong> $${Number(pos.currentValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             <p><strong>PnL:</strong> ${pos.cashPnl >= 0 ? '+' : ''}$${Number(pos.cashPnl).toFixed(2)} (${pos.percentPnl >= 0 ? '+' : ''}${Number(pos.percentPnl).toFixed(1)}%)</p>
-            ${pos.icon ? `<img src="${pos.icon}" alt="${pos.title || 'Position'}" style="max-width: 100%;">` : ''}
+            <img src="${pos.icon}" alt="${pos.title || 'Position'}" style="max-width: 100%;">
         `,
         link: pos.eventSlug ? `https://polymarket.com/event/${pos.eventSlug}` : pos.slug ? `https://polymarket.com/event/${pos.slug}` : 'https://polymarket.com',
         author: displayName,
