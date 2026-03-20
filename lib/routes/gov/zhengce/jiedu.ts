@@ -10,6 +10,7 @@ import timezone from '@/utils/timezone';
 const rootUrl = 'https://www.gov.cn';
 const listUrl = `${rootUrl}/zhengce/jiedu/index.htm`;
 const dataUrl = `${rootUrl}/zhengce/jiedu/ZCJD_QZ.json`;
+const articleLinkPattern = /content_\d+\.htm(?:$|[?#])/;
 
 export const route: Route = {
     path: '/zhengce/jiedu',
@@ -42,44 +43,45 @@ async function handler(ctx) {
 
     const $ = load(listResponse);
     const items = data
-        .slice(0, limit)
         .map((item) => ({
             title: item.TITLE,
             link: item.URL,
-            pubDate: item.DOCRELPUBTIME ? timezone(parseDate(item.DOCRELPUBTIME), 8) : undefined,
         }))
-        .filter((item) => item.link);
+        .filter((item) => item.link && articleLinkPattern.test(item.link))
+        .slice(0, limit);
 
-    const detailItems = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link, { headers: { 'user-agent': config.trueUA } });
-                const content = load(detailResponse);
+    const detailItems = (
+        await Promise.all(
+            items.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    const { data: detailResponse } = await got(item.link, { headers: { 'user-agent': config.trueUA } });
+                    const content = load(detailResponse);
 
-                const title = content('div.share-title').text();
-                const description = content('div.TRS_UEDITOR').first().html() || content('div#UCAP-CONTENT, td#UCAP-CONTENT').first().html();
+                    const published = content('meta[name="firstpublishedtime"]').prop('content');
 
-                if (!description) {
-                    return item;
-                }
+                    if (!published) {
+                        return;
+                    }
 
-                const author = content('meta[name="author"]').prop('content');
-                const keywords = content('meta[name="keywords"]').prop('content')?.split(/;|,/) ?? [];
-                const subject = content('td.zcwj_ztfl').text();
-                const column = content('meta[name="lanmu"]').prop('content');
-                const published = content('meta[name="firstpublishedtime"]').prop('content');
+                    const title = content('div.share-title').text();
+                    const description = content('div.TRS_UEDITOR').first().html() || content('div#UCAP-CONTENT, td#UCAP-CONTENT').first().html();
+                    const author = content('meta[name="author"]').prop('content');
+                    const keywords = content('meta[name="keywords"]').prop('content')?.split(/;|,/) ?? [];
+                    const subject = content('td.zcwj_ztfl').text();
+                    const column = content('meta[name="lanmu"]').prop('content');
 
-                return {
-                    ...item,
-                    title: title || item.title,
-                    description,
-                    author: author || undefined,
-                    category: [...new Set([subject, column, ...keywords].filter(Boolean))],
-                    pubDate: published ? timezone(parseDate(published, 'YYYY-MM-DD-HH:mm:ss'), 8) : item.pubDate,
-                };
-            })
+                    return {
+                        ...item,
+                        title: title || item.title,
+                        description,
+                        author: author || undefined,
+                        category: [...new Set([subject, column, ...keywords].filter(Boolean))],
+                        pubDate: timezone(parseDate(published, 'YYYY-MM-DD-HH:mm:ss'), 8),
+                    };
+                })
+            )
         )
-    );
+    ).filter((item): item is NonNullable<typeof item> => item !== undefined);
 
     const logoPath = $('img.wordlogo').prop('src');
     const iconPath = $('link[rel="shortcut icon"]').prop('href') || $('link[rel="icon"]').prop('href');
