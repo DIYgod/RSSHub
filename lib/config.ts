@@ -127,6 +127,7 @@ type ConfigEnvKeys =
     | 'IG_COOKIE'
     | 'IWARA_USERNAME'
     | 'IWARA_PASSWORD'
+    | 'JIKE_REFRESH_TOKEN'
     | 'JAVDB_SESSION'
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
@@ -453,6 +454,9 @@ export type Config = {
     iwara: {
         username?: string;
         password?: string;
+    };
+    jike: {
+        refresh_token?: string;
     };
     javdb: {
         session?: string;
@@ -941,6 +945,9 @@ const calculateValue = () => {
         iwara: {
             username: envs.IWARA_USERNAME,
             password: envs.IWARA_PASSWORD,
+        },
+        jike: {
+            refresh_token: envs.JIKE_REFRESH_TOKEN,
         },
         javdb: {
             session: envs.JAVDB_SESSION,

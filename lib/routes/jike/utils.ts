@@ -6,6 +6,124 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const videoAPI = 'https://api.ruguoapp.com/1.0/mediaMeta/play?type=ORIGINAL_POST';
+const refreshTokenAPI = 'https://api.ruguoapp.com/app_auth_tokens.refresh';
+const topicFeedAPI = 'https://api.ruguoapp.com/1.0/topics/tabs/selected/feed';
+const topicFeedPageSize = 20;
+const jikeRefreshTokenCacheKey = 'JIKE_REFRESH_TOKEN';
+
+const hydrateTopicPosts = async (posts) =>
+    await Promise.all(
+        posts.map(async (item) => {
+            if (!item.video) {
+                return item;
+            }
+
+            const videoUrl = `${videoAPI}&id=${item.id}`;
+            const videoRes = await got(videoUrl);
+
+            return {
+                ...item,
+                video: videoRes.data,
+            };
+        })
+    );
+
+const mergeTopicPosts = (initialPosts, expandedPosts) => {
+    const seen = new Set();
+
+    return [...initialPosts, ...expandedPosts].filter((item) => {
+        if (!item?.id || seen.has(item.id)) {
+            return false;
+        }
+
+        seen.add(item.id);
+        return true;
+    });
+};
+
+const getJikeRefreshToken = async () => (await cache.get(jikeRefreshTokenCacheKey)) || config.jike.refresh_token;
+
+const getJikeAccessToken = async () => {
+    const refreshToken = await getJikeRefreshToken();
+    if (!refreshToken) {
+        return;
+    }
+
+    const { data } = await got.post(refreshTokenAPI, {
+        headers: {
+            'User-Agent': config.trueUA,
+            'x-jike-refresh-token': refreshToken,
+        },
+    });
+
+    if (data?.['x-jike-refresh-token']) {
+        cache.set(jikeRefreshTokenCacheKey, data['x-jike-refresh-token']);
+    }
+
+    return data?.['x-jike-access-token'];
+};
+
+const fetchExpandedTopicPosts = async (topicId, accessToken, loadMoreKey) => {
+    const { data } = await got.post(topicFeedAPI, {
+        json: {
+            limit: topicFeedPageSize,
+            loadMoreKey,
+            topicId,
+        },
+        searchParams: {
+            tab: 'selected',
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            Origin: 'https://web.okjike.com',
+            Referer: `https://web.okjike.com/topic/${topicId}`,
+            'User-Agent': config.trueUA,
+            'x-jike-access-token': accessToken,
+        },
+    });
+
+    return {
+        data: await hydrateTopicPosts(data?.data ?? []),
+        loadMoreKey: data?.loadMoreKey,
+    };
+};
+
+const collectExpandedTopicPosts = async (topicId, accessToken, limit, loadMoreKey, expandedPosts = []) => {
+    if (expandedPosts.length >= limit) {
+        return expandedPosts;
+    }
+
+    const page = await fetchExpandedTopicPosts(topicId, accessToken, loadMoreKey);
+    if (page.data.length === 0) {
+        return expandedPosts;
+    }
+
+    const mergedPosts = mergeTopicPosts(expandedPosts, page.data);
+    if (!page.loadMoreKey || page.loadMoreKey === loadMoreKey) {
+        return mergedPosts;
+    }
+
+    return collectExpandedTopicPosts(topicId, accessToken, limit, page.loadMoreKey, mergedPosts);
+};
+
+const getExpandedTopicPosts = async (topicId, initialPosts, limit) => {
+    if (limit <= initialPosts.length) {
+        return initialPosts;
+    }
+
+    try {
+        const accessToken = await getJikeAccessToken();
+        if (!accessToken) {
+            return initialPosts;
+        }
+
+        const expandedPosts = await collectExpandedTopicPosts(topicId, accessToken, limit);
+        return mergeTopicPosts(initialPosts, expandedPosts);
+    } catch {
+        return initialPosts;
+    }
+};
+
 const topicDataHanding = (data, ctx) =>
     data.posts.map((item) => {
         let audioName, videoName, linkName;
@@ -155,19 +273,7 @@ const constructTopicEntry = async (ctx, url) => {
             const $ = load(html);
             const raw = $('[type = "application/json"]').html();
             const data = JSON.parse(raw).props.pageProps;
-            data.posts = await Promise.all(
-                data.posts.map(async (item) => {
-                    if (!item.video) {
-                        return item;
-                    }
-
-                    const videoUrl = `${videoAPI}&id=${item.id}`;
-                    const videoRes = await got(videoUrl);
-                    item.video = videoRes.data;
-
-                    return item;
-                })
-            );
+            data.posts = await hydrateTopicPosts(data.posts);
 
             return data;
         },
@@ -175,7 +281,7 @@ const constructTopicEntry = async (ctx, url) => {
         false
     );
 
-    if (data.length === 0) {
+    if (!data.posts?.length) {
         return {
             title: '主题 ID 不存在，或该主题暂无内容',
         };
@@ -194,4 +300,4 @@ const constructTopicEntry = async (ctx, url) => {
     return data;
 };
 
-export { constructTopicEntry, topicDataHanding };
+export { constructTopicEntry, getExpandedTopicPosts, topicDataHanding };

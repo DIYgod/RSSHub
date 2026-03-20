@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { constructTopicEntry, topicDataHanding } from './utils';
+import { constructTopicEntry, getExpandedTopicPosts, topicDataHanding } from './utils';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 
@@ -15,6 +15,7 @@ export const route: Route = {
     categories: ['social-media'],
     view: ViewType.SocialMedia,
     example: '/jike/topic/556688fae4b00c57d9dd46ee',
+    description: '公开源默认返回圈子页首屏内容。配置 `JIKE_REFRESH_TOKEN` 后，通用参数 `limit` 可继续抓取更多精选帖子。',
     parameters: {
         id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到',
         showUid: {
@@ -52,6 +53,12 @@ async function handler(ctx) {
     const data = await constructTopicEntry(ctx, topicUrl);
 
     if (data) {
+        const limit = Number.parseInt(ctx.req.query('limit') ?? '', 10);
+        if (!Number.isNaN(limit) && limit > 0) {
+            data.posts = await getExpandedTopicPosts(id, data.posts, limit);
+            data.posts = data.posts.slice(0, limit);
+        }
+
         const result = data.result;
         result.item = topicDataHanding(data, ctx);
         if (id === '553870e8e4b0cafb0a1bef68' || id === '55963702e4b0d84d2c30ce6f') {
