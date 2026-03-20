@@ -8,6 +8,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://nautil.us';
+const apiUrl = 'https://lede-admin.nautil.us';
 
 export const route: Route = {
     path: '/topic/:tid',
@@ -35,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categoryIdMap = await cache.tryGet('nautil:categories', async () => {
-        const { data } = await got(`${baseUrl}/wp-json/wp/v2/categories`, {
+        const { data } = await got(`${apiUrl}/wp-json/wp/v2/categories`, {
             searchParams: {
                 per_page: 100,
             },
@@ -47,7 +48,7 @@ async function handler(ctx) {
         }));
     });
 
-    const { data: list } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
+    const { data: list } = await got(`${apiUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             categories: categoryIdMap.find((item) => item.slug === ctx.req.param('tid').toLowerCase()).id,
             per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
