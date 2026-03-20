@@ -13281,10 +13281,33 @@
         "title": "Blog",
         "docs": "https://docs.rsshub.app/routes/blog",
         "source": [
-          "/blog",
+          "/blog"
+        ],
+        "target": "/cursor/blog"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
           "/blog/topic/:topic"
         ],
         "target": "/cursor/blog/:topic"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/:locale/blog"
+        ],
+        "target": "/cursor/blog/all/:locale"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/:locale/blog/topic/:topic"
+        ],
+        "target": "/cursor/blog/:topic/:locale"
       },
       {
         "title": "Changelog",
@@ -13293,6 +13316,14 @@
           "/changelog"
         ],
         "target": "/cursor/changelog"
+      },
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:locale/changelog"
+        ],
+        "target": "/cursor/changelog/:locale"
       }
     ]
   },

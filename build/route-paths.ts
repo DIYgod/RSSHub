@@ -692,8 +692,8 @@ export type RoutePath =
   | `/cupl/jwc`
   | `/curiouscat/user/:id`
   | `/curius/links/:name`
-  | `/cursor/blog/:topic?`
-  | `/cursor/changelog`
+  | `/cursor/blog/:topic?/:locale?`
+  | `/cursor/changelog/:locale?`
   | `/cw/author/:channel`
   | `/cw/master/:channel`
   | `/cw/sub/:channel`
