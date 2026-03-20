@@ -136,40 +136,8 @@ async function handler(ctx: Context) {
 
                 $content('script, style, noscript').remove();
 
-                let description: string | undefined;
-                const contentArea = $content('[data-framer-name="Content"]');
-                if (contentArea.length) {
-                    const contentParts: string[] = [];
-                    const seenText = new Set<string>();
-
-                    contentArea.find('h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure, pre').each((_, el) => {
-                        const $el = $content(el);
-                        const text = $el.text().trim();
-                        if (!text || seenText.has(text)) {
-                            return;
-                        }
-
-                        if (text === 'Written by' || text === 'Published on' || text === 'Perplexity Team') {
-                            return;
-                        }
-
-                        if ($el.find('time').length > 0) {
-                            return;
-                        }
-
-                        // Stop before sharing/footer section
-                        if (/^Share this (article|post)$/i.test(text)) {
-                            return false;
-                        }
-
-                        seenText.add(text);
-                        contentParts.push(text);
-                    });
-
-                    if (contentParts.length > 0) {
-                        description = contentParts.join('\n');
-                    }
-                }
+                const contentArea = $content('[data-framer-name="Content"]').first();
+                const description = contentArea.length ? (contentArea.html() ?? undefined) : undefined;
 
                 return {
                     ...item,
