@@ -103,7 +103,6 @@ export const getData = async (list) => {
                         if (cleanImageUrl.endsWith('.jpg') || cleanImageUrl.endsWith('.jpeg')) {
                             item.enclosure_type = 'image/jpeg';
                         }
-                        
                         item.image = imageUrl;
                     }
 
