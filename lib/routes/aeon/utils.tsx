@@ -95,6 +95,16 @@ export const getData = async (list) => {
                         delete item.image;
                         item.enclosure_url = data.audioUrl;
                         item.enclosure_type = 'audio/mpeg';
+                    } else if (data.image?.url) {
+                        const imageUrl = data.image.url;
+                        const cleanImageUrl = imageUrl.split('?')[0].toLowerCase();
+
+                        item.enclosure_url = imageUrl;
+                        if (cleanImageUrl.endsWith('.jpg') || cleanImageUrl.endsWith('.jpeg')) {
+                            item.enclosure_type = 'image/jpeg';
+                        }
+                        
+                        item.image = imageUrl;
                     }
 
                     const capture = load(data.body, null, false);
