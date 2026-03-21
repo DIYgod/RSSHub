@@ -9,7 +9,7 @@ const apiRoot = `${baseUrl}/wp-json/wp/v2`;
 
 export const route: Route = {
     path: '/blog',
-    categories: ['security'],
+    categories: ['programming'],
     example: '/ctfiot/blog',
     parameters: {},
     features: {
@@ -35,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 20;
-    const { data: posts } = await got<WPPost[]>(`${apiRoot}/posts`, {
+    const { data: posts } = await got(`${apiRoot}/posts`, {
         searchParams: {
             per_page: limit,
             _embed: 'wp:term',
