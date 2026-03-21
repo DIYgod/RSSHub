@@ -46,6 +46,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
+                content('[style]').removeAttr('style');
                 item.description = content('.menu-article').html();
 
                 return item;

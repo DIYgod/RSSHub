@@ -78,6 +78,7 @@ async function handler(ctx) {
 
                 content('.more-bt').remove();
 
+                content('[style]').removeAttr('style');
                 item.description = content('.main-content-wrapper').html();
 
                 return item;
