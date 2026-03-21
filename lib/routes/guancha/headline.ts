@@ -63,6 +63,7 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
+                content('[style]').removeAttr('style');
                 item.description += content('.all-txt').html();
 
                 return item;

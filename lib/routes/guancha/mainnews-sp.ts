@@ -63,7 +63,7 @@ function extractItems(html: string) {
                 author: titleElement.closest('.tsp-list1-box-type1').find('.tsp-list1-name').text() || undefined,
             };
         })
-        .filter((item): item is Item => !!item);
+        .filter((item): item is NonNullable<typeof item> => !!item);
 
     const reviewItems = $('.tsp-list2-box')
         .toArray()
@@ -83,7 +83,7 @@ function extractItems(html: string) {
                 pubDate: parseListPubDate(itemElement.find('.tsp-list2-review span').last().text()),
             };
         })
-        .filter((item): item is Item => !!item);
+        .filter((item): item is NonNullable<typeof item> => !!item);
 
     return dedupeItems([...featuredItems, ...reviewItems]);
 }
@@ -107,6 +107,7 @@ async function getArticle(item: Item) {
 
     const $ = load(detailResponse.data);
     const dateMatch = detailResponse.data.match(/"pubDate":\s*"(.*)"/);
+    $('[style]').removeAttr('style');
     const dateText = $('.time.fix span').first().text();
     const relativeDateText = $('.time1').text();
     const category = $('.key-word a')

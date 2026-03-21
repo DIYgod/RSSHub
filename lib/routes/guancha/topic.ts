@@ -56,6 +56,7 @@ async function handler(ctx) {
 
                 item.pubDate = parseRelativeDate(content('.time1').text());
                 item.author = content('.user-main h4 a').first().text();
+                content('[style]').removeAttr('style');
                 item.description = content('.article-txt-content').html();
 
                 return item;

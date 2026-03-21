@@ -176,6 +176,7 @@ async function handler(ctx) {
                         : timezone(parseDate(dateMatch[1]), +8);
 
                 item.description = content('.all-txt').html() || content('.article-txt-content').html();
+                content('[style]').removeAttr('style');
                 item.author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
                 return item;
             })
