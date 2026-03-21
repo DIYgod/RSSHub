@@ -1,5 +1,6 @@
-import type { Cheerio, Element } from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import pMap from 'p-map';
 
 import { config } from '@/config';

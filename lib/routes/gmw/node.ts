@@ -1,10 +1,11 @@
-import type { Cheerio, Element } from 'cheerio';
+import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import pMap from 'p-map';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -113,29 +114,68 @@ const parseCommentaryList = ($: ReturnType<typeof load>, currentUrl: string, cat
           ]
         : [];
 
+    // Also extract extend_box articles from the lead block
+    const leadExtendItems = leadBlock
+        .find('.extend_box1 span, .extend_box2 span')
+        .toArray()
+        .map((span) => {
+            const inner = $(span).find('a').last();
+            const extHref = inner.attr('href');
+            const extTitle = normalizeText(inner.text());
+            if (!extHref) {
+                return null;
+            }
+            return {
+                ...(extTitle ? { title: extTitle } : {}),
+                link: new URL(extHref, currentUrl).href,
+                category,
+            } as ListItem;
+        })
+        .filter((i): i is ListItem => i !== null);
+
     const listItems = $('.content_left_main li')
         .toArray()
-        .map((element) => {
+        .flatMap((element) => {
             const item = $(element);
             const linkElement = item.find('.main_title > a[href*="content_"]').first();
             const href = linkElement.attr('href');
             const title = normalizeText(linkElement.text());
             const pubDate = normalizeText(item.find('.reading_right').first().text()).replace(/^发布时间[:：]\s*/, '');
 
-            if (!href) {
-                return null;
-            }
+            const mainItem: ListItem | null = href
+                ? {
+                      ...(title ? { title } : {}),
+                      link: new URL(href, currentUrl).href,
+                      ...(pubDate ? { pubDate } : {}),
+                      category,
+                  }
+                : null;
 
-            return {
-                ...(title ? { title } : {}),
-                link: new URL(href, currentUrl).href,
-                ...(pubDate ? { pubDate } : {}),
-                category,
-            };
-        })
-        .filter((item): item is ListItem => item !== null);
+            // Each li contains extend_box1/2 and reading_left with related articles.
+            // HTML parsers auto-close <a> before nesting another <a>, so Cheerio
+            // produces two sibling <a> tags per span/block; the last one is the real link.
+            const extendItems = [...item.find('.extend_box1 span, .extend_box2 span').toArray(), ...item.find('.reading_left').toArray()]
+                .map((el) => {
+                    const inner = $(el).find('a').last();
+                    const extHref = inner.attr('href');
+                    const extTitle = normalizeText(inner.text());
 
-    return [...leadItems, ...listItems];
+                    if (!extHref || extHref === 'ArticleUrlPh') {
+                        return null;
+                    }
+
+                    return {
+                        ...(extTitle ? { title: extTitle } : {}),
+                        link: new URL(extHref, currentUrl).href,
+                        category,
+                    } as ListItem;
+                })
+                .filter((i): i is ListItem => i !== null);
+
+            return [...(mainItem ? [mainItem] : []), ...extendItems];
+        });
+
+    return [...leadItems, ...leadExtendItems, ...listItems];
 };
 
 const dedupeItems = (items: ListItem[]) => {
@@ -160,9 +200,14 @@ const parseListPage = (html: string, currentUrl: string) => {
     const items =
         $('.content_left_main .main_title > a[href*="content_"]').length > 0 || $('.content_left .select > a[href*="content_"]').length > 0 ? parseCommentaryList($, currentUrl, category) : parseStandardList($, currentUrl, category);
 
+    // Resolve the next-page link from the pagination bar (unquoted href, e.g. node_11273_2.htm)
+    const nextHref = $('#displaypagenum a[href]').first().attr('href');
+    const nextPageUrl = nextHref ? new URL(nextHref, currentUrl).href : undefined;
+
     return {
         feedTitle,
         items: dedupeItems(items),
+        nextPageUrl,
     };
 };
 
@@ -225,7 +270,7 @@ const parsePubDate = (dateText?: string) => {
         return;
     }
 
-    return timezone(parseDate(dateText, dateText.includes(':') ? undefined : 'YYYY-MM-DD'), +8);
+    return timezone(dateText.includes(':') ? parseDate(dateText) : parseDate(dateText, 'YYYY-MM-DD'), +8);
 };
 
 const extractDetail = (html: string, link: string, fallbackItem: ListItem) => {
@@ -257,7 +302,7 @@ const extractDetail = (html: string, link: string, fallbackItem: ListItem) => {
     };
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { subdomain, nodeId } = ctx.req.param();
 
     if (!supportedSubdomainSet.has(subdomain)) {
@@ -270,7 +315,13 @@ async function handler(ctx: Context) {
 
     const listUrl = getListUrl(subdomain, nodeId);
     const listHtml = await fetchPage(listUrl);
-    const { feedTitle, items } = parseListPage(listHtml, listUrl);
+    const { feedTitle, items: page1Items, nextPageUrl } = parseListPage(listHtml, listUrl);
+
+    // Fetch page 2 when a next-page link is present, to avoid missing articles
+    // between polling intervals on paginated list pages.
+    const page2Items = nextPageUrl ? await fetchPage(nextPageUrl).then((html) => parseListPage(html, nextPageUrl).items) : [];
+
+    const items = dedupeItems([...page1Items, ...page2Items]);
 
     if (items.length === 0) {
         throw new Error(`未在 ${listUrl} 找到文章列表，可能是节点不存在或模板暂未支持。`);
@@ -309,19 +360,19 @@ export const route: Route = {
     radar: [
         {
             source: ['legal.gmw.cn/node_:nodeId.htm'],
-            target: '/legal/:nodeId',
+            target: '/gmw/legal/:nodeId',
         },
         {
             source: ['news.gmw.cn/node_:nodeId.htm'],
-            target: '/news/:nodeId',
+            target: '/gmw/news/:nodeId',
         },
         {
             source: ['theory.gmw.cn/node_:nodeId.htm'],
-            target: '/theory/:nodeId',
+            target: '/gmw/theory/:nodeId',
         },
         {
             source: ['guancha.gmw.cn/node_:nodeId.htm'],
-            target: '/guancha/:nodeId',
+            target: '/gmw/guancha/:nodeId',
         },
     ],
     name: '栏目列表',
