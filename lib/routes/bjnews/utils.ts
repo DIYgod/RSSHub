@@ -13,6 +13,7 @@ export function fetchArticle(item) {
 
         item.pubDate = timezone(parseDate($d('.left-info .timer').text()), +8);
         item.author = $d('.left-info .reporter').text();
+        $d('#contentStr [style]').removeAttr('style');
         item.description = $d('#contentStr').html();
 
         return item;

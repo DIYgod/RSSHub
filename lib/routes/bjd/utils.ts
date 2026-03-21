@@ -166,7 +166,7 @@ const parseIssuePage = (html: string, issueUrl: string, issue: string): Edition[
                 articles,
             };
         })
-        .filter((edition): edition is Edition => edition !== null && edition.articles.length > 0);
+        .filter((edition): edition is NonNullable<typeof edition> => edition !== null && edition.articles.length > 0);
 };
 
 const extractAuthor = (authorText: string, paperName: string) => {
@@ -186,6 +186,8 @@ const extractDetail = (html: string, baseUrl: string, fallbackTitle: string, iss
     const content = $('#content').first();
 
     content.find('script, style').remove();
+
+    content.find('[style]').removeAttr('style');
 
     content.find('img').each((_, element) => {
         const item = $(element);

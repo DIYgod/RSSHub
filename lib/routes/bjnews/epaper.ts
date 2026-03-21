@@ -76,6 +76,7 @@ function fetchArticleDetail(item: EpaperListItem) {
         });
         const $ = load(response);
         const content = $('.article-detail .content').first();
+        content.find('[style]').removeAttr('style');
         const description = content.length ? content.html() : item.fallbackContent;
 
         return {
