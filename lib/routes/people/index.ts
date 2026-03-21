@@ -17,6 +17,15 @@ export const route: Route = {
     handler,
 };
 
+const fixImages = (ctx: ReturnType<typeof load>, base: string) => {
+    ctx('img').each((_, el) => {
+        const src = ctx(el).attr('src');
+        if (src && !src.startsWith('http')) {
+            ctx(el).attr('src', new URL(src, base).href);
+        }
+    });
+};
+
 async function handler(ctx) {
     const { site = 'www' } = ctx.req.param();
     let { category = site === 'www' ? '59476' : '' } = ctx.req.param();
@@ -72,11 +81,49 @@ async function handler(ctx) {
                     });
 
                     const data = iconv.decode(Buffer.from(detailResponse), encoding);
-                    const content = load(data);
+                    const page1 = load(data);
 
-                    content('.paper_num, #rwb_tjyd').remove();
+                    // Collect sub-page links from pagination bar before removing it
+                    const itemBaseUrl = new URL(item.link);
+                    const subPageLinks = page1('.zdfy a')
+                        .toArray()
+                        .map((a) => {
+                            const href = page1(a).attr('href')?.trim();
+                            if (!href) {
+                                return null;
+                            }
+                            return href.startsWith('http') ? href : new URL(href, itemBaseUrl).href;
+                        })
+                        .filter((href): href is string => Boolean(href) && href !== item.link);
 
-                    item.description = content('#rwb_zw').html();
+                    fixImages(page1, item.link);
+                    page1('.paper_num, #rwb_tjyd, .zdfy, center').remove();
+                    // Remove empty box_pic divs only
+                    page1('.box_pic').each((_, el) => {
+                        if (!page1(el).find('img').length) {
+                            page1(el).remove();
+                        }
+                    });
+                    const htmlParts = [page1('#rwb_zw, #rm_txt_zw').html() ?? ''];
+
+                    // Fetch and append remaining sub-pages in parallel
+                    const subHtmlParts = await Promise.all(
+                        subPageLinks.map(async (subUrl) => {
+                            const subData = iconv.decode(Buffer.from(await ofetch(subUrl, { responseType: 'arrayBuffer' })), encoding);
+                            const subPage = load(subData);
+                            fixImages(subPage, subUrl);
+                            subPage('.paper_num, #rwb_tjyd, .zdfy, center').remove();
+                            subPage('.box_pic').each((_, el) => {
+                                if (!subPage(el).find('img').length) {
+                                    subPage(el).remove();
+                                }
+                            });
+                            return subPage('#rwb_zw, #rm_txt_zw').html() ?? '';
+                        })
+                    );
+                    htmlParts.push(...subHtmlParts);
+
+                    item.description = htmlParts.join('');
                     item.pubDate = timezone(parseDate(data.match(/(\d{4}年\d{2}月\d{2}日\d{2}:\d{2})/)?.[1] || '', 'YYYY年MM月DD日 HH:mm'), +8);
                 } catch (error) {
                     item.description = String(error);
