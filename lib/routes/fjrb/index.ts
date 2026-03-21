@@ -17,10 +17,11 @@ const getDescription = (html: string | null | undefined) => {
     }
 
     const $ = load(cleaned);
+    $('img, video, audio, source').removeAttr('referrerpolicy');
     const hasText = $.text().replaceAll(/\s+/g, '').length > 0;
     const hasMedia = $('img, video, audio, source').length > 0;
 
-    return hasText || hasMedia ? cleaned : undefined;
+    return hasText || hasMedia ? $.html() : undefined;
 };
 
 const getAttachmentDescription = ($: CheerioAPI) => getDescription($('.attachment').html());
@@ -36,16 +37,6 @@ const mergeDescription = (mainDescription: string | undefined, attachmentDescrip
 
     const main = load(mainDescription);
     const attachment = load(attachmentDescription);
-    const attachmentMedia = attachment('img, video, audio, source')
-        .toArray()
-        .map((item) => attachment.html(item))
-        .filter(Boolean)
-        .join('');
-
-    if (!attachmentMedia) {
-        return mainDescription;
-    }
-
     const mainMediaSources = new Set(
         main('img, video, audio, source')
             .toArray()
@@ -66,19 +57,43 @@ const mergeDescription = (mainDescription: string | undefined, attachmentDescrip
     return newMedia ? `${newMedia}${mainDescription}` : mainDescription;
 };
 
-const getPageLabel = ($: CheerioAPI, pageId: string) => {
-    const pageLink = $('#list a')
-        .toArray()
-        .find((item) => $(item).attr('href')?.includes(`node_${pageId}.html`));
+const getIssueDate = async (date: string | undefined) => {
+    if (date) {
+        if (!/^\d{8}$/.test(date)) {
+            throw new Error('Invalid date format. Expected YYYYMMDD, for example `20260316`.');
+        }
 
-    return pageLink ? $(pageLink).text().replaceAll(/\s+/g, ' ').trim() : `第${pageId}版`;
+        return {
+            yearMonth: date.slice(0, 6),
+            day: date.slice(6, 8),
+        };
+    }
+
+    const indexResponse = await got(`${rootUrl}/pc/col/index.html`);
+    const $ = load(indexResponse.data);
+    const latestPath = $('#list li:first-child a').attr('href');
+
+    if (!latestPath) {
+        throw new Error('Failed to locate the latest Fujian Daily edition.');
+    }
+
+    const [, yearMonth, day] = latestPath.match(/(\d{6})\/(\d{2})\/node_\d+\.html/) ?? [];
+
+    if (!yearMonth || !day) {
+        throw new Error('Failed to parse the latest Fujian Daily edition date.');
+    }
+
+    return {
+        yearMonth,
+        day,
+    };
 };
 
 export const route: Route = {
-    path: '/:id?',
+    path: '/:date?',
     categories: ['traditional-media'],
-    example: '/fjrb',
-    parameters: { id: '版次，留空为当天全部版面，例如 `01`、`02`' },
+    example: '/fjrb/20260316',
+    parameters: { date: '日期，格式为 `YYYYMMDD`，留空时抓取当天全部版面，例如 `20260316`' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -94,43 +109,19 @@ export const route: Route = {
         },
         {
             source: ['fjrb.fjdaily.com/pc/col/:yearmonth/:day/node_:id.html'],
-            target: '/:id',
         },
     ],
     name: '电子报',
     maintainers: ['nczitzk'],
     handler,
-    description: `| 版次 | 栏目 |
-| ---- | ---- |
-| 01   | 要闻 |
-| 02   | 要闻 |
-| 03   | 经济 |
-| 04   | 社会 |
-| 05   | 教育/文化 |
-| 06   | 时事 |
-| 07   | 理论周刊·求是 |
-| 08   | 深读 |`,
+    description: '留空时抓取最新一期全部版面，也可以通过日期参数抓取指定日期的全部版面内容。',
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id')?.padStart(2, '0');
-
-    const indexResponse = await got(`${rootUrl}/pc/col/index.html`);
-    const $ = load(indexResponse.data);
-
-    const latestPath = $('#list li:first-child a').attr('href');
-    if (!latestPath) {
-        throw new Error('Failed to locate the latest Fujian Daily edition.');
-    }
-
-    const [, yearMonth, day] = latestPath.match(/(\d{6})\/(\d{2})\/node_\d+\.html/) ?? [];
-    if (!yearMonth || !day) {
-        throw new Error('Failed to parse the latest Fujian Daily edition date.');
-    }
-
-    const pageId = id ?? '01';
-    const padUrl = `${rootUrl}/pad/col/${yearMonth}/${day}/node_${pageId}.html`;
-    const pageUrl = id ? `${rootUrl}/pc/col/${yearMonth}/${day}/node_${pageId}.html` : `${rootUrl}/pc/col/index.html`;
+    const date = ctx.req.param('date');
+    const { yearMonth, day } = await getIssueDate(date);
+    const padUrl = `${rootUrl}/pad/col/${yearMonth}/${day}/node_01.html`;
+    const pageUrl = `${rootUrl}/pc/col/${yearMonth}/${day}/node_01.html`;
 
     const pageResponse = await got(padUrl);
     const content = load(pageResponse.data);
@@ -151,17 +142,15 @@ async function handler(ctx) {
             return;
         }
 
-        if (!id || currentCategory.startsWith(pageId)) {
-            list.push({
-                title: a.text().trim(),
-                link: new URL(href, padUrl).toString().replace('/pad/', '/pc/'),
-                category: [currentCategory.replace(/^\d+版\s*/, '')],
-            });
-        }
+        list.push({
+            title: a.text().replaceAll(/\s+/g, ' ').trim(),
+            link: new URL(href, padUrl).toString().replace('/pad/', '/pc/'),
+            category: [currentCategory.replace(/^\d+版\s*/, '')],
+        });
     });
 
-    if (id && list.length === 0) {
-        throw new Error(`Edition ${pageId} was not found in the latest Fujian Daily issue.`);
+    if (list.length === 0) {
+        throw new Error(`No articles were found for ${yearMonth}${day}.`);
     }
 
     const items = await Promise.all(
@@ -186,7 +175,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `福建日报${id ? ` - ${getPageLabel($, pageId)}` : ''}`,
+        title: `福建日报 - ${yearMonth.slice(0, 4)}-${yearMonth.slice(4, 6)}-${day}`,
         link: pageUrl,
         item: items,
     };
