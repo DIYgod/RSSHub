@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const rootUrl = 'https://fjrb.fjdaily.com';
+const ROOT_URL = 'https://fjrb.fjdaily.com';
 
 const getDescription = (html: string | null | undefined) => {
     const cleaned = html?.replaceAll(/<!--[\s\S]*?-->/g, '').trim();
@@ -69,7 +69,7 @@ const getIssueDate = async (date: string | undefined) => {
         };
     }
 
-    const indexResponse = await got(`${rootUrl}/pc/col/index.html`);
+    const indexResponse = await got(`${ROOT_URL}/pc/col/index.html`);
     const $ = load(indexResponse.data);
     const latestPath = $('#list li:first-child a').attr('href');
 
@@ -120,8 +120,8 @@ export const route: Route = {
 async function handler(ctx) {
     const date = ctx.req.param('date');
     const { yearMonth, day } = await getIssueDate(date);
-    const padUrl = `${rootUrl}/pad/col/${yearMonth}/${day}/node_01.html`;
-    const pageUrl = `${rootUrl}/pc/col/${yearMonth}/${day}/node_01.html`;
+    const padUrl = `${ROOT_URL}/pad/col/${yearMonth}/${day}/node_01.html`;
+    const pageUrl = `${ROOT_URL}/pc/col/${yearMonth}/${day}/node_01.html`;
 
     const pageResponse = await got(padUrl);
     const content = load(pageResponse.data);
