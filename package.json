@@ -176,7 +176,7 @@
         "@vitest/coverage-v8": "4.0.9",
         "discord-api-types": "0.38.42",
         "domhandler": "6.0.1",
-        "eslint": "10.0.3",
+        "eslint": "10.1.0",
         "eslint-nibble": "9.1.1",
         "eslint-plugin-import-x": "4.16.2",
         "eslint-plugin-n": "17.24.0",
