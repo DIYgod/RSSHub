@@ -568,15 +568,17 @@ class PageParsers {
 }
 
 const redirectHelper = async (url: string, maxRedirects: number = 5) => {
-    maxRedirects--;
-    const raw = await ofetch.raw(url);
+    const raw = await ofetch.raw(url, {
+        redirect: 'manual',
+    });
     if ([301, 302, 303, 307, 308].includes(raw.status)) {
-        if (!raw.headers.has('location')) {
+        const location = raw.headers.get('location');
+        if (!location) {
             error('redirect without location', url);
-        } else if (maxRedirects <= 0) {
+        } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(raw.headers.get('location') as string, maxRedirects);
+        return await redirectHelper(new URL(location, url).toString(), maxRedirects - 1);
     }
     return raw;
 };
