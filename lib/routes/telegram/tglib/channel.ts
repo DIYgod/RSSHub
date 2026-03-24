@@ -35,6 +35,26 @@ export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     return txt;
 }
 
+export function withSearchParams(src: string, params: Record<string, string>) {
+    const url = new URL(src);
+    for (const [key, value] of Object.entries(params)) {
+        url.searchParams.set(key, value);
+    }
+    return url.toString();
+}
+
+export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number) {
+    const request = new URL(requestUrl);
+    const url = new URL(`/telegram/media/${username}/${messageId}`, request.origin);
+    for (const key of ['key', 'code']) {
+        const value = request.searchParams.get(key);
+        if (value) {
+            url.searchParams.set(key, value);
+        }
+    }
+    return url.toString();
+}
+
 export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
     const doc = getDocument(m);
     const mime = doc ? doc.mimeType : '';
@@ -44,7 +64,7 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
     }
     if (doc && mime.startsWith('video/')) {
         const vid = (doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 }) as { w: number; h: number };
-        return `<video controls preload="metadata" poster="${src}?thumb" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
+        return `<video controls preload="metadata" poster="${withSearchParams(src, { thumb: '' })}" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
     }
     if (doc && mime.startsWith('audio/')) {
         return `<div>${getAudioTitle(m)}</div><div><audio src="${src}"></audio></div>`;
@@ -56,7 +76,7 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
             linkText = ''; // remove filename, it's only an animated sticker
         }
         if ((doc.thumbs?.length ?? 0) > 0) {
-            linkText = `<div><img src="${src}?thumb" alt=""/></div><div>${linkText}</div>`;
+            linkText = `<div><img src="${withSearchParams(src, { thumb: '' })}" alt=""/></div><div>${linkText}</div>`;
         }
         return `<a href="${src}" target="_blank">${linkText}</a>`;
     }
@@ -155,7 +175,7 @@ export default async function handler(ctx: Context) {
             }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = `${new URL(ctx.req.url).origin}/telegram/media/${username}/${message.id}`;
+            const src = getMessageMediaUrl(ctx.req.url, username, message.id);
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
