@@ -289,7 +289,7 @@ Unknown paragraph
     }),
     http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
 );
-server.listen();
+server.listen({ onUnhandledRequest: 'bypass' });
 
 afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
