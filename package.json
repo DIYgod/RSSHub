@@ -169,7 +169,6 @@
         "@types/module-alias": "2.0.4",
         "@types/node": "25.5.0",
         "@types/sanitize-html": "2.16.1",
-        "@types/supertest": "7.2.0",
         "@typescript-eslint/eslint-plugin": "8.57.2",
         "@typescript-eslint/parser": "8.57.2",
         "@vercel/nft": "1.5.0",
@@ -191,13 +190,12 @@
         "lint-staged": "16.4.0",
         "magic-string": "0.30.21",
         "mockdate": "3.0.5",
-        "msw": "2.4.3",
+        "msw": "2.12.14",
         "node-network-devtools": "1.0.29",
         "oxfmt": "0.41.0",
         "oxlint": "1.56.0",
         "oxlint-tsgolint": "0.17.2",
         "remark-parse": "11.0.0",
-        "supertest": "7.2.2",
         "tsdown": "0.21.4",
         "typescript": "5.9.3",
         "unified": "11.0.5",
@@ -256,6 +254,7 @@
             "side-channel": "npm:@nolyfill/side-channel@^1"
         },
         "patchedDependencies": {
+            "@mswjs/interceptors@0.41.3": "patches/@mswjs__interceptors@0.41.3.patch",
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
         }
     }
