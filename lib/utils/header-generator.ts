@@ -4,21 +4,27 @@ import { HeaderGenerator, PRESETS } from 'header-generator';
 export { PRESETS } from 'header-generator';
 
 /**
- * Checks if a generated user agent is valid (doesn't contain unwanted strings)
+ * Checks if the generated headers are valid (no unwanted UA strings, required headers present)
  *
- * @param {string} userAgent The user agent string to validate
+ * @param {Record<string, string>} headers The generated headers to validate
  * @param {string} browser The browser type (used to determine which filters to apply)
- * @returns {boolean} True if the user agent is valid, false if it contains unwanted strings
+ * @returns {boolean} True if the headers are valid
  */
-const isValidUserAgent = (userAgent: string, browser: string): boolean => {
+const isValidHeader = (headers: Record<string, string>, browser: string): boolean => {
     browser = browser.toLowerCase();
+    const userAgent = headers['user-agent'];
 
     if (browser === 'chrome') {
-        return !(userAgent.includes('Chrome-Lighthouse') || userAgent.includes('Gener8') || userAgent.includes('HeadlessChrome') || userAgent.includes('SMTBot') || userAgent.includes('Electron') || userAgent.includes('Code'));
+        if (userAgent.includes('Chrome-Lighthouse') || userAgent.includes('Gener8') || userAgent.includes('HeadlessChrome') || userAgent.includes('SMTBot') || userAgent.includes('Electron') || userAgent.includes('Code')) {
+            return false;
+        }
+        if (!(headers['sec-ch-ua'] && headers['sec-ch-ua-mobile'] && headers['sec-ch-ua-platform'])) {
+            return false;
+        }
     }
 
-    if (browser === 'safari') {
-        return !userAgent.includes('Applebot');
+    if (browser === 'safari' && userAgent.includes('Applebot')) {
+        return false;
     }
 
     return true;
@@ -51,7 +57,7 @@ export const generateHeaders = (preset: Partial<HeaderGeneratorOptions> = PRESET
     }
 
     let attempts = 0;
-    while (!isValidUserAgent(headers['user-agent'], detectedBrowser) && attempts < 10) {
+    while (!isValidHeader(headers, detectedBrowser) && attempts < 10) {
         headers = generator.getHeaders();
         attempts++;
     }
