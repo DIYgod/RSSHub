@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.landiannews.com/';
 
-const getRenderedText = (html: string) => load(html).text();
+const getRenderedText = (html: string) => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
 const getPubDate = (dateGmt?: string, date?: string) => (dateGmt ? parseDate(`${dateGmt}Z`) : date ? parseDate(date) : undefined);
 
