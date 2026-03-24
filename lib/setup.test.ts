@@ -202,7 +202,12 @@ var ct = "${1_636_626_300}";
         )
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
-    http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
+    http.get(`https://mp.weixin.qq.com/s`, ({ request }) => {
+        const url = new URL(request.url);
+        if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
+            return HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`);
+        }
+    }),
     http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
         HttpResponse.text(
             `<html>
