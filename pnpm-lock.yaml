@@ -20,6 +20,9 @@ overrides:
   side-channel: npm:@nolyfill/side-channel@^1
 
 patchedDependencies:
+  '@mswjs/interceptors@0.41.3':
+    hash: 22d4e00cca8fd0ed1515baa1fd79dccb47fb247d4cb6f2bf2c85abd619a3df21
+    path: patches/@mswjs__interceptors@0.41.3.patch
   rss-parser@3.13.0:
     hash: e1697dd9dde771024b5d0669a3eff6237e75fbac78381a6127012b67593bb2b7
     path: patches/rss-parser@3.13.0.patch
@@ -6887,7 +6890,7 @@ snapshots:
 
   '@mixmark-io/domino@2.2.0': {}
 
-  '@mswjs/interceptors@0.41.3':
+  '@mswjs/interceptors@0.41.3(patch_hash=22d4e00cca8fd0ed1515baa1fd79dccb47fb247d4cb6f2bf2c85abd619a3df21)':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -10336,7 +10339,7 @@ snapshots:
   msw@2.12.14(@types/node@25.5.0)(typescript@5.9.3):
     dependencies:
       '@inquirer/confirm': 5.1.21(@types/node@25.5.0)
-      '@mswjs/interceptors': 0.41.3
+      '@mswjs/interceptors': 0.41.3(patch_hash=22d4e00cca8fd0ed1515baa1fd79dccb47fb247d4cb6f2bf2c85abd619a3df21)
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
       cookie: 1.1.1

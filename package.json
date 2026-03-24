@@ -254,6 +254,7 @@
             "side-channel": "npm:@nolyfill/side-channel@^1"
         },
         "patchedDependencies": {
+            "@mswjs/interceptors@0.41.3": "patches/@mswjs__interceptors@0.41.3.patch",
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch"
         }
     }
