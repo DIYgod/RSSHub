@@ -5,11 +5,11 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { getPuppeteerPage } from '@/utils/puppeteer';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
-import { apiqRootUrl, imageRootUrl, rootUrl } from './utils';
 import { renderSubscriptionImages } from './templates/subscriptions';
+import { apiqRootUrl, imageRootUrl, rootUrl } from './utils';
 
 const md = MarkdownIt({
     html: true,
