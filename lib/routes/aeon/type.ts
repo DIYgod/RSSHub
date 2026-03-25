@@ -5,34 +5,34 @@ import { getData } from './utils';
 
 const ENDPOINT = 'https://api.aeonmedia.co/graphql';
 const LIST_BY_TYPE = /* GraphQL */ `
-query getAeonArticlesByType($type: [ArticleTypeEnum!], $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
-  articles(
-    site: aeon
-    type: $type
-    status: [published]
-    tag: $tag
-    sort: {field: $sortField, order: desc}
-    after: $afterCursor
-    first: 12
-  ) {
-    nodes {
-      slug
-      ...aeonArticleCardFragment
+    query getAeonArticlesByType($type: [ArticleTypeEnum!], $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
+        articles(site: aeon, type: $type, status: [published], tag: $tag, sort: { field: $sortField, order: desc }, after: $afterCursor, first: 12) {
+            nodes {
+                slug
+                ...aeonArticleCardFragment
+            }
+        }
     }
-  }
-}
 
-fragment aeonArticleCardFragment on Article {
-  id
-  title
-  slug
-  type
-  standfirstLong
-  authors { name }
-  image { url }
-  primaryTopic { title }
-  section { slug }
-}
+    fragment aeonArticleCardFragment on Article {
+        id
+        title
+        slug
+        type
+        standfirstLong
+        authors {
+            name
+        }
+        image {
+            url
+        }
+        primaryTopic {
+            title
+        }
+        section {
+            slug
+        }
+    }
 `;
 
 export const route: Route = {
