@@ -39,43 +39,43 @@ export const route: Route = {
 
 const ENDPOINT = 'https://api.aeonmedia.co/graphql';
 const LIST_BY_SECTION = /* GraphQL */ `
-query getAeonArticlesBySection($section: String!, $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
-  section(site: aeon, slug: $section) {
-    slug
-    title
-    metaDescription
-  }
-  articles(
-    site: aeon
-    section: $section
-    status: [published]
-    tag: $tag
-    sort: {field: $sortField, order: desc}
-    after: $afterCursor
-    first: 24
-  ) {
-    nodes {
-      slug
-      ...aeonArticleCardFragment
+    query getAeonArticlesBySection($section: String!, $sortField: ArticleSortEnum = published_at, $afterCursor: String, $tag: String) {
+        section(site: aeon, slug: $section) {
+            slug
+            title
+            metaDescription
+        }
+        articles(site: aeon, section: $section, status: [published], tag: $tag, sort: { field: $sortField, order: desc }, after: $afterCursor, first: 24) {
+            nodes {
+                slug
+                ...aeonArticleCardFragment
+            }
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+        }
     }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
-}
 
-fragment aeonArticleCardFragment on Article {
-  id
-  title
-  slug
-  type
-  standfirstLong
-  authors { name }
-  image { url }
-  primaryTopic { title }
-  section { slug }
-}
+    fragment aeonArticleCardFragment on Article {
+        id
+        title
+        slug
+        type
+        standfirstLong
+        authors {
+            name
+        }
+        image {
+            url
+        }
+        primaryTopic {
+            title
+        }
+        section {
+            slug
+        }
+    }
 `;
 
 async function handler(ctx) {
