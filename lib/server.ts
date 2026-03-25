@@ -2,4 +2,4 @@
 
 import '@/utils/request-rewriter';
 
-export { default } from './app-bootstrap';
+export default (await import('./app-bootstrap')).default;
