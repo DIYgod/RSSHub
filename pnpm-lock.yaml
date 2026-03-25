@@ -47,8 +47,8 @@ importers:
         specifier: 1.2.3
         version: 1.2.3(hono@4.12.8)(zod@4.3.6)
       '@jocmp/mercury-parser':
-        specifier: 3.0.6
-        version: 3.0.6
+        specifier: 3.0.7
+        version: 3.0.7
       '@notionhq/client':
         specifier: 5.14.0
         version: 5.14.0
@@ -1301,8 +1301,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.0.6':
-    resolution: {integrity: sha512-MKVZvpFboVNfKYGOlpl7SIn+9VnJ9jXIjSC2QYAsvksXsp5CM91IZdtKCSBOMogPdXQx0o34JiPclU5TI2SRjQ==}
+  '@jocmp/mercury-parser@3.0.7':
+    resolution: {integrity: sha512-DnZqzYrLFaOc6SPiCKQ1GuaqN1ZPi72JbheKmE4XDwRBr4eFF7FzMlv3eujO1+huBtnIyKYi4zOCMSYmMFAc1A==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -3467,9 +3467,8 @@ packages:
   electron-to-chromium@1.5.313:
     resolution: {integrity: sha512-QBMrTWEf00GXZmJyx2lbYD45jpI3TUFnNIzJ5BBc8piGUDwMPa1GV6HJWTZVvY/eiN3fSopl7NRbgGp9sZ9LTA==}
 
-  ellipsize@0.7.0:
-    resolution: {integrity: sha512-zxc0AigE4HMvuiqEk7//BjwCSFBXseJCuGNxfjo6wz1BoCSrJDj8tYnIgn/Z7lQ2T89ZypvGyJvPCCVf9uErBA==}
-    engines: {node: ^20.19.0 || >= 22.12.0}
+  ellipsize@0.6.0:
+    resolution: {integrity: sha512-oest45O39yGzIKJj3gJv/Gt6jtYN6PHw/IbCXHPEd2KwC0dgxKqXOhTU0EGwRXWhGKoBJk7eJQkb3sp8W0px2g==}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
@@ -6828,13 +6827,13 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jocmp/mercury-parser@3.0.6':
+  '@jocmp/mercury-parser@3.0.7':
     dependencies:
       '@babel/runtime-corejs2': 7.29.2
       cheerio: 1.2.0
       dayjs: 1.11.20
       difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
-      ellipsize: 0.7.0
+      ellipsize: 0.6.0
       iconv-lite: 0.7.2
       postman-request: 2.88.1-postman.48
       string-direction: 0.1.2
@@ -8847,7 +8846,7 @@ snapshots:
 
   electron-to-chromium@1.5.313: {}
 
-  ellipsize@0.7.0: {}
+  ellipsize@0.6.0: {}
 
   emoji-regex@10.6.0: {}
 
