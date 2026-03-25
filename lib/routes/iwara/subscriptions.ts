@@ -76,7 +76,7 @@ async function handler() {
     });
 
     try {
-        const fetchApi = async (url: string, options: any) =>
+        const fetchApi = (url: string, options: any) =>
             page.evaluate(
                 async (args) => {
                     const res = await fetch(args.url, {
