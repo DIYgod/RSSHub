@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { Api } from 'telegram';
+import { describe, expect, it } from 'vitest';
 
 import { getMediaLink, getMessageMediaUrl, withSearchParams } from './channel';
 
@@ -7,15 +7,11 @@ describe('telegram tglib channel', () => {
     it('preserves access auth params in telegram media urls', () => {
         expect(getMessageMediaUrl('https://rsshub.app/telegram/channel/test?key=secret', 'test', 123)).toBe('https://rsshub.app/telegram/media/test/123?key=secret');
         expect(getMessageMediaUrl('https://rsshub.app/telegram/channel/test?code=signed', 'test', 123)).toBe('https://rsshub.app/telegram/media/test/123?code=signed');
-        expect(getMessageMediaUrl('https://rsshub.app/telegram/channel/test?key=secret&code=signed', 'test', 123)).toBe(
-            'https://rsshub.app/telegram/media/test/123?key=secret&code=signed'
-        );
+        expect(getMessageMediaUrl('https://rsshub.app/telegram/channel/test?key=secret&code=signed', 'test', 123)).toBe('https://rsshub.app/telegram/media/test/123?key=secret&code=signed');
     });
 
     it('appends thumb without dropping existing query params', () => {
-        expect(withSearchParams('https://rsshub.app/telegram/media/test/123?key=secret', { thumb: '' })).toBe(
-            'https://rsshub.app/telegram/media/test/123?key=secret&thumb='
-        );
+        expect(withSearchParams('https://rsshub.app/telegram/media/test/123?key=secret', { thumb: '' })).toBe('https://rsshub.app/telegram/media/test/123?key=secret&thumb=');
     });
 
     it('renders video poster urls with preserved auth params', () => {
