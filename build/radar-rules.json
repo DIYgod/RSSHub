@@ -14467,6 +14467,19 @@
       }
     ]
   },
+  "dewu.com": {
+    "_name": "得物",
+    "tech": [
+      {
+        "title": "技术博客",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/dewu/techblog"
+      }
+    ]
+  },
   "dgtle.com": {
     "_name": "数字尾巴",
     "www": [

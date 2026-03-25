@@ -2268,6 +2268,9 @@
   "/devtrium/": [
     "Xy2002"
   ],
+  "/dewu/techblog/:categoryId?": [
+    "zhenlohuang"
+  ],
   "/dewu/declaration/:categoryId?": [
     "blade0910"
   ],
