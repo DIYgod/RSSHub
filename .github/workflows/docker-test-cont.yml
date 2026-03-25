@@ -37,7 +37,7 @@ jobs:
                     >> "${GITHUB_OUTPUT}"
 
             - name: Fetch PR data via GitHub API
-              uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
+              uses: octokit/request-action@b91aabaa861c777dcdb14e2387e30eddf04619ae # v3.0.0
               id: pr-data
               with:
                   route: GET /repos/{repo}/pulls/{number}
@@ -45,6 +45,16 @@ jobs:
                   number: ${{ steps.source-run-info.outputs.number }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+
+            - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: Install dependencies (pnpm) # require js-beautify
+              run: pnpm i
 
             - name: Fetch affected routes
               id: fetch-route
@@ -64,7 +74,7 @@ jobs:
 
             - name: Fetch Docker image
               if: (env.TEST_CONTINUE)
-              uses: dawidd6/action-download-artifact@2536c51d3d126276eb39f74d6bc9c72ac6ef30d3 # v16
+              uses: dawidd6/action-download-artifact@8a338493df3d275e4a7a63bcff3b8fe97e51a927 # v19
               with:
                   workflow: ${{ github.event.workflow_run.workflow_id }}
                   run_id: ${{ github.event.workflow_run.id }}
@@ -87,17 +97,31 @@ jobs:
                     -p 1200:1200 \
                     rsshub:latest
 
-            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-
-            - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+            - name: Wait for RSSHub startup
               if: (env.TEST_CONTINUE)
-              with:
-                  node-version: lts/*
-                  cache: 'pnpm'
+              env:
+                  TEST_BASEURL: http://localhost:1200
+              run: |
+                  set -euo pipefail
+                  healthcheck_url="$TEST_BASEURL/healthz"
 
-            - name: Install dependencies (pnpm) # require js-beautify
-              if: (env.TEST_CONTINUE)
-              run: pnpm i
+                  for _ in $(seq 1 30); do
+                      if curl --silent --show-error --fail "$healthcheck_url" >/dev/null; then
+                          exit 0
+                      fi
+
+                      if [ "$(docker inspect -f '{{.State.Status}}' rsshub 2>/dev/null)" != 'running' ]; then
+                          docker logs rsshub || true
+                          echo "rsshub container exited before becoming ready"
+                          exit 1
+                      fi
+
+                      sleep 1
+                  done
+
+                  docker logs rsshub || true
+                  echo "Timed out waiting for RSSHub health check: $healthcheck_url"
+                  exit 1
 
             - name: Generate feedback
               if: (env.TEST_CONTINUE)
@@ -121,11 +145,11 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@71b62d7da76e59ff7b193904feb6e77d4dbb2777 # v3.7.6
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}
                   labels: 'auto: DO NOT merge'
 
             - name: Print Docker container logs
@@ -161,7 +185,7 @@ jobs:
                     >> "${GITHUB_OUTPUT}"
 
             - name: Pull Request Labeler
-              uses: actions-cool/issues-helper@71b62d7da76e59ff7b193904feb6e77d4dbb2777 # v3.7.6
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}

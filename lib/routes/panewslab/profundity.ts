@@ -27,7 +27,10 @@ export const route: Route = {
     parameters: { category: '分类，见下表，默认为精选' },
     radar: [
         {
-            source: ['panewslab.com/', 'www.panewslab.com/zh/profundity/index.html'],
+            source: ['panewslab.com/'],
+        },
+        {
+            source: ['www.panewslab.com/zh/profundity/index.html'],
         },
     ],
     name: '深度',

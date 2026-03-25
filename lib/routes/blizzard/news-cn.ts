@@ -20,7 +20,15 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ow.blizzard.cn', 'wow.blizzard.cn', 'hs.blizzard.cn'],
+            source: ['ow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['wow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['hs.blizzard.cn'],
             target: '/news-cn/',
         },
     ],

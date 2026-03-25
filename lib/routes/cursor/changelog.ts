@@ -9,16 +9,14 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
+    const locale = ctx.req.param('locale');
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
     const baseUrl = 'https://cursor.com';
-    const targetUrl: string = new URL('changelog', baseUrl).href;
+    const localeSegment = locale ? `/${locale}` : '';
+    const targetUrl: string = new URL(`${localeSegment}/changelog`, baseUrl).href;
 
-    const response = await ofetch(targetUrl, {
-        headers: {
-            cookie: 'NEXT_LOCALE=en',
-        },
-    });
+    const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
@@ -75,13 +73,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/changelog',
+    path: '/changelog/:locale?',
     name: 'Changelog',
     url: 'cursor.com',
     maintainers: ['p3psi-boo', 'nczitzk'],
     handler,
     example: '/cursor/changelog',
-    parameters: undefined,
+    parameters: {
+        locale: 'Locale appended to the route path, e.g. `ja`',
+    },
     description: undefined,
     categories: ['program-update'],
     features: {
@@ -97,6 +97,10 @@ export const route: Route = {
         {
             source: ['cursor.com/changelog'],
             target: '/changelog',
+        },
+        {
+            source: ['cursor.com/:locale/changelog'],
+            target: '/changelog/:locale',
         },
     ],
     view: ViewType.Articles,
