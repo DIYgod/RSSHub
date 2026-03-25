@@ -42,7 +42,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionOfToday',
-                query: `query questionOfToday {
+                query: /* GraphQL */ `query questionOfToday {
                             activeDailyCodingChallengeQuestion {
                                 date
                                 link
@@ -67,7 +67,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionData',
-                query: `query questionData($titleSlug: String!) {
+                query: /* GraphQL */ `query questionData($titleSlug: String!) {
                             question(titleSlug: $titleSlug) {
                                 questionId
                                 questionFrontendId
@@ -98,7 +98,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'QuestionNote',
-                query: `query QuestionNote($titleSlug: String!) {
+                query: /* GraphQL */ `query QuestionNote($titleSlug: String!) {
                     question(titleSlug: $titleSlug) {
                       questionId
                       article
@@ -172,7 +172,7 @@ async function handler() {
                     url,
                     json: {
                         operationName: 'fetchPlayground',
-                        query: `query fetchPlayground {
+                        query: /* GraphQL */ `query fetchPlayground {
                             playground(uuid: "${uuid}") {
                               testcaseInput
                               name

@@ -57,7 +57,7 @@ function newFollowingFeedQuery(pagingLimit = 5) {
                 limit: pagingLimit,
             },
         },
-        query: `query LegacyFollowingFeedQuery($paging: PagingOptions) {
+        query: /* GraphQL */ `query LegacyFollowingFeedQuery($paging: PagingOptions) {
             followingFeed(paging: $paging) {
               items {
                 feedId
@@ -92,7 +92,7 @@ function newWebInlineRecommendedFeedQuery(pagingLimit = 5) {
                 limit: pagingLimit,
             },
         },
-        query: `query LegacyWebInlineRecommendedFeedQuery($paging: PagingOptions, $forceRank: Boolean) {
+        query: /* GraphQL */ `query LegacyWebInlineRecommendedFeedQuery($paging: PagingOptions, $forceRank: Boolean) {
             webRecommendedFeed(paging: $paging, forceRank: $forceRank) {
               items {
                 feedId
@@ -127,7 +127,7 @@ function newWebInlineTopicFeedQuery(tagSlug, pagingLimit = 5) {
             },
             skipCache: true,
         },
-        query: `query LegacyWebInlineTopicFeedQuery($tagSlug: String!, $paging: PagingOptions!, $skipCache: Boolean) {
+        query: /* GraphQL */ `query LegacyWebInlineTopicFeedQuery($tagSlug: String!, $paging: PagingOptions!, $skipCache: Boolean) {
             personalisedTagFeed(tagSlug: $tagSlug, paging: $paging, skipCache: $skipCache) {
               items {
                 feedId
@@ -162,7 +162,7 @@ function newUserCatalogMainContentQuery(catalogId, pagingLimit = 20) {
                 limit: pagingLimit,
             },
         },
-        query: `query UserCatalogMainContentQuery($catalogId: ID!, $pagingOptions: CatalogPagingOptionsInput!) {
+        query: /* GraphQL */ `query UserCatalogMainContentQuery($catalogId: ID!, $pagingOptions: CatalogPagingOptionsInput!) {
             catalogById(catalogId: $catalogId) {
               __typename
               ... on Catalog {

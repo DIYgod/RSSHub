@@ -41,7 +41,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionOfToday',
-                query: `query questionOfToday {
+                query: /* GraphQL */ `query questionOfToday {
                             todayRecord {
                                 date
                                 userStatus
@@ -70,7 +70,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionData',
-                query: `query questionData($titleSlug: String!) {
+                query: /* GraphQL */ `query questionData($titleSlug: String!) {
                             question(titleSlug: $titleSlug) {
                                 questionId
                                 questionFrontendId
@@ -101,7 +101,7 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionSolutionArticles',
-                query: `query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {
+                query: /* GraphQL */ `query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {
                             questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {
                                 totalNum
                                 edges {
@@ -144,7 +144,7 @@ async function handler() {
                     url,
                     json: {
                         operationName: 'solutionDetailArticle',
-                        query: `query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {
+                        query: /* GraphQL */ `query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {
                                     solutionArticle(slug: $slug, orderBy: $orderBy) {
                                         ...solutionArticle
                                         content

@@ -36,7 +36,7 @@ async function handler(ctx) {
         json: {
             operationName: 'comicById',
             variables: { comicId: id },
-            query: `query comicById($comicId: ID!) {
+            query: /* GraphQL */ `query comicById($comicId: ID!) {
                 comicById(comicId: $comicId) {
                     title
                     imageUrl
@@ -51,7 +51,7 @@ async function handler(ctx) {
         json: {
             operationName: 'chapterByComicId',
             variables: { comicId: id },
-            query: `query chapterByComicId($comicId: ID!) {
+            query: /* GraphQL */ `query chapterByComicId($comicId: ID!) {
                 chaptersByComicId(comicId: $comicId) {
                     id
                     serial

@@ -71,7 +71,7 @@ async function handler() {
 
     const requestEndpoint = `${baseURL}/graphql`;
     const requestBody = JSON.stringify({
-        query: `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
+        query: /* GraphQL */ `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
           paginatedWidget(url: $url, widgetType: $widgetType) {
             ... on SimpleArticleGridWidget {
               articles(page: $page) {
