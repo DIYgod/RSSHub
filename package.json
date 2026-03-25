@@ -46,7 +46,6 @@
         "start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' node dist/index.mjs",
         "test": "npm run format:check && npm run vitest:coverage",
         "vercel-build": "npm run build:routes && tsdown --config ./tsdown-vercel.config.ts",
-        "vercel-start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' vercel dev",
         "vitest": "cross-env NODE_ENV=test vitest",
         "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
         "vitest:fullroutes": "cross-env NODE_ENV=test FULL_ROUTES_TEST=true vitest --reporter=json --reporter=default --outputFile=\"./assets/build/test-full-routes.json\" routes",
@@ -200,7 +199,6 @@
         "tsdown": "0.21.4",
         "typescript": "5.9.3",
         "unified": "11.0.5",
-        "vercel": "50.37.0",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.0.9",
         "wrangler": "4.76.0",
@@ -217,7 +215,7 @@
         ]
     },
     "engines": {
-        "node": "^24"
+        "node": "^22.20.0 || ^24"
     },
     "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
     "pnpm": {
