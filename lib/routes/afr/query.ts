@@ -1,4 +1,4 @@
-export const pageByNavigationPathQuery = `query pageByNavigationPath(
+export const pageByNavigationPathQuery = /* GraphQL */ `query pageByNavigationPath(
     $input: PageByNavigationPathInput!
     $firstStories: Int
     $afterStories: Cursor
@@ -216,7 +216,7 @@ export const pageByNavigationPathQuery = `query pageByNavigationPath(
     }
   }`;
 
-export const assetsConnectionByCriteriaQuery = `query assetsConnectionByCriteria(
+export const assetsConnectionByCriteriaQuery = /* GraphQL */ `query assetsConnectionByCriteria(
     $after: ID
     $brand: Brand!
     $categories: [Int!]

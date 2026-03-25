@@ -30,7 +30,7 @@ async function handler() {
     };
     const url = host + '/graphql';
     const dailyQuestionPayload = {
-        query: `query questionOfToday {
+        query: /* GraphQL */ `query questionOfToday {
             activeDailyCodingChallengeQuestion {
                 date
                 link
@@ -57,7 +57,7 @@ async function handler() {
 
     const detailsPayload = {
         operationName: 'questionData',
-        query: `query questionData($titleSlug: String!) {
+        query: /* GraphQL */ `query questionData($titleSlug: String!) {
             question(titleSlug: $titleSlug) {
                 questionId
                 questionFrontendId

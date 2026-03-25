@@ -39,7 +39,7 @@ export const getCreatorPostReelList = (identifier: string, limit: number): Promi
                 Referer: baseUrl,
             },
             body: JSON.stringify({
-                query: `query CreatorPostReelList($identifier: String!, $first: Int, $after: String, $last: Int, $before: String) {
+                query: /* GraphQL */ `query CreatorPostReelList($identifier: String!, $first: Int, $after: String, $last: Int, $before: String) {
   posts(
     where: {status: {equals: PUBLISHED}, creator: {is: {identifier: {equals: $identifier}}}}
     orderBy: [{pinnedAt: {nulls: last, sort: desc}}, {order: asc}, {createdAt: desc}, {id: desc}]

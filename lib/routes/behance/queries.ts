@@ -1,4 +1,4 @@
-export const getProfileProjectsAndSelectionsQuery = `query GetProfileProjectsAndSections($username: String, $after: String) {
+export const getProfileProjectsAndSelectionsQuery = /* GraphQL */ `query GetProfileProjectsAndSections($username: String, $after: String) {
     user(username: $username) {
       hasPortfolio
       profileSections {
@@ -172,7 +172,7 @@ export const getProfileProjectsAndSelectionsQuery = `query GetProfileProjectsAnd
     userId
   }`;
 
-export const getAppreciatedQuery = `query GetAppreciatedProjects($username: String, $after: String) {
+export const getAppreciatedQuery = /* GraphQL */ `query GetAppreciatedProjects($username: String, $after: String) {
     user(username: $username) {
       appreciatedProjects(first: 24, after: $after) {
         nodes {
@@ -247,7 +247,7 @@ export const getAppreciatedQuery = `query GetAppreciatedProjects($username: Stri
     }
   }`;
 
-export const getProjectPageQuery = `query ProjectPage($projectId: ProjectId!, $projectPassword: String) {
+export const getProjectPageQuery = /* GraphQL */ `query ProjectPage($projectId: ProjectId!, $projectPassword: String) {
     viewer {
       ...Project_Viewer
     }
