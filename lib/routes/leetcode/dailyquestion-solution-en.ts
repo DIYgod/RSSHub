@@ -42,16 +42,18 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionOfToday',
-                query: /* GraphQL */ `query questionOfToday {
-                            activeDailyCodingChallengeQuestion {
-                                date
-                                link
-                                question {
-                                    frontendQuestionId: questionFrontendId
-                                    titleSlug
-                                }
+                query: /* GraphQL */ `
+                    query questionOfToday {
+                        activeDailyCodingChallengeQuestion {
+                            date
+                            link
+                            question {
+                                frontendQuestionId: questionFrontendId
+                                titleSlug
                             }
-                        }`,
+                        }
+                    }
+                `,
                 variables: {},
             },
             headers,
@@ -67,22 +69,24 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionData',
-                query: /* GraphQL */ `query questionData($titleSlug: String!) {
-                            question(titleSlug: $titleSlug) {
-                                questionId
-                                questionFrontendId
-                                categoryTitle
-                                boundTopicId
-                                title
-                                titleSlug
-                                content
-                                translatedTitle
-                                translatedContent
-                                isPaidOnly
-                                difficulty
-                                likes
-                            }
-                        }`,
+                query: /* GraphQL */ `
+                    query questionData($titleSlug: String!) {
+                        question(titleSlug: $titleSlug) {
+                            questionId
+                            questionFrontendId
+                            categoryTitle
+                            boundTopicId
+                            title
+                            titleSlug
+                            content
+                            translatedTitle
+                            translatedContent
+                            isPaidOnly
+                            difficulty
+                            likes
+                        }
+                    }
+                `,
                 variables: {
                     titleSlug: questionTitle,
                 },
@@ -98,29 +102,31 @@ async function handler() {
             url,
             json: {
                 operationName: 'QuestionNote',
-                query: /* GraphQL */ `query QuestionNote($titleSlug: String!) {
-                    question(titleSlug: $titleSlug) {
-                      questionId
-                      article
-                      solution {
-                        id
-                        content
-                        contentTypeId
-                        canSeeDetail
-                        paidOnly
-                        hasVideoSolution
-                        paidOnlyVideo
-                        rating {
-                          id
-                          count
-                          average
-                          userRating {
-                            score
-                          }
+                query: /* GraphQL */ `
+                    query QuestionNote($titleSlug: String!) {
+                        question(titleSlug: $titleSlug) {
+                            questionId
+                            article
+                            solution {
+                                id
+                                content
+                                contentTypeId
+                                canSeeDetail
+                                paidOnly
+                                hasVideoSolution
+                                paidOnlyVideo
+                                rating {
+                                    id
+                                    count
+                                    average
+                                    userRating {
+                                        score
+                                    }
+                                }
+                            }
                         }
-                      }
                     }
-                }`,
+                `,
                 variables: {
                     titleSlug: questionTitle,
                 },

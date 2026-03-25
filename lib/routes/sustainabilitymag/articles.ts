@@ -71,33 +71,35 @@ async function handler() {
 
     const requestEndpoint = `${baseURL}/graphql`;
     const requestBody = JSON.stringify({
-        query: /* GraphQL */ `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
-          paginatedWidget(url: $url, widgetType: $widgetType) {
-            ... on SimpleArticleGridWidget {
-              articles(page: $page) {
-                results {
-                  _id
-                  headline
-                  fullUrlPath
-                  featured
-                  category
-                  contentType
-                  tags {
-                    tag
-                  }
-                  attribution
-                  subAttribution
-                  sell
-                  images {
-                    thumbnail_widescreen_553 {
-                      url
+        query: /* GraphQL */ `
+            query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
+                paginatedWidget(url: $url, widgetType: $widgetType) {
+                    ... on SimpleArticleGridWidget {
+                        articles(page: $page) {
+                            results {
+                                _id
+                                headline
+                                fullUrlPath
+                                featured
+                                category
+                                contentType
+                                tags {
+                                    tag
+                                }
+                                attribution
+                                subAttribution
+                                sell
+                                images {
+                                    thumbnail_widescreen_553 {
+                                        url
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
-        }`,
+        `,
         operationName: 'PaginatedQuery',
         variables: {
             widgetType: 'simpleArticleGrid',

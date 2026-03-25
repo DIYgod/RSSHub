@@ -30,16 +30,18 @@ async function handler() {
     };
     const url = host + '/graphql';
     const dailyQuestionPayload = {
-        query: /* GraphQL */ `query questionOfToday {
-            activeDailyCodingChallengeQuestion {
-                date
-                link
-                question {
-                    frontendQuestionId: questionFrontendId
-                    titleSlug
+        query: /* GraphQL */ `
+            query questionOfToday {
+                activeDailyCodingChallengeQuestion {
+                    date
+                    link
+                    question {
+                        frontendQuestionId: questionFrontendId
+                        titleSlug
+                    }
                 }
             }
-        } `,
+        `,
         variables: {},
     };
     const dailyQuestionResponse = await got({
@@ -57,25 +59,27 @@ async function handler() {
 
     const detailsPayload = {
         operationName: 'questionData',
-        query: /* GraphQL */ `query questionData($titleSlug: String!) {
-            question(titleSlug: $titleSlug) {
-                questionId
-                questionFrontendId
-                title
-                titleSlug
-                content
-                translatedTitle
-                translatedContent
-                difficulty
-                topicTags {
-                    name
-                    slug
-                    translatedName
+        query: /* GraphQL */ `
+            query questionData($titleSlug: String!) {
+                question(titleSlug: $titleSlug) {
+                    questionId
+                    questionFrontendId
+                    title
+                    titleSlug
+                    content
+                    translatedTitle
+                    translatedContent
+                    difficulty
+                    topicTags {
+                        name
+                        slug
+                        translatedName
+                        __typename
+                    }
                     __typename
                 }
-                __typename
             }
-        }`,
+        `,
         variables: {
             titleSlug: question.titleSlug,
         },
