@@ -41,20 +41,22 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionOfToday',
-                query: `query questionOfToday {
-                            todayRecord {
-                                date
-                                userStatus
-                                question {
-                                    questionId
-                                    frontendQuestionId: questionFrontendId
-                                    difficulty
-                                    title
-                                    titleCn: translatedTitle
-                                    titleSlug
-                                }
+                query: /* GraphQL */ `
+                    query questionOfToday {
+                        todayRecord {
+                            date
+                            userStatus
+                            question {
+                                questionId
+                                frontendQuestionId: questionFrontendId
+                                difficulty
+                                title
+                                titleCn: translatedTitle
+                                titleSlug
                             }
-                        }`,
+                        }
+                    }
+                `,
                 variables: {},
             },
             headers,
@@ -70,22 +72,24 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionData',
-                query: `query questionData($titleSlug: String!) {
-                            question(titleSlug: $titleSlug) {
-                                questionId
-                                questionFrontendId
-                                categoryTitle
-                                boundTopicId
-                                title
-                                titleSlug
-                                content
-                                translatedTitle
-                                translatedContent
-                                isPaidOnly
-                                difficulty
-                                likes
-                            }
-                        }`,
+                query: /* GraphQL */ `
+                    query questionData($titleSlug: String!) {
+                        question(titleSlug: $titleSlug) {
+                            questionId
+                            questionFrontendId
+                            categoryTitle
+                            boundTopicId
+                            title
+                            titleSlug
+                            content
+                            translatedTitle
+                            translatedContent
+                            isPaidOnly
+                            difficulty
+                            likes
+                        }
+                    }
+                `,
                 variables: {
                     titleSlug: questionTitle,
                 },
@@ -101,30 +105,32 @@ async function handler() {
             url,
             json: {
                 operationName: 'questionSolutionArticles',
-                query: `query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {
-                            questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {
-                                totalNum
-                                edges {
-                                    node {
+                query: /* GraphQL */ `
+                    query questionSolutionArticles($questionSlug: String!, $skip: Int, $first: Int, $orderBy: SolutionArticleOrderBy, $userInput: String, $tagSlugs: [String!]) {
+                        questionSolutionArticles(questionSlug: $questionSlug, skip: $skip, first: $first, orderBy: $orderBy, userInput: $userInput, tagSlugs: $tagSlugs) {
+                            totalNum
+                            edges {
+                                node {
                                     ...solutionArticle
-                                    __typename
-                                    }
                                     __typename
                                 }
                                 __typename
                             }
+                            __typename
                         }
-                        fragment solutionArticle on SolutionArticleNode {
-                            uuid
-                            title
-                            slug
-                            createdAt
-                            thumbnail
-                            author {
-                                username
-                            }
-                            summary
-                        }`,
+                    }
+                    fragment solutionArticle on SolutionArticleNode {
+                        uuid
+                        title
+                        slug
+                        createdAt
+                        thumbnail
+                        author {
+                            username
+                        }
+                        summary
+                    }
+                `,
                 variables: {
                     questionSlug: questionTitle,
                     first: 3,
@@ -144,27 +150,29 @@ async function handler() {
                     url,
                     json: {
                         operationName: 'solutionDetailArticle',
-                        query: `query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {
-                                    solutionArticle(slug: $slug, orderBy: $orderBy) {
-                                        ...solutionArticle
-                                        content
-                                        question {
-                                            questionTitleSlug
-                                            __typename
-                                        }
+                        query: /* GraphQL */ `
+                            query solutionDetailArticle($slug: String!, $orderBy: SolutionArticleOrderBy!) {
+                                solutionArticle(slug: $slug, orderBy: $orderBy) {
+                                    ...solutionArticle
+                                    content
+                                    question {
+                                        questionTitleSlug
+                                        __typename
                                     }
                                 }
-                                fragment solutionArticle on SolutionArticleNode {
-                                    uuid
-                                    title
-                                    slug
-                                    createdAt
-                                    thumbnail
-                                    author {
-                                        username
-                                    }
-                                    summary
-                                }`,
+                            }
+                            fragment solutionArticle on SolutionArticleNode {
+                                uuid
+                                title
+                                slug
+                                createdAt
+                                thumbnail
+                                author {
+                                    username
+                                }
+                                summary
+                            }
+                        `,
                         variables: {
                             slug: art.node.slug,
                             orderBy: 'DEFAULT',
