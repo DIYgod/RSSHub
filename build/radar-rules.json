@@ -25465,15 +25465,6 @@
     "_name": "iwara",
     "www": [
       {
-        "title": "User Subscriptions",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/subscriptions/videos",
-          "/subscriptions/images"
-        ],
-        "target": "/iwara/subscriptions"
-      },
-      {
         "title": "Ranking",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
@@ -25481,6 +25472,15 @@
           "/images"
         ],
         "target": "/iwara(params,url)=>{const searchParams=new URL(url).searchParams;const type=url.includes(\"/videos\")?\"video\":\"image\";const sort=searchParams.get(\"sort\")||\"date\";const rating=searchParams.get(\"rating\")||\"ecchi\";return`/iwara/ranking/${type}/${sort}/${rating}`}"
+      },
+      {
+        "title": "User Subscriptions",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/subscriptions/videos",
+          "/subscriptions/images"
+        ],
+        "target": "/iwara/subscriptions"
       }
     ]
   },
