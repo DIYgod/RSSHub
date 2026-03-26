@@ -148,6 +148,7 @@ async function handler(ctx) {
                 const readTpc = content('#read_tpc').first();
                 const copyLink = content('#copytext')?.first()?.text();
                 const readTpcHtml = readTpc.html() ?? '';
+                const magnetText = readTpc.find('.magnet-text').first().text().trim();
 
                 // Extract enclosure: rmdown.com (fetch page for magnet) | magnet from 哈希校验 | copyLink
                 const rmdownLink = readTpc.find('a[href*="rmdown.com/link.php"]').first().attr('href');
@@ -165,20 +166,19 @@ async function handler(ctx) {
                 if (!item.enclosure_url) {
                     const hashMatch = readTpcHtml.match(/哈希校验[^;]*;\s*([a-fA-F0-9]{40})\s*[;；]/);
                     const magnetFromHash = hashMatch ? `magnet:?xt=urn:btih:${hashMatch[1]}` : null;
-                    const magnetLink = readTpcHtml.match(/magnet:\?xt=urn:btih:[^\s"'<>]+/)?.[0] ?? magnetFromHash ?? copyLink;
+                    const magnetFromText = magnetText.match(/magnet:\?xt=urn:btih:[^\s"'<>]+/)?.[0];
+                    const magnetLink = magnetFromText ?? readTpcHtml.match(/magnet:\?xt=urn:btih:[^\s"'<>]+/)?.[0] ?? magnetFromHash ?? copyLink;
                     if (magnetLink?.startsWith('magnet')) {
                         item.enclosure_url = magnetLink;
                         item.enclosure_type = 'x-scheme-handler/magnet';
                     }
                 }
 
-                const desp = content('#read_tpc').first();
-
                 content('.showhide img').each(function () {
-                    desp.append(`<br><img style="max-width: 100%;" src="${content(this).attr('src')}">`);
+                    readTpc.append(`<br><img style="max-width: 100%;" src="${content(this).attr('src')}">`);
                 });
 
-                item.description = desp.html();
+                item.description = readTpc.html();
 
                 return item;
             })
