@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
