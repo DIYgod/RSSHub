@@ -48549,6 +48549,19 @@
       }
     ]
   },
+  "xupt.edu.cn": {
+    "_name": "西安邮电大学",
+    "jyc": [
+      {
+        "title": "教务处通知公告",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/index/tzgg.htm"
+        ],
+        "target": "/xupt/jyc/tzgg"
+      }
+    ]
+  },
   "xwenming.com": {
     "_name": "未知文明",
     "www": [
