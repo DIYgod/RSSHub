@@ -1,16 +1,18 @@
 import { load } from 'cheerio';
-import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
+import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+};
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
-// 唱吧专用的解密函数
+// 唱吧 AES 解密函数
 function decryptWorkPath(str: string) {
     try {
         const iv = CryptoJS.enc.Utf8.parse(AES_KEY.substring(0, 16));
@@ -18,11 +20,10 @@ function decryptWorkPath(str: string) {
         const decrypted = CryptoJS.AES.decrypt(str, key, { iv, padding: CryptoJS.pad.Pkcs7 });
         let url = decrypted.toString(CryptoJS.enc.Utf8);
         if (url) {
-            // 补全协议并强制使用 https
             url = url.startsWith('http') ? url : `https:${url}`;
             return url.replace('http://', 'https://');
         }
-    } catch (e) {
+    } catch {
         return null;
     }
     return null;
@@ -66,10 +67,12 @@ async function handler(ctx) {
     const author = $('.uname').first().text().trim() || '唱吧用户';
     const authorimg = $('.poster img').attr('data-src');
 
-    let items = await Promise.all(
+    const items = await Promise.all(
         list.map((item) => {
             const workLink = $(item).attr('href');
-            if (!workLink) return null;
+            if (!workLink) {
+                return null;
+            }
 
             return cache.tryGet(workLink, async () => {
                 const res = await got({
@@ -79,19 +82,23 @@ async function handler(ctx) {
                 });
                 const html = res.data;
 
-                // 从网页源码中匹配加密字符串
+                // 适配两种可能的加密字段名
                 const match = html.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || html.match(/commonObj\.url\s*=\s*'([^']+)'/);
-                if (!match) return null;
+                if (!match) {
+                    return null;
+                }
 
                 const realAudioUrl = decryptWorkPath(match[1]);
-                if (!realAudioUrl) return null;
+                if (!realAudioUrl) {
+                    return null;
+                }
 
                 const inner$ = load(html);
                 const title = inner$('.work-title').text() || inner$('.song-name').text() || '无题作品';
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
 
                 return {
-                    title: title,
+                    title,
                     description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
                     link: workLink,
                     author,
