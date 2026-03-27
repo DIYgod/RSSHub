@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 import CryptoJS from 'crypto-js';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -62,7 +62,7 @@ async function handler(ctx) {
         url,
         headers,
     });
-    
+
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
@@ -91,9 +91,11 @@ async function handler(ctx) {
                 const inner$ = load(html);
                 const title = inner$('.work-title').text() || inner$('.song-name').text() || '无题作品';
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
-                
+
                 // 提取作品封面图，用于 RSS 预览
-                let coverImg = inner$('.work-cover').attr('style')?.match(/url\(['"]?(.*?)['"]?\)/)?.[1];
+                let coverImg = inner$('.work-cover')
+                    .attr('style')
+                    ?.match(/url\(['"]?(.*?)['"]?\)/)?.[1];
                 if (!coverImg) {
                     coverImg = inner$('.poster img').attr('src') || authorimg;
                 }
@@ -101,13 +103,7 @@ async function handler(ctx) {
                 return {
                     title: title,
                     // 使用自定义组件渲染更美观的描述页
-                    description: renderToString(
-                        <ChangbaWorkDescription 
-                            desc={desc} 
-                            mp3url={realAudioUrl} 
-                            cover={coverImg} 
-                        />
-                    ),
+                    description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} cover={coverImg} />),
                     link: workLink,
                     author,
                     itunes_item_image: coverImg,
