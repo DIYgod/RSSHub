@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 import CryptoJS from 'crypto-js';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -50,7 +50,7 @@ async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `https://changba.com/wap/index.php?s=${userid}`;
     const response = await got({ method: 'get', url, headers });
-    
+
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
@@ -75,7 +75,7 @@ async function handler(ctx) {
                 const inner$ = load(html);
                 const songName = inner$('.work-title').text() || inner$('.song-name').text() || '作品';
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
-                
+
                 // 尝试抓取发布时间，如果抓不到则用当前时间
                 const timeTag = formatTime(inner$('.time').text());
 
@@ -83,7 +83,7 @@ async function handler(ctx) {
                 const customTitle = `${timeTag}${author} - ${songName}${desc ? ' - ' + desc : ''}`;
 
                 return {
-                    title: customTitle, 
+                    title: customTitle,
                     description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
                     link: workLink,
                     author: author,
