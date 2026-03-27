@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 import CryptoJS from 'crypto-js';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -60,7 +60,7 @@ async function handler(ctx) {
         url,
         headers,
     });
-    
+
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
@@ -89,7 +89,7 @@ async function handler(ctx) {
                 const inner$ = load(html);
                 const title = inner$('.work-title').text() || inner$('.song-name').text() || '无题作品';
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
-                
+
                 return {
                     title: title,
                     description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
