@@ -74,7 +74,7 @@ async function handler(ctx) {
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
                 const timeTag = formatTime(inner$('.time').text());
 
-                // 构造文件名格式
+                // 文件名格式
                 const prettyFileName = `${timeTag}${author} - ${songName}${desc ? ' - ' + desc.substring(0, 20) : ''}`.replace(/[\\/:*?"<>|]/g, "_");
                 
                 // 在 URL 结尾通过查询参数注入文件名，Telegram 会读取这个部分作为文件名显示
