@@ -1,5 +1,6 @@
-import { Route, DataItem } from '@/types';
-import { handleTopSection, handleForumSection, handleCommentSection } from './utils';
+import type { DataItem, Route } from '@/types';
+
+import { handleCommentSection, handleForumSection, handleTopSection } from './utils';
 
 export const route: Route = {
     path: '/:category/:type?',

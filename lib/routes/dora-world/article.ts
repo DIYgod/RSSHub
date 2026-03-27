@@ -1,7 +1,9 @@
-import { Route, Data, DataItem, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -82,7 +84,7 @@ async function getContent(nextBuildId: string, contentId: string) {
     const description =
         content
             .html()
-            ?.replace(rubyRegex, '$1（$2）')
-            ?.replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
+            ?.replaceAll(rubyRegex, '$1（$2）')
+            ?.replaceAll(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
     return description;
 }

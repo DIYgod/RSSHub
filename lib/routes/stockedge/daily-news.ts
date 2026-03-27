@@ -1,5 +1,7 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {

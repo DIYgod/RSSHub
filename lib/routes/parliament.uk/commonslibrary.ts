@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
-import { Route } from '@/types';
+
+import type { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
 import timezone from '@/utils/timezone';
 

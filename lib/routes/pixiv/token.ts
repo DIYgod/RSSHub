@@ -1,7 +1,8 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import got from './pixiv-got';
+
 import { maskHeader } from './constants';
+import got from './pixiv-got';
 
 let token = null;
 

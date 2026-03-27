@@ -1,16 +1,17 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-
-import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = '' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://musify.club';
+    const baseUrl = 'https://musify.club';
     const targetUrl: string = new URL(language, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -96,10 +97,9 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Latest](https://musify.club/en), where the source URL is \`https://musify.club/en\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/musify/en\`](https://rsshub.app/musify/en).
-:::
-`,
+:::`,
     categories: ['multimedia'],
     features: {
         requireConfig: false,

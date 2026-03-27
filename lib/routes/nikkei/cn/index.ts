@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 import Parser from 'rss-parser';
+
+import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const parser = new Parser({
     customFields: {
@@ -62,7 +63,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    let language = '';
+    let language: string;
     let path = getSubPath(ctx);
 
     if (/^\/cn\/(cn|zh)/.test(path)) {
@@ -80,8 +81,8 @@ async function handler(ctx) {
 
     let officialFeed;
 
-    let items = [],
-        $;
+    let items: DataItem[];
+    let $;
 
     if (isOfficialRSS) {
         officialFeed = await parser.parseURL(currentUrl);
@@ -136,10 +137,7 @@ async function handler(ctx) {
 
                 item.author = content('meta[name="author"]').attr('content');
                 item.title = item.title ?? content('meta[name="twitter:title"]').attr('content');
-                item.description = content('#contentDiv')
-                    .html()
-                    ?.replace(/&nbsp;/g, '')
-                    .replaceAll('<p></p>', '');
+                item.description = content('#contentDiv').html()?.replaceAll('&nbsp;', '').replaceAll('<p></p>', '');
 
                 return item;
             })

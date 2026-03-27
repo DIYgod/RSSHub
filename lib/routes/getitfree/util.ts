@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 
 const rootUrl = 'https://getitfree.cn';
 const apiSlug = 'wp-json/wp/v2';
@@ -47,7 +48,7 @@ const bakeFilterSearchParams = (filterPairs, pairKey, isApi = false) => {
         const key = keys[0];
         const pairs = filterPairs[key];
 
-        const originalFilters = Object.assign({}, filterPairs);
+        const originalFilters = { ...filterPairs };
         delete originalFilters[key];
 
         filterSearchParams.append(getFilterKeyForSearchParams(key, isApi), pairs.map((pair) => (Object.hasOwn(pair, pairKey) ? pair[pairKey] : pair)).join(','));
@@ -120,7 +121,7 @@ const bakeFiltersWithPair = async (filters) => {
         const key = keys[0];
         const keywords = filters[key];
 
-        const originalFilters = Object.assign({}, filters);
+        const originalFilters = { ...filters };
         delete originalFilters[key];
 
         return bakeFilters(originalFilters, {
@@ -312,4 +313,4 @@ const parseFilterStr = (filterStr) => {
     return parseStr(filterStr, {});
 };
 
-export { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr };
+export { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr, rootUrl };

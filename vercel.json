@@ -1,0 +1,14 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": "hono",
+    "outputDirectory": "src",
+    "rewrites": [
+        {
+            "source": "/favicon.ico",
+            "destination": "/favicon.png"
+        }
+    ],
+    "github": {
+        "silent": true
+    }
+}

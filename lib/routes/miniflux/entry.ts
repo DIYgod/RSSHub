@@ -1,7 +1,7 @@
-import { Route, Data } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, DataItem, Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/entry/:feeds/:parameters?',
@@ -131,7 +131,7 @@ async function handler(ctx) {
 
     const entriesID = [];
     const feedsName = [];
-    const articles = [];
+    const articles: DataItem[] = [];
 
     // MiniFlux will only preserve the *first* valid filter option
     // for each parameter, in order to matching the default behavior
@@ -162,28 +162,16 @@ async function handler(ctx) {
         const feedsList = [feedsID.split('&')].flat();
 
         if (limit && queryLimit) {
-            if (limit < queryLimit) {
-                queryLimit = limit * feedsList.length;
-            } else {
+            if (limit >= queryLimit) {
                 const eachLimit = Number.parseInt(queryLimit / feedsList.length);
-                if (eachLimit) {
-                    limit = eachLimit;
-                } else {
-                    limit = 1;
-                    queryLimit = feedsList.length;
-                }
+                limit = eachLimit || 1;
             }
             parameters += `&limit=${limit}`;
         } else if (limit) {
             parameters += `&limit=${limit}`;
         } else if (queryLimit) {
             const eachLimit = Number.parseInt(queryLimit / feedsList.length);
-            if (eachLimit) {
-                limit = eachLimit;
-            } else {
-                limit = 1;
-                queryLimit = feedsList.length;
-            }
+            limit = eachLimit || 1;
             parameters += `&limit=${limit}`;
         }
 
@@ -233,13 +221,13 @@ async function handler(ctx) {
         let agTitle, agInfo;
         if (feedsNumber > 2) {
             agTitle = `MiniFlux | Aggregator For ${feedsNumber} Feeds`;
-            agInfo = 'An aggregator powered by MiniFlux and RSSHub. ' + 'This aggregator truthfully preserves the contents in ' + `${feedsNumber} feeds, including: ` + `<li>${feedsName.join('<li></li>')}</li>`;
+            agInfo = `An aggregator powered by MiniFlux and RSSHub. This aggregator truthfully preserves the contents in ${feedsNumber} feeds, including: <li>${feedsName.join('<li></li>')}</li>`;
         } else if (feedsNumber) {
             agTitle = `MiniFlux | ${feedsName.join(', ')}`;
-            agInfo = 'A RSS feed powered by MiniFlux and RSSHub ' + 'effortlessly republishes the contents in ' + `"${feedsName.join('" & "')}".`;
+            agInfo = `A RSS feed powered by MiniFlux and RSSHub effortlessly republishes the contents in "${feedsName.join('" & "')}".`;
         } else {
             agTitle = `MiniFlux | Feeds Aggregator`;
-            agInfo = 'An aggregator powered by MiniFlux and RSSHub ' + 'with empty content. If this is not your intention, ' + `please double-check your setting for parameters.`;
+            agInfo = 'An aggregator powered by MiniFlux and RSSHub with empty content. If this is not your intention, please double-check your setting for parameters.';
         }
 
         result = {
@@ -267,7 +255,7 @@ async function handler(ctx) {
         });
 
         const entries = response.data.entries;
-        const articles = [];
+        const articles: DataItem[] = [];
         for (const entry of entries) {
             entriesID.push(entry.id);
             let entryTitle = entry.title;

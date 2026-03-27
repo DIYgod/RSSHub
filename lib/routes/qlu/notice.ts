@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://www.qlu.edu.cn';
 
@@ -48,7 +49,7 @@ async function handler() {
             const path = item.find('.news_title').children().attr('href');
             const itemUrl = path.startsWith('https') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (path.startsWith('https')) {
                     description = itemTitle;
                 } else {

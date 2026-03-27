@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { TITLE, HOST } from './const';
-import { fetchPerformerInfo } from './service';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { HOST, TITLE } from './const';
+import { fetchPerformerInfo } from './service';
 
 export const route: Route = {
     path: '/artist/:id',
@@ -39,5 +41,6 @@ async function handler(ctx: Context): Promise<Data> {
         description: artist.content,
         link: `${HOST}/artist/${artist.id}`,
         item: artist.activityList,
+        allowEmpty: true,
     };
 }

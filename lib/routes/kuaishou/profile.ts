@@ -1,6 +1,7 @@
-import { Route, Data } from '@/types';
-import puppeteer from '@/utils/puppeteer';
 import { config } from '@/config';
+import type { Data, Route } from '@/types';
+import puppeteer from '@/utils/puppeteer';
+
 export const route: Route = {
     name: 'Profile',
     path: '/profile/:principalId',
@@ -66,7 +67,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
-    const resData = (await promise.catch((error) => error)) as Array<any>;
+    const resData = (await promise.catch((error) => error)) as any[];
 
     await browser.close();
     const data: Data = {

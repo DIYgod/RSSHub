@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const urlRoot = 'https://jwc.sjtu.edu.cn';
 
 async function getFullArticle(link) {
-    const response = await got(link).catch(() => null);
+    const response = await got(link);
     if (!response) {
         return null;
     }

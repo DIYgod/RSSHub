@@ -1,17 +1,18 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { year = new Date().getFullYear() } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://id-info.jihs.go.jp';
+    const baseUrl = 'https://id-info.jihs.go.jp';
     const targetUrl: string = new URL(`surveillance/idwr/jp/idwr/${year}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -51,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const enclosureUrl: string | undefined = linkUrl ? new URL(linkUrl, targetUrl).href : undefined;
 
             if (enclosureUrl) {
-                const enclosureType: string = `application/${enclosureUrl.split(/\./).pop()}`;
+                const enclosureType = `application/${enclosureUrl.split(/\./).pop()}`;
                 const enclosureTitle: string = $enclosureEl.text();
 
                 processedItem = {
@@ -91,10 +92,9 @@ export const route: Route = {
             description: 'Year, current year by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/), where the source URL is \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025).
-:::
-`,
+:::`,
     categories: ['government'],
     features: {
         requireConfig: false,
@@ -129,7 +129,7 @@ To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/s
                 description: '年份，默认为当前年份，可在对应页 URL 中找到',
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [传染病发生动向调查周报](https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/)，网址为 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/2025/\`，请截取 \`https://id-info.jihs.go.jp/surveillance/idwr/jp/idwr/\` 到末尾 \`/\` 的部分 \`2025\` 作为 \`year\` 参数填入，此时目标路由为 [\`/go/jihs/idwr/2025\`](https://rsshub.app/go/jihs/idwr/2025)。
 :::
 `,

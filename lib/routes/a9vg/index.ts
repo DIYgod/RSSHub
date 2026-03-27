@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news/All' } = ctx.req.param();
@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 link: new URL(item.prop('href'), rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     images: image
                         ? [
                               {
@@ -59,7 +59,7 @@ export const handler = async (ctx) => {
                     el = $$(el);
 
                     el.parent().replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             images: el.prop('file')
                                 ? [
                                       {
@@ -73,7 +73,7 @@ export const handler = async (ctx) => {
                 });
 
                 item.title = $$('h1.ts, div.c-article-main_content-title').first().text();
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     description: $$('td.t_f, div.c-article-main_contentraw').first().html(),
                 });
                 item.author =

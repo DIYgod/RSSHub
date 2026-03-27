@@ -1,20 +1,21 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/security-releases';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = 'en-us' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://support.apple.com';
+    const baseUrl = 'https://support.apple.com';
     const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -26,9 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el) => $(el).text());
 
-    let items: DataItem[] = [];
-
-    items = $trEls
+    let items: DataItem[] = $trEls
         .slice(1, limit)
         .toArray()
         .map((el): Element => {
@@ -36,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const titleEl: Cheerio<Element> = $el.find('td').first();
             const title: string = titleEl.contents().first().text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/security-releases.art'), {
+            const description: string | undefined = renderDescription({
                 headers,
                 infos: $el
                     .find('td')
@@ -81,7 +80,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/security-releases.art'), {
+                    renderDescription({
                         description: $$('div#sections').html(),
                     });
                 const pubDateStr: string | undefined = detailResponse.match(/publish_date:\s"(\d{8})",/, '')?.[1];
@@ -133,7 +132,7 @@ export const route: Route = {
             description: 'Language, `en-us` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Apple security releases](https://support.apple.com/en-us/100100), where the source URL is \`https://support.apple.com/en-us/100100\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/apple/security-releases/en-us\`](https://rsshub.app/apple/security-releases/en-us).
 :::
 `,
@@ -171,7 +170,7 @@ To subscribe to [Apple security releases](https://support.apple.com/en-us/100100
                 description: '语言，默认为 `en-us`，可在对应页 URL 中找到',
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Apple 安全性发布](https://support.apple.com/zh-cn/100100)，网址为 \`https://support.apple.com/zh-cn/100100\`，请截取 \`https://support.apple.com/\` 到末尾 \`/100100\` 的部分 \`zh-cn\` 作为 \`language\` 参数填入，此时目标路由为 [\`/apple/security-releases/zh-cn\`](https://rsshub.app/apple/security-releases/zh-cn)。
 :::
 `,

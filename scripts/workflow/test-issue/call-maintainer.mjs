@@ -1,5 +1,5 @@
-import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
@@ -11,8 +11,14 @@ const deprecatedRoute = 'route: deprecated';
 const route = 'route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
+// eslint-disable-next-line unicorn/no-useless-collection-argument
 const dndUsernames = new Set([]);
 
+/**
+ * @param {string} body
+ * @param {typeof import('@actions/core')} core
+ * @returns {Promise<string[] | null>}
+ */
 async function parseBodyRoutes(body, core) {
     const ast = await unified().use(remarkParse).parse(body);
 
@@ -42,6 +48,11 @@ async function parseBodyRoutes(body, core) {
     throw new Error('unable to parse the issue body: route does not exist');
 }
 
+/**
+ * @param {string[]} routes
+ * @param {typeof import('@actions/core')} core
+ * @returns {Promise<(string[] | undefined)[]>}
+ */
 async function getMaintainersByRoutes(routes, core) {
     const response = await fetch(maintainerURL);
     const maintainers = await response.json();
@@ -56,6 +67,10 @@ async function getMaintainersByRoutes(routes, core) {
     });
 }
 
+/**
+ * @param {{ github: ReturnType<typeof import('@actions/github').getOctokit>, context: typeof import('@actions/github').context, core: typeof import('@actions/core') }} githubScript
+ * @returns {Promise<void>}
+ */
 export default async function callMaintainer({ github, context, core }) {
     const body = context.payload.issue.body;
     const issueFacts = {
@@ -64,6 +79,7 @@ export default async function callMaintainer({ github, context, core }) {
         repo: context.repo.repo,
     };
 
+    /** @param {string[]} labels */
     const addLabels = (labels) =>
         github.rest.issues
             .addLabels({
@@ -73,6 +89,7 @@ export default async function callMaintainer({ github, context, core }) {
             .catch((error) => {
                 core.warning(error);
             });
+    /** @param {'open' | 'closed'} state */
     const updateIssueState = (state) =>
         github.rest.issues
             .update({
@@ -124,7 +141,7 @@ export default async function callMaintainer({ github, context, core }) {
         if (main.length > 0) {
             const pingStr = main
                 .map((e) => {
-                    if (e in dndUsernames) {
+                    if (dndUsernames.has(e)) {
                         return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
                     }
                     return `@${e}`;

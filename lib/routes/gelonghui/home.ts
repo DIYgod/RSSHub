@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { parseItem } from './utils';
 
 export const route: Route = {
@@ -34,7 +36,7 @@ export const route: Route = {
     handler,
     description: `| 推荐            | 股票  | 基金 | 新股       | 研报     |
 | --------------- | ----- | ---- | ---------- | -------- |
-| web\_home\_page | stock | fund | new\_stock | research |`,
+| web_home_page | stock | fund | new_stock | research |`,
 };
 
 async function handler(ctx) {

@@ -1,9 +1,10 @@
-import { Route, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:category/:type?',
@@ -61,7 +62,8 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
-                    const $ = load(await ofetch(item.link!));
+                    const html = await ofetch(item.link!);
+                    const $ = load(html);
                     const content = $('.list_cont');
 
                     item.title = content.find('.title').text();

@@ -1,8 +1,9 @@
-import { resourceFromAttributes } from '@opentelemetry/resources';
-import { PrometheusExporter, PrometheusSerializer } from '@opentelemetry/exporter-prometheus';
-import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
-import { MeterProvider } from '@opentelemetry/sdk-metrics';
 import type { Attributes } from '@opentelemetry/api';
+import { PrometheusExporter, PrometheusSerializer } from '@opentelemetry/exporter-prometheus';
+import { resourceFromAttributes } from '@opentelemetry/resources';
+import { MeterProvider } from '@opentelemetry/sdk-metrics';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+
 import { config } from '@/config';
 
 interface IMetricAttributes extends Attributes {

@@ -1,17 +1,18 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '50', 10);
 
     const apiSlug = 'wp-json/wp/v2';
-    const baseUrl: string = 'https://www.xwenming.com';
+    const baseUrl = 'https://www.xwenming.com';
 
     const apiUrl = new URL(`${apiSlug}/posts`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/categories`, baseUrl).href;
@@ -127,7 +128,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [科技前沿](https://www.xwenming.com/index.php/category/news)，其源网址为 \`https://www.xwenming.com/index.php/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/xwenming/category/news\`](https://rsshub.app/xwenming/category/news) 或 [\`/xwenming/category/科技前沿\`](https://rsshub.app/xwenming/category/科技前沿)。
 :::
 

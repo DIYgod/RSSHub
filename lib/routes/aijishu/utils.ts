@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate, parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 const parseArticle = (item) => {
     const articleUrl = `https://aijishu.com${item.url || item.object.url}`;

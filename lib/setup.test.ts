@@ -1,6 +1,6 @@
-import { afterAll, afterEach } from 'vitest';
-import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+import { afterAll, afterEach } from 'vitest';
 
 const genWeChatMpPage = (rich_media_content: string, scripts: string[] | string) => {
     if (!Array.isArray(scripts)) {
@@ -83,6 +83,51 @@ window.ip_wording = {
             )
         )
     ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_empty`, () =>
+        HttpResponse.text(
+            `<meta name="description" content="summary" />
+<meta name="author" content="author" />
+<meta property="og:title" content="title" />
+<meta property="og:image" content="https://mmbiz.qpic.cn/rsshub_test/og_img_1/0?wx_fmt=jpeg" />
+<meta property="twitter:card" content="summary" />
+<div class="rich_media_content" id="js_content" style="visibility: hidden;"></div>
+<div id="js_share_source" data-url="https://mp.weixin.qq.com/rsshub_test/original_source"></div>
+<div class="wx_follow_nickname">mpName</div>
+<script type="text/javascript" nonce="000000000">
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";
+</script>`
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_source`, () =>
+        HttpResponse.text(
+            genWeChatMpPage(
+                `original content`,
+                `
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+            )
+        )
+    ),
+    http.get(`https://mp.weixin.qq.com/rsshub_test/original_long`, () =>
+        HttpResponse.text(
+            genWeChatMpPage(
+                'long-content-'.repeat(10),
+                `
+var item_show_type = "0";
+var real_item_show_type = "0";
+var appmsg_type = "9";
+var ct = "${1_636_626_300}";
+var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
+            )
+        )
+    ),
     http.get(`https://mp.weixin.qq.com/rsshub_test/img`, () =>
         HttpResponse.text(
             genWeChatMpPage('fake_description', [
@@ -157,7 +202,12 @@ var ct = "${1_636_626_300}";
         )
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
-    http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
+    http.get(`https://mp.weixin.qq.com/s`, ({ request }) => {
+        const url = new URL(request.url);
+        if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
+            return HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`);
+        }
+    }),
     http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
         HttpResponse.text(
             `<html>
@@ -221,11 +271,7 @@ Unknown paragraph
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
-    http.get(`http://rsshub.test/headers`, ({ request }) =>
-        HttpResponse.json({
-            ...Object.fromEntries(request.headers.entries()),
-        })
-    ),
+    http.get(`http://rsshub.test/headers`, ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
     http.post(`http://rsshub.test/form-post`, async ({ request }) => {
         const formData = await request.formData();
         return HttpResponse.json({
@@ -243,7 +289,7 @@ Unknown paragraph
     }),
     http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
 );
-server.listen();
+server.listen({ onUnhandledRequest: 'bypass' });
 
 afterAll(() => server.close());
 afterEach(() => server.resetHandlers());

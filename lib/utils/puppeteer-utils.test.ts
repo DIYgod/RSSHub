@@ -1,7 +1,8 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
-import { parseCookieArray, constructCookieArray, setCookies, getCookies } from '@/utils/puppeteer-utils';
-import puppeteer from '@/utils/puppeteer';
 import type { Browser } from 'rebrowser-puppeteer';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import puppeteer from '@/utils/puppeteer';
+import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/puppeteer-utils';
 
 let browser: Browser | null = null;
 
@@ -73,7 +74,7 @@ describe('puppeteer-utils', () => {
         await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'httpbingo.org')).split('; ').sort()).toEqual(['foo=bar', 'baz=qux'].sort());
+        expect((await getCookies(page, 'httpbingo.org')).split('; ').toSorted()).toEqual(['foo=bar', 'baz=qux'].toSorted());
     }, 45000);
 
     it('setCookies httpbingo', async () => {
@@ -85,7 +86,7 @@ describe('puppeteer-utils', () => {
             waitUntil: 'domcontentloaded',
         });
         const data = await page.evaluate(() => JSON.parse(document.body.textContent || ''));
-        expect(data).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
+        expect(data.cookies).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
     }, 45000);
 
     it('setCookies & getCookies example.org', async () => {
@@ -96,6 +97,6 @@ describe('puppeteer-utils', () => {
         await page.goto('https://example.org', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'example.org')).split('; ').sort()).toEqual(cookieStrAll.split('; ').sort());
+        expect((await getCookies(page, 'example.org')).split('; ').toSorted()).toEqual(cookieStrAll.split('; ').toSorted());
     }, 45000);
 });

@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import * as cheerio from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
 import { baseUrl, gqlEndpoint, parseItem } from './utils';
 
 interface Tag {
@@ -33,7 +35,7 @@ const handler = async (ctx) => {
     const gqlResponse = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 node(input: {id: "${tagId}"}) {
                   ... on Tag {
                     content

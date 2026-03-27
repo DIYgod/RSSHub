@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 type ArticleData = [
     string,

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { finishArticleItem } from '@/utils/wechat-mp';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { finishArticleItem } from '@/utils/wechat-mp';
 
 const oaa_base_url = 'http://oaa.tju.edu.cn/';
 const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
@@ -109,9 +110,8 @@ async function handler(ctx) {
                     case 'tju-oaa':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
-                                detailResponse = await got(item.link, { https: { rejectUnauthorized: false } });
+                                const detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.description = content('.v_news_content').html();
                             } catch {

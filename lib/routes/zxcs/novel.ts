@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import type { Route, DataItem } from '@/types';
 
 const types = {
     jinqigengxin: '近期更新',

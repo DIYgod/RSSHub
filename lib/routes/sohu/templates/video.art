@@ -1,7 +1,0 @@
-<video controls
-    {{ if poster }}
-        poster="{{ poster }}"
-    {{ /if }}
->
-    <source src="{{ src }}" type="video/{{ type }}"/>
-</video>

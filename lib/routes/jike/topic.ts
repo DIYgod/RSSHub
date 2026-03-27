@@ -1,9 +1,12 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { topicDataHanding, constructTopicEntry } from './utils';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { constructTopicEntry, topicDataHanding } from './utils';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 
@@ -30,6 +33,10 @@ export const route: Route = {
     radar: [
         {
             source: ['web.okjike.com/topic/:id'],
+            target: '/topic/:id',
+        },
+        {
+            source: ['m.okjike.com/topics/:id'],
             target: '/topic/:id',
         },
     ],
@@ -61,8 +68,8 @@ async function handler(ctx) {
                             const links = upper.find('a').map((_, ele) => $(ele).attr('href'));
                             const texts = upper.find('span.text').map((_, ele) => $(ele).text());
                             let description = '';
-                            for (const [i, link] of links.entries()) {
-                                description += `${i + 1}、<a href="${link}">${texts[i]}</a><br>`;
+                            for (let i = 0; i < links.length; i++) {
+                                description += `${i + 1}、<a href="${links[i]}">${texts[i]}</a><br>`;
                             }
                             description = description.replace(/<br>$/, '');
                             return description;

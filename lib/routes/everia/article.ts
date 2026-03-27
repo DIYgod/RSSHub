@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import got from '@/utils/got';
 
 async function loadArticle(link) {

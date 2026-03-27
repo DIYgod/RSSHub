@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://www.ymgal.games';
 
@@ -45,7 +46,7 @@ async function handler(ctx) {
                 data.push(...response.data.data);
             })
         );
-        data = data.sort((a, b) => b.publishTime - a.publishTime).slice(0, 10);
+        data = data.toSorted((a, b) => b.publishTime - a.publishTime).slice(0, 10);
     } else {
         const response = await got(link);
         data = response.data.data;

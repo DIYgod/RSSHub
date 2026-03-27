@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/global/tag/:tag?',
@@ -34,19 +36,19 @@ async function handler(ctx) {
 
     const rootUrl = 'https://global.udn.com';
     const currentUrl = `${rootUrl}/search/tagging/1020/${tag}`;
-    const apiUrl = `${rootUrl}/search/ajax_tag/1020/${tag}`;
+    const apiUrl = `${rootUrl}/global_vision/load/article/newest/tag:${tag}`;
 
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
 
-    let items = response.data.articles.map((item) => ({
-        title: item.TITLE,
-        author: item.AUTHOR,
-        pubDate: parseDate(item.TIMESTAMP * 1000),
-        category: item.TAG.map((t) => t.tag),
-        link: `${rootUrl}/global_vision/story/${item.CATE_ID}/${item.ART_ID}`,
+    let items = response.data.lists.map((item) => ({
+        title: item.title,
+        author: item.author?.title,
+        pubDate: timezone(parseDate(item.time?.dateTime), +8),
+        link: item.url,
+        category: item.hash?.map((h) => h.title),
     }));
 
     items = await Promise.all(
@@ -59,11 +61,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('#story_art_title, #story_bady_info, #story_also').remove();
-                content('.social_bar, .photo_pop, .only_mobile, .area').remove();
+                const mainImage = content('.article-content__focus').html();
+                const articleBodyHtml = content('.article-content__editor')
+                    .find('p, figure, h2, .video-container')
+                    .toArray()
+                    .map((e) => content.html(e))
+                    .join('');
 
-                item.author = content('#story_author_name').text();
-                item.description = content('#tags').prev().html();
+                item.description = mainImage + articleBodyHtml;
 
                 return item;
             })

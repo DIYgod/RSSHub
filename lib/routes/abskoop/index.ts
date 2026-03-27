@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -16,6 +17,9 @@ export const route: Route = {
     maintainers: ['zhenhappy'],
     handler,
     url: 'ahhhhfs.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

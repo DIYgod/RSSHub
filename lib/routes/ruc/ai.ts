@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/ai/:category?',
@@ -26,7 +27,7 @@ export const route: Route = {
     name: '高瓴人工智能学院',
     maintainers: ['yinhanyan'],
     handler: async (ctx) => {
-        const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'newslist/notice';
+        const category = ctx.req.param('category')?.replaceAll('-', '/') ?? 'newslist/notice';
         const baseURL = `http://ai.ruc.edu.cn/${category}/`;
         const indexUrl = baseURL + 'index.htm';
         const response = await ofetch(indexUrl);

@@ -1,21 +1,23 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import vm from 'node:vm';
+
 import { load } from 'cheerio';
 import markdownit from 'markdown-it';
-import vm from 'node:vm';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 interface Package {
     name: string;
     version: string;
     entrypoint: string;
-    authors: Array<string>;
+    authors: string[];
     license: string;
     description: string;
     repository: string;
-    keywords: Array<string>;
+    keywords: string[];
     compiler: string;
-    exclude: Array<string>;
+    exclude: string[];
     size: number;
     readme: string;
     updatedAt: number;
@@ -23,7 +25,7 @@ interface Package {
 }
 
 interface Context {
-    an: { exports: Array<Package> };
+    an: { exports: Package[] };
 }
 
 const GITHUBRAW_BASE = 'https://raw.githubusercontent.com';
@@ -77,7 +79,7 @@ export const route: Route = {
                 displayErrors: true,
             });
             const md = markdownit('commonmark');
-            const items = context.an.exports.sort((a, b) => a.updatedAt - b.updatedAt);
+            const items = context.an.exports.toSorted((a, b) => a.updatedAt - b.updatedAt);
             const groups = new Map(items.map((it) => [it.name, it]));
             const pkgs = [...groups.values()].map((item) => {
                 const $ = load(md.render(item.readme));

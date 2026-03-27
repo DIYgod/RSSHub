@@ -1,7 +1,7 @@
+import undici from 'undici';
 import { describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
-import undici from 'undici';
 
 const { config } = await import('@/config');
 

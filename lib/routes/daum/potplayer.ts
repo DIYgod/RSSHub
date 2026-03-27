@@ -1,14 +1,15 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const baseUrl: string = 'https://t1.daumcdn.net';
+    const baseUrl = 'https://t1.daumcdn.net';
     const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${lang ?? ''}.html`, baseUrl).href;
 
     const response: string = await ofetch(targetUrl);
@@ -26,9 +27,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     while ((match = updateRegex.exec(response)) !== null && items.length < limit) {
         const headerLine: string | undefined = match[2].trim();
-        const description: string | undefined = match[4].trim()?.replace(/(\s[+-])/g, '<br>$1');
+        const description: string | undefined = match[4].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
-        let version: string = 'N/A';
+        let version = 'N/A';
         let pubDateStr: string | undefined = undefined;
 
         // Regex to extract version (e.g., [1.4.20199] or [250514])
@@ -55,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
         }
 
-        const guid: string = `potplayer-${lang}-${version}`;
+        const guid = `potplayer-${lang}-${version}`;
 
         const processedItem: DataItem = {
             title: version,
@@ -125,7 +126,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html), where the source URL is \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/daum/potplayer/Eng\`](https://rsshub.app/daum/potplayer/Eng).
 :::
 
@@ -239,7 +240,7 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
                 ],
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html)，网址为 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html\`，请截取 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update\` 到末尾的部分 \`Chs\` 作为 \`lang\` 参数填入，此时目标路由为 [\`/daum/potplayer/Chs\`](https://rsshub.app/daum/potplayer/Chs)。
 :::
 

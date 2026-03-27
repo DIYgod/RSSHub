@@ -1,5 +1,4 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -21,7 +20,7 @@ async function handler() {
                 return Object.values(response);
             })
         )
-    ).flat() as {
+    ).flat() as Array<{
         manifest: {
             name: string;
         };
@@ -33,7 +32,7 @@ async function handler() {
         topics?: string[];
         last_updated: string;
         last_fetched: number;
-    }[];
+    }>;
 
     return {
         title: 'HACS Repositories',

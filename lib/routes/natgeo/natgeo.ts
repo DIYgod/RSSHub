@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -9,21 +10,16 @@ import { parseDate } from '@/utils/parse-date';
 async function loadContent(link) {
     const data = await ofetch(link);
     const $ = load(data);
-    const dtStr = $('.content-title-area')
-        .find('h6')
-        .first()
-        .text()
-        .replaceAll(/&nbsp;/gi, ' ')
-        .trim();
+    const dtStr = $('.content-title-area').find('h6').first().text().replaceAll('&nbsp;', ' ').trim();
 
-    $('.splide__arrows, .slide-control').remove();
+    $('.splide__arrows, .slide-control, [class^="ad-"], style').remove();
 
     let description = ($('article').eq(0).html() ?? '') + ($('article').eq(1).html() ?? '');
     if (/photo|gallery/.test(link)) {
         description = $('#content-album').html() + description;
     }
     return {
-        title: $('title').text(),
+        title: $('h1.content-title').text().trim(),
         pubDate: parseDate(dtStr),
         description,
         category: $('.content-tag a')
@@ -66,6 +62,7 @@ async function handler(ctx) {
 
     const urlList = $('.article-link-content h4')
         .toArray()
+        .filter((i) => $(i).closest('.article-link-right').length === 0) // 移除右側熱門精選
         .map((i) => ({
             link: $(i).find('a[href]').first().attr('href'),
         }))

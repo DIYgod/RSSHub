@@ -1,9 +1,9 @@
-import { parseDate } from '@/utils/parse-date';
-import { DataItem } from '@/types';
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 
 const getAccessToken: () => Promise<string | null> = async () => {
     let accessToken: string | null = await cache.get('tumblr:accessToken', false);
@@ -31,9 +31,7 @@ const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () 
     };
 };
 
-const generateAuthParams: () => { apiKey?: string } = () => ({
-    apiKey: config.tumblr.clientId,
-});
+const generateAuthParams: () => string = () => config.tumblr.clientId!;
 
 const processPost: (post: any) => DataItem = (post) => {
     let description = '';
@@ -41,6 +39,13 @@ const processPost: (post: any) => DataItem = (post) => {
     switch (post.type) {
         case 'text':
             description = post.body;
+            break;
+        case 'answer':
+            description += post.asking_url === null ? `<p>${post.asking_name} asks:</p>` : `<p><a href="${post.asking_url}">${post.asking_name}</a> asks:</p>`;
+            description += post.question;
+            description += '<hr>';
+            description += `<p><a href="${post.blog.url}">${post.blog_name}</a> answers:</p>`;
+            description += post.answer;
             break;
         case 'photo':
             for (const photo of post.photos ?? []) {
@@ -58,6 +63,7 @@ const processPost: (post: any) => DataItem = (post) => {
     }
 
     return {
+        author: post.blog_name,
         id: post.id_string,
         title: post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { header, processImage, getSignedHeader } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getSignedHeader, header, processImage } from './utils';
 
 export const route: Route = {
     path: '/question/:questionId/:sortBy?',
@@ -9,7 +10,13 @@ export const route: Route = {
     example: '/zhihu/question/59895982',
     parameters: { questionId: '问题 id', sortBy: '排序方式：`default`, `created`, `updated`。默认为 `default`' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+                optional: true,
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,

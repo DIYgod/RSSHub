@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 // import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -76,7 +77,7 @@ async function handler(ctx) {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                let desc = '';
+                let desc: string;
                 try {
                     const response = await got(item.link);
                     desc = load(response.data)('div.wp_articlecontent').html();

@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/user/:id',
@@ -23,7 +23,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['dianping.com/member/:id', 'm.dianping.com/userprofile/:id'],
+            source: ['dianping.com/member/:id'],
+            target: '/dianping/user/:id',
+        },
+        {
+            source: ['m.dianping.com/userprofile/:id'],
             target: '/dianping/user/:id',
         },
     ],

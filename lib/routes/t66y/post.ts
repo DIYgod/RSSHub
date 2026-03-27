@@ -1,8 +1,10 @@
-import { Route } from '@/types';
 import * as cheerio from 'cheerio';
-import got from '@/utils/got';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { baseUrl, parseContent } from './utils';
 
 function parseItems(tid: string, $: cheerio.CheerioAPI) {
@@ -42,6 +44,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '帖子跟踪',
     maintainers: ['cnzgray'],

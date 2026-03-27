@@ -1,7 +1,8 @@
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const host = 'https://www.dlsite.com';
 const infos = {
@@ -141,6 +142,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Discounted Works',
     maintainers: ['cssxsh'],

@@ -1,29 +1,28 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'all' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://asiafruitchina.net';
+    const baseUrl = 'https://asiafruitchina.net';
     const targetUrl: string = new URL(`categories?gspx=${category}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.listBlocks ul li')
+    let items: DataItem[] = $('div.listBlocks ul li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -31,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('div.storyDetails h3 a');
 
             const title: string = $aEl.text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 images:
                     $el.find('a.image img').length > 0
                         ? $el
@@ -82,8 +81,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.story_title h1').text();
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.storytext').html(),
+                    const description: string = renderDescription({
+                        description: $$('div.storytext').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('span.date').first().text().split(/：/).pop();
                     const categories: string[] =
@@ -364,7 +363,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [橙](https://asiafruitchina.net/categories?gspx=chengzi)，网址为 \`https://asiafruitchina.net/categories?gspx=chengzi\`，请截取 \`https://asiafruitchina.net/categories?gspx=\` 到末尾的部分 \`chengzi\` 作为 \`category\` 参数填入，此时目标路由为 [\`/asiafruitchina/categories/chengzi\`](https://rsshub.app/asiafruitchina/categories/chengzi)。
 :::
 

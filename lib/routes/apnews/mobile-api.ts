@@ -1,8 +1,11 @@
-import { Route, ViewType } from '@/types';
-import { fetchArticle } from './utils';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import { fetchArticle } from './utils';
 
 export const route: Route = {
     path: '/mobile/:path{.+}?',
@@ -81,7 +84,7 @@ async function handler(ctx) {
             }
         })
         .filter(Boolean)
-        .sort((a, b) => b.pubDate - a.pubDate)
+        .toSorted((a, b) => b.pubDate - a.pubDate)
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;

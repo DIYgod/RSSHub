@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import { parseList } from './util';
-const baseUrl = 'https://www.zaobao.com';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { logo } from './util';
 
 export const route: Route = {
     path: '/interactive-graphics',
@@ -11,15 +13,25 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
+    const baseUrl = 'https://www.zaobao.com.sg'; // SG Only
     const sectionLink = '/interactive-graphics';
 
-    const { resultList } = await parseList(ctx, sectionLink);
+    const response = await ofetch(`${baseUrl}/_plat/api/v2/page-content/interactive-graphics`);
+
+    const items = response.response.articles.map((i) => ({
+        title: i.title,
+        description: i.summary,
+        link: new URL(i.href, baseUrl).href,
+        pubDate: parseDate(i.timestamp, 'X'),
+        image: i.thumbnail,
+    }));
 
     return {
-        title: '《联合早报》互动新闻',
+        title: response.seoMetaInfo.seoTitle,
         link: baseUrl + sectionLink,
-        description: '新加坡、中国、亚洲和国际的即时、评论、商业、体育、生活、科技与多媒体新闻，尽在联合早报。',
-        item: resultList,
+        description: response.seoMetaInfo.seoDescription,
+        image: logo,
+        item: items,
     };
 }

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 // Yep http is bad, but I had no choice :(
 const rootMeta = {
@@ -74,14 +75,11 @@ async function handler(ctx) {
         item: await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const $ = load(
-                        (
-                            await got({
-                                method: 'get',
-                                url: item.link,
-                            })
-                        ).body
-                    );
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+                    const $ = load(response.body);
                     item.author = /作者：(\S*)\s{4}/g.exec($('p', '.main_contit').text())[1];
                     item.description = $('#vsb_content').html();
                     return item;

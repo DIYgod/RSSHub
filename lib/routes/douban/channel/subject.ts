@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -45,7 +45,7 @@ async function handler(ctx) {
 
     const channel_name = channel_info_response.data.title;
     const data = response.data.modules[nav].payload.subjects;
-    let nav_name = '';
+    let nav_name: string;
 
     switch (nav) {
         case '0':
@@ -60,6 +60,8 @@ async function handler(ctx) {
         case '3':
             nav_name = '唱片';
             break;
+        default:
+            throw new Error(`Unknown nav: ${nav}`);
     }
 
     return {

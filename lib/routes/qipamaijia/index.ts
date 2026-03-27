@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const rootUrl = 'https://www.qipamaijia.com';
 
@@ -34,13 +35,7 @@ async function handler(ctx) {
     const cate = ctx.req.param('cate') ?? '';
     const url = `${rootUrl}/${cate}`;
 
-    const response = await got({
-        method: 'get',
-        url,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(url);
     const $ = load(response.data);
     const title = $('#highlight').text();
     const items = $('div.col_l > div.block')

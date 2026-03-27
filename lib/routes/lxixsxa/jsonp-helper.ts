@@ -2,7 +2,7 @@ function parseJSONP(jsonpData) {
     try {
         const startPos = jsonpData.indexOf('({');
         const endPos = jsonpData.lastIndexOf('})');
-        let jsonString = jsonpData.substring(startPos + 1, endPos + 1);
+        let jsonString = jsonpData.slice(startPos + 1, endPos + 1);
 
         // remove escaped single quotes since they are not valid json
         jsonString = jsonString.replaceAll(String.raw`\'`, "'");

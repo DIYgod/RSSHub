@@ -1,4 +1,0 @@
-{{ each images image }}
-<img src="{{ image }}">
-{{ /each }}
-{{@ description }}

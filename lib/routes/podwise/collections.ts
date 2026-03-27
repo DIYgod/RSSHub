@@ -1,5 +1,7 @@
-import { Route, ViewType } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 
 export const route: Route = {

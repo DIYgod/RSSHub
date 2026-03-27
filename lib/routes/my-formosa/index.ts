@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -56,7 +57,7 @@ async function handler() {
                     const res = await fetch(link);
                     const $ = load(res);
 
-                    const isTV = /^\/TV/.test(new URL(link).pathname);
+                    const isTV = new URL(link).pathname.startsWith('/TV');
 
                     return {
                         title,

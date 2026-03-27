@@ -1,10 +1,15 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
-import { load } from 'cheerio';
-import path from 'node:path';
-import { art } from '@/utils/render';
+
+import { renderHeader } from './templates/header';
+
+const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
+
+const shouldKeep = (b: any) => !excludeTypes.has(b.__typename.trim());
 
 export const route: Route = {
     path: '/:hub?',
@@ -46,6 +51,9 @@ export const route: Route = {
 };
 
 const renderBlock = (b) => {
+    if (!shouldKeep(b)) {
+        return '';
+    }
     switch (b.__typename) {
         case 'CoreEmbedBlockType':
             return b.embedHtml;
@@ -60,7 +68,7 @@ const renderBlock = (b) => {
         case 'CoreListBlockType':
             return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
         case 'CoreParagraphBlockType':
-            return b.contents.html;
+            return b.tempContents.map((c) => c.html).join('');
         case 'CorePullquoteBlockType':
             return `<blockquote>${b.contents.html}</blockquote>`;
         case 'CoreQuoteBlockType':
@@ -69,15 +77,25 @@ const renderBlock = (b) => {
             return '<hr>';
         case 'HighlightBlockType':
             return b.children.map((c) => renderBlock(c)).join('');
+        case 'ImageCompareBlockType':
+            return `<figure><img src="${b.leftImage.thumbnails.horizontal.url.split('?')[0]}" alt="${b.leftImage.alt}" /><img src="${b.rightImage.thumbnails.horizontal.url.split('?')[0]}" alt="${b.rightImage.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
+        case 'ImageSliderBlockType':
+            return b.images.map((i) => `<figure><img src="${i.image.originalUrl.split('?')[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
         case 'MethodologyAccordionBlockType':
             return `<h2>${b.heading.html}</h2>${b.sections.map((s) => `<h3>${s.heading.html}</h3>${s.content.html}`).join('')}`;
+        case 'ProductBlockType': {
+            const product = b.product;
+            return `<div><figure><img src="${product.image.thumbnails.horizontal.url.split('?')[0]}" alt="${product.image.alt}" /><figcaption>${product.image.alt}</figcaption></figure><br><a href="${product.bestRetailLink.url}">${product.title} $${product.bestRetailLink.price}</a><br>${product.description.html}${product.pros.html ? `<br>The Good${product.pros.html}The Bad${product.cons.html}` : ''}</div>`;
+        }
+        case 'TableBlockType':
+            return `<table><tr>${b.header.map((cell) => `<th>${cell}</th>`).join('')}</tr>${b.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
 };
 
 async function handler(ctx) {
-    const link = ctx.req.param('hub') ? `https://www.theverge.com/${ctx.req.param('hub')}/rss/index.xml` : 'https://www.theverge.com/rss/index.xml';
+    const link = ctx.req.param('hub') ? `https://www.theverge.com/rss/${ctx.req.param('hub')}/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
     const feed = await parser.parseURL(link);
 
@@ -91,22 +109,19 @@ async function handler(ctx) {
                 const nextData = JSON.parse($('script#__NEXT_DATA__').text());
                 const node = nextData.props.pageProps.hydration.responses.find((x) => x.operationName === 'PostLayoutQuery' || x.operationName === 'StreamLayoutQuery').data.node;
 
-                let description = art(path.join(__dirname, 'templates/header.art'), {
+                let description = renderHeader({
                     featuredImage: node.featuredImage,
                     ledeMediaData: node.ledeMediaData,
                 });
 
-                description += node.blocks
-                    .filter((b) => b.__typename !== 'NewsletterBlockType' && b.__typename !== 'RelatedPostsBlockType' && b.__typename !== 'ProductBlockType' && b.__typename !== 'TableOfContentsBlockType')
-                    .map((b) => renderBlock(b))
-                    .join('<br><br>');
+                description += node.blocks.map((b) => renderBlock(b)).join('<br><br>');
 
                 if (node.__typename === 'StreamResourceType') {
                     description += node.posts.edges
                         .map(({ node: n }) => {
                             let d =
                                 `<h2><a href="${n.permalink}">${n.promo.headline || n.title}</a></h2>` +
-                                art(path.join(__dirname, 'templates/header.art'), {
+                                renderHeader({
                                     ledeMediaData: n.ledeMediaData,
                                 });
                             switch (n.__typename) {

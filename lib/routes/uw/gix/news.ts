@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 const gixBaseURL = 'https://gixnetwork.org';
 
@@ -49,6 +50,8 @@ async function handler(ctx) {
             feedTitle += 'In The News';
             listSelector += 'div.news-wrapper > section.news-list > article';
             break;
+        default:
+            throw new Error(`Unknown category: ${category}`);
     }
 
     const response = await got(newsURL);

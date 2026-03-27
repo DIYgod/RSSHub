@@ -1,6 +1,7 @@
-import { Data, DataItem, Route } from '@/types';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, DataItem, Route } from '@/types';
+
 import { getFollowingsItems } from './utils';
 
 export const route: Route = {
@@ -21,6 +22,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Following Creators',
     maintainers: ['SnowAgar25'],

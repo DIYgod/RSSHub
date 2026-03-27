@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
 
 const md = MarkdownIt({ html: true });
 
@@ -87,7 +88,7 @@ async function handler(ctx) {
     const items = response.activities
         .map((activity) => processActivity(activity, issueId))
         .filter((item) => item !== null)
-        .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+        .toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
         .slice(0, limit);
 
     return {

@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
 
@@ -69,7 +70,7 @@ const handler: Route['handler'] = async () => {
             id: 'https://rsshub.app/xbmu/academic',
         };
     } catch (error) {
-        throw new Error(`Error fetching academic information: ${error}`);
+        throw new Error(`Error fetching academic information: ${error}`, { cause: error });
     }
 };
 

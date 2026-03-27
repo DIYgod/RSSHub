@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import path from 'node:path';
 
-import { rootUrl, apiTopicUrl, art, processItems } from './util';
+import { renderDescription } from './templates/description';
+import { apiTopicUrl, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/:category?',
@@ -26,7 +26,7 @@ export const route: Route = {
     handler,
     description: `| 热门话题 | 科技动态 | 医疗产业 | 财经快讯           |
 | -------- | -------- | -------- | ------------------ |
-|          | news     | medical  | financial\_express |`,
+|          | news     | medical  | financial_express |`,
 };
 
 async function handler(ctx) {
@@ -50,10 +50,11 @@ async function handler(ctx) {
     let items = response.data.items.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.url ?? new URL(`topic/${item.uid}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             description: item.summary,
             news: item.newsAggList,
             timeline: item.timeline,
+            rootUrl,
         }),
         author: item.siteNameDisplay,
         category: [...(item.entityList.map((c) => c.name) ?? []), ...(item.tagList.map((c) => c.name) ?? [])],

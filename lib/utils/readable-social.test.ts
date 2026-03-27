@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { fallback, queryToBoolean, queryToInteger, queryToFloat } from './readable-social';
+
+import { fallback, queryToBoolean, queryToFloat, queryToInteger } from './readable-social';
 
 describe('fallback', () => {
     test('应该返回第一个存在的参数', () => {
@@ -24,6 +25,12 @@ describe('queryToBoolean', () => {
         expect(queryToBoolean('0')).toBe(false);
         expect(queryToBoolean('false')).toBe(false);
     });
+
+    test('should handle undefined and array inputs', () => {
+        expect(queryToBoolean(undefined)).toBeUndefined();
+        expect(queryToBoolean([])).toBeUndefined();
+        expect(queryToBoolean(['false', 'true'])).toBe(false);
+    });
 });
 
 describe('queryToInteger', () => {
@@ -35,6 +42,11 @@ describe('queryToInteger', () => {
     test('should handle invalid inputs', () => {
         expect(queryToInteger(null)).toBeNull();
         expect(queryToInteger('abc')).toBeNaN();
+    });
+
+    test('should handle array inputs', () => {
+        expect(queryToInteger([])).toBeUndefined();
+        expect(queryToInteger(['7'])).toBe(7);
     });
 });
 
@@ -53,6 +65,10 @@ describe('queryToFloat', () => {
 
     test('should process array input', () => {
         expect(queryToFloat(['3.14'])).toBe(3.14);
+    });
+
+    test('should handle empty array', () => {
+        expect(queryToFloat([])).toBeUndefined();
     });
 
     test('should convert numeric string', () => {

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { getItemList as detailItemList } from './detail';
 
-import { ensureDomain } from './utils';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { getItemList as detailItemList } from './detail';
+import { ensureDomain } from './utils';
 
 function getItemList($) {
     const list = $(`#vod .list-group-item`)

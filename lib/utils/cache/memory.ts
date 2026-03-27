@@ -1,5 +1,7 @@
 import { LRUCache } from 'lru-cache';
+
 import { config } from '@/config';
+
 import type CacheModule from './base';
 
 const status = { available: false };
@@ -25,6 +27,12 @@ export default {
         } else {
             return null;
         }
+    },
+    has: (key: string) => {
+        if (key && status.available && clients.memoryCache) {
+            return clients.memoryCache.has(key);
+        }
+        return false;
     },
     set: (key, value, maxAge = config.cache.contentExpire) => {
         if (!value || value === 'undefined') {

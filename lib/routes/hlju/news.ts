@@ -1,7 +1,8 @@
-import { Route, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -99,7 +100,7 @@ async function handler(ctx) {
 
                 // 提取文章内容 - 只使用主要内容选择器
                 const content = $detail('.v_news_content');
-                let description = '';
+                let description: string;
 
                 if (content.length > 0) {
                     // 清理内容

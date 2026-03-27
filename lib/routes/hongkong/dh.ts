@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -30,7 +31,7 @@ export const route: Route = {
 
 | English | 中文简体 | 中文繁體 |
 | ------- | -------- | -------- |
-| english | chs      | tc\_chi  |`,
+| english | chs      | tc_chi  |`,
 };
 
 async function handler(ctx) {

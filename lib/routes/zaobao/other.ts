@@ -1,5 +1,7 @@
-import { Route } from '@/types';
-import { parseList } from './util';
+import type { Route } from '@/types';
+
+import { logo, parseList } from './util';
+
 const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
@@ -18,12 +20,13 @@ async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'china';
     const sectionLink = `/${type}/${section}`;
 
-    const { title, resultList } = await parseList(ctx, sectionLink);
+    const { title, resultList } = await parseList(sectionLink);
 
     return {
         title: `《联合早报》${title}`,
         link: baseUrl + sectionLink,
         description: '新加坡、中国、亚洲和国际的即时、评论、商业、体育、生活、科技与多媒体新闻，尽在联合早报。',
+        image: logo,
         item: resultList,
     };
 }

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -33,7 +34,8 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 5;
     const link = `https://syosetu.org/novel/${id}`;
-    const $ = load(await get(link));
+    const html = await get(link);
+    const $ = load(html);
 
     const title = $('span[itemprop="name"]').text();
     const description = $('div.ss:nth-child(2)').text();
@@ -49,14 +51,15 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate($_chapter.find('nobr').text(), 'YYYYMMDD HH:mm'), +9),
             };
         })
-        .sort((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
+        .toSorted((a, b) => (a.pubDate <= b.pubDate ? 1 : -1))
         .slice(0, limit);
 
     const item_list = await Promise.all(
         chapter_list.map((chapter) => {
             chapter.link = `${link}/${chapter.link}`;
             return cache.tryGet(chapter.link, async () => {
-                const content = load(await get(chapter.link));
+                const html = await get(chapter.link);
+                const content = load(html);
                 chapter.description = content('#honbun').html();
                 return chapter;
             });

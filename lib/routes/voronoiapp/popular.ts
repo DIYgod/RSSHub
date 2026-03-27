@@ -1,4 +1,5 @@
 import type { Data, Route } from '@/types';
+
 import { CategoryParam, CommonDataProperties, CommonRouteProperties, getPostItems, TabMap, TabParam, TimeRangeParam } from './common';
 
 export const route: Route = {

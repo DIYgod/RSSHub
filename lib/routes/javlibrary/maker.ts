@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { defaultMode, defaultLanguage, defaultMaker, rootUrl, ProcessItems } from './utils';
+
+import { defaultLanguage, defaultMaker, defaultMode, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/videos/maker/:maker?/:language?/:mode?',
@@ -14,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Videos by makers',
     maintainers: [],

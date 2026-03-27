@@ -8,6 +8,10 @@ export const namespace: Namespace = {
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 \`locallimit.us.sinaimg.cn\` 而非 \`f.video.weibocdn.com\`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
 :::
 
+::: warning
+大部分路由均需要 Cookies 才能获取。优先使用 \`WEIBO_COOKIES\`；未设置时尝试使用 Puppeteer 获取访客 Cookies。部分路由不支持访客访问，则必须设置 \`WEIBO_COOKIES\`，详见各个路由的文档。
+:::
+
 对于微博内容，在 \`routeParams\` 参数中以 query string 格式指定选项，可以控制输出的样式
 
 | 键                         | 含义                                                               | 接受的值       | 默认值                              |
@@ -27,15 +31,15 @@ export const namespace: Namespace = {
 | displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                                |
 | displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
 | displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
-| showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 \`[表情名]\`                  | 0/1/true/false | true                                |
-| showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
+| showEmojiInDescription     | 是否展示正文和评论中的微博表情，关闭则替换为 \`[表情名]\`            | 0/1/true/false | true                                |
+| showLinkIconInDescription  | 是否展示正文和评论中的链接图标                                     | 0/1/true/false | true                                |
 | preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
 | showRetweeted              | 是否显示转发的微博                                                 | 0/1/true/false | true                               |
 | showBloggerIcons           | 是否显示评论中博主的标志，只在显示热门评论时有效                                           | 0/1/true/false | false                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
-[https://rsshub.app/weibo/user/1642909335/readable=1\&authorNameBold=1\&showAuthorInTitle=1\&showAuthorInDesc=1\&showAuthorAvatarInDesc=1\&showEmojiForRetweet=1\&showRetweetTextInTitle=0\&addLinkForPics=1\&showTimestampInDescription=1\&showTimestampInDescription=1\&heightOfPics=150](https://rsshub.app/weibo/user/1642909335/readable=1\&authorNameBold=1\&showAuthorInTitle=1\&showAuthorInDesc=1\&showAuthorAvatarInDesc=1\&showEmojiForRetweet=1\&showRetweetTextInTitle=0\&addLinkForPics=1\&showTimestampInDescription=1\&showTimestampInDescription=1\&heightOfPics=150)
+[https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150](https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150)
 
 的效果为
 

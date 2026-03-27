@@ -45,7 +45,11 @@ Currently supports two authentication methods:
 
 - Using \`TWITTER_AUTH_TOKEN\` (recommended): Configure a comma-separated list of \`auth_token\` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.
 
-- Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.
+~~- Using \`TWITTER_USERNAME\` \`TWITTER_PASSWORD\` and \`TWITTER_AUTHENTICATION_SECRET\`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.
+
+- Using \`TWITTER_CONSUMER_KEY\` and \`TWITTER_CONSUMER_SECRET\`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.
+- OPTIONAL: Using \`TWITTER_ACCESS_TOKEN\` and \`TWITTER_ACCESS_SECRET\`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.
+
 `,
     lang: 'en',
 };

@@ -1,9 +1,10 @@
-import { Route, ViewType } from '@/types';
-import { getFulltext } from './utils-fulltext';
-
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import { parseArticle } from './utils';
+import { getFulltext } from './utils-fulltext';
 
 export const route: Route = {
     path: '/latest',

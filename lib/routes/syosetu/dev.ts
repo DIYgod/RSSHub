@@ -1,7 +1,8 @@
-import { Data, Route } from '@/types';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dev',
@@ -49,7 +50,7 @@ async function handler(): Promise<Data> {
     const updates = dates
         .map((date, index) => ({
             date,
-            content: contents[index]?.replace(/\n/g, '<br>') ?? '',
+            content: contents[index]?.replaceAll('\n', '<br>') ?? '',
         }))
         .filter((update) => update.content);
 

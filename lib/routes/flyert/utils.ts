@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import pMap from 'p-map';
+
+import got from '@/utils/got';
 import wait from '@/utils/wait';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
@@ -69,7 +70,7 @@ const ProcessFeed = (list, caches) => {
             const other = await caches.tryGet(itemUrl, () => loadContent(itemUrl));
 
             // 合并解析后的结果集作为该篇文章最终的输出结果
-            return Object.assign({}, single, other);
+            return { ...single, ...other };
         },
         { concurrency: 2 }
     ); // 设置并发请求数量为 2

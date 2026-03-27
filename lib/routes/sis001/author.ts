@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
 import { getCookie, getThread } from './common';
 
 export const route: Route = {
@@ -18,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '作者',
     maintainers: ['keocheung'],

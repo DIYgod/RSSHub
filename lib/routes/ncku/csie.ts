@@ -1,5 +1,7 @@
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
-import { CheerioAPI, load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 
 const currentURL = (catagory: string, page: number) => (catagory === '_all' ? `https://www.csie.ncku.edu.tw/zh-hant/news?page=${page}` : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=${page}`);

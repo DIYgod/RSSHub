@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import auth from './auth';
-import { processImage } from '../utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { processImage } from '../utils';
+import auth from './auth';
 
 export const route: Route = {
     path: '/xhu/topic/:topicId',
@@ -48,11 +49,11 @@ async function handler(ctx) {
         link,
         item: listRes.map(({ target: item }) => {
             const type = item.type;
-            let title = '';
-            let description = '';
-            let link = '';
-            let pubDate = new Date();
-            let author = '';
+            let title: string;
+            let description: string;
+            let link: string;
+            let pubDate: Date;
+            let author: string;
 
             switch (type) {
                 case 'answer':

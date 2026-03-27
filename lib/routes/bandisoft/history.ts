@@ -1,11 +1,12 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 const idOptions = [
     {
@@ -129,19 +130,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const validIds: Set<string> = new Set(idOptions.map((option) => option.value));
+    const validIds = new Set<string>(idOptions.map((option) => option.value));
 
     if (!validIds.has(id)) {
         throw new Error(`Invalid id: ${id}. Allowed values are: ${[...validIds].join(', ')}`);
     }
 
-    const validLanguages: Set<string> = new Set(languageOptions.map((option) => option.value));
+    const validLanguages = new Set<string>(languageOptions.map((option) => option.value));
 
     if (!validLanguages.has(language)) {
         throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);
     }
 
-    const baseUrl: string = `https://${language}.bandisoft.com`;
+    const baseUrl = `https://${language}.bandisoft.com`;
     const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -162,7 +163,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
 
             const linkUrl: string = targetUrl;
-            const guid: string = `bandisoft-${id}-${language}-${version}`;
+            const guid = `bandisoft-${id}-${language}-${version}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
@@ -214,7 +215,7 @@ export const route: Route = {
             options: languageOptions,
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/history/), where the source URL is \`https://www.bandisoft.com/bandizip/history/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/bandisoft/history/bandizip\`](https://rsshub.app/bandisoft/history/bandizip).
 :::
 
@@ -289,7 +290,7 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
                 options: languageOptions,
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Bandizip 更新记录](https://cn.bandisoft.com/bandizip/history/)，网址为 \`https://cn.bandisoft.com/bandizip/history/\`，请截取 \`cn\` 作为 \`category\` 参数填入，此时目标路由为 [\`/bandisoft/:language?/:id?\`](https://rsshub.app/bandisoft/:language?/:id?)。
 :::
 

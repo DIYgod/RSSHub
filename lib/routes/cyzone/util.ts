@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.cyzone.cn';
@@ -64,7 +65,7 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
 
         return {
             title: item.title,
-            link: /^\/\//.test(item.url) ? `https:${item.url}` : item.url,
+            link: item.url.startsWith('//') ? `https:${item.url}` : item.url,
             description: item.description,
             category: [item.category_name, ...(item.tags?.split(',') ?? [])],
             guid: item.content_id,
@@ -114,4 +115,4 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
     return items;
 };
 
-export { rootUrl, apiRootUrl, getInfo, processItems };
+export { apiRootUrl, getInfo, processItems, rootUrl };

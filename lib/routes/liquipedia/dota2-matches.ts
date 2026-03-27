@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -44,7 +45,7 @@ async function handler(ctx) {
         link: url,
         item: list?.toArray().map((item) => {
             item = $(item);
-            let message = '';
+            let message: string;
             if (item.attr('style') === 'background:rgb(240, 255, 240)') {
                 message = '胜';
             } else if (item.attr('style') === 'background:rgb(249, 240, 242)') {

@@ -1,10 +1,11 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 const createSearchParams = (queryString: string, limit: number = 30): URLSearchParams => {
     const params = new URLSearchParams(queryString);
@@ -26,8 +27,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
     const params: URLSearchParams = createSearchParams(filters, limit);
 
-    const baseUrl: string = 'https://digitalpolicyalert.org';
-    const apiBaseUrl: string = 'https://api.globaltradealert.org';
+    const baseUrl = 'https://digitalpolicyalert.org';
+    const apiBaseUrl = 'https://api.globaltradealert.org';
     const targetUrl: string = new URL(`activity-tracker?${params.toString()}`, baseUrl).href;
     const apiUrl: string = new URL('dpa/intervention', apiBaseUrl).href;
 
@@ -39,9 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = response.results.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.latest_event?.description ?? undefined;
         const pubDate: number | string = item.latest_event?.date;
@@ -106,7 +105,7 @@ export const route: Route = {
             description: 'Filter, all by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Activity Tracker - International trade](https://digitalpolicyalert.org/activity-tracker?policy=1), where the source URL is \`https://digitalpolicyalert.org/activity-tracker?policy=1\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/digitalpolicyalert/activity-tracker/policy=1\`](https://rsshub.app/digitalpolicyalert/activity-tracker/policy=1).
 :::
 `,

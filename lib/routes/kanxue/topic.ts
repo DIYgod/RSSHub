@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseRelativeDate, parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://bbs.kanxue.com/';
 const categoryId = {
@@ -73,15 +74,13 @@ async function handler(ctx) {
             path = `forum-${categoryId[category][0]}.html`;
             title = `看雪论坛最新主题 - ${categoryId[category][1]}`;
         }
-    } else {
+    } else if (category === 'digest') {
         // category未知时则获取全站最新帖
-        if (category === 'digest') {
-            path = 'new-digest.htm';
-            title = '看雪论坛精华主题';
-        } else {
-            path = 'new-tid.htm';
-            title = '看雪论坛最新主题';
-        }
+        path = 'new-digest.htm';
+        title = '看雪论坛精华主题';
+    } else {
+        path = 'new-tid.htm';
+        title = '看雪论坛最新主题';
     }
 
     const response = await got({

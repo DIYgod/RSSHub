@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import { apiBase, baseUrl, getUserInfo, renderCast } from './utils';
 
 export const route: Route = {

@@ -1,7 +1,8 @@
-import { Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://auto.hdu.edu.cn';

@@ -1,16 +1,17 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
 
-    const baseUrl: string = 'https://community.chocolatey.org';
+    const baseUrl = 'https://community.chocolatey.org';
     const targetUrl: string = new URL(`packages/${id}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -32,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             avatar: $authorEl.attr('src'),
         };
     });
-    const guid: string = `chocolatey-${title}`;
+    const guid = `chocolatey-${title}`;
     const image: string | undefined = $('div.package-logo img').attr('src') ? new URL($('div.package-logo img').attr('src') as string, baseUrl).href : undefined;
     const upDatedStr: string | undefined = pubDateStr;
 

@@ -1,15 +1,18 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import JSONbig from 'json-bigint';
-import utils, { getLiveUrl, getVideoUrl } from './utils';
-import { parseDate } from '@/utils/parse-date';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
-import cacheIn from './cache';
-import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
-import { parseDuration } from '@/utils/helpers';
+
 import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDuration } from '@/utils/helpers';
+import { parseDate } from '@/utils/parse-date';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
+import cacheIn from './cache';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -126,34 +129,58 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: string[] = [];
+    const imgUrls: Array<{
+        url: string;
+        width?: number;
+        height?: number;
+    }> = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
     }
     // 动态图片
     if (major.opus?.pics?.length) {
-        imgUrls.push(...major.opus.pics.map((e) => e.url));
+        imgUrls.push(
+            ...major.opus.pics.map((e) => ({
+                url: e.url,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 专栏封面
     if (major.article?.covers?.length) {
-        imgUrls.push(...major.article.covers);
+        imgUrls.push(
+            ...major.article.covers.map((e) => ({
+                url: e,
+            }))
+        );
     }
     // 相簿
     if (major.draw?.items?.length) {
-        imgUrls.push(...major.draw.items.map((e) => e.src));
+        imgUrls.push(
+            ...major.draw.items.map((e) => ({
+                url: e.src,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 正在直播的动态
     if (major.live_rcmd?.content) {
-        imgUrls.push(JSON.parse(major.live_rcmd.content)?.live_play_info?.cover);
+        imgUrls.push({
+            url: JSON.parse(major.live_rcmd.content)?.live_play_info?.cover,
+        });
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
-        imgUrls.push(major[type].cover);
+        imgUrls.push({
+            url: major[type]?.cover,
+        });
     }
     return imgUrls
         .filter(Boolean)
-        .map((url) => `<img src="${url}">`)
+        .map((img) => `<img src="${img.url}" ${img.width ? `width="${img.width}"` : ''} ${img.height ? `height="${img.height}"` : ''}>`)
         .join('');
 };
 
@@ -235,6 +262,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
 };
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -267,6 +295,7 @@ async function handler(ctx) {
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
+            cache.set('bili-cookie', '');
             throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
@@ -396,7 +425,7 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
-                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
 
                 return {
                     title: title || originalDescription,

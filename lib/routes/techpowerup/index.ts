@@ -1,26 +1,28 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { baseUrl, headers, fixImages, parseReviews } from './utils';
+
+import { baseUrl, fixImages, headers, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/',
     radar: [
         {
             source: ['techpowerup.com/'],
-            target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Latest Content',
     maintainers: ['TonyRL'],
+    example: '/techpowerup',
     handler,
-    url: 'techpowerup.com/',
+    url: 'www.techpowerup.com/',
 };
 
 async function handler() {
-    const { data: response } = await got(baseUrl, {
+    const response = await ofetch(baseUrl, {
         headers,
     });
 
@@ -29,15 +31,15 @@ async function handler() {
     const list = $('.newspost')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('h1 a');
-            const date = item.find('time').attr('datetime');
+            const $item = $(item);
+            const a = $item.find('h1 a');
+            const date = $item.find('time').attr('datetime');
             return {
                 title: a.text(),
                 link: baseUrl + a.attr('href'),
                 pubDate: date ? parseDate(date) : null, // 2023-05-21T16:05:14+00:00
-                author: item.find('.byline address').text(),
-                category: item
+                author: $item.find('.byline address').text(),
+                category: $item
                     .find('.byline .flags span')
                     .toArray()
                     .map((item) => $(item).text().trim()),
@@ -47,7 +49,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link, {
+                const response = await ofetch(item.link, {
                     headers,
                 });
                 const $ = load(response);

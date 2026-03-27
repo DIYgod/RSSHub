@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 import { getArticle } from './utils';
 
 export const route: Route = {
@@ -88,7 +88,7 @@ query ($take: Int, $skip: Int, $orderBy: [PostOrderByInput!]!, $filter: PostWher
         title: e.title,
         pubDate: parseDate(e.publishedDate),
         category: [...(e.sections ?? []).map((_) => `section:${_.name}`), ...(e.categories ?? []).map((_) => `category:${_.name}`)],
-        link: `${rootUrl}/${'story'}/${e.slug}`,
+        link: `${rootUrl}/story/${e.slug}`,
     }));
 
     const list = await Promise.all(items.map((item) => getArticle(item)));

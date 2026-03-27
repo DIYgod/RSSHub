@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://vocus.cc';
@@ -43,4 +44,4 @@ const ProcessFeed = (list, tryGet) =>
         )
     );
 
-export { processList, ProcessFeed, baseUrl, apiUrl };
+export { apiUrl, baseUrl, ProcessFeed, processList };

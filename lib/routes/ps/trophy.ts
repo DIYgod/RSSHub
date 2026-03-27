@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/trophy/:id',
@@ -87,7 +88,7 @@ async function handler(ctx) {
     for (const item of items) {
         result = [...result, ...item];
     }
-    result = result.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    result = result.toSorted((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
     return {
         title: `${id} 的 PSN 奖杯`,

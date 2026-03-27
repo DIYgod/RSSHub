@@ -1,15 +1,16 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.azul.com';
-    const apiBaseUrl: string = 'https://api.azul.com';
+    const baseUrl = 'https://www.azul.com';
+    const apiBaseUrl = 'https://api.azul.com';
     const targetUrl: string = new URL('downloads', baseUrl).href;
     const apiUrl: string = new URL('metadata/v1/zulu/packages', apiBaseUrl).href;
 
@@ -29,13 +30,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
-        const javaVersion: string = `${item.java_version.join('.')}+${item.openjdk_build_number}`;
+        const javaVersion = `${item.java_version.join('.')}+${item.openjdk_build_number}`;
         const distroVersion: string = item.distro_version.join('.');
 
-        const title: string = `[${javaVersion}] (${distroVersion}) ${item.name}`;
+        const title = `[${javaVersion}] (${distroVersion}) ${item.name}`;
         const linkUrl: string | undefined = item.download_url;
         const categories: string[] = [item.os, item.arch, item.java_package_type, item.archive_type, item.abi, ...(item.javafx_bundled ? ['javafx'] : []), ...(item.crac_supported ? ['crac'] : [])];
-        const guid: string = `azul-${item.name}`;
+        const guid = `azul-${item.name}`;
 
         let processedItem: DataItem = {
             title,

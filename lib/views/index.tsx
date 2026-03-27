@@ -1,9 +1,9 @@
 import type { FC } from 'hono/jsx';
 
-import { Layout } from '@/views/layout';
 import { config } from '@/config';
-import { gitHash, gitDate } from '@/utils/git-hash';
 import { getDebugInfo } from '@/utils/debug-info';
+import { gitDate, gitHash } from '@/utils/git-hash';
+import { Layout } from '@/views/layout';
 
 const startTime = Date.now();
 
@@ -78,7 +78,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Routes',
                 value: Object.keys(debug.routes)
-                    .sort((a, b) => debug.routes[b] - debug.routes[a])
+                    .toSorted((a, b) => debug.routes[b] - debug.routes[a])
                     .slice(0, 30)
                     .map((route) => (
                         <>
@@ -90,7 +90,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Paths',
                 value: Object.keys(debug.paths)
-                    .sort((a, b) => debug.paths[b] - debug.paths[a])
+                    .toSorted((a, b) => debug.paths[b] - debug.paths[a])
                     .slice(0, 30)
                     .map((path) => (
                         <>
@@ -102,7 +102,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Error Routes',
                 value: Object.keys(debug.errorRoutes)
-                    .sort((a, b) => debug.errorRoutes[b] - debug.errorRoutes[a])
+                    .toSorted((a, b) => debug.errorRoutes[b] - debug.errorRoutes[a])
                     .slice(0, 30)
                     .map((route) => (
                         <>
@@ -114,7 +114,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
             {
                 name: 'Hot Error Paths',
                 value: Object.keys(debug.errorPaths)
-                    .sort((a, b) => debug.errorPaths[b] - debug.errorPaths[a])
+                    .toSorted((a, b) => debug.errorPaths[b] - debug.errorPaths[a])
                     .slice(0, 30)
                     .map((path) => (
                         <>
@@ -142,9 +142,23 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 </h1>
                 <p className="text-xl font-medium text-zinc-600">The world's largest RSS Network.</p>
                 <p className="text-zinc-500">If you see this page, the RSSHub is successfully installed and working.</p>
+                <p className="max-w-xl text-center text-zinc-500">
+                    Pair your feeds with{' '}
+                    <a target="_blank" href="https://folo.is/" className="text-[#F5712C]">
+                        Folo
+                    </a>
+                    , an AI RSS reader built for feed discovery and modern reading workflows. Source code is available on{' '}
+                    <a target="_blank" href="https://github.com/RSSNext/Folo" className="text-[#F5712C]">
+                        GitHub
+                    </a>
+                    .
+                </p>
                 <div className="font-bold space-x-4 text-sm">
                     <a target="_blank" href="https://docs.rsshub.app">
                         <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full transition-colors">Home</button>
+                    </a>
+                    <a target="_blank" href="https://folo.is/">
+                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full transition-colors">Try Folo</button>
                     </a>
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
                         <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full transition-colors">GitHub</button>
@@ -194,7 +208,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub/graphs/contributors" className="text-[#F5712C]">
                         Contributors
                     </a>{' '}
-                    under MIT License.
+                    under AGPL-3.0 License.
                 </p>
             </div>
         </Layout>

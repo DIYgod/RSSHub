@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -77,7 +78,7 @@ async function handler(ctx) {
                     .find('ul li') // 定位到附件列表项
                     .each(function () {
                         const $li = $(this);
-                        const newText = $li.html()?.replace(/已下载[\s\S]*?<\/span>次/g, '') ?? '';
+                        const newText = $li.html()?.replaceAll(/已下载[\s\S]*?<\/span>次/g, '') ?? '';
                         $li.html(newText.replace(/<\/a>\s*$/, '</a>'));
                     })
                     .end()

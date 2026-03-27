@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/desc';
 
 const rootUrl = 'https://chn.oversea.cnki.net';
 
@@ -63,7 +63,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got.get(item.link);
                 const $ = load(detailResponse.data);
-                item.description = art(path.join(__dirname, 'templates/desc.art'), {
+                item.description = renderDescription({
                     author: $('h3.author > span')
                         .toArray()
                         .map((item) => $(item).text())

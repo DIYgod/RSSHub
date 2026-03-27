@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const base = 'https://houqin.qdu.edu.cn/';
 
@@ -47,7 +48,6 @@ async function handler() {
             const path = item.find('a').attr('href');
             const itemUrl = base + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
                 const result = await got(itemUrl);
                 const $ = load(result.data);
                 if (
@@ -68,7 +68,7 @@ async function handler() {
                         8
                     );
                 }
-                description = $('.v_news_content').html().trim();
+                const description = $('.v_news_content').html()?.trim();
 
                 return {
                     title: itemTitle,

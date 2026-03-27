@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
@@ -93,4 +94,4 @@ function ensureDomain(ctx, domain = defaultDomain) {
     return origin;
 }
 
-export { defaultDomain, magnetTrackers, getUrlType, composeMagnetUrl, decodeCipherText, ensureDomain };
+export { composeMagnetUrl, decodeCipherText, defaultDomain, ensureDomain, getUrlType, magnetTrackers };

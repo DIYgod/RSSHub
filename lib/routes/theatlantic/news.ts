@@ -1,7 +1,10 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
 import { getArticleDetails } from './utils';
+
 export const route: Route = {
     path: '/:category',
     categories: ['traditional-media'],
@@ -42,9 +45,7 @@ async function handler(ctx) {
     let list = Object.values(data)[0].river.edges;
     list = list.filter((item) => !item.node.url.startsWith('https://www.theatlantic.com/photo'));
     list = list.map((item) => {
-        const data = {};
-        data.link = item.node.url;
-        data.pubDate = item.node.datePublished;
+        const data = { link: item.node.url, pubDate: item.node.datePublished };
         return data;
     });
     const items = await getArticleDetails(list);

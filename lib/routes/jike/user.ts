@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -20,6 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['web.okjike.com/u/:uid'],
+            target: '/user/:uid',
+        },
+        {
+            source: ['m.okjike.com/users/:uid'],
             target: '/user/:uid',
         },
     ],

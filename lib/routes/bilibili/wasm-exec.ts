@@ -1,3 +1,5 @@
+// oxlint-disable unicorn/prefer-math-trunc
+// oxlint-disable no-unused-vars
 /* eslint-disable prefer-rest-params */
 /* eslint-disable default-case */
 /* eslint-disable unicorn/consistent-function-scoping */
@@ -147,7 +149,6 @@
         };
     }
 
-    // eslint-disable-next-line n/no-unsupported-features/node-builtins
     if (!globalThis.crypto) {
         throw new Error('globalThis.crypto is not available, polyfill required (crypto.getRandomValues only)');
     }
@@ -208,7 +209,7 @@
             };
 
             const storeValue = (addr, v) => {
-                const nanHead = 0x7F_F8_00_00;
+                const nanHead = 0x7f_f8_00_00;
 
                 if (typeof v === 'number' && v !== 0) {
                     if (Number.isNaN(v)) {
@@ -320,7 +321,7 @@
 
                     // func resetMemoryDataView()
                     'runtime.resetMemoryDataView': (sp) => {
-                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-useless-assignment
                         sp >>>= 0;
                         this.mem = new DataView(this._inst.exports.mem.buffer);
                     },
@@ -373,7 +374,6 @@
                     // func getRandomData(r []byte)
                     'runtime.getRandomData': (sp) => {
                         sp >>>= 0;
-                        // eslint-disable-next-line n/no-unsupported-features/node-builtins
                         crypto.getRandomValues(loadSlice(sp + 8));
                     },
 
@@ -595,7 +595,7 @@
             }
             argvPtrs.push(0);
 
-            const keys = Object.keys(this.env).sort();
+            const keys = Object.keys(this.env).toSorted();
             for (const key of keys) {
                 argvPtrs.push(strPtr(`${key}=${this.env[key]}`));
             }

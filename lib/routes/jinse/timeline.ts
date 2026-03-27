@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/timeline/:category?',
@@ -55,8 +56,8 @@ async function handler(ctx) {
     const { category = '头条' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
-    const rootUrl = 'https://www.jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://www.jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('noah/v3/timelines', rootApiUrl).href;
     const currentUrl = rootUrl;
 
@@ -72,10 +73,14 @@ async function handler(ctx) {
     let items = response.data.list.slice(0, limit).map((item) => {
         item = item.object_1 ?? item.object_2;
 
+        // Reason: API returns mixed domains (jinse.com, m.jinse.com.cn, jinse.com.cn),
+        // normalize all to www.jinse.com.cn since old domains are dead
+        const link = item.jump_url.replace(/\/\/(www\.|m\.)?jinse\.com(?!\.cn)/, '//www.jinse.com.cn').replace('//m.jinse.com.cn', '//www.jinse.com.cn');
+
         return {
             title: item.title,
-            link: item.jump_url,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            link,
+            description: renderDescription({
                 images: item.cover
                     ? [
                           {
@@ -107,7 +112,7 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('section.js-article-content').html() || content('div.js-article').html(),
                 });
                 item.category = content('section.js-article-tag_state_1 a span')

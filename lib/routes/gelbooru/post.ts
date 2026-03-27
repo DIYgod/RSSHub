@@ -1,10 +1,12 @@
-import { Route, ViewType } from '@/types';
-import { Context } from 'hono';
-import { parseDate } from '@/utils/parse-date';
-import { renderDesc, getAPIKeys } from './utils';
-
-import got from '@/utils/got';
+import type { Context } from 'hono';
 import queryString from 'query-string';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { getAPIKeys, renderDesc } from './utils';
 
 export const route: Route = {
     path: '/post/:tags?/:quality?',
@@ -37,6 +39,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -66,7 +69,7 @@ async function handler(ctx: Context) {
     const tags = decodeURIComponent(_tags).trim();
 
     const { limit = 40 }: { limit?: number } = ctx.req.query();
-    const { apiKey, useId } = getAPIKeys();
+    const { apiKey, userId } = getAPIKeys();
 
     const response = await got({
         url: 'https://gelbooru.com/index.php',
@@ -76,7 +79,7 @@ async function handler(ctx: Context) {
             q: 'index',
             tags,
             api_key: apiKey,
-            user_id: useId,
+            user_id: userId,
             limit: limit <= 0 || limit > 100 ? 40 : limit,
             json: 1,
         }),

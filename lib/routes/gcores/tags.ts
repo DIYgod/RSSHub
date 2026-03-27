@@ -1,6 +1,7 @@
-import { type Data, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
-import { type Context } from 'hono';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
@@ -67,7 +68,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [美国 - 文章](https://www.gcores.com/tags/1/originals?tab=articles)，网址为 \`https://www.gcores.com/tags/1/originals?tab=articles\`，请截取 \`https://www.gcores.com/tags/\` 到末尾 \`/originals\` 的部分 \`1\` 作为 \`id\` 参数填入，截取 \`articles\` 作为 \`tab\` 参数填入，此时目标路由为 [\`/gcores/tags/1/articles\`](https://rsshub.app/gcores/tags/1/articles)。
 :::
 

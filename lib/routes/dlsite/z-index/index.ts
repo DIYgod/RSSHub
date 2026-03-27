@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { ProcessItems } from '../utils';
 
 export const route: Route = {
@@ -6,6 +7,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

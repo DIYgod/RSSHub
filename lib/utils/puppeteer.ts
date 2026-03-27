@@ -1,8 +1,11 @@
+import { anonymizeProxy } from 'proxy-chain';
+import type { Browser, Page } from 'rebrowser-puppeteer';
+import puppeteer from 'rebrowser-puppeteer';
+
 import { config } from '@/config';
-import puppeteer, { Browser, Page } from 'rebrowser-puppeteer';
+
 import logger from './logger';
 import proxy from './proxy';
-import { anonymizeProxy } from 'proxy-chain';
 
 /**
  * @deprecated use getPage instead
@@ -59,6 +62,10 @@ const outPuppeteer = async () => {
 };
 
 export default outPuppeteer;
+
+// No-op in Node.js environment (used by Worker build via alias)
+
+export const setBrowserBinding = (_binding: any) => {};
 
 /**
  * @returns Puppeteer page

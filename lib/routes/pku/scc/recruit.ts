@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const arr = {
@@ -56,7 +57,7 @@ async function handler(ctx) {
             };
         });
 
-    const sorted = list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, 10);
+    const sorted = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, 10);
 
     return {
         title: `北京大学学生就业指导服务中心 - ${feed_title}`,

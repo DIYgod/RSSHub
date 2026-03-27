@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const base = 'https://jwc.qdu.edu.cn/';
 
@@ -48,7 +49,7 @@ async function handler() {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : base + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (path.startsWith('http')) {
                     description = itemTitle;
                 } else {

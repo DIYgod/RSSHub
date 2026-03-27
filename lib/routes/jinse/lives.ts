@@ -1,10 +1,11 @@
-import { Route, ViewType } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const categories = {
     0: '全部',
@@ -47,8 +48,8 @@ async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
-    const rootUrl = 'https://jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('noah/v2/lives', rootApiUrl).href;
     const currentUrl = new URL('lives', rootUrl).href;
 
@@ -70,7 +71,7 @@ async function handler(ctx) {
             .map((item) => ({
                 title: item.content_prefix,
                 link: new URL(`lives/${item.id}.html`, rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     images:
                         item.images?.map((i) => ({
                             src: i.url.replace(/_[^\W_]+(\.\w+)$/, '_true$1'),

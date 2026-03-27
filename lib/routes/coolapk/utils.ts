@@ -1,16 +1,16 @@
-import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
+import crypto from 'node:crypto';
+
 import { load } from 'cheerio';
-import got from '@/utils/got';
+
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const dynamicTpye = { 0: '基本动态', 8: '酷图', 9: '评论', 10: '提问', 11: '回答', 12: '图文', 15: '二手', 17: '观点', 20: '交易动态' };
 
-const getRandomDEVICE_ID = () => {
-    let id = [10, 6, 6, 6, 14];
-    id = id.map((i) => Math.random().toString(36).substring(2, i));
-    return id.join('-');
-};
+const getRandomDEVICE_ID = () => crypto.randomUUID();
 
 const get_app_token = () => {
     const DEVICE_ID = getRandomDEVICE_ID();
@@ -24,6 +24,7 @@ const get_app_token = () => {
 };
 
 const base_url = 'https://api.coolapk.com';
+const v2_api_url = 'https://api2.coolapk.com';
 
 const getHeaders = () => ({
     'X-Requested-With': 'XMLHttpRequest',
@@ -39,29 +40,33 @@ const getHeaders = () => ({
 
 const parseTuwenFromRaw = (raw) =>
     raw.map((i) => {
-        if (i.type === 'text') {
-            const output = i.message
-                .split('\n')
-                .filter((t) => t !== '')
-                .map((t) => `<p>${t}</p>`)
-                .join('');
-            return output;
-        } else if (i.type === 'image') {
-            return `<div class="img-container" style="text-align: center;">
+        switch (i.type) {
+            case 'text': {
+                const output = i.message
+                    .split('\n')
+                    .filter((t) => t !== '')
+                    .map((t) => `<p>${t}</p>`)
+                    .join('');
+                return output;
+            }
+            case 'image':
+                return `<div class="img-container" style="text-align: center;">
                 <img src="${i.url}">
                 <p class="image-caption" style="text-align: center;">${i.description}</p></div>`;
-        } else {
-            // console.log(i);
-            return `Unkown type`;
+            case 'shareUrl':
+                return `<a href="${i.url}" target="_blank" rel="noopener">${i.title}</a>`;
+            default:
+                logger.debug(`Unknown tuwen type: ${i.type}`);
+                return 'Unknown type';
         }
     });
 
 const parseDynamic = async (item) => {
     const pubDate = parseDate(item.dateline, 'X');
-    if (item.entityType === 'sponsorCard' || item.shareUrl === undefined) {
+    if (item.entityType === 'sponsorCard' || !item.url) {
         return;
     }
-    const itemUrl = item.shareUrl.split('?')[0];
+    const itemUrl = `${v2_api_url}/v6${item.url.replace('/feed/', '/feed/detail?id=')}`;
     let description, title;
     const type = Number.parseInt(item.type);
     switch (type) {
@@ -80,10 +85,10 @@ const parseDynamic = async (item) => {
             if (item.issummary) {
                 // 需要爬内容
                 description = await cache.tryGet(itemUrl, async () => {
-                    const result = await got(itemUrl, {
+                    const result = await ofetch(itemUrl, {
                         headers: getHeaders(),
                     });
-                    const message = `<p>` + result.data.data?.message.split('\n').join('<br>') + `</p>`;
+                    const message = `<p>` + result.data?.message.split('\n').join('<br>') + `</p>`;
                     const picArr = item.picArr.filter(Boolean).map((i) => `<img src="${i}">`); // 若无图片，item.picArr=[""]
                     return message + picArr.join('');
                 });
@@ -113,15 +118,19 @@ const parseDynamic = async (item) => {
         case 12:
             title = item.title;
             description = await cache.tryGet(itemUrl, async () => {
-                const result = await got(itemUrl, {
+                const result = await ofetch(itemUrl, {
                     headers: getHeaders(),
                 });
 
-                const raw = JSON.parse(result.data.data.message_raw_output);
+                if (!result.data) {
+                    return result.message;
+                }
+
+                const raw = JSON.parse(result.data.message_raw_output);
 
                 const tags = parseTuwenFromRaw(raw);
 
-                return `<img src="${result.data.data.pic}"><hr>` + tags.join('');
+                return `<img src="${result.data.pic}"><hr>` + tags.join('');
             });
             break;
 
@@ -135,8 +144,8 @@ const parseDynamic = async (item) => {
         title,
         description,
         pubDate,
-        link: item.shareUrl,
-        guid: itemUrl,
+        link: `https://www.coolapk.com${item.url}`,
+        // guid: itemUrl,
         author: item.username,
     };
 };

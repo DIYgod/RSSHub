@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 import { baseUrl, gqlEndpoint, parseItem } from './utils';
 
 const handler = async (ctx) => {
@@ -8,7 +9,7 @@ const handler = async (ctx) => {
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 user(input: {userName: "${uid}"}) {
                   displayName
                   avatar
