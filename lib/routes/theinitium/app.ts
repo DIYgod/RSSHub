@@ -1,16 +1,51 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
-import type { Element } from 'domhandler';
-
-import { config } from '@/config';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 
-import { renderDescription } from './templates/description';
+import { applyLanguageToTagSlug, CHANNEL_TAG_MAP, ghostFetch, postsToItems } from './utils';
 
-const appUrl = 'https://app.theinitium.com/';
-const userAgent = 'PugpigBolt v4.1.8 (iPhone, iOS 18.2.1) on phone (model iPhone15,2)';
+// Reason: Old app categories map to Ghost channel tag + language.
+// The _sc suffix = Simplified Chinese (zh-hans), _tc = Traditional Chinese (zh-hant).
+const APP_CATEGORY_MAP: Record<string, { channelType: string; language: string }> = {
+    latest_sc: { channelType: 'latest', language: 'zh-hans' },
+    latest_tc: { channelType: 'latest', language: 'zh-hant' },
+    daily_brief_sc: { channelType: 'daily-brief', language: 'zh-hans' },
+    daily_brief_tc: { channelType: 'daily-brief', language: 'zh-hant' },
+    whats_new_sc: { channelType: 'whatsnew', language: 'zh-hans' },
+    whats_new_tc: { channelType: 'whatsnew', language: 'zh-hant' },
+    report_sc: { channelType: 'feature', language: 'zh-hans' },
+    report_tc: { channelType: 'feature', language: 'zh-hant' },
+    opinion_sc: { channelType: 'opinion', language: 'zh-hans' },
+    opinion_tc: { channelType: 'opinion', language: 'zh-hant' },
+    international_sc: { channelType: 'international', language: 'zh-hans' },
+    international_tc: { channelType: 'international', language: 'zh-hant' },
+    mainland_sc: { channelType: 'mainland', language: 'zh-hans' },
+    mainland_tc: { channelType: 'mainland', language: 'zh-hant' },
+    hongkong_sc: { channelType: 'hongkong', language: 'zh-hans' },
+    hongkong_tc: { channelType: 'hongkong', language: 'zh-hant' },
+    taiwan_sc: { channelType: 'taiwan', language: 'zh-hans' },
+    taiwan_tc: { channelType: 'taiwan', language: 'zh-hant' },
+};
+
+// Reason: Display labels for the old app categories, kept for RSS feed titles
+const APP_CATEGORY_LABELS: Record<string, string> = {
+    latest_sc: '最新',
+    latest_tc: '最新',
+    daily_brief_sc: '日报',
+    daily_brief_tc: '日報',
+    whats_new_sc: '速递',
+    whats_new_tc: '速遞',
+    report_sc: '专题',
+    report_tc: '專題',
+    opinion_sc: '评论',
+    opinion_tc: '評論',
+    international_sc: '国际',
+    international_tc: '國際',
+    mainland_sc: '大陆',
+    mainland_tc: '大陸',
+    hongkong_sc: '香港',
+    hongkong_tc: '香港',
+    taiwan_sc: '台湾',
+    taiwan_tc: '台灣',
+};
 
 export const route: Route = {
     path: '/app/:category?',
@@ -20,6 +55,13 @@ export const route: Route = {
         category: 'Category, see below, latest_sc by default',
     },
     features: {
+        requireConfig: [
+            {
+                name: 'INITIUM_MEMBER_COOKIE',
+                optional: true,
+                description: '端传媒会员登录后的 Cookie，用于获取付费文章全文。',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -30,18 +72,12 @@ export const route: Route = {
     maintainers: ['quiniapiezoelectricity'],
     radar: [
         {
-            source: ['app.theinitium.com/t/latest/:category'],
-            target: '/app/:category',
+            source: ['theinitium.com/latest/'],
+            target: '/app/latest_sc',
         },
     ],
     handler,
-    description: `抓取[The Initium App](https://app.theinitium.com/)的文章列表
-
-::: warning
-此路由暂不支持登陆认证
-:::
-
-Category 栏目：
+    description: `Category 栏目：
 
 | ----- | 简体中文     | 繁體中文      |
 | ----- | ----------------- | ---------------- |
@@ -54,139 +90,50 @@ Category 栏目：
 | 大陆   | mainland_sc | mainland_tc |
 | 香港   | hongkong_sc | hongkong_tc |
 | 台湾   | taiwan_sc | taiwan_tc |
-| 播客   | article_audio_sc | article_audio_tc |`,
+
+:::tip
+原 App 路由已迁移至 Ghost CMS API。播客（article_audio）分类已停用，请改用 \`/theinitium/channel\` 路由。
+:::`,
 };
-
-const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, appUrl?: string) => {
-    // code from @/middleware/paratmeter.ts
-    const $elem = $(elem);
-
-    if (appUrl) {
-        try {
-            const oldAttr = $elem.attr(attr);
-            if (oldAttr) {
-                // e.g. <video><source src="https://example.com"></video> should leave <video> unchanged
-                $elem.attr(attr, new URL(oldAttr, appUrl).href);
-            }
-        } catch {
-            // no-empty
-        }
-    }
-};
-
-async function getUA(url: string) {
-    return await ofetch(url, {
-        headers: {
-            'User-Agent': userAgent,
-        },
-    });
-}
-
-async function fetchAppPage(url: URL) {
-    const response = await getUA(url.href);
-    const $ = load(response);
-    // resolve relative links with app.theinitium.com
-    // code from @/middleware/paratmeter.ts
-    $('a, area').each((_, elem) => {
-        resolveRelativeLink($, elem, 'href', appUrl);
-        // $(elem).attr('rel', 'noreferrer');  // currently no such a need
-    });
-    // https://www.w3schools.com/tags/att_src.asp
-    $('img, video, audio, source, iframe, embed, track').each((_, elem) => {
-        resolveRelativeLink($, elem, 'src', appUrl);
-        $(elem).removeAttr('srcset');
-    });
-    $('video[poster]').each((_, elem) => {
-        resolveRelativeLink($, elem, 'poster', appUrl);
-    });
-    const article = $('.pp-article__body');
-    article.find('.block-related-articles').remove();
-    article.find('.copyright').wrapInner('<small></small>').wrapInner('<figure></figure>');
-    article.find('figure.wp-block-pullquote').children().unwrap();
-    article.find('div.block-explanation-note').wrapInner('<blockquote></blockquote>');
-    article.find('div.wp-block-tcc-author-note').wrapInner('<em></em>').after('<hr>');
-    article.find('p.has-small-font-size').wrapInner('<small></small>');
-    return renderDescription({
-        standfirst: $('.pp-header-group__standfirst').html(),
-        coverImage: $('.pp-media__image').attr('src'),
-        coverCaption: $('.pp-media__caption').html(),
-        article: article.html(),
-    });
-}
-
-async function fetchWebPage(url: URL) {
-    const response = await ofetch(url.href);
-    const $ = load(response);
-    const article = $('.ghost-content');
-    article.find('.kg-card, .gh-post-upgrade-cta').remove();
-    return renderDescription({
-        standfirst: $('p.caption1').html(),
-        coverImage: $('.post-hero .object-cover').attr('src')?.replace('/size/w30', ''),
-        coverCaption: $('.post-hero figcaption').html(),
-        article: article.html(),
-    });
-}
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest_sc';
 
-    const feeds = await cache.tryGet(new URL('timelines.json', appUrl).href, async () => await getUA(new URL('timelines.json', appUrl).href), config.cache.routeExpire, false);
-    const metadata = feeds.timelines.find((timeline) => timeline.id === category);
-    const response = await getUA(new URL(metadata.feed, appUrl).href);
-    const feed = response.stories.filter((item) => item.type === 'article');
-
-    const items = await Promise.all(
-        feed.map((item) =>
-            cache.tryGet(item.shareurl, async () => {
-                const url = new URL(item.shareurl);
-                item.link = url.href;
-                item.description = item.summary;
-                item.pubDate = item.published;
-                item.category = [];
-                if (item.section) {
-                    item.category = [...item.category, item.section];
-                }
-                if (item.taxonomy) {
-                    if (item.taxonomy.collection_tag) {
-                        item.category = [...item.category, ...item.taxonomy.collection_tag];
-                    }
-                    if (item.taxonomy.sections) {
-                        item.category = [...item.category, ...item.taxonomy.sections];
-                    }
-                }
-                item.category = [...new Set(item.category)];
-                try {
-                    switch (url.hostname) {
-                        case 'app.theinitium.com':
-                            item.description = (await fetchAppPage(url)) ?? item.description;
-                            break;
-                        case 'theinitium.com':
-                            item.description = (await fetchWebPage(url)) ?? item.description;
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (error: any) {
-                    if (error?.response?.status === 404) {
-                        // ignore 404
-                    }
-                }
-                return item;
-            })
-        )
-    );
-
-    let lang = 'zh-hans';
-    let name = '端传媒';
-    if (metadata.timeline_sets[0] === 'chinese-traditional') {
-        lang = 'zh-hant';
-        name = '端傳媒';
+    const mapping = APP_CATEGORY_MAP[category];
+    if (!mapping) {
+        throw new Error(`Unknown category: ${category}. Supported: ${Object.keys(APP_CATEGORY_MAP).join(', ')}`);
     }
 
+    const { channelType, language } = mapping;
+
+    // Reason: Reuse the same Ghost tag filter logic as processFeed's channel case
+    const baseTag = CHANNEL_TAG_MAP[channelType] ?? channelType;
+    let filter = '';
+    if (baseTag === '') {
+        // "latest" = no tag filter, just filter by language via internal tag
+        filter = `tag:hash-${language}`;
+    } else {
+        const tagSlug = applyLanguageToTagSlug(baseTag, language);
+        filter = `tag:${tagSlug}`;
+    }
+
+    const params: Record<string, string> = {
+        include: 'tags,authors',
+        limit: '20',
+        filter,
+    };
+
+    const data = await ghostFetch('posts', params);
+    const items = await postsToItems(data.posts);
+
+    const label = APP_CATEGORY_LABELS[category] ?? category;
+    const name = language === 'zh-hans' ? '端传媒' : '端傳媒';
+
     return {
-        title: `${name} - ${metadata.title}`,
-        link: `https://app.theinitium.com/t/latest/${category}/`,
-        language: lang,
+        title: `${name} - ${label}`,
+        link: 'https://theinitium.com/latest/',
+        icon: 'https://theinitium.com/favicon.ico',
+        language: language === 'zh-hans' ? 'zh-CN' : 'zh-TW',
         item: items,
     };
 }
