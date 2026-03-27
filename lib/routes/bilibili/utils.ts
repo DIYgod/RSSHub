@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';

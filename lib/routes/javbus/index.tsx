@@ -73,7 +73,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const isWestern = /^\/western/.test(getSubPath(ctx));
+    const isWestern = getSubPath(ctx).startsWith('/western');
     const domain = ctx.req.query('domain') ?? 'javbus.com';
     const westernDomain = ctx.req.query('western_domain') ?? 'javbus.org';
 

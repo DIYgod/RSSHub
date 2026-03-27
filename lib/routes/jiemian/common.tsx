@@ -8,18 +8,27 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx): Promise<Data> => {
-    const { category = '' } = ctx.req.param();
+    const { category, id } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://www.jiemian.com';
-    const currentUrl = new URL(category ? `${category}.html` : '', rootUrl).href;
+    // Reason: lists.ts uses :id param, other routes use :category or hardcoded paths
+    const pathSegment = category || (id ? `lists/${id}` : '');
+    const currentUrl = new URL(pathSegment ? `${pathSegment}.html` : '', rootUrl).href;
 
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
 
+    // Reason: Remove sidebar sections to prevent picking up articles
+    // that are not part of the main content list (e.g. "快讯" sidebar on category pages)
+    $('.sub-col-right').remove();
+
+    // Scope to #lists for newsflash-type pages, otherwise search the full page
+    const container = $('#lists').length ? $('#lists') : $('body');
+
     let items = {};
-    const links = $('a').toArray();
+    const links = container.find('a').toArray();
     for (const el of links) {
         const item = $(el);
         const href = item.prop('href');

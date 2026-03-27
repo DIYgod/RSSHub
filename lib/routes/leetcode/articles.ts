@@ -66,13 +66,15 @@ async function handler() {
                     body: {
                         operationName: 'questionContent',
                         variables: { titleSlug },
-                        query: `query questionContent($titleSlug: String!) {
+                        query: /* GraphQL */ `
+                            query questionContent($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     content
                                     mysqlSchemas
                                     dataSchemas
                                 }
-                            }`,
+                            }
+                        `,
                     },
                 });
 
@@ -81,13 +83,15 @@ async function handler() {
                     body: {
                         operationName: 'officialSolution',
                         variables: { titleSlug },
-                        query: `query officialSolution($titleSlug: String!) {
+                        query: /* GraphQL */ `
+                            query officialSolution($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     solution {
                                         content
                                     }
                                 }
-                            }`,
+                            }
+                        `,
                     },
                 });
 

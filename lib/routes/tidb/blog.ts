@@ -87,9 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.summary;
         const pubDate: number | string = item.publishedAt;

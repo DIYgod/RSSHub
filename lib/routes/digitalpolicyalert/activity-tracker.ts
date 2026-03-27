@@ -40,9 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = response.results.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.latest_event?.description ?? undefined;
         const pubDate: number | string = item.latest_event?.date;

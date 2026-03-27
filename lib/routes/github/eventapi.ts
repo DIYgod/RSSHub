@@ -22,9 +22,9 @@ export const eventTypeMapping: Record<string, string> = {
 function formatEventItem(event: any) {
     const { id, type, actor, repo, payload, created_at } = event;
 
-    let title = '';
-    let description = '';
-    let link = '';
+    let title: string;
+    let description: string;
+    let link: string;
 
     switch (type) {
         case 'PushEvent': {

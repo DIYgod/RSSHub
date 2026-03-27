@@ -45,7 +45,7 @@ async function handler(ctx) {
     }
 
     let pos = 1;
-    let hasMore = false;
+    let hasMore: boolean;
     let epgs = [];
     do {
         const {

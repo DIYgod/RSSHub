@@ -45,6 +45,13 @@ export default {
             return null;
         }
     },
+    has: async (key: string) => {
+        if (key && status.available && kvNamespace) {
+            const value = await kvNamespace.get(key);
+            return value !== null;
+        }
+        return false;
+    },
     set: async (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
         if (!status.available || !kvNamespace) {
             return;

@@ -52,7 +52,7 @@ async function handler(ctx: Context): Promise<Data> {
         // ignore
     }
 
-    const postListResponse = (await ofetch(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20`, { headers: getHeaders() })) as PostListResponse;
+    const postListResponse = (await ofetch(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() })) as PostListResponse;
     const items = await Promise.all(postListResponse.body.map((i) => parseItem(i)));
 
     return {

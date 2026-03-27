@@ -70,9 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.result.lists.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.result.lists.slice(0, limit).map((item): DataItem => {
         const title: string = item.name;
         const image: string | undefined = item.thumb?.startsWith('https:') ? item.thumb : `https:${item.thumb}`;
         const description: string | undefined = renderDescription({

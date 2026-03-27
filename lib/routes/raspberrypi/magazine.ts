@@ -21,11 +21,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
     const author: DataItem['author'] = $('meta[property="og:site_name"]').attr('content');
 
-    items = $('div.o-grid--equal div.o-grid__col')
+    let items: DataItem[] = $('div.o-grid--equal div.o-grid__col')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

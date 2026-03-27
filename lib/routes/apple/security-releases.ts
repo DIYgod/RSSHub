@@ -27,9 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el) => $(el).text());
 
-    let items: DataItem[] = [];
-
-    items = $trEls
+    let items: DataItem[] = $trEls
         .slice(1, limit)
         .toArray()
         .map((el): Element => {

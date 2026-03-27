@@ -90,8 +90,9 @@ async function handler(ctx) {
         )
     );
 
+    const fallbackHtml = await ofetch(currentUrl);
     return {
-        title: $('title').text() || load(await ofetch(currentUrl))('title').text(),
+        title: $('title').text() || load(fallbackHtml)('title').text(),
         link: currentUrl,
         item: items,
     };

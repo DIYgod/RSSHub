@@ -37,17 +37,18 @@ async function handler(ctx) {
     const referer = 'https://ff.sdo.com/web8/index.html';
     const type = ctx.req.param('type') ?? 'all';
 
-    const type_number = {
+    const typeNumber: Record<string, string> = {
         news: '5310',
-        announce: '5312',
+        announce: '5312,8324,8325,8326,8327',
         events: '5311',
         advertise: '5313',
-        all: '5310,5312,5311,5313,5309',
     };
+
+    typeNumber.all = `5309,${Object.values(typeNumber).join(',')}`;
 
     const response = await got({
         method: 'get',
-        url: `http://api.act.sdo.com/UnionNews/List?gameCode=ff&category=${type_number[type]}&pageIndex=0&pageSize=50`,
+        url: `http://api.act.sdo.com/UnionNews/List?gameCode=ff&category=${typeNumber[type]}&pageIndex=0&pageSize=50`,
         headers: {
             Referer: referer,
         },

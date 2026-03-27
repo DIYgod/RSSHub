@@ -29,9 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     ];
 
-    let items: DataItem[] = [];
-
-    items = $('a.flex-col')
+    let items: DataItem[] = $('a.flex-col')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

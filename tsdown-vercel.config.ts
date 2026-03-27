@@ -9,5 +9,7 @@ export default defineConfig({
     shims: true,
     clean: true,
     // copy: [{ from: 'lib/assets', to: 'dist' }],
-    inlineOnly: false,
+    deps: {
+        onlyBundle: false,
+    },
 });

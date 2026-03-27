@@ -37,7 +37,7 @@ function parseText(text: string, props: FeedFontProps | undefined): string {
 }
 
 function parseDataItem(item: FeedPatternData, texts: string[], images: { [id: string]: FeedImage }): string {
-    let imageId = '';
+    let imageId: string;
     switch (patternTypeMap[item.type] || undefined) {
         case 'text':
             return parseText(texts.shift() ?? '', item.props);

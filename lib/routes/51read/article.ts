@@ -36,10 +36,12 @@ export const route: Route = {
 async function handler(ctx) {
     const { id } = ctx.req.param();
     const link = `https://m.51read.org/xiaoshuo/${id}`;
-    const $book = load(await ofetch(link));
+    const bookHtml = await ofetch(link);
+    const $book = load(bookHtml);
 
     const chapter = `https://m.51read.org/zhangjiemulu/${id}`;
-    const $chapter = load(await ofetch(chapter));
+    const chapterHtml = await ofetch(chapter);
+    const $chapter = load(chapterHtml);
 
     const pageLength = $chapter('.ml-page select')
         .find('option')
@@ -61,7 +63,8 @@ async function handler(ctx) {
 
 const createItem = async (baseUrl: string, page: number) => {
     const url = `${baseUrl}/${page}`;
-    const $latest = load(await ofetch(url));
+    const html = await ofetch(url);
+    const $latest = load(html);
     const item = await Promise.all(
         $latest('.kb-jp li>a')
             .toArray()
@@ -73,7 +76,8 @@ const createItem = async (baseUrl: string, page: number) => {
 
 const buildItem = (url: string) =>
     cache.tryGet(url, async () => {
-        const $ = load(await ofetch(url));
+        const html = await ofetch(url);
+        const $ = load(html);
 
         return {
             title: $('h1').text(),

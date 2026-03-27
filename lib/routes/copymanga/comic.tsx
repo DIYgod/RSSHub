@@ -41,7 +41,7 @@ async function handler(ctx) {
     const chapterArray = await cache.tryGet(
         strBaseUrl,
         async () => {
-            let bHasNextPage = false;
+            let bHasNextPage: boolean;
             let chapters = [];
             let iReqOffSet = 0;
 

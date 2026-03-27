@@ -58,7 +58,7 @@ export const route: Route = {
 async function handler(ctx) {
     const bank = ctx.req.param('bank');
     const target = `${host}/forum-${bank}-1.html`;
-    let bankname = '';
+    let bankname: string;
 
     switch (bank) {
         case 'creditcard':

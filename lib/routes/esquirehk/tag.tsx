@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import { destr } from 'destr';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';

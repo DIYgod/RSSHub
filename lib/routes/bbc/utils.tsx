@@ -239,8 +239,6 @@ const renderVideo = (block: Block, index: number): JSX.Element | null => {
 
     let src: string | undefined;
     let sourceText: string | undefined;
-    let width: number | undefined;
-    let height: number | undefined;
 
     if (mediaMetadataBlock?.model?.imageUrl) {
         src = mediaMetadataBlock.model.imageUrl;
@@ -254,7 +252,7 @@ const renderVideo = (block: Block, index: number): JSX.Element | null => {
         return null;
     }
 
-    return renderFigure(`video-${index}`, src, altText, width, height, caption, sourceText);
+    return renderFigure(`video-${index}`, src, altText, undefined, undefined, caption, sourceText);
 };
 
 const renderMedia = (block: Block, index: number): JSX.Element | null => {
@@ -357,20 +355,26 @@ export const extractInitialData = ($: CheerioAPI): any => {
     const initialDataText = JSON.parse(
         $('script:contains("window.__INITIAL_DATA__")')
             .text()
-            .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '{}'
+            .match(/window\.__INITIAL_DATA__\s*=\s*(.*);/)?.[1] ?? '"{}"'
     );
 
     return JSON.parse(initialDataText);
 };
 
 const extractArticleWithInitialData = ($: CheerioAPI, item) => {
-    if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/')) {
+    if (item.link.includes('/live/') || item.link.includes('/videos/') || item.link.includes('/extra/') || item.link.includes('/sounds/play/')) {
         return {
             description: item.content,
         };
     }
 
     const initialData = extractInitialData($);
+    if (!initialData || !initialData.data) {
+        return {
+            description: item.content,
+        };
+    }
+
     const article = Object.values(initialData.data).find((d) => d.name === 'article')?.data;
     const topics = Array.isArray(article?.topics) ? article.topics : [];
     const blocks = article?.content?.model?.blocks;

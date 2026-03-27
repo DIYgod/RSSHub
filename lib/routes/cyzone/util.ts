@@ -65,7 +65,7 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
 
         return {
             title: item.title,
-            link: /^\/\//.test(item.url) ? `https:${item.url}` : item.url,
+            link: item.url.startsWith('//') ? `https:${item.url}` : item.url,
             description: item.description,
             category: [item.category_name, ...(item.tags?.split(',') ?? [])],
             guid: item.content_id,
