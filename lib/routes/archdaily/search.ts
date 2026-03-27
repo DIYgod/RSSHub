@@ -12,7 +12,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.archdaily.com/search/:category?q=:search'],
+            source: ['www.archdaily.com/search/:category'],
             target: '/search/:category/:search',
         },
     ],
