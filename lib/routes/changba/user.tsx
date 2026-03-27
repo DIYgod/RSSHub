@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -7,6 +8,25 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
+const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
+
+// 唱吧专用的解密函数
+function decryptWorkPath(str: string) {
+    try {
+        const iv = CryptoJS.enc.Utf8.parse(AES_KEY.substring(0, 16));
+        const key = CryptoJS.enc.Utf8.parse(AES_KEY.substring(16));
+        const decrypted = CryptoJS.AES.decrypt(str, key, { iv, padding: CryptoJS.pad.Pkcs7 });
+        let url = decrypted.toString(CryptoJS.enc.Utf8);
+        if (url) {
+            // 补全协议并强制使用 https
+            url = url.startsWith('http') ? url : `https:${url}`;
+            return url.replace('http://', 'https://');
+        }
+    } catch (e) {
+        return null;
+    }
+    return null;
+}
 
 export const route: Route = {
     path: '/:userid',
@@ -27,7 +47,7 @@ export const route: Route = {
             source: ['changba.com/s/:userid'],
         },
     ],
-    name: '用户',
+    name: '用户作品',
     maintainers: ['kt286', 'xizeyoupan', 'pseudoyu'],
     handler,
 };
@@ -40,64 +60,53 @@ async function handler(ctx) {
         url,
         headers,
     });
-    const data = response.data;
-    const $ = load(data);
+    
+    const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
-    const author = $('div.user-main-info > span.txt-info > a.uname').text();
-    const authorimg = $('div.user-main-info > .poster > img').attr('data-src');
+    const author = $('.uname').first().text().trim() || '唱吧用户';
+    const authorimg = $('.poster img').attr('data-src');
 
     let items = await Promise.all(
         list.map((item) => {
-            const $ = load(item);
-            const link = $('a').attr('href');
-            return cache.tryGet(link, async () => {
-                const result = await got({
+            const workLink = $(item).attr('href');
+            if (!workLink) return null;
+
+            return cache.tryGet(workLink, async () => {
+                const res = await got({
                     method: 'get',
-                    url: link,
+                    url: workLink,
                     headers,
                 });
+                const html = res.data;
 
-                const re = /workid: '\d+'/;
-                let workid;
-                try {
-                    workid = result.data.match(re)[0];
-                } catch {
-                    // 没有找到该作品
-                    // 这可能是由下列原因造成的：
-                    // 该作品已经被原作者删除了
-                    // 该作品包含了视频，目前正在审核中，在审核没有通过前无法被播放
-                    // 目前服务器压力太大，刚刚上传成功的作品可能需要半个小时后才能被播放
-                    return null;
-                }
+                // 从网页源码中匹配加密字符串
+                const match = html.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || html.match(/commonObj\.url\s*=\s*'([^']+)'/);
+                if (!match) return null;
 
-                workid = workid.split("'")[1];
+                const realAudioUrl = decryptWorkPath(match[1]);
+                if (!realAudioUrl) return null;
 
-                if (!workid) {
-                    return null;
-                }
-                const mp3 = `https://upscuw.changba.com/${workid}.mp3`;
-                const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
-                const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(')[1];
+                const inner$ = load(html);
+                const title = inner$('.work-title').text() || inner$('.song-name').text() || '无题作品';
+                const desc = inner$('.des').text() || inner$('.song-des').text() || '';
+                
                 return {
-                    title: $('.work-title').text(),
-                    description,
-                    link,
+                    title: title,
+                    description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
+                    link: workLink,
                     author,
-                    itunes_item_image,
-                    enclosure_url: mp3,
-                    enclosure_type: 'audio/mpeg',
+                    enclosure_url: realAudioUrl,
+                    enclosure_type: realAudioUrl.includes('.mp4') ? 'video/mp4' : 'audio/mpeg',
                 };
             });
         })
     );
 
-    items = items.filter(Boolean);
-
     return {
-        title: author + ' - 唱吧',
+        title: `${author} - 唱吧`,
         link: url,
-        description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
-        item: items,
+        description: $('meta[name="description"]').attr('content') || `${author} 的唱吧作品列表`,
+        item: items.filter(Boolean),
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',
@@ -107,6 +116,6 @@ async function handler(ctx) {
 const ChangbaWorkDescription = ({ desc, mp3url }: { desc: string; mp3url: string }) => (
     <>
         <p>{desc}</p>
-        <audio id="audio" src={mp3url} preload="metadata"></audio>
+        <audio controls src={mp3url} preload="metadata" style={{ width: '100%' }}></audio>
     </>
 );
