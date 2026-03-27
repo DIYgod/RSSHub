@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
+import { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -53,7 +54,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const userid = ctx.req.param('userid');
     const url = `https://changba.com/wap/index.php?s=${userid}`;
     const response = await got({
@@ -68,13 +69,14 @@ async function handler(ctx) {
     const authorimg = $('.poster img').attr('data-src');
 
     const items = await Promise.all(
-        list.map((item) => {
+        list.map(async (item) => {
             const workLink = $(item).attr('href');
             if (!workLink) {
                 return null;
             }
 
-            return cache.tryGet(workLink, async () => {
+            // 使用 cache.tryGet 缓存单个作品详情
+            const cachedItem = await cache.tryGet(workLink, async () => {
                 const res = await got({
                     method: 'get',
                     url: workLink,
@@ -82,15 +84,15 @@ async function handler(ctx) {
                 });
                 const html = res.data;
 
-                // 适配两种可能的加密字段名
+                // 匹配加密后的音频路径
                 const match = html.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || html.match(/commonObj\.url\s*=\s*'([^']+)'/);
                 if (!match) {
-                    return null;
+                    throw new Error(`Work path not found for ${workLink}`);
                 }
 
                 const realAudioUrl = decryptWorkPath(match[1]);
                 if (!realAudioUrl) {
-                    return null;
+                    throw new Error(`Decryption failed for ${workLink}`);
                 }
 
                 const inner$ = load(html);
@@ -106,6 +108,16 @@ async function handler(ctx) {
                     enclosure_type: realAudioUrl.includes('.mp4') ? 'video/mp4' : 'audio/mpeg',
                 };
             });
+
+            // 转换缓存结果类型以兼容返回数组
+            return cachedItem as {
+                title: string;
+                description: string;
+                link: string;
+                author: string;
+                enclosure_url: string;
+                enclosure_type: string;
+            } | null;
         })
     );
 
@@ -113,7 +125,7 @@ async function handler(ctx) {
         title: `${author} - 唱吧`,
         link: url,
         description: $('meta[name="description"]').attr('content') || `${author} 的唱吧作品列表`,
-        item: items.filter(Boolean),
+        item: items.filter((item): item is Exclude<typeof item, null> => item !== null),
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',
