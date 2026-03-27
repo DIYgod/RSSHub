@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 import CryptoJS from 'crypto-js';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -30,7 +30,9 @@ function decryptWorkPath(str: string) {
             url = url.startsWith('http') ? url : `https:${url}`;
             return url.replace('http://', 'https://');
         }
-    } catch (e) { return null; }
+    } catch (e) {
+        return null;
+    }
     return null;
 }
 
@@ -50,7 +52,7 @@ async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `https://changba.com/wap/index.php?s=${userid}`;
     const response = await got({ method: 'get', url, headers });
-    
+
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
@@ -78,16 +80,16 @@ async function handler(ctx) {
 
                 // 1. 严格清洗标题：去除换行、回车、制表符，防止 URL 编码污染
                 const cleanTitle = `${timeTag}${author} - ${songName}${desc ? ' - ' + desc : ''}`
-                    .replace(/[\r\n\t]/g, " ") 
-                    .replace(/\s+/g, " ")
+                    .replace(/[\r\n\t]/g, ' ')
+                    .replace(/\s+/g, ' ')
                     .trim()
-                    .replace(/[\\/:*?"<>|]/g, "_");
+                    .replace(/[\\/:*?"<>|]/g, '_');
 
                 // 2. 路径伪装修复：将自定义文件名插入到查询参数之前，形成 .../id.mp3/自定义名.mp3?sign=...
                 // 这种结构能让 Telegram 机器人最稳定地识别出文件名
                 const urlParts = realAudioUrl.split('?');
                 const baseUrl = urlParts[0];
-                const queryArgs = urlParts[1] || "";
+                const queryArgs = urlParts[1] || '';
                 const finalEnclosureUrl = `${baseUrl}/${encodeURIComponent(cleanTitle)}.mp3?${queryArgs}`;
 
                 return {
@@ -95,7 +97,7 @@ async function handler(ctx) {
                     description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
                     link: workLink,
                     author: author,
-                    enclosure_url: finalEnclosureUrl, 
+                    enclosure_url: finalEnclosureUrl,
                     enclosure_type: 'audio/mpeg',
                     itunes_item_image: authorimg,
                 };
