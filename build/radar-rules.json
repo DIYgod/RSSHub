@@ -45219,17 +45219,15 @@
   },
   "theinitium.com": {
     "_name": "The Initium",
-    "app": [
+    ".": [
       {
         "title": "App",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/t/latest/:category"
+          "/latest/"
         ],
-        "target": "/theinitium/app/:category"
-      }
-    ],
-    ".": [
+        "target": "/theinitium/app/latest_sc"
+      },
       {
         "title": "作者",
         "docs": "https://docs.rsshub.app/routes/new-media",
