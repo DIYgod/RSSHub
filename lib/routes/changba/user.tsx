@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
+import CryptoJS from 'crypto-js';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -10,7 +10,10 @@ import got from '@/utils/got';
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
-// 唱吧专用的解密函数
+/**
+ * 唱吧 AES 解密函数
+ * 用于从页面加密字符串中获取真实的 CDN 音频地址
+ */
 function decryptWorkPath(str: string) {
     try {
         const iv = CryptoJS.enc.Utf8.parse(AES_KEY.substring(0, 16));
@@ -18,7 +21,6 @@ function decryptWorkPath(str: string) {
         const decrypted = CryptoJS.AES.decrypt(str, key, { iv, padding: CryptoJS.pad.Pkcs7 });
         let url = decrypted.toString(CryptoJS.enc.Utf8);
         if (url) {
-            // 补全协议并强制使用 https
             url = url.startsWith('http') ? url : `https:${url}`;
             return url.replace('http://', 'https://');
         }
@@ -60,11 +62,11 @@ async function handler(ctx) {
         url,
         headers,
     });
-
+    
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
-    const authorimg = $('.poster img').attr('data-src');
+    const authorimg = $('.poster img').attr('data-src') || $('.poster img').attr('src');
 
     let items = await Promise.all(
         list.map((item) => {
@@ -79,7 +81,7 @@ async function handler(ctx) {
                 });
                 const html = res.data;
 
-                // 从网页源码中匹配加密字符串
+                // 匹配加密后的音频路径
                 const match = html.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || html.match(/commonObj\.url\s*=\s*'([^']+)'/);
                 if (!match) return null;
 
@@ -89,12 +91,26 @@ async function handler(ctx) {
                 const inner$ = load(html);
                 const title = inner$('.work-title').text() || inner$('.song-name').text() || '无题作品';
                 const desc = inner$('.des').text() || inner$('.song-des').text() || '';
+                
+                // 提取作品封面图，用于 RSS 预览
+                let coverImg = inner$('.work-cover').attr('style')?.match(/url\(['"]?(.*?)['"]?\)/)?.[1];
+                if (!coverImg) {
+                    coverImg = inner$('.poster img').attr('src') || authorimg;
+                }
 
                 return {
                     title: title,
-                    description: renderToString(<ChangbaWorkDescription desc={desc} mp3url={realAudioUrl} />),
+                    // 使用自定义组件渲染更美观的描述页
+                    description: renderToString(
+                        <ChangbaWorkDescription 
+                            desc={desc} 
+                            mp3url={realAudioUrl} 
+                            cover={coverImg} 
+                        />
+                    ),
                     link: workLink,
                     author,
+                    itunes_item_image: coverImg,
                     enclosure_url: realAudioUrl,
                     enclosure_type: realAudioUrl.includes('.mp4') ? 'video/mp4' : 'audio/mpeg',
                 };
@@ -105,17 +121,29 @@ async function handler(ctx) {
     return {
         title: `${author} - 唱吧`,
         link: url,
-        description: $('meta[name="description"]').attr('content') || `${author} 的唱吧作品列表`,
+        description: $('meta[name="description"]').attr('content') || `${author} 的唱吧作品集`,
         item: items.filter(Boolean),
         image: authorimg,
         itunes_author: author,
-        itunes_category: '唱吧',
+        itunes_category: 'Music',
     };
 }
 
-const ChangbaWorkDescription = ({ desc, mp3url }: { desc: string; mp3url: string }) => (
-    <>
-        <p>{desc}</p>
-        <audio controls src={mp3url} preload="metadata" style={{ width: '100%' }}></audio>
-    </>
+/**
+ * 美化后的描述组件
+ * 增加封面展示，优化播放器布局
+ */
+const ChangbaWorkDescription = ({ desc, mp3url, cover }: { desc: string; mp3url: string; cover?: string }) => (
+    <div style="font-family: sans-serif;">
+        {cover && (
+            <div style="margin-bottom: 15px;">
+                <img src={cover} style="width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+            </div>
+        )}
+        <p style="font-size: 16px; color: #333; line-height: 1.5; margin-bottom: 15px;">{desc}</p>
+        <div style="background: #f4f4f4; padding: 10px; border-radius: 8px;">
+            <audio controls src={mp3url} preload="metadata" style="width: 100%;"></audio>
+        </div>
+        <p style="font-size: 12px; color: #999; margin-top: 10px;">温馨提示：如果无法播放，请尝试在浏览器中打开链接</p>
+    </div>
 );
