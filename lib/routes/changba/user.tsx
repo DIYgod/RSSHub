@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 import CryptoJS from 'crypto-js';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -30,7 +30,9 @@ function decryptWorkPath(str: string) {
             url = url.startsWith('http') ? url : `https:${url}`;
             return url.replace('http://', 'https://');
         }
-    } catch (e) { return null; }
+    } catch (e) {
+        return null;
+    }
     return null;
 }
 
@@ -47,7 +49,7 @@ async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `https://changba.com/wap/index.php?s=${userid}`;
     const response = await got({ method: 'get', url, headers });
-    
+
     const $ = load(response.data);
     const list = $('.user-work .work-info').toArray();
     const author = $('.uname').first().text().trim() || '唱吧用户';
@@ -75,8 +77,8 @@ async function handler(ctx) {
                 const timeTag = formatTime(inner$('.time').text());
 
                 // 文件名格式
-                const prettyFileName = `${timeTag}${author} - ${songName}${desc ? ' - ' + desc.substring(0, 20) : ''}`.replace(/[\\/:*?"<>|]/g, "_");
-                
+                const prettyFileName = `${timeTag}${author} - ${songName}${desc ? ' - ' + desc.substring(0, 20) : ''}`.replace(/[\\/:*?"<>|]/g, '_');
+
                 // 在 URL 结尾通过查询参数注入文件名，Telegram 会读取这个部分作为文件名显示
                 const finalMediaUrl = `${realAudioUrl}&filename=/${encodeURIComponent(prettyFileName)}.mp3`;
 
