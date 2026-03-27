@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/search/:category?/:search',
+    path: '/search/:category/:search',
     categories: ['journal'],
     example: '/archdaily/search/projects/Urban Design',
     parameters: { category: 'The category to search in, including "all", "projects", "products", "images", "professionals", "article-archive", "folders", "articles"', search: 'The search query' },
@@ -22,7 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { category = 'all', search } = ctx.req.param();
+    const { category, search } = ctx.req.param();
 
     const baseUrl = 'https://www.archdaily.com';
     const allowedCategories = new Set(['all', 'projects', 'products', 'images', 'professionals', 'article-archive', 'folders', 'articles']);
