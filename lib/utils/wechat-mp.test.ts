@@ -1,3 +1,4 @@
+// oxlint-disable no-useless-concat
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
