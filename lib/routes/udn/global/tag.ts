@@ -36,18 +36,19 @@ async function handler(ctx) {
 
     const rootUrl = 'https://global.udn.com';
     const currentUrl = `${rootUrl}/search/tagging/1020/${tag}`;
-    const apiUrl = `${rootUrl}/search/ajax_tag/1020/${tag}`;
+    const apiUrl = `${rootUrl}/global_vision/load/article/newest/tag:${tag}`;
 
     const response = await got({
         method: 'get',
         url: apiUrl,
     });
 
-    let items = response.data.articles.map((item) => ({
-        title: item.art_title,
-        // author: item.art_author_name,
-        // pubDate: timezone(parseDate(item.art_time), +8),
-        link: `${rootUrl}${item.link}`,
+    let items = response.data.lists.map((item) => ({
+        title: item.title,
+        author: item.author?.title,
+        pubDate: timezone(parseDate(item.time?.dateTime), +8),
+        link: item.url,
+        category: item.hash?.map((h) => h.title),
     }));
 
     items = await Promise.all(
@@ -60,9 +61,6 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.author = content('.article-content__authors-name').first().text().trim();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
-
                 const mainImage = content('.article-content__focus').html();
                 const articleBodyHtml = content('.article-content__editor')
                     .find('p, figure, h2, .video-container')
@@ -71,7 +69,6 @@ async function handler(ctx) {
                     .join('');
 
                 item.description = mainImage + articleBodyHtml;
-                item.category = content('meta[name="news_keywords"]').attr('content').split(',');
 
                 return item;
             })
