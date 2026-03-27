@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -13,7 +13,6 @@ const headers = {
 };
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
-// 唱吧 AES 解密函数
 function decryptWorkPath(str: string) {
     try {
         const iv = CryptoJS.enc.Utf8.parse(AES_KEY.substring(0, 16));
@@ -75,7 +74,6 @@ async function handler(ctx: Context) {
                 return null;
             }
 
-            // 使用 cache.tryGet 缓存单个作品详情
             const cachedItem = await cache.tryGet(workLink, async () => {
                 const res = await got({
                     method: 'get',
@@ -83,8 +81,6 @@ async function handler(ctx: Context) {
                     headers,
                 });
                 const html = res.data;
-
-                // 匹配加密后的音频路径
                 const match = html.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || html.match(/commonObj\.url\s*=\s*'([^']+)'/);
                 if (!match) {
                     throw new Error(`Work path not found for ${workLink}`);
@@ -109,7 +105,6 @@ async function handler(ctx: Context) {
                 };
             });
 
-            // 转换缓存结果类型以兼容返回数组
             return cachedItem as {
                 title: string;
                 description: string;
