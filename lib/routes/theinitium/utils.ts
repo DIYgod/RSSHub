@@ -15,7 +15,7 @@ const GHOST_API_BASE = 'https://production-initium-media.ghost.io/ghost/api/cont
 const GHOST_CONTENT_KEY = 'a44a0409c222328d39e2c75293';
 
 // Old channel slugs → Ghost tag slugs mapping
-const CHANNEL_TAG_MAP: Record<string, string> = {
+export const CHANNEL_TAG_MAP: Record<string, string> = {
     latest: '', // no filter = latest
     whatsnew: 'whatsnew',
     'news-brief': 'whatsnew',
@@ -35,7 +35,7 @@ const CHANNEL_TAG_MAP: Record<string, string> = {
 //   - zh-hant (Traditional Chinese): uses base tag slug, e.g. "whatsnew", with internal tag #zh-hant
 //   - zh-hans (Simplified Chinese): uses suffixed tag slug, e.g. "whatsnew-zh-hans", with internal tag #zh-hans
 // When no language is specified, we return all posts (both zh-hans and zh-hant mixed).
-function applyLanguageToTagSlug(tagSlug: string, language: string): string {
+export function applyLanguageToTagSlug(tagSlug: string, language: string): string {
     if (language === 'zh-hans') {
         return `${tagSlug}-zh-hans`;
     }
@@ -76,7 +76,7 @@ interface GhostResponse {
     };
 }
 
-async function ghostFetch(endpoint: string, params: Record<string, string> = {}): Promise<any> {
+export async function ghostFetch(endpoint: string, params: Record<string, string> = {}): Promise<any> {
     const url = new URL(`${GHOST_API_BASE}/${endpoint}/`);
     url.searchParams.set('key', GHOST_CONTENT_KEY);
     for (const [k, v] of Object.entries(params)) {
@@ -160,7 +160,7 @@ function cleanGhostHtml(html: string): string {
     return $.html();
 }
 
-async function postsToItems(posts: GhostPost[]) {
+export async function postsToItems(posts: GhostPost[]) {
     const memberCookie = config.initium?.memberCookie;
 
     const items = await Promise.all(
