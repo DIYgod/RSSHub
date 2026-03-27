@@ -15,8 +15,8 @@ const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
 function decryptWorkPath(str: string) {
     try {
-        const iv = CryptoJS.enc.Utf8.parse(AES_KEY.substring(0, 16));
-        const key = CryptoJS.enc.Utf8.parse(AES_KEY.substring(16));
+        const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
+        const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
         const decrypted = CryptoJS.AES.decrypt(str, key, { iv, padding: CryptoJS.pad.Pkcs7 });
         let url = decrypted.toString(CryptoJS.enc.Utf8);
         if (url) {
