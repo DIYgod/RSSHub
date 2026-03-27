@@ -48,8 +48,8 @@ async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
-    const rootUrl = 'https://jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('noah/v2/lives', rootApiUrl).href;
     const currentUrl = new URL('lives', rootUrl).href;
 
