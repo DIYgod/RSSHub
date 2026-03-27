@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/search/:category/:search',
     categories: ['journal'],
     example: '/archdaily/search/projects/Urban Design',
-    parameters: { category: 'The category to search in, including "all", "projects", "products", "images", "professionals", "article-archive", "folders", "articles"', search: 'The search query' },
+    parameters: { category: 'The category to search in, including "all", "projects", "products", "images", "professionals", "folders", "articles"', search: 'The search query' },
     features: {
         requireConfig: false,
     },
@@ -25,7 +25,7 @@ async function handler(ctx) {
     const { category, search } = ctx.req.param();
 
     const baseUrl = 'https://www.archdaily.com';
-    const allowedCategories = new Set(['all', 'projects', 'products', 'images', 'professionals', 'article-archive', 'folders', 'articles']);
+    const allowedCategories = new Set(['all', 'projects', 'products', 'images', 'professionals', 'folders', 'articles']);
     const finalCategory = allowedCategories.has(category) ? category : 'all';
 
     const response = await ofetch<{ results?: any[] }>(`${baseUrl}/search/api/v1/us/${finalCategory}?q=${encodeURIComponent(search)}`);
