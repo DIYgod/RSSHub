@@ -45017,104 +45017,104 @@
       }
     ]
   },
-  "the.bi": {
-    "_name": "The.bi",
+  "river.to": {
+    "_name": "River.to (江河日下)",
     ".": [
       {
         "title": "分类",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/:category"
+          "/occasus/:category"
         ],
         "target": "/theparams=>{const category=params.category;return`/the${category?`/category/${category}`:\"\"}`}"
       },
       {
-        "title": "时局图",
+        "title": "时局",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawj7o4ypewv94"
+          "/occasus/rawj7o4ypewv94"
         ],
-        "target": "/the/category/rawj7o4ypewv94"
+        "target": "/the/the/category/rawj7o4ypewv94"
       },
       {
         "title": "剩余价值",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawmw7dsta2jew"
+          "/occasus/rawmw7dsta2jew"
         ],
-        "target": "/the/category/rawmw7dsta2jew"
+        "target": "/the/the/category/rawmw7dsta2jew"
       },
       {
-        "title": "打江山",
+        "title": "Beijing",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawbcvxkktdkq8"
+          "/occasus/rawbcvxkktdkq8"
         ],
-        "target": "/the/category/rawbcvxkktdkq8"
+        "target": "/the/the/category/rawbcvxkktdkq8"
       },
       {
-        "title": "中国经济",
+        "title": "稳中向好",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/raw4krvx85dh27"
+          "/occasus/raw4krvx85dh27"
         ],
-        "target": "/the/category/raw4krvx85dh27"
+        "target": "/the/the/category/raw4krvx85dh27"
       },
       {
         "title": "水深火热",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawtn8jpsc6uvv"
+          "/occasus/rawtn8jpsc6uvv"
         ],
-        "target": "/the/category/rawtn8jpsc6uvv"
+        "target": "/the/the/category/rawtn8jpsc6uvv"
       },
       {
         "title": "东升西降",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawai5kd4z15il"
+          "/occasus/rawai5kd4z15il"
         ],
-        "target": "/the/category/rawai5kd4z15il"
+        "target": "/the/the/category/rawai5kd4z15il"
       },
       {
-        "title": "大局 & 大棋",
+        "title": "大局",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/raw2efkzejrsx8"
+          "/occasus/raw2efkzejrsx8"
         ],
-        "target": "/the/category/raw2efkzejrsx8"
+        "target": "/the/the/category/raw2efkzejrsx8"
       },
       {
         "title": "境外势力",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawmpalhnlphuc"
+          "/occasus/rawmpalhnlphuc"
         ],
-        "target": "/the/category/rawmpalhnlphuc"
+        "target": "/the/the/category/rawmpalhnlphuc"
       },
       {
         "title": "副刊",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawxght2jr2u5z"
+          "/occasus/rawxght2jr2u5z"
         ],
-        "target": "/the/category/rawxght2jr2u5z"
+        "target": "/the/the/category/rawxght2jr2u5z"
       },
       {
         "title": "天高地厚",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawrsnh9zakqdx"
+          "/occasus/rawrsnh9zakqdx"
         ],
-        "target": "/the/category/rawrsnh9zakqdx"
+        "target": "/the/the/category/rawrsnh9zakqdx"
       },
       {
         "title": "Oyster",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/s/rawdhl9hugdfn9"
+          "/occasus/rawdhl9hugdfn9"
         ],
-        "target": "/the/category/rawdhl9hugdfn9"
+        "target": "/the/the/category/rawdhl9hugdfn9"
       }
     ]
   },
