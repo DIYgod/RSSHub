@@ -30,17 +30,23 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const baseUrl = 'https://digitalpolicyalert.org';
     const apiBaseUrl = 'https://api.globaltradealert.org';
     const targetUrl: string = new URL(`activity-tracker?${params.toString()}`, baseUrl).href;
-    const apiUrl: string = new URL('dpa/intervention', apiBaseUrl).href;
+    // Reason: trailing slash avoids a 301 redirect from the API server
+    const apiUrl: string = new URL('dpa/intervention/', apiBaseUrl).href;
 
+    // Reason: explicit Accept header needed because RSSHub's ofetch auto-generates
+    // browser-like Accept headers, causing the API to return HTML via content negotiation
     const response = await ofetch(apiUrl, {
         query: searchParamsToObject(params),
+        headers: {
+            Accept: 'application/json',
+        },
     });
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'en';
 
-    const items: DataItem[] = response.results.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = (response.results ?? []).slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.latest_event?.description ?? undefined;
         const pubDate: number | string = item.latest_event?.date;
