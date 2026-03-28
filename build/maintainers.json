@@ -6085,11 +6085,13 @@
   ],
   "/nhentai/index/:key/:keyword/:mode?": [
     "MegrezZhu",
-    "hoilc"
+    "hoilc",
+    "pseudoyu"
   ],
   "/nhentai/search/:keyword/:mode?": [
     "MegrezZhu",
-    "hoilc"
+    "hoilc",
+    "pseudoyu"
   ],
   "/nhk/news/:lang?": [
     "TonyRL",
