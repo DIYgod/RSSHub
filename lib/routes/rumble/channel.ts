@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://rumble.com';
 
 export const route: Route = {
-    path: ['/c/:channel', '/c/:channel/embed'],
+    path: '/c/:channel/:embed?',
     categories: ['social-media'],
     view: ViewType.Videos,
     name: 'Channel',
@@ -19,8 +19,9 @@ export const route: Route = {
     example: '/rumble/c/Timcast',
     parameters: {
         channel: 'Channel slug from `https://rumble.com/c/<channel>`',
+        embed: 'Default to embed the video, set to any value to disable embedding',
     },
-    description: 'Append `/embed` to include the Rumble player iframe in each item description.',
+    description: 'Fetches full Rumble video descriptions and embeds the player by default.',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -173,7 +174,7 @@ async function parseItemFromVideoElement($: ReturnType<typeof load>, videoElemen
 
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const includeEmbed = ctx.req.path.endsWith('/embed');
+    const includeEmbed = !ctx.req.param('embed');
     const channelUrl = new URL(`/c/${encodeURIComponent(channel)}`, rootUrl).href;
 
     const response = await ofetch(channelUrl, {
