@@ -6,6 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -65,16 +66,32 @@ const getCookie = async (username, password, cache) => {
     return userTokenCookie;
 };
 
-const oFetch = (url, ...options) =>
-    ofetch(url, {
-        ...options,
-        headers: {
-            host: 'nhentai.net',
-        },
-    });
+// Reason: try ofetch first for speed, fall back to puppeteer on 403 (anti-bot protection)
+const fetchPage = async (url: string): Promise<string> => {
+    try {
+        return await ofetch(url);
+    } catch (error: unknown) {
+        const status = (error as { status?: number; statusCode?: number }).status ?? (error as { status?: number; statusCode?: number }).statusCode;
+        if (status === 403) {
+            const { page, destory } = await getPuppeteerPage(url, {
+                onBeforeLoad: async (page) => {
+                    const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+                    await page.setRequestInterception(true);
+                    page.on('request', (request) => {
+                        allowedTypes.has(request.resourceType()) ? request.continue() : request.abort();
+                    });
+                },
+            });
+            const content = await page.content();
+            await destory();
+            return content;
+        }
+        throw error;
+    }
+};
 
 const getSimple = async (url) => {
-    const data = await oFetch(url);
+    const data = await fetchPage(url);
     const $ = load(data);
 
     return $('.gallery a.cover')
@@ -113,7 +130,9 @@ const parseSimpleDetail = ($ele) => {
 
 const getTorrent = async (simple, cookie) => {
     const { link } = simple;
-    const response = await oFetch(link + 'download', { followRedirect: false, responseType: 'buffer', headers: { Cookie: cookie } });
+    const response = await ofetch(link + 'download', {
+        headers: { Cookie: cookie },
+    });
     return {
         ...simple,
         enclosure_url: response,
@@ -123,7 +142,7 @@ const getTorrent = async (simple, cookie) => {
 
 const getDetail = async (simple) => {
     const { link } = simple;
-    const data = await oFetch(link);
+    const data = await fetchPage(link);
     const $ = load(data);
 
     const galleryImgs = $('.gallerythumb img')
