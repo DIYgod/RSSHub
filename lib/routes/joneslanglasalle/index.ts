@@ -7,19 +7,47 @@ import { parseDate } from '@/utils/parse-date';
 
 const searchApiUrl = 'https://www.jll.com/api/search/template';
 const subscriptionKey = '8f6a4de5b0144673acaa89b03aac035e';
-const rootUrl = 'https://www.joneslanglasalle.com.cn';
 
-// Reason: map old route language params to the API language code
-const langMap: Record<string, string> = {
-    zh: 'zh-cn',
-    en: 'en-GB',
+interface LocaleConfig {
+    apiLang: string;
+    countries: string[];
+    insightsUrl: string;
+    title: string;
+}
+
+// Reason: each locale maps to a different country filter, API language code, and site URL
+const localeMap: Record<string, LocaleConfig> = {
+    zh: {
+        apiLang: 'zh-CN',
+        countries: ['China Mainland'],
+        insightsUrl: 'https://www.joneslanglasalle.com.cn/zh-cn/insights',
+        title: '洞察 - 仲量联行JLL',
+    },
+    en: {
+        apiLang: 'en-GB',
+        countries: ['China Mainland'],
+        insightsUrl: 'https://www.joneslanglasalle.com.cn/en-cn/insights',
+        title: 'Insights - JLL China',
+    },
+    'zh-hk': {
+        apiLang: 'zh-HK',
+        countries: ['Hong Kong'],
+        insightsUrl: 'https://www.jll.com/zh-hk/insights',
+        title: '洞察 - 仲量聯行JLL 香港',
+    },
+    'en-hk': {
+        apiLang: 'en-GB',
+        countries: ['Hong Kong'],
+        insightsUrl: 'https://www.jll.com/en-hk/insights',
+        title: 'Insights - JLL Hong Kong',
+    },
 };
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: lang = 'zh' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
 
-    const apiLang = langMap[lang] || lang;
+    const locale = localeMap[lang] || localeMap.zh;
 
     // Reason: site rebuilt with search API; old HTML scraping no longer works.
     // Using the public search API (Elasticsearch-backed) with subscription key from page JS.
@@ -34,8 +62,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
             params: {
                 size: limit,
                 from: 0,
-                countries: ['China Mainland'],
-                language: apiLang,
+                countries: locale.countries,
+                language: locale.apiLang,
                 sort_by_relevance: false,
                 includeGlobalPeople: false,
                 boostCountry: '',
@@ -57,14 +85,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
         };
     });
 
-    const targetUrl = lang === 'en' ? `${rootUrl}/en-cn/insights` : `${rootUrl}/zh-cn/insights`;
-
     return {
-        title: lang === 'en' ? 'Insights - JLL' : '洞察 - 仲量联行JLL',
-        link: targetUrl,
+        title: locale.title,
+        link: locale.insightsUrl,
         item: items,
         allowEmpty: true,
-        language: apiLang,
+        language: locale.apiLang,
     };
 };
 
@@ -76,20 +102,19 @@ export const route: Route = {
     handler,
     example: '/joneslanglasalle/en/trends-and-insights',
     parameters: {
-        language: 'Language, `zh` by default',
+        language: 'Language, `zh` for China Mainland Chinese, `en` for China Mainland English, `zh-hk` for Hong Kong Chinese, `en-hk` for Hong Kong English, `zh` by default',
         category: 'Category, `trends-and-insights` by default',
     },
     description: `::: tip
-If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en-cn/insights)，where the URL is \`https://www.joneslanglasalle.com.cn/en-cn/insights\`, extract the part \`https://joneslanglasalle.com.cn/\` to the end. Use \`en\` and \`trends-and-insights\` as the parameters to fill in. Therefore, the route will be [\`/joneslanglasalle/en/trends-and-insights\`](https://rsshub.app/joneslanglasalle/en/trends-and-insights).
+If you subscribe to [Trends & Insights (China)](https://www.joneslanglasalle.com.cn/en-cn/insights), use \`en\` as the language. For [Hong Kong Insights](https://www.jll.com/zh-hk/insights), use \`zh-hk\` as the language.
 :::
 
-| Category  | ID                            |
-| --------- | ----------------------------- |
-| Latest    | trends-and-insights           |
-| Workplace | trends-and-insights/workplace |
-| Investor  | trends-and-insights/investor  |
-| Cities    | trends-and-insights/cities    |
-| Research  | trends-and-insights/research  |
+| Region         | Language | Parameter |
+| -------------- | -------- | --------- |
+| China Mainland | 中文     | zh        |
+| China Mainland | English  | en        |
+| Hong Kong      | 中文     | zh-hk     |
+| Hong Kong      | English  | en-hk     |
 `,
     categories: ['new-media'],
     features: {
@@ -113,13 +138,21 @@ If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en-c
         },
         {
             title: 'Latest',
-            source: ['joneslanglasalle.com.cn/en/trends-and-insights', 'joneslanglasalle.com.cn/en-cn/insights'],
+            source: ['joneslanglasalle.com.cn/en-cn/insights'],
             target: '/en/trends-and-insights',
         },
         {
             title: '房地产趋势与洞察',
-            source: ['joneslanglasalle.com.cn/zh/trends-and-insights', 'joneslanglasalle.com.cn/zh-cn/insights'],
+            source: ['joneslanglasalle.com.cn/zh-cn/insights'],
             target: '/zh/trends-and-insights',
+        },
+        {
+            source: ['jll.com/zh-hk/insights'],
+            target: '/zh-hk/trends-and-insights',
+        },
+        {
+            source: ['jll.com/en-hk/insights'],
+            target: '/en-hk/trends-and-insights',
         },
     ],
     view: ViewType.Articles,
@@ -132,20 +165,19 @@ If you subscribe to [Trends & Insights](https://www.joneslanglasalle.com.cn/en-c
         handler,
         example: '/joneslanglasalle/zh/trends-and-insights',
         parameters: {
-            language: '语言，默认为 `zh`，可在对应分类页 URL 中找到',
-            category: '分类，默认为 `trends-and-insights`，可在对应分类页 URL 中找到',
+            language: '语言，`zh` 为中国大陆中文，`en` 为中国大陆英文，`zh-hk` 为香港中文，`en-hk` 为香港英文，默认为 `zh`',
+            category: '分类，默认为 `trends-and-insights`',
         },
         description: `::: tip
-若订阅 [房地产趋势与洞察](https://www.joneslanglasalle.com.cn/zh-cn/insights)，网址为 \`https://www.joneslanglasalle.com.cn/zh-cn/insights\`，请截取 \`https://joneslanglasalle.com.cn/\` 到末尾的部分 \`zh\` 和 \`trends-and-insights\` 作为 \`language\` 和 \`category\` 参数填入，此时目标路由为 [\`/joneslanglasalle/zh/trends-and-insights\`](https://rsshub.app/joneslanglasalle/zh/trends-and-insights)。
+若订阅 [中国大陆洞察](https://www.joneslanglasalle.com.cn/zh-cn/insights)，语言参数为 \`zh\`。若订阅 [香港洞察](https://www.jll.com/zh-hk/insights)，语言参数为 \`zh-hk\`。
 :::
 
-| 分类名称   | 分类 ID                       |
-| ---------- | ----------------------------- |
-| 趋势及洞察 | trends-and-insights           |
-| 办公空间   | trends-and-insights/workplace |
-| 投资者     | trends-and-insights/investor  |
-| 城市       | trends-and-insights/cities    |
-| 研究报告   | trends-and-insights/research  |
+| 地区   | 语言    | 参数  |
+| ------ | ------- | ----- |
+| 中国大陆 | 中文  | zh    |
+| 中国大陆 | English | en    |
+| 香港   | 中文    | zh-hk |
+| 香港   | English | en-hk |
 `,
     },
 };
