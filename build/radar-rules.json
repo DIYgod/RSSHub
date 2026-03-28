@@ -27350,7 +27350,6 @@
         "title": "Latest",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/en/trends-and-insights",
           "/en-cn/insights"
         ],
         "target": "/joneslanglasalle/en/trends-and-insights"
@@ -27359,10 +27358,30 @@
         "title": "房地产趋势与洞察",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/zh/trends-and-insights",
           "/zh-cn/insights"
         ],
         "target": "/joneslanglasalle/zh/trends-and-insights"
+      }
+    ]
+  },
+  "jll.com": {
+    "_name": "Jones Lang LaSalle",
+    ".": [
+      {
+        "title": "Trends & Insights",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zh-hk/insights"
+        ],
+        "target": "/joneslanglasalle/zh-hk/trends-and-insights"
+      },
+      {
+        "title": "Trends & Insights",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/en-hk/insights"
+        ],
+        "target": "/joneslanglasalle/en-hk/trends-and-insights"
       }
     ]
   },
