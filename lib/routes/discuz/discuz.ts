@@ -20,16 +20,38 @@ function fixUrl(itemLink, baseUrl) {
     return itemLink;
 }
 
-// discuz 7.x 与 discuz x系列 通用文章内容抓取
-async function loadContent(itemLink, charset, header) {
-    // 处理编码问题
-    const response = await ofetch.raw(itemLink, {
+// Reason: some Discuz forums use a "page reload" anti-bot mechanism that sets cookies
+// on the first request; this helper detects it and retries with the received cookies
+async function fetchWithAntiBot(url: string, header: Record<string, string>) {
+    let response = await ofetch.raw(url, {
         method: 'get',
         responseType: 'arrayBuffer',
         headers: header,
     });
 
-    const responseData = iconv.decode(Buffer.from(response._data), charset ?? 'utf-8');
+    let responseData = Buffer.from(response._data);
+    const initialHtml = iconv.decode(responseData, 'utf-8');
+
+    if (initialHtml.includes('document.location.reload()')) {
+        const setCookies = response.headers.getSetCookie?.() ?? [];
+        const cookieStr = setCookies.map((c) => c.split(';')[0]).join('; ');
+        if (cookieStr) {
+            response = await ofetch.raw(url, {
+                method: 'get',
+                responseType: 'arrayBuffer',
+                headers: { ...header, Cookie: [header.Cookie, cookieStr].filter(Boolean).join('; ') },
+            });
+            responseData = Buffer.from(response._data);
+        }
+    }
+
+    return { response, responseData };
+}
+
+// discuz 7.x 与 discuz x系列 通用文章内容抓取
+async function loadContent(itemLink, charset, header) {
+    const { responseData: rawData } = await fetchWithAntiBot(itemLink, header);
+    const responseData = iconv.decode(rawData, charset ?? 'utf-8');
     if (!responseData) {
         const description = '获取详细内容失败';
         return { description };
@@ -77,13 +99,8 @@ async function handler(ctx) {
         Cookie: cookie,
     };
 
-    const response = await ofetch.raw(link, {
-        method: 'get',
-        responseType: 'arrayBuffer',
-        headers: header,
-    });
+    const { response, responseData } = await fetchWithAntiBot(link, header);
 
-    const responseData = Buffer.from(response._data);
     // 若没有指定编码，则默认utf-8
     const contentType = response.headers['content-type'] || '';
     let $ = load(iconv.decode(responseData, 'utf-8'));
@@ -93,6 +110,10 @@ async function handler(ctx) {
     }
 
     const version = ver ? `DISCUZ! ${ver}` : $('head > meta[name=generator]').attr('content');
+
+    if (!version) {
+        throw new InvalidParameterError('无法检测 Discuz 版本，请在路由中指定版本参数，如 /discuz/x/ 或 /discuz/7/');
+    }
 
     let items;
     if (version.toUpperCase().startsWith('DISCUZ! 7')) {
