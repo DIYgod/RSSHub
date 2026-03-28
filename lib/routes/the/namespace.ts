@@ -1,9 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'The.bi',
-    url: 'the.bi',
+    name: 'River.to (江河日下)',
+    url: 'river.to',
     categories: ['new-media'],
     description: '',
-    lang: 'en',
+    lang: 'zh-CN',
 };
