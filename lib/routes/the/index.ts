@@ -249,7 +249,7 @@ export const route: Route = {
     path: '/:filter{.+}?',
     name: '分类',
     url: 'river.to',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     example: '/the',
     parameters: { filter: '过滤器，见下方描述' },

@@ -37,7 +37,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '快讯',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
 | ---- | ---- | ---- | ---- | --- | ---- |

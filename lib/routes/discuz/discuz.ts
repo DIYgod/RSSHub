@@ -80,7 +80,7 @@ async function loadContent(itemLink, charset, header) {
 export const route: Route = {
     path: ['/:ver{[7x]}/:cid{[0-9]{2}}/:link{.+}', '/:ver{[7x]}/:link{.+}', '/:link{.+}'],
     name: 'Unknown',
-    maintainers: [],
+    maintainers: ['pseudoyu'],
     handler,
 };
 

@@ -22,7 +22,7 @@ export const route: Route = {
         },
     ],
     name: '成人 A 漫',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'jmcomic.group/',
     description: `分类

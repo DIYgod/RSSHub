@@ -44,7 +44,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '首页',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 头条   | 独家 | 铭文    | 产业       | 项目 |
 | ------ | ---- | ------- | ---------- | ---- |

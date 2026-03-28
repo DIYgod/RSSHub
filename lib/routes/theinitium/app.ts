@@ -69,7 +69,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'App',
-    maintainers: ['quiniapiezoelectricity'],
+    maintainers: ['quiniapiezoelectricity', 'pseudoyu'],
     radar: [
         {
             source: ['theinitium.com/latest/'],

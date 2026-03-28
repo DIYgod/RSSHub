@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/channel/:type?/:language?',
     name: '栏目',
     url: 'theinitium.com',
-    maintainers: ['prnake', 'mintyfrankie'],
+    maintainers: ['prnake', 'mintyfrankie', 'pseudoyu'],
     parameters: {
         type: '栏目，缺省为最新（latest）',
         language: '语言，简体`zh-hans`，繁体`zh-hant`，缺省为不限',

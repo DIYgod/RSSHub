@@ -21,7 +21,7 @@ export const route: Route = {
     features: {
         antiCrawler: true,
     },
-    maintainers: ['huanfe1'],
+    maintainers: ['huanfe1', 'pseudoyu'],
     handler,
     url: 'qiche365.org.cn/index/recall/index.html',
 };

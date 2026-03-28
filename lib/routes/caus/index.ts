@@ -29,7 +29,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '分类',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 全部 | 要闻 | 商业 | 快讯 | 财富 | 生活 |
 | ---- | ---- | ---- | ---- | ---- | ---- |

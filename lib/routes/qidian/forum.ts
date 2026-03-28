@@ -26,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: '讨论区',
-    maintainers: ['fuzy112'],
+    maintainers: ['fuzy112', 'pseudoyu'],
     handler,
 };
 

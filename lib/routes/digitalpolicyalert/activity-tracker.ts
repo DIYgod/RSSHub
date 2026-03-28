@@ -103,7 +103,7 @@ export const route: Route = {
     path: '/activity-tracker/:filters?',
     name: 'Activity Tracker',
     url: 'digitalpolicyalert.org',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     example: '/digitalpolicyalert/activity-tracker',
     parameters: {

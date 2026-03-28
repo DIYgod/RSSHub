@@ -14,7 +14,7 @@ export const route: Route = {
         },
     ],
     name: 'Generic News',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'rfi.fr',
     example: '/rfi',

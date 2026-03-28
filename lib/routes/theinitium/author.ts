@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/author/:type/:language?',
     name: '作者',
     url: 'theinitium.com',
-    maintainers: ['AgFlore'],
+    maintainers: ['AgFlore', 'pseudoyu'],
     parameters: {
         type: '作者 slug，可从作者主页 URL 中获取，如 `https://theinitium.com/author/initium-newsroom/`',
         language: '语言，简体`zh-hans`，繁体`zh-hant`，缺省为不限',

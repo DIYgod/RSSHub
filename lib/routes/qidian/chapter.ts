@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '作品章节',
-    maintainers: ['fuzy112'],
+    maintainers: ['fuzy112', 'pseudoyu'],
     handler,
 };
 

@@ -32,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: '搜索',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'jmcomic.group/',
     description: `::: tip

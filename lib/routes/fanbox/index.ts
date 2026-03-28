@@ -13,7 +13,7 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/fanbox/official',
     parameters: { creator: 'fanbox user name' },
-    maintainers: ['KarasuShin'],
+    maintainers: ['KarasuShin', 'pseudoyu'],
     name: 'Creator',
     handler,
     features: {

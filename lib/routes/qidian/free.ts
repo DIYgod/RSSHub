@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: '限时免费',
-    maintainers: ['LogicJake'],
+    maintainers: ['LogicJake', 'pseudoyu'],
     handler,
     url: 'www.qidian.com/free',
 };
