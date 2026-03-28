@@ -156,6 +156,7 @@ type ConfigEnvKeys =
     | 'MISSKEY_ACCESS_TOKEN'
     | 'MIXI2_AUTH_TOKEN'
     | 'MIXI2_AUTH_KEY'
+    | 'LOCALS_AUTH_TOKEN'
     | 'MOX_COOKIE'
     | 'NCM_COOKIES'
     | 'NEWRANK_COOKIE'
@@ -514,6 +515,9 @@ export type Config = {
     mixi2: {
         authToken?: string;
         authKey?: string;
+    };
+    locals: {
+        authToken?: string;
     };
     mox: {
         cookie: string;
@@ -1002,6 +1006,9 @@ const calculateValue = () => {
         mixi2: {
             authToken: envs.MIXI2_AUTH_TOKEN,
             authKey: envs.MIXI2_AUTH_KEY,
+        },
+        locals: {
+            authToken: envs.LOCALS_AUTH_TOKEN,
         },
         mox: {
             cookie: envs.MOX_COOKIE,
