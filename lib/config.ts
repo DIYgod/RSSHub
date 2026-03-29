@@ -131,7 +131,7 @@ type ConfigEnvKeys =
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
-    | 'SECURITY_KEY'
+    | 'LOCALS_SESSION'
     | 'LOFTER_COOKIE'
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
@@ -182,6 +182,7 @@ type ConfigEnvKeys =
     | 'SCIHUB_HOST'
     | 'SDO_FF14RISINGSTONES'
     | 'SDO_UA'
+    | 'SECURITY_KEY'
     | 'SIS001_BASE_URL'
     | 'SKEB_BEARER_TOKEN'
     | 'SORRYCC_COOKIES'
@@ -469,6 +470,9 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    locals: {
+        session?: string;
     };
     lofter: {
         cookies?: string;
@@ -958,6 +962,9 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        locals: {
+            session: envs.LOCALS_SESSION,
         },
         lofter: {
             cookies: envs.LOFTER_COOKIE,
