@@ -150,8 +150,8 @@ type ConfigEnvKeys =
     | 'MASTODON_API_ACCT_DOMAIN'
     | `MEDIUM_COOKIE_${string}`
     | 'MEDIUM_ARTICLE_COOKIE'
-    | 'MIHOYO_COOKIE'
     | 'LOCALS_SESSION'
+    | 'MIHOYO_COOKIE'
     | 'MINIFLUX_INSTANCE'
     | 'MINIFLUX_TOKEN'
     | 'MISSKEY_ACCESS_TOKEN'
@@ -502,11 +502,11 @@ export type Config = {
         cookies: Record<string, string | undefined>;
         articleCookie?: string;
     };
-    mihoyo: {
-        cookie?: string;
-    };
     locals: {
         session?: string;
+    };
+    mihoyo: {
+        cookie?: string;
     };
     miniflux: {
         instance?: string;
@@ -993,11 +993,11 @@ const calculateValue = () => {
             cookies: medium_cookies,
             articleCookie: envs.MEDIUM_ARTICLE_COOKIE || '',
         },
-        mihoyo: {
-            cookie: envs.MIHOYO_COOKIE,
-        },
         locals: {
             session: envs.LOCALS_SESSION,
+        },
+        mihoyo: {
+            cookie: envs.MIHOYO_COOKIE,
         },
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
