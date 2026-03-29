@@ -1,10 +1,14 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+const baseUrl = 'https://www.archdaily.com';
+const archdailyArticlePrefix = 'https://www.archdaily.com/';
+const allowedCategories = new Set(['all', 'projects', 'products', 'folders', 'articles', 'competitions', 'events']);
 
 export const route: Route = {
     path: '/search/:category/:search',
@@ -31,8 +35,6 @@ export const route: Route = {
 async function handler(ctx) {
     const { category, search } = ctx.req.param();
 
-    const baseUrl = 'https://www.archdaily.com';
-    const allowedCategories = new Set(['all', 'projects', 'products', 'folders', 'articles', 'competitions', 'events']);
     const finalCategory = allowedCategories.has(category) ? category : 'all';
 
     if (finalCategory === 'competitions' || finalCategory === 'events') {
@@ -44,7 +46,7 @@ async function handler(ctx) {
         const seen = new Set<string>();
         const list = $('li.afd-search-list__item')
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const element = $(item);
                 const linkElement = element.find('a.afd-search-list__link').first();
                 const href = linkElement.attr('href');
@@ -53,27 +55,28 @@ async function handler(ctx) {
 
                 const title = titleElement.text().trim() || imageElement.attr('alt')?.trim();
                 if (!href || !title) {
-                    return;
+                    return [];
                 }
 
                 const link = normalizeArchdailyLink(href, baseUrl);
-                if (!link || !link.startsWith('https://www.archdaily.com/') || link.includes('/search/') || seen.has(link)) {
-                    return;
+                if (!link || !link.startsWith(archdailyArticlePrefix) || link.includes('/search/') || seen.has(link)) {
+                    return [];
                 }
                 seen.add(link);
 
                 const articleId = getArchdailyArticleId(link);
 
-                return {
-                    title,
-                    link,
-                    image: normalizeImageUrl(imageElement.attr('src')),
-                    guid: articleId ? `archdaily-${pageCategory}-${articleId}` : `${pageCategory}:${link}`,
-                };
-            })
-            .filter(Boolean);
+                return [
+                    {
+                        title,
+                        link,
+                        image: normalizeImageUrl(imageElement.attr('src')),
+                        guid: articleId ? `archdaily-${pageCategory}-${articleId}` : `${pageCategory}:${link}`,
+                    },
+                ];
+            });
 
-        const items = await Promise.all(
+        const items: DataItem[] = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.guid, async () => {
                     const detail = await getCompetitionMeta(item.link);
@@ -99,21 +102,21 @@ async function handler(ctx) {
 
     const response = await ofetch<{ results?: any[] }>(`${baseUrl}/search/api/v1/us/${finalCategory}?q=${encodeURIComponent(search)}`);
 
-    const items = (response?.results ?? [])
-        .map((item) => {
-            const title = item?.title || item?.name;
-            const link = item?.url;
-            if (!title || !link) {
-                return;
-            }
+    const items: DataItem[] = (response?.results ?? []).flatMap((item) => {
+        const title = item?.title || item?.name;
+        const link = item?.url;
+        if (!title || !link) {
+            return [];
+        }
 
-            if (finalCategory === 'folders') {
-                const images = (item?.images ?? []).map((image) => normalizeImageUrl(image)).filter(Boolean);
-                const author = item?.user?.slug_name;
-                const profileUrl = item?.user?.profile_url;
-                const folderTitle = author ? `${title} by ${author}` : title;
+        if (finalCategory === 'folders') {
+            const images = (item?.images ?? []).map((image) => normalizeImageUrl(image)).filter(Boolean);
+            const author = item?.user?.slug_name;
+            const profileUrl = item?.user?.profile_url;
+            const folderTitle = author ? `${title} by ${author}` : title;
 
-                return {
+            return [
+                {
                     title: folderTitle,
                     link,
                     guid: item?.id ? `archdaily-folder-${item.id}` : undefined,
@@ -128,26 +131,28 @@ async function handler(ctx) {
                     pubDate: item?.last_update ? parseDate(item.last_update) : undefined,
                     author,
                     category: ['folders', title],
-                };
-            }
+                },
+            ];
+        }
 
-            const image = normalizeImageUrl(item?.featured_images?.url_large || item?.featured_images?.url_medium || item?.featured_images?.url_small);
-            const itemCategory = (item?.tags ?? []).map((tag) => tag?.name).filter(Boolean);
+        const image = normalizeImageUrl(item?.featured_images?.url_large || item?.featured_images?.url_medium || item?.featured_images?.url_small);
+        const itemCategory = (item?.tags ?? []).map((tag) => tag?.name).filter(Boolean);
 
-            return {
+        return [
+            {
                 title,
                 link,
                 description: `${image ? `<img src="${image}"><br>` : ''}${item?.meta_description ?? ''}`,
                 pubDate: item?.publication_date ? parseDate(item.publication_date) : undefined,
                 author: item?.author?.name,
                 category: itemCategory,
-            };
-        })
-        .filter(Boolean);
+            },
+        ];
+    });
 
     const seenOutput = new Set<string>();
     const dedupedItems = items.filter((item) => {
-        const key = item?.guid || item?.link;
+        const key = item.guid || item.link;
         if (!key || seenOutput.has(key)) {
             return false;
         }
@@ -174,19 +179,19 @@ function normalizeImageUrl(url?: string) {
 }
 
 function normalizeArchdailyLink(url: string, baseUrl: string) {
-    const normalize = (input: string) => {
-        const parsed = new URL(input);
-        parsed.search = '';
-        parsed.hash = '';
-        return parsed.toString();
-    };
-
     if (url.startsWith('/')) {
-        return normalize(`${baseUrl}${url}`);
+        return normalizeUrlWithoutSearchAndHash(`${baseUrl}${url}`);
     }
-    if (url.startsWith('https://www.archdaily.com/')) {
-        return normalize(url);
+    if (url.startsWith(archdailyArticlePrefix)) {
+        return normalizeUrlWithoutSearchAndHash(url);
     }
+}
+
+function normalizeUrlWithoutSearchAndHash(input: string) {
+    const parsed = new URL(input);
+    parsed.search = '';
+    parsed.hash = '';
+    return parsed.toString();
 }
 
 function getArchdailyArticleId(link: string) {
