@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
-import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -137,9 +136,6 @@ function renderDescription(image: string | undefined, description: string | unde
 function fetchVideoDetails(link: string) {
     return cache.tryGet(link, async () => {
         const response = await ofetch(link, {
-            headers: {
-                'user-agent': config.trueUA,
-            },
             retryStatusCodes: [403],
         });
 
@@ -211,9 +207,6 @@ async function handler(ctx) {
     const channelUrl = new URL(`/c/${encodeURIComponent(channel)}`, rootUrl).href;
 
     const response = await ofetch(channelUrl, {
-        headers: {
-            'user-agent': config.trueUA,
-        },
         retryStatusCodes: [403],
     });
 
