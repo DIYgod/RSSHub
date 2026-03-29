@@ -151,12 +151,12 @@ type ConfigEnvKeys =
     | `MEDIUM_COOKIE_${string}`
     | 'MEDIUM_ARTICLE_COOKIE'
     | 'MIHOYO_COOKIE'
+    | 'LOCALS_SESSION'
     | 'MINIFLUX_INSTANCE'
     | 'MINIFLUX_TOKEN'
     | 'MISSKEY_ACCESS_TOKEN'
     | 'MIXI2_AUTH_TOKEN'
     | 'MIXI2_AUTH_KEY'
-    | 'LOCALS_SESSION'
     | 'MOX_COOKIE'
     | 'NCM_COOKIES'
     | 'NEWRANK_COOKIE'
@@ -505,6 +505,9 @@ export type Config = {
     mihoyo: {
         cookie?: string;
     };
+    locals: {
+        session?: string;
+    };
     miniflux: {
         instance?: string;
         token?: string;
@@ -515,9 +518,6 @@ export type Config = {
     mixi2: {
         authToken?: string;
         authKey?: string;
-    };
-    locals: {
-        session?: string;
     };
     mox: {
         cookie: string;
@@ -996,6 +996,9 @@ const calculateValue = () => {
         mihoyo: {
             cookie: envs.MIHOYO_COOKIE,
         },
+        locals: {
+            session: envs.LOCALS_SESSION,
+        },
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
@@ -1006,9 +1009,6 @@ const calculateValue = () => {
         mixi2: {
             authToken: envs.MIXI2_AUTH_TOKEN,
             authKey: envs.MIXI2_AUTH_KEY,
-        },
-        locals: {
-            session: envs.LOCALS_SESSION,
         },
         mox: {
             cookie: envs.MOX_COOKIE,
