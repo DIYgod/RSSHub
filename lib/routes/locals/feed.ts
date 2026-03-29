@@ -196,7 +196,7 @@ function parseUnknownResponse<T>(body: string, instanceId: string): T {
 }
 
 function getImage(post: LocalsPost) {
-    return post.photos?.[0]?.sizes?.full?.url || post.photos?.[0]?.sizes?.thumb?.url || post.previews?.[0]?.first_frame_url || post.previews?.[0]?.url || post.videos?.[0]?.preview || post.audios?.[0]?.preview;
+    return post.photos?.[0]?.sizes?.full?.url || post.photos?.[0]?.sizes?.thumb?.url || post.previews?.[0]?.url || post.previews?.[0]?.first_frame_url || post.videos?.[0]?.preview || post.audios?.[0]?.preview;
 }
 
 function getTitle(post: LocalsPost) {
