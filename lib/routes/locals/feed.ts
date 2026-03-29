@@ -4,6 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const contentFilterMap = {
@@ -23,8 +24,7 @@ const contentTypeMap = {
     video: 'video',
 } as const;
 
-const serverId = 'src_lib_localsApi_index_ts--serverApi_4#/app/packages/locals/src/lib/localsApi/index.ts?tsr-directive-use-server=';
-const tenantInfoId = 'src_lib_shared_cachedQueries_ts--_tenantInfo_query#/app/packages/locals/src/lib/shared/cachedQueries.ts?tsr-directive-use-server=';
+const rootUrl = 'https://locals.com';
 
 type ContentFilter = keyof typeof contentFilterMap;
 type ContentType = keyof typeof contentTypeMap;
@@ -109,7 +109,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['locals.com/:community/feed?mode=content'],
+            source: ['locals.com/:community/feed'],
             target: '/content/:community',
         },
     ],
@@ -120,6 +120,31 @@ export const route: Route = {
 
 function getCookieHeader(session: string) {
     return [`locals2.v3.session=${session}`, 'locals.preferLocals2=false', 'locals2.v3.locale.actual=en-us%2Cen', 'locals2.v3.locale.inferred=en'].join('; ');
+}
+
+function getRequestHeaders(session: string) {
+    return {
+        Cookie: getCookieHeader(session),
+        'User-Agent': config.trueUA,
+    };
+}
+
+function extractAssetUrls(html: string) {
+    return [...new Set([...html.matchAll(/\/_build\/assets\/[^"'\s>]+\.js/g)].map((match) => match[0]))];
+}
+
+function extractFeedActionId(asset: string) {
+    const symbol = asset.match(/getFeedPosts:([A-Za-z_$][\w$]*)/)?.[1];
+    if (!symbol) {
+        return;
+    }
+
+    const match = asset.match(new RegExp(`${symbol}=s\\(\\(\\)=>\\{\\},"([^"]+)","([^"]+)"\\)`));
+    if (!match) {
+        return;
+    }
+
+    return `${match[1]}#${match[2]}`;
 }
 
 function createRequestBody(value: unknown) {
@@ -195,6 +220,61 @@ function parseUnknownResponse<T>(body: string, instanceId: string): T {
     return value;
 }
 
+function extractCommunityInfo(html: string, community: string) {
+    const markerIndex = html.indexOf(`hashtag:"${community}"`);
+    if (markerIndex === -1) {
+        throw new Error('Unable to resolve the Locals community metadata.');
+    }
+
+    const context = html.slice(Math.max(0, markerIndex - 200), markerIndex + 1200);
+    const idMatch = context.match(/id:(\d+)/);
+    const titleMatch = context.match(/title:"([^"]+)"/);
+    const descriptionMatch = context.match(/description:"([^"]*)"/);
+    const imageMatch = context.match(/image:\$R\[\d+\]=\{big:"([^"]*)",thumb:"([^"]*)"/);
+
+    if (!idMatch || !titleMatch) {
+        throw new Error('Unable to resolve the Locals community metadata.');
+    }
+
+    return {
+        description: descriptionMatch?.[1],
+        design: {
+            image: {
+                big: imageMatch?.[1] || undefined,
+                thumb: imageMatch?.[2] || undefined,
+            },
+        },
+        hashtag: community,
+        id: Number(idMatch[1]),
+        title: titleMatch[1],
+    } satisfies LocalsCommunityInfo;
+}
+
+function fetchContentPage(community: string, session: string) {
+    return cache.tryGet(`locals:content-page:${community}`, () => ofetch(`${rootUrl}/${community}/feed?mode=content`, { headers: getRequestHeaders(session) }));
+}
+
+function resolveActionIds(community: string, session: string) {
+    return cache.tryGet(`locals:action-ids:${community}`, async () => {
+        const html = await fetchContentPage(community, session);
+        const serverApiAsset = extractAssetUrls(html).find((assetUrl) => assetUrl.includes('/serverApi-'));
+        if (!serverApiAsset) {
+            throw new Error('Unable to locate the current Locals serverApi asset.');
+        }
+
+        const assetContent = await ofetch(new URL(serverApiAsset, rootUrl).href, {
+            headers: getRequestHeaders(session),
+        });
+        const serverId = extractFeedActionId(assetContent);
+
+        if (!serverId) {
+            throw new Error('Unable to discover the current Locals feed action id.');
+        }
+
+        return serverId;
+    });
+}
+
 function getImage(post: LocalsPost) {
     return post.photos?.[0]?.sizes?.full?.url || post.photos?.[0]?.sizes?.thumb?.url || post.previews?.[0]?.url || post.previews?.[0]?.first_frame_url || post.videos?.[0]?.preview || post.audios?.[0]?.preview;
 }
@@ -245,9 +325,11 @@ function mapPostToItem(post: LocalsPost): DataItem | null {
 
 function parseOptions(option1: string | undefined, option2: string | undefined) {
     const values = [option1, option2].filter(Boolean) as string[];
-    const filter = values.find((value): value is ContentFilter => value in contentFilterMap);
-    const contentType = values.find((value): value is ContentType => value in contentTypeMap);
-    const unknown = values.find((value) => !(value in contentFilterMap) && !(value in contentTypeMap));
+    const hasFilter = (value: string): value is ContentFilter => Object.hasOwn(contentFilterMap, value);
+    const hasContentType = (value: string): value is ContentType => Object.hasOwn(contentTypeMap, value);
+    const filter = values.find((value) => hasFilter(value));
+    const contentType = values.find((value) => hasContentType(value));
+    const unknown = values.find((value) => !hasFilter(value) && !hasContentType(value));
 
     if (unknown) {
         throw new Error('Invalid Locals content route option. Supported filters are `plus` and `nonplus`, and supported content types are `video`, `live`, `audio`, `podcast`, `article`, `document`, and `pdf`.');
@@ -264,8 +346,7 @@ async function requestServerFunction<T>(session: string, id: string, key: string
         body: createRequestBody(args),
         headers: {
             'Content-Type': 'application/json',
-            Cookie: getCookieHeader(session),
-            'User-Agent': config.trueUA,
+            ...getRequestHeaders(session),
             'X-Server-Id': id,
             'X-Server-Instance': key,
         },
@@ -280,10 +361,13 @@ async function requestServerFunction<T>(session: string, id: string, key: string
 }
 
 function fetchCommunityInfo(community: string, session: string) {
-    return cache.tryGet(`locals:community:${community}`, () => requestServerFunction<LocalsCommunityInfo>(session, tenantInfoId, `server-fn:rsshub-tenant-${community}`, [community]));
+    return cache.tryGet(`locals:community:${community}`, async () => {
+        const html = await fetchContentPage(community, session);
+        return extractCommunityInfo(html, community);
+    });
 }
 
-async function fetchFeedData(communityId: number, community: string, session: string, filter: ContentFilter | undefined, contentType: string | undefined) {
+async function fetchFeedData(communityId: number, community: string, session: string, serverId: string, filter: ContentFilter | undefined, contentType: string | undefined) {
     const requestFilter = filter ? contentFilterMap[filter] : undefined;
     const filters = requestFilter ? [requestFilter] : Object.values(contentFilterMap);
 
@@ -342,8 +426,9 @@ async function handler(ctx) {
     }
 
     const { contentType, filter } = parseOptions(option1, option2);
+    const serverId = await resolveActionIds(community, config.locals.session);
     const communityInfo = await fetchCommunityInfo(community, config.locals.session);
-    const items = await fetchFeedData(communityInfo.id, community, config.locals.session, filter, contentType);
+    const items = await fetchFeedData(communityInfo.id, community, config.locals.session, serverId, filter, contentType);
 
     return {
         description: `Locals content feed for ${communityInfo.title}${filter ? ` (${filter})` : ''}${contentType ? ` (${contentType})` : ''}`,
