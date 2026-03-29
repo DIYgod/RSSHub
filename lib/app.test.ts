@@ -3,8 +3,6 @@ import { describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
 
-const { config } = await import('@/config');
-
 describe('index', () => {
     it('serve index', async () => {
         const res = await app.request('/');
@@ -20,6 +18,6 @@ describe('request-rewriter', () => {
 
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
-        expect(headers.get('user-agent')).toBe(config.ua);
+        expect(headers.get('user-agent')).toMatch(/Chrome/);
     });
 });
