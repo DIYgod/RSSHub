@@ -15,7 +15,7 @@ export const route: Route = {
     view: ViewType.Videos,
     name: 'Channel',
     maintainers: ['luckycold'],
-    example: '/rumble/c/Timcast',
+    example: '/rumble/c/MikhailaPeterson',
     parameters: {
         channel: 'Channel slug from `https://rumble.com/c/<channel>`',
         embed: 'Default to embed the video, set to any value to disable embedding',
