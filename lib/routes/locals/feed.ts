@@ -30,6 +30,9 @@ type ContentFilter = keyof typeof contentFilterMap;
 type ContentType = keyof typeof contentTypeMap;
 
 type LocalsPost = {
+    audios?: Array<{
+        preview?: string;
+    }>;
     author_name?: string;
     author_username?: string;
     content_plus?: {
@@ -48,6 +51,10 @@ type LocalsPost = {
     }>;
     post_date?: string;
     published?: string;
+    previews?: Array<{
+        first_frame_url?: string;
+        url?: string;
+    }>;
     share_url?: string;
     subtitle?: string;
     text?: string;
@@ -189,7 +196,7 @@ function parseUnknownResponse<T>(body: string, instanceId: string): T {
 }
 
 function getImage(post: LocalsPost) {
-    return post.photos?.[0]?.sizes?.full?.url || post.photos?.[0]?.sizes?.thumb?.url || post.videos?.[0]?.preview;
+    return post.photos?.[0]?.sizes?.full?.url || post.photos?.[0]?.sizes?.thumb?.url || post.previews?.[0]?.first_frame_url || post.previews?.[0]?.url || post.videos?.[0]?.preview || post.audios?.[0]?.preview;
 }
 
 function getTitle(post: LocalsPost) {
@@ -201,6 +208,18 @@ function getTitle(post: LocalsPost) {
     return post.title || post.subtitle || textFallback || post.share_url || 'Locals post';
 }
 
+function renderDescription(image: string | undefined, description: string | undefined) {
+    if (image && description) {
+        return `<p><img src="${image}"></p>${description}`;
+    }
+
+    if (image) {
+        return `<p><img src="${image}"></p>`;
+    }
+
+    return description;
+}
+
 function mapPostToItem(post: LocalsPost): DataItem | null {
     if (!post.share_url || (!post.is_content && post.content_type === 'no_content')) {
         return null;
@@ -208,12 +227,14 @@ function mapPostToItem(post: LocalsPost): DataItem | null {
 
     const contentType = post.content_type ? [post.content_type] : [];
     const accessType = post.content_plus?.enabled ? ['content_plus'] : ['content'];
+    const image = getImage(post);
 
     return {
         author: post.author_name || post.author_username,
         category: [...accessType, ...contentType],
-        description: post.text,
-        itunes_item_image: getImage(post),
+        description: renderDescription(image, post.text),
+        image,
+        itunes_item_image: image,
         link: post.share_url,
         pubDate: post.published ? parseDate(post.published) : post.post_date ? parseDate(post.post_date) : undefined,
         title: getTitle(post),
