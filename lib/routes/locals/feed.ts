@@ -85,7 +85,7 @@ type LocalsCommunityInfo = {
 };
 
 export const route: Route = {
-    path: ['/content/:community', '/content/:community/:option1', '/content/:community/:option1/:option2'],
+    path: '/content/:community/:option1?/:option2?',
     categories: ['social-media'],
     example: '/locals/content/mattfradd/video',
     parameters: {
@@ -125,7 +125,6 @@ function getCookieHeader(session: string) {
 function getRequestHeaders(session: string) {
     return {
         Cookie: getCookieHeader(session),
-        'User-Agent': config.trueUA,
     };
 }
 
@@ -342,7 +341,7 @@ function parseOptions(option1: string | undefined, option2: string | undefined) 
 }
 
 async function requestServerFunction<T>(session: string, id: string, key: string, args: unknown[]) {
-    const response = await fetch('https://locals.com/_server', {
+    const response = await ofetch.raw(`${rootUrl}/_server`, {
         body: createRequestBody(args),
         headers: {
             'Content-Type': 'application/json',
@@ -351,13 +350,14 @@ async function requestServerFunction<T>(session: string, id: string, key: string
             'X-Server-Instance': key,
         },
         method: 'POST',
+        responseType: 'text',
     });
 
     if (!response.ok) {
         throw new Error(`Unable to access the Locals server function (${response.status}).`);
     }
 
-    return parseUnknownResponse<T>(await response.text(), key);
+    return parseUnknownResponse<T>(response._data, key);
 }
 
 function fetchCommunityInfo(community: string, session: string) {
@@ -411,11 +411,7 @@ async function fetchFeedData(communityId: number, community: string, session: st
         }
     }
 
-    return [...items.values()].toSorted((a, b) => {
-        const aTime = a.pubDate ? new Date(a.pubDate).getTime() : 0;
-        const bTime = b.pubDate ? new Date(b.pubDate).getTime() : 0;
-        return bTime - aTime;
-    });
+    return [...items.values()];
 }
 
 async function handler(ctx) {

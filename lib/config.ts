@@ -131,6 +131,7 @@ type ConfigEnvKeys =
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
+    | 'LOCALS_SESSION'
     | 'SECURITY_KEY'
     | 'LOFTER_COOKIE'
     | 'LORIENTLEJOUR_TOKEN'
@@ -150,7 +151,6 @@ type ConfigEnvKeys =
     | 'MASTODON_API_ACCT_DOMAIN'
     | `MEDIUM_COOKIE_${string}`
     | 'MEDIUM_ARTICLE_COOKIE'
-    | 'LOCALS_SESSION'
     | 'MIHOYO_COOKIE'
     | 'MINIFLUX_INSTANCE'
     | 'MINIFLUX_TOKEN'
@@ -467,6 +467,9 @@ export type Config = {
     lastfm: {
         api_key?: string;
     };
+    locals: {
+        session?: string;
+    };
     lightnovel: {
         cookie?: string;
     };
@@ -501,9 +504,6 @@ export type Config = {
     medium: {
         cookies: Record<string, string | undefined>;
         articleCookie?: string;
-    };
-    locals: {
-        session?: string;
     };
     mihoyo: {
         cookie?: string;
@@ -958,6 +958,9 @@ const calculateValue = () => {
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
+        locals: {
+            session: envs.LOCALS_SESSION,
+        },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
         },
@@ -992,9 +995,6 @@ const calculateValue = () => {
         medium: {
             cookies: medium_cookies,
             articleCookie: envs.MEDIUM_ARTICLE_COOKIE || '',
-        },
-        locals: {
-            session: envs.LOCALS_SESSION,
         },
         mihoyo: {
             cookie: envs.MIHOYO_COOKIE,
