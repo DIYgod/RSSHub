@@ -90,8 +90,8 @@ export const route: Route = {
     example: '/locals/content/mattfradd/video',
     parameters: {
         community: 'Community slug from `locals.com/:community/feed?mode=content`',
-        option1: 'Optional filter or content type. Filters: `plus`, `nonplus`. Content types: `video`, `live`, `audio`, `podcast`, `article`, `document`, `pdf`',
-        option2: 'Optional content type when `option1` is a filter',
+        option1: 'Filter or content type. Filters: `plus`, `nonplus`. Content types: `video`, `live`, `audio`, `podcast`, `article`, `document`, `pdf`',
+        option2: 'Content type when `option1` is a filter',
     },
     description: 'Fetches the Locals content library with an authenticated session cookie. By default it merges regular content and content+ posts, and it can be filtered by access tier and media type.',
     features: {
