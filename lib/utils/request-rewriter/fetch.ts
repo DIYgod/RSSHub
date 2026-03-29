@@ -36,7 +36,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
     // ua
-    if (config.isDefaultUA) {
+    if (config.isDefaultUA || init?.headerGeneratorOptions) {
         const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
         if (!request.headers.get('user-agent')) {

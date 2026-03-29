@@ -49,7 +49,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
         // ua
-        if (config.isDefaultUA) {
+        if (config.isDefaultUA || options.headerGeneratorOptions) {
             const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
 
             if (!headersLowerCaseKeys.has('user-agent')) {
