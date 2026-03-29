@@ -28820,6 +28820,19 @@
       }
     ]
   },
+  "locals.com": {
+    "_name": "Locals",
+    ".": [
+      {
+        "title": "Content Feed",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:community/feed"
+        ],
+        "target": "/locals/content/:community"
+      }
+    ]
+  },
   "logonews.cn": {
     "_name": "LogoNews 标志情报局",
     ".": [
