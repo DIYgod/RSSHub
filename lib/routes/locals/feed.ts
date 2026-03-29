@@ -221,13 +221,15 @@ function renderDescription(image: string | undefined, description: string | unde
 }
 
 function mapPostToItem(post: LocalsPost): DataItem | null {
-    if (!post.share_url || (!post.is_content && post.content_type === 'no_content')) {
+    const image = getImage(post);
+    const hasBodyContent = Boolean(post.text || image || post.photos?.length || post.videos?.length || post.audios?.length);
+
+    if (!post.share_url || (!post.is_content && post.content_type === 'no_content' && !hasBodyContent)) {
         return null;
     }
 
-    const contentType = post.content_type ? [post.content_type] : [];
+    const contentType = post.content_type && post.content_type !== 'no_content' ? [post.content_type] : [];
     const accessType = post.content_plus?.enabled ? ['content_plus'] : ['content'];
-    const image = getImage(post);
 
     return {
         author: post.author_name || post.author_username,
