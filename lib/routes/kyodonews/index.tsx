@@ -109,7 +109,7 @@ async function handler(ctx) {
                     </>
                 );
 
-                const ldJson = JSON.parse($('script[type="application/ld+json"]').text()).find((obj) => obj['@type'] === 'NewsArticle');
+                const ldJson = JSON.parse($('script[type="application/ld+json"]').text() || '[]').find((obj) => obj['@type'] === 'NewsArticle');
                 const pubDateMatch = ldJson && ldJson.datePublished;
                 const updatedMatch = ldJson && ldJson.dateModified;
                 if (pubDateMatch) {
