@@ -50,7 +50,7 @@ jobs:
                   Issue number:
                   $ISSUE_NUMBER
 
-                  Lookup this issue and search through existing issues (excluding #$ISSUE_NUMBER) in this repository to find any potential duplicates of this new issue.
+                  Lookup this issue and search through existing issues (excluding #$ISSUE_NUMBER) in this repository (DIYgod/RSSHub) to find any potential duplicates of this new issue.
                   Consider:
                   1. Similar titles or descriptions
                   2. Same error messages or symptoms
