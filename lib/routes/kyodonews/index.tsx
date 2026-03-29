@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -37,7 +36,7 @@ async function handler(ctx) {
 
     // raise error for invalid languages
     if (!['china', 'tchina'].includes(language)) {
-        throw new ConfigNotFoundError('Invalid language');
+        throw new InvalidParameterError('Invalid language');
     }
 
     const rootUrl = `https://${language}.kyodonews.net`;
@@ -73,11 +72,11 @@ async function handler(ctx) {
         title = $('head > title').text();
         description = $('meta[name="description"]').attr('content');
         image = resolveRelativeLink($('head > link[rel="apple-touch-icon"]').attr('href'), rootUrl) || image;
-        items = $('div.sec-latest > ul > li')
+        items = $('.m-article-wrap:first-of-type .m-article-item__link')
             .toArray()
             .map((item) => {
                 item = $(item);
-                const link = item.find('a').attr('href');
+                const link = item.attr('href');
                 return {
                     link: resolveRelativeLink(link, rootUrl),
                 };
@@ -94,18 +93,7 @@ async function handler(ctx) {
                 item.author = $('meta[name="author"]').attr('content');
 
                 // add main pic
-                const mainPicArea = $('div.mainpic');
-                mainPicArea.find('div').each((_, elem) => {
-                    elem = $(elem);
-                    elem.css('text-align', 'center');
-                });
-                // moving `data-src` to `src`
-                mainPicArea.find('img').each((_, img) => {
-                    img = $(img);
-                    img.attr('src', img.attr('data-src'));
-                    img.removeAttr('data-src');
-                    img.wrap('<div>');
-                });
+                const mainPicArea = $('.article-header-img');
                 let mainPic = mainPicArea.html();
                 mainPic = mainPic ? mainPic.trim() : '';
 
@@ -116,28 +104,22 @@ async function handler(ctx) {
                 // render description
                 item.description = renderToString(
                     <>
-                        {mainPic ? (
-                            <>
-                                {raw(mainPic)}
-                                <br />
-                                <br />
-                            </>
-                        ) : null}
+                        {mainPic ? raw(mainPic) : null}
                         {articleBody ? raw(articleBody) : null}
                     </>
                 );
 
-                const ldJson = $('script[type="application/ld+json"]').html();
-                const pubDate_match = ldJson && ldJson.match(/"datePublished":"([\d\s-:]*?)"/);
-                const updated_match = ldJson && ldJson.match(/"dateModified":"([\d\s-:]*?)"/);
-                if (pubDate_match) {
-                    item.pubDate = timezone(parseDate(pubDate_match[1]), 9);
+                const ldJson = JSON.parse($('script[type="application/ld+json"]').text() || '[]').find((obj) => obj['@type'] === 'NewsArticle');
+                const pubDateMatch = ldJson && ldJson.datePublished;
+                const updatedMatch = ldJson && ldJson.dateModified;
+                if (pubDateMatch) {
+                    item.pubDate = timezone(parseDate(pubDateMatch), 9);
                 }
-                if (updated_match) {
-                    item.updated = timezone(parseDate(updated_match[1]), 9);
+                if (updatedMatch) {
+                    item.updated = timezone(parseDate(updatedMatch), 9);
                 }
 
-                item.category = $('p.credit > a')
+                item.category = $('.article-header-cate__link')
                     .toArray()
                     .map((a) => $(a).text());
                 return item;
