@@ -467,11 +467,11 @@ export type Config = {
     lastfm: {
         api_key?: string;
     };
-    locals: {
-        session?: string;
-    };
     lightnovel: {
         cookie?: string;
+    };
+    locals: {
+        session?: string;
     };
     lofter: {
         cookies?: string;
@@ -958,11 +958,11 @@ const calculateValue = () => {
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
         },
-        locals: {
-            session: envs.LOCALS_SESSION,
-        },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        locals: {
+            session: envs.LOCALS_SESSION,
         },
         lofter: {
             cookies: envs.LOFTER_COOKIE,
