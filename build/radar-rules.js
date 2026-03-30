@@ -6443,7 +6443,7 @@
         docs:"https://docs.rsshub.app/routes/blog",
         source:[ "/category/:category/" ],
         target:"/ddosi/category/:category" },
-      { title:"Unknown",
+      { title:"首页",
         docs:"https://docs.rsshub.app/routes/blog",
         source:[ "/" ],
         target:"/ddosi/" } ] },

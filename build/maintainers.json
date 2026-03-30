@@ -2195,7 +2195,9 @@
   "/dcfever/trading/:id": [
     "TonyRL"
   ],
-  "/ddosi/category/:category?": [],
+  "/ddosi/category/:category?": [
+    "XinRoom"
+  ],
   "/ddosi/": [
     "XinRoom"
   ],
