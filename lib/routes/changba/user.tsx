@@ -1,5 +1,5 @@
-import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -7,8 +7,9 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
+const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
+
 export const route: Route = {
     path: '/:userid',
     categories: ['social-media'],
@@ -43,7 +44,7 @@ async function handler(ctx) {
     });
     const data = response.data;
     const $ = load(data);
-    const list = $('.user-work .work-info').toArray();
+    const list = $('.work-info, .user-work .work-info').toArray();
     const author = $('div.user-main-info > span.txt-info > a.uname').text();
     const authorimg = $('div.user-main-info > .poster > img').attr('data-src');
 
@@ -51,6 +52,8 @@ async function handler(ctx) {
         list.map((item) => {
             const $ = load(item);
             const link = $('a').attr('href');
+            if (!link) return null;
+
             return cache.tryGet(link, async () => {
                 const result = await got({
                     method: 'get',
@@ -58,7 +61,9 @@ async function handler(ctx) {
                     headers,
                 });
 
-                const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/);
+                const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || 
+                             result.data.match(/["']enc_workpath["']\s*,\s*["']([^"']+)["']/);
+
                 if (!match) {
                     return null;
                 }
@@ -66,17 +71,21 @@ async function handler(ctx) {
                 const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
                 const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
                 const decrypted = CryptoJS.AES.decrypt(match[1], key, { iv, padding: CryptoJS.pad.Pkcs7 });
-                const url = decrypted.toString(CryptoJS.enc.Utf8);
+                const mp3Url = decrypted.toString(CryptoJS.enc.Utf8);
 
-                if (!url) {
+                if (!mp3Url) {
                     return null;
                 }
 
-                const mp3 = url.replace('http://', 'https://');
+                const mp3 = mp3Url.replace('http://', 'https://');
                 const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
-                const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(')[1];
+                const coverStyle = $('div.work-cover').attr('style') || '';
+                const itunes_item_image = coverStyle.includes('url(') 
+                    ? coverStyle.split('url(')[1].split(')')[0].replace(/['"]/g, '') 
+                    : '';
+
                 return {
-                    title: $('.work-title').text(),
+                    title: $('.work-title').text() || '无题',
                     description,
                     link,
                     author,
@@ -93,7 +102,7 @@ async function handler(ctx) {
     return {
         title: author + ' - 唱吧',
         link: url,
-        description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
+        description: $('meta[name="description"]').attr('content') || `${author} - 唱吧`,
         item: items,
         image: authorimg,
         itunes_author: author,
@@ -104,6 +113,6 @@ async function handler(ctx) {
 const ChangbaWorkDescription = ({ desc, mp3url }: { desc: string; mp3url: string }) => (
     <>
         <p>{desc}</p>
-        <audio id="audio" src={mp3url} preload="metadata"></audio>
+        <audio id="audio" src={mp3url} preload="metadata" controls></audio>
     </>
 );
