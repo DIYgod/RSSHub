@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
-
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -59,14 +58,12 @@ async function handler(ctx) {
                     headers,
                 });
 
-                // 增强型正则：捕获多种格式的 enc_workpath
                 const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || result.data.match(/["']enc_workpath["']\s*,\s*["']([^"']+)["']/);
 
                 if (!match) {
                     return null;
                 }
 
-                // AES 解密逻辑
                 const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
                 const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
                 const decrypted = CryptoJS.AES.decrypt(match[1], key, { iv, padding: CryptoJS.pad.Pkcs7 });
