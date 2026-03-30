@@ -7,8 +7,6 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.qiche365.org.cn';
 
-const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
-
 export const route: Route = {
     path: '/recall/:channel',
     name: '汽车召回',
@@ -34,7 +32,6 @@ async function handler(ctx): Promise<Data> {
     // second request with those cookies returns the actual JSON data.
     const initResponse = await ofetch.raw(targetUrl, {
         headers: {
-            'User-Agent': userAgent,
             'Accept-Language': 'zh-CN,zh;q=0.9',
         },
         ignoreResponseError: true,
@@ -44,7 +41,6 @@ async function handler(ctx): Promise<Data> {
 
     const { html } = await ofetch(targetUrl, {
         headers: {
-            'User-Agent': userAgent,
             'Accept-Language': 'zh-CN,zh;q=0.9',
             Cookie: cookies,
         },

@@ -21,11 +21,7 @@ export const handler = async (ctx): Promise<Data> => {
     const slug = parseSlug(filter);
     const targetUrl = slug ? `${baseUrl}/${slug}` : `${baseUrl}/${defaultFeedPath}`;
 
-    const { data: response } = await got(targetUrl, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-    });
+    const { data: response } = await got(targetUrl);
 
     const $ = load(response);
 

@@ -1,5 +1,6 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
+import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -58,12 +59,10 @@ const starMap: Record<number, string> = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1';
     const userPage = `https://m.dianping.com/userprofile/${id}`;
     const cookie = config.dianping.cookie;
 
     const headers: Record<string, string> = {
-        'User-Agent': userAgent,
         Referer: userPage,
     };
 
@@ -73,6 +72,7 @@ async function handler(ctx) {
 
     const pageResponse = await ofetch(userPage, {
         headers,
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
     const nickNameReg = /window\.nickName = "(.*?)"/g;
@@ -80,6 +80,7 @@ async function handler(ctx) {
 
     const response = await ofetch(`https://m.dianping.com/member/ajax/NobleUserFeeds?userId=${id}`, {
         headers,
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
     const data = response.data;

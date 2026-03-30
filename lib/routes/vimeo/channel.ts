@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
@@ -64,8 +65,8 @@ async function handler(ctx) {
                     url: `https://vimeo.com${link}/description?breeze=1`,
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X)  ',
                     },
+                    headerGeneratorOptions: PRESETS.MODERN_IOS,
                 });
                 const articledata = response2.data;
                 const $2 = load(articledata);
