@@ -46,7 +46,7 @@ async function handler(ctx) {
         title: $('title').text(),
         description: $('.markdown-body').text().trim(),
         link: url,
-        item: $('article.my-4')
+        item: $('article.border')
             .toArray()
             .map((item) => {
                 item = $(item);
