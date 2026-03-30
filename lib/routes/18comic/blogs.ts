@@ -27,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: '文庫',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'jmcomic.group/',
     description: `分类

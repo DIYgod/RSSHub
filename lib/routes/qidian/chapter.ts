@@ -14,7 +14,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '作品章节',
-    maintainers: ['fuzy112'],
+    maintainers: ['fuzy112', 'pseudoyu'],
     handler,
 };
 

@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '专辑',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'jmcomic.group/',
     description: `::: tip

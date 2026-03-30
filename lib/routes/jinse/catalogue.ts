@@ -34,7 +34,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '分类',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
 | ------- | ------------ | ---- | ----- | ---------- |

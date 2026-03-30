@@ -3,7 +3,7 @@ import type { Route } from '@/types';
 export const route: Route = {
     path: '/follow/articles/:language?',
     name: '个人订阅追踪动态（已停用）',
-    maintainers: ['AgFlore'],
+    maintainers: ['AgFlore', 'pseudoyu'],
     parameters: {
         language: '语言',
     },

@@ -7,7 +7,7 @@ export const route: Route = {
     parameters: { id: '分类 id，见下表，可在对应分类页 URL 中找到' },
     name: '栏目',
     example: '/jiemian/lists/65',
-    maintainers: ['WenhuWee', 'nczitzk'],
+    maintainers: ['WenhuWee', 'nczitzk', 'pseudoyu'],
     handler,
     description: `| [首页](https://www.jiemian.com) | [商业](https://www.jiemian.com/lists/2.html) | [财经](https://www.jiemian.com/lists/800.html) | [新闻](https://www.jiemian.com/lists/801.html) | [文化生活](https://www.jiemian.com/lists/130.html) | [快报](https://www.jiemian.com/lists/4.html) |
 | ------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------- |

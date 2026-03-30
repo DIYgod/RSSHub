@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/tags/:type/:language?',
     name: '话题・标签',
     url: 'theinitium.com',
-    maintainers: ['AgFlore'],
+    maintainers: ['AgFlore', 'pseudoyu'],
     parameters: {
         type: '标签 slug，可从标签页 URL 中获取，如 `https://theinitium.com/tag/south-korea/` 则为 `south-korea`',
         language: '语言，简体`zh-hans`，繁体`zh-hant`，缺省为不限',

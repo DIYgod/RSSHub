@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1',
+};
 
 export const route: Route = {
     path: '/author/:id',
@@ -14,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -25,48 +26,34 @@ export const route: Route = {
         },
     ],
     name: '作者',
-    maintainers: ['miles170'],
+    maintainers: ['miles170', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const rootUrl = 'https://my.qidian.com';
-    const currentUrl = `${rootUrl}/author/${id}/`;
-    const response = await got(currentUrl);
-    const $ = load(response.data);
-    const authorName = $('.header-msg h1').contents().first().text().trim();
-    const items = $('.author-work .author-item')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const messageItem = item.find('.author-item-msg');
-            const updatedDate = messageItem.find('.author-item-update span').text().replace('·', '').trim();
+    const currentUrl = `https://my.qidian.com/author/${id}/`;
 
-            return {
-                title: messageItem.find('.author-item-title').text().trim(),
-                author: authorName,
-                category: messageItem.find('.author-item-exp a').first().text().trim(),
-                description: renderDescription(messageItem.find('.author-item-update a').attr('title'), item.find('a img').attr('src')),
-                pubDate: timezone(/(今|昨)/.test(updatedDate) ? parseRelativeDate(updatedDate) : parseDate(updatedDate, 'YYYY-MM-DD HH:mm'), +8),
-                link: messageItem.find('.author-item-update a').attr('href'),
-            };
-        });
+    // Reason: PC site (my.qidian.com) returns anti-bot JS challenge; mobile site has SSR data
+    const response = await got(`https://m.qidian.com/author/${id}/`, { headers });
+    const $ = load(response.data);
+    const { pageContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const pageData = pageContext.pageProps.pageData;
+
+    const authorName = pageData.info.name;
+
+    const items = (pageData.allBook || []).map((book) => ({
+        title: book.bName,
+        author: authorName,
+        category: book.cat,
+        description: book.desc,
+        link: `https://book.qidian.com/info/${book.bid}/`,
+    }));
 
     return {
         title: `${authorName} - 起点中文网`,
-        description: $('.header-msg-desc').text().trim(),
+        description: pageData.info.desc,
         link: currentUrl,
         item: items,
     };
 }
-
-const renderDescription = (description?: string, image?: string, author?: string) => renderToString(<QidianDescription description={description} image={image} author={author} />);
-
-const QidianDescription = ({ description, image, author }: { description?: string; image?: string; author?: string }) => (
-    <>
-        <p>{description}</p>
-        {image ? <img src={image} /> : null}
-        {author ?? null}
-    </>
-);
