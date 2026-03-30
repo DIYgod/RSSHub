@@ -44,8 +44,8 @@ importers:
         specifier: 1.19.11
         version: 1.19.11(hono@4.12.8)
       '@hono/zod-openapi':
-        specifier: 1.2.3
-        version: 1.2.3(hono@4.12.8)(zod@4.3.6)
+        specifier: 1.2.4
+        version: 1.2.4(hono@4.12.8)(zod@4.3.6)
       '@jocmp/mercury-parser':
         specifier: 3.0.7
         version: 3.0.7
@@ -1080,8 +1080,8 @@ packages:
     peerDependencies:
       hono: ^4
 
-  '@hono/zod-openapi@1.2.3':
-    resolution: {integrity: sha512-zAviC3ApRAYGUiGWZiW/mrK/UBqkTi9BKQxn1IvwYyp2kS+k1tlnwut59DfEInpcsq1347zAYOqYI+obMy4vzQ==}
+  '@hono/zod-openapi@1.2.4':
+    resolution: {integrity: sha512-cZu71bpODTbtIDoUsIIYPrs58wJ565Tbg6FE+JshU0irBAd6KxrP+k62Amm/mjA7tTOQ3+ingODHKGFOnv+Ibw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
@@ -6668,7 +6668,7 @@ snapshots:
     dependencies:
       hono: 4.12.8
 
-  '@hono/zod-openapi@1.2.3(hono@4.12.8)(zod@4.3.6)':
+  '@hono/zod-openapi@1.2.4(hono@4.12.8)(zod@4.3.6)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.5.0(zod@4.3.6)
       '@hono/zod-validator': 0.7.6(hono@4.12.8)(zod@4.3.6)
