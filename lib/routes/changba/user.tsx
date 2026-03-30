@@ -5,8 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/:userid',
@@ -38,7 +37,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
-        headers,
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
     const data = response.data;
     const $ = load(data);
@@ -54,7 +53,7 @@ async function handler(ctx) {
                 const result = await got({
                     method: 'get',
                     url: link,
-                    headers,
+                    headerGeneratorOptions: PRESETS.MODERN_IOS,
                 });
 
                 const re = /workid: '\d+'/;

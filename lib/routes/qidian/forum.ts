@@ -2,10 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-
-const headers = {
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1',
-};
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/forum/:id',
@@ -35,7 +32,7 @@ async function handler(ctx) {
 
     // Reason: forum.qidian.com redirects and PC site has anti-bot JS challenge;
     // mobile book page embeds forum posts via seoBookCirclePost
-    const response = await got(`https://m.qidian.com/book/${id}.html`, { headers });
+    const response = await got(`https://m.qidian.com/book/${id}.html`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
     const $ = load(response.data);
     const { pageContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
     const pageData = pageContext.pageProps.pageData;

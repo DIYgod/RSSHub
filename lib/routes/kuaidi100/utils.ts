@@ -230,7 +230,6 @@ export default {
                 headers: {
                     Referer: 'https://www.kuaidi100.com/',
                     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7',
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
                     Cookie: `${cookie.globacsrftoken}; ${cookie.csrf}; ${cookie.wwwid}; ${cookie.dasddocHref}; ${cookie.dasddocReferrer}; ${
                         cookie.dasddocTitl
                     }; addcom=${number}; addnu=${id}; snt_query_meta=${queryMeta}; sortStatus=0; Hm_lpvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp}; Hm_lvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp - 1642}`,
