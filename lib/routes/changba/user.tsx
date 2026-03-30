@@ -1,5 +1,5 @@
-import CryptoJS from 'crypto-js';
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -60,8 +60,7 @@ async function handler(ctx) {
                 });
 
                 // 增强型正则：捕获多种格式的 enc_workpath
-                const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || 
-                             result.data.match(/["']enc_workpath["']\s*,\s*["']([^"']+)["']/);
+                const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/) || result.data.match(/["']enc_workpath["']\s*,\s*["']([^"']+)["']/);
 
                 if (!match) {
                     return null;
@@ -78,7 +77,7 @@ async function handler(ctx) {
                 }
 
                 const mp3 = mp3Url.replace('http://', 'https://');
-                const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);                
+                const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
                 const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(')[1];
                 return {
                     title: $('.work-title').text(),
