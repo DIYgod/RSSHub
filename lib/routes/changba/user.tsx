@@ -1,5 +1,5 @@
-import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -10,10 +10,10 @@ import got from '@/utils/got';
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 export const route: Route = {
-    path: '/user/:userid',
+    path: '/:userid',
     categories: ['social-media'],
     view: ViewType.Audios,
-    example: '/changba/user/skp6hhF59n48R-UpqO3izw',
+    example: '/changba/skp6hhF59n48R-UpqO3izw',
     parameters: { userid: '用户ID, 可在对应分享页面的 URL 中找到' },
     features: {
         requireConfig: false,
@@ -58,21 +58,21 @@ async function handler(ctx) {
                     headers,
                 });
 
-                const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/);
-                if (!match) {
-                    return null;
-                }
+            const match = result.data.match(/enc_workpath\s*[:=]\s*['"]([^'"]+)['"]/);
+            if (!match) {
+                return null;
+            }
 
-                const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
-                const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
-                const decrypted = CryptoJS.AES.decrypt(match[1], key, { iv, padding: CryptoJS.pad.Pkcs7 });
-                const url = decrypted.toString(CryptoJS.enc.Utf8);
+            const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
+            const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
+            const decrypted = CryptoJS.AES.decrypt(match[1], key, { iv, padding: CryptoJS.pad.Pkcs7 });
+            const url = decrypted.toString(CryptoJS.enc.Utf8);
 
-                if (!url) {
-                    return null;
-                }
+            if (!url) {
+                return null;
+            }
 
-                const mp3 = url.replace('http://', 'https://');
+            const mp3 = url.replace('http://', 'https://');
                 const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
                 const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(')[1];
                 return {
