@@ -148,7 +148,7 @@
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.2.0",
         "@cloudflare/puppeteer": "1.0.6",
-        "@cloudflare/workers-types": "4.20260317.1",
+        "@cloudflare/workers-types": "4.20260329.1",
         "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.57.0",
@@ -201,7 +201,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.0.9",
-        "wrangler": "4.77.0",
+        "wrangler": "4.78.0",
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
