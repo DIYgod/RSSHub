@@ -50,6 +50,7 @@ describe('honeybadger middleware', () => {
 
         expect(honeybadger.configure).toHaveBeenCalledWith({
             apiKey: 'hbp_test_key',
+            enableUncaught: false,
         });
         expect(honeybadger.setContext).toHaveBeenCalledWith({ node_name: 'node-a' });
         expect(logger.info).toHaveBeenCalledWith('Honeybadger inited.');
