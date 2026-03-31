@@ -24,6 +24,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['china.kyodonews.net/news/:keyword', 'china.kyodonews.net/'],
+            target: '/china/:keyword?',
+        },
+        {
+            source: ['tchina.kyodonews.net/news/:keyword', 'tchina.kyodonews.net/'],
+            target: '/tchina/:keyword?',
+        },
+    ],
     name: '最新报道',
     maintainers: ['Rongronggg9'],
     handler,
@@ -40,7 +50,7 @@ async function handler(ctx) {
     }
 
     const rootUrl = `https://${language}.kyodonews.net`;
-    const currentUrl = `${rootUrl}/${keyword ? (keyword === 'rss' ? 'rss/news.xml' : `news/${keyword}`) : ''}`;
+    const currentUrl = `${rootUrl}/${keyword ? (keyword === 'rss' ? 'list/feed/rss4news' : `news/${keyword}`) : ''}`;
 
     let response;
     try {
@@ -52,7 +62,7 @@ async function handler(ctx) {
     const $ = load(response.data, { xmlMode: keyword === 'rss' });
 
     let title, description, image, items;
-    image = `${rootUrl}/apple-touch-icon-180x180.png`;
+    image = `https://${language}-kyodo.ismcdn.jp/common/images/apple-touch-icon-180x180.png`;
 
     if (keyword === 'rss') {
         title = $('channel > title').text();

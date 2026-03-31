@@ -218,7 +218,7 @@ async function handler(ctx) {
         title: `搜狐号 - ${globalConst.title}`,
         description: briefIntroductionCard.column_9_text,
         link: originalRequest.url,
-        image: `https:${briefIntroductionCard.column_2_image}`,
+        image: briefIntroductionCard.column_2_image.startsWith('http') ? briefIntroductionCard.column_2_image.replace('http:', 'https:') : `https:${briefIntroductionCard.column_2_image}`,
         item: items,
     };
 }
