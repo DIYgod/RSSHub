@@ -5,6 +5,7 @@ const errorSpy = vi.fn();
 vi.mock('@/utils/logger', () => ({
     default: {
         error: errorSpy,
+        info: vi.fn(),
     },
 }));
 
