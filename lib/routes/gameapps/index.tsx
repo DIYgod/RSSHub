@@ -38,40 +38,15 @@ async function handler() {
 
                 item.title = $('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text();
 
-                const nextPages = $('.pagination li')
-                    .not('.disabled')
-                    .not('.active')
-                    .find('a')
-                    .toArray()
-                    .map((a) => `${baseUrl}${a.attribs.href}`);
-
                 $('.pages').remove();
-
-                const content = $('.news-content');
 
                 // remove unwanted key value
                 delete item.content;
                 delete item.contentSnippet;
                 delete item.isoDate;
 
-                if (nextPages.length) {
-                    const pages = await Promise.all(
-                        nextPages.map(async (url) => {
-                            const response = await ofetch(url, {
-                                headers: {
-                                    referer: item.link,
-                                },
-                            });
-                            const $ = load(response);
-                            $('.pages').remove();
-                            return $('.news-content').html();
-                        })
-                    );
-                    content.append(pages);
-                }
-
                 const intro = $('div.introduction.media.news-intro div.media-body').html()?.trim();
-                const desc = content.html()?.trim();
+                const desc = $('.article-content').html()?.trim();
                 item.description = renderToString(
                     <>
                         {intro ? raw(intro) : null}
