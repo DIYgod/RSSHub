@@ -22,7 +22,9 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://www.tw-nongmu.com';
-    const response = await ofetch(`${baseUrl}/market.html`);
+    const link = `${baseUrl}/market.html`;
+
+    const response = await ofetch(link);
     const $ = load(response);
 
     const list = $('.list-list li')
@@ -41,8 +43,9 @@ async function handler() {
 
     return {
         title: $('head title').text(),
-        link: `${baseUrl}/market.html`,
-        language: 'zh-CN',
+        link,
+        language: $('html').attr('lang') as 'zh-CN',
+        image: `${baseUrl}/favicon.ico`,
         item: items,
     };
 }
