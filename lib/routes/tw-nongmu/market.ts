@@ -44,7 +44,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang') as 'zh-CN',
+        language: $('html').attr('lang') as const,
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };
