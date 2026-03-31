@@ -6,8 +6,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { PRESETS } from '@/utils/constants';
 
-const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
 export const route: Route = {
@@ -40,7 +40,9 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
-        headers,
+        headers: {
+            'User-Agent': PRESETS.MODERN_IOS,
+        },
     });
     const data = response.data;
     const $ = load(data);
@@ -56,7 +58,9 @@ async function handler(ctx) {
                 const result = await got({
                     method: 'get',
                     url: link,
-                    headers,
+                    headers: {
+                        'User-Agent': PRESETS.MODERN_IOS,
+                    },
                 });
 
                 const match = result.data.match(/enc_workpath\s*[:=,]\s*['"]([^'"]+)['"]/);
