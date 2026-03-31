@@ -8,6 +8,7 @@ import logger from '@/utils/logger';
 if (config.honeybadger.apiKey) {
     Honeybadger.configure({
         apiKey: config.honeybadger.apiKey,
+        enableUncaught: false,
     });
     Honeybadger.setContext({ node_name: config.nodeName });
 
