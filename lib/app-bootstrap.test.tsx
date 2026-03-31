@@ -5,7 +5,14 @@ const errorSpy = vi.fn();
 vi.mock('@/utils/logger', () => ({
     default: {
         error: errorSpy,
-        info: vi.fn(),
+    },
+}));
+
+vi.mock('@honeybadger-io/js', () => ({
+    default: {
+        configure: vi.fn(),
+        notify: vi.fn(),
+        setContext: vi.fn(),
     },
 }));
 
