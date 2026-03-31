@@ -5,8 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { PRESETS } from '@/utils/constants';
+import got from '@/utils/got';
 
 const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
