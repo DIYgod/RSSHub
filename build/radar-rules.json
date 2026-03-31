@@ -46202,6 +46202,20 @@
       }
     ]
   },
+  "tw-nongmu.com": {
+    "_name": "通威农业发展",
+    "www": [
+      {
+        "title": "鱼价行情",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/market.html",
+          "/"
+        ],
+        "target": "/tw-nongmu/market"
+      }
+    ]
+  },
   "twitch.tv": {
     "_name": "Twitch",
     "www": [
