@@ -31,10 +31,10 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const $link = $item.find('a');
+            const a = $item.find('a');
             return {
-                title: $link.text(),
-                link: $link.attr('href')!,
+                title: a.text(),
+                link: a.attr('href')!,
                 pubDate: parseDate($item.find('.date').text(), 'YYYY年MM月DD日'),
             };
         });
