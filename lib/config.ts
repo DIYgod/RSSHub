@@ -48,6 +48,8 @@ type ConfigEnvKeys =
     | 'OTEL_SECONDS_BUCKET'
     | 'OTEL_MILLISECONDS_BUCKET'
     | 'SHOW_LOGGER_TIMESTAMP'
+    | 'HONEYBADGER_API_KEY'
+    | 'ERROR_TRACKING_ROUTE_TIMEOUT'
     | 'SENTRY'
     | 'SENTRY_ROUTE_TIMEOUT'
     | 'ENABLE_REMOTE_DEBUGGING'
@@ -306,10 +308,13 @@ export type Config = {
         milliseconds_bucket?: string;
     };
     showLoggerTimestamp?: boolean;
+    honeybadger: {
+        apiKey?: string;
+    };
     sentry: {
         dsn?: string;
-        routeTimeout: number;
     };
+    errorTrackingRouteTimeout: number;
     enableRemoteDebugging?: boolean;
     // feed config
     hotlink: {
@@ -798,10 +803,13 @@ const calculateValue = () => {
             milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
         },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
+        honeybadger: {
+            apiKey: envs.HONEYBADGER_API_KEY,
+        },
         sentry: {
             dsn: envs.SENTRY,
-            routeTimeout: toInt(envs.SENTRY_ROUTE_TIMEOUT, 30000),
         },
+        errorTrackingRouteTimeout: toInt(envs.ERROR_TRACKING_ROUTE_TIMEOUT || envs.SENTRY_ROUTE_TIMEOUT, 30000),
         enableRemoteDebugging: toBoolean(envs.ENABLE_REMOTE_DEBUGGING, false),
         // feed config
         hotlink: {

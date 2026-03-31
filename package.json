@@ -59,6 +59,7 @@
         "@bbob/html": "4.3.1",
         "@bbob/plugin-helper": "4.3.1",
         "@bbob/preset-html5": "4.3.1",
+        "@honeybadger-io/js": "6.12.3",
         "@hono/node-server": "1.19.12",
         "@hono/zod-openapi": "1.2.4",
         "@jocmp/mercury-parser": "3.0.7",

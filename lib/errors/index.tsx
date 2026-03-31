@@ -1,3 +1,4 @@
+import Honeybadger from '@honeybadger-io/js';
 import * as Sentry from '@sentry/node';
 import type { ErrorHandler, NotFoundHandler } from 'hono';
 import { routePath } from 'hono/route';
@@ -35,6 +36,12 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
     hasMatchedRoute && debug.errorRoutes[matchedRoute]++;
     setDebugInfo(debug);
+
+    if (config.honeybadger.apiKey) {
+        Honeybadger.notify(error, {
+            context: { name: requestPath.split('/')[1] },
+        });
+    }
 
     if (config.sentry.dsn) {
         Sentry.withScope((scope) => {
