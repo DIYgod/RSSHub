@@ -135,6 +135,29 @@ describe('wechat-mp', () => {
             realShowType: '112233445566778899',
             createTime: '1713009660',
         });
+
+        // item_show_type in a separate script tag from real_item_show_type
+        expect(
+            ExtractMetadata.common(
+                load(/* HTML */ `
+                    <html lang="">
+                        <script type="text/javascript" nonce="123456789">
+                            var item_show_type = '0';
+                        </script>
+                        <script type="text/javascript" nonce="123456789">
+                            var real_item_show_type = '0';
+                            var ct = '1713009660';
+                            var msg_source_url = 'https://mp.weixin.qq.com/rsshub_test/fake';
+                        </script>
+                    </html>
+                `)
+            )
+        ).toMatchObject({
+            showType: showTypeMapReverse['0'],
+            realShowType: showTypeMapReverse['0'],
+            createTime: '1713009660',
+            sourceUrl: 'https://mp.weixin.qq.com/rsshub_test/fake',
+        });
     });
 
     it('ExtractMetadata.common rethrows unexpected errors', () => {
