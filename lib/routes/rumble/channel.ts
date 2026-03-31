@@ -31,7 +31,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['rumble.com/c/:channel'],
+            source: ['rumble.com/c/:channel', 'rumble.com/c/:channel/videos'],
             target: '/c/:channel',
         },
     ],
@@ -205,8 +205,9 @@ async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const includeEmbed = !ctx.req.param('embed');
     const channelUrl = new URL(`/c/${encodeURIComponent(channel)}`, rootUrl).href;
+    const videosUrl = `${channelUrl}/videos`;
 
-    const response = await ofetch(channelUrl, {
+    const response = await ofetch(videosUrl, {
         retryStatusCodes: [403],
     });
 
@@ -230,7 +231,7 @@ async function handler(ctx) {
 
     return {
         title: `Rumble - ${title}`,
-        link: channelUrl,
+        link: videosUrl,
         item: items.filter((item): item is DataItem => Boolean(item && item.link)),
     };
 }
