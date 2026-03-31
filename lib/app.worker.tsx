@@ -52,6 +52,7 @@ app.use(mLogger);
 app.use(trace);
 
 // Heavy middleware excluded in Worker build:
+// - honeybadger: @honeybadger-io/js
 // - sentry: @sentry/node
 // - antiHotlink: cheerio
 // - parameter: cheerio, sanitize-html, @jocmp/mercury-parser

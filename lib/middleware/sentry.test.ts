@@ -36,8 +36,8 @@ describe('sentry middleware', () => {
             config: {
                 sentry: {
                     dsn: 'https://sentry.example/123',
-                    routeTimeout: 50,
                 },
+                errorTrackingRouteTimeout: 50,
                 nodeName: 'node-a',
             },
         }));
