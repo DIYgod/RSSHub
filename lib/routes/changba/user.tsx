@@ -1,11 +1,14 @@
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { PRESETS } from '@/utils/header-generator';
+
+const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
+const AES_KEY = 'a17fe74e421c2cbf3dc323f4b4f3a1af';
 
 export const route: Route = {
     path: '/:userid',
@@ -37,7 +40,7 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
-        headerGeneratorOptions: PRESETS.MODERN_IOS,
+        headers,
     });
     const data = response.data;
     const $ = load(data);
@@ -53,28 +56,25 @@ async function handler(ctx) {
                 const result = await got({
                     method: 'get',
                     url: link,
-                    headerGeneratorOptions: PRESETS.MODERN_IOS,
+                    headers,
                 });
 
-                const re = /workid: '\d+'/;
-                let workid;
-                try {
-                    workid = result.data.match(re)[0];
-                } catch {
-                    // 没有找到该作品
-                    // 这可能是由下列原因造成的：
-                    // 该作品已经被原作者删除了
-                    // 该作品包含了视频，目前正在审核中，在审核没有通过前无法被播放
-                    // 目前服务器压力太大，刚刚上传成功的作品可能需要半个小时后才能被播放
+                const match = result.data.match(/\benc_workpath\b\s*:\s*['"]([^'"]+)['"]/);
+
+                if (!match) {
                     return null;
                 }
 
-                workid = workid.split("'")[1];
+                const iv = CryptoJS.enc.Utf8.parse(AES_KEY.slice(0, 16));
+                const key = CryptoJS.enc.Utf8.parse(AES_KEY.slice(16));
+                const decrypted = CryptoJS.AES.decrypt(match[1], key, { iv, padding: CryptoJS.pad.Pkcs7 });
+                const mp3Url = decrypted.toString(CryptoJS.enc.Utf8);
 
-                if (!workid) {
+                if (!mp3Url) {
                     return null;
                 }
-                const mp3 = `https://upscuw.changba.com/${workid}.mp3`;
+
+                const mp3 = mp3Url.replace('http://', 'https://');
                 const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
                 const itunes_item_image = $('div.work-cover').attr('style').replace(')', '').split('url(')[1];
                 return {
