@@ -59,7 +59,7 @@ async function handler(ctx) {
                     headers,
                 });
 
-                const match = result.data.match(/\benc_workpath\b\s*:\s*['"]([^'"]+)['"]/);
+            const match = result.data.match(/enc_workpath\s*[:=,]\s*['"]([^'"]+)['"]/);
 
                 if (!match) {
                     return null;
