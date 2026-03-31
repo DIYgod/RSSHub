@@ -28177,6 +28177,31 @@
       }
     ]
   },
+  "kyodonews.net": {
+    "_name": "共同网",
+    "china": [
+      {
+        "title": "最新报道",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news/:keyword",
+          "/"
+        ],
+        "target": "/kyodonews/china/:keyword?"
+      }
+    ],
+    "tchina": [
+      {
+        "title": "最新报道",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news/:keyword",
+          "/"
+        ],
+        "target": "/kyodonews/tchina/:keyword?"
+      }
+    ]
+  },
   "laimanhua8.com": {
     "_name": "来漫画",
     "www": [
