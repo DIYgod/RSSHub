@@ -146,7 +146,7 @@
         "@actions/core": "3.0.0",
         "@actions/github": "9.0.0",
         "@bbob/types": "4.3.1",
-        "@cloudflare/containers": "0.2.0",
+        "@cloudflare/containers": "0.2.1",
         "@cloudflare/puppeteer": "1.0.6",
         "@cloudflare/workers-types": "4.20260329.1",
         "@eslint/eslintrc": "3.3.5",
