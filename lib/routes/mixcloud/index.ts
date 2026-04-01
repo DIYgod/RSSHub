@@ -44,11 +44,13 @@ async function callApi(objectType: string, objectFields: string, username: strin
     const headers = MIXCLOUD_CONFIG.headers;
 
     const lookupParams = slug ? `, slug: "${slug}"` : '';
-    const query = /* GraphQL */ `{
-    ${lookupKey}(lookup: {username: "${username}"${lookupParams}}) {
-      ${objectFields}
-    }
-  }`;
+    const query = /* GraphQL */ `
+      {
+          ${lookupKey}(lookup: {username: "${username}"${lookupParams}}) {
+            ${objectFields}
+          }
+        }
+    `;
 
     const response = await got({
         method: 'post',

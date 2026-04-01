@@ -9,31 +9,33 @@ const handler = async (ctx) => {
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: /* GraphQL */ `{
-                user(input: {userName: "${uid}"}) {
-                  displayName
-                  avatar
-                  info {
-                    description
-                  }
-                  articles(input: {first: ${limit}}) {
-                    edges {
-                      node {
-                        shortHash
-                        title
-                        content
-                        createdAt
-                        author {
-                          displayName
-                        }
-                        tags {
-                          content
-                        }
-                      }
-                    }
-                  }
-                }
-              }`,
+            query: /* GraphQL */ `
+              {
+                              user(input: {userName: "${uid}"}) {
+                                displayName
+                                avatar
+                                info {
+                                  description
+                                }
+                                articles(input: {first: ${limit}}) {
+                                  edges {
+                                    node {
+                                      shortHash
+                                      title
+                                      content
+                                      createdAt
+                                      author {
+                                        displayName
+                                      }
+                                      tags {
+                                        content
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+            `,
         },
     });
 
