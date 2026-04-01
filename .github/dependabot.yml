@@ -35,6 +35,7 @@ updates:
                   - '@oxlint/*'
                   - 'oxfmt'
                   - 'oxlint'
+                  - 'oxlint-plugin-eslint'
                   - 'oxlint-tsgolint'
           proxy-agent:
               patterns:

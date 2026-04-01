@@ -19,7 +19,7 @@ export const getPosts = async (limit: number, options?: { categories?: number; t
         description: item.content.rendered,
         link: item.link,
         pubDate: parseDate(item.date_gmt),
-        author: item._embedded?.['author']?.map((a) => a.name).join(', '),
+        author: item._embedded?.author?.map((a) => a.name).join(', '),
         category: item._embedded?.['wp:term']?.flatMap((terms) => terms.map((t) => t.name)),
     })) satisfies DataItem[];
 };

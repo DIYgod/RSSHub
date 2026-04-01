@@ -139,7 +139,7 @@ describe('wechat-mp', () => {
         // item_show_type in a separate script tag from real_item_show_type
         expect(
             ExtractMetadata.common(
-                load(/* HTML */ `
+                load(`
                     <html lang="">
                         <script type="text/javascript" nonce="123456789">
                             var item_show_type = '0';

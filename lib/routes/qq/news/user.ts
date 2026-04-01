@@ -64,10 +64,12 @@ async function handler(ctx) {
         news = await Promise.all(
             response.newslist.map((item) =>
                 cache.tryGet(item.id, async () => {
-                    const description =
-                        item.articletype === '0'
-                            ? load(await ofetch(`https://news.qq.com/rain/a/${item.id}`))('.rich_media_content').html()!
-                            : `<p>${item.abstract}</p><img src="${item.miniProShareImage}" /><h4>文章包含非文本内容，请在浏览器中打开查看</h4>`;
+                    let description = `<p>${item.abstract}</p><img src="${item.miniProShareImage}" /><h4>文章包含非文本内容，请在浏览器中打开查看</h4>`;
+                    if (item.articletype === '0') {
+                        const article = await ofetch(`https://news.qq.com/rain/a/${item.id}`);
+                        const $ = load(article);
+                        description = $('.rich_media_content').html()!;
+                    }
                     return {
                         title: item.longtitle,
                         description,

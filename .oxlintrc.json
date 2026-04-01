@@ -12,11 +12,12 @@
     },
     "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
     "jsPlugins": [
-        "@stylistic/eslint-plugin",
         { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
         { "name": "n", "specifier": "eslint-plugin-n" },
         { "name": "unicorn-js", "specifier": "eslint-plugin-unicorn" },
+        "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
+        "oxlint-plugin-eslint",
         "./eslint-plugins/no-then.js",
         "./eslint-plugins/nsfw-flag.js"
     ],
@@ -325,27 +326,60 @@
             }
         ],
 
-        // "no-implicit-globals": "error", // not yet implemented
+        "eslint-js/no-implicit-globals": "error", // use jsPlugins
         "no-labels": "error",
         "no-lonely-if": "error",
         "no-multi-str": "error",
         "no-new-func": "error",
+
+        "eslint-js/no-restricted-syntax": [
+            "error", // use jsPlugins
+            {
+                "selector": "CallExpression[callee.property.name='get'][arguments.length=0]",
+                "message": "Please use .toArray() instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
+                "message": "Please use .toArray() before .map()."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.value=null]",
+                "message": "Usage of .catch(() => null) is not allowed. Please handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.type=\"Identifier\"][body.name=\"undefined\"]",
+                "message": "Usage of .catch(() => undefined) is not allowed. Please handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]",
+                "message": "Usage of .catch(() => []) is not allowed. Please handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]",
+                "message": "Usage of .catch(() => {}) is not allowed. Please handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.name=\"load\"] AwaitExpression > CallExpression",
+                "message": "Do not use await in call expressions. Extract the result into a variable first."
+            }
+        ],
+
         "no-unneeded-ternary": "error",
         "no-useless-computed-key": "error",
         "no-useless-concat": "warn",
         "no-useless-rename": "error",
         "no-var": "error",
-        // "object-shorthand": "error", // not yet implemented
-        // "prefer-arrow-callback'": "error", // not yet implemented
+        "eslint-js/object-shorthand": "error", // use jsPlugins
+        "eslint-js/prefer-arrow-callback": "error", // use jsPlugins
         "prefer-const": "error",
         "prefer-object-has-own": "error",
+        "eslint-js/prefer-regex-literals": [
+            "error", // use jsPlugins
+            {
+                "disallowRedundantWrapping": true
+            }
+        ],
         "require-await": "error",
-        // "prefer-regex-literals": [ // not yet implemented
-        //     "error",
-        //     {
-        //         "disallowRedundantWrapping": true
-        //     }
-        // ],
         // #endregion
 
         // #region --- TypeScript ---
@@ -354,6 +388,7 @@
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/consistent-indexed-object-style": "off", // stylistic
         "@typescript-eslint/consistent-type-definitions": "off", // stylistic
+        "@typescript-eslint/dot-notation": "error", // type-aware
         "@typescript-eslint/no-empty-function": "off", // stylistic && tests
         "@typescript-eslint/no-explicit-any": "off",
 
