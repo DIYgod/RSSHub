@@ -5,7 +5,6 @@ import tsParser from '@typescript-eslint/parser';
 // import { importX } from 'eslint-plugin-import-x';
 import n from 'eslint-plugin-n';
 // import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import unicorn from 'eslint-plugin-unicorn';
 import eslintPluginYml from 'eslint-plugin-yml';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
@@ -35,9 +34,8 @@ export default defineConfig([
             // github,
             js,
             n,
-            unicorn,
         },
-        // extends: [js.configs.recommended, typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script'], unicorn.configs.recommended],
+        // extends: [js.configs.recommended, typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script']],
 
         languageOptions: {
             globals: {
@@ -163,87 +161,6 @@ export default defineConfig([
             '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true, ignoreProperties: true }],
             '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
             '@typescript-eslint/no-unused-vars': ['error', { args: 'after-used', argsIgnorePattern: '^_' }],
-            */
-            // #endregion
-
-            // #region unicorn
-            /*
-            'unicorn/consistent-function-scoping': 'warn',
-            'unicorn/explicit-length-check': 'off',
-
-            'unicorn/filename-case': [
-                'error',
-                {
-                    case: 'kebabCase',
-                    ignore: [String.raw`.*\.(yaml|yml)$`, String.raw`RequestInProgress\.js$`],
-                },
-            ],
-
-            'unicorn/no-array-callback-reference': 'warn',
-            'unicorn/no-array-reduce': 'warn',
-            'unicorn/no-array-sort': 'warn',
-            'unicorn/no-await-expression-member': 'off',
-            'unicorn/no-empty-file': 'warn',
-            'unicorn/no-for-loop': 'off',
-            'unicorn/no-hex-escape': 'warn',
-            'unicorn/no-nested-ternary': 'off',
-            'unicorn/no-null': 'off',
-            'unicorn/no-object-as-default-parameter': 'warn',
-            'unicorn/no-process-exit': 'off',
-            'unicorn/no-useless-switch-case': 'off',
-
-            'unicorn/no-useless-undefined': ['error', { checkArguments: false }],
-
-            'unicorn/number-literal-case': 'off',
-
-            'unicorn/numeric-separators-style': [
-                'warn',
-                {
-                    onlyIfContainsSeparator: false,
-
-                    number: {
-                        minimumDigits: 7,
-                        groupLength: 3,
-                    },
-
-                    binary: {
-                        minimumDigits: 9,
-                        groupLength: 4,
-                    },
-
-                    octal: {
-                        minimumDigits: 9,
-                        groupLength: 4,
-                    },
-
-                    hexadecimal: {
-                        minimumDigits: 5,
-                        groupLength: 2,
-                    },
-                },
-            ],
-
-            'unicorn/prefer-code-point': 'warn',
-            'unicorn/prefer-global-this': 'off',
-            'unicorn/prefer-import-meta-properties': 'warn',
-            'unicorn/prefer-module': 'off',
-
-            'unicorn/prefer-number-properties': ['error', { checkInfinity: false, checkNaN: false }],
-
-            'unicorn/prefer-spread': 'warn',
-            'unicorn/prefer-string-slice': 'warn',
-
-            'unicorn/prefer-switch': [
-                'warn',
-                {
-                    emptyDefaultCase: 'do-nothing-comment',
-                },
-            ],
-
-            'unicorn/prefer-top-level-await': 'off',
-            'unicorn/prevent-abbreviations': 'off',
-            'unicorn/switch-case-braces': ['error', 'avoid'],
-            'unicorn/text-encoding-identifier-case': 'off',
             */
             // #endregion
 
