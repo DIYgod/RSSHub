@@ -178,26 +178,24 @@ async function handler() {
                     url,
                     json: {
                         operationName: 'fetchPlayground',
-                        query: /* GraphQL */ `
-                          query fetchPlayground {
-                                                      playground(uuid: "${uuid}") {
-                                                        testcaseInput
-                                                        name
-                                                        isUserOwner
-                                                        isLive
-                                                        showRunCode
-                                                        showOpenInPlayground
-                                                        selectedLangSlug
-                                                        isShared
-                                                        __typename
-                                                      }
-                                                      allPlaygroundCodes(uuid: "${uuid}") {
-                                                        code
-                                                        langSlug
-                                                        __typename
-                                                      }
-                                                    }
-                        `,
+                        query: /* GraphQL */ `query fetchPlayground {
+                            playground(uuid: "${uuid}") {
+                              testcaseInput
+                              name
+                              isUserOwner
+                              isLive
+                              showRunCode
+                              showOpenInPlayground
+                              selectedLangSlug
+                              isShared
+                              __typename
+                            }
+                            allPlaygroundCodes(uuid: "${uuid}") {
+                              code
+                              langSlug
+                              __typename
+                            }
+                          }`,
                         variables: {},
                     },
                     headers,

@@ -24,30 +24,28 @@ const handler = async (ctx) => {
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: /* GraphQL */ `
-              {
-                              viewer {
-                                recommendation {
-                                  feed: ${options[type].apiType}(input: {first: ${limit}}) {
-                                    edges {
-                                      node {
-                                        shortHash
-                                        title
-                                        content
-                                        createdAt
-                                        author {
-                                          displayName
-                                        }
-                                        tags {
-                                          content
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-            `,
+            query: /* GraphQL */ `{
+                viewer {
+                  recommendation {
+                    feed: ${options[type].apiType}(input: {first: ${limit}}) {
+                      edges {
+                        node {
+                          shortHash
+                          title
+                          content
+                          createdAt
+                          author {
+                            displayName
+                          }
+                          tags {
+                            content
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }`,
         },
     });
 
