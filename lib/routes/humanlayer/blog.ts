@@ -52,6 +52,11 @@ async function handler(ctx) {
             const parts = metaLine.split('·').map((s) => s.trim());
             const author = parts[0] || '';
             const dateStr = parts[1] || '';
+            const category = parts
+                .slice(3)
+                .join(' ')
+                .match(/#\w+/g)
+                ?.map((t) => t.slice(1));
 
             return {
                 title,
@@ -59,6 +64,7 @@ async function handler(ctx) {
                 author,
                 description,
                 pubDate: dateStr ? parseDate(dateStr) : undefined,
+                category,
             } as DataItem;
         });
 
