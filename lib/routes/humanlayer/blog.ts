@@ -38,12 +38,8 @@ async function handler(ctx) {
     const response = await ofetch(listUrl);
     const $ = load(response);
 
-    const list = $('a.block.py-2.group[href^="/blog/"]')
+    const list = $('a.block.py-2.group[href^="/blog/"]:not([href^="/blog/tags/"])')
         .toArray()
-        .filter((el) => {
-            const href = $(el).attr('href')!;
-            return !href.startsWith('/blog/tags/');
-        })
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
