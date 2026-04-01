@@ -331,13 +331,13 @@
   "/accessbriefing/:category{.+}?": [
     "nczitzk"
   ],
-  "/acfun/bangumi/:id": [
+  "/acfun/bangumi/:id/:embed?": [
     "xyqfer"
   ],
   "/acfun/article/:categoryId/:sortType?/:timeRange?": [
     "TonyRL"
   ],
-  "/acfun/user/video/:uid": [
+  "/acfun/user/video/:uid/:embed?": [
     "wdssmq"
   ],
   "/acg17/post/all": [

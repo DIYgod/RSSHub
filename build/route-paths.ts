@@ -111,8 +111,8 @@ export type RoutePath =
   | `/academia/topic/:interest`
   | `/accessbriefing/:category{.+}?`
   | `/acfun/article/:categoryId/:sortType?/:timeRange?`
-  | `/acfun/bangumi/:id`
-  | `/acfun/user/video/:uid`
+  | `/acfun/bangumi/:id/:embed?`
+  | `/acfun/user/video/:uid/:embed?`
   | `/acg17/post/all`
   | `/acgvinyl/news`
   | `/acpaa/:id?/:name?`
