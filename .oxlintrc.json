@@ -15,6 +15,7 @@
         "@stylistic/eslint-plugin",
         { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
         { "name": "n", "specifier": "eslint-plugin-n" },
+        { "name": "unicorn-js", "specifier": "eslint-plugin-unicorn" },
         "eslint-plugin-simple-import-sort",
         "./eslint-plugins/no-then.js",
         "./eslint-plugins/nsfw-flag.js"
@@ -147,7 +148,7 @@
         "n/process-exit-as-throw": "error",
         // #endregion
 
-        // #region --- unicorn ---
+        // #region --- unicorn recommended ---
         "unicorn/catch-error-name": "error",
         "unicorn/consistent-assert": "error",
         "unicorn/consistent-date-clone": "error",
@@ -160,8 +161,8 @@
         // "unicorn/expiring-todo-comments": "error", // not yet implemented
         // "unicorn/explicit-length-check": "error",
         // "unicorn/filename-case": "error",
-        // "unicorn/import-style": "error", // not yet implemented
-        // "unicorn/isolated-functions": "error", // not yet implemented
+        "unicorn-js/import-style": "error", // use jsPlugins
+        "unicorn-js/isolated-functions": "error", // use jsPlugins
         "unicorn/new-for-builtins": "error",
         "unicorn/no-abusive-eslint-disable": "error",
         "unicorn/no-accessor-recursion": "error",
@@ -204,7 +205,7 @@
         "unicorn/no-unnecessary-array-flat-depth": "error",
         "unicorn/no-unnecessary-array-splice-count": "error",
         "unicorn/no-unnecessary-await": "error",
-        // "unicorn/no-unnecessary-polyfills": "error", // not yet implemented
+        "unicorn-js/no-unnecessary-polyfills": "error", // use jsPlugins
         "unicorn/no-unnecessary-slice-end": "error",
         "unicorn/no-unreadable-array-destructuring": "error",
         "unicorn/no-unreadable-iife": "error",
@@ -238,7 +239,7 @@
         "unicorn/prefer-dom-node-remove": "error",
         "unicorn/prefer-dom-node-text-content": "error",
         "unicorn/prefer-event-target": "error",
-        // "unicorn/prefer-export-from": "error", // not yet implemented
+        "unicorn-js/prefer-export-from": "error", // use jsPlugins
         // "unicorn/prefer-global-this": "error",
         "unicorn/prefer-includes": "error",
         "unicorn/prefer-keyboard-event-key": "error",
@@ -261,7 +262,7 @@
         "unicorn/prefer-response-static-json": "error",
         "unicorn/prefer-set-has": "error",
         "unicorn/prefer-set-size": "error",
-        // "unicorn/prefer-single-call": "error", // not yet implemented
+        "unicorn-js/prefer-single-call": "error", // use jsPlugins
         // "unicorn/prefer-spread": "error",
         "unicorn/prefer-string-raw": "error",
         "unicorn/prefer-string-replace-all": "error",
@@ -269,18 +270,18 @@
         "unicorn/prefer-string-starts-ends-with": "error",
         "unicorn/prefer-string-trim-start-end": "error",
         "unicorn/prefer-structured-clone": "error",
-        // "unicorn/prefer-switch": "error", // not yet implemented
+        // "unicorn/prefer-switch": "error", // use jsPlugins
         "unicorn/prefer-ternary": "error",
         // "unicorn/prefer-top-level-await": "error",
         "unicorn/prefer-type-error": "error",
-        // "unicorn/prevent-abbreviations": "error", // not yet implemented
+        // "unicorn/prevent-abbreviations": "error",
         "unicorn/relative-url-style": "error",
         "unicorn/require-array-join-separator": "error",
         "unicorn/require-module-attributes": "error",
         "unicorn/require-module-specifiers": "error",
         "unicorn/require-number-to-fixed-digits-argument": "error",
         // "unicorn/switch-case-braces": "error",
-        // "unicorn/template-indent": "error", // not yet implemented
+        "unicorn-js/template-indent": "error", // use jsPlugins
         // "unicorn/text-encoding-identifier-case": "error",
         "unicorn/throw-new-error": "error",
         // #endregion
@@ -423,7 +424,7 @@
 
         "unicorn/prefer-code-point": "warn",
         "unicorn/prefer-global-this": "off",
-        "unicorn/prefer-import-meta-properties": "warn",
+        "unicorn-js/prefer-import-meta-properties": "warn",
         "unicorn/prefer-module": "off",
 
         "unicorn/prefer-number-properties": ["error", { "checkInfinity": false, "checkNaN": false }],
@@ -431,15 +432,15 @@
         "unicorn/prefer-spread": "warn",
         "unicorn/prefer-string-slice": "warn",
 
-        // "unicorn/prefer-switch": [ // not yet implemented
-        //     "warn",
-        //     {
-        //         "emptyDefaultCase": "do-nothing-comment"
-        //     }
-        // ],
+        "unicorn-js/prefer-switch": [
+            "warn",
+            {
+                "emptyDefaultCase": "do-nothing-comment"
+            }
+        ],
 
         "unicorn/prefer-top-level-await": "off",
-        "unicorn/prevent-abbreviations": "off",
+        // "unicorn/prevent-abbreviations": "off",
         "unicorn/switch-case-braces": ["error", "avoid"],
         "unicorn/text-encoding-identifier-case": "off",
         // #endregion
@@ -469,12 +470,12 @@
         // #region --- import sorting ---
         // oxfmt also handles import sorting
         "sort-imports": "off",
-        "import-x/order": "off",
+        // "import-x/order": "off",
         "simple-import-sort/imports": "error", // oxc doesn't sort named imports yet https://github.com/oxc-project/oxc/issues/13610
         "simple-import-sort/exports": "error",
 
         "import-x/first": "error",
-        "import-x-js/newline-after-import": "error", // oxc native not yet implemented
+        "import-x-js/newline-after-import": "error", // use jsPlugins
         "no-duplicate-imports": "off",
         "import-x/no-duplicates": "error",
 
