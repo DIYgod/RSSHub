@@ -87,7 +87,8 @@ export const route: Route = {
     ],
     name: 'Research',
     maintainers: ['27Aaron'],
-    url: 'zhipuai.cn/zh/research',
+    url: 'zhipuai.cn',
+    description: '智谱AI研究文章，支持中英文切换和标签筛选',
     handler: async (ctx) => {
         const language = ctx.req.param('language') ?? 'zh';
         const validLanguages = ['zh', 'en'];
