@@ -43,7 +43,6 @@ export const route: Route = {
     path: '/blog',
     categories: ['programming'],
     example: '/kimi/blog',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -54,13 +53,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['kimi.com/blog/'],
+            source: ['kimi.com/blog'],
             target: '/kimi/blog',
         },
     ],
-    name: 'Blog',
+    name: 'Kimi Blog',
     maintainers: ['27Aaron'],
-    url: 'kimi.com/blog',
+    url: 'kimi.com',
+    description: 'Kimi AI 官方博客',
     handler: async () => {
         // Step 1: Fetch index page to find the lean.js URL
         const html = await ofetch(`${baseUrl}/blog/`, { responseType: 'text' });
