@@ -12,6 +12,41 @@ const tagMap: Record<string, string> = {
     codemodel: '代码模型',
 };
 
+const extractArticles = (html: string): Array<Record<string, unknown>> => {
+    let startIdx = html.indexOf(String.raw`blogsItems\":[`);
+    let offset = String.raw`blogsItems\":`.length;
+    if (startIdx === -1) {
+        startIdx = html.indexOf('blogsItems":[');
+        offset = 'blogsItems":'.length;
+    }
+    if (startIdx === -1) {
+        throw new Error('blogsItems not found in page');
+    }
+
+    const arrStart = startIdx + offset;
+    let depth = 0;
+    let arrEnd = arrStart;
+    for (let i = arrStart; i < html.length; i++) {
+        const c = html[i];
+        if (c === '[') {
+            depth++;
+        } else if (c === ']') {
+            depth--;
+            if (depth === 0) {
+                arrEnd = i + 1;
+                break;
+            }
+        }
+    }
+
+    const raw = html
+        .slice(arrStart, arrEnd)
+        .replaceAll(String.raw`\"`, '"')
+        .replaceAll(String.raw`\n`, '\n')
+        .replaceAll(String.raw`\\`, '\\');
+    return JSON.parse(raw);
+};
+
 export const route: Route = {
     path: '/research/:language?/:tag?',
     categories: ['programming'],
@@ -64,42 +99,6 @@ export const route: Route = {
 
         // Fetch SSR page - article data is embedded in Next.js RSC payload
         const html = await ofetch(`https://www.zhipuai.cn/${locale}/research`, { responseType: 'text' });
-
-        // Extract blogsItems from RSC payload using bracket counting
-        const extractArticles = (html: string): Array<Record<string, unknown>> => {
-            let startIdx = html.indexOf(String.raw`blogsItems\":[`);
-            let offset = String.raw`blogsItems\":`.length;
-            if (startIdx === -1) {
-                startIdx = html.indexOf('blogsItems":[');
-                offset = 'blogsItems":'.length;
-            }
-            if (startIdx === -1) {
-                throw new Error('blogsItems not found in page');
-            }
-
-            const arrStart = startIdx + offset;
-            let depth = 0;
-            let arrEnd = arrStart;
-            for (let i = arrStart; i < html.length; i++) {
-                const c = html[i];
-                if (c === '[') {
-                    depth++;
-                } else if (c === ']') {
-                    depth--;
-                    if (depth === 0) {
-                        arrEnd = i + 1;
-                        break;
-                    }
-                }
-            }
-
-            const raw = html
-                .slice(arrStart, arrEnd)
-                .replaceAll(String.raw`\"`, '"')
-                .replaceAll(String.raw`\n`, '\n')
-                .replaceAll(String.raw`\\`, '\\');
-            return JSON.parse(raw);
-        };
 
         const items = extractArticles(html);
 
