@@ -67,8 +67,8 @@ export const route: Route = {
 
         // Extract blogsItems from RSC payload using bracket counting
         const extractArticles = (html: string): Array<Record<string, unknown>> => {
-            let startIdx = html.indexOf('blogsItems\\\":[');
-            let offset = 'blogsItems\\\":'.length;
+            let startIdx = html.indexOf(String.raw`blogsItems\":[`);
+            let offset = String.raw`blogsItems\":`.length;
             if (startIdx === -1) {
                 startIdx = html.indexOf('blogsItems":[');
                 offset = 'blogsItems":'.length;
@@ -93,7 +93,11 @@ export const route: Route = {
                 }
             }
 
-            const raw = html.slice(arrStart, arrEnd).replaceAll('\\"', '"').replaceAll('\\n', '\n').replaceAll('\\\\', '\\');
+            const raw = html
+                .slice(arrStart, arrEnd)
+                .replaceAll(String.raw`\"`, '"')
+                .replaceAll(String.raw`\n`, '\n')
+                .replaceAll(String.raw`\\`, '\\');
             return JSON.parse(raw);
         };
 
