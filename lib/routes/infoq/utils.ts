@@ -27,6 +27,7 @@ const ProcessFeed = async (list, cache) => {
                     title: data.article_title,
                     description: parseContent(content),
                     pubDate: parseDate(e.publish_time, 'x'),
+                    cover: data.article_cover,
                     category,
                     author,
                     link,
