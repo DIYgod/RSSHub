@@ -22044,7 +22044,7 @@
         target:"/wechat/ce/:id" } ] },
   "data258.com":{ _name:"微信小程序",
     mp:[ { title:"Unknown",
-        docs:"https://docs.rsshub.app/routes/programming",
+        docs:"https://docs.rsshub.app/routes/new-media",
         source:[ "/",
           "/article/category/:id" ],
         target:"/wechat/data258/:id?" } ] },

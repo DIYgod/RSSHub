@@ -9131,6 +9131,9 @@
   "/webcatalog/changelog": [
     "Tsuyumi25"
   ],
+  "/wechat/wechat2rss/:id": [
+    "TonyRL"
+  ],
   "/wechat/announce": [
     "xyqfer"
   ],
@@ -9159,9 +9162,6 @@
   ],
   "/wechat/uread/:userid": [
     "kt286"
-  ],
-  "/wechat/wechat2rss/:id": [
-    "TonyRL"
   ],
   "/weekendhk/": [
     "TonyRL"
