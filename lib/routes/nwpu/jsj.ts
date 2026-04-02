@@ -1,7 +1,7 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
 
 export const route: Route = {
     path: '/jsj/:channelId?',
@@ -55,7 +55,7 @@ async function handler(ctx) {
                 return null;
             }
             // 转换为完整 URL: https://jsj.nwpu.edu.cn/info/1599/29115.htm
-            const link = `${baseUrl}/${href.replace('../', '')}`;
+            const link = `${baseUrl}/${href.replaceAll('../', '')}`;
 
             return {
                 title: a.text().trim(),
