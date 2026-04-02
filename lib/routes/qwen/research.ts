@@ -72,7 +72,8 @@ export const route: Route = {
     ],
     name: 'Research',
     maintainers: ['27Aaron'],
-    url: 'qwen.ai/research',
+    url: 'qwen.ai',
+    description: '通义千问研究文章，支持中英文切换和标签筛选',
     handler: async (ctx) => {
         const language = ctx.req.param('language') ?? 'en';
         const validLanguages = ['en', 'zh-cn'];
