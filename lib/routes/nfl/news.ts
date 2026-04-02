@@ -170,7 +170,11 @@ async function handler(ctx) {
                         const content = $article(selector);
                         if (content.length) {
                             content.find('script, style, [data-ad], .ad, .social-share, .related-content').remove();
-                            const html = content.html();
+                            const html = content
+                                .toArray()
+                                .map((el) => $article(el).html())
+                                .filter(Boolean)
+                                .join('');
                             if (html) {
                                 result.description = html;
                                 break;
