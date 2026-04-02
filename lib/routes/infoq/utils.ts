@@ -22,12 +22,12 @@ const ProcessFeed = async (list, cache) => {
                 const author = data.author ? data.author.map((p) => p.nickname).join(',') : data.no_author;
                 const category = [...e.topic.map((t) => t.name), ...e.label.map((l) => l.name)];
                 const content = data.content_url ? (await got(data.content_url)).body : data.content;
+                const description = addCoverToDescription(parseContent(content), data.article_cover);
 
                 return {
                     title: data.article_title,
-                    description: parseContent(content),
+                    description,
                     pubDate: parseDate(e.publish_time, 'x'),
-                    cover: data.article_cover,
                     category,
                     author,
                     link,
@@ -97,6 +97,10 @@ const parseToSimpleTexts = (content) =>
 
         return parseToSimpleText(i.content);
     });
+
+function addCoverToDescription(content, cover){
+   return `<p><img src="${cover}" referrerpolicy="no-referrer"></p>` + content;    
+}
 
 function parseContent(content) {
     const isRichContent = content.startsWith(`{"`);
