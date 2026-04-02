@@ -9,7 +9,7 @@ const feeds = {
     'Top Headlines': 'topheadlines',
     'Recent Headlines': 'mostrecent',
     Kelowna: 'page-1',
-    'West Kelowna': 'page-101',
+    'West-Kelowna': 'page-101',
     Peachland: 'page-86',
     Vernon: 'page-2',
     'Salmon-Arm': 'page-61',
