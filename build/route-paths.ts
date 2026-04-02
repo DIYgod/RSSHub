@@ -467,6 +467,7 @@ export type RoutePath =
   | `/cas/sim/kyjz`
   | `/casssp/news/:category?`
   | `/cast/:column/:subColumn/:category?`
+  | `/castanet/:category?`
   | `/catti/news/:category`
   | `/cau/ele`
   | `/cau/yjs`

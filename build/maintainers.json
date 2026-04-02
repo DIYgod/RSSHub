@@ -1417,6 +1417,9 @@
     "KarasuShin",
     "TonyRL"
   ],
+  "/castanet/:category?": [
+    "TonyRL"
+  ],
   "/catti/news/:category": [
     "PrinOrange"
   ],

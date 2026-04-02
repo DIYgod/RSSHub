@@ -8802,6 +8802,27 @@
       }
     ]
   },
+  "castanet.net": {
+    "_name": "Castanet",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/news/:category/"
+        ],
+        "target": "/castanet/:category"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/castanet/"
+      }
+    ]
+  },
   "catticenter.com": {
     "_name": "全国翻译专业资格水平考试 (CATTI)",
     "www": [
