@@ -37,8 +37,11 @@ async function handler() {
                 const $ = load(response);
 
                 item.title = $('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text();
+                item.category = $('.tags-wrap .tag-item')
+                    .toArray()
+                    .map((el) => $(el).text().trim().replace(/^#/, ''));
 
-                $('.pages').remove();
+                $('.pages, .article-ad, .social-actions, .news-footer').remove();
 
                 // remove unwanted key value
                 delete item.content;
