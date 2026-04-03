@@ -73,7 +73,7 @@ const fetchPage = async (url: string): Promise<string> => {
     } catch (error: unknown) {
         const status = (error as { status?: number; statusCode?: number }).status ?? (error as { status?: number; statusCode?: number }).statusCode;
         if (status === 403) {
-            const { page, destory } = await getPuppeteerPage(url, {
+            const { page, destroy } = await getPuppeteerPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                     await page.setRequestInterception(true);
@@ -83,7 +83,7 @@ const fetchPage = async (url: string): Promise<string> => {
                 },
             });
             const content = await page.content();
-            await destory();
+            await destroy();
             return content;
         }
         throw error;

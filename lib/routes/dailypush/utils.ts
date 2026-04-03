@@ -1,9 +1,10 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Browser, Page } from 'rebrowser-puppeteer';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import logger from '@/utils/logger';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 export const BASE_URL = 'https://www.dailypush.dev';
@@ -17,6 +18,38 @@ export interface ArticleItem {
     description?: string;
     articleUrl: string;
     dailyPushUrl?: string;
+}
+
+const allowedRequestTypes = new Set(['document']);
+
+async function preparePage(page: Page) {
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        if (allowedRequestTypes.has(request.resourceType())) {
+            request.continue();
+            return;
+        }
+
+        request.abort();
+    });
+}
+
+export async function fetchPageHtml(browser: Browser, url: string, waitForSelector?: string): Promise<string> {
+    const page = await browser.newPage();
+    await preparePage(page);
+
+    try {
+        logger.http(`Requesting ${url}`);
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+        if (waitForSelector) {
+            await page.waitForSelector(waitForSelector);
+        }
+
+        return await page.content();
+    } finally {
+        await page.close();
+    }
 }
 
 /**
@@ -40,14 +73,14 @@ function extractAuthor(article: ReturnType<CheerioAPI>): DataItem['author'] {
         return undefined;
     }
 
-    // Get all content spans (exclude separator spans with '•')
+    // Get all content spans (exclude separator spans with "•")
     const allSpans = container.find('span');
     const contentSpans: string[] = [];
 
     for (let i = 0; i < allSpans.length; i++) {
         const $span = allSpans.eq(i);
         const text = $span.text().trim();
-        // Skip separator spans (contain only '•' or have separator classes)
+        // Skip separator spans (contain only "•" or have separator classes)
         if (text !== '•' && !$span.hasClass('text-slate-300') && !$span.hasClass('dark:text-slate-600')) {
             contentSpans.push(text);
         }
@@ -127,14 +160,14 @@ function extractPubDate(article: ReturnType<CheerioAPI>): Date | undefined {
         return undefined;
     }
 
-    // Get all content spans (exclude separator spans with '•')
+    // Get all content spans (exclude separator spans with "•")
     const allSpans = container.find('span');
     const contentSpans: string[] = [];
 
     for (let i = 0; i < allSpans.length; i++) {
         const $span = allSpans.eq(i);
         const text = $span.text().trim();
-        // Skip separator spans (contain only '•' or have separator classes)
+        // Skip separator spans (contain only "•" or have separator classes)
         if (text !== '•' && !$span.hasClass('text-slate-300') && !$span.hasClass('dark:text-slate-600')) {
             contentSpans.push(text);
         }
@@ -225,23 +258,20 @@ export function parseArticles($: CheerioAPI, baseUrl: string): ArticleItem[] {
 }
 
 /**
- * Enhance items with full summaries from dailypush article pages
+ * Enhance items with full summaries from dailypush article pages.
+ * Uses the provided browser; opens a new tab per URL (document requests only). Caller must close the browser.
  */
-export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<DataItem[]> {
+export async function enhanceItemsWithSummaries(browser: Browser, items: ArticleItem[]): Promise<DataItem[]> {
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    const enhancedItems: DataItem[] = await Promise.all(
+    const enhancedItems = await Promise.all(
         itemsWithUrl.map((item) =>
             cache.tryGet(item.dailyPushUrl!, async () => {
-                // If we have a dailypush article URL, fetch it for the longer summary
                 try {
-                    const articleResponse = await ofetch(item.dailyPushUrl!);
-                    const $ = load(articleResponse);
-
-                    // Find the longer summary/description on the article page
+                    const html = await fetchPageHtml(browser, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
+                    const $ = load(html);
                     const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
-
                     if (summary.length > 0 && summary.text().trim()) {
                         item.description = summary.text().trim();
                     }
@@ -254,6 +284,5 @@ export async function enhanceItemsWithSummaries(items: ArticleItem[]): Promise<D
         )
     );
 
-    // Include items without dailyPushUrl as-is
     return [...enhancedItems, ...itemsWithoutUrl];
 }
