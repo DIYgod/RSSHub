@@ -1,6 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Browser } from 'rebrowser-puppeteer';
+import type { Browser, Page } from 'rebrowser-puppeteer';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -18,6 +18,38 @@ export interface ArticleItem {
     description?: string;
     articleUrl: string;
     dailyPushUrl?: string;
+}
+
+const allowedRequestTypes = new Set(['document']);
+
+async function preparePage(page: Page) {
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        if (allowedRequestTypes.has(request.resourceType())) {
+            request.continue();
+            return;
+        }
+
+        request.abort();
+    });
+}
+
+export async function fetchPageHtml(browser: Browser, url: string, waitForSelector?: string): Promise<string> {
+    const page = await browser.newPage();
+    await preparePage(page);
+
+    try {
+        logger.http(`Requesting ${url}`);
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+        if (waitForSelector) {
+            await page.waitForSelector(waitForSelector);
+        }
+
+        return await page.content();
+    } finally {
+        await page.close();
+    }
 }
 
 /**
@@ -239,16 +271,8 @@ export async function enhanceItemsWithSummaries(browser: Browser, items: Article
         chain = chain.then((acc) =>
             cache
                 .tryGet(item.dailyPushUrl!, async () => {
-                    const page = await browser.newPage();
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' ? request.continue() : request.abort();
-                    });
-
                     try {
-                        logger.http(`Requesting ${item.dailyPushUrl}`);
-                        await page.goto(item.dailyPushUrl!, { waitUntil: 'domcontentloaded' });
-                        const html = await page.content();
+                        const html = await fetchPageHtml(browser, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
                         const $ = load(html);
                         const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
                         if (summary.length > 0 && summary.text().trim()) {
@@ -256,8 +280,6 @@ export async function enhanceItemsWithSummaries(browser: Browser, items: Article
                         }
                     } catch {
                         // If fetching article page fails, keep the original description
-                    } finally {
-                        await page.close();
                     }
 
                     return item;

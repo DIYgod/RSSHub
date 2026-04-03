@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import puppeteer from '@/utils/puppeteer';
 
-import { BASE_URL, enhanceItemsWithSummaries, parseArticles } from './utils';
+import { BASE_URL, enhanceItemsWithSummaries, fetchPageHtml, parseArticles } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag/:sort?',
@@ -45,16 +45,7 @@ async function handler(ctx) {
 
     const browser = await puppeteer();
     try {
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
-        });
-
-        await page.goto(url, { waitUntil: 'domcontentloaded' });
-        const html = await page.content();
-        await page.close();
-
+        const html = await fetchPageHtml(browser, url, 'article');
         const $ = load(html);
         const list = parseArticles($, BASE_URL);
         const items = await enhanceItemsWithSummaries(browser, list);
