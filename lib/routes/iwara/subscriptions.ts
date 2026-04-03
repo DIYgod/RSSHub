@@ -69,7 +69,7 @@ async function handler() {
     const username = config.iwara.username;
     const password = config.iwara.password;
 
-    const { page, destory } = await getPuppeteerPage(rootUrl, {
+    const { page, destroy } = await getPuppeteerPage(rootUrl, {
         gotoConfig: {
             waitUntil: 'domcontentloaded',
         },
@@ -113,7 +113,10 @@ async function handler() {
             async () => {
                 const result = await fetchApi(`${apiqRootUrl}/user/token`, {
                     method: 'POST',
-                    headers: { ...apiHeaders, Authorization: refreshHeaders.authorization },
+                    headers: {
+                        ...apiHeaders,
+                        Authorization: refreshHeaders.authorization,
+                    },
                 });
                 return { authorization: 'Bearer ' + result.accessToken };
             },
@@ -121,7 +124,10 @@ async function handler() {
             false
         );
 
-        const authedHeaders = { ...apiHeaders, Authorization: authHeaders.authorization };
+        const authedHeaders = {
+            ...apiHeaders,
+            Authorization: authHeaders.authorization,
+        };
 
         // fetch subscriptions
         const [videoResponse, imageResponse] = await Promise.all([
@@ -177,7 +183,9 @@ async function handler() {
                     }
 
                     const apiUrl = item.link.replace('www.iwara.tv', 'apiq.iwara.tv');
-                    const response = await fetchApi(apiUrl, { headers: authedHeaders });
+                    const response = await fetchApi(apiUrl, {
+                        headers: authedHeaders,
+                    });
 
                     description = renderSubscriptionImages(response.files ? response.files.filter((f) => f.type === 'image').map((f) => `${imageRootUrl}/image/original/${f.id}/${f.name}`) : [item.imageUrl]);
 
@@ -202,6 +210,6 @@ async function handler() {
             item: items,
         };
     } finally {
-        await destory();
+        await destroy();
     }
 }

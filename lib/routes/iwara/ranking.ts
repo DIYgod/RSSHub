@@ -58,7 +58,7 @@ async function handler(ctx) {
     const items = await cache.tryGet(
         `iwara:ranking:${type}:${sort}:${rating}`,
         async () => {
-            const { page, destory } = await getPuppeteerPage(url, {
+            const { page, destroy } = await getPuppeteerPage(url, {
                 onBeforeLoad: async (page) => {
                     await page.setRequestInterception(true);
                     page.on('request', (request) => {
@@ -83,7 +83,7 @@ async function handler(ctx) {
                     pubDate: parseDate(item.createdAt),
                 }));
             } finally {
-                await destory();
+                await destroy();
             }
         },
         config.cache.routeExpire,
