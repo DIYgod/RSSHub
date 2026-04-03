@@ -1,7 +1,7 @@
-import type { CheerioAPI } from 'cheerio';
+import type { AnyNode, Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,52 +9,69 @@ import timezone from '@/utils/timezone';
 
 const ROOT_URL = 'https://fjrb.fjdaily.com';
 
-const getDescription = (html: string | null | undefined) => {
-    const cleaned = html?.replaceAll(/<!--[\s\S]*?-->/g, '').trim();
+const getNormalizedHtml = (element: Cheerio<AnyNode>) => {
+    element.find('img, video, audio, source').removeAttr('referrerpolicy');
 
-    if (!cleaned) {
+    return element
+        .html()
+        ?.replaceAll(/<!--[\s\S]*?-->/g, '')
+        .trim();
+};
+
+const hasMeaningfulContent = (element: Cheerio<AnyNode>) => {
+    const text = element.text().replaceAll(/\s+/g, '');
+    const media = element.find('img, video, audio, source').length;
+
+    return text.length > 0 || media > 0;
+};
+
+const getDescription = (element: Cheerio<AnyNode>) => {
+    const normalizedHtml = getNormalizedHtml(element);
+
+    if (!normalizedHtml || !hasMeaningfulContent(element)) {
         return;
     }
 
-    const $ = load(cleaned);
-    $('img, video, audio, source').removeAttr('referrerpolicy');
-    const hasText = $.text().replaceAll(/\s+/g, '').length > 0;
-    const hasMedia = $('img, video, audio, source').length > 0;
-
-    return hasText || hasMedia ? $.html() : undefined;
+    return normalizedHtml;
 };
 
-const getAttachmentDescription = ($: CheerioAPI) => getDescription($('.attachment').html());
+const getAttachmentDescription = (attachment: Cheerio<AnyNode>) => getDescription(attachment);
 
-const mergeDescription = (mainDescription: string | undefined, attachmentDescription: string | undefined) => {
-    if (!mainDescription) {
-        return attachmentDescription;
-    }
-
-    if (!attachmentDescription) {
-        return mainDescription;
-    }
-
-    const main = load(mainDescription);
-    const attachment = load(attachmentDescription);
-    const mainMediaSources = new Set(
-        main('img, video, audio, source')
-            .toArray()
-            .map((item) => main(item).attr('src'))
-            .filter(Boolean)
-    );
-
-    const newMedia = attachment('img, video, audio, source')
+const getNewMediaHtml = (attachment: Cheerio<AnyNode>, mainMediaSources: Set<string>) =>
+    attachment
+        .find('img, video, audio, source')
         .toArray()
         .filter((item) => {
-            const src = attachment(item).attr('src');
+            const src = attachment.constructor(item).attr('src');
             return src && !mainMediaSources.has(src);
         })
         .map((item) => attachment.html(item))
         .filter(Boolean)
         .join('');
 
-    return newMedia ? `${newMedia}${mainDescription}` : mainDescription;
+const mergeDescription = (mainDescription: string | undefined, attachment: Cheerio<AnyNode>, mainMediaSources: Set<string>) => {
+    if (!mainDescription) {
+        return getAttachmentDescription(attachment);
+    }
+
+    const newMediaHtml = getNewMediaHtml(attachment, mainMediaSources);
+    return newMediaHtml ? `${newMediaHtml}${mainDescription}` : mainDescription;
+};
+
+const getItemDescription = (detail: CheerioAPI) => {
+    const mainContent = detail('#content').clone();
+    const zoomContent = detail('#ozoom').clone();
+    const attachment = detail('.attachment').clone();
+    const mainDescription = getDescription(mainContent) || getDescription(zoomContent);
+    const mainMediaSources = new Set(
+        mainContent
+            .find('img, video, audio, source')
+            .toArray()
+            .map((item) => mainContent.constructor(item).attr('src'))
+            .filter(Boolean)
+    );
+
+    return mergeDescription(mainDescription, attachment, mainMediaSources);
 };
 
 const getIssueDate = async (date: string | undefined) => {
@@ -112,7 +129,7 @@ export const route: Route = {
         },
     ],
     name: '电子报',
-    maintainers: ['nczitzk'],
+    maintainers: ['DakoWang'],
     handler,
     description: '留空时抓取最新一期全部版面，也可以通过日期参数抓取指定日期的全部版面内容。',
 };
@@ -127,27 +144,28 @@ async function handler(ctx) {
     const content = load(pageResponse.data);
 
     let currentCategory = '';
-    const list: Array<{ title: string; link: string; category: string[] }> = [];
+    const list: DataItem[] = content('#catalog li')
+        .toArray()
+        .map((item) => {
+            const element = content(item);
+            if (element.hasClass('verson')) {
+                currentCategory = element.text().replaceAll(/\s+/g, ' ').trim();
+                return;
+            }
 
-    content('#catalog li').each((_, item) => {
-        const element = content(item);
-        if (element.hasClass('verson')) {
-            currentCategory = element.text().replaceAll(/\s+/g, ' ').trim();
-            return;
-        }
+            const a = element.find('a').first();
+            const href = a.attr('href');
+            if (!href) {
+                return;
+            }
 
-        const a = element.find('a').first();
-        const href = a.attr('href');
-        if (!href) {
-            return;
-        }
-
-        list.push({
-            title: a.text().replaceAll(/\s+/g, ' ').trim(),
-            link: new URL(href, padUrl).toString().replace('/pad/', '/pc/'),
-            category: [currentCategory.replace(/^\d+版\s*/, '')],
-        });
-    });
+            return {
+                title: a.text().replaceAll(/\s+/g, ' ').trim(),
+                link: new URL(href, padUrl).toString().replace('/pad/', '/pc/'),
+                category: [currentCategory.replace(/^\d+版\s*/, '')],
+            };
+        })
+        .filter((item): item is DataItem => item !== undefined);
 
     if (list.length === 0) {
         throw new Error(`No articles were found for ${yearMonth}${day}.`);
@@ -155,14 +173,12 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await got(item.link!);
                 const detail = load(detailResponse.data);
                 const pubDate = detail('#NewsArticlePubDay').text().trim();
                 const author = detail('#NewsArticleAuthor').text().trim();
-                const mainDescription = getDescription(detail('#content').html()) || getDescription(detail('#ozoom').html());
-                const attachmentDescription = getAttachmentDescription(detail);
-                const description = mergeDescription(mainDescription, attachmentDescription);
+                const description = getItemDescription(detail);
 
                 return {
                     ...item,
