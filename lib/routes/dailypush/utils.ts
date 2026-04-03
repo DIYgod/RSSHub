@@ -73,14 +73,14 @@ function extractAuthor(article: ReturnType<CheerioAPI>): DataItem['author'] {
         return undefined;
     }
 
-    // Get all content spans (exclude separator spans with '•')
+    // Get all content spans (exclude separator spans with "•")
     const allSpans = container.find('span');
     const contentSpans: string[] = [];
 
     for (let i = 0; i < allSpans.length; i++) {
         const $span = allSpans.eq(i);
         const text = $span.text().trim();
-        // Skip separator spans (contain only '•' or have separator classes)
+        // Skip separator spans (contain only "•" or have separator classes)
         if (text !== '•' && !$span.hasClass('text-slate-300') && !$span.hasClass('dark:text-slate-600')) {
             contentSpans.push(text);
         }
@@ -160,14 +160,14 @@ function extractPubDate(article: ReturnType<CheerioAPI>): Date | undefined {
         return undefined;
     }
 
-    // Get all content spans (exclude separator spans with '•')
+    // Get all content spans (exclude separator spans with "•")
     const allSpans = container.find('span');
     const contentSpans: string[] = [];
 
     for (let i = 0; i < allSpans.length; i++) {
         const $span = allSpans.eq(i);
         const text = $span.text().trim();
-        // Skip separator spans (contain only '•' or have separator classes)
+        // Skip separator spans (contain only "•" or have separator classes)
         if (text !== '•' && !$span.hasClass('text-slate-300') && !$span.hasClass('dark:text-slate-600')) {
             contentSpans.push(text);
         }
@@ -265,29 +265,24 @@ export async function enhanceItemsWithSummaries(browser: Browser, items: Article
     const itemsWithUrl = items.filter((item) => item.dailyPushUrl !== undefined);
     const itemsWithoutUrl: DataItem[] = items.filter((item) => item.dailyPushUrl === undefined);
 
-    // Sequential fetching required to avoid multiple concurrent Puppeteer sessions (AGENTS.md Rule 43)
-    let chain: Promise<DataItem[]> = Promise.resolve([]);
-    for (const item of itemsWithUrl) {
-        chain = chain.then((acc) =>
-            cache
-                .tryGet(item.dailyPushUrl!, async () => {
-                    try {
-                        const html = await fetchPageHtml(browser, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
-                        const $ = load(html);
-                        const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
-                        if (summary.length > 0 && summary.text().trim()) {
-                            item.description = summary.text().trim();
-                        }
-                    } catch {
-                        // If fetching article page fails, keep the original description
+    const enhancedItems = await Promise.all(
+        itemsWithUrl.map((item) =>
+            cache.tryGet(item.dailyPushUrl!, async () => {
+                try {
+                    const html = await fetchPageHtml(browser, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
+                    const $ = load(html);
+                    const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                    if (summary.length > 0 && summary.text().trim()) {
+                        item.description = summary.text().trim();
                     }
+                } catch {
+                    // If fetching article page fails, keep the original description
+                }
 
-                    return item;
-                })
-                .then((enhanced) => [...acc, enhanced])
-        );
-    }
-    const enhancedItems = await chain;
+                return item;
+            })
+        )
+    );
 
     return [...enhancedItems, ...itemsWithoutUrl];
 }
