@@ -98,8 +98,8 @@ const parseToSimpleTexts = (content) =>
         return parseToSimpleText(i.content);
     });
 
-function addCoverToDescription(content, cover){
-   return `<p><img src="${cover}" referrerpolicy="no-referrer"></p>` + content;    
+function addCoverToDescription(content, cover) {
+   return `<p><img src="${cover}"></p>${content}`;    
 }
 
 function parseContent(content) {
