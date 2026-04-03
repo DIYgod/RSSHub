@@ -37,12 +37,14 @@ const getDescription = (element: Cheerio<AnyNode>) => {
 
 const getAttachmentDescription = (attachment: Cheerio<AnyNode>) => getDescription(attachment);
 
+const getNodeSrc = (node: AnyNode) => ('attribs' in node ? node.attribs?.src : undefined);
+
 const getNewMediaHtml = (attachment: Cheerio<AnyNode>, mainMediaSources: Set<string>) =>
     attachment
         .find('img, video, audio, source')
         .toArray()
         .filter((item) => {
-            const src = attachment.constructor(item).attr('src');
+            const src = getNodeSrc(item);
             return src && !mainMediaSources.has(src);
         })
         .map((item) => attachment.html(item))
@@ -67,7 +69,7 @@ const getItemDescription = (detail: CheerioAPI) => {
         mainContent
             .find('img, video, audio, source')
             .toArray()
-            .map((item) => mainContent.constructor(item).attr('src'))
+            .map((item) => getNodeSrc(item))
             .filter(Boolean)
     );
 
