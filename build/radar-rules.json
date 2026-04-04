@@ -38166,6 +38166,19 @@
       }
     ]
   },
+  "peterwunder.de": {
+    "_name": "Peter Wunder",
+    "projects": [
+      {
+        "title": "New Badges",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/achievements"
+        ],
+        "target": "/peterwunder/achievements"
+      }
+    ]
+  },
   "phoronix.com": {
     "_name": "Phoronix",
     ".": [

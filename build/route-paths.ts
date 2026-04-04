@@ -2206,6 +2206,7 @@ export type RoutePath =
   | `/peopo/topic/:topicId?`
   | `/perplexity/blog`
   | `/perplexity/changelog`
+  | `/peterwunder/achievements`
   | `/phoronix/:category?/:topic?`
   | `/pianyivps/`
   | `/pianyuan/index/:media?`
