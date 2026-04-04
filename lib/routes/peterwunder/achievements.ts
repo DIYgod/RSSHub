@@ -1,6 +1,5 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { AnyNode } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -19,27 +18,27 @@ type BadgeItem = DataItem & {
     title: string;
 };
 
-function absolutizeAttribute($: CheerioAPI, elements: Cheerio<AnyNode>, attribute: 'href' | 'src', baseUrl: string) {
-    elements.each((_, element) => {
-        const value = $(element).attr(attribute);
+function absolutizeImageSource($: CheerioAPI, itemUrl: string) {
+    $('article')
+        .first()
+        .find('[src]')
+        .each((_, element) => {
+            const value = $(element).attr('src');
 
-        if (value) {
-            $(element).attr(attribute, new URL(value, baseUrl).href);
-        }
-    });
+            if (value) {
+                $(element).attr('src', new URL(value, itemUrl).href);
+            }
+        });
 }
 
-function extractBadgeDescription($: CheerioAPI, itemUrl: string) {
-    const article = $('article').first().clone();
+function extractBadgeDescription($: CheerioAPI) {
+    const article = $('article').first();
 
     if (!article.length) {
         return;
     }
 
     article.find('h1, script, style, noscript').remove();
-
-    absolutizeAttribute($, article.find('[src]'), 'src', itemUrl);
-    absolutizeAttribute($, article.find('a[href]'), 'href', itemUrl);
 
     return article.html() ?? undefined;
 }
@@ -78,11 +77,12 @@ function fetchBadge(item: BadgeItem) {
         const title = $('article h1').first().text().trim();
         const visibleStart = $('ul.metadata li').first().find('time.date').first().attr('datetime');
         const image = $('meta[property="og:image"]').attr('content');
+        absolutizeImageSource($, item.link);
 
         return {
             ...item,
             title: title || item.title,
-            description: extractBadgeDescription($, item.link),
+            description: extractBadgeDescription($),
             pubDate: visibleStart ? parseDate(visibleStart) : item.pubDate,
             author,
             image: image ? new URL(image, rootUrl).href : item.image,
@@ -97,7 +97,6 @@ const handler: Route['handler'] = async (ctx) => {
     const $: CheerioAPI = load(response);
 
     const items = await Promise.all(extractListItems($, limit).map((item) => fetchBadge(item)));
-    const lastUpdated = $('#last-updated').attr('datetime');
 
     return {
         title: 'All Activity Challenges - New Badges',
@@ -109,7 +108,6 @@ const handler: Route['handler'] = async (ctx) => {
         icon,
         logo: icon,
         image: icon,
-        lastBuildDate: lastUpdated ? parseDate(lastUpdated).toUTCString() : undefined,
     };
 };
 
