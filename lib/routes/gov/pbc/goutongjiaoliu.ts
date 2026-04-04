@@ -7,10 +7,10 @@ import puppeteer from '@/utils/puppeteer';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/pbc/goutongjiaoliu',
+    path: '/pbc/goutongjiaoliu/:page?',
     categories: ['finance'],
     example: '/gov/pbc/goutongjiaoliu',
-    parameters: {},
+    parameters: { page: '页码，默认为 1' },
     features: {
         requireConfig: false,
         requirePuppeteer: true,
@@ -30,8 +30,10 @@ export const route: Route = {
     url: 'pbc.gov.cn/goutongjiaoliu/113456/113469/index.html',
 };
 
-async function handler() {
-    const link = 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
+async function handler(ctx) {
+    const pageNumber = Number.parseInt(ctx.req.param('page') ?? '1', 10);
+    const normalizedPage = Number.isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
+    const link = `http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040-${normalizedPage}.html`;
 
     const browser = await puppeteer();
     const page = await browser.newPage();
@@ -43,6 +45,7 @@ async function handler() {
         waitUntil: 'domcontentloaded',
     });
     const html = await page.evaluate(() => document.documentElement.innerHTML);
+    await page.close();
 
     const $ = load(html);
     const list = $('font.newslist_style')
@@ -68,6 +71,7 @@ async function handler() {
                     waitUntil: 'domcontentloaded',
                 });
                 const detailHtml = await detailPage.evaluate(() => document.documentElement.innerHTML);
+                await detailPage.close();
                 const content = load(detailHtml);
                 item.description = content('#zoom').html();
                 item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), +8);
