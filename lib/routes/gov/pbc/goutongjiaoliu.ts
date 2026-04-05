@@ -31,9 +31,10 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const pageNumber = Number.parseInt(ctx.req.param('page') ?? '1', 10);
+    const pageParam = ctx.req.param('page');
+    const pageNumber = Number.parseInt(pageParam ?? '1', 10);
     const normalizedPage = Number.isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
-    const link = `http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040-${normalizedPage}.html`;
+    const link = pageParam ? `http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040-${normalizedPage}.html` : 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
 
     const browser = await puppeteer();
     const page = await browser.newPage();
