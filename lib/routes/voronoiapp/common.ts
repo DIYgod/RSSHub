@@ -19,13 +19,11 @@ export async function getPostItems(params: {
 }): Promise<DataItem[]> {
     const baseUrl = 'https://9oyi4rk426.execute-api.ca-central-1.amazonaws.com/production/post';
     const url = new URL(baseUrl);
-    const finalSearchParams = Object.assign(
-        {
-            limit: 20,
-            offset: 0,
-        },
-        params
-    );
+    const finalSearchParams = {
+        limit: 20,
+        offset: 0,
+        ...params,
+    };
     if (finalSearchParams.time_range !== undefined) {
         finalSearchParams.time_range = finalSearchParams.time_range.toUpperCase();
         if (!TimeRangeParam.options.some((option) => option.value === finalSearchParams.time_range)) {

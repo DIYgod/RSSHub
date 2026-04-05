@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,8 +23,8 @@ async function handler(ctx) {
 
     const channelId = $('meta[name="channelid"]').attr('content');
 
-    let data,
-        out = [];
+    let data;
+    let out: DataItem[];
     if (channelId) {
         data = await got(`${baseUrl}/searchList/${channelId}`, {
             searchParams: {

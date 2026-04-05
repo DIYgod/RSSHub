@@ -84,9 +84,11 @@ describe('config', () => {
         delete process.env.NO_RANDOM_UA;
     });
 
-    it('random ua', async () => {
+    it('default ua from preset', async () => {
         const { config } = await import('./config');
-        expect(config.ua).not.toBe('RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)');
+        expect(config.ua).toContain('Chrome');
+        expect(config.ua).toContain('Macintosh');
+        expect(config.isDefaultUA).toBe(true);
     });
 
     it('remote config', async () => {

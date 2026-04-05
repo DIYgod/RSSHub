@@ -48,6 +48,8 @@ type ConfigEnvKeys =
     | 'OTEL_SECONDS_BUCKET'
     | 'OTEL_MILLISECONDS_BUCKET'
     | 'SHOW_LOGGER_TIMESTAMP'
+    | 'HONEYBADGER_API_KEY'
+    | 'ERROR_TRACKING_ROUTE_TIMEOUT'
     | 'SENTRY'
     | 'SENTRY_ROUTE_TIMEOUT'
     | 'ENABLE_REMOTE_DEBUGGING'
@@ -120,9 +122,7 @@ type ConfigEnvKeys =
     | 'HEFENG_API_HOST'
     | 'HUITUN_COOKIE'
     | 'INFZM_COOKIE'
-    | 'INITIUM_USERNAME'
-    | 'INITIUM_PASSWORD'
-    | 'INITIUM_BEARER_TOKEN'
+    | 'INITIUM_MEMBER_COOKIE'
     | 'IG_USERNAME'
     | 'IG_PASSWORD'
     | 'IG_PROXY'
@@ -133,7 +133,7 @@ type ConfigEnvKeys =
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
-    | 'SECURITY_KEY'
+    | 'LOCALS_SESSION'
     | 'LOFTER_COOKIE'
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
@@ -184,6 +184,7 @@ type ConfigEnvKeys =
     | 'SCIHUB_HOST'
     | 'SDO_FF14RISINGSTONES'
     | 'SDO_UA'
+    | 'SECURITY_KEY'
     | 'SIS001_BASE_URL'
     | 'SKEB_BEARER_TOKEN'
     | 'SORRYCC_COOKIES'
@@ -204,10 +205,14 @@ type ConfigEnvKeys =
     | 'TUMBLR_CLIENT_ID'
     | 'TUMBLR_CLIENT_SECRET'
     | 'TUMBLR_REFRESH_TOKEN'
-    | 'TWITTER_USERNAME'
-    | 'TWITTER_PASSWORD'
-    | 'TWITTER_AUTHENTICATION_SECRET'
-    | 'TWITTER_PHONE_OR_EMAIL'
+    | 'TWITTER_CONSUMER_KEY'
+    | 'TWITTER_CONSUMER_SECRET'
+    | 'TWITTER_ACCESS_TOKEN'
+    | 'TWITTER_ACCESS_SECRET'
+    // | 'TWITTER_USERNAME'
+    // | 'TWITTER_PASSWORD'
+    // | 'TWITTER_AUTHENTICATION_SECRET'
+    // | 'TWITTER_PHONE_OR_EMAIL'
     | 'TWITTER_AUTH_TOKEN'
     | 'TWITTER_THIRD_PARTY_API'
     | 'UESTC_BBS_COOKIE'
@@ -232,6 +237,7 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_ID'
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
+    | 'YOUTUBE_VIDEO_EMBED_URL'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -260,6 +266,7 @@ export type Config = {
     requestRetry: number;
     requestTimeout: number;
     ua: string;
+    isDefaultUA: boolean;
     trueUA: string;
     allowOrigin?: string;
     // cache
@@ -301,10 +308,13 @@ export type Config = {
         milliseconds_bucket?: string;
     };
     showLoggerTimestamp?: boolean;
+    honeybadger: {
+        apiKey?: string;
+    };
     sentry: {
         dsn?: string;
-        routeTimeout: number;
     };
+    errorTrackingRouteTimeout: number;
     enableRemoteDebugging?: boolean;
     // feed config
     hotlink: {
@@ -439,9 +449,7 @@ export type Config = {
         cookie?: string;
     };
     initium: {
-        username?: string;
-        password?: string;
-        bearertoken?: string;
+        memberCookie?: string;
     };
     instagram: {
         username?: string;
@@ -467,6 +475,9 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    locals: {
+        session?: string;
     };
     lofter: {
         cookies?: string;
@@ -617,10 +628,14 @@ export type Config = {
         refreshToken?: string;
     };
     twitter: {
-        username?: string[];
-        password?: string[];
-        authenticationSecret?: string[];
-        phoneOrEmail?: string[];
+        consumerKey?: string;
+        consumerSecret?: string;
+        accessToken?: string;
+        accessSecret?: string;
+        // username?: string[];
+        // password?: string[];
+        // authenticationSecret?: string[];
+        // phoneOrEmail?: string[];
         authToken?: string[];
         thirdPartyApi?: string;
     };
@@ -667,6 +682,7 @@ export type Config = {
         clientId?: string;
         clientSecret?: string;
         refreshToken?: string;
+        videoEmbedUrl?: string;
     };
     zhihu: {
         cookies?: string;
@@ -738,7 +754,8 @@ const calculateValue = () => {
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
-        ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
+        ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
+        isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
@@ -786,10 +803,13 @@ const calculateValue = () => {
             milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
         },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
+        honeybadger: {
+            apiKey: envs.HONEYBADGER_API_KEY,
+        },
         sentry: {
             dsn: envs.SENTRY,
-            routeTimeout: toInt(envs.SENTRY_ROUTE_TIMEOUT, 30000),
         },
+        errorTrackingRouteTimeout: toInt(envs.ERROR_TRACKING_ROUTE_TIMEOUT || envs.SENTRY_ROUTE_TIMEOUT, 30000),
         enableRemoteDebugging: toBoolean(envs.ENABLE_REMOTE_DEBUGGING, false),
         // feed config
         hotlink: {
@@ -924,9 +944,7 @@ const calculateValue = () => {
             cookie: envs.INFZM_COOKIE,
         },
         initium: {
-            username: envs.INITIUM_USERNAME,
-            password: envs.INITIUM_PASSWORD,
-            bearertoken: envs.INITIUM_BEARER_TOKEN,
+            memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {
             username: envs.IG_USERNAME,
@@ -952,6 +970,9 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        locals: {
+            session: envs.LOCALS_SESSION,
         },
         lofter: {
             cookies: envs.LOFTER_COOKIE,
@@ -1102,10 +1123,14 @@ const calculateValue = () => {
             refreshToken: envs.TUMBLR_REFRESH_TOKEN,
         },
         twitter: {
-            username: envs.TWITTER_USERNAME?.split(','),
-            password: envs.TWITTER_PASSWORD?.split(','),
-            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
-            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
+            consumerKey: envs.TWITTER_CONSUMER_KEY,
+            consumerSecret: envs.TWITTER_CONSUMER_SECRET,
+            accessToken: envs.TWITTER_ACCESS_TOKEN,
+            accessSecret: envs.TWITTER_ACCESS_SECRET,
+            // username: envs.TWITTER_USERNAME?.split(','),
+            // password: envs.TWITTER_PASSWORD?.split(','),
+            // authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            // phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
             thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
@@ -1152,6 +1177,7 @@ const calculateValue = () => {
             clientId: envs.YOUTUBE_CLIENT_ID,
             clientSecret: envs.YOUTUBE_CLIENT_SECRET,
             refreshToken: envs.YOUTUBE_REFRESH_TOKEN,
+            videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
         },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,

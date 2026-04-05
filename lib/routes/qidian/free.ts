@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/free/:type?',
@@ -12,7 +12,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '限时免费',
-    maintainers: ['LogicJake'],
+    maintainers: ['LogicJake', 'pseudoyu'],
     handler,
     url: 'www.qidian.com/free',
 };
@@ -32,39 +32,27 @@ export const route: Route = {
 async function handler(ctx) {
     const type = ctx.req.param('type');
 
-    let link, title;
-    if (type === 'mm') {
-        link = 'https://www.qidian.com/mm/free';
-        title = '起点女生网';
-    } else {
-        link = 'https://www.qidian.com/free';
-        title = '起点中文网';
-    }
+    const isMM = type === 'mm';
+    const link = isMM ? 'https://www.qidian.com/mm/free' : 'https://www.qidian.com/free';
+    const title = isMM ? '起点女生网' : '起点中文网';
 
-    const response = await got(link);
+    // Reason: PC site (www.qidian.com) returns anti-bot JS challenge; mobile site has SSR data
+    const response = await got('https://m.qidian.com/free', { headerGeneratorOptions: PRESETS.MODERN_IOS });
     const $ = load(response.data);
+    const { pageContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const pageData = pageContext.pageProps.pageData;
 
-    const list = $('#limit-list li');
-    const out = list.toArray().map((item) => {
-        item = $(item);
-
-        const img = `<img src="https:${item.find('.book-img-box img').attr('src')}">`;
-        const rank = `<p>评分：${item.find('.score').text()}</p>`;
-        const update = `<a href=https:${item.find('p.update > a').attr('href')}>${item.find('p.update > a').text()}</a>`;
-
-        return {
-            title: item.find('.book-mid-info h4 a').text(),
-            description: img + rank + update + '<br>' + item.find('p.intro').html(),
-            pubDate: parseRelativeDate(item.find('p.update span').text()),
-            link: 'https:' + item.find('.book-mid-info h4 a').attr('href'),
-            author: item.find('p.author a.name').text(),
-        };
-    });
+    const items = (pageData.curFree || []).map((book) => ({
+        title: book.bName,
+        link: `https://book.qidian.com/info/${book.bid}/`,
+        author: book.bAuth,
+        description: `评分：${book.score === -1 ? '暂无' : book.score}`,
+    }));
 
     return {
         title,
         description: `限时免费-${title}`,
         link,
-        item: out,
+        item: items,
     };
 }

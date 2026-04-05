@@ -55,7 +55,7 @@ async function handler(ctx) {
     const notes = note_data.extData.list;
     const items = await Promise.all(
         notes.map(async (item) => {
-            let desc = '';
+            let desc: string;
             switch (item.type) {
                 case 'normal':
                     desc = `<p><img src="${item.imageUrl}"></p>`;

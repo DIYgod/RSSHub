@@ -34,7 +34,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '分类',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
 | ------- | ------------ | ---- | ----- | ---------- |
@@ -49,8 +49,8 @@ async function handler(ctx) {
     const { category = 'zhengce' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
-    const rootUrl = 'https://www.jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://www.jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('v6/www/information/list', rootApiUrl).href;
     const currentUrl = rootUrl;
 

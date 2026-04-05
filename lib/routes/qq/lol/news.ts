@@ -34,9 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(iconv.decode(Buffer.from(targetResponse), 'gbk'));
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = response.data.result.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.result.slice(0, limit).map((item): DataItem => {
         const title: string = item.sTitle;
         const pubDate: number | string = item.sCreated;
         const linkUrl: string | undefined = item.iDocID ? `${item.iVideoId ? 'v/v2' : 'news'}/detail.shtml?docid=${item.iDocID}` : undefined;

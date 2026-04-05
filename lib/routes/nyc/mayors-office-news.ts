@@ -117,7 +117,7 @@ Categories
         }
 
         // Description
-        let description = '';
+        let description: string;
         description = types ? toTitleCase(cleanedTypes) : 'News';
 
         if (categories) {

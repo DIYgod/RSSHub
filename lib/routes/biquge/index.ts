@@ -60,11 +60,11 @@ async function handler(ctx) {
         .map((item) => {
             item = $(item);
 
-            let link = '';
+            let link: string;
             const url = item.attr('href');
             if (url.startsWith('http')) {
                 link = url;
-            } else if (/^\//.test(url)) {
+            } else if (url.startsWith('/')) {
                 link = `${rootUrl}${url}`;
             } else {
                 link = `${currentUrl}/${url}`;

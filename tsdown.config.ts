@@ -6,4 +6,7 @@ export default defineConfig({
     shims: true,
     clean: true,
     copy: ['lib/assets'],
+    deps: {
+        onlyBundle: false,
+    },
 });

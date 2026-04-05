@@ -86,7 +86,7 @@ describe('puppeteer-utils', () => {
             waitUntil: 'domcontentloaded',
         });
         const data = await page.evaluate(() => JSON.parse(document.body.textContent || ''));
-        expect(data).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
+        expect(data.cookies).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
     }, 45000);
 
     it('setCookies & getCookies example.org', async () => {

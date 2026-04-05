@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -23,7 +23,7 @@ export const route: Route = {
 
 async function handler() {
     const response = await ofetch('https://www.chongdiantou.com/nice-json/front-end/home-load-more');
-    let items = [];
+    let items: DataItem[];
 
     items = response.data.map((item) => ({
         title: item.title,

@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import puppeteer from '@/utils/puppeteer';
 
-import { BASE_URL, enhanceItemsWithSummaries, parseArticles } from './utils';
+import { BASE_URL, enhanceItemsWithSummaries, fetchPageHtml, parseArticles } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag/:sort?',
@@ -22,7 +22,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -43,17 +43,21 @@ async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
     const url = `${BASE_URL}/${tag}/${sort}`;
 
-    const response = await ofetch(url);
-    const $ = load(response);
+    const browser = await puppeteer();
+    try {
+        const html = await fetchPageHtml(browser, url, 'article');
+        const $ = load(html);
+        const list = parseArticles($, BASE_URL);
+        const items = await enhanceItemsWithSummaries(browser, list);
 
-    const list = parseArticles($, BASE_URL);
-    const items = await enhanceItemsWithSummaries(list);
+        const pageTitle = $('title').text() || `DailyPush - ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
 
-    const pageTitle = $('title').text() || `DailyPush - ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
-
-    return {
-        title: pageTitle,
-        link: url,
-        item: items,
-    };
+        return {
+            title: pageTitle,
+            link: url,
+            item: items,
+        };
+    } finally {
+        await browser.close();
+    }
 }

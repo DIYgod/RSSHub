@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { PRESETS } from '@/utils/header-generator';
 
 export const route: Route = {
     path: '/forum/:id',
@@ -12,7 +12,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -23,41 +23,33 @@ export const route: Route = {
         },
     ],
     name: '讨论区',
-    maintainers: ['fuzy112'],
+    maintainers: ['fuzy112', 'pseudoyu'],
     handler,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const url = `https://forum.qidian.com/NewForum/List.aspx?BookId=${id}`;
+    // Reason: forum.qidian.com redirects and PC site has anti-bot JS challenge;
+    // mobile book page embeds forum posts via seoBookCirclePost
+    const response = await got(`https://m.qidian.com/book/${id}.html`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
+    const $ = load(response.data);
+    const { pageContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const pageData = pageContext.pageProps.pageData;
 
-    const forum_response = await got(url, {
-        headers: {
-            Referer: `https://book.qidian.com/info/${id}`,
-        },
-    });
+    const bookName = pageData.bookInfo?.bookName || '';
+    const posts = pageData.seoBookCirclePost?.bookCirclePostList || [];
 
-    const $ = load(forum_response.data);
-    const name = $('.main-header>h1').text();
-    const cover_url = $('img.forum_book').attr('src');
-    const list = $('li.post-wrap>.post');
-
-    const items = [];
-    for (const el of list) {
-        const title = $(el).children().eq(1).find('a');
-        items.push({
-            title: title.text(),
-            link: `https:${title.attr('href')}`,
-            description: $(el).text(),
-            pubDate: parseRelativeDate($(el).find('.post-info>span').text()),
-        });
-    }
+    const items = posts.map((post) => ({
+        title: post.title,
+        link: `https://book.qidian.com/info/${id}/`,
+        description: post.circleReviewDesc,
+        author: post.userName,
+    }));
 
     return {
-        title: `起点 《${name}》讨论区`,
-        link: url,
-        image: cover_url,
+        title: `起点 《${bookName}》讨论区`,
+        link: `https://book.qidian.com/info/${id}/`,
         item: items,
     };
 }

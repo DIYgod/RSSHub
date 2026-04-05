@@ -17,7 +17,7 @@ if (config.sentry.dsn) {
 const middleware: MiddlewareHandler = async (ctx, next) => {
     const time = Date.now();
     await next();
-    if (config.sentry.dsn && Date.now() - time >= config.sentry.routeTimeout) {
+    if (config.sentry.dsn && Date.now() - time >= config.errorTrackingRouteTimeout) {
         Sentry.withScope((scope) => {
             scope.setTag('name', getRouteNameFromPath(ctx.req.path));
             Sentry.captureException(new Error('Route Timeout'));

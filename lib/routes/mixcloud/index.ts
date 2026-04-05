@@ -44,7 +44,7 @@ async function callApi(objectType: string, objectFields: string, username: strin
     const headers = MIXCLOUD_CONFIG.headers;
 
     const lookupParams = slug ? `, slug: "${slug}"` : '';
-    const query = `{
+    const query = /* GraphQL */ `{
     ${lookupKey}(lookup: {username: "${username}"${lookupParams}}) {
       ${objectFields}
     }

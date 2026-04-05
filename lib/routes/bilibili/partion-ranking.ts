@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 import utils from './utils';
@@ -43,11 +43,8 @@ async function handler(ctx) {
     const responseApi = `https://api.bilibili.com/x/web-interface/newlist?ps=15&rid=${tid}&_=${Date.now()}`;
 
     const response = await got_ins.get(responseApi);
-    const items = [];
     let name = '未知';
-    let list = {};
-
-    list = response.data.data.archives;
+    const list = response.data.data.archives;
     if (list && list[0] && list[0].tname) {
         name = list[0].tname;
     }
@@ -58,16 +55,13 @@ async function handler(ctx) {
     const HotRankResponse = await got_ins.get(HotRankResponseApi);
     const hotlist = HotRankResponse.data.result;
 
-    for (let item of hotlist) {
-        item = {
-            title: item.title,
-            description: utils.renderUGCDescription(embed, item.pic, `${item.description} - ${item.tag}`, item.id, undefined, item.bvid),
-            pubDate: new Date(item.pubdate).toUTCString(),
-            link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.id}`,
-            author: item.author,
-        };
-        items.push(item);
-    }
+    const items: DataItem[] = hotlist.map((item) => ({
+        title: item.title,
+        description: utils.renderUGCDescription(embed, item.pic, `${item.description} - ${item.tag}`, item.id, undefined, item.bvid),
+        pubDate: new Date(item.pubdate).toUTCString(),
+        link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.id}`,
+        author: item.author,
+    }));
 
     return {
         title: `bilibili ${name} 最热视频`,

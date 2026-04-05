@@ -35,6 +35,10 @@ export const route: Route = {
             source: ['web.okjike.com/topic/:id'],
             target: '/topic/:id',
         },
+        {
+            source: ['m.okjike.com/topics/:id'],
+            target: '/topic/:id',
+        },
     ],
     name: '圈子',
     maintainers: ['DIYgod', 'prnake'],

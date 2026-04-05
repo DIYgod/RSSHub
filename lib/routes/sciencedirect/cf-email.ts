@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 const decodeCFEmail = (encoded) => {
     const parseHex = (string, position) => Number.parseInt(string.slice(position, position + 2), 16);
     let decoded = '';

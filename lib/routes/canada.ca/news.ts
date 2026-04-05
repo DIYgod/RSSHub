@@ -25,12 +25,11 @@ export const route: Route = {
         },
         // Innovation, Science and Economic Development Canada
         {
-            source: [
-                'ised-isde.canada.ca/site/ised/:lang',
-                'ised-isde.canada.ca/site/isde/:lang',
-                'www.canada.ca/:lang/innovation-science-economic-development/news/*',
-                'www.canada.ca/:lang/innovation-sciences-developpement-economique/nouvelles/*',
-            ],
+            source: ['ised-isde.canada.ca/site/ised/:lang', 'ised-isde.canada.ca/site/isde/:lang'],
+            target: '/news/:lang/departmentofindustry',
+        },
+        {
+            source: ['www.canada.ca/:lang/innovation-science-economic-development/news/*', 'www.canada.ca/:lang/innovation-sciences-developpement-economique/nouvelles/*'],
             target: '/news/:lang/departmentofindustry',
         },
         // All news

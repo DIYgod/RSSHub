@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import type { JSX } from 'hono/jsx/jsx-runtime';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -256,7 +257,7 @@ async function handler(ctx) {
             guid: e.id,
             pubDate: parseDate(e.published_time),
             updated: parseDate(e.updated_time),
-            author: e.authors.map((e) => e.name).join(', '),
+            author: e.authors?.map((e) => e.name).join(', '),
             category: e.kicker.names,
             description: e.description,
         }));
@@ -328,7 +329,10 @@ async function handler(ctx) {
             link: `https://www.reuters.com${section_id}`,
             item: items,
         };
-    } catch {
+    } catch (error: any) {
+        if (error?.name !== 'FetchError') {
+            throw error;
+        }
         // Fallback to arc outboundfeeds if API fails
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 

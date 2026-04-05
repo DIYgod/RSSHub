@@ -187,7 +187,7 @@ export const getPuppeteerPage = async (
 
     return {
         page,
-        destory: async () => {
+        destroy: async () => {
             await browser.close();
         },
         browser,

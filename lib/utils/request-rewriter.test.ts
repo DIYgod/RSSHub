@@ -91,7 +91,7 @@ describe('request-rewriter', () => {
 
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
-        expect(headers.get('user-agent')).toBe(config.ua);
+        expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
         expect(headers.get('sec-ch-ua')).toBeDefined();
@@ -138,7 +138,7 @@ describe('request-rewriter', () => {
 
         // headers
         const headers: Headers = fetchSpy.mock.lastCall?.[0].headers;
-        expect(headers.get('user-agent')).toBe(config.ua);
+        expect(headers.get('user-agent')).toMatch(/Chrome/);
         expect(headers.get('accept')).toBeDefined();
         expect(headers.get('referer')).toBe('http://rsshub.test');
         expect(headers.get('sec-ch-ua')).toBeDefined();
@@ -237,7 +237,7 @@ describe('request-rewriter', () => {
         // headers
         const options = httpSpy.mock.lastCall?.[1];
         const headers = options?.headers;
-        expect(headers?.['user-agent']).toBe(config.ua);
+        expect(headers?.['user-agent']).toMatch(/Chrome/);
         expect(headers?.accept).toBeDefined();
         expect(headers?.referer).toBe('http://rsshub.test');
 

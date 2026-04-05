@@ -57,7 +57,7 @@ async function handler() {
                     const res = await fetch(link);
                     const $ = load(res);
 
-                    const isTV = /^\/TV/.test(new URL(link).pathname);
+                    const isTV = new URL(link).pathname.startsWith('/TV');
 
                     return {
                         title,

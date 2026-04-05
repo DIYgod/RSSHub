@@ -202,7 +202,12 @@ var ct = "${1_636_626_300}";
         )
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
-    http.get(`https://mp.weixin.qq.com/s?__biz=rsshub_test&mid=1&idx=1&sn=1`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
+    http.get(`https://mp.weixin.qq.com/s`, ({ request }) => {
+        const url = new URL(request.url);
+        if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
+            return HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`);
+        }
+    }),
     http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
         HttpResponse.text(
             `<html>
@@ -266,11 +271,7 @@ Unknown paragraph
     ),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
     http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
-    http.get(`http://rsshub.test/headers`, ({ request }) =>
-        HttpResponse.json({
-            ...Object.fromEntries(request.headers.entries()),
-        })
-    ),
+    http.get(`http://rsshub.test/headers`, ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
     http.post(`http://rsshub.test/form-post`, async ({ request }) => {
         const formData = await request.formData();
         return HttpResponse.json({
@@ -288,7 +289,7 @@ Unknown paragraph
     }),
     http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
 );
-server.listen();
+server.listen({ onUnhandledRequest: 'bypass' });
 
 afterAll(() => server.close());
 afterEach(() => server.resetHandlers());

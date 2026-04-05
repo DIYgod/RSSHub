@@ -33,7 +33,7 @@ async function handler(ctx) {
     const originDomain = 'https://www.gov.cn';
     let url = '';
     let title = '';
-    let list = '';
+    let list: string;
     switch (uid) {
         case 'bm':
             url = `${originDomain}/lianbo/bumen/index.htm`;
@@ -98,25 +98,23 @@ async function handler(ctx) {
                         } else {
                             description = item.find('a').text(); // 忽略获取吹风会的全文
                         }
-                    } else {
-                        if (contentUrl.includes('content')) {
-                            fullTextGet = await got.get(contentUrl);
-                            fullTextData = load(fullTextGet.data);
-                            const $1 = fullTextData.html();
-                            pubDate = timezone(parseDate(fullTextData('meta[name="firstpublishedtime"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
-                            author = fullTextData('meta[name="author"]').attr('content');
-                            category = fullTextData('meta[name="keywords"]').attr('content').split(/[,;]/);
-                            if (/zhengceku/g.test(contentUrl)) {
-                                // 政策文件库
-                                description = fullTextData('.pages_content').html();
-                            } else {
-                                fullTextData('.shuzi').remove(); // 移除videobg的图片
-                                fullTextData('#myFlash').remove(); // 移除flash
-                                description = /UCAP-CONTENT/g.test($1) ? fullTextData('#UCAP-CONTENT').html() : fullTextData('body').html();
-                            }
+                    } else if (contentUrl.includes('content')) {
+                        fullTextGet = await got.get(contentUrl);
+                        fullTextData = load(fullTextGet.data);
+                        const $1 = fullTextData.html();
+                        pubDate = timezone(parseDate(fullTextData('meta[name="firstpublishedtime"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
+                        author = fullTextData('meta[name="author"]').attr('content');
+                        category = fullTextData('meta[name="keywords"]').attr('content').split(/[,;]/);
+                        if (/zhengceku/g.test(contentUrl)) {
+                            // 政策文件库
+                            description = fullTextData('.pages_content').html();
                         } else {
-                            description = item.find('a').text(); // 忽略获取吹风会的全文
+                            fullTextData('.shuzi').remove(); // 移除videobg的图片
+                            fullTextData('#myFlash').remove(); // 移除flash
+                            description = /UCAP-CONTENT/g.test($1) ? fullTextData('#UCAP-CONTENT').html() : fullTextData('body').html();
                         }
+                    } else {
+                        description = item.find('a').text(); // 忽略获取吹风会的全文
                     }
                     return {
                         title: item.find('a').text(),

@@ -48,17 +48,21 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         options.headers = options.headers || {};
         const headersLowerCaseKeys = new Set(Object.keys(options.headers).map((key) => key.toLowerCase()));
 
-        const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
-
         // ua
-        if (!headersLowerCaseKeys.has('user-agent')) {
-            options.headers['user-agent'] = config.ua;
-        }
+        if (config.isDefaultUA || options.headerGeneratorOptions) {
+            const generatedHeaders = generateHeaders(options.headerGeneratorOptions);
 
-        for (const header of HEADER_LIST) {
-            if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
-                options.headers[header] = generatedHeaders[header];
+            if (!headersLowerCaseKeys.has('user-agent')) {
+                options.headers['user-agent'] = generatedHeaders['user-agent'];
             }
+
+            for (const header of HEADER_LIST) {
+                if (!headersLowerCaseKeys.has(header) && generatedHeaders[header]) {
+                    options.headers[header] = generatedHeaders[header];
+                }
+            }
+        } else if (!headersLowerCaseKeys.has('user-agent')) {
+            options.headers['user-agent'] = config.ua;
         }
 
         // referer

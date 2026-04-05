@@ -68,8 +68,7 @@ async function handler() {
         });
 
     const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
-    const tabPages = sections.flatMap((section) => section?.tabPages ?? []).filter((tabPage) => tabPage?.label === 'Overview');
-    const publicationSections = tabPages.flatMap((tabPage) => tabPage.sections).filter((section) => section?.title === 'Publications');
+    const publicationSections = sections.filter((section) => section?.title === 'Publications');
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])
         .map((post) => ({
@@ -85,7 +84,10 @@ async function handler() {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                const content = $('div[class*="PostDetail_post-detail__"]');
+                const content = $('#main-content > article');
+                content
+                    .find('[class$="__header"], [class$="__sidebar-container"], [class$="__controls"], [class$="__socialShare"], [class^="LandingPageSection-module-scss-module__"], [class^="SubjectNewsletter-module-scss-module__"]')
+                    .remove();
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');

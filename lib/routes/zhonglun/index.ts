@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/research/article/:language{[a-zA-Z0-9-]+}?',
+    path: '/research/article/:language?',
     name: '中伦研究专业文章',
     url: 'zhonglun.com',
     maintainers: ['nczitzk'],

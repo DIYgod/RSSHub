@@ -36,11 +36,7 @@ async function handler(ctx): Promise<Data> {
     const userid = ctx.req.param('userid');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
-    const response = await ofetch(`https://youmemark.com/user/${userid}`, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-    });
+    const response = await ofetch(`https://youmemark.com/user/${userid}`);
 
     const $ = load(response);
 

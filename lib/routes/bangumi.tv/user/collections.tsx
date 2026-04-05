@@ -154,7 +154,7 @@ async function handler(ctx) {
     const typeName = typeNames[type] || '';
     const subjectTypeName = subjectTypeNames[subjectType] || '';
 
-    let descriptionFields = '';
+    let descriptionFields: string;
 
     if (typeName && subjectTypeName) {
         descriptionFields = `${typeName}的${subjectTypeName}列表`;

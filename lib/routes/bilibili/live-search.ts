@@ -27,7 +27,7 @@ async function handler(ctx) {
     const order = ctx.req.param('order');
 
     const urlEncodedKey = encodeURIComponent(key);
-    let orderTitle = '';
+    let orderTitle: string;
 
     switch (order) {
         case 'live_time':

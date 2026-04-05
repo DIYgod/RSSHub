@@ -12,11 +12,11 @@
       # Helper to define the RSSHub package
       makeRSSHub = pkgs:
         let
-          pnpm = pkgs.pnpm_9;
-          deps = pnpm.fetchDeps {
+          pnpm = pkgs.pnpm_10;
+          deps = pkgs.fetchPnpmDeps {
             pname = "rsshub";
             src = ./.;
-            hash = "sha256-ErMPvlOIDqn03s2P+tzbQbYPZFEax5P61O1DJputvo4=";
+            hash = "sha256-QG1cIkZh+qBA5Dipt0iDLuQpEOI45wdFhuG/CTcRVU8=";
             fetcherVersion = 2;
           };
         in
@@ -28,7 +28,8 @@
 
           nativeBuildInputs = with pkgs; [
             nodejs_22
-            pnpm.configHook
+            pnpm
+            pnpmConfigHook
             git
           ];
 
@@ -166,6 +167,19 @@
               '';
             };
 
+            environmentFiles = mkOption {
+              type = types.listOf types.path;
+              default = [ ];
+              example = literalExpression ''
+                [ config.sops.secrets.rsshub.path ]
+              '';
+              description = ''
+                Environment variables stored in files for RSSHub.
+                It can be used for secrets like agenix, sops-nix, etc.
+                See https://docs.rsshub.app/deploy/config for available options.
+              '';
+            };
+
             redis = {
               enable = mkOption {
                 type = types.bool;
@@ -238,7 +252,7 @@
                   User = cfg.user;
                   Group = cfg.group;
                   WorkingDirectory = cfg.dataDir;
-                  EnvironmentFile = environmentFile;
+                  EnvironmentFile = [environmentFile] ++ cfg.environmentFiles;
                   ExecStart = "${cfg.package}/bin/rsshub";
                   Restart = "on-failure";
                   RestartSec = "5s";

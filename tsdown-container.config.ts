@@ -13,4 +13,7 @@ export default defineConfig({
         'process.env.NODE_ENV': JSON.stringify('production'),
     },
     external: ['@cloudflare/containers'],
+    deps: {
+        onlyBundle: false,
+    },
 });

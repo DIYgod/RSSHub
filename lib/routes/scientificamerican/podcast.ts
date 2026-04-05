@@ -22,11 +22,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language: string = $('html').attr('lang') ?? 'en';
     const data: string | undefined = response.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-    const parsedData = data ? JSON.parse(data.replaceAll('\\\\', '\\')) : undefined;
+    const parsedData = data ? JSON.parse(data.replaceAll(String.raw`\\`, '\\')) : undefined;
 
-    let items: DataItem[] = [];
-
-    items = parsedData
+    let items: DataItem[] = parsedData
         ? parsedData.initialData.props.results.slice(0, limit).map((item): DataItem => {
               const title: string = item.title;
               const image: string | undefined = item.image_url;
@@ -103,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const detailResponse = await ofetch(item.link);
 
                     const detailData: string | undefined = detailResponse.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll('\\\\', '\\')) : undefined;
+                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll(String.raw`\\`, '\\')) : undefined;
 
                     if (!parsedDetailData) {
                         return item;

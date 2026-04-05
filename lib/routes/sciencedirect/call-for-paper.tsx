@@ -26,11 +26,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { subject = '' } = ctx.req.param();
     const apiUrl = `https://www.sciencedirect.com/browse/calls-for-papers?subject=${subject}`;
-    const headers = {
-        accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', // need this to avoid 403, 503 error
-    };
-    const response = await got(apiUrl, { headers });
+    const response = await got(apiUrl);
     const $ = load(response.body);
 
     const scriptJSON = $('script[data-iso-key="_0"]').text();
@@ -42,7 +38,7 @@ async function handler(ctx) {
     try {
         data = JSON.parse(JSON.parse(scriptJSON));
     } catch (error: any) {
-        throw new Error(`Failed to parse embedded script JSON: ${error.message}`);
+        throw new Error(`Failed to parse embedded script JSON: ${error.message}`, { cause: error });
     }
 
     const cfpList = data?.callsForPapers?.list || [];

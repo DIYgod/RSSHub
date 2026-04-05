@@ -71,7 +71,7 @@ const getMangaMeta = async (id: string, needCover: boolean = true, lang?: string
  * @usage const mangaMetaMap = await getMangaMetaByIds(['f98660a1-d2e2-461c-960d-7bd13df8b76d']);
  */
 export async function getMangaMetaByIds(ids: string[], needCover: boolean = true, lang?: string | string[]): Promise<Map<string, { id: string; title: string; description: string; cover?: string }>> {
-    const deDuplidatedIds = [...new Set(ids)].sort();
+    const deDuplidatedIds = [...new Set(ids)].toSorted();
     const includes = needCover ? ['cover_art'] : [];
 
     const rawMangaMetas = (await cache.tryGet(

@@ -32,7 +32,7 @@ export const route: Route = {
         },
     ],
     name: '搜索',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     url: 'jmcomic.group/',
     description: `::: tip
@@ -48,12 +48,15 @@ async function handler(ctx) {
     const { domain = defaultDomain } = ctx.req.query();
     const rootUrl = getRootUrl(domain);
     let order = ctx.req.param('order') ?? 'mr';
-    const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${keyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
+    // Reason: keyword may contain `+` (AND operator) and `-` (NOT operator).
+    // Without encoding, `+` is treated as space in query strings, breaking search logic.
+    const encodedKeyword = encodeURIComponent(keyword);
+    const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${encodedKeyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     let apiUrl = getApiUrl();
     order = time === 'a' ? order : `${order}_${time}`;
-    apiUrl = `${apiUrl}/search?search_query=${keyword}&o=${order}`;
+    apiUrl = `${apiUrl}/search?search_query=${encodedKeyword}&o=${order}`;
     const apiResult = await processApiItems(apiUrl);
     let filteredItemsByCategory = apiResult.content;
     // Filter items by category if not 'all'

@@ -72,10 +72,10 @@ if (config.isPackage) {
             }
             break;
         default:
-            modules = directoryImport({
+            modules = (await directoryImport({
                 targetDirectoryPath: path.join(__dirname, './routes'),
                 importPattern: /\.tsx?$/,
-            }) as typeof modules;
+            })) as typeof modules;
     }
 }
 
@@ -100,6 +100,7 @@ if (Object.keys(modules).length) {
             namespaces[namespace] = Object.assign(
                 {
                     routes: {},
+                    apiRoutes: {},
                 },
                 namespaces[namespace],
                 content.namespace

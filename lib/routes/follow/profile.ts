@@ -74,7 +74,7 @@ async function handler(ctx: Context): Promise<Data> {
     };
 }
 
-const getUrlIcon = (url: string, fallback?: boolean | undefined) => {
+const getUrlIcon = (url: string, fallback?: boolean) => {
     let src: string;
     let fallbackUrl = '';
 

@@ -9,4 +9,7 @@ export default defineConfig({
     shims: true,
     clean: true,
     // copy: [{ from: 'lib/assets', to: 'dist' }],
+    deps: {
+        onlyBundle: false,
+    },
 });

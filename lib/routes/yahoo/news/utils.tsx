@@ -95,7 +95,7 @@ const parseItem = (item, tryGet) =>
         const author = ldJson.author.name;
         const body = $('.atoms');
 
-        body.find('noscript, .text-gandalf, [id^="sda-inbody-"]').remove();
+        body.find('noscript, .recommendation-contents, .text-gandalf, [id^="sda-inbody-"]').remove();
         // remove padding
         body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
             const $ele = $(ele);
@@ -136,7 +136,10 @@ const parseItem = (item, tryGet) =>
             }
         });
 
-        item.description = body.html();
+        item.description = body
+            .toArray()
+            .map((ele) => $(ele).html())
+            .join('');
         item.author = author;
         item.category = ldJson.keywords;
         item.pubDate = parseDate(ldJson.datePublished);

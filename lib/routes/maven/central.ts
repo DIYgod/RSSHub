@@ -72,7 +72,7 @@ async function handler(ctx) {
         }
     } catch (error: any) {
         if (error?.response?.status === 404) {
-            throw new Error(`Could not find component for ${group}:${artifact}: metadata not found`);
+            throw new Error(`Could not find component for ${group}:${artifact}: metadata not found`, { cause: error });
         }
         throw error;
     }

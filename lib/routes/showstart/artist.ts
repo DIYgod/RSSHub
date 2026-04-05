@@ -41,5 +41,6 @@ async function handler(ctx: Context): Promise<Data> {
         description: artist.content,
         link: `${HOST}/artist/${artist.id}`,
         item: artist.activityList,
+        allowEmpty: true,
     };
 }

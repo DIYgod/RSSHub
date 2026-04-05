@@ -31,9 +31,7 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
     const included = response.included;
     const data = [...response.data, ...included].filter((item) => types.has(item.type));
 
-    let items: DataItem[] = [];
-
-    items = data?.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = data?.slice(0, limit).map((item): DataItem => {
         const attributes = item.attributes;
         const relationships = item.relationships;
 

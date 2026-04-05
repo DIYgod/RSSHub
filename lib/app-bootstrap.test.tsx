@@ -8,6 +8,14 @@ vi.mock('@/utils/logger', () => ({
     },
 }));
 
+vi.mock('@honeybadger-io/js', () => ({
+    default: {
+        configure: vi.fn(),
+        notify: vi.fn(),
+        setContext: vi.fn(),
+    },
+}));
+
 describe('app-bootstrap', () => {
     it('logs uncaught exceptions', async () => {
         const before = new Set(process.listeners('uncaughtException'));

@@ -33,9 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
     });
 
-    let items: DataItem[] = [];
-
-    items = $('li.articles__item')
+    let items: DataItem[] = $('li.articles__item')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

@@ -4,12 +4,13 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 
 // Static browser headers (Chrome-like fingerprint)
+const STATIC_BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36';
 const STATIC_BROWSER_HEADERS: Record<string, string> = {
     accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     'accept-language': 'en-US,en;q=0.9',
-    'sec-ch-ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
+    'sec-ch-ua': '"Google Chrome";v="139", "Chromium";v="139", "Not_A Brand";v="24"',
     'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
+    'sec-ch-ua-platform': '"macOS"',
     'sec-fetch-dest': 'document',
     'sec-fetch-mode': 'navigate',
     'sec-fetch-site': 'none',
@@ -25,15 +26,19 @@ const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Res
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
     // Set User-Agent if not provided
-    if (!request.headers.has('user-agent')) {
-        request.headers.set('user-agent', config.ua);
-    }
-
-    // Set browser headers if not provided
-    for (const [header, value] of Object.entries(STATIC_BROWSER_HEADERS)) {
-        if (!request.headers.has(header)) {
-            request.headers.set(header, value);
+    if (config.isDefaultUA) {
+        if (!request.headers.get('user-agent')) {
+            request.headers.set('user-agent', STATIC_BROWSER_UA);
         }
+
+        // Set browser headers if not provided
+        for (const [header, value] of Object.entries(STATIC_BROWSER_HEADERS)) {
+            if (!request.headers.has(header)) {
+                request.headers.set(header, value);
+            }
+        }
+    } else if (!request.headers.get('user-agent')) {
+        request.headers.set('user-agent', config.ua);
     }
 
     // Set Referer if not provided

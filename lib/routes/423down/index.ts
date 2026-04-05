@@ -27,8 +27,9 @@ export const handler = async (ctx) => {
             item = $(item);
 
             const link = item.find('h2 a').prop('href');
+            const isAdItem = item.find('span.cat').text().includes('423Down');
 
-            return new RegExp(domain).test(link);
+            return new RegExp(domain).test(link) && !isAdItem;
         })
         .slice(0, limit)
         .map((item) => {

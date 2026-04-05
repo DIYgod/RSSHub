@@ -124,4 +124,80 @@ describe('registry dynamic loading', () => {
 
         process.env.NODE_ENV = originalEnv;
     });
+
+    // https://github.com/DIYgod/RSSHub/pull/18002
+    it('prioritizes literal segments over parameter segments in route matching', async () => {
+        const originalEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = 'development';
+
+        const modules = {
+            '/specificity/param-route.ts': {
+                route: {
+                    path: '/:category',
+                    name: 'ParamRoute',
+                    handler: () => ({
+                        title: 'param',
+                        link: 'https://example.com',
+                        item: [],
+                        allowEmpty: true,
+                    }),
+                },
+            },
+            '/specificity/literal-route.ts': {
+                route: {
+                    path: '/news/:channel',
+                    name: 'LiteralRoute',
+                    handler: () => ({
+                        title: 'literal',
+                        link: 'https://example.com',
+                        item: [],
+                        allowEmpty: true,
+                    }),
+                },
+            },
+            '/specificity/news-route.ts': {
+                route: {
+                    path: '/news',
+                    name: 'NewsRoute',
+                    handler: () => ({
+                        title: 'news',
+                        link: 'https://example.com',
+                        item: [],
+                        allowEmpty: true,
+                    }),
+                },
+            },
+        };
+
+        const directoryImportMock = vi.fn(() => modules);
+        vi.doMock('@/utils/directory-import', () => ({
+            directoryImport: directoryImportMock,
+        }));
+        vi.resetModules();
+        const { default: registry } = await import('@/registry');
+
+        const app = new Hono();
+        app.use(async (ctx, next) => {
+            await next();
+            const data = ctx.get('data');
+            if (data) {
+                return ctx.json(data);
+            }
+        });
+        app.route('/', registry);
+
+        // /news/sports should match /news/:channel (literal "news" wins over :category)
+        const literalResponse = await app.request('/specificity/news/sports');
+        expect((await literalResponse.json()).title).toBe('literal');
+
+        // /news should match /news (literal wins over :category)
+        const newsResponse = await app.request('/specificity/news');
+        expect((await newsResponse.json()).title).toBe('news');
+
+        // /products should match /:category
+        const paramResponse = await app.request('/specificity/products');
+        expect((await paramResponse.json()).title).toBe('param');
+
+        process.env.NODE_ENV = originalEnv;
+    });
 });
