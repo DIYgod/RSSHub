@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const host = 'https://www.sehuatang.net/';
+const host = 'https://www.sehuatang.org/';
 
 const forumIdMaps = {
     // 原创 BT 电影
