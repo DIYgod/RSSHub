@@ -99,7 +99,7 @@ const parseToSimpleTexts = (content) =>
     });
 
 function addCoverToDescription(content, cover) {
-   return `<p><img src="${cover}"></p>${content}`;
+    return `<p><img src="${cover}"></p>${content}`;
 }
 
 function parseContent(content) {
