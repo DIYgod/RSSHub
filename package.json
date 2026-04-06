@@ -114,7 +114,7 @@
         "ofetch": "1.5.1",
         "otplib": "13.4.0",
         "p-map": "7.0.4",
-        "pac-proxy-agent": "9.0.0",
+        "pac-proxy-agent": "9.0.1",
         "proxy-chain": "2.7.1",
         "puppeteer-real-browser": "1.4.4",
         "query-string": "9.3.1",
