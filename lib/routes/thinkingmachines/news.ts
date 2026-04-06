@@ -54,10 +54,10 @@ async function handler() {
 
                 // Remove non-content elements
                 $article('nav, footer, header, script, style').remove();
-                // Remove heading block (title, author, pubDate) — these have dedicated fields
-                $article('.post-heading').remove();
+                // Remove heading (title, author, pubDate) and paginator
+                $article('.post-heading, #post-prev-link, #post-next-link').remove();
 
-                const description = $article('main').html()?.trim() || $article('article').html()?.trim() || '';
+                const description = $article('main').html()?.trim() || '';
 
                 return {
                     title: item.title,
