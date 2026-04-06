@@ -45426,6 +45426,20 @@
       }
     ]
   },
+  "thinkingmachines.ai": {
+    "_name": "Thinking Machines Lab",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/news",
+          "/news/"
+        ],
+        "target": "/thinkingmachines/news"
+      }
+    ]
+  },
   "thoughtworks.com": {
     "_name": "ThoughtWorks",
     "www": [
