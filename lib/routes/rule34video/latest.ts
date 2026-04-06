@@ -1,8 +1,7 @@
 import { load } from 'cheerio';
-
 import type { Context } from 'hono';
-import type { Route } from '@/types';
 
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
