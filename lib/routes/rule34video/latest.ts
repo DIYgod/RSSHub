@@ -1,7 +1,8 @@
-import type { Context } from 'hono';
 import { load } from 'cheerio';
 
+import type { Context } from 'hono';
 import type { Route } from '@/types';
+
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -41,7 +42,7 @@ interface VideoItem {
     videoId?: string;
 }
 
-async function handler(ctx: Context) {
+async function handler(_ctx: Context) {
     const response = await got({
         method: 'get',
         url: 'https://www.rule34video.com/latest-updates',
@@ -62,7 +63,7 @@ async function handler(ctx: Context) {
                 $el.find('img.thumb.lazy-load').attr('src') ||
                 undefined;
             const duration = $el.find('.time').text().trim() || undefined;
-            const added = $el.find('.added').text().replace(/\s+/g, ' ').trim() || undefined;
+            const added = $el.find('.added').text().replaceAll(/\s+/g, ' ').trim() || undefined;
             const rating = $el.find('.rating').text().trim() || undefined;
             const views = $el.find('.views').text().trim() || undefined;
             const hasSound = $el.find('.sound').length > 0;
