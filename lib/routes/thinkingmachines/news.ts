@@ -49,29 +49,22 @@ async function handler() {
     const fullItems = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const articleResponse = await ofetch(item.link);
-                    const $article = load(articleResponse);
+                const articleResponse = await ofetch(item.link);
+                const $article = load(articleResponse);
 
-                    // Remove nav, footer, and other non-content elements
-                    $article('nav, footer, header, script, style').remove();
+                // Remove non-content elements
+                $article('nav, footer, header, script, style').remove();
+                // Remove heading block (title, author, pubDate) — these have dedicated fields
+                $article('.post-heading').remove();
 
-                    const description = $article('main').html()?.trim() || $article('article').html()?.trim() || '';
+                const description = $article('main').html()?.trim() || $article('article').html()?.trim() || '';
 
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        pubDate: parseDate(item.dateStr, 'MMM D, YYYY'),
-                        description,
-                    };
-                } catch {
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        pubDate: parseDate(item.dateStr, 'MMM D, YYYY'),
-                        description: '',
-                    };
-                }
+                return {
+                    title: item.title,
+                    link: item.link,
+                    pubDate: parseDate(item.dateStr, 'MMM D, YYYY'),
+                    description,
+                };
             })
         )
     );
