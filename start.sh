@@ -1,4 +1,4 @@
 #!/bin/bash
 
 pm2 delete rsshub
-pm2 start dist/index.mjs --name "rsshub"
+pm2 start 'pnpm run start' --name "rsshub"
