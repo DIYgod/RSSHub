@@ -49,8 +49,14 @@ const GOT_HEADERS = {
 async function handler(ctx) {
     const { query } = ctx.req.param();
     const encodedQuery = encodeURIComponent(query);
-
-    const apiUrl = `https://jable.tv/search/${encodedQuery}/` + `?mode=async&function=get_block&block_id=list_videos_videos_list_search_result` + `&q=${encodedQuery}&sort_by=post_date`;
+    const params = new URLSearchParams({
+        mode: 'async',
+        function: 'get_block',
+        block_id: 'list_videos_videos_list_search_result',
+        q: encodedQuery,
+        sort_by: 'post_date',
+    });
+    const apiUrl = `https://jable.tv/search/${encodedQuery}/?${params.toString()}`;
 
     const response = await got(apiUrl, { headers: GOT_HEADERS });
     const $ = load(response.data);
