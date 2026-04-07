@@ -54,14 +54,19 @@ const GOT_HEADERS = {
 
 async function handler(ctx) {
     const { query } = ctx.req.param();
+    const params = new URLSearchParams({
+        mode: 'async',
+        function: 'get_block',
+        block_id: 'list_videos_videos_list_search_result',
+        q: query,
+        sort_by: 'post_date',
+    });
     const encodedQuery = encodeURIComponent(query);
-
-    const apiUrl = `https://jable.tv/search/${encodedQuery}/` + `?mode=async&function=get_block&block_id=list_videos_videos_list_search_result` + `&q=${encodedQuery}&sort_by=post_date`;
-
+    const apiUrl = `https://jable.tv/search/${encodedQuery}/?${params.toString()}`;
     const response = await got(apiUrl, { headers: GOT_HEADERS });
     const $ = load(response.data);
 
-    const pageAuthor = $('section.content-header h2').first().text().trim() || query;
+    const author = $('section.content-header h2').first().text().trim() || query;
 
     const items = await Promise.all(
         $('.video-img-box')
@@ -86,7 +91,6 @@ async function handler(ctx) {
 
                 return cache.tryGet(`jable:video:${videoId}`, async () => {
                     let pubDate;
-                    const author = pageAuthor;
                     let videoUrl;
 
                     try {
