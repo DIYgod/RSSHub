@@ -300,8 +300,8 @@ importers:
         specifier: 4.3.1
         version: 4.3.1
       '@cloudflare/containers':
-        specifier: 0.2.2
-        version: 0.2.2
+        specifier: 0.2.3
+        version: 0.2.3
       '@cloudflare/puppeteer':
         specifier: 1.0.6
         version: 1.0.6(bufferutil@4.1.0)(utf-8-validate@5.0.10)
@@ -588,8 +588,8 @@ packages:
   '@bufbuild/protobuf@2.11.0':
     resolution: {integrity: sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ==}
 
-  '@cloudflare/containers@0.2.2':
-    resolution: {integrity: sha512-cfTSd7M96Z9NeCiaN4i3FuMb+i2Nzi0HbMuxvMAnUmkXwtWIZCQ3XLqUWQkdCKWNJZ/3BLMInC6ntFvpbTWIpA==}
+  '@cloudflare/containers@0.2.3':
+    resolution: {integrity: sha512-LPPVLwmXQb8Q61r0v5IDM02ZQESRYzlrVHIe9vUoqvowBmYRBARCJi6GjUsW5/zCue/YRkcMBIiIoNCOWfH8TA==}
 
   '@cloudflare/kv-asset-handler@0.4.2':
     resolution: {integrity: sha512-SIOD2DxrRRwQ+jgzlXCqoEFiKOFqaPjhnNTGKXSRLvp1HiOvapLaFG2kEr9dYQTYe8rKrd9uvDUzmAITeNyaHQ==}
@@ -6559,7 +6559,7 @@ snapshots:
 
   '@bufbuild/protobuf@2.11.0': {}
 
-  '@cloudflare/containers@0.2.2': {}
+  '@cloudflare/containers@0.2.3': {}
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
