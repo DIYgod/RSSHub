@@ -46,7 +46,7 @@ async function handler(ctx) {
         const seen = new Set<string>();
         const list = $('li.afd-search-list__item')
             .toArray()
-            .flatMap((item) => {
+            .map((item) => {
                 const element = $(item);
                 const linkElement = element.find('a.afd-search-list__link').first();
                 const href = linkElement.attr('href');
@@ -55,26 +55,25 @@ async function handler(ctx) {
 
                 const title = titleElement.text().trim() || imageElement.attr('alt')?.trim();
                 if (!href || !title) {
-                    return [];
+                    return null;
                 }
 
                 const link = normalizeArchdailyLink(href, baseUrl);
                 if (!link || !link.startsWith(archdailyArticlePrefix) || link.includes('/search/') || seen.has(link)) {
-                    return [];
+                    return null;
                 }
                 seen.add(link);
 
                 const articleId = getArchdailyArticleId(link);
 
-                return [
-                    {
-                        title,
-                        link,
-                        image: normalizeImageUrl(imageElement.attr('src')),
-                        guid: articleId ? `archdaily-${pageCategory}-${articleId}` : `${pageCategory}:${link}`,
-                    },
-                ];
-            });
+                return {
+                    title,
+                    link,
+                    image: normalizeImageUrl(imageElement.attr('src')),
+                    guid: articleId ? `archdaily-${pageCategory}-${articleId}` : `${pageCategory}:${link}`,
+                };
+            })
+            .filter(Boolean);
 
         const items: DataItem[] = await Promise.all(
             list.map((item) =>
@@ -102,53 +101,44 @@ async function handler(ctx) {
 
     const response = await ofetch<{ results?: any[] }>(`${baseUrl}/search/api/v1/us/${finalCategory}?q=${encodeURIComponent(search)}`);
 
-    const items: DataItem[] = (response?.results ?? []).flatMap((item) => {
-        const title = item?.title || item?.name;
-        const link = item?.url;
-        if (!title || !link) {
-            return [];
-        }
+    const items: DataItem[] = (response?.results ?? [])
+        .map((item) => {
+            const title = item?.title || item?.name;
+            const link = item?.url;
+            if (!title || !link) {
+                return null;
+            }
 
-        if (finalCategory === 'folders') {
-            const images = (item?.images ?? []).map((image) => normalizeImageUrl(image)).filter(Boolean);
-            const author = item?.user?.slug_name;
-            const profileUrl = item?.user?.profile_url;
-            const folderTitle = author ? `${title} by ${author}` : title;
+            if (finalCategory === 'folders') {
+                const images = (item?.images ?? []).map((image) => normalizeImageUrl(image)).filter(Boolean);
+                const author = item?.user?.slug_name;
+                const profileUrl = item?.user?.profile_url;
+                const folderTitle = author ? `${title} by ${author}` : title;
 
-            return [
-                {
+                return {
                     title: folderTitle,
                     link,
                     guid: item?.id ? `archdaily-folder-${item.id}` : undefined,
-                    description: [
-                        `<p><strong>${folderTitle}</strong></p>`,
-                        item?.last_update ? `<p>Updated: ${item.last_update}</p>` : undefined,
-                        profileUrl ? `<p><a href="${profileUrl}">Uploader Profile</a></p>` : undefined,
-                        images.map((image) => `<img src="${image}">`).join('<br>'),
-                    ]
-                        .filter(Boolean)
-                        .join(''),
+                    description: [profileUrl ? `<p><a href="${profileUrl}">Uploader Profile</a></p>` : undefined, images.map((image) => `<img src="${image}">`).join('<br>')].filter(Boolean).join(''),
                     pubDate: item?.last_update ? parseDate(item.last_update) : undefined,
                     author,
                     category: ['folders', title],
-                },
-            ];
-        }
+                };
+            }
 
-        const image = normalizeImageUrl(item?.featured_images?.url_large || item?.featured_images?.url_medium || item?.featured_images?.url_small);
-        const itemCategory = (item?.tags ?? []).map((tag) => tag?.name).filter(Boolean);
+            const image = normalizeImageUrl(item?.featured_images?.url_large || item?.featured_images?.url_medium || item?.featured_images?.url_small);
+            const itemCategory = (item?.tags ?? []).map((tag) => tag?.name).filter(Boolean);
 
-        return [
-            {
+            return {
                 title,
                 link,
                 description: `${image ? `<img src="${image}"><br>` : ''}${item?.meta_description ?? ''}`,
                 pubDate: item?.publication_date ? parseDate(item.publication_date) : undefined,
                 author: item?.author?.name,
                 category: itemCategory,
-            },
-        ];
-    });
+            };
+        })
+        .filter(Boolean);
 
     const seenOutput = new Set<string>();
     const dedupedItems = items.filter((item) => {
@@ -180,18 +170,11 @@ function normalizeImageUrl(url?: string) {
 
 function normalizeArchdailyLink(url: string, baseUrl: string) {
     if (url.startsWith('/')) {
-        return normalizeUrlWithoutSearchAndHash(`${baseUrl}${url}`);
+        return `${baseUrl}${url}`;
     }
     if (url.startsWith(archdailyArticlePrefix)) {
-        return normalizeUrlWithoutSearchAndHash(url);
+        return url;
     }
-}
-
-function normalizeUrlWithoutSearchAndHash(input: string) {
-    const parsed = new URL(input);
-    parsed.search = '';
-    parsed.hash = '';
-    return parsed.toString();
 }
 
 function getArchdailyArticleId(link: string) {
@@ -203,22 +186,19 @@ async function getCompetitionMeta(link: string) {
     const { data } = await got(link);
     const $ = load(data);
 
-    const publishedTime =
-        $('meta[property="article:published_time"]').attr('content') ??
-        $('script[type="application/ld+json"]')
-            .toArray()
-            .map((script) => $(script).text())
-            .map((jsonText) => {
-                try {
-                    return JSON.parse(jsonText);
-                } catch {
-                    return;
-                }
-            })
-            .flatMap((entry) => (Array.isArray(entry) ? entry : [entry]))
-            .find((entry) => entry && typeof entry === 'object' && entry.datePublished)?.datePublished;
+    const scriptText = $('script[type="application/ld+json"]').first().text();
+    let publishedTime = $('meta[property="article:published_time"]').attr('content');
+    if (!publishedTime && scriptText) {
+        try {
+            const parsed = JSON.parse(scriptText);
+            const entry = Array.isArray(parsed) ? parsed.find((e) => e && typeof e === 'object' && e.datePublished) : parsed && typeof parsed === 'object' && parsed.datePublished ? parsed : undefined;
+            publishedTime = entry?.datePublished;
+        } catch {
+            // ignore
+        }
+    }
 
-    const description = $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content');
+    const description = $('.afd-post-content').html();
 
     return {
         pubDate: publishedTime ? parseDate(publishedTime) : undefined,
