@@ -6386,6 +6386,14 @@
     "_name": "Bangumi 番组计划",
     ".": [
       {
+        "title": "放送列表",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/calendar"
+        ],
+        "target": "/bangumi.tv/calendar/today"
+      },
+      {
         "title": "Bangumi 用户收藏列表",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
@@ -6400,14 +6408,6 @@
           "/anime/list/:id/wish"
         ],
         "target": "/bangumi.tv/bangumi.tv/user/collections/:id/2/1"
-      },
-      {
-        "title": "放送列表",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/calendar"
-        ],
-        "target": "/bangumi.tv/calendar/today"
       },
       {
         "title": "小组话题的新回复",
@@ -18281,14 +18281,6 @@
     "_name": "Gitee",
     ".": [
       {
-        "title": "仓库 Releases",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/:owner/:repo/releases"
-        ],
-        "target": "/gitee/releases/:owner/:repo"
-      },
-      {
         "title": "仓库提交",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
@@ -18303,6 +18295,14 @@
           "/:owner/:repo"
         ],
         "target": "/gitee/events/:owner/:repo"
+      },
+      {
+        "title": "仓库 Releases",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/:owner/:repo/releases"
+        ],
+        "target": "/gitee/releases/:owner/:repo"
       },
       {
         "title": "用户公开动态",
@@ -34235,16 +34235,6 @@
   },
   "nju.edu.cn": {
     "_name": "南京大学",
-    "jw": [
-      {
-        "title": "本科生院",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/:type/list.htm"
-        ],
-        "target": "/nju/jw/:type"
-      }
-    ],
     "rczp": [
       {
         "title": "人才招聘网",
@@ -34253,6 +34243,16 @@
           "/sylm/:type/index.html"
         ],
         "target": "/nju/rczp/:type"
+      }
+    ],
+    "jw": [
+      {
+        "title": "本科生院",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/nju/jw/:type"
       }
     ],
     "admission": [
@@ -39786,7 +39786,7 @@
     "new": [
       {
         "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/game",
+        "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/zt2020/page/feiyan.htm"
         ],
@@ -43053,32 +43053,6 @@
     "_name": "少数派 sspai",
     ".": [
       {
-        "title": "作者动态",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/u/:id/updates"
-        ],
-        "target": "/sspai/activity/:id"
-      },
-      {
-        "title": "用户收藏",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/u/:slug/bookmark_posts"
-        ],
-        "target": "/sspai/bookmarks/:slug"
-      },
-      {
-        "title": "付费专栏文章更新",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/series/:id",
-          "/series/:id/list",
-          "/series/:id/metadata"
-        ],
-        "target": "/sspai/series/:id"
-      },
-      {
         "title": "会员社区",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
@@ -43087,12 +43061,28 @@
         "target": "/sspai/prime/community"
       },
       {
+        "title": "作者动态",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/u/:id/updates"
+        ],
+        "target": "/sspai/activity/:id"
+      },
+      {
         "title": "作者",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
           "/u/:id/posts"
         ],
         "target": "/sspai/author/:id"
+      },
+      {
+        "title": "用户收藏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/u/:slug/bookmark_posts"
+        ],
+        "target": "/sspai/bookmarks/:slug"
       },
       {
         "title": "专栏",
@@ -43117,6 +43107,16 @@
           "/matrix"
         ],
         "target": "/sspai/matrix"
+      },
+      {
+        "title": "付费专栏文章更新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/series/:id",
+          "/series/:id/list",
+          "/series/:id/metadata"
+        ],
+        "target": "/sspai/series/:id"
       },
       {
         "title": "标签订阅",
@@ -46985,20 +46985,20 @@
     "_name": "VCB-Studio",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/vcb-s/"
-      },
-      {
         "title": "分类文章",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
           "/archives/category/:cate"
         ],
         "target": "/vcb-s/category/:cate"
+      },
+      {
+        "title": "Unknown",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/vcb-s/"
       }
     ]
   },
@@ -47139,6 +47139,14 @@
     "_name": "Voronoi",
     "www": [
       {
+        "title": "Author Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/author/:username"
+        ],
+        "target": "/voronoiapp/author/:username"
+      },
+      {
         "title": "Editor's Pick Posts",
         "docs": "https://docs.rsshub.app/routes/picture",
         "source": [
@@ -47194,14 +47202,6 @@
           "/explore"
         ],
         "target": "/voronoiapp(_,url)=>{const parsedURL=new URL(url);const keyword=parsedURL.searchParams.get(\"search\");return`/voronoiapp/search/${keyword}`}"
-      },
-      {
-        "title": "Author Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/author/:username"
-        ],
-        "target": "/voronoiapp/author/:username"
       }
     ]
   },
@@ -47346,15 +47346,6 @@
         "target": "/wallstreetcn/calendar/:section?"
       },
       {
-        "title": "实时快讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/live/:category",
-          "/"
-        ],
-        "target": "/wallstreetcn/live/:category?"
-      },
-      {
         "title": "最热文章",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
@@ -47370,6 +47361,15 @@
           "/"
         ],
         "target": "/wallstreetcn/news/:category?"
+      },
+      {
+        "title": "实时快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/live/:category",
+          "/"
+        ],
+        "target": "/wallstreetcn/live/:category?"
       }
     ]
   },
