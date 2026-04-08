@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+// Strip the Cloudinary `/t_lazy/` transformation which returns a blurred placeholder
+const unlazy = (url: string) => url.replaceAll('/t_lazy/', '/');
 
 const teamDomains: Record<string, string> = {
     '49ers': 'www.49ers.com',
@@ -131,84 +134,46 @@ async function handler(ctx) {
         }
     });
 
-    const items = (
-        await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    let articleResponse;
-                    try {
-                        articleResponse = await ofetch(item.link);
-                    } catch {
-                        return null;
-                    }
-                    const $article = load(articleResponse);
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const articleResponse = await ofetch(item.link);
+                const $article = load(articleResponse);
 
-                    let jsonLd: Record<string, any> | null = null;
-                    $article('script[type="application/ld+json"]').each((_, el) => {
-                        try {
-                            const data = JSON.parse($article(el).text());
-                            const candidate = Array.isArray(data) ? data.find((d) => d['@type'] === 'NewsArticle') : data;
-                            if (candidate?.['@type'] === 'NewsArticle') {
-                                jsonLd = candidate;
-                            }
-                        } catch {
-                            // skip malformed JSON-LD
-                        }
-                    });
+                let jsonLd: Record<string, any> = {};
+                try {
+                    jsonLd = JSON.parse($article('script[type="application/ld+json"]').first().text());
+                } catch {
+                    // no JSON-LD or malformed
+                }
 
-                    const result: DataItem = {
-                        title: jsonLd?.headline || item.title,
-                        link: item.link,
-                        pubDate: jsonLd?.datePublished ? parseDate(jsonLd.datePublished) : undefined,
-                        author: jsonLd?.author?.name || (Array.isArray(jsonLd?.author) ? jsonLd.author[0]?.name : undefined),
-                        image: jsonLd?.image?.url || (Array.isArray(jsonLd?.image) ? jsonLd.image[0]?.url : undefined),
-                    };
+                // Fix lazy-loaded images within the article body
+                const content = $article('.nfl-c-article__body');
+                content.find('img[data-src]').each((_, img) => {
+                    const $img = $article(img);
+                    $img.attr('src', unlazy($img.attr('data-src')!));
+                    $img.removeAttr('data-src');
+                });
+                content.find('source[data-srcset]').each((_, src) => {
+                    const $src = $article(src);
+                    $src.attr('srcset', unlazy($src.attr('data-srcset')!));
+                    $src.removeAttr('data-srcset');
+                });
 
-                    // Try to extract article body HTML
-                    const contentSelectors = ['article .nfl-c-body-part', '.article-body', 'article [data-module="content"]', 'article'];
-                    for (const selector of contentSelectors) {
-                        const content = $article(selector);
-                        if (content.length) {
-                            content.find('script, style, [data-ad], .ad, .social-share, .related-content').remove();
-                            // Fix lazy-loaded images: real URLs live in data-src/data-srcset, src is a placeholder GIF.
-                            // Also strip the Cloudinary "/t_lazy/" transformation which returns a blurred placeholder.
-                            const unlazy = (url: string) => url.replaceAll('/t_lazy/', '/');
-                            content.find('img[data-src]').each((_, img) => {
-                                const $img = $article(img);
-                                $img.attr('src', unlazy($img.attr('data-src')!));
-                                $img.removeAttr('data-src');
-                            });
-                            content.find('source[data-srcset]').each((_, src) => {
-                                const $src = $article(src);
-                                $src.attr('srcset', unlazy($src.attr('data-srcset')!));
-                                $src.removeAttr('data-srcset');
-                            });
-                            const html = content
-                                .toArray()
-                                .map((el) => $article(el).html())
-                                .filter(Boolean)
-                                .join('');
-                            if (html) {
-                                result.description = html;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!result.description && jsonLd?.description) {
-                        result.description = jsonLd.description;
-                    }
-
-                    return result;
-                })
-            )
+                return {
+                    title: jsonLd.headline || item.title,
+                    link: item.link,
+                    pubDate: jsonLd.datePublished ? parseDate(jsonLd.datePublished) : undefined,
+                    author: jsonLd.author?.name,
+                    description: content.html() || jsonLd.description,
+                };
+            })
         )
-    ).filter(Boolean) as DataItem[];
+    );
 
     return {
         title: $('title').text() || `${team.charAt(0).toUpperCase() + team.slice(1)} News`,
         link: listingUrl,
-        language: 'en',
         item: items,
     };
 }
