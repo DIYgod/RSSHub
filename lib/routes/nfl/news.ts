@@ -149,6 +149,7 @@ async function handler(ctx) {
 
                 // Fix lazy-loaded images within the article body
                 const content = $article('.nfl-c-article__body');
+                content.find('.nfl-c-article__divider').remove();
                 content.find('img[data-src]').each((_, img) => {
                     const $img = $article(img);
                     $img.attr('src', unlazy($img.attr('data-src')!));
