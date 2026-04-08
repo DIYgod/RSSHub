@@ -6927,6 +6927,27 @@
   "/podwise/explore/:type": [
     "lyling"
   ],
+  "/polymarket/event/:slug": [
+    "heqi201255"
+  ],
+  "/polymarket/events/:tagSlug?": [
+    "heqi201255"
+  ],
+  "/polymarket/leaderboard/:category?/:timePeriod?": [
+    "heqi201255"
+  ],
+  "/polymarket/positions/:address": [
+    "heqi201255"
+  ],
+  "/polymarket/search/:query": [
+    "heqi201255"
+  ],
+  "/polymarket/series/:slug?": [
+    "heqi201255"
+  ],
+  "/polymarket/user/:address": [
+    "heqi201255"
+  ],
   "/pornhub/category/:caty/:img?": [
     "nczitzk"
   ],

@@ -2260,6 +2260,13 @@ export type RoutePath =
   | `/pnas/:topicPath{.+}?`
   | `/podwise/explore`
   | `/podwise/explore/:type`
+  | `/polymarket/event/:slug`
+  | `/polymarket/events/:tagSlug?`
+  | `/polymarket/leaderboard/:category?/:timePeriod?`
+  | `/polymarket/positions/:address`
+  | `/polymarket/search/:query`
+  | `/polymarket/series/:slug?`
+  | `/polymarket/user/:address`
   | `/pornhub/category/:caty/:img?`
   | `/pornhub/category_url/:url?/:language?/:img?`
   | `/pornhub/model/:username/:language?/:sort?/:img?`
