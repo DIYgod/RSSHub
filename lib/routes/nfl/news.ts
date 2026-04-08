@@ -170,15 +170,17 @@ async function handler(ctx) {
                         const content = $article(selector);
                         if (content.length) {
                             content.find('script, style, [data-ad], .ad, .social-share, .related-content').remove();
-                            // Fix lazy-loaded images: real URLs live in data-src/data-srcset, src is a placeholder GIF
+                            // Fix lazy-loaded images: real URLs live in data-src/data-srcset, src is a placeholder GIF.
+                            // Also strip the Cloudinary "/t_lazy/" transformation which returns a blurred placeholder.
+                            const unlazy = (url: string) => url.replaceAll('/t_lazy/', '/');
                             content.find('img[data-src]').each((_, img) => {
                                 const $img = $article(img);
-                                $img.attr('src', $img.attr('data-src')!);
+                                $img.attr('src', unlazy($img.attr('data-src')!));
                                 $img.removeAttr('data-src');
                             });
                             content.find('source[data-srcset]').each((_, src) => {
                                 const $src = $article(src);
-                                $src.attr('srcset', $src.attr('data-srcset')!);
+                                $src.attr('srcset', unlazy($src.attr('data-srcset')!));
                                 $src.removeAttr('data-srcset');
                             });
                             const html = content
