@@ -432,6 +432,7 @@
         "unicorn/no-null": "off",
         "unicorn/no-object-as-default-parameter": "warn",
         "unicorn/no-process-exit": "off",
+        "unicorn/no-useless-iterator-to-array": "off",
         "unicorn/no-useless-switch-case": "off",
 
         "unicorn/no-useless-undefined": ["error", { "checkArguments": false }],
