@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://projectjav.com';
-const processItems = async (currentUrl: string, tryGet) => {
+const processItems = async (currentUrl: string) => {
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -27,7 +28,7 @@ const processItems = async (currentUrl: string, tryGet) => {
 
     items = await Promise.all(
         items.map((item) =>
-            tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
