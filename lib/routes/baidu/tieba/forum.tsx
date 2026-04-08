@@ -49,7 +49,6 @@ async function handler(ctx) {
 
     // 固定抓取3页，约30条帖子
     const maxPages = 3;
-    let allThreads: any[] = [];
 
     // 先获取第一页
     const { getPuppeteerPage } = await import('@/utils/puppeteer');
@@ -89,8 +88,7 @@ async function handler(ctx) {
                         // 如果3秒内没加载出来，继续执行
                     }
 
-                    const html = await page.content();
-                    return html;
+                    return await page.content();
                 } finally {
                     await destroy();
                 }
@@ -107,8 +105,9 @@ async function handler(ctx) {
     // 解析所有页面数据并去重
     const threadMap = new Map();
     for (const pageData of pageResults) {
-        if (pageData && typeof pageData === 'string') {
-            const $ = load(pageData);
+        const html = pageData as string;
+        if (html && html.length > 0) {
+            const $ = load(html);
             const threads = parseThreads($);
             for (const thread of threads) {
                 // 使用帖子ID去重，只保留第一次出现的
@@ -119,7 +118,7 @@ async function handler(ctx) {
         }
     }
 
-    allThreads = [...threadMap.values()];
+    const allThreads = [...threadMap.values()];
 
     if (allThreads.length === 0) {
         throw new Error('No threads found. The cookie may be expired or invalid. Please check your BAIDU_COOKIE.');
