@@ -147,9 +147,9 @@
         "@actions/core": "3.0.0",
         "@actions/github": "9.0.0",
         "@bbob/types": "4.3.1",
-        "@cloudflare/containers": "0.2.3",
+        "@cloudflare/containers": "0.2.4",
         "@cloudflare/puppeteer": "1.0.6",
-        "@cloudflare/workers-types": "4.20260405.1",
+        "@cloudflare/workers-types": "4.20260408.1",
         "@eslint/eslintrc": "3.3.5",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.59.0",
@@ -203,7 +203,7 @@
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
         "vitest": "4.0.9",
-        "wrangler": "4.80.0",
+        "wrangler": "4.81.0",
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
