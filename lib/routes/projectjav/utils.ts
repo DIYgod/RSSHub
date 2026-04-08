@@ -1,7 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import type { DataItem } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://projectjav.com';
 const processItems = async (currentUrl: string, tryGet) => {

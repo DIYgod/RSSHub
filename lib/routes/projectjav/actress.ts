@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { rootUrl, processItems } from './utils';
+
+import { processItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: ['/actress/:id', '/actress/:id/'],
