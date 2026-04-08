@@ -85,6 +85,7 @@ type ConfigEnvKeys =
     | 'BITBUCKET_USERNAME'
     | 'BITBUCKET_PASSWORD'
     | 'BTBYR_HOST'
+    | 'BAIDU_COOKIE'
     | 'BTBYR_COOKIE'
     | 'BUPT_PORTAL_COOKIE'
     | 'CAIXIN_COOKIE'
@@ -348,6 +349,9 @@ export type Config = {
     };
 
     // Route-specific Configurations
+    baidu: {
+        cookie?: string;
+    };
     bilibili: {
         cookies: Record<string, string | undefined>;
         dmImgList?: string;
@@ -763,7 +767,7 @@ const calculateValue = () => {
             type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
-            contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
+            contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 60 * 60), // 不变内容缓存时间，单位为秒
         },
         memory: {
             max: toInt(envs.MEMORY_MAX, Math.pow(2, 8)), // The maximum number of items that remain in the cache. This must be a positive finite intger.
@@ -843,6 +847,9 @@ const calculateValue = () => {
         },
 
         // Route-specific Configurations
+        baidu: {
+            cookie: envs.BAIDU_COOKIE,
+        },
         bilibili: {
             cookies: bilibili_cookies,
             dmImgList: envs.BILIBILI_DM_IMG_LIST,
