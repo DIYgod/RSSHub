@@ -47,7 +47,7 @@ jobs:
                   fi
 
                   # Update with correct hash
-                  sed -i "s/hash = \"sha256-[^\"]*\";/hash = \"sha256-$NEW_HASH\";/" flake.nix
+                  sed -i "s#hash = \"sha256-[^\"]*\";#hash = \"sha256-$NEW_HASH\";#" flake.nix
 
                   if [ "$CURRENT_HASH" = "$NEW_HASH" ]; then
                       echo "Hash unchanged"
