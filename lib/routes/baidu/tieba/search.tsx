@@ -2,12 +2,11 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { getTiebaPageContent, normalizeUrl } from './common';
 
 export const route: Route = {
     path: '/tieba/search/:qw/:routeParams?',
@@ -43,11 +42,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const qw = ctx.req.param('qw');
-    const cookie = config.baidu.cookie;
-
-    if (!cookie) {
-        throw new ConfigNotFoundError('Baidu Tieba RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#baidu">BAIDU_COOKIE</a>');
-    }
 
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     query.set('ie', 'utf-8');
@@ -55,67 +49,12 @@ async function handler(ctx) {
     query.set('rn', query.get('rn') || '20');
     const link = `https://tieba.baidu.com/f/search/res?${query.toString()}`;
 
-    const { getPuppeteerPage } = await import('@/utils/puppeteer');
+    const html = await getTiebaPageContent(link, `tieba:search:${qw}:${query.toString()}`, {
+        waitForSelector: '.thread-content-box',
+        timeout: 3000,
+    });
 
-    const data = await cache.tryGet(
-        `tieba:search:${qw}:${query.toString()}`,
-        async () => {
-            const { page, destroy } = await getPuppeteerPage(link, {
-                noGoto: true,
-            });
-
-            try {
-                // 先访问以设置域名
-                await page.goto('https://tieba.baidu.com', { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-                // 设置 Cookie
-                const cookies = cookie.split(';').map((c) => {
-                    const [name, value] = c.trim().split('=');
-                    return {
-                        name: name.trim(),
-                        value: value || '',
-                        domain: '.tieba.baidu.com',
-                    };
-                });
-                await page.setCookie(...cookies);
-
-                // 访问目标页面
-                await page.goto(link, { waitUntil: 'networkidle2', timeout: 60000 });
-
-                // 动态等待搜索结果加载，最多3秒
-                try {
-                    await page.waitForSelector('.thread-content-box', { timeout: 3000 });
-                } catch {
-                    // 如果3秒内没加载出来，尝试滚动触发
-                }
-
-                // 滚动触发内容加载
-                await page.evaluate(() => {
-                    window.scrollTo(0, 500);
-                });
-
-                // 再次等待内容加载，最多2秒
-                try {
-                    await page.waitForFunction(() => document.querySelectorAll('.thread-content-box').length > 0, { timeout: 2000 });
-                } catch {
-                    // 继续执行
-                }
-
-                return await page.content();
-            } finally {
-                await destroy();
-            }
-        },
-        config.cache.routeExpire,
-        false
-    );
-
-    const $ = load(data as string);
-
-    // 检查是否遇到安全验证
-    if ($('title').text().includes('安全验证') || (data as string).includes('百度安全验证')) {
-        throw new Error('Baidu security verification required. The cookie may be expired or invalid. Please update your BAIDU_COOKIE.');
-    }
+    const $ = load(html);
 
     const resultList = $('.thread-content-box');
 
@@ -135,8 +74,9 @@ async function handler(ctx) {
             // 内容摘要
             const details = item.find('.abstract-wrap span').text().trim();
 
-            // 从链接中提取帖子URL
-            const linkHref = item.find('.action-bar-warp a.action-link-bg').attr('href') || '';
+            // 从链接中提取帖子URL，并规范化为绝对地址
+            const linkPath = item.find('.action-bar-warp a.action-link-bg').attr('href') || '';
+            const linkHref = normalizeUrl(linkPath);
 
             // 作者
             const author = item.find('.forum-attention.user').text().trim();

@@ -1,12 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { getTiebaPageContent, normalizeUrl } from './common';
 
 export const route: Route = {
     path: '/tieba/user/:uid',
@@ -35,62 +34,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const cookie = config.baidu.cookie;
-
-    if (!cookie) {
-        throw new ConfigNotFoundError('Baidu Tieba RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#baidu">BAIDU_COOKIE</a>');
-    }
-
-    const { getPuppeteerPage } = await import('@/utils/puppeteer');
     const url = `https://tieba.baidu.com/home/main?un=${uid}`;
 
-    const data = await cache.tryGet(
-        `tieba:user:${uid}`,
-        async () => {
-            const { page, destroy } = await getPuppeteerPage(url, {
-                noGoto: true,
-            });
+    const html = await getTiebaPageContent(url, `tieba:user:${uid}`, {
+        waitForSelector: '.thread-card',
+        timeout: 3000,
+    });
 
-            try {
-                // 先访问以设置域名
-                await page.goto('https://tieba.baidu.com', { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-                // 设置 Cookie
-                const cookies = cookie.split(';').map((c) => {
-                    const [name, value] = c.trim().split('=');
-                    return {
-                        name: name.trim(),
-                        value: value || '',
-                        domain: '.tieba.baidu.com',
-                    };
-                });
-                await page.setCookie(...cookies);
-
-                // 访问目标页面
-                await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
-
-                // 动态等待帖子卡片加载，最多3秒
-                try {
-                    await page.waitForSelector('.thread-card', { timeout: 3000 });
-                } catch {
-                    // 如果3秒内没加载出来，继续执行
-                }
-
-                return await page.content();
-            } finally {
-                await destroy();
-            }
-        },
-        config.cache.routeExpire,
-        false
-    );
-
-    const $ = load(data as string);
-
-    // 检查是否遇到安全验证
-    if ($('title').text().includes('安全验证') || (data as string).includes('百度安全验证')) {
-        throw new Error('Baidu security verification required. The cookie may be expired or invalid. Please update your BAIDU_COOKIE.');
-    }
+    const $ = load(html);
 
     const name = $('span.userinfo_username').text() || uid;
     const list = $('.thread-card');
@@ -127,7 +78,7 @@ async function handler(ctx) {
             const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
 
             // 链接
-            const link = item.find('a.thread-card-content').attr('href') || '';
+            const link = normalizeUrl(item.find('a.thread-card-content').attr('href') || '');
 
             return {
                 title,
