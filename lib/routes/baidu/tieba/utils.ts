@@ -1,4 +1,4 @@
-import type { load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 
 import { parseDate } from '@/utils/parse-date';
 
@@ -91,7 +91,7 @@ export interface Thread {
 /**
  * 解析帖子列表
  */
-export function parseThreads($: ReturnType<typeof load>): Thread[] {
+export function parseThreads($: CheerioAPI): Thread[] {
     return $('.thread-card-wrapper')
         .toArray()
         .map((element) => {

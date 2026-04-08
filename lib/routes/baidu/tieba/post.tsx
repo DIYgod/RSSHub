@@ -166,13 +166,17 @@ async function handler(ctx) {
                 const floorMatch = descText.match(/第(\d+)楼/);
                 const floor = floorMatch ? `${floorMatch[1]}楼` : '';
 
-                // 时间 - 可能是 "2分钟前" 这样的相对时间
-                const timeMatch = descText.match(/(\d+分钟前|\d+小时前|今天\s*\d{2}:\d{2}|\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-                const timeText = timeMatch ? timeMatch[1] : '';
-
-                // 解析时间并验证有效性
-                const parsedDate = timeText ? parseRelativeTime(timeText) : null;
+                // 解析时间并验证有效性 - 使用完整的 descText 以支持 parseRelativeTime 能处理的所有格式
+                const parsedDate = descText ? parseRelativeTime(descText) : null;
                 const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
+
+                // 提取时间文本用于显示
+                const timeMatch = descText.match(/(\d+分钟前|\d+小时前|今天\s*\d{2}:\d{2}|\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}|昨天\s*\d{2}:\d{2}|刚刚)/);
+                const timeText = timeMatch ? timeMatch[1] : descText;
+
+                // 尝试获取回复的唯一ID用于生成直接链接
+                const postId = item.attr('data-post-id') || item.attr('id') || '';
+                const replyLink = postId ? `https://tieba.baidu.com/p/${id}?pid=${postId}#${postId}` : `https://tieba.baidu.com/p/${id}`;
 
                 return {
                     title: `${authorName} 回复了帖子《${title}》`,
@@ -190,7 +194,7 @@ async function handler(ctx) {
 
                     pubDate: validPubDate,
                     author: authorName,
-                    link: `https://tieba.baidu.com/p/${id}`,
+                    link: replyLink,
                 };
             })
             .filter((item): item is NonNullable<typeof item> => item !== null),
