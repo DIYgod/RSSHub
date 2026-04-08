@@ -34,6 +34,7 @@ export function checkSecurityVerification(html: string): void {
 /**
  * 使用 Puppeteer 获取贴吧页面内容
  * 包含统一的 cookie 设置、安全验证检查和缓存逻辑
+ * 带有重试机制处理瞬态错误
  */
 export async function getTiebaPageContent(
     url: string,
@@ -41,6 +42,7 @@ export async function getTiebaPageContent(
     options: {
         waitForSelector?: string;
         timeout?: number;
+        retries?: number;
     } = {}
 ): Promise<string> {
     const cookie = config.baidu.cookie;
@@ -50,32 +52,51 @@ export async function getTiebaPageContent(
     }
 
     const { getPuppeteerPage } = await import('@/utils/puppeteer');
-    const { waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card', timeout = 3000 } = options;
+    const { waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card', timeout = 3000, retries = 3 } = options;
 
     const data = await cache.tryGet(
         cacheKey,
         async () => {
-            const { page, destroy } = await getPuppeteerPage(url, { noGoto: true });
+            let lastError: Error | undefined;
 
-            try {
-                // 设置 Cookie（在访问页面前设置，减少一次导航）
-                const cookies = parseBaiduCookies(cookie);
-                await page.setCookie(...cookies);
+            /* eslint-disable no-await-in-loop -- Intentional sequential retry logic */
+            for (let attempt = 0; attempt < retries; attempt++) {
+                const { page, destroy } = await getPuppeteerPage(url, { noGoto: true });
 
-                // 访问目标页面
-                await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
-
-                // 动态等待内容加载
                 try {
-                    await page.waitForSelector(waitForSelector, { timeout });
-                } catch {
-                    // 如果超时，继续执行
-                }
+                    // 设置 Cookie（在访问页面前设置，减少一次导航）
+                    const cookies = parseBaiduCookies(cookie);
+                    await page.setCookie(...cookies);
 
-                return await page.content();
-            } finally {
-                await destroy();
+                    // 访问目标页面 - 使用更宽松的等待条件
+                    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+
+                    // 等待页面稳定
+                    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+                    // 动态等待内容加载
+                    try {
+                        await page.waitForSelector(waitForSelector, { timeout });
+                    } catch {
+                        // 如果超时，继续执行
+                    }
+
+                    return await page.content();
+                } catch (error) {
+                    lastError = error as Error;
+                    // 如果是最后一次尝试，抛出错误
+                    if (attempt === retries - 1) {
+                        throw lastError;
+                    }
+                    // 等待后重试
+                    await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+                } finally {
+                    await destroy();
+                }
             }
+            /* eslint-enable no-await-in-loop */
+
+            throw lastError || new Error('Failed to fetch page content');
         },
         config.cache.routeExpire,
         false
