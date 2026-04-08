@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -8,10 +9,18 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://rumble.com';
+type RumbleVideoObject = {
+    author?: {
+        name?: string;
+    };
+    description?: string;
+    embedUrl?: string;
+    thumbnailUrl?: string;
+};
 
 export const route: Route = {
     path: '/c/:channel/:embed?',
-    categories: ['social-media'],
+    categories: ['multimedia'],
     view: ViewType.Videos,
     name: 'Channel',
     maintainers: ['luckycold'],
@@ -39,13 +48,7 @@ export const route: Route = {
 };
 
 function parseChannelTitle($: ReturnType<typeof load>): string {
-    const h1 = $('h1').first().text().trim();
-    if (h1) {
-        return h1;
-    }
-
-    const title = $('title').first().text().trim();
-    return title || 'Rumble';
+    return $('title').first().text().trim() || 'Rumble';
 }
 
 function parseDescription($: ReturnType<typeof load>, fallback: string | undefined): string | undefined {
@@ -58,124 +61,45 @@ function parseDescription($: ReturnType<typeof load>, fallback: string | undefin
     return paragraphs || $('meta[name="description"]').attr('content')?.trim() || fallback || undefined;
 }
 
-function parseStructuredVideoObject($: ReturnType<typeof load>) {
-    for (const element of $('script[type="application/ld+json"]').toArray()) {
-        const content = $(element).text().trim();
-        if (!content) {
-            continue;
-        }
+function parseStructuredVideoObject($: ReturnType<typeof load>): RumbleVideoObject | undefined {
+    const content = $('script[type="application/ld+json"]').text().trim();
+    if (!content) {
+        return;
+    }
 
-        try {
-            const parsed = JSON.parse(content);
-            const entries = Array.isArray(parsed) ? parsed : [parsed];
-
-            for (const entry of entries) {
-                if (entry?.['@type'] === 'VideoObject') {
-                    return entry as {
-                        description?: string;
-                        embedUrl?: string;
-                        genre?: string | string[];
-                        keywords?: string | string[];
-                        author?: {
-                            name?: string;
-                        };
-                        thumbnailUrl?: string | string[];
-                    };
-                }
-            }
-        } catch {
-            continue;
-        }
+    try {
+        const parsed = JSON.parse(content);
+        const type = parsed?.['@type'];
+        return type === 'VideoObject' || (Array.isArray(type) && type.includes('VideoObject')) ? (parsed as RumbleVideoObject) : undefined;
+    } catch {
+        return;
     }
 }
 
-function parseImage($: ReturnType<typeof load>, videoObject: ReturnType<typeof parseStructuredVideoObject>) {
-    const thumbnailUrl = Array.isArray(videoObject?.thumbnailUrl) ? videoObject.thumbnailUrl[0] : videoObject?.thumbnailUrl;
-    const image = thumbnailUrl || $('meta[property="og:image"]').attr('content')?.trim();
+function parseImage($: ReturnType<typeof load>, videoObject: RumbleVideoObject | undefined) {
+    const image = videoObject?.thumbnailUrl || $('meta[property="og:image"]').attr('content')?.trim();
 
     return image ? new URL(image, rootUrl).href : undefined;
 }
 
-async function mapLimit<T, R>(values: T[], limit: number, mapper: (value: T, index: number) => Promise<R>) {
-    const results = Array.from({ length: values.length }) as R[];
-    let nextIndex = 0;
-
-    const worker = async (): Promise<void> => {
-        const currentIndex = nextIndex;
-        nextIndex += 1;
-
-        if (currentIndex >= values.length) {
-            return;
-        }
-
-        results[currentIndex] = await mapper(values[currentIndex], currentIndex);
-        await worker();
-    };
-
-    await Promise.all(Array.from({ length: Math.min(limit, values.length) }, () => worker()));
-
-    return results;
-}
-
 function renderDescription(image: string | undefined, description: string | undefined, embedUrl: string | undefined, includeEmbed: boolean): string | undefined {
-    const parts: string[] = [];
+    let descriptionHtml = '';
 
     if (includeEmbed && embedUrl) {
-        parts.push(`<iframe src="${embedUrl}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`);
+        descriptionHtml += `<iframe src="${embedUrl}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
     } else if (image) {
-        parts.push(`<p><img src="${image}"></p>`);
+        descriptionHtml += `<p><img src="${image}"></p>`;
     }
 
     if (description) {
-        parts.push(description);
+        descriptionHtml += description;
     }
 
-    return parts.join('');
+    return descriptionHtml || undefined;
 }
 
-function fetchVideoDetails(link: string) {
-    return cache.tryGet(link, async () => {
-        const response = await ofetch(link, {
-            retryStatusCodes: [403],
-        });
-
-        const $ = load(response);
-        const videoObject = parseStructuredVideoObject($);
-        const image = parseImage($, videoObject);
-
-        return {
-            author: videoObject?.author?.name || $('.channel-header--title').first().text().trim() || undefined,
-            description: parseDescription($, videoObject?.description?.trim()),
-            embedUrl: videoObject?.embedUrl,
-            image,
-        };
-    });
-}
-
-async function parseItemFromVideoElement($: ReturnType<typeof load>, videoElement: Element, includeEmbed: boolean): Promise<DataItem | null> {
-    const $video = $(videoElement);
-    const $link = $video.find('.title__link[href], .videostream__link[href]').first();
-    const href = $link.attr('href')?.trim();
-    if (!href) {
-        return null;
-    }
-
-    const url = new URL(href, rootUrl);
-    url.search = '';
-    url.hash = '';
-
-    const $title = $video.find('.thumbnail__title').first();
-    const title = $title.attr('title')?.trim() || $title.text().trim() || url.pathname;
-
-    const $img = $video.find('img.thumbnail__image, .thumbnail__thumb img').first();
-    const imageRaw = $img.attr('src') || $img.attr('data-src');
-    const listImage = imageRaw ? new URL(imageRaw, rootUrl).href : undefined;
-    const pubDateRaw = $video.find('time.videostream__time[datetime], time[datetime]').first().attr('datetime')?.trim();
-    const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
-    const details = await fetchVideoDetails(url.href);
-    const image = listImage || details.image;
-
-    const media = image
+function getMedia(image: string | undefined): DataItem['media'] {
+    return image
         ? {
               thumbnail: {
                   url: image,
@@ -186,17 +110,27 @@ async function parseItemFromVideoElement($: ReturnType<typeof load>, videoElemen
               },
           }
         : undefined;
+}
 
-    const description = renderDescription(image, details.description, details.embedUrl, includeEmbed);
+async function buildItem(link: string, title: string, listImage: string | undefined, pubDate: Date | undefined, includeEmbed: boolean): Promise<DataItem> {
+    const response = await ofetch(link, {
+        retryStatusCodes: [403],
+    });
+
+    const $ = load(response);
+    const videoObject = parseStructuredVideoObject($);
+    const image = listImage || parseImage($, videoObject);
+    const description = renderDescription(image, parseDescription($, videoObject?.description?.trim()), videoObject?.embedUrl, includeEmbed);
+    const author = videoObject?.author?.name;
 
     return {
         title,
-        author: details.author,
+        author,
         image,
-        link: url.href,
+        link,
         description,
         itunes_item_image: image,
-        media,
+        media: getMedia(image),
         pubDate,
     };
 }
@@ -215,19 +149,33 @@ async function handler(ctx) {
 
     const title = parseChannelTitle($);
 
-    const uniqueIds = new Set<string>();
-    const videoElements = $('.channel-listing__container .videostream[data-video-id], .videostream.thumbnail__grid--item[data-video-id]')
-        .toArray()
-        .filter((element) => {
-            const videoId = $(element).attr('data-video-id')?.trim();
-            if (!videoId || uniqueIds.has(videoId)) {
-                return false;
+    const videoElements = $('.videostream.thumbnail__grid--item[data-video-id]').toArray();
+    const items = await pMap(
+        videoElements,
+        (element: Element) => {
+            const $video = $(element);
+            const href = $video.find('.videostream__link[href]').attr('href')?.trim();
+            if (!href) {
+                return null;
             }
 
-            uniqueIds.add(videoId);
-            return true;
-        });
-    const items = await mapLimit(videoElements, 5, (element) => parseItemFromVideoElement($, element, includeEmbed));
+            const url = new URL(href, rootUrl);
+            url.search = '';
+
+            const title = $video.find('.thumbnail__title').text().trim();
+            if (!title) {
+                return null;
+            }
+
+            const imageRaw = $video.find('img.thumbnail__image').attr('src');
+            const listImage = imageRaw ? new URL(imageRaw, rootUrl).href : undefined;
+            const pubDateRaw = $video.find('time.videostream__time[datetime]').attr('datetime')?.trim();
+            const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
+
+            return cache.tryGet(`${url.href}:${includeEmbed ? 'embed' : 'noembed'}`, () => buildItem(url.href, title, listImage, pubDate, includeEmbed));
+        },
+        { concurrency: 5 }
+    );
 
     return {
         title: `Rumble - ${title}`,
