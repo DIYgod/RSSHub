@@ -97,7 +97,7 @@ export function parseThreads($: CheerioAPI): Thread[] {
         .map((element) => {
             const item = $(element);
 
-            const linkHref = item.find('a.thread-content-link').first().attr('href') || '';
+            const linkHref = item.find('a.thread-content-link').attr('href') || '';
             const idMatch = linkHref.match(/\/p\/(\d+)/);
             const id = idMatch ? idMatch[1] : '';
 
@@ -105,8 +105,8 @@ export function parseThreads($: CheerioAPI): Thread[] {
             const content = item.find('.thread-content .text').text().trim();
             const author = item.find('.head-name').text().trim();
 
-            const descInfo = item.find('.desc-info').first();
-            const timeText = descInfo.length > 0 ? descInfo.text().trim() : item.find('[class*="time"], [class*="date"]').first().text().trim();
+            const descInfo = item.find('.desc-info');
+            const timeText = descInfo.length > 0 ? descInfo.text().trim() : item.find('.time, .date').text().trim();
 
             const images = item
                 .find('.image-list-item img')
