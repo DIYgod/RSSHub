@@ -7,16 +7,19 @@ import cache from '@/utils/cache';
  * 正确处理包含 '=' 的 cookie 值
  */
 export function parseBaiduCookies(cookieStr: string): Array<{ name: string; value: string; domain: string }> {
-    return cookieStr.split(';').map((c) => {
-        const trimmed = c.trim();
-        const firstEqualIndex = trimmed.indexOf('=');
-        if (firstEqualIndex === -1) {
-            return { name: trimmed, value: '', domain: '.tieba.baidu.com' };
-        }
-        const name = trimmed.slice(0, firstEqualIndex).trim();
-        const value = trimmed.slice(firstEqualIndex + 1).trim();
-        return { name, value, domain: '.tieba.baidu.com' };
-    });
+    return cookieStr
+        .split(';')
+        .map((c) => c.trim())
+        .filter((c) => c.length > 0)
+        .map((c) => {
+            const firstEqualIndex = c.indexOf('=');
+            if (firstEqualIndex === -1) {
+                return { name: c, value: '', domain: '.tieba.baidu.com' };
+            }
+            const name = c.slice(0, firstEqualIndex).trim();
+            const value = c.slice(firstEqualIndex + 1).trim();
+            return { name, value, domain: '.tieba.baidu.com' };
+        });
 }
 
 /**
@@ -55,10 +58,7 @@ export async function getTiebaPageContent(
             const { page, destroy } = await getPuppeteerPage(url, { noGoto: true });
 
             try {
-                // 先访问以设置域名
-                await page.goto('https://tieba.baidu.com', { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-                // 设置 Cookie
+                // 设置 Cookie（在访问页面前设置，减少一次导航）
                 const cookies = parseBaiduCookies(cookie);
                 await page.setCookie(...cookies);
 

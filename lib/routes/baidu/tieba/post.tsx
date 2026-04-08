@@ -92,13 +92,13 @@ async function handler(ctx) {
                     return null;
                 }
 
-                // 内容 - 从 pb-rich-text 获取
+                // 内容 - 从 pb-rich-text 获取（保留行内富文本，如链接、图片、表情等）
                 const contentItems = item.find('.pb-rich-text .pb-content-item');
                 let postContent = '';
                 contentItems.each((_, el) => {
-                    const text = $(el).text().trim();
-                    if (text) {
-                        postContent += `<p>${text}</p>`;
+                    const html = $(el).html()?.trim();
+                    if (html) {
+                        postContent += `<p>${html}</p>`;
                     }
                 });
 
