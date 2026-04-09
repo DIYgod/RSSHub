@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: 'Jable 搜索结果',
-    maintainers: [],
+    maintainers: ['eve2ptp'],
     handler,
 };
 
