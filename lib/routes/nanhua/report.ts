@@ -21,7 +21,7 @@ export const route: Route = {
                 const params = new URL(url).searchParams;
                 const type1 = params.get('type1');
                 const type2 = params.get('type2');
-                return type1 && type2 ? `/nanhua/report/${type1}/${type2}` : '';
+                return type1 && type2 ? `/nanhua/report/${encodeURIComponent(type1)}/${encodeURIComponent(type2)}` : '';
             },
         },
     ],
