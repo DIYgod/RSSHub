@@ -3021,6 +3021,7 @@ export type RoutePath =
   | `/wise/pair/:source/:target`
   | `/withgoogle/explorables`
   | `/wizfile/updates`
+  | `/wkjyqh/research`
   | `/wmc-bj/publish/:category{.+}?`
   | `/wmpvp/news/:type`
   | `/wnacg/`

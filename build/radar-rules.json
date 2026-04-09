@@ -48185,6 +48185,20 @@
       }
     ]
   },
+  "wkjyqh.com": {
+    "_name": "五矿期货",
+    "www": [
+      {
+        "title": "研究报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/main/research_center/yjbg/index.shtml",
+          "/main/research_center/"
+        ],
+        "target": "/wkjyqh/research"
+      }
+    ]
+  },
   "wnacg.com": {
     "_name": "紳士漫畫",
     ".": [
