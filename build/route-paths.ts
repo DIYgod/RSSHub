@@ -2829,6 +2829,7 @@ export type RoutePath =
   | `/tradingview/pine/:version?`
   | `/transcriptforest/:channel?`
   | `/transformer-circuits/`
+  | `/trendforce/cn/presscenter/news`
   | `/trendforce/news`
   | `/trendingpapers/papers/:category?/:time?/:cited?`
   | `/tribalfootball/`

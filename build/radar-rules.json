@@ -46159,6 +46159,19 @@
       }
     ]
   },
+  "trendforce.cn": {
+    "_name": "TrendForce",
+    "www": [
+      {
+        "title": "产业洞察",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/presscenter/news"
+        ],
+        "target": "/trendforce/cn/presscenter/news"
+      }
+    ]
+  },
   "tribalfootball.com": {
     "_name": "Tribal Football",
     ".": [

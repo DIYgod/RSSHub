@@ -8711,6 +8711,9 @@
   "/trendforce/news": [
     "nczitzk"
   ],
+  "/trendforce/cn/presscenter/news": [
+    "TonyRL"
+  ],
   "/trendingpapers/papers/:category?/:time?/:cited?": [
     "CookiePieWw"
   ],
