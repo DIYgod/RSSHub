@@ -61,9 +61,11 @@ interface Initials {
 }
 
 function extractInitials(scriptContent: string): Initials {
-    const withoutPrefix = scriptContent.replace(/^\s*window\.initials\s*=\s*/, '').trim();
-    const jsonStr = withoutPrefix.endsWith(';') ? withoutPrefix.slice(0, -1) : withoutPrefix;
-    return JSON.parse(jsonStr);
+    const match = scriptContent.match(/window\.initials\s*=\s*([\s\S]*?);?$/);
+    if (!match) {
+        throw new Error('initials not found');
+    }
+    return JSON.parse(match[1]);
 }
 
 function formatDuration(seconds: number): string {
