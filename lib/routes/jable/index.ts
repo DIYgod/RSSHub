@@ -67,21 +67,23 @@ async function handler(ctx) {
             .toArray()
             .map((el) => {
                 const $el = $(el);
-
                 const $titleLink = $el.find('.detail h6.title a');
+                const $img = $el.find('img');
+                const $fav = $el.find('[data-fav-video-id]');
+
                 const title = $titleLink.text().trim();
                 const link = $titleLink.attr('href') ?? '';
 
-                const thumb = $el.find('img[data-src]').attr('data-src') ?? '';
-                const preview = $el.find('img[data-preview]').attr('data-preview') ?? '';
+                const thumb = $img.attr('data-src') ?? '';
+                const preview = $img.attr('data-preview') ?? '';
+
+                const videoId = $fav.attr('data-fav-video-id') ?? link;
 
                 // const duration = $el.find('.label').text().trim();
                 // const subText = $el.find('.sub-title').text().trim();
                 // const nums = subText.split(/\s+/);
                 // const views = nums[0] ?? '';
                 // const favorites = nums[1] ?? '';
-
-                const videoId = $el.find('[data-fav-video-id]').attr('data-fav-video-id') ?? link;
 
                 return cache.tryGet(`jable:video:${videoId}`, async () => {
                     let pubDate;
