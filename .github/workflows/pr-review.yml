@@ -134,6 +134,20 @@ jobs:
                   - Otherwise create a new PR comment.
                   - If there are no findings and marker comment exists, edit marker comment to a short pass status.
 
+                  gh command reference (PR_NUMBER and GITHUB_REPOSITORY are available as env vars):
+                  - Create a new PR comment:
+                      gh pr comment \"\$PR_NUMBER\" --repo \"\$GITHUB_REPOSITORY\" --body \"<!-- pr-auto-review -->
+                      ## Auto Review
+                      ...\"
+                  - List existing marker comments to find the one to update:
+                      gh pr view \"\$PR_NUMBER\" --repo \"\$GITHUB_REPOSITORY\" --json comments \\
+                        --jq '.comments[] | select(.body | startswith(\"<!-- pr-auto-review -->\")) | {id: .id, body: .body}'
+                  - Update an existing marker comment (use the numeric id from the URL, not the node id):
+                      gh api \"repos/\$GITHUB_REPOSITORY/issues/comments/<comment_id>\" -X PATCH -f body=\"<!-- pr-auto-review -->
+                      ## Auto Review
+                      ...\"
+                  - Prefer --body-file - with a heredoc when the body contains quotes or many lines.
+
                   Suggested comment format:
                   <!-- pr-auto-review -->
                   ## Auto Review
