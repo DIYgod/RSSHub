@@ -28,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '最近更新',
-    maintainers: [],
+    maintainers: ['eve2ptp'],
     handler,
     url: 'xhamster.com/faustina-pierre/newest',
 };
