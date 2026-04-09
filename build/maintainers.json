@@ -5882,6 +5882,9 @@
   "/mysql/release/:version?": [
     "nczitzk"
   ],
+  "/nanhua/report/:type1/:type2": [
+    "TonyRL"
+  ],
   "/nankai/ai/:type?": [
     "LMark"
   ],
