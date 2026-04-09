@@ -57,8 +57,8 @@ async function handler() {
                 const $ = load(response);
 
                 const content = $('.article_detail');
+                item.pubDate = timezone(parseDate(content.find('b#time').text()), +8);
                 content.find('h2, .tips').remove();
-
                 item.description = content.html()?.trim();
 
                 return item;
