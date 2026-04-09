@@ -2829,7 +2829,6 @@ export type RoutePath =
   | `/tradingview/pine/:version?`
   | `/transcriptforest/:channel?`
   | `/transformer-circuits/`
-  | `/trendforce/cn/presscenter/news`
   | `/trendforce/news`
   | `/trendingpapers/papers/:category?/:time?/:cited?`
   | `/tribalfootball/`
@@ -3021,7 +3020,6 @@ export type RoutePath =
   | `/wise/pair/:source/:target`
   | `/withgoogle/explorables`
   | `/wizfile/updates`
-  | `/wkjyqh/research`
   | `/wmc-bj/publish/:category{.+}?`
   | `/wmpvp/news/:type`
   | `/wnacg/`
