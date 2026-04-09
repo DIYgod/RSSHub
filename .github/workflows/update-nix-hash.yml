@@ -5,7 +5,7 @@ on:
         branches:
             - master
         paths:
-            - 'pnpm-lock.yaml'
+            - 'flake.lock'
 
 permissions:
     contents: write
@@ -23,6 +23,8 @@ jobs:
               uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31.10.4
               with:
                   nix_path: nixpkgs=channel:nixos-unstable
+            - name: Cache Nix store
+              uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
 
             - name: Update Nix flake hash
               id: update-hash
