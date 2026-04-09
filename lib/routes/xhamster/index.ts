@@ -99,7 +99,7 @@ async function handler(ctx) {
     const response = await got(pageUrl);
 
     const $ = load(response.data);
-    const initialsRaw = $('#initials-script').html();
+    const initialsRaw = $('#initials-script').text();
     if (!initialsRaw) {
         throw new Error('Could not locate initials script on page');
     }
