@@ -92,17 +92,11 @@ function renderDescription(video: VideoThumb & { author?: string }): string {
     `.trim();
 }
 
-const GOT_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    'Accept-Language': 'en-US,en;q=0.9',
-    Referer: 'https://xhamster.com/',
-};
-
 async function handler(ctx) {
     const { creators } = ctx.req.param();
     const pageUrl = `https://xhamster.com/creators/${encodeURIComponent(creators)}/newest`;
 
-    const response = await got(pageUrl, { headers: GOT_HEADERS });
+    const response = await got(pageUrl);
 
     const $ = load(response.data);
     const initialsRaw = $('#initials-script').html();
@@ -126,7 +120,7 @@ async function handler(ctx) {
                 // 尝试获取单个视频页面以提取更完整的信息
                 let author = creatorName;
                 try {
-                    const { data } = await got(video.pageURL, { headers: GOT_HEADERS });
+                    const { data } = await got(video.pageURL);
                     const $page = load(data);
                     // 从视频页面提取作者名，xHamster 视频页的上传者通常在此选择器
                     const uploaderText = $page('.video-author-wrap a').first().text().trim();
