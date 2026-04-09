@@ -70,7 +70,14 @@ export const route: Route = {
                 const title = titleAttr || titleText;
 
                 const pubDateRaw = $el.find('.listTxt .prompt i').text().trim();
-                const author = $el.find('.listTxt .prompt > span').first().text().replace('来源：', '').trim();
+                const author = $el
+                    .find('.listTxt .prompt > span')
+                    .first()
+                    .contents()
+                    .filter((_, n) => n.type === 'text')
+                    .text()
+                    .replace('来源：', '')
+                    .trim();
 
                 const category = $el
                     .find('.listTxt .prompt span em a')
@@ -83,7 +90,30 @@ export const route: Route = {
                     link,
                     author: author || undefined,
                     category,
-                    pubDate: parseDate(pubDateRaw),
+                    pubDate: (() => {
+                        if (!pubDateRaw) {
+                            return undefined;
+                        }
+                        if (pubDateRaw.includes('刚刚')) {
+                            return new Date();
+                        }
+                        const minutesMatch = pubDateRaw.match(/(\d+)分钟前/);
+                        if (minutesMatch) {
+                            return new Date(Date.now() - Number(minutesMatch[1]) * 60_000);
+                        }
+                        const hoursMatch = pubDateRaw.match(/(\d+)小时前/);
+                        if (hoursMatch) {
+                            return new Date(Date.now() - Number(hoursMatch[1]) * 3_600_000);
+                        }
+                        if (pubDateRaw.startsWith('今天')) {
+                            return parseDate(new Date().toDateString() + ' ' + pubDateRaw.replace('今天', '').trim());
+                        }
+                        if (pubDateRaw.startsWith('昨天')) {
+                            const d = new Date(Date.now() - 86_400_000);
+                            return parseDate(d.toDateString() + ' ' + pubDateRaw.replace('昨天', '').trim());
+                        }
+                        return parseDate(pubDateRaw);
+                    })(),
                 } as DataItem;
             })
             .filter((item) => Boolean(item.title && item.link));
