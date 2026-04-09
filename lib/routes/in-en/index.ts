@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-// 各子站配置：name=频道中文名，newsPath=新闻列表路径
+// Subdomain config: name = channel display name, newsPath = news list path
 const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
     solar: { name: '光伏太阳能', newsPath: '/news/' },
     wind: { name: '风电', newsPath: '/windnews/' },
@@ -18,8 +18,9 @@ const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
 };
 
 /**
- * 将列表页的相对时间文本（"X分钟前"、"X小时前"、"X天前"、"YYYY-MM-DD"）
- * 转换为 Date 对象（UTC+8 本地时）
+ * Parse Chinese relative time strings ("X分钟前", "X小时前", "X天前") or
+ * absolute date strings ("YYYY-MM-DD") into a Date object.
+ * Returns undefined when input is empty.
  */
 function parseRelTime(text: string): Date | undefined {
     if (!text) {
@@ -34,6 +35,7 @@ function parseRelTime(text: string): Date | undefined {
             小时: 3_600_000,
             天: 86_400_000,
         };
+        // Returns an absolute UTC timestamp; no further timezone shift needed.
         return new Date(now - n * offsets[m[2]]);
     }
     return parseDate(text) ?? undefined;
@@ -44,7 +46,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/in-en/news/solar',
     parameters: {
-        type: '频道类型，见下表',
+        type: 'Channel type, see table below',
     },
     features: {
         requireConfig: false,
@@ -55,7 +57,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '新闻',
-    maintainers: [],
+    maintainers: ['Harviewang'],
     description: `| 频道 | type 参数 |
 | --- | --- |
 | 光伏太阳能 | solar |
@@ -71,7 +73,7 @@ export const route: Route = {
         const type = ctx.req.param('type') ?? 'solar';
         const cat = CATEGORIES[type];
         if (!cat) {
-            throw new Error(`未知的频道类型: ${type}，可选值: ${Object.keys(CATEGORIES).join(', ')}`);
+            throw new Error(`Unknown channel type: ${type}. Valid values: ${Object.keys(CATEGORIES).join(', ')}`);
         }
 
         const baseUrl = `https://${type}.in-en.com`;
@@ -87,7 +89,7 @@ export const route: Route = {
                 const $a = $el.find('.listTxt h5 a');
                 const link = $a.attr('href') ?? '';
 
-                // 优先用 title 属性（完整标题），否则取文本并去掉「原创」标签
+                // Prefer title attribute (full title); fall back to text with OrigSign badge removed
                 const titleAttr = $a.attr('title')?.trim() ?? '';
                 const titleText = $a.clone().children('span.OrigSign').remove().end().text().trim();
                 const title = titleAttr || titleText;
@@ -99,12 +101,13 @@ export const route: Route = {
                     title,
                     link,
                     author: author || undefined,
-                    pubDate: timezone(parseRelTime(pubDateRaw), +8),
+                    // parseRelTime returns an absolute UTC Date; no extra timezone shift needed
+                    pubDate: parseRelTime(pubDateRaw),
                 } as DataItem;
             })
             .filter((item) => Boolean(item.title && item.link));
 
-        // 并发抓取详情页正文（带缓存）
+        // Fetch full article body concurrently with caching
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
@@ -112,22 +115,21 @@ export const route: Route = {
                         const detail = await ofetch(item.link!);
                         const $d = load(detail);
 
-                        // 正文
                         item.description = $d('.article-body').first().html() ?? '';
 
-                        // 详情页有精确到日的发布时间，覆盖列表页的相对时间
+                        // Detail page has an exact date (YYYY-MM-DD); override relative list-page time
                         const dateText = $d('.article-meta .date').first().text().replace('日期：', '').trim();
                         if (dateText) {
                             item.pubDate = timezone(parseDate(dateText), +8);
                         }
 
-                        // 详情页来源可能比列表页更完整
+                        // Detail page source may be more complete than the list snippet
                         const detailAuthor = $d('.article-meta .source a').first().text().trim();
                         if (detailAuthor) {
                             item.author = detailAuthor;
                         }
                     } catch {
-                        // 详情页抓取失败时保留列表页数据
+                        // Keep list-page data if detail fetch fails
                     }
                     return item;
                 })
