@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
@@ -34,7 +35,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 title: version,
                 description,
                 link,
-                pubDate: dateText ? new Date(dateText).toUTCString() : undefined,
+                pubDate: dateText ? parseDate(dateText) : undefined,
                 guid: `claude-code-${version}`,
                 id: `claude-code-${version}`,
             };
