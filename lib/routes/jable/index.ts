@@ -32,12 +32,6 @@ export const route: Route = {
     handler,
 };
 
-const GOT_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    'Accept-Language': 'en-US,en;q=0.9',
-    Referer: 'https://jable.tv/',
-};
-
 // function renderDescription(item) {
 //     return `
 //         <a href="${item.link}">
@@ -63,7 +57,7 @@ async function handler(ctx) {
     });
     const encodedQuery = encodeURIComponent(query);
     const apiUrl = `https://jable.tv/search/${encodedQuery}/?${params.toString()}`;
-    const response = await got(apiUrl, { headers: GOT_HEADERS });
+    const response = await got(apiUrl);
     const $ = load(response.data);
 
     const author = $('section.content-header h2').first().text().trim() || query;
@@ -94,7 +88,7 @@ async function handler(ctx) {
                     let videoUrl;
 
                     try {
-                        const { data } = await got(link, { headers: GOT_HEADERS });
+                        const { data } = await got(link);
                         const $page = load(data);
 
                         const dateText = $page('.video-date').text().trim();
