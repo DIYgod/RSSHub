@@ -4,7 +4,6 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cn/presscenter/news',
@@ -37,7 +36,7 @@ async function handler() {
                 title: a.find('strong').text().trim(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('p').text()?.trim(),
-                pubDate: timezone(parseDate($item.find('h4').text().trim(), 'D MMMM YYYY'), 8),
+                pubDate: parseDate($item.find('h4').text().trim()),
             };
         });
 
