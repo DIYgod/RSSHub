@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -17,32 +16,6 @@ const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
     power: { name: '电力', newsPath: '/news/' },
     huanbao: { name: '环保', newsPath: '/policy/' },
 };
-
-const headers = { 'User-Agent': config.trueUA };
-
-/**
- * Parse Chinese relative time strings ("X分钟前", "X小时前", "X天前") or
- * absolute date strings ("YYYY-MM-DD") into a Date object.
- * Returns undefined when input is empty.
- */
-function parseRelTime(text: string): Date | undefined {
-    if (!text) {
-        return undefined;
-    }
-    const m = text.match(/^(\d+)(分钟|小时|天)前$/);
-    if (m) {
-        const n = Number.parseInt(m[1], 10);
-        const now = Date.now();
-        const offsets: Record<string, number> = {
-            分钟: 60000,
-            小时: 3_600_000,
-            天: 86_400_000,
-        };
-        // Returns an absolute UTC timestamp; no further timezone shift needed.
-        return new Date(now - n * offsets[m[2]]);
-    }
-    return parseDate(text) ?? undefined;
-}
 
 export const route: Route = {
     path: '/news/:type',
@@ -82,7 +55,7 @@ export const route: Route = {
         const baseUrl = `https://${type}.in-en.com`;
         const listUrl = `${baseUrl}${cat.newsPath}`;
 
-        const html = await ofetch(listUrl, { headers });
+        const html = await ofetch(listUrl);
         const $ = load(html);
 
         const list: DataItem[] = $('ul.infoList > li')
@@ -92,15 +65,13 @@ export const route: Route = {
                 const $a = $el.find('.listTxt h5 a');
                 const link = $a.attr('href') ?? '';
 
-                // Prefer title attribute (full title); fall back to text with OrigSign badge removed
                 const titleAttr = $a.attr('title')?.trim() ?? '';
-                const titleText = $a.clone().children('span.OrigSign').remove().end().text().trim();
+                const titleText = $a.contents().filter((_, n) => n.type === 'text').text().trim();
                 const title = titleAttr || titleText;
 
-                const pubDateRaw = $el.find('.listTxt .prompt i').first().text().trim();
-                const author = $el.find('.listTxt .prompt span em.ly').first().text().trim();
+                const pubDateRaw = $el.find('.listTxt .prompt i').text().trim();
+                const author = $el.find('.listTxt .prompt > span').first().text().replace('来源：', '').trim();
 
-                // Extract article keyword tags into the category field
                 const category = $el
                     .find('.listTxt .prompt span em a')
                     .toArray()
@@ -111,33 +82,25 @@ export const route: Route = {
                     title,
                     link,
                     author: author || undefined,
-                    category: category.length > 0 ? category : undefined,
-                    // parseRelTime returns an absolute UTC Date; no extra timezone shift needed
-                    pubDate: parseRelTime(pubDateRaw),
+                    category,
+                    pubDate: parseDate(pubDateRaw),
                 } as DataItem;
             })
             .filter((item) => Boolean(item.title && item.link));
 
-        // Fetch full article body concurrently with caching
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
-                    try {
-                        const detail = await ofetch(item.link!, { headers });
-                        const $d = load(detail);
+                    const detail = await ofetch(item.link!);
+                    const $d = load(detail);
 
-                        item.description = $d('.article-body').first().html() ?? '';
+                    item.description = $d('#article').html() ?? '';
 
-                        // Detail page source may be more complete than the list snippet
-                        // Note: detail page only provides date-level precision (YYYY-MM-DD),
-                        // so we keep the more precise relative timestamp from the list page.
-                        const detailAuthor = $d('.article-meta .source a').first().text().trim();
-                        if (detailAuthor) {
-                            item.author = detailAuthor;
-                        }
-                    } catch {
-                        // Keep list-page data if detail fetch fails
+                    const detailAuthor = $d('p.source a').text().trim();
+                    if (detailAuthor) {
+                        item.author = detailAuthor;
                     }
+
                     return item;
                 })
             )
