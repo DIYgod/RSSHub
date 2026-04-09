@@ -20,13 +20,13 @@ const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el): DataItem => {
             const $entry = $(el);
-            const version = $entry.find('[data-component-part="update-label"]').first().text().trim();
+            const version = $entry.find('[data-component-part="update-label"]').text().trim();
             if (!version) {
                 return null as unknown as DataItem;
             }
 
-            const dateText = $entry.find('[data-component-part="update-description"]').first().text().trim();
-            const description = $entry.find('[data-component-part="update-content"]').first().html() ?? '';
+            const dateText = $entry.find('[data-component-part="update-description"]').text().trim();
+            const description = $entry.find('[data-component-part="update-content"]').html() ?? '';
 
             const anchor = $entry.attr('id') ?? version.replaceAll('.', '-');
             const link = `${targetUrl}#${anchor}`;
