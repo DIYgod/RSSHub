@@ -145,7 +145,7 @@
     },
     "devDependencies": {
         "@actions/core": "3.0.0",
-        "@actions/github": "9.0.0",
+        "@actions/github": "9.1.0",
         "@bbob/types": "4.3.1",
         "@cloudflare/containers": "0.2.4",
         "@cloudflare/puppeteer": "1.0.6",
