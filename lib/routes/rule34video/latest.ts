@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/latest',
@@ -16,10 +17,11 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
-            source: ['rule34video.com/latest-updates'],
+            source: ['rule34video.com/latest-updates/'],
             target: '/latest',
         },
     ],
@@ -44,7 +46,7 @@ interface VideoItem {
 async function handler(_ctx: Context) {
     const response = await got({
         method: 'get',
-        url: 'https://www.rule34video.com/latest-updates',
+        url: 'https://www.rule34video.com/latest-updates/',
         headers: {
             Referer: 'https://www.rule34video.com',
         },
@@ -57,10 +59,7 @@ async function handler(_ctx: Context) {
             const $el = $(element);
             const title = $el.attr('title')?.trim() || $el.find('.thumb_title').text().trim();
             const link = $el.attr('href')?.trim() || '';
-            const preview =
-                $el.find('img.thumb.lazy-load').attr('data-original') ||
-                $el.find('img.thumb.lazy-load').attr('src') ||
-                undefined;
+            const preview = $el.find('img.thumb.lazy-load').attr('data-original') || undefined;
             const duration = $el.find('.time').text().trim() || undefined;
             const added = $el.find('.added').text().replaceAll(/\s+/g, ' ').trim() || undefined;
             const rating = $el.find('.rating').text().trim() || undefined;
@@ -87,26 +86,23 @@ async function handler(_ctx: Context) {
     return {
         allowEmpty: true,
         title: 'Rule34 Video Latest Updates',
-        link: 'https://www.rule34video.com/latest-updates',
+        link: 'https://www.rule34video.com/latest-updates/',
         description: 'Latest updates from Rule34 Video',
         item: items.map((item) => buildDataItem(item)),
     };
 }
 
 function buildDataItem(item: VideoItem) {
-    const descriptionParts: string[] = [];
+    let description = '';
 
-    if (item.title) {
-        descriptionParts.push(item.title);
-    }
     if (item.duration) {
-        descriptionParts.push(`Duration: ${item.duration}`);
+        description += `<p>Duration: ${item.duration}</p>`;
     }
     if (item.views) {
-        descriptionParts.push(`Views: ${item.views}`);
+        description += `<p>Views: ${item.views}</p>`;
     }
     if (item.rating) {
-        descriptionParts.push(`Rating: ${item.rating}`);
+        description += `<p>Rating: ${item.rating}</p>`;
     }
 
     const qualities: string[] = [];
@@ -117,53 +113,22 @@ function buildDataItem(item: VideoItem) {
         qualities.push('Has Sound');
     }
     if (qualities.length > 0) {
-        descriptionParts.push(`Quality: ${qualities.join(', ')}`);
+        description += `<p>Quality: ${qualities.join(', ')}</p>`;
     }
 
     if (item.preview) {
-        descriptionParts.push(`Image: ${item.preview}`);
+        description += `<img src="${item.preview}" alt="${item.title}" />`;
     }
 
-    const description = descriptionParts.join(' | ');
-    const pubDate = item.added ? parseRelativeDate(item.added) : new Date();
+    const pubDate = item.added ? parseRelativeDate(item.added) : undefined;
 
     return {
         title: item.title,
         link: item.link,
         description,
         image: item.preview,
-        pubDate: pubDate.toISOString(),
+        ...(pubDate && { pubDate: pubDate.toISOString() }),
         guid: item.videoId ? `rule34video:${item.videoId}` : item.link,
         category: item.isHD ? ['HD'] : [],
     };
-}
-
-function parseRelativeDate(text: string) {
-    const match = text.match(/(\d+)\s+(second|minute|hour|day|week|month|year)s?\s+ago/i);
-    if (!match) {
-        return new Date();
-    }
-
-    const value = Number(match[1]);
-    const unit = match[2].toLowerCase();
-    const now = new Date();
-
-    switch (unit) {
-        case 'second':
-            return new Date(now.getTime() - value * 1000);
-        case 'minute':
-            return new Date(now.getTime() - value * 60 * 1000);
-        case 'hour':
-            return new Date(now.getTime() - value * 60 * 60 * 1000);
-        case 'day':
-            return new Date(now.getTime() - value * 24 * 60 * 60 * 1000);
-        case 'week':
-            return new Date(now.getTime() - value * 7 * 24 * 60 * 60 * 1000);
-        case 'month':
-            return new Date(now.getTime() - value * 30 * 24 * 60 * 60 * 1000);
-        case 'year':
-            return new Date(now.getTime() - value * 365 * 24 * 60 * 60 * 1000);
-        default:
-            return now;
-    }
 }
