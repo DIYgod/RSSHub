@@ -3,18 +3,17 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 // Subdomain config: name = channel display name, newsPath = news list path
 const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
     solar: { name: '光伏太阳能', newsPath: '/news/' },
     wind: { name: '风电', newsPath: '/windnews/' },
     chuneng: { name: '储能', newsPath: '/news/' },
-    h2: { name: '氢能', newsPath: '/news/' },
-    chd: { name: '充换电', newsPath: '/news/' },
+    h2: { name: '氢能', newsPath: '/hydrogen/' },
+    chd: { name: '充换电', newsPath: '/ChargingStation/' },
     newenergy: { name: '新能源', newsPath: '/news/' },
     power: { name: '电力', newsPath: '/news/' },
-    huanbao: { name: '环保', newsPath: '/news/' },
+    huanbao: { name: '环保', newsPath: '/policy/' },
 };
 
 /**
@@ -117,13 +116,9 @@ export const route: Route = {
 
                         item.description = $d('.article-body').first().html() ?? '';
 
-                        // Detail page has an exact date (YYYY-MM-DD); override relative list-page time
-                        const dateText = $d('.article-meta .date').first().text().replace('日期：', '').trim();
-                        if (dateText) {
-                            item.pubDate = timezone(parseDate(dateText), +8);
-                        }
-
                         // Detail page source may be more complete than the list snippet
+                        // Note: detail page only provides date-level precision (YYYY-MM-DD),
+                        // so we keep the more precise relative timestamp from the list page.
                         const detailAuthor = $d('.article-meta .source a').first().text().trim();
                         if (detailAuthor) {
                             item.author = detailAuthor;
