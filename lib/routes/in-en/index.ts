@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -16,6 +18,8 @@ const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
     huanbao: { name: '环保', newsPath: '/policy/' },
 };
 
+const headers = { 'User-Agent': config.trueUA };
+
 /**
  * Parse Chinese relative time strings ("X分钟前", "X小时前", "X天前") or
  * absolute date strings ("YYYY-MM-DD") into a Date object.
@@ -30,7 +34,7 @@ function parseRelTime(text: string): Date | undefined {
         const n = Number.parseInt(m[1], 10);
         const now = Date.now();
         const offsets: Record<string, number> = {
-            分钟: 60_000,
+            分钟: 60000,
             小时: 3_600_000,
             天: 86_400_000,
         };
@@ -78,7 +82,7 @@ export const route: Route = {
         const baseUrl = `https://${type}.in-en.com`;
         const listUrl = `${baseUrl}${cat.newsPath}`;
 
-        const html = await ofetch(listUrl);
+        const html = await ofetch(listUrl, { headers });
         const $ = load(html);
 
         const list: DataItem[] = $('ul.infoList > li')
@@ -96,10 +100,18 @@ export const route: Route = {
                 const pubDateRaw = $el.find('.listTxt .prompt i').first().text().trim();
                 const author = $el.find('.listTxt .prompt span em.ly').first().text().trim();
 
+                // Extract article keyword tags into the category field
+                const category = $el
+                    .find('.listTxt .prompt span em a')
+                    .toArray()
+                    .map((a) => $(a).text().trim())
+                    .filter(Boolean);
+
                 return {
                     title,
                     link,
                     author: author || undefined,
+                    category: category.length > 0 ? category : undefined,
                     // parseRelTime returns an absolute UTC Date; no extra timezone shift needed
                     pubDate: parseRelTime(pubDateRaw),
                 } as DataItem;
@@ -111,7 +123,7 @@ export const route: Route = {
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
                     try {
-                        const detail = await ofetch(item.link!);
+                        const detail = await ofetch(item.link!, { headers });
                         const $d = load(detail);
 
                         item.description = $d('.article-body').first().html() ?? '';
