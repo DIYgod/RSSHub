@@ -3,7 +3,6 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/search/:query',
@@ -24,7 +23,7 @@ export const route: Route = {
     radar: [
         {
             source: ['jable.tv/search/:query'],
-            target: '/:query',
+            target: '/search/:query',
         },
     ],
     name: 'Jable 搜索结果',
@@ -32,22 +31,20 @@ export const route: Route = {
     handler,
 };
 
-// function renderDescription(item) {
-//     return `
-//         <a href="${item.link}">
-//             <img src="${item.thumb}" style="max-width:100%" />
-//         </a>
-//         <p>
-//             ${item.duration ? `<strong>Duration:</strong> ${item.duration}` : ''}
-//             ${item.views ? `｜<strong>Views:</strong> ${item.views}` : ''}
-//             ${item.favorites ? `｜<strong>Favorites:</strong> ${item.favorites}` : ''}
-//             ${item.author ? `｜<strong>Author:</strong> ${item.author}` : ''}
-//         </p>
-//     `.trim();
-// }
+interface VideoThumb {
+    title: string;
+    link: string;
+    thumb: string;
+    preview: string;
+}
+
+function renderDescription(video: VideoThumb): string {
+    return `<img src="${video.thumb}" alt="${video.title}" style="max-width:100%" />`.trim();
+}
 
 async function handler(ctx) {
     const { query } = ctx.req.param();
+
     const params = new URLSearchParams({
         mode: 'async',
         function: 'get_block',
@@ -55,103 +52,52 @@ async function handler(ctx) {
         q: query,
         sort_by: 'post_date',
     });
+
     const encodedQuery = encodeURIComponent(query);
-    const apiUrl = `https://jable.tv/search/${encodedQuery}/?${params.toString()}`;
+    const baseUrl = `https://jable.tv/search/${encodedQuery}/`;
+    const apiUrl = `${baseUrl}?${params.toString()}`;
+
     const response = await got(apiUrl);
     const $ = load(response.data);
 
-    const author = $('section.content-header h2').first().text().trim() || query;
+    const videos: VideoThumb[] = $('.video-img-box')
+        .toArray()
+        .map((el) => {
+            const $el = $(el);
+            const $titleLink = $el.find('.detail h6.title a');
+            const $img = $el.find('img');
+
+            return {
+                title: $titleLink.text().trim(),
+                link: $titleLink.attr('href') ?? '',
+                thumb: $img.attr('data-src') ?? '',
+                preview: $img.attr('data-preview') ?? '',
+            };
+        });
 
     const items = await Promise.all(
-        $('.video-img-box')
-            .toArray()
-            .map((el) => {
-                const $el = $(el);
-                const $titleLink = $el.find('.detail h6.title a');
-                const $img = $el.find('img');
-                const $fav = $el.find('[data-fav-video-id]');
-
-                const title = $titleLink.text().trim();
-                const link = $titleLink.attr('href') ?? '';
-
-                const thumb = $img.attr('data-src') ?? '';
-                const preview = $img.attr('data-preview') ?? '';
-
-                const videoId = $fav.attr('data-fav-video-id') ?? link;
-
-                // const duration = $el.find('.label').text().trim();
-                // const subText = $el.find('.sub-title').text().trim();
-                // const nums = subText.split(/\s+/);
-                // const views = nums[0] ?? '';
-                // const favorites = nums[1] ?? '';
-
-                return cache.tryGet(`jable:video:${videoId}`, async () => {
-                    let pubDate;
-                    let videoUrl;
-
-                    try {
-                        const { data } = await got(link);
-                        const $page = load(data);
-
-                        const dateText = $page('.video-date').text().trim();
-                        if (dateText) {
-                            pubDate = parseDate(dateText);
-                        }
-
-                        const script = $page('script')
-                            .toArray()
-                            .map((s) => $(s).html())
-                            .find((s) => s && s.includes('sources'));
-
-                        if (script) {
-                            const match = script.match(/file:\s*"([^"]+)"/);
-                            if (match) {
-                                videoUrl = match[1];
-                            }
-                        }
-                    } catch {
-                        // 忽略错误
-                    }
-
-                    return {
-                        title,
-                        link,
-                        guid: `jable:video:${videoId}`,
-                        pubDate,
-                        author,
-                        // description: renderDescription({
-                        //     title,
-                        //     link,
-                        //     thumb,
-                        //     duration,
-                        //     views,
-                        //     favorites,
-                        //     author,
-                        // }),
-                        media: {
-                            content: preview
-                                ? {
-                                      url: preview,
-                                      type: 'video/mp4',
-                                  }
-                                : videoUrl
-                                  ? {
-                                        url: videoUrl,
-                                        type: 'video/mp4',
-                                    }
-                                  : undefined,
-                            thumbnail: {
-                                url: thumb,
-                            },
-                        },
-                    };
-                });
-            })
+        videos.map((video) =>
+            cache.tryGet(`jable:search:${video.link}`, () => ({
+                title: video.title,
+                link: video.link,
+                author: query,
+                description: renderDescription(video),
+                media: {
+                    content: {
+                        url: video.preview || video.link,
+                        type: 'video/mp4',
+                    },
+                    thumbnail: {
+                        url: video.thumb,
+                    },
+                },
+            }))
+        )
     );
 
     return {
-        title: query,
-        link: `https://jable.tv/search/${encodedQuery}/`,
+        title: `${query} - Search | Jable`,
+        link: baseUrl,
         description: `Search results for ${query}`,
         item: items,
     };
