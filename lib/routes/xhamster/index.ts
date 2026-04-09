@@ -118,20 +118,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         videos.map((video) =>
-            cache.tryGet(`xhamster:video:${video.id}`, async () => {
-                // 尝试获取单个视频页面以提取更完整的信息
-                let author = creatorName;
-                try {
-                    const { data } = await got(video.pageURL);
-                    const $page = load(data);
-                    // 从视频页面提取作者名，xHamster 视频页的上传者通常在此选择器
-                    const uploaderText = $page('.video-author-wrap a').first().text().trim();
-                    if (uploaderText) {
-                        author = uploaderText;
-                    }
-                } catch {
-                    // 页面抓取失败时降级使用列表页数据
-                }
+            cache.tryGet(`xhamster:video:${video.id}`, () => {
+                const author = creatorName;
 
                 const enriched = { ...video, author };
 
