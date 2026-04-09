@@ -8711,6 +8711,9 @@
   "/trendforce/news": [
     "nczitzk"
   ],
+  "/trendforce/cn/presscenter/news": [
+    "TonyRL"
+  ],
   "/trendingpapers/papers/:category?/:time?/:cited?": [
     "CookiePieWw"
   ],
@@ -9313,6 +9316,9 @@
   ],
   "/wizfile/updates": [
     "Fatpandac"
+  ],
+  "/wkjyqh/research": [
+    "TonyRL"
   ],
   "/wmc-bj/publish/:category{.+}?": [],
   "/wmpvp/news/:type": [
