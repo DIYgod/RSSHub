@@ -155,7 +155,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${creatorName} – Newest | xHamster`,
+        title: `${creatorName} - Newest | xHamster`,
         link: pageUrl,
         description: `Latest videos from ${creatorName} on xHamster`,
         item: items,
