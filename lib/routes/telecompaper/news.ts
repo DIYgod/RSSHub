@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import FormData from 'form-data';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
@@ -58,7 +57,7 @@ async function handler(ctx) {
     form.append('__EVENTTARGET', 'ctl00$MainPlaceHolder$ddlContentType');
     form.append('__EVENTARGUMENT', '');
     form.append('__LASTFOCUS', '');
-    form.append('__VIEWSTATE', $('#__VIEWSTATE').attr('value'));
+    form.append('__VIEWSTATE', $('#__VIEWSTATE').attr('value') ?? '');
     form.append('__VIEWSTATEGENERATOR', 'E4EF4CD1');
     form.append('ctl00$header$searchText', ctx.req.param('keyword') || '');
     form.append('ctl00$header$searchTextMobile', ctx.req.param('keyword') || '');
@@ -66,26 +65,26 @@ async function handler(ctx) {
         form.append(
             'ctl00$MainPlaceHolder$ddlYears',
             year && year !== 'all'
-                ? $('select[name="ctl00$MainPlaceHolder$ddlYears"] option')
+                ? ($('select[name="ctl00$MainPlaceHolder$ddlYears"] option')
                       .filter((index, element) => $(element).text().split(' (')[0] === ctx.req.param('year'))
-                      .attr('value')
+                      .attr('value') ?? '0')
                 : '0'
         );
         form.append(
             'ctl00$MainPlaceHolder$ddlCountries',
             country && country !== 'all'
-                ? $('select[name="ctl00$MainPlaceHolder$ddlCountries"] option')
+                ? ($('select[name="ctl00$MainPlaceHolder$ddlCountries"] option')
                       .filter((index, element) => $(element).text().split(' (')[0] === country)
-                      .attr('value')
+                      .attr('value') ?? '0')
                 : '0'
         );
     }
     form.append(
         'ctl00$MainPlaceHolder$ddlContentType',
         type && type !== 'all'
-            ? $('select[name="ctl00$MainPlaceHolder$ddlContentType"] option')
+            ? ($('select[name="ctl00$MainPlaceHolder$ddlContentType"] option')
                   .filter((index, element) => $(element).text().split(' (')[0] === type)
-                  .attr('value')
+                  .attr('value') ?? '')
             : ''
     );
 
