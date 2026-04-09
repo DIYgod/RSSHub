@@ -81,16 +81,21 @@ function renderDescription(video: VideoThumb & { author?: string }): string {
     const views = video.views === undefined ? '' : video.views.toLocaleString();
     const quality = video.isUHD ? '<span>4K</span>' : '';
 
+    const meta: string[] = [];
+
+    if (quality) {
+        meta.push(quality);
+    }
+    if (duration) {
+        meta.push(`<strong>Duration:</strong> ${duration}`);
+    }
+    if (views) {
+        meta.push(`<strong>Views:</strong> ${views}`);
+    }
+
     return `
-        <a href="${video.pageURL}">
-            <img src="${thumb}" alt="${video.title}" style="max-width:100%" />
-        </a>
-        <p>
-            ${quality}
-            ${duration ? `<strong>Duration:</strong> ${duration}` : ''}
-            ${views ? `｜<strong>Views:</strong> ${views}` : ''}
-            ${video.author ? `｜<strong>Author:</strong> ${video.author}` : ''}
-        </p>
+        <img src="${thumb}" alt="${video.title}" style="max-width:100%" />
+        <p>${meta.join(' ｜ ')}</p>
     `.trim();
 }
 
