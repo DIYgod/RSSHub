@@ -4509,6 +4509,9 @@
   "/ianspriggs/:category?": [
     "nczitzk"
   ],
+  "/iapp/news": [
+    "TonyRL"
+  ],
   "/icac/news/:lang?": [
     "linbuxiao, TonyRL"
   ],
