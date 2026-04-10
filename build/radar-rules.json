@@ -24132,6 +24132,19 @@
       }
     ]
   },
+  "iapp.org": {
+    "_name": "IAPP",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news"
+        ],
+        "target": "/iapp/news"
+      }
+    ]
+  },
   "icac.org.hk": {
     "_name": "Hong Kong Independent Commission Against Corruption 香港廉政公署",
     ".": [
@@ -25528,6 +25541,19 @@
           "/"
         ],
         "target": "/j-test/news"
+      }
+    ]
+  },
+  "jable.tv": {
+    "_name": "jable",
+    ".": [
+      {
+        "title": "Jable 搜索结果",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/search/:query"
+        ],
+        "target": "/jable/search/:query"
       }
     ]
   },
