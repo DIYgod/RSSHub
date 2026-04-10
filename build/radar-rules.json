@@ -16841,6 +16841,34 @@
       }
     ]
   },
+  "fcbayern.com": {
+    "_name": "FC Bayern München",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:language/news",
+          "/:language"
+        ],
+        "target": "/fcbayern/news/:language"
+      }
+    ]
+  },
+  "fcbayern.cn": {
+    "_name": "FC Bayern München",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/fcbayern/news/zh"
+      }
+    ]
+  },
   "fda.gov": {
     "_name": "U.S. Food and Drug Administration",
     ".": [

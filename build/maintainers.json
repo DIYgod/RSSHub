@@ -3009,6 +3009,9 @@
   "/fastbull/news": [
     "nczitzk"
   ],
+  "/fcbayern/news/:language?": [
+    "TonyRL"
+  ],
   "/fda/cdrh/:titleOnly?": [],
   "/fediverse/timeline/:account": [
     "DIYgod",
