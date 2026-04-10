@@ -411,8 +411,8 @@ importers:
         specifier: 17.4.0
         version: 17.4.0
       got:
-        specifier: 15.0.0
-        version: 15.0.0
+        specifier: 15.0.1
+        version: 15.0.1
       husky:
         specifier: 9.1.7
         version: 9.1.7
@@ -4205,8 +4205,8 @@ packages:
     resolution: {integrity: sha512-QLV1qeYSo5l13mQzWgP/y0LbMr5Plr5fJilgAIwgnwseproEbtNym8xpLsDzeZ6MWXgNE6kdWGBjdh3zT/Qerg==}
     engines: {node: '>=20'}
 
-  got@15.0.0:
-    resolution: {integrity: sha512-CUqLG9oFZRis7SZq5Bcxh42LpzxXgXwxWVwNljo60oki8Cq3GXVRpDY2K4GwTzYz3htyXf212nfNg2socz4esQ==}
+  got@15.0.1:
+    resolution: {integrity: sha512-InYCBboAj9YmFiMcxbIRQ/WPoLsKSc9t9EGaUjGENtxunnx8USWtRY/SO/V3VsHLfDvUxAO2Qmx+6fQyG1jjaw==}
     engines: {node: '>=22'}
 
   graceful-fs@4.2.11:
@@ -9940,7 +9940,7 @@ snapshots:
       responselike: 4.0.2
       type-fest: 4.41.0
 
-  got@15.0.0:
+  got@15.0.1:
     dependencies:
       '@sindresorhus/is': 7.2.0
       byte-counter: 0.1.0
