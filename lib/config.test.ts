@@ -75,6 +75,15 @@ describe('config', () => {
         delete process.env.DISCOURSE_CONFIG_34;
     });
 
+    it('xquik api key', async () => {
+        process.env.XQUIK_API_KEY = 'xk_test_key_123';
+
+        const { config } = await import('./config');
+        expect(config.twitter.xquikApiKey).toBe('xk_test_key_123');
+
+        delete process.env.XQUIK_API_KEY;
+    });
+
     it('no random ua', async () => {
         process.env.NO_RANDOM_UA = '1';
 
