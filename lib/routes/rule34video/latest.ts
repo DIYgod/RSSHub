@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['rule34video.com/latest-updates/'],
-            target: '/latest',
+            target: '/rule34video/latest',
         },
     ],
     name: 'Latest Updates',
@@ -59,7 +59,7 @@ async function handler(_ctx: Context) {
             const $el = $(element);
             const title = $el.attr('title')?.trim() || $el.find('.thumb_title').text().trim();
             const link = $el.attr('href')?.trim() || '';
-            const preview = $el.find('img.thumb.lazy-load').attr('data-original') || undefined;
+            const preview = $el.find('img.thumb.lazy-load').attr('data-original');
             const duration = $el.find('.time').text().trim() || undefined;
             const added = $el.find('.added').text().replaceAll(/\s+/g, ' ').trim() || undefined;
             const rating = $el.find('.rating').text().trim() || undefined;
