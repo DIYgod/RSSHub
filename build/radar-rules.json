@@ -48378,6 +48378,20 @@
       }
     ]
   },
+  "xhamster.com": {
+    "_name": "xHamster",
+    ".": [
+      {
+        "title": "Newest Videos by Creator",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/creators/:creators",
+          "/creators/:creators/newest"
+        ],
+        "target": "/xhamster/:creators"
+      }
+    ]
+  },
   "xianbao.fun": {
     "_name": "线报酷",
     "new": [

@@ -3057,6 +3057,7 @@ export type RoutePath =
   | `/xbmu/announcement`
   | `/xbookcn/:label?`
   | `/xboxfan/news`
+  | `/xhamster/:creators`
   | `/xianbao/:category?`
   | `/xiaoheihe/add2cart/:platform`
   | `/xiaoheihe/discount/:platform`
