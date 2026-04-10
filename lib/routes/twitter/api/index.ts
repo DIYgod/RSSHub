@@ -4,7 +4,9 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import devApi from './developer-api/api';
 // import mobileApi from './mobile-api/api';
 import webApi from './web-api/api';
+import xquikApi from './xquik-api/api';
 
+const enableXquikApi = config.twitter.xquikApiKey;
 const enableThirdPartyApi = config.twitter.thirdPartyApi;
 // const enableMobileApi = config.twitter.username && config.twitter.password;
 const enableWebApi = config.twitter.authToken;
@@ -39,7 +41,9 @@ let api: {
     getHomeLatestTimeline: () => null,
 };
 
-if (enableThirdPartyApi) {
+if (enableXquikApi) {
+    api = xquikApi;
+} else if (enableThirdPartyApi) {
     api = webApi;
 } else if (enableWebApi) {
     api = webApi;
