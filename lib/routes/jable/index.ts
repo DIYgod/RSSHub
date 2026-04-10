@@ -1,7 +1,5 @@
 import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -75,25 +73,21 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        videos.map((video) =>
-            cache.tryGet(`jable:search:${video.link}`, () => ({
-                title: video.title,
-                link: video.link,
-                author: query,
-                description: renderDescription(video),
-                media: {
-                    content: {
-                        url: video.preview || video.link,
-                        type: 'video/mp4',
-                    },
-                    thumbnail: {
-                        url: video.thumb,
-                    },
-                },
-            }))
-        )
-    );
+    const items = videos.map((video) => ({
+        title: video.title,
+        link: video.link,
+        author: query,
+        description: renderDescription(video),
+        media: {
+            content: {
+                url: video.preview || video.link,
+                type: 'video/mp4',
+            },
+            thumbnail: {
+                url: video.thumb,
+            },
+        },
+    }));
 
     return {
         title: `${query} - Search | Jable`,
