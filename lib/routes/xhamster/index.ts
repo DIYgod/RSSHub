@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -79,16 +80,16 @@ function renderDescription(video: VideoThumb): string {
     const views = video.views === undefined ? '' : video.views.toLocaleString();
     const quality = video.isUHD ? '<span>4K</span>' : '';
 
-    let meta = "";
+    let meta = '';
 
     if (quality) {
         meta += quality;
     }
     if (duration) {
-        meta += `${meta ? " · " : ""}<strong>Duration:</strong> ${duration}`;
+        meta += `${meta ? ' · ' : ''}<strong>Duration:</strong> ${duration}`;
     }
     if (views) {
-        meta += `${meta ? " · " : ""}<strong>Views:</strong> ${views}`;
+        meta += `${meta ? ' · ' : ''}<strong>Views:</strong> ${views}`;
     }
 
     return `
