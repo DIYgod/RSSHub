@@ -25,7 +25,7 @@ export const route: Route = {
             target: '/:creators',
         },
     ],
-    name: 'xhamster - Newest Videos by Creator',
+    name: 'Newest Videos by Creator',
     maintainers: ['eve2ptp'],
     handler,
     url: 'xhamster.com/faustina-pierre/newest',
