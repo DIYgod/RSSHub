@@ -1,7 +1,5 @@
 import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -27,7 +25,7 @@ export const route: Route = {
             target: '/:creators',
         },
     ],
-    name: '最近更新',
+    name: 'xhamster - Newest Videos by Creator',
     maintainers: ['eve2ptp'],
     handler,
     url: 'xhamster.com/faustina-pierre/newest',
@@ -75,27 +73,27 @@ function formatDuration(seconds: number): string {
     return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}` : `${m}:${String(s).padStart(2, '0')}`;
 }
 
-function renderDescription(video: VideoThumb & { author?: string }): string {
+function renderDescription(video: VideoThumb): string {
     const thumb = video.imageURL ?? video.thumbURL;
     const duration = video.duration ? formatDuration(video.duration) : '';
     const views = video.views === undefined ? '' : video.views.toLocaleString();
     const quality = video.isUHD ? '<span>4K</span>' : '';
 
-    const meta: string[] = [];
+    let meta = "";
 
     if (quality) {
-        meta.push(quality);
+        meta += quality;
     }
     if (duration) {
-        meta.push(`<strong>Duration:</strong> ${duration}`);
+        meta += `${meta ? " · " : ""}<strong>Duration:</strong> ${duration}`;
     }
     if (views) {
-        meta.push(`<strong>Views:</strong> ${views}`);
+        meta += `${meta ? " · " : ""}<strong>Views:</strong> ${views}`;
     }
 
     return `
         <img src="${thumb}" alt="${video.title}" style="max-width:100%" />
-        <p>${meta.join(' ｜ ')}</p>
+        <p>${meta}</p>
     `.trim();
 }
 
@@ -121,36 +119,26 @@ async function handler(ctx) {
     const creatorName = initials.infoComponent?.pornstarTop?.name ?? creators;
     const videos = initials.trendingVideoSectionComponent?.videoListProps?.videoThumbProps ?? [];
 
-    const items = await Promise.all(
-        videos.map((video) =>
-            cache.tryGet(`xhamster:video:${video.id}`, () => {
-                const author = creatorName;
-
-                const enriched = { ...video, author };
-
-                return {
-                    title: `${video.title}${video.isUHD ? ' [4K]' : ''}`,
-                    link: video.pageURL,
-                    pubDate: video.created ? parseDate(video.created * 1000) : undefined,
-                    author,
-                    description: renderDescription(enriched),
-                    media: {
-                        content: {
-                            url: video.trailerURL ?? video.pageURL,
-                            type: 'video/mp4',
-                            ...(video.duration && { duration: video.duration }),
-                        },
-                        thumbnail: {
-                            url: video.imageURL ?? video.thumbURL,
-                        },
-                    },
-                };
-            })
-        )
-    );
+    const items = videos.map((video) => ({
+        title: `${video.title}${video.isUHD ? ' [4K]' : ''}`,
+        link: video.pageURL,
+        pubDate: video.created ? parseDate(video.created * 1000) : undefined,
+        author: creatorName,
+        description: renderDescription(video),
+        media: {
+            content: {
+                url: video.trailerURL ?? video.pageURL,
+                type: 'video/mp4',
+                ...(video.duration && { duration: video.duration }),
+            },
+            thumbnail: {
+                url: video.imageURL ?? video.thumbURL,
+            },
+        },
+    }));
 
     return {
-        title: `${creatorName} - Newest | xHamster`,
+        title: `${creatorName} - newest videos on xHamster`,
         link: pageUrl,
         description: `Latest videos from ${creatorName} on xHamster`,
         item: items,
