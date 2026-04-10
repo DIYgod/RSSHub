@@ -1474,7 +1474,6 @@ export type RoutePath =
   | `/hypergryph/arknights/news/:group?`
   | `/i-cable/news/:category?`
   | `/ianspriggs/:category?`
-  | `/iapp/news`
   | `/icac/news/:lang?`
   | `/icbc/whpj/:format?`
   | `/idaily/:language?`
