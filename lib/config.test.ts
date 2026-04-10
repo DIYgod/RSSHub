@@ -100,6 +100,15 @@ describe('config', () => {
         expect(config.isDefaultUA).toBe(true);
     });
 
+    it('setConfig updates config values', async () => {
+        const { config, setConfig } = await import('./config');
+
+        setConfig({ NO_RANDOM_UA: '1' });
+        expect(config.ua).toBe('RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)');
+
+        setConfig({ NO_RANDOM_UA: '' });
+    });
+
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 
