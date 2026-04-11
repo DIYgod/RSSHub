@@ -42,13 +42,13 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    // 内容在 <UL> 下的 <LI> 中，格式为: <LI><SPAN>日期</SPAN><A href="...">标题</A></LI>
-    const items = $('div.cno-right > UL > LI')
+    // 内容在 <ul> 下的 <li> 中，格式为: <li><span>日期</span><a href="...">标题</a></li>
+    const items = $('div.cno-right > ul > li')
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const span = $el.find('SPAN').first();
-            const a = $el.find('A').first();
+            const span = $el.find('span');
+            const a = $el.find('a');
             const dateText = span.text().trim();
             // 链接格式: ../info/1599/29115.htm
             const href = a.attr('href');
