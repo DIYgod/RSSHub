@@ -3,7 +3,7 @@ import type { Route } from '@/types';
 import { processItems, rootUrl } from './utils';
 
 export const route: Route = {
-    path: '/actress/:id{[^/]+/?}',
+    path: '/actress/:id',
     categories: ['multimedia'],
     example: '/projectjav/actress/rima-arai-22198',
     parameters: { id: 'Actress ID or slug, can be found in the actress page URL' },
