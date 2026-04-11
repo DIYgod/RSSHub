@@ -69,17 +69,11 @@ const processItems = async (currentUrl: string) => {
                 }
 
                 // Extract date
-                let dateText: string | null = null;
-                mainContent
+                const dateEl = mainContent
                     .find('div.second-main~div.row>div.col-3')
                     .toArray()
-                    .some((el) => {
-                        if (content(el).text().includes('Date added')) {
-                            dateText = content(el).next().text().trim();
-                            return true;
-                        }
-                        return false;
-                    });
+                    .find((el) => content(el).text().includes('Date added'));
+                const dateText = dateEl ? content(dateEl).next().text().trim() : null;
                 if (dateText) {
                     // ProjectJAV uses DD/MM/YYYY format
                     item.pubDate = parseDate(dateText, 'DD/MM/YYYY');
