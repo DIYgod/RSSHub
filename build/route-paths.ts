@@ -2281,6 +2281,7 @@ export type RoutePath =
   | `/priconne-redive/news/:server?`
   | `/producereport/:category{.+}?`
   | `/producthunt/today`
+  | `/projectjav/actress/:id`
   | `/ps/monthly-games`
   | `/ps/trophy/:id`
   | `/psnine/`

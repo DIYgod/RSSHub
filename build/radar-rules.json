@@ -39304,6 +39304,19 @@
       }
     ]
   },
+  "projectjav.com": {
+    "_name": "ProjectJAV",
+    ".": [
+      {
+        "title": "Actress",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/actress/:id"
+        ],
+        "target": "/projectjav/actress/:id"
+      }
+    ]
+  },
   "playstation.com": {
     "_name": "PlayStation Store",
     "www": [
