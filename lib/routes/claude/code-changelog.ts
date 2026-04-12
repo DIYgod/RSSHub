@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '25', 10);
@@ -14,29 +15,27 @@ const handler = async (ctx: Context): Promise<Data> => {
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
 
-    const items: DataItem[] = $('div.markdown-heading')
+    const items: DataItem[] = $('div.update-container')
         .slice(0, limit)
         .toArray()
         .map((el): DataItem => {
-            const $heading = $(el);
-            const version = $heading.find('h2.heading-element').text().trim();
+            const $entry = $(el);
+            const version = $entry.find('[data-component-part="update-label"]').text().trim();
             if (!version) {
                 return null as unknown as DataItem;
             }
 
-            const descriptionParts: string[] = [];
-            $heading.nextUntil('div.markdown-heading').each((_, sibling) => {
-                descriptionParts.push($(sibling).prop('outerHTML') ?? '');
-            });
-            const description = descriptionParts.join('');
+            const dateText = $entry.find('[data-component-part="update-description"]').text().trim();
+            const description = $entry.find('[data-component-part="update-content"]').html() ?? '';
 
-            const anchor = $heading.find('a.anchor').attr('href') ?? `#${version.replaceAll('.', '')}`;
-            const link = `${targetUrl}${anchor}`;
+            const anchor = $entry.attr('id') ?? version.replaceAll('.', '-');
+            const link = `${targetUrl}#${anchor}`;
 
             return {
                 title: version,
                 description,
                 link,
+                pubDate: dateText ? parseDate(dateText) : undefined,
                 guid: `claude-code-${version}`,
                 id: `claude-code-${version}`,
             };

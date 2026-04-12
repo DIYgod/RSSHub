@@ -46,6 +46,15 @@ updates:
               patterns:
                   - '@typescript-eslint/*'
 
+    - package-ecosystem: 'nix'
+      directory: '/'
+      schedule:
+          interval: daily
+          time: '08:00'
+      open-pull-requests-limit: 100
+      labels:
+          - dependencies
+
     - package-ecosystem: 'github-actions'
       directory: '/'
       schedule:
