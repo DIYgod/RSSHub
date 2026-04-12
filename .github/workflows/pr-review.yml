@@ -38,8 +38,9 @@ jobs:
                           || github.event.workflow_run.head_branch
                       }}
               run: |
-                  gh pr view --repo "${PR_TARGET_REPO}" "${PR_BRANCH}" \
-                    --json 'number' --jq '"number=\(.number)"' \
+                  gh api "repos/${PR_TARGET_REPO}/pulls" \
+                    --method GET -f head="${PR_BRANCH}" -f state=open \
+                    --jq '.[0] | "number=\(.number)"' \
                     >> "${GITHUB_OUTPUT}"
 
             - name: Check PR author
