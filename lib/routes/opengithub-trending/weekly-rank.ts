@@ -55,7 +55,7 @@ async function handler() {
         };
     };
 
-    const monthData = await Promise.all(years.map(getMonthData));
+    const monthData = await Promise.all(years.map((year) => getMonthData(year)));
 
     const getDayData = async (year: string, monthItem: any) => {
         const dayResponse = await got(`${repoUrl}/${year}/${monthItem.name}`, { headers });
