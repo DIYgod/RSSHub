@@ -1,5 +1,6 @@
-import type { AnyNode, Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -9,23 +10,33 @@ import timezone from '@/utils/timezone';
 
 const ROOT_URL = 'https://fjrb.fjdaily.com';
 
-const getNormalizedHtml = (element: Cheerio<AnyNode>) => {
-    element.find('img, video, audio, source').removeAttr('referrerpolicy');
-
-    return element
-        .html()
-        ?.replaceAll(/<!--[\s\S]*?-->/g, '')
-        .trim();
+const removeComments = (element) => {
+    element
+        .contents()
+        .filter((_, node) => node.type === 'comment')
+        .remove();
+    element
+        .find('*')
+        .contents()
+        .filter((_, node) => node.type === 'comment')
+        .remove();
 };
 
-const hasMeaningfulContent = (element: Cheerio<AnyNode>) => {
+const getNormalizedHtml = (element) => {
+    removeComments(element);
+    element.find('img, video, audio, source').removeAttr('referrerpolicy');
+
+    return element.html()?.trim();
+};
+
+const hasMeaningfulContent = (element) => {
     const text = element.text().replaceAll(/\s+/g, '');
     const media = element.find('img, video, audio, source').length;
 
     return text.length > 0 || media > 0;
 };
 
-const getDescription = (element: Cheerio<AnyNode>) => {
+const getDescription = (element) => {
     const normalizedHtml = getNormalizedHtml(element);
 
     if (!normalizedHtml || !hasMeaningfulContent(element)) {
@@ -35,45 +46,44 @@ const getDescription = (element: Cheerio<AnyNode>) => {
     return normalizedHtml;
 };
 
-const getAttachmentDescription = (attachment: Cheerio<AnyNode>) => getDescription(attachment);
+const getNodeSrc = (node: Element) => node.attribs?.src;
 
-const getNodeSrc = (node: AnyNode) => ('attribs' in node ? node.attribs?.src : undefined);
+const getAttachmentDescription = (attachment) => getDescription(attachment);
 
-const getNewMediaHtml = (attachment: Cheerio<AnyNode>, mainMediaSources: Set<string>) =>
+const getNewMediaHtml = (detail: CheerioAPI, attachment, mainMediaSources: Set<string>) =>
     attachment
         .find('img, video, audio, source')
         .toArray()
-        .filter((item) => {
+        .filter((item: Element) => {
             const src = getNodeSrc(item);
             return src && !mainMediaSources.has(src);
         })
-        .map((item) => attachment.html(item))
+        .map((item) => detail(item).prop('outerHTML'))
         .filter(Boolean)
         .join('');
 
-const mergeDescription = (mainDescription: string | undefined, attachment: Cheerio<AnyNode>, mainMediaSources: Set<string>) => {
+const mergeDescription = (detail: CheerioAPI, mainDescription: string | undefined, attachment, mainMediaSources: Set<string>) => {
     if (!mainDescription) {
         return getAttachmentDescription(attachment);
     }
 
-    const newMediaHtml = getNewMediaHtml(attachment, mainMediaSources);
+    const newMediaHtml = getNewMediaHtml(detail, attachment, mainMediaSources);
     return newMediaHtml ? `${newMediaHtml}${mainDescription}` : mainDescription;
 };
 
 const getItemDescription = (detail: CheerioAPI) => {
-    const mainContent = detail('#content').clone();
-    const zoomContent = detail('#ozoom').clone();
-    const attachment = detail('.attachment').clone();
-    const mainDescription = getDescription(mainContent) || getDescription(zoomContent);
+    const mainContent = detail('#content');
+    const attachment = detail('.attachment');
+    const mainDescription = getDescription(mainContent);
     const mainMediaSources = new Set(
         mainContent
             .find('img, video, audio, source')
             .toArray()
-            .map((item) => getNodeSrc(item))
+            .map((item: Element) => getNodeSrc(item))
             .filter(Boolean)
     );
 
-    return mergeDescription(mainDescription, attachment, mainMediaSources);
+    return mergeDescription(detail, mainDescription, attachment, mainMediaSources);
 };
 
 const getIssueDate = async (date: string | undefined) => {
@@ -111,7 +121,7 @@ const getIssueDate = async (date: string | undefined) => {
 export const route: Route = {
     path: '/:date?',
     categories: ['traditional-media'],
-    example: '/fjrb/20260316',
+    example: '/fjdaily/20260316',
     parameters: { date: '日期，格式为 `YYYYMMDD`，留空时抓取当天全部版面，例如 `20260316`' },
     features: {
         requireConfig: false,
