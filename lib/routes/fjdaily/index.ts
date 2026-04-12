@@ -89,7 +89,7 @@ const getItemDescription = (detail: CheerioAPI) => {
 const getIssueDate = async (date: string | undefined) => {
     if (date) {
         if (!/^\d{8}$/.test(date)) {
-            throw new Error('Invalid date format. Expected YYYYMMDD, for example `20260316`.');
+            throw new Error('Invalid date format. Expected YYYYMMDD, for example `20260316`. ');
         }
 
         return {
