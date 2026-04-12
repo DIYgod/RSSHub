@@ -60,11 +60,7 @@ export const route: Route = {
         const channelParams = { cid, r: 1, raw: 1, web: 1 };
         const { m: cm, n: cn, queryStr: cQuery } = getNonce(channelParams);
 
-        const channelData = await ofetch(`https://everest.castbox.fm/data/channel/v3?${cQuery}&m=${cm}&n=${cn}`, {
-            headers: {
-                'User-Agent': config.trueUA,
-            },
-        });
+        const channelData = await ofetch(`https://everest.castbox.fm/data/channel/v3?${cQuery}&m=${cm}&n=${cn}`);
 
         if (!channelData?.data) {
             throw new Error('Failed to fetch channel data from Castbox');
@@ -104,7 +100,7 @@ export const route: Route = {
                 enclosure_url: ep.url,
                 enclosure_type,
                 enclosure_length: ep.size,
-                itunes_item_image: ep.cover_url || ep.big_cover_url,
+                itunes_item_image: ep.big_cover_url || ep.cover_url,
                 itunes_duration: ep.duration ? Math.round(ep.duration / 1000) : undefined,
             };
         });
