@@ -4,20 +4,21 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    example: '/runyeah',
     radar: [
         {
-            source: ['runtrail.cn/'],
-            target: '',
+            source: ['runyeah.world/'],
         },
     ],
-    name: 'Unknown',
+    categories: ['sport'],
+    name: '最新文章',
     maintainers: ['TonyRL'],
     handler,
-    url: 'runtrail.cn/',
+    url: 'runyeah.world/',
 };
 
 async function handler(ctx) {
-    const baseUrl = 'https://runtrail.cn';
+    const baseUrl = 'https://runyeah.world';
     const { data: response } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
             _embed: true,
