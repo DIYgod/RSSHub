@@ -1420,6 +1420,9 @@
   "/castanet/:category?": [
     "TonyRL"
   ],
+  "/castbox/channel/:channel": [
+    "ananyatimalsina"
+  ],
   "/catti/news/:category": [
     "PrinOrange"
   ],

@@ -468,6 +468,7 @@ export type RoutePath =
   | `/casssp/news/:category?`
   | `/cast/:column/:subColumn/:category?`
   | `/castanet/:category?`
+  | `/castbox/channel/:channel`
   | `/catti/news/:category`
   | `/cau/ele`
   | `/cau/yjs`

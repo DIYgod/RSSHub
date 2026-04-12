@@ -8823,6 +8823,19 @@
       }
     ]
   },
+  "castbox.fm": {
+    "_name": "Castbox",
+    ".": [
+      {
+        "title": "Channels",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/channel/:channel"
+        ],
+        "target": "/castbox/channel/:channel"
+      }
+    ]
+  },
   "catticenter.com": {
     "_name": "全国翻译专业资格水平考试 (CATTI)",
     "www": [
