@@ -8118,7 +8118,7 @@
         target:"/galxe/quest/:alias" } ] },
   "gameapps.hk":{ _name:"GameApps.hk 香港手机游戏网",
     ".":[ { title:"最新消息",
-        docs:"https://docs.rsshub.app/routes/other",
+        docs:"https://docs.rsshub.app/routes/game",
         source:[ "/" ],
         target:"/gameapps/" } ] },
   "gamebase.com.tw":{ _name:"遊戲基地 Gamebase",
