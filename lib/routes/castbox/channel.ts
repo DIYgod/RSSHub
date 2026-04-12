@@ -72,11 +72,7 @@ export const route: Route = {
         const epParams = { cid, limit, r: 1, raw: 1, web: 1 };
         const { m: em, n: en, queryStr: eQuery } = getNonce(epParams);
 
-        const epData = await ofetch(`https://everest.castbox.fm/data/episode_list/v2?${eQuery}&m=${em}&n=${en}`, {
-            headers: {
-                'User-Agent': config.trueUA,
-            },
-        });
+        const epData = await ofetch(`https://everest.castbox.fm/data/episode_list/v2?${eQuery}&m=${em}&n=${en}`);
 
         if (!epData?.data?.episode_list) {
             throw new Error('Failed to fetch episode list from Castbox');
