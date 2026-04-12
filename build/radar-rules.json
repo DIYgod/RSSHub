@@ -6198,7 +6198,7 @@
     ".": [
       {
         "title": "News",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/"
         ],
@@ -15097,7 +15097,7 @@
     "www": [
       {
         "title": "早报",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/special/48"
         ],
@@ -15105,7 +15105,7 @@
       },
       {
         "title": "足球赛果",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/team/*team"
         ],
@@ -15113,7 +15113,7 @@
       },
       {
         "title": "球员新闻",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/player/*id"
         ],
@@ -15121,7 +15121,7 @@
       },
       {
         "title": "专题",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/special/:id"
         ],
@@ -15129,7 +15129,7 @@
       },
       {
         "title": "球队新闻",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/team/*team"
         ],
@@ -15139,7 +15139,7 @@
     "m": [
       {
         "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/home/:id"
         ],
@@ -16859,7 +16859,7 @@
     ".": [
       {
         "title": "News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/:language/news",
           "/:language"
@@ -16873,7 +16873,7 @@
     "www": [
       {
         "title": "News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/news",
           "/"
@@ -28576,7 +28576,7 @@
     ".": [
       {
         "title": "Fil Info Le Phocéen (Chrono)",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/chrono"
         ],
@@ -40387,16 +40387,16 @@
       }
     ]
   },
-  "runtrail.cn": {
+  "runyeah.world": {
     "_name": "跑野大爆炸",
     ".": [
       {
-        "title": "Unknown",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/"
         ],
-        "target": "/runtrail/"
+        "target": "/runyeah/"
       }
     ]
   },
@@ -48070,7 +48070,7 @@
     ".": [
       {
         "title": "News",
-        "docs": "https://docs.rsshub.app/routes/other",
+        "docs": "https://docs.rsshub.app/routes/sport",
         "source": [
           "/news/",
           "/"

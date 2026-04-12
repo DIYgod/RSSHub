@@ -2414,7 +2414,7 @@ export type RoutePath =
   | `/ruankao/news`
   | `/ruc/ai/:category?`
   | `/ruc/hr/:category?`
-  | `/runtrail/`
+  | `/runyeah/`
   | `/rustcc/jobs`
   | `/rustcc/news`
   | `/sakurazaka46/blog/:id?/:page?`
