@@ -54,7 +54,7 @@ function toNeutralDate(input: string, appendDay: boolean = false): Date {
 }
 
 function extractGames($: any, limit: number, baseUrl: string): Array<{ title: string; link: string; pubDate: string | null }> {
-    const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+    const dateRegex = /^\d{2}\.\d{2}\.\d{4}/;
     const games: Array<{ title: string; link: string; pubDate: string | null }> = [];
     let arrivedAtGameSection = false;
 
@@ -68,14 +68,15 @@ function extractGames($: any, limit: number, baseUrl: string): Array<{ title: st
 
         if (tagName === 'h1') {
             const text = $elem.text().trim();
-            if (!dateRegex.test(text)) {
+            const match = text.match(dateRegex);
+            if (!match) {
                 return;
             }
             arrivedAtGameSection = true;
             // Found H1 date, fill all empty Games with the new Date.
             for (const game of games) {
                 if (game.pubDate === null || game.pubDate.trim() === '') {
-                    game.pubDate = text;
+                    game.pubDate = match[0];
                 }
             }
         } else if ((tagName === 'h3' || tagName === 'h5') && arrivedAtGameSection) {
