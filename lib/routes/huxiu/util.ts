@@ -3,6 +3,7 @@ import CryptoJS from 'crypto-js';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 import { renderDescription } from './templates/description';
 
@@ -164,57 +165,106 @@ const fetchData = async (url) => {
 const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
 
 /**
- * Fetches item data.
+ * Fetches item data using puppeteer to bypass WAF protection.
  *
  * @param {Object} item - The item to fetch data for.
  * @returns {Promise<Object>} The fetched item data object.
  */
 const fetchItem = async (item) => {
     let detailResponse: string;
+
+    const { page, destroy } = await getPuppeteerPage(item.link, {
+        onBeforeLoad: async (page) => {
+            // Block unnecessary resources to speed up loading
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                const resourceType = request.resourceType();
+                // Only allow document, script, and xhr requests
+                if (resourceType === 'document' || resourceType === 'script' || resourceType === 'xhr' || resourceType === 'other') {
+                    request.continue();
+                } else {
+                    request.abort();
+                }
+            });
+        },
+    });
+
     try {
-        const response = await got(item.link);
-        detailResponse = response.data;
+        // Wait for the page to load
+        await page.waitForSelector('#__NUXT_DATA__, .detail-content', { timeout: 10000 });
+
+        // Get the rendered HTML content
+        detailResponse = await page.content();
     } catch {
-        // Request failed (e.g., 503, connection terminated), return original item
-        return item;
+        // If timeout, try to get whatever content is available
+        detailResponse = await page.content();
+    } finally {
+        await destroy();
     }
 
     const state = parseInitialState(detailResponse);
     const data = state?.articleDetail?.articleDetail;
 
-    if (!data) {
-        return item;
+    if (data) {
+        const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(data.audio_info);
+
+        if (Object.keys(audioItem).length !== 0) {
+            audioItem.itunes_item_image = data.pic_path ?? data.share_info?.share_img ?? undefined;
+        }
+
+        const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
+
+        const preface = data.content_preface ?? data.preface;
+        const content = data.content;
+
+        return {
+            ...audioItem,
+            ...videoItem,
+            ...item,
+            title: data.title ?? item.title,
+            description: renderDescription({
+                image: { src: data.pic_path },
+                video,
+                audio,
+                preface: preface ? cleanUpHTML(preface) : undefined,
+                summary: data.summary,
+                description: content ? cleanUpHTML(content) : undefined,
+            }),
+            author: data.user_info?.username ?? item.author,
+            category: buildCategories(data),
+            pubDate: parseDate(data.dateline ?? data.publish_time, 'X'),
+            upvotes: Number.parseInt(data.agreenum ?? item.upvotes ?? 0, 10),
+            comments: Number.parseInt(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0, 10),
+        };
     }
 
-    const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(data.audio_info);
+    // Fallback: parse HTML directly using cheerio for brief pages
+    const $ = load(detailResponse);
 
-    if (Object.keys(audioItem).length !== 0) {
-        audioItem.itunes_item_image = data.pic_path ?? data.share_info?.share_img ?? undefined;
+    // Extract pubDate from meta tag
+    const publishedTime = $('meta[property="article:published_time"]').attr('content');
+
+    // Extract description from preface and main content
+    const prefaceHtml = $('.detail-content__preface').html();
+    const mainContentHtml = $('#js-part').html() ?? $('.part').html();
+
+    const descriptionParts: string[] = [];
+    if (prefaceHtml) {
+        descriptionParts.push(prefaceHtml);
+    }
+    if (mainContentHtml) {
+        if (descriptionParts.length > 0) {
+            descriptionParts.push('<br><hr>');
+        }
+        descriptionParts.push(mainContentHtml);
     }
 
-    const { processed: video, processedItem: videoItem = {} } = processVideoInfo(data.video_info);
-
-    const preface = data.content_preface ?? data.preface;
-    const content = data.content;
+    const description = descriptionParts.length > 0 ? descriptionParts.join('') : undefined;
 
     return {
-        ...audioItem,
-        ...videoItem,
         ...item,
-        title: data.title ?? item.title,
-        description: renderDescription({
-            image: { src: data.pic_path },
-            video,
-            audio,
-            preface: preface ? cleanUpHTML(preface) : undefined,
-            summary: data.summary,
-            description: content ? cleanUpHTML(content) : undefined,
-        }),
-        author: data.user_info?.username ?? item.author,
-        category: buildCategories(data),
-        pubDate: parseDate(data.dateline ?? data.publish_time, 'X'),
-        upvotes: Number.parseInt(data.agreenum ?? item.upvotes ?? 0, 10),
-        comments: Number.parseInt(data.commentnum ?? data.total_comment_num ?? item.comments ?? 0, 10),
+        description: description ?? item.description,
+        pubDate: publishedTime ? parseDate(publishedTime) : item.pubDate,
     };
 };
 
@@ -316,18 +366,32 @@ const resolveNuxtData = (arr: unknown[], index: number, visited = new Set<number
  * @returns {Object|undefined} - The parsed initial state object, or undefined if not found.
  */
 const parseInitialState = (data: string) => {
-    const $ = load(data);
+    // Try to extract __NUXT_DATA__ from HTML using multiple methods
+    let nuxtDataScript: string | undefined;
 
-    // Try Nuxt 3 format first (for articles)
-    const nuxtDataScript = $('#__NUXT_DATA__').text();
+    // Method 1: Use regex to find the script tag content directly
+    // Match script tag with id="__NUXT_DATA__" and capture its content
+    const nuxtDataMatch = data.match(/<script[^>]*id="__NUXT_DATA__"[^>]*>\s*(\[[\s\S]*?\])\s*<\/script>/i);
+    if (nuxtDataMatch?.[1]) {
+        nuxtDataScript = nuxtDataMatch[1].trim();
+    }
+
+    // Method 2: Try cheerio if regex failed
+    if (!nuxtDataScript) {
+        const $ = load(data);
+        const scriptEl = $('#__NUXT_DATA__');
+        nuxtDataScript = scriptEl.html() ?? scriptEl.text() ?? undefined;
+    }
+
     if (nuxtDataScript) {
         try {
             const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
 
-            // Find the data object which contains articleDetail
+            // Find the data object which contains articleDetail or briefDetail
             // The structure is: [["ShallowReactive", 1], {data: 2, ...}, ["ShallowReactive", 3], {articleDetail-xxx: 4}, ...]
             for (const item of nuxtData) {
                 if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                    // Check for articleDetail first
                     const articleDetailKey = Object.keys(item).find((key) => key.startsWith('articleDetail-'));
                     if (articleDetailKey) {
                         const articleDetailIndex = (item as Record<string, number>)[articleDetailKey];
@@ -338,6 +402,40 @@ const parseInitialState = (data: string) => {
                             }
                         }
                     }
+
+                    // Check for briefDetail (used by brief pages like /brief/xxx.html)
+                    const briefDetailKey = Object.keys(item).find((key) => key.startsWith('briefDetail-'));
+                    if (briefDetailKey) {
+                        const briefDetailIndex = (item as Record<string, number>)[briefDetailKey];
+                        if (typeof briefDetailIndex === 'number') {
+                            const briefDetailData = resolveNuxtData(nuxtData, briefDetailIndex) as Record<string, unknown>;
+                            const brief = briefDetailData?.brief as Record<string, unknown> | undefined;
+                            if (brief) {
+                                const publisherList = brief.publisher_list as Array<{ username?: string }> | undefined;
+                                const briefColumn = briefDetailData?.brief_column as Record<string, unknown> | undefined;
+                                const clubInfo = briefDetailData?.club_info as Record<string, unknown> | undefined;
+
+                                return {
+                                    articleDetail: {
+                                        articleDetail: {
+                                            title: brief.title,
+                                            content: brief.content,
+                                            preface: brief.preface,
+                                            dateline: brief.publish_time,
+                                            publish_time: brief.publish_time,
+                                            audio_info: brief.audio_info,
+                                            agreenum: brief.agree_num,
+                                            total_comment_num: brief.total_comment_num,
+                                            user_info: publisherList?.[0] ? { username: publisherList[0].username } : undefined,
+                                            brief_column: briefColumn ? { name: briefColumn.name } : undefined,
+                                            club_info: clubInfo ? { name: clubInfo.name } : undefined,
+                                            share_info: brief.share_info,
+                                        },
+                                    },
+                                };
+                            }
+                        }
+                    }
                 }
             }
         } catch {
@@ -345,7 +443,7 @@ const parseInitialState = (data: string) => {
         }
     }
 
-    // Try window.__INITIAL_STATE__ format (for briefs)
+    // Try window.__INITIAL_STATE__ format (for briefs - legacy)
     const initialStateMatch = data.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});?\s*\(function\(\)/);
     if (initialStateMatch?.[1]) {
         try {
