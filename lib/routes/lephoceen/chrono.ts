@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/chrono',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/lephoceen/chrono',
     parameters: {},
     features: {

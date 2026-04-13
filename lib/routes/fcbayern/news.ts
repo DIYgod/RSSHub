@@ -127,7 +127,7 @@ const query = /* GraphQL */ `
 
 export const route: Route = {
     path: '/news/:language?',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/fcbayern/news',
     parameters: {
         language: {
