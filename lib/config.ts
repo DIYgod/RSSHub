@@ -14,6 +14,7 @@ type ConfigEnvKeys =
     // Network
     | 'PORT'
     | 'LISTEN_INADDR_ANY'
+    | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
     | 'UA'
@@ -263,6 +264,7 @@ export type Config = {
         port: number;
     };
     listenInaddrAny: boolean;
+    disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
     ua: string;
@@ -752,6 +754,7 @@ const calculateValue = () => {
             port: toInt(envs.PORT, 1200), // 监听端口
         },
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
+        disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
