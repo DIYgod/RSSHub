@@ -45,6 +45,10 @@ updates:
           typescript-eslint:
               patterns:
                   - '@typescript-eslint/*'
+          vitest:
+              patterns:
+                  - 'vitest'
+                  - '@vitest/coverage-v8'
 
     - package-ecosystem: 'nix'
       directory: '/'
