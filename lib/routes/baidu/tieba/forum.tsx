@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { getTiebaPageContent, normalizeUrl } from './common';
+import { parseRelativeTime, parseThreads } from './utils';
 
 export const route: Route = {
     path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
@@ -13,73 +13,89 @@ export const route: Route = {
     example: '/baidu/tieba/forum/good/女图',
     parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requireConfig: [
+            {
+                name: 'BAIDU_COOKIE',
+                optional: false,
+                description: '百度 cookie 值，用于需要登录的贴吧页面',
+            },
+        ],
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     name: '精品帖子',
-    maintainers: ['u3u'],
+    maintainers: ['u3u', 'FlanChanXwO'],
     handler,
 };
 
 async function handler(ctx) {
     // sortBy: created, replied
     const { kw, cid = '0', sortBy = 'created' } = ctx.req.param();
+    const sortParam = sortBy === 'replied' ? '&sc=67108864' : '';
 
-    // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
-    // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
-    const params = { kw: encodeURIComponent(kw) };
-    ctx.req.path.includes('good') && (params.tab = 'good');
-    cid && (params.cid = cid);
-    const { data } = await got(`https://tieba.baidu.com/f`, {
-        headers: {
-            Referer: 'https://tieba.baidu.com/',
-        },
-        searchParams: params,
+    // 固定抓取3页，约30条帖子
+    const maxPages = 3;
+
+    // 并发获取所有页面
+    const pagePromises = [];
+    for (let pageNum = 0; pageNum < maxPages; pageNum++) {
+        const pageUrl = `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}&pn=${pageNum * 50}${cid === '0' ? '' : `&cid=${cid}`}${ctx.req.path.includes('good') ? '&tab=good' : ''}${pageNum === 0 ? '' : '&ie=utf-8'}${sortParam}`;
+
+        const promise = getTiebaPageContent(pageUrl, `tieba:forum:${kw}:${cid}:${sortBy}:page${pageNum}`, { waitForSelector: '.thread-card-wrapper', timeout: 3000 });
+        pagePromises.push(promise);
+    }
+
+    // 等待所有页面获取完成
+    const pageResults = await Promise.all(pagePromises);
+
+    // 解析所有页面数据并去重
+    const threadMap = new Map();
+    for (const html of pageResults) {
+        if (html && html.length > 0) {
+            const $ = load(html);
+            const threads = parseThreads($);
+            for (const thread of threads) {
+                // 使用帖子ID去重，只保留第一次出现的
+                if (!threadMap.has(thread.id)) {
+                    threadMap.set(thread.id, thread);
+                }
+            }
+        }
+    }
+
+    const allThreads = [...threadMap.values()];
+
+    if (allThreads.length === 0) {
+        throw new Error('No threads found. The cookie may be expired or invalid. Please check your BAIDU_COOKIE.');
+    }
+
+    const list = allThreads.map((thread) => {
+        const parsedDate = parseRelativeTime(thread.time);
+        return {
+            title: thread.title,
+            link: normalizeUrl(thread.link) || `https://tieba.baidu.com/p/${thread.id}`,
+            pubDate: parsedDate ? timezone(parsedDate, +8) : undefined,
+            author: thread.author,
+            description: renderToString(
+                <>
+                    {thread.content ? <p>{thread.content}</p> : null}
+                    {thread.images && thread.images.length > 0 ? (
+                        <div>
+                            {thread.images.map((img) => (
+                                <img src={img} alt="" style={{ maxWidth: '100%', margin: '5px 0' }} />
+                            ))}
+                        </div>
+                    ) : null}
+                </>
+            ),
+        };
     });
-
-    const threadListHTML = load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]')
-        .contents()
-        .filter((e) => e.nodeType === '8');
-
-    const $ = load(threadListHTML.prevObject[0].data);
-    const list = $('#thread_list > .j_thread_list[data-field]')
-        .toArray()
-        .map((element) => {
-            const item = $(element);
-            const { id, author_name } = item.data('field');
-            const time = sortBy === 'created' ? item.find('.is_show_create_time').text().trim() : item.find('.threadlist_reply_date').text().trim();
-            const title = item.find('a.j_th_tit').text().trim();
-            const details = item.find('.threadlist_abs').text().trim();
-            const medias = item
-                .find('.threadlist_media img')
-                .toArray()
-                .map((element) => {
-                    const item = $(element);
-                    return `<img src="${item.attr('bpic')}">`;
-                })
-                .join('');
-
-            return {
-                title,
-                description: renderToString(
-                    <>
-                        <p>{details}</p>
-                        <p>{raw(medias)}</p>
-                        <p>作者：{author_name}</p>
-                    </>
-                ),
-                pubDate: timezone(parseDate(time, ['HH:mm', 'M-D', 'YYYY-MM'], true), +8),
-                link: `https://tieba.baidu.com/p/${id}`,
-            };
-        });
 
     return {
         title: `${kw}吧`,
-        description: load(data)('meta[name="description"]').attr('content'),
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
         item: list,
     };
