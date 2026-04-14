@@ -83,7 +83,7 @@ async function handler(ctx) {
     const channelVideoShelvesQueryData = response.data[0].data;
 
     if (!channelVideoShelvesQueryData.user.id) {
-        throw new InvalidParameterError(`Username does not exist`);
+        throw new InvalidParameterError('Username does not exist');
     }
 
     const displayName = channelVideoShelvesQueryData.user.displayName;

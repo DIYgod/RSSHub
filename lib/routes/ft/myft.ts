@@ -69,9 +69,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `FT.com - myFT`,
+        title: 'FT.com - myFT',
         link,
-        description: `FT.com - myFT`,
+        description: 'FT.com - myFT',
         item: items,
     };
 }

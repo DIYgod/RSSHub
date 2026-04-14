@@ -91,7 +91,7 @@ async function handler(ctx) {
                         throw new Error(`Unknown type: ${x}`);
                 }
             }
-            contact_result += `<br> `;
+            contact_result += '<br> ';
         }
     }
 

@@ -28,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const rootUrl = `https://chaping.cn/`;
+    const rootUrl = 'https://chaping.cn/';
     const response = await got({
         method: 'get',
         url: rootUrl,

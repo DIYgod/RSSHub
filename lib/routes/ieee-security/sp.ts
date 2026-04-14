@@ -20,7 +20,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'ieee-security.org/TC/SP-Index.html',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {

@@ -15,7 +15,7 @@ describe('got', () => {
         const requestRun = vi.fn();
         const { default: server } = await import('@/setup.test');
         server.use(
-            http.get(`http://rsshub.test/retry-test`, () => {
+            http.get('http://rsshub.test/retry-test', () => {
                 requestRun();
                 return HttpResponse.error();
             })

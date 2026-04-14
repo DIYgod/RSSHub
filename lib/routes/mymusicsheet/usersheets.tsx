@@ -31,7 +31,7 @@ export const route: Route = {
     name: 'User Sheets',
     maintainers: ['Freddd13'],
     handler,
-    description: `Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.`,
+    description: 'Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.',
 };
 
 async function handler(ctx) {

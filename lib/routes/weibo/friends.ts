@@ -67,13 +67,13 @@ async function handler(ctx) {
     }
 
     const uid = await cache.tryGet(
-        `weibo:friends:login-user`,
+        'weibo:friends:login-user',
         async () => {
             const _r = await got({
                 method: 'get',
                 url: 'https://m.weibo.cn/api/config',
                 headers: {
-                    Referer: `https://m.weibo.cn/`,
+                    Referer: 'https://m.weibo.cn/',
                     Cookie: config.weibo.cookies,
                     ...weiboUtils.apiHeaders,
                 },
@@ -112,7 +112,7 @@ async function handler(ctx) {
                 method: 'get',
                 url: 'https://m.weibo.cn/feed/friends',
                 headers: {
-                    Referer: `https://m.weibo.cn/`,
+                    Referer: 'https://m.weibo.cn/',
                     Cookie: config.weibo.cookies,
                     ...weiboUtils.apiHeaders,
                 },
@@ -156,7 +156,7 @@ async function handler(ctx) {
 
     return weiboUtils.sinaimgTvax({
         title,
-        link: `https://weibo.com`,
+        link: 'https://weibo.com',
         item: resultItems,
     });
 }

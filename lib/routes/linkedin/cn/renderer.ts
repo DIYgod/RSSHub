@@ -90,7 +90,7 @@ const renderSingle = (node) => {
         case 'BOLD':
             return `<b>${node.text}</b>`;
         case 'LINE_BREAK':
-            return `<br>`;
+            return '<br>';
         case 'LIST_ITEM':
             return `<li>${node.text}</li>`;
         case 'LIST':

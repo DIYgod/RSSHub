@@ -53,7 +53,7 @@ async function handler(ctx: Context) {
     const response = await got(`https://api.bilibili.com/x/space/wbi/arc/search?${params}`, {
         headers: {
             Referer: `https://space.bilibili.com/${uid}`,
-            origin: `https://space.bilibili.com`,
+            origin: 'https://space.bilibili.com',
             Cookie: cookie,
         },
     });

@@ -74,7 +74,7 @@ async function handler(ctx) {
 
     return {
         title: `Nature (${pageTitle}) | Latest Research`,
-        description: pageCapture('meta[name="description"]').attr('content') || `Nature, a nature research journal`,
+        description: pageCapture('meta[name="description"]').attr('content') || 'Nature, a nature research journal',
         link: pageURL,
         item: items,
     };

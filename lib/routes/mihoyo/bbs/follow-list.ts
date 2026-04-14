@@ -31,7 +31,7 @@ async function handler(ctx) {
         page_size,
     };
     const link = `https://www.miyoushe.com/ys/accountCenter/followList?id=${uid}`;
-    const url = `https://bbs-api.miyoushe.com/user/wapi/following`;
+    const url = 'https://bbs-api.miyoushe.com/user/wapi/following';
     const response = await got({
         method: 'get',
         url,

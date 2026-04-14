@@ -212,7 +212,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 关注的动态`,
-        link: `https://t.bilibili.com`,
+        link: 'https://t.bilibili.com',
         description: `${name} 关注的动态`,
         item: items,
     };

@@ -48,7 +48,7 @@ function formatEventItem(event: any) {
                 description = `PR: ${link}`;
             } else {
                 link = `https://github.com/${repo.name}`;
-                description = `PR: Unknown`;
+                description = 'PR: Unknown';
             }
             break;
         case 'PullRequestReviewCommentEvent':
@@ -117,7 +117,7 @@ function formatEventItem(event: any) {
             for (const page of payload.pages ?? []) {
                 description += `<li>Page <a href=${page.html_url}>${page.page_name}</a> ${page.action} ${page.summary ? `: ${page.summary}` : ''}</li>`;
             }
-            description += `</ul>`;
+            description += '</ul>';
             link = `https://github.com/${repo.name}`;
             break;
         case 'DiscussionEvent':

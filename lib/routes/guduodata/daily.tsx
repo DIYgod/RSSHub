@@ -66,14 +66,14 @@ async function handler() {
         }))
     );
     return {
-        title: `骨朵数据 - 日榜`,
+        title: '骨朵数据 - 日榜',
         link: host,
         description: yestoday,
         item: await Promise.all(
             items.map((item) =>
                 cache.tryGet(item.url, async () => {
                     const response = await got.get(`${item.url}&t=${now}`, {
-                        headers: { Referer: `http://guduodata.com/` },
+                        headers: { Referer: 'http://guduodata.com/' },
                     });
                     const data = response.data.data;
                     return {

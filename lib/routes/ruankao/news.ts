@@ -101,7 +101,7 @@ export const route: Route = {
         {
             title: '计算机职业技术资格考试（软考）动态',
             source: ['www.ruankao.org.cn/index/work', 'www.ruankao.org.cn'],
-            target: `/news`,
+            target: '/news',
         },
     ],
     example: '/ruankao/news',

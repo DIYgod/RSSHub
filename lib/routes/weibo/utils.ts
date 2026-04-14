@@ -312,8 +312,8 @@ const weiboUtils = {
         // 处理转发的微博
         if (status.retweeted_status) {
             html += readable
-                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
-                : `<br><blockquote> - 转发 `;
+                ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">'
+                : '<br><blockquote> - 转发 ';
             if (!status.retweeted_status.user) {
                 // 当转发的微博被删除时user为null
                 status.retweeted_status.user = {
@@ -335,10 +335,10 @@ const weiboUtils = {
                 html += `<br><small>原博：<a href="https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}" target="_blank" rel="noopener noreferrer">https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}</a></small>`;
             }
             if (showTimestampInDescription) {
-                html += `<br><small>` + new Date(status.retweeted_status.created_at).toLocaleString() + `</small>`;
+                html += '<br><small>' + new Date(status.retweeted_status.created_at).toLocaleString() + '</small>';
             }
             if (readable) {
-                html += `<br clear="both" /><div style="clear: both"></div>`;
+                html += '<br clear="both" /><div style="clear: both"></div>';
             }
 
             html += '</blockquote>';
@@ -548,7 +548,7 @@ const weiboUtils = {
             });
             if (response.data && response.data.data) {
                 const comments = response.data.data;
-                itemDesc += `<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`;
+                itemDesc += '<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">';
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';

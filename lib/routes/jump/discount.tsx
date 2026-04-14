@@ -111,7 +111,7 @@ const renderDescription = (item) =>
     );
 
 const getDiscountNum = async (platform) => {
-    const response = await got.get(`https://switch.jumpvg.com/jump/platform/order/v2?needCount=1&needFilter=1&version=3`);
+    const response = await got.get('https://switch.jumpvg.com/jump/platform/order/v2?needCount=1&needFilter=1&version=3');
     const data = response.data.data;
     let totalNum = 0;
     for (const index in data) {

@@ -36,7 +36,7 @@ async function handler() {
 
     const response = await got({
         method: 'get',
-        url: `https://apin.eastday.com/apiplus/special/specialnewslistbyurl?specialUrl=1632798465040016&skipCount=0&limitCount=20`,
+        url: 'https://apin.eastday.com/apiplus/special/specialnewslistbyurl?specialUrl=1632798465040016&skipCount=0&limitCount=20',
     });
 
     const result = await Promise.all(
@@ -69,7 +69,7 @@ async function handler() {
     );
 
     return {
-        title: `东方网-上海`,
+        title: '东方网-上海',
         link: `${domain}/wap/sh.html`,
         item: result,
     };

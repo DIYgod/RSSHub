@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const BASE_URL = `https://scholar.google.com`;
+    const BASE_URL = 'https://scholar.google.com';
     const url = `https://scholar.google.com/citations?user=${id}`;
 
     const response = await got({

@@ -25,7 +25,7 @@ export const route: Route = {
     name: '论坛摘要',
     maintainers: ['shinemoon'],
     handler,
-    description: `版面网址如果为 \`https://stage1st.com/2b/forum-6-1.html\` 那么论坛 id 就是 \`forum-6-1\`。`,
+    description: '版面网址如果为 `https://stage1st.com/2b/forum-6-1.html` 那么论坛 id 就是 `forum-6-1`。',
 };
 
 async function handler(ctx) {

@@ -37,7 +37,7 @@ async function handler(ctx) {
     const { id, region } = ctx.req.param();
     const numericId = id.match(/id(\d+)/)?.[1];
     const baseUrl = 'https://podcasts.apple.com';
-    const link = `${baseUrl}/${region || `cn`}/podcast/${id}`;
+    const link = `${baseUrl}/${region || 'cn'}/podcast/${id}`;
 
     const response = await ofetch(link);
 

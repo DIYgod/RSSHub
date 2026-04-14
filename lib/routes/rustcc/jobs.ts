@@ -47,7 +47,7 @@ async function handler() {
     return {
         title: 'Rust语言中文社区 | 招聘',
         link: jobs_url,
-        description: `获取Rust语言中文社区的最新招聘`,
+        description: '获取Rust语言中文社区的最新招聘',
         item: await Promise.all(list.map((item) => getFeedItem(item))),
     };
 }

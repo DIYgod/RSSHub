@@ -466,8 +466,8 @@ const nodeRenderers = {
         }
         return nextNode(node.content);
     },
-    br: () => `<br/>`,
-    hr: () => `<br/>`,
+    br: () => '<br/>',
+    hr: () => '<br/>',
     ad: () => {},
     blockquote: async (node, nextNode) => `<blockquote>${await nextNode(node.content)}</blockquote>`,
     quote: async (node, nextNode) => `<blockquote>${await nextNode(node.content)}</blockquote>`,

@@ -34,7 +34,7 @@ export async function getFulltext(url: string) {
     const sigValueHex = hextob64(sig.sign());
 
     const isWeekly = url.includes('weekly');
-    const res = await ofetch(`https://gateway.caixin.com/api/newauth/checkAuthByIdJsonp`, {
+    const res = await ofetch('https://gateway.caixin.com/api/newauth/checkAuthByIdJsonp', {
         query: {
             type: 1,
             page: isWeekly ? 0 : 1,

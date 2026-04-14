@@ -25,7 +25,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseurl = `https://leetcode.com`;
+    const baseurl = 'https://leetcode.com';
     const url = `${baseurl}/graphql/`;
     const headers = {
         'content-type': 'application/json',

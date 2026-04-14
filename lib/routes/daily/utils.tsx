@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'https://app.daily.dev';
-const gqlUrl = `https://api.daily.dev/graphql`;
+const gqlUrl = 'https://api.daily.dev/graphql';
 export const variables = {
     version: 54,
     loggedIn: false,

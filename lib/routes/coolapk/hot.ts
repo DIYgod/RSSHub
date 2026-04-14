@@ -58,11 +58,11 @@ const getLinkAndTitle = (type, period) => {
                 statDays: '30days',
             },
         };
-        link = `#/feed/coolPictureList?statDays=` + trans[period].statDays + `&listType=statFavNum&buildCard=1&title=` + trans[period].description + `&page=1`;
+        link = '#/feed/coolPictureList?statDays=' + trans[period].statDays + '&listType=statFavNum&buildCard=1&title=' + trans[period].description + '&page=1';
         res.title = '酷图榜-' + trans[period].description;
     } else {
-        link = `#/feed/statList?statType=` + periods[period].statType + `&sortField=` + types[type].sortField + `&title=` + periods[period].description + `&page=1`;
-        res.title = types[type].title + `-` + periods[period].description;
+        link = '#/feed/statList?statType=' + periods[period].statType + '&sortField=' + types[type].sortField + '&title=' + periods[period].description + '&page=1';
+        res.title = types[type].title + '-' + periods[period].description;
     }
     res.link = baseURL + encodeURIComponent(link);
     return res;
@@ -129,7 +129,7 @@ async function handler(ctx) {
     return {
         title,
         link: 'https://www.coolapk.com/',
-        description: `热榜-` + title,
+        description: '热榜-' + title,
         item: out,
     };
 }

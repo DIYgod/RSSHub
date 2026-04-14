@@ -61,7 +61,7 @@ async function handler(ctx) {
                     .find(String.raw`news\:publication_date`)
                     .text()
             );
-            const lastmod = timezone(parseDate($(e).find(`lastmod`).text()), -4);
+            const lastmod = timezone(parseDate($(e).find('lastmod').text()), -4);
             const language = LANGUAGE_MAP.get(
                 $(e)
                     .find(String.raw`news\:language`)

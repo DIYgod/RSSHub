@@ -67,7 +67,7 @@ async function handler(ctx) {
         allowEmpty: true,
         title: 'Fur Affinity | Search',
         link: `https://www.furaffinity.net/Search/?q=${query}`,
-        description: `Fur Affinity Search`,
+        description: 'Fur Affinity Search',
         item: items,
     };
 }

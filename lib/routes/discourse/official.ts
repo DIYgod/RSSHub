@@ -16,7 +16,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'DISCOURSE_CONFIG_*',
-                description: `Configure the Discourse environment variables referring to [https://docs.rsshub.app/deploy/config#discourse](https://docs.rsshub.app/deploy/config#discourse).`,
+                description: 'Configure the Discourse environment variables referring to [https://docs.rsshub.app/deploy/config#discourse](https://docs.rsshub.app/deploy/config#discourse).',
             },
         ],
         requirePuppeteer: false,

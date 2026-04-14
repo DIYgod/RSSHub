@@ -43,7 +43,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
-    const apiUrl = new URL(`web/channel/articleListV1`, apiArticleRootUrl).href;
+    const apiUrl = new URL('web/channel/articleListV1', apiArticleRootUrl).href;
     const currentUrl = new URL(id ? `channel/${id}.html` : 'article', rootUrl).href;
 
     const { data: response } = await got.post(apiUrl, {

@@ -23,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const feedUrl = calculate(`https://api.xiaoheihe.cn/bbs/app/feeds/news?os_type=web&app=heybox&client_type=mobile&version=999.0.3&x_client_type=web&x_os_type=Mac&x_app=heybox&heybox_id=-1&appid=900018355&offset=0&limit=20`);
+    const feedUrl = calculate('https://api.xiaoheihe.cn/bbs/app/feeds/news?os_type=web&app=heybox&client_type=mobile&version=999.0.3&x_client_type=web&x_os_type=Mac&x_app=heybox&heybox_id=-1&appid=900018355&offset=0&limit=20');
     const response = await got({
         method: 'get',
         url: feedUrl,
@@ -55,8 +55,8 @@ async function handler() {
     );
 
     return {
-        title: `小黑盒游戏新闻`,
-        link: `https://xiaoheihe.cn`,
+        title: '小黑盒游戏新闻',
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

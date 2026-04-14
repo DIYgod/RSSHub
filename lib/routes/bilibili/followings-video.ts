@@ -79,7 +79,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 关注视频动态`,
-        link: `https://t.bilibili.com/?tab=8`,
+        link: 'https://t.bilibili.com/?tab=8',
         item: out,
     };
 }

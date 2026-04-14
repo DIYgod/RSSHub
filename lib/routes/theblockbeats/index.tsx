@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
-const apiBase = `https://api.blockbeats.cn`;
+const apiBase = 'https://api.blockbeats.cn';
 
 const render = (data: { image?: string; description?: string }) => {
     const html = renderToString(<BlockBeatsDescription image={data.image} description={data.description} />);

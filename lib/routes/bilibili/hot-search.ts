@@ -39,7 +39,7 @@ async function handler() {
         method: 'get',
         url,
         headers: {
-            Referer: `https://api.bilibili.com`,
+            Referer: 'https://api.bilibili.com',
         },
     });
     const trending = response?.data?.data?.trending;

@@ -20,7 +20,7 @@ export const route: Route = {
     name: '标签',
     maintainers: ['xyqfer', 'HenryQW', 'nczitzk', 'TimoYoung'],
     handler,
-    description: `更多标签请参见 [标签](https://www.huxiu.com/tags)`,
+    description: '更多标签请参见 [标签](https://www.huxiu.com/tags)',
 };
 
 async function handler(ctx) {

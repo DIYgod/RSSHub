@@ -222,7 +222,7 @@ async function dealLatestDataChannel() {
         })
     );
     return {
-        title: `中华人民共和国农业农村部 - 数据 - 最新发布`,
+        title: '中华人民共和国农业农村部 - 数据 - 最新发布',
         link: 'http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp',
         item: items,
     };

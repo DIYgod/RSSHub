@@ -108,12 +108,12 @@ fs.mkdirSync(buildDir, { recursive: true });
 // For Worker build, only output routes-worker.js with filtered namespaces
 // For regular build, output all files
 if (isWorkerBuild) {
-    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespacesToProcess, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespacesToProcess, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
 } else {
     fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
     fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
     fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
     fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
-    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
     fs.writeFileSync(path.join(__dirname, '../../assets/build/route-paths.ts'), routePathsType);
 }

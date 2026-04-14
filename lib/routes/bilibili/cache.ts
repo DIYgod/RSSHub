@@ -196,7 +196,7 @@ const getUserInfoFromLiveID = (liveID) => {
 const getVideoNameFromId = (aid, bvid) => {
     const key = `bili-videoname-from-id-${bvid || aid}`;
     return cache.tryGet(key, async () => {
-        const { data } = await got(`https://api.bilibili.com/x/web-interface/view`, {
+        const { data } = await got('https://api.bilibili.com/x/web-interface/view', {
             searchParams: {
                 aid: aid || undefined,
                 bvid: bvid || undefined,

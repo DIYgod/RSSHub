@@ -53,7 +53,7 @@ export const route: Route = {
     name: 'FX Pair Yesterday',
     maintainers: ['HenryQW'],
     handler,
-    description: `Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).`,
+    description: 'Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).',
 };
 
 async function handler(ctx) {
@@ -108,7 +108,7 @@ async function handler(ctx) {
     return {
         title: `${source} to ${target} by Wise`,
         link,
-        description: `Exchange Rate from Wise`,
+        description: 'Exchange Rate from Wise',
         item: [single],
     };
 }

@@ -209,9 +209,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: `广东工业大学通知公文网 - ` + type.name,
+        title: '广东工业大学通知公文网 - ' + type.name,
         link: site,
-        description: `广东工业大学通知公文网`,
+        description: '广东工业大学通知公文网',
         item: results,
     };
 }

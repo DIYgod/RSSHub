@@ -27,7 +27,7 @@ async function handler(ctx) {
     const embed = !ctx.req.param('embed');
     const response = await got({
         method: 'get',
-        url: `https://api.bilibili.com/x/web-interface/popular`,
+        url: 'https://api.bilibili.com/x/web-interface/popular',
         headers: {
             Referer: 'https://www.bilibili.com/',
         },
@@ -35,9 +35,9 @@ async function handler(ctx) {
     const list = response.data.data.list;
 
     return {
-        title: `bilibili 综合热门`,
+        title: 'bilibili 综合热门',
         link: 'https://www.bilibili.com',
-        description: `bilibili 综合热门`,
+        description: 'bilibili 综合热门',
         item:
             list &&
             list.map((item) => ({

@@ -121,12 +121,12 @@ export const route: Route = {
         {
             title: '中国人事考试网通知公告',
             source: ['www.cpta.com.cn/notice.html', 'www.cpta.com.cn'],
-            target: `/notice`,
+            target: '/notice',
         },
         {
             title: '中国人事考试网成绩发布',
             source: ['www.cpta.com.cn/performance.html', 'www.cpta.com.cn'],
-            target: `/performance`,
+            target: '/performance',
         },
     ],
     example: '/cpta/notice',

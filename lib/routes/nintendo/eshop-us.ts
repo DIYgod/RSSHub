@@ -34,9 +34,9 @@ async function handler(ctx) {
 
     ctx.set('json', response.data);
     return {
-        title: `Nintendo eShop（美服）新游戏`,
-        link: `https://www.nintendo.com/store/games/`,
-        description: `Nintendo eShop（美服）新上架的游戏`,
+        title: 'Nintendo eShop（美服）新游戏',
+        link: 'https://www.nintendo.com/store/games/',
+        description: 'Nintendo eShop（美服）新上架的游戏',
         item: data.map((item) => ({
             title: item.title,
             description: renderEshopUsDescription(item),

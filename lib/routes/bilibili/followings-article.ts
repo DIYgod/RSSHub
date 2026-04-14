@@ -75,7 +75,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 关注专栏动态`,
-        link: `https://t.bilibili.com/?tab=64`,
+        link: 'https://t.bilibili.com/?tab=64',
         item: out,
     };
 }

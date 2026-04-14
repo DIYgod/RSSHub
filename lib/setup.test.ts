@@ -26,7 +26,7 @@ ${script}
 };
 
 const server = setupServer(
-    http.post(`https://api.openai.mock/v1/chat/completions`, () =>
+    http.post('https://api.openai.mock/v1/chat/completions', () =>
         HttpResponse.json({
             choices: [
                 {
@@ -37,12 +37,12 @@ const server = setupServer(
             ],
         })
     ),
-    http.get(`http://rsshub.test/config`, () =>
+    http.get('http://rsshub.test/config', () =>
         HttpResponse.json({
             UA: 'test',
         })
     ),
-    http.get(`http://rsshub.test/buildData`, () =>
+    http.get('http://rsshub.test/buildData', () =>
         HttpResponse.text(`<div class="content">
             <ul>
                 <li>
@@ -58,7 +58,7 @@ const server = setupServer(
             </ul>
         </div>`)
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/appMsg`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/appMsg', () =>
         HttpResponse.text(
             genWeChatMpPage(
                 `
@@ -83,7 +83,7 @@ window.ip_wording = {
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/original_empty`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/original_empty', () =>
         HttpResponse.text(
             `<meta name="description" content="summary" />
 <meta name="author" content="author" />
@@ -102,10 +102,10 @@ var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";
 </script>`
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/original_source`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/original_source', () =>
         HttpResponse.text(
             genWeChatMpPage(
-                `original content`,
+                'original content',
                 `
 var item_show_type = "0";
 var real_item_show_type = "0";
@@ -115,7 +115,7 @@ var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/original_long`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/original_long', () =>
         HttpResponse.text(
             genWeChatMpPage(
                 'long-content-'.repeat(10),
@@ -128,7 +128,7 @@ var msg_source_url = "https://mp.weixin.qq.com/rsshub_test/fake";`
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/img`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/img', () =>
         HttpResponse.text(
             genWeChatMpPage('fake_description', [
                 `
@@ -150,7 +150,7 @@ window.picture_page_info_list = [
             ])
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/audio`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/audio', () =>
         HttpResponse.text(
             genWeChatMpPage('fake_description', [
                 `
@@ -175,7 +175,7 @@ window.cgiData = {
             ])
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/video`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/video', () =>
         HttpResponse.text(
             genWeChatMpPage(
                 'fake_description',
@@ -188,7 +188,7 @@ var ct = "${1_636_626_300}";
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/rsshub_test/fallback`, () =>
+    http.get('https://mp.weixin.qq.com/rsshub_test/fallback', () =>
         HttpResponse.text(
             genWeChatMpPage(
                 'fake_description',
@@ -201,14 +201,14 @@ var ct = "${1_636_626_300}";
             )
         )
     ),
-    http.get(`https://mp.weixin.qq.com/s/rsshub_test`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`)),
-    http.get(`https://mp.weixin.qq.com/s`, ({ request }) => {
+    http.get('https://mp.weixin.qq.com/s/rsshub_test', () => HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback')),
+    http.get('https://mp.weixin.qq.com/s', ({ request }) => {
         const url = new URL(request.url);
         if (url.searchParams.get('__biz') === 'rsshub_test' && url.searchParams.get('mid') === '1' && url.searchParams.get('idx') === '1' && url.searchParams.get('sn') === '1') {
-            return HttpResponse.redirect(`https://mp.weixin.qq.com/rsshub_test/fallback`);
+            return HttpResponse.redirect('https://mp.weixin.qq.com/rsshub_test/fallback');
         }
     }),
-    http.get(`https://mp.weixin.qq.com/mp/rsshub_test/waf`, () =>
+    http.get('https://mp.weixin.qq.com/mp/rsshub_test/waf', () =>
         HttpResponse.text(
             `<html>
 <head>
@@ -236,8 +236,8 @@ var ct = "${1_636_626_300}";
 </body></html>`
         )
     ),
-    http.get(`https://mp.weixin.qq.com/s/rsshub_test_hit_waf`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/mp/rsshub_test/waf`)),
-    http.get(`https://mp.weixin.qq.com/s/unknown_page`, () =>
+    http.get('https://mp.weixin.qq.com/s/rsshub_test_hit_waf', () => HttpResponse.redirect('https://mp.weixin.qq.com/mp/rsshub_test/waf')),
+    http.get('https://mp.weixin.qq.com/s/unknown_page', () =>
         HttpResponse.text(
             `<html>
 <head>
@@ -253,7 +253,7 @@ Unknown paragraph
 </body></html>`
         )
     ),
-    http.get(`https://mp.weixin.qq.com/s/deleted_page`, () =>
+    http.get('https://mp.weixin.qq.com/s/deleted_page', () =>
         HttpResponse.text(
             `<html>
 <head>
@@ -269,17 +269,17 @@ Unknown paragraph
 </body></html>`
         )
     ),
-    http.get(`https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location`, () => HttpResponse.text('', { status: 302 })),
-    http.get(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`, () => HttpResponse.redirect(`https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect`)),
-    http.get(`http://rsshub.test/headers`, ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
-    http.post(`http://rsshub.test/form-post`, async ({ request }) => {
+    http.get('https://mp.weixin.qq.com/s/rsshub_test_redirect_no_location', () => HttpResponse.text('', { status: 302 })),
+    http.get('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect', () => HttpResponse.redirect('https://mp.weixin.qq.com/s/rsshub_test_recursive_redirect')),
+    http.get('http://rsshub.test/headers', ({ request }) => HttpResponse.json(Object.fromEntries(request.headers.entries()))),
+    http.post('http://rsshub.test/form-post', async ({ request }) => {
         const formData = await request.formData();
         return HttpResponse.json({
             test: formData.get('test'),
             req: { headers: Object.fromEntries(request.headers.entries()) },
         });
     }),
-    http.post(`http://rsshub.test/json-post`, async ({ request }) => {
+    http.post('http://rsshub.test/json-post', async ({ request }) => {
         const jsonData = (await request.json()) as {
             test: string;
         };
@@ -287,7 +287,7 @@ Unknown paragraph
             test: jsonData?.test,
         });
     }),
-    http.get(`http://rsshub.test/rss`, () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
+    http.get('http://rsshub.test/rss', () => HttpResponse.text('<rss version="2.0"><channel><item></item></channel></rss>'))
 );
 server.listen({ onUnhandledRequest: 'bypass' });
 

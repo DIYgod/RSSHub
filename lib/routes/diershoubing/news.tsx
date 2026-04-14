@@ -69,9 +69,9 @@ async function handler(ctx) {
     });
 
     return {
-        title: `二柄APP`,
-        link: `https://www.diershoubing.com`,
-        description: `二柄APP新闻`,
+        title: '二柄APP',
+        link: 'https://www.diershoubing.com',
+        description: '二柄APP新闻',
         item: items,
     };
 }

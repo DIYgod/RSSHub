@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     const apiRootUrl = 'https://github.com/advisories';
     const apiUrl = `${apiRootUrl}?query=type%3A${type}+ecosystem%3A${category}`;
-    const currentUrl = `https://github.com/advisories`;
+    const currentUrl = 'https://github.com/advisories';
 
     const response = await got({
         method: 'get',

@@ -52,7 +52,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { type } = ctx.req.param();
 
-    const baseUrl = `https://www.zxcs.info`;
+    const baseUrl = 'https://www.zxcs.info';
     const link = `${baseUrl}/${type}`;
     const response = await ofetch(link);
     const $ = load(response);

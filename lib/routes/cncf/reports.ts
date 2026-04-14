@@ -47,7 +47,7 @@ async function handler() {
     );
 
     return {
-        title: `CNCF - Reports`,
+        title: 'CNCF - Reports',
         link: url,
         item: items,
     };

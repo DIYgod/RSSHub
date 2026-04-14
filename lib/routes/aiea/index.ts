@@ -49,7 +49,7 @@ async function handler(ctx) {
     return await buildData({
         link,
         url: link,
-        title: `%title%`,
+        title: '%title%',
         params: {
             title: 'AIEA Seminars',
         },

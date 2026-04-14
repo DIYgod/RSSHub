@@ -54,8 +54,8 @@ async function handler(ctx) {
     }
 
     return {
-        title: `Twitter following timeline`,
-        link: `https://x.com/home`,
+        title: 'Twitter following timeline',
+        link: 'https://x.com/home',
         // description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {
             data,

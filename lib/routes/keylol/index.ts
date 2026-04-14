@@ -25,7 +25,7 @@ export const route: Route = {
             {
                 name: 'KEYLOL_COOKIE',
                 optional: true,
-                description: `配置后可抓取具有阅读权限的帖子內容`,
+                description: '配置后可抓取具有阅读权限的帖子內容',
             },
         ],
         requirePuppeteer: false,

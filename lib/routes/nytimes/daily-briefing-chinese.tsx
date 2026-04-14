@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['yueyericardo', 'nczitzk'],
     handler,
     url: 'nytimes.com/',
-    description: `URL: [https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)`,
+    description: 'URL: [https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)',
 };
 
 async function handler() {

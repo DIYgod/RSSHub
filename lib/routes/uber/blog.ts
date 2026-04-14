@@ -85,7 +85,7 @@ async function handler() {
     );
 
     return {
-        title: `Uber Engineering Blog`,
+        title: 'Uber Engineering Blog',
         link: rootURL + '/blog/engineering',
         description: 'The technology behind Uber Engineering',
         item: result,

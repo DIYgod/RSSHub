@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.bilibili.com/x/v2/history/toview`,
+        url: 'https://api.bilibili.com/x/v2/history/toview',
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
             Cookie: cookie,

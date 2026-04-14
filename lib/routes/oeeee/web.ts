@@ -51,7 +51,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
     return {
-        title: `南方都市报奥一网`,
+        title: '南方都市报奥一网',
         link: `https://www.oeeee.com/api/channel.php?s=/index/index/channel/${channelEname}`,
         item: items,
     };

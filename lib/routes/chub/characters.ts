@@ -71,7 +71,7 @@ async function handler() {
             link: `${hostURL}/${item.fullPath}`,
             author: String(item.fullPath.split('/', 1)),
             enclosure_url: item.max_res_url,
-            enclosure_type: `image/png`,
+            enclosure_type: 'image/png',
             category: item.topics,
         })),
     };

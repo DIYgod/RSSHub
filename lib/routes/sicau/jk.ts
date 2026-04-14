@@ -83,7 +83,7 @@ export const route: Route = {
             method: 'post',
         });
         const query = async (page: number) =>
-            await $post(`/getUserSchoolActList`, {
+            await $post('/getUserSchoolActList', {
                 query: {
                     gid: gidDict[gid],
                     typeId: typeDict[typeId],

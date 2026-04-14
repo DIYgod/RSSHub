@@ -5,7 +5,7 @@ import app from '@/app';
 import { config } from '@/config';
 
 describe('error', () => {
-    it(`error`, async () => {
+    it('error', async () => {
         const response = await app.request('/test/error');
         expect(response.status).toBe(503);
         const text = await response.text();
@@ -14,7 +14,7 @@ describe('error', () => {
 });
 
 describe('httperror', () => {
-    it(`httperror`, async () => {
+    it('httperror', async () => {
         const response = await app.request('/test/httperror');
         expect(response.status).toBe(503);
         const text = await response.text();
@@ -23,11 +23,11 @@ describe('httperror', () => {
 });
 
 describe('RequestInProgressError', () => {
-    it(`RequestInProgressError with retry`, async () => {
+    it('RequestInProgressError with retry', async () => {
         const responses = await Promise.all([app.request('/test/slow'), app.request('/test/slow')]);
         expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 200]));
     });
-    it(`RequestInProgressError`, async () => {
+    it('RequestInProgressError', async () => {
         const responses = await Promise.all([app.request('/test/slow4'), app.request('/test/slow4')]);
         expect(new Set(responses.map((r) => r.status))).toEqual(new Set([200, 503]));
         expect(new Set(responses.map((r) => r.headers.get('cache-control')))).toEqual(new Set([`public, max-age=${config.cache.routeExpire}`, `public, max-age=${config.requestTimeout / 1000}`]));
@@ -37,7 +37,7 @@ describe('RequestInProgressError', () => {
 });
 
 describe('config-not-found-error', () => {
-    it(`config-not-found-error`, async () => {
+    it('config-not-found-error', async () => {
         const response = await app.request('/test/config-not-found-error');
         expect(response.status).toBe(503);
         const text = await response.text();
@@ -46,7 +46,7 @@ describe('config-not-found-error', () => {
 });
 
 describe('invalid-parameter-error', () => {
-    it(`invalid-parameter-error`, async () => {
+    it('invalid-parameter-error', async () => {
         const response = await app.request('/test/invalid-parameter-error');
         expect(response.status).toBe(503);
         const text = await response.text();
@@ -55,7 +55,7 @@ describe('invalid-parameter-error', () => {
 });
 
 describe('captcha-error', () => {
-    it(`captcha-error`, async () => {
+    it('captcha-error', async () => {
         const response = await app.request('/test/captcha-error');
         expect(response.status).toBe(503);
         const text = await response.text();

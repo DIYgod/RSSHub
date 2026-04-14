@@ -50,7 +50,7 @@ export const route: Route = {
   <img loading="lazy" src="/img/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS" />`,
 };
 
-const headers = { Referer: `https://m.douban.com/` };
+const headers = { Referer: 'https://m.douban.com/' };
 
 function tryFixStatus(status) {
     let result = { isFixSuccess: true, why: '' };
@@ -222,20 +222,20 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
                 activityInDesc += `<a href="${status.reshared_status.author.url}" target="_blank" rel="noopener noreferrer">`;
             }
             if (authorNameBold) {
-                activityInDesc += `<strong>`;
+                activityInDesc += '<strong>';
             }
             activityInDesc += status.reshared_status.author.name;
             if (authorNameBold) {
-                activityInDesc += `</strong>`;
+                activityInDesc += '</strong>';
             }
             if (readable) {
-                activityInDesc += `</a>`;
+                activityInDesc += '</a>';
             }
-            activityInDesc += ` 的广播`;
+            activityInDesc += ' 的广播';
             activityInTitle = `转发 ${status.reshared_status.author.name} 的广播`;
         } else {
-            activityInDesc = `转发广播`;
-            activityInTitle = `转发广播`;
+            activityInDesc = '转发广播';
+            activityInTitle = '转发广播';
         }
     } else {
         activityInDesc = status.activity;
@@ -251,16 +251,16 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
             usernameAndAvatar += `<img width="${sizeOfAuthorAvatar}" height="${sizeOfAuthorAvatar}" src="${status.author.avatar}" ${readable ? 'hspace="8" vspace="8" align="left"' : ''} />`;
         }
         if (authorNameBold) {
-            usernameAndAvatar += `<strong>`;
+            usernameAndAvatar += '<strong>';
         }
         usernameAndAvatar += status.author.name;
         if (authorNameBold) {
-            usernameAndAvatar += `</strong>`;
+            usernameAndAvatar += '</strong>';
         }
         if (readable) {
-            usernameAndAvatar += `</a>`;
+            usernameAndAvatar += '</a>';
         }
-        usernameAndAvatar += `&ensp;`;
+        usernameAndAvatar += '&ensp;';
         description += usernameAndAvatar + activityInDesc + (showColonInDesc ? ': ' : '');
     }
 
@@ -299,7 +299,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
     }
 
     if (status.images && status.images.length) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div>` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div>' : '<br>';
 
         // 一些RSS Reader会识别所有<img>标签作为内含图片显示，我们不想要头像也作为内含图片之一
         // 让所有配图在description的最前面再次出现一次，但宽高设为0
@@ -320,7 +320,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
     }
 
     if (status.video_info) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div>` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div>' : '<br>';
         const videoCover = status.video_info.cover_url;
         const videoSrc = status.video_info.video_url;
         if (videoSrc) {
@@ -350,16 +350,16 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
                 usernameAndAvatar += `<a href="${status.parent_status.author.url}">`;
             }
             if (authorNameBold) {
-                usernameAndAvatar += `<strong>`;
+                usernameAndAvatar += '<strong>';
             }
             usernameAndAvatar += status.parent_status.author.name;
             if (authorNameBold) {
-                usernameAndAvatar += `</strong>`;
+                usernameAndAvatar += '</strong>';
             }
             if (readable) {
-                usernameAndAvatar += `</a>`;
+                usernameAndAvatar += '</a>';
             }
-            usernameAndAvatar += `:&ensp;`;
+            usernameAndAvatar += ':&ensp;';
             description += usernameAndAvatar + status.parent_status.text;
             if (showRetweetTextInTitle) {
                 title += status.parent_status.author.name + ': ' + status.parent_status.text;
@@ -376,8 +376,8 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
     if (status.card) {
         if (description) {
             description += readable
-                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
-                : `<br>`;
+                ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">'
+                : '<br>';
         }
         if (!status.card.images_block && status.card.image) {
             description += `<img src="${status.card.image.large.url}" ${readable ? 'vspace="0" hspace="12" align="left" height="75" style="height: 75px;"' : ''} />`;
@@ -408,7 +408,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
         }
         description += cardContents.join('<br>');
         if (readable) {
-            description += `<br clear="both" /><div style="clear: both"></div></blockquote>`;
+            description += '<br clear="both" /><div style="clear: both"></div></blockquote>';
         }
         if (status.card.images_block) {
             const imageUrls: Array<string | undefined> = [];
@@ -421,7 +421,7 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
 
     // video_card
     if (status.video_card) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">' : '<br>';
         const videoCover = status.video_card.video_info && status.video_card.video_info.cover_url;
         const videoSrc = status.video_card.video_info && status.video_card.video_info.video_url;
 
@@ -431,13 +431,13 @@ function getContentByActivity(ctx, item, params = {}, picsPrefixes = []) {
 
         description += `${videoSrc ? `<video src="${videoSrc}" ${videoCover ? `poster="${videoCover}"` : ''}></video>` : ''}<br>${status.video_card.title ? `<a href="${status.video_card.url}">${status.video_card.title}</a>` : ''}`;
         if (readable) {
-            description += `</blockquote>`;
+            description += '</blockquote>';
         }
     }
 
     // reshared_status
     if (status.reshared_status) {
-        description += readable ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">` : `<br>`;
+        description += readable ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">' : '<br>';
 
         if (showRetweetTextInTitle) {
             title += ' | ';

@@ -91,7 +91,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['bennyyip'],
     handler,
-    description: `Provide full article RSS for CBC topics.`,
+    description: 'Provide full article RSS for CBC topics.',
 };
 
 async function handler(ctx) {

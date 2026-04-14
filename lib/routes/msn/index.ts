@@ -17,7 +17,7 @@ export const route: Route = {
     },
     categories: ['traditional-media'],
     example: '/zh-tw/Bloomberg/sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s',
-    description: `MSN News`,
+    description: 'MSN News',
     features: {
         requireConfig: false,
         requirePuppeteer: false,

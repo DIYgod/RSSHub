@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://bbs.hupu.com';
     const apiRootUrl = 'https://games.mobileapi.hupu.com';
-    const currentUrl = `${rootUrl}/${id}${order === '1' ? `-postdate` : ''}`;
+    const currentUrl = `${rootUrl}/${id}${order === '1' ? '-postdate' : ''}`;
 
     const response = await got({
         method: 'get',

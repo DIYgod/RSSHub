@@ -38,7 +38,7 @@ export const route: Route = {
     name: 'User',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: `Subscribe to the content of a specific user`,
+    description: 'Subscribe to the content of a specific user',
 };
 
 async function handler(ctx) {

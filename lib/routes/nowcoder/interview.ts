@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: '牛客面试经验',
-    description: `牛客面试经验`,
+    description: '牛客面试经验',
     maintainers: ['xia0ne'],
     handler,
     url: 'nowcoder.com/',

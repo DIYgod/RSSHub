@@ -47,6 +47,6 @@ export async function handler(ctx) {
         title: 'NBER Working Paper',
         link: 'https://www.nber.org/papers',
         item: items,
-        description: `National Bureau of Economic Research Working Papers articles`,
+        description: 'National Bureau of Economic Research Working Papers articles',
     };
 }

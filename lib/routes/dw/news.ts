@@ -38,7 +38,7 @@ For the site https://www.dw.com/de/deutschland/s-12321 the language code would b
     ],
 };
 
-const defaultUrl = `https://www.dw.com/graph-api/en/content/navigation/9097`;
+const defaultUrl = 'https://www.dw.com/graph-api/en/content/navigation/9097';
 const typenames = new Set(['Article', 'Liveblog', 'Video']);
 
 async function handler(ctx) {

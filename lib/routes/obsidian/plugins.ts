@@ -27,7 +27,7 @@ async function handler() {
 
     return {
         title: 'Obsidian Plugins',
-        link: `https://obsidian.md/plugins`,
+        link: 'https://obsidian.md/plugins',
         item: data.map((item) => ({
             title: item.name,
             description: `${item.description}<br><br>Downloads: ${stats[item.id].downloads}`,

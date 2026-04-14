@@ -79,7 +79,7 @@ async function handler(ctx) {
         item: vimeojs.map((item) => ({
             title: item.name,
             description: renderDescription({
-                videoUrl: item.uri.replace(`/videos`, ''),
+                videoUrl: item.uri.replace('/videos', ''),
                 vdescription: item.description || '',
             }),
             pubDate: parseDate(item.created_time),

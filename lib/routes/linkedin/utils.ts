@@ -114,7 +114,7 @@ function parseJobDetail(data) {
     const job = new Job();
     const $ = load(data);
 
-    job.recruiter = $('a.message-the-recruiter__cta').attr(`href`);
+    job.recruiter = $('a.message-the-recruiter__cta').attr('href');
     job.description = $('div.description__text description__text--rich').text();
 
     return job;

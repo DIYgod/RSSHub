@@ -61,7 +61,7 @@ async function handler(ctx): Promise<Data> {
         }
     } else {
         // exclude category-joshi to get result of general
-        apiUrl += `?categories_exclude=1598`;
+        apiUrl += '?categories_exclude=1598';
     }
 
     const posts = await ofetch(apiUrl, {

@@ -231,7 +231,7 @@ async function handler(ctx) {
     // When the hour is 3, some special rank_id require a special hour num
     const true_hour = getTrueHour(rank_type, rank_id, hour);
 
-    const response = await got(`https://www.smzdm.com/top/json_more`, {
+    const response = await got('https://www.smzdm.com/top/json_more', {
         headers: {
             Referer: 'https://www.smzdm.com/top',
             ...getHeaders(),

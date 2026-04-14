@@ -63,7 +63,7 @@ async function handler(ctx) {
     const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
 
     if (!utils.isYouTubeChannelId(id)) {
-        throw new InvalidParameterError(`Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.`);
+        throw new InvalidParameterError('Invalid YouTube channel ID. \nYou may want to use <code>/youtube/user/:id</code> instead.');
     }
 
     const isJsonFeed = ctx.req.query('format') === 'json';

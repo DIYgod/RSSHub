@@ -49,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const rootUrl = `https://www.nowcoder.com/job/center/`;
+    const rootUrl = 'https://www.nowcoder.com/job/center/';
     const currentUrl = `${rootUrl}?${ctx.req.param('type') ? 'type=' + ctx.req.param('type') : ''}${ctx.req.param('city') ? '&city=' + ctx.req.param('city') : ''}${ctx.req.param('order') ? '&order=' + ctx.req.param('order') : ''}${
         ctx.req.param('recruitType') ? '&recruitType=' + ctx.req.param('recruitType') : ''
     }${ctx.req.param('latest') ? '&latest=' + ctx.req.param('latest') : ''}`;

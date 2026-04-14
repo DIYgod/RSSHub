@@ -40,15 +40,15 @@ async function handler(): Promise<Data> {
         language: 'en',
         item: items,
         image: `${baseUrl}/current-affairs/images/news-today-logo.svg`,
-        icon: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
-        logo: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
+        icon: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
+        logo: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
         allowEmpty: true,
     };
 }
 
 async function processNews(page) {
     const $ = load(page);
-    const divItems = $(`#monthly-table-of-content>div`).toArray();
+    const divItems = $('#monthly-table-of-content>div').toArray();
     const linkItems = divItems.flatMap((item) => {
         const maintitle = $(item).find('button>div:nth-child(2) div.text-left').text().trim();
         return $(item)

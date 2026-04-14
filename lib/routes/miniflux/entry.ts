@@ -226,7 +226,7 @@ async function handler(ctx) {
             agTitle = `MiniFlux | ${feedsName.join(', ')}`;
             agInfo = `A RSS feed powered by MiniFlux and RSSHub effortlessly republishes the contents in "${feedsName.join('" & "')}".`;
         } else {
-            agTitle = `MiniFlux | Feeds Aggregator`;
+            agTitle = 'MiniFlux | Feeds Aggregator';
             agInfo = 'An aggregator powered by MiniFlux and RSSHub with empty content. If this is not your intention, please double-check your setting for parameters.';
         }
 
@@ -276,7 +276,7 @@ async function handler(ctx) {
         }
 
         result = {
-            title: `MiniFlux | All`,
+            title: 'MiniFlux | All',
             link: instance,
             description: `All feeds on ${instance} powered by MiniFlux`,
             item: articles,

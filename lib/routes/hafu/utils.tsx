@@ -57,7 +57,7 @@ async function tryGetFullText(href, link, type) {
 
 function tryGetAttachments(articleData, articleBody, type) {
     if (type === 'ggtz') {
-        articleData(`[id^=nattach]`)
+        articleData('[id^=nattach]')
             .prev()
             .map((_, item) => {
                 const href = articleData(item).attr('href').slice(1);

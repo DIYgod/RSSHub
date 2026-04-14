@@ -42,7 +42,7 @@ export const route: Route = {
                 } else if (params.category && !params.type) {
                     return `/nikkei/cn/cn/${params.category.replace('.html', '')}`;
                 } else {
-                    return `/nikkei/cn/cn`;
+                    return '/nikkei/cn/cn';
                 }
             },
         },
@@ -55,7 +55,7 @@ export const route: Route = {
                 } else if (params.category && !params.type) {
                     return `/nikkei/cn/zh/${params.category.replace('.html', '')}`;
                 } else {
-                    return `/nikkei/cn/zh`;
+                    return '/nikkei/cn/zh';
                 }
             },
         },

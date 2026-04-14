@@ -70,7 +70,7 @@ async function handler(ctx) {
         // 源链接
         link: rootUrl,
         // 源说明
-        description: `西安理工大学教务处-` + dic_title[category],
+        description: '西安理工大学教务处-' + dic_title[category],
         // 遍历此前获取的数据
         item: await Promise.all(
             list.map((item) =>

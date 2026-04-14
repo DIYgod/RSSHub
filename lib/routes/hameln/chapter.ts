@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'chapter',
     maintainers: ['huangliangshusheng'],
     handler,
-    description: `Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)`,
+    description: 'Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)',
 };
 
 async function handler(ctx) {

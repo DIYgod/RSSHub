@@ -43,7 +43,7 @@ export const route: Route = {
     maintainers: ['HenryQW', 'pseudoyu'],
     handler,
     url: 'nytimes.com/',
-    description: `By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.`,
+    description: 'By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.',
 };
 
 async function handler(ctx) {

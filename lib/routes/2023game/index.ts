@@ -41,7 +41,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await got(currentUrl);
     const $ = load(response.data as any);
 
-    let selector = `.news`;
+    let selector = '.news';
     if (tab !== 'all') {
         selector = `#${tab} > ${selector}`;
     }

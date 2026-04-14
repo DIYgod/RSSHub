@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const baseUrl = 'https://www.stcn.com';
     const targetUrl: string = new URL(`article/list/${id}.html`, baseUrl).href;
-    const apiUrl: string = new URL(`article/category-news-rank.html`, baseUrl).href;
+    const apiUrl: string = new URL('article/category-news-rank.html', baseUrl).href;
 
     const response = await ofetch(apiUrl, {
         headers: {

@@ -11,7 +11,7 @@ import { puppeteerGet, renderDesc } from './utils';
 const handler = async (ctx) => {
     const pub = ctx.req.param('pub');
     const jrn = ctx.req.param('jrn');
-    const host = `https://pubs.aip.org`;
+    const host = 'https://pubs.aip.org';
     const jrnlUrl = `${host}/${pub}/${jrn}/issue`;
     if (!isValidHost(pub)) {
         throw new InvalidParameterError('Invalid pub');

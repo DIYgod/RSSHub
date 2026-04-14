@@ -58,7 +58,7 @@ async function handler(ctx) {
                     .text()
                     .match(/window\._rcState_ = (.*);/)?.[1];
 
-                item.description = rcState ? parseDescriptionFromState(rcState) : ($(`div[data-testid="newsStoryMedia"]`).html() ?? '') + ($('article > main').html() ?? '');
+                item.description = rcState ? parseDescriptionFromState(rcState) : ($('div[data-testid="newsStoryMedia"]').html() ?? '') + ($('article > main').html() ?? '');
 
                 return item;
             })

@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const pub = ctx.req.param('pub');
     const jrn = ctx.req.param('jrn');
-    const host = `https://pubs.aip.org`;
+    const host = 'https://pubs.aip.org';
     const jrnlUrl = `${host}/${pub}/${jrn}/issue`;
 
     const { data: response } = await got.get(jrnlUrl);

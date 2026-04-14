@@ -48,7 +48,7 @@ async function handler(ctx) {
     const list = JSONresponse.data.appmsg_list;
     const $ = load(HTMLresponse.data);
     // 标题，另外差一个菜单标题！求助
-    const mptitle = $('div.articles_header').find('a').text() + `|` + $('div.articles_header > h2.rich_media_title').text();
+    const mptitle = $('div.articles_header').find('a').text() + '|' + $('div.articles_header > h2.rich_media_title').text();
     const articledata = await Promise.all(
         list.map((item) => {
             const single = {

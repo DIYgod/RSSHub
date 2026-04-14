@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = `https://www.yystv.cn/docs`;
+    const url = 'https://www.yystv.cn/docs';
     const response = await ofetch(url);
 
     const $ = load(response);
@@ -62,7 +62,7 @@ async function handler() {
 
     return {
         title: '游研社-' + $('title').text(),
-        link: `https://www.yystv.cn/docs`,
+        link: 'https://www.yystv.cn/docs',
         item: items,
     };
 }

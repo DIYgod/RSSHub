@@ -46,7 +46,7 @@ async function handler() {
 
     const items = data.map((item) => ({
         title: item.cname + ' ' + item.sigtypename,
-        link: `http://www.tqyb.com.cn/gz/weatherAlarm/otherCity/`,
+        link: 'http://www.tqyb.com.cn/gz/weatherAlarm/otherCity/',
         description: renderToString(
             <>
                 <text>地区： {item.cname} </text>
@@ -62,7 +62,7 @@ async function handler() {
 
     return {
         title: '广东省内城市预警信号',
-        link: `http://www.tqyb.com.cn/gz/weatherAlarm/otherCity/`,
+        link: 'http://www.tqyb.com.cn/gz/weatherAlarm/otherCity/',
         item: items,
     };
 }

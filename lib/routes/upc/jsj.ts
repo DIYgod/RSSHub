@@ -92,9 +92,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: HEAD[type] + `-计算机科学与技术学院`,
+        title: HEAD[type] + '-计算机科学与技术学院',
         link,
-        description: HEAD[type] + `-计算机科学与技术学院`,
+        description: HEAD[type] + '-计算机科学与技术学院',
         item: out,
     };
 }

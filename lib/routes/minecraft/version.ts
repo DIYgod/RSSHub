@@ -8,8 +8,8 @@ export const route: Route = {
     categories: ['game'],
     example: '/minecraft/version',
     parameters: {
-        versionType: `Game version type, \`all\` by default`,
-        linkType: `Link added to feed, \`official\` by default`,
+        versionType: 'Game version type, `all` by default',
+        linkType: 'Link added to feed, `official` by default',
     },
     features: {
         requireConfig: false,
@@ -60,7 +60,7 @@ const typeName = {
 };
 
 const linkFormatter: any = {
-    official: () => `https://www.minecraft.net`,
+    official: () => 'https://www.minecraft.net',
     enwiki: (item: VersionInManifest) => {
         let id = item.id;
         if (item.type === 'old_beta' && id.startsWith('b')) {
@@ -72,7 +72,7 @@ const linkFormatter: any = {
             } else if (id.startsWith('c')) {
                 id = `Classic ${id.slice(1)}`;
             } else if (id.startsWith('inf-')) {
-                id = `Infdev`;
+                id = 'Infdev';
             } else if (id.startsWith('rd-')) {
                 id = `pre-Classic ${id}`;
             }
@@ -93,7 +93,7 @@ const linkFormatter: any = {
             } else if (id.startsWith('c')) {
                 id = `Java版Classic ${id.slice(1)}`;
             } else if (id.startsWith('inf-')) {
-                id = `Java版Infdev`;
+                id = 'Java版Infdev';
             } else if (id.startsWith('rd-')) {
                 id = `Java版pre-Classic ${id}`;
             }
@@ -125,7 +125,7 @@ async function handler(ctx?: Context) {
 
     return {
         title,
-        link: `https://www.minecraft.net/`,
+        link: 'https://www.minecraft.net/',
         description: title,
         item: data.map((item) => ({
             title: `${item.id} ${typeName[item.type] || ''}更新`,

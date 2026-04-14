@@ -80,7 +80,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `Latest News | KBS WORLD`,
+        title: 'Latest News | KBS WORLD',
         link: currentUrl,
         item: items,
     };

@@ -53,7 +53,7 @@ async function handler() {
     return {
         title: 'Fur Affinity | Status',
         link: 'https://www.furaffinity.net/',
-        description: `Fur Affinity Status`,
+        description: 'Fur Affinity Status',
         item: items,
     };
 }

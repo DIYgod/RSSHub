@@ -44,7 +44,7 @@ async function handler(ctx: Context) {
     const extra = {
         description: (topic: string) => `Articles for your research and knowledge under ${topic}`,
         date: true,
-        selector: `div.card`,
+        selector: 'div.card',
     };
     return await commonHandler('https://insider.finology.in', `/${category}`, extra);
 }

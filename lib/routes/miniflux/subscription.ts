@@ -120,9 +120,9 @@ async function handler(ctx) {
     }
 
     return {
-        title: `MiniFlux | Subscription List`,
+        title: 'MiniFlux | Subscription List',
         link: instance,
-        description: `A subscription tracking feed.`,
+        description: 'A subscription tracking feed.',
         item: subscription,
         allowEmpty: true,
     };

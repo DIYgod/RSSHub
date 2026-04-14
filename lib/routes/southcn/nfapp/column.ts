@@ -37,7 +37,7 @@ async function handler(ctx) {
 
     const getColumnDetail = `https://api.nfapp.southcn.com/nanfang_if/getColumn?columnId=${columnId}`;
     const { data: responseColumn } = await got(getColumnDetail);
-    const columnName = responseColumn.columnName === '' ? `南方+` : `南方+ - ${responseColumn.columnName}`;
+    const columnName = responseColumn.columnName === '' ? '南方+' : `南方+ - ${responseColumn.columnName}`;
     const columnLink = responseColumn.linkUrl === '' ? `https://m.nfapp.southcn.com/${columnId}` : responseColumn.linkUrl;
 
     /* Notes of columnLink:

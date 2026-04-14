@@ -33,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const channel = channelMap[ctx.req.param('channel')] ?? ctx.req.param('channel');
 
-    const { data: response } = await got(`https://www.guokr.com/apis/minisite/article.json`, {
+    const { data: response } = await got('https://www.guokr.com/apis/minisite/article.json', {
         searchParams: {
             retrieve_type: 'by_wx',
             channel_key: channel,

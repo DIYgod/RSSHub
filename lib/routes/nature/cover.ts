@@ -45,7 +45,7 @@ export const route: Route = {
     maintainers: ['y9c', 'pseudoyu'],
     handler,
     url: 'nature.com/',
-    description: `Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.`,
+    description: 'Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.',
 };
 
 async function handler() {

@@ -139,7 +139,7 @@ async function handler(ctx) {
 
     return {
         title: `小黑盒 ${platformInfo.desc} 游戏折扣`,
-        link: `https://xiaoheihe.cn`,
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

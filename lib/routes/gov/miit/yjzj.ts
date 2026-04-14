@@ -79,7 +79,7 @@ async function handler() {
     );
 
     return {
-        title: `工业和信息化部 - 意见征集`,
+        title: '工业和信息化部 - 意见征集',
         link: url,
         item: items,
     };

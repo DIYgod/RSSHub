@@ -29,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const url = `https://europechinese.blogspot.com/`;
+    const url = 'https://europechinese.blogspot.com/';
     const { data: response } = await got(url);
     const $ = load(response);
     const list = $('h3.post-title');
@@ -60,7 +60,7 @@ async function handler() {
     );
 
     return {
-        title: `歐洲動態（國際）| 最新`,
+        title: '歐洲動態（國際）| 最新',
         link: url,
         item: out,
     };

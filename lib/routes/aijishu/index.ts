@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type, name = 'newest' } = ctx.req.param();
-    const u = name === 'newest' ? `https://aijishu.com/` : `https://aijishu.com/${type}/${name}`;
+    const u = name === 'newest' ? 'https://aijishu.com/' : `https://aijishu.com/${type}/${name}`;
     const html = await got(u);
 
     const $ = load(html.data);

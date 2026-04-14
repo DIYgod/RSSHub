@@ -28,16 +28,16 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
     const browser = await puppeteer();
 
-    let link = `https://www.dcard.tw/f`;
-    let api = `https://www.dcard.tw/service/api/v2`;
-    let title = `Dcard - `;
+    let link = 'https://www.dcard.tw/f';
+    let api = 'https://www.dcard.tw/service/api/v2';
+    let title = 'Dcard - ';
 
     if (section !== 'posts' && section !== 'popular' && section !== 'latest') {
         link += `/${section}`;
         api += `/forums/${section}`;
         title += `${section} - `;
     }
-    api += `/posts`;
+    api += '/posts';
     if (type === 'popular') {
         link += '?latest=false';
         api += '?popular=true';

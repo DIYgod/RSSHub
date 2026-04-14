@@ -19,7 +19,7 @@ export const route: Route = {
             source: ['mashiro.best/', 'mashiro.best/:lang/'],
         },
     ],
-    name: `Blog`,
+    name: 'Blog',
     maintainers: ['MuenYu'],
     handler: async (ctx) => {
         const { lang = 'en' } = ctx.req.param();

@@ -27,7 +27,7 @@ export const route: Route = {
     maintainers: ['lilPiper'],
     handler,
     url: 'sz-water.com.cn/*',
-    description: `可能仅限中国大陆服务器访问，以实际情况为准。`,
+    description: '可能仅限中国大陆服务器访问，以实际情况为准。',
 };
 
 async function handler() {

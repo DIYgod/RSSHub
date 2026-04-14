@@ -18,7 +18,7 @@ export const route: Route = {
     name: '教育学部-培养动态',
     maintainers: ['etShaw-zh'],
     handler,
-    description: `\`https://fe.bnu.edu.cn/pc/cms1info/list/1/18\` 则对应为 \`/bnu/fe/18`,
+    description: '`https://fe.bnu.edu.cn/pc/cms1info/list/1/18` 则对应为 `/bnu/fe/18',
 };
 
 async function handler(ctx) {

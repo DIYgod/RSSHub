@@ -30,7 +30,7 @@ export const route: Route = {
         const { id } = ctx.req.param();
         const baseUrl = 'https://comic-fuz.com';
         const openUrl = `${baseUrl}/manga/${id}`;
-        const imgUrl = `https://img.comic-fuz.com`;
+        const imgUrl = 'https://img.comic-fuz.com';
 
         const response = await ofetch(openUrl, {
             headers: {

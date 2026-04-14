@@ -52,7 +52,7 @@ export const route: Route = {
     name: '地球科学与工程学院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `研究生教育通知公告`,
+    description: '研究生教育通知公告',
 };
 
 async function handler() {

@@ -12,7 +12,7 @@ async function getNoticeList(ctx, url, host, titleSelector, dateSelector, conten
     }
     const $ = load(response);
 
-    const list = $(`tr[height=20]`)
+    const list = $('tr[height=20]')
         .toArray()
         .map((item) => {
             item = $(item);

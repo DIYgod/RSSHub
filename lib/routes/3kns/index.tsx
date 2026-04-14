@@ -82,7 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await got(currentUrl);
     const $ = load(response.data as any);
 
-    const selector = `form .newItem`;
+    const selector = 'form .newItem';
     const items: DataItem[] = $(selector)
         .toArray()
         .map((item) => {

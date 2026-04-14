@@ -22,8 +22,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `https://www.uraaka-joshi.com/`;
-    const title = `裏垢女子まとめ`;
+    const link = 'https://www.uraaka-joshi.com/';
+    const title = '裏垢女子まとめ';
 
     const browser = await puppeteer();
 

@@ -33,7 +33,7 @@ async function handler(ctx) {
 
     return {
         title: `Twitter Trends on ${data[0].locations[0].name}`,
-        link: `https://x.com/i/trends`,
+        link: 'https://x.com/i/trends',
         item: trends
             .filter((t) => !t.promoted_content)
             .map((t) => ({

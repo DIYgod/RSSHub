@@ -47,7 +47,7 @@ const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['pro
                     if (Number.parseInt(proxyObj.port)) {
                         proxyUrlHandler.port = proxyObj.port;
                     } else {
-                        logger.warn(`PROXY_PORT is not a number, ignoring`);
+                        logger.warn('PROXY_PORT is not a number, ignoring');
                     }
                 } else {
                     logger.warn('PROXY_PORT is not set, leaving proxy agent to determine');

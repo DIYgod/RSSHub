@@ -59,7 +59,7 @@ async function handler() {
         .toArray()
         .map((item) => ({
             title: $(item).find('kaosxmmc').text(),
-            link: `http://www.rsj.sh.gov.cn/ksyzc/index801.jsp`,
+            link: 'http://www.rsj.sh.gov.cn/ksyzc/index801.jsp',
             description: renderDescription({
                 name: $(item).find('kaosxmmc').text(),
                 type: $(item).find('kaoslb_dmfy').text(),

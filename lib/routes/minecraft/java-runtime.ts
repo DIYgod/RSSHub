@@ -8,8 +8,8 @@ export const route: Route = {
     categories: ['game'],
     example: '/minecraft/java-runtime',
     parameters: {
-        arch: `Arch, \`all\` by default`,
-        javaType: `Java runtime type, \`all\` by default`,
+        arch: 'Arch, `all` by default',
+        javaType: 'Java runtime type, `all` by default',
     },
     features: {
         requireConfig: false,

@@ -15,7 +15,7 @@ export const route: Route = {
             {
                 name: 'MOX_COOKIE',
                 optional: true,
-                description: `注册用户登录后的 Cookie, 可以从浏览器开发者工具Network面板中的mox页面请求获取，Cookie内容形如VOLSKEY=xxxxxx; VLIBSID=xxxxxx; VOLSESS=xxxxxx`,
+                description: '注册用户登录后的 Cookie, 可以从浏览器开发者工具Network面板中的mox页面请求获取，Cookie内容形如VOLSKEY=xxxxxx; VLIBSID=xxxxxx; VOLSESS=xxxxxx',
             },
         ],
         antiCrawler: true,

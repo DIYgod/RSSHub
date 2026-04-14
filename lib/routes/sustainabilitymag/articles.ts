@@ -64,7 +64,7 @@ const render = (widgets) =>
         .join('');
 
 async function handler() {
-    const baseURL = `https://sustainabilitymag.com`;
+    const baseURL = 'https://sustainabilitymag.com';
     const feedURL = `${baseURL}/articles`;
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';

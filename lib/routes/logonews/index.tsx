@@ -19,7 +19,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     url: 'logonews.cn/',
-    description: `如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 \`https://www.logonews.cn/tag/china\`，可得路由为 [\`/logonews/tag/china\`](https://rsshub.app/logonews/tag/china)。`,
+    description: '如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。',
 };
 
 async function handler(ctx) {

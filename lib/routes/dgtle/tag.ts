@@ -28,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = ProcessFeedItems(limit, response.data.dataList, $);
 
-    const title: string | undefined = $(`div.tags-detail-top-1 h2`).text();
+    const title: string | undefined = $('div.tags-detail-top-1 h2').text();
 
     return {
         title: `${$('title').text().trim().split(/\s/)[0]}${title ? ` - ${title}` : id}`,
