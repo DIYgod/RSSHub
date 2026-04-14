@@ -57,50 +57,51 @@ async function handler(ctx) {
             body: {
                 operationName: 'ArtistDetailLoadUser',
                 query: /* GraphQL */ `
-              query ArtistDetailLoadUser($artistUrl: String!) {
-                user(artistUrl: $artistUrl) {
-                  coverUrl
-                  coverImageMeta {
-                    isDark
-                    isLight
-                    startRgba: rgba(opacity: 1)
-                    endRgba: rgba(opacity: 0.24)
-                  }
-                  createdAt
-                  instruments
-                  userId
-                  name
-                  profileUrl
-                  iamUuid
-                  artistUrl
-                  profileImageMeta {
-                    startRgba: rgba(opacity: 1)
-                    endRgba: rgba(opacity: 0.24)
-                    hex
-                    isDark
-                  }
-                  social {
-                    type
-                    url
-                  }
-                  sheetsCount
-                  isArtist
-                  isOfficial
-                  likes
-                  seoInfo {
-                    title
-                    description
-                    keywords
-                    imageUrl
-                  }
-                  uploadedInstrumentGroups {
-                    name
-                    instruments {
-                      name
+                    query ArtistDetailLoadUser($artistUrl: String!) {
+                        user(artistUrl: $artistUrl) {
+                            coverUrl
+                            coverImageMeta {
+                                isDark
+                                isLight
+                                startRgba: rgba(opacity: 1)
+                                endRgba: rgba(opacity: 0.24)
+                            }
+                            createdAt
+                            instruments
+                            userId
+                            name
+                            profileUrl
+                            iamUuid
+                            artistUrl
+                            profileImageMeta {
+                                startRgba: rgba(opacity: 1)
+                                endRgba: rgba(opacity: 0.24)
+                                hex
+                                isDark
+                            }
+                            social {
+                                type
+                                url
+                            }
+                            sheetsCount
+                            isArtist
+                            isOfficial
+                            likes
+                            seoInfo {
+                                title
+                                description
+                                keywords
+                                imageUrl
+                            }
+                            uploadedInstrumentGroups {
+                                name
+                                instruments {
+                                    name
+                                }
+                            }
+                        }
                     }
-                  }
-                }
-              }`,
+                `,
                 variables: {
                     artistUrl: username,
                 },
@@ -114,37 +115,38 @@ async function handler(ctx) {
         body: {
             operationName: 'loadArtistSheets',
             query: /* GraphQL */ `
-          query loadArtistSheets($data: SheetSearchInput!) {
-            sheetSearch(data: $data) {
-              list {
-                productId
-                productType
-                metaSong
-                metaMaker
-                metaMusician
-                metaMemo
-                instruments
-                createdAt
-                level
-                price
-                sheetId
-                status
-                author {
-                  name
-                  artistUrl
-                  profileUrl
+                query loadArtistSheets($data: SheetSearchInput!) {
+                    sheetSearch(data: $data) {
+                        list {
+                            productId
+                            productType
+                            metaSong
+                            metaMaker
+                            metaMusician
+                            metaMemo
+                            instruments
+                            createdAt
+                            level
+                            price
+                            sheetId
+                            status
+                            author {
+                                name
+                                artistUrl
+                                profileUrl
+                            }
+                            youtubeId
+                            title
+                            supportCountry
+                            excludeCountries
+                            __typename
+                        }
+                        total
+                        current
+                        listNum
+                    }
                 }
-                youtubeId
-                title
-                supportCountry
-                excludeCountries
-                __typename
-              }
-              total
-              current
-              listNum
-            }
-          }`,
+            `,
             variables: {
                 data: {
                     listNum: 10,

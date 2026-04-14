@@ -58,7 +58,6 @@ async function handler() {
                         }
                     }
                 }
-            
             `,
         },
     });
