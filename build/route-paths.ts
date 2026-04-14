@@ -180,6 +180,7 @@ export type RoutePath =
   | `/amazon/awsblogs/:locale?`
   | `/amazon/kindle/software-updates`
   | `/amz123/kx`
+  | `/android/pixel-update-bulletin`
   | `/android/platform-tools-releases`
   | `/android/security-bulletin`
   | `/anime1anime/:category/:name`

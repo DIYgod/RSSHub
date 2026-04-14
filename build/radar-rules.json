@@ -5290,18 +5290,16 @@
   },
   "android.com": {
     "_name": "Android",
-    "developer": [
+    "source": [
       {
-        "title": "SDK Platform Tools release notes",
+        "title": "Pixel Update Bulletins",
         "docs": "https://docs.rsshub.app/routes/program-update",
         "source": [
-          "/studio/releases/platform-tools",
+          "/docs/security/bulletin/pixel",
           "/"
         ],
-        "target": "/android/platform-tools-releases"
-      }
-    ],
-    "source": [
+        "target": "/android/pixel-update-bulletin"
+      },
       {
         "title": "Security Bulletins",
         "docs": "https://docs.rsshub.app/routes/program-update",
@@ -5311,6 +5309,17 @@
           "/"
         ],
         "target": "/android/security-bulletin"
+      }
+    ],
+    "developer": [
+      {
+        "title": "SDK Platform Tools release notes",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/studio/releases/platform-tools",
+          "/"
+        ],
+        "target": "/android/platform-tools-releases"
       }
     ]
   },
@@ -34154,7 +34163,7 @@
           "/:category",
           "/"
         ],
-        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/cn/${params.category}/${params.type.replace(\".html\",\"\")}`}else if(params.category&&!params.type){return`/nikkei/cn/cn/${params.category.replace(\".html\",\"\")}`}else{return`/nikkei/cn/cn`}}"
+        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/cn/${params.category}/${params.type.replace(\".html\",\"\")}`}else if(params.category&&!params.type){return`/nikkei/cn/cn/${params.category.replace(\".html\",\"\")}`}else{return\"/nikkei/cn/cn\"}}"
       }
     ],
     "zh.cn": [
@@ -34166,7 +34175,7 @@
           "/:category",
           "/"
         ],
-        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/zh/${params.category}/${params.type.replace(\".html\",\"\")}`}else if(params.category&&!params.type){return`/nikkei/cn/zh/${params.category.replace(\".html\",\"\")}`}else{return`/nikkei/cn/zh`}}"
+        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/zh/${params.category}/${params.type.replace(\".html\",\"\")}`}else if(params.category&&!params.type){return`/nikkei/cn/zh/${params.category.replace(\".html\",\"\")}`}else{return\"/nikkei/cn/zh\"}}"
       }
     ],
     "www": [
