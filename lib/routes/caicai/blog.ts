@@ -116,6 +116,7 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
+
                 const { pageProps } = JSON.parse($('script#__NEXT_DATA__').text()).props;
                 const blocks = lang === 'en' ? pageProps.blocks : pageProps.chineseBlocks;
 
@@ -131,7 +132,7 @@ async function handler(ctx: Context) {
         description: $('head meta[name="description"]').attr('content'),
         link,
         language: lang === 'en' ? ('en' as const) : ('zh-CN' as const),
-        image: $('head meta[property="og:image"]').attr('content'),
+        image: `${baseUrl}/favicon.ico`,
         item: items,
     };
 }
