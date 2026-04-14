@@ -50303,6 +50303,27 @@
       }
     ]
   },
+  "caicai.me": {
+    "_name": "caicai",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blogs"
+        ],
+        "target": "/caicai/blog/:lang?"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/zh/blogs"
+        ],
+        "target": "/caicai/blog/zh"
+      }
+    ]
+  },
   "cline.bot": {
     "_name": "cline",
     ".": [
