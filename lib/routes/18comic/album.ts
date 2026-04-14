@@ -59,8 +59,8 @@ async function handler(ctx) {
             description: renderDescription({
                 introduction: description,
                 // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
-                images: [`https://cdn-msp3.${domain}/media/albums/${id}_3x4.jpg`],
-                cover: `https://cdn-msp3.${domain}/media/albums/${id}_3x4.jpg`,
+                images: [`https://cdn-msp3.${domain}/media/albums/${id}.jpg`],
+                cover: `https://cdn-msp3.${domain}/media/albums/${id}.jpg`,
                 category,
             }),
         });
@@ -82,8 +82,8 @@ async function handler(ctx) {
                     result.description = renderDescription({
                         introduction: description,
                         // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
-                        images: [`https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`],
-                        cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                        images: [`https://cdn-msp3.${domain}/media/albums/${item.id}.jpg`],
+                        cover: `https://cdn-msp3.${domain}/media/albums/${item.id}.jpg`,
                         category,
                     });
                     return result;

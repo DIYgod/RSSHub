@@ -76,13 +76,13 @@ async function handler(ctx) {
                 result.description = renderDescription({
                     introduction: apiResult.description,
                     images: [
-                        `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                        `https://cdn-msp3.${domain}/media/albums/${item.id}.jpg`,
                         // 取得的预览图片会被分割排序，所以先只取封面图
                         // `https://cdn-msp3.${domain}/media/photos/${item.id}/00001.webp`,
                         // `https://cdn-msp3.${domain}/media/photos/${item.id}/00002.webp`,
                         // `https://cdn-msp3.${domain}/media/photos/${item.id}/00003.webp`,
                     ],
-                    cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                    cover: `https://cdn-msp3.${domain}/media/albums/${item.id}.jpg`,
                     category: result.category,
                 });
                 return result;
