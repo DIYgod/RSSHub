@@ -31,12 +31,8 @@ jobs:
               env:
                   GH_TOKEN: ${{ github.token }}
                   PR_TARGET_REPO: ${{ github.repository }}
-                  PR_BRANCH: |-
-                      ${{
-                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
-                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
-                          || github.event.workflow_run.head_branch
-                      }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
                     --method GET -f head="${PR_BRANCH}" -f state=open \

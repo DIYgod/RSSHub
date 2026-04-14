@@ -23,13 +23,8 @@ jobs:
                   GH_TOKEN: ${{ github.token }}
                   # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
                   PR_TARGET_REPO: ${{ github.repository }}
-                  # If the PR is from a fork, prefix it with `<owner-login>:`, otherwise only the PR branch name is relevant:
-                  PR_BRANCH: |-
-                      ${{
-                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
-                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
-                          || github.event.workflow_run.head_branch
-                      }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
               # Query the PR number by repo + branch, then assign to step output:
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
@@ -172,13 +167,8 @@ jobs:
                   GH_TOKEN: ${{ github.token }}
                   # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
                   PR_TARGET_REPO: ${{ github.repository }}
-                  # If the PR is from a fork, prefix it with `<owner-login>:`, otherwise only the PR branch name is relevant:
-                  PR_BRANCH: |-
-                      ${{
-                        (github.event.workflow_run.head_repository.owner.login != github.event.workflow_run.repository.owner.login)
-                          && format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch)
-                          || github.event.workflow_run.head_branch
-                      }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
               # Query the PR number by repo + branch, then assign to step output:
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
