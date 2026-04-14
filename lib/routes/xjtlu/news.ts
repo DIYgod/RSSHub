@@ -97,7 +97,7 @@ const handler = async (ctx) => {
                 const $article = load(articleResponse);
 
                 const fullContent = $article('.post_content').html();
-                const articleDate = $article('.edited-view .date, p.date').first().text().trim();
+                const articleDate = $article('.edited-view .date, p.date').text().trim();
 
                 // Parse date based on language
                 // English: "21 Jan 2026" with 'en' locale for month name recognition
@@ -108,7 +108,7 @@ const handler = async (ctx) => {
                     title: item.title,
                     link: item.link!,
                     category: item.category,
-                    description: fullContent || undefined,
+                    description: fullContent,
                     pubDate,
                 };
             })

@@ -35,11 +35,11 @@ export const fetchArticleDetails = async (url: string) => {
     $article.find('#citations').remove();
 
     return {
-        content: $article.html() ?? undefined,
+        content: $article.html(),
         // Categories can be found on https://openai.com/news/ and https://openai.com/research/index/
         categories,
         image: $('meta[property="og:image"]').attr('content'),
-        author: authors.join(', ') || undefined,
+        author: authors.join(', '),
         link: normalizedUrl,
     };
 };

@@ -59,7 +59,7 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('div.v_news_content').first().html() || undefined,
+                    description: $('div.v_news_content').html(),
                 };
             })
         )

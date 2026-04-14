@@ -209,7 +209,7 @@ function extractPubDate(article: ReturnType<CheerioAPI>): Date | undefined {
  */
 function parseArticle(article: ReturnType<CheerioAPI>, $: CheerioAPI, baseUrl: string): (DataItem & ArticleItem) | null {
     // Find the title link in h2 > a
-    const titleLink = article.find('h2 a[href^="http"]').first();
+    const titleLink = article.find('h2 a[href^="http"]');
     if (titleLink.length === 0) {
         return null;
     }
@@ -222,11 +222,11 @@ function parseArticle(article: ReturnType<CheerioAPI>, $: CheerioAPI, baseUrl: s
     }
 
     const author = extractAuthor(article);
-    const description = article.find('p.text-sm.text-muted-foreground').first().text().trim() || undefined;
+    const description = article.find('p.text-sm.text-muted-foreground').text().trim();
     const categories = extractCategories(article, $);
 
-    const footer = article.find('.flex.items-center.justify-between.gap-4.flex-wrap').first();
-    const summaryLink = footer.find('a[href*="/article/"]').first().attr('href');
+    const footer = article.find('.flex.items-center.justify-between.gap-4.flex-wrap');
+    const summaryLink = footer.find('a[href*="/article/"]').attr('href');
     const dailyPushUrl = summaryLink ? `${baseUrl}${summaryLink}` : undefined;
 
     const pubDate = extractPubDate(article);
@@ -271,7 +271,7 @@ export async function enhanceItemsWithSummaries(browser: Browser, items: Article
                 try {
                     const html = await fetchPageHtml(browser, item.dailyPushUrl!, 'p.font-ibm-plex-sans.leading-relaxed');
                     const $ = load(html);
-                    const summary = $('p.font-ibm-plex-sans.leading-relaxed').first();
+                    const summary = $('p.font-ibm-plex-sans.leading-relaxed');
                     if (summary.length > 0 && summary.text().trim()) {
                         item.description = summary.text().trim();
                     }

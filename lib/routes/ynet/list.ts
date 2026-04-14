@@ -70,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('h2 a');
 
             const title: string = $aEl.text();
-            const pubDateStr: string | undefined = $el.find('em.fRight').text() || undefined;
+            const pubDateStr: string | undefined = $el.find('em.fRight').text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 

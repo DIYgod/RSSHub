@@ -89,6 +89,6 @@ async function handler(ctx) {
         title: `Polymarket User - ${displayName}`,
         link: `https://polymarket.com/portfolio?address=${address}`,
         item: items,
-        description: profile?.bio || undefined,
+        description: profile?.bio,
     };
 }
