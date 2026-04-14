@@ -38,7 +38,7 @@ async function handler(ctx) {
                     ...sectionFilter,
                 },
             },
-            query: `
+            query: /* GraphQL */ `
 fragment section on Section {
   id
   name

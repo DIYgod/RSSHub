@@ -47,7 +47,7 @@ async function handler(ctx) {
         return;
     }
 
-    const query = `
+    const query = /* GraphQL */ `
     {
         user(username: "${username}") {
             publication {

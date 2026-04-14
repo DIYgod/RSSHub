@@ -135,7 +135,7 @@ async function handler(ctx) {
         } = await ofetch(graphqlUrl, {
             method: 'POST',
             body: {
-                query: `query CommunityQuery($id: ID, $slug: String) {
+                query: /* GraphQL */ `query CommunityQuery($id: ID, $slug: String) {
   community(where: { _id_EQ: $id, slug_EQ: $slug }) {
     ...CommunityFragment
     topContributors {
@@ -232,7 +232,7 @@ fragment ImageFragment on Image {
     } = await ofetch(graphqlUrl, {
         method: 'POST',
         body: {
-            query: `query PostsQuery(
+            query: /* GraphQL */ `query PostsQuery(
   $first: Int
   $after: String
   $where: PostWhere

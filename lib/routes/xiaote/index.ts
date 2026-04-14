@@ -29,7 +29,7 @@ export const route: Route = {
 async function handler() {
     const { data } = await got.post('https://lcen.xiaote.net//api/graphql/', {
         json: {
-            query: `query($startCursor: Int) {
+            query: /* GraphQL */ `query($startCursor: Int) {
                 communities(startCursor: $startCursor) {
                     edges {
                         node {

@@ -56,7 +56,7 @@ async function handler(ctx) {
             method: 'POST',
             body: {
                 operationName: 'ArtistDetailLoadUser',
-                query: `
+                query: /* GraphQL */ `
               query ArtistDetailLoadUser($artistUrl: String!) {
                 user(artistUrl: $artistUrl) {
                   coverUrl
@@ -113,7 +113,7 @@ async function handler(ctx) {
         method: 'POST',
         body: {
             operationName: 'loadArtistSheets',
-            query: `
+            query: /* GraphQL */ `
           query loadArtistSheets($data: SheetSearchInput!) {
             sheetSearch(data: $data) {
               list {
