@@ -156,7 +156,7 @@
         "unicorn/consistent-empty-array-spread": "error",
         "unicorn/consistent-existence-index-check": "error",
         // "unicorn/consistent-function-scoping": "error",
-        "unicorn-js/consistent-template-literal-escape": "error", // use jsPlugins
+        "unicorn/consistent-template-literal-escape": "error",
         "unicorn/empty-brace-spaces": "error",
         "unicorn/error-message": "error",
         "unicorn/escape-case": "error",
@@ -498,6 +498,9 @@
 
         "@stylistic/no-multiple-empty-lines": "error",
         "@stylistic/no-trailing-spaces": "error",
+
+        "@stylistic/quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": "avoidEscape" }],
+
         "@stylistic/rest-spread-spacing": "error",
         "@stylistic/semi": "error",
         "@stylistic/space-before-blocks": "error",
