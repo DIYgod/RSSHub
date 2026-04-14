@@ -1336,6 +1336,9 @@
   "/cahkms/:category?": [
     "nczitzk"
   ],
+  "/caicai/blog/:lang?": [
+    "TonyRL"
+  ],
   "/caijing/roll": [
     "TonyRL"
   ],
@@ -10102,9 +10105,6 @@
   ],
   "/199it/:category{.+}?": [
     "nczitzk"
-  ],
-  "/caicai/blog/:lang?": [
-    "TonyRL"
   ],
   "/cline/blog": [
     "yeshan333"

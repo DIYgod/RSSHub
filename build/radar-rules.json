@@ -8436,6 +8436,27 @@
       }
     ]
   },
+  "caicai.me": {
+    "_name": "CaiCai",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/blogs"
+        ],
+        "target": "/caicai/blog/:lang?"
+      },
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/zh/blogs"
+        ],
+        "target": "/caicai/blog/zh"
+      }
+    ]
+  },
   "caijing.com.cn": {
     "_name": "财经网",
     "roll": [
@@ -50300,27 +50321,6 @@
           "/archives/category/internet-users"
         ],
         "target": "/199it/archives/category/internet-users"
-      }
-    ]
-  },
-  "caicai.me": {
-    "_name": "caicai",
-    "www": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/blogs"
-        ],
-        "target": "/caicai/blog/:lang?"
-      },
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/blog",
-        "source": [
-          "/zh/blogs"
-        ],
-        "target": "/caicai/blog/zh"
       }
     ]
   },
