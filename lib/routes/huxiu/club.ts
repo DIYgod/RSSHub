@@ -12,7 +12,7 @@ export const route: Route = {
     parameters: { id: '源流 id，可在对应源流页 URL 中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: true,

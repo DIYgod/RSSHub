@@ -2,8 +2,9 @@ import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 
 import got from '@/utils/got';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import puppeteer from '@/utils/puppeteer';
 
 import { renderDescription } from './templates/description';
 
@@ -73,10 +74,12 @@ const cleanUpHTML = (data) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
  *                            to be added into `ctx.state.data`.
  */
-const fetchClubData = async (id: string) => {
+const fetchClubData = async (id: string, requestHeaders = {}) => {
     const currentUrl = new URL(`club/${id}.html`, rootUrl).href;
 
-    const { data: currentResponse } = await got(currentUrl);
+    const { data: currentResponse } = await got(currentUrl, {
+        headers: requestHeaders,
+    });
 
     const $ = load(currentResponse);
 
@@ -165,43 +168,72 @@ const fetchData = async (url) => {
 const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
 
 /**
- * Fetches item data using puppeteer to bypass WAF protection.
+ * Solves the WAF once with Puppeteer, fetches all internal detail pages inside the
+ * browser context in small batches, then closes the browser immediately after the
+ * HTML payloads are returned to Node.js.
  *
- * @param {Object} item - The item to fetch data for.
- * @returns {Promise<Object>} The fetched item data object.
+ * @param {string[]} urls - Internal detail URLs to fetch.
+ * @returns {Promise<Map<string, string>>} Map of detail URL to raw HTML.
  */
-const fetchItem = async (item) => {
-    let detailResponse: string;
-
-    const { page, destroy } = await getPuppeteerPage(item.link, {
-        onBeforeLoad: async (page) => {
-            // Block unnecessary resources to speed up loading
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                const resourceType = request.resourceType();
-                // Only allow document, script, and xhr requests
-                if (resourceType === 'document' || resourceType === 'script' || resourceType === 'xhr' || resourceType === 'other') {
-                    request.continue();
-                } else {
-                    request.abort();
-                }
-            });
-        },
-    });
-
-    try {
-        // Wait for the page to load
-        await page.waitForSelector('#__NUXT_DATA__, .detail-content', { timeout: 10000 });
-
-        // Get the rendered HTML content
-        detailResponse = await page.content();
-    } catch {
-        // If timeout, try to get whatever content is available
-        detailResponse = await page.content();
-    } finally {
-        await destroy();
+const fetchDetailPagesInBrowser = async (urls: string[]) => {
+    if (urls.length === 0) {
+        return new Map<string, string>();
     }
 
+    const browser = await puppeteer();
+
+    try {
+        const page = await browser.newPage();
+
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            const resourceType = request.resourceType();
+            if (resourceType === 'document' || resourceType === 'script' || resourceType === 'xhr' || resourceType === 'fetch' || resourceType === 'other') {
+                request.continue();
+            } else {
+                request.abort();
+            }
+        });
+
+        await page.goto(urls[0], {
+            waitUntil: 'domcontentloaded',
+        });
+        await page.waitForSelector('#__NUXT_DATA__, .detail-content', { timeout: 8000 });
+
+        const htmlEntries = await page.evaluate((detailUrls) => {
+            const batchSize = 4;
+            const batches = Array.from({ length: Math.ceil(detailUrls.length / batchSize) }, (_, index) => detailUrls.slice(index * batchSize, (index + 1) * batchSize));
+
+            const fetchBatch = async (index: number): Promise<Array<[string, string]>> => {
+                if (index >= batches.length) {
+                    return [];
+                }
+
+                const currentBatch = await Promise.all(
+                    batches[index].map(async (url) => {
+                        const response = await fetch(url, {
+                            credentials: 'include',
+                        });
+                        return [url, await response.text()] as [string, string];
+                    })
+                );
+
+                return [...currentBatch, ...(await fetchBatch(index + 1))];
+            };
+
+            return fetchBatch(0);
+        }, urls);
+
+        return new Map(htmlEntries);
+    } catch (error) {
+        logger.warn(`[huxiu] failed to fetch details in browser context: ${error instanceof Error ? error.message : String(error)}`);
+        return new Map<string, string>();
+    } finally {
+        await browser.close();
+    }
+};
+
+const fetchItem = (item, detailResponse: string) => {
     const state = parseInitialState(detailResponse);
     const data = state?.articleDetail?.articleDetail;
 
@@ -640,17 +672,31 @@ const processItems = async (items, limit, tryGet) => {
         .filter(Boolean)
         .slice(0, limit);
 
+    const internalItems = processedItems.filter((item) => {
+        const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
+        const isMoment = item.guid.startsWith('huxiu-moment');
+        return !isExternalLink && !isMoment;
+    });
+
+    const detailResponses = await fetchDetailPagesInBrowser(internalItems.map((item) => item.link));
+
     return await Promise.all(
         processedItems.map((item) =>
-            tryGet(item.guid, async () => {
+            tryGet(item.guid, () => {
                 const isExternalLink = !new RegExp(domain, 'i').test(new URL(item.link).hostname);
                 const isMoment = item.guid.startsWith('huxiu-moment');
 
                 if (isExternalLink || isMoment) {
-                    return item;
+                    return Promise.resolve(item);
                 }
 
-                return await fetchItem(item);
+                const detailResponse = detailResponses.get(item.link);
+
+                if (!detailResponse) {
+                    return Promise.resolve(item);
+                }
+
+                return Promise.resolve(fetchItem(item, detailResponse));
             })
         )
     );
