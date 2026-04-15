@@ -68,3 +68,23 @@ jobs:
             - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
               with:
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    vouch-check-pr:
+        name: Vouch check PR
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
+        permissions:
+            contents: read
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-slim
+        timeout-minutes: 5
+        steps:
+            - name: Checkout
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+            - name: Check if PR author is denounced
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+              with:
+                  script: |
+                      const { default: checkPr } = await import('${{ github.workspace }}/scripts/workflow/vouch/check-pr.mjs')
+                      await checkPr({ github, context, core })

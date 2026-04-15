@@ -206,11 +206,15 @@
         "yaml-eslint-parser": "2.0.0"
     },
     "lint-staged": {
-        "!(*.ts|*.tsx|*.js|*.yml)": [
+        "!(*.ts|*.tsx|*.js|*.cjs|*.mjs|*.yml)": [
             "oxfmt --no-error-on-unmatched-pattern"
         ],
-        "*.{ts,tsx,js,yml}": [
+        "*.{ts,tsx,js,cjs,mjs}": [
             "oxlint --type-aware --fix",
+            "eslint --cache --fix --concurrency auto",
+            "oxfmt --no-error-on-unmatched-pattern"
+        ],
+        "*.yml": [
             "eslint --cache --fix --concurrency auto",
             "oxfmt --no-error-on-unmatched-pattern"
         ]
