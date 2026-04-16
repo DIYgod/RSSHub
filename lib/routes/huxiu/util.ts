@@ -136,18 +136,21 @@ const fetchData = async (url) => {
     const { data: response } = await got(url);
 
     const $ = load(response);
-
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
+    const iconHref = $('link[rel="apple-touch-icon"]').prop('href');
+    const title = $('title').text();
+    const description = $('div.tag-content').text() || $('span.author-intro').text() || $('p.collection__intro').text() || $('meta[name="description"]').prop('content');
     const author = $('meta[name="author"]').prop('content');
 
+    const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
+
     return {
-        title: $('title').text(),
+        title,
         link: url,
-        description: $('div.tag-content').text() || $('span.author-intro').text() || $('p.collection__intro').text() || $('meta[name="description"]').prop('content'),
+        description,
         language: $('html').prop('lang'),
         icon,
         logo: icon,
-        subtitle: $('title').text().split(/-/)[0],
+        subtitle: title.split(/-/)[0],
         author,
         itunes_author: author,
         itunes_category: 'News',
@@ -188,29 +191,16 @@ const fetchArticleDetail = async (aid: string) => {
  */
 const fetchItem = async (item) => {
     const articleId = extractArticleId(item.link);
-    let data;
-    let state;
 
-    if (articleId) {
-        try {
-            data = await fetchArticleDetail(articleId);
-        } catch {
-            // Fall back to HTML parsing when the article detail API is unavailable.
-        }
+    if (!articleId) {
+        return item;
     }
 
-    if (!data) {
-        let detailResponse: string;
-        try {
-            const response = await got(item.link);
-            detailResponse = response.data;
-        } catch {
-            // Request failed (e.g., 503, connection terminated), return original item
-            return item;
-        }
-
-        state = parseInitialState(detailResponse);
-        data = state?.articleDetail?.articleDetail;
+    let data;
+    try {
+        data = await fetchArticleDetail(articleId);
+    } catch {
+        return item;
     }
 
     if (!data) {
@@ -336,86 +326,6 @@ const resolveNuxtData = (arr: unknown[], index: number, visited = new Set<number
     }
 
     return item;
-};
-
-/**
- * Parses the initial state from the provided data.
- * Supports both Nuxt 3 (__NUXT_DATA__) format for articles and
- * window.__INITIAL_STATE__ format for briefs.
- *
- * @param {string} data - The data to parse the initial state from.
- * @returns {Object|undefined} - The parsed initial state object, or undefined if not found.
- */
-const parseInitialState = (data: string) => {
-    const $ = load(data);
-
-    // Try Nuxt 3 format first (for articles)
-    const nuxtDataScript = $('#__NUXT_DATA__').text();
-    if (nuxtDataScript) {
-        try {
-            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
-
-            // Find the data object which contains articleDetail
-            // The structure is: [["ShallowReactive", 1], {data: 2, ...}, ["ShallowReactive", 3], {articleDetail-xxx: 4}, ...]
-            for (const item of nuxtData) {
-                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-                    const articleDetailKey = Object.keys(item).find((key) => key.startsWith('articleDetail-'));
-                    if (articleDetailKey) {
-                        const articleDetailIndex = (item as Record<string, number>)[articleDetailKey];
-                        if (typeof articleDetailIndex === 'number') {
-                            const articleData = resolveNuxtData(nuxtData, articleDetailIndex) as Record<string, unknown>;
-                            if (articleData?.articleDetail) {
-                                return { articleDetail: articleData };
-                            }
-                        }
-                    }
-                }
-            }
-        } catch {
-            // Failed to parse Nuxt data
-        }
-    }
-
-    // Try window.__INITIAL_STATE__ format (for briefs)
-    const initialStateMatch = data.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});?\s*\(function\(\)/);
-    if (initialStateMatch?.[1]) {
-        try {
-            const initialState = JSON.parse(initialStateMatch[1]) as Record<string, unknown>;
-            const briefStoreModule = initialState.briefStoreModule as Record<string, unknown> | undefined;
-            const briefDetail = briefStoreModule?.brief_detail as Record<string, unknown> | undefined;
-            const brief = briefDetail?.brief as Record<string, unknown> | undefined;
-
-            if (brief) {
-                // Transform brief data to match the articleDetail structure expected by fetchItem
-                const publisherList = brief.publisher_list as Array<{ username?: string }> | undefined;
-                const briefColumn = briefDetail?.brief_column as Record<string, unknown> | undefined;
-                const clubInfo = briefDetail?.club_info as Record<string, unknown> | undefined;
-
-                return {
-                    articleDetail: {
-                        articleDetail: {
-                            title: brief.title,
-                            content: brief.content,
-                            preface: brief.preface,
-                            dateline: brief.publish_time,
-                            publish_time: brief.publish_time,
-                            audio_info: brief.audio_info,
-                            agreenum: brief.agree_num,
-                            total_comment_num: brief.total_comment_num,
-                            user_info: publisherList?.[0] ? { username: publisherList[0].username } : undefined,
-                            brief_column: briefColumn ? { name: briefColumn.name } : undefined,
-                            club_info: clubInfo ? { name: clubInfo.name } : undefined,
-                            share_info: brief.share_info,
-                        },
-                    },
-                };
-            }
-        } catch {
-            // Failed to parse initial state
-        }
-    }
-
-    return;
 };
 
 const audioQualities = ['', 'low'];
