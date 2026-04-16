@@ -163,6 +163,23 @@ const fetchData = async (url) => {
  */
 const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
 
+const extractArticleId = (link: string) => {
+    const pathname = new URL(link).pathname;
+    return pathname.match(/^\/article\/(\d+)\.html$/)?.[1];
+};
+
+const fetchArticleDetail = async (aid: string) => {
+    const apiUrl = new URL('web/article/detail', apiArticleRootUrl).href;
+    const { data: response } = await got.post(apiUrl, {
+        form: {
+            platform: 'www',
+            aid,
+        },
+    });
+
+    return response.data;
+};
+
 /**
  * Fetches item data.
  *
@@ -170,17 +187,31 @@ const buildCategories = (data) => [data.video_article_tag, data.brief_column?.na
  * @returns {Promise<Object>} The fetched item data object.
  */
 const fetchItem = async (item) => {
-    let detailResponse: string;
-    try {
-        const response = await got(item.link);
-        detailResponse = response.data;
-    } catch {
-        // Request failed (e.g., 503, connection terminated), return original item
-        return item;
+    const articleId = extractArticleId(item.link);
+    let data;
+    let state;
+
+    if (articleId) {
+        try {
+            data = await fetchArticleDetail(articleId);
+        } catch {
+            // Fall back to HTML parsing when the article detail API is unavailable.
+        }
     }
 
-    const state = parseInitialState(detailResponse);
-    const data = state?.articleDetail?.articleDetail;
+    if (!data) {
+        let detailResponse: string;
+        try {
+            const response = await got(item.link);
+            detailResponse = response.data;
+        } catch {
+            // Request failed (e.g., 503, connection terminated), return original item
+            return item;
+        }
+
+        state = parseInitialState(detailResponse);
+        data = state?.articleDetail?.articleDetail;
+    }
 
     if (!data) {
         return item;
