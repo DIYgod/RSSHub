@@ -84,7 +84,7 @@ async function handler(ctx) {
 
     return {
         title: `Fantia - ${fanClub.fanclub_name_with_creator_name}`,
-        description: fanClub.comment.replaceAll('\r\n', ' ').trim(),
+        description: fanClub.comment?.replaceAll('\r\n', ' ')?.trim(),
         link: `${rootUrl}/fanclubs/${ctx.req.param('id')}`,
         image: fanClub.icon.original ?? fanClub.icon.main,
         item: items,
