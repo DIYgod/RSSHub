@@ -2,15 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { apiArticleRootUrl, processItems, rootUrl } from './util';
-
-const prefixHuxiu = (value?: string) => {
-    if (!value) {
-        return;
-    }
-
-    return value.startsWith('虎嗅资讯-') ? value : `虎嗅资讯-${value}`;
-};
+import { apiArticleRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: ['/article', '/channel/:id?'],
@@ -64,16 +56,16 @@ async function handler(ctx) {
 
     const items = await processItems(response.data?.dataList ?? response.data.datalist, limit, cache.tryGet);
     const rawTitle = response.data?.share_info?.share_title ?? response.data?.name ?? '全部';
-    const data = {
-        title: prefixHuxiu(rawTitle) ?? rawTitle,
+
+    const data = buildFeedMetadata({
+        title: rawTitle,
         link: currentUrl,
-        description: prefixHuxiu(response.data?.share_info?.share_desc || rawTitle),
-        icon: response.data?.share_info?.share_img,
-        logo: response.data?.share_info?.share_img,
+        description: response.data?.share_info?.share_desc || rawTitle,
+        image: response.data?.share_info?.share_img,
         subtitle: rawTitle,
-        allowEmpty: true,
-        itunes_category: 'News',
-    };
+        titlePrefix: buildHuxiuRouteTitlePrefix(route.name),
+        descriptionPrefix: buildHuxiuRouteTitlePrefix(route.name),
+    });
 
     return {
         item: items,
