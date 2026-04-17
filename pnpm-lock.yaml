@@ -3192,13 +3192,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  basic-ftp@5.2.0:
-    resolution: {integrity: sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==}
-    engines: {node: '>=10.0.0'}
-    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
-
-  basic-ftp@5.2.2:
-    resolution: {integrity: sha512-1tDrzKsdCg70WGvbFss/ulVAxupNauGnOlgpyjKzeQxzyllBLS0CGLV7tjIXTK3ZQA9/FBEm9qyFFN1bciA6pw==}
+  basic-ftp@5.3.0:
+    resolution: {integrity: sha512-5K9eNNn7ywHPsYnFwjKgYH8Hf8B5emh7JKcPaVjjrMJFQQwGpwowEnZNEtHs7DfR7hCZsmaK3VA4HUK0YarT+w==}
     engines: {node: '>=10.0.0'}
 
   bcrypt-pbkdf@1.0.2:
@@ -4680,8 +4675,8 @@ packages:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
     deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
-  lodash@4.17.23:
-    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   log-update@6.1.0:
     resolution: {integrity: sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w==}
@@ -8775,9 +8770,7 @@ snapshots:
 
   baseline-browser-mapping@2.10.13: {}
 
-  basic-ftp@5.2.0: {}
-
-  basic-ftp@5.2.2: {}
+  basic-ftp@5.3.0: {}
 
   bcrypt-pbkdf@1.0.2:
     dependencies:
@@ -9836,7 +9829,7 @@ snapshots:
 
   get-uri@6.0.5:
     dependencies:
-      basic-ftp: 5.2.2
+      basic-ftp: 5.3.0
       data-uri-to-buffer: 6.0.2
       debug: 4.4.3
     transitivePeerDependencies:
@@ -9844,7 +9837,7 @@ snapshots:
 
   get-uri@8.0.0:
     dependencies:
-      basic-ftp: 5.2.0
+      basic-ftp: 5.3.0
       data-uri-to-buffer: 8.0.0
       debug: 4.4.3
     transitivePeerDependencies:
@@ -10160,7 +10153,7 @@ snapshots:
       debug: 4.4.3
       image-size: 0.7.5
       json-bigint: 1.0.0
-      lodash: 4.17.23
+      lodash: 4.18.1
       luxon: 1.28.1
       reflect-metadata: 0.1.14
       request: 2.88.2
@@ -10466,7 +10459,7 @@ snapshots:
 
   lodash.isequal@4.5.0: {}
 
-  lodash@4.17.23: {}
+  lodash@4.18.1: {}
 
   log-update@6.1.0:
     dependencies:
@@ -11429,7 +11422,7 @@ snapshots:
 
   request-promise-core@1.1.4(request@2.88.2):
     dependencies:
-      lodash: 4.17.23
+      lodash: 4.18.1
       request: 2.88.2
 
   request-promise@4.2.6(request@2.88.2):
@@ -12420,7 +12413,7 @@ snapshots:
 
   wuzzy@0.1.8:
     dependencies:
-      lodash: 4.17.23
+      lodash: 4.18.1
 
   xml-name-validator@5.0.0: {}
 
