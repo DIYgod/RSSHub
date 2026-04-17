@@ -197,7 +197,7 @@
         "oxlint-plugin-eslint": "1.60.0",
         "oxlint-tsgolint": "0.21.0",
         "remark-parse": "11.0.0",
-        "tsdown": "0.21.8",
+        "tsdown": "0.21.9",
         "typescript": "5.9.3",
         "unified": "11.0.5",
         "vite-tsconfig-paths": "6.1.1",
