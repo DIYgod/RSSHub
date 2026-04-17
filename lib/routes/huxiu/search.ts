@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { apiSearchRootUrl, fetchData, generateSignature, processItems, rootUrl } from './util';
+import { apiSearchRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, generateSignature, processItems, rootUrl, siteTitle } from './util';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -31,6 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const baseTitle = siteTitle;
 
     const apiUrl = new URL('api/article', apiSearchRootUrl).href;
     const currentUrl = rootUrl;
@@ -49,8 +50,13 @@ async function handler(ctx) {
 
     const items = await processItems(response.data.datalist, limit, cache.tryGet);
 
-    const data = await fetchData(currentUrl);
-    data.title = `${keyword}-搜索结果-${data.title}`;
+    const data = buildFeedMetadata({
+        title: `搜索结果-${keyword}`,
+        link: currentUrl,
+        description: baseTitle,
+        subtitle: baseTitle,
+        titlePrefix: buildHuxiuRouteTitlePrefix(route.name),
+    });
 
     ctx.set('json', response.data.datalist);
 

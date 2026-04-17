@@ -14,6 +14,7 @@ const apiClubRootUrl = `https://api-ms-web-club.${domain}`;
 const apiMemberRootUrl = `https://api-account.${domain}`;
 const apiMomentRootUrl = `https://moment-api.${domain}`;
 const apiSearchRootUrl = `https://search-api.${domain}`;
+const siteTitle = '虎嗅';
 
 /**
  * Cleans up HTML data by removing specific elements and attributes.
@@ -65,94 +66,100 @@ const cleanUpHTML = (data) => {
     return $.html();
 };
 
-/**
- * Fetches club data for the specified ID.
- *
- * @param {string} id - The ID of the club to fetch data from.
- * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
- *                            to be added into `ctx.state.data`.
- */
-const fetchClubData = async (id: string) => {
-    const currentUrl = new URL(`club/${id}.html`, rootUrl).href;
-
-    const { data: currentResponse } = await got(currentUrl);
-
-    const $ = load(currentResponse);
-
-    const title = $('title').text();
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href') ?? '', rootUrl).href;
-    const author = $('meta[name="author"]').prop('content');
-
-    // Parse club data from __NUXT_DATA__
-    let clubData: Record<string, unknown> | undefined;
-
-    const nuxtDataScript = $('#__NUXT_DATA__').text();
-    if (nuxtDataScript) {
-        try {
-            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
-
-            // Find the fetchData object which contains club info
-            for (const item of nuxtData) {
-                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-                    const keys = Object.keys(item);
-                    if (keys.includes('fetchData')) {
-                        const fetchDataIndex = (item as Record<string, number>).fetchData;
-                        if (typeof fetchDataIndex === 'number') {
-                            clubData = resolveNuxtData(nuxtData, fetchDataIndex) as Record<string, unknown>;
-                            break;
-                        }
-                    }
-                }
-            }
-        } catch {
-            // Failed to parse Nuxt data
-        }
+const normalizeText = (value?: string) => {
+    if (!value) {
+        return;
     }
 
-    return {
-        title,
-        link: currentUrl,
-        description: String(clubData?.format_desc ?? $('meta[name="description"]').prop('content') ?? ''),
-        language: $('html').prop('lang'),
-        image: clubData?.icon_path ? String(clubData.icon_path).split(/\?/)[0] : undefined,
-        icon,
-        logo: icon,
-        subtitle: String(clubData?.name ?? title.split(/-/)[0]),
-        author,
-        itunes_author: author,
-        itunes_category: 'News',
-        allowEmpty: true,
-    };
+    return load(value).text().trim() || undefined;
 };
 
-/**
- * Fetch data from the specified URL.
- *
- * @param {string} url - The URL to fetch data from.
- * @returns {Promise<Object>} A promise that resolves to an object containing the fetched data
- *                            to be added into `ctx.state.data`.
- */
-const fetchData = async (url) => {
-    const { data: response } = await got(url);
+const buildRouteData = ({ title, link, description, image, icon, subtitle, author }: { title: string; link: string; description?: string; image?: string; icon?: string; subtitle?: string; author?: string }) => ({
+    title,
+    link,
+    description,
+    language: 'zh-CN' as const,
+    image,
+    icon,
+    logo: icon,
+    subtitle: subtitle ?? title,
+    author,
+    itunes_author: author,
+    itunes_category: 'News',
+    allowEmpty: true,
+});
 
-    const $ = load(response);
+const prefixValue = (value?: string, prefix?: string) => {
+    if (!value || !prefix) {
+        return value;
+    }
 
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
-    const author = $('meta[name="author"]').prop('content');
+    return value.startsWith(prefix) ? value : `${prefix}${value}`;
+};
 
-    return {
-        title: $('title').text(),
-        link: url,
-        description: $('div.tag-content').text() || $('span.author-intro').text() || $('p.collection__intro').text() || $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
-        icon,
-        logo: icon,
-        subtitle: $('title').text().split(/-/)[0],
+const buildHuxiuRouteTitlePrefix = (routeName: string) => `${siteTitle}${routeName}-`;
+
+const buildFeedMetadata = ({
+    title,
+    link,
+    description,
+    image,
+    subtitle,
+    author,
+    titlePrefix,
+    descriptionPrefix,
+}: {
+    title: string;
+    link: string;
+    description?: string;
+    image?: string;
+    subtitle?: string;
+    author?: string;
+    titlePrefix?: string;
+    descriptionPrefix?: string;
+}) => {
+    const baseTitle = title;
+    const baseDescription = normalizeText(description) ?? description ?? subtitle ?? title;
+    const resolvedTitle = prefixValue(baseTitle, titlePrefix) ?? baseTitle;
+    const resolvedDescription = prefixValue(baseDescription, descriptionPrefix) ?? baseDescription;
+    const resolvedSubtitle = subtitle ?? baseTitle;
+
+    return buildRouteData({
+        title: resolvedTitle,
+        link,
+        description: resolvedDescription,
+        image,
+        icon: image,
+        subtitle: resolvedSubtitle,
         author,
-        itunes_author: author,
-        itunes_category: 'News',
-        allowEmpty: true,
+    });
+};
+
+const fetchApiRouteData = async <T>({
+    currentUrl,
+    apiUrl,
+    form,
+    mapData,
+}: {
+    currentUrl: string;
+    apiUrl: string;
+    form: Record<string, string | number>;
+    mapData: (data: T) => {
+        title: string;
+        description?: string;
+        image?: string;
+        subtitle?: string;
+        author?: string;
+        titlePrefix?: string;
+        descriptionPrefix?: string;
     };
+}) => {
+    const { data: response } = await got.post(apiUrl, { form });
+
+    return buildFeedMetadata({
+        link: currentUrl,
+        ...mapData(response.data as T),
+    });
 };
 
 /**
@@ -163,6 +170,80 @@ const fetchData = async (url) => {
  */
 const buildCategories = (data) => [data.video_article_tag, data.brief_column?.name, data.club_info?.name, ...(data.tags_info?.map((c) => c.name) ?? []), ...(data.relation_info?.channel?.map((c) => c.name) ?? [])].filter(Boolean);
 
+const extractArticleId = (link: string) => {
+    const pathname = new URL(link).pathname;
+    return pathname.match(/^\/article\/(\d+)\.html$/)?.[1];
+};
+
+const extractBriefId = (link: string) => {
+    const pathname = new URL(link).pathname;
+    return pathname.match(/^\/brief\/(\d+)\.html$/)?.[1];
+};
+
+const fetchArticleDetail = async (aid: string) => {
+    const apiUrl = new URL('web/article/detail', apiArticleRootUrl).href;
+    const { data: response } = await got.post(apiUrl, {
+        form: {
+            platform: 'www',
+            aid,
+        },
+    });
+
+    return response.data;
+};
+
+const fetchBriefDetail = async (briefId: string) => {
+    const apiUrl = new URL('v1/brief/detail', apiClubRootUrl).href;
+    const { data: response } = await got.post(apiUrl, {
+        form: {
+            platform: 'www',
+            brief_id: briefId,
+        },
+    });
+
+    return response.data;
+};
+
+const buildBriefCategories = (data) => [data.brief_column?.name, data.club_info?.name, ...(data.brief?.tags_info?.map((c) => c.name) ?? [])].filter(Boolean);
+
+const buildBriefAuthor = (data) =>
+    data.brief?.publisher_list
+        ?.map((publisher) => publisher.username)
+        .filter(Boolean)
+        .join(', ') || data.brief_column?.name;
+
+const fetchMemberData = async (id: string, type: string, items, titlePrefix?: string) => {
+    const currentUrl = new URL(`member/${id}${type === 'article' ? '' : `/${type}`}.html`, rootUrl).href;
+    const firstArticleId = items.find((item) => item.aid)?.aid;
+
+    if (firstArticleId) {
+        try {
+            const detail = await fetchArticleDetail(firstArticleId);
+            const username = detail.user_info?.username ?? detail.author;
+            const description = detail.user_info?.yijuhua ?? `${username ?? `用户 ${id}`}的${type === 'moment' ? '24 小时' : '文章'}`;
+            const image = detail.user_info?.avatar?.split(/\?/)[0];
+
+            return buildFeedMetadata({
+                title: username ?? `用户 ${id}`,
+                link: currentUrl,
+                description,
+                image,
+                author: username,
+                titlePrefix,
+            });
+        } catch {
+            // Fall back to generic member metadata when article detail is unavailable.
+        }
+    }
+
+    return buildFeedMetadata({
+        title: `用户 ${id}`,
+        link: currentUrl,
+        description: `用户 ${id} 的${type === 'moment' ? '24 小时' : '文章'}`,
+        titlePrefix,
+    });
+};
+
 /**
  * Fetches item data.
  *
@@ -170,23 +251,50 @@ const buildCategories = (data) => [data.video_article_tag, data.brief_column?.na
  * @returns {Promise<Object>} The fetched item data object.
  */
 const fetchItem = async (item) => {
-    let detailResponse: string;
-    try {
-        const response = await got(item.link);
-        detailResponse = response.data;
-    } catch {
-        // Request failed (e.g., 503, connection terminated), return original item
+    const articleId = extractArticleId(item.link);
+    const briefId = extractBriefId(item.link);
+
+    if (!articleId && !briefId) {
         return item;
     }
 
-    const state = parseInitialState(detailResponse);
-    const data = state?.articleDetail?.articleDetail;
+    let data;
+    try {
+        data = articleId ? await fetchArticleDetail(articleId) : await fetchBriefDetail(briefId!);
+    } catch {
+        return item;
+    }
 
     if (!data) {
         return item;
     }
 
-    const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(data.audio_info);
+    if (briefId) {
+        const { brief, brief_column: briefColumn, club_info: clubInfo } = data;
+        const briefAudioInfo = processAudioInfo(brief.audio_info);
+        const audio = briefAudioInfo.processed;
+        const audioItem: Record<string, unknown> = briefAudioInfo.processedItem ?? {};
+        const body = [brief.preface, brief.content, brief.peroration].filter(Boolean).join('');
+
+        return {
+            ...audioItem,
+            ...item,
+            title: brief.title ?? item.title,
+            description: renderDescription({
+                audio,
+                description: body ? cleanUpHTML(body) : undefined,
+            }),
+            author: buildBriefAuthor(data) ?? item.author,
+            category: buildBriefCategories({ brief, brief_column: briefColumn, club_info: clubInfo }),
+            pubDate: parseDate(brief.publish_time, 'X'),
+            upvotes: Number.parseInt(brief.agree_num ?? item.upvotes ?? 0, 10),
+            comments: Number.parseInt(brief.total_comment_num ?? brief.comment_num ?? item.comments ?? 0, 10),
+        };
+    }
+
+    const articleAudioInfo = processAudioInfo(data.audio_info);
+    const audio = articleAudioInfo.processed;
+    const audioItem: Record<string, unknown> = articleAudioInfo.processedItem ?? {};
 
     if (Object.keys(audioItem).length !== 0) {
         audioItem.itunes_item_image = data.pic_path ?? data.share_info?.share_img ?? undefined;
@@ -251,140 +359,6 @@ const generateSignature = () => {
         timestamp,
         signature: CryptoJS.SHA1(r[0] + r[1] + r[2]).toString(),
     };
-};
-
-/**
- * Resolves Nuxt 3 data array references recursively.
- * Nuxt 3 uses a special array format where numbers are references to other array indices.
- *
- * @param {unknown[]} arr - The Nuxt data array.
- * @param {number} index - The index to resolve.
- * @param {Set<number>} visited - Set of visited indices to prevent infinite loops.
- * @returns {unknown} - The resolved value.
- */
-const resolveNuxtData = (arr: unknown[], index: number, visited = new Set<number>()): unknown => {
-    if (visited.has(index)) {
-        return arr[index];
-    }
-    visited.add(index);
-
-    const item = arr[index];
-
-    // Handle ShallowReactive wrapper: ["ShallowReactive", refIndex]
-    if (Array.isArray(item) && item[0] === 'ShallowReactive' && typeof item[1] === 'number') {
-        return resolveNuxtData(arr, item[1], visited);
-    }
-
-    // Handle Reactive wrapper: ["Reactive", refIndex]
-    if (Array.isArray(item) && item[0] === 'Reactive' && typeof item[1] === 'number') {
-        return resolveNuxtData(arr, item[1], visited);
-    }
-
-    // Handle Set wrapper: ["Set"]
-    if (Array.isArray(item) && item[0] === 'Set') {
-        return new Set();
-    }
-
-    // Handle object - resolve all numeric references in values
-    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-        const resolved: Record<string, unknown> = {};
-        for (const [key, value] of Object.entries(item)) {
-            resolved[key] = typeof value === 'number' ? resolveNuxtData(arr, value, new Set(visited)) : value;
-        }
-        return resolved;
-    }
-
-    // Handle arrays that are not special wrappers
-    if (Array.isArray(item)) {
-        return item.map((value, i) => {
-            if (typeof value === 'number' && value !== i) {
-                return resolveNuxtData(arr, value, new Set(visited));
-            }
-            return value;
-        });
-    }
-
-    return item;
-};
-
-/**
- * Parses the initial state from the provided data.
- * Supports both Nuxt 3 (__NUXT_DATA__) format for articles and
- * window.__INITIAL_STATE__ format for briefs.
- *
- * @param {string} data - The data to parse the initial state from.
- * @returns {Object|undefined} - The parsed initial state object, or undefined if not found.
- */
-const parseInitialState = (data: string) => {
-    const $ = load(data);
-
-    // Try Nuxt 3 format first (for articles)
-    const nuxtDataScript = $('#__NUXT_DATA__').text();
-    if (nuxtDataScript) {
-        try {
-            const nuxtData = JSON.parse(nuxtDataScript) as unknown[];
-
-            // Find the data object which contains articleDetail
-            // The structure is: [["ShallowReactive", 1], {data: 2, ...}, ["ShallowReactive", 3], {articleDetail-xxx: 4}, ...]
-            for (const item of nuxtData) {
-                if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-                    const articleDetailKey = Object.keys(item).find((key) => key.startsWith('articleDetail-'));
-                    if (articleDetailKey) {
-                        const articleDetailIndex = (item as Record<string, number>)[articleDetailKey];
-                        if (typeof articleDetailIndex === 'number') {
-                            const articleData = resolveNuxtData(nuxtData, articleDetailIndex) as Record<string, unknown>;
-                            if (articleData?.articleDetail) {
-                                return { articleDetail: articleData };
-                            }
-                        }
-                    }
-                }
-            }
-        } catch {
-            // Failed to parse Nuxt data
-        }
-    }
-
-    // Try window.__INITIAL_STATE__ format (for briefs)
-    const initialStateMatch = data.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\});?\s*\(function\(\)/);
-    if (initialStateMatch?.[1]) {
-        try {
-            const initialState = JSON.parse(initialStateMatch[1]) as Record<string, unknown>;
-            const briefStoreModule = initialState.briefStoreModule as Record<string, unknown> | undefined;
-            const briefDetail = briefStoreModule?.brief_detail as Record<string, unknown> | undefined;
-            const brief = briefDetail?.brief as Record<string, unknown> | undefined;
-
-            if (brief) {
-                // Transform brief data to match the articleDetail structure expected by fetchItem
-                const publisherList = brief.publisher_list as Array<{ username?: string }> | undefined;
-                const briefColumn = briefDetail?.brief_column as Record<string, unknown> | undefined;
-                const clubInfo = briefDetail?.club_info as Record<string, unknown> | undefined;
-
-                return {
-                    articleDetail: {
-                        articleDetail: {
-                            title: brief.title,
-                            content: brief.content,
-                            preface: brief.preface,
-                            dateline: brief.publish_time,
-                            publish_time: brief.publish_time,
-                            audio_info: brief.audio_info,
-                            agreenum: brief.agree_num,
-                            total_comment_num: brief.total_comment_num,
-                            user_info: publisherList?.[0] ? { username: publisherList[0].username } : undefined,
-                            brief_column: briefColumn ? { name: briefColumn.name } : undefined,
-                            club_info: clubInfo ? { name: clubInfo.name } : undefined,
-                            share_info: brief.share_info,
-                        },
-                    },
-                };
-            }
-        } catch {
-            // Failed to parse initial state
-        }
-    }
-
-    return;
 };
 
 const audioQualities = ['', 'low'];
@@ -500,7 +474,9 @@ const mapItem = (item) => {
         return '';
     }
 
-    const { processed: audio, processedItem: audioItem = {} } = processAudioInfo(item.audio_info);
+    const mappedAudioInfo = processAudioInfo(item.audio_info);
+    const audio = mappedAudioInfo.processed;
+    const audioItem: Record<string, unknown> = mappedAudioInfo.processedItem ?? {};
 
     if (Object.keys(audioItem).length !== 0) {
         audioItem.itunes_item_image = item.pic_path ?? item.share_info?.share_img ?? undefined;
@@ -601,4 +577,18 @@ const processVideoInfo = (info) => {
     };
 };
 
-export { apiArticleRootUrl, apiClubRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchClubData, fetchData, generateSignature, processItems, rootUrl };
+export {
+    apiArticleRootUrl,
+    apiClubRootUrl,
+    apiMemberRootUrl,
+    apiMomentRootUrl,
+    apiSearchRootUrl,
+    buildFeedMetadata,
+    buildHuxiuRouteTitlePrefix,
+    fetchApiRouteData,
+    fetchMemberData,
+    generateSignature,
+    processItems,
+    rootUrl,
+    siteTitle,
+};
