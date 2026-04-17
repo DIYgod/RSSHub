@@ -195,7 +195,7 @@
         "oxfmt": "0.45.0",
         "oxlint": "1.60.0",
         "oxlint-plugin-eslint": "1.60.0",
-        "oxlint-tsgolint": "0.21.0",
+        "oxlint-tsgolint": "0.21.1",
         "remark-parse": "11.0.0",
         "tsdown": "0.21.9",
         "typescript": "5.9.3",
