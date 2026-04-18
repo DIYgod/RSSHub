@@ -15,7 +15,7 @@ vi.mock('@/utils/cache', () => ({
     },
 }));
 
-const loadRoute = async () => (await import('./en')).route;
+const loadRoute = async () => (await import('./routes/gigazine/en')).route;
 
 const createCtx = (limit?: string) => ({
     req: {
