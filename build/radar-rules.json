@@ -18784,6 +18784,14 @@
           "/"
         ],
         "target": "/go(_,url)=>{const category=new URL(url).href.match(/mhlw\\.go\\.jp\\/(.*)$/)?.[1]??void 0;return`/mhlw/pdf${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "毎月勤労統計調査 全国調査（月別結果）",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/toukei/list/30-1a.html"
+        ],
+        "target": "/mhlw/monthly-labour-survey"
       }
     ]
   },

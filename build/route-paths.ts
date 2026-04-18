@@ -1859,6 +1859,7 @@ export type RoutePath =
   | `/meteor/:board?`
   | `/meteor/boards`
   | `/metmuseum/exhibitions/:state?`
+  | `/mhlw/monthly-labour-survey`
   | `/mi/crowdfunding`
   | `/mi/golden`
   | `/microsoft/edge/addon/:crxid`
