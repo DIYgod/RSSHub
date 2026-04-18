@@ -52,6 +52,46 @@ describe('GET /api/route/status', () => {
         expect(data.lastBuildDate).toBe(mockBuildDate);
     });
 
+    it('returns cached: true with null lastBuildDate when cached payload is missing', async () => {
+        mockHas.mockResolvedValue(true);
+        mockGet.mockResolvedValue(null);
+
+        const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
+        expect(response.status).toBe(200);
+
+        const data = await response.json();
+        expect(data.cached).toBe(true);
+        expect(data.lastBuildDate).toBeNull();
+    });
+
+    it('returns cached: true with null lastBuildDate when cached payload is invalid', async () => {
+        mockHas.mockResolvedValue(true);
+        mockGet.mockResolvedValue('not-json');
+
+        const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
+        expect(response.status).toBe(200);
+
+        const data = await response.json();
+        expect(data.cached).toBe(true);
+        expect(data.lastBuildDate).toBeNull();
+    });
+
+    it('returns cached: true with null lastBuildDate when cached payload omits it', async () => {
+        mockHas.mockResolvedValue(true);
+        mockGet.mockResolvedValue(
+            JSON.stringify({
+                items: [],
+            })
+        );
+
+        const response = await api.request('/route/status?requestPath=/github/comments/DIYgod/RSSHub/20768');
+        expect(response.status).toBe(200);
+
+        const data = await response.json();
+        expect(data.cached).toBe(true);
+        expect(data.lastBuildDate).toBeNull();
+    });
+
     it('returns 503 when cache is unavailable', async () => {
         const { default: cacheModule } = await import('@/utils/cache/index');
         (cacheModule.status as { available: boolean }).available = false;
