@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -8,25 +10,81 @@ import { parseDate } from '@/utils/parse-date';
 
 const ROOT_URL = 'https://gigazine.net';
 const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
-
-// Full Chrome headers reduce Cloudflare rate-limit sensitivity
-const CHROME_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Cache-Control': 'max-age=0',
-    'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"macOS"',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'same-origin',
-    'sec-fetch-user': '?1',
-    'upgrade-insecure-requests': '1',
-};
+const DEFAULT_LIMIT = 10;
+const DETAIL_FETCH_DELAY = 3000;
+const MAX_CONSECUTIVE_DETAIL_FAILURES = 3;
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const getRequestOptions = (referer: string) => ({
+    headers: {
+        Referer: referer,
+        'User-Agent': config.trueUA,
+    },
+});
+const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_URL).href : undefined);
+const getArticleAuthor = ($: ReturnType<typeof load>) =>
+    $('#article .items p')
+        .first()
+        .text()
+        .match(/Posted by\s+(.+)$/)?.[1]
+        ?.trim();
+const getArticleCategories = ($: ReturnType<typeof load>) => [
+    ...new Set(
+        $('#article .items p a[href^="/gsc_news/en/C"]')
+            .toArray()
+            .map((element) => $(element).text().trim())
+            .filter(Boolean)
+    ),
+];
+const getErrorStatus = (error: unknown) => {
+    if (!error || typeof error !== 'object') {
+        return;
+    }
+
+    if ('status' in error && typeof error.status === 'number') {
+        return error.status;
+    }
+
+    if ('statusCode' in error && typeof error.statusCode === 'number') {
+        return error.statusCode;
+    }
+
+    if ('response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && typeof error.response.status === 'number') {
+        return error.response.status;
+    }
+};
+
+const fetchDescription = async (item: DataItem) => {
+    const articleHtml = await ofetch(item.link!, getRequestOptions(LIST_URL));
+    const $ = load(articleHtml);
+    const content = $('#article .cntimage');
+
+    content.find('script, .sbn, noscript').remove();
+    content.find('h1.title, time.yeartime').remove();
+
+    content.find('img').each((_, img) => {
+        const src = $(img).attr('src') ?? $(img).attr('data-src');
+        if (src) {
+            $(img).attr('src', getAbsoluteUrl(src));
+        }
+        $(img).removeAttr('data-src');
+    });
+
+    content.find('a[href]').each((_, anchor) => {
+        const href = $(anchor).attr('href');
+        if (href) {
+            $(anchor).attr('href', getAbsoluteUrl(href));
+        }
+    });
+
+    item.description = content.html()?.trim() ?? '';
+    item.image = getAbsoluteUrl($('meta[property="og:image"]').attr('content')) ?? item.image;
+    item.author = getArticleAuthor($) ?? item.author;
+    const categories = getArticleCategories($);
+    item.category = categories.length > 0 ? categories : item.category;
+
+    return item;
+};
 
 export const route: Route = {
     path: '/en',
@@ -51,96 +109,76 @@ export const route: Route = {
         },
     ],
     handler,
-    description: 'Full-text English articles from GIGAZINE. The first load is slow due to sequential fetching required by the site rate limits; subsequent loads are served from cache.',
+    description: 'Full-text English articles from GIGAZINE. Detail pages are cached, and the common `limit` parameter controls how many recent entries are fetched.',
 };
 
-async function handler() {
-    const html = await ofetch(LIST_URL, {
-        headers: { ...CHROME_HEADERS, Referer: ROOT_URL },
-    });
+async function handler(ctx) {
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '', 10) || DEFAULT_LIMIT;
+
+    const html = await ofetch(LIST_URL, getRequestOptions(ROOT_URL));
     const $ = load(html);
 
-    const list = $('.card')
+    const list: DataItem[] = $('.card')
         .toArray()
         .map((el) => {
             const card = $(el);
             const anchor = card.find('h2 a');
-            const path = anchor.attr('href') ?? '';
-            const link = path.startsWith('http') ? path : `${ROOT_URL}${path}`;
-            const title = anchor.find('span').text().trim();
+            const path = anchor.attr('href');
+            const link = path ? new URL(path, ROOT_URL).href : undefined;
+            const title = anchor.find('span').text();
             const pubDate = parseDate(card.find('time').attr('datetime') ?? '');
             const category = card.find('.catab').text().trim();
-            const image = card.find('.thumb img').attr('src') ?? '';
+            const imagePath = card.find('.thumb img').attr('src') ?? card.find('.thumb img').attr('data-src');
 
-            return { title, link, pubDate, category, image } as DataItem & { category: string; image: string };
+            return {
+                title,
+                link,
+                pubDate,
+                category: category ? [category] : undefined,
+                image: imagePath ? new URL(imagePath, ROOT_URL).href : undefined,
+            };
         })
-        .filter((item) => item.title && item.link);
+        .filter((item) => item.title && item.link)
+        .slice(0, limit);
 
-    const items: DataItem[] = [];
+    let detailRequestCount = 0;
+    let consecutiveDetailFailures = 0;
+    let shouldSkipRemainingDetails = false;
 
-    for (const item of list) {
-        let full: DataItem;
-        try {
-            // eslint-disable-next-line no-await-in-loop
-            full = (await cache.tryGet(item.link!, async () => {
-                // Sequential delay to stay under Cloudflare's rate limit between cache-miss fetches
-                await delay(5000);
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (shouldSkipRemainingDetails || consecutiveDetailFailures >= MAX_CONSECUTIVE_DETAIL_FAILURES) {
+                return item;
+            }
 
-                const articleHtml = await ofetch(item.link!, {
-                    headers: { ...CHROME_HEADERS, Referer: LIST_URL },
-                });
-                const $$ = load(articleHtml);
-
-                // Remove ads, scripts, and trackers
-                $$('#article script, #article .sbn, #article noscript').remove();
-
-                const content = $$('#article .cntimage');
-                // Title and timestamp are already in RSS metadata
-                content.find('h1.title').remove();
-                content.find('time.yeartime').remove();
-
-                // Make image src absolute and prevent hotlink blocking
-                content.find('img').each((_, img) => {
-                    const src = $$(img).attr('src');
-                    if (src?.startsWith('//')) {
-                        $$(img).attr('src', `https:${src}`);
+            try {
+                const detailedItem = await cache.tryGet(item.link!, async () => {
+                    if (detailRequestCount > 0) {
+                        await delay(DETAIL_FETCH_DELAY);
                     }
-                    $$(img).attr('referrerpolicy', 'no-referrer');
+                    detailRequestCount++;
+
+                    return fetchDescription(item);
                 });
 
-                // Make internal links absolute
-                content.find('a[href]').each((_, a) => {
-                    const href = $$(a).attr('href');
-                    if (href?.startsWith('/')) {
-                        $$(a).attr('href', `${ROOT_URL}${href}`);
-                    }
-                });
+                consecutiveDetailFailures = 0;
 
-                return {
-                    title: item.title,
-                    link: item.link,
-                    pubDate: item.pubDate,
-                    category: [item.category as string],
-                    image: item.image as string,
-                    description: content.html()?.trim() ?? '',
-                } as DataItem;
-            })) as DataItem;
-        } catch {
-            full = {
-                title: item.title,
-                link: item.link,
-                pubDate: item.pubDate,
-                category: [item.category as string],
-                image: item.image as string,
-            } as DataItem;
-        }
-
-        items.push(full);
-    }
+                return detailedItem;
+            } catch (error) {
+                const status = getErrorStatus(error);
+                consecutiveDetailFailures++;
+                shouldSkipRemainingDetails = status === 403 || status === 429;
+                return item;
+            }
+        },
+        { concurrency: 1 }
+    );
 
     return {
         title: 'GIGAZINE - English News',
         link: LIST_URL,
+        language: 'en',
         item: items,
     };
 }
