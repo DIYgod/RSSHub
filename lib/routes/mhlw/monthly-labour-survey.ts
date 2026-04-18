@@ -36,9 +36,7 @@ async function handler(ctx: Context) {
     const response = await fetchPage(link);
     const $ = load(response);
 
-    const list: DataItem[] = $('table.xgengo')
-        .eq(0)
-        .find('tr')
+    const list: DataItem[] = $('table.xgengo:first tr')
         .toArray()
         .flatMap((row) => {
             const $row = $(row);
