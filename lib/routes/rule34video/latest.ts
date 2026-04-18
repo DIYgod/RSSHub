@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import type { Context } from 'hono';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -22,11 +22,11 @@ export const route: Route = {
     radar: [
         {
             source: ['rule34video.com/latest-updates/'],
-            target: '/rule34video/latest',
+            target: '/latest',
         },
     ],
     name: 'Latest Updates',
-    maintainers: ['Dgama'],
+    maintainers: ['ashi-koki'],
     handler,
 };
 
@@ -43,11 +43,12 @@ interface VideoItem {
     videoId?: string;
 }
 
-async function handler(_ctx: Context) {
+async function handler() {
     const response = await got({
         method: 'get',
         url: 'https://www.rule34video.com/latest-updates/',
         headers: {
+            'User-Agent': config.trueUA,
             Referer: 'https://www.rule34video.com',
         },
     });
@@ -60,10 +61,10 @@ async function handler(_ctx: Context) {
             const title = $el.attr('title')?.trim() || $el.find('.thumb_title').text().trim();
             const link = $el.attr('href')?.trim() || '';
             const preview = $el.find('img.thumb.lazy-load').attr('data-original');
-            const duration = $el.find('.time').text().trim() || undefined;
-            const added = $el.find('.added').text().replaceAll(/\s+/g, ' ').trim() || undefined;
-            const rating = $el.find('.rating').text().trim() || undefined;
-            const views = $el.find('.views').text().trim() || undefined;
+            const duration = $el.find('.time').text().trim();
+            const added = $el.find('.added').text().replaceAll(/\s+/g, ' ').trim();
+            const rating = $el.find('.rating').text().trim();
+            const views = $el.find('.views').text().trim();
             const hasSound = $el.find('.sound').length > 0;
             const isHD = $el.find('.quality').length > 0;
             const videoId = link.match(/\/video\/(\d+)\//)?.[1];
