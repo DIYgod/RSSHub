@@ -10,6 +10,7 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 
+import { getClientTransactionId } from './client-transaction';
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
 import login from './login';
 
@@ -80,6 +81,7 @@ export const twitterGot = async (
     params,
     options?: {
         allowNoAuth?: boolean;
+        headers?: Record<string, string>;
     }
 ) => {
     const auth = await getAuth(30);
@@ -171,6 +173,7 @@ export const twitterGot = async (
                 : {
                       'x-guest-token': jsonCookie.gt,
                   }),
+            ...options?.headers,
         },
         dispatcher: dispatchers?.agent,
     });
@@ -263,7 +266,14 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             });
             return data;
         }
-        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params);
+        const transactionId = endpoint === 'UserTweetsAndReplies' ? await getClientTransactionId('GET', new URL(baseUrl + gqlMap[endpoint]).pathname) : undefined;
+        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params, {
+            headers: transactionId
+                ? {
+                      'x-client-transaction-id': transactionId,
+                  }
+                : undefined,
+        });
         return data;
     };
 
