@@ -24,7 +24,7 @@ const types = {
 export const route: Route = {
     path: '/novel/:type',
     name: '小说列表',
-    url: 'zxcs.info',
+    url: 'zxcs.click',
     maintainers: ['liaochuan'],
     example: '/zxcs/novel/jinqigengxin',
     parameters: { type: '小说类型, 可在对应类型页 URL 中找到' },
@@ -42,7 +42,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['zxcs.info/:type'],
+            source: ['zxcs.click/:type'],
             target: '/novel/:type',
         },
     ],
@@ -52,7 +52,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { type } = ctx.req.param();
 
-    const baseUrl = 'https://www.zxcs.info';
+    const baseUrl = 'https://www.zxcs.click';
     const link = `${baseUrl}/${type}`;
     const response = await ofetch(link);
     const $ = load(response);
