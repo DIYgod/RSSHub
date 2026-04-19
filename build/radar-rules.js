@@ -22990,7 +22990,7 @@
         source:[ "/",
           "/notice/list.htm" ],
         target:"/zuel/notice" } ] },
-  "zxcs.info":{ _name:"知轩藏书",
+  "zxcs.click":{ _name:"知轩藏书",
     ".":[ { title:"小说列表",
         docs:"https://docs.rsshub.app/routes/reading",
         source:[ "/:type" ],
