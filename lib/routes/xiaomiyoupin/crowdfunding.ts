@@ -33,10 +33,14 @@ export const route: Route = {
 async function handler() {
     const resp = await got('https://m.xiaomiyoupin.com/homepage/main/v1005');
 
-    const floors = resp.data.data.homepage.floors;
-    const crowdFloor = parseModule(floors, 'crowd_funding');
+    const homepage = resp.data?.data?.homepage;
+    if (!homepage || !Array.isArray(homepage.floors)) {
+        throw new Error('未获取到首页数据');
+    }
 
-    if (!crowdFloor || !crowdFloor.data.items) {
+    const crowdFloor = parseModule(homepage.floors, 'crowd_funding');
+
+    if (!crowdFloor?.data?.items) {
         throw new Error('未找到众筹数据');
     }
 

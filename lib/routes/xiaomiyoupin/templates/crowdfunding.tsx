@@ -18,8 +18,8 @@ type CrowdfundingGoods = {
     progress?: number;
 };
 
-const formatPrice = (cent: number | undefined): string => (cent != null ? (cent / 100).toFixed(2) : '-');
-const formatDate = (ts: number | undefined): string => (ts != null ? new Date(ts * 1000).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }) : '-');
+const formatPrice = (cent: number | undefined): string => (cent === undefined || cent === null ? '-' : (cent / 100).toFixed(2));
+const formatDate = (ts: number | undefined): string => (ts === undefined || ts === null ? '-' : new Date(ts * 1000).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }));
 
 const CrowdfundingCard = (goods: CrowdfundingGoods) => {
     const imageUrl = goods.pic_url || goods.imgs?.img800 || goods.img_square;
@@ -68,7 +68,7 @@ const CrowdfundingCard = (goods: CrowdfundingGoods) => {
                             </div>
                         </td>
                     </tr>
-                    {goods.saled_count != null ? (
+                    {goods.saled_count !== undefined && goods.saled_count !== null ? (
                         <tr>
                             <td style="padding:4px 8px; border:1px solid #eee;">
                                 <strong>支持人数</strong>
@@ -76,7 +76,7 @@ const CrowdfundingCard = (goods: CrowdfundingGoods) => {
                             <td style="padding:4px 8px; border:1px solid #eee;">{goods.saled_count} 人</td>
                         </tr>
                     ) : null}
-                    {goods.target_count != null ? (
+                    {goods.target_count !== undefined && goods.target_count !== null ? (
                         <tr>
                             <td style="padding:4px 8px; border:1px solid #eee;">
                                 <strong>目标人数</strong>
