@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
+import { parseModule } from './utils';
 import { renderCrowdfunding } from './templates/crowdfunding';
 
 const base_url = 'https://m.xiaomiyoupin.com';
@@ -30,18 +31,17 @@ export const route: Route = {
 };
 
 async function handler() {
-    // 使用 homepage/main/v1005 API，不需要 sign，长期稳定
     const resp = await got('https://m.xiaomiyoupin.com/homepage/main/v1005');
 
     const floors = resp.data.data.homepage.floors;
-    const crowdFloor = floors.find((floor) => floor.module_key === 'crowd_funding');
+    const crowdFloor = parseModule(floors, 'crowd_funding');
 
     if (!crowdFloor || !crowdFloor.data.items) {
         throw new Error('未找到众筹数据');
     }
 
-    const goodsList = crowdFloor.data.items.map((e) => e.item);
-    const items = goodsList.map((goods) => {
+    const items = crowdFloor.data.items.map((e) => {
+        const goods = e.item;
         return {
             title: goods.name,
             guid: `xiaomiyoupin:${goods.gid}`,
