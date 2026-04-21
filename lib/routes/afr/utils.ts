@@ -6,7 +6,13 @@ export const getItem = async (item) => {
     const response = await ofetch(item.link);
     const $ = cheerio.load(response);
 
-    const reduxState = JSON.parse($('script#__REDUX_STATE__').text().replaceAll(':undefined', ':null').match('__REDUX_STATE__=(.*);')?.[1] || '{}');
+    const reduxState = JSON.parse(
+        $('script#__REDUX_STATE__').text()
+            .replaceAll(':undefined', ':null')
+            .replace(/new\s+Set\s*\(\[([^\[\]]*)\]\)/g, 'null')
+            .replace(/new\s+Map\s*\(\[(?:[^\[\]]|\[(?:[^\[\]])*\])*\]\)/g, 'null')
+            .match('__REDUX_STATE__=(.*);')?.[1] || '{}'
+    );
 
     const content = reduxState.page.content;
     const asset = content.asset;
