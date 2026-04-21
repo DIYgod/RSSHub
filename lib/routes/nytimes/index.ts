@@ -81,8 +81,11 @@ async function handler(ctx) {
         // Do nothing
     }
 
-    const browser = await puppeteer();
     const feed = await parser.parseURL(rssUrl);
+
+    // Puppeteer is only needed for lang === 'en' to fetch www.nytimes.com article pages
+    const browser = lang === 'en' ? await puppeteer() : null;
+
     const items = await Promise.all(
         feed.items.splice(0, 10).map(async (item) => {
             let link = item.link;
@@ -154,7 +157,9 @@ async function handler(ctx) {
         })
     );
 
-    await browser.close();
+    if (browser) {
+        await browser.close();
+    }
 
     return {
         title,
