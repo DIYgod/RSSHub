@@ -191,7 +191,7 @@
         "magic-string": "0.30.21",
         "mockdate": "3.0.5",
         "msw": "2.13.4",
-        "node-network-devtools": "1.0.29",
+        "node-network-devtools": "1.0.30",
         "oxfmt": "0.45.0",
         "oxlint": "1.60.0",
         "oxlint-plugin-eslint": "1.60.0",
