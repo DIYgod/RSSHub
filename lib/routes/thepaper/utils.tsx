@@ -61,14 +61,14 @@ export default {
                 category: [...(contentDetail.tagList?.map((t) => t.tag) ?? []), contentDetail?.nodeInfo?.name ?? []],
                 pubDate,
                 author: contentDetail.author || '',
-                media: {
-                    content: {
-                        url: item.pic || contentDetail.videos?.coverUrl || contentDetail.bigPic,
-                    },
-                    thumbnails: {
-                        url: item.sharePic || contentDetail.sharePic,
-                    },
-                },
+//                media: {
+//                    content: {
+//                        url: item.pic || contentDetail.videos?.coverUrl || contentDetail.bigPic,
+//                    },
+//                    thumbnails: {
+//                        url: item.sharePic || contentDetail.sharePic,
+//                    },
+//                },
             };
             if (contentDetail.voiceInfo?.isHaveVoice) {
                 rss_item.enclosure_type = 'audio/mpeg';
