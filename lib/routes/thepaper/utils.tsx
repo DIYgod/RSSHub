@@ -70,11 +70,11 @@ export default {
 //                    },
 //                },
             };
-            if (contentDetail.voiceInfo?.isHaveVoice) {
-                rss_item.enclosure_type = 'audio/mpeg';
-                rss_item.enclosure_url = contentDetail.voiceInfo.voiceSrc;
-                rss_item.itunes_item_image = item.pic || contentDetail.videos?.coverUrl;
-            }
+//            if (contentDetail.voiceInfo?.isHaveVoice) {
+//                rss_item.enclosure_type = 'audio/mpeg';
+//                rss_item.enclosure_url = contentDetail.voiceInfo.voiceSrc;
+//                rss_item.itunes_item_image = item.pic || contentDetail.videos?.coverUrl;
+//            }
             return rss_item;
         });
     },
