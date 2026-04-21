@@ -58,6 +58,7 @@ async function handler(ctx) {
     const $ = load(data);
 
     let list;
+    const rootUrl = 'https://www.yomiuri.co.jp';
     if (category === 'news') {
         list = $('.news-top-latest__list .news-top-latest__list-item__inner')
             .toArray()
@@ -66,24 +67,22 @@ async function handler(ctx) {
                 const a = item.find('h3 a');
                 return {
                     title: a.text(),
-                    link: a.attr('href'),
+                    link: new URL(a.attr('href'), rootUrl).href,
                     pubDate: timezone(parseDate(item.find('time').attr('datetime')), +9),
                     locked: item.find('.icon-locked').length,
                 };
             });
     } else {
-        $('.p-category-reading-recommend').remove();
-        list = $('.layout-contents__main .c-list-title')
+        list = $('.p-category-organization .list .item')
             .toArray()
             .map((item) => {
                 item = $(item);
-                const a = item.find('h3 a');
-                const parent = item.parent();
+                const a = item.find('h3.title a');
                 return {
                     title: a.text(),
-                    link: a.attr('href'),
-                    pubDate: timezone(parseDate(parent.find('time').attr('datetime')), +9),
-                    locked: parent.find('.c-list-member-only').length,
+                    link: new URL(a.attr('href'), rootUrl).href,
+                    pubDate: timezone(parseDate(item.find('.info time').attr('datetime')), +9),
+                    locked: item.find('.c-list-member-only').length,
                 };
             });
     }
@@ -108,7 +107,7 @@ async function handler(ctx) {
                 item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')); // 2023-05-17T22:33:00+09:00
                 item.updated = parseDate($('meta[property="article:modified_time"]').attr('content'));
 
-                const tag = $('.p-header-category-breadcrumbs li a').last().text();
+                const tag = $('.p-header-category__breadcrumbs li a').last().text();
                 item.category = tag;
                 item.title = `[${tag}] ${item.title}`;
                 return item;
