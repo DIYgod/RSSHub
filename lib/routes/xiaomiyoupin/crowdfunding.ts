@@ -1,11 +1,9 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { parseModule } from './utils';
-import { renderCrowdfunding } from './templates/crowdfunding';
+import { renderGoods } from './templates/goods';
 
 const base_url = 'https://m.xiaomiyoupin.com';
-
 export const route: Route = {
     path: '/crowdfunding',
     categories: ['shopping'],
@@ -31,33 +29,43 @@ export const route: Route = {
 };
 
 async function handler() {
-    const resp = await got('https://m.xiaomiyoupin.com/homepage/main/v1005');
+    const resp = await got('https://home.mi.com/lasagne/page/5');
+    const site_url = resp.data.redirect.location;
 
-    const homepage = resp.data?.data?.homepage;
-    if (!homepage || !Array.isArray(homepage.floors)) {
-        throw new Error('未获取到首页数据');
-    }
+    const urlParams = new URLSearchParams(site_url);
+    const pageid = urlParams.get('pageid');
+    const sign = urlParams.get('sign');
 
-    const crowdFloor = parseModule(homepage.floors, 'crowd_funding');
+    // 1. fetchPageData
+    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
+        headers: {
+            accept: '*/*',
+        },
+    });
+    const crowd_funding_floor = pageData.data.data.floors.find((floor) => floor.module_key === 'crowding');
+    const query_list = crowd_funding_floor.query_list;
 
-    if (!crowdFloor?.data?.items) {
-        throw new Error('未找到众筹数据');
-    }
+    // 2. fetchFloorDetailData
+    const floor_detail_data = await got.post(`${base_url}/mtop/navi/venue/batch?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
+        json: {
+            query_list,
+        },
+    });
 
-    const items = crowdFloor.data.items.map((e) => {
-        const goods = e.item;
+    const goodsList = floor_detail_data.data.data.result_list[0].list;
+    const items = goodsList.map((e) => {
+        const goods = e.value.goods;
         return {
             title: goods.name,
             guid: `xiaomiyoupin:${goods.gid}`,
-            description: renderCrowdfunding(goods),
+            description: renderGoods(goods),
             link: goods.jump_url,
-            pubDate: goods.start ? new Date(goods.start * 1000).toUTCString() : undefined,
+            pubDate: new Date(goods.fist_release_time * 1000).toUTCString(),
         };
     });
-
     return {
         title: '小米有品众筹',
-        link: `${base_url}/w/crowdfundV3`,
+        link: site_url,
         description: '小米有品众筹',
         item: items,
     };
