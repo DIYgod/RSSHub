@@ -78,6 +78,7 @@ type ConfigEnvKeys =
     | 'FOLLOW_PRICE'
     | 'FOLLOW_USER_LIMIT'
     // Route-specific (dynamic cookies with prefixes)
+    | 'BAIDU_COOKIE'
     | `BILIBILI_COOKIE_${string}`
     | 'BILIBILI_DM_IMG_LIST'
     | 'BILIBILI_DM_IMG_INTER'

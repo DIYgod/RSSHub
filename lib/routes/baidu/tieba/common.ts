@@ -1,6 +1,8 @@
-import { config } from '@/config';
+import {config} from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
+import {getPuppeteerPage} from '@/utils/puppeteer';
+import {Cookie} from 'tough-cookie';
 
 /**
  * 解析百度 cookie 字符串为 Puppeteer 可用的 cookie 对象数组
@@ -9,17 +11,13 @@ import cache from '@/utils/cache';
 export function parseBaiduCookies(cookieStr: string): Array<{ name: string; value: string; domain: string }> {
     return cookieStr
         .split(';')
-        .map((c) => c.trim())
-        .filter((c) => c.length > 0)
-        .map((c) => {
-            const firstEqualIndex = c.indexOf('=');
-            if (firstEqualIndex === -1) {
-                return { name: c, value: '', domain: '.tieba.baidu.com' };
-            }
-            const name = c.slice(0, firstEqualIndex).trim();
-            const value = c.slice(firstEqualIndex + 1).trim();
-            return { name, value, domain: '.tieba.baidu.com' };
-        });
+        .map((c) => Cookie.parse(c.trim()))
+        .filter((c): c is Cookie => Boolean(c?.key))
+        .map((c) => ({
+            name: c.key,
+            value: c.value,
+            domain: '.tieba.baidu.com',
+        }));
 }
 
 /**
@@ -51,8 +49,12 @@ export async function getTiebaPageContent(
         throw new ConfigNotFoundError('Baidu Tieba RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#baidu">BAIDU_COOKIE</a>');
     }
 
-    const { getPuppeteerPage } = await import('@/utils/puppeteer');
-    const { waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card', timeout = 3000, retries = 3 } = options;
+    const cookies = parseBaiduCookies(cookie);
+    const {
+        waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card',
+        timeout = 3000,
+        retries = 3
+    } = options;
 
     const data = await cache.tryGet(
         cacheKey,
@@ -61,22 +63,22 @@ export async function getTiebaPageContent(
 
             /* eslint-disable no-await-in-loop -- Intentional sequential retry logic */
             for (let attempt = 0; attempt < retries; attempt++) {
-                const { page, destroy } = await getPuppeteerPage(url, { noGoto: true });
+                const {page, destroy} = await getPuppeteerPage(url, {
+                    onBeforeLoad: async (page) => {
+                        if (cookies.length > 0) {
+                            await page.setCookie(...cookies);
+                        }
+                    },
+                    gotoConfig: {waitUntil: 'domcontentloaded'},
+                });
 
                 try {
-                    // 设置 Cookie（在访问页面前设置，减少一次导航）
-                    const cookies = parseBaiduCookies(cookie);
-                    await page.setCookie(...cookies);
-
-                    // 访问目标页面 - 使用更宽松的等待条件
-                    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-
                     // 等待页面稳定
                     await new Promise((resolve) => setTimeout(resolve, 2000));
 
                     // 动态等待内容加载
                     try {
-                        await page.waitForSelector(waitForSelector, { timeout });
+                        await page.waitForSelector(waitForSelector, {timeout});
                     } catch {
                         // 如果超时，继续执行
                     }
@@ -95,7 +97,6 @@ export async function getTiebaPageContent(
                 }
             }
             /* eslint-enable no-await-in-loop */
-
             throw lastError || new Error('Failed to fetch page content');
         },
         config.cache.routeExpire,

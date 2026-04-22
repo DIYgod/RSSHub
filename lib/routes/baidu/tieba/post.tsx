@@ -120,10 +120,6 @@ async function handler(ctx) {
                 const parsedDate = descText ? parseRelativeTime(descText) : null;
                 const validPubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
 
-                // 提取时间文本用于显示
-                const timeMatch = descText.match(/(\d+分钟前|\d+小时前|今天\s*\d{2}:\d{2}|\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}|昨天\s*\d{2}:\d{2}|刚刚)/);
-                const timeText = timeMatch ? timeMatch[1] : descText;
-
                 // 尝试获取回复的唯一ID用于生成直接链接
                 const postId = item.attr('data-post-id') || item.attr('id') || '';
                 const replyLink = postId ? `https://tieba.baidu.com/p/${id}?pid=${postId}#${postId}` : `https://tieba.baidu.com/p/${id}`;
@@ -132,13 +128,9 @@ async function handler(ctx) {
                     title: `${authorName} 回复了帖子《${title}》`,
                     description: renderToString(
                         <>
-                            <div dangerouslySetInnerHTML={{ __html: postContent }} />
-                            <div dangerouslySetInnerHTML={{ __html: images }} />
-                            <p>
-                                楼层：{floor}
-                                <br />
-                                时间：{timeText}
-                            </p>
+                            {postContent ? <div>{raw(postContent)}</div> : null}
+                            {images ? <div>{raw(images)}</div> : null}
+                            {floor ? <p>楼层：{floor}</p> : null}
                         </>
                     ),
 

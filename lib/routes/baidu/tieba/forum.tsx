@@ -36,37 +36,19 @@ async function handler(ctx) {
     const { kw, cid = '0', sortBy = 'created' } = ctx.req.param();
     const sortParam = sortBy === 'replied' ? '&sc=67108864' : '';
 
-    // 固定抓取3页，约30条帖子
-    const maxPages = 3;
+    const pageUrl = `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}&pn=0${cid === '0' ? '' : `&cid=${cid}`}${ctx.req.path.includes('good') ? '&tab=good' : ''}${sortParam}`;
+    const data = await getTiebaPageContent(pageUrl, `tieba:forum:${kw}:${cid}:${sortBy}`, { waitForSelector: '.thread-card-wrapper', timeout: 3000 });
 
-    // 并发获取所有页面
-    const pagePromises = [];
-    for (let pageNum = 0; pageNum < maxPages; pageNum++) {
-        const pageUrl = `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}&pn=${pageNum * 50}${cid === '0' ? '' : `&cid=${cid}`}${ctx.req.path.includes('good') ? '&tab=good' : ''}${pageNum === 0 ? '' : '&ie=utf-8'}${sortParam}`;
+    const $ = load(data);
+    const threadListHTML = $('code[id="pagelet_html_frs-list/pagelet/thread_list"]')
+        .contents()
+        .filter((_, e) => e.type === 'comment' || (e as { nodeType?: number }).nodeType === 8)
+        .first()
+        .text()
+        .trim();
 
-        const promise = getTiebaPageContent(pageUrl, `tieba:forum:${kw}:${cid}:${sortBy}:page${pageNum}`, { waitForSelector: '.thread-card-wrapper', timeout: 3000 });
-        pagePromises.push(promise);
-    }
-
-    // 等待所有页面获取完成
-    const pageResults = await Promise.all(pagePromises);
-
-    // 解析所有页面数据并去重
-    const threadMap = new Map();
-    for (const html of pageResults) {
-        if (html && html.length > 0) {
-            const $ = load(html);
-            const threads = parseThreads($);
-            for (const thread of threads) {
-                // 使用帖子ID去重，只保留第一次出现的
-                if (!threadMap.has(thread.id)) {
-                    threadMap.set(thread.id, thread);
-                }
-            }
-        }
-    }
-
-    const allThreads = [...threadMap.values()];
+    const threadRoot = threadListHTML ? load(threadListHTML) : $;
+    const allThreads = parseThreads(threadRoot);
 
     if (allThreads.length === 0) {
         throw new Error('No threads found. The cookie may be expired or invalid. Please check your BAIDU_COOKIE.');
