@@ -1,6 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 
 import { getArchive, getCategories, parseItem, parseList } from './utils';
@@ -120,13 +119,13 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     if (['hk', 'tw'].includes(region)) {
-        const categoryMap = await getCategories(region, cache.tryGet);
+        const categoryMap = await getCategories(region);
         const tag = category ? categoryMap[category].yctMap : null;
 
         const response = await getArchive(region, limit, tag);
         const list = parseList(region, response);
 
-        const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
+        const items = await Promise.all(list.map((item) => parseItem(item)));
 
         return {
             title: `Yahoo 新聞 ${region.toUpperCase()} - ${category ? categoryMap[category].name : '所有類別'}`,
@@ -138,7 +137,7 @@ async function handler(ctx) {
         const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category ? `${category}/` : ''}`;
         const feed = await parser.parseURL(rssUrl);
         const filteredItems = feed.items.filter((item) => item?.link && !item.link.includes('promotions') && new URL(item.link).hostname.match(/.*\.yahoo\.com$/));
-        const items = await Promise.all(filteredItems.map((item) => parseItem(item, cache.tryGet)));
+        const items = await Promise.all(filteredItems.map((item) => parseItem(item)));
 
         return {
             title: `Yahoo News ${region.toUpperCase()} - ${category ? category.toUpperCase() : 'All'}`,

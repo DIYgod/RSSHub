@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -27,9 +28,9 @@ const getList = async (region, listId) => {
     return response;
 };
 
-const getCategories = (region, tryGet) =>
-    tryGet(`yahoo:${region}:categoryMap`, async () => {
-        const { PageStore } = await getStores(region, tryGet);
+const getCategories = (region) =>
+    cache.tryGet(`yahoo:${region}:categoryMap`, async () => {
+        const { PageStore } = await getStores(region);
 
         const { Col1: col1 } = PageStore.pagesConfigRaw.base.section.regions;
         const { categoryMap } = col1.find((c) => c.name === 'ArchiveFilterBar').props;
@@ -43,31 +44,46 @@ const getCategories = (region, tryGet) =>
         return categoryMap;
     });
 
-const getProviderList = (region, tryGet) =>
-    tryGet(`yahoo:${region}:providerList`, async () => {
-        const { ProviderListStore } = await getStores(region, tryGet);
+const getProviderList = async (region) => {
+    const stores = await getStores(region);
+    return stores.providerList.map((provider) => ({
+        title: provider.title,
+        key: provider.key,
+        link: new URL(`${provider.key}--所有類別`, `https://${region}.news.yahoo.com`).href,
+    }));
+};
 
-        return ProviderListStore.providerList.flatMap((list) =>
-            list.providers.map((provider) => ({
-                title: `${list.title} - ${provider.title}`,
-                key: provider.key,
-                link: new URL(provider.url, `https://${region}.news.yahoo.com`).href,
-            }))
-        );
-    });
+const findStoresObject = (node) => {
+    if (!node || typeof node !== 'object') {
+        return null;
+    }
+    if ('breakingNews' in node) {
+        return node;
+    }
+    for (const value of Object.values(node)) {
+        const found = findStoresObject(value);
+        if (found) {
+            return found;
+        }
+    }
+    return null;
+};
 
-const getStores = (region, tryGet) =>
-    tryGet(`yahoo:${region}:stores`, async () => {
+const getStores = (region) =>
+    cache.tryGet(`yahoo:${region}:stores`, async () => {
         const { data: response } = await got(`https://${region}.news.yahoo.com/archive`);
         const $ = load(response);
 
-        const appData = JSON.parse(
-            $('script:contains("root.App.main")')
-                .text()
-                .match(/root.App.main\s+=\s+({.+});/)?.[1] as string
-        );
+        const script = $('script:contains("pageBenjiConfig")').text();
+        const rscText = script.match(/self\.__next_f\.push\(\[1,"\d:(.*)"\]\)/)?.[1];
+        const rscData = JSON.parse(JSON.parse(`"${rscText}"`));
 
-        return appData.context.dispatcher.stores;
+        const stores = findStoresObject(rscData);
+        if (!stores) {
+            throw new Error(`Unable to locate stores data for region ${region}`);
+        }
+
+        return stores;
     });
 
 const parseList = (region, response) =>
@@ -78,8 +94,8 @@ const parseList = (region, response) =>
         pubDate: parseDate(item.published_at, 'X'),
     }));
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
         const { data: response } = await got(item.link, {
             headers: {
                 'User-Agent': config.trueUA,

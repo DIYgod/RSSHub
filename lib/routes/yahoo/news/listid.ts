@@ -1,6 +1,5 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 
 import { getList, parseItem, parseList } from './utils';
 
@@ -55,7 +54,7 @@ async function handler(ctx) {
     // console.log('Is response an array?', Array.isArray(response.stream_items));
     const list = parseList(region, response.stream_items);
 
-    const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseItem(item)));
 
     const author = items[0].author;
     const atIndex = author.indexOf('@'); // fing '@'
