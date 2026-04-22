@@ -1,6 +1,6 @@
-import type {CheerioAPI} from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 
-import {parseRelativeDate} from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 /**
  * 解析相对时间（如"回复于4小时前"）为实际日期

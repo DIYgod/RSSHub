@@ -1,8 +1,9 @@
-import {config} from '@/config';
+import { Cookie } from 'tough-cookie';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
-import {getPuppeteerPage} from '@/utils/puppeteer';
-import {Cookie} from 'tough-cookie';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 /**
  * 解析百度 cookie 字符串为 Puppeteer 可用的 cookie 对象数组
@@ -50,11 +51,7 @@ export async function getTiebaPageContent(
     }
 
     const cookies = parseBaiduCookies(cookie);
-    const {
-        waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card',
-        timeout = 3000,
-        retries = 3
-    } = options;
+    const { waitForSelector = '.thread-card-wrapper, .virtual-list-item, .thread-content-box, .thread-card', timeout = 3000, retries = 3 } = options;
 
     const data = await cache.tryGet(
         cacheKey,
@@ -63,13 +60,13 @@ export async function getTiebaPageContent(
 
             /* eslint-disable no-await-in-loop -- Intentional sequential retry logic */
             for (let attempt = 0; attempt < retries; attempt++) {
-                const {page, destroy} = await getPuppeteerPage(url, {
+                const { page, destroy } = await getPuppeteerPage(url, {
                     onBeforeLoad: async (page) => {
                         if (cookies.length > 0) {
                             await page.setCookie(...cookies);
                         }
                     },
-                    gotoConfig: {waitUntil: 'domcontentloaded'},
+                    gotoConfig: { waitUntil: 'domcontentloaded' },
                 });
 
                 try {
@@ -78,7 +75,7 @@ export async function getTiebaPageContent(
 
                     // 动态等待内容加载
                     try {
-                        await page.waitForSelector(waitForSelector, {timeout});
+                        await page.waitForSelector(waitForSelector, { timeout });
                     } catch {
                         // 如果超时，继续执行
                     }
