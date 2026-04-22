@@ -90,12 +90,12 @@ async function handler(ctx) {
 
             // 图片
             const medias = item
-                .find('.thread-media-new img')
+                .find('.p_mediaCont img')
                 .toArray()
-                .map((el) => {
-                    const img = $(el);
-                    const src = img.attr('src') || img.attr('data-src') || '';
-                    return `<img src="${src}" alt="${title}">`;
+                .flatMap((element) => {
+                    const item = $(element);
+                    const src = (item.attr('original') || '').trim();
+                    return src ? [`<img src="${src}">`] : [];
                 })
                 .join('');
 

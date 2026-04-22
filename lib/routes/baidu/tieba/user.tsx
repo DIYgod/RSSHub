@@ -34,7 +34,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const url = `https://tieba.baidu.com/home/main?un=${uid}`;
+    const encodedUid = encodeURIComponent(uid);
+    const url = `https://tieba.baidu.com/home/main?un=${encodedUid}`;
 
     const html = await getTiebaPageContent(url, `tieba:user:${uid}`, {
         waitForSelector: '.thread-card',
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
     return {
         title: `${name} 的贴吧`,
-        link: `https://tieba.baidu.com/home/main?un=${uid}`,
+        link: `https://tieba.baidu.com/home/main?un=${encodedUid}`,
         item: list.toArray().map((element) => {
             const item = $(element);
 

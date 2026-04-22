@@ -55,11 +55,12 @@ async function handler(ctx) {
     }
 
     const list = allThreads.map((thread) => {
-        const parsedDate = parseRelativeTime(thread.time);
+        const parsedDate = thread.time ? parseRelativeTime(thread.time) : undefined;
+        const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? timezone(parsedDate, +8) : undefined;
         return {
             title: thread.title,
             link: normalizeUrl(thread.link) || `https://tieba.baidu.com/p/${thread.id}`,
-            pubDate: parsedDate ? timezone(parsedDate, +8) : undefined,
+            ...(pubDate ? { pubDate } : {}),
             author: thread.author,
             description: renderToString(
                 <>

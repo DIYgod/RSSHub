@@ -86,7 +86,6 @@ type ConfigEnvKeys =
     | 'BITBUCKET_USERNAME'
     | 'BITBUCKET_PASSWORD'
     | 'BTBYR_HOST'
-    | 'BAIDU_COOKIE'
     | 'BTBYR_COOKIE'
     | 'BUPT_PORTAL_COOKIE'
     | 'CAIXIN_COOKIE'

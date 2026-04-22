@@ -80,7 +80,9 @@ export async function getTiebaPageContent(
                         // 如果超时，继续执行
                     }
 
-                    return await page.content();
+                    const html = await page.content();
+                    checkSecurityVerification(html);
+                    return html;
                 } catch (error) {
                     lastError = error as Error;
                     // 如果是最后一次尝试，抛出错误
@@ -100,9 +102,7 @@ export async function getTiebaPageContent(
         false
     );
 
-    const html = data as string;
-    checkSecurityVerification(html);
-    return html;
+    return data as string;
 }
 
 /**
