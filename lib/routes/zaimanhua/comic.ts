@@ -14,7 +14,13 @@ export const route: Route = {
     parameters: { id: '漫画ID' },
     example: '/zaimanhua/comic/14488',
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZAIMANHUA_COOKIE',
+                optional: true,
+                description: '用户登录后，可以从浏览器开发者工具 Network 面板的请求获取 Cookie，如：`SUB=xxx`全部复制并设置为环境变量',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -30,6 +36,9 @@ export const route: Route = {
     ],
     name: '漫画更新',
     maintainers: ['kjasn'],
+    description: `::: Warning
+未登录用户无法获取到所有漫画，需要设置\`ZAIMANHUA_COOKIE\`环境变量。
+:::`,
     handler,
 };
 
@@ -38,12 +47,17 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const currentComicUrl = `${baseUrl}/api/v1/comic2/comic/detail?id=${id}`;
 
-    const response = await ofetch(currentComicUrl, {
-        headers: {
-            'user-agent': config.trueUA,
-            referer: baseUrl,
-        },
-    });
+    const headers: Record<string, string> = {
+        'user-agent': config.trueUA,
+        referer: baseUrl,
+    };
+    const cookie = config.zaimanhua.cookie;
+    if (cookie) {
+        headers.cookie = cookie;
+    }
+    // console.log('look, i got cookie:', cookie);
+
+    const response = await ofetch(currentComicUrl, { headers });
 
     const comicInfo = response.data.comicInfo;
     const status = comicInfo.chapterList[0].title; // 更新状态
@@ -58,12 +72,7 @@ async function handler(ctx) {
 
             return await cache.tryGet(chapterUrl, async () => {
                 // 获取章节内容
-                const chapterResponse = await ofetch(chapterUrl, {
-                    headers: {
-                        'user-agent': config.trueUA,
-                        referer: baseUrl,
-                    },
-                });
+                const chapterResponse = await ofetch(chapterUrl, { headers });
 
                 const chapterData = chapterResponse.data;
                 const description = renderComic(chapterData.chapterInfo.page_url || []);

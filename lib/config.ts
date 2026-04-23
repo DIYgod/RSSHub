@@ -239,6 +239,7 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
     | 'YOUTUBE_VIDEO_EMBED_URL'
+    | 'ZAIMANHUA_COOKIE'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -685,6 +686,9 @@ export type Config = {
         clientSecret?: string;
         refreshToken?: string;
         videoEmbedUrl?: string;
+    };
+    zaimanhua: {
+        cookie?: string;
     };
     zhihu: {
         cookies?: string;
@@ -1182,6 +1186,9 @@ const calculateValue = () => {
             refreshToken: envs.YOUTUBE_REFRESH_TOKEN,
             videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
         },
+        zaimanhua: {
+            cookie: envs.ZAIMANHUA_COOKIE,
+        },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,
         },
@@ -1201,7 +1208,6 @@ const calculateValue = () => {
     }
 };
 calculateValue();
-
 (async () => {
     if (envs.REMOTE_CONFIG) {
         const { default: logger } = await import('@/utils/logger');
