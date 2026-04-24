@@ -268,6 +268,7 @@ async function handler(ctx) {
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), false);
     const displayArticle = ctx.req.query('mode') === 'fulltext';
+    const showOrigin = fallback(undefined, queryToBoolean(ctx.req.query('show_origin')), false);
     const offset = fallback(undefined, routeParams.offset, '');
     const useAvid = fallback(undefined, queryToBoolean(routeParams.useAvid), false);
     const directLink = fallback(undefined, queryToBoolean(routeParams.directLink), false);
@@ -420,7 +421,17 @@ async function handler(ctx) {
                 // 换行处理
                 description = description.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
-                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+
+                const isOriginDeleted = origin?.module_dynamic?.major?.none !== undefined;
+                const shouldShowOrigin = showOrigin && !isOriginDeleted && origin !== undefined;
+
+                const originContents = shouldShowOrigin
+                    ? [originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
+                    : showOrigin
+                        ? []
+                        : [originDescription, getIframe(origin, embed), getImgs(origin), originUrlText];
+
+                const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, ...originContents]
                     .map((e) => e?.trim())
                     .filter(Boolean)
                     .join('<br>');
