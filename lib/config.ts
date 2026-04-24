@@ -27,6 +27,8 @@ type ConfigEnvKeys =
     | 'CACHE_CONTENT_EXPIRE'
     | 'MEMORY_MAX'
     | 'REDIS_URL'
+    | 'CACHE_HTTP_URL'
+    | 'CACHE_HTTP_TOKEN'
     // Proxy
     | 'PROXY_URI'
     | 'PROXY_URIS'
@@ -283,6 +285,10 @@ export type Config = {
     };
     redis: {
         url: string;
+    };
+    httpCache: {
+        url?: string;
+        token?: string;
     };
     // proxy
     proxyUri?: string;
@@ -763,7 +769,7 @@ const calculateValue = () => {
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
-            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
+            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // Cache type; supports 'memory', 'redis', and 'http'. Set to empty string to disable cache.
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
             contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
@@ -774,6 +780,10 @@ const calculateValue = () => {
         },
         redis: {
             url: envs.REDIS_URL || 'redis://localhost:6379/',
+        },
+        httpCache: {
+            url: envs.CACHE_HTTP_URL,
+            token: envs.CACHE_HTTP_TOKEN,
         },
         // proxy
         proxyUri: envs.PROXY_URI,
