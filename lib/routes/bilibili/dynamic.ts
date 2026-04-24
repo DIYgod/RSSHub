@@ -423,13 +423,11 @@ async function handler(ctx) {
                 originDescription = originDescription.replaceAll('\r\n', '<br>').replaceAll('\n', '<br>');
 
                 const isOriginDeleted = origin?.module_dynamic?.major?.none !== undefined;
-                const shouldShowOrigin = showOrigin && !isOriginDeleted && origin !== undefined;
 
-                const originContents = shouldShowOrigin
-                    ? [originDescription, getIframe(origin, embed), getImgs(origin), originUrlText]
-                    : showOrigin
-                        ? []
-                        : [originDescription, getIframe(origin, embed), getImgs(origin), originUrlText];
+                let originContents: string[] = [];
+                if (showOrigin && origin !== undefined && !isOriginDeleted) {
+                    originContents = [originDescription, getIframe(origin, embed), getImgs(origin), originUrlText];
+                }
 
                 const descriptions = [title, description, getIframe(data, embed), getImgs(data), urlText, ...originContents]
                     .map((e) => e?.trim())
