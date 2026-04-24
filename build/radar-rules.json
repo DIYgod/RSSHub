@@ -5535,6 +5535,25 @@
   },
   "apple.com": {
     "_name": "Apple",
+    "apps": [
+      {
+        "title": "App Update",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:country/app/:appSlug/:id",
+          "/:country/app/:id"
+        ],
+        "target": "/apple/apps/update/:country/:id"
+      },
+      {
+        "title": "Price Drop",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/appstore/price/:country/:type/:id"
+      }
+    ],
     "support": [
       {
         "title": "Exchange and Repair Extension Programs",
@@ -5562,25 +5581,6 @@
           "/:region/podcast/:id"
         ],
         "target": "/apple/podcast/:id/:region?"
-      }
-    ],
-    "apps": [
-      {
-        "title": "App Update",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/:country/app/:appSlug/:id",
-          "/:country/app/:id"
-        ],
-        "target": "/apple/apps/update/:country/:id"
-      },
-      {
-        "title": "Price Drop",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/"
-        ],
-        "target": "/appstore/price/:country/:type/:id"
       }
     ]
   },
