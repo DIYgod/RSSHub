@@ -239,7 +239,7 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
     | 'YOUTUBE_VIDEO_EMBED_URL'
-    | 'ZAIMANHUA_COOKIE'
+    | 'ZAIMANHUA_TOKEN'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -688,7 +688,7 @@ export type Config = {
         videoEmbedUrl?: string;
     };
     zaimanhua: {
-        cookie?: string;
+        token?: string;
     };
     zhihu: {
         cookies?: string;
@@ -1187,7 +1187,7 @@ const calculateValue = () => {
             videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
         },
         zaimanhua: {
-            cookie: envs.ZAIMANHUA_COOKIE,
+            token: envs.ZAIMANHUA_TOKEN,
         },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,

@@ -12,13 +12,13 @@ export const route: Route = {
     path: '/comic/:id',
     categories: ['anime'],
     parameters: { id: '漫画ID' },
-    example: '/zaimanhua/comic/14488',
+    example: '/zaimanhua/comic/57069',
     features: {
         requireConfig: [
             {
-                name: 'ZAIMANHUA_COOKIE',
+                name: 'ZAIMANHUA_TOKEN',
                 optional: true,
-                description: '用户登录后，可以从浏览器开发者工具 Network 面板的请求获取 Cookie，如：`SUB=xxx`全部复制并设置为环境变量',
+                description: '用户登录后，可以从浏览器开发者工具 Network 面板中的请求信息中获取 token，使用请求中的 `Authorization` 的值，完整设置为 `Bearer <token>`，或直接设置 token 并由路由自动补齐 `Bearer ` 前缀。',
             },
         ],
         requirePuppeteer: false,
@@ -37,7 +37,7 @@ export const route: Route = {
     name: '漫画更新',
     maintainers: ['kjasn'],
     description: `::: Warning
-未登录用户无法获取到所有漫画，需要设置\`ZAIMANHUA_COOKIE\`环境变量。
+未登录用户无法获取到所有漫画，需要设置\`ZAIMANHUA_TOKEN\`环境变量以使用 API 授权访问。
 :::`,
     handler,
 };
@@ -51,11 +51,11 @@ async function handler(ctx) {
         'user-agent': config.trueUA,
         referer: baseUrl,
     };
-    const cookie = config.zaimanhua.cookie;
-    if (cookie) {
-        headers.cookie = cookie;
+
+    const token = config.zaimanhua.token;
+    if (token) {
+        headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
     }
-    // console.log('look, i got cookie:', cookie);
 
     const response = await ofetch(currentComicUrl, { headers });
 
