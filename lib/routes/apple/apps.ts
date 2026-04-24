@@ -3,8 +3,6 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { appstoreBearerToken } from './utils';
-
 const platformIds = {
     osx: 'macOS',
     ios: 'iOS',
@@ -87,20 +85,20 @@ async function handler(ctx) {
     const rootUrl = 'https://apps.apple.com';
     const currentUrl = new URL(`${country}/app/${id}`, rootUrl).href;
 
-    const bearer = await appstoreBearerToken();
-
-    const response = await ofetch(`https://amp-api-edge.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
+    const response = await ofetch(`https://apps.apple.com/api/apps/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
         headers: {
-            authorization: `Bearer ${bearer}`,
+            authorization: 'Bearer',
             origin: 'https://apps.apple.com',
         },
         query: {
             platform: 'iphone',
             additionalPlatforms: 'appletv,ipad,iphone,mac,realityDevice,watch',
-            extend: 'accessibility,accessibilityDetails,ageRating,backgroundAssetsInfo,backgroundAssetsInfoWithOptional,customArtwork,customDeepLink,customIconArtwork,customPromotionalText,customScreenshotsByType,customVideoPreviewsByType,description,expectedReleaseDateDisplayFormat,fileSizeByDevice,gameDisplayName,iconArtwork,installSizeByDeviceInBytes,messagesScreenshots,miniGamesDeepLink,minimumOSVersion,privacy,privacyDetails,privacyPolicyUrl,remoteControllerRequirement,requirementsByDeviceFamily,supportURLForLanguage,supportedGameCenterFeatures,supportsFunCamera,supportsSharePlay,versionHistory,websiteUrl',
+            extend: 'accessibility,accessibilityDetails,ageRating,backgroundAssetsInfo,backgroundAssetsInfoWithOptional,customArtwork,customDeepLink,customIconArtwork,customPromotionalText,customScreenshotsByType,customVideoPreviewsByType,description,expectedReleaseDateDisplayFormat,fileSizeByDevice,gameDisplayName,iconArtwork,installSizeByDeviceInBytes,macRequiredCapabilities,medicalDeviceInfo,messagesScreenshots,miniGamesDeepLink,minimumOSVersion,privacy,privacyDetails,privacyPolicyUrl,remoteControllerRequirement,requirementsByDeviceFamily,supportURLForLanguage,supportedGameCenterFeatures,supportsFunCamera,supportsSharePlay,versionHistory,websiteUrl',
+            'extend[apps]': 'distributionKind,isVerifiedForAppleSiliconMac',
             'extend[app-events]': 'description,productArtwork,productVideo',
-            include: 'alternate-apps,app-bundles,customers-also-bought-apps,developer,developer-other-apps,merchandised-in-apps,related-editorial-items,reviews,top-in-apps',
+            include: 'alternate-apps,app-bundles,customers-also-bought-apps,developer,developer-other-apps,merchandised-in-apps,related-editorial-items,reviews',
             'include[apps]': 'app-events',
+            views: 'top-in-app-purchasables',
             'availableIn[app-events]': 'future',
             'sparseLimit[apps:customers-also-bought-apps]': 40,
             'sparseLimit[apps:developer-other-apps]': 40,
