@@ -17,7 +17,7 @@ export const route: Route = {
             {
                 name: 'ZAIMANHUA_TOKEN',
                 optional: true,
-                description: '可从请求头 `Authorization` 获取 Bearer token，设置为完整值 `Bearer <token>`，或仅设置 token 由路由自动补齐 `Bearer ` 前缀。',
+                description: '可从浏览器开发者工具中抓取站点请求头 `Authorization` 的 Bearer token，并配置为环境变量。可设置为完整值 `Bearer <token>`，或仅设置 token 由路由自动补齐 `Bearer ` 前缀。',
             },
         ],
         requirePuppeteer: false,
