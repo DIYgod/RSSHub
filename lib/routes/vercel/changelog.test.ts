@@ -1,8 +1,8 @@
 import Parser from 'rss-parser';
+import type { Page } from 'rebrowser-puppeteer';
 import { describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
-import ofetch from '@/utils/ofetch';
 
 const parser = new Parser();
 
@@ -13,21 +13,22 @@ const mockChangelogHtml = `
   <title>Changelog - Vercel</title>
 </head>
 <body>
-  <script>
-    self.__next_f.push([1, '1:["$","abc123",null,{"children":["abc123"]}]']);
-    self.__next_f.push([1, '2:["$L1",[["$","abc123",null,{"slug":"test-changelog-1","title":"Test Changelog Entry 1","publishedAt":"2026-04-23T07:00:00.000Z"}]]]']);
-    self.__next_f.push([1, '3:["$L2",[["$","abc123",null,{"slug":"test-changelog-2","title":"Test Changelog Entry 2","publishedAt":"2026-04-22T07:00:00.000Z"}]]]']);
-    self.__next_f.push([1, '4:["$L3",[["$","abc123",null,{"slug":"blog/test-blog-1","title":"Test Blog Entry","publishedAt":"2026-04-21T07:00:00.000Z"}]]]']);
-  </script>
-  <div>
-    <h2>Test Changelog Entry 1</h2>
-    <time>Apr 23, 2026</time>
-    <p>This is a test changelog entry 1.</p>
-  </div>
-  <div>
-    <h2>Test Changelog Entry 2</h2>
-    <time>Apr 22, 2026</time>
-    <p>This is a test changelog entry 2.</p>
+  <div role="main">
+    <div role="listitem">
+      <a href="/changelog/test-changelog-1">Test Changelog Entry 1</a>
+      <span>Apr 23, 2026</span>
+      <p>This is a test changelog entry 1.</p>
+    </div>
+    <div role="listitem">
+      <a href="/changelog/test-changelog-2">Test Changelog Entry 2</a>
+      <span>Apr 22, 2026</span>
+      <p>This is a test changelog entry 2.</p>
+    </div>
+    <div role="listitem">
+      <a href="/blog/test-blog-1">Test Blog Entry</a>
+      <span>Apr 21, 2026</span>
+      <p>This is a blog entry, should be filtered out.</p>
+    </div>
   </div>
 </body>
 </html>
@@ -40,23 +41,56 @@ const mockDetailHtml = `
   <title>Test Entry - Vercel</title>
 </head>
 <body>
-  <script>
-    self.__next_f.push([1, '1:["$","abc123",null,{"children":["abc123"]}]']);
-    self.__next_f.push([1, '2:["$L1",[["$","abc123",null,{"content":[{"type":"p","children":["This is the detailed content."]}]}]]]']);
-  </script>
+  <main role="main">
+    <h1>Test Changelog Entry 1</h1>
+    <span>Apr 23, 2026</span>
+    <p>This is the detailed content for test changelog entry 1.</p>
+    <p>It contains more information about the changes.</p>
+  </main>
 </body>
 </html>
 `;
 
-vi.mock('@/utils/ofetch', () => ({
-    default: vi.fn((url) => {
+const mockDetailHtml2 = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Entry 2 - Vercel</title>
+</head>
+<body>
+  <main role="main">
+    <h1>Test Changelog Entry 2</h1>
+    <span>Apr 22, 2026</span>
+    <p>This is the detailed content for test changelog entry 2.</p>
+  </main>
+</body>
+</html>
+`;
+
+vi.mock('@/utils/puppeteer', () => ({
+    getPuppeteerPage: vi.fn((url: string) => {
+        let html = '';
         if (url === 'https://vercel.com/changelog') {
-            return Promise.resolve(mockChangelogHtml);
+            html = mockChangelogHtml;
+        } else if (url.includes('/changelog/test-changelog-1')) {
+            html = mockDetailHtml;
+        } else if (url.includes('/changelog/test-changelog-2')) {
+            html = mockDetailHtml2;
         }
-        if (url.startsWith('https://vercel.com/changelog/')) {
-            return Promise.resolve(mockDetailHtml);
-        }
-        return Promise.resolve('');
+
+        const mockPage: Partial<Page> = {
+            waitForSelector: vi.fn().mockResolvedValue(null),
+            content: vi.fn().mockResolvedValue(html),
+            goto: vi.fn().mockResolvedValue(null),
+        };
+
+        return Promise.resolve({
+            page: mockPage as Page,
+            destroy: vi.fn().mockResolvedValue(null),
+            browser: {
+                close: vi.fn().mockResolvedValue(null),
+            },
+        });
     }),
 }));
 
@@ -89,5 +123,18 @@ describe('vercel/changelog route', () => {
         const guids = feed.items.map((item) => item.guid);
         const uniqueGuids = new Set(guids);
         expect(uniqueGuids.size).toBe(guids.length);
+    });
+
+    it('should only include changelog entries (not blog entries)', async () => {
+        const response = await app.request('/vercel/changelog');
+        expect(response.status).toBe(200);
+
+        const text = await response.text();
+        const feed = await parser.parseString(text);
+
+        const titles = feed.items.map((item) => item.title);
+        expect(titles).toContain('Test Changelog Entry 1');
+        expect(titles).toContain('Test Changelog Entry 2');
+        expect(titles).not.toContain('Test Blog Entry');
     });
 });

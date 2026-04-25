@@ -3,7 +3,7 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -11,6 +11,13 @@ export const route: Route = {
     categories: ['programming'],
     example: '/vercel/changelog',
     parameters: {},
+    features: {
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['vercel.com/changelog', 'vercel.com'],
@@ -22,266 +29,119 @@ export const route: Route = {
     url: 'vercel.com/changelog',
 };
 
-function findPosts(data: any): any[] {
-    const posts: any[] = [];
-
-    if (!data) {
-        return posts;
-    }
-
-    if (Array.isArray(data)) {
-        for (const item of data) {
-            posts.push(...findPosts(item));
-        }
-    } else if (typeof data === 'object') {
-        if (data.slug && data.title && data.publishedAt) {
-            posts.push(data);
-        }
-        for (const key in data) {
-            posts.push(...findPosts(data[key]));
-        }
-    }
-
-    return posts;
-}
-
-function findContent(data: any): any[] | null {
-    if (!data) {
-        return null;
-    }
-
-    if (Array.isArray(data)) {
-        for (const item of data) {
-            const result = findContent(item);
-            if (result) {
-                return result;
-            }
-        }
-    } else if (typeof data === 'object') {
-        if (data.content && Array.isArray(data.content)) {
-            return data.content;
-        }
-        for (const key in data) {
-            const result = findContent(data[key]);
-            if (result) {
-                return result;
-            }
-        }
-    }
-
-    return null;
-}
-
-function renderContent(content: any[]): string {
-    let html = '';
-    for (const node of content) {
-        if (typeof node === 'string') {
-            html += node;
-        } else if (node?.type) {
-            switch (node.type) {
-                case 'p':
-                    html += `<p>${renderContent(node.children || [])}</p>`;
-                    break;
-                case 'h1':
-                case 'h2':
-                case 'h3':
-                case 'h4':
-                case 'h5':
-                case 'h6':
-                    html += `<${node.type}>${renderContent(node.children || [])}</${node.type}>`;
-                    break;
-                case 'ul':
-                    html += `<ul>${renderContent(node.children || [])}</ul>`;
-                    break;
-                case 'ol':
-                    html += `<ol>${renderContent(node.children || [])}</ol>`;
-                    break;
-                case 'li':
-                    html += `<li>${renderContent(node.children || [])}</li>`;
-                    break;
-                case 'a':
-                    html += `<a href="${node.href || '#'}">${renderContent(node.children || [])}</a>`;
-                    break;
-                case 'strong':
-                    html += `<strong>${renderContent(node.children || [])}</strong>`;
-                    break;
-                case 'em':
-                    html += `<em>${renderContent(node.children || [])}</em>`;
-                    break;
-                case 'code':
-                    html += `<code>${renderContent(node.children || [])}</code>`;
-                    break;
-                case 'pre':
-                    html += `<pre><code>${renderContent(node.children || [])}</code></pre>`;
-                    break;
-                case 'img':
-                    html += `<img src="${node.src || ''}" alt="${node.alt || ''}" />`;
-                    break;
-                case 'blockquote':
-                    html += `<blockquote>${renderContent(node.children || [])}</blockquote>`;
-                    break;
-                case 'br':
-                    html += '<br />';
-                    break;
-                default:
-                    if (node.children) {
-                        html += renderContent(node.children);
-                    }
-            }
-        }
-    }
-    return html;
-}
-
 async function handler() {
     const baseUrl = 'https://vercel.com';
     const changelogUrl = `${baseUrl}/changelog`;
-    const response = await ofetch(changelogUrl);
-    const $ = load(response);
-
     const limit = 10;
 
-    const selfNextFPush = /self\.__next_f\.push\((.+)\)/;
-    const textList: string[] = [];
-    for (const e of $('script').toArray()) {
-        const $e = $(e);
-        const text = $e.text();
-        const match = selfNextFPush.exec(text);
-        if (match) {
-            let data;
-            try {
-                data = JSON.parse(match[1]);
-                if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
-                    textList.push(data[1]);
-                }
-            } catch {
-                // ignore
-            }
-        }
-    }
+    const { page, destroy } = await getPuppeteerPage(changelogUrl, {
+        gotoConfig: {
+            waitUntil: 'networkidle2',
+        },
+    });
 
-    const partRegex = /^([0-9a-zA-Z]+):([0-9a-zA-Z]+)?(\[.*)$/;
-    const fd = textList
-        .join('')
-        .split('\n')
-        .map((d) => {
-            const matchPart = partRegex.exec(d);
-            if (matchPart) {
-                try {
-                    return {
-                        id: matchPart[1],
-                        tag: matchPart[2],
-                        data: JSON.parse(matchPart[3]),
-                    };
-                } catch {
-                    return {
-                        id: '',
-                        tag: '',
-                        data: d,
-                    };
-                }
+    try {
+        await page.waitForSelector('a[href^="/changelog/"]', { timeout: 10000 });
+
+        const html = await page.content();
+        const $ = load(html);
+
+        const items: DataItem[] = [];
+        const seenLinks = new Set<string>();
+
+        $('a').each((_, element) => {
+            const $element = $(element);
+            const href = $element.attr('href');
+
+            if (!href || !href.startsWith('/changelog/') || href === '/changelog' || href === '/changelog/') {
+                return;
             }
-            return {
-                id: '',
-                tag: '',
-                data: d,
-            };
+
+            if (seenLinks.has(href)) {
+                return;
+            }
+            seenLinks.add(href);
+
+            const $parent = $element.closest('li, article, div[role="listitem"]');
+
+            let title = $element.text().trim();
+            if (!title) {
+                title = $parent.find('h1, h2, h3, h4').first().text().trim();
+            }
+            if (!title) {
+                title = $parent.find('a').first().text().trim();
+            }
+
+            const link = `${baseUrl}${href}`;
+
+            const datePattern = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+\d{4}/i;
+            const pageText = $parent.text() || $('body').text();
+            const dateMatch = pageText.match(datePattern);
+            const pubDate = dateMatch ? parseDate(dateMatch[0]) : undefined;
+
+            if (title && items.length < limit) {
+                items.push({
+                    title,
+                    link,
+                    pubDate,
+                });
+            }
         });
 
-    const allPosts: any[] = [];
-    for (const item of fd) {
-        allPosts.push(...findPosts(item.data));
-    }
+        const uniqueItems = items.slice(0, limit);
 
-    const uniquePosts = allPosts.filter((post, index, self) => index === self.findIndex((p) => p.slug === post.slug));
-
-    const list: DataItem[] = uniquePosts
-        .filter((post) => post.slug && !post.slug.includes('/blog/'))
-        .slice(0, limit)
-        .map((post) => {
-            const title = post.title;
-            const href = `/changelog/${post.slug}`;
-            const pubDate = post.publishedAt;
-            const link = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            return {
-                title,
-                link,
-                pubDate: parseDate(pubDate),
-            };
-        });
-
-    const items = await pMap(
-        list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
-                const $ = load(response);
-
-                const textList: string[] = [];
-                for (const e of $('script').toArray()) {
-                    const $e = $(e);
-                    const text = $e.text();
-                    const match = selfNextFPush.exec(text);
-                    if (match) {
-                        let data;
-                        try {
-                            data = JSON.parse(match[1]);
-                            if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
-                                textList.push(data[1]);
-                            }
-                        } catch {
-                            // ignore
-                        }
-                    }
-                }
-
-                const fd = textList
-                    .join('')
-                    .split('\n')
-                    .map((d) => {
-                        const matchPart = partRegex.exec(d);
-                        if (matchPart) {
-                            try {
-                                return {
-                                    id: matchPart[1],
-                                    tag: matchPart[2],
-                                    data: JSON.parse(matchPart[3]),
-                                };
-                            } catch {
-                                return {
-                                    id: '',
-                                    tag: '',
-                                    data: d,
-                                };
-                            }
-                        }
-                        return {
-                            id: '',
-                            tag: '',
-                            data: d,
-                        };
+        const enrichedItems = await pMap(
+            uniqueItems,
+            (item) =>
+                cache.tryGet(item.link!, async () => {
+                    const { page: detailPage, destroy: destroyDetail } = await getPuppeteerPage(item.link!, {
+                        gotoConfig: {
+                            waitUntil: 'domcontentloaded',
+                        },
                     });
 
-                let contentHtml = '';
-                for (const item of fd) {
-                    const content = findContent(item.data);
-                    if (content) {
-                        contentHtml = renderContent(content);
-                        break;
+                    try {
+                        await detailPage.waitForSelector('h1, [role="main"]', { timeout: 10000 });
+
+                        const detailHtml = await detailPage.content();
+                        const $detail = load(detailHtml);
+
+                        const $main = $detail('[role="main"], main, article').first();
+                        if ($main.length > 0) {
+                            $main.find('nav, header, footer, aside, [role="navigation"], [role="banner"], [role="contentinfo"]').remove();
+
+                            $main.find('script, style, noscript').remove();
+
+                            const htmlContent = $main.html();
+                            if (htmlContent && htmlContent.trim()) {
+                                item.description = htmlContent.trim();
+                            }
+                        }
+
+                        if (!item.pubDate) {
+                            const datePattern = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+\d{4}/i;
+                            const pageText = $detail.text();
+                            const dateMatch = pageText.match(datePattern);
+                            if (dateMatch) {
+                                item.pubDate = parseDate(dateMatch[0]);
+                            }
+                        }
+
+                        return item;
+                    } finally {
+                        await destroyDetail();
                     }
-                }
+                }),
+            { concurrency: 5 }
+        );
 
-                item.description = contentHtml || undefined;
-
-                return item;
-            }),
-        { concurrency: 5 }
-    );
-
-    return {
-        title: 'Vercel Changelog',
-        link: changelogUrl,
-        description: 'Latest updates from Vercel Changelog',
-        item: items,
-    };
+        return {
+            title: 'Vercel Changelog',
+            link: changelogUrl,
+            description: 'Latest updates from Vercel Changelog',
+            item: enrichedItems,
+        };
+    } finally {
+        await destroy();
+    }
 }
