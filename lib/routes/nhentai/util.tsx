@@ -171,7 +171,7 @@ const getTorrents = async (cache, simples, limit) => {
         cookie = await getCookie(username, password, cache);
     } catch (error) {
         if (error instanceof Error && error.message.toLowerCase().includes('cloudflare')) {
-            throw new Error('nhentai login failed: Access denied by Cloudflare protection. Please try again later or configure a proxy.');
+            throw new Error('nhentai login failed: Access denied by Cloudflare protection. Please try again later or configure a proxy.', { cause: error });
         }
         throw error;
     }
