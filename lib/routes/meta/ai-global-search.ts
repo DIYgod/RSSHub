@@ -54,31 +54,74 @@ type ResultShape = {
     year: string | null;
 };
 
+type SearchInput = {
+    alphabetical_filter: string | null;
+    content_types: string[] | null;
+    offset: number;
+    search_query: string;
+    sort_by: string;
+    filter_tags: string[] | null;
+    location_cities: string[] | null;
+    research_areas: string[] | null;
+    years: string[] | null;
+};
+
+const buildSearchInput = (params: querystring.ParsedUrlQuery): SearchInput => ({
+    alphabetical_filter: firstString(params.alphabetical_filter) || null,
+    content_types: toList(firstString(params.content_types)),
+    offset: Number.parseInt(firstString(params.offset) ?? '0', 10),
+    search_query: firstString(params.q) ?? firstString(params.search_query) ?? '',
+    sort_by: firstString(params.sort_by) ?? 'RELEVANCE',
+    filter_tags: toList(firstString(params.filter_tags)),
+    location_cities: toList(firstString(params.location_cities)),
+    research_areas: toList(firstString(params.research_areas)),
+    years: toList(firstString(params.years)),
+});
+
+const summarizeFilters = (input: SearchInput): string => {
+    const parts: string[] = [];
+    if (input.search_query) {
+        parts.push(`q=${input.search_query}`);
+    }
+    if (input.content_types) {
+        parts.push(`content_types=${input.content_types.join(',')}`);
+    }
+    if (input.research_areas) {
+        parts.push(`research_areas=${input.research_areas.join(',')}`);
+    }
+    if (input.filter_tags) {
+        parts.push(`filter_tags=${input.filter_tags.join(',')}`);
+    }
+    if (input.years) {
+        parts.push(`years=${input.years.join(',')}`);
+    }
+    if (input.location_cities) {
+        parts.push(`location_cities=${input.location_cities.join(',')}`);
+    }
+    if (input.alphabetical_filter) {
+        parts.push(`alphabetical_filter=${input.alphabetical_filter}`);
+    }
+    return parts.join(' · ');
+};
+
+const mapItem = (item: ResultShape) => ({
+    title: item.title,
+    description: item.description ?? '',
+    link: item.href?.startsWith('http') ? item.href : `https://ai.meta.com${item.href}`,
+    pubDate: item.published_time ? parseDate(Number(item.published_time) * 1000) : undefined,
+    author: item.authors || undefined,
+    category: [item.type, ...(item.tags ?? [])].filter(Boolean) as string[],
+    image: item.image_src || undefined,
+    guid: item.cmsid,
+});
+
 async function handler(ctx) {
     const link = 'https://ai.meta.com/global_search/';
     const { server } = await getMetaServerContext(link);
 
     const params = querystring.parse(ctx.req.param('routeParams') || '');
-
     const limit = Number.parseInt(ctx.req.query('limit') ?? '36', 10);
-    const offset = Number.parseInt(firstString(params.offset) ?? '0', 10);
-    const searchQuery = firstString(params.q) ?? firstString(params.search_query) ?? '';
-    const sortBy = firstString(params.sort_by) ?? 'RELEVANCE';
-    const alphabeticalFilter = firstString(params.alphabetical_filter) || null;
-
-    const variables = {
-        input: {
-            alphabetical_filter: alphabeticalFilter,
-            content_types: toList(firstString(params.content_types)),
-            offset,
-            search_query: searchQuery,
-            sort_by: sortBy,
-            filter_tags: toList(firstString(params.filter_tags)),
-            location_cities: toList(firstString(params.location_cities)),
-            research_areas: toList(firstString(params.research_areas)),
-            years: toList(firstString(params.years)),
-        },
-    };
+    const input = buildSearchInput(params);
 
     const friendlyName = 'useFBAIGlobalSearchQuery';
     const data = await ofetch(GRAPHQL_ENDPOINT, {
@@ -88,41 +131,20 @@ async function handler(ctx) {
             server,
             friendlyName,
             docId: '9716930201759979',
-            variables,
+            variables: { input },
         }),
         parseResponse: JSON.parse,
     });
 
     const result = data?.data?.result;
     const shapes: ResultShape[] = result?.result_shapes ?? [];
+    const items = shapes.slice(0, limit).map((item) => mapItem(item));
 
-    const items = shapes.slice(0, limit).map((item) => ({
-        title: item.title,
-        description: item.description ?? '',
-        link: item.href?.startsWith('http') ? item.href : `https://ai.meta.com${item.href}`,
-        pubDate: item.published_time ? parseDate(Number(item.published_time) * 1000) : undefined,
-        author: item.authors || undefined,
-        category: [item.type, ...(item.tags ?? [])].filter(Boolean) as string[],
-        image: item.image_src || undefined,
-        guid: item.cmsid,
-    }));
-
-    const filterSummary = [
-        searchQuery && `q=${searchQuery}`,
-        variables.input.content_types && `content_types=${variables.input.content_types.join(',')}`,
-        variables.input.research_areas && `research_areas=${variables.input.research_areas.join(',')}`,
-        variables.input.filter_tags && `filter_tags=${variables.input.filter_tags.join(',')}`,
-        variables.input.years && `years=${variables.input.years.join(',')}`,
-        variables.input.location_cities && `location_cities=${variables.input.location_cities.join(',')}`,
-        alphabeticalFilter && `alphabetical_filter=${alphabeticalFilter}`,
-    ]
-        .filter(Boolean)
-        .join(' · ');
-
+    const filterSummary = summarizeFilters(input);
     const baseTitle = 'Meta AI Global Search';
     return {
         title: filterSummary ? `${baseTitle} — ${filterSummary}` : baseTitle,
-        description: `Search results from ai.meta.com/global_search/ (sort: ${sortBy}, total hits: ${result?.total_hits ?? 0}).`,
+        description: `Search results from ai.meta.com/global_search/ (sort: ${input.sort_by}, total hits: ${result?.total_hits ?? 0}).`,
         link,
         item: items,
     };
