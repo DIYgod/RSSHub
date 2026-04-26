@@ -15,9 +15,9 @@ export const route: Route = {
     url: 'ai.meta.com/global_search/',
     parameters: {
         routeParams:
-            'URL-encoded query string of filters (path-based so each combination caches independently). Supported keys: `q` (search query), `content_types` (comma-separated: `person`, `publication`, `blog`, `dataset`, `event`, `tool`), `research_areas` (e.g. `natural-language-processing,computer-vision`), `filter_tags` (`research`, `ml-applications`, `open-source`, `developer-tools`, `ar-vr`, `hardware`), `years` (e.g. `2024,2025`), `location_cities` (publication venues like `AAAI,ACL`), `alphabetical_filter` (single letter, pairs with `content_types=person`+`sort_by=ALPHABETICAL`), `sort_by` (`RELEVANCE`, `MOST_RECENT`, `ALPHABETICAL`, `RANDOM`, default `RELEVANCE`), `offset` (default `0`).',
-        limit: 'Number of items to return (default `36`). Provided as a normal query string (`?limit=N`) since the cache layer keys on it.',
+            'URL-encoded query string of filters (path-based so each combination caches independently). Supported keys: `q` (search query), `content_types` (comma-separated: `person`, `publication`, `blog`, `dataset`, `event`, `tool`), `research_areas` (e.g. `natural-language-processing,computer-vision`), `filter_tags` (`research`, `ml-applications`, `open-source`, `developer-tools`, `ar-vr`, `hardware`), `years` (e.g. `2024,2025`), `location_cities` (publication venues like `AAAI,ACL`), `alphabetical_filter` (single letter, pairs with `content_types=person`+`sort_by=ALPHABETICAL`), `sort_by` (`RELEVANCE`, `MOST_RECENT`, `ALPHABETICAL`, `RANDOM`, default `RELEVANCE`), `offset` (default `0`). Combine multiple filters by encoding `&` as `%26`.',
     },
+    description: 'Page size can be tuned with the `limit` query string parameter (default `36`).',
     radar: [
         {
             source: ['ai.meta.com/global_search/', 'ai.meta.com/global_search', 'ai.meta.com/results/'],
@@ -144,7 +144,7 @@ async function handler(ctx) {
     const baseTitle = 'Meta AI Global Search';
     return {
         title: filterSummary ? `${baseTitle} — ${filterSummary}` : baseTitle,
-        description: `Search results from ai.meta.com/global_search/ (sort: ${input.sort_by}, total hits: ${result?.total_hits ?? 0}).`,
+        description: 'Search results from ai.meta.com/global_search/.',
         link,
         item: items,
     };
