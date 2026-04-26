@@ -37,7 +37,11 @@ async function handler() {
     const sign = urlParams.get('sign');
 
     // 1. fetchPageData
-    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`);
+    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
+        headers: {
+            accept: '*/*',
+        },
+    });
     const crowd_funding_floor = pageData.data.data.floors.find((floor) => floor.module_key === 'crowding');
     const query_list = crowd_funding_floor.query_list;
 

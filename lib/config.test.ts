@@ -91,6 +91,20 @@ describe('config', () => {
         expect(config.isDefaultUA).toBe(true);
     });
 
+    it('http cache config', async () => {
+        process.env.CACHE_HTTP_URL = 'https://cache.example.com';
+        process.env.CACHE_HTTP_TOKEN = 'token';
+
+        const { config } = await import('./config');
+        expect(config.httpCache).toMatchObject({
+            url: 'https://cache.example.com',
+            token: 'token',
+        });
+
+        delete process.env.CACHE_HTTP_URL;
+        delete process.env.CACHE_HTTP_TOKEN;
+    });
+
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 

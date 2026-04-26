@@ -13,7 +13,13 @@ export const route: Route = {
     categories: ['anime'],
     example: '/zaimanhua/update',
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZAIMANHUA_TOKEN',
+                optional: true,
+                description: '可从浏览器开发者工具中抓取站点请求头 `Authorization` 的 Bearer token，并配置为环境变量。可设置为完整值 `Bearer <token>`，或仅设置 token 由路由自动补齐 `Bearer ` 前缀。',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -29,15 +35,23 @@ export const route: Route = {
     ],
     name: '最近更新',
     maintainers: ['kjasn'],
+    description: `::: Warning
+建议设置\`ZAIMANHUA_TOKEN\`环境变量以使用 API 授权访问。且由于源网站本身的限制，建议尽量在部署于中国大陆网络内的 RSSHub 节点中使用本路由。若在海外网络环境中使用，即使设置了\`ZAIMANHUA_TOKEN\`环境变量，也可能无法获取全部漫画。
+:::`,
     handler: async () => {
         const baseUrl = 'https://manhua.zaimanhua.com';
         const currentUrl = `${baseUrl}/api/v1/comic2/update_list?status&theme&zone&cate&firstLetter&sortType&page=1&size=20`;
+        const headers: Record<string, string> = {
+            'user-agent': config.trueUA,
+            referer: baseUrl,
+        };
+        const token = config.zaimanhua.token;
+        if (token) {
+            headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+        }
 
         const response = await ofetch(currentUrl, {
-            headers: {
-                'user-agent': config.trueUA,
-                referer: baseUrl,
-            },
+            headers,
         });
 
         // 近期更新漫画数据
@@ -53,12 +67,7 @@ export const route: Route = {
 
                 return await cache.tryGet(chapterUrl, async () => {
                     // 获取章节内容
-                    const chapterResponse = await ofetch(chapterUrl, {
-                        headers: {
-                            'user-agent': config.trueUA,
-                            referer: baseUrl,
-                        },
-                    });
+                    const chapterResponse = await ofetch(chapterUrl, { headers });
 
                     const chapterData = chapterResponse.data;
                     const description = renderComic(chapterData.chapterInfo.page_url || []);

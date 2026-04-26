@@ -3,6 +3,7 @@ import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 
 import type CacheModule from './base';
+import http from './http';
 import memory from './memory';
 import redis from './redis';
 
@@ -16,76 +17,96 @@ const globalCache: {
     set: () => null,
 };
 
-let cacheModule: CacheModule;
+const noopCacheModule: CacheModule = {
+    init: () => null,
+    get: () => null,
+    has: () => false,
+    set: () => null,
+    status: {
+        available: false,
+    },
+    clients: {},
+};
+
+let cacheModule: CacheModule = noopCacheModule;
 
 if (isWorker) {
     // No-op cache for Cloudflare Workers
-    cacheModule = {
-        init: () => null,
-        get: () => null,
-        has: () => false,
-        set: () => null,
-        status: {
-            available: false,
-        },
-        clients: {},
-    };
-} else if (config.cache.type === 'redis') {
-    cacheModule = redis;
-    cacheModule.init();
-    const { redisClient } = cacheModule.clients;
-    globalCache.get = async (key) => {
-        if (key && cacheModule.status.available && redisClient) {
-            const value = await redisClient.get(key);
-            return value;
-        }
-    };
-    globalCache.has = async (key) => {
-        if (key && cacheModule.status.available && redisClient) {
-            const result = await redisClient.exists(key);
-            return result > 0;
-        }
-        return false;
-    };
-    globalCache.set = cacheModule.set;
-} else if (config.cache.type === 'memory') {
-    cacheModule = memory;
-    cacheModule.init();
-    const { memoryCache } = cacheModule.clients;
-    globalCache.get = (key) => {
-        if (key && cacheModule.status.available && memoryCache) {
-            return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
-        }
-    };
-    globalCache.has = (key) => {
-        if (key && cacheModule.status.available && memoryCache) {
-            return memoryCache.has(key);
-        }
-        return false;
-    };
-    globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
-        if (key && memoryCache) {
-            return memoryCache.set(key, value, { ttl: maxAge * 1000 });
-        }
-    };
+    cacheModule = noopCacheModule;
 } else {
-    cacheModule = {
-        init: () => null,
-        get: () => null,
-        has: () => false,
-        set: () => null,
-        status: {
-            available: false,
-        },
-        clients: {},
-    };
-    logger.error('Cache not available, concurrent requests are not limited. This could lead to bad behavior.');
+    switch (config.cache.type) {
+        case 'redis': {
+            cacheModule = redis;
+            cacheModule.init();
+            const { redisClient } = cacheModule.clients;
+            globalCache.get = async (key) => {
+                if (key && cacheModule.status.available && redisClient) {
+                    const value = await redisClient.get(key);
+                    return value;
+                }
+            };
+            globalCache.has = async (key) => {
+                if (key && cacheModule.status.available && redisClient) {
+                    const result = await redisClient.exists(key);
+                    return result > 0;
+                }
+                return false;
+            };
+            globalCache.set = cacheModule.set;
+            break;
+        }
+        case 'http':
+            cacheModule = http;
+            cacheModule.init();
+            globalCache.get = (key) => {
+                if (key && cacheModule.status.available) {
+                    return cacheModule.get(key, false);
+                }
+            };
+            globalCache.has = (key) => {
+                if (key && cacheModule.status.available) {
+                    return cacheModule.has(key);
+                }
+                return false;
+            };
+            globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
+                if (key && cacheModule.status.available) {
+                    return cacheModule.set(key, value, maxAge);
+                }
+            };
+            break;
+        case 'memory': {
+            cacheModule = memory;
+            cacheModule.init();
+            const { memoryCache } = cacheModule.clients;
+            globalCache.get = (key) => {
+                if (key && cacheModule.status.available && memoryCache) {
+                    return memoryCache.get(key, { updateAgeOnGet: false }) as string | undefined;
+                }
+            };
+            globalCache.has = (key) => {
+                if (key && cacheModule.status.available && memoryCache) {
+                    return memoryCache.has(key);
+                }
+                return false;
+            };
+            globalCache.set = (key, value, maxAge = config.cache.routeExpire) => {
+                if (!value || value === 'undefined') {
+                    value = '';
+                }
+                if (typeof value === 'object') {
+                    value = JSON.stringify(value);
+                }
+                if (key && memoryCache) {
+                    return memoryCache.set(key, value, { ttl: maxAge * 1000 });
+                }
+            };
+            break;
+        }
+        default:
+            cacheModule = noopCacheModule;
+            logger.error('Cache not available, concurrent requests are not limited. This could lead to bad behavior.');
+    }
 }
 
 // only give cache string, as the `!` condition tricky

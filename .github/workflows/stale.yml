@@ -3,6 +3,7 @@ name: 'Close stale issues and PRs'
 on:
     schedule:
         - cron: '31 23 * * *'
+    workflow_dispatch:
 
 permissions:
     issues: write
@@ -25,6 +26,19 @@ jobs:
                   exempt-issue-labels: 'wait for upstream'
                   exempt-pr-labels: 'wait for upstream'
                   any-of-issue-labels: 'more data required'
+
+            - name: Close Broken PRs
+              uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10.2.0
+              with:
+                  days-before-issue-stale: -1
+                  days-before-issue-close: -1
+                  days-before-pr-stale: 1
+                  days-before-pr-close: 0
+                  only-pr-labels: 'auto: DO NOT merge'
+                  stale-pr-label: 'Stale'
+                  remove-pr-stale-when-updated: true
+                  close-pr-message: >
+                      This PR is being auto-closed because it has a broken Docker build without any fixes. Push a fix and reopen when ready.
     lock:
         runs-on: ubuntu-slim
         steps:

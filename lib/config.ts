@@ -27,6 +27,8 @@ type ConfigEnvKeys =
     | 'CACHE_CONTENT_EXPIRE'
     | 'MEMORY_MAX'
     | 'REDIS_URL'
+    | 'CACHE_HTTP_URL'
+    | 'CACHE_HTTP_TOKEN'
     // Proxy
     | 'PROXY_URI'
     | 'PROXY_URIS'
@@ -166,6 +168,8 @@ type ConfigEnvKeys =
     | 'NGA_PASSPORT_CID'
     | 'NHENTAI_USERNAME'
     | 'NHENTAI_PASSWORD'
+    | 'NHENTAI_ACCESS_TOKEN'
+    | 'NHENTAI_REFRESH_TOKEN'
     | 'NOTION_TOKEN'
     | 'PATREON_SESSION_ID'
     | 'PIANYUAN_COOKIE'
@@ -239,6 +243,7 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
     | 'YOUTUBE_VIDEO_EMBED_URL'
+    | 'ZAIMANHUA_TOKEN'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -283,6 +288,10 @@ export type Config = {
     };
     redis: {
         url: string;
+    };
+    httpCache: {
+        url?: string;
+        token?: string;
     };
     // proxy
     proxyUri?: string;
@@ -686,6 +695,9 @@ export type Config = {
         refreshToken?: string;
         videoEmbedUrl?: string;
     };
+    zaimanhua: {
+        token?: string;
+    };
     zhihu: {
         cookies?: string;
     };
@@ -763,7 +775,7 @@ const calculateValue = () => {
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
-            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
+            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // Cache type; supports 'memory', 'redis', and 'http'. Set to empty string to disable cache.
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
             contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
@@ -774,6 +786,10 @@ const calculateValue = () => {
         },
         redis: {
             url: envs.REDIS_URL || 'redis://localhost:6379/',
+        },
+        httpCache: {
+            url: envs.CACHE_HTTP_URL,
+            token: envs.CACHE_HTTP_TOKEN,
         },
         // proxy
         proxyUri: envs.PROXY_URI,
@@ -1182,6 +1198,9 @@ const calculateValue = () => {
             refreshToken: envs.YOUTUBE_REFRESH_TOKEN,
             videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
         },
+        zaimanhua: {
+            token: envs.ZAIMANHUA_TOKEN,
+        },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,
         },
@@ -1201,7 +1220,6 @@ const calculateValue = () => {
     }
 };
 calculateValue();
-
 (async () => {
     if (envs.REMOTE_CONFIG) {
         const { default: logger } = await import('@/utils/logger');
