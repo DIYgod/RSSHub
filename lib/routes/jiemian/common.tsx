@@ -70,7 +70,19 @@ export const handler = async (ctx): Promise<Data> => {
                               }
                             : undefined,
                         intro: content('div.article-header p').text(),
-                        description: content('div.article-content').clone().find('p.report-view').remove().end().html(),
+                        description: (() => {
+    const featuredImageSrc = image.prop('src');
+    const baseImageName = featuredImageSrc.replace(/_[^.]+(\.\w+)$/, '$1');
+    
+    const descContent = content('div.article-content').clone();
+    descContent.find('p.report-view').remove();
+    
+    if (baseImageName && baseImageName !== featuredImageSrc) {
+        descContent.find(`img[src="${baseImageName}"]`).remove();
+    }
+    
+    return descContent.html();
+})(),                   
 
                     });
                     item.author = content('span.author')
