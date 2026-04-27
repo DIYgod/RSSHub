@@ -28,7 +28,7 @@ jobs:
               # Query the PR number by repo + branch, then assign to step output:
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
-                    --method GET -f head="${PR_BRANCH}" -f state=open \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
                     --jq '.[0] | "number=\(.number)"' \
                     >> "${GITHUB_OUTPUT}"
 
@@ -172,8 +172,8 @@ jobs:
               # Query the PR number by repo + branch, then assign to step output:
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
-                    --method GET -f head="${PR_BRANCH}" -f state=open \
-                    --jq '.[0] | "number=\(.number)"' \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
+                    --jq '.[0] | "number=\(.number)\nauthor_association=\(.author_association)"' \
                     >> "${GITHUB_OUTPUT}"
 
             - name: Pull Request Labeler
@@ -183,3 +183,11 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   issue-number: ${{ steps.source-run-info.outputs.number }}
                   labels: 'auto: DO NOT merge'
+
+            - name: Close broken PR
+              if: ${{ steps.source-run-info.outputs.author_association != 'OWNER' && steps.source-run-info.outputs.author_association != 'COLLABORATOR' && steps.source-run-info.outputs.author_association != 'MEMBER' }}
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              with:
+                  actions: 'close-issue'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}

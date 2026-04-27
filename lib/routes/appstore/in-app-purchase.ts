@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { appstoreBearerToken } from '@/routes/apple/utils';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -33,11 +32,10 @@ async function handler(ctx) {
     const res = await ofetch(link);
     const $ = load(res);
     const lang = $('html').attr('lang');
-    const mediaToken = await appstoreBearerToken();
 
-    const apiResponse = await ofetch(`https://amp-api-edge.apps.apple.com/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
+    const apiResponse = await ofetch(`https://apps.apple.com/api/apps/v1/catalog/${country}/apps/${id.replace('id', '')}`, {
         headers: {
-            authorization: `Bearer ${mediaToken}`,
+            authorization: 'Bearer',
             origin: 'https://apps.apple.com',
         },
         query: {
