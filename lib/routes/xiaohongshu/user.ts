@@ -7,6 +7,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { getFullNote, getUser, getUserWithCookie, renderNotesFulltext } from './util';
+
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',
@@ -96,7 +97,7 @@ async function getUserFeeds(url: string, category: string) {
     const image = basicInfo.imageb || basicInfo.images;
 
  const urlNotePrefix = 'https://www.xiaohongshu.com/explore';
- const renderNote = async (notes) => {
+ const renderNote =  (notes) => {
      const promises = notes.flatMap((n) =>
          n.map(async ({ id, noteCard }) => {
              const link = `${urlNotePrefix}/${id}`;
@@ -151,6 +152,6 @@ const renderCollect = (collect) => {
         description,
         image,
         link: url,
-        item: category === 'notes' ? await renderNote(notes) : renderCollect(collect),
+        item: category === 'notes' ?  renderNote(notes) : renderCollect(collect),
     };
 }
