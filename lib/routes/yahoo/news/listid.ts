@@ -57,8 +57,8 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => parseItem(item)));
 
     const author = items[0].author;
-    const atIndex = author.indexOf('@'); // fing '@'
-    const source = atIndex === -1 ? author : author.slice(atIndex + 1).trim();
+    const atIndex = author?.indexOf('@'); // fing '@'
+    const source = atIndex === -1 ? author : author?.slice(atIndex + 1).trim();
     // console.log(source);
 
     return {

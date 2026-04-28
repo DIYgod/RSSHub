@@ -52,7 +52,7 @@ async function handler(ctx) {
     const providerList = await getProviderList(region);
     const provider = providerList.find((p) => p.key === providerId);
 
-    const response = await getArchive(region, limit, null, providerId);
+    const response = await getArchive(region, limit, [], providerId);
     const list = parseList(region, response);
 
     const items = await Promise.all(list.map((item) => parseItem(item)));
