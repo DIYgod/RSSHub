@@ -1,9 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 
-import { getArchive, getCategories, parseItem, parseList } from './utils';
+import { getArchive, parseItem, parseList, regionConfig } from './utils';
 
 export const route: Route = {
     path: '/news/:region/:category?',
@@ -47,9 +46,9 @@ Category for hk.news.yahoo.com (hongkong)
 
 Category for tw.news.yahoo.com (taiwan)
 
-| 全部     | 政治     | 財經    | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康   | 科技        | 品味  |
-| ------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- | ----- |
-| (empty) | politics | finance | entertainment | sports | society  | world | lifestyle | health | technology | style |
+| 全部     | 政治     | 財經    | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康   | 科技        |
+| ------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- |
+| (empty) | politics | finance | entertainment | sports | society  | world | lifestyle | health | technology |
 
 Other Yahoo news is fetched from the RSS provided by Yahoo. Please refer to the categories displayed on the pages of *.news.yahoo.com (for example, "world"), and try to access *.news.yahoo.com/rss/world to see if it is accessible and contains recent news (some categories exist but are not updated). If it is accessible and has recent news, then that category can be used on the corresponding site. For example, the available categories for news.yahoo.com are as follows
 
@@ -87,9 +86,9 @@ hk.news.yahoo.com (香港) 所支持的分类
 
 tw.news.yahoo.com (台湾) 所支持的分类
 
-| 全部     | 政治     | 財經    | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康   | 科技        | 品味  |
-| ------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- | ----- |
-| （留空） | politics | finance | entertainment | sports | society  | world | lifestyle | health | technology | style |
+| 全部     | 政治     | 財經    | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康   | 科技        |
+| ------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- |
+| （留空） | politics | finance | entertainment | sports | society  | world | lifestyle | health | technology |
 
 其他雅虎新闻读取自 yahoo 提供的 RSS, 请根据 *.news.yahoo.com 的页面上展示的分类(例如 world ), 尝试 *.news.yahoo.com/rss/world 能否访问并且有近期的新闻(有些分类存在但未更新), 如果可以的话则该分类可以用在相应站点, 例如 news.yahoo.com 可用的分类如下
 
@@ -120,13 +119,16 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     if (['hk', 'tw'].includes(region)) {
-        const categoryMap = await getCategories(region, cache.tryGet);
-        const tag = category ? categoryMap[category].yctMap : null;
+        const { categoryMap } = regionConfig[region];
+        if (category && !categoryMap[category]) {
+            throw new InvalidParameterError(`Unknown category for ${region}: ${category}`);
+        }
+        const tags = category ? categoryMap[category].tags : undefined;
 
-        const response = await getArchive(region, limit, tag);
+        const response = await getArchive(region, limit, tags);
         const list = parseList(region, response);
 
-        const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
+        const items = await Promise.all(list.map((item) => parseItem(item)));
 
         return {
             title: `Yahoo 新聞 ${region.toUpperCase()} - ${category ? categoryMap[category].name : '所有類別'}`,
@@ -138,7 +140,7 @@ async function handler(ctx) {
         const rssUrl = `https://${region ? `${region}.` : ''}news.yahoo.com/rss/${category ? `${category}/` : ''}`;
         const feed = await parser.parseURL(rssUrl);
         const filteredItems = feed.items.filter((item) => item?.link && !item.link.includes('promotions') && new URL(item.link).hostname.match(/.*\.yahoo\.com$/));
-        const items = await Promise.all(filteredItems.map((item) => parseItem(item, cache.tryGet)));
+        const items = await Promise.all(filteredItems.map((item) => parseItem(item)));
 
         return {
             title: `Yahoo News ${region.toUpperCase()} - ${category ? category.toUpperCase() : 'All'}`,
