@@ -52,7 +52,7 @@ const getArchive = async (region, limit, tags?: string[], providerId?) => {
         start: '0',
         version: 'v1',
         imageSizes: '498x280,100x100',
-        providerid: providerId,
+        providerid: providerId ?? '',
         spaceId,
     });
     if (tags) {
