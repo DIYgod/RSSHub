@@ -210,7 +210,7 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         if (item.is_quote_status) {
             const quoteData = item.quoted_status;
 
-            if (quoteData) {
+            if (quoteData?.user) {
                 quoteData.full_text = quoteData.full_text || quoteData.text;
                 const author = quoteData.user;
                 quote += '<div class="rsshub-quote">';
@@ -416,14 +416,15 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         },
                     ],
                 }) ||
-                (item.is_quote_status && {
-                    links: [
-                        {
-                            url: `https://x.com/${item.quoted_status?.user?.screen_name}/status/${item.quoted_status?.id_str || item.quoted_status?.conversation_id_str}`,
-                            type: 'quote',
-                        },
-                    ],
-                }) ||
+                (item.is_quote_status &&
+                    item.quoted_status?.user && {
+                        links: [
+                            {
+                                url: `https://x.com/${item.quoted_status?.user?.screen_name}/status/${item.quoted_status?.id_str || item.quoted_status?.conversation_id_str}`,
+                                type: 'quote',
+                            },
+                        ],
+                    }) ||
                 (item.in_reply_to_screen_name &&
                     item.in_reply_to_status_id_str && {
                         links: [
