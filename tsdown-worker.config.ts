@@ -62,6 +62,7 @@ export default defineConfig({
     entry: ['./lib/worker.ts'],
     outDir: 'dist-worker',
     format: 'esm',
+    dts: false,
     minify: true,
     clean: true,
     platform: 'node',
@@ -76,12 +77,6 @@ export default defineConfig({
         __dirname: JSON.stringify('/worker'),
         __filename: JSON.stringify('/worker/index.mjs'),
     },
-    external: [
-        // Exclude non-code files that might be accidentally imported
-        /\/_README$/,
-        /\.node$/,
-    ],
-    noExternal: [/.*/],
     plugins: [workerAliasPlugin()],
     alias: {
         // External dependencies that need Worker-compatible replacements
@@ -98,5 +93,11 @@ export default defineConfig({
     },
     deps: {
         onlyBundle: false,
+        neverBundle: [
+            // Exclude non-code files that might be accidentally imported
+            /\/_README$/,
+            /\.node$/,
+        ],
+        alwaysBundle: [/.*/],
     },
 });
