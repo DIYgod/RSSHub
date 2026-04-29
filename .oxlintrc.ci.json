@@ -1,6 +1,8 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
     "extends": ["./.oxlintrc.json"],
+    // extends doesn't extend ignorePatterns, oxc-project/oxc#10223, oxc-project/oxc#16079
+    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "lib/routes-deprecated", "lib/router.js", "dist", "dist-lib", "dist-worker"],
     "options": {
         "respectEslintDisableDirectives": false
     }
