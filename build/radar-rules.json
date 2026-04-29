@@ -35122,16 +35122,6 @@
         "target": "/nmc/publish/nongyeqixiang/guowainongyeqixiangyuebao/index/html"
       }
     ],
-    "typhoon": [
-      {
-        "title": "台风海洋 - 台风综合信息",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/"
-        ],
-        "target": "/nmc/publish/http://typhoon/nmc.cn"
-      }
-    ],
     ".": [
       {
         "title": "全国气象预警",
