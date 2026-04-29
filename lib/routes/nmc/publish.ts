@@ -24,7 +24,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = $('html').attr('lang') ?? 'zh';
 
     const items: DataItem[] =
-        $('div#home div[data-img]').length === 0
+        $('div.row div[data-img]').length === 0
             ? $('div#text')
                   .slice(0, limit)
                   .toArray()
@@ -353,10 +353,6 @@ export const route: Route = {
                     value: 'typhoon/typhoon-name/index/html',
                 },
                 {
-                    label: '台风海洋 - 台风综合信息',
-                    value: 'http://typhoon/nmc.cn',
-                },
-                {
                     label: '全球预报 - 全球天气公报',
                     value: 'quanqiuyubao/quanqiutianqigongbao/index/html',
                 },
@@ -527,7 +523,6 @@ export const route: Route = {
   | [北太平洋分析与预报](https://www.nmc.cn/publish/marine/h000.html)                     | [marine/h000/html](https://rsshub.app/nmc/publish/marine/h000/html)                                                     |
   | [全球热带气旋监测公报](https://www.nmc.cn/publish/typhoon/totalcyclone.htm)           | [typhoon/totalcyclone/htm](https://rsshub.app/nmc/publish/typhoon/totalcyclone/htm)                                     |
   | [台风命名](https://www.nmc.cn/publish/typhoon/typhoon-name/index.html)                | [typhoon/typhoon-name/index/html](https://rsshub.app/nmc/publish/typhoon/typhoon-name/index/html)                       |
-  | [台风综合信息](http://typhoon.nmc.cn)                                                 | [http://typhoon/nmc.cn](https://rsshub.app/nmc/publish/http://typhoon/nmc.cn)                                           |
 
   #### [全球预报](https://www.nmc.cn/publish/quanqiuyubao/quanqiutianqigongbao/index.html)
 
@@ -842,11 +837,6 @@ export const route: Route = {
             title: '台风海洋 - 台风命名',
             source: ['www.nmc.cn/publish/typhoon/typhoon-name/index.html'],
             target: '/publish/typhoon/typhoon-name/index/html',
-        },
-        {
-            title: '台风海洋 - 台风综合信息',
-            source: ['typhoon.nmc.cn'],
-            target: '/publish/http://typhoon/nmc.cn',
         },
         {
             title: '全球预报 - 全球天气公报',
