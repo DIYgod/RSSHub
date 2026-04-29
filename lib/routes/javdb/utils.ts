@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import { Cookie, CookieJar } from 'tough-cookie';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
@@ -18,28 +18,22 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const cookieJar = new CookieJar();
-
+    const { page, destroy, browser } = await getPuppeteerPage('about:blank');
     if (config.javdb.session) {
-        const cookie = Cookie.fromJSON({
-            key: '_jdb_session',
+        await browser.setCookie({
+            name: '_jdb_session',
             value: config.javdb.session,
             domain,
             path: '/',
         });
-        cookie && cookieJar.setCookie(cookie, rootUrl);
     }
-
-    const response = await got({
-        method: 'get',
-        url: url.href,
-        cookieJar,
-        headers: {
-            'User-Agent': config.trueUA,
-        },
+    await page.goto(url.href, {
+        waitUntil: 'networkidle2',
     });
+    const response = await page.content();
+    await page.close();
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     $('.tags, .tag-can-play, .over18-modal').remove();
 
@@ -47,27 +41,26 @@ const ProcessItems = async (ctx, currentUrl, title) => {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const element = $(item);
             return {
-                title: item.find('.video-title').text(),
-                link: `${rootUrl}${item.find('.box').attr('href')}`,
-                pubDate: parseDate(item.find('.meta').text()),
+                title: element.find('.video-title').text(),
+                link: `${rootUrl}${element.find('.box').attr('href')}`,
+                pubDate: parseDate(element.find('.meta').text()),
             };
         });
+
+    logger.debug(`items: ${JSON.stringify(items)}`);
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                    cookieJar,
-                    headers: {
-                        'User-Agent': config.trueUA,
-                    },
+                const page = await browser.newPage();
+                await page.goto(item.link, {
+                    waitUntil: 'networkidle2',
                 });
+                const detailResponse = await page.content();
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 item.enclosure_type = 'application/x-bittorrent';
                 item.enclosure_url = content('#magnets-content button[data-clipboard-text]').first().attr('data-clipboard-text');
@@ -87,6 +80,8 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
                 item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
 
+                await page.close();
+
                 return item;
             })
         )
@@ -94,6 +89,8 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const htmlTitle = $('title').text();
     const subject = htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
+
+    await destroy();
 
     return {
         title: subject === '' ? title : `${subject} - ${title}`,
