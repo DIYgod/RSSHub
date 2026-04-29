@@ -15,7 +15,16 @@ export const route: Route = {
     example: '/bilibili/user/video-browser/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'BILIBILI_COOKIE',
+                description: `B 站用户登录后的 Cookie 值，获取方式：
+    1.  打开 [https://space.bilibili.com](https://space.bilibili.com) 并登录
+    2.  按 F12 打开开发者工具，切换到 Application → Cookies
+    3.  复制整段 Cookie 值（包含 SESSDATA 字段即可，但建议完整复制）
+    4.  设置为环境变量 \`BILIBILI_COOKIE\` 或在配置文件中填写`,
+            },
+        ],
         requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
@@ -25,11 +34,14 @@ export const route: Route = {
     radar: [
         {
             source: ['space.bilibili.com/:uid'],
-            target: '/bilibili/user/video-browser/:uid',
+            target: '/user/video-browser/:uid',
         },
     ],
     name: 'UP 主投稿（浏览器模式）',
     maintainers: ['gqy20'],
+    description: `::: warning
+  需要 Puppeteer 以及 B 站登录 Cookie，只能自建部署使用。
+:::`,
     handler,
 };
 
@@ -37,7 +49,8 @@ interface VideoItem {
     bvid: string;
     title: string;
     pic: string;
-    pubDate?: string;
+    description: string;
+    pubDate?: number;
 }
 
 function getCookieString(): string {
@@ -56,6 +69,8 @@ async function fetchVideoListFromPage(uid: string): Promise<{ videos: VideoItem[
     if (!cookieString) {
         throw new Error('BILIBILI_COOKIE is not configured');
     }
+
+    let apiData: Record<string, unknown> | null = null;
 
     const { page, destroy } = await getPuppeteerPage(url, {
         onBeforeLoad: async (page) => {
@@ -87,110 +102,44 @@ async function fetchVideoListFromPage(uid: string): Promise<{ videos: VideoItem[
             page.on('request', (request) => {
                 allowed.has(request.resourceType()) ? request.continue() : request.abort();
             });
+
+            // Intercept the video list API response — browser calls this automatically
+            page.on('response', async (response) => {
+                if (!response.url().includes('/x/space/wbi/arc/search')) {
+                    return;
+                }
+                try {
+                    apiData = (await response.json()) as Record<string, unknown>;
+                } catch {
+                    // ignore parse errors
+                }
+            });
         },
         gotoConfig: { waitUntil: 'networkidle0' },
     });
 
     try {
-        // Wait for video links to appear in DOM
-        try {
-            await page.waitForSelector('a[href*="/video/BV"]', { timeout: 15000 });
-        } catch {
-            // selector may not exist, continue anyway
-        }
+        // Wait a bit for the API response to arrive
         await new Promise((resolve) => setTimeout(resolve, 3000));
 
-        // Extract video data from DOM using proven approach
-        const result = await page.evaluate(() => {
-            // Collect all video link candidates grouped by BV
-            const bvMap = new Map();
-            for (const link of document.querySelectorAll('a[href]')) {
-                const m = link.href.match(/\/video\/(BV\w+)/);
-                if (!m) {
-                    continue;
-                }
-                const bv = m[1];
-                const text = (link.textContent || '').trim().replaceAll(/\s+/g, ' ');
-                const hasTitle = !/^\d+$/.test(text) && !/^[\d\s:]+$/.test(text) && text.length > 3;
-                if (!bvMap.has(bv)) {
-                    bvMap.set(bv, []);
-                }
-                bvMap.get(bv).push({ text, hasTitle, el: link });
-            }
+        if (!apiData || (apiData as { code?: number }).code !== 0) {
+            throw new Error(`Failed to get video list from API: ${JSON.stringify(apiData)?.slice(0, 200)}`);
+        }
 
-            // For each BV, pick the best candidate (prefer real titles over stats)
-            const videos = [];
-            for (const [bv, candidates] of bvMap) {
-                // Strategy: prefer text that looks like a real title (Chinese content, not starting with digit/stats)
-                let best = '';
-                let bestEl;
-                for (const c of candidates) {
-                    const t = c.text;
-                    // A real title: has Chinese, length > 3, doesn't start with pure digits
-                    const isRealTitle = /[一-鿿]/.test(t) && t.length > 3 && !/^\d/.test(t);
-                    if (isRealTitle && (!best || t.length > best.length)) {
-                        best = t;
-                        bestEl = c.el;
-                    }
-                }
-                // Fallback: pick longest hasTitle candidate
-                if (!best) {
-                    for (const c of candidates) {
-                        if (c.hasTitle && (!best || c.text.length > best.length)) {
-                            best = c.text;
-                            bestEl = c.el;
-                        }
-                    }
-                }
-                best = best.replace(/\d+[\s\S]*$/, '').trim();
-                if (best.length > 2) {
-                    // Find cover image: look for img in parent card or nearby
-                    let pic = '';
-                    const card = bestEl?.closest('.small-item, .content-item, [class*="video-card"], li');
-                    if (card) {
-                        const img = card.querySelector('img');
-                        if (img) {
-                            pic = img.src || img.dataset.src || '';
-                        }
-                    }
-                    // Fallback: find nearest img to this link
-                    if (!pic && bestEl) {
-                        const parent = bestEl.closest('div') || bestEl.parentElement;
-                        if (parent) {
-                            const imgs = parent.querySelectorAll('img');
-                            for (const im of imgs) {
-                                const src = im.src || im.dataset.src || '';
-                                if (src && (src.includes('hdslb') || src.includes('bilibili'))) {
-                                    pic = src;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    videos.push({ bvid: bv, title: best, pic });
-                }
-            }
+        const data = apiData.data as { list?: { vlist?: VideoItem[] }; page?: { count?: number } };
+        const vlist = data.list?.vlist || [];
 
-            // Get username from page title (format: "DIYgod投稿视频-DIYgod视频分享-哔哩哔哩视频")
-            let userName = '';
-            const titleMatch = document.title.match(/^(\S+?)投稿视频/);
-            if (titleMatch) {
-                userName = titleMatch[1];
-            }
+        // Get username from first video's author field or page title
+        let userName = vlist.length > 0 ? vlist[0].author : '';
+        if (!userName) {
+            userName = (await page.evaluate(() => {
+                const m = document.title.match(/^(\S+?)投稿视频/);
+                return m?.[1] || '';
+            })) as string;
+        }
 
-            // Fallback: try DOM selectors
-            if (!userName) {
-                const nameEl = document.querySelector('.h-name, .name, [class*="username"], h1');
-                if (nameEl) {
-                    userName = nameEl.textContent?.trim() || '';
-                }
-            }
-
-            return { videos, userName };
-        });
-
-        logger.info(`[bilibili/video-browser] extracted ${result.videos.length} videos, user: ${result.userName}`);
-        return result;
+        logger.info(`[bilibili/video-browser] extracted ${vlist.length} videos, user: ${userName}`);
+        return { videos: vlist, userName };
     } finally {
         await destroy();
     }
@@ -207,10 +156,10 @@ async function handler(ctx: Context) {
         .map((video) => ({
             title: video.title,
             description: utils.renderUGCDescription(embed, video.pic || '', '', 0, undefined, video.bvid),
-            pubDate: video.pubDate ? new Date(video.pubDate) : undefined,
+            pubDate: video.pubDate ? new Date(video.pubDate * 1000) : undefined,
             link: `https://www.bilibili.com/video/${video.bvid}`,
             author: userName || uid,
-            comments: 0,
+            comments: video.comment || 0,
             attachments: video.bvid ? [{ url: getVideoUrl(video.bvid), mime_type: 'text/html' as const }] : undefined,
         }));
 
