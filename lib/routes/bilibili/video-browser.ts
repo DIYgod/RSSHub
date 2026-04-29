@@ -104,7 +104,7 @@ async function fetchVideoListFromPage(uid: string): Promise<{ videos: VideoItem[
         const result = await page.evaluate(() => {
             // Collect all video link candidates grouped by BV
             const bvMap = new Map();
-            for (const link of [...document.querySelectorAll('a[href]')]) {
+            for (const link of document.querySelectorAll('a[href]')) {
                 const m = link.href.match(/\/video\/(BV\w+)/);
                 if (!m) {
                     continue;
@@ -118,20 +118,28 @@ async function fetchVideoListFromPage(uid: string): Promise<{ videos: VideoItem[
                 bvMap.get(bv).push({ text, hasTitle, el: link });
             }
 
-            // For each BV, pick the best candidate (prefer Chinese text, longer titles)
+            // For each BV, pick the best candidate (prefer real titles over stats)
             const videos = [];
             for (const [bv, candidates] of bvMap) {
-                let best = candidates[0]?.text || '';
-                let bestEl = candidates[0]?.el;
+                // Strategy: prefer text that looks like a real title (Chinese content, not starting with digit/stats)
+                let best = '';
+                let bestEl;
                 for (const c of candidates) {
-                    if (c.hasTitle && c.text.length > best.length) {
-                        best = c.text;
+                    const t = c.text;
+                    // A real title: has Chinese, length > 3, doesn't start with pure digits
+                    const isRealTitle = /[一-鿿]/.test(t) && t.length > 3 && !/^\d/.test(t);
+                    if (isRealTitle && (!best || t.length > best.length)) {
+                        best = t;
                         bestEl = c.el;
                     }
-                    if (/[一-鿿]/.test(c.text) && c.text.length > 5) {
-                        best = c.text;
-                        bestEl = c.el;
-                        break;
+                }
+                // Fallback: pick longest hasTitle candidate
+                if (!best) {
+                    for (const c of candidates) {
+                        if (c.hasTitle && (!best || c.text.length > best.length)) {
+                            best = c.text;
+                            bestEl = c.el;
+                        }
                     }
                 }
                 best = best.replace(/\d+[\s\S]*$/, '').trim();
