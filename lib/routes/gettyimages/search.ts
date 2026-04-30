@@ -8,7 +8,9 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const getTitleFromElement = ($element: Cheerio<Element>): string | undefined => $element.attr('aria-label') || $element.find('img').attr('alt') || $element.text().trim() || undefined;
+import { renderSearchItemDescription } from './description';
+
+const getTitleFromElement = ($element: Cheerio<Element>): string | undefined => $element.attr('aria-label') || $element.find('img').attr('alt') || $element.text() || undefined;
 
 const getImageFromElement = ($element: Cheerio<Element>): string | undefined =>
     $element.find('img').attr('src') || $element.find('img').attr('data-src') || $element.find('img').attr('data-lazy-src') || $element.find('img').attr('data-image-src');
@@ -86,7 +88,7 @@ async function handler(ctx: Context) {
             title,
             link: normalizedLink,
             guid: normalizedLink,
-            description: image ? `<img src="${image}">` : undefined,
+            description: image ? renderSearchItemDescription(image) : undefined,
         });
     }
 
