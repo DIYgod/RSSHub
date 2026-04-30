@@ -47,7 +47,7 @@ async function handler(ctx) {
             Authorization: `Bearer ${token}`,
         },
     });
-    const itemsResponse = await ofetch(`https://api.spotify.com/v1/artists/${id}/albums`, {
+    const itemsResponse = await ofetch(`https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single,ep,appears_on,compilation`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
