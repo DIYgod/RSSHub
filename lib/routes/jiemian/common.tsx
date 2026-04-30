@@ -70,7 +70,28 @@ export const handler = async (ctx): Promise<Data> => {
                               }
                             : undefined,
                         intro: content('div.article-header p').text(),
-                        description: content('div.article-content').html(),
+                        description: (() => {
+                            const featuredImageSrc = image.prop('src');
+                            
+                            if (!featuredImageSrc) {
+                                // 如果没有 featured image，直接返回原始内容
+                                const descContent = content('div.article-content').clone();
+                                descContent.find('p.report-view').remove();
+                                return descContent.html();
+                            }
+                            
+                            const baseImageName = featuredImageSrc.replace(/_[^.]+(\.\w+)$/, '$1');
+                            
+                            const descContent = content('div.article-content').clone();
+                            descContent.find('p.report-view').remove();
+                            
+                            if (baseImageName && baseImageName !== featuredImageSrc) {
+                                descContent.find(`img[src="${baseImageName}"]`).remove();
+                            }
+                            
+                            return descContent.html();
+                        })(),
+
                     });
                     item.author = content('span.author')
                         .first()
