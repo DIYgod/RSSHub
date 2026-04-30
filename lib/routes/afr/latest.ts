@@ -40,7 +40,7 @@ async function handler(ctx: Context) {
             variables: {
                 brand: 'afr',
                 first: limit,
-                render: 'web',
+                render: 'WEB',
                 types: ['article', 'bespoke', 'featureArticle', 'liveArticle', 'video'],
                 after: '',
             },
