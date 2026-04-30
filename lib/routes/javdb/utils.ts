@@ -27,8 +27,12 @@ const ProcessItems = async (ctx, currentUrl, title) => {
             path: '/',
         });
     }
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
     await page.goto(url.href, {
-        waitUntil: 'networkidle2',
+        waitUntil: 'domcontentloaded',
     });
     const response = await page.content();
     await page.close();
@@ -49,14 +53,17 @@ const ProcessItems = async (ctx, currentUrl, title) => {
             };
         });
 
-    logger.debug(`items: ${JSON.stringify(items)}`);
-
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const page = await browser.newPage();
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
+                logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
-                    waitUntil: 'networkidle2',
+                    waitUntil: 'domcontentloaded',
                 });
                 const detailResponse = await page.content();
 
