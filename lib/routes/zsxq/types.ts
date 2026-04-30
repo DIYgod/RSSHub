@@ -11,7 +11,7 @@ interface BasicTopic {
     create_time: string;
     digested: boolean;
     group: {
-        group_id: number;
+        group_id: number | string;
         name: string;
         type: string;
         background_url: string;
@@ -22,14 +22,14 @@ interface BasicTopic {
             avatar_url: string;
             name: string;
             number: number;
-            user_id: number;
+            user_id: number | string;
         };
     }>;
     likes_count: number;
     readers_count: number;
     reading_count: number;
     rewards_count: number;
-    topic_id: number;
+    topic_id: number | string;
     type: string;
     user_specific: {
         liked: false;

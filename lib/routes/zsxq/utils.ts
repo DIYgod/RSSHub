@@ -12,8 +12,12 @@ export async function customFetch<T extends BasicResponse<ResponseData>>(path: s
         headers: {
             cookie: `zsxq_access_token=${config.zsxq.accessToken};`,
         },
+        responseType: 'text',
     });
-    const { succeeded, code, resp_data } = response.data as T;
+    // Preserve large integer IDs (topic_id, group_id, user_id etc.) by converting them to strings
+    // before JSON.parse, which would otherwise lose precision on numbers > Number.MAX_SAFE_INTEGER
+    const safeBody = (response.body as string).replaceAll(/("(?:topic_id|group_id|user_id|task_id|image_id|category_id)"\s*:\s*)(\d+)/g, '$1"$2"');
+    const { succeeded, code, resp_data } = JSON.parse(safeBody) as T;
     if (succeeded) {
         return resp_data;
     }
@@ -39,7 +43,7 @@ export function generateTopicDataItem(topics: Topic[]): DataItem[] {
     return topics.map((topic) => {
         let description: string | undefined;
         let title = '';
-        const url = `https://wx.zsxq.com/topic/${topic.topic_id}`;
+        const url = `https://wx.zsxq.com/group/${topic.group.group_id}/topic/${topic.topic_id}`;
         switch (topic.type) {
             case 'talk':
                 title = topic.talk?.text?.split('\n')[0] ?? '文章';
