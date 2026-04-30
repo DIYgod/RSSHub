@@ -247,7 +247,8 @@ type ConfigEnvKeys =
     | 'ZSXQ_ACCESS_TOKEN'
     | 'SMZDM_COOKIE'
     | 'REMOTE_CONFIG'
-    | 'REMOTE_CONFIG_AUTH';
+    | 'REMOTE_CONFIG_AUTH'
+    | 'JAAuthCookie';
 
 export type ConfigEnv = Partial<Record<ConfigEnvKeys, string | undefined>>;
 
@@ -598,6 +599,9 @@ export type Config = {
     };
     sis001: {
         baseUrl?: string;
+    };
+    sjtu: {
+        JAAuthCookie?: string;
     };
     skeb: {
         bearerToken?: string;
@@ -1101,6 +1105,9 @@ const calculateValue = () => {
         },
         sis001: {
             baseUrl: envs.SIS001_BASE_URL || 'https://sis001.com',
+        },
+        sjtu: {
+            JAAuthCookie: envs.JAAuthCookie,
         },
         skeb: {
             bearerToken: envs.SKEB_BEARER_TOKEN,
