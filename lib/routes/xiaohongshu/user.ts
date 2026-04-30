@@ -6,8 +6,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-
-import { getUser, getUserWithCookie, renderNotesFulltext } from './util';
+import { getFullNote, getUser, getUserWithCookie, renderNotesFulltext } from './util';
 
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
@@ -97,18 +96,39 @@ async function getUserFeeds(url: string, category: string) {
     const description = `${basicInfo.desc} ${tags.map((t) => t.name).join(' ')} ${interactions.map((i) => `${i.count} ${i.name}`).join(' ')}`;
     const image = basicInfo.imageb || basicInfo.images;
 
-    const renderNote = (notes) =>
-        notes.flatMap((n) =>
-            n.map(({ id, noteCard }) => ({
-                title: noteCard.displayTitle,
-                link: new URL(noteCard.noteId || id, url).toString(),
-                guid: noteCard.displayTitle,
-                description: `<img src="${noteCard.cover.infoList.pop().url}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
-                author: noteCard.user.nickname,
-                upvotes: noteCard.interactInfo.likedCount,
-            }))
-        );
-    const renderCollect = (collect) => {
+ const urlNotePrefix = 'https://www.xiaohongshu.com/explore';
+ const renderNote =  (notes) => {
+     const promises = notes.flatMap((n) =>
+         n.map(async ({ id, noteCard }) => {
+             const link = `${urlNotePrefix}/${id}`;
+             try {
+                 const { title, description, pubDate, updated } = await getFullNote(link, false);
+                 return {
+                     title,
+                     link,
+                     description,
+                     author: noteCard.user.nickname,
+                     guid: `${urlNotePrefix}/${noteCard.noteId}`,
+                     pubDate,
+                     updated,
+                     upvotes: noteCard.interactInfo.likedCount,
+                 };
+             } catch {
+                 // Fallback to basic rendering if full fetch fails
+                 return {
+                     title: noteCard.displayTitle,
+                     link,
+                     guid: noteCard.displayTitle,
+                     description: `<img src="${noteCard.cover.infoList.pop().url}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
+                     author: noteCard.user.nickname,
+                     upvotes: noteCard.interactInfo.likedCount,
+                 };
+             }
+         })
+     );
+     return Promise.all(promises);
+ };
+const renderCollect = (collect) => {
         if (!collect) {
             throw new InvalidParameterError('该用户已设置收藏内容不可见');
         }
@@ -120,7 +140,7 @@ async function getUserFeeds(url: string, category: string) {
         }
         return collect.data.notes.map((item) => ({
             title: item.display_title,
-            link: `${url}/${item.note_id}`,
+            link: `https://www.xiaohongshu.com/explore/${item.note_id}`,
             description: `<img src ="${item.cover.info_list.pop().url}"><br>${item.display_title}`,
             author: item.user.nickname,
             upvotes: item.interact_info.likedCount,
@@ -132,6 +152,6 @@ async function getUserFeeds(url: string, category: string) {
         description,
         image,
         link: url,
-        item: category === 'notes' ? renderNote(notes) : renderCollect(collect),
+        item: category === 'notes' ?  renderNote(notes) : renderCollect(collect),
     };
 }
