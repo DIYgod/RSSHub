@@ -3,46 +3,117 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPuppeteerPage } from '@/utils/puppeteer';
 
 const baseUrl = 'https://nhentai.net';
 
-const getCookie = async (username, password, cache) => {
+const getCookie = async (username, password, cache, force = false) => {
     const loginUrl = 'https://nhentai.net/login/';
     const cacheKey = 'nhentai:cookie';
 
-    const cachedCookie = await cache.get(cacheKey);
-    if (cachedCookie) {
-        const { cookie, time } = JSON.parse(cachedCookie);
-        const now = Date.now();
-        if (now - time < 86400 * 3 * 1000) {
-            // 不考虑缓存过期的话，有效期最多允许3天
-            return cookie;
+    if (!force) {
+        const cachedCookie = await cache.get(cacheKey);
+        if (cachedCookie) {
+            const { cookie, time } = JSON.parse(cachedCookie);
+            const now = Date.now();
+            if (cookie && now - time < 86400 * 30 * 1000) {
+                return cookie;
+            }
         }
     }
 
-    const { data, headers } = await got(loginUrl);
-    const csrfTokenMiddleware = data.match(/name="csrfmiddlewaretoken" value="(.*?)"/)[1];
-    const csrfTokenCookie = headers['set-cookie'].map((c) => c.split(';')[0]).join('; ');
-
-    const login = await got.post(loginUrl, {
-        headers: {
-            referer: loginUrl,
-            cookie: csrfTokenCookie,
+    const { page, destroy } = await getPuppeteerPage(loginUrl, {
+        onBeforeLoad: async (page) => {
+            const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch', 'stylesheet']);
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                allowedTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            });
         },
-        form: {
-            csrfmiddlewaretoken: csrfTokenMiddleware,
-            username_or_email: username,
-            password,
-            next: '',
-        },
-        followRedirect: false,
+        gotoConfig: { waitUntil: 'domcontentloaded' },
     });
 
-    if (login.statusCode !== 302) {
+    try {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+
+        let currentUrl = page.url();
+        let title = await page.title();
+
+        let attempts = 0;
+        // eslint-disable-next-line no-await-in-loop
+        while ((title.includes('Just a moment') || currentUrl.includes('challenges.cloudflare')) && attempts < 10) {
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+            currentUrl = page.url();
+            // eslint-disable-next-line no-await-in-loop
+            title = await page.title();
+            attempts++;
+        }
+
+        if (title.includes('Just a moment')) {
+            await destroy();
+            return '';
+        }
+
+        await page.waitForSelector('input[name="username_or_email"]', { timeout: 30000 });
+        await page.type('input[name="username_or_email"]', username);
+        await page.type('input[name="password"]', password);
+
+        const submitButton = await page.$('button[type="submit"]');
+        if (!submitButton) {
+            await destroy();
+            return '';
+        }
+
+        try {
+            await Promise.race([
+                Promise.all([page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 }), submitButton.click()]),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Navigation timeout')), 35000)),
+            ]);
+        } catch {
+            // Continue anyway
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        currentUrl = page.url();
+        title = await page.title();
+
+        if (currentUrl.includes('/login') || title.includes('Login')) {
+            await destroy();
+            cache.set(
+                cacheKey,
+                JSON.stringify({
+                    cookie: '',
+                    time: Date.now(),
+                })
+            );
+            return '';
+        }
+
+        const cookies = await page.cookies();
+        const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+
+        await destroy();
+
+        cache.set(
+            cacheKey,
+            JSON.stringify({
+                cookie: cookieString,
+                time: Date.now(),
+            })
+        );
+
+        return cookieString;
+    } catch (error) {
+        await destroy();
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        if (errorMsg.includes('detached') || errorMsg.includes('Navigating') || errorMsg.includes('Timeout') || errorMsg.includes('timeout')) {
+            throw new Error(`Network/Cloudflare error: ${errorMsg}`, { cause: error });
+        }
+
         cache.set(
             cacheKey,
             JSON.stringify({
@@ -52,21 +123,8 @@ const getCookie = async (username, password, cache) => {
         );
         return '';
     }
-
-    const userTokenCookie = login.headers['set-cookie'].map((c) => c.split(';')[0]).join('; ');
-
-    cache.set(
-        cacheKey,
-        JSON.stringify({
-            cookie: userTokenCookie,
-            time: Date.now(),
-        })
-    );
-
-    return userTokenCookie;
 };
 
-// Reason: try ofetch first for speed, fall back to puppeteer on 403 (anti-bot protection)
 const fetchPage = async (url: string): Promise<string> => {
     try {
         return await ofetch(url);
@@ -105,11 +163,35 @@ const getTorrents = async (cache, simples, limit) => {
     if (!config.nhentai || !config.nhentai.username || !config.nhentai.password) {
         throw new ConfigNotFoundError('nhentai RSS with torrents is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
-    const cookie = await getCookie(config.nhentai.username, config.nhentai.password, cache);
+
+    const { username, password } = config.nhentai;
+
+    let cookie;
+    try {
+        cookie = await getCookie(username, password, cache);
+    } catch (error) {
+        if (error instanceof Error && error.message.toLowerCase().includes('cloudflare')) {
+            throw new Error('nhentai login failed: Access denied by Cloudflare protection. Please try again later or configure a proxy.', { cause: error });
+        }
+        throw error;
+    }
+
     if (!cookie) {
         throw new ConfigNotFoundError('Invalid username (or email) or password for nhentai torrent download');
     }
-    return getTorrentWithCookie(cache, simples, cookie, limit);
+
+    try {
+        return await getTorrentWithCookie(cache, simples, cookie, limit);
+    } catch (error) {
+        if (error instanceof Error && error.message === 'Cookie expired or invalid') {
+            cookie = await getCookie(username, password, cache, true);
+            if (!cookie) {
+                throw new ConfigNotFoundError('Invalid username (or email) or password for nhentai torrent download');
+            }
+            return getTorrentWithCookie(cache, simples, cookie, limit);
+        }
+        throw error;
+    }
 };
 const getTorrentWithCookie = (cache, simples, cookie, limit) => Promise.all(simples.slice(0, limit).map((simple) => cache.tryGet(simple.link + 'download', () => getTorrent(simple, cookie))));
 
@@ -130,12 +212,71 @@ const parseSimpleDetail = ($ele) => {
 
 const getTorrent = async (simple, cookie) => {
     const { link } = simple;
-    const response = await ofetch(link + 'download', {
-        headers: { Cookie: cookie },
+    const downloadUrl = link + 'download';
+
+    const cookiesToSet = cookie.split('; ').map((c) => {
+        const [name, ...valueParts] = c.split('=');
+        return {
+            name: name.trim(),
+            value: valueParts.join('=').trim(),
+            domain: '.nhentai.net',
+            path: '/',
+        };
     });
+
+    const { page, destroy } = await getPuppeteerPage(downloadUrl, {
+        onBeforeLoad: async (page) => {
+            await page.setCookie(...cookiesToSet);
+            const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+            await page.setRequestInterception(true);
+            page.on('request', (request) => {
+                allowedTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            });
+        },
+        gotoConfig: { waitUntil: 'domcontentloaded' },
+    });
+
+    const content = await page.content();
+    const currentUrl = page.url();
+    await destroy();
+
+    if (currentUrl.includes('/login')) {
+        throw new Error('Cookie expired or invalid');
+    }
+
+    const $ = load(content);
+
+    let enclosureUrl = '';
+
+    const torrentLink = $('a[href$=".torrent"]').attr('href');
+    if (torrentLink) {
+        enclosureUrl = torrentLink.startsWith('http') ? torrentLink : new URL(torrentLink, baseUrl).href;
+    }
+
+    if (!enclosureUrl) {
+        const magnetLink = $('a[href^="magnet:"]').attr('href');
+        if (magnetLink) {
+            enclosureUrl = magnetLink;
+        }
+    }
+
+    if (!enclosureUrl) {
+        const downloadLink = $('a[href*="download"]').attr('href');
+        if (downloadLink) {
+            enclosureUrl = downloadLink.startsWith('http') ? downloadLink : new URL(downloadLink, baseUrl).href;
+        }
+    }
+
+    if (!enclosureUrl) {
+        const galleryId = link.match(/\/g\/(\d+)/)?.[1];
+        if (galleryId) {
+            enclosureUrl = `${baseUrl}/download/${galleryId}`;
+        }
+    }
+
     return {
         ...simple,
-        enclosure_url: response,
+        enclosure_url: enclosureUrl,
         enclosure_type: 'application/x-bittorrent',
     };
 };
@@ -147,16 +288,21 @@ const getDetail = async (simple) => {
 
     const galleryImgs = $('.gallerythumb img')
         .toArray()
-        .map((ele) => new URL($(ele).attr('data-src'), baseUrl).href)
-        .map((src) => src.replace(/(.+)(\d+)t\.(.+)/, (_, p1, p2, p3) => `${p1}${p2}.${p3}`)) // thumb to high-quality
+        .map((ele) => {
+            const img = $(ele);
+            const src = img.attr('data-src') || img.attr('src');
+            return src ? new URL(src, baseUrl).href : null;
+        })
+        .filter((src) => src !== null)
+        .map((src) => src.replace(/(.+)(\d+)t\.(.+)/, (_, p1, p2, p3) => `${p1}${p2}.${p3}`))
         .map((src) => src.replace(/t(\d+)\.nhentai\.net/, 'i$1.nhentai.net'))
-        .map((src) => src.replace(/\.(jpg|png|gif)\.webp$/, '.$1')) // 移除重複的.webp後綴
-        .map((src) => src.replace(/\.webp\.webp$/, '.webp')); // 處理.webp.webp的情況
+        .map((src) => src.replace(/\.(jpg|png|gif)\.webp$/, '.$1'))
+        .map((src) => src.replace(/\.webp\.webp$/, '.webp'));
 
     return {
         ...simple,
         title: $('div#info > h2').text() || $('div#info > h1').text(),
-        pubDate: parseDate($('time').attr('datetime')),
+        pubDate: parseDate($('time').attr('datetime') || ''),
         description: renderDescription(galleryImgs.length, galleryImgs),
     };
 };

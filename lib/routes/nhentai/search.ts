@@ -11,7 +11,7 @@ export const route: Route = {
         mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`',
     },
     features: {
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: true,
         nsfw: true,
@@ -23,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'Advanced Search',
-    maintainers: ['MegrezZhu', 'hoilc', 'pseudoyu'],
+    maintainers: ['MegrezZhu', 'hoilc', 'pseudoyu', 'FlanChanXwO'],
     handler,
 };
 
