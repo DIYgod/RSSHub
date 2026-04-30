@@ -40,7 +40,7 @@ export const route: Route = {
         },
     ],
     name: 'Search',
-    maintainers: ['siyan'],
+    maintainers: ['QwQ-OvO'],
     handler,
 };
 
