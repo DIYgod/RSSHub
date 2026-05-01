@@ -1,7 +1,18 @@
+import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+const md = MarkdownIt({
+    breaks: true,
+    html: true,
+    linkify: true,
+    typographer: true,
+});
 
 export const route: Route = {
     path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],
@@ -17,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search Result',
-    maintainers: ['Lava-Swimmer', 'noname1776', 'camera-2018'],
+    maintainers: ['Lava-Swimmer', 'noname1776', 'camera-2018', 'Q16KBreak'],
     handler,
 };
 
@@ -48,17 +59,41 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(currentRSSURL);
 
-    feed.items.map((item) => {
-        item.description = item.content;
-        item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
-        item.enclosure_type = 'application/x-bittorrent';
-        return item;
-    });
+    if (ctx.req.query('mode')?.toLowerCase() === 'fulltext') {
+        const limit = Math.max(1, Number.parseInt(ctx.req.query('limit')) || 6);
+        const items = await Promise.all(
+            feed.items.slice(0, limit).map((item) =>
+                cache.tryGet(item.guid, async () => {
+                    const response = await ofetch(item.guid);
+                    const $ = load(response);
 
-    return {
-        title: feed.title,
-        link: currentLink,
-        description: feed.description,
-        item: feed.items,
-    };
+                    item.description = md.render($('div#torrent-description.panel-body[markdown-text]').text());
+                    item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
+                    item.enclosure_type = 'application/x-bittorrent';
+                    return item;
+                })
+            )
+        );
+
+        return {
+            title: feed.title,
+            link: currentLink,
+            description: feed.description,
+            item: items,
+        };
+    } else {
+        feed.items.map((item) => {
+            item.description = item.content;
+            item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
+            item.enclosure_type = 'application/x-bittorrent';
+            return item;
+        });
+
+        return {
+            title: feed.title,
+            link: currentLink,
+            description: feed.description,
+            item: feed.items,
+        };
+    }
 }
