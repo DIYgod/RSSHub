@@ -80,8 +80,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.10.12
-        version: 0.10.12(hono@4.12.15)
+        specifier: 0.10.13
+        version: 0.10.13(hono@4.12.15)
       '@sentry/node':
         specifier: 10.51.0
         version: 10.51.0(@opentelemetry/exporter-trace-otlp-http@0.216.0(@opentelemetry/api@1.9.1))
@@ -2573,22 +2573,22 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.1.5':
-    resolution: {integrity: sha512-XZ+lZbVli1rAX8Y13sQqisvbjVhkbePVeo0izJZ4cNzpzSh7fDpigEqpV67u4ljpTpLO0B12JDXR5xnmSy+YwQ==}
+  '@scalar/client-side-rendering@0.1.6':
+    resolution: {integrity: sha512-ooc5RKyi83EvBuxB2N8H00ZE2CF4oKynuUToSCaoqxkjv+oJ6B3+OYsb0HVixznsyWhUDdtQZm4/xOb0kxBaaA==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.5.4':
-    resolution: {integrity: sha512-AJFJNoSVcCHXDPH1Mosie+5+AOpNC4zrtwWywvQEhcaqHfiH4LSq8Og8Bay82M/jhCwNRNjWfGOGcaCE4XbCDw==}
+  '@scalar/helpers@0.5.5':
+    resolution: {integrity: sha512-TqbErkqGijJJW6Ad8lpswHFTmlJaYFt9oolaWF1/Nn9171xdkK9ZDAk3pCaOCWs8WpwvcbUSxIVD8JxdBg0MFg==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.10.12':
-    resolution: {integrity: sha512-X7ueApsdUkTEhyLfR9S6G+qzvoFUwZk4Hfh/I8EwTocxMAcv28bWvf0fe9UbmhXBN/vO6lKdpey/RCr5kiFjcg==}
+  '@scalar/hono-api-reference@0.10.13':
+    resolution: {integrity: sha512-xYSN6GVdzsgt5i3OTt4wDpIcD/KpKTwb6Wiy65NucGIFW0WidM6ilb9Lf8EG9xescut5djLtGOOxO4Ze0w8qgQ==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/types@0.9.4':
-    resolution: {integrity: sha512-nspIWRUVPv2uf9d0bBxn2uqKcEVbLqoUqKvNAuBgKMinZ95XSMcGjQjsgqDiRBPsn1luTtjC9xupUFfer7kLtg==}
+  '@scalar/types@0.9.5':
+    resolution: {integrity: sha512-joen5nuqgmGzgXK5XIqkGs0JmCZ16djaw+pgC24sfb+p3sSPVfKQTNTil/RuvHMNsmA/dFcQ6GI0Y3HhTlUQrg==}
     engines: {node: '>=22'}
 
   '@scure/base@2.0.0':
@@ -4988,8 +4988,13 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.1.9:
-    resolution: {integrity: sha512-ZUvP7KeBLe3OZ1ypw6dI/TzYJuvHP77IM4Ry73waSQTLn8/g8rpdjfyVAh7t1/+FjBtG4lCP42MEbDxOsRpBMw==}
+  nanoid@3.3.12:
+    resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.1.11:
+    resolution: {integrity: sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -5313,8 +5318,8 @@ packages:
     resolution: {integrity: sha512-pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.12:
-    resolution: {integrity: sha512-W62t/Se6rA0Az3DfCL0AqJwXuKwBeYg6nOaIgzP+xZ7N5BFCI7DYi1qs6ygUYT6rvfi6t9k65UMLJC+PHZpDAA==}
+  postcss@8.5.13:
+    resolution: {integrity: sha512-qif0+jGGZoLWdHey3UFHHWP0H7Gbmsk8T5VEqyYFbWqPr1XqvLGBbk/sl8V5exGmcYJklJOhOQq1pV9IcsiFag==}
     engines: {node: ^10 || ^12 || >=14}
 
   postgres-array@2.0.0:
@@ -8212,21 +8217,21 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.1.5':
+  '@scalar/client-side-rendering@0.1.6':
     dependencies:
-      '@scalar/types': 0.9.4
+      '@scalar/types': 0.9.5
 
-  '@scalar/helpers@0.5.4': {}
+  '@scalar/helpers@0.5.5': {}
 
-  '@scalar/hono-api-reference@0.10.12(hono@4.12.15)':
+  '@scalar/hono-api-reference@0.10.13(hono@4.12.15)':
     dependencies:
-      '@scalar/client-side-rendering': 0.1.5
+      '@scalar/client-side-rendering': 0.1.6
       hono: 4.12.15
 
-  '@scalar/types@0.9.4':
+  '@scalar/types@0.9.5':
     dependencies:
-      '@scalar/helpers': 0.5.4
-      nanoid: 5.1.9
+      '@scalar/helpers': 0.5.5
+      nanoid: 5.1.11
       type-fest: 5.6.0
       zod: 4.4.1
 
@@ -10943,7 +10948,9 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nanoid@5.1.9: {}
+  nanoid@3.3.12: {}
+
+  nanoid@5.1.11: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -11316,9 +11323,9 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.12:
+  postcss@8.5.13:
     dependencies:
-      nanoid: 3.3.11
+      nanoid: 3.3.12
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -12389,7 +12396,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
-      postcss: 8.5.12
+      postcss: 8.5.13
       rollup: 4.60.2
       tinyglobby: 0.2.16
     optionalDependencies:
