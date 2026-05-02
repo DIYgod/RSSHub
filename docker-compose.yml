@@ -1,9 +1,6 @@
 services:
     rsshub:
-        # two ways to enable puppeteer:
-        # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
-        # * (consumes more disk space and memory) leave everything unchanged
-        image: diygod/rsshub # or ghcr.io/diygod/rsshub
+        image: diygod/rsshub
         restart: always
         ports:
             - '1200:1200'
@@ -11,40 +8,98 @@ services:
             NODE_ENV: production
             CACHE_TYPE: redis
             REDIS_URL: 'redis://redis:6379/'
-            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000' # marked
+            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'
         healthcheck:
             test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
             interval: 30s
             timeout: 10s
             retries: 3
         depends_on:
-            - redis
-            - browserless # marked
+            redis:
+                condition: service_healthy
+            browserless:
+                condition: service_healthy
+        # 允许容器访问宿主机代理（OpenClash）
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        # 加载 .env 文件中的环境变量
+        env_file:
+            - .env
+        # 资源配置
+        deploy:
+            resources:
+                limits:
+                    memory: 2G
+                reservations:
+                    memory: 512M
+        # 日志配置
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
 
-    browserless: # marked
-        image: browserless/chrome # marked
-        restart: always # marked
-        ulimits: # marked
-            core: # marked
-                hard: 0 # marked
-                soft: 0 # marked
-        healthcheck: # marked
-            test: ['CMD', 'curl', '-f', 'http://localhost:3000/pressure'] # marked
-            interval: 30s # marked
-            timeout: 10s # marked
-            retries: 3 # marked
+    browserless:
+        image: browserless/chrome
+        restart: always
+        environment:
+            # 并发连接数
+            MAX_CONCURRENT_SESSIONS: 10
+            # 预启动浏览器
+            PREBOOT_CHROME: true
+            # 连接超时
+            CONNECTION_TIMEOUT: 60000
+        deploy:
+            resources:
+                limits:
+                    memory: 2G
+                reservations:
+                    memory: 512M
+        ulimits:
+            core:
+                hard: 0
+                soft: 0
+        healthcheck:
+            test: ['CMD', 'curl', '-f', 'http://localhost:3000/pressure']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
 
     redis:
         image: redis:alpine
         restart: always
         volumes:
             - redis-data:/data
+        # Redis 优化配置
+        command: >
+            redis-server
+            --maxmemory 4gb
+            --maxmemory-policy allkeys-lru
+            --save 900 1
+            --save 300 10
+            --save 60 10000
         healthcheck:
             test: ['CMD', 'redis-cli', 'ping']
             interval: 30s
             timeout: 10s
             retries: 5
             start_period: 5s
+        deploy:
+            resources:
+                limits:
+                    memory: 5G
+                reservations:
+                    memory: 1G
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
 
 volumes:
     redis-data:
