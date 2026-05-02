@@ -48,7 +48,6 @@ async function handler() {
         method: 'get',
         url: 'https://www.rule34video.com/latest-updates/',
         headers: {
-            'User-Agent': config.trueUA,
             Referer: 'https://www.rule34video.com',
         },
     });
