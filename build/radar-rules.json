@@ -40423,6 +40423,19 @@
       }
     ]
   },
+  "rule34video.com": {
+    "_name": "Rule34Video",
+    ".": [
+      {
+        "title": "Latest Updates",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/latest-updates/"
+        ],
+        "target": "/rule34video/latest"
+      }
+    ]
+  },
   "runyeah.world": {
     "_name": "跑野大爆炸",
     ".": [
