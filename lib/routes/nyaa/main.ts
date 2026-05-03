@@ -59,8 +59,8 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(currentRSSURL);
 
-    if (ctx.req.query('mode')?.toLowerCase() === 'fulltext') {
-        const limit = Math.max(1, Number.parseInt(ctx.req.query('limit')) || 6);
+    if (['true', '1'].includes(ctx.req.query('fulltext'))) {
+        const limit = Math.max(1, Number.parseInt(ctx.req.query('fetchLimit')) || 6);
         const items = await Promise.all(
             feed.items.slice(0, limit).map((item) =>
                 cache.tryGet(item.guid, async () => {

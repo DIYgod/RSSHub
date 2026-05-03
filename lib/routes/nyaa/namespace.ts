@@ -12,11 +12,7 @@ The 'Nyaa' includes several routes to access different parts of the site:
 4. \`/nyaa/sukebei/search/:query?\` - This route is for searching adult content with a specific query, e.g., \`/nyaa/sukebei/search/hentai\`.
 5. \`/nyaa/sukebei/user/:username?\` - Access an adult content user's profile, e.g., \`/nyaa/sukebei/user/milannews\`.
 6. \`/nyaa/sukebei/user/:username/search/:query?\` - Search within a specific user's adult content submissions, e.g., \`/nyaa/sukebei/user/milannews/search/hentai\`.
-<<<<<<< HEAD
-
-=======
-7. Append the query string \`?mode=fulltext\` to any URL to retrieve detailed descriptions. By default, it returns \`6\` entries, but this can be adjusted using the \`limit\` query string, e.g., \`/nyaa/user/VCB-Studio?mode=fulltext&limit=10\`.
->>>>>>> 171681e (feat(route): support fulltext mode for nyaa)
+7. Append the query string \`?fulltext=true\` to any URL to retrieve detailed descriptions. By default, it returns \`6\` entries, but this can be adjusted using the \`fetchLimit\` query string, e.g., \`/nyaa/user/VCB-Studio?fulltext=true&fetchLimit=10\`.
 :::`,
     lang: 'en',
 };
