@@ -1,6 +1,7 @@
+import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/zl',
@@ -22,8 +23,8 @@ export const route: Route = {
                 const $link = $item.find('a.recurl');
 
                 const relativeLink = $link.attr('href') || '';
-                const itemLink = relativeLink.startsWith('.') 
-                    ? new URL(relativeLink, url).href 
+                const itemLink = relativeLink.startsWith('.')
+                    ? new URL(relativeLink, url).href
                     : `${baseUrl}${relativeLink}`;
 
                 const title = $item.find('div.cj_zxx3 p').text().trim();
