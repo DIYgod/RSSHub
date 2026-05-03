@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';;
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -15,8 +15,8 @@ export const route: Route = {
                 limit: 16,
                 page: 1,
                 params: {
-                    exhibitTypeCode: "OFFLINE_EXHIBITION",
-                    langCode: "CHINESE"
+                    exhibitTypeCode: 'OFFLINE_EXHIBITION',
+                    langCode: 'CHINESE'
                 }
             }
         });
@@ -29,7 +29,7 @@ export const route: Route = {
             item: list.map((item) => ({
                 title: item.name,
                 
-                link: `${baseUrl}/mu/frontend/pg/article/id/${item.code}`, 
+                link: `${baseUrl}/mu/frontend/pg/article/id/${item.code}`,
                 
                 description: `
                     <img src="${baseUrl}/${item.picPath}"><br>
