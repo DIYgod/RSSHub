@@ -19,7 +19,7 @@ export const route: Route = {
 
         const response = await got.post(apiUrl, {
             json: {
-                limit: parseInt(limit),
+                limit: Number.parseInt(limit),
                 page: 1,
                 params: {
                     exhibitTypeCode: 'OFFLINE_EXHIBITION',
