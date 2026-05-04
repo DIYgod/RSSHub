@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/',
@@ -24,8 +24,8 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://www.hottoys.com.hk';
 
-    // 导入 puppeteer 工具类并初始化浏览器实例
-    const browser = await puppeteer();
+    // 导入 Playwright 工具类并初始化浏览器实例
+    const browser = await playwright();
     // 打开一个新标签页
     const page = await browser.newPage();
     // 拦截所有请求

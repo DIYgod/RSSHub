@@ -21,10 +21,10 @@ COPY ./patches /app/patches
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
-# lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
+# Lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size.
 RUN \
     set -ex && \
-    export PUPPETEER_SKIP_DOWNLOAD=true && \
+    export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=true && \
     pnpm install --frozen-lockfile && \
     pnpm rb
 
@@ -40,7 +40,7 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="rebrowser-puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version && \
+    grep -Po '(?<="playwright": ")[^\s"]*(?=")' /app/package.json | tee /ver/.playwright_version && \
     grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
     grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
@@ -88,30 +88,29 @@ FROM node:24-bookworm-slim AS chromium-downloader
 # Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
-COPY ./.puppeteerrc.cjs /app/
-COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
+COPY --from=dep-version-parser /ver/.playwright_version /app/.playwright_version
 
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
-ARG PUPPETEER_SKIP_DOWNLOAD=1
-# The official recommended way to use Puppeteer on x86(_64) is to use the bundled Chromium from Puppeteer:
-# https://pptr.dev/faq#q-why-doesnt-puppeteer-vxxx-workwith-chromium-vyyy
+ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+# The official recommended way to use Playwright on x86(_64) is to use the bundled browser.
 RUN \
     set -ex ; \
-    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
             yarn config set registry https://registry.npmmirror.com && \
             pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
         echo 'Downloading Chromium...' && \
-        unset PUPPETEER_SKIP_DOWNLOAD && \
+        unset PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD && \
+        export PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright && \
         corepack enable pnpm && \
-        pnpm --allow-build=rebrowser-puppeteer add rebrowser-puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
+        pnpm --allow-build=playwright add playwright@$(cat /app/.playwright_version) --save-prod && \
         pnpm rb && \
-        pnpx rebrowser-puppeteer browsers install chrome ; \
+        pnpm exec playwright install chromium ; \
     else \
-        mkdir -p /app/node_modules/.cache/puppeteer ; \
+        mkdir -p /app/node_modules/.cache/ms-playwright ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -127,20 +126,17 @@ WORKDIR /app
 
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
 ARG TARGETPLATFORM
-ARG PUPPETEER_SKIP_DOWNLOAD=1
-# https://pptr.dev/troubleshooting#chrome-headless-doesnt-launch-on-unix
-# https://github.com/puppeteer/puppeteer/issues/7822
+ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+# https://playwright.dev/docs/docker#introduction
 # https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
-# The official recommended way to use Puppeteer on arm/arm64 is to install Chromium from the distribution repositories:
-# https://github.com/puppeteer/puppeteer/blob/07391bbf5feaf85c191e1aa8aa78138dce84008d/packages/puppeteer-core/src/node/BrowserFetcher.ts#L128-L131
-# Dependencies of puppeteer-real-browser: xvfb, procps
+# On arm/arm64, install Chromium from the distribution repositories.
 RUN \
     set -ex && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
         dumb-init git curl \
     ; \
-    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ]; then \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
         if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
             apt-get install -yq --no-install-recommends \
                 ca-certificates fonts-liberation wget xdg-utils \
@@ -154,19 +150,16 @@ RUN \
             && \
             echo "CHROMIUM_EXECUTABLE_PATH=$(which chromium)" | tee /app/.env ; \
         fi; \
-        apt-get install -yq --no-install-recommends \
-            xvfb procps \
-        ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /app/node_modules/.cache/puppeteer /app/node_modules/.cache/puppeteer
+COPY --from=chromium-downloader /app/node_modules/.cache/ms-playwright /app/node_modules/.cache/ms-playwright
 
 RUN \
     set -ex && \
-    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        _chrome_path=$(find /app/node_modules/.cache/puppeteer/chrome/ -name chrome -xtype f -executable | head -n1) && \
+        _chrome_path=$(find /app/node_modules/.cache/ms-playwright/ -name chrome -xtype f -executable | head -n1) && \
         echo "CHROMIUM_EXECUTABLE_PATH=$_chrome_path" | tee /app/.env && \
         if ldd "$_chrome_path" | grep "not found"; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
@@ -194,7 +187,7 @@ CMD ["npm", "run", "start"]
 #     apt-file \
 # && \
 # apt-file update && \
-# ldd $(find /app/node_modules/.cache/puppeteer/ -name chrome -type f) | grep -Po "\S+(?= => not found)" | \
+# ldd $(find /app/node_modules/.cache/ms-playwright/ -name chrome -type f) | grep -Po "\S+(?= => not found)" | \
 # sed 's/\./\\./g' | awk '{print $1"$"}' | apt-file search -xlf - | grep ^lib | \
 # xargs -d '\n' -- \
 #     apt-get install -yq --no-install-recommends \

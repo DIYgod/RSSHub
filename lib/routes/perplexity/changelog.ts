@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
-    const { page, destroy, browser } = await getPuppeteerPage(targetUrl, {
+    const { page, destroy, browser } = await getPlaywrightPage(targetUrl, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {

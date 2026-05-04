@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
+import playwright, { getPlaywrightPage } from '@/utils/playwright';
 
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
@@ -58,12 +58,12 @@ const getUser = (url, cache) =>
                 userPageData = userPageData._rawValue || userPageData;
                 notes = notes._rawValue || notes;
 
-                // Cannot get collect data without puppeteer
+                // Cannot get collect data without Playwright
                 return { userPageData, notes, collect: '' };
             }
 
-            // Use puppeteer
-            const { page, destroy } = await getPuppeteerPage(url, {
+            // Use Playwright
+            const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     await page.setRequestInterception(true);
                     page.on('request', (request) => {
@@ -127,8 +127,8 @@ const getBoard = (url, cache) =>
                 return state.Main;
             }
 
-            // Use puppeteer
-            const browser = await puppeteer();
+            // Use Playwright
+            const browser = await playwright();
             try {
                 const page = await browser.newPage();
                 await page.setRequestInterception(true);

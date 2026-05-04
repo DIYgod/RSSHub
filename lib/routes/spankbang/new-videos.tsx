@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const render = ({ preview, cover }) =>
     renderToString(
@@ -22,7 +22,7 @@ const handler = async () => {
     const baseUrl = 'https://spankbang.com';
     const link = `${baseUrl}/new_videos/`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const data = await cache.tryGet(
         link,

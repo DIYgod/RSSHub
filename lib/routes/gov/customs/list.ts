@@ -4,10 +4,10 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
-import { host, puppeteerGet } from './utils';
+import { host, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/customs/list/:gchannel?',
@@ -61,12 +61,12 @@ async function handler(ctx) {
             break;
     }
 
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const list = await cache.tryGet(
         link,
         async () => {
-            const response = await puppeteerGet(link, browser);
+            const response = await playwrightGet(link, browser);
             const $ = load(response);
             const list = $('[class^="conList_ul"] li')
                 .toArray()
@@ -90,7 +90,7 @@ async function handler(ctx) {
                 if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
                     return info;
                 }
-                const response = await puppeteerGet(info.link, browser);
+                const response = await playwrightGet(info.link, browser);
                 const $ = load(response);
                 let date;
 

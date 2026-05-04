@@ -1,13 +1,13 @@
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
-import { getCookies } from '@/utils/puppeteer-utils';
+import playwright from '@/utils/playwright';
+import { getCookies } from '@/utils/playwright-utils';
 
 export const parseToken = (link: string) =>
     cache.tryGet(
         'xueqiu:token',
         async () => {
-            const browser = await puppeteer();
+            const browser = await playwright();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {

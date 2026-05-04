@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import parser from '@/utils/rss-parser';
 
 import utils from './utils';
@@ -81,7 +81,7 @@ async function handler(ctx) {
         // Do nothing
     }
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
         feed.items.splice(0, 10).map(async (item) => {

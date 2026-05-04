@@ -16,7 +16,7 @@ command = "pnpm run worker-build"
 [observability]
 enabled = true
 
-# Browser Rendering API for puppeteer support
+# Browser Run API for Playwright support
 # Requires Workers Paid plan
 [browser]
 binding = "BROWSER"

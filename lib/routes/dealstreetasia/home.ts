@@ -3,7 +3,7 @@ import { load } from 'cheerio'; // An HTML parser with an API similar to jQuery
 import type { Route } from '@/types';
 // import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // Unified request library used
-// import puppeteer from '@/utils/puppeteer';
+// import playwright from '@/utils/playwright';
 // import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {

@@ -5,9 +5,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
-import { puppeteerGet } from './utils';
+import { playwrightGet } from './utils';
 
 const baseUrl = 'https://xsijishe.com';
 
@@ -62,8 +62,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
 
-    const browser = await puppeteer();
-    let usePuppeteer = false;
+    const browser = await playwright();
+    let usePlaywright = false;
 
     const url = `${baseUrl}/portal.php`;
     const headers = {
@@ -113,7 +113,7 @@ async function handler(ctx) {
         const $ = load(resp.data);
         const firstViewBox = $('.t_f').first();
         if (firstViewBox.length === 0) {
-            usePuppeteer = true;
+            usePlaywright = true;
         }
     }
 
@@ -121,8 +121,8 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 let data;
-                if (usePuppeteer) {
-                    data = await puppeteerGet(item.link, browser);
+                if (usePlaywright) {
+                    data = await playwrightGet(item.link, browser);
                 } else {
                     const resp = await got(item.link, {
                         headers,

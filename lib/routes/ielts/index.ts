@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const targetUrl = 'https://ielts.neea.cn/allnews?locale=zh_CN';
@@ -28,7 +28,7 @@ async function handler() {
     const html = await cache.tryGet(
         targetUrl,
         async () => {
-            const browser = await puppeteer();
+            const browser = await playwright();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             page.on('request', (request) => {

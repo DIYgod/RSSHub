@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const rootURL = 'https://www.cmde.org.cn';
@@ -18,7 +18,7 @@ export const route: Route = {
 async function handler(ctx) {
     const cate = ctx.req.param('cate') ?? 'xwdt/zxyw';
     const url = `${rootURL}/${cate}/`;
-    const browser = await puppeteer();
+    const browser = await playwright();
     const data = await cache.tryGet(url, async () => {
         const page = await browser.newPage();
         await page.setRequestInterception(true);

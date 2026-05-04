@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-const puppeteerGet = async (url, browser) => {
+const playwrightGet = async (url, browser) => {
     const page = await browser.newPage();
     // await page.setExtraHTTPHeaders({ referer: host });
     await page.setRequestInterception(true);
@@ -41,4 +41,4 @@ const renderDesc = (title, authors, doi, img) =>
         </>
     );
 
-export { puppeteerGet, renderDesc };
+export { playwrightGet, renderDesc };

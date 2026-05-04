@@ -1,5 +1,5 @@
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { baseUrl, parsePage } from './utils';
 
@@ -22,7 +22,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const { $, items } = await parsePage('sub', browser, ctx);
 

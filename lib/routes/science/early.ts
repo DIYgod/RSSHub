@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { baseUrl, fetchDesc, getItem } from './utils';
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => getItem(item, $));
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const items = await fetchDesc(list, browser, cache.tryGet);
     await browser.close();
 

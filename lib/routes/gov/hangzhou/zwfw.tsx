@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 import { analyzer, crawler } from './zjzwfw';
@@ -216,7 +216,7 @@ async function handler() {
     const host = 'https://www.hangzhou.gov.cn/col/col1256349/index.html';
     const response = await ofetch(host);
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const link = host;
     const formatted = response
         .replace('<script type="text/xml">', '')
