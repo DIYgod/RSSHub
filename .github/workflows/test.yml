@@ -39,7 +39,7 @@ jobs:
             - name: Install dependencies (pnpm)
               run: pnpm i
             - name: Run postinstall script for dependencies
-              run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
+              run: pnpm rb && pnpm exec playwright install chromium
             - name: Build routes
               run: pnpm build
             - name: Build worker routes
@@ -56,7 +56,7 @@ jobs:
               with:
                   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
 
-    puppeteer:
+    playwright:
         runs-on: ubuntu-latest
         timeout-minutes: 10
         strategy:
@@ -66,14 +66,14 @@ jobs:
                 chromium:
                     - name: bundled Chromium
                       dependency: ''
-                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "0" }'
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "0" }'
                     - name: Chromium from Ubuntu
                       dependency: chromium-browser
-                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
                     - name: Chrome from Google
                       dependency: google-chrome-stable
-                      environment: '{ "PUPPETEER_SKIP_DOWNLOAD": "1" }'
-        name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
+        name: Vitest Playwright on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
             - uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
@@ -85,11 +85,12 @@ jobs:
               run: pnpm i
               env: ${{ fromJSON(matrix.chromium.environment) }}
             - name: Run postinstall script for dependencies
-              run: pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
-              env: ${{ fromJSON(matrix.chromium.environment) }}
+              run: pnpm rb
             - name: Build routes
               run: pnpm build
-              env: ${{ fromJSON(matrix.chromium.environment) }}
+            - name: Install bundled Chromium
+              if: ${{ matrix.chromium.dependency == '' }}
+              run: pnpm exec playwright install chromium
             - name: Install Chromium
               if: ${{ matrix.chromium.dependency != '' }}
               # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -104,12 +105,13 @@ jobs:
                     sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
                   sudo apt-get update
                   sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
-            - name: Test puppeteer
+            - name: Test Playwright
               run: |
                   set -eux
-                  export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
-                  pnpm run vitest puppeteer
-              env: ${{ fromJSON(matrix.chromium.environment) }}
+                  if [ -n "${{ matrix.chromium.dependency }}" ]; then
+                    export CHROMIUM_EXECUTABLE_PATH="$(which ${{ matrix.chromium.dependency }})"
+                  fi
+                  pnpm run vitest playwright
 
     all:
         runs-on: ubuntu-latest
@@ -139,7 +141,7 @@ jobs:
 
     automerge:
         if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-        needs: [vitest, puppeteer, all]
+        needs: [vitest, playwright, all]
         runs-on: ubuntu-slim
         permissions:
             pull-requests: write

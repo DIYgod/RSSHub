@@ -120,7 +120,7 @@ jobs:
                   cache: 'pnpm'
 
             - name: Install dependencies (pnpm)
-              run: pnpm i && pnpm rb && pnpx rebrowser-puppeteer browsers install chrome
+              run: pnpm i && pnpm rb && pnpm exec playwright install chromium
 
             - name: Fetch affected routes
               id: fetch-route
