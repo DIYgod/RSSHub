@@ -60,8 +60,38 @@ interface VideoListResponse {
     message?: string;
 }
 
+type BrowserResponse = Awaited<ReturnType<Page['waitForResponse']>>;
+
 const videoListApiPath = '/x/space/wbi/arc/search';
 const allowedBrowserRequestTypes = new Set(['document', 'script', 'xhr', 'fetch', 'image', 'font', 'stylesheet', 'other']);
+const browserResponseTimeout = 45000;
+const browserCloseTimeout = 90000;
+
+const getErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
+const isVideoListApiJsonResponse = (response: BrowserResponse) => {
+    const request = response.request();
+    const contentType = response.headers()['content-type'];
+    return response.url().includes(videoListApiPath) && request.method() === 'GET' && (request.resourceType() === 'xhr' || request.resourceType() === 'fetch') && contentType?.includes('application/json');
+};
+
+const waitForVideoListResponse = async (page: Page) => {
+    try {
+        return {
+            response: await page.waitForResponse(isVideoListApiJsonResponse, { timeout: browserResponseTimeout }),
+        };
+    } catch (error) {
+        return { error };
+    }
+};
+
+const navigateToVideoPage = async (page: Page, videoUrl: string) => {
+    try {
+        await page.goto(videoUrl, { timeout: browserResponseTimeout, waitUntil: 'domcontentloaded' });
+    } catch (error) {
+        logger.warn(`[bilibili/video] video page navigation did not finish before the response wait ended: ${getErrorMessage(error)}`);
+    }
+};
 
 async function applyCookie(page: Page, cookie: string) {
     const cookies = cookie
@@ -116,26 +146,18 @@ async function fetchVideoListFromApi(uid: string): Promise<VideoListData> {
 }
 
 async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
-    const cookie = await cache.getCookie();
-    if (!cookie) {
-        throw new Error('Bilibili cookie is required to fetch video list in browser mode');
-    }
+    const cookie = cache.getConfiguredCookie();
+    const userUrl = `https://space.bilibili.com/${uid}`;
+    const videoUrl = `${userUrl}/video`;
+    logger.info(`[bilibili/video] fetching via playwright: ${videoUrl}`);
 
-    const url = `https://space.bilibili.com/${uid}/video`;
-    logger.info(`[bilibili/video] fetching via playwright: ${url}`);
-
-    let videoListResponsePromise: ReturnType<Page['waitForResponse']> | undefined;
-    const { destroy } = await getPlaywrightPage(url, {
+    const { destroy, page } = await getPlaywrightPage(userUrl, {
+        closeTimeout: browserCloseTimeout,
+        noGoto: true,
         onBeforeLoad: async (page) => {
-            await applyCookie(page, cookie);
-
-            videoListResponsePromise = page.waitForResponse(
-                (response) => {
-                    const request = response.request();
-                    return response.url().includes(videoListApiPath) && request.method() === 'GET' && (request.resourceType() === 'xhr' || request.resourceType() === 'fetch');
-                },
-                { timeout: 30000 }
-            );
+            if (cookie) {
+                await applyCookie(page, cookie);
+            }
 
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -146,16 +168,16 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
     });
 
     try {
-        if (!videoListResponsePromise) {
-            throw new Error('Failed to initialize Bilibili video list response watcher');
+        const videoListResponsePromise = waitForVideoListResponse(page);
+        await page.goto(userUrl, { waitUntil: 'domcontentloaded' });
+        void navigateToVideoPage(page, videoUrl);
+
+        const videoListResponseResult = await videoListResponsePromise;
+        if ('error' in videoListResponseResult) {
+            throw new Error(`Bilibili browser mode did not receive a JSON video list response within ${browserResponseTimeout}ms: ${getErrorMessage(videoListResponseResult.error)}`);
         }
 
-        const response = await videoListResponsePromise;
-        const contentType = response.headers()['content-type'];
-        if (!contentType?.includes('application/json')) {
-            throw new Error(`Bilibili browser mode returned non-JSON response with status ${response.status()}; BILIBILI_COOKIE_* may be required`);
-        }
-
+        const response = videoListResponseResult.response;
         const data = (await response.json()) as VideoListResponse;
         if (data.code) {
             logger.error(JSON.stringify(data.data));

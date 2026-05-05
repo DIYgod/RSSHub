@@ -20,8 +20,8 @@ const subtitleLimiterQueue = new RateLimiterQueue(subtitleLimiter, {
     maxQueueSize: 4800,
 });
 
-const getCookie = (disableConfig = false) => {
-    if (Object.keys(config.bilibili.cookies).length > 0 && !disableConfig) {
+const getConfiguredCookie = () => {
+    if (Object.keys(config.bilibili.cookies).length > 0) {
         // Update b_lsid in cookies
         for (const key of Object.keys(config.bilibili.cookies)) {
             const cookie = config.bilibili.cookies[key];
@@ -33,6 +33,14 @@ const getCookie = (disableConfig = false) => {
 
         return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
     }
+};
+
+const getCookie = (disableConfig = false) => {
+    const configuredCookie = disableConfig ? undefined : getConfiguredCookie();
+    if (configuredCookie !== undefined) {
+        return configuredCookie;
+    }
+
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
         let waitForRequest = new Promise<string>((resolve) => {
@@ -374,6 +382,7 @@ const getArticleDataFromCvid = async (cvid, uid) => {
 
 export default {
     getCookie,
+    getConfiguredCookie,
     getWbiVerifyString,
     getUsernameFromUID,
     getUsernameAndFaceFromUID,

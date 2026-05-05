@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
+const connect = vi.fn();
 const connectOverCDP = vi.fn();
 const launch = vi.fn();
 
@@ -54,6 +55,7 @@ const proxyMock = {
 
 vi.mock('playwright', () => ({
     chromium: {
+        connect,
         connectOverCDP,
         launch,
     },
@@ -78,6 +80,7 @@ const loadPlaywright = async () => {
 
 const resetMocks = () => {
     createBrowserMocks();
+    connect.mockReset();
     connectOverCDP.mockReset();
     launch.mockReset();
     routeContinue.mockReset();
@@ -97,6 +100,7 @@ createBrowserMocks();
 describe('getPlaywrightPage (mocked)', () => {
     it('connects via ws endpoint and runs onBeforeLoad', async () => {
         resetMocks();
+        connect.mockResolvedValue(browser);
         connectOverCDP.mockResolvedValue(browser);
         launch.mockResolvedValue(browser);
         page.goto.mockResolvedValue(undefined);
@@ -112,12 +116,90 @@ describe('getPlaywrightPage (mocked)', () => {
             onBeforeLoad,
         });
 
-        const endpoint = connectOverCDP.mock.calls[0][0] as string;
-        expect(endpoint).toContain('launch=');
+        const endpoint = connect.mock.calls[0][0] as string;
+        expect(connectOverCDP).not.toHaveBeenCalled();
+        expect(endpoint).toContain('launch-options=');
+        expect(endpoint).not.toContain('launch=');
+        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch-options') || '{}');
+        expect(launchOptions.args).not.toContainEqual(expect.stringContaining('--user-agent='));
         expect(onBeforeLoad).toHaveBeenCalled();
 
         await result.destroy();
         expect(close).toHaveBeenCalled();
+    });
+
+    it('does not override the browser user agent', async () => {
+        resetMocks();
+        launch.mockResolvedValue(browser);
+        page.goto.mockResolvedValue(undefined);
+        proxyMock.getCurrentProxy.mockReturnValue(null);
+
+        const getPlaywrightPage = await loadPlaywright();
+        await getPlaywrightPage('https://example.com');
+
+        expect(launch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                args: expect.not.arrayContaining([expect.stringContaining('--user-agent=')]),
+            })
+        );
+        expect(browser.newContext).toHaveBeenCalledWith(
+            expect.not.objectContaining({
+                userAgent: expect.any(String),
+            })
+        );
+    });
+
+    it('supports extending the browser auto close timeout', async () => {
+        vi.useFakeTimers();
+        try {
+            resetMocks();
+            launch.mockResolvedValue(browser);
+            browser.close.mockResolvedValue(undefined);
+            page.goto.mockResolvedValue(undefined);
+            proxyMock.getCurrentProxy.mockReturnValue(null);
+
+            const getPlaywrightPage = await loadPlaywright();
+            const close = browser.close;
+            await getPlaywrightPage('https://example.com', {
+                closeTimeout: 90000,
+                noGoto: true,
+            });
+
+            await vi.advanceTimersByTimeAsync(89999);
+            expect(close).not.toHaveBeenCalled();
+
+            await vi.advanceTimersByTimeAsync(1);
+            expect(close).toHaveBeenCalled();
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it('handles requestfinished events after the remote page closes', async () => {
+        resetMocks();
+        launch.mockResolvedValue(browser);
+        page.goto.mockResolvedValue(undefined);
+        proxyMock.getCurrentProxy.mockReturnValue(null);
+
+        const getPlaywrightPage = await loadPlaywright();
+        const handler = vi.fn();
+        const rawOn = page.on;
+        await getPlaywrightPage('https://example.com', {
+            onBeforeLoad: (page) => {
+                page.on('requestfinished', handler);
+            },
+        });
+
+        const finishedHandler = rawOn.mock.calls.find(([event]) => event === 'requestfinished')?.[1];
+        await finishedHandler?.({
+            response: vi.fn().mockRejectedValue(new Error('closed')),
+            url: () => 'https://example.com/api',
+        });
+
+        expect(handler).toHaveBeenCalledTimes(1);
+        const finishedRequest = handler.mock.calls[0][0];
+        expect(finishedRequest.response()).toBeNull();
+        expect(finishedRequest.url()).toBe('https://example.com/api');
     });
 
     it('marks proxy failed when navigation throws with multi-proxy', async () => {

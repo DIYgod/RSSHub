@@ -172,7 +172,6 @@ const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
 const createCompatBrowser = async (browser: PlaywrightBrowser): Promise<Browser> => {
     const context = await browser.newContext({
         ignoreHTTPSErrors: true,
-        userAgent: config.ua,
     });
     const compatBrowser = browser as Browser;
     const originalClose = browser.close.bind(browser);

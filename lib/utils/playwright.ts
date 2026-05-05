@@ -96,7 +96,7 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
 };
 
 const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'],
     executablePath: config.chromiumExecutablePath || undefined,
     headless: true,
     ...getProxyOptions(currentProxy),
@@ -104,7 +104,6 @@ const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
 
 const getContextOptions = (): BrowserContextOptions => ({
     ignoreHTTPSErrors: true,
-    userAgent: config.ua,
 });
 
 const createRouteRequest = (route: Route): HandledRouteRequest => {
@@ -204,7 +203,12 @@ const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
         }
         if (event === 'requestfinished') {
             originalOn(event, async (request) => {
-                const response = await request.response();
+                let response: PlaywrightResponse | null = null;
+                try {
+                    response = await request.response();
+                } catch {
+                    // The remote browser may close before Playwright resolves the response.
+                }
                 await (handler as RequestFinishedHandler)(createFinishedRequest(request, response));
             });
             return compatPage;
@@ -241,20 +245,20 @@ const createCompatBrowser = async (browser: PlaywrightBrowser, contextOptions: B
 
 const launchBrowser = async (currentProxy?: ProxyState | null) => {
     const launchOptions = getLaunchOptions(currentProxy);
-    const browser = config.playwrightWSEndpoint ? await chromium.connectOverCDP(getEndpointWithLaunchOptions(config.playwrightWSEndpoint, launchOptions)) : await chromium.launch(launchOptions);
+    const browser = config.playwrightWSEndpoint ? await chromium.connect(getEndpointWithLaunchOptions(config.playwrightWSEndpoint, launchOptions)) : await chromium.launch(launchOptions);
     return createCompatBrowser(browser, getContextOptions());
 };
 
 const getEndpointWithLaunchOptions = (endpoint: string, launchOptions: LaunchOptions) => {
     const endpointURL = new URL(endpoint);
-    endpointURL.searchParams.set('launch', JSON.stringify(launchOptions));
+    endpointURL.searchParams.set('launch-options', JSON.stringify(launchOptions));
     return endpointURL.toString();
 };
 
-const scheduleClose = (browser: Browser) => {
+const scheduleClose = (browser: Browser, timeout = 30000) => {
     setTimeout(() => {
         void browser.close();
-    }, 30000);
+    }, timeout);
 };
 
 /**
@@ -278,6 +282,7 @@ export const setBrowserBinding = (_binding: any) => {};
 export const getPlaywrightPage = async (
     url: string,
     instanceOptions: {
+        closeTimeout?: number;
         gotoConfig?: GotoOptions;
         noGoto?: boolean;
         onBeforeLoad?: (page: Page, browser?: Browser) => Promise<void> | void;
@@ -300,7 +305,7 @@ export const getPlaywrightPage = async (
     const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
     const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
     const browser = await launchBrowser(currentProxyState);
-    scheduleClose(browser);
+    scheduleClose(browser, instanceOptions.closeTimeout);
     const page = await browser.newPage();
 
     if (hasProxy && currentProxyState) {
