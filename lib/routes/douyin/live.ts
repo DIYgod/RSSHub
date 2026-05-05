@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { getOriginAvatar } from './utils';
 
@@ -42,7 +42,7 @@ async function handler(ctx) {
         `douyin:live:${rid}`,
         async () => {
             let roomInfo;
-            const browser = await puppeteer();
+            const browser = await playwright();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
 

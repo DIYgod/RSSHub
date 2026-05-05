@@ -5,7 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
@@ -18,7 +18,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, browser } = await getPuppeteerPage('about:blank');
+    const { page, destroy, browser } = await getPlaywrightPage('about:blank');
     if (config.javdb.session) {
         await browser.setCookie({
             name: '_jdb_session',

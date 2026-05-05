@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 // import { config } from '@/config';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const urlPath = 'dm514/new';
 
@@ -39,7 +39,7 @@ async function handler() {
     const baseUrl = 'https://missav.ws';
     const url = `${baseUrl}/${urlPath}`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

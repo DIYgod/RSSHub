@@ -6,7 +6,7 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import utils from './utils';
 
@@ -38,7 +38,7 @@ const getCookie = (disableConfig = false) => {
         let waitForRequest = new Promise<string>((resolve) => {
             resolve('');
         });
-        const { destroy } = await getPuppeteerPage('https://space.bilibili.com/1/dynamic', {
+        const { destroy } = await getPlaywrightPage('https://space.bilibili.com/1/dynamic', {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
                     page.on('requestfinished', async (request) => {

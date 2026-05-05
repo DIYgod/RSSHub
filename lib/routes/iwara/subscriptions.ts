@@ -6,7 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import { renderSubscriptionImages } from './templates/subscriptions';
 import { apiqRootUrl, imageRootUrl, rootUrl } from './utils';
@@ -69,7 +69,7 @@ async function handler() {
     const username = config.iwara.username;
     const password = config.iwara.password;
 
-    const { page, destroy } = await getPuppeteerPage(rootUrl, {
+    const { page, destroy } = await getPlaywrightPage(rootUrl, {
         gotoConfig: {
             waitUntil: 'domcontentloaded',
         },

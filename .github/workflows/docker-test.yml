@@ -43,7 +43,7 @@ jobs:
               uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
               with:
                   context: .
-                  build-args: PUPPETEER_SKIP_DOWNLOAD=0 # also test bundling Chromium
+                  build-args: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0 # also test bundling Chromium
                   load: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}

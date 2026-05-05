@@ -5,7 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     name: '漏洞',
@@ -46,7 +46,7 @@ async function handler(ctx: Context): Promise<Data> {
         url += `/${status}`;
     }
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
 

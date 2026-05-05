@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const baseIndexUrl = 'https://www.scse.uestc.edu.cn/index.htm';
 const host = 'https://www.scse.uestc.edu.cn/';
@@ -46,7 +46,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

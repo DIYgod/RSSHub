@@ -1,3 +1,4 @@
+// oxlint-disable simple-import-sort/imports
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -53,12 +54,6 @@ export default defineConfig([
             '@typescript-eslint/no-unused-vars': ['error', { args: 'after-used', argsIgnorePattern: '^_' }],
             */
             // #endregion
-        },
-    },
-    {
-        files: ['.puppeteerrc.cjs'],
-        rules: {
-            '@typescript-eslint/no-require-imports': 'off',
         },
     },
     {

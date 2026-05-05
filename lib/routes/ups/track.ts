@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/track/:trackingNumber',
@@ -26,7 +26,7 @@ async function handler(ctx) {
     const { trackingNumber } = ctx.req.param();
     const url = `https://www.ups.com/track?loc=en_US&tracknum=${trackingNumber}`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
 
     await page.setRequestInterception(true);

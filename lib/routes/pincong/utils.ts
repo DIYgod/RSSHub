@@ -1,10 +1,10 @@
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const baseUrl = 'https://pincong.rocks';
 
-const puppeteerGet = (url, cache) =>
+const playwrightGet = (url, cache) =>
     cache.tryGet(url, async () => {
-        const browser = await puppeteer();
+        const browser = await playwright();
         const page = await browser.newPage();
         await page.setRequestInterception(true);
         page.on('request', (request) => {
@@ -18,4 +18,4 @@ const puppeteerGet = (url, cache) =>
         return html;
     });
 
-export { baseUrl, puppeteerGet };
+export { baseUrl, playwrightGet };

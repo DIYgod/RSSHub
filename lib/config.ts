@@ -8,7 +8,7 @@ type ConfigEnvKeys =
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
     | 'NODE_NAME'
-    | 'PUPPETEER_REAL_BROWSER_SERVICE'
+    | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
     // Network
@@ -259,8 +259,7 @@ export type Config = {
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
-    puppeteerRealBrowserService?: string;
-    puppeteerWSEndpoint?: string;
+    playwrightWSEndpoint?: string;
     chromiumExecutablePath?: string;
     // network
     connect: {
@@ -756,8 +755,7 @@ const calculateValue = () => {
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
-        puppeteerRealBrowserService: envs.PUPPETEER_REAL_BROWSER_SERVICE,
-        puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
+        playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         chromiumExecutablePath: envs.CHROMIUM_EXECUTABLE_PATH,
         // network
         connect: {

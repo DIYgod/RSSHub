@@ -1,4 +1,4 @@
-const puppeteerGet = async (url, browser) => {
+const playwrightGet = async (url, browser) => {
     const page = await browser.newPage();
     const expectResourceTypes = new Set(['document', 'script']);
     await page.setRequestInterception(true);
@@ -22,4 +22,4 @@ const puppeteerGet = async (url, browser) => {
     return html;
 };
 
-export { puppeteerGet };
+export { playwrightGet };

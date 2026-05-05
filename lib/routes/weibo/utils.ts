@@ -6,8 +6,8 @@ import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
-import { getPuppeteerPage } from '@/utils/puppeteer';
-import { getCookies } from '@/utils/puppeteer-utils';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { getCookies } from '@/utils/playwright-utils';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
 class RenewWeiboCookiesError extends Error {
@@ -80,7 +80,7 @@ const weiboUtils = {
                     logger.info(`Fetching visitor Cookies from ${url}`);
                 }
                 let times = 0;
-                const { page, destroy } = await getPuppeteerPage(url, {
+                const { page, destroy } = await getPlaywrightPage(url, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                         await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);

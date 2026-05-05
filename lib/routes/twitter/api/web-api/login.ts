@@ -4,7 +4,7 @@ import { CookieJar } from 'tough-cookie';
 
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const loginLimiter = cache.clients.redisClient
     ? new RateLimiterRedis({
@@ -29,7 +29,7 @@ async function login({ username, password, authenticationSecret }) {
         await loginLimiterQueue.removeTokens(1);
 
         const cookieJar = new CookieJar();
-        const browser = await puppeteer();
+        const browser = await playwright();
         const page = await browser.newPage();
         await page.goto('https://x.com/i/flow/login');
         await page.waitForSelector('input[autocomplete="username"]');

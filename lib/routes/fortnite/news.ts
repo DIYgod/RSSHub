@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/news/:options?',
@@ -39,9 +39,8 @@ async function handler(ctx) {
     const link = `${rootUrl}/${path}?lang=${language}`;
     const apiUrl = `https://www.fortnite.com/api/blog/getPosts?category=&postsPerPage=0&offset=0&locale=${language}&rootPageSlug=blog`;
 
-    // using puppeteer instead instead of got
-    // whitch may be blocked by anti-crawling script with response code 403
-    const browser = await puppeteer();
+    // Use Playwright instead of got, which may be blocked by anti-crawling scripts with response code 403.
+    const browser = await playwright();
     const page = await browser.newPage();
 
     // intercept all requests
@@ -51,22 +50,34 @@ async function handler(ctx) {
         request.resourceType() === 'document' ? request.continue() : request.abort();
     });
 
-    // get json data in response event handler
-    let data;
-    page.on('response', async (res) => {
-        data = await res.json();
-    });
-
-    // log manually (necessary for puppeteer)
+    // log manually (necessary for Playwright)
     logger.http(`Requesting ${apiUrl}`);
-    await page.goto(apiUrl, {
-        waitUntil: 'networkidle0', // if use 'domcontentloaded', `await page.content()` is necessary
-    });
+    let data;
+    try {
+        const response = await page.goto(apiUrl, {
+            waitUntil: 'networkidle0',
+        });
+        if (!response) {
+            throw new Error(`No response received from ${apiUrl}`);
+        }
+        if (!response.ok()) {
+            const statusText = response.statusText();
+            const statusMessage = [response.status(), statusText].filter(Boolean).join(' ');
+            throw new Error(`Fortnite API responded with ${statusMessage} for ${apiUrl}`);
+        }
+        const contentType = response.headers()['content-type'];
+        if (!contentType?.includes('application/json')) {
+            throw new Error(`Fortnite API returned non-JSON response with content-type ${contentType ?? 'unknown'}`);
+        }
 
-    await page.close();
-    await browser.close();
+        data = await response.json();
+    } finally {
+        await page.close();
+        await browser.close();
+    }
 
     const { blogList: list } = data;
+
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, () => ({

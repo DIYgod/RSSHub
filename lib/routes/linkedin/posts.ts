@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { BASE_URL, parseCompanyName, parseCompanyPosts } from './utils';
 
@@ -27,7 +27,7 @@ export const route: Route = {
         const company_id = ctx.req.param('company_id');
 
         // Puppeteer setup
-        const browser = await puppeteer();
+        const browser = await playwright();
         const page = await browser.newPage();
         await page.setRequestInterception(true);
 

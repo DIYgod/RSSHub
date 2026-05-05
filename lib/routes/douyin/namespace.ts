@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: '抖音直播',
     url: 'douyin.com',
     description: `::: warning
-反爬严格，需要启用 puppeteer。\
+反爬严格，需要启用 Playwright。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
 
 1.  启用内嵌视频 (\`embed=1\`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 \`multimedia_hotlink_template\` **或** \`wrap_multimedia_in_iframe\`。

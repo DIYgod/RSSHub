@@ -4,7 +4,7 @@ import { parseToken } from '@/routes/xueqiu/cookies';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 const rootUrl = 'https://xueqiu.com';
 
@@ -50,7 +50,7 @@ async function handler(ctx) {
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     try {
         const mainPage = await browser.newPage();
 

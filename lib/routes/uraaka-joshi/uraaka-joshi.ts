@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/',
@@ -25,7 +25,7 @@ async function handler() {
     const link = 'https://www.uraaka-joshi.com/';
     const title = '裏垢女子まとめ';
 
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const page = await browser.newPage();
     await page.setRequestInterception(true);
