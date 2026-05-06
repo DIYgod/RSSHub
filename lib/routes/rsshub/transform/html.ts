@@ -6,6 +6,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/transform/html/:url/:routeParams',
@@ -43,6 +44,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
 | \`itemDescAttr\`    | The attributes of \`descrption\` element as description                                                       | \`string\`      | Element html             |
 | \`itemPubDate\`     | The HTML elements as \`pubDate\` in \`item\` using CSS selector                                               | \`string\`      | \`item\` element         |
 | \`itemPubDateAttr\` | The attributes of \`pubDate\` element as pubDate                                                              | \`string\`      | Element html             |
+| \`itemPubDateFmt\`  | Date format string for \`day.js\`                                                                             | \`string\`      |                          |
 | \`itemContent\`     | The HTML elements as \`description\` in \`item\` using CSS selector ( in \`itemLink\` page for full content ) | \`string\`      |                          |
 | \`encoding\`        | The encoding of the HTML content                                                                              | \`string\`      | utf-8                    |
 
@@ -103,7 +105,8 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                     const desc = routeParams.get('itemDescAttr') ? descEle.attr(routeParams.get('itemDescAttr')) : descEle.html();
 
                     const pubDateEle = routeParams.get('itemPubDate') ? item.find(routeParams.get('itemPubDate')) : item;
-                    const pubDate = routeParams.get('itemPubDateAttr') ? pubDateEle.attr(routeParams.get('itemPubDateAttr')) : pubDateEle.html();
+                    const pubDateRaw = routeParams.get('itemPubDateAttr') ? pubDateEle.attr(routeParams.get('itemPubDateAttr')) : pubDateEle.html();
+                    const pubDate = routeParams.get('itemPubDateFmt') ? parseDate(pubDateRaw, routeParams.get('itemPubDateFmt')) : pubDateRaw;
 
                     return {
                         title,

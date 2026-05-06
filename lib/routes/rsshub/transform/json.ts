@@ -4,6 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 function jsonGet(obj, attr) {
     if (typeof attr !== 'string') {
@@ -49,6 +50,8 @@ export const route: Route = {
 | \`itemLinkPrefix\` | Optional Prefix for \`itemLink\` value       | \`string\`        | None                                       |
 | \`itemDesc\`       | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
 | \`itemPubDate\`    | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
+| \`itemPubDateFmt\` | Date format string for \`day.js\`            | \`string\`        | None                                       |
+
 
 ::: tip
 JSON Path only supports format like \`a.b.c\`. if you need to access arrays, like \`a[0].b\`, you can write it as \`a.0.b\`.
@@ -103,11 +106,15 @@ async function handler(ctx) {
         if (link && !link.startsWith('http')) {
             link = `${new URL(url).origin}${link}`;
         }
+
+        const pubDateRaw = routeParams.get('itemPubDate') ? jsonGet(item, routeParams.get('itemPubDate')) : '';
+        const pubDate = routeParams.get('itemPubDateFmt') ? parseDate(pubDateRaw, routeParams.get('itemPubDateFmt')) : pubDateRaw;
+
         return {
             title: jsonGet(item, routeParams.get('itemTitle')),
             link,
             description: routeParams.get('itemDesc') ? jsonGet(item, routeParams.get('itemDesc')) : '',
-            pubDate: routeParams.get('itemPubDate') ? jsonGet(item, routeParams.get('itemPubDate')) : '',
+            pubDate,
         };
     });
 
