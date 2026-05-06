@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 // Subdomain config: name = channel display name, newsPath = news list path
 const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
@@ -58,29 +58,23 @@ export const route: Route = {
         const html = await ofetch(listUrl);
         const $ = load(html);
 
+        // Each `ul.infoList > li` carries a single `.prompt` block with this fixed shape:
+        //   <i>{relative or absolute date}</i>
+        //   <span>来源：{author or <em class="ly">{author}</em>}</span>
+        //   <span><em>{<a>{category}</a>}+</em></span>
+        // See https://solar.in-en.com/news/ for live samples.
         const list: DataItem[] = $('ul.infoList > li')
             .toArray()
             .map((el) => {
                 const $el = $(el);
                 const $a = $el.find('.listTxt h5 a');
                 const link = $a.attr('href') ?? '';
+                const title = $a.attr('title')?.trim() || $a.text().trim();
 
-                const titleAttr = $a.attr('title')?.trim() ?? '';
-                const titleText = $a.contents().filter((_, n) => n.type === 'text').text().trim();
-                const title = titleAttr || titleText;
-
-                const pubDateRaw = $el.find('.listTxt .prompt i').text().trim();
-                const author = $el
-                    .find('.listTxt .prompt > span')
-                    .first()
-                    .contents()
-                    .filter((_, n) => n.type === 'text')
-                    .text()
-                    .replace('来源：', '')
-                    .trim();
-
+                const pubDateRaw = $el.find('.listTxt .prompt > i').text().trim();
+                const author = $el.find('.listTxt .prompt > span').first().text().replace('来源：', '').trim();
                 const category = $el
-                    .find('.listTxt .prompt span em a')
+                    .find('.listTxt .prompt > span:not(:first-of-type) em a')
                     .toArray()
                     .map((a) => $(a).text().trim())
                     .filter(Boolean);
@@ -88,32 +82,9 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    author: author || undefined,
+                    author,
                     category,
-                    pubDate: (() => {
-                        if (!pubDateRaw) {
-                            return undefined;
-                        }
-                        if (pubDateRaw.includes('刚刚')) {
-                            return new Date();
-                        }
-                        const minutesMatch = pubDateRaw.match(/(\d+)分钟前/);
-                        if (minutesMatch) {
-                            return new Date(Date.now() - Number(minutesMatch[1]) * 60_000);
-                        }
-                        const hoursMatch = pubDateRaw.match(/(\d+)小时前/);
-                        if (hoursMatch) {
-                            return new Date(Date.now() - Number(hoursMatch[1]) * 3_600_000);
-                        }
-                        if (pubDateRaw.startsWith('今天')) {
-                            return parseDate(new Date().toDateString() + ' ' + pubDateRaw.replace('今天', '').trim());
-                        }
-                        if (pubDateRaw.startsWith('昨天')) {
-                            const d = new Date(Date.now() - 86_400_000);
-                            return parseDate(d.toDateString() + ' ' + pubDateRaw.replace('昨天', '').trim());
-                        }
-                        return parseDate(pubDateRaw);
-                    })(),
+                    pubDate: pubDateRaw ? parseRelativeDate(pubDateRaw) : undefined,
                 } as DataItem;
             })
             .filter((item) => Boolean(item.title && item.link));
@@ -124,7 +95,7 @@ export const route: Route = {
                     const detail = await ofetch(item.link!);
                     const $d = load(detail);
 
-                    item.description = $d('#article').html() ?? '';
+                    item.description = $d('#article').html() ?? undefined;
 
                     const detailAuthor = $d('p.source a').text().trim();
                     if (detailAuthor) {
