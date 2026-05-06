@@ -83,7 +83,7 @@ async function handler(ctx) {
 
     return {
         allowEmpty: true,
-        title: `${user}/${repo}${state ? ' ' + state.replace(/^\S/, (s) => s.toUpperCase()) : ''} Pull Requests${labels ? ' - ' + labels : ''}`,
+        title: `${user}/${repo} ${state.replace(/^\S/, (s) => s.toUpperCase())} Pull Requests${labels ? ' - ' + labels : ''}`,
         link: host,
         item: data.map((item) => ({
             title: item.title,
