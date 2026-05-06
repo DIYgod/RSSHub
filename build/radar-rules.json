@@ -17080,6 +17080,27 @@
       }
     ]
   },
+  "fjdaily.com": {
+    "_name": "福建日报",
+    "fjrb": [
+      {
+        "title": "电子报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/pc/col/index.html"
+        ],
+        "target": "/fjdaily/"
+      },
+      {
+        "title": "电子报",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/pc/col/:yearmonth/:day/node_:id.html"
+        ],
+        "target": "/fjdaily/:date?"
+      }
+    ]
+  },
   "fjksbm.com": {
     "_name": "福建考试报名网",
     ".": [

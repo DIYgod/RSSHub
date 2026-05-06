@@ -1003,6 +1003,7 @@ export type RoutePath =
   | `/firefox/release/:platform?`
   | `/fisher-spb/news`
   | `/fishshell/`
+  | `/fjdaily/:date?`
   | `/fjksbm/:category?`
   | `/flashcat/blog`
   | `/flyert/creditcard/:bank`
