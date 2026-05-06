@@ -47,7 +47,7 @@ describe('cache', () => {
         }
 
         const snowflakeId = '1234567890123456789';
-        const fetcher = vi.fn(async () => snowflakeId);
+        const fetcher = vi.fn(() => Promise.resolve(snowflakeId));
 
         const fresh = await cache.tryGet('snowflake', fetcher);
         expect(fresh).toBe(snowflakeId);
