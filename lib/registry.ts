@@ -259,8 +259,14 @@ app.get('/', index);
 app.get('/healthz', healthz);
 app.get('/robots.txt', robotstxt);
 if (config.debugInfo !== 'false') {
-    // Only enable tracing in debug mode
-    app.get('/metrics', metrics);
+    // Only enable tracing in debug mode; restrict to localhost to prevent info disclosure
+    app.get('/metrics', async (ctx, next) => {
+        const ip = ctx.req.header('x-forwarded-for')?.split(',')[0].trim() || ctx.env?.remoteAddr?.hostname || '';
+        if (ip !== '127.0.0.1' && ip !== '::1' && ip !== 'localhost' && ip !== '') {
+            return ctx.text('Forbidden', 403);
+        }
+        return next();
+    }, metrics);
 }
 if (!config.isPackage && !process.env.VERCEL_ENV && !isWorker) {
     app.use(
