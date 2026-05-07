@@ -180,7 +180,7 @@
         "eslint-plugin-simple-import-sort": "13.0.0",
         "eslint-plugin-unicorn": "64.0.0",
         "eslint-plugin-yml": "3.3.2",
-        "fs-extra": "11.3.4",
+        "fs-extra": "11.3.5",
         "globals": "17.6.0",
         "got": "15.0.3",
         "husky": "9.1.7",
