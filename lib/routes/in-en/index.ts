@@ -19,7 +19,7 @@ const CATEGORIES: Record<string, { name: string; newsPath: string }> = {
 
 export const route: Route = {
     path: '/news/:type',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/in-en/news/solar',
     parameters: {
         type: 'Channel type, see table below',
@@ -46,7 +46,7 @@ export const route: Route = {
 | 环保 | huanbao |`,
 
     async handler(ctx) {
-        const type = ctx.req.param('type') ?? 'solar';
+        const type = ctx.req.param('type')!;
         const cat = CATEGORIES[type];
         if (!cat) {
             throw new Error(`Unknown channel type: ${type}. Valid values: ${Object.keys(CATEGORIES).join(', ')}`);
