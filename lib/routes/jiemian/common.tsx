@@ -52,7 +52,7 @@ export const handler = async (ctx): Promise<Data> => {
                     const content = load(detailResponse);
                     const image = content('div.article-img img').first();
                     const video = content('#video-player').first();
-                    content.find('p.report-view').remove();
+                    content('p.report-view').remove();
 
                     item.title = content('div.article-header h1').eq(0).text();
                     item.description = renderDescription({
