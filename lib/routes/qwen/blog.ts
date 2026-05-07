@@ -38,9 +38,9 @@ export const route: Route = {
     maintainers: ['Kjasn'],
     handler: async (ctx): Promise<Data> => {
         const base = 'https://qwen.ai';
-        const { lang = 'zh-CN', type = 'qwen_ai' } = ctx.req.param(); // type default to qwen_ai
+        const { lang = 'zh-CN' } = ctx.req.param();
 
-        const blogUrl = `${base}/api/v2/article/retrieval?language=${lang}&type=${type}`;
+        const blogUrl = `${base}/api/v2/article/retrieval?language=${lang}&type=qwen_ai`;
 
         const response = await ofetch(blogUrl, {
             headers: {
