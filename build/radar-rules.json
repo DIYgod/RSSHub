@@ -24217,6 +24217,16 @@
         ],
         "target": "/hypergryph/arknights/news/:group?"
       }
+    ],
+    "endfield": [
+      {
+        "title": "明日方舟：终末地 - 游戏公告与新闻",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/hypergryph/endfield/news/:group?"
+      }
     ]
   },
   "i-cable.com": {
