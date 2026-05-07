@@ -1,16 +1,30 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+export const buildBlogItem = (item: any, base: string): DataItem => {
+    const $ = load(item.content || item.introduction || '');
+    const content = $('.post-content').html() ?? (item.introduction || '');
+
+    return {
+        title: item.title,
+        image: item.extra?.cover_small,
+        pubDate: item.extra?.date,
+        author: item.extra?.author,
+        link: `${base}/blog?id=${item.path}`,
+        description: content,
+        category: item.extra?.tags,
+    };
+};
 
 export const route: Route = {
     path: '/blog/:lang?',
-    categories: ['blog'],
-    example: '/qwen/blog/zh-cn',
+    categories: ['blog', 'programming'],
+    example: '/qwen/blog',
     parameters: {
-        lang: '语言，例如 `zh-cn`, `en`',
+        lang: '语言，`zh-CN`, `en-US`',
     },
     features: {
         requireConfig: false,
@@ -22,10 +36,11 @@ export const route: Route = {
     },
     name: 'Blog',
     maintainers: ['Kjasn'],
-    handler: async (ctx) => {
+    handler: async (ctx): Promise<Data> => {
         const base = 'https://qwen.ai';
-        const { lang = 'zh-cn' } = ctx.req.param();
-        const blogUrl = `${base}/api/page_config?code=research.research-list&language=${lang}`;
+        const { lang = 'zh-CN', type = 'qwen_ai' } = ctx.req.param(); // type default to qwen_ai
+
+        const blogUrl = `${base}/api/v2/article/retrieval?language=${lang}&type=${type}`;
 
         const response = await ofetch(blogUrl, {
             headers: {
@@ -34,32 +49,16 @@ export const route: Route = {
             },
         });
 
-        const articles = response.map((item: any) => ({
-            title: item.title,
-            image: item.cover_small, // or item.cover
-            pubDate: item.date,
-            author: item.author,
-            link: `${base}/blog?id=${item.id}`,
-            description: item.introduction,
-            category: item.tags,
-        }));
+        if (response.success === false) {
+            return null as any;
+        }
 
-        // get blog content
-        const items = await Promise.all(
-            articles.map((item: any) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
-                    item.content = $('.post-content').first().html();
-                    return item;
-                })
-            )
-        );
+        const articles = response.data?.articles;
 
         return {
             title: 'Qwen Blog',
             link: `${base}/research`,
-            item: items,
+            item: articles.map((item: any) => buildBlogItem(item, base)),
         };
     },
 };
