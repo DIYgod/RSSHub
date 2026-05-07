@@ -3,14 +3,20 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/display/index',
+    path: '/display/offline-exhibit',
     categories: ['travel'],
-    example: '/shanghaimuseum/display/index',
+    example: '/shanghaimuseum/display/offline-exhibit',
     parameters: {
         limit: '条数，默认为 16',
     },
-    name: '上海博物馆 - 展览',
+    name: 'Shanghai Museum - Special Exhibitions',
     maintainers: ['magazian'],
+    radar: [
+        {
+            source: ['www.shanghaimuseum.net/mu/frontend/pg/display/offline-exhibit'],
+            target: '/display/offline-exhibit',
+        },
+    ],
     handler: async (ctx) => {
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
@@ -31,8 +37,9 @@ export const route: Route = {
         const list = response.data.data || [];
 
         return {
-            title: '上海博物馆 - 展览',
-            link: `${baseUrl}/mu/frontend/pg/display/index`,
+            title: '上海博物馆 - 特别展览',
+            link: `${baseUrl}/mu/frontend/pg/display/offline-exhibit`,
+            language: 'zh-CN',
             item: list.map((item) => ({
                 title: item.name,
                 link: `${baseUrl}/mu/frontend/pg/article/id/${item.code}`,
