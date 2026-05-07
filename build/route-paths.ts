@@ -1515,6 +1515,7 @@ export type RoutePath =
   | `/imiker/ask/jinghua`
   | `/immich/cursed-knowledge`
   | `/imop/tianshu`
+  | `/in-en/news/:type`
   | `/inceptionlabs/blog`
   | `/indianexpress/section/:id{.+}?`
   | `/indiansinkuwait/latest`
