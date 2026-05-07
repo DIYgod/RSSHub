@@ -6,58 +6,116 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-// 栏目映射：key → { name: 中文名, path: URL路径 }
-const channelMap: Record<string, { name: string; path: string }> = {
-    swdt: { name: '新闻动态', path: '/sjj/swdt' },
-    ywpd: { name: '业务频道', path: '/sjj/ywpd' },
-    zwgk: { name: '政务公开', path: '/sjj/zwgk' },
-    xwfb: { name: '新闻发布', path: '/sjj/swdt/xwfb' },
-    jlddt: { name: '领导活动', path: '/sjj/swdt/jlddt' },
-    sjdt: { name: '数据动态', path: '/sjj/swdt/sjdt' },
-    dfdt: { name: '地方动态', path: '/sjj/swdt/dfdt' },
-    mtsy: { name: '媒体声音', path: '/sjj/swdt/mtsy' },
-    sjzy: { name: '数据资源', path: '/sjj/ywpd/sjzy' },
-    szkj: { name: '数字科技', path: '/sjj/ywpd/szkjyjcss' },
-    zjjd: { name: '专家解读', path: '/sjj/zwgk/zjjd' },
-    zcjd: { name: '政策解读', path: '/sjj/zwgk/zcjd' },
+interface ChannelEntry {
+    name: string;
+    path: string;
+}
+
+interface SubChannelEntry {
+    name: string;
+    path: string;
+}
+
+// Channel map: channel key → { name, path, subchannels? }
+// Main channels and subchannels are all flat-accessible by key
+const channelMap: Record<string, ChannelEntry> = {};
+const subChannelMap: Record<string, Record<string, SubChannelEntry>> = {};
+
+// --- Main channels ---
+const mainChannels: Record<string, string> = {
+    swdt: '新闻动态',
+    ywpd: '业务频道',
+    zwgk: '政务公开',
 };
+
+for (const [key, name] of Object.entries(mainChannels)) {
+    channelMap[key] = { name, path: `/sjj/${key}` };
+}
+
+// --- Subchannels under swdt (新闻动态) ---
+const swdtSubs: Record<string, string> = {
+    xwfb: '新闻发布',
+    jlddt: '领导活动',
+    sjdt: '司局动态',
+    dfdt: '地方动态',
+    mtsy: '媒体声音',
+};
+
+subChannelMap.swdt = {};
+for (const [key, name] of Object.entries(swdtSubs)) {
+    const path = `/sjj/swdt/${key}`;
+    subChannelMap.swdt[key] = { name, path };
+    channelMap[key] = { name, path };
+}
+
+// --- Subchannels under ywpd (业务频道) ---
+const ywpdSubs: Record<string, string> = {
+    sjzg: '数字中国',
+    zcgh: '政策规划',
+    sjzy: '数据资源',
+    szjj: '数字经济',
+    szsh: '数字社会',
+    szkjyjcss: '数字科技和基础设施',
+    gjjlhz: '国际交流合作',
+};
+
+subChannelMap.ywpd = {};
+for (const [key, name] of Object.entries(ywpdSubs)) {
+    const path = `/sjj/ywpd/${key}`;
+    subChannelMap.ywpd[key] = { name, path };
+    channelMap[key] = { name, path };
+}
+
+// --- Subchannels under zwgk (政务公开) ---
+const zwgkSubs: Record<string, string> = {
+    zcfb: '政策发布',
+    zcjd: '政策解读',
+    zjjd: '专家解读',
+    tzgg: '通知公告',
+};
+
+subChannelMap.zwgk = {};
+for (const [key, name] of Object.entries(zwgkSubs)) {
+    const path = `/sjj/zwgk/${key}`;
+    subChannelMap.zwgk[key] = { name, path };
+    channelMap[key] = { name, path };
+}
 
 const validChannels = new Set(Object.keys(channelMap));
 const baseUrl = 'https://www.nda.gov.cn';
 
-// 计算请求路径和栏目名
-function resolveChannel(channel: string, subchannel: string | undefined) {
-    // 子栏目作为直接 key（如 /xwfb）
-    if (subchannel && channelMap[subchannel]) {
-        return { basePath: channelMap[subchannel].path, channelName: channelMap[subchannel].name };
-    }
-    // channel 是子栏目 key（如 xwfb → /sjj/swdt/xwfb）
-    if (channelMap[channel]?.path.includes('/')) {
-        return { basePath: channelMap[channel].path, channelName: channelMap[channel].name };
-    }
-    // channel 是主栏目 key（如 swdt → /sjj/swdt）
-    if (channelMap[channel]) {
-        return { basePath: channelMap[channel].path, channelName: channelMap[channel].name };
-    }
-    // 动态组合（不在 channelMap 中的 channel/subchannel）
+function getChannelInfo(channel: string, subchannel?: string): { basePath: string; channelName: string } {
     if (subchannel) {
-        return { basePath: `/sjj/${channel}/${subchannel}`, channelName: channel };
+        // If subchannel is specified, check if it's valid under this parent
+        const parentSubs = subChannelMap[channel];
+        if (parentSubs?.[subchannel]) {
+            return { basePath: parentSubs[subchannel].path, channelName: parentSubs[subchannel].name };
+        }
+        // Subchannel exists in global channelMap but not under this parent
+        if (channelMap[subchannel]) {
+            throw new Error(`"${subchannel}" is not a subchannel of "${channel}". Access it directly as /nda/${subchannel}`);
+        }
+        // Dynamic subchannel (not in any map)
+        return { basePath: `/sjj/${channel}/${subchannel}`, channelName: subchannel };
     }
+    // No subchannel: return the channel itself
+    const entry = channelMap[channel];
+    if (entry) {
+        return { basePath: entry.path, channelName: entry.name };
+    }
+    // Dynamic channel (not in channelMap)
     return { basePath: `/sjj/${channel}`, channelName: channel };
 }
 
 async function handler(ctx) {
     const { channel = 'swdt', subchannel } = ctx.req.param();
 
-    // 提前校验 channel 合法性
-    if (!validChannels.has(channel) && !(subchannel && validChannels.has(subchannel))) {
-        const dynamicChannels = new Set(['swdt', 'ywpd', 'zwgk']);
-        if (!dynamicChannels.has(channel)) {
-            throw new Error(`不支持的栏目: ${channel}，可选: ${[...validChannels].join(', ')}`);
-        }
+    // Validate channel
+    if (!validChannels.has(channel)) {
+        throw new Error(`不支持的栏目: ${channel}，可选: ${[...validChannels].join(', ')}`);
     }
 
-    const { basePath, channelName } = resolveChannel(channel, subchannel);
+    const { basePath, channelName } = getChannelInfo(channel, subchannel);
     const listUrl = `${baseUrl}${basePath}/list/index_pc_1.html`;
 
     const { data: listResponse } = await got(listUrl);
@@ -78,7 +136,7 @@ async function handler(ctx) {
             };
         });
 
-    // 去重
+    // Deduplicate
     const seen = new Set<string>();
     const uniqueItems = items.filter((item) => {
         if (seen.has(item.link)) {
@@ -142,14 +200,14 @@ async function handler(ctx) {
 }
 
 export const route: Route = {
-    path: '/:channel?/:subchannel?',
+    path: '/nda/:channel?/:subchannel?',
     name: '栏目内容',
     maintainers: ['benzking'],
     categories: ['government'],
-    example: '/gov/nda/swdt',
+    example: '/nda/swdt',
     parameters: {
-        channel: '栏目简称，默认 swdt。可选: swdt, ywpd, zwgk, xwfb, jlddt, sjdt, dfdt, mtsy, sjzy, szkj, zjjd, zcjd',
-        subchannel: '子栏目，可选',
+        channel: '栏目简称，默认 swdt。可选: swdt, ywpd, zwgk',
+        subchannel: '子栏目简称，可选。如 swdt 下有 xwfb, jlddt, sjdt, dfdt, mtsy；ywpd 下有 sjzg, zcgh, sjzy, szjj, szsh, szkjyjcss, gjjlhz；zwgk 下有 zcfb, zcjd, zjjd, tzgg',
     },
     features: {
         requireConfig: false,
@@ -160,24 +218,16 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        { source: ['www.nda.gov.cn/'], target: '/gov/nda' },
-        { source: ['www.nda.gov.cn/sjj/:channel/list/index_pc_1.html'], target: '/gov/nda/:channel' },
+        { source: ['www.nda.gov.cn/'], target: '/nda' },
+        { source: ['www.nda.gov.cn/sjj/:channel/list/index_pc_1.html'], target: '/nda/:channel' },
+        { source: ['www.nda.gov.cn/sjj/:channel/:subchannel/list/index_pc_1.html'], target: '/nda/:channel/:subchannel' },
     ],
     description: `国家数据局官方网站内容订阅，支持主栏目和子栏目。
 
-| 栏目 | 简称 | 路径 |
-| ---- | ---- | ---- |
-| 新闻动态 | swdt | /sjj/swdt |
-| 业务频道 | ywpd | /sjj/ywpd |
-| 政务公开 | zwgk | /sjj/zwgk |
-| 新闻发布 | xwfb | /sjj/swdt/xwfb |
-| 领导活动 | jlddt | /sjj/swdt/jlddt |
-| 数据动态 | sjdt | /sjj/swdt/sjdt |
-| 地方动态 | dfdt | /sjj/swdt/dfdt |
-| 媒体声音 | mtsy | /sjj/swdt/mtsy |
-| 数据资源 | sjzy | /sjj/ywpd/sjzy |
-| 数字科技 | szkj | /sjj/ywpd/szkjyjcss |
-| 专家解读 | zjjd | /sjj/zwgk/zjjd |
-| 政策解读 | zcjd | /sjj/zwgk/zcjd |`,
+| 主栏目 | 简称 | 子栏目 | 简称 |
+|------|------|-------|------|
+| 新闻动态 | swdt | 新闻发布, 领导活动, 司局动态, 地方动态, 媒体声音 | xwfb, jlddt, sjdt, dfdt, mtsy |
+| 业务频道 | ywpd | 数字中国, 政策规划, 数据资源, 数字经济, 数字社会, 数字科技和基础设施, 国际交流合作 | sjzg, zcgh, sjzy, szjj, szsh, szkjyjcss, gjjlhz |
+| 政务公开 | zwgk | 政策发布, 政策解读, 专家解读, 通知公告 | zcfb, zcjd, zjjd, tzgg |`,
     handler,
 };
