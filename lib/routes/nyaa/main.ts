@@ -15,7 +15,14 @@ const md = MarkdownIt({
 });
 
 export const route: Route = {
-    path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],
+    path: [
+        '/search/:query?/:fulltext?',
+        '/user/:username?/:fulltext?',
+        '/user/:username/search/:query?/:fulltext?',
+        '/sukebei/search/:query?/:fulltext?',
+        '/sukebei/user/:username?/:fulltext?',
+        '/sukebei/user/:username/search/:query?/:fulltext?',
+    ],
     categories: ['multimedia'],
     example: '/nyaa/search/psycho-pass',
     parameters: { query: 'Search keyword' },
@@ -59,8 +66,8 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(currentRSSURL);
 
-    if (['true', '1'].includes(ctx.req.query('fulltext'))) {
-        const limit = Math.max(1, Number.parseInt(ctx.req.query('fetchLimit')) || 6);
+    if (ctx.req.path.split('/').at(-1) === 'fulltext') {
+        const limit = Math.max(1, Number.parseInt(ctx.req.query('limit')) || 6); // prevent 429 rate limiting
         const items = await Promise.all(
             feed.items.slice(0, limit).map((item) =>
                 cache.tryGet(item.guid, async () => {
