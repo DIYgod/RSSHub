@@ -86,6 +86,7 @@ export const handler = async (ctx): Promise<Data> => {
                             }
                             return descContent.html();
                         })(),
+
                     });
                     item.author = content('span.author')
                         .first()
