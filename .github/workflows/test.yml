@@ -121,7 +121,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node-version: [24, 22, 20]
+                node-version: [26, 24, 22]
         name: Build radar and maintainer on Node ${{ matrix.node-version }}
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
