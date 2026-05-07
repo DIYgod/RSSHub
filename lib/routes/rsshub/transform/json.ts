@@ -108,7 +108,7 @@ async function handler(ctx) {
         }
 
         const pubDateRaw = routeParams.get('itemPubDate') ? jsonGet(item, routeParams.get('itemPubDate')) : '';
-        const pubDate = routeParams.get('itemPubDateFmt') ? parseDate(pubDateRaw, routeParams.get('itemPubDateFmt')) : pubDateRaw;
+        const pubDate = pubDateRaw && routeParams.get('itemPubDateFmt') ? parseDate(pubDateRaw, routeParams.get('itemPubDateFmt')) : pubDateRaw;
 
         return {
             title: jsonGet(item, routeParams.get('itemTitle')),

@@ -139,7 +139,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` par
                         }
 
                         const $ = load(decoder.decode(response.data));
-                        const content = $(itemContentSelector).html();
+                        const content = $(itemContentSelector).text();
                         if (!content) {
                             return item;
                         }
