@@ -212,8 +212,8 @@ importers:
         specifier: 9.3.1
         version: 9.3.1
       rate-limiter-flexible:
-        specifier: 11.0.2
-        version: 11.0.2
+        specifier: 11.1.0
+        version: 11.1.0
       re2js:
         specifier: 2.3.2
         version: 2.3.2
@@ -5234,8 +5234,8 @@ packages:
   ramda@0.32.0:
     resolution: {integrity: sha512-GQWAHhxhxWBWA8oIBr1XahFVjQ9Fic6MK9ikijfd4TZHfE2+urfk+irVlR5VOn48uwMgM+loRRBJd6Yjsbc0zQ==}
 
-  rate-limiter-flexible@11.0.2:
-    resolution: {integrity: sha512-KF/g/GrzzL8bm5K9ZZ8MM0ascA+8dUwv5xA6+/k/3TpT/5cfz3ab36sRUTZsWMd0zmkOOZBu5oXURsRvztjBhw==}
+  rate-limiter-flexible@11.1.0:
+    resolution: {integrity: sha512-lyyC0SqKz+dE5JoHZ4JMqdrM3LSZKBxzuAFAyKCYAnmHnPz/Rb6iDquxoL4CMipDXoR0G+QRhOzYWL3JKihbNw==}
 
   re2js@2.3.2:
     resolution: {integrity: sha512-Y7oXKIPeei9mNLgi0kCbFrE3w+3sybHFh8UD3hE1EKU3/eY1ODjb4EBHUnZGL2TG3rnmqCex81Cevoy3wf8wEg==}
@@ -10934,7 +10934,7 @@ snapshots:
 
   ramda@0.32.0: {}
 
-  rate-limiter-flexible@11.0.2: {}
+  rate-limiter-flexible@11.1.0: {}
 
   re2js@2.3.2: {}
 
