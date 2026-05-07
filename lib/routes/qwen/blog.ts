@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const buildBlogItem = (item: any, base: string): DataItem => {
     const $ = load(item.content || item.introduction || '');
@@ -11,7 +12,7 @@ export const buildBlogItem = (item: any, base: string): DataItem => {
     return {
         title: item.title,
         image: item.extra?.cover_small,
-        pubDate: item.extra?.date,
+        pubDate: parseDate(item.extra?.date),
         author: item.extra?.author,
         link: `${base}/blog?id=${item.path}`,
         description: content,
@@ -21,7 +22,7 @@ export const buildBlogItem = (item: any, base: string): DataItem => {
 
 export const route: Route = {
     path: '/blog/:lang?',
-    categories: ['blog', 'programming'],
+    categories: ['programming'],
     example: '/qwen/blog',
     parameters: {
         lang: '语言，`zh-CN`, `en-US`',
@@ -49,16 +50,12 @@ export const route: Route = {
             },
         });
 
-        if (response.success === false) {
-            return null as any;
-        }
-
         const articles = response.data?.articles;
 
         return {
             title: 'Qwen Blog',
             link: `${base}/research`,
-            item: articles.map((item: any) => buildBlogItem(item, base)),
+            item: (articles || []).map((item: any) => buildBlogItem(item, base)),
         };
     },
 };
