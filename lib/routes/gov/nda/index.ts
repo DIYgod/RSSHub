@@ -48,7 +48,6 @@ function resolveChannel(channel: string, subchannel: string | undefined) {
 
 async function handler(ctx) {
     const { channel = 'swdt', subchannel } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     // 提前校验 channel 合法性
     if (!validChannels.has(channel) && !(subchannel && validChannels.has(subchannel))) {
@@ -70,7 +69,6 @@ async function handler(ctx) {
             const href = $(el).attr('href') || '';
             return href.includes('_pc.html') && !href.includes('/list/') && !href.includes('/sjj/index_pc.html') && !href.endsWith('/index_pc.html') && !href.endsWith('index_pc.html');
         })
-        .slice(0, limit)
         .map((el) => {
             const $el = $(el);
             const href = $el.attr('href') || '';
@@ -145,7 +143,7 @@ async function handler(ctx) {
 
 export const route: Route = {
     path: '/:channel?/:subchannel?',
-    name: '国家数据局',
+    name: '栏目内容',
     maintainers: ['benzking'],
     categories: ['government'],
     example: '/gov/nda/swdt',
