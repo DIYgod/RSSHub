@@ -2374,7 +2374,7 @@ export type RoutePath =
   | `/qust/jw`
   | `/qweather/3days/:location`
   | `/qweather/now/:location`
-  | `/qwenlm/blog/:lang?`
+  | `/qwen/blog/:lang?`
   | `/qztc/home/:type`
   | `/qztc/jwc/:type`
   | `/qztc/sjxy/:type`

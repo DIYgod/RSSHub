@@ -7282,7 +7282,7 @@
   "/qweather/now/:location": [
     "Rein-Ou"
   ],
-  "/qwenlm/blog/:lang?": [
+  "/qwen/blog/:lang?": [
     "Kjasn"
   ],
   "/qztc/home/:type": [
