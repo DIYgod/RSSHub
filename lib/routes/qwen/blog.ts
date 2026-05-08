@@ -6,17 +6,17 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const buildBlogItem = (item: any, base: string): DataItem => {
-    const $ = load(item.content || item.introduction || '');
-    const content = $('.post-content').html() ?? (item.introduction || '');
+    const $ = load(item.content || item.extra.introduction || '');
+    const content = $('.post-content').html() ?? (item.extra.introduction || '');
 
     return {
         title: item.title,
-        image: item.extra?.cover_small,
-        pubDate: parseDate(item.extra?.date),
-        author: item.extra?.author,
+        image: item.extra.cover_small,
+        pubDate: parseDate(item.extra.date),
+        author: item.extra.author,
         link: `${base}/blog?id=${item.path}`,
         description: content,
-        category: item.extra?.tags,
+        category: item.extra.tags,
     };
 };
 
