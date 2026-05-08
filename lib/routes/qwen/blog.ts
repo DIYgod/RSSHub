@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -43,13 +42,7 @@ export const route: Route = {
 
         const blogUrl = `${base}/api/v2/article/retrieval?language=${lang}&type=qwen_ai`;
 
-        const response = await ofetch(blogUrl, {
-            headers: {
-                'user-agent': config.trueUA,
-                referer: base,
-            },
-        });
-
+        const response = await ofetch(blogUrl);
         const articles = response.data?.articles;
 
         return {
