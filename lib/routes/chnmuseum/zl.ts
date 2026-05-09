@@ -26,6 +26,10 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
 };
 
 const parseExhibitionDuration = (duration: string) => {
+    if (!duration) {
+        return { startDate: undefined, endDate: undefined };
+    }
+
     // Remove all spaces and parentheses to prevent regex matching from breaking
     const cleanStr = duration
         .replaceAll(/\s+/g, '')
@@ -99,7 +103,7 @@ export const route: Route = {
                 const imgUrl = new URL($item.find('img').first().attr('src') || '', url).href;
                 const location = $item.find('div.cj_zxx1').text().trim();
 
-                let fullDuration = $item.find('div.cj_zxx2 p').text().trim();
+                let fullDuration: string = $item.find('div.cj_zxx2 p').text().trim() || '';
 
                 // --- Check if the text ends with "..." If so, proceed to fetch the full version. ---
                 if (fullDuration.endsWith('...')) {
