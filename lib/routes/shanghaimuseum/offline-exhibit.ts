@@ -31,6 +31,7 @@ export const route: Route = {
                 params: {
                     exhibitTypeCode: 'OFFLINE_EXHIBITION',
                     langCode: 'CHINESE',
+                    offlineExhibitionType: 'PRESENT',
                 },
             },
         });
