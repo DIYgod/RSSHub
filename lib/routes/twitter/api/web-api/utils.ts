@@ -343,7 +343,6 @@ let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet
                 const preview = tweet.tweet;
                 if (preview?.rest_id) {
                     const userResult = preview.core?.user_results?.result;
-                    const screenName = userResult?.core?.screen_name ?? '';
                     const fakeLegacy: any = {
                         id_str: preview.rest_id,
                         full_text: `🔒 [Subscribers Only] ${preview.text ?? ''}`,
