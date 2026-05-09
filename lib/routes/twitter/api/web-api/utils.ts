@@ -337,11 +337,34 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of filteredEntries) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
-            let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+            // 处理订阅者专属预览帖子（必须在 tweet.tweet 替换之前判断）
+            if (tweet?.__typename === 'TweetPreviewDisplay') {
+                const preview = tweet.tweet;
+                if (preview?.rest_id) {
+                    const userResult = preview.core?.user_results?.result;
+                    const screenName = userResult?.core?.screen_name ?? '';
+                    const fakeLegacy: any = {
+                        id_str: preview.rest_id,
+                        full_text: `🔒 [Subscribers Only] ${preview.text ?? ''}`,
+                        created_at: preview.created_at ?? '',
+                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
+                        user_id_str: userResult?.rest_id ?? '',
+                        favorite_count: preview.favorite_count ?? 0,
+                        reply_count: preview.reply_count ?? 0,
+                        retweet_count: preview.retweet_count ?? 0,
+                    };
+                    hydrateLegacyUser(fakeLegacy, { core: preview.core, rest_id: preview.rest_id });
+                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
+                        tweets.push(fakeLegacy);
+                    }
+                }
+                continue;
+            }
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }
-            if (tweet) {
+if (tweet) {
                 const retweet = tweet.legacy?.retweeted_status_result?.result;
                 for (const t of [tweet, retweet]) {
                     if (!t?.legacy) {
