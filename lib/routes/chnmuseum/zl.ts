@@ -8,8 +8,14 @@ import { parseDate } from '@/utils/parse-date';
 
 // Formatting Function: Returns YYYY-MM-DD only if there are 3 valid numeric segments; otherwise, returns undefined.
 const formatExhibitionDate = (dateStr: string | undefined): string | undefined => {
-    if (!dateStr) return undefined;
-    const normalized = dateStr.replace(/年|月/g, '-').replace(/日/g, '').replace(/\//g, '-').replace(/\./g, '-');
+    if (!dateStr) {
+        return undefined;
+    }
+    const normalized = dateStr
+        .replaceAll(/年|月/g, '-')
+        .replaceAll(/日/g, '')
+        .replaceAll(/\//g, '-')
+        .replaceAll(/\./g, '-');
     const parts = normalized.split('-').filter(Boolean);
     if (parts.length === 3) {
         return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
@@ -19,10 +25,13 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
 
 const parseExhibitionDuration = (duration: string) => {
     // Remove all spaces and parentheses to prevent regex matching from breaking
-    const cleanStr = duration.replace(/\s+/g, '').replace(/（[^）]*）/g, '').trim();
+    const cleanStr = duration
+        .replaceAll(/\s+/g, '')
+        .replaceAll(/（[^）]*）/g, '')
+        .trim();
 
     // Match YYYY-MM-DD or MM-DD
-    const dateRegex = /(\d{4}[./-年]\d{1,2}[./-月]\d{1,2}日?)|(\d{1,2}[./-月]\d{1,2}日?)/g;
+    const dateRegex = /(\d{4}[./年-]\d{1,2}[./月-]\d{1,2}日?)|(\d{1,2}[./月-]\d{1,2}日?)/g;
     const allDates = cleanStr.match(dateRegex) || [];
 
     let startDateRaw: string | undefined;
