@@ -13,9 +13,9 @@ const formatExhibitionDate = (dateStr: string | undefined): string | undefined =
     }
     const normalized = dateStr
         .replaceAll(/年|月/g, '-')
-        .replaceAll(/日/g, '')
-        .replaceAll(/\//g, '-')
-        .replaceAll(/\./g, '-');
+        .replaceAll('日', '')
+        .replaceAll('/', '-')
+        .replaceAll('.', '-');
     const parts = normalized.split('-').filter(Boolean);
     if (parts.length === 3) {
         return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
