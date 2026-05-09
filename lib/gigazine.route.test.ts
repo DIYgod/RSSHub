@@ -110,20 +110,14 @@ describe('gigazine english route', () => {
             1,
             LIST_URL,
             expect.objectContaining({
-                headers: expect.objectContaining({
-                    Referer: ROOT_URL,
-                    'User-Agent': expect.any(String),
-                }),
+                headers: expect.objectContaining({ Referer: ROOT_URL }),
             })
         );
         expect(ofetchMock).toHaveBeenNthCalledWith(
             2,
             detailUrl,
             expect.objectContaining({
-                headers: expect.objectContaining({
-                    Referer: LIST_URL,
-                    'User-Agent': expect.any(String),
-                }),
+                headers: expect.objectContaining({ Referer: LIST_URL }),
             })
         );
 
@@ -143,12 +137,14 @@ describe('gigazine english route', () => {
         expect(item.description).not.toContain('<script');
     });
 
-    it('skips remaining detail fetches after a 403 and falls back to list metadata', async () => {
+    it('falls back to list metadata on a detail fetch error but continues fetching remaining articles', async () => {
+        vi.useFakeTimers();
+
         const firstDetailUrl = `${LIST_URL}blocked-1/`;
-        const secondDetailUrl = `${LIST_URL}blocked-2/`;
+        const secondDetailUrl = `${LIST_URL}ok-2/`;
         const listHtml = createListHtml(
             createCard('/gsc_news/en/blocked-1/', 'Blocked 1', '2026-04-18T10:30:00+09:00', 'First', '/images/first.jpg'),
-            createCard('/gsc_news/en/blocked-2/', 'Blocked 2', '2026-04-18T10:40:00+09:00', 'Second', '/images/second.jpg')
+            createCard('/gsc_news/en/ok-2/', 'OK 2', '2026-04-18T10:40:00+09:00', 'Second', '/images/second.jpg')
         );
 
         ofetchMock.mockImplementation((url: string) => {
@@ -159,18 +155,19 @@ describe('gigazine english route', () => {
                 throw { status: 403 };
             }
             if (url === secondDetailUrl) {
-                return createArticleHtml({ body: '<p>Should not be fetched</p>' });
+                return createArticleHtml({ body: '<p>Second article body</p>', categories: ['Detail'] });
             }
             throw new Error(`Unexpected URL: ${url}`);
         });
 
         const route = await loadRoute();
-        const data = await route.handler(createCtx('2'));
+        const handlerPromise = route.handler(createCtx('2'));
+        await vi.runAllTimersAsync();
+        const data = await handlerPromise;
 
         expect(data.item).toHaveLength(2);
-        expect(tryGetMock).toHaveBeenCalledTimes(1);
-        expect(ofetchMock).toHaveBeenCalledTimes(2);
-        expect(ofetchMock).not.toHaveBeenCalledWith(secondDetailUrl, expect.anything());
+        expect(tryGetMock).toHaveBeenCalledTimes(2);
+        expect(ofetchMock).toHaveBeenCalledTimes(3);
 
         expect(data.item[0]).toEqual(
             expect.objectContaining({
@@ -181,15 +178,9 @@ describe('gigazine english route', () => {
             })
         );
         expect(data.item[0].description).toBeUndefined();
-        expect(data.item[1]).toEqual(
-            expect.objectContaining({
-                title: 'Blocked 2',
-                link: secondDetailUrl,
-                category: ['Second'],
-                image: `${ROOT_URL}/images/second.jpg`,
-            })
-        );
-        expect(data.item[1].description).toBeUndefined();
+
+        expect(data.item[1].description).toContain('<p>Second article body</p>');
+        expect(data.item[1].category).toEqual(['Detail']);
     });
 
     it('waits before the second uncached detail fetch', async () => {

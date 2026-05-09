@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -12,13 +11,11 @@ const ROOT_URL = 'https://gigazine.net';
 const LIST_URL = `${ROOT_URL}/gsc_news/en/`;
 const DEFAULT_LIMIT = 10;
 const DETAIL_FETCH_DELAY = 3000;
-const MAX_CONSECUTIVE_DETAIL_FAILURES = 3;
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const getRequestOptions = (referer: string) => ({
     headers: {
         Referer: referer,
-        'User-Agent': config.trueUA,
     },
 });
 const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_URL).href : undefined);
@@ -36,24 +33,6 @@ const getArticleCategories = ($: ReturnType<typeof load>) => [
             .filter(Boolean)
     ),
 ];
-const getErrorStatus = (error: unknown) => {
-    if (!error || typeof error !== 'object') {
-        return;
-    }
-
-    if ('status' in error && typeof error.status === 'number') {
-        return error.status;
-    }
-
-    if ('statusCode' in error && typeof error.statusCode === 'number') {
-        return error.statusCode;
-    }
-
-    if ('response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && typeof error.response.status === 'number') {
-        return error.response.status;
-    }
-};
-
 const fetchDescription = async (item: DataItem) => {
     const articleHtml = await ofetch(item.link!, getRequestOptions(LIST_URL));
     const $ = load(articleHtml);
@@ -113,7 +92,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '', 10) || DEFAULT_LIMIT;
+    const limit = Number.parseInt(ctx.req.query('limit'), 10) || DEFAULT_LIMIT;
 
     const html = await ofetch(LIST_URL, getRequestOptions(ROOT_URL));
     const $ = load(html);
@@ -141,34 +120,17 @@ async function handler(ctx) {
         .filter((item) => item.title && item.link)
         .slice(0, limit);
 
-    let detailRequestCount = 0;
-    let consecutiveDetailFailures = 0;
-    let shouldSkipRemainingDetails = false;
-
     const items = await pMap(
         list,
-        async (item) => {
-            if (shouldSkipRemainingDetails || consecutiveDetailFailures >= MAX_CONSECUTIVE_DETAIL_FAILURES) {
-                return item;
-            }
-
+        async (item, index) => {
             try {
-                const detailedItem = await cache.tryGet(item.link!, async () => {
-                    if (detailRequestCount > 0) {
+                return await cache.tryGet(item.link!, async () => {
+                    if (index > 0) {
                         await delay(DETAIL_FETCH_DELAY);
                     }
-                    detailRequestCount++;
-
                     return fetchDescription(item);
                 });
-
-                consecutiveDetailFailures = 0;
-
-                return detailedItem;
-            } catch (error) {
-                const status = getErrorStatus(error);
-                consecutiveDetailFailures++;
-                shouldSkipRemainingDetails = status === 403 || status === 429;
+            } catch {
                 return item;
             }
         },
