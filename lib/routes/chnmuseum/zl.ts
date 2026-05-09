@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { namespace } from './namespace';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -92,6 +93,7 @@ export const route: Route = {
                 const rawLink = $item.find('a.recurl').attr('href') || '';
                 const itemLink = rawLink.startsWith('.') ? new URL(rawLink, url).href : `${baseUrl}${rawLink}`;
 
+                const museumName = namespace.zh?.name || namespace.name;
                 const title = $item.find('div.cj_zxx3 p').text();
                 const imgUrl = new URL($item.find('img').first().attr('src') || '', url).href;
                 const location = $item.find('div.cj_zxx1').text().trim();
@@ -123,17 +125,24 @@ export const route: Route = {
                 $desc('div').append(`<p><b>地点：</b>${location}</p>`);
                 $desc('div').append(`<p><b>开展：</b>${startDate ?? '未定/常设'}</p>`);
                 $desc('div').append(`<p><b>闭展：</b>${endDate ?? '未定/常设'}</p>`);
-                $desc('div').append(`<p><small>原始展期：${fullDuration}</small></p>`);
+                
+                if (fullDuration) {
+                    $desc('div').append(`<p><small>原始展期：${fullDuration}</small></p>`);
+                }
 
                 return {
                     title,
                     link: itemLink,
                     pubDate,
                     description: $desc.html(),
-                    // For further processing in Calendar, keep the raw dates in _extra
+                    // For further processing, keep the fixed format
                     _extra: {
-                        startDate,
-                        endDate
+                        source: museumName,
+                        title: title,
+                        location: location,
+                        startdate: startDate,
+                        enddate: startDate,
+                        link: itemLink
                     }
                 };
             })
