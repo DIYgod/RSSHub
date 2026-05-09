@@ -164,10 +164,11 @@ const getList = async (id: string, params?: Record<string, any>) =>
 
 const getUser = async (id: string) => {
     const userData: any = await getUserData(id);
+    const result = (userData.data?.user || userData.data?.user_result)?.result;
     return {
-        profile_image_url: userData.data?.user?.result?.avatar?.image_url,
-        ...userData.data?.user?.result?.core,
-        ...(userData.data?.user || userData.data?.user_result)?.result?.legacy,
+        profile_image_url: result?.avatar?.image_url,
+        ...result?.core,
+        ...result?.legacy,
     };
 };
 

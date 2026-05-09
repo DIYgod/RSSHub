@@ -84,11 +84,13 @@ async function handler(ctx) {
     }
 
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
+    const screenName = userInfo?.screen_name || (id.startsWith('+') ? undefined : id);
+    const displayName = userInfo?.name || screenName || id;
 
     return {
-        title: `Twitter @${userInfo?.name}`,
-        link: `https://x.com/${userInfo?.screen_name}`,
-        image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
+        title: `Twitter @${displayName}`,
+        link: screenName ? `https://x.com/${screenName}` : 'https://x.com/',
+        image: profileImageUrl?.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item:
             data &&
