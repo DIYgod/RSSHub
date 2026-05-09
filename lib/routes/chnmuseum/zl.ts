@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import { namespace } from './namespace';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import { namespace } from './namespace';
 
 // Formatting Function: Returns YYYY-MM-DD only if there are 3 valid numeric segments; otherwise, returns undefined.
 const formatExhibitionDate = (dateStr: string | undefined): string | undefined => {
@@ -125,7 +126,7 @@ export const route: Route = {
                 $desc('div').append(`<p><b>地点：</b>${location}</p>`);
                 $desc('div').append(`<p><b>开展：</b>${startDate ?? '未定/常设'}</p>`);
                 $desc('div').append(`<p><b>闭展：</b>${endDate ?? '未定/常设'}</p>`);
-                
+
                 if (fullDuration) {
                     $desc('div').append(`<p><small>原始展期：${fullDuration}</small></p>`);
                 }
@@ -137,12 +138,12 @@ export const route: Route = {
                     description: $desc.html(),
                     // For further processing, keep the fixed format
                     _extra: {
-                        source: museumName,
-                        title: title,
-                        location: location,
-                        startdate: startDate,
-                        enddate: startDate,
-                        link: itemLink
+                        museumName,
+                        title,
+                        location,
+                        startDate,
+                        endDate,
+                        itemLink
                     }
                 };
             })
