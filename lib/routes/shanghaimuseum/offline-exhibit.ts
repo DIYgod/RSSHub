@@ -12,7 +12,7 @@ export const route: Route = {
     categories: ['travel'],
     example: '/shanghaimuseum/display/offline-exhibit',
     // Use SHM English version channel name
-    name: 'Shanghai Museum - Special Exhibitions',
+    name: 'Special Exhibitions',
     maintainers: ['magazian'],
     radar: [
         {
