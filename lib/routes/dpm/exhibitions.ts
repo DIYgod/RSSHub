@@ -48,6 +48,7 @@ export const route: Route = {
         const $ = load(response.data);
 
         const rawItems = $('.item, .exhibition-item')
+            .toArray()
             .map((_, item) => {
                 const $item = $(item);
                 const title = $item.attr('title') || $item.find('h1').text() || $item.find('.t1').text();
@@ -160,8 +161,7 @@ export const route: Route = {
                         },
                     } as DataItem;
                 });
-            })
-            .toArray();
+            });
 
         // filter out null items and assert the type to DataItem[]
         const items = (await Promise.all(rawItems)).filter((item): item is DataItem => item !== null);
