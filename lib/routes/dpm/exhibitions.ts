@@ -18,7 +18,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.dpm.org.cn/classify/exhibition.html'],
-            target: '/classify/exhibition.html',
+            target: '/exhibitions',
         },
     ],
     handler: async (_ctx: Context): Promise<Data> => {
@@ -83,7 +83,7 @@ export const route: Route = {
                 const hasNoLink = !rawLink || rawLink.includes('javascript:void(0)') || rawLink === '#';
 
                 // if has no link, generate a fake one to store in cache, and add a flag in cache key to avoid conflict with real links
-                const itemLink = hasNoLink 
+                const itemLink = hasNoLink
                     ? `https://www.dpm.org.cn/classify/exhibition.html#no-details-${encodeURIComponent(title)}-${Duration.replaceAll('-', '')}`
                     : (rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`);
 
@@ -123,8 +123,8 @@ export const route: Route = {
 
                     const pubDate = startDate ? parseDate(startDate) : undefined;
 
-                    const detailNotice = hasNoLink 
-                        ? '<p style="color: #ff4d4f;"><b>注：该展览暂无详情页，已链接至官网院内展览页</b></p>' 
+                    const detailNotice = hasNoLink
+                        ? '<p style="color: #ff4d4f;"><b>注：该展览暂无详情页，已链接至官网院内展览页</b></p>'
                         : '';
 
                     const $desc = load('<div></div>', null, false);
@@ -161,7 +161,7 @@ export const route: Route = {
                     } as DataItem;
                 });
             })
-            .get();
+            .toArray();
 
         // filter out null items and assert the type to DataItem[]
         const items = (await Promise.all(rawItems)).filter((item): item is DataItem => item !== null);
