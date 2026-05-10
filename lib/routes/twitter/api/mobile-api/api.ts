@@ -146,7 +146,7 @@ function gatherLegacyFromData(entries, filterNested, userId) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
 let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
-            // 处理订阅者专属预览帖子（必须在 tweet.tweet 替换之前判断）
+            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
             if (tweet?.__typename === 'TweetPreviewDisplay') {
                 const preview = tweet.tweet;
                 if (preview?.rest_id) {

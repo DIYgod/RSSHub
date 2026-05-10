@@ -337,8 +337,8 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     for (const entry of filteredEntries) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
-let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
-            // 处理订阅者专属预览帖子（必须在 tweet.tweet 替换之前判断）
+            let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
             if (tweet?.__typename === 'TweetPreviewDisplay') {
                 const preview = tweet.tweet;
                 if (preview?.rest_id) {
@@ -363,7 +363,7 @@ let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }
-if (tweet) {
+            if (tweet) {
                 const retweet = tweet.legacy?.retweeted_status_result?.result;
                 for (const t of [tweet, retweet]) {
                     if (!t?.legacy) {
