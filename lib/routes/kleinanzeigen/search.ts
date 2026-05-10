@@ -37,7 +37,7 @@ Parameter
         supportScihub: false,
     },
     radar: [],
-    name: 'Kleinanzeigen Search',
+    name: 'Search',
     maintainers: ['LunyaaDev'],
     handler,
 };
