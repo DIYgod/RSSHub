@@ -49,7 +49,7 @@ export const route: Route = {
 
         const rawItems = $('.item, .exhibition-item')
             .toArray()
-            .map((_, item) => {
+            .map((item) => {
                 const $item = $(item);
                 const title = $item.attr('title') || $item.find('h1').text() || $item.find('.t1').text();
 
@@ -68,7 +68,7 @@ export const route: Route = {
                 const pTags = $item.find('.desc p');
                 const location = pTags.eq(0).text().replaceAll('展览地点：', '').trim();
 
-                const Duration = pTags
+                const duration = pTags
                     .eq(1)
                     .contents()
                     .filter(function () {
@@ -78,20 +78,20 @@ export const route: Route = {
                     .replaceAll('展览时间：', '')
                     .trim();
 
-                const isIncomplete = Duration.endsWith('-') || !Duration.includes('-');
+                const isIncomplete = duration.endsWith('-') || !duration.includes('-');
 
                 const rawLink = $item.find('a.t1').attr('href') || $item.find('a.aa').attr('href');
                 const hasNoLink = !rawLink || rawLink.includes('javascript:void(0)') || rawLink === '#';
 
                 // if has no link, generate a fake one to store in cache, and add a flag in cache key to avoid conflict with real links
                 const itemLink = hasNoLink
-                    ? `https://www.dpm.org.cn/classify/exhibition.html#no-details-${encodeURIComponent(title)}-${Duration.replaceAll('-', '')}`
+                    ? `https://www.dpm.org.cn/classify/exhibition.html#no-details-${encodeURIComponent(title)}-${duration.replaceAll('-', '')}`
                     : (rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`);
 
-                const cacheKey = hasNoLink ? `dpm-exhibit-${title}-${Duration}` : itemLink;
+                const cacheKey = hasNoLink ? `dpm-exhibit-${title}-${duration}` : itemLink;
 
                 return cache.tryGet(cacheKey, async () => {
-                    let fullDuration = Duration;
+                    let fullDuration = duration;
 
                     // if the exhibition is marked as incomplete, try to fetch the detail page to get the full duration, but only if there is a valid link to follow
                     if (!hasNoLink && isIncomplete) {
