@@ -284,7 +284,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             });
         }
 
-        // limit
+        // limit: 截取已有 items 数组（不是从源头限制数量）
+        // 注意：此参数在缓存之后执行，带/不带 limit 的请求会命中同一缓存但返回不同结果
         if (ctx.req.query('limit')) {
             data.item = data.item.slice(0, Number.parseInt(ctx.req.query('limit')!));
         }
