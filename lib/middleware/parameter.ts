@@ -284,7 +284,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             });
         }
 
-        // limit
+        // limit: slices the existing items array (does not restrict items fetched from source)
+        // Note: this parameter is applied after caching — requests with and without limit share the same cache but return different results
         if (ctx.req.query('limit')) {
             data.item = data.item.slice(0, Number.parseInt(ctx.req.query('limit')!));
         }
