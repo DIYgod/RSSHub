@@ -38,7 +38,7 @@ async function handler(ctx) {
     const response = await ofetch(listUrl);
     const $ = load(response);
 
-    const list = $('a.block.py-2.group[href^="/blog/"]:not([href^="/blog/tags/"])')
+    const list = $('a.block.py-2.group[href^="/blog/"]')
         .toArray()
         .slice(0, limit)
         .map((el) => {
@@ -52,11 +52,7 @@ async function handler(ctx) {
             const parts = metaLine.split('·').map((s) => s.trim());
             const author = parts[0] || '';
             const dateStr = parts[1] || '';
-            const category = parts
-                .slice(3)
-                .join(' ')
-                .match(/#\w+/g)
-                ?.map((t) => t.slice(1));
+            const category = parts[3]?.match(/#[\w-]+/g)?.map((t) => t.slice(1));
 
             return {
                 title,
