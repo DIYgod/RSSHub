@@ -28,9 +28,9 @@ async function handler(ctx) {
     const url = `${baseUrl}/type/${topic}/`;
     const browser = await playwright();
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',

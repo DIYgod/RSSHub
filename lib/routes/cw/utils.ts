@@ -33,9 +33,9 @@ const getCookie = async (browser, tryGet) => {
     if (!cookie) {
         cookie = await tryGet('cw:cookie', async () => {
             const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
             logger.http(`Requesting ${baseUrl}/user/get/cookie-bar`);
             await page.goto(`${baseUrl}/user/get/cookie-bar`, {
@@ -54,9 +54,9 @@ const parsePage = async (path, browser, ctx) => {
 
     const cookie = await getCookie(browser, cache.tryGet);
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await setCookies(page, cookie, 'cw.com.tw');
     logger.http(`Requesting ${pageUrl}`);

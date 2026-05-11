@@ -29,11 +29,10 @@ async function handler() {
     // 打开一个新标签页
     const page = await browser.newPage();
     // 拦截所有请求
-    await page.setRequestInterception(true);
-
-    page.on('request', (request) => {
+    await page.route('**/*', (route) => {
+        const request = route.request();
         // 在这次例子，我们只允许 HTML 请求
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
 
     await page.goto(baseUrl, {

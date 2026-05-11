@@ -8,9 +8,7 @@ import logger from './logger';
 
 type SetCookieParam = Parameters<BrowserContext['addCookies']>[0][number];
 type Cookie = Awaited<ReturnType<BrowserContext['cookies']>>[number];
-type GotoOptions = Parameters<PlaywrightPage['goto']>[1] & {
-    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'networkidle0' | 'networkidle2';
-};
+type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
 
 type FinishedRequest = {
     response: () => {
@@ -24,7 +22,6 @@ type RequestFinishedHandler = (request: FinishedRequest) => Promise<void> | void
 export type Page = PlaywrightPage & {
     authenticate: (credentials: { password?: string; username?: string }) => Promise<void>;
     cookies: (urls?: string | string[]) => Promise<Cookie[]>;
-    goto: (url: string, options?: GotoOptions) => ReturnType<PlaywrightPage['goto']>;
     on: ((event: 'requestfinished', handler: RequestFinishedHandler) => Page) & PlaywrightPage['on'];
     setCookie: (...cookies: SetCookieParam[]) => Promise<void>;
     setUserAgent: (userAgent: string) => Promise<void>;
@@ -50,16 +47,6 @@ const getBrowserBinding = () => {
     return browserBinding;
 };
 
-const normalizeWaitUntil = (waitUntil: GotoOptions['waitUntil']) => (waitUntil === 'networkidle0' || waitUntil === 'networkidle2' ? 'networkidle' : waitUntil);
-
-const normalizeGotoOptions = (options?: GotoOptions): Parameters<PlaywrightPage['goto']>[1] | undefined =>
-    options
-        ? {
-              ...options,
-              waitUntil: normalizeWaitUntil(options.waitUntil),
-          }
-        : options;
-
 const withDefaultCookiePath = (cookie: SetCookieParam): SetCookieParam => ('domain' in cookie && !('path' in cookie) ? { ...cookie, path: '/' } : cookie);
 
 const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightResponse | null): FinishedRequest => ({
@@ -74,10 +61,8 @@ const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightR
 
 const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
     const compatPage = page as Page;
-    const originalGoto = page.goto.bind(page);
     const originalOn = page.on.bind(page);
 
-    compatPage.goto = (url, options) => originalGoto(url, normalizeGotoOptions(options));
     compatPage.cookies = (urls) => context.cookies(urls);
     compatPage.setCookie = async (...cookies) => {
         await context.addCookies(cookies.map((cookie) => withDefaultCookiePath(cookie)));

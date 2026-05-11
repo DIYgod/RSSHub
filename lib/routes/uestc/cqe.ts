@@ -54,12 +54,12 @@ async function handler(ctx) {
 
     const browser = await playwright();
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(baseUrl + pageUrl, {
-        waitUntil: 'networkidle2',
+        waitUntil: 'networkidle',
     });
     const content = await page.content();
     await browser.close();

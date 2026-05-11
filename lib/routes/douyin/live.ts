@@ -44,10 +44,9 @@ async function handler(ctx) {
             let roomInfo;
             const browser = await playwright();
             const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -57,7 +56,7 @@ async function handler(ctx) {
             });
             logger.http(`Requesting ${pageUrl}`);
             await page.goto(pageUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
             await browser.close();
 

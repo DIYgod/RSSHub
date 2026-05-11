@@ -63,9 +63,9 @@ async function handler(ctx) {
         async () => {
             const browser = await playwright();
             const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
             const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
             logger.http(`Requesting ${apiUrl}`);

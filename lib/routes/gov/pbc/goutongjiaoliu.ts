@@ -35,9 +35,9 @@ async function handler() {
 
     const browser = await playwright();
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
@@ -60,9 +60,9 @@ async function handler() {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailPage = await browser.newPage();
-                await detailPage.setRequestInterception(true);
-                detailPage.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+                await detailPage.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
                 });
                 await detailPage.goto(item.link, {
                     waitUntil: 'domcontentloaded',

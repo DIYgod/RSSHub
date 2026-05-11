@@ -23,14 +23,14 @@ export interface ArticleItem {
 const allowedRequestTypes = new Set(['document']);
 
 async function preparePage(page: Page) {
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
+    await page.route('**/*', (route) => {
+        const request = route.request();
         if (allowedRequestTypes.has(request.resourceType())) {
-            request.continue();
+            route.continue();
             return;
         }
 
-        request.abort();
+        route.abort();
     });
 }
 

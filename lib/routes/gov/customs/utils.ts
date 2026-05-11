@@ -3,9 +3,9 @@ const host = 'http://www.customs.gov.cn';
 const playwrightGet = async (url, browser) => {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({ referer: host });
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',

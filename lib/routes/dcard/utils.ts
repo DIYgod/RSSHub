@@ -11,9 +11,9 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
                 // try catch 处理被删除的帖子
                 try {
                     const page = await browser.newPage();
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                     });
                     await page.setExtraHTTPHeaders({
                         referer: `https://www.dcard.tw/f/${i.forumAlias}/p/${i.id}`,

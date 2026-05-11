@@ -19,9 +19,9 @@ const playwrightGet = async (url: string, browser: Browser, waitForSelector = '.
             await setCookies(page, options.cookie, 'xsijishe.com');
         }
 
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            expectResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            expectResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
         });
         await page.goto(url, {
             waitUntil: 'domcontentloaded',

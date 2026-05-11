@@ -43,11 +43,10 @@ async function handler(ctx) {
     const browser = await playwright();
     const page = await browser.newPage();
 
-    // intercept all requests
-    await page.setRequestInterception(true);
     // only document is allowed
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
     });
 
     // log manually (necessary for Playwright)
@@ -55,7 +54,7 @@ async function handler(ctx) {
     let data;
     try {
         const response = await page.goto(apiUrl, {
-            waitUntil: 'networkidle0',
+            waitUntil: 'networkidle',
         });
         if (!response) {
             throw new Error(`No response received from ${apiUrl}`);

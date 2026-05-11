@@ -90,12 +90,12 @@ async function handler(ctx) {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
             await page.setUserAgent(headers['User-Agent']);
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                allowedResourceTypes.has(request.resourceType()) ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
             });
         },
-        gotoConfig: { waitUntil: 'networkidle2' },
+        gotoConfig: { waitUntil: 'networkidle' },
     });
 
     const cookies = await browser.cookies();

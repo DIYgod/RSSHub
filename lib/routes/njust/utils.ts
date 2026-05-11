@@ -13,12 +13,12 @@ async function getContent(url, pptr = false) {
             //         get: () => undefined,
             //     });
             // });
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
             });
             await page.goto(url, {
-                waitUntil: 'networkidle0',
+                waitUntil: 'networkidle',
             });
             const content = await page.content();
             return content;

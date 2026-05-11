@@ -29,10 +29,9 @@ export const route: Route = {
         // Puppeteer setup
         const browser = await playwright();
         const page = await browser.newPage();
-        await page.setRequestInterception(true);
-
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' ? route.continue() : route.abort();
         });
 
         const url = new URL(`${BASE_URL}/company/${company_id}`);

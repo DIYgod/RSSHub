@@ -221,23 +221,4 @@ describe('getPlaywrightPage (mocked)', () => {
 
         expect(proxyMock.markProxyFailed).toHaveBeenCalledWith(currentProxy.uri);
     });
-
-    it('maps legacy networkidle waits to playwright networkidle', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-
-        const getPlaywrightPage = await loadPlaywright();
-        const goto = page.goto;
-        await getPlaywrightPage('https://example.com', {
-            gotoConfig: {
-                waitUntil: 'networkidle2',
-            },
-        });
-
-        expect(goto).toHaveBeenCalledWith('https://example.com', {
-            waitUntil: 'networkidle',
-        });
-    });
 });

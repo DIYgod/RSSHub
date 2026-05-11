@@ -34,13 +34,12 @@ async function handler(ctx) {
     const promise = new Promise((res) => {
         resolve = res;
     });
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        const resourceType = req.resourceType();
+    await page.route('**/*', (route) => {
+        const resourceType = route.request().resourceType();
         if (resourceType === 'image' || resourceType === 'media' || resourceType === 'font' || resourceType === 'stylesheet' || resourceType === 'ping') {
-            req.abort();
+            route.abort();
         } else {
-            req.continue();
+            route.continue();
         }
     });
     page.on('response', async (res) => {

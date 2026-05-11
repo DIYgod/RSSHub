@@ -65,9 +65,9 @@ const getUser = (url, cache) =>
             // Use Playwright
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
-                    await page.setRequestInterception(true);
-                    page.on('request', (request) => {
-                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? request.continue() : request.abort();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' || request.resourceType() === 'other' ? route.continue() : route.abort();
                     });
                 },
             });
@@ -131,9 +131,9 @@ const getBoard = (url, cache) =>
             const browser = await playwright();
             try {
                 const page = await browser.newPage();
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
                 });
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);

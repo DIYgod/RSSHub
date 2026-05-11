@@ -29,14 +29,12 @@ async function handler(ctx) {
     const browser = await playwright();
     const page = await browser.newPage();
 
-    await page.setRequestInterception(true);
-
     // skip loading images, stylesheets, and fonts
-    page.on('request', (request) => {
-        if (['image', 'stylesheet', 'font', 'ping', 'fetch'].includes(request.resourceType())) {
-            request.abort();
+    await page.route('**/*', (route) => {
+        if (['image', 'stylesheet', 'font', 'ping', 'fetch'].includes(route.request().resourceType())) {
+            route.abort();
         } else {
-            request.continue();
+            route.continue();
         }
     });
 

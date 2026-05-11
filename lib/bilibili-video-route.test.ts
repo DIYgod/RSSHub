@@ -11,15 +11,15 @@ const destroy = vi.fn();
 const getPlaywrightPage = vi.fn();
 const goto = vi.fn();
 const on = vi.fn();
+const pageRoute = vi.fn();
 const setCookie = vi.fn();
-const setRequestInterception = vi.fn();
 const waitForResponse = vi.fn();
 
 const page = {
     goto,
     on,
+    route: pageRoute,
     setCookie,
-    setRequestInterception,
     waitForResponse,
 };
 
@@ -66,8 +66,8 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockReset();
         goto.mockReset();
         on.mockReset();
+        pageRoute.mockReset();
         setCookie.mockReset();
-        setRequestInterception.mockReset();
         waitForResponse.mockReset();
     });
 

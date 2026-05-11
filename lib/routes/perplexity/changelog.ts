@@ -18,9 +18,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const { page, destroy, browser } = await getPlaywrightPage(targetUrl, {
         onBeforeLoad: async (page) => {
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
         },
     });
@@ -104,9 +104,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const contentPage = await browser.newPage();
 
                 // Set request interception for this page
-                await contentPage.setRequestInterception(true);
-                contentPage.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                await contentPage.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
 
                 // Navigate to the item link

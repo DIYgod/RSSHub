@@ -28,9 +28,9 @@ async function handler() {
     const browser = await playwright();
 
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
     });
     page.on('requestfinished', async (request) => {
         if (request.url() === link && request.response().status() === 403) {
