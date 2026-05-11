@@ -24,7 +24,7 @@ const parseParams = (routeParams?: string) => {
 
 const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions }) => {
     const transformedData = data.flatMap((page) => page.threads);
-    const filteredData = transformedData.filter((thread) => {
+    return transformedData.filter((thread) => {
         if (viewOptions.excludeSticky && thread.sticky) {
             return false;
         }
@@ -39,9 +39,7 @@ const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; 
         }
 
         return true;
-    });
-
-    return filteredData.map((thread) => ({
+    }).map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
         description: renderToString(renderPost({ post: thread, board, viewOptions })),
         link: `https://boards.4chan.org/${board}/thread/${thread.no}`,
