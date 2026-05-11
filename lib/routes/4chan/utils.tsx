@@ -1,47 +1,128 @@
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
-import sanitizeHtml from 'sanitize-html';
+import { raw } from "hono/html";
+import { renderToString } from "hono/jsx/dom/server";
+import sanitizeHtml from "sanitize-html";
 
-import { parseDate } from '@/utils/parse-date';
-import { queryToBoolean } from '@/utils/readable-social';
+import { parseDate } from "@/utils/parse-date";
+import { queryToBoolean } from "@/utils/readable-social";
 
-const parseParams = (routeParams: string) => {
-    const parsed = new URLSearchParams(routeParams);
+const parseParams = (routeParams?: string) => {
+    const parsed = new URLSearchParams(routeParams ?? "");
+    const minRepliesRaw = parsed.get("minReplies");
+    const maxRepliesRaw = parsed.get("maxReplies");
+    const minReplies =
+        minRepliesRaw === null ? undefined : Number(minRepliesRaw);
+    const maxReplies =
+        maxRepliesRaw === null ? undefined : Number(maxRepliesRaw);
     const viewOptions = {
-        includeLastReplies: !!queryToBoolean(parsed.get('showLastReplies')),
-        includeReplyCount: !!queryToBoolean(parsed.get('showReplyCount')),
-        revealSpoilers: !!queryToBoolean(parsed.get('revealSpoilers')),
+        excludeSticky: !!queryToBoolean(parsed.get("excludeSticky")),
+        includeLastReplies: !!queryToBoolean(parsed.get("showLastReplies")),
+        includeReplyCount: !!queryToBoolean(parsed.get("showReplyCount")),
+        maxReplies: Number.isFinite(maxReplies) ? maxReplies : undefined,
+        minReplies: Number.isFinite(minReplies) ? minReplies : undefined,
+        revealSpoilers: !!queryToBoolean(parsed.get("revealSpoilers")),
     };
     return viewOptions;
 };
 
-const processCatalog = ({ data, board, viewOptions }: { data: CatalogApiReturn; board: string; viewOptions: ViewOptions }) => {
+const processCatalog = ({
+    data,
+    board,
+    viewOptions,
+}: {
+    data: CatalogApiReturn;
+    board: string;
+    viewOptions: ViewOptions;
+}) => {
     const transformedData = data.flatMap((page) => page.threads);
-    return transformedData.map((thread) => ({
+    const filteredData = transformedData.filter((thread) => {
+        if (viewOptions.excludeSticky && thread.sticky) {
+            return false;
+        }
+
+        const replies = thread.replies ?? 0;
+        if (
+            viewOptions.minReplies !== undefined &&
+            replies < viewOptions.minReplies
+        ) {
+            return false;
+        }
+
+        if (
+            viewOptions.maxReplies !== undefined &&
+            replies > viewOptions.maxReplies
+        ) {
+            return false;
+        }
+
+        return true;
+    });
+
+    return filteredData.map((thread) => ({
         author: `${thread.name} ${thread.trip ?? thread.no}`,
-        description: renderToString(renderPost({ post: thread, board, viewOptions })),
+        description: renderToString(
+            renderPost({ post: thread, board, viewOptions }),
+        ),
         link: `https://boards.4chan.org/${board}/thread/${thread.no}`,
         pubDate: parseDate(thread.time * 1000),
-        title: thread.sub ?? sanitizeHtml(thread.com?.split('<br>')[0] ?? '', { allowedTags: [] }),
+        title:
+            thread.sub ??
+            sanitizeHtml(thread.com?.split("<br>")[0] ?? "", {
+                allowedTags: [],
+            }),
     }));
 };
 
-const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: string; viewOptions: ViewOptions }) => {
+const renderPost = ({
+    post,
+    board,
+    viewOptions,
+}: {
+    post: ChanPost;
+    board: string;
+    viewOptions: ViewOptions;
+}) => {
     let media = <></>;
     switch (post.ext) {
-        case '.jpg':
-        case '.png':
-        case '.gif':
-            media = <img width={post.w} height={post.h} style="" src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} />;
+        case ".jpg":
+        case ".png":
+        case ".gif":
+            media = (
+                <img
+                    width={post.w}
+                    height={post.h}
+                    style=""
+                    src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`}
+                />
+            );
             break;
-        case '.pdf':
-            media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} width="100%" height="500px"></embed>;
+        case ".pdf":
+            media = (
+                <embed
+                    src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`}
+                    width="100%"
+                    height="500px"
+                ></embed>
+            );
             break;
-        case '.swf':
-            media = <embed src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} type="application/x-shockwave-flash" width={post.w} height={post.h} />;
+        case ".swf":
+            media = (
+                <embed
+                    src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`}
+                    type="application/x-shockwave-flash"
+                    width={post.w}
+                    height={post.h}
+                />
+            );
             break;
-        case '.webm':
-            media = <video src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`} loop controls class="full-image"></video>;
+        case ".webm":
+            media = (
+                <video
+                    src={`https://i.4cdn.org/${board}/${post.tim}${post.ext}`}
+                    loop
+                    controls
+                    class="full-image"
+                ></video>
+            );
             break;
         default:
             break;
@@ -67,9 +148,14 @@ const renderPost = ({ post, board, viewOptions }: { post: ChanPost; board: strin
                     <br />
                 </>
             )}
-            {raw(post.com ?? '')}
+            {raw(post.com ?? "")}
             {media}
-            {viewOptions.includeLastReplies && post.last_replies?.map((n) => <div className="post reply">{renderPost({ post: n, board, viewOptions })}</div>)}
+            {viewOptions.includeLastReplies &&
+                post.last_replies?.map((n) => (
+                    <div className="post reply">
+                        {renderPost({ post: n, board, viewOptions })}
+                    </div>
+                ))}
         </>
     );
     return renderedPost;
@@ -95,7 +181,7 @@ interface ChanPost {
     com?: string;
     tim?: number;
     filename: string;
-    ext: '.jpg' | '.png' | '.gif' | '.pdf' | '.swf' | '.webm';
+    ext: ".jpg" | ".png" | ".gif" | ".pdf" | ".swf" | ".webm";
     fsize: number;
     md5: string;
     w?: number;
