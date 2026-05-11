@@ -1445,6 +1445,7 @@ export type RoutePath =
   | `/huggingface/models/:group`
   | `/huijin-inv/news`
   | `/huitun/xiaohongshu/:user_id`
+  | `/humanlayer/blog`
   | `/hunanpea/rsks/:guid`
   | `/hunau/gfxy/:category?/:page?`
   | `/hunau/ied/:type?/:category?/:page?`
