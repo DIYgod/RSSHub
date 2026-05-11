@@ -30,17 +30,15 @@ export const route: Route = {
     url: 'www.humanlayer.dev/blog',
 };
 
-async function handler(ctx) {
+async function handler() {
     const baseUrl = 'https://www.humanlayer.dev';
     const listUrl = `${baseUrl}/blog`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const response = await ofetch(listUrl);
     const $ = load(response);
 
     const list = $('a.block.py-2.group[href^="/blog/"]')
         .toArray()
-        .slice(0, limit)
         .map((el) => {
             const $el = $(el);
             const href = $el.attr('href')!;
