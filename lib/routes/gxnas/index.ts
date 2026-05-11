@@ -18,6 +18,14 @@ export const route: Route = {
     maintainers: ['Franklittleboy'],
     handler,
     description: 'GXNAS博客最新文章',
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
 };
 
 async function handler() {
@@ -47,9 +55,10 @@ async function handler() {
             // Date format: 2023年11月17日
             const dateText = $el.find('.a-meta span').first().text().trim();
             let pubDate: Date | undefined;
+
             const m = dateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
             if (m) {
-                pubDate = new Date(parseInt(m[1]), parseInt(m[2]) - 1, parseInt(m[3]));
+                pubDate = new Date(Number.parseInt(m[1]), Number.parseInt(m[2]) - 1, Number.parseInt(m[3]));
             }
 
             return {
@@ -57,7 +66,7 @@ async function handler() {
                 link,
                 description: image ? `<img src="${image}"><br>${description}` : description,
                 category,
-                pubDate: pubDate ? parseDate(pubDate) : undefined,
+                pubDate: pubDate && parseDate(pubDate),
             } as DataItem;
         })
         .filter((item) => item.title && item.link);
