@@ -15,14 +15,7 @@ const md = MarkdownIt({
 });
 
 export const route: Route = {
-    path: [
-        '/search/:query?/:fulltext?',
-        '/user/:username?/:fulltext?',
-        '/user/:username/search/:query?/:fulltext?',
-        '/sukebei/search/:query?/:fulltext?',
-        '/sukebei/user/:username?/:fulltext?',
-        '/sukebei/user/:username/search/:query?/:fulltext?',
-    ],
+    path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],
     categories: ['multimedia'],
     example: '/nyaa/search/psycho-pass',
     parameters: { query: 'Search keyword' },
