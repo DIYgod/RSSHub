@@ -66,8 +66,20 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(currentRSSURL);
 
-    if (ctx.req.path.split('/').at(-1) === 'fulltext') {
-        const limit = Math.max(1, Number.parseInt(ctx.req.query('limit')) || 6); // prevent 429 rate limiting
+    /**
+     * Shares the same `mode=fulltext` trigger condition with
+     * DIYgod/RSSHub/lib/middleware/parameter.ts
+     *
+     * @caution
+     * Due to semantic differences in Nyaa (where `link` = torrent file, `guid` = web page),
+     * the middleware may trigger unnecessary requests to torrent files, and when a 429 error occurs,
+     * you can observe request errors for the torrent file in the console.
+     *
+     * @impact
+     * Does NOT affect the final RSS output. The actual fulltext is correctly fetched from `item.guid`.
+     */
+    if (ctx.req.query('mode')?.toLowerCase() === 'fulltext') {
+        const limit = Number.parseInt(ctx.req.query('limit')) || 6; // prevent 429 rate limiting
         const items = await Promise.all(
             feed.items.slice(0, limit).map((item) =>
                 cache.tryGet(item.guid, async () => {
