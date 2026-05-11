@@ -205,7 +205,7 @@ importers:
       pac-proxy-agent:
         specifier: 9.0.1
         version: 9.0.1
-      playwright:
+      patchright:
         specifier: 1.59.1
         version: 1.59.1
       query-string:
@@ -5216,6 +5216,16 @@ packages:
   parseley@0.13.1:
     resolution: {integrity: sha512-uNBJZzmb60l6p6VWLTmevizNAGnE0xoSf1n0B4q3ntegDNzcS68NRCcBDZTcyXHxt2XhBChsCuqj4M+nChvE/A==}
 
+  patchright-core@1.59.1:
+    resolution: {integrity: sha512-VthHtavFwFgs5VRalZtbacmjw8E7SPXPhGjfOakvjPsrJcIHl/i7K9lgKYpevy4F90+/GQSJiO0Mt58JB4+9HQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  patchright@1.59.1:
+    resolution: {integrity: sha512-nrWFE1/U3qu9ybrgNFJt75iTiszvZ23Dn4S6UDSydbXJtbyBXRVGenHowKq6n7hmArGYPVTfuDqiXVH7avPkiw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   path-browserify@1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
@@ -5283,16 +5293,6 @@ packages:
 
   pino@10.3.1:
     resolution: {integrity: sha512-r34yH/GlQpKZbU1BvFFqOjhISRo1MNx1tWYsYvmj6KIRHSPMT2+yHOEb1SG6NMvRoHRF0a07kCOox/9yakl1vg==}
-    hasBin: true
-
-  playwright-core@1.59.1:
-    resolution: {integrity: sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==}
-    engines: {node: '>=18'}
-    hasBin: true
-
-  playwright@1.59.1:
-    resolution: {integrity: sha512-C8oWjPR3F81yljW9o5OxcWzfh6avkVwDD2VYdwIGqTkl+OGFISgypqzfu7dOe4QNLL2aqcWBmI3PMtLIK233lw==}
-    engines: {node: '>=18'}
     hasBin: true
 
   pluralize@8.0.0:
@@ -11137,6 +11137,14 @@ snapshots:
       leac: 0.7.0
       peberminta: 0.10.0
 
+  patchright-core@1.59.1: {}
+
+  patchright@1.59.1:
+    dependencies:
+      patchright-core: 1.59.1
+    optionalDependencies:
+      fsevents: 2.3.2
+
   path-browserify@1.0.1: {}
 
   path-exists@4.0.0: {}
@@ -11203,14 +11211,6 @@ snapshots:
       safe-stable-stringify: 2.5.0
       sonic-boom: 4.2.1
       thread-stream: 4.0.0
-
-  playwright-core@1.59.1: {}
-
-  playwright@1.59.1:
-    dependencies:
-      playwright-core: 1.59.1
-    optionalDependencies:
-      fsevents: 2.3.2
 
   pluralize@8.0.0: {}
 

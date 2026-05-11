@@ -1,5 +1,5 @@
 // Worker-compatible Playwright using Cloudflare Browser Run.
-import type { Browser as PlaywrightBrowser, BrowserContext, Page as PlaywrightPage, Request as PlaywrightRequest, Response as PlaywrightResponse, Route } from '@cloudflare/playwright';
+import type { Browser as PlaywrightBrowser, BrowserContext, Page as PlaywrightPage, Request as PlaywrightRequest, Response as PlaywrightResponse } from '@cloudflare/playwright';
 import { launch } from '@cloudflare/playwright';
 
 import { config } from '@/config';
@@ -12,13 +12,6 @@ type GotoOptions = Parameters<PlaywrightPage['goto']>[1] & {
     waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'networkidle0' | 'networkidle2';
 };
 
-type RouteRequest = {
-    abort: (errorCode?: string) => Promise<void>;
-    continue: (options?: Parameters<Route['continue']>[0]) => Promise<void>;
-    resourceType: () => ReturnType<PlaywrightRequest['resourceType']>;
-    url: () => string;
-};
-
 type FinishedRequest = {
     response: () => {
         status: () => number;
@@ -26,17 +19,14 @@ type FinishedRequest = {
     url: () => string;
 };
 
-type RequestHandler = (request: RouteRequest) => Promise<void> | void;
 type RequestFinishedHandler = (request: FinishedRequest) => Promise<void> | void;
-type HandledRouteRequest = RouteRequest & { handled: boolean };
 
 export type Page = PlaywrightPage & {
     authenticate: (credentials: { password?: string; username?: string }) => Promise<void>;
     cookies: (urls?: string | string[]) => Promise<Cookie[]>;
     goto: (url: string, options?: GotoOptions) => ReturnType<PlaywrightPage['goto']>;
-    on: ((event: 'request', handler: RequestHandler) => Page) & ((event: 'requestfinished', handler: RequestFinishedHandler) => Page) & PlaywrightPage['on'];
+    on: ((event: 'requestfinished', handler: RequestFinishedHandler) => Page) & PlaywrightPage['on'];
     setCookie: (...cookies: SetCookieParam[]) => Promise<void>;
-    setRequestInterception: (enabled: boolean) => Promise<void>;
     setUserAgent: (userAgent: string) => Promise<void>;
 };
 
@@ -72,33 +62,6 @@ const normalizeGotoOptions = (options?: GotoOptions): Parameters<PlaywrightPage[
 
 const withDefaultCookiePath = (cookie: SetCookieParam): SetCookieParam => ('domain' in cookie && !('path' in cookie) ? { ...cookie, path: '/' } : cookie);
 
-const createRouteRequest = (route: Route): HandledRouteRequest => {
-    const request = route.request();
-    const routeRequest = {
-        abort: async (errorCode) => {
-            routeRequest.handled = true;
-            await route.abort(errorCode);
-        },
-        continue: async (options) => {
-            routeRequest.handled = true;
-            await route.continue(options);
-        },
-        handled: false,
-        resourceType: () => request.resourceType(),
-        url: () => request.url(),
-    };
-    return routeRequest;
-};
-
-const runRequestHandlers = async (handlers: RequestHandler[], request: HandledRouteRequest, index = 0): Promise<void> => {
-    if (request.handled || index >= handlers.length) {
-        return;
-    }
-
-    await handlers[index](request);
-    await runRequestHandlers(handlers, request, index + 1);
-};
-
 const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightResponse | null): FinishedRequest => ({
     response: () =>
         response
@@ -111,13 +74,8 @@ const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightR
 
 const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
     const compatPage = page as Page;
-    const requestHandlers: RequestHandler[] = [];
     const originalGoto = page.goto.bind(page);
     const originalOn = page.on.bind(page);
-    const originalRoute = page.route.bind(page);
-    const originalUnroute = page.unroute.bind(page);
-    let routeHandler: ((route: Route) => Promise<void>) | undefined;
-    let requestInterceptionEnabled = false;
 
     compatPage.goto = (url, options) => originalGoto(url, normalizeGotoOptions(options));
     compatPage.cookies = (urls) => context.cookies(urls);
@@ -130,31 +88,7 @@ const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
             'User-Agent': userAgent,
         });
     };
-    compatPage.setRequestInterception = async (enabled) => {
-        requestInterceptionEnabled = enabled;
-        if (enabled && !routeHandler) {
-            routeHandler = async (route) => {
-                const request = createRouteRequest(route);
-                await runRequestHandlers(requestHandlers, request);
-                if (request.handled) {
-                    return;
-                }
-                await route.continue();
-            };
-            await originalRoute('**/*', routeHandler);
-        } else if (!enabled && routeHandler) {
-            await originalUnroute('**/*', routeHandler);
-            routeHandler = undefined;
-        }
-    };
     compatPage.on = ((event: string, handler: (...args: any[]) => any) => {
-        if (event === 'request') {
-            requestHandlers.push(handler as RequestHandler);
-            if (!requestInterceptionEnabled) {
-                originalOn(event, handler);
-            }
-            return compatPage;
-        }
         if (event === 'requestfinished') {
             originalOn(event, async (request) => {
                 const response = await request.response();

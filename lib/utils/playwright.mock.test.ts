@@ -4,19 +4,6 @@ const connect = vi.fn();
 const connectOverCDP = vi.fn();
 const launch = vi.fn();
 
-const routeContinue = vi.fn();
-const routeAbort = vi.fn();
-const route = {
-    request: vi.fn(),
-    continue: routeContinue,
-    abort: routeAbort,
-};
-
-const request = {
-    resourceType: vi.fn(),
-    url: vi.fn(),
-};
-
 let page: any;
 let context: any;
 let browser: any;
@@ -26,9 +13,7 @@ const createBrowserMocks = () => {
         context: vi.fn(),
         goto: vi.fn(),
         on: vi.fn(),
-        route: vi.fn(),
         setExtraHTTPHeaders: vi.fn(),
-        unroute: vi.fn(),
     };
 
     context = {
@@ -53,7 +38,7 @@ const proxyMock = {
     getDispatcherForProxy: vi.fn(),
 };
 
-vi.mock('playwright', () => ({
+vi.mock('patchright', () => ({
     chromium: {
         connect,
         connectOverCDP,
@@ -83,11 +68,6 @@ const resetMocks = () => {
     connect.mockReset();
     connectOverCDP.mockReset();
     launch.mockReset();
-    routeContinue.mockReset();
-    routeAbort.mockReset();
-    route.request.mockReset();
-    request.resourceType.mockReset();
-    request.url.mockReset();
     proxyMock.multiProxy = undefined;
     proxyMock.getCurrentProxy.mockReset();
     proxyMock.markProxyFailed.mockReset();
@@ -118,14 +98,36 @@ describe('getPlaywrightPage (mocked)', () => {
 
         const endpoint = connect.mock.calls[0][0] as string;
         expect(connectOverCDP).not.toHaveBeenCalled();
-        expect(endpoint).toContain('launch-options=');
-        expect(endpoint).not.toContain('launch=');
-        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch-options') || '{}');
+        expect(endpoint).toContain('launch=');
+        expect(endpoint).not.toContain('launch-options=');
+        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
         expect(launchOptions.args).not.toContainEqual(expect.stringContaining('--user-agent='));
+        expect(launchOptions.executablePath).toBeUndefined();
+        expect(launchOptions.acceptInsecureCerts).toBe(true);
         expect(onBeforeLoad).toHaveBeenCalled();
 
         await result.destroy();
         expect(close).toHaveBeenCalled();
+    });
+
+    it('merges browserless launch options with existing ws endpoint launch param', async () => {
+        resetMocks();
+        connect.mockResolvedValue(browser);
+        launch.mockResolvedValue(browser);
+        page.goto.mockResolvedValue(undefined);
+        browser.close.mockResolvedValue(undefined);
+        process.env.PLAYWRIGHT_WS_ENDPOINT = `ws://localhost:3000/?token=abc&launch=${encodeURIComponent(JSON.stringify({ stealth: true }))}`;
+        proxyMock.getCurrentProxy.mockReturnValue(null);
+
+        const getPlaywrightPage = await loadPlaywright();
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+
+        const endpoint = connect.mock.calls[0][0] as string;
+        const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
+        expect(launchOptions.stealth).toBe(true);
+        expect(launchOptions.headless).toBe(true);
+
+        await result.destroy();
     });
 
     it('does not override the browser user agent', async () => {
@@ -237,32 +239,5 @@ describe('getPlaywrightPage (mocked)', () => {
         expect(goto).toHaveBeenCalledWith('https://example.com', {
             waitUntil: 'networkidle',
         });
-    });
-
-    it('keeps legacy request interception helpers', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-        request.resourceType.mockReturnValue('image');
-        request.url.mockReturnValue('https://example.com/logo.png');
-        routeAbort.mockReturnValueOnce(new Promise((resolve) => setTimeout(resolve, 0)));
-        route.request.mockReturnValue(request);
-
-        const getPlaywrightPage = await loadPlaywright();
-        await getPlaywrightPage('https://example.com', {
-            onBeforeLoad: async (page) => {
-                await page.setRequestInterception(true);
-                page.on('request', (request) => {
-                    request.resourceType() === 'document' ? request.continue() : request.abort();
-                });
-            },
-        });
-
-        const routeHandler = page.route.mock.calls[0][1];
-        await routeHandler(route);
-
-        expect(routeAbort).toHaveBeenCalled();
-        expect(routeContinue).not.toHaveBeenCalled();
     });
 });

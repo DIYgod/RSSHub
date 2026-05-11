@@ -40,7 +40,7 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="playwright": ")[^\s"]*(?=")' /app/package.json | tee /ver/.playwright_version && \
+    grep -Po '(?<="patchright": ")[^\s"]*(?=")' /app/package.json | tee /ver/.patchright_version && \
     grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
     grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
@@ -88,12 +88,12 @@ FROM node:24-bookworm-slim AS chromium-downloader
 # Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
-COPY --from=dep-version-parser /ver/.playwright_version /app/.playwright_version
+COPY --from=dep-version-parser /ver/.patchright_version /app/.patchright_version
 
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-# The official recommended way to use Playwright on x86(_64) is to use the bundled browser.
+# The official recommended way to use Patchright on x86(_64) is to use the bundled browser.
 RUN \
     set -ex ; \
     if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
@@ -106,9 +106,9 @@ RUN \
         unset PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD && \
         export PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright && \
         corepack enable pnpm && \
-        pnpm --allow-build=playwright add playwright@$(cat /app/.playwright_version) --save-prod && \
+        pnpm --allow-build=patchright --allow-build=patchright-core add patchright@$(cat /app/.patchright_version) --save-prod && \
         pnpm rb && \
-        pnpm exec playwright install chromium ; \
+        pnpm exec patchright install chromium ; \
     else \
         mkdir -p /app/node_modules/.cache/ms-playwright ; \
     fi;
