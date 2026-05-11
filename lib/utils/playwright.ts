@@ -1,5 +1,6 @@
-import type { Browser as PlaywrightBrowser, BrowserContext, BrowserContextOptions, LaunchOptions, Page as PlaywrightPage, Request as PlaywrightRequest, Response as PlaywrightResponse } from 'patchright';
-import { chromium } from 'patchright';
+import { launch } from 'cloakbrowser';
+import type { Browser as PlaywrightBrowser, BrowserContext, BrowserContextOptions, LaunchOptions, Page as PlaywrightPage, Request as PlaywrightRequest, Response as PlaywrightResponse } from 'playwright-core';
+import { chromium } from 'playwright-core';
 
 import { config } from '@/config';
 
@@ -74,7 +75,8 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
 
 const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
 
-// Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation), so we don't add those manually.
+// CloakBrowser auto-downloads its own patched Chromium (both linux/amd64 and linux/arm64 prebuilds) and applies anti-detection at the C++ source level.
+// executablePath is still forwarded when CHROMIUM_EXECUTABLE_PATH is set so users can point at a custom binary — in that case CloakBrowser's C++ patches don't apply.
 const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
     args: COMMON_LAUNCH_ARGS,
     executablePath: config.chromiumExecutablePath || undefined,
@@ -83,8 +85,8 @@ const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
 });
 
 // Browserless accepts launch options as a `launch` URL query parameter (URL-encoded JSON).
-// (Patchright's own launch-server uses `launch-options` — RSSHub's WS_ENDPOINT targets browserless, so we emit `launch`.)
-// The browserless schema also differs from patchright's LaunchOptions: no `executablePath`, and `ignoreHTTPSErrors` is renamed to `acceptInsecureCerts`.
+// (Playwright's own launch-server uses `launch-options` — RSSHub's WS_ENDPOINT targets browserless, so we emit `launch`.)
+// The browserless schema differs from playwright LaunchOptions: no `executablePath`, and `ignoreHTTPSErrors` is renamed to `acceptInsecureCerts`.
 type BrowserlessLaunchOptions = {
     acceptInsecureCerts?: boolean;
     args?: string[];
@@ -187,7 +189,11 @@ const createCompatBrowser = async (browser: PlaywrightBrowser, contextOptions: B
 };
 
 const launchBrowser = async (currentProxy?: ProxyState | null) => {
-    const browser = config.playwrightWSEndpoint ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy))) : await chromium.launch(getLaunchOptions(currentProxy));
+    // When WS_ENDPOINT is set we connect to self-hosted browserless via playwright-core's CDP/WS;
+    // otherwise we launch CloakBrowser's bundled stealth Chromium locally.
+    const browser = config.playwrightWSEndpoint
+        ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy)))
+        : ((await launch(getLaunchOptions(currentProxy))) as PlaywrightBrowser);
     return createCompatBrowser(browser, getContextOptions());
 };
 

@@ -38,12 +38,15 @@ const proxyMock = {
     getDispatcherForProxy: vi.fn(),
 };
 
-vi.mock('patchright', () => ({
+vi.mock('playwright-core', () => ({
     chromium: {
         connect,
         connectOverCDP,
-        launch,
     },
+}));
+
+vi.mock('cloakbrowser', () => ({
+    launch,
 }));
 
 vi.mock('@/utils/proxy', () => ({

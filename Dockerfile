@@ -40,7 +40,7 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="patchright": ")[^\s"]*(?=")' /app/package.json | tee /ver/.patchright_version && \
+    grep -Po '(?<="cloakbrowser": ")[^\s"]*(?=")' /app/package.json | tee /ver/.cloakbrowser_version && \
     grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
     grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
@@ -88,29 +88,29 @@ FROM node:24-bookworm-slim AS chromium-downloader
 # Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
-COPY --from=dep-version-parser /ver/.patchright_version /app/.patchright_version
+COPY --from=dep-version-parser /ver/.cloakbrowser_version /app/.cloakbrowser_version
 
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-# The official recommended way to use Patchright on x86(_64) is to use the bundled browser.
+# CloakBrowser publishes prebuilt patched Chromium for both linux/amd64 and linux/arm64,
+ENV CLOAKBROWSER_CACHE_DIR=/app/node_modules/.cache/cloakbrowser
 RUN \
     set -ex ; \
-    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
             yarn config set registry https://registry.npmmirror.com && \
             pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
-        echo 'Downloading Chromium...' && \
+        echo 'Downloading CloakBrowser ...' && \
         unset PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD && \
-        export PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright && \
         corepack enable pnpm && \
-        pnpm --allow-build=patchright --allow-build=patchright-core add patchright@$(cat /app/.patchright_version) --save-prod && \
+        pnpm add cloakbrowser@$(cat /app/.cloakbrowser_version) --save-prod && \
         pnpm rb && \
-        pnpm exec patchright install chromium ; \
+        pnpm exec cloakbrowser install ; \
     else \
-        mkdir -p /app/node_modules/.cache/ms-playwright ; \
+        mkdir -p "$CLOAKBROWSER_CACHE_DIR" ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -121,6 +121,7 @@ LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
 ENV NODE_ENV=production
 ENV TZ=Asia/Shanghai
+ENV CLOAKBROWSER_AUTO_UPDATE=false
 
 WORKDIR /app
 
@@ -129,7 +130,7 @@ ARG TARGETPLATFORM
 ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 # https://playwright.dev/docs/docker#introduction
 # https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
-# On arm/arm64, install Chromium from the distribution repositories.
+# CloakBrowser ships prebuilt patched Chromium for both linux/amd64 and linux/arm64
 RUN \
     set -ex && \
     apt-get update && \
@@ -137,32 +138,29 @@ RUN \
         dumb-init git curl \
     ; \
     if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
-        if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
-            apt-get install -yq --no-install-recommends \
-                ca-certificates fonts-liberation wget xdg-utils \
-                libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 \
-                libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 \
-                libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 \
-            ; \
-        else \
-            apt-get install -yq --no-install-recommends \
-                chromium \
-            && \
-            echo "CHROMIUM_EXECUTABLE_PATH=$(which chromium)" | tee /app/.env ; \
-        fi; \
+        apt-get install -yq --no-install-recommends \
+            ca-certificates fonts-liberation wget xdg-utils \
+            libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 \
+            libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 \
+            libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 \
+        ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /app/node_modules/.cache/ms-playwright /app/node_modules/.cache/ms-playwright
+ENV CLOAKBROWSER_CACHE_DIR=/app/node_modules/.cache/cloakbrowser
+COPY --from=chromium-downloader /app/node_modules/.cache/cloakbrowser /app/node_modules/.cache/cloakbrowser
 
 RUN \
     set -ex && \
-    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
-        echo 'Verifying Chromium installation...' && \
-        _chrome_path=$(find /app/node_modules/.cache/ms-playwright/ -name chrome -xtype f -executable | head -n1) && \
-        echo "CHROMIUM_EXECUTABLE_PATH=$_chrome_path" | tee /app/.env && \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
+        echo 'Verifying CloakBrowser Chromium installation...' && \
+        _chrome_path=$(find /app/node_modules/.cache/cloakbrowser/ -name chrome -xtype f -executable | head -n1) && \
+        if [ -z "$_chrome_path" ]; then \
+            echo "!!! CloakBrowser binary not found !!!" && \
+            exit 1 ; \
+        fi; \
         if ldd "$_chrome_path" | grep "not found"; then \
-            echo "!!! Chromium has unmet shared libs !!!" && \
+            echo "!!! CloakBrowser has unmet shared libs !!!" && \
             exit 1 ; \
         else \
             echo "Awesome! All shared libs are met!" ; \
