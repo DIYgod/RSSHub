@@ -25,9 +25,9 @@ async function handler() {
     const link = 'https://www.uraaka-joshi.com/';
     const title = '裏垢女子まとめ';
 
-    const browser = await playwright();
+    const context = await playwright();
 
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
@@ -57,7 +57,7 @@ async function handler() {
     } catch {
         throw new Error('Access denied (403)');
     }
-    await browser.close();
+    await context.close();
 
     const $ = load(html);
     const list = $('.grid-cell');

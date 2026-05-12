@@ -32,12 +32,12 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const browser = await playwright();
+    const context = await playwright();
     const lang = ctx.req.param('lang') ?? 'sc';
     const type = utils.TYPE[ctx.req.param('type')];
 
     const BASE = utils.langBase(lang);
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -46,7 +46,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
     const articles = await page.evaluate(() => window.articles);
-    await browser.close();
+    await context.close();
 
     const list = utils
         .typeFilter(articles, type)

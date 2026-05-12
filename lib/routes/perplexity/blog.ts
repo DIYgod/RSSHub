@@ -38,7 +38,7 @@ async function handler(ctx: Context) {
     const limit = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
     const rootUrl = 'https://www.perplexity.ai/hub';
 
-    const { page, destroy, browser } = await getPlaywrightPage(rootUrl, {
+    const { page, destroy, context } = await getPlaywrightPage(rootUrl, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -112,7 +112,7 @@ async function handler(ctx: Context) {
             }
 
             return (await cache.tryGet(item.link, async () => {
-                const contentPage = await browser.newPage();
+                const contentPage = await context.newPage();
 
                 await contentPage.route('**/*', (route) => {
                     const request = route.request();

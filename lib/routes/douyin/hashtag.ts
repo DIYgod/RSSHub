@@ -47,8 +47,8 @@ async function handler(ctx) {
     const tagData = await cache.tryGet(
         `douyin:hashtag:${cid}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             let awemeList = '';
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -65,7 +65,7 @@ async function handler(ctx) {
             });
             await page.waitForSelector('#RENDER_DATA');
             const html = await page.evaluate(() => document.querySelector('#RENDER_DATA').textContent);
-            await browser.close();
+            await context.close();
 
             const renderData = JSON.parse(decodeURIComponent(html));
             const dataKey = Object.keys(renderData).find((key) => renderData[key].topicDetail);

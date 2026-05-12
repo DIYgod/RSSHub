@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
-    const { page, destroy, browser } = await getPlaywrightPage(targetUrl, {
+    const { page, destroy, context } = await getPlaywrightPage(targetUrl, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 logger.http(`Fetching full content for ${item.link!}`);
 
                 // Create a new page in the same browser session
-                const contentPage = await browser.newPage();
+                const contentPage = await context.newPage();
 
                 // Set request interception for this page
                 await contentPage.route('**/*', (route) => {

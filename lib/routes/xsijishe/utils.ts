@@ -1,4 +1,5 @@
-import type { Browser } from '@/utils/playwright';
+import type { BrowserContext } from 'playwright-core';
+
 import { setCookies } from '@/utils/playwright-utils';
 
 interface PlaywrightGetOptions {
@@ -7,12 +8,12 @@ interface PlaywrightGetOptions {
     userAgent?: string;
 }
 
-const playwrightGet = async (url: string, browser: Browser, waitForSelector = '.t_f', options: PlaywrightGetOptions = {}) => {
-    const page = await browser.newPage();
+const playwrightGet = async (url: string, context: BrowserContext, waitForSelector = '.t_f', options: PlaywrightGetOptions = {}) => {
+    const page = await context.newPage();
     const expectResourceTypes = new Set(['document', 'script']);
     try {
         if (options.userAgent) {
-            await page.setUserAgent(options.userAgent);
+            await page.setExtraHTTPHeaders({ 'User-Agent': options.userAgent });
         }
 
         if (options.cookie) {

@@ -83,7 +83,7 @@ const weiboUtils = {
                 const { page, destroy } = await getPlaywrightPage(url, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                        await page.setUserAgent(weiboUtils.apiHeaders['User-Agent']);
+                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
                         await page.route('**/*', (route) => {
                             const request = route.request();
                             // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok

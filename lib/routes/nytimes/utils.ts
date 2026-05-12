@@ -15,9 +15,9 @@ const ProcessImage = ($, e) => {
     return cover;
 };
 
-const PuppeterGetter = async (ctx, browser, link) => {
+const PuppeterGetter = async (ctx, context, link) => {
     const result = await cache.tryGet(`nyt: ${link}`, async () => {
-        const page = await browser.newPage();
+        const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
             request.resourceType() === 'document' ? route.continue() : route.abort();

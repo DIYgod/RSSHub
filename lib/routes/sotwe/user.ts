@@ -61,8 +61,8 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `sotwe:user:${id}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
@@ -74,7 +74,7 @@ async function handler(ctx) {
             });
             const response = await page.evaluate(() => document.documentElement.textContent);
             await page.close();
-            await browser.close();
+            await context.close();
 
             return JSON.parse(response || '{}');
         },

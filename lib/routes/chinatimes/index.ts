@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const response = await ofetch(link);
     const $ = load(response);
-    const browser = await playwright();
+    const context = await playwright();
 
     const list = $('.articlebox-compact')
         .toArray()
@@ -66,7 +66,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' ? route.continue() : route.abort();
@@ -98,7 +98,7 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: $('head title').text(),

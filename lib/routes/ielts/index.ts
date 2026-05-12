@@ -28,8 +28,8 @@ async function handler() {
     const html = await cache.tryGet(
         targetUrl,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -40,7 +40,7 @@ async function handler() {
             await page.waitForSelector('div.container');
 
             const html = await page.evaluate(() => document.documentElement.innerHTML);
-            await browser.close();
+            await context.close();
             return html;
         },
         config.cache.routeExpire,

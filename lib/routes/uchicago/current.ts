@@ -35,8 +35,8 @@ async function handler(ctx) {
     const baseUrl = 'https://www.journals.uchicago.edu';
     const link = `${baseUrl}/toc/${journal}/current`;
 
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' ? route.continue() : route.abort();
@@ -57,7 +57,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await setCookies(page, cookies, 'journals.uchicago.edu');
                 await page.route('**/*', (route) => {
                     const request = route.request();
@@ -95,7 +95,7 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: $('head title').text(),

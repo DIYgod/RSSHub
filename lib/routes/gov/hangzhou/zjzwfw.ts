@@ -1,9 +1,9 @@
 import logger from '@/utils/logger';
 
-export async function crawler(item: any, browser: any): Promise<string> {
+export async function crawler(item: any, context: any): Promise<string> {
     try {
         let response = '';
-        const page = await browser.newPage();
+        const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
             const resourceType = request.resourceType();

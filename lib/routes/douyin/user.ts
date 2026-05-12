@@ -50,8 +50,8 @@ async function handler(ctx) {
         `douyin:user:${uid}`,
         async () => {
             let postData;
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
@@ -68,7 +68,7 @@ async function handler(ctx) {
                 waitUntil: 'networkidle',
             });
 
-            await browser.close();
+            await context.close();
 
             if (!postData) {
                 throw new Error('Empty post data. The request may be filtered by WAF.');

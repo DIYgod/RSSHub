@@ -37,11 +37,11 @@ async function handler(ctx) {
     const link = `https://www.iqiyi.com/u/${uid}/videos`;
 
     // Use Playwright because iqiyi page has a delay.
-    const browser = await playwright();
+    const context = await playwright();
     const data = await cache.tryGet(
         link,
         async () => {
-            const page = await browser.newPage();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -70,7 +70,7 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
-    await browser.close();
+    await context.close();
 
     return data;
 }

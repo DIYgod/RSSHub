@@ -1,7 +1,7 @@
 const host = 'http://www.customs.gov.cn';
 
-const playwrightGet = async (url, browser) => {
-    const page = await browser.newPage();
+const playwrightGet = async (url, context) => {
+    const page = await context.newPage();
     await page.setExtraHTTPHeaders({ referer: host });
     await page.route('**/*', (route) => {
         const request = route.request();

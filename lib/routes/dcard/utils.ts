@@ -1,6 +1,6 @@
 import pMap from 'p-map';
 
-const ProcessFeed = async (items, cookies, browser, limit, cache) => {
+const ProcessFeed = async (items, cookies, context, limit, cache) => {
     let newCookies = [];
     const result = await pMap(
         items.slice(0, limit),
@@ -10,7 +10,7 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
                 let response;
                 // try catch 处理被删除的帖子
                 try {
-                    const page = await browser.newPage();
+                    const page = await context.newPage();
                     await page.route('**/*', (route) => {
                         const request = route.request();
                         request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' || request.resourceType() === 'xhr' ? route.continue() : route.abort();

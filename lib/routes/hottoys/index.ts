@@ -25,9 +25,9 @@ async function handler() {
     const baseUrl = 'https://www.hottoys.com.hk';
 
     // 导入 Playwright 工具类并初始化浏览器实例
-    const browser = await playwright();
+    const context = await playwright();
     // 打开一个新标签页
-    const page = await browser.newPage();
+    const page = await context.newPage();
     // 拦截所有请求
     await page.route('**/*', (route) => {
         const request = route.request();
@@ -54,7 +54,7 @@ async function handler() {
                 guid: a.attr('href'),
             };
         });
-    await browser.close();
+    await context.close();
     return {
         title: 'Hot Toys New Products',
         link: baseUrl,

@@ -39,17 +39,17 @@ async function handler() {
     const baseUrl = 'https://missav.ws';
     const url = `${baseUrl}/${urlPath}`;
 
-    const browser = await playwright();
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+    const context = await playwright();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
     const response = await page.evaluate(() => document.documentElement.innerHTML);
-    await browser.close();
+    await context.close();
 
     // const response = await ofetch(`${baseUrl}/dm397/new`, {
     //     headers: {

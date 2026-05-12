@@ -106,6 +106,7 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockImplementation(async (_url, options) => {
             await options.onBeforeLoad?.(page);
             return {
+                context: {},
                 destroy,
                 page,
             };
@@ -168,6 +169,7 @@ describe('/bilibili/user/video/:uid', () => {
         getPlaywrightPage.mockImplementation(async (_url, options) => {
             await options.onBeforeLoad?.(page);
             return {
+                context: {},
                 destroy,
                 page,
             };

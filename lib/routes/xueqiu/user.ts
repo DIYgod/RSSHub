@@ -50,9 +50,9 @@ async function handler(ctx) {
     const link = `${rootUrl}/u/${id}`;
     const token = await parseToken(link);
 
-    const browser = await playwright();
+    const context = await playwright();
     try {
-        const mainPage = await browser.newPage();
+        const mainPage = await context.newPage();
 
         await mainPage.setExtraHTTPHeaders({
             Cookie: token as string,
@@ -161,6 +161,6 @@ async function handler(ctx) {
             item: items,
         };
     } finally {
-        await browser.close();
+        await context.close();
     }
 }

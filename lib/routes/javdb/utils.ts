@@ -18,7 +18,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, browser } = await getPlaywrightPage('about:blank');
+    const { page, destroy, context } = await getPlaywrightPage('about:blank');
     if (config.javdb.session) {
         await page.context().addCookies([
             {
@@ -58,7 +58,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' ? route.continue() : route.abort();

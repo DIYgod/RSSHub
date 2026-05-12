@@ -38,8 +38,8 @@ async function handler(ctx) {
     const response = await cache.tryGet(
         link,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
@@ -67,7 +67,7 @@ async function handler(ctx) {
             } catch {
                 throw new Error('Access denied (403)');
             }
-            await browser.close();
+            await context.close();
             return html;
         },
         config.cache.routeExpire,

@@ -43,9 +43,9 @@ async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const url = `https://${domain}/${id}`;
 
-    const browser = await playwright();
+    const context = await playwright();
 
-    const page = await browser.newPage();
+    const page = await context.newPage();
 
     await page.route('**/*', (route) => {
         const request = route.request();
@@ -59,7 +59,7 @@ async function handler(ctx: Context) {
     });
 
     const response = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(response);
 

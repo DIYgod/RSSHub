@@ -33,8 +33,8 @@ export const route: Route = {
 async function handler() {
     const link = 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
 
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -59,7 +59,7 @@ async function handler() {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailPage = await browser.newPage();
+                const detailPage = await context.newPage();
                 await detailPage.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -76,7 +76,7 @@ async function handler() {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: '中国人民银行 - 沟通交流',

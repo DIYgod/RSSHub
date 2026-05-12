@@ -128,9 +128,9 @@ const getBoard = (url, cache) =>
             }
 
             // Use Playwright
-            const browser = await playwright();
+            const context = await playwright();
             try {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
@@ -141,7 +141,7 @@ const getBoard = (url, cache) =>
                 const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
-                await browser.close();
+                await context.close();
             }
         },
         config.cache.routeExpire,
