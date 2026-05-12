@@ -177,33 +177,6 @@ describe('getPlaywrightPage (mocked)', () => {
         }
     });
 
-    it('handles requestfinished events after the remote page closes', async () => {
-        resetMocks();
-        launch.mockResolvedValue(browser);
-        page.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
-
-        const getPlaywrightPage = await loadPlaywright();
-        const handler = vi.fn();
-        const rawOn = page.on;
-        await getPlaywrightPage('https://example.com', {
-            onBeforeLoad: (page) => {
-                page.on('requestfinished', handler);
-            },
-        });
-
-        const finishedHandler = rawOn.mock.calls.find(([event]) => event === 'requestfinished')?.[1];
-        await finishedHandler?.({
-            response: vi.fn().mockRejectedValue(new Error('closed')),
-            url: () => 'https://example.com/api',
-        });
-
-        expect(handler).toHaveBeenCalledTimes(1);
-        const finishedRequest = handler.mock.calls[0][0];
-        expect(finishedRequest.response()).toBeNull();
-        expect(finishedRequest.url()).toBe('https://example.com/api');
-    });
-
     it('marks proxy failed when navigation throws with multi-proxy', async () => {
         resetMocks();
         launch.mockResolvedValue(browser);

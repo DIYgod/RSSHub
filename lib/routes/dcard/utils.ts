@@ -18,11 +18,11 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
                     await page.setExtraHTTPHeaders({
                         referer: `https://www.dcard.tw/f/${i.forumAlias}/p/${i.id}`,
                     });
-                    await page.setCookie(...cookies);
+                    await page.context().addCookies(cookies);
                     await page.goto(url);
                     await page.waitForSelector('body > pre');
                     response = await page.evaluate(() => document.querySelector('body > pre').textContent);
-                    newCookies = await page.cookies();
+                    newCookies = await page.context().cookies();
                     await page.close();
 
                     const data = JSON.parse(response);

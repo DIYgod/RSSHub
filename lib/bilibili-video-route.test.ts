@@ -12,14 +12,12 @@ const getPlaywrightPage = vi.fn();
 const goto = vi.fn();
 const on = vi.fn();
 const pageRoute = vi.fn();
-const setCookie = vi.fn();
 const waitForResponse = vi.fn();
 
 const page = {
     goto,
     on,
     route: pageRoute,
-    setCookie,
     waitForResponse,
 };
 
@@ -67,7 +65,6 @@ describe('/bilibili/user/video/:uid', () => {
         goto.mockReset();
         on.mockReset();
         pageRoute.mockReset();
-        setCookie.mockReset();
         waitForResponse.mockReset();
     });
 

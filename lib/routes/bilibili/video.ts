@@ -140,7 +140,7 @@ async function applyCookie(page: Page, cookie: string) {
         .filter((item) => item !== undefined);
 
     if (cookies.length > 0) {
-        await page.setCookie(...cookies);
+        await page.context().addCookies(cookies);
     }
 }
 

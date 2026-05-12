@@ -86,7 +86,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const url = `${host}index/${cate}.htm`;
 
-    const { page, destroy, browser } = await getPlaywrightPage(url, {
+    const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
             await page.setUserAgent(headers['User-Agent']);
@@ -98,7 +98,7 @@ async function handler(ctx) {
         gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const cookies = await browser.cookies();
+    const cookies = await page.context().cookies();
     const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
 
     const response = await page.content();

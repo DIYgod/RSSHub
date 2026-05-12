@@ -20,12 +20,14 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const { page, destroy, browser } = await getPlaywrightPage('about:blank');
     if (config.javdb.session) {
-        await browser.setCookie({
-            name: '_jdb_session',
-            value: config.javdb.session,
-            domain,
-            path: '/',
-        });
+        await page.context().addCookies([
+            {
+                name: '_jdb_session',
+                value: config.javdb.session,
+                domain,
+                path: '/',
+            },
+        ]);
     }
     await page.route('**/*', (route) => {
         const request = route.request();
