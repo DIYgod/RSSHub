@@ -160,7 +160,7 @@
         "@types/fs-extra": "11.0.4",
         "@types/html-to-text": "9.0.4",
         "@types/js-beautify": "1.14.3",
-        "@types/jsdom": "28.0.1",
+        "@types/jsdom": "28.0.2",
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.15",
         "@types/mailparser": "3.4.6",
