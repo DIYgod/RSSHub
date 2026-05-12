@@ -186,6 +186,4 @@ export const getPlaywrightPage = async (
     };
 };
 
-export const getPuppeteerPage = getPlaywrightPage;
-
-export { type Page } from 'playwright-core';
+export { type Page } from 'patchright';
