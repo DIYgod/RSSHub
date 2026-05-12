@@ -1,7 +1,6 @@
-import { load } from 'cheerio';
-import type { Context } from 'hono';
+import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -20,7 +19,8 @@ export const route: Route = {
             target: '/display/offline-exhibit',
         },
     ],
-    handler: async (_ctx: Context): Promise<Data> => {
+    handler: async (ctx) => {
+        ctx.req.query();
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
@@ -36,10 +36,10 @@ export const route: Route = {
             },
         });
 
+        const museumName = namespace.zh?.name || namespace.name;
         const list = response.data.data || [];
 
         const items = list.map((item) => {
-            const museumName = namespace.zh?.name || namespace.name;
             const title = item.name;
             const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
             const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
@@ -47,43 +47,64 @@ export const route: Route = {
             const pubDate = parseDate(item.issueTime);
 
             const fullDuration = item.exhibitDateRange || '';
-            const [startDate, endDate] = fullDuration.includes(' - ')
-                ? fullDuration.split(' - ').map((s) => s.trim())
-                : [fullDuration, ''];
+            const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ').map((s) => s.trim()) : [fullDuration, ''];
 
-            const $desc = load('<div></div>', null, false);
+            const description = renderToString(
+                <div>
+                    {imgUrl && (
+                        <>
+                            <img src={imgUrl} />
+                            <br />
+                        </>
+                    )}
+                    <p>
+                        <b>地点：</b>
+                        {location}
+                    </p>
+                    <p>
+                        <b>开展：</b>
+                        {startDate ?? '未定/常设'}
+                    </p>
+                    <p>
+                        <b>闭展：</b>
+                        {endDate ?? '未定/常设'}
+                    </p>
 
-            if (imgUrl) {
-                $desc('div').append(`<img src="${imgUrl}">`);
-                $desc('div').append('<br>');
-            }
-            $desc('div').append(`<p><b>地点：</b>${location}</p>`);
-            $desc('div').append(`<p><b>开展：</b>${startDate ?? '未定/常设'}</p>`);
-            $desc('div').append(`<p><b>闭展：</b>${endDate ?? '未定/常设'}</p>`);
-
-            if (fullDuration) {
-                $desc('div').append(`<p><small>原始展期：${fullDuration}</small></p>`);
-            }
+                    {fullDuration && (
+                        <p>
+                            <small>
+                                原始展期：
+                                {fullDuration.split('\n').map((line, i) => (
+                                    <span key={i}>
+                                        {line}
+                                        <br />
+                                    </span>
+                                ))}
+                            </small>
+                        </p>
+                    )}
+                </div>
+            );
 
             return {
                 title,
                 link: itemLink,
                 pubDate,
-                description: $desc.html(),
-                // For further processing, keep the fixed format
+                description,
+                // For further .ics file processing
                 _extra: {
                     museumName,
                     title,
                     location,
-                    startDate,
-                    endDate,
+                    startDate, // format: YYYY-MM-DD or '未定/常设'
+                    endDate, // format: YYYY-MM-DD or '未定/常设'
                     itemLink,
                 },
             };
         });
 
         return {
-            title: '上海博物馆 - 特别展览',
+            title: `${museumName} - 特别展览`,
             link: `${baseUrl}/mu/frontend/pg/display/offline-exhibit`,
             language: 'zh-CN',
             item: items,
