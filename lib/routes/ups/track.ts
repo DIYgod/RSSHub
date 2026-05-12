@@ -26,8 +26,8 @@ async function handler(ctx) {
     const { trackingNumber } = ctx.req.param();
     const url = `https://www.ups.com/track?loc=en_US&tracknum=${trackingNumber}`;
 
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
 
     // skip loading images, stylesheets, and fonts
     await page.route('**/*', (route) => {
@@ -55,7 +55,7 @@ async function handler(ctx) {
     await page.waitForSelector('tr[id^="stApp_activitydetails_row"]');
 
     const content = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(content);
 

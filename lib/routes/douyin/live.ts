@@ -42,8 +42,8 @@ async function handler(ctx) {
         `douyin:live:${rid}`,
         async () => {
             let roomInfo;
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
@@ -58,7 +58,7 @@ async function handler(ctx) {
             await page.goto(pageUrl, {
                 waitUntil: 'networkidle',
             });
-            await browser.close();
+            await context.close();
 
             return roomInfo;
         },

@@ -89,7 +89,6 @@ async function handler(ctx) {
     const { page, destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
-            await page.setUserAgent(headers['User-Agent']);
             await page.route('**/*', (route) => {
                 const request = route.request();
                 allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();

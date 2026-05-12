@@ -43,8 +43,8 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `tiktok:user:${user}`,
         async () => {
-            const browser = await playwright();
-            const page = await browser.newPage();
+            const context = await playwright();
+            const page = await context.newPage();
             let itemList = { itemList: [] };
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -61,7 +61,7 @@ async function handler(ctx) {
             });
 
             const pageHtml = await page.content();
-            await browser.close();
+            await context.close();
 
             const $ = load(pageHtml);
             const rehydrationData = JSON.parse($('script#__UNIVERSAL_DATA_FOR_REHYDRATION__').text());

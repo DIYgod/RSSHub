@@ -23,8 +23,8 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.researchgate.net';
     const currentUrl = `${rootUrl}/profile/${id}`;
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await browser.newPage();
+                const page = await context.newPage();
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -77,7 +77,7 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: `${$('meta[property="profile:username"]').attr('content')}'s Publications - ResearchGate`,

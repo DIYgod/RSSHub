@@ -67,8 +67,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('type not supported');
     }
 
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -77,7 +77,7 @@ async function handler(ctx) {
         waitUntil: 'networkidle',
     });
     const content = await page.content();
-    await browser.close();
+    await context.close();
 
     const $ = load(content);
 

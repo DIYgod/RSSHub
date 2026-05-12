@@ -27,8 +27,8 @@ export const route: Route = {
         const company_id = ctx.req.param('company_id');
 
         // Puppeteer setup
-        const browser = await playwright();
-        const page = await browser.newPage();
+        const context = await playwright();
+        const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
             request.resourceType() === 'document' ? route.continue() : route.abort();
@@ -48,7 +48,7 @@ export const route: Route = {
         const companyName = parseCompanyName($);
         const posts = parseCompanyPosts($);
 
-        await browser.close();
+        await context.close();
 
         return {
             title: `LinkedIn - ${companyName}'s Posts`,

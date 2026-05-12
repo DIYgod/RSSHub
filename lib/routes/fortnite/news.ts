@@ -40,8 +40,8 @@ async function handler(ctx) {
     const apiUrl = `https://www.fortnite.com/api/blog/getPosts?category=&postsPerPage=0&offset=0&locale=${language}&rootPageSlug=blog`;
 
     // Use Playwright instead of got, which may be blocked by anti-crawling scripts with response code 403.
-    const browser = await playwright();
-    const page = await browser.newPage();
+    const context = await playwright();
+    const page = await context.newPage();
 
     // only document is allowed
     await page.route('**/*', (route) => {
@@ -72,7 +72,7 @@ async function handler(ctx) {
         data = await response.json();
     } finally {
         await page.close();
-        await browser.close();
+        await context.close();
     }
 
     const { blogList: list } = data;

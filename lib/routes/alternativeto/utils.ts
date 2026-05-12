@@ -4,8 +4,8 @@ const baseURL = 'https://alternativeto.net';
 
 const playwrightGet = (url, cache) =>
     cache.tryGet(url, async () => {
-        const browser = await playwright();
-        const page = await browser.newPage();
+        const context = await playwright();
+        const page = await context.newPage();
         await page.route('**/*', (route) => {
             const request = route.request();
             request.resourceType() === 'document' ? route.continue() : route.abort();
@@ -14,7 +14,7 @@ const playwrightGet = (url, cache) =>
             waitUntil: 'domcontentloaded',
         });
         const html = await page.evaluate(() => document.documentElement.innerHTML);
-        await browser.close();
+        await context.close();
         return html;
     });
 

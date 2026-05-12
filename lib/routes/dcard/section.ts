@@ -26,7 +26,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { type = 'latest', section = 'posts' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
-    const browser = await playwright();
+    const context = await playwright();
 
     let link = 'https://www.dcard.tw/f';
     let api = 'https://www.dcard.tw/service/api/v2';
@@ -48,7 +48,7 @@ async function handler(ctx) {
         title += '最新';
     }
 
-    const page = await browser.newPage();
+    const page = await context.newPage();
     await page.route('**/*', (route) => {
         const request = route.request();
         request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -76,8 +76,8 @@ async function handler(ctx) {
     }));
 
     // parse fulltext for first `limit` items
-    const result = await utils.ProcessFeed(items, cookies, browser, limit, cache);
-    await browser.close();
+    const result = await utils.ProcessFeed(items, cookies, context, limit, cache);
+    await context.close();
 
     return {
         title,
