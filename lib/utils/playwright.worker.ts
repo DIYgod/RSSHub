@@ -1,12 +1,10 @@
 // Worker-compatible Playwright using Cloudflare Browser Run.
-import type { Browser as PlaywrightBrowser, Page as PlaywrightPage } from '@cloudflare/playwright';
+import type { Browser, Page } from '@cloudflare/playwright';
 import { launch } from '@cloudflare/playwright';
 
 import logger from './logger';
 
-type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
-
-export type Page = PlaywrightPage;
+type GotoOptions = Parameters<Page['goto']>[1];
 
 let browserBinding: any = null;
 
@@ -29,7 +27,7 @@ const launchBrowser = async () => {
     return { browser, context };
 };
 
-const scheduleClose = (browser: PlaywrightBrowser) => {
+const scheduleClose = (browser: Browser) => {
     setTimeout(() => {
         void browser.close();
     }, 30000);
@@ -86,3 +84,5 @@ export const getPlaywrightPage = async (
 };
 
 export const getPuppeteerPage = getPlaywrightPage;
+
+export { type Page } from '@cloudflare/playwright';
