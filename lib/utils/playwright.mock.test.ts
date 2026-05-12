@@ -90,7 +90,7 @@ describe('getPlaywrightPage (mocked)', () => {
 
         const getPlaywrightPage = await loadPlaywright();
         const onBeforeLoad = vi.fn();
-        const close = browser.close;
+        const contextClose = context.close;
         const result = await getPlaywrightPage('https://example.com', {
             noGoto: true,
             onBeforeLoad,
@@ -107,7 +107,7 @@ describe('getPlaywrightPage (mocked)', () => {
         expect(onBeforeLoad).toHaveBeenCalled();
 
         await result.destroy();
-        expect(close).toHaveBeenCalled();
+        expect(contextClose).toHaveBeenCalled();
     });
 
     it('merges browserless launch options with existing ws endpoint launch param', async () => {

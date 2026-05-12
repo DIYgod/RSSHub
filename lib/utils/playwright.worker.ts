@@ -2,21 +2,11 @@
 import type { Browser as PlaywrightBrowser, Page as PlaywrightPage } from '@cloudflare/playwright';
 import { launch } from '@cloudflare/playwright';
 
-import { config } from '@/config';
-
 import logger from './logger';
 
 type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
 
-export type Page = PlaywrightPage & {
-    authenticate: (credentials: { password?: string; username?: string }) => Promise<void>;
-    setUserAgent: (userAgent: string) => Promise<void>;
-};
-
-export type Browser = PlaywrightBrowser & {
-    newPage: () => Promise<Page>;
-    userAgent: () => string;
-};
+export type Page = PlaywrightPage;
 
 let browserBinding: any = null;
 
@@ -31,46 +21,27 @@ const getBrowserBinding = () => {
     return browserBinding;
 };
 
-const patchPage = (page: PlaywrightPage): Page => {
-    const compatPage = page as Page;
-
-    compatPage.authenticate = async () => {};
-    compatPage.setUserAgent = async (userAgent) => {
-        await page.setExtraHTTPHeaders({
-            'User-Agent': userAgent,
-        });
-    };
-
-    return compatPage;
-};
-
-const createCompatBrowser = async (browser: PlaywrightBrowser): Promise<Browser> => {
+const launchBrowser = async () => {
+    const browser = await launch(getBrowserBinding(), { keep_alive: 60000 });
     const context = await browser.newContext({
         ignoreHTTPSErrors: true,
     });
-    const compatBrowser = browser as Browser;
-
-    compatBrowser.newPage = async () => patchPage(await context.newPage());
-    compatBrowser.userAgent = () => config.ua;
-
-    return compatBrowser;
+    return { browser, context };
 };
 
-const launchBrowser = async () => createCompatBrowser(await launch(getBrowserBinding(), { keep_alive: 60000 }));
-
-const scheduleClose = (browser: Browser) => {
+const scheduleClose = (browser: PlaywrightBrowser) => {
     setTimeout(() => {
         void browser.close();
     }, 30000);
 };
 
 /**
- * @returns Playwright browser
+ * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
 const outPlaywright = async () => {
-    const browser = await launchBrowser();
+    const { browser, context } = await launchBrowser();
     scheduleClose(browser);
-    return browser;
+    return context;
 };
 
 export default outPlaywright;
@@ -83,17 +54,17 @@ export const getPlaywrightPage = async (
     instanceOptions: {
         gotoConfig?: GotoOptions;
         noGoto?: boolean;
-        onBeforeLoad?: (page: Page, browser?: Browser) => Promise<void> | void;
+        onBeforeLoad?: (page: Page, context?: Awaited<ReturnType<typeof launchBrowser>>['context']) => Promise<void> | void;
     } = {}
 ) => {
     logger.debug(`Launching Cloudflare Browser for: ${url}`);
 
-    const browser = await launchBrowser();
+    const { browser, context } = await launchBrowser();
     scheduleClose(browser);
-    const page = await browser.newPage();
+    const page = await context.newPage();
 
     if (instanceOptions.onBeforeLoad) {
-        await instanceOptions.onBeforeLoad(page, browser);
+        await instanceOptions.onBeforeLoad(page, context);
     }
 
     if (!instanceOptions.noGoto) {
@@ -106,9 +77,9 @@ export const getPlaywrightPage = async (
     }
 
     return {
-        browser,
+        context,
         destroy: async () => {
-            await browser.close();
+            await context.close();
         },
         page,
     };

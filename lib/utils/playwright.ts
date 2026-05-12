@@ -10,15 +10,7 @@ type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
 
 type ProxyState = NonNullable<ReturnType<typeof proxy.getCurrentProxy>>;
 
-export type Page = PlaywrightPage & {
-    authenticate: (credentials: { password?: string; username?: string }) => Promise<void>;
-    setUserAgent: (userAgent: string) => Promise<void>;
-};
-
-export type Browser = PlaywrightBrowser & {
-    newPage: () => Promise<Page>;
-    userAgent: () => string;
-};
+export type Page = PlaywrightPage;
 
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
@@ -90,44 +82,10 @@ const getContextOptions = (): BrowserContextOptions => ({
     userAgent: config.ua,
 });
 
-const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
-    const compatPage = page as Page;
-
-    compatPage.authenticate = async () => {};
-    compatPage.setUserAgent = async (userAgent) => {
-        const contextWithCDP = context as BrowserContext & {
-            newCDPSession?: (page: PlaywrightPage) => Promise<{
-                detach: () => Promise<void>;
-                send: (method: string, params?: Record<string, unknown>) => Promise<void>;
-            }>;
-        };
-        if (contextWithCDP.newCDPSession) {
-            const session = await contextWithCDP.newCDPSession(page);
-            await session.send('Network.setUserAgentOverride', { userAgent });
-            await session.detach();
-            return;
-        }
-        await page.setExtraHTTPHeaders({
-            'User-Agent': userAgent,
-        });
-    };
-
-    return compatPage;
-};
-
-const createCompatBrowser = async (browser: PlaywrightBrowser, contextOptions: BrowserContextOptions): Promise<Browser> => {
-    const context = await browser.newContext(contextOptions);
-    const compatBrowser = browser as Browser;
-
-    compatBrowser.newPage = async () => patchPage(await context.newPage(), context);
-    compatBrowser.userAgent = () => config.ua;
-
-    return compatBrowser;
-};
-
 const launchBrowser = async (currentProxy?: ProxyState | null) => {
     const browser = config.playwrightWSEndpoint ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy))) : await chromium.launch(getLaunchOptions(currentProxy));
-    return createCompatBrowser(browser, getContextOptions());
+    const context = await browser.newContext(getContextOptions());
+    return { browser, context };
 };
 
 // Merge our launch options into the existing `launch` query parameter so endpoint-level options
@@ -147,20 +105,20 @@ const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaun
     return endpointURL.toString();
 };
 
-const scheduleClose = (browser: Browser, timeout = 30000) => {
+const scheduleClose = (browser: PlaywrightBrowser, timeout = 30000) => {
     setTimeout(() => {
         void browser.close();
     }, timeout);
 };
 
 /**
- * @returns Playwright browser
+ * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
 const outPlaywright = async () => {
     const currentProxy = proxy.getCurrentProxy();
-    const browser = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
+    const { browser, context } = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
     scheduleClose(browser);
-    return browser;
+    return context;
 };
 
 export default outPlaywright;
@@ -177,7 +135,7 @@ export const getPlaywrightPage = async (
         closeTimeout?: number;
         gotoConfig?: GotoOptions;
         noGoto?: boolean;
-        onBeforeLoad?: (page: Page, browser?: Browser) => Promise<void> | void;
+        onBeforeLoad?: (page: Page, context?: BrowserContext) => Promise<void> | void;
     } = {}
 ) => {
     let allowProxy = false;
@@ -196,16 +154,16 @@ export const getPlaywrightPage = async (
     const currentProxy = proxy.getCurrentProxy();
     const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
     const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
-    const browser = await launchBrowser(currentProxyState);
+    const { browser, context } = await launchBrowser(currentProxyState);
     scheduleClose(browser, instanceOptions.closeTimeout);
-    const page = await browser.newPage();
+    const page = await context.newPage();
 
     if (hasProxy && currentProxyState) {
         logger.debug(`Proxying request in playwright via ${currentProxyState.uri}: ${url}`);
     }
 
     if (instanceOptions.onBeforeLoad) {
-        await instanceOptions.onBeforeLoad(page, browser);
+        await instanceOptions.onBeforeLoad(page, context);
     }
 
     if (!instanceOptions.noGoto) {
@@ -222,9 +180,9 @@ export const getPlaywrightPage = async (
     }
 
     return {
-        browser,
+        context,
         destroy: async () => {
-            await browser.close();
+            await context.close();
         },
         page,
     };
