@@ -3,6 +3,9 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import logger from '@/utils/logger';
+
+const FLARESOLVERR_URL = process.env.FLARESOLVERR_URL || 'http://flaresolverr:8191/v1';
 
 export const route: Route = {
     path: '/',
@@ -31,8 +34,24 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://wp.gxnas.com';
 
-    const response = await ofetch(rootUrl);
-    const $ = load(response);
+    logger.debug(`Fetching ${rootUrl} via FlareSolverr at ${FLARESOLVERR_URL}`);
+
+    const result = await ofetch(FLARESOLVERR_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+            cmd: 'request.get',
+            url: rootUrl,
+            maxTimeout: 60000,
+        },
+    });
+
+    const html = result?.solution?.response;
+    if (!html) {
+        throw new Error('FlareSolverr 返回内容为空');
+    }
+
+    const $ = load(html);
 
     const items = $('.article-panel')
         .toArray()
