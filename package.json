@@ -166,7 +166,7 @@
         "@types/mailparser": "3.4.6",
         "@types/markdown-it": "14.1.2",
         "@types/module-alias": "2.0.4",
-        "@types/node": "25.6.2",
+        "@types/node": "25.7.0",
         "@types/sanitize-html": "2.16.1",
         "@typescript-eslint/eslint-plugin": "8.59.3",
         "@typescript-eslint/parser": "8.59.3",
