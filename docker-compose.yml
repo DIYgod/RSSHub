@@ -1,6 +1,6 @@
 services:
     rsshub:
-        build: .
+        image: franksun123/rsshub
         restart: always
         ports:
             - '1200:1200'
@@ -16,21 +16,6 @@ services:
             retries: 3
         depends_on:
             - redis
-
-    redis:
-        image: redis:alpine
-        restart: always
-        volumes:
-            - redis-data:/data
-        healthcheck:
-            test: ['CMD', 'redis-cli', 'ping']
-            interval: 30s
-            timeout: 10s
-            retries: 5
-            start_period: 5s
-
-volumes:
-    redis-data:
 
     redis:
         image: redis:alpine
