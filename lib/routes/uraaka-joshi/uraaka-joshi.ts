@@ -33,7 +33,11 @@ async function handler() {
         request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
     });
     page.on('requestfinished', async (request) => {
-        if (request.url() === link && request.response().status() === 403) {
+        if (request.url() !== link) {
+            return;
+        }
+        const response = await request.response();
+        if (response?.status() === 403) {
             await page.close();
         }
     });

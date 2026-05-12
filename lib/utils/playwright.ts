@@ -1,5 +1,5 @@
 import { launch } from 'cloakbrowser';
-import type { Browser as PlaywrightBrowser, BrowserContext, BrowserContextOptions, LaunchOptions, Page as PlaywrightPage, Request as PlaywrightRequest, Response as PlaywrightResponse } from 'playwright-core';
+import type { Browser as PlaywrightBrowser, BrowserContext, BrowserContextOptions, LaunchOptions, Page as PlaywrightPage } from 'playwright-core';
 import { chromium } from 'playwright-core';
 
 import { config } from '@/config';
@@ -7,37 +7,19 @@ import { config } from '@/config';
 import logger from './logger';
 import proxy from './proxy';
 
-type SetCookieParam = Parameters<BrowserContext['addCookies']>[0][number];
-type Cookie = Awaited<ReturnType<BrowserContext['cookies']>>[number];
 type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
 
 type ProxyState = NonNullable<ReturnType<typeof proxy.getCurrentProxy>>;
 
-type FinishedRequest = {
-    response: () => {
-        status: () => number;
-    } | null;
-    url: () => string;
-};
-
-type RequestFinishedHandler = (request: FinishedRequest) => Promise<void> | void;
-
 export type Page = PlaywrightPage & {
     authenticate: (credentials: { password?: string; username?: string }) => Promise<void>;
-    cookies: (urls?: string | string[]) => Promise<Cookie[]>;
-    on: ((event: 'requestfinished', handler: RequestFinishedHandler) => Page) & PlaywrightPage['on'];
-    setCookie: (...cookies: SetCookieParam[]) => Promise<void>;
     setUserAgent: (userAgent: string) => Promise<void>;
 };
 
 export type Browser = PlaywrightBrowser & {
-    cookies: (urls?: string | string[]) => Promise<Cookie[]>;
     newPage: () => Promise<Page>;
-    setCookie: (...cookies: SetCookieParam[]) => Promise<void>;
     userAgent: () => string;
 };
-
-const withDefaultCookiePath = (cookie: SetCookieParam): SetCookieParam => ('domain' in cookie && !('path' in cookie) ? { ...cookie, path: '/' } : cookie);
 
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
@@ -109,24 +91,9 @@ const getContextOptions = (): BrowserContextOptions => ({
     ignoreHTTPSErrors: true,
 });
 
-const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightResponse | null): FinishedRequest => ({
-    response: () =>
-        response
-            ? {
-                  status: () => response.status(),
-              }
-            : null,
-    url: () => request.url(),
-});
-
 const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
     const compatPage = page as Page;
-    const originalOn = page.on.bind(page);
 
-    compatPage.cookies = (urls) => context.cookies(urls);
-    compatPage.setCookie = async (...cookies) => {
-        await context.addCookies(cookies.map((cookie) => withDefaultCookiePath(cookie)));
-    };
     compatPage.authenticate = async () => {};
     compatPage.setUserAgent = async (userAgent) => {
         const contextWithCDP = context as BrowserContext & {
@@ -145,22 +112,6 @@ const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
             'User-Agent': userAgent,
         });
     };
-    compatPage.on = ((event: string, handler: (...args: any[]) => any) => {
-        if (event === 'requestfinished') {
-            originalOn(event, async (request) => {
-                let response: PlaywrightResponse | null = null;
-                try {
-                    response = await request.response();
-                } catch {
-                    // The remote browser may close before Playwright resolves the response.
-                }
-                await (handler as RequestFinishedHandler)(createFinishedRequest(request, response));
-            });
-            return compatPage;
-        }
-        originalOn(event, handler);
-        return compatPage;
-    }) as Page['on'];
 
     return compatPage;
 };
@@ -168,22 +119,9 @@ const patchPage = (page: PlaywrightPage, context: BrowserContext): Page => {
 const createCompatBrowser = async (browser: PlaywrightBrowser, contextOptions: BrowserContextOptions): Promise<Browser> => {
     const context = await browser.newContext(contextOptions);
     const compatBrowser = browser as Browser;
-    const originalClose = browser.close.bind(browser);
 
     compatBrowser.newPage = async () => patchPage(await context.newPage(), context);
-    compatBrowser.setCookie = async (...cookies) => {
-        await context.addCookies(cookies.map((cookie) => withDefaultCookiePath(cookie)));
-    };
-    compatBrowser.cookies = (urls) => context.cookies(urls);
     compatBrowser.userAgent = () => config.ua;
-    compatBrowser.close = async (options) => {
-        try {
-            await context.close();
-        } catch {
-            // Ignore already-closed contexts.
-        }
-        await originalClose(options);
-    };
 
     return compatBrowser;
 };
