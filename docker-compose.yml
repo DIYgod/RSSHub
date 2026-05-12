@@ -6,28 +6,9 @@ services:
             - '1200:1200'
         environment:
             NODE_ENV: production
-            CACHE_TYPE: redis
-            REDIS_URL: 'redis://redis:6379/'
-            FLARESOLVERR_URL: http://flaresolverr:8191/v1
+            FLARESOLVERR_URL: http://192.168.1.190:8191/v1
         healthcheck:
             test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
             interval: 30s
             timeout: 10s
             retries: 3
-        depends_on:
-            - redis
-
-    redis:
-        image: redis:alpine
-        restart: always
-        volumes:
-            - redis-data:/data
-        healthcheck:
-            test: ['CMD', 'redis-cli', 'ping']
-            interval: 30s
-            timeout: 10s
-            retries: 5
-            start_period: 5s
-
-volumes:
-    redis-data:
