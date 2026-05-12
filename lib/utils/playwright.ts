@@ -1,5 +1,5 @@
 import { launch } from 'cloakbrowser';
-import type { Browser as PlaywrightBrowser, BrowserContext, BrowserContextOptions, LaunchOptions, Page as PlaywrightPage } from 'playwright-core';
+import type { Browser, BrowserContext, BrowserContextOptions, LaunchOptions, Page } from 'playwright-core';
 import { chromium } from 'playwright-core';
 
 import { config } from '@/config';
@@ -7,11 +7,9 @@ import { config } from '@/config';
 import logger from './logger';
 import proxy from './proxy';
 
-type GotoOptions = Parameters<PlaywrightPage['goto']>[1];
+type GotoOptions = Parameters<Page['goto']>[1];
 
 type ProxyState = NonNullable<ReturnType<typeof proxy.getCurrentProxy>>;
-
-export type Page = PlaywrightPage;
 
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
@@ -86,9 +84,7 @@ const getContextOptions = (): BrowserContextOptions => ({
 const launchBrowser = async (currentProxy?: ProxyState | null) => {
     // When WS_ENDPOINT is set we connect to self-hosted browserless via playwright-core's CDP/WS;
     // otherwise we launch CloakBrowser's bundled stealth Chromium locally.
-    const browser = config.playwrightWSEndpoint
-        ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy)))
-        : ((await launch(getLaunchOptions(currentProxy))) as PlaywrightBrowser);
+    const browser = config.playwrightWSEndpoint ? await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy))) : ((await launch(getLaunchOptions(currentProxy))) as Browser);
     const context = await browser.newContext(getContextOptions());
     return { browser, context };
 };
@@ -110,7 +106,7 @@ const getBrowserlessEndpoint = (endpoint: string, launchOptions: BrowserlessLaun
     return endpointURL.toString();
 };
 
-const scheduleClose = (browser: PlaywrightBrowser, timeout = 30000) => {
+const scheduleClose = (browser: Browser, timeout = 30000) => {
     setTimeout(() => {
         void browser.close();
     }, timeout);
@@ -194,3 +190,5 @@ export const getPlaywrightPage = async (
 };
 
 export const getPuppeteerPage = getPlaywrightPage;
+
+export { type Page } from 'playwright-core';
