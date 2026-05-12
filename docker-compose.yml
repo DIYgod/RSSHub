@@ -1,14 +1,22 @@
+version: '3.8'
 services:
     rsshub:
-        image: franksun123/rsshub
+        image: franksun123/rsshub:latest
+        container_name: rsshubfrank
         restart: always
-        ports:
-            - '1200:1200'
+        network_mode: host
         environment:
-            NODE_ENV: production
-            FLARESOLVERR_URL: http://192.168.1.190:8191/v1
-        healthcheck:
-            test: ['CMD', 'curl', '-f', 'http://localhost:1200/healthz']
-            interval: 30s
-            timeout: 10s
-            retries: 3
+            - NODE_ENV=production
+            - CACHE_TYPE=redis
+            - REDIS_URL=redis://127.0.0.1:6379/0
+            - FLARESOLVERR_URL=http://127.0.0.1:8191/v1
+        depends_on:
+            - redis
+
+    redis:
+        image: redis:alpine
+        container_name: rsshub-redis
+        restart: always
+        network_mode: host
+        volumes:
+            - ./redis-data:/data
