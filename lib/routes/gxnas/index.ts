@@ -1,11 +1,34 @@
 import { load } from 'cheerio';
-
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
 
 const FLARESOLVERR_URL = process.env.FLARESOLVERR_URL || 'http://flaresolverr:8191/v1';
+const SESSION_ID = 'gxnas_session';
+
+// Session singleton: create once, reuse across requests
+let sessionCreated = false;
+
+async function ensureSession() {
+    if (sessionCreated) {
+        return;
+    }
+    try {
+        logger.debug(`Creating FlareSolverr session: ${SESSION_ID}`);
+        await ofetch(FLARESOLVERR_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: { cmd: 'sessions.create', session: SESSION_ID },
+        });
+        sessionCreated = true;
+        logger.debug(`FlareSolverr session created: ${SESSION_ID}`);
+    } catch (e) {
+        // Session might already exist from a previous run
+        logger.debug(`Session creation failed (may already exist): ${(e as Error).message}`);
+        sessionCreated = true;
+    }
+}
 
 export const route: Route = {
     path: '/',
@@ -34,15 +57,17 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://wp.gxnas.com';
 
-    logger.debug(`Fetching ${rootUrl} via FlareSolverr at ${FLARESOLVERR_URL}`);
+    await ensureSession();
 
+    logger.debug(`Fetching ${rootUrl} via FlareSolverr session ${SESSION_ID}`);
     const result = await ofetch(FLARESOLVERR_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: {
             cmd: 'request.get',
             url: rootUrl,
-            maxTimeout: 60000,
+            session: SESSION_ID,
+            maxTimeout: 120000,
         },
     });
 
@@ -57,24 +82,19 @@ async function handler() {
         .toArray()
         .map((el) => {
             const $el = $(el);
-
             const titleEl = $el.find('.header .title a');
             const title = titleEl.text().trim();
             const link = titleEl.attr('href');
-
             const categoryEl = $el.find('.header .label');
             const category = categoryEl.text().trim();
-
             const contentEl = $el.find('.content');
             const description = contentEl.html() || '';
-
             const thumbEl = $el.find('.a-thumb img');
             const image = thumbEl.attr('src');
 
             // Date format: 2023年11月17日
             const dateText = $el.find('.a-meta span').first().text().trim();
             let pubDate: Date | undefined;
-
             const m = dateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
             if (m) {
                 pubDate = new Date(Number.parseInt(m[1]), Number.parseInt(m[2]) - 1, Number.parseInt(m[3]));
