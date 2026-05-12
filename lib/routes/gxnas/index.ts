@@ -67,7 +67,7 @@ async function handler() {
             cmd: 'request.get',
             url: rootUrl,
             session: SESSION_ID,
-            maxTimeout: 120000,
+            maxTimeout: 180000,
         },
     });
 
