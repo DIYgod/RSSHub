@@ -42,7 +42,7 @@ async function handler(ctx) {
             const href = item.attr('href');
             const title = item.find('h2, h3').first().text().trim() || item.text().trim();
 
-            if (!href || !title || !href.match(/^\/[^\/]+\/\d+\//)) {
+            if (!href || !title || !/^\/[^/]+\/\d+\//.test(href)) {
                 return null;
             }
 
