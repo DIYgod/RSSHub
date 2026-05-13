@@ -145,13 +145,12 @@ function gatherLegacyFromData(entries, filterNested, userId) {
     for (const entry of filteredEntries) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
-let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
+            let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
             // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
             if (tweet?.__typename === 'TweetPreviewDisplay') {
                 const preview = tweet.tweet;
                 if (preview?.rest_id) {
                     const userResult = preview.core?.user_results?.result;
-                    const screenName = userResult?.core?.screen_name ?? '';
                     const fakeLegacy = {
                         id_str: preview.rest_id,
                         full_text: `🔒 [Subscribers Only] ${preview.text ?? ''}`,
@@ -159,8 +158,8 @@ let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet
                         entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
                         user_id_str: userResult?.rest_id ?? '',
                         user: {
-                            name: userResult?.core?.name ?? screenName,
-                            screen_name: screenName,
+                            name: userResult?.core?.name ?? userResult?.core?.screen_name ?? '',
+                            screen_name: userResult?.core?.screen_name ?? '',
                             profile_image_url_https: userResult?.avatar?.image_url ?? '',
                         },
                         favorite_count: preview.favorite_count ?? 0,
