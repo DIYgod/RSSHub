@@ -3444,6 +3444,9 @@
   "/gf-cn/news/:category?": [
     "nczitzk"
   ],
+  "/gigazine/en": [
+    "chansantheman"
+  ],
   "/gihyo/list/group/:id": [
     "masakichi"
   ],

@@ -18318,6 +18318,20 @@
       }
     ]
   },
+  "gigazine.net": {
+    "_name": "GIGAZINE",
+    ".": [
+      {
+        "title": "English News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/gsc_news/en/",
+          "/gsc_news/en"
+        ],
+        "target": "/gigazine/en"
+      }
+    ]
+  },
   "gihyo.jp": {
     "_name": "gihyo.jp",
     ".": [

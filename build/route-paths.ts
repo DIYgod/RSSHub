@@ -1116,6 +1116,7 @@ export type RoutePath =
   | `/getitfree/:filter{.+}?`
   | `/gettr/user/:id`
   | `/gf-cn/news/:category?`
+  | `/gigazine/en`
   | `/gihyo/list/group/:id`
   | `/gisreportsonline/:path{.*}`
   | `/gitcode/commits/:owner/:repo/:branch?`
