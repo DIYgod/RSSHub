@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Route, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const BASE = 'https://hex2077.dev';
 
@@ -89,11 +90,11 @@ export const route: Route = {
             for (const [i, text] of sectionItems.entries()) {
                 const firstSentence = text.split(/[。！？.!?]/)[0] || text;
                 items.push({
-                    title: firstSentence.length > 60 ? firstSentence.slice(0, 60) + '…' : firstSentence,
+                    title: firstSentence,
                     description: text,
                     link: articleUrl,
                     guid: `${latestPath}${sectionName}-${i}`,
-                    pubDate: dateLabel ? new Date(dateLabel).toUTCString() : undefined,
+                    pubDate: parseDate(dateLabel),
                 });
             }
 
@@ -113,11 +114,11 @@ export const route: Route = {
                 for (const [i, text] of sectionItems.entries()) {
                     const firstSentence = text.split(/[。！？.!?]/)[0] || text;
                     items.push({
-                        title: `[${sectionDisplay}] ${firstSentence.length > 60 ? firstSentence.slice(0, 60) + '…' : firstSentence}`,
+                        title: `[${sectionDisplay}] ${firstSentence}`,
                         description: text,
                         link: articleUrl,
                         guid: `${latestPath}${sectionName}-${i}`,
-                        pubDate: dateLabel ? new Date(dateLabel).toUTCString() : undefined,
+                        pubDate: parseDate(dateLabel),
                     });
                 }
             }
