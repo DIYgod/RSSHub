@@ -1,3 +1,35 @@
+import { config } from '@/config';
+import logger from '@/utils/logger';
+
+const downloadChromiumInBackground = async () => {
+    if (config.playwrightWSEndpoint || config.chromiumExecutablePath) {
+        return;
+    }
+
+    const cloakbrowser = await import('cloakbrowser');
+
+    const info = cloakbrowser.binaryInfo();
+    if (info.installed) {
+        logger.info(`CloakBrowser ${info.version} present at ${info.binaryPath}`);
+        return;
+    }
+
+    logger.info(`CloakBrowser ${info.version} not found, downloading from GitHub release...`);
+    const binaryPath = await cloakbrowser.ensureBinary();
+    logger.info(`CloakBrowser installed at ${binaryPath}`);
+};
+
+const checkChromium = async () => {
+    if (!process.env.CLOAKBROWSER_DOWNLOAD_URL) {
+        return;
+    }
+    try {
+        await downloadChromiumInBackground();
+    } catch (error) {
+        logger.error(`CloakBrowser check failed: ${error}`);
+    }
+};
+
 /**
  * Get Cookie-header-style cookie string from a browser cookie array.
  *
@@ -55,4 +87,4 @@ const getCookies = async (page, domainFilter?: string) => {
     return parseCookieArray(cookies, domainFilter);
 };
 
-export { constructCookieArray, getCookies, parseCookieArray, setCookies };
+export { checkChromium, constructCookieArray, downloadChromiumInBackground, getCookies, parseCookieArray, setCookies };

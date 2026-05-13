@@ -8,6 +8,7 @@ import app from '@/app';
 import { config } from '@/config';
 import { getLocalhostAddress } from '@/utils/common-utils';
 import logger from '@/utils/logger';
+import { checkChromium } from '@/utils/playwright-utils';
 
 const port = config.connect.port;
 const hostIPList = getLocalhostAddress();
@@ -30,6 +31,8 @@ if (config.enableCluster) {
         for (let i = 0; i < numCPUs; i++) {
             cluster.fork();
         }
+
+        void checkChromium();
     } else {
         logger.info(`Worker ${process.pid} is running`);
         serve({
@@ -58,6 +61,8 @@ if (config.enableCluster) {
             maxHeaderSize: 1024 * 32,
         },
     });
+
+    void checkChromium();
 }
 
 export default server;

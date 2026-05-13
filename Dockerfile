@@ -93,6 +93,7 @@ COPY --from=dep-version-parser /ver/.cloakbrowser_version /app/.cloakbrowser_ver
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ARG CLOAKBROWSER_SKIP_DOWNLOAD=1
 # CloakBrowser publishes prebuilt patched Chromium for both linux/amd64 and linux/arm64,
 ENV CLOAKBROWSER_CACHE_DIR=/app/node_modules/.cache/cloakbrowser
 RUN \
@@ -103,12 +104,14 @@ RUN \
             yarn config set registry https://registry.npmmirror.com && \
             pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
-        echo 'Downloading CloakBrowser ...' && \
+        echo 'Downloading CloakBrowser...' && \
         unset PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD && \
         corepack enable pnpm && \
         pnpm add cloakbrowser@$(cat /app/.cloakbrowser_version) --save-prod && \
-        pnpm rb && \
-        pnpm exec cloakbrowser install ; \
+        pnpm rb ; \
+        if [ "$CLOAKBROWSER_SKIP_DOWNLOAD" = 0 ]; then \
+            pnpm exec cloakbrowser install ; \
+        fi; \
     else \
         mkdir -p "$CLOAKBROWSER_CACHE_DIR" ; \
     fi;
@@ -122,12 +125,14 @@ LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 ENV NODE_ENV=production
 ENV TZ=Asia/Shanghai
 ENV CLOAKBROWSER_AUTO_UPDATE=false
+ENV CLOAKBROWSER_DOWNLOAD_URL=https://github.com/CloakHQ/cloakbrowser/releases/download
 
 WORKDIR /app
 
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
 ARG TARGETPLATFORM
 ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ARG CLOAKBROWSER_SKIP_DOWNLOAD=1
 # https://playwright.dev/docs/docker#introduction
 # https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
 # CloakBrowser ships prebuilt patched Chromium for both linux/amd64 and linux/arm64
@@ -143,6 +148,9 @@ RUN \
             libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 \
             libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 \
             libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 \
+            # https://github.com/CloakHQ/CloakBrowser/tree/main#font-setup-on-linux
+            fonts-noto-color-emoji fonts-freefont-ttf fonts-unifont \
+            fonts-ipafont-gothic fonts-wqy-zenhei fonts-tlwg-loma-otf \
         ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
@@ -152,8 +160,8 @@ COPY --from=chromium-downloader /app/node_modules/.cache/cloakbrowser /app/node_
 
 RUN \
     set -ex && \
-    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
-        echo 'Verifying CloakBrowser Chromium installation...' && \
+    if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$CLOAKBROWSER_SKIP_DOWNLOAD" = 0 ]; then \
+        echo 'Verifying Chromium installation...' && \
         _chrome_path=$(find /app/node_modules/.cache/cloakbrowser/ -name chrome -xtype f -executable | head -n1) && \
         if [ -z "$_chrome_path" ]; then \
             echo "!!! CloakBrowser binary not found !!!" && \
