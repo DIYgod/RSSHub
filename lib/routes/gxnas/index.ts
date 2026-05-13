@@ -1,8 +1,35 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
+
+const FLARESOLVERR_URL = process.env.FLARESOLVERR_URL || 'http://flaresolverr:8191/v1';
+const SESSION_ID = 'gxnas_session';
+
+// Session singleton: create once, reuse across requests
+let sessionCreated = false;
+
+async function ensureSession() {
+    if (sessionCreated) {
+        return;
+    }
+    try {
+        logger.debug(`Creating FlareSolverr session: ${SESSION_ID}`);
+        await ofetch(FLARESOLVERR_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: { cmd: 'sessions.create', session: SESSION_ID },
+        });
+        sessionCreated = true;
+        logger.debug(`FlareSolverr session created: ${SESSION_ID}`);
+    } catch (e) {
+        // Session might already exist from a previous run
+        logger.debug(`Session creation failed (may already exist): ${(e as Error).message}`);
+        sessionCreated = true;
+    }
+}
 
 export const route: Route = {
     path: '/',
@@ -17,12 +44,13 @@ export const route: Route = {
     name: '最新文章',
     maintainers: ['Franklittleboy'],
     handler,
-    description: `::: warning
-该网站受 Cloudflare 保护，自建实例需要 Chromium 支持（默认已包含）。
+    description: `:::warning
+该网站受 Cloudflare 保护，需要配置 FlareSolverr 服务（[文档](https://github.com/FlareSolverr/FlareSolverr)）。
+环境变量 \`FLARESOLVERR_URL\` 默认为 \`http://flaresolverr:8191/v1\`。
 :::`,
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -33,19 +61,24 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://wp.gxnas.com';
 
-    const { page, destroy } = await getPlaywrightPage('about:blank');
+    await ensureSession();
 
-    // Only load document resources to speed up page load
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' ? request.continue() : request.abort();
+    logger.debug(`Fetching ${rootUrl} via FlareSolverr session ${SESSION_ID}`);
+    const result = await ofetch(FLARESOLVERR_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+            cmd: 'request.get',
+            url: rootUrl,
+            session: SESSION_ID,
+            maxTimeout: 180000,
+        },
     });
 
-    await page.goto(rootUrl, { waitUntil: 'domcontentloaded' });
-
-    const html = await page.content();
-    await page.close();
-    await destroy();
+    const html = result?.solution?.response;
+    if (!html) {
+        throw new Error('FlareSolverr 返回内容为空');
+    }
 
     const $ = load(html);
 
