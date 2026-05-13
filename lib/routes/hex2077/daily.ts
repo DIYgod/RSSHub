@@ -88,9 +88,8 @@ export const route: Route = {
             const sectionItems = extractSection($d, sectionName);
 
             for (const [i, text] of sectionItems.entries()) {
-                const firstSentence = text.split(/[。！？.!?]/)[0] || text;
                 items.push({
-                    title: firstSentence,
+                    title: text,
                     description: text,
                     link: articleUrl,
                     guid: `${latestPath}${sectionName}-${i}`,
@@ -112,9 +111,8 @@ export const route: Route = {
                 const sectionItems = extractSection($d, sectionName);
 
                 for (const [i, text] of sectionItems.entries()) {
-                    const firstSentence = text.split(/[。！？.!?]/)[0] || text;
                     items.push({
-                        title: `[${sectionDisplay}] ${firstSentence}`,
+                        title: `[${sectionDisplay}] ${text}`,
                         description: text,
                         link: articleUrl,
                         guid: `${latestPath}${sectionName}-${i}`,
