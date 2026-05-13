@@ -13,3 +13,7 @@ export function exec() {
 export function spawn() {
     throw new Error('spawn is not supported in Cloudflare Workers');
 }
+
+export function execFileSync() {
+    throw new Error('execFileSync is not supported in Cloudflare Workers');
+}
