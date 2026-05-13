@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
-import { getPlaywrightPage } from '@/utils/playwright';
-import { parseDate } from '@/utils/parse-date';
 import type { DataItem, Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/',
