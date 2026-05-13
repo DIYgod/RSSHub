@@ -9,7 +9,10 @@ import { namespace } from './namespace';
 export const route: Route = {
     path: '/display/offline-exhibit',
     categories: ['travel'],
-    example: '/shanghaimuseum/display/offline-exhibit',
+    example: '/shanghaimuseum/display/offline-exhibit?type=PAST',
+    parameters: {
+        type: 'Exhibition type, supported values: PRESENT (当期展览) | PAST (往期展览). Default: PRESENT.',
+    },
     // Use SHM English version channel name
     name: 'Special Exhibitions',
     maintainers: ['magazian'],
@@ -20,7 +23,11 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
-        ctx.req.query();
+        const type = ctx.req.query('type');
+
+        // Default to PRESENT if type is not provided or invalid
+        const exhibitionType = type === 'PAST' ? 'PAST' : 'PRESENT';
+
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
@@ -31,7 +38,7 @@ export const route: Route = {
                 params: {
                     exhibitTypeCode: 'OFFLINE_EXHIBITION',
                     langCode: 'CHINESE',
-                    offlineExhibitionType: 'PRESENT',
+                    offlineExhibitionType: exhibitionType,
                 },
             },
         });
@@ -104,7 +111,7 @@ export const route: Route = {
         });
 
         return {
-            title: `${museumName} - 特别展览`,
+            title: `${museumName} - 特别展览 - ${exhibitionType === 'PAST' ? '往期展览' : '当期展览'}`,
             link: `${baseUrl}/mu/frontend/pg/display/offline-exhibit`,
             language: 'zh-CN',
             item: items,
