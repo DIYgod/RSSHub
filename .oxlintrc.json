@@ -388,8 +388,8 @@
         "eslint-js/prefer-arrow-callback": "error", // use jsPlugins
         "prefer-const": "error",
         "prefer-object-has-own": "error",
-        "eslint-js/prefer-regex-literals": [
-            "error", // use jsPlugins
+        "prefer-regex-literals": [
+            "error",
             {
                 "disallowRedundantWrapping": true
             }
