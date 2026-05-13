@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
