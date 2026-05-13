@@ -21,13 +21,12 @@ const getRequestOptions = (referer: string) => ({
 const getAbsoluteUrl = (path: string | undefined) => (path ? new URL(path, ROOT_URL).href : undefined);
 const getArticleAuthor = ($: ReturnType<typeof load>) =>
     $('#article .items p')
-        .first()
         .text()
         .match(/Posted by\s+(.+)$/)?.[1]
         ?.trim();
 const getArticleCategories = ($: ReturnType<typeof load>) => [
     ...new Set(
-        $('#article .items p a[href^="/gsc_news/en/C"]')
+        $('#article .items p a[href*="/gsc_news/en/C"]')
             .toArray()
             .map((element) => $(element).text().trim())
             .filter(Boolean)
@@ -38,7 +37,7 @@ const fetchDescription = async (item: DataItem) => {
     const $ = load(articleHtml);
     const content = $('#article .cntimage');
 
-    content.find('script, .sbn, noscript').remove();
+    content.find('script').remove();
     content.find('h1.title, time.yeartime').remove();
 
     content.find('img').each((_, img) => {
