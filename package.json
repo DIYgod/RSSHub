@@ -137,7 +137,7 @@
         "uuid": "14.0.0",
         "winston": "3.19.0",
         "xxhash-wasm": "1.1.0",
-        "youtube-caption-extractor": "1.9.1",
+        "youtube-caption-extractor": "1.10.1",
         "youtubei.js": "17.0.1",
         "zod": "4.4.3"
     },
