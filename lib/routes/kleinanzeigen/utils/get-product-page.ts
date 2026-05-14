@@ -37,8 +37,20 @@ export const getProductPage = (url: string): Promise<DataItem> =>
         // description of the product
         const description = (product.find('[itemprop="description"]').html() ?? '').replaceAll(/<(?!\/?br\s*\/?)[^>]*>/g, '');
 
-        // image html of the product
-        const image = product.find('#viewad-image').attr('src') ? `<img src="${product.find('#viewad-image').attr('src')}" alt="Image" />` : '';
+        // get images from page
+        const images = product
+            .find('#viewad-image')
+            .toArray()
+            .map((img) => ({
+                src: $(img).attr('src'),
+                alt: $(img).attr('alt'),
+            }));
+
+        // create html for images
+        const imagesHtml = images
+            .filter((img) => img.src)
+            .map((img) => `<img src="${img.src}" alt="${img.alt}" />`)
+            .join('<br>');
 
         const category = [
             ...$('.breadcrump .breadcrump-link')
@@ -56,7 +68,7 @@ export const getProductPage = (url: string): Promise<DataItem> =>
         return {
             title,
             link: url,
-            description: `${price}<br>${address}<br><br>${description}<br>${image}<br>`,
+            description: `${price}<br>${address}<br><br>${description}<br>${imagesHtml}<br>`,
             author: [
                 {
                     name: sellerProfile.find('.userprofile-vip a').text().trim(),
