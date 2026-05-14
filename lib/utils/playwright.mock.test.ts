@@ -130,7 +130,7 @@ describe('getPlaywrightPage (mocked)', () => {
         await result.destroy();
     });
 
-    it('does not override the browser user agent', async () => {
+    it('does override the default HeadlessChrome user agent', async () => {
         resetMocks();
         launch.mockResolvedValue(browser);
         page.goto.mockResolvedValue(undefined);
@@ -145,10 +145,12 @@ describe('getPlaywrightPage (mocked)', () => {
             })
         );
         expect(browser.newContext).toHaveBeenCalledWith(
-            expect.not.objectContaining({
+            expect.objectContaining({
                 userAgent: expect.any(String),
             })
         );
+        const contextOptions = browser.newContext.mock.calls[0][0];
+        expect(contextOptions.userAgent).not.toMatch(/HeadlessChrome/i);
     });
 
     it('supports extending the browser auto close timeout', async () => {
