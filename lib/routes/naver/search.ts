@@ -229,13 +229,7 @@ function extractItems(response: string, templateId: string) {
 }
 
 function cleanText(text: string): string {
-    return text
-        .replaceAll(/&lt;/g, '<')
-        .replaceAll(/&gt;/g, '>')
-        .replaceAll(/&amp;/g, '&')
-        .replaceAll(/&quot;/g, '"')
-        .replaceAll(/<mark>/g, '')
-        .replaceAll(/<\/mark>/g, '');
+    return text.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('<mark>', '').replaceAll('</mark>', '');
 }
 
 function parseKoreanRelativeTime(timeText: string): Date {
