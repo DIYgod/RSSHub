@@ -22,7 +22,7 @@ export const route: Route = {
         target: '/showcase',
     }],
     name: 'Showcase',
-    maintainers: [],
+    maintainers: ['github-oysl'],
     handler,
     description: 'Fars News showcase articles. Persian news agency.',
 };
@@ -57,19 +57,15 @@ async function handler(ctx) {
     const processedItems = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await got({ method: 'get', url: item.link });
-                    const detail$ = load(detailResponse.data);
+                const detailResponse = await got({ method: 'get', url: item.link });
+                const detail$ = load(detailResponse.data);
 
-                    const desc = detail$('meta[name="description"]').attr('content') || '';
-                    item.description = desc;
+                const desc = detail$('meta[name="description"]').attr('content') || '';
+                item.description = desc;
 
-                    const timeText = detail$('time').attr('datetime') || detail$('.text-gray-400').first().text();
-                    if (timeText) {
-                        item.pubDate = parseDate(timeText);
-                    }
-                } catch {
-                    // Silently continue if detail fetch fails
+                const timeText = detail$('time').attr('datetime') || detail$('.text-gray-400').first().text();
+                if (timeText) {
+                    item.pubDate = parseDate(timeText);
                 }
                 return item;
             })
