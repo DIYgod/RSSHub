@@ -40,10 +40,10 @@ export const route: Route = {
                     },
                 },
             });
-            return (response.data?.data as ExhibitItem[]) || [];
+            return (response.data?.data as exhibitItem[]) || [];
         };
 
-        let rawItems: ExhibitItem[] = [];
+        let rawItems: exhibitItem[] = [];
         let titleTag = '';
 
         if (type === 'PAST' || type === 'PRESENT') {
