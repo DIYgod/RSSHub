@@ -7,7 +7,7 @@ import { search } from './utils/search';
 export const route: Route = {
     path: '/search/:routeParams',
     categories: ['shopping'],
-    example: '/search/category=PCs&location=Berlin&radius=20',
+    example: '/kleinanzeigen/search/category=PCs&location=Berlin&radius=20',
     parameters: {
         routeParams: 'Extra parameters, see the table below',
     },
