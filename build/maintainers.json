@@ -6526,6 +6526,9 @@
   "/obsidian/plugins": [
     "DIYgod"
   ],
+  "/obsidian/themes": [
+    "DIYgod"
+  ],
   "/obsidian/publish/:id": [
     "Xy2002"
   ],

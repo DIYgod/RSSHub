@@ -2129,6 +2129,7 @@ export type RoutePath =
   | `/nytimes/rss/:cat?`
   | `/obsidian/plugins`
   | `/obsidian/publish/:id`
+  | `/obsidian/themes`
   | `/oceanengine/index/:keyword/:channel?`
   | `/oct0pu5/`
   | `/odaily/:id?`
