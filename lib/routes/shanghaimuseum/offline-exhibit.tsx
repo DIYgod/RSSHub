@@ -7,11 +7,11 @@ import { parseDate } from '@/utils/parse-date';
 import { namespace } from './namespace';
 
 export const route: Route = {
-    path: '/display/offline-exhibit',
+    path: '/display/offline-exhibit/:type?',
     categories: ['travel'],
-    example: '/shanghaimuseum/display/offline-exhibit?type=PAST',
+    example: '/shanghaimuseum/display/offline-exhibit/PRESENT',
     parameters: {
-        type: 'Exhibition type, supported values: PRESENT (当期展览) | PAST (往期展览). Default: PRESENT.',
+        type: 'Exhibition type, supported values: PRESENT (当期展览) | PAST (往期展览). Default: All exhibitions (both PRESENT and PAST).',
     },
     // Use SHM English version channel name
     name: 'Special Exhibitions',
@@ -23,30 +23,43 @@ export const route: Route = {
         },
     ],
     handler: async (ctx) => {
-        const type = ctx.req.query('type');
-
-        // Default to PRESENT if type is not provided or invalid
-        const exhibitionType = type === 'PAST' ? 'PAST' : 'PRESENT';
+        const type = ctx.req.param('type')?.toUpperCase();
 
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
-        const response = await got.post(apiUrl, {
-            json: {
-                limit: 20,
-                page: 1,
-                params: {
-                    exhibitTypeCode: 'OFFLINE_EXHIBITION',
-                    langCode: 'CHINESE',
-                    offlineExhibitionType: exhibitionType,
+        const fetchExhibits = async (status: string, limit = 20) => {
+            const response = await got.post(apiUrl, {
+                json: {
+                    limit,
+                    page: 1,
+                    params: {
+                        exhibitTypeCode: 'OFFLINE_EXHIBITION',
+                        langCode: 'CHINESE',
+                        offlineExhibitionType: status,
+                    },
                 },
-            },
-        });
+            });
+            return (response.data?.data as ExhibitItem[]) || [];
+        };
+
+        let rawItems: ExhibitItem[] = [];
+        let titleTag = '';
+
+        if (type === 'PAST' || type === 'PRESENT') {
+            // if user specified the type with past or present
+            rawItems = await fetchExhibits(type, 50);
+            titleTag = type === 'PAST' ? '往期展览' : '当期展览';
+        } else {
+            // default to fetch both present and past exhibitions
+            const [presentItems, pastItems] = await Promise.all([fetchExhibits('PRESENT', 50), fetchExhibits('PAST', 20)]);
+            rawItems = [...presentItems, ...pastItems];
+            titleTag = '当期展览&往期展览';
+        }
 
         const museumName = namespace.zh?.name || namespace.name;
-        const list = response.data.data || [];
 
-        const items = list.map((item) => {
+        const items = rawItems.map((item) => {
             const title = item.name;
             const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
             const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
@@ -111,7 +124,7 @@ export const route: Route = {
         });
 
         return {
-            title: `${museumName} - 特别展览 - ${exhibitionType === 'PAST' ? '往期展览' : '当期展览'}`,
+            title: `${museumName} - 特别展览 - ${titleTag}`,
             link: `${baseUrl}/mu/frontend/pg/display/offline-exhibit`,
             language: 'zh-CN',
             item: items,
