@@ -41186,6 +41186,19 @@
       }
     ]
   },
+  "shanghaimuseum.net": {
+    "_name": "Shanghai Museum",
+    "www": [
+      {
+        "title": "Special Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/mu/frontend/pg/display/offline-exhibit"
+        ],
+        "target": "/shanghaimuseum/display/offline-exhibit"
+      }
+    ]
+  },
   "shcstheatre.com": {
     "_name": "上海文化广场",
     "www": [
