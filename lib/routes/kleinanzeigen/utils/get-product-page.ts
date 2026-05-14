@@ -19,10 +19,9 @@ export const getProductPage = (url: string): Promise<DataItem> =>
 
         const title = product
             .find('#viewad-title')
-            .clone() // Clone the element to avoid modifying the original
             .find('.is-hidden') // Find all elements with class 'is-hidden'
             .remove() // Remove them
-            .end() // Go back to the cloned h1
+            .end() // Go back to the h1
             .text() // Get the text
             .trim();
 
