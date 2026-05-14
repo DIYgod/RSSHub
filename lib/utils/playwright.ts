@@ -105,6 +105,7 @@ const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): Browserle
 
 const getContextOptions = (): BrowserContextOptions => ({
     ignoreHTTPSErrors: true,
+    userAgent: config.ua,
 });
 
 const createFinishedRequest = (request: PlaywrightRequest, response: PlaywrightResponse | null): FinishedRequest => ({
