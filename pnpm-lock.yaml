@@ -215,8 +215,8 @@ importers:
         specifier: 11.1.0
         version: 11.1.0
       re2js:
-        specifier: 2.6.1
-        version: 2.6.1
+        specifier: 2.8.0
+        version: 2.8.0
       rfc4648:
         specifier: 1.5.4
         version: 1.5.4
@@ -5394,8 +5394,8 @@ packages:
   rate-limiter-flexible@11.1.0:
     resolution: {integrity: sha512-lyyC0SqKz+dE5JoHZ4JMqdrM3LSZKBxzuAFAyKCYAnmHnPz/Rb6iDquxoL4CMipDXoR0G+QRhOzYWL3JKihbNw==}
 
-  re2js@2.6.1:
-    resolution: {integrity: sha512-E5bG/nXPEcgd4yL+P8yYBd8FZ2z6zC+mj17iOMjqr8EhrWAO9W6GxwpaQaedIPNtm9dbKUbGVDOtj4CbJKJv9Q==}
+  re2js@2.8.0:
+    resolution: {integrity: sha512-HCjH9S3vdPyoYqv6++dZGa0RtG9xr7cAV00I0ymNHaKgiYOISsfTOMAj2UAP9miRWP+786AO/a4bIvtzTFOI1Q==}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -11328,7 +11328,7 @@ snapshots:
 
   rate-limiter-flexible@11.1.0: {}
 
-  re2js@2.6.1: {}
+  re2js@2.8.0: {}
 
   readable-stream@3.6.2:
     dependencies:
