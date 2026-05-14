@@ -77,10 +77,6 @@ async function handler(ctx) {
 
     const response = await ofetch(url);
 
-    const segments = response.split(`"templateId":"${config.templateId}"`);
-    // eslint-disable-next-line no-console
-    console.log(`[naver-search] category=${category}, templateId=${config.templateId}, segments=${segments.length}`);
-
     const items = extractItems(response, config.templateId);
 
     return {
@@ -229,7 +225,23 @@ function extractItems(response: string, templateId: string) {
 }
 
 function cleanText(text: string): string {
-    return text.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('<mark>', '').replaceAll('</mark>', '');
+    return text
+        .replaceAll(/&(amp|lt|gt|quot);/g, (match) => {
+            switch (match) {
+                case '&amp;':
+                    return '&';
+                case '&lt;':
+                    return '<';
+                case '&gt;':
+                    return '>';
+                case '&quot;':
+                    return '"';
+                default:
+                    return match;
+            }
+        })
+        .replaceAll('<mark>', '')
+        .replaceAll('</mark>', '');
 }
 
 function parseKoreanRelativeTime(timeText: string): Date {
