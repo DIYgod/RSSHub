@@ -6,6 +6,15 @@ import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
 
+interface ExhibitItem {
+    code: string;
+    exhibitDateRange?: string;
+    exhibitPlace?: string;
+    issueTime: string;
+    name: string;
+    picPath?: string;
+}
+
 export const route: Route = {
     path: '/display/offline-exhibit/:type?',
     categories: ['travel'],
@@ -28,7 +37,7 @@ export const route: Route = {
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
-        const fetchExhibits = async (status: string, limit = 20) => {
+        const fetchExhibits = async (status: string, limit = 20): Promise<ExhibitItem[]> => {
             const response = await got.post(apiUrl, {
                 json: {
                     limit,
@@ -40,10 +49,10 @@ export const route: Route = {
                     },
                 },
             });
-            return (response.data?.data as exhibitItem[]) || [];
+            return (response.data?.data as ExhibitItem[]) || [];
         };
 
-        let rawItems: exhibitItem[] = [];
+        let rawItems: ExhibitItem[] = [];
         let titleTag = '';
 
         if (type === 'PAST' || type === 'PRESENT') {
