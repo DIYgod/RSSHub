@@ -89,6 +89,89 @@ const parseExhibitionDuration = (duration: string) => {
     };
 };
 
+// to identify the route config and titletag based on type and subtype, and also to clean the input for better matching, this function is used in both route handler and radar to ensure consistency
+const resolveRouteConfig = (type: string | undefined, subType: string | undefined, baseUrl: string) => {
+    let url = `${baseUrl}/zl/`;
+    let cleanType = '';
+
+    if (type) {
+        const firstLevel = type.toLowerCase().trim();
+        if (subType) {
+            cleanType = `${firstLevel}/${subType.toLowerCase().trim()}`;
+            url = `${baseUrl}/zl/${cleanType}/`;
+        } else if (firstLevel === 'lszl') {
+            url = `${baseUrl}/zl/lszl/`;
+            cleanType = 'lszl';
+        } else {
+            cleanType = firstLevel;
+            url = `${baseUrl}/zl/${cleanType}/`;
+        }
+    }
+    return { cleanType, url, titleTag: titleTagMap[cleanType] || cleanType || '展览' };
+};
+
+// to concurrent or single-page retrieval according to titletag
+const fetchTargetElements = async (cleanType: string, subType: string | undefined, url: string, baseUrl: string) => {
+    const items: Array<{ element: any; contextUrl: string }> = [];
+    if (cleanType === 'lszl' && !subType) {
+        const subKeys = Object.keys(titleTagMap).filter((key) => key.startsWith('lszl/'));
+        const pagesData = await Promise.all(
+            subKeys.map(async (subKey) => {
+                try {
+                    const targetSubUrl = `${baseUrl}/zl/${subKey}/`;
+                    const res = await got(targetSubUrl);
+                    return { html: res.data, targetSubUrl };
+                } catch {
+                    return null;
+                }
+            })
+        );
+        const seenLinks = new Set<string>();
+        for (const page of pagesData) {
+            if (!page) {
+                continue;
+            }
+            const pageElements = load(page.html)('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
+            for (const el of pageElements) {
+                const href = load(el)('a.recurl').attr('href') || '';
+                if (href && !seenLinks.has(href)) {
+                    seenLinks.add(href);
+                    items.push({ element: el, contextUrl: page.targetSubUrl });
+                }
+            }
+        }
+    } else {
+        const response = await got(url);
+        const pageElements = load(response.data)('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
+        for (const el of pageElements) {
+            items.push({ element: el, contextUrl: url });
+        }
+    }
+    return items;
+};
+
+// create itemLink
+const buildItemLink = (rawLink: string, contextUrl: string, baseUrl: string) => (rawLink && (rawLink.startsWith('.') || rawLink.startsWith('/')) ? new URL(rawLink, contextUrl).href : rawLink ? `${baseUrl}${rawLink}` : baseUrl);
+
+// create exhibitionLink
+const buildExhibitionLink = (rawZtzl: string, itemLink: string, baseUrl: string) =>
+    rawZtzl && rawZtzl !== '#' && rawZtzl !== 'undefined' ? (rawZtzl.startsWith('http') ? rawZtzl : `${baseUrl}${rawZtzl.startsWith('/') ? '' : '/'}${rawZtzl}`) : itemLink;
+
+// create imgUrl
+const buildImgUrl = (rawSrc: string, contextUrl: string) => (rawSrc && (rawSrc.startsWith('.') || rawSrc.startsWith('/')) ? new URL(rawSrc, contextUrl).href : rawSrc.startsWith('http') ? rawSrc : '');
+
+// fetch full duration and check if with '...'
+const fetchFullDuration = async (itemLink: string, duration: string): Promise<string> => {
+    if (!duration.endsWith('...')) {
+        return duration;
+    }
+    return (await cache.tryGet(itemLink, async () => {
+        const detailResponse = await got(itemLink);
+        const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
+        return match && match[1] ? match[1] : duration;
+    })) as string;
+};
+
 export const route: Route = {
     path: '/zl/:type?/:subType?',
     categories: ['travel'],
@@ -110,76 +193,11 @@ export const route: Route = {
     handler: async (ctx: Context): Promise<Data> => {
         const type = ctx.req.param('type');
         const subType = ctx.req.param('subType');
-
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.chnmuseum.cn';
-        let url = `${baseUrl}/zl/`;
-        let cleanType = '';
-        let titleTag = '展览'; // default with all exhibition info
 
-        if (type) {
-            const firstLevel = type.toLowerCase().trim();
-            if (subType) {
-                // for subtype used in lszl
-                cleanType = `${firstLevel}/${subType.toLowerCase().trim()}`;
-                url = `${baseUrl}/zl/${cleanType}/`;
-                titleTag = titleTagMap[cleanType] || cleanType;
-            } else if (firstLevel === 'lszl') {
-                // for only type used in lszl, will merge all its subtypes into one feed
-                url = `${baseUrl}/zl/lszl/`;
-                cleanType = 'lszl';
-                titleTag = titleTagMap[cleanType] || cleanType;
-            } else {
-                // for other type exclude lszl, keep single page for each type
-                cleanType = firstLevel;
-                url = `${baseUrl}/zl/${cleanType}/`;
-                titleTag = titleTagMap[cleanType] || cleanType;
-            }
-        }
-
-        const itemsToParse: Array<{ element: any; contextUrl: string }> = [];
-
-        if (cleanType === 'lszl' && !subType) {
-            // catch total 8 subtype for lszl, and merge them into one feed, because the website doesn't provide a good parent-level page for lszl, we have to crawl all subtypes' page to get complete exhibition list, it's a bit costly but worth it for comprehensive coverage. For other types, we can just crawl the single page directly.
-            const subKeys = Object.keys(titleTagMap).filter((key) => key.startsWith('lszl/'));
-
-            const pagesData = await Promise.all(
-                subKeys.map(async (subKey) => {
-                    try {
-                        const targetSubUrl = `${baseUrl}/zl/${subKey}/`;
-                        const res = await got(targetSubUrl);
-                        return { html: res.data, targetSubUrl };
-                    } catch {
-                        return null;
-                    }
-                })
-            );
-
-            const seenLinks = new Set<string>();
-            for (const page of pagesData) {
-                if (!page) {
-                    continue;
-                }
-                const $page = load(page.html);
-                const pageElements = $page('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
-
-                for (const el of pageElements) {
-                    const href = $page(el).find('a.recurl').attr('href') || '';
-                    if (href && !seenLinks.has(href)) {
-                        seenLinks.add(href);
-                        itemsToParse.push({ element: el, contextUrl: page.targetSubUrl });
-                    }
-                }
-            }
-        } else {
-            // regular catch according to input
-            const response = await got(url);
-            const $ = load(response.data);
-            const pageElements = $('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
-            for (const el of pageElements) {
-                itemsToParse.push({ element: el, contextUrl: url });
-            }
-        }
+        const { cleanType, url, titleTag } = resolveRouteConfig(type, subType, baseUrl);
+        const itemsToParse = await fetchTargetElements(cleanType, subType, url, baseUrl);
 
         const list = (
             await Promise.all(
@@ -192,11 +210,11 @@ export const route: Route = {
                     }
 
                     const rawLink = aTag.attr('href') || '';
-                    const itemLink = rawLink && (rawLink.startsWith('.') || rawLink.startsWith('/')) ? new URL(rawLink, contextUrl).href : rawLink ? `${baseUrl}${rawLink}` : baseUrl;
+                    const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
 
                     // for detailed exhibition page if available, different from base exhibition page.
                     const rawZtzl = aTag.attr('ztzlurl') ? aTag.attr('ztzlurl')!.trim() : '';
-                    const exhibitionLink: string = rawZtzl && rawZtzl !== '#' && rawZtzl !== 'undefined' ? (rawZtzl.startsWith('http') ? rawZtzl : `${baseUrl}${rawZtzl.startsWith('/') ? '' : '/'}${rawZtzl}`) : itemLink;
+                    const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
 
                     // title may not have full display on the page, use the img alt information instead
                     const imgTag = $item.find('img').first();
@@ -205,23 +223,12 @@ export const route: Route = {
 
                     // if img alt is not available, use zxxx3 instead
                     const rawSrc = imgTag.attr('src') || '';
-                    const imgUrl = rawSrc && (rawSrc.startsWith('.') || rawSrc.startsWith('/')) ? new URL(rawSrc, contextUrl).href : rawSrc.startsWith('http') ? rawSrc : '';
+                    const imgUrl = buildImgUrl(rawSrc, contextUrl);
 
                     const location = $item.find('div.cj_zxx1').text().trim();
 
-                    let fullDuration: string = $item.find('div.cj_zxx2 p').text().trim();
-
-                    // Check if the text ends with "..." If so, proceed to fetch the full version.
-                    if (fullDuration.endsWith('...')) {
-                        fullDuration = (await cache.tryGet(itemLink, async () => {
-                            const detailResponse = await got(itemLink);
-                            const html = detailResponse.data;
-                            const dateRegex = /var\s+qtxszq\s*=\s*"(.*?)";/;
-                            const match = html.match(dateRegex);
-                            return match && match[1] ? match[1] : fullDuration;
-                            // cannot use return match?.[1] ?? fullDuration; if it return "", it will use fullDuration instead, which is not expected, we want to use the matched value even it's empty string, because empty string is also a valid value for fullDuration, it means the exhibition didn't provide any info about duration, while fullDuration with "..." is a sign that there is more info hidden and we should try to fetch it from detail page.
-                        })) as string;
-                    }
+                    const initialDuration = $item.find('div.cj_zxx2 p').text().trim();
+                    const fullDuration = await fetchFullDuration(itemLink, initialDuration);
 
                     const { startDate, endDate } = parseExhibitionDuration(fullDuration);
 
