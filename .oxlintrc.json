@@ -385,7 +385,7 @@
         "no-useless-rename": "error",
         "no-var": "error",
         "eslint-js/object-shorthand": "error", // use jsPlugins
-        "eslint-js/prefer-arrow-callback": "error", // use jsPlugins
+        "prefer-arrow-callback": "error",
         "prefer-const": "error",
         "prefer-object-has-own": "error",
         "prefer-regex-literals": [
