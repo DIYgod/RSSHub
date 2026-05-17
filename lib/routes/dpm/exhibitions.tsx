@@ -93,9 +93,7 @@ export const route: Route = {
             const duration = pTags
                 .eq(1)
                 .contents()
-                .filter(function () {
-                    return this.nodeType === 3;
-                })
+                .filter((_, el: any) => el.nodeType === 3)
                 .text()
                 .replaceAll('展览时间：', '')
                 .trim();
