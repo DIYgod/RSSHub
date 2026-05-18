@@ -22,6 +22,8 @@ const languages = {
     },
 };
 
+const englishPaths = new Set(['middle-east']);
+
 const renderDescription = (image, description) =>
     renderToString(
         <>
@@ -45,7 +47,7 @@ async function handler(ctx) {
     const params = getSubPath(ctx) === '/' ? ['arabic'] : getSubPath(ctx).replace(/^\//, '').split('/');
 
     if (!Object.hasOwn(languages, params[0])) {
-        params.unshift('arabic');
+        params.unshift(englishPaths.has(params[0]) ? 'english' : 'arabic');
     }
 
     const language = params.shift();
