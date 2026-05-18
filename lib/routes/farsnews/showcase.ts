@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [{
         source: ['farsnews.ir/showcase'],
-        target: '/showcase',
+        target: '/farsnews/showcase',
     }],
     name: 'Showcase',
     maintainers: ['github-oysl'],
@@ -60,8 +60,31 @@ async function handler(ctx) {
                 const detailResponse = await got({ method: 'get', url: item.link });
                 const detail$ = load(detailResponse.data);
 
-                const desc = detail$('meta[name="description"]').attr('content') || '';
-                item.description = desc;
+                // Try to extract full article content from hydration data first
+                const hydrationScript = detail$('script')
+                    .toArray()
+                    .map((script) => detail$(script).html())
+                    .find((html) => html?.includes('window.__hydrationDataString'));
+
+                if (hydrationScript) {
+                    const match = hydrationScript.match(/window\.__hydrationDataString\s*=\s*'([^']+)'/);
+                    if (match) {
+                        try {
+                            const hydrationData = JSON.parse(match[1]);
+                            const articleBody = hydrationData?.article?.body || hydrationData?.content?.body || '';
+                            if (articleBody) {
+                                item.description = articleBody;
+                            }
+                        } catch {
+                            // Fall back to meta description if hydration parse fails
+                        }
+                    }
+                }
+
+                // Fallback to meta description if no hydration data
+                if (!item.description) {
+                    item.description = detail$('meta[name="description"]').attr('content') || '';
+                }
 
                 const timeText = detail$('time').attr('datetime') || detail$('.text-gray-400').first().text();
                 if (timeText) {
