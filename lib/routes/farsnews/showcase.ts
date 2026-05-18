@@ -1,8 +1,8 @@
-import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/showcase/:category?',
@@ -35,7 +35,7 @@ function extractHydrationData(html: string): any {
         .find((html) => html?.includes('window.__hydrationDataString'));
 
     if (hydrationScript) {
-        const match = hydrationScript.match(/window\.__hydrationDataString\s*=\s*'([^']+)'/);
+        const match = /window\.__hydrationDataString\s*=\s*'([^']+)'/.exec(hydrationScript);
         if (match) {
             try {
                 return JSON.parse(match[1]);
