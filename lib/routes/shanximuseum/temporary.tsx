@@ -177,7 +177,6 @@ export const route = {
                 title: `当前暂无${titleTag}`,
                 description: '<p>官方目前没有提供相关的展览数据。</p>',
                 link: `${baseUrl}/sx/exhibition/temporary.html`,
-                pubDate: timezone(new Date(), +8),
                 // fixed guid
                 guid: `shanxi-museum-empty-${fetchTypes.join('-')}`,
             });
