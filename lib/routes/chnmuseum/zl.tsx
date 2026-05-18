@@ -218,8 +218,8 @@ export const route: Route = {
 
                     // title may not have full display on the page, use the img alt information instead
                     const imgTag = $item.find('img').first();
-                    const rawAltTitle = imgTag.attr('alt')?.trim();
-                    const title = rawAltTitle || $item.find('div.cj_zxx3 p').text().trim() || 'Title N/A';
+                    const rawAltTitle = imgTag.attr('alt');
+                    const title = rawAltTitle || $item.find('div.cj_zxx3 p').text() || 'Title N/A';
 
                     // if img alt is not available, use zxxx3 instead
                     const rawSrc = imgTag.attr('src') || '';
