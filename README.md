@@ -70,6 +70,10 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 
 - `lib/routes/163/domestic.ts`
 - `lib/routes/foreignpolicy/`
+- `lib/routes/fastbull/center_bank.ts`
+- `lib/routes/fastbull/crypto.ts`
+- `lib/routes/fastbull/stock.ts`
+- `lib/routes/fastbull/trump.ts`
 - `lib/routes/github/blog.ts`
 - `lib/routes/github/latest.ts`
 - `lib/routes/qq/finance.ts`
