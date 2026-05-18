@@ -89,6 +89,10 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 - `lib/routes/thediplomat/`
 - `lib/routes/xinhua/`
 
+2026 年 5 月 19 日更新以下 routes：
+
+- `lib/routes/kaopu/latest.ts`
+
 FastBull 自定义快讯参数记录：
 
 - `lib/routes/fastbull/center_bank.ts`：央行，`checkImportant=1`，只看重要。
@@ -112,5 +116,6 @@ FastBull 自定义快讯参数记录：
 | 腾讯国际新闻 | `https://rss.cnnewsnow.com/qq/world` | `lib/routes/qq/world.ts` |
 | 新浪国际新闻 | `https://rss.cnnewsnow.com/sina/world` | `lib/routes/sina/world.ts` |
 | TechCrunch Latest | `https://rss.cnnewsnow.com/techcrunch/latest` | `lib/routes/techcrunch/latest.ts` |
+| 靠谱新闻最新 | `https://rss.cnnewsnow.com/kaopu/latest` | `lib/routes/kaopu/latest.ts` |
 
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
