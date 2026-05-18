@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,7 +35,6 @@ function parseListing(html: string): ListItem[] {
             const link = absolutize($el.find('> a').attr('href'));
             const title = $el.find('.txt .tit').text().trim();
             const image = absolutize($el.find('.imgk img').attr('src'));
-            // Each <p> is one metadata row: time / location / speaker / topic
             const adRows = $el
                 .find('.txt .ad p')
                 .toArray()
@@ -55,35 +55,39 @@ function parseListing(html: string): ListItem[] {
 }
 
 function extractDate(timeText: string): Date | undefined {
-    // 2026.05.15 12:00 / 2025.12.15（周一）13:30 / 2025-08-03 / 2026.04.22 10:00
-    const match = timeText.match(/(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/);
-    if (!match) {
+    // Examples: 2026.05.15 12:00 / 2025.12.15（周一）13:30 / 2025-08-03 / 2026.04.22 10:00
+    const dateMatch = timeText.match(/(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/);
+    if (!dateMatch) {
         return undefined;
     }
-    const [, y, m, d] = match;
-    return timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), +8);
+    const [, y, m, d] = dateMatch;
+    const timeMatch = timeText.match(/(\d{1,2}):(\d{2})/);
+    const dateStr = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    if (timeMatch) {
+        const [, hh, mm] = timeMatch;
+        return timezone(parseDate(`${dateStr} ${hh.padStart(2, '0')}:${mm}`, 'YYYY-MM-DD HH:mm'), +8);
+    }
+    return timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8);
 }
 
-function buildMetaHtml(item: ListItem): string {
-    const parts: string[] = [];
-    if (item.image) {
-        parts.push(`<p><img src="${item.image}" referrerpolicy="no-referrer" /></p>`);
-    }
-    if (item.timeText) {
-        parts.push(`<p>时间：${item.timeText}</p>`);
-    }
-    if (item.location) {
-        parts.push(`<p>地点：${item.location}</p>`);
-    }
-    if (item.topic) {
-        parts.push(`<p>主题：${item.topic}</p>`);
-    }
-    return parts.join('');
+function renderDescription(item: ListItem, body?: string): string {
+    return renderToString(
+        <>
+            {item.location && <p>地点：{item.location}</p>}
+            {item.topic && <p>主题：{item.topic}</p>}
+            {body && (
+                <>
+                    <hr />
+                    <div dangerouslySetInnerHTML={{ __html: body }} />
+                </>
+            )}
+        </>
+    );
 }
 
 function enrichItem(item: ListItem): Promise<DataItem> {
     return cache.tryGet(item.link, async () => {
-        let description = buildMetaHtml(item);
+        let body: string | undefined;
         let pubDate = extractDate(item.timeText);
 
         try {
@@ -91,7 +95,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
             const $ = load(response.data);
             const $body = $('.xw-cont');
             // In-site article page — enrich with body content.
-            // Otherwise it's a WeChat MP redirect interstitial; keep the SJTU link as-is so the reader follows the redirect.
+            // Otherwise it is a WeChat MP redirect interstitial; the SJTU link redirects to the original article when opened.
             if ($body.length > 0) {
                 const $txt = $body.find('.txt');
                 $txt.find('img').each((_, e) => {
@@ -106,7 +110,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
                         $(e).attr('href', absolutize(href));
                     }
                 });
-                description = `${buildMetaHtml(item)}<hr/>${$txt.html() ?? ''}`;
+                body = $txt.html() ?? undefined;
 
                 const publishedText = $body.find('.jj p').first().text();
                 const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
@@ -122,8 +126,9 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         return {
             title: item.title,
             link: item.link,
-            description,
+            description: renderDescription(item, body),
             author: item.speakers || undefined,
+            image: item.image || undefined,
             pubDate,
         };
     }) as Promise<DataItem>;
