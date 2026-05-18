@@ -85,4 +85,11 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 - `lib/routes/thediplomat/`
 - `lib/routes/xinhua/`
 
+FastBull 自定义快讯参数记录：
+
+- `lib/routes/fastbull/center_bank.ts`：央行，`checkImportant=1`，只看重要。
+- `lib/routes/fastbull/crypto.ts`：加密货币，`checkImportant=1`，只看重要。
+- `lib/routes/fastbull/stock.ts`：股票，`checkImportant=1`，只看重要。
+- `lib/routes/fastbull/trump.ts`：特朗普动态，`checkImportant=0`，不过滤重要性。
+
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
