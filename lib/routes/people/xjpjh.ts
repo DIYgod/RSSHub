@@ -1,5 +1,3 @@
-import * as url from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -68,7 +66,7 @@ async function handler(ctx) {
     const out = await Promise.all(
         list.map(async (info) => {
             const title = info.title;
-            const itemUrl = url.resolve(host, info.link);
+            const itemUrl = new URL(info.link, host).href;
 
             const cacheIn = await cache.get(itemUrl);
             if (cacheIn) {

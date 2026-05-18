@@ -35,17 +35,21 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
-    const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
-
     // ua
-    if (!request.headers.has('user-agent')) {
-        request.headers.set('user-agent', config.ua);
-    }
+    if (config.isDefaultUA || init?.headerGeneratorOptions) {
+        const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
-    for (const header of HEADER_LIST) {
-        if (!request.headers.has(header) && generatedHeaders[header]) {
-            request.headers.set(header, generatedHeaders[header]);
+        if (!request.headers.get('user-agent')) {
+            request.headers.set('user-agent', generatedHeaders['user-agent']);
         }
+
+        for (const header of HEADER_LIST) {
+            if (!request.headers.has(header) && generatedHeaders[header]) {
+                request.headers.set(header, generatedHeaders[header]);
+            }
+        }
+    } else if (!request.headers.get('user-agent')) {
+        request.headers.set('user-agent', config.ua);
     }
 
     // referer

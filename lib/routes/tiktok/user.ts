@@ -1,15 +1,13 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import { queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
+import { renderUserEmbed } from './templates/user';
 import type { Item } from './types';
 
 const baseUrl = 'https://www.tiktok.com';
@@ -29,7 +27,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tiktok.com/:user'],
+            source: ['www.tiktok.com/:user'],
             target: '/user/:user',
         },
     ],
@@ -45,7 +43,7 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `tiktok:user:${user}`,
         async () => {
-            const browser = await puppeteer();
+            const browser = await playwright();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
             let itemList = { itemList: [] };
@@ -79,7 +77,7 @@ async function handler(ctx) {
 
     const items = itemList.itemList.map((item: Item) => ({
         title: item.desc,
-        description: art(path.join(__dirname, 'templates/user.art'), {
+        description: renderUserEmbed({
             poster: item.video.cover,
             source: item.video.playAddr,
             useIframe,

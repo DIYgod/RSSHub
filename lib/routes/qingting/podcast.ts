@@ -32,7 +32,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['RookieZoe', 'huyyi', 'pseudoyu'],
     handler,
-    description: `获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。`,
+    description: '获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。',
 };
 
 function getMediaUrl(channelId: string, mediaId: string) {

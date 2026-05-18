@@ -1,6 +1,6 @@
 export interface LinkData {
     '@context': string;
-    '@graph': {
+    '@graph': Array<{
         '@type': string;
         headline: string;
         name: string;
@@ -18,13 +18,13 @@ export interface LinkData {
             name: string;
             url: string;
         };
-    }[];
+    }>;
 }
 
 export interface VideoSetup {
     techOrder: string[];
-    sources: {
+    sources: Array<{
         type: string;
         src: string;
-    }[];
+    }>;
 }

@@ -39,7 +39,7 @@ async function handler(ctx) {
                 const src = p1.replaceAll(/\?.*/g, '');
                 return `<img src="${src}" />`;
             })
-            .replaceAll(/\[url](.+?)\[\/url]/g, `<a href="$1">$1</a>`);
+            .replaceAll(/\[url](.+?)\[\/url]/g, '<a href="$1">$1</a>');
     const homePage = await got.post('https://ngabbs.com/app_api.php?__lib=subject&__act=list', {
         headers: {
             'X-User-Agent': X_UA,

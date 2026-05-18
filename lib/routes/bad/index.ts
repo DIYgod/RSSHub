@@ -33,18 +33,18 @@ async function handler(ctx) {
 
             const a = item.find('a.title');
 
-            item.find('img').each(function () {
-                $(this).attr('src', $(this).attr('data-echo'));
-                $(this).removeClass('lazy');
-                $(this).removeAttr('data-echo');
-                $(this).removeAttr('id');
+            item.find('img').each((_, el) => {
+                $(el).attr('src', $(el).attr('data-echo'));
+                $(el).removeClass('lazy');
+                $(el).removeAttr('data-echo');
+                $(el).removeAttr('id');
             });
 
-            item.find('video').each(function () {
-                $(this).attr('poster', $(this).attr('data-echo'));
-                $(this).removeAttr('data-echo');
-                $(this).removeAttr('onerror');
-                $(this).removeAttr('id');
+            item.find('video').each((_, el) => {
+                $(el).attr('poster', $(el).attr('data-echo'));
+                $(el).removeAttr('data-echo');
+                $(el).removeAttr('onerror');
+                $(el).removeAttr('id');
             });
 
             return {

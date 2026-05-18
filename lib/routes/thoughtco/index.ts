@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:category?',
@@ -318,6 +317,7 @@ export const route: Route = {
 | ----------------------- | ------------------------------- |
 | Tips For Adult Students | tips-for-adult-students-4132468 |
 | Getting Your Ged        | getting-your-ged-4132466        |
+
 </details>`,
 };
 
@@ -359,7 +359,7 @@ async function handler(ctx) {
                     const image = e.find('img');
 
                     e.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             image: {
                                 src: image.prop('data-src'),
                                 width: image.prop('width'),
@@ -370,7 +370,7 @@ async function handler(ctx) {
                 });
 
                 item.title = content('meta[property="og:title"]').prop('content');
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
                     },

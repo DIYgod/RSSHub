@@ -9,7 +9,7 @@ const handler = async (ctx) => {
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 user(input: {userName: "${uid}"}) {
                   displayName
                   avatar

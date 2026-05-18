@@ -1,6 +1,6 @@
 const host = 'http://www.customs.gov.cn';
 
-const puppeteerGet = async (url, browser) => {
+const playwrightGet = async (url, browser) => {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({ referer: host });
     await page.setRequestInterception(true);
@@ -15,4 +15,4 @@ const puppeteerGet = async (url, browser) => {
     return html;
 };
 
-export { host, puppeteerGet };
+export { host, playwrightGet };

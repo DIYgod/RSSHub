@@ -19,8 +19,7 @@ export const route: Route = {
             source: ['www.cccfna.org.cn/:category/:type?'],
         },
     ],
-    description: `
-::: tip
+    description: `::: tip
 存在**二级分类**的**一级分类**不能单独当作参数，如：\`/cccfna/hangyezixun\`
 :::
 
@@ -62,7 +61,8 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(item.link!, async () => {
-                    const $ = load(await ofetch(item.link!));
+                    const html = await ofetch(item.link!);
+                    const $ = load(html);
                     const content = $('.list_cont');
 
                     item.title = content.find('.title').text();

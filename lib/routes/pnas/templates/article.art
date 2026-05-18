@@ -1,8 +1,0 @@
-{{ if abstracts }}{{@ abstracts }}{{ /if }}
-
-{{ if access }}{{@ articleBody }}{{ /if }}
-
-{{ if dataAvailability }}{{@ dataAvailability }}{{ /if }}
-{{ if acknowledgments }}{{@ acknowledgments }}{{ /if }}
-{{ if supplementaryMaterials }}{{@ supplementaryMaterials }}{{ /if }}
-{{ if bibliography }}{{@ bibliography }}{{ /if }}

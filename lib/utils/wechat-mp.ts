@@ -150,7 +150,7 @@ class ExtractMetadata {
         return (str: string) => {
             const values: string[] = [];
             for (const match of str.matchAll(regExp)) {
-                const value = <string>match.groups?.value;
+                const value = match.groups?.value as string;
                 if (!multiple) {
                     return value;
                 }
@@ -166,47 +166,73 @@ class ExtractMetadata {
     private static doExtract = (metadataToBeExtracted: Record<string, (str: string) => string | string[] | null | undefined>, scriptText: string) => {
         const metadataExtracted: Record<string, string | string[]> = {};
         for (const [key, extractFunc] of Object.entries(metadataToBeExtracted)) {
-            metadataExtracted[key] = <string>extractFunc(scriptText);
+            metadataExtracted[key] = extractFunc(scriptText) as string;
         }
         metadataExtracted._extractedFrom = scriptText;
         return metadataExtracted;
     };
 
     private static commonMetadataToBeExtracted = {
-        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+` }),
+        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+`, allowNotFound: true }),
         realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: String.raw`\d+` }),
         createTime: this.genExtractFunc('ct', { valuePattern: String.raw`\d+`, allowNotFound: true }),
         sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
     };
 
-    static common = ($: CheerioAPI) =>
-        forEachScript(
+    private static showTypeMetadataToBeExtracted = {
+        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+` }),
+    };
+
+    static common = ($: CheerioAPI) => {
+        const metadataExtracted = forEachScript(
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>>this.doExtract(this.commonMetadataToBeExtracted, scriptText);
-                const showType = showTypeMapReverse[metadataExtracted.showType];
-                const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
-                metadataExtracted.sourceUrl = metadataExtracted.sourceUrl && fixUrl(metadataExtracted.sourceUrl);
-                if (showType) {
-                    metadataExtracted.showType = showType;
-                } else {
-                    warn('showType not found', `item_show_type=${metadataExtracted.showType}`);
-                }
-                if (realShowType) {
-                    metadataExtracted.realShowType = realShowType;
-                } else {
-                    warn('realShowType not found', `real_item_show_type=${metadataExtracted.realShowType}`);
-                }
-                if (metadataExtracted.showType !== metadataExtracted.realShowType) {
-                    // never seen this happen, waiting for examples
-                    warn('showType mismatch', `item_show_type=${metadataExtracted.showType}, real_item_show_type=${metadataExtracted.realShowType}`);
-                }
+                const metadataExtracted = this.doExtract(this.commonMetadataToBeExtracted, scriptText) as Record<string, string>;
                 throw new LoopReturn(metadataExtracted);
             },
             {},
             'script[nonce][type="text/javascript"]:contains("real_item_show_type")'
         );
+
+        // APP_MSG_PAGE has its item_show_type in a separate script
+        if (!metadataExtracted.showType) {
+            const showTypeExtracted = forEachScript(
+                $,
+                (script) => {
+                    const scriptText = $(script).text();
+                    const metadataExtracted = this.doExtract(this.showTypeMetadataToBeExtracted, scriptText) as Record<string, string>;
+                    throw new LoopReturn(metadataExtracted);
+                },
+                {},
+                'script[nonce][type="text/javascript"]:contains("item_show_type")'
+            );
+            if (showTypeExtracted.showType) {
+                metadataExtracted.showType = showTypeExtracted.showType;
+            }
+        }
+
+        const showType = showTypeMapReverse[metadataExtracted.showType];
+        const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
+        if (metadataExtracted.sourceUrl) {
+            metadataExtracted.sourceUrl = fixUrl(metadataExtracted.sourceUrl);
+        }
+        if (showType) {
+            metadataExtracted.showType = showType;
+        } else {
+            warn('showType not found', `item_show_type=${metadataExtracted.showType}`);
+        }
+        if (realShowType) {
+            metadataExtracted.realShowType = realShowType;
+        } else {
+            warn('realShowType not found', `real_item_show_type=${metadataExtracted.realShowType}`);
+        }
+        if (metadataExtracted.showType !== metadataExtracted.realShowType) {
+            // never seen this happen, waiting for examples
+            warn('showType mismatch', `item_show_type=${metadataExtracted.showType}, real_item_show_type=${metadataExtracted.realShowType}`);
+        }
+        return metadataExtracted;
+    };
 
     private static audioMetadataToBeExtracted = {
         voiceId: this.genExtractFunc('voiceid', { assignPattern: ':' }),
@@ -219,7 +245,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>>this.doExtract(this.audioMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.audioMetadataToBeExtracted, scriptText) as Record<string, string>;
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -235,7 +261,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string[]>>this.doExtract(this.imgMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.imgMetadataToBeExtracted, scriptText) as Record<string, string[]>;
                 if (Array.isArray(metadataExtracted.imgUrls)) {
                     metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
                 }
@@ -353,10 +379,10 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
     // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('iframe.video_iframe[data-src]').each((_, iframe) => {
         const $iframe = $(iframe);
-        const dataSrc = <string>$iframe.attr('data-src');
+        const dataSrc = $iframe.attr('data-src') as string;
         const srcUrlObj = new URL(dataSrc);
         if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
-            const newSrc = genVideoSrc(<string>srcUrlObj.searchParams.get('vid'));
+            const newSrc = genVideoSrc(srcUrlObj.searchParams.get('vid') as string);
             $iframe.attr('src', newSrc);
             $iframe.removeAttr('data-src');
             const width = $iframe.attr('data-w');
@@ -543,6 +569,7 @@ class PageParsers {
                 } else {
                     error('unknown page, probably due to WAF', pageTextShort, url);
                 }
+                /* v8 ignore next */
                 return {}; // just to make TypeScript happy, actually UNREACHABLE
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
@@ -567,15 +594,17 @@ class PageParsers {
 }
 
 const redirectHelper = async (url: string, maxRedirects: number = 5) => {
-    maxRedirects--;
-    const raw = await ofetch.raw(url);
+    const raw = await ofetch.raw(url, {
+        redirect: 'manual',
+    });
     if ([301, 302, 303, 307, 308].includes(raw.status)) {
-        if (!raw.headers.has('location')) {
+        const location = raw.headers.get('location');
+        if (!location) {
             error('redirect without location', url);
-        } else if (maxRedirects <= 0) {
+        } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(<string>raw.headers.get('location'), maxRedirects);
+        return await redirectHelper(new URL(location, url).toString(), maxRedirects - 1);
     }
     return raw;
 };
@@ -626,21 +655,19 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
 const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
-    if (item.link) {
-        const fetchedItem = await fetchArticle(item.link);
-        for (const key in fetchedItem) {
-            switch (key) {
-                case 'author':
-                    item.author = setMpNameAsAuthor
-                        ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
-                        : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
-                    break;
-                case 'link':
-                    item.link = skipLink ? item.link : fetchedItem.link || item.link;
-                    break;
-                default:
-                    item[key] = item[key] || fetchedItem[key];
-            }
+    const fetchedItem = await fetchArticle(item.link);
+    for (const key in fetchedItem) {
+        switch (key) {
+            case 'author':
+                item.author = setMpNameAsAuthor
+                    ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
+                    : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
+                break;
+            case 'link':
+                item.link = skipLink ? item.link : fetchedItem.link || item.link;
+                break;
+            default:
+                item[key] = item[key] || fetchedItem[key];
         }
     }
     return item;

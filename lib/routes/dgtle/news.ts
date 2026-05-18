@@ -67,14 +67,13 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [最新](https://www.dgtle.com/news)，其对应分类 ID 为 \`0\`，此时路由为 [\`/dgtle/news/0\`](https://rsshub.app/dgtle/news/0)。
 :::
 
 | 最新 | 直播 | 资讯 | 每日一言 |
 | ---- | ---- | ---- | -------- |
-| 0    | 395  | 396  | 388      |
-`,
+| 0    | 395  | 396  | 388      |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

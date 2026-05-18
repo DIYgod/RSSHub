@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 const getDetails = async (list: CrowdfundingList[]) => {
-    const result: Promise<CrowdfundingDetailInfo>[] = list.flatMap((section) => section.items.map((item) => utils.getCrowdfundingItem(item)));
+    const result: Array<Promise<CrowdfundingDetailInfo>> = list.flatMap((section) => section.items.map((item) => utils.getCrowdfundingItem(item)));
     return await Promise.all(result);
 };
 

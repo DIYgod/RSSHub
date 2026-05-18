@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const domain = 'www.colamanga.com';
@@ -43,7 +43,7 @@ async function handler(ctx: Context) {
     const id = ctx.req.param('id');
     const url = `https://${domain}/${id}`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const page = await browser.newPage();
 

@@ -29,7 +29,8 @@ export const route: Route = {
     handler: async (ctx) => {
         const { id } = ctx.req.param();
         const link = `https://www.69shuba.cx/book/${id}.htm`;
-        const $ = load(await get(link));
+        const html = await get(link);
+        const $ = load(html);
 
         const item = await Promise.all(
             $('.qustime li>a')
@@ -51,7 +52,8 @@ export const route: Route = {
 
 const createItem = (url: string) =>
     cache.tryGet(url, async () => {
-        const $ = load(await get(url));
+        const html = await get(url);
+        const $ = load(html);
         const { articleid, chapterid, chaptername } = parseObject(/bookinfo\s?=\s?{[\S\s]+?}/, $('head>script:not([src])').text());
         const decryptionMap = parseObject(/_\d+\s?=\s?{[\S\s]+?}/, $('.txtnav+script').text());
 

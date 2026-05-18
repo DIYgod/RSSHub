@@ -52,6 +52,7 @@ async function handler(ctx) {
     const item = $('.stretcher')
         .find('h3')
         .toArray()
+        // oxlint-disable-next-line array-callback-return
         .map((item) => {
             item = $(item);
             const pubDate = item

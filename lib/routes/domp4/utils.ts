@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 

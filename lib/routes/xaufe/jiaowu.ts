@@ -75,14 +75,11 @@ async function handler(ctx) {
         item: await Promise.all(
             data.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const $ = load(
-                        (
-                            await got({
-                                method: 'get',
-                                url: item.link,
-                            })
-                        ).body
-                    );
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+                    const $ = load(response.body);
                     item.author = /作者：(\S*)\s{4}/g.exec($('p', '.main_contit').text())[1];
                     item.description = $('#vsb_content').html();
                     return item;

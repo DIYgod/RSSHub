@@ -33,7 +33,7 @@ interface Paper {
     id: string;
     summary: string;
     upvotes: number;
-    authors: { name: string }[];
+    authors: Array<{ name: string }>;
 }
 
 interface DailyPaperItem {

@@ -1,7 +1,0 @@
-<p>
-  <a href="{{ section.content }}">
-    <img src="{{ section.icon }}">
-    <div>{{ section.title}}</div>
-    <div>{{ section.description}}</div>
-  </a>
-</p>

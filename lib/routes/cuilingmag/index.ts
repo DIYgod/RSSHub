@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category } = ctx.req.param();
@@ -32,7 +31,7 @@ export const handler = async (ctx) => {
             const src = item.find('img').first().prop('src');
             const image = src ? new URL(src, rootUrl).href : undefined;
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -71,7 +70,7 @@ export const handler = async (ctx) => {
 
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         images: banner
                             ? [
                                   {
@@ -140,18 +139,17 @@ export const route: Route = {
     example: '/cuilingmag',
     parameters: { category: '分类，默认为空，即全部，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [#哲学·文明](https://www.cuilingmag.com/category/philosophy_civilization)，网址为 \`https://www.cuilingmag.com/category/philosophy_civilization\`。截取 \`https://www.cuilingmag.com/category\` 到末尾的部分 \`philosophy_civilization\` 作为参数填入，此时路由为 [\`/cuilingmag/philosophy_civilization\`](https://rsshub.app/cuilingmag/philosophy_civilization)。
+若订阅 [#哲学・文明](https://www.cuilingmag.com/category/philosophy_civilization)，网址为 \`https://www.cuilingmag.com/category/philosophy_civilization\`。截取 \`https://www.cuilingmag.com/category\` 到末尾的部分 \`philosophy_civilization\` 作为参数填入，此时路由为 [\`/cuilingmag/philosophy_civilization\`](https://rsshub.app/cuilingmag/philosophy_civilization)。
 :::
 
-| 分类                                                                       | ID                                                                                |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [哲学 · 文明](https://www.cuilingmag.com/category/philosophy_civilization) | [philosophy_civilization](https://rsshub.app/cuilingmag/philosophy_civilization) |
-| [艺术 · 科技](https://www.cuilingmag.com/category/art_science)             | [art_science](https://rsshub.app/cuilingmag/art_science)                         |
-| [未来 · 生命](https://www.cuilingmag.com/category/future_life)             | [future_life](https://rsshub.app/cuilingmag/future_life)                         |
-| [行星智慧](https://www.cuilingmag.com/category/planetary_wisdom)           | [planetary_wisdom](https://rsshub.app/cuilingmag/planetary_wisdom)               |
-| [数字治理](https://www.cuilingmag.com/category/digital_governance)         | [digital_governance](https://rsshub.app/cuilingmag/digital_governance)           |
-| [Noema精选](https://www.cuilingmag.com/category/selected_noema)            | [selected_noema](https://rsshub.app/cuilingmag/selected_noema)                   |
-  `,
+| 分类                                                                      | ID                                                                                |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [哲学・文明](https://www.cuilingmag.com/category/philosophy_civilization) | [philosophy\\_civilization](https://rsshub.app/cuilingmag/philosophy_civilization) |
+| [艺术・科技](https://www.cuilingmag.com/category/art_science)             | [art\\_science](https://rsshub.app/cuilingmag/art_science)                         |
+| [未来・生命](https://www.cuilingmag.com/category/future_life)             | [future\\_life](https://rsshub.app/cuilingmag/future_life)                         |
+| [行星智慧](https://www.cuilingmag.com/category/planetary_wisdom)          | [planetary\\_wisdom](https://rsshub.app/cuilingmag/planetary_wisdom)               |
+| [数字治理](https://www.cuilingmag.com/category/digital_governance)        | [digital\\_governance](https://rsshub.app/cuilingmag/digital_governance)           |
+| [Noema 精选](https://www.cuilingmag.com/category/selected_noema)          | [selected\\_noema](https://rsshub.app/cuilingmag/selected_noema)                   |`,
 
     features: {
         requireConfig: false,

@@ -13,29 +13,48 @@ jobs:
             pull-requests: write
         if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if unsuccessful
         steps:
-            - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-            # https://github.com/orgs/community/discussions/25220
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
             - name: Search the PR that triggered this workflow
-              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
               id: source-run-info
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  sourceRunId: ${{ github.event.workflow_run.id }}
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh api "repos/${PR_TARGET_REPO}/pulls" \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
+                    --jq '.[0] | "number=\(.number)"' \
+                    >> "${GITHUB_OUTPUT}"
 
             - name: Fetch PR data via GitHub API
-              uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d # v2.4.0
+              uses: octokit/request-action@b91aabaa861c777dcdb14e2387e30eddf04619ae # v3.0.0
               id: pr-data
               with:
                   route: GET /repos/{repo}/pulls/{number}
                   repo: ${{ github.repository }}
-                  number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  number: ${{ steps.source-run-info.outputs.number }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+            - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: Install dependencies (pnpm) # require js-beautify
+              run: pnpm i
+
             - name: Fetch affected routes
               id: fetch-route
-              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               env:
                   PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
               with:
@@ -51,7 +70,7 @@ jobs:
 
             - name: Fetch Docker image
               if: (env.TEST_CONTINUE)
-              uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
+              uses: dawidd6/action-download-artifact@b6e2e70617bc3265edd6dab6c906732b2f1ae151 # v21
               with:
                   workflow: ${{ github.event.workflow_run.workflow_id }}
                   run_id: ${{ github.event.workflow_run.id }}
@@ -74,23 +93,37 @@ jobs:
                     -p 1200:1200 \
                     rsshub:latest
 
-            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-
-            - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+            - name: Wait for RSSHub startup
               if: (env.TEST_CONTINUE)
-              with:
-                  node-version: lts/*
-                  cache: 'pnpm'
+              env:
+                  TEST_BASEURL: http://localhost:1200
+              run: |
+                  set -euo pipefail
+                  healthcheck_url="$TEST_BASEURL/healthz"
 
-            - name: Install dependencies (pnpm) # require js-beautify
-              if: (env.TEST_CONTINUE)
-              run: pnpm i
+                  for _ in $(seq 1 30); do
+                      if curl --silent --show-error --fail "$healthcheck_url" >/dev/null; then
+                          exit 0
+                      fi
+
+                      if [ "$(docker inspect -f '{{.State.Status}}' rsshub 2>/dev/null)" != 'running' ]; then
+                          docker logs rsshub || true
+                          echo "rsshub container exited before becoming ready"
+                          exit 1
+                      fi
+
+                      sleep 1
+                  done
+
+                  docker logs rsshub || true
+                  echo "Timed out waiting for RSSHub health check: $healthcheck_url"
+                  exit 1
 
             - name: Generate feedback
               if: (env.TEST_CONTINUE)
               id: generate-feedback
               timeout-minutes: 10
-              uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               env:
                   TEST_BASEURL: http://localhost:1200
                   TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
@@ -108,11 +141,11 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@d1d51fccf39469b5458203b1369060db0ff0c0db # v3.7.4
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}
                   labels: 'auto: DO NOT merge'
 
             - name: Print Docker container logs
@@ -121,23 +154,40 @@ jobs:
 
     fail-build:
         name: Fail build
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         permissions:
             pull-requests: write
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}
         steps:
-            # https://github.com/orgs/community/discussions/25220
+            # https://github.com/orgs/community/discussions/25220#discussioncomment-11316244
             - name: Search the PR that triggered this workflow
-              uses: potiuk/get-workflow-origin@e2dae063368361e4cd1f510e8785cd73bca9352e # v1_5
               id: source-run-info
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  sourceRunId: ${{ github.event.workflow_run.id }}
+              env:
+                  # Token required for GH CLI:
+                  GH_TOKEN: ${{ github.token }}
+                  # Best practice for scripts is to reference via ENV at runtime. Avoid using the expression syntax in the script content directly:
+                  PR_TARGET_REPO: ${{ github.repository }}
+                  # The REST API `head` filter requires `<owner>:<branch>` format
+                  PR_BRANCH: ${{ format('{0}:{1}', github.event.workflow_run.head_repository.owner.login, github.event.workflow_run.head_branch) }}
+              # Query the PR number by repo + branch, then assign to step output:
+              run: |
+                  gh api "repos/${PR_TARGET_REPO}/pulls" \
+                    --method GET -f head="${PR_BRANCH}" -f state=all \
+                    --jq '.[0] | "number=\(.number)\nauthor_association=\(.author_association)"' \
+                    >> "${GITHUB_OUTPUT}"
 
             - name: Pull Request Labeler
-              uses: actions-cool/issues-helper@d1d51fccf39469b5458203b1369060db0ff0c0db # v3.7.4
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
               with:
                   actions: 'add-labels'
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}
                   labels: 'auto: DO NOT merge'
+
+            - name: Close broken PR
+              if: ${{ steps.source-run-info.outputs.author_association != 'OWNER' && steps.source-run-info.outputs.author_association != 'COLLABORATOR' && steps.source-run-info.outputs.author_association != 'MEMBER' }}
+              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              with:
+                  actions: 'close-issue'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-number: ${{ steps.source-run-info.outputs.number }}

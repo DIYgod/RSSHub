@@ -26,12 +26,12 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-| Language  | 한국어 | English | 简体中文 | 日本語 | عربي   | Español | Français |
-| --------- | ------ | ------- | -------- | ------ | ------ | ------- | -------- |
-| \`:lang\` | \`ko\` | \`en\`  | \`cn\`   | \`jp\` | \`ar\` | \`es\`  | \`fr\`   |
+    description: `| Language | 한국어 | English | 简体中文 | 日本語 | عربي | Español | Français |
+| -------- | ------ | ------- | -------- | ------ | ---- | ------- | -------- |
+| \`:lang\`  | \`ko\`   | \`en\`    | \`cn\`     | \`jp\`   | \`ar\` | \`es\`    | \`fr\`     |
 
 For a full list of RSS Feed Channels, please refer to the RSS feed page of the corresponding language
+
 | RSS Feed Page                                             |
 | --------------------------------------------------------- |
 | [한국어](https://www.yna.co.kr/rss/index?site=footer_rss) |
@@ -43,9 +43,8 @@ For a full list of RSS Feed Channels, please refer to the RSS feed page of the c
 | [Français](https://fr.yna.co.kr/channel/index)            |
 
 ::: tip
-For example, the path for the RSS feed url https://www.yna.co.kr/rss/economy.xml and https://cn.yna.co.kr/RSS/news.xml would be \`/ko/economy\` and \`/cn/news\` respectively. 
-:::
-`,
+For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xml> and <https://cn.yna.co.kr/RSS/news.xml> would be \`/ko/economy\` and \`/cn/news\` respectively.
+:::`,
 };
 
 async function handler(ctx) {

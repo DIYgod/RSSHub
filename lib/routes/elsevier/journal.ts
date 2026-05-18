@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const cookieJar = new CookieJar();
 
@@ -61,10 +60,7 @@ async function handler(ctx) {
             };
         });
 
-    const renderDesc = (item) =>
-        art(path.join(__dirname, 'templates/description.art'), {
-            item,
-        });
+    const renderDesc = (item) => renderDescription(item);
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {

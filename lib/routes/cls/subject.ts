@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import { getSearchParams, rootUrl } from './utils';
 
 export const handler = async (ctx) => {
@@ -25,7 +23,7 @@ export const handler = async (ctx) => {
 
     let items = response.data.slice(0, limit).map((item) => {
         const title = item.article_title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             intro: item.article_brief,
         });
         const guid = `cls-${item.article_id}`;
@@ -63,7 +61,7 @@ export const handler = async (ctx) => {
                 }
 
                 const title = data.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     images: data.images.map((i) => ({
                         src: i,
                         alt: title,
@@ -125,9 +123,8 @@ export const route: Route = {
     example: '/cls/subject/1103',
     parameters: { category: '分类，默认为 1103，即A股盘面直播，可在对应话题页 URL 中找到' },
     description: `::: tip
-  若订阅 [有声早报](https://www.cls.cn/subject/1151)，网址为 \`https://www.cls.cn/subject/1151\`。截取 \`https://www.cls.cn/subject/\` 到末尾的部分 \`1151\` 作为参数填入，此时路由为 [\`/cls/subject/1151\`](https://rsshub.app/cls/subject/1151)。
-:::
-    `,
+若订阅 [有声早报](https://www.cls.cn/subject/1151)，网址为 \`https://www.cls.cn/subject/1151\`。截取 \`https://www.cls.cn/subject/\` 到末尾的部分 \`1151\` 作为参数填入，此时路由为 [\`/cls/subject/1151\`](https://rsshub.app/cls/subject/1151)。
+:::`,
     categories: ['finance'],
 
     features: {

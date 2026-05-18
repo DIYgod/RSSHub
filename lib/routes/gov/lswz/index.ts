@@ -84,7 +84,7 @@ export const route: Route = {
     example: '/gov/lswz',
     parameters: { category: '分类，默认为 `html/xinwen/index`，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [新闻发布](https://www.lswz.gov.cn/html/xinwen/index.shtml)，网址为 \`https://www.lswz.gov.cn/html/xinwen/index.shtml\`。截取 \`https://www.lswz.gov.cn/\` 到末尾 \`.shtml\` 的部分 \`html/xinwen/index\` 作为参数填入，此时路由为 [\`/gov/lswz/html/xinwen/index\`](https://rsshub.app/gov/lswz/html/xinwen/index)。
+若订阅 [新闻发布](https://www.lswz.gov.cn/html/xinwen/index.shtml)，网址为 \`https://www.lswz.gov.cn/html/xinwen/index.shtml\`。截取 \`https://www.lswz.gov.cn/\` 到末尾 \`.shtml\` 的部分 \`html/xinwen/index\` 作为参数填入，此时路由为 [\`/gov/lswz/html/xinwen/index\`](https://rsshub.app/gov/lswz/html/xinwen/index)。
 :::
 
 | [新闻发布](https://www.lswz.gov.cn/html/xinwen/index.shtml)        | [党建工作](https://www.lswz.gov.cn/html/djgz/index.shtml)      |
@@ -94,7 +94,6 @@ export const route: Route = {
 | [粮食交易](https://www.lswz.gov.cn/html/zmhd/lysj/lsjy.shtml)          | [粮食质量](https://www.lswz.gov.cn/html/zmhd/lysj/lszl.shtml)          |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | [html/zmhd/lysj/lsjy](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjy) | [html/zmhd/lysj/lszl](https://rsshub.app/gov/lswz/html/zmhd/lysj/lszl) |
-
 
 #### [业务频道](https://www.lswz.gov.cn/html/ywpd/index.shtml)
 
@@ -124,7 +123,7 @@ export const route: Route = {
 
 #### [粮食收购](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)
 
-| [收购数据](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)               | [政策·解读](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-gzdt.shtml)              |
+| [收购数据](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-szym.shtml)               | [政策・解读](https://www.lswz.gov.cn/html/zmhd/lysj/lssg-gzdt.shtml)             |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | [html/zmhd/lysj/lssg-szym](https://rsshub.app/gov/lswz/html/zmhd/lysj/lssg-szym) | [html/zmhd/lysj/lssg-gzdt](https://rsshub.app/gov/lswz/html/zmhd/lysj/lssg-gzdt) |
 
@@ -132,9 +131,7 @@ export const route: Route = {
 
 | [市场监测](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjc.shtml)               | [市场价格](https://www.lswz.gov.cn/html/zmhd/lysj/lsjg-scjg.shtml)               |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [html/zmhd/lysj/lsjg-scjc](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjg-scjc) | [html/zmhd/lysj/lsjg-scjg](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjg-scjg) |
-
-  `,
+| [html/zmhd/lysj/lsjg-scjc](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjg-scjc) | [html/zmhd/lysj/lsjg-scjg](https://rsshub.app/gov/lswz/html/zmhd/lysj/lsjg-scjg) |`,
     categories: ['government'],
 
     features: {

@@ -104,9 +104,8 @@ async function handler(ctx) {
                     case 'tju-cic':
                     case 'in-site':
                         return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
                             try {
-                                detailResponse = await got(item.link);
+                                const detailResponse = await got(item.link);
                                 const content = load(detailResponse.data);
                                 item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), +8);
                                 content('.news_tit').remove();

@@ -49,7 +49,7 @@ async function handler() {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : base + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (path.startsWith('http')) {
                     description = itemTitle;
                 } else {

@@ -1,12 +1,8 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
 
+import { renderDescription } from '../templates/description';
 import cache from './cache';
-
-const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });
 
 export const route: Route = {
     path: '/bbs/follow-list/:uid',
@@ -35,7 +31,7 @@ async function handler(ctx) {
         page_size,
     };
     const link = `https://www.miyoushe.com/ys/accountCenter/followList?id=${uid}`;
-    const url = `https://bbs-api.miyoushe.com/user/wapi/following`;
+    const url = 'https://bbs-api.miyoushe.com/user/wapi/following';
     const response = await got({
         method: 'get',
         url,

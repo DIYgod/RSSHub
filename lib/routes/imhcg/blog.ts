@@ -42,7 +42,7 @@ async function handler() {
         });
 
     return {
-        title: `Engineering Blogs`,
+        title: 'Engineering Blogs',
         link: 'https://infos.imhcg.cn/',
         item: items,
     };

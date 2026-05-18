@@ -26,7 +26,7 @@ async function handler(ctx) {
     return await buildData({
         link,
         url: link,
-        title: `%title%`,
+        title: '%title%',
         description: '政府文件库, 当页的所有列表',
         params: {
             title: `$('.channel_tab > .noline > a').text().trim() + ' - 政府文件库'`,

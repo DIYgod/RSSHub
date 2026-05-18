@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -7,8 +5,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderDepthDescription } from './templates/depth';
 import { getSearchParams, rootUrl } from './utils';
 
 const categories = {
@@ -90,9 +88,7 @@ async function handler(ctx) {
                 const articleDetail = nextData.props.initialState.detail.articleDetail;
 
                 item.author = articleDetail.author?.name ?? item.author ?? '';
-                item.description = art(path.join(__dirname, 'templates/depth.art'), {
-                    articleDetail,
-                });
+                item.description = renderDepthDescription(articleDetail);
 
                 return item;
             })

@@ -9,7 +9,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const baseUrl: string = 'https://t1.daumcdn.net';
+    const baseUrl = 'https://t1.daumcdn.net';
     const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${lang ?? ''}.html`, baseUrl).href;
 
     const response: string = await ofetch(targetUrl);
@@ -29,7 +29,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const headerLine: string | undefined = match[2].trim();
         const description: string | undefined = match[4].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
-        let version: string = 'N/A';
+        let version = 'N/A';
         let pubDateStr: string | undefined = undefined;
 
         // Regex to extract version (e.g., [1.4.20199] or [250514])
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
         }
 
-        const guid: string = `potplayer-${lang}-${version}`;
+        const guid = `potplayer-${lang}-${version}`;
 
         const processedItem: DataItem = {
             title: version,
@@ -130,16 +130,15 @@ export const route: Route = {
 To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html), where the source URL is \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/daum/potplayer/Eng\`](https://rsshub.app/daum/potplayer/Eng).
 :::
 
-| Language                                                                           | Id                                           |
-| ---------------------------------------------------------------------------------- | -------------------------------------------- |
-| [한국어](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update.html)        |                                              |
-| [中文(简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
-| [中文(繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
-| [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)    | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html) | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)    | [Eng](https://rsshub.app/daum/potplayer/Rus) |
-| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)     | [Eng](https://rsshub.app/daum/potplayer/Pol) |
-`,
+| Language                                                                            | Id                                           |
+| ----------------------------------------------------------------------------------- | -------------------------------------------- |
+| [한국어](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update.html)         |                                              |
+| [中文 (简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
+| [中文 (繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
+| [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)     | [Eng](https://rsshub.app/daum/potplayer/Eng) |
+| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)  | [Eng](https://rsshub.app/daum/potplayer/Eng) |
+| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Eng](https://rsshub.app/daum/potplayer/Rus) |
+| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Eng](https://rsshub.app/daum/potplayer/Pol) |`,
     categories: ['program-update'],
     features: {
         requireConfig: false,
@@ -244,15 +243,14 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
 若订阅 [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html)，网址为 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html\`，请截取 \`https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update\` 到末尾的部分 \`Chs\` 作为 \`lang\` 参数填入，此时目标路由为 [\`/daum/potplayer/Chs\`](https://rsshub.app/daum/potplayer/Chs)。
 :::
 
-| Language                                                                           | Id                                           |
-| ---------------------------------------------------------------------------------- | -------------------------------------------- |
-| [한국어](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update.html)        |                                              |
-| [中文(简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
-| [中文(繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
-| [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)    | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html) | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)    | [Eng](https://rsshub.app/daum/potplayer/Rus) |
-| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)     | [Eng](https://rsshub.app/daum/potplayer/Pol) |
-`,
+| Language                                                                            | Id                                           |
+| ----------------------------------------------------------------------------------- | -------------------------------------------- |
+| [한국어](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/Update.html)         |                                              |
+| [中文 (简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
+| [中文 (繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
+| [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)     | [Eng](https://rsshub.app/daum/potplayer/Eng) |
+| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)  | [Eng](https://rsshub.app/daum/potplayer/Eng) |
+| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Eng](https://rsshub.app/daum/potplayer/Rus) |
+| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Eng](https://rsshub.app/daum/potplayer/Pol) |`,
     },
 };

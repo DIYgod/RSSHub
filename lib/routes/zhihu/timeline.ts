@@ -28,7 +28,7 @@ export const route: Route = {
     maintainers: ['SeanChao'],
     handler,
     description: `::: warning
-  用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -39,7 +39,7 @@ async function handler(ctx) {
     }
     const response = await got({
         method: 'get',
-        url: `https://www.zhihu.com/api/v3/moments`,
+        url: 'https://www.zhihu.com/api/v3/moments',
         headers: {
             Cookie: cookie,
         },
@@ -145,8 +145,8 @@ async function handler(ctx) {
         });
 
     return {
-        title: `知乎关注动态`,
-        link: `https://www.zhihu.com/follow`,
+        title: '知乎关注动态',
+        link: 'https://www.zhihu.com/follow',
         item: out,
     };
 }

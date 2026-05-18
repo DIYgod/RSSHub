@@ -68,8 +68,7 @@ export const route: Route = {
     maintainers: ['Astrian'],
     handler,
     url: 'ak-conf.hypergryph.com/news',
-    description: `
-| 全部 | 最新   | 公告         | 活动     | 新闻 |
+    description: `| 全部 | 最新   | 公告         | 活动     | 新闻 |
 | ---- | ------ | ------------ | -------- | ---- |
 | ALL  | LATEST | ANNOUNCEMENT | ACTIVITY | NEWS |`,
 };

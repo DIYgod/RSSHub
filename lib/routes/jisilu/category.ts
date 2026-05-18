@@ -59,13 +59,12 @@ export const route: Route = {
         id: '分类 id，可在对应分类页 URL 中找到',
     },
     description: `::: tip
-若订阅 [债券/可转债](https://www.jisilu.cn/category/4)，网址为 \`https://www.jisilu.cn/category/4\`，请截取 \`https://www.jisilu.cn/category/\` 到末尾的部分 \`4\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/category/4\`](https://rsshub.app/jisilu/category/4)。
+若订阅 [债券 / 可转债](https://www.jisilu.cn/category/4)，网址为 \`https://www.jisilu.cn/category/4\`，请截取 \`https://www.jisilu.cn/category/\` 到末尾的部分 \`4\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/category/4\`](https://rsshub.app/jisilu/category/4)。
 :::
 
-| 新股 | 债券/可转债 | 套利 | 其他 | 基金 | 股票 |
-| ---- | ----------- | ---- | ---- | ---- | ---- |
-| 3    | 4           | 5    | 6    | 7    | 8    |
-`,
+| 新股 | 债券 / 可转债 | 套利 | 其他 | 基金 | 股票 |
+| ---- | ------------- | ---- | ---- | ---- | ---- |
+| 3    | 4             | 5    | 6    | 7    | 8    |`,
     categories: ['finance'],
     features: {
         requireConfig: false,

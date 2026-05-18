@@ -4,36 +4,11 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const rootUrl = 'https://www.iwara.tv';
-const apiRootUrl = 'https://api.iwara.tv';
-const imageRootUrl = 'https://i.iwara.tv';
-
-const typeMap = {
-    video: 'Videos',
-    image: 'Images',
-};
+import { apiRootUrl, parseThumbnail, rootUrl, typeMap } from './utils';
 
 const apiUrlMap = {
     video: `${apiRootUrl}/videos`,
     image: `${apiRootUrl}/images`,
-};
-
-const parseThumbnail = (type, item) => {
-    if (type === 'image') {
-        return `<img src="${imageRootUrl}/image/original/${item.thumbnail.id}/${item.thumbnail.name}">`;
-    }
-
-    if (item.embedUrl === null) {
-        return `<img src="${imageRootUrl}/image/original/${item.file.id}/thumbnail-${String(item.thumbnail).padStart(2, '0')}.jpg">`;
-    }
-
-    // regex borrowed from https://stackoverflow.com/a/3726073
-    const match = /https?:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(&(amp;)?[\w=?]*)?/.exec(item.embedUrl);
-    if (match) {
-        return `<img src="${imageRootUrl}/image/embed/original/youtube/${match[1]}">`;
-    }
-
-    return '';
 };
 
 export const route: Route = {

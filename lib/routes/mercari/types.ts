@@ -93,11 +93,11 @@ export interface ItemDetail {
             root_category_name: string;
             brand_group_id: number;
         };
-        parent_categories_ntiers: {
+        parent_categories_ntiers: Array<{
             id: number;
             name: string;
             display_order: number;
-        }[];
+        }>;
         item_condition: {
             id: number;
             name: string;
@@ -174,28 +174,28 @@ export interface ItemDetail {
             };
             omakase: boolean;
         };
-        item_attributes: {
+        item_attributes: Array<{
             id: string;
             text: string;
-            values: {
+            values: Array<{
                 id: string;
                 text: string;
-            }[];
+            }>;
             deep_facet_filterable: boolean;
             show_on_ui: boolean;
-        }[];
+        }>;
         is_dismissed: boolean;
         photo_descriptions: string[];
         meta_title: string;
         meta_subtitle: string;
         price_promotion_area_details: {
             promotion_type: string;
-            promotion_info: {
+            promotion_info: Array<{
                 label_text: string;
                 supplementary_text: string;
                 expire_time: number;
                 promotion_duration: number;
-            }[];
+            }>;
         };
     };
     meta: object;
@@ -221,24 +221,24 @@ export interface ShopItemDetail {
                 reviewCount: string;
             };
             allowDirectMessage: boolean;
-            shopItems: {
+            shopItems: Array<{
                 productId: string;
                 displayName: string;
                 productTags: string[];
                 thumbnail: string;
                 price: string;
-            }[];
+            }>;
             isInboundXb: boolean;
         };
         photos: string[];
         description: string;
-        categories: {
+        categories: Array<{
             categoryId: string;
             displayName: string;
             parentId: string;
             rootId: string;
             hasChild: boolean;
-        }[];
+        }>;
         brand: null;
         condition: {
             displayName: string;
@@ -266,12 +266,12 @@ export interface ShopItemDetail {
         promotions: any[];
         productStats: null;
         timeSaleDetails: null;
-        variants: {
+        variants: Array<{
             variantId: string;
             displayName: string;
             quantity: string;
             size: string;
-        }[];
+        }>;
         shippingFeeConfig: null;
         variationGrouping: null;
     };

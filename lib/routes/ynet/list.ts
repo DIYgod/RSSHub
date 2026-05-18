@@ -55,16 +55,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = `https://${category ? `${category}.` : ''}ynet.com`;
+    const baseUrl = `https://${category ? `${category}.` : ''}ynet.com`;
     const targetUrl: string = new URL(`list/${id}.html`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('li.cfix')
+    let items: DataItem[] = $('li.cfix')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -72,7 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $aEl: Cheerio<Element> = $el.find('h2 a');
 
             const title: string = $aEl.text();
-            const pubDateStr: string | undefined = $el.find('em.fRight').text() || undefined;
+            const pubDateStr: string | undefined = $el.find('em.fRight').text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const upDatedStr: string | undefined = pubDateStr;
 
@@ -155,10 +153,9 @@ export const route: Route = {
             description: '列表 ID，可在对应列表页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [北青快讯](https://news.ynet.com/list/2121t76.html)，其源网址为 \`https://news.ynet.com/list/2121t76.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/ynet/list/news/2121t76\`](https://rsshub.app/ynet/list/news/2121t76)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

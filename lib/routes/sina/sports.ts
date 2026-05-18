@@ -9,7 +9,7 @@ import { parseArticle } from './utils';
 export const route: Route = {
     path: '/sports/:type?',
     name: '新浪体育',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/sports',
     parameters: { type: '类别' },
     maintainers: ['nczitzk'],

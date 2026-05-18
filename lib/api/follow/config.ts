@@ -7,10 +7,11 @@ import { gitDate, gitHash } from '@/utils/git-hash';
 const route = createRoute({
     method: 'get',
     path: '/follow/config',
+    description: 'Follow configuration for the current instance',
     tags: ['Follow'],
     responses: {
         200: {
-            description: 'Follow config',
+            description: 'Follow configuration for the current instance',
         },
     },
 });

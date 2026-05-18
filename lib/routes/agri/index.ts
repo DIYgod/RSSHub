@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'zx/zxfb/' } = ctx.req.param();
@@ -32,7 +31,7 @@ export const handler = async (ctx) => {
 
             const title = a.text();
             const image = item.find('img').first().prop('src') ? new URL(item.find('img').first().prop('src'), rootUrl).href : undefined;
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 intro: item.find('p.con_text').text() || undefined,
                 images: image
                     ? [
@@ -67,8 +66,8 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('div.detailCon_info_tit').text().trim();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.content_body_box').html(),
+                const description = renderDescription({
+                    description: $$('div.content_body_box').html() || undefined,
                 });
 
                 item.title = title;
@@ -111,7 +110,7 @@ export const route: Route = {
     example: '/agri/zx/zxfb',
     parameters: { category: '分类，默认为 `zx/zxfb`，即最新发布，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
+若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
 :::
 
 #### [机构](http://www.agri.cn/jg/)
@@ -165,8 +164,7 @@ export const route: Route = {
 | [地方农业](http://www.agri.cn/video/dfny/beijing/) | [video/dfny/beijing](https://rsshub.app/agri/video/dfny/beijing) |
 | [气象农业](http://www.agri.cn/video/qxny/)         | [video/qxny](https://rsshub.app/agri/video/qxny)                 |
 | [讲座培训](http://www.agri.cn/video/jzpx/)         | [video/jzpx](https://rsshub.app/agri/video/jzpx)                 |
-| [文化生活](http://www.agri.cn/video/whsh/)         | [video/whsh](https://rsshub.app/agri/video/whsh)                 |
-  `,
+| [文化生活](http://www.agri.cn/video/whsh/)         | [video/whsh](https://rsshub.app/agri/video/whsh)                 |`,
     categories: ['new-media'],
 
     features: {

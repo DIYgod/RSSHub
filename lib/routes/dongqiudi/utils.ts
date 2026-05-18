@@ -65,7 +65,7 @@ const ProcessImg = (content) => {
 
 const ProcessFeed = async (ctx, type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
-    const apiUrl = `https://api.dongqiudi.com/v3/archive/app/channel/feeds`;
+    const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
 
     let name;

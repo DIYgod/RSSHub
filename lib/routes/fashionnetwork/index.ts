@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
@@ -33,7 +32,7 @@ export const handler = async (ctx) => {
             const src = item.find('img.item__img').first().prop('src') ?? undefined;
             const image = src ? new URL(src, rootUrl).href : undefined;
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -65,7 +64,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.newsTitle').text();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     description: $$('div.article-content').html(),
                 });
 
@@ -113,7 +112,7 @@ export const route: Route = {
     example: '/fashionnetwork/cn/lists/0',
     parameters: { category: '分类，默认为 0，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
+若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
 :::
 
 | 分类                                           | ID                                                  |
@@ -125,8 +124,7 @@ export const route: Route = {
 | [产业](https://fashionnetwork.cn/lists/5)      | [5](https://rsshub.app/fashionnetwork/cn/lists/5)   |
 | [创新研究](https://fashionnetwork.cn/lists/6)  | [6](https://rsshub.app/fashionnetwork/cn/lists/6)   |
 | [人事变动](https://fashionnetwork.cn/lists/12) | [12](https://rsshub.app/fashionnetwork/cn/lists/12) |
-| [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork/cn/lists/11) |
-  `,
+| [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork/cn/lists/11) |`,
     categories: ['new-media'],
 
     features: {

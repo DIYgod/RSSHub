@@ -87,13 +87,13 @@ export const route: Route = {
     example: '/szse/rule/allrules/bussiness',
     parameters: { channel: '频道，默认为 `allrules/bussiness`，即全部业务规则，可在对应频道页 URL 中找到' },
     description: `::: tip
-  若订阅 [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)，网址为 \`https://www.szse.cn/www/lawrules/rule/all/index.html\`。截取 \`https://www.szse.cn/www/lawrules/rule/\` 到末尾 \`/index.html\` 的部分 \`all\` 作为参数填入，此时路由为 [\`/szse/rule/all\`](https://rsshub.app/szse/rule/all)。
+若订阅 [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)，网址为 \`https://www.szse.cn/www/lawrules/rule/all/index.html\`。截取 \`https://www.szse.cn/www/lawrules/rule/\` 到末尾 \`/index.html\` 的部分 \`all\` 作为参数填入，此时路由为 [\`/szse/rule/all\`](https://rsshub.app/szse/rule/all)。
 :::
 
 | 频道                                                                        | ID                                                    |
 | --------------------------------------------------------------------------- | ----------------------------------------------------- |
 | [综合类](https://www.szse.cn/www/lawrules/rule/all/index.html)              | [all](https://rsshub.app/szes/rule/all)               |
-| [基础设施REITs类](https://www.szse.cn/www/lawrules/rule/reits/index.html)   | [reits](https://rsshub.app/szes/rule/reits)           |
+| [基础设施 REITs 类](https://www.szse.cn/www/lawrules/rule/reits/index.html) | [reits](https://rsshub.app/szes/rule/reits)           |
 | [衍生品类](https://www.szse.cn/www/lawrules/rule/derivative/index.html)     | [derivative](https://rsshub.app/szes/rule/derivative) |
 | [会员管理类](https://www.szse.cn/www/lawrules/rule/memberty/index.html)     | [memberty](https://rsshub.app/szes/rule/memberty)     |
 | [纪律处分与内部救济类](https://www.szse.cn/www/lawrules/rule/pr/index.html) | [pr](https://rsshub.app/szes/rule/pr)                 |
@@ -144,7 +144,7 @@ export const route: Route = {
 | ----------------------------------------------------------------------------- | ----------------------------------------------------- |
 | [深港通](https://www.szse.cn/www/lawrules/rule/inno/szhk/index.html)          | [inno/szhk](https://rsshub.app/szes/rule/inno/szhk)   |
 | [试点创新企业](https://www.szse.cn/www/lawrules/rule/inno/pilot/index.html)   | [inno/pilot](https://rsshub.app/szes/rule/inno/pilot) |
-| [H股全流通](https://www.szse.cn/www/lawrules/rule/inno/hc/index.html)         | [inno/hc](https://rsshub.app/szes/rule/inno/hc)       |
+| [H 股全流通](https://www.szse.cn/www/lawrules/rule/inno/hc/index.html)        | [inno/hc](https://rsshub.app/szes/rule/inno/hc)       |
 | [互联互通存托凭证](https://www.szse.cn/www/lawrules/rule/inno/gdr/index.html) | [inno/gdr](https://rsshub.app/szes/rule/inno/gdr)     |
 
 #### 全部规则
@@ -159,8 +159,7 @@ export const route: Route = {
 | 频道                                                                                 | ID                                                                      |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
 | [规则废止公告](https://www.szse.cn/www/lawrules/rule/repeal/announcement/index.html) | [repeal/announcement](https://rsshub.app/szes/rule/repeal/announcement) |
-| [已废止规则文本](https://www.szse.cn/www/lawrules/rule/repeal/rules/index.html)      | [repeal/rules](https://rsshub.app/szes/rule/repeal/rules)               |
-  `,
+| [已废止规则文本](https://www.szse.cn/www/lawrules/rule/repeal/rules/index.html)      | [repeal/rules](https://rsshub.app/szes/rule/repeal/rules)               |`,
     categories: ['finance'],
 
     features: {

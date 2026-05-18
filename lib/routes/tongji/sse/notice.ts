@@ -30,7 +30,7 @@ export const route: Route = {
 | ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
 | bkstz      | yjstz      | jgtz     | qttz     | xytz     | xyxw     | xyhd     |
 
-  注意: \`qttz\` 与 \`xytz\` 在原网站等价.`,
+注意: \`qttz\` 与 \`xytz\` 在原网站等价.`,
 };
 
 async function handler(ctx) {

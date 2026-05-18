@@ -27,7 +27,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const { id } = ctx.req.param();
     const html = await ofetch(`https://javtiful.com/actress/${id}`);
-    const $ = load(<string>html);
+    const $ = load(html as string);
     const items: DataItem[] = $('section .card:not(:has(.bg-danger))')
         .toArray()
         .map((item) => parseItems($(item)));

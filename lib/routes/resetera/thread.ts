@@ -140,7 +140,7 @@ const handler: Route['handler'] = async (ctx) => {
                     category: hasImage ? ['image'] : undefined, // 有图打标签，供全局过滤使用
                 };
             })
-            .filter(Boolean) as NonNullable<any>[];
+            .filter(Boolean) as Array<NonNullable<any>>;
     });
 
     // 4) 显式排序：postId 降序；再按时间兜底

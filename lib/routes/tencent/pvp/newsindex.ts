@@ -13,7 +13,7 @@ const map = new Map([
 ]);
 const link = 'https://pvp.qq.com/web201706/newsindex.shtml';
 const apiUrl = 'https://apps.game.qq.com/wmp/v3.1/?p0=18&p1=searchNewsKeywordsList&order=sIdxTime&r0=cors&type=iTarget&source=app_news_search&pagesize=12&page=1&id=';
-const pageUrl = `https://pvp.qq.com/web201706/newsdetail.shtml?tid=`;
+const pageUrl = 'https://pvp.qq.com/web201706/newsdetail.shtml?tid=';
 
 const getPage = async (id, typeName) => {
     const response = await got(apiUrl + id, {
@@ -83,7 +83,8 @@ async function handler(ctx) {
     return {
         title: `【${OutName}】 - 王者荣耀 - 新闻列表`,
         link,
-        description: `《王者荣耀》是腾讯天美工作室历时3年推出的东方英雄即时对战手游大作，抗塔强杀、团灭超神，领略爽热血竞技的酣畅淋漓！1v1、3v3、闯关等丰富游戏模式，随时战，更自由！跨服匹配秒开局，好友组队战排位，不靠装备、没有等级，更公平、更爽快的无差异对战！`,
+        description:
+            '《王者荣耀》是腾讯天美工作室历时3年推出的东方英雄即时对战手游大作，抗塔强杀、团灭超神，领略爽热血竞技的酣畅淋漓！1v1、3v3、闯关等丰富游戏模式，随时战，更自由！跨服匹配秒开局，好友组队战排位，不靠装备、没有等级，更公平、更爽快的无差异对战！',
         item,
     };
 }

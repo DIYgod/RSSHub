@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import type { Data, Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     name: 'Profile',
@@ -25,7 +25,7 @@ The profile page of the user, which contains the user's information, videos, and
 
 async function handler(ctx) {
     const { principalId } = ctx.req.param();
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
 
     let retryCount = 0;
@@ -67,7 +67,7 @@ async function handler(ctx) {
         waitUntil: 'domcontentloaded',
     });
     await page.goto(`https://live.kuaishou.com/profile/${principalId}`);
-    const resData = (await promise.catch((error) => error)) as Array<any>;
+    const resData = (await promise.catch((error) => error)) as any[];
 
     await browser.close();
     const data: Data = {

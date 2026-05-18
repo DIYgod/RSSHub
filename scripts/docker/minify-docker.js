@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
-import fs from 'fs-extra';
 import path from 'node:path';
+
 import { nodeFileTrace } from '@vercel/nft';
+import fs from 'fs-extra';
+
 const __dirname = import.meta.dirname;
 // !!! if any new dependencies are added, update the Dockerfile !!!
 

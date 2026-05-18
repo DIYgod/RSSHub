@@ -21,9 +21,6 @@ async function handler(ctx) {
         headers: {
             referer: xmut,
         },
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(res.data);
     const items = $('.mainWrap .main_con .main_conR ul li')
@@ -42,9 +39,6 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link, {
                     headers: {
                         referer: xmut,
-                    },
-                    https: {
-                        rejectUnauthorized: false,
                     },
                 });
                 const $item = load(detailResponse.data);

@@ -21,9 +21,6 @@ async function handler(ctx) {
         headers: {
             referer: xmut,
         },
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(res.data);
     const itemsArray = $('#result_list table tbody tr')
@@ -53,9 +50,6 @@ async function handler(ctx) {
                 const res = await got(item.link, {
                     headers: {
                         referer: xmut,
-                    },
-                    https: {
-                        rejectUnauthorized: false,
                     },
                 });
                 const $item = load(res.data);

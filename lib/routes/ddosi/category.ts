@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -25,22 +25,21 @@ export const route: Route = {
         },
     ],
     name: '分类',
-    maintainers: [],
+    maintainers: ['XinRoom'],
     handler,
     url: 'ddosi.org/',
 };
 
 async function handler(ctx) {
     const url = 'https://www.ddosi.org/category';
-    const userAgent = config.ua || 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1';
     const category = ctx.req.param('category');
     const response = await got({
         method: 'get',
         url: `${url}/${category}/`,
         headers: {
-            'User-Agent': userAgent,
             Referer: url,
         },
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
     const $ = load(response.data);
     const list = $('main>article').toArray();

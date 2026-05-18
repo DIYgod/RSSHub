@@ -68,7 +68,7 @@ function sortThumb(thumb: Api.TypePhotoSize) {
 }
 
 function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
-    thumbs = [...thumbs].sort((a, b) => sortThumb(a) - sortThumb(b));
+    thumbs = [...thumbs].toSorted((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
 
@@ -186,11 +186,9 @@ export const route: Route = {
     name: 'Channel Media',
     maintainers: ['synchrone'],
     handler,
-    description: `
-::: tip
-  Serves telegram media like pictures, video or files.
-:::
-`,
+    description: `::: tip
+Serves telegram media like pictures, video or files.
+:::`,
 };
 
 export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {

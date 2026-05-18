@@ -1,14 +1,13 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/money18';
 
 const sections = {
     exp: '新聞總覽',
@@ -55,11 +54,11 @@ async function handler(ctx) {
 
     const toApiUrl = (date) => `${rootUrl}/cnt/utf8/content/${date}/articleList/list_${id}_all.js`;
 
-    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD')),
-        hasArticle = false,
-        items = [],
-        i = 0,
-        response;
+    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD'));
+    let hasArticle = false;
+    let items: DataItem[];
+    let i = 0;
+    let response;
 
     /* eslint-disable no-await-in-loop */
 
@@ -85,7 +84,7 @@ async function handler(ctx) {
             title: item.title,
             author: item.authorname,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
-            description: art(path.join(__dirname, 'templates/money18.art'), {
+            description: renderDescription({
                 images: item.hasHdPhoto ? [`https://hk.on.cc/hk/bkn${item.hdEnlargeThumbnail}`] : undefined,
                 description: item.content,
             }),
@@ -119,7 +118,7 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    item.description = art(path.join(__dirname, 'templates/money18.art'), {
+                    item.description = renderDescription({
                         images: content('.photo img')
                             .toArray()
                             .map((i) => content(i).attr('src')),

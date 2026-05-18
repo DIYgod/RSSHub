@@ -13,14 +13,12 @@ export const route: Route = {
     parameters: {
         category: '栏目分类，见下表',
     },
-    description: `
-  | \`category\` | 栏目分类 |
-  | ------------ | ------- |
-  | \`daily\`    | 每日聚焦 |
-  | \`pcz\`      | 最好玩   |
-  | \`night\`    | 触乐夜话 |
-  | \`news\`     | 动态资讯 |
-    `,
+    description: `| \`category\` | 栏目分类 |
+| ---------- | -------- |
+| \`daily\`    | 每日聚焦 |
+| \`pcz\`      | 最好玩   |
+| \`night\`    | 触乐夜话 |
+| \`news\`     | 动态资讯 |`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -108,7 +106,7 @@ async function handler(ctx: Context): Promise<Data | null> {
             link: $(element).attr('href'),
         }));
 
-    const processedItems: Promise<DataItem>[] = articles
+    const processedItems: Array<Promise<DataItem>> = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
         .map((article: ValidArticle) => {
             if (article.link.startsWith('/')) {

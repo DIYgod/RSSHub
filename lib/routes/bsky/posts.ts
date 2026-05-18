@@ -1,12 +1,11 @@
-import path from 'node:path';
 import querystring from 'node:querystring';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderPost } from './templates/post';
 import { getAuthorFeed, getProfile, resolveHandle } from './utils';
 
 export const route: Route = {
@@ -34,17 +33,17 @@ export const route: Route = {
     name: 'Post',
     maintainers: ['TonyRL'],
     handler,
-    description: `
-| Filter Value | Description |
-|--------------|-------------|
-| posts_with_replies | Includes Posts, Replies, and Reposts |
-| posts_no_replies | Includes Posts and Reposts, without Replies |
-| posts_with_media | Shows only Posts containing media |
-| posts_and_author_threads | Shows Posts and Threads, without Replies and Reposts |
+    description: `| Filter Value                | Description                                          |
+| --------------------------- | ---------------------------------------------------- |
+| posts\\_with\\_replies        | Includes Posts, Replies, and Reposts                 |
+| posts\\_no\\_replies          | Includes Posts and Reposts, without Replies          |
+| posts\\_with\\_media          | Shows only Posts containing media                    |
+| posts\\_and\\_author\\_threads | Shows Posts and Threads, without Replies and Reposts |
 
 Default value for filter is \`posts_and_author_threads\` if not specified.
 
 Example:
+
 - \`/bsky/profile/bsky.app/filter=posts_with_replies\``,
 };
 
@@ -59,7 +58,7 @@ async function handler(ctx) {
 
     const items = authorFeed.feed.map(({ post }) => ({
         title: post.record.text.split('\n')[0],
-        description: art(path.join(__dirname, 'templates/post.art'), {
+        description: renderPost({
             text: post.record.text.replaceAll('\n', '<br>'),
             embed: post.embed,
             // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled

@@ -47,21 +47,21 @@ export const route: Route = {
 |    区县专题    |  qxzt  |
 
 ::: tip
-  **热点专题**栏目包含**市本级专题**和**区县专题**
+**热点专题**栏目包含**市本级专题**和**区县专题**
 
-  **市本级专题**栏目包含**最新热点专题**和**往期专题**
+**市本级专题**栏目包含**最新热点专题**和**往期专题**
 
-  如需订阅完整的热点专题，仅需订阅 **热点专题**\`rdzt\` 一项即可。
+如需订阅完整的热点专题，仅需订阅 **热点专题**\`rdzt\` 一项即可。
 :::`,
 };
 
 async function handler(ctx) {
     const rootUrl = 'https://www.suzhou.gov.cn';
     const uid = ctx.req.param('uid');
-    let url = '';
-    let title = '';
+    let url: string;
+    let title: string;
     let apiUrl = '';
-    let items = [];
+    let items: DataItem[];
     switch (uid) {
         case 'szyw':
         case 'news':

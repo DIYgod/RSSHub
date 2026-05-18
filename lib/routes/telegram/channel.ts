@@ -1,4 +1,3 @@
-import path from 'node:path';
 import querystring from 'node:querystring';
 
 import { load } from 'cheerio';
@@ -10,8 +9,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { art } from '@/utils/render';
 
+import { renderVideo } from './templates/video';
 import tglibchannel from './tglib/channel';
 
 /* message types */
@@ -145,9 +144,8 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     name: 'Channel',
     maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
-    description: `
-::: tip
-  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
+    description: `::: tip
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
 :::`,
 };
 
@@ -421,7 +419,7 @@ async function handler(ctx) {
                             const thumbBackground = $node.find('.tgme_widget_message_video_thumb').css('background-image');
                             const thumbBackgroundUrl = thumbBackground && thumbBackground.match(/url\('(.*)'\)/);
                             const thumbBackgroundUrlSrc = thumbBackgroundUrl && thumbBackgroundUrl[1];
-                            tag_media += art(path.join(__dirname, 'templates/video.art'), {
+                            tag_media += renderVideo({
                                 source: videoLink,
                                 poster: thumbBackgroundUrlSrc,
                             });
@@ -438,7 +436,7 @@ async function handler(ctx) {
                         } else if (node.attribs && node.attribs.class && node.attribs.class.search(/(^|\s)tgme_widget_message_videosticker(\s|$)/) !== -1) {
                             // video sticker
                             const videoLink = $node.find('.js-videosticker_video').attr('src');
-                            tag_media += art(path.join(__dirname, 'templates/video.art'), {
+                            tag_media += renderVideo({
                                 source: videoLink,
                             });
                         } else if (node.name === 'img') {
@@ -660,13 +658,13 @@ async function handler(ctx) {
                 if (msgTypes.includes(UNSUPPORTED)) {
                     if (unsupportedNodes.length) {
                         unsupportedHtml += '<blockquote>';
-                        unsupportedNodes.find('.message_media_not_supported_label').each(function () {
-                            const $this = $(this);
+                        unsupportedNodes.find('.message_media_not_supported_label').each((_, el) => {
+                            const $this = $(el);
                             unsupportedTitle += $this.text();
                             unsupportedHtml += `<p>${$this.text()}</p>`;
                         });
-                        unsupportedNodes.find('.message_media_view_in_telegram').each(function () {
-                            const $this = $(this);
+                        unsupportedNodes.find('.message_media_view_in_telegram').each((_, el) => {
+                            const $this = $(el);
                             unsupportedHtml += $this.attr('href') ? `<p><a href="${$this.attr('href')}">${$this.text()}</a></p>` : `<p>${$this.text()}</p>`;
                         });
                         unsupportedHtml += '</blockquote>';

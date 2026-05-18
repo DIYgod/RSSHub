@@ -10,36 +10,36 @@ export interface UserNextData {
 }
 
 export interface PortfolioResponse {
-    data: {
+    data: Array<{
         url: string;
         postId: string;
         imageNum: number;
-    }[];
+    }>;
 }
 
 export interface PortfolioDetailResponse {
     data: {
         createdAt: string;
-        images: {
+        images: Array<{
             src: string;
             isCoverImg: boolean;
-        }[];
+        }>;
         title: string;
         content: string;
     };
 }
 
 export interface PostsResponse {
-    data: {
+    data: Array<{
         name: string;
         photo: string;
         createdAt: string;
-        images: {
+        images: Array<{
             src: string;
             isCoverImg: boolean;
-        }[];
+        }>;
         id: string;
         title: string;
         content: string;
-    }[];
+    }>;
 }

@@ -49,7 +49,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['about.netflix.com/:region/newsroom', 'netflix.com'],
+            source: ['about.netflix.com/:region/newsroom'],
+        },
+        {
+            source: ['netflix.com'],
         },
     ],
     name: 'Newsroom',

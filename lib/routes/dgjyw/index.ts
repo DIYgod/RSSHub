@@ -20,13 +20,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.dgjyw.com';
     const currentUrl = `${rootUrl}${params === '/' ? '/tz' : params}.htm`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
 
@@ -48,13 +42,7 @@ async function handler(ctx) {
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 if (/dgjyw\.com/.test(item.link)) {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const detailResponse = await got(item.link);
 
                     const content = load(detailResponse.data);
 

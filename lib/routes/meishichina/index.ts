@@ -172,22 +172,22 @@ export const route: Route = {
     example: '/meishichina/recipe',
     parameters: { category: '分类，默认为最新推荐，见下表' },
     description: `::: tip
-  若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`最新推荐\` 分类，将 \`最新推荐\` 作为参数填入，此时路由为 [\`/meishichina/recipe/最新推荐/\`](https://rsshub.app/meishichina/recipe/最新推荐)。
+若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`最新推荐\` 分类，将 \`最新推荐\` 作为参数填入，此时路由为 [\`/meishichina/recipe/最新推荐/\`](https://rsshub.app/meishichina/recipe/最新推荐)。
 
-  若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`自制食材\` 分类，将 \`自制食材\` 作为参数填入，此时路由为 [\`/meishichina/recipe/自制食材/\`](https://rsshub.app/meishichina/recipe/自制食材)。
+若订阅 [菜谱大全](https://home.meishichina.com/recipe.html) 中的 \`自制食材\` 分类，将 \`自制食材\` 作为参数填入，此时路由为 [\`/meishichina/recipe/自制食材/\`](https://rsshub.app/meishichina/recipe/自制食材)。
 :::
 
 | [最新推荐](https://home.meishichina.com/recipe.html) | [最新发布](https://home.meishichina.com/recipe.html) | [热菜](https://home.meishichina.com/recipe.html) | [凉菜](https://home.meishichina.com/recipe.html) | [汤羹](https://home.meishichina.com/recipe.html) | [主食](https://home.meishichina.com/recipe.html) | [小吃](https://home.meishichina.com/recipe.html) | [西餐](https://home.meishichina.com/recipe.html) | [烘焙](https://home.meishichina.com/recipe.html) | [自制食材](https://home.meishichina.com/recipe.html) |
 | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ---------------------------------------------------- |
 
 ::: tip
-  若订阅 [全部分类](https://home.meishichina.com/recipe-type.html) 中的对应分类页，见下方说明。
+若订阅 [全部分类](https://home.meishichina.com/recipe-type.html) 中的对应分类页，见下方说明。
 
-  若订阅 [热菜最新菜谱](https://home.meishichina.com/recipe/recai/)，网址为 \`https://home.meishichina.com/recipe/recai/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`recai\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recai/\`](https://rsshub.app/meishichina/recipe/recai)。
-  
-  若订阅 [米饭最热菜谱](https://home.meishichina.com/recipe/mifan/hot/)，网址为 \`https://home.meishichina.com/recipe/mifan/hot/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`mifan/hot\` 作为参数填入，此时路由为 [\`/meishichina/recipe/mifan/hot/\`](https://rsshub.app/meishichina/recipe/mifan/hot)。
-  
-  若订阅 [制作难度简单菜谱](https://home.meishichina.com/recipe-type-do-level-view-1.html)，网址为 \`https://home.meishichina.com/recipe-type-do-level-view-1.html\`。截取 \`https://home.meishichina.com/\` 到末尾 \`.html\` 的部分 \`recipe-type-do-level-view-1\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recipe-type-do-level-view-1/\`](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-1)。
+若订阅 [热菜最新菜谱](https://home.meishichina.com/recipe/recai/)，网址为 \`https://home.meishichina.com/recipe/recai/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`recai\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recai/\`](https://rsshub.app/meishichina/recipe/recai)。
+
+若订阅 [米饭最热菜谱](https://home.meishichina.com/recipe/mifan/hot/)，网址为 \`https://home.meishichina.com/recipe/mifan/hot/\`。截取 \`https://home.meishichina.com/recipe/\` 到末尾 \`/\` 的部分 \`mifan/hot\` 作为参数填入，此时路由为 [\`/meishichina/recipe/mifan/hot/\`](https://rsshub.app/meishichina/recipe/mifan/hot)。
+
+若订阅 [制作难度简单菜谱](https://home.meishichina.com/recipe-type-do-level-view-1.html)，网址为 \`https://home.meishichina.com/recipe-type-do-level-view-1.html\`。截取 \`https://home.meishichina.com/\` 到末尾 \`.html\` 的部分 \`recipe-type-do-level-view-1\` 作为参数填入，此时路由为 [\`/meishichina/recipe/recipe-type-do-level-view-1/\`](https://rsshub.app/meishichina/recipe/recipe-type-do-level-view-1)。
 :::
 
 <details>
@@ -207,7 +207,7 @@ export const route: Route = {
 | ------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
 | [huoguo](https://rsshub.app/meishichina/recipe/huoguo) | [zizhishicai](https://rsshub.app/meishichina/recipe/zizhishicai) | [haixian](https://rsshub.app/meishichina/recipe/haixian) | [yankecai](https://rsshub.app/meishichina/recipe/yankecai) |
 
-#### 主食/小吃
+#### 主食 / 小吃
 
 | [米饭](https://home.meishichina.com/recipe/mifan/)   | [炒饭](https://home.meishichina.com/recipe/chaofan/)     | [面食](https://home.meishichina.com/recipe/mianshi/)     | [包子](https://home.meishichina.com/recipe/baozi/)   | [饺子](https://home.meishichina.com/recipe/jiaozi/)    | [馒头花卷](https://home.meishichina.com/recipe/mantou/) |
 | ---------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------- |
@@ -229,7 +229,7 @@ export const route: Route = {
 | ------------------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | [henanxiaochi](https://rsshub.app/meishichina/recipe/henanxiaochi) | [taiwanxiaochi](https://rsshub.app/meishichina/recipe/taiwanxiaochi) | [jiangzhexiaochi](https://rsshub.app/meishichina/recipe/jiangzhexiaochi) | [yunguixiaochi](https://rsshub.app/meishichina/recipe/yunguixiaochi) | [dongbeixiaochi](https://rsshub.app/meishichina/recipe/dongbeixiaochi) | [xibeixiaochi](https://rsshub.app/meishichina/recipe/xibeixiaochi) |
 
-#### 甜品/饮品
+#### 甜品 / 饮品
 
 | [甜品](https://home.meishichina.com/recipe/tianpin/)     | [冰品](https://home.meishichina.com/recipe/bingpin/)     | [果汁](https://home.meishichina.com/recipe/guozhi/)    | [糖水](https://home.meishichina.com/recipe/tangshui/)      | [布丁](https://home.meishichina.com/recipe/buding/)    | [果酱](https://home.meishichina.com/recipe/guojiang/)      |
 | -------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
@@ -449,8 +449,7 @@ export const route: Route = {
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | [recipe-type-do-technics-view-37](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-37) | [recipe-type-do-technics-view-38](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-38) | [recipe-type-do-technics-view-39](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-39) | [recipe-type-do-technics-view-50](https://rsshub.app/meishichina/recipe/recipe-type-do-technics-view-50) |
 
-</details>
-  `,
+</details>`,
     categories: ['new-media'],
 
     features: {

@@ -71,7 +71,7 @@ async function handler(ctx) {
     });
 
     const list = JSON.parse(response.data.match(/"data":(\[{.*}])}/)[1]).map((item) => {
-        let link = '';
+        let link: string;
 
         if (item.UrlPath_en) {
             link = item[`UrlPath_${language}`].includes('http') ? item[`UrlPath_${language}`] : `${rootUrl}${item[`UrlPath_${language}`]}`;

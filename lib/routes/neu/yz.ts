@@ -162,12 +162,11 @@ export const route: Route = {
     url: 'yz.neu.edu.cn',
     maintainers: ['paintstar'],
     handler,
-    description: `
-| 分类名                     | 分类id      |
-| ------------------------- | ---------- |
-| 硕士公告                   | master1     |
-| 硕士简章                   | master2     |
-| 博士公告                   | phd1        |
-| 博士简章                   | phd2        |
-| 下载中心                   | download    |`,
+    description: `| 分类名   | 分类 id  |
+| -------- | -------- |
+| 硕士公告 | master1  |
+| 硕士简章 | master2  |
+| 博士公告 | phd1     |
+| 博士简章 | phd2     |
+| 下载中心 | download |`,
 };

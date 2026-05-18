@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,14 +8,15 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.oschina.net';
+    const baseUrl = 'https://www.oschina.net';
     const userHostRegex: string = String.raw`https://my\.oschina\.net`;
     const targetUrl: string = new URL(`news/column?columnId=${id}`, baseUrl).href;
 
@@ -25,16 +24,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language: string = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.news-item')
+    let items: DataItem[] = $('div.news-item')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.title').text();
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 intro: $el.find('div.description p.line-clamp').text(),
             });
             const pubDateStr: string | undefined = $el.find('inddiv.item').contents().last().text().trim();
@@ -84,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     $$('.ad-wrap').remove();
 
                     const title: string = $$('h1.article-box__title').text();
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         description: $$('div.content').html(),
                     });
                     const pubDateEl: Element = $$('div.article-box__meta div.item-list div.item')
@@ -105,7 +102,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             url: $authorEl.attr('href'),
                         };
                     });
-                    const guid: string = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
+                    const guid = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
                     const image: string | undefined = $$('val[data-name="sharePic"]').attr('data-value');
                     const upDatedStr: string | undefined = $$('meta[property="bytedance:updated_time"]').attr('content') || pubDateStr;
 
@@ -191,34 +188,33 @@ export const route: Route = {
 <details>
 <summary>更多专栏</summary>
 
-| 名称            | ID  |
-| --------------- | --- |
-| 古典主义 Debian | 4   |
-| 自由&开源       | 5   |
-| 溯源            | 6   |
-| 开源先懂协议    | 7   |
-| 开源变局        | 8   |
-| 创造者说        | 9   |
-| 精英主义 BSD    | 10  |
-| 苹果有开源      | 11  |
-| 开源访谈        | 12  |
-| 抱团找组织      | 13  |
-| 开源安全        | 14  |
-| OSPO            | 15  |
-| 创业小辑        | 16  |
-| 星推荐          | 17  |
-| 单口开源        | 18  |
-| 编辑部观察直播  | 19  |
-| 开源商业化      | 20  |
-| ChatGPT 专题    | 21  |
-| 开源新思        | 24  |
-| 开源日报        | 25  |
-| 大模型思辨      | 26  |
-| 家里有个程序员  | 27  |
-| 开源漫谈        | 23  |
+| 名称            | ID |
+| --------------- | -- |
+| 古典主义 Debian | 4  |
+| 自由 & 开源     | 5  |
+| 溯源            | 6  |
+| 开源先懂协议    | 7  |
+| 开源变局        | 8  |
+| 创造者说        | 9  |
+| 精英主义 BSD    | 10 |
+| 苹果有开源      | 11 |
+| 开源访谈        | 12 |
+| 抱团找组织      | 13 |
+| 开源安全        | 14 |
+| OSPO            | 15 |
+| 创业小辑        | 16 |
+| 星推荐          | 17 |
+| 单口开源        | 18 |
+| 编辑部观察直播  | 19 |
+| 开源商业化      | 20 |
+| ChatGPT 专题    | 21 |
+| 开源新思        | 24 |
+| 开源日报        | 25 |
+| 大模型思辨      | 26 |
+| 家里有个程序员  | 27 |
+| 开源漫谈        | 23 |
 
-</details>
-`,
+</details>`,
     categories: ['programming'],
     features: {
         requireConfig: false,

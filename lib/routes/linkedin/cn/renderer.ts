@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-code-point */
 const text_tag = {
     LINE_BREAK: 0,
     INLINE_CODE: 1,
@@ -68,6 +69,7 @@ class Ucs2Text {
         return new Ucs2Text(_start === _end ? '' : this.codePoints.slice(_start, _end));
     }
     slice(a, b) {
+        // oxlint-disable-next-line unicorn/prefer-string-slice
         return this.substring(a, b).toString();
     }
     toString() {
@@ -88,7 +90,7 @@ const renderSingle = (node) => {
         case 'BOLD':
             return `<b>${node.text}</b>`;
         case 'LINE_BREAK':
-            return `<br>`;
+            return '<br>';
         case 'LIST_ITEM':
             return `<li>${node.text}</li>`;
         case 'LIST':

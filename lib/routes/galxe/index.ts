@@ -45,7 +45,7 @@ async function handler(ctx) {
                     listType: 'Newest',
                 },
             },
-            query: `
+            query: /* GraphQL */ `
                 query BrowseSpaceCampaigns($id: Int, $alias: String, $campaignInput: ListCampaignInput!) {
                     space(id: $id, alias: $alias) {
                         id

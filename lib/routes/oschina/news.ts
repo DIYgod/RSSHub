@@ -1,46 +1,87 @@
-import { load } from 'cheerio';
-
-import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import { fetchArticle } from '@/utils/wechat-mp';
+import { parseDate } from '@/utils/parse-date';
+
+import { baseUrl, blogBaseUrl, getBlog, getBlogListCategory, getNews } from './utils';
 
 const configs = {
-    all: {
-        name: '最新资讯',
-        link: 'https://www.oschina.net/news/project',
-        ajaxUrl: 'https://www.oschina.net/news/widgets/_news_index_all_list?p=1&type=ajax',
+    0: {
+        name: '全部',
     },
-    industry: {
-        name: '综合资讯',
-        link: 'https://www.oschina.net/news/industry',
-        ajaxUrl: 'https://www.oschina.net/news/widgets/_news_index_generic_list?p=1&type=ajax',
+    9998: {
+        name: '开源资讯',
     },
-    project: {
-        name: '软件更新资讯',
-        link: 'https://www.oschina.net/news/project',
-        ajaxUrl: 'https://www.oschina.net/news/widgets/_news_index_project_list?p=1&type=ajax',
+    9999: {
+        name: '软件资讯',
     },
-    'industry-news': {
-        name: '行业资讯',
-        link: 'https://www.oschina.net/news/industry-news',
-        ajaxUrl: 'https://www.oschina.net/news/widgets/_news_index_industry_list?p=1&type=ajax',
+    4: {
+        name: 'AI & 大模型',
     },
-    programming: {
-        name: '编程语言资讯',
-        link: 'https://www.oschina.net/news/programming',
-        ajaxUrl: 'https://www.oschina.net/news/widgets/_news_index_programming_language_list?p=1&type=ajax',
+    3: {
+        name: '云原生',
+    },
+    12: {
+        name: '大前端',
+    },
+    10: {
+        name: '软件架构',
+    },
+    11: {
+        name: '开发技能',
+    },
+    6: {
+        name: '硬件 & IoT',
+    },
+    9: {
+        name: 'DevOps',
+    },
+    19: {
+        name: '操作系统',
+    },
+    8: {
+        name: '程序人生',
+    },
+    5: {
+        name: '数据库',
+    },
+    2: {
+        name: '区块链 & Web3 & 元宇宙',
+    },
+    14: {
+        name: '软件测试 & 运维',
+    },
+    13: {
+        name: '信息安全',
+    },
+    15: {
+        name: '网络技术',
+    },
+    7: {
+        name: '信息安全',
+    },
+    1: {
+        name: '开源治理',
+    },
+    16: {
+        name: '游戏开发',
+    },
+    17: {
+        name: '多媒体处理',
     },
 };
 
 export const route: Route = {
     path: '/news/:category?',
     categories: ['programming'],
-    example: '/oschina/news/project',
-    parameters: { category: '板块名' },
+    example: '/oschina/news',
+    parameters: {
+        category: {
+            description: '板块名',
+            default: '0',
+            options: Object.entries(configs).map(([key, value]) => ({ value: key, label: value.name })),
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -51,101 +92,69 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['oschina.net/news/:category'],
-            target: '/news/:category',
+            source: ['oschina.net'],
+            target: '/news',
         },
     ],
     name: '资讯',
     maintainers: ['tgly307', 'zengxs'],
     handler,
-    description: `| [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
-| ------------------- | ------------------------ | ------------------- | ---------------------- |
-| industry            | project                  | industry-news       | programming            |
-
-  订阅 [全部板块资讯][osc_all] 可以使用 [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
-
-  [osc_all]: https://www.oschina.net/news "开源中国 - 全部资讯"
-
-  [osc_gen]: https://www.oschina.net/news/industry "开源中国 - 综合资讯"
-
-  [osc_proj]: https://www.oschina.net/news/project "开源中国 - 软件更新资讯"
-
-  [osc_ind]: https://www.oschina.net/news/industry-news "开源中国 - 行业资讯"
-
-  [osc_pl]: https://www.oschina.net/news/programming "开源中国 - 编程语言资讯"`,
 };
 
-const getCookie = () =>
-    cache.tryGet(
-        'oschina:cookie',
-        async () => {
-            const res = await ofetch.raw('https://www.oschina.net/news');
-            const cookie = res.headers
-                .getSetCookie()
-                .map((i) => i.split(';')[0])
-                .join('; ');
-            return cookie;
-        },
-        config.cache.routeExpire,
-        false
-    );
-
 async function handler(ctx) {
-    const category = ctx.req.param('category') ?? 'all';
-    const config = configs[category];
+    let { category = '0' } = ctx.req.param();
+    const limit = Number.parseInt(ctx.req.query('limit') ?? 30, 10);
 
-    const cookie = await getCookie();
-    const res = await ofetch(config.ajaxUrl, {
-        headers: {
-            Referer: config.link,
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: cookie,
+    switch (category) {
+        case 'all':
+            category = '0';
+            break;
+        case 'industry':
+        case 'industry-news':
+        case 'programming':
+            category = '9998';
+            break;
+        case 'project':
+            category = '9999';
+            break;
+        default:
+            break;
+    }
+
+    const blogListCategory = await getBlogListCategory();
+    const config = blogListCategory.find((item) => item.id.toString() === category) ?? blogListCategory[0];
+
+    const response = await ofetch(`${baseUrl}/ApiHomeNew${config.apiPath}`, {
+        query: {
+            page: 1,
+            pageSize: limit,
+            type: category,
         },
     });
-    const $ = load(res);
 
-    $('.ad-wrap').remove();
+    const list = response.result.map((item) => ({
+        title: item.obj_title,
+        description: item.detail,
+        link: item.obj_type === 4 ? `${baseUrl}/news/${item.obj_id}${item.ident ? `/${item.ident}` : ''}` : `${blogBaseUrl}/u/${item.userVo.id}/blog/${item.obj_id}`,
+        guid: `oschina:${item.obj_type === 4 ? 'news' : 'blog'}:${item.obj_id}`,
+        objectType: item.obj_type,
+        detailId: item.obj_id,
+        pubDate: parseDate(item.create_time, 'x'),
+        author: item.userVo.name,
+        image: item.image,
+    }));
 
-    const list = $('.items .news-item')
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            const date = item.find('.extra > .list > .item:nth-of-type(2)').text();
-            return {
-                title: item.find('h3 a').attr('title'),
-                description: item.find('.description p').text(),
-                link: item.find('h3 a').attr('href'),
-                pubDate: timezone(/\//.test(date) ? parseDate(date, ['YYYY/MM/DD HH:mm', 'MM/DD HH:mm']) : parseRelativeDate(date), +8),
-            };
-        });
-
-    const resultItem = await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (/^https?:\/\/(my|www)\.oschina.net\/.*$/.test(item.link)) {
-                    const detail = await ofetch(item.link, {
-                        headers: {
-                            Referer: config.link,
-                            Cookie: cookie,
-                        },
-                    });
-                    const content = load(detail);
-                    content('.ad-wrap').remove();
-
-                    item.description = content('.article-detail').html();
-                    item.author = content('.article-box__meta .item').first().text();
-                } else if (/^https?:\/\/gitee\.com\/.*$/.test(item.link)) {
-                    const detail = await ofetch(item.link, {
-                        headers: {
-                            Referer: config.link,
-                        },
-                    });
-                    const content = load(detail);
-
-                    item.description = content('.file_content').html();
-                } else if (/^https?:\/\/osc\.cool\/.*$/.test(item.link)) {
-                    return fetchArticle(item.link, true);
+            cache.tryGet(item.guid, async () => {
+                if (item.objectType === 4) {
+                    const response = await getNews(item.detailId);
+                    item.description = response.code === 200 ? response.result.detail : item.description;
+                } else if (item.objectType === 3) {
+                    const response = await getBlog(item.detailId);
+                    item.description = response.code === 200 ? response.result.content : item.description;
                 }
+
                 return item;
             })
         )
@@ -153,7 +162,10 @@ async function handler(ctx) {
 
     return {
         title: `开源中国-${config.name}`,
-        link: config.link,
-        item: resultItem,
+        description: config.description,
+        link: `${baseUrl}/?type=${category}`,
+        image: config.logo,
+        language: 'zh-CN' as const,
+        item: items,
     };
 }

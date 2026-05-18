@@ -1,12 +1,7 @@
-import path from 'node:path';
-
-import { art } from '@/utils/render';
+import { renderWork } from './templates/work';
 
 const extractArticle = (data) => data.props.pageProps.data.summary + data.props.pageProps.data.memo;
 
-const extractWork = (data) =>
-    art(path.join(__dirname, 'templates/work.art'), {
-        data: data.props.pageProps.data,
-    });
+const extractWork = (data) => renderWork(data.props.pageProps.data);
 
 export { extractArticle, extractWork };

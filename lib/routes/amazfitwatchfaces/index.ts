@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,22 +8,21 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { device, sort, searchParams } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://amazfitwatchfaces.com';
+    const baseUrl = 'https://amazfitwatchfaces.com';
     const targetUrl: string = new URL(`${device}/${sort}${searchParams ? `?${searchParams}` : ''}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = $('div.wf-panel')
+    let items: DataItem[] = $('div.wf-panel')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -33,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $el.prop('title');
             const image: string | undefined = $el.find('img.wf-img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -88,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = $$('div.page-title h1').text();
                     const image: string | undefined = $$('img#watchface-preview').attr('src');
-                    const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string | undefined = renderDescription({
                         images: image
                             ? [
                                   {
@@ -97,7 +94,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                   },
                               ]
                             : undefined,
-                        description: $$('div.unicodebidi').html(),
+                        description: $$('div.unicodebidi').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('i.fa-calendar').parent().find('span').text();
                     const linkUrl: string | undefined = $$('.title').attr('href');
@@ -275,37 +272,36 @@ export const route: Route = {
     description: `::: tip
 If you subscribe to [Updated watch faces for Amazfit X](https://amazfitwatchfaces.com/amazfit-x/updated)，where the URL is \`https://amazfitwatchfaces.com/amazfit-x/updated\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`amazfit-x/updated\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/amazfit-x/updated\`](https://rsshub.app/amazfitwatchfaces/amazfit-x/updated).
 
-If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months)，where the URL is \`https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`mi-band/top\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months\`](https://rsshub.app/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months).
+If you subscribe to [TOP for the last 6 months (Only new) - Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9\\&topof=6months)，where the URL is \`https://amazfitwatchfaces.com/mi-band/top?compatible=Smart_Band_9&topof=6months\`, extract the part \`https://amazfitwatchfaces.com/\` to the end, which is \`mi-band/top\`, and use it as the parameter to fill in. Therefore, the route will be [\`/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9&topof=6months\`](https://rsshub.app/amazfitwatchfaces/mi-band/top/compatible=Smart_Band_9\\&topof=6months).
 :::
 
 <details>
   <summary>More devices</summary>
 
-| Device Name                                                                                | Device Id       |
-| ------------------------------------------------------------------------------------------ | --------------- |
-| [Amazfit X](https://amazfitwatchfaces.com/amazfit-x/fresh)                                 | [amazfit-x](https://rsshub.app/amazfitwatchfaces/amazfit-x/fresh) |
-| [Amazfit Band](https://amazfitwatchfaces.com/amazfit-band/fresh)                           | [amazfit-band](https://rsshub.app/amazfitwatchfaces/amazfit-band/fresh) |
-| [Amazfit Bip](https://amazfitwatchfaces.com/bip/fresh)                                     | [bip](https://rsshub.app/amazfitwatchfaces/bip/fresh) |
-| [Amazfit Active](https://amazfitwatchfaces.com/active/fresh)                               | [active](https://rsshub.app/amazfitwatchfaces/active/fresh) |
-| [Amazfit Balance](https://amazfitwatchfaces.com/balance/fresh)                             | [balance](https://rsshub.app/amazfitwatchfaces/balance/fresh) |
-| [Amazfit Cheetah](https://amazfitwatchfaces.com/cheetah/fresh)                             | [cheetah](https://rsshub.app/amazfitwatchfaces/cheetah/fresh) |
-| [Amazfit Falcon](https://amazfitwatchfaces.com/falcon/fresh)                               | [falcon](https://rsshub.app/amazfitwatchfaces/falcon/fresh) |
-| [Amazfit GTR](https://amazfitwatchfaces.com/gtr/fresh)                                     | [gtr](https://rsshub.app/amazfitwatchfaces/gtr/fresh) |
-| [Amazfit GTS](https://amazfitwatchfaces.com/gts/fresh)                                     | [gts](https://rsshub.app/amazfitwatchfaces/gts/fresh) |
-| [Amazfit T-Rex](https://amazfitwatchfaces.com/t-rex/fresh)                                 | [t-rex](https://rsshub.app/amazfitwatchfaces/t-rex/fresh) |
-| [Amazfit Stratos](https://amazfitwatchfaces.com/pace/fresh)                                | [pace](https://rsshub.app/amazfitwatchfaces/pace/fresh) |
-| [Amazfit Verge Lite](https://amazfitwatchfaces.com/verge-lite/fresh)                       | [verge-lite](https://rsshub.app/amazfitwatchfaces/verge-lite/fresh) |
-| [Haylou Watches](https://amazfitwatchfaces.com/haylou/fresh)                               | [haylou](https://rsshub.app/amazfitwatchfaces/haylou/fresh) |
-| [Huawei Watches](https://amazfitwatchfaces.com/huawei-watch-gt/fresh)                      | [huawei-watch-gt](https://rsshub.app/amazfitwatchfaces/huawei-watch-gt/fresh) |
-| [Xiaomi Mi Band 4](https://amazfitwatchfaces.com/mi-band-4/fresh)                          | [mi-band-4](https://rsshub.app/amazfitwatchfaces/mi-band-4/fresh) |
-| [Xiaomi Mi Band 5](https://amazfitwatchfaces.com/mi-band-5/fresh)                          | [mi-band-5](https://rsshub.app/amazfitwatchfaces/mi-band-5/fresh) |
-| [Xiaomi Mi Band 6](https://amazfitwatchfaces.com/mi-band-6/fresh)                          | [mi-band-6](https://rsshub.app/amazfitwatchfaces/mi-band-6/fresh) |
-| [Xiaomi Mi Band 7](https://amazfitwatchfaces.com/mi-band-7/fresh)                          | [mi-band-7](https://rsshub.app/amazfitwatchfaces/mi-band-7/fresh) |
+| Device Name                                                                                | Device Id                                                                             |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| [Amazfit X](https://amazfitwatchfaces.com/amazfit-x/fresh)                                 | [amazfit-x](https://rsshub.app/amazfitwatchfaces/amazfit-x/fresh)                     |
+| [Amazfit Band](https://amazfitwatchfaces.com/amazfit-band/fresh)                           | [amazfit-band](https://rsshub.app/amazfitwatchfaces/amazfit-band/fresh)               |
+| [Amazfit Bip](https://amazfitwatchfaces.com/bip/fresh)                                     | [bip](https://rsshub.app/amazfitwatchfaces/bip/fresh)                                 |
+| [Amazfit Active](https://amazfitwatchfaces.com/active/fresh)                               | [active](https://rsshub.app/amazfitwatchfaces/active/fresh)                           |
+| [Amazfit Balance](https://amazfitwatchfaces.com/balance/fresh)                             | [balance](https://rsshub.app/amazfitwatchfaces/balance/fresh)                         |
+| [Amazfit Cheetah](https://amazfitwatchfaces.com/cheetah/fresh)                             | [cheetah](https://rsshub.app/amazfitwatchfaces/cheetah/fresh)                         |
+| [Amazfit Falcon](https://amazfitwatchfaces.com/falcon/fresh)                               | [falcon](https://rsshub.app/amazfitwatchfaces/falcon/fresh)                           |
+| [Amazfit GTR](https://amazfitwatchfaces.com/gtr/fresh)                                     | [gtr](https://rsshub.app/amazfitwatchfaces/gtr/fresh)                                 |
+| [Amazfit GTS](https://amazfitwatchfaces.com/gts/fresh)                                     | [gts](https://rsshub.app/amazfitwatchfaces/gts/fresh)                                 |
+| [Amazfit T-Rex](https://amazfitwatchfaces.com/t-rex/fresh)                                 | [t-rex](https://rsshub.app/amazfitwatchfaces/t-rex/fresh)                             |
+| [Amazfit Stratos](https://amazfitwatchfaces.com/pace/fresh)                                | [pace](https://rsshub.app/amazfitwatchfaces/pace/fresh)                               |
+| [Amazfit Verge Lite](https://amazfitwatchfaces.com/verge-lite/fresh)                       | [verge-lite](https://rsshub.app/amazfitwatchfaces/verge-lite/fresh)                   |
+| [Haylou Watches](https://amazfitwatchfaces.com/haylou/fresh)                               | [haylou](https://rsshub.app/amazfitwatchfaces/haylou/fresh)                           |
+| [Huawei Watches](https://amazfitwatchfaces.com/huawei-watch-gt/fresh)                      | [huawei-watch-gt](https://rsshub.app/amazfitwatchfaces/huawei-watch-gt/fresh)         |
+| [Xiaomi Mi Band 4](https://amazfitwatchfaces.com/mi-band-4/fresh)                          | [mi-band-4](https://rsshub.app/amazfitwatchfaces/mi-band-4/fresh)                     |
+| [Xiaomi Mi Band 5](https://amazfitwatchfaces.com/mi-band-5/fresh)                          | [mi-band-5](https://rsshub.app/amazfitwatchfaces/mi-band-5/fresh)                     |
+| [Xiaomi Mi Band 6](https://amazfitwatchfaces.com/mi-band-6/fresh)                          | [mi-band-6](https://rsshub.app/amazfitwatchfaces/mi-band-6/fresh)                     |
+| [Xiaomi Mi Band 7](https://amazfitwatchfaces.com/mi-band-7/fresh)                          | [mi-band-7](https://rsshub.app/amazfitwatchfaces/mi-band-7/fresh)                     |
 | [Xiaomi Smart Band 8](https://amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_8) | [mi-band](https://rsshub.app/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_8) |
 | [Xiaomi Smart Band 9](https://amazfitwatchfaces.com/mi-band/fresh?compatible=Smart_Band_9) | [mi-band](https://rsshub.app/amazfitwatchfaces/mi-band/fresh/compatible=Smart_Band_9) |
 
-</details>
-`,
+</details>`,
     categories: ['program-update'],
     features: {
         requireConfig: false,

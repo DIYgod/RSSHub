@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '2', key } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.jl1mall.com';
+    const baseUrl = 'https://www.jl1mall.com';
     const targetUrl: string = new URL('forum', baseUrl).href;
     const apiUrl: string = new URL(`postApi/${type === 'recommend' ? 'recommend' : 'post'}/getPostData`, baseUrl).href;
     const apiRacerUrl: string = new URL('postApi/racer/getRacerList', baseUrl).href;
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
               ]
             : undefined;
-        const guid: string = `jl1mall-${item.postId}`;
+        const guid = `jl1mall-${item.postId}`;
         const image: string | undefined = item.pictureLink;
         const updated: number | string = pubDate;
 
@@ -118,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    const title: string = '星林社区';
+    const title = '星林社区';
 
     return {
         title: name ? `${title} - ${name}` : title,
@@ -626,10 +626,9 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [星林社区遥感开发者培训班的最新内容](https://www.jl1mall.com/forum/)，此时路由为 [\`/jl1mall/forum/2/\`](https://rsshub.app/jl1mall/forum/2/遥感开发者培训班)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

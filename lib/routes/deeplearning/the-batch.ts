@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { tag } = ctx.req.param();
@@ -28,7 +27,7 @@ export const handler = async (ctx) => {
 
     let items = posts.slice(0, limit).map((item) => {
         const title = item.title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             images: item.feature_image
                 ? [
                       {
@@ -85,7 +84,7 @@ export const handler = async (ctx) => {
                 });
 
                 const title = post.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     images: post.feature_image
                         ? [
                               {
@@ -145,7 +144,7 @@ export const route: Route = {
     example: '/deeplearning/the-batch',
     parameters: { tag: 'Tag, Weekly Issues by default' },
     description: `::: tip
-  If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
+If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
 
 :::
 
@@ -174,8 +173,7 @@ export const route: Route = {
 | [DeepLearning.AI News](https://www.deeplearning.ai/the-batch/tag/deeplearning-ai-news/) | [deeplearning-ai-news](https://rsshub.app/deeplearning/the-batch/deeplearning-ai-news) |
 | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)                     | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)                     |
 | [Just For Fun](https://www.deeplearning.ai/the-batch/tag/just-for-fun/)                 | [just-for-fun](https://rsshub.app/deeplearning/the-batch/just-for-fun)                 |
-| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |
-    `,
+| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |`,
     categories: ['programming'],
 
     features: {

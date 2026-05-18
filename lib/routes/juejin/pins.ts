@@ -37,10 +37,10 @@ async function handler(ctx) {
         '6824710203112423437': '树洞一下',
     };
 
-    let url = '';
-    let json = {};
+    let url: string;
+    let json: Record<string, unknown>;
     if (/^\d+$/.test(type)) {
-        url = `https://api.juejin.cn/recommend_api/v1/short_msg/topic`;
+        url = 'https://api.juejin.cn/recommend_api/v1/short_msg/topic';
         json = { id_type: 4, sort_type: 500, cursor: '0', limit: 20, topic_id: type };
     } else {
         url = `https://api.juejin.cn/recommend_api/v1/short_msg/${type}`;

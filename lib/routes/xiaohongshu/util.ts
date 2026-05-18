@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer, { getPuppeteerPage } from '@/utils/puppeteer';
+import playwright, { getPlaywrightPage } from '@/utils/playwright';
 
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
@@ -29,11 +29,41 @@ const getHeaders = (cookie?: string) => ({
     ...(cookie ? { Cookie: cookie } : {}),
 });
 
+// Fetch HTML through proxy when configured
+async function fetchWithProxy(url: string, cookie?: string): Promise<string> {
+    const proxy = config.xiaohongshu.proxy;
+    if (proxy) {
+        const proxyUrl = `${proxy}?url=${encodeURIComponent(url)}`;
+        logger.http(`Requesting ${url} via proxy`);
+        return await ofetch(proxyUrl, { parseResponse: (txt) => txt });
+    }
+    logger.http(`Requesting ${url}`);
+    return await ofetch(url, {
+        headers: getHeaders(cookie),
+    });
+}
+
 const getUser = (url, cache) =>
     cache.tryGet(
         url,
         async () => {
-            const { page, destory } = await getPuppeteerPage(url, {
+            // Use proxy if configured
+            if (config.xiaohongshu.proxy) {
+                const res = await fetchWithProxy(url);
+                const $ = load(res);
+                const script = extractInitialState($);
+                const state = JSON.parse(script);
+
+                let { userPageData, notes } = state.user;
+                userPageData = userPageData._rawValue || userPageData;
+                notes = notes._rawValue || notes;
+
+                // Cannot get collect data without Playwright
+                return { userPageData, notes, collect: '' };
+            }
+
+            // Use Playwright
+            const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     await page.setRequestInterception(true);
                     page.on('request', (request) => {
@@ -77,7 +107,7 @@ const getUser = (url, cache) =>
 
                 return { userPageData, notes, collect };
             } finally {
-                await destory();
+                await destroy();
             }
         },
         config.cache.routeExpire,
@@ -88,7 +118,17 @@ const getBoard = (url, cache) =>
     cache.tryGet(
         url,
         async () => {
-            const browser = await puppeteer();
+            // Use proxy if configured
+            if (config.xiaohongshu.proxy) {
+                const res = await fetchWithProxy(url);
+                const $ = load(res);
+                const script = extractInitialSsrState($);
+                const state = JSON.parse(script);
+                return state.Main;
+            }
+
+            // Use Playwright
+            const browser = await playwright();
             try {
                 const page = await browser.newPage();
                 await page.setRequestInterception(true);
@@ -111,9 +151,9 @@ const getBoard = (url, cache) =>
 const formatText = (text) => text.replaceAll(/(\r\n|\r|\n)/g, '<br>').replaceAll('\t', '&emsp;');
 
 // tag_list.id has nothing to do with its url
-const formatTagList = (tagList) => tagList.reduce((acc, item) => acc + `#${item.name} `, ``);
+const formatTagList = (tagList) => tagList.reduce((acc, item) => acc + `#${item.name} `, '');
 
-const formatImageList = (imageList) => imageList.reduce((acc, item) => acc + `<img src="${item.url}"><br>`, ``);
+const formatImageList = (imageList) => imageList.reduce((acc, item) => acc + `<img src="${item.url}"><br>`, '');
 
 const formatNote = (url, note) => ({
     title: note.title,
@@ -156,9 +196,7 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
 
 async function getFullNote(link, displayLivePhoto) {
     const data = (await cache.tryGet(link, async () => {
-        const res = await ofetch(link, {
-            headers: getHeaders(config.xiaohongshu.cookie),
-        });
+        const res = await fetchWithProxy(link, config.xiaohongshu.cookie);
         const $ = load(res);
         const script = extractInitialState($);
         const state = JSON.parse(script);
@@ -244,9 +282,7 @@ async function getFullNote(link, displayLivePhoto) {
 
 async function getUserWithCookie(url: string) {
     const cookie = config.xiaohongshu.cookie;
-    const res = await ofetch(url, {
-        headers: getHeaders(cookie),
-    });
+    const res = await fetchWithProxy(url, cookie);
     const $ = load(res);
     const paths = $('#userPostedFeeds > section > div > a.cover.ld.mask').map((i, item) => item.attributes[3].value);
     const script = extractInitialState($);
@@ -273,6 +309,29 @@ function extractInitialState($) {
     script = script.slice('window.__INITIAL_STATE__='.length);
     script = script.replaceAll('undefined', 'null');
     return script;
+}
+
+// Add helper function to extract initial SSR state
+function extractInitialSsrState($) {
+    let script = $('script')
+        .filter((i, script) => {
+            const text = script.children[0]?.data;
+            return text?.includes('window.__INITIAL_SSR_STATE__=');
+        })
+        .text();
+    const match = script.match(/window\.__INITIAL_SSR_STATE__\s*=\s*(\{[\s\S]*?\})\s*(?:;|$)/);
+    if (match) {
+        return match[1].replaceAll('undefined', 'null');
+    }
+    // Fallback: try simple extraction
+    const startMarker = 'window.__INITIAL_SSR_STATE__=';
+    const startIndex = script.indexOf(startMarker);
+    if (startIndex !== -1) {
+        script = script.slice(startIndex + startMarker.length);
+        script = script.replaceAll('undefined', 'null');
+        return script;
+    }
+    throw new Error('Cannot extract __INITIAL_SSR_STATE__');
 }
 
 async function checkCookie() {

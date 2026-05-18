@@ -40,13 +40,13 @@ export const route: Route = {
     handler,
     description: `Specify options (in the format of query string) in parameter \`routeParams\` parameter to extract data from JSON.
 
-| Key                | Meaning                                      | Accepted Values   | Default                                    |
-| ------------------ | -------------------------------------------- | ----------------- | ------------------------------------------ |
-| \`title\`          | The title of the RSS                         | \`string\`        | Extracted from home page of current domain |
-| \`item\`           | The JSON Path as \`item\` element            | \`string\`        | Entire JSON response                       |
+| Key              | Meaning                                  | Accepted Values | Default                                    |
+| ---------------- | ---------------------------------------- | --------------- | ------------------------------------------ |
+| \`title\`          | The title of the RSS                     | \`string\`        | Extracted from home page of current domain |
+| \`item\`           | The JSON Path as \`item\` element          | \`string\`        | Entire JSON response                       |
 | \`itemTitle\`      | The JSON Path as \`title\` in \`item\`       | \`string\`        | None                                       |
 | \`itemLink\`       | The JSON Path as \`link\` in \`item\`        | \`string\`        | None                                       |
-| \`itemLinkPrefix\` | Optional Prefix for \`itemLink\` value       | \`string\`        | None                                       |
+| \`itemLinkPrefix\` | Optional Prefix for \`itemLink\` value     | \`string\`        | None                                       |
 | \`itemDesc\`       | The JSON Path as \`description\` in \`item\` | \`string\`        | None                                       |
 | \`itemPubDate\`    | The JSON Path as \`pubDate\` in \`item\`     | \`string\`        | None                                       |
 
@@ -54,14 +54,14 @@ export const route: Route = {
 JSON Path only supports format like \`a.b.c\`. if you need to access arrays, like \`a[0].b\`, you can write it as \`a.0.b\`.
 :::
 
-  Parameters parsing in the above example:
+Parameters parsing in the above example:
 
 | Parameter     | Value                                                                    |
 | ------------- | ------------------------------------------------------------------------ |
 | \`url\`         | \`https://api.github.com/repos/ginuerzh/gost/releases\`                    |
 | \`routeParams\` | \`title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body\` |
 
-  Parsing of \`routeParams\` parameter:
+Parsing of \`routeParams\` parameter:
 
 | Parameter   | Value           |
 | ----------- | --------------- |

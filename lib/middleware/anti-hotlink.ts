@@ -59,13 +59,13 @@ const replaceUrl = (template?: string, url?: string) => {
 };
 
 const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src') => {
-    $(selector).each(function () {
-        const oldSrc = $(this).attr(attribute);
+    $(selector).each((_, el) => {
+        const oldSrc = $(el).attr(attribute);
         if (oldSrc) {
             const url = parseUrl(oldSrc);
             if (url && url.protocol !== 'data:') {
                 // Cheerio will do the right thing to prohibit XSS.
-                $(this).attr(attribute, interpolate(template, url));
+                $(el).attr(attribute, interpolate(template, url));
             }
         }
     });

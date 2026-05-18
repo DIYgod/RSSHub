@@ -21,10 +21,9 @@ export const route: Route = {
     maintainers: ['sitdownkevin'],
     url: 'sem.tongji.edu.cn/semch',
     handler,
-    description: `| 学院通知 | 招生通知 | 学术观点 | 新闻 | 活动 | 视点 | 教师与行政人员招聘 |
-| -------- | -------------- | ------------------ | ---- | ---------- | --------- | ------------------ |
-| notice   | enrollment     | academic-paper     | news | events     | focus     | collegerecruitment |
-`,
+    description: `| 学院通知 | 招生通知   | 学术观点       | 新闻 | 活动   | 视点  | 教师与行政人员招聘 |
+| -------- | ---------- | -------------- | ---- | ------ | ----- | ------------------ |
+| notice   | enrollment | academic-paper | news | events | focus | collegerecruitment |`,
 };
 
 async function handler(ctx) {
@@ -42,7 +41,7 @@ async function handler(ctx) {
 
     const url = `https://sem.tongji.edu.cn/semch/category/frontpage/${subType.has(type) ? type : 'notice'}`;
 
-    const results: { title: string; link: string; pubDate: Date }[] = await getNotifByPage(url);
+    const results: Array<{ title: string; link: string; pubDate: Date }> = await getNotifByPage(url);
 
     const resultsWithContent = await Promise.all(results.map((item) => cache.tryGet(item.link, () => getArticle(item))));
 

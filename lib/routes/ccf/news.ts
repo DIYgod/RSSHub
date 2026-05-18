@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
     description: `| CCF 新闻    | CCF 聚焦 | ACM 信息  |
 | ----------- | -------- | --------- |
-| Media\_list | Focus    | ACM\_News |`,
+| Media\\_list | Focus    | ACM\\_News |`,
 };
 
 async function handler(ctx) {

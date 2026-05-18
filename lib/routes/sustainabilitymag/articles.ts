@@ -64,40 +64,42 @@ const render = (widgets) =>
         .join('');
 
 async function handler() {
-    const baseURL = `https://sustainabilitymag.com`;
+    const baseURL = 'https://sustainabilitymag.com';
     const feedURL = `${baseURL}/articles`;
     const feedLang = 'en';
     const feedDescription = 'Sustainability Magazine Articles';
 
     const requestEndpoint = `${baseURL}/graphql`;
     const requestBody = JSON.stringify({
-        query: `query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
-          paginatedWidget(url: $url, widgetType: $widgetType) {
-            ... on SimpleArticleGridWidget {
-              articles(page: $page) {
-                results {
-                  _id
-                  headline
-                  fullUrlPath
-                  featured
-                  category
-                  contentType
-                  tags {
-                    tag
-                  }
-                  attribution
-                  subAttribution
-                  sell
-                  images {
-                    thumbnail_widescreen_553 {
-                      url
+        query: /* GraphQL */ `
+            query PaginatedQuery($url: String!, $page: Int = 1, $widgetType: String!) {
+                paginatedWidget(url: $url, widgetType: $widgetType) {
+                    ... on SimpleArticleGridWidget {
+                        articles(page: $page) {
+                            results {
+                                _id
+                                headline
+                                fullUrlPath
+                                featured
+                                category
+                                contentType
+                                tags {
+                                    tag
+                                }
+                                attribution
+                                subAttribution
+                                sell
+                                images {
+                                    thumbnail_widescreen_553 {
+                                        url
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
-        }`,
+        `,
         operationName: 'PaginatedQuery',
         variables: {
             widgetType: 'simpleArticleGrid',

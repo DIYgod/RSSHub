@@ -3,7 +3,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { baseUrl, gqlFeatures, gqlMap } from './constants';
+import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
 const getUserData = (id) =>
@@ -216,5 +216,5 @@ export default {
     getList,
     getHomeTimeline,
     getHomeLatestTimeline,
-    init: () => {},
+    init: initGqlMap,
 };

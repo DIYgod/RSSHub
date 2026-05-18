@@ -2,6 +2,7 @@ import os from 'node:os';
 
 import title from 'title';
 
+import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
 // convert a string into title case
@@ -41,7 +42,9 @@ const getLocalhostAddress = () => {
         .filter((iface) => iface?.family === 'IPv4' && !iface.internal)
         .map((iface) => iface?.address)
         .filter(Boolean);
-    address.push('[::]');
+    if (!config.disableIPv6) {
+        address.push('[::]');
+    }
     return address;
 };
 

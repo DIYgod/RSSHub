@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,7 +55,7 @@ async function handler(ctx) {
 
     const data = iconv.decode(response.data, 'gbk');
 
-    let items = {};
+    let items: DataItem[];
 
     const urls = data.match(/url:"(.*)",/g);
 

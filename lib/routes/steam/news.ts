@@ -19,8 +19,7 @@ export const route: Route = {
         appid: 'Game App ID, all digits, can be found in the URL',
         language: 'Language, english by default, see below for more languages',
     },
-    description: `
-<details>
+    description: `<details>
 <summary>More languages</summary>
 
 | 语言代码                                          | 语言名称   |
@@ -54,8 +53,7 @@ export const route: Route = {
 | Tiếng Việt (Vietnamese)                           | vietnamese |
 | Español - Latinoamérica (Spanish - Latin America) | latam      |
 
-</details>
-    `,
+</details>`,
     categories: ['game'],
     features: {
         requireConfig: false,

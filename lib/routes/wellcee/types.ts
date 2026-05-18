@@ -20,10 +20,10 @@ export interface District {
     longitude: number;
     latitude: number;
     name: string;
-    business: {
+    business: Array<{
         id: string;
         name: string;
-    }[];
+    }>;
 }
 
 export interface House {

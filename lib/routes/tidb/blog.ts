@@ -66,7 +66,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
 
-    const baseUrl: string = 'https://tidb.net';
+    const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
     const targetResponse = await ofetch(targetUrl);
 
@@ -87,9 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.summary;
         const pubDate: number | string = item.publishedAt;
@@ -156,7 +154,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined;
-                const guid: string = `tidb-blog-${detailResponse.slug}`;
+                const guid = `tidb-blog-${detailResponse.slug}`;
                 const updated: number | string = detailResponse.lastModifiedAt ?? pubDate;
 
                 const processedItem: DataItem = {
@@ -253,9 +251,7 @@ export const route: Route = {
 | [架构选型](https://tidb.net/blog/c/architecture-selection)     | [architecture-selection](https://rsshub.app/tidb/blog/c/architecture-selection)     |
 | [原理解读](https://tidb.net/blog/c/principle-interpretation)   | [principle-interpretation](https://rsshub.app/tidb/blog/c/principle-interpretation) |
 | [应用开发](https://tidb.net/blog/c/application-development)    | [application-development](https://rsshub.app/tidb/blog/c/application-development)   |
-| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |
-
-`,
+| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

@@ -13,16 +13,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'Industry/Comment' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://www.chinaratings.com.cn';
+    const baseUrl = 'https://www.chinaratings.com.cn';
     const targetUrl: string = new URL(`CreditResearch/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.contRight ul.list li')
+    let items: DataItem[] = $('div.contRight ul.list li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -124,8 +122,7 @@ export const route: Route = {
     },
     description: `::: tip
 若订阅 [行业评论](https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/)，网址为 \`https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/\`，请截取 \`https://www.chinaratings.com.cn/CreditResearch/\` 到末尾 \`/\` 的部分 \`Industry/Comment\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinaratings/CreditResearch/Industry/Comment\`](https://rsshub.app/chinaratings/CreditResearch/Industry/Comment)。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

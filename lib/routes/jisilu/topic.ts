@@ -55,8 +55,7 @@ export const route: Route = {
 
 ::: tip
 前往 [话题广场](https://www.jisilu.cn/topic) 查看更多话题。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

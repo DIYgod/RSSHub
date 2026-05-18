@@ -15,7 +15,7 @@ export function extractNextData<T = unknown>(html: string, url?: string): T {
     try {
         return JSON.parse(scriptMatch[1]) as T;
     } catch (error) {
-        throw new Error(`Failed to parse __NEXT_DATA__ JSON: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`Failed to parse __NEXT_DATA__ JSON: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
     }
 }
 
@@ -149,7 +149,8 @@ function generateTeamPlayerTable(team: TeamPlayerStats): string {
     const playerDataRows = allPlayers.map((player) => generatePlayerDataRow(player)).join('');
     const teamColor = hexToRgb(team.teamColor);
 
-    const headerRow = `<tr><td><div class="body-cell cell">时间</div></td><td><div class="body-cell cell">得分</div></td><td><div class="body-cell cell">篮板</div></td><td><div class="body-cell cell">助攻</div></td><td><div class="body-cell cell">抢断</div></td><td><div class="body-cell cell">盖帽</div></td><td><div class="body-cell cell">投篮</div></td><td><div class="body-cell cell">投篮%</div></td><td><div class="body-cell cell">三分</div></td><td><div class="body-cell cell">三分%</div></td><td><div class="body-cell cell">罚球</div></td><td><div class="body-cell cell">罚球%</div></td><td><div class="body-cell cell">失误</div></td><td><div class="body-cell cell">前板</div></td><td><div class="body-cell cell">后板</div></td><td><div class="body-cell cell">被盖</div></td><td><div class="body-cell cell">犯规</div></td><td><div class="body-cell cell">被犯</div></td><td><div class="body-cell cell">+/-</div></td></tr>`;
+    const headerRow =
+        '<tr><td><div class="body-cell cell">时间</div></td><td><div class="body-cell cell">得分</div></td><td><div class="body-cell cell">篮板</div></td><td><div class="body-cell cell">助攻</div></td><td><div class="body-cell cell">抢断</div></td><td><div class="body-cell cell">盖帽</div></td><td><div class="body-cell cell">投篮</div></td><td><div class="body-cell cell">投篮%</div></td><td><div class="body-cell cell">三分</div></td><td><div class="body-cell cell">三分%</div></td><td><div class="body-cell cell">罚球</div></td><td><div class="body-cell cell">罚球%</div></td><td><div class="body-cell cell">失误</div></td><td><div class="body-cell cell">前板</div></td><td><div class="body-cell cell">后板</div></td><td><div class="body-cell cell">被盖</div></td><td><div class="body-cell cell">犯规</div></td><td><div class="body-cell cell">被犯</div></td><td><div class="body-cell cell">+/-</div></td></tr>';
 
     return `<div class="match-player-data"><div class="table-wrap-views"><div class="table-views table-views-body"><div class="table-body-left"><table cellspacing="0" cellpadding="0"><tbody><tr><td><div class="body-cell cell team" style="border-color: ${teamColor}"><span style="padding-left: 15px">${team.teamName}</span></div></td></tr>${playerNameRows}</tbody></table></div><div class="table-body-right"><table cellspacing="0" cellpadding="0"><tbody>${headerRow}${playerDataRows}</tbody></table></div></div></div></div>${team.dnpPlayerList.length > 0 ? `<div class="not-play mlr-15"><span>未出场队员：</span>${team.dnpPlayerList.join('、')}</div>` : ''}`;
 }
@@ -256,9 +257,9 @@ export function getEntryDetails(item: DataItem): Promise<DataItem> {
                 .filter(Boolean);
 
             content('.basketballTobbs_tag').remove();
-            content('.hupu-img').each(function () {
-                const imgSrc = content(this).attr('data-gif') || content(this).attr('data-origin') || content(this).attr('src');
-                content(this).parent().html(`<img src="${imgSrc}">`);
+            content('.hupu-img').each((_, el) => {
+                const imgSrc = content(el).attr('data-gif') || content(el).attr('data-origin') || content(el).attr('src');
+                content(el).parent().html(`<img src="${imgSrc}">`);
             });
 
             // 分别获取内容元素

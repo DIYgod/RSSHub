@@ -36,7 +36,7 @@ export const route: Route = {
 | 9    | 最近一年 5.0 级以上地震信息 |
 | 0    | 最近一年 6.0 级以上地震信息 |
 
-  可通过全局过滤参数订阅您感兴趣的地区.`,
+可通过全局过滤参数订阅您感兴趣的地区.`,
 };
 
 async function handler(ctx) {
@@ -77,7 +77,7 @@ async function handler(ctx) {
 
     const response = await got(api);
     const data = response.data.replace(/,"page":"(.*?)","num":/, ',"num":');
-    let json = JSON.parse(data.substring(1, data.length - 1)).shuju;
+    let json = JSON.parse(data.slice(1, -1)).shuju;
     if (json.length > 20) {
         json = json.slice(0, 20);
     }

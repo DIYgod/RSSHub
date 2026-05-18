@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news/All' } = ctx.req.param();
@@ -34,7 +33,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 link: new URL(item.prop('href'), rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     images: image
                         ? [
                               {
@@ -60,7 +59,7 @@ export const handler = async (ctx) => {
                     el = $$(el);
 
                     el.parent().replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                        renderDescription({
                             images: el.prop('file')
                                 ? [
                                       {
@@ -74,7 +73,7 @@ export const handler = async (ctx) => {
                 });
 
                 item.title = $$('h1.ts, div.c-article-main_content-title').first().text();
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     description: $$('td.t_f, div.c-article-main_contentraw').first().html(),
                 });
                 item.author =
@@ -129,7 +128,7 @@ export const route: Route = {
     example: '/a9vg/news',
     parameters: { category: '分类，默认为 ，可在对应分类页 URL 中找到, Category, by default' },
     description: `::: tip
-  若订阅 [PS4](http://www.a9vg.com/list/news/PS4)，网址为 \`http://www.a9vg.com/list/news/PS4\`。截取 \`http://www.a9vg.com/list\` 到末尾的部分 \`news/PS4\` 作为参数填入，此时路由为 [\`/a9vg/news/PS4\`](https://rsshub.app/a9vg/news/PS4)。
+若订阅 [PS4](http://www.a9vg.com/list/news/PS4)，网址为 \`http://www.a9vg.com/list/news/PS4\`。截取 \`http://www.a9vg.com/list\` 到末尾的部分 \`news/PS4\` 作为参数填入，此时路由为 [\`/a9vg/news/PS4\`](https://rsshub.app/a9vg/news/PS4)。
 :::
 
 | 分类                                               | ID                                                     |
@@ -142,8 +141,7 @@ export const route: Route = {
 | [XSX](https://www.a9vg.com/list/news/XSX)          | [news/XSX](https://rsshub.app/a9vg/news/XSX)           |
 | [PC](https://www.a9vg.com/list/news/PC)            | [news/PC](https://rsshub.app/a9vg/news/PC)             |
 | [业界](https://www.a9vg.com/list/news/Industry)    | [news/Industry](https://rsshub.app/a9vg/news/Industry) |
-| [厂商](https://www.a9vg.com/list/news/Factory)     | [news/Factory](https://rsshub.app/a9vg/news/Factory)   |
-  `,
+| [厂商](https://www.a9vg.com/list/news/Factory)     | [news/Factory](https://rsshub.app/a9vg/news/Factory)   |`,
     categories: ['game'],
 
     features: {

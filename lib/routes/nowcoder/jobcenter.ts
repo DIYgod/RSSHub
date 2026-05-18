@@ -1,5 +1,3 @@
-import * as url from 'node:url';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
@@ -37,13 +35,13 @@ export const route: Route = {
     url: 'nowcoder.com/',
     description: `可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
 
-  职位类型代码见下表：
+职位类型代码见下表：
 
 | 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
 
-  排序参数见下表：
+排序参数见下表：
 
 | 最新发布 | 最快处理 | 处理率最高 |
 | -------- | -------- | ---------- |
@@ -51,7 +49,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const rootUrl = `https://www.nowcoder.com/job/center/`;
+    const rootUrl = 'https://www.nowcoder.com/job/center/';
     const currentUrl = `${rootUrl}?${ctx.req.param('type') ? 'type=' + ctx.req.param('type') : ''}${ctx.req.param('city') ? '&city=' + ctx.req.param('city') : ''}${ctx.req.param('order') ? '&order=' + ctx.req.param('order') : ''}${
         ctx.req.param('recruitType') ? '&recruitType=' + ctx.req.param('recruitType') : ''
     }${ctx.req.param('latest') ? '&latest=' + ctx.req.param('latest') : ''}`;
@@ -78,7 +76,7 @@ async function handler(ctx) {
             }
             return {
                 title: `${company.text()} | ${title.text()}`,
-                link: url.resolve(rootUrl, title.attr('href')),
+                link: new URL(title.attr('href'), rootUrl).href,
                 pubDate: date.toUTCString(),
             };
         });

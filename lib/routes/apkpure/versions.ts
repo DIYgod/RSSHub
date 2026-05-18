@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/versions/:pkg/:region?',
@@ -28,7 +28,7 @@ async function handler(ctx) {
     const baseUrl = 'https://apkpure.com';
     const link = `${baseUrl}/${region}/${pkg}/versions`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
@@ -54,7 +54,13 @@ async function handler(ctx) {
                 title: ver.find('.ver-item-n').text(),
                 description: ver.html(),
                 link: `${baseUrl}${ver.find('a').attr('href')}`,
-                pubDate: parseDate(ver.find('.update-on').text().replaceAll(/年|月/g, '-').replace('日', '')),
+                pubDate: parseDate(
+                    ver
+                        .find('.update-on')
+                        .text()
+                        .replaceAll(/年|月/g, '-')
+                        .replace('日', '')
+                ),
             };
         });
 

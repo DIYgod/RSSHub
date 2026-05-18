@@ -26,13 +26,11 @@ export const route: Route = {
         },
     ],
     name: '计算机与人工智能学院',
-    description: `
-| 分区              | 参数         |
-| ----------------- | ----------- |
-| 本科生教育         | bks         |
-| 研究生教育         | yjs         |
-| 学生工作           | xsgz        |
-`,
+    description: `| 分区       | 参数 |
+| ---------- | ---- |
+| 本科生教育 | bks  |
+| 研究生教育 | yjs  |
+| 学生工作   | xsgz |`,
     maintainers: ['AzureG03', 'SuperJeason'],
     handler,
 };

@@ -45,6 +45,7 @@ const QuerySchema = z.object({
 const route = createRoute({
     method: 'get',
     path: '/category/{category}',
+    description: 'Namespace list filtered by category',
     tags: ['Category'],
     request: {
         query: QuerySchema,
@@ -52,7 +53,7 @@ const route = createRoute({
     },
     responses: {
         200: {
-            description: 'Namespace list by categories and language',
+            description: 'Namespaces matching the requested category',
         },
     },
 });

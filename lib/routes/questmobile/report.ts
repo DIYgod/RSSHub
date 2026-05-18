@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.
@@ -45,14 +44,14 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  若订阅行业 [互联网行业](https://www.questmobile.com.cn/research/reports/1/-1)，网址为 \`https://www.questmobile.com.cn/research/reports/1/-1\`
-  参数 industry 为 \`互联网行业\` 或 \`1\`，此时路由为 [\`/questmobile/report/互联网行业\`](https://rsshub.app/questmobile/report/互联网行业) 或 [\`/questmobile/report/1/-1\`](https://rsshub.app/questmobile/report/1/-1)。
+若订阅行业 [互联网行业](https://www.questmobile.com.cn/research/reports/1/-1)，网址为 \`https://www.questmobile.com.cn/research/reports/1/-1\`
+参数 industry 为 \`互联网行业\` 或 \`1\`，此时路由为 [\`/questmobile/report/互联网行业\`](https://rsshub.app/questmobile/report/互联网行业) 或 [\`/questmobile/report/1/-1\`](https://rsshub.app/questmobile/report/1/-1)。
 
-  若订阅标签 [榜单](https://www.questmobile.com.cn/research/reports/-1/11)，网址为 \`https://www.questmobile.com.cn/research/reports/-1/11\`
-  参数 label 为 \`榜单\` 或 \`11\`，此时路由为 [\`/questmobile/report/榜单\`](https://rsshub.app/questmobile/report/榜单) 或 [\`/questmobile/report/-1/11\`](https://rsshub.app/questmobile/report/-1/11)。
+若订阅标签 [榜单](https://www.questmobile.com.cn/research/reports/-1/11)，网址为 \`https://www.questmobile.com.cn/research/reports/-1/11\`
+参数 label 为 \`榜单\` 或 \`11\`，此时路由为 [\`/questmobile/report/榜单\`](https://rsshub.app/questmobile/report/榜单) 或 [\`/questmobile/report/-1/11\`](https://rsshub.app/questmobile/report/-1/11)。
 
-  若订阅行业和标签 [品牌领域 - 互联网经济](https://www.questmobile.com.cn/research/reports/2/1)，网址为 \`https://www.questmobile.com.cn/research/reports/2/1\`
-  参数 industry 为 \`品牌领域\` 或 \`2\`，参数 label 为 \`互联网经济\` 或 \`1\`，此时路由为 [\`/questmobile/report/品牌领域/互联网经济\`](https://rsshub.app/questmobile/report/品牌领域/互联网经济) 或 [\`/questmobile/report/2/1\`](https://rsshub.app/questmobile/report/2/1)，甚至 [\`/questmobile/report/品牌领域/1\`](https://rsshub.app/questmobile/report/品牌领域/1)。
+若订阅行业和标签 [品牌领域 - 互联网经济](https://www.questmobile.com.cn/research/reports/2/1)，网址为 \`https://www.questmobile.com.cn/research/reports/2/1\`
+参数 industry 为 \`品牌领域\` 或 \`2\`，参数 label 为 \`互联网经济\` 或 \`1\`，此时路由为 [\`/questmobile/report/品牌领域/互联网经济\`](https://rsshub.app/questmobile/report/品牌领域/互联网经济) 或 [\`/questmobile/report/2/1\`](https://rsshub.app/questmobile/report/2/1)，甚至 [\`/questmobile/report/品牌领域/1\`](https://rsshub.app/questmobile/report/品牌领域/1)。
 :::
 
 <details>
@@ -153,6 +152,7 @@ export const route: Route = {
 | 智能终端 | 国产终端 | 5G 手机 | 盘点 | 季度报告 |
 | -------- | -------- | ------- | ---- | -------- |
 | 9001     | 9002     | 9003    | 10   | 10001    |
+
 </details>`,
 };
 
@@ -194,7 +194,7 @@ async function handler(ctx) {
     let items = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`research/report/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: {
                 src: item.coverImgUrl,
                 alt: item.title,
@@ -217,7 +217,7 @@ async function handler(ctx) {
                 content('div.text div.daoyu').remove();
 
                 item.title = content('div.title h1').text();
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     description: content('div.text').html(),
                 });
                 item.author = content('div.source')

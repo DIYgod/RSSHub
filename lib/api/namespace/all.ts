@@ -6,10 +6,11 @@ import { namespaces } from '@/registry';
 const route = createRoute({
     method: 'get',
     path: '/namespace',
+    description: 'Information about all namespaces',
     tags: ['Namespace'],
     responses: {
         200: {
-            description: 'Information about all namespaces',
+            description: 'Namespace registry data for all namespaces',
         },
     },
 });

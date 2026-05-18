@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
     description: `参数均可在官网获取，如：
 
-  \`https://www.ntdtv.com/b5/prog1201\` 对应 \`/ntdtv/b5/prog1201\``,
+\`https://www.ntdtv.com/b5/prog1201\` 对应 \`/ntdtv/b5/prog1201\``,
 };
 
 async function handler(ctx) {

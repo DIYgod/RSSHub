@@ -11,7 +11,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { tag } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://yuanliao.info';
+    const baseUrl = 'https://yuanliao.info';
     const apiUrl: string = new URL('api/discussions', baseUrl).href;
     const targetUrl: string = new URL(tag ? `t/${tag}` : '', baseUrl).href;
 
@@ -58,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
               ]
             : undefined;
-        const guid: string = `yuanliao-${item.id}`;
+        const guid = `yuanliao-${item.id}`;
         const updated: number | string = attributes.lastPostedAt ?? pubDate;
 
         const processedItem: DataItem = {
@@ -153,8 +153,7 @@ export const route: Route = {
 | [意见建议](https://yuanliao.info/t/suggestions)  | [suggestions](https://rsshub.app/yuanliao/suggestions)   |
 | [插件发布](https://yuanliao.info/t/plugins)      | [plugins](https://rsshub.app/yuanliao/plugins)           |
 | [插件需求](https://yuanliao.info/t/plugin-needs) | [plugin-needs](https://rsshub.app/yuanliao/plugin-needs) |
-| [开发者](https://yuanliao.info/t/developers)     | [developers](https://rsshub.app/yuanliao/developers)     |
-`,
+| [开发者](https://yuanliao.info/t/developers)     | [developers](https://rsshub.app/yuanliao/developers)     |`,
     categories: ['bbs'],
     features: {
         requireConfig: false,

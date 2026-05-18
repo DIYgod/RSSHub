@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
@@ -7,7 +5,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/blog/:category{.+}?',
@@ -38,7 +37,7 @@ async function handler(ctx) {
             return {
                 title,
                 link: item.find('a.articles-grid-link').prop('href'),
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     image: {
                         src: item
                             .find('div.articles-grid-img img')
@@ -68,20 +67,18 @@ async function handler(ctx) {
                     .find('img')
                     .each((_, e) => {
                         content(e).replaceWith(
-                            art(path.join(__dirname, 'templates/description.art'), {
+                            renderDescription({
                                 image: {
                                     src: content(e)
                                         .prop('src')
                                         .replace(/-\d+x\d+\./, '.'),
-                                    width: content(e).prop('width'),
-                                    height: content(e).prop('height'),
                                 },
                             })
                         );
                     });
 
                 item.title = content('meta[property="og:title"]').prop('content');
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
                         alt: item.title,

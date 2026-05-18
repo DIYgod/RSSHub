@@ -26,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xs';
-    const link = host + type + `/list.htm`;
+    const link = host + type + '/list.htm';
     const response = await got({
         method: 'get',
         url: link,
@@ -77,7 +77,7 @@ async function handler(ctx) {
         })
     );
     return {
-        title: `浙江大学` + $('ul.submenu .selected').text(),
+        title: '浙江大学' + $('ul.submenu .selected').text(),
         link,
         item: out,
     };

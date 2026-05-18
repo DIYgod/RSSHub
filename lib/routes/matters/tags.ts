@@ -35,7 +35,7 @@ const handler = async (ctx) => {
     const gqlResponse = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 node(input: {id: "${tagId}"}) {
                   ... on Tag {
                     content

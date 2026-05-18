@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,21 +8,20 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://www.ornl.gov';
+    const baseUrl = 'https://www.ornl.gov';
     const targetUrl: string = new URL('all-news', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'en';
 
-    let items: DataItem[] = [];
-
-    items = $('div.view-rows-main div.list-item-wrapper')
+    let items: DataItem[] = $('div.view-rows-main div.list-item-wrapper')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -34,7 +31,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const image: string | undefined = $imgEl.attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -82,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 const title: string = $$('h1.page-title').text();
                 const image: string | undefined = $$imgEl.attr('src');
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     images: image
                         ? [
                               {

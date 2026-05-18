@@ -41,7 +41,7 @@ async function handler(ctx) {
 
     const keyword = ctx.req.param('keyword');
 
-    const response = await got(`https://search.smzdm.com`, {
+    const response = await got('https://search.smzdm.com', {
         headers: {
             ...getHeaders(),
             Referer: `https://search.smzdm.com/?c=home&s=${encodeURIComponent(keyword)}&order=time&v=a`,

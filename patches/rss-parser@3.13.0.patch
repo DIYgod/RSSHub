@@ -1,5 +1,5 @@
 diff --git a/lib/parser.js b/lib/parser.js
-index 2852b5f9249a59adf8f51f3451181ac2c994bc54..50e16ca0a97c98d7048122d5427fe467058485fb 100644
+index 2852b5f9249a59adf8f51f3451181ac2c994bc54..e56d2c932b92424a0f43a77b57e575d90a634cc2 100644
 --- a/lib/parser.js
 +++ b/lib/parser.js
 @@ -3,6 +3,7 @@ const http = require('http');
@@ -10,7 +10,7 @@ index 2852b5f9249a59adf8f51f3451181ac2c994bc54..50e16ca0a97c98d7048122d5427fe467
  
  const fields = require('./fields');
  const utils = require('./utils');
-@@ -88,14 +89,27 @@ class Parser {
+@@ -88,14 +89,43 @@ class Parser {
            return reject(new Error("Status code " + res.statusCode))
          }
          let encoding = utils.getEncodingFromContentType(res.headers['content-type']);
@@ -23,16 +23,32 @@ index 2852b5f9249a59adf8f51f3451181ac2c994bc54..50e16ca0a97c98d7048122d5427fe467
 -        });
 -      })
 +        const contentEncoding = (res.headers['content-encoding'] || '').toLowerCase();
-+        if (contentEncoding === 'gzip') {
-+          const gunzip = zlib.createGunzip();
++        let decompressStream;
++        switch (contentEncoding) {
++          case 'gzip':
++            decompressStream = zlib.createGunzip();
++            break;
++          case 'deflate':
++            decompressStream = zlib.createInflate();
++            break;
++          case 'br':
++            decompressStream = zlib.createBrotliDecompress();
++            break;
++          case 'zstd':
++            if (zlib.createZstdDecompress) {
++              decompressStream = zlib.createZstdDecompress();
++            }
++            break;
++        }
++        if (decompressStream) {
 +          const chunks = [];
-+          gunzip.on('data', (chunk) => chunks.push(chunk));
-+          gunzip.on('end', () => {
++          decompressStream.on('data', (chunk) => chunks.push(chunk));
++          decompressStream.on('end', () => {
 +            const decompressed = Buffer.concat(chunks).toString(encoding);
 +            return this.parseString(decompressed).then(resolve, reject);
 +          });
-+          gunzip.on('error', reject);
-+          res.pipe(gunzip);
++          decompressStream.on('error', reject);
++          res.pipe(decompressStream);
 +        } else {
 +          res.setEncoding(encoding);
 +          res.on('data', (chunk) => {

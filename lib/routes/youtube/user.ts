@@ -15,10 +15,12 @@ export const route: Route = {
         routeParams: 'Extra parameters, see the table below',
     },
     description: `::: tip Parameter
-| Name       | Description                                                                         | Default |
-| ---------- | ----------------------------------------------------------------------------------- | ------- |
-| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
+
+| Name         | Description                                                                        | Default |
+| ------------ | ---------------------------------------------------------------------------------- | ------- |
+| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |
 | filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
+
 :::`,
     features: {
         requireConfig: [

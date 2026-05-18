@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
@@ -25,7 +24,7 @@ export const handler = async (ctx) => {
         .map((item) => {
             item = $(item);
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 intro: item.find('p').text(),
             });
 
@@ -48,7 +47,7 @@ export const handler = async (ctx) => {
                 const title = $$('div.news_dtitle h2').text();
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         description: $$('div.edit_con_original').html(),
                     });
                 const image = $$('img.raw-image').first().prop('src');
@@ -85,18 +84,16 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/research/article/:language{[a-zA-Z0-9-]+}?',
+    path: '/research/article/:language?',
     name: '中伦研究专业文章',
     url: 'zhonglun.com',
     maintainers: ['nczitzk'],
     handler,
     example: '/zhonglun/research/article/zh',
     parameters: { category: '语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到' },
-    description: `
-| ENG | 简体中文 | 日本語 | 한국어 |
+    description: `| ENG | 简体中文 | 日本語 | 한국어 |
 | --- | -------- | ------ | ------ |
-| en  | zh       | ja     | kr     |
-    `,
+| en  | zh       | ja     | kr     |`,
     categories: ['new-media'],
 
     features: {

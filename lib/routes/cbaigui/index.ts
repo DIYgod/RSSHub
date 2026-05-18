@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderFigure } from './templates/figure';
 import { apiSlug, GetFilterId, rootUrl } from './utils';
 
 export const route: Route = {
@@ -46,14 +44,14 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images from external sites.
 
-        content('figure').each(function () {
-            const image = content(this).find('img');
+        content('figure').each((_, el) => {
+            const image = content(el).find('img');
             const src = image.prop('data-actualsrc') ?? image.prop('data-original');
             const width = image.prop('data-rawwidth');
             const height = image.prop('data-rawheight');
 
-            content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+            content(el).replaceWith(
+                renderFigure({
                     src,
                     width,
                     height,
@@ -63,14 +61,14 @@ async function handler(ctx) {
 
         // To remove watermarks on images.
 
-        content('p img').each(function () {
-            const image = content(this);
+        content('p img').each((_, el) => {
+            const image = content(el);
             const src = image.prop('src').split('!')[0];
             const width = image.prop('width');
             const height = image.prop('height');
 
-            content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+            content(el).replaceWith(
+                renderFigure({
                     src,
                     width,
                     height,

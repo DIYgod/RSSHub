@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
-import FormData from 'form-data';
-import tough from 'tough-cookie';
+import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,9 +33,9 @@ export const route: Route = {
 | mobile   | internet  | boardcast | general | it | industry-resources |
 
 ::: tip
-  If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`
+If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`
 
-  Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides \`Content Type\` which corresponds to \`type\`. \`year\` and \`country\` are not supported.
+Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides \`Content Type\` which corresponds to \`type\`. \`year\` and \`country\` are not supported.
 :::`,
 };
 
@@ -46,7 +45,7 @@ async function handler(ctx) {
     const country = ctx.req.param('country') ? ctx.req.param('country').split('-').join(' ') : 'all';
     const type = ctx.req.param('type') ? ctx.req.param('type').split('-').join(' ') : 'all';
 
-    const cookieJar = new tough.CookieJar();
+    const cookieJar = new CookieJar();
     let response = await got({
             method: 'get',
             url: rootUrl,
@@ -58,7 +57,7 @@ async function handler(ctx) {
     form.append('__EVENTTARGET', 'ctl00$MainPlaceHolder$ddlContentType');
     form.append('__EVENTARGUMENT', '');
     form.append('__LASTFOCUS', '');
-    form.append('__VIEWSTATE', $('#__VIEWSTATE').attr('value'));
+    form.append('__VIEWSTATE', $('#__VIEWSTATE').attr('value') ?? '');
     form.append('__VIEWSTATEGENERATOR', 'E4EF4CD1');
     form.append('ctl00$header$searchText', ctx.req.param('keyword') || '');
     form.append('ctl00$header$searchTextMobile', ctx.req.param('keyword') || '');
@@ -66,26 +65,26 @@ async function handler(ctx) {
         form.append(
             'ctl00$MainPlaceHolder$ddlYears',
             year && year !== 'all'
-                ? $('select[name="ctl00$MainPlaceHolder$ddlYears"] option')
+                ? ($('select[name="ctl00$MainPlaceHolder$ddlYears"] option')
                       .filter((index, element) => $(element).text().split(' (')[0] === ctx.req.param('year'))
-                      .attr('value')
+                      .attr('value') ?? '0')
                 : '0'
         );
         form.append(
             'ctl00$MainPlaceHolder$ddlCountries',
             country && country !== 'all'
-                ? $('select[name="ctl00$MainPlaceHolder$ddlCountries"] option')
+                ? ($('select[name="ctl00$MainPlaceHolder$ddlCountries"] option')
                       .filter((index, element) => $(element).text().split(' (')[0] === country)
-                      .attr('value')
+                      .attr('value') ?? '0')
                 : '0'
         );
     }
     form.append(
         'ctl00$MainPlaceHolder$ddlContentType',
         type && type !== 'all'
-            ? $('select[name="ctl00$MainPlaceHolder$ddlContentType"] option')
+            ? ($('select[name="ctl00$MainPlaceHolder$ddlContentType"] option')
                   .filter((index, element) => $(element).text().split(' (')[0] === type)
-                  .attr('value')
+                  .attr('value') ?? '')
             : ''
     );
 

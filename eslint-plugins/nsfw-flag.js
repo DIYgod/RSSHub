@@ -1,6 +1,7 @@
 /**
  * ESLint 9 plugin to automatically mark NSFW routes with the nsfw flag
  */
+import { eslintCompatPlugin } from '@oxlint/plugins';
 
 const nsfwRoutes = [
     '141jav',
@@ -88,7 +89,7 @@ function isNsfwRoute(filePath) {
     });
 }
 
-export default {
+export default eslintCompatPlugin({
     meta: {
         name: '@rsshub/nsfw-flag',
         version: '1.0.0',
@@ -118,15 +119,14 @@ export default {
                     missingNsfwFlag: 'NSFW route is missing the nsfw flag in features',
                 },
             },
-            create(context) {
-                const filename = context.filename || context.getFilename();
-
-                // 如果不是 NSFW 路由，跳过检查
-                if (!isNsfwRoute(filename)) {
-                    return {};
-                }
-
+            createOnce(context) {
                 return {
+                    before() {
+                        // 如果不是 NSFW 路由，跳过检查
+                        if (!isNsfwRoute(context.filename)) {
+                            return false;
+                        }
+                    },
                     ExportNamedDeclaration(node) {
                         // 查找 export const route: Route = {...}
                         if (
@@ -211,4 +211,4 @@ export default {
             },
         },
     },
-};
+});

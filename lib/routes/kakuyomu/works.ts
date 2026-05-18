@@ -33,7 +33,8 @@ async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const url = `https://kakuyomu.jp/works/${id}`;
     const limit = Number.parseInt(ctx.req.query('limit') || '10');
-    const $ = load(await ofetch(url));
+    const html = await ofetch(url);
+    const $ = load(html);
 
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
 
@@ -56,7 +57,8 @@ async function handler(ctx: Context): Promise<Data> {
             .map((item) => {
                 const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
                 return cache.tryGet(episodeUrl, async () => {
-                    const $ = load(await ofetch(episodeUrl));
+                    const html = await ofetch(episodeUrl);
+                    const $ = load(html);
                     const description = $('.widget-episodeBody').html();
                     return {
                         title: item.title,

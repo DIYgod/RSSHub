@@ -1,6 +1,0 @@
-<div>
-    {{@ item.content}}
-</div>
-
-
-

@@ -30,8 +30,8 @@ export const route: Route = {
     maintainers: ['KiraKiseki'],
     handler,
     description: `| 学生专栏 | 教师专栏 | 选课专栏（仅选课期间开放） | 辅修专业 |
-| -------- | -------- | -------- | -------- |
-| student  | teacher  | class    | fxzy     |`,
+| -------- | -------- | -------------------------- | -------- |
+| student  | teacher  | class                      | fxzy     |`,
 };
 
 async function handler(ctx) {
@@ -60,7 +60,7 @@ async function handler(ctx) {
                 return await cache.tryGet(url, async () => {
                     // fetch article content
                     // some contents are only available for internal network
-                    let description = '';
+                    let description: string;
                     try {
                         const { data: response } = await got(url);
                         const $ = load(response);

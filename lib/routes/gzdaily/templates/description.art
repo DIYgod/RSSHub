@@ -1,3 +1,0 @@
-{{ if thumb }}
-<img src="{{ thumb }}"><br>
-{{ /if }}

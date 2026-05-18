@@ -36,11 +36,9 @@ export const route: Route = {
     ],
     name: '教务处',
     maintainers: ['hualiong'],
-    description: `
-::: tip
+    description: `::: tip
 抓取全文返回会导致更长的响应时间，可以尝试使用 \`/sicau/jiaowu/jxtz\` 路径，这将只返回标题，然后再在应用内抓取全文内容。
-:::
-`,
+:::`,
     url: 'jiaowu.sicau.edu.cn/',
     handler: async (ctx) => {
         const baseUrl = 'https://jiaowu.sicau.edu.cn/web/web/web';
@@ -68,7 +66,8 @@ export const route: Route = {
             items = await Promise.all(
                 items.map((item) =>
                     cache.tryGet(item.link!, async () => {
-                        const $ = load(await $get(item.link!));
+                        const html = await $get(item.link!);
+                        const $ = load(html);
                         item.description = $trim($('.text1[width="95%"] b').html()!);
                         return item;
                     })

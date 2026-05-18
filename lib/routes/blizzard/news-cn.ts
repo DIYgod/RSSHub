@@ -20,17 +20,23 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ow.blizzard.cn', 'wow.blizzard.cn', 'hs.blizzard.cn'],
+            source: ['ow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['wow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['hs.blizzard.cn'],
             target: '/news-cn/',
         },
     ],
     name: '暴雪游戏国服新闻',
     maintainers: ['zhangpeng2k'],
-    description: `
-| 守望先锋 | 炉石传说 | 魔兽世界 |
-|----------|----------|---------|
-| ow       | hs       | wow     |
-`,
+    description: `| 守望先锋 | 炉石传说 | 魔兽世界 |
+| -------- | -------- | -------- |
+| ow       | hs       | wow      |`,
     handler,
 };
 

@@ -33,8 +33,7 @@ export const route: Route = {
         },
     ],
     name: '滚动新闻',
-    description: `
-| NBA | 足球  | 电竞     | 综合   |
+    description: `| NBA | 足球  | 电竞     | 综合   |
 | --- | ----- | -------- | ------ |
 | nba | zuqiu | dianjing | zonghe |`,
     maintainers: ['nczitzk'],
@@ -46,10 +45,10 @@ async function handler(ctx) {
 
     const rootUrl = 'https://news.zhibo8.cc';
 
-    let list,
-        apiUrl = '',
-        currentUrl = '',
-        response;
+    let list;
+    let apiUrl: string;
+    let currentUrl: string;
+    let response;
 
     if (category === 'nba' || category === 'zuqiu') {
         currentUrl = `${rootUrl}/${category}/more.htm`;

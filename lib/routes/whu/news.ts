@@ -1,13 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
+import { renderDescription } from './templates/description';
 import { domain, getMeta, processItems, processMeta } from './util';
 
 export const route: Route = {
@@ -18,15 +16,13 @@ export const route: Route = {
     name: '新闻网',
     maintainers: [],
     handler,
-    description: `
-category 参数可选，范围如下:
+    description: `category 参数可选，范围如下:
 
-| 新闻栏目 | 武大资讯 | 学术动态 | 珞珈影像 | 武大视频 |
-| -------- | -------- | -------- | -------- | -------- |
-| 参数     |  0 或 \`wdzx/wdyw\`  | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
+| 新闻栏目 | 武大资讯         | 学术动态    | 珞珈影像         | 武大视频         |
+| -------- | ---------------- | ----------- | ---------------- | ---------------- |
+| 参数     | 0 或 \`wdzx/wdyw\` | 1 或 \`kydt\` | 2 或 \`stkj/ljyx\` | 3 或 \`stkj/wdsp\` |
 
-此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。
-`,
+此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。`,
 };
 
 const parseCategory = (category: string | number) => {
@@ -70,7 +66,7 @@ async function handler(ctx) {
                 title: item.prop('title') ?? item.find('h4.eclips').text(),
                 link: new URL(item.prop('href'), rootUrl).href,
                 pubDate: parseDate(item.find('time').text(), ['YYYY.MM.DD', 'DDYYYY.MM']),
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     description: item.find('div.txt p').html(),
                     image: image.prop('src')
                         ? {

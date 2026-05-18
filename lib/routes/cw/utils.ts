@@ -4,7 +4,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getCookies, setCookies } from '@/utils/puppeteer-utils';
+import { getCookies, setCookies } from '@/utils/playwright-utils';
 
 let cookie;
 
@@ -122,4 +122,4 @@ const parseItems = (list, browser, tryGet) =>
 
 export { baseUrl, getCookie, parseItems, parseList, parsePage, pathMap };
 
-export { setCookies } from '@/utils/puppeteer-utils';
+export { setCookies } from '@/utils/playwright-utils';

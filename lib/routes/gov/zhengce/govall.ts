@@ -43,7 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const advance = ctx.req.param('advance');
-    const link = `http://sousuo.gov.cn/list.htm`;
+    const link = 'http://sousuo.gov.cn/list.htm';
     const params = new URLSearchParams({
         n: 20,
         t: 'govall',
@@ -71,7 +71,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let description = '';
+                let description: string;
                 try {
                     const contentData = await got(item.link);
                     const $ = load(contentData.data);

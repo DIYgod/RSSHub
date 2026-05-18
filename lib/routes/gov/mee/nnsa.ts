@@ -14,16 +14,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'ywdt/hjyw' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
 
-    const baseUrl: string = 'https://nnsa.mee.gov.cn';
+    const baseUrl = 'https://nnsa.mee.gov.cn';
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('a.cjcx_biaob, ul#div li a')
+    let items: DataItem[] = $('a.cjcx_biaob, ul#div li a')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -54,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const title: string = $$('meta[name="ArticleTitle"]').attr('content') ?? item.title;
                 const description: string | undefined = $$('div.Custom_UnionStyle').html() ?? undefined;
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
-                const categoryEls: Cheerio<Element>[] = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
+                const categoryEls: Array<Cheerio<Element>> = [$$('meta[name="ColumnName"]'), $$('meta[name="ColumnType"]'), $$('meta[name="ContentSource"]'), $$('meta[name="source"]')];
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el)?.attr('content') ?? '').filter(Boolean))];
                 const authors: DataItem['author'] = [$$('meta[name="Author"]'), $$('meta[name="author"]'), $$('meta[name="source"]')]
                     .filter((authorEl) => $$(authorEl).attr('content'))
@@ -192,49 +190,48 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/)，其源网址为 \`https://nnsa.mee.gov.cn/ywdt/hjyw/\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/gov/mee/nnsa/ywdt/hjyw\`](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw)。
 :::
 
 <details>
   <summary>更多分类</summary>
 
-  #### [要闻动态](https://nnsa.mee.gov.cn/ywdt/)
+#### [要闻动态](https://nnsa.mee.gov.cn/ywdt/)
 
-  | 分类                                           | ID                                                     |
-  | ---------------------------------------------- | ------------------------------------------------------ |
-  | [时政要闻](https://nnsa.mee.gov.cn/ywdt/szyw/) | [ywdt/szyw](https://rsshub.app/gov/mee/nnsa/ywdt/szyw) |
-  | [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/) | [ywdt/hjyw](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw) |
-  | [监管动态](https://nnsa.mee.gov.cn/ywdt/gzdt/) | [ywdt/gzdt](https://rsshub.app/gov/mee/nnsa/ywdt/gzdt) |
-  | [行业资讯](https://nnsa.mee.gov.cn/ywdt/hyzx/) | [ywdt/hyzx](https://rsshub.app/gov/mee/nnsa/ywdt/hyzx) |
-  | [国际资讯](https://nnsa.mee.gov.cn/ywdt/gjzx/) | [ywdt/gjzx](https://rsshub.app/gov/mee/nnsa/ywdt/gjzx) |
-  | [公示公告](https://nnsa.mee.gov.cn/ywdt/gsqg/) | [ywdt/gsqg](https://rsshub.app/gov/mee/nnsa/ywdt/gsqg) |
-  | [曝光台](https://nnsa.mee.gov.cn/ywdt/bgt/)    | [ywdt/bgt](https://rsshub.app/gov/mee/nnsa/ywdt/bgt)   |
+| 分类                                           | ID                                                     |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| [时政要闻](https://nnsa.mee.gov.cn/ywdt/szyw/) | [ywdt/szyw](https://rsshub.app/gov/mee/nnsa/ywdt/szyw) |
+| [环境要闻](https://nnsa.mee.gov.cn/ywdt/hjyw/) | [ywdt/hjyw](https://rsshub.app/gov/mee/nnsa/ywdt/hjyw) |
+| [监管动态](https://nnsa.mee.gov.cn/ywdt/gzdt/) | [ywdt/gzdt](https://rsshub.app/gov/mee/nnsa/ywdt/gzdt) |
+| [行业资讯](https://nnsa.mee.gov.cn/ywdt/hyzx/) | [ywdt/hyzx](https://rsshub.app/gov/mee/nnsa/ywdt/hyzx) |
+| [国际资讯](https://nnsa.mee.gov.cn/ywdt/gjzx/) | [ywdt/gjzx](https://rsshub.app/gov/mee/nnsa/ywdt/gjzx) |
+| [公示公告](https://nnsa.mee.gov.cn/ywdt/gsqg/) | [ywdt/gsqg](https://rsshub.app/gov/mee/nnsa/ywdt/gsqg) |
+| [曝光台](https://nnsa.mee.gov.cn/ywdt/bgt/)    | [ywdt/bgt](https://rsshub.app/gov/mee/nnsa/ywdt/bgt)   |
 
-  #### [政策文件](https://nnsa.mee.gov.cn/zcwj/)
+#### [政策文件](https://nnsa.mee.gov.cn/zcwj/)
 
-  | 分类                                                    | ID                                                           |
-  | ------------------------------------------------------- | ------------------------------------------------------------ |
-  | [中央有关文件](https://nnsa.mee.gov.cn/zcwj/zyygwj/)    | [zcwj/zyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/zyygwj)   |
-  | [国务院有关文件](https://nnsa.mee.gov.cn/zcwj/gwyygwj/) | [zcwj/gwyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/gwyygwj) |
-  | [部文件](https://nnsa.mee.gov.cn/zcwj/bwj/)             | [zcwj/bwj](https://rsshub.app/gov/mee/nnsa/zcwj/bwj)         |
-  | [核安全局文件](https://nnsa.mee.gov.cn/zcwj/haqjwj/)    | [zcwj/haqjwj](https://rsshub.app/gov/mee/nnsa/zcwj/haqjwj)   |
-  | [其他](https://nnsa.mee.gov.cn/zcwj/qt/)                | [zcwj/qt](https://rsshub.app/gov/mee/nnsa/zcwj/qt)           |
-  | [解读](https://nnsa.mee.gov.cn/zcwj/jd/)                | [zcwj/jd](https://rsshub.app/gov/mee/nnsa/zcwj/jd)           |
+| 分类                                                    | ID                                                           |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
+| [中央有关文件](https://nnsa.mee.gov.cn/zcwj/zyygwj/)    | [zcwj/zyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/zyygwj)   |
+| [国务院有关文件](https://nnsa.mee.gov.cn/zcwj/gwyygwj/) | [zcwj/gwyygwj](https://rsshub.app/gov/mee/nnsa/zcwj/gwyygwj) |
+| [部文件](https://nnsa.mee.gov.cn/zcwj/bwj/)             | [zcwj/bwj](https://rsshub.app/gov/mee/nnsa/zcwj/bwj)         |
+| [核安全局文件](https://nnsa.mee.gov.cn/zcwj/haqjwj/)    | [zcwj/haqjwj](https://rsshub.app/gov/mee/nnsa/zcwj/haqjwj)   |
+| [其他](https://nnsa.mee.gov.cn/zcwj/qt/)                | [zcwj/qt](https://rsshub.app/gov/mee/nnsa/zcwj/qt)           |
+| [解读](https://nnsa.mee.gov.cn/zcwj/jd/)                | [zcwj/jd](https://rsshub.app/gov/mee/nnsa/zcwj/jd)           |
 
-  #### [业务工作](https://nnsa.mee.gov.cn/ywdh/)
+#### [业务工作](https://nnsa.mee.gov.cn/ywdh/)
 
-  | 分类                                                        | ID                                                           |
-  | ----------------------------------------------------------- | ------------------------------------------------------------ |
-  | [核动力厂和研究堆](https://nnsa.mee.gov.cn/ywdh/fyd/)       | [ywdh/fyd](https://rsshub.app/gov/mee/nnsa/ywdh/fyd)         |
-  | [核燃料、放废](https://nnsa.mee.gov.cn/ywdh/hrlff/)         | [ywdh/hrlff](https://rsshub.app/gov/mee/nnsa/ywdh/hrlff)     |
-  | [核技术、电磁、矿冶](https://nnsa.mee.gov.cn/ywdh/hjsdcky/) | [ywdh/hjsdcky](https://rsshub.app/gov/mee/nnsa/ywdh/hjsdcky) |
-  | [监测与应急](https://nnsa.mee.gov.cn/ywdh/jcyj_1/)          | [ywdh/jcyj_1](https://rsshub.app/gov/mee/nnsa/ywdh/jcyj_1)   |
-  | [核安全设备与人员](https://nnsa.mee.gov.cn/ywdh/haqsbry/)   | [ywdh/haqsbry](https://rsshub.app/gov/mee/nnsa/ywdh/haqsbry) |
-  | [国际合作](https://nnsa.mee.gov.cn/ywdh/gjhz/)              | [ywdh/gjhz](https://rsshub.app/gov/mee/nnsa/ywdh/gjhz)       |
+| 分类                                                        | ID                                                           |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| [核动力厂和研究堆](https://nnsa.mee.gov.cn/ywdh/fyd/)       | [ywdh/fyd](https://rsshub.app/gov/mee/nnsa/ywdh/fyd)         |
+| [核燃料、放废](https://nnsa.mee.gov.cn/ywdh/hrlff/)         | [ywdh/hrlff](https://rsshub.app/gov/mee/nnsa/ywdh/hrlff)     |
+| [核技术、电磁、矿冶](https://nnsa.mee.gov.cn/ywdh/hjsdcky/) | [ywdh/hjsdcky](https://rsshub.app/gov/mee/nnsa/ywdh/hjsdcky) |
+| [监测与应急](https://nnsa.mee.gov.cn/ywdh/jcyj_1/)          | [ywdh/jcyj\\_1](https://rsshub.app/gov/mee/nnsa/ywdh/jcyj_1)  |
+| [核安全设备与人员](https://nnsa.mee.gov.cn/ywdh/haqsbry/)   | [ywdh/haqsbry](https://rsshub.app/gov/mee/nnsa/ywdh/haqsbry) |
+| [国际合作](https://nnsa.mee.gov.cn/ywdh/gjhz/)              | [ywdh/gjhz](https://rsshub.app/gov/mee/nnsa/ywdh/gjhz)       |
 
-</details>
-`,
+</details>`,
     categories: ['government'],
     features: {
         requireConfig: false,

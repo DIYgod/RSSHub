@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
@@ -28,7 +27,7 @@ export const handler = async (ctx) => {
 
             const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/)[0] ?? undefined;
             const title = item.find('h2.List-item-title').text();
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -66,7 +65,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.Post-title').text().trim();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
+                const description = renderDescription({
                     description: $$('div.Post-content').html(),
                 });
                 const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/)[0] ?? undefined;

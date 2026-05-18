@@ -25,14 +25,40 @@ describe('cache', () => {
         }
         await cache.set('mock', undefined);
         expect(await cache.get('mock')).toBe('');
+        expect(await cache.has('mock')).toBe(true);
 
         await cache.globalCache.set('mock', undefined);
         expect(await cache.globalCache.get('mock')).toBe('');
+        expect(await cache.globalCache.has('mock')).toBe(true);
         await cache.globalCache.set('mock', {
             mock: 1,
         });
         expect(await cache.globalCache.get('mock')).toBe('{"mock":1}');
     }, 10000);
+
+    it('memory get returns null before init', async () => {
+        const memory = (await import('@/utils/cache/memory')).default;
+        expect(await memory.get('missing')).toBeNull();
+        expect(await memory.has('missing')).toBe(false);
+    });
+
+    it('tryGet preserves snowflake ID precision', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        const cache = (await import('@/utils/cache')).default;
+        if (!cache.clients.memoryCache || !cache.status.available) {
+            throw new Error('Memory cache client error');
+        }
+
+        const snowflakeId = '1234567890123456789';
+        const fetcher = vi.fn(() => Promise.resolve(snowflakeId));
+
+        const fresh = await cache.tryGet('snowflake', fetcher);
+        expect(fresh).toBe(snowflakeId);
+        const cached = await cache.tryGet('snowflake', fetcher);
+        expect(typeof cached).toBe('string');
+        expect(cached).toBe(snowflakeId);
+        expect(fetcher).toHaveBeenCalledTimes(1);
+    });
 
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
@@ -46,6 +72,7 @@ describe('cache', () => {
         await cache.set('mock2', '2');
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe('2');
+        expect(await cache.has('mock2')).toBe(true);
         await cache.clients.redisClient?.quit();
     }, 10000);
 
@@ -59,6 +86,7 @@ describe('cache', () => {
         }
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
+        expect(await cache.has('mock2')).toBe(false);
     });
 
     it('redis with error', async () => {
@@ -67,14 +95,20 @@ describe('cache', () => {
         const cache = (await import('@/utils/cache')).default;
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
-        await cache.clients.redisClient?.quit();
+        expect(await cache.has('mock2')).toBe(false);
+        cache.clients.redisClient?.disconnect();
     });
 
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';
         const cache = (await import('@/utils/cache')).default;
+        await cache.init();
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
+        expect(await cache.has('mock2')).toBe(false);
+        expect(await cache.globalCache.get('mock2')).toBeNull();
+        expect(await cache.globalCache.has('mock2')).toBe(false);
+        expect(cache.globalCache.set('mock2', '2')).toBeNull();
     });
 
     it('throws TTL key', async () => {

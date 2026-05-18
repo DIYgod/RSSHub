@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
@@ -28,8 +27,9 @@ export const handler = async (ctx) => {
             item = $(item);
 
             const link = item.find('h2 a').prop('href');
+            const isAdItem = item.find('span.cat').text().includes('423Down');
 
-            return new RegExp(domain).test(link);
+            return new RegExp(domain).test(link) && !isAdItem;
         })
         .slice(0, limit)
         .map((item) => {
@@ -37,7 +37,7 @@ export const handler = async (ctx) => {
 
             const title = item.find('h2').text();
             const image = item.find('a.pic img').prop('src');
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -79,11 +79,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.meta-tit a').text();
-                const description =
-                    item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.entry').html(),
-                    });
+                const description = item.description + renderDescription({ description: $$('div.entry').html() });
 
                 item.title = title;
                 item.description = description;
@@ -126,7 +122,7 @@ export const route: Route = {
     example: '/423down',
     parameters: { category: '分类，默认为首页，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [Android - 423Down](https://www.423down.com/apk)，网址为 \`https://www.423down.com/apk\`。截取 \`https://www.423down.com/\` 到末尾的部分 \`apk\` 作为参数填入，此时路由为 [\`/423down/apk\`](https://rsshub.app/423down/apk)。
+若订阅 [Android - 423Down](https://www.423down.com/apk)，网址为 \`https://www.423down.com/apk\`。截取 \`https://www.423down.com/\` 到末尾的部分 \`apk\` 作为参数填入，此时路由为 [\`/423down/apk\`](https://rsshub.app/423down/apk)。
 :::
 
 #### [安卓软件](https://www.423down.com/apk)
@@ -153,8 +149,7 @@ export const route: Route = {
 
 | [Windows 11](https://www.423down.com/win11) | [Windows 10](https://www.423down.com/win10) | [Windows 7](https://www.423down.com/win7) | [Windows XP](https://www.423down.com/win7/winxp)    | [WinPE](https://www.423down.com/pe-system)        |
 | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
-| [win11](https://rsshub.app/423down/win11)   | [win10](https://rsshub.app/423down/win10)   | [win7](https://rsshub.app/423down/win7)   | [win7/winxp](https://rsshub.app/423down/win7/winxp) | [pe-system](https://rsshub.app/423down/pe-system) |
-  `,
+| [win11](https://rsshub.app/423down/win11)   | [win10](https://rsshub.app/423down/win10)   | [win7](https://rsshub.app/423down/win7)   | [win7/winxp](https://rsshub.app/423down/win7/winxp) | [pe-system](https://rsshub.app/423down/pe-system) |`,
     categories: ['program-update'],
 
     features: {

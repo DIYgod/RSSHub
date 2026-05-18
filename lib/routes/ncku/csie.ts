@@ -20,10 +20,10 @@ const catagories = {
 export const route: Route = {
     'zh-TW': {
         name: '國立成功大學資訊系公告',
-        description: '可用分類：_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
+        description: '可用分類：\\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
     },
     name: 'CSIE News',
-    description: 'Availible catagories：_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
+    description: 'Availible catagories：\\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
     path: '/csie/:catagory?',
     categories: ['university'],
     example: '/ncku/csie/normal',

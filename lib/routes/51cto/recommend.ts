@@ -27,7 +27,6 @@ export const route: Route = {
 const pattern = /'(WTKkN|bOYDu|wyeCN)':\s*(\d+)/g;
 
 async function getFullcontent(item, cookie = '') {
-    let fullContent: null | string = null;
     const articleResponse = await ofetch(item.url, {
         headers: {
             cookie,
@@ -35,7 +34,7 @@ async function getFullcontent(item, cookie = '') {
     });
     const $ = load(articleResponse);
 
-    fullContent = new URL(item.url).host === 'ost.51cto.com' ? $('.posts-content').html() : $('article').html();
+    const fullContent = new URL(item.url).host === 'ost.51cto.com' ? $('.posts-content').html() : $('article').html();
 
     if (!fullContent && cookie === '') {
         // If fullContent is null and haven't tried to request with cookie, try to get fullContent with cookie

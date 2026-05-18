@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import utils from './utils';
 
@@ -26,18 +26,18 @@ export const route: Route = {
 async function handler(ctx) {
     const { type = 'latest', section = 'posts' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
-    const browser = await puppeteer();
+    const browser = await playwright();
 
-    let link = `https://www.dcard.tw/f`;
-    let api = `https://www.dcard.tw/service/api/v2`;
-    let title = `Dcard - `;
+    let link = 'https://www.dcard.tw/f';
+    let api = 'https://www.dcard.tw/service/api/v2';
+    let title = 'Dcard - ';
 
     if (section !== 'posts' && section !== 'popular' && section !== 'latest') {
         link += `/${section}`;
         api += `/forums/${section}`;
         title += `${section} - `;
     }
-    api += `/posts`;
+    api += '/posts';
     if (type === 'popular') {
         link += '?latest=false';
         api += '?popular=true';

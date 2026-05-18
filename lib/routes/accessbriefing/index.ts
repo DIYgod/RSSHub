@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'latest/news' } = ctx.req.param();
@@ -38,7 +37,7 @@ export const handler = async (ctx) => {
     let items = response.slice(0, limit).map((item) => {
         const title = item.Article_Headline;
         const image = new URL(item.Image, rootUrl).href;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             images: image
                 ? [
                       {
@@ -79,7 +78,7 @@ export const handler = async (ctx) => {
                 const title = $$('h1.khl-article-page-title').text();
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
+                    renderDescription({
                         description: $$('div.khl-article-page-storybody').html(),
                     });
 
@@ -123,7 +122,7 @@ export const route: Route = {
     example: '/accessbriefing/latest/news',
     parameters: { category: 'Category, Latest News by default' },
     description: `::: tip
-  If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，where the URL is \`https://www.accessbriefing.com/latest/news\`, extract the part \`https://www.accessbriefing.com/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/accessbriefing/latest/news\`](https://rsshub.app/accessbriefing/latest/news).
+If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，where the URL is \`https://www.accessbriefing.com/latest/news\`, extract the part \`https://www.accessbriefing.com/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/accessbriefing/latest/news\`](https://rsshub.app/accessbriefing/latest/news).
 :::
 
 #### Latest
@@ -144,8 +143,7 @@ export const route: Route = {
 | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | [Interviews](https://www.accessbriefing.com/insight/interviews)                   | [insight/interviews](https://rsshub.app/target/site/insight/interviews)                   |
 | [Longer reads](https://www.accessbriefing.com/insight/longer-reads)               | [insight/longer-reads](https://rsshub.app/target/site/insight/longer-reads)               |
-| [Videos and podcasts](https://www.accessbriefing.com/insight/videos-and-podcasts) | [insight/videos-and-podcasts](https://rsshub.app/target/site/insight/videos-and-podcasts) |
-  `,
+| [Videos and podcasts](https://www.accessbriefing.com/insight/videos-and-podcasts) | [insight/videos-and-podcasts](https://rsshub.app/target/site/insight/videos-and-podcasts) |`,
     categories: ['new-media'],
 
     features: {

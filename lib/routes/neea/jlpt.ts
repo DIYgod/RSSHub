@@ -12,16 +12,14 @@ import { parseDate } from '@/utils/parse-date';
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://jlpt.neea.cn';
+    const baseUrl = 'https://jlpt.neea.cn';
     const targetUrl: string = new URL('index.do', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.indexcontent a')
+    let items: DataItem[] = $('div.indexcontent a')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {

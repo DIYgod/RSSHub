@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'ndss-symposium.org/',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {

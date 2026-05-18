@@ -41,7 +41,7 @@ export const route: Route = {
 | BlizzCon               | blizzcon            |
 | Inside Blizzard        | blizzard            |
 
-  Language codes
+Language codes
 
 | Language           | Code  |
 | ------------------ | ----- |

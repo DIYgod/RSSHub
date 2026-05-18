@@ -1,12 +1,10 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
 import { viewForum, viewThread } from './query';
+import { renderContent } from './templates/content';
 
 export const route: Route = {
     path: '/forum/:id?/:digest?',
@@ -51,9 +49,7 @@ async function handler(ctx) {
 
                 item.author = detailResponse.data.data.thread?.author.name;
                 item.pubDate = parseDate(detailResponse.data.data.thread?.dateline);
-                item.description = art(path.join(__dirname, 'templates/content.art'), {
-                    content: JSON.parse(detailResponse.data.data.posts[0].content),
-                });
+                item.description = renderContent(JSON.parse(detailResponse.data.data.posts[0].content));
                 delete item.guid;
 
                 return item;

@@ -19,7 +19,7 @@ export async function customFetch<T extends BasicResponse<ResponseData>>(path: s
     }
     // sometimes the request will fail with code 1059, retry will solve the problem
     if (code === 1059 && retryCount < 3) {
-        return customFetch(path, ++retryCount);
+        return customFetch(path, retryCount + 1);
     }
     throw new Error('something wrong');
 }

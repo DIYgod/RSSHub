@@ -26,7 +26,7 @@ async function handler(ctx) {
     const { type = '' } = ctx.req.param();
     const referer = `https://m.douban.com/book/${type}`;
 
-    const _ = async (type) => {
+    const requestItem = async (type) => {
         const response = await got({
             url: `https://m.douban.com/rexxar/api/v2/subject_collection/book_${type}/items?start=0&count=10`,
             headers: { Referer: referer },
@@ -34,7 +34,7 @@ async function handler(ctx) {
         return response.data.subject_collection_items;
     };
 
-    const items = type ? await _(type) : [...(await _('fiction')), ...(await _('nonfiction'))];
+    const items = type ? await requestItem(type) : [...(await requestItem('fiction')), ...(await requestItem('nonfiction'))];
 
     return {
         title: `豆瓣热门图书-${type ? (type === 'fiction' ? '虚构类' : '非虚构类') : '全部'}`,

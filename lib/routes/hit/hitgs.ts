@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,29 +8,28 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'tzgg' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
 
-    const baseUrl: string = 'https://hitgs.hit.edu.cn';
+    const baseUrl = 'https://hitgs.hit.edu.cn';
     const targetUrl: string = new URL(`${id}/list.htm`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = $('li.news, div.tbt17')
+    let items: DataItem[] = $('li.news, div.tbt17')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.news_title, span.div.news_title, div.bttb2').text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 intro: $el.find('div.news_text, div.jj5').text(),
             });
             const pubDateStr: string | undefined = $('span.news_meta').text() || ($('span.news_days').text() ? `${$('span.news_days').text()}-${$('span.news_year').text()}` : `${$('div.tm-3').text()}-${$('div.tm-1').text()}`);
@@ -66,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1.arti_title').text() + $$('h2.arti_title').text();
-                const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+                const description: string | undefined = renderDescription({
                     description: $$('div.wp_articlecontent').html(),
                 });
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
@@ -95,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {
-                    const enclosureType: string = `application/${enclosureUrl.split(/\./).pop() || 'octet-stream'}`;
+                    const enclosureType = `application/${enclosureUrl.split(/\./).pop() || 'octet-stream'}`;
                     const enclosureTitle: string | undefined = $enclosureEl.attr('sudyfile-attr')?.match(/'title':'(.*?)'/)?.[1];
 
                     processedItem = {
@@ -183,19 +180,18 @@ export const route: Route = {
 <details>
   <summary>更多栏目</summary>
 
-| 栏目 | ID |
-| - | - |
-| [通知公告](https://hitgs.hit.edu.cn/tzgg/list.htm) | [tzgg](https://rsshub.app/hit/hitgs/tzgg) |
-| [综合新闻](https://hitgs.hit.edu.cn/zhxw/list.htm) | [zhxw](https://rsshub.app/hit/hitgs/zhxw) |
+| 栏目                                                                 | ID                                                    |
+| -------------------------------------------------------------------- | ----------------------------------------------------- |
+| [通知公告](https://hitgs.hit.edu.cn/tzgg/list.htm)                   | [tzgg](https://rsshub.app/hit/hitgs/tzgg)             |
+| [综合新闻](https://hitgs.hit.edu.cn/zhxw/list.htm)                   | [zhxw](https://rsshub.app/hit/hitgs/zhxw)             |
 | [高水平课程与学术交流](https://hitgs.hit.edu.cn/gspkcyxsjl/list.htm) | [gspkcyxsjl](https://rsshub.app/hit/hitgs/gspkcyxsjl) |
-| [国家政策](https://hitgs.hit.edu.cn/gjzc/list.htm) | [gjzc](https://rsshub.app/hit/hitgs/gjzc) |
-| [规章制度](https://hitgs.hit.edu.cn/17546/list.htm) | [17546](https://rsshub.app/hit/hitgs/17546) |
-| [办事流程](https://hitgs.hit.edu.cn/17547/list.htm) | [17547](https://rsshub.app/hit/hitgs/17547) |
-| [常见问题](https://hitgs.hit.edu.cn/17548/list.htm) | [17548](https://rsshub.app/hit/hitgs/17548) |
-| [常见下载](https://hitgs.hit.edu.cn/17549/list.htm) | [17549](https://rsshub.app/hit/hitgs/17549) |
+| [国家政策](https://hitgs.hit.edu.cn/gjzc/list.htm)                   | [gjzc](https://rsshub.app/hit/hitgs/gjzc)             |
+| [规章制度](https://hitgs.hit.edu.cn/17546/list.htm)                  | [17546](https://rsshub.app/hit/hitgs/17546)           |
+| [办事流程](https://hitgs.hit.edu.cn/17547/list.htm)                  | [17547](https://rsshub.app/hit/hitgs/17547)           |
+| [常见问题](https://hitgs.hit.edu.cn/17548/list.htm)                  | [17548](https://rsshub.app/hit/hitgs/17548)           |
+| [常见下载](https://hitgs.hit.edu.cn/17549/list.htm)                  | [17549](https://rsshub.app/hit/hitgs/17549)           |
 
-</details>
-`,
+</details>`,
     categories: ['university'],
     features: {
         requireConfig: false,

@@ -34,9 +34,9 @@ export const route: Route = {
 | ------- | ----- |
 | article | state |
 
-  参数
+参数
 
-  -   \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
+- \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
 };
 
 async function handler(ctx) {
@@ -71,7 +71,7 @@ async function handler(ctx) {
     });
     const $ = load(response.data.data.list);
 
-    let item = [];
+    let item: DataItem[];
     const needFullText = option === 'fulltext';
     switch (type) {
         case 'article':
@@ -80,6 +80,8 @@ async function handler(ctx) {
         case 'state':
             item = utils.statusListParser($);
             break;
+        default:
+            throw new Error(`Unknown type: ${type}`);
     }
 
     const typeToLabel = {

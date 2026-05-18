@@ -12,7 +12,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
     const rootUrl = 'https://www.c114.com.cn';
-    const currentUrl = new URL(`news/roll.asp${original === 'true' ? `?o=true` : ''}`, rootUrl).href;
+    const currentUrl = new URL(`news/roll.asp${original === 'true' ? '?o=true' : ''}`, rootUrl).href;
 
     const { data: response } = await got(currentUrl, {
         responseType: 'buffer',

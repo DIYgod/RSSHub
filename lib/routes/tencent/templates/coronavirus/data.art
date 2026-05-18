@@ -1,4 +1,0 @@
-<p>新增确诊：</p><p>+{{@todayConfirm}}</p></br>
-<p>现有确诊：</p><p>{{@totalNowConfirm}}</p></br>
-<p>累计确诊：</p><p>{{@totalConfirm}}</p></br>
-<p>累计死亡：</p><p>{{@totalDead}}</p></br>

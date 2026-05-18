@@ -25,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '轉角國際 - 首頁',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 首頁 | 編輯精選 | 熱門文章 |
 | ---- | -------- | -------- |

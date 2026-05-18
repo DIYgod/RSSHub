@@ -130,19 +130,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '500', 10);
 
-    const validIds: Set<string> = new Set(idOptions.map((option) => option.value));
+    const validIds = new Set<string>(idOptions.map((option) => option.value));
 
     if (!validIds.has(id)) {
         throw new Error(`Invalid id: ${id}. Allowed values are: ${[...validIds].join(', ')}`);
     }
 
-    const validLanguages: Set<string> = new Set(languageOptions.map((option) => option.value));
+    const validLanguages = new Set<string>(languageOptions.map((option) => option.value));
 
     if (!validLanguages.has(language)) {
         throw new Error(`Invalid language: ${language}. Allowed values are: ${[...validLanguages].join(', ')}`);
     }
 
-    const baseUrl: string = `https://${language}.bandisoft.com`;
+    const baseUrl = `https://${language}.bandisoft.com`;
     const targetUrl: string = new URL(`${id}/history/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
@@ -163,7 +163,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description: string | undefined = $el.find('ul.cell3').html() ?? undefined;
 
             const linkUrl: string = targetUrl;
-            const guid: string = `bandisoft-${id}-${language}-${version}`;
+            const guid = `bandisoft-${id}-${language}-${version}`;
             const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
@@ -222,35 +222,34 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
 <details>
   <summary>More languages</summary>
 
-| Language             | ID  |
-| -------------------- | --- |
-| English              | en  |
-| 中文(简体)           | cn  |
-| 中文(繁體)           | tw  |
-| 日本語               | jp  |
-| Русский              | ru  |
-| Español              | es  |
-| Français             | fr  |
-| Deutsch              | de  |
-| Italiano             | it  |
-| Slovenčina           | sk  |
-| Українська           | uk  |
-| Беларуская           | be  |
-| Dansk                | da  |
-| Polski               | pl  |
-| Português Brasileiro | br  |
-| Čeština              | cs  |
-| Nederlands           | nl  |
-| Slovenščina          | sl  |
-| Türkçe               | tr  |
-| ภาษาไทย              | th  |
-| Ελληνικά             | gr  |
-| Oʻzbek               | uz  |
-| Romanian             | ro  |
-| 한국어               | kr  |
+| Language             | ID |
+| -------------------- | -- |
+| English              | en |
+| 中文 (简体)          | cn |
+| 中文 (繁體)          | tw |
+| 日本語               | jp |
+| Русский              | ru |
+| Español              | es |
+| Français             | fr |
+| Deutsch              | de |
+| Italiano             | it |
+| Slovenčina           | sk |
+| Українська           | uk |
+| Беларуская           | be |
+| Dansk                | da |
+| Polski               | pl |
+| Português Brasileiro | br |
+| Čeština              | cs |
+| Nederlands           | nl |
+| Slovenščina          | sl |
+| Türkçe               | tr |
+| ภาษาไทย              | th |
+| Ελληνικά             | gr |
+| Oʻzbek               | uz |
+| Romanian             | ro |
+| 한국어               | kr |
 
-</details>
-`,
+</details>`,
     categories: ['program-update'],
     features: {
         requireConfig: false,
@@ -297,34 +296,33 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
 <details>
   <summary>更多语言</summary>
 
-| Language             | ID  |
-| -------------------- | --- |
-| English              | en  |
-| 中文(简体)           | cn  |
-| 中文(繁體)           | tw  |
-| 日本語               | jp  |
-| Русский              | ru  |
-| Español              | es  |
-| Français             | fr  |
-| Deutsch              | de  |
-| Italiano             | it  |
-| Slovenčina           | sk  |
-| Українська           | uk  |
-| Беларуская           | be  |
-| Dansk                | da  |
-| Polski               | pl  |
-| Português Brasileiro | br  |
-| Čeština              | cs  |
-| Nederlands           | nl  |
-| Slovenščina          | sl  |
-| Türkçe               | tr  |
-| ภาษาไทย              | th  |
-| Ελληνικά             | gr  |
-| Oʻzbek               | uz  |
-| Romanian             | ro  |
-| 한국어               | kr  |
+| Language             | ID |
+| -------------------- | -- |
+| English              | en |
+| 中文 (简体)          | cn |
+| 中文 (繁體)          | tw |
+| 日本語               | jp |
+| Русский              | ru |
+| Español              | es |
+| Français             | fr |
+| Deutsch              | de |
+| Italiano             | it |
+| Slovenčina           | sk |
+| Українська           | uk |
+| Беларуская           | be |
+| Dansk                | da |
+| Polski               | pl |
+| Português Brasileiro | br |
+| Čeština              | cs |
+| Nederlands           | nl |
+| Slovenščina          | sl |
+| Türkçe               | tr |
+| ภาษาไทย              | th |
+| Ελληνικά             | gr |
+| Oʻzbek               | uz |
+| Romanian             | ro |
+| 한국어               | kr |
 
-</details>
-`,
+</details>`,
     },
 };

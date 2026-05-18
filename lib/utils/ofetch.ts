@@ -13,7 +13,7 @@ declare module 'ofetch' {
 
 config.enableRemoteDebugging && process.env.NODE_ENV === 'dev' && register();
 
-const rofetch = createFetch().create({
+const rofetch = createFetch({ fetch: (...args: Parameters<typeof fetch>) => globalThis.fetch(...args) }).create({
     retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],
     retry: config.requestRetry,
     retryDelay: 1000,

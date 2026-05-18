@@ -49,7 +49,7 @@ async function handler() {
             const path = item.find('.news_title').children().attr('href');
             const itemUrl = path.startsWith('https') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (path.startsWith('https')) {
                     description = itemTitle;
                 } else {
@@ -68,7 +68,7 @@ async function handler() {
     );
 
     return {
-        title: `齐鲁工业大学 - 通知公告`,
+        title: '齐鲁工业大学 - 通知公告',
         link: `${host}/tzggsh/list1.htm`,
         description: '齐鲁工业大学 - 通知公告',
         item: items,

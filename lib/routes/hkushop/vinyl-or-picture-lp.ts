@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/vinyl/:cat?',
@@ -29,9 +29,10 @@ export const route: Route = {
     maintainers: ['gideonsenku'],
     handler,
     description: `常见分类:
+
 | 華語音樂 | 經典復刻 | 古典跨界 | 爵士音樂 | 國際音樂 | 電影原聲帶 | 黑膠日本音樂 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 37 | 38 | 40 | 41 | 39 | 170 | 224 |`,
+| -------- | -------- | -------- | -------- | -------- | ---------- | ------------ |
+| 37       | 38       | 40       | 41       | 39       | 170        | 224          |`,
     url: 'hkushop.com/vinyl-or-picture-lp.html',
 };
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const cat = ctx.req.param('cat') ?? '';
     const url = cat ? `${baseUrl}/vinyl-or-picture-lp.html?cat=${cat}` : `${baseUrl}/vinyl-or-picture-lp.html`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

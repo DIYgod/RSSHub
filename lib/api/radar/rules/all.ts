@@ -45,10 +45,11 @@ for (const namespace in namespaces) {
 const route = createRoute({
     method: 'get',
     path: '/radar/rules',
+    description: 'All Radar rules grouped by domain',
     tags: ['Radar'],
     responses: {
         200: {
-            description: 'All Radar rules',
+            description: 'Radar rules grouped by domain',
         },
     },
 });

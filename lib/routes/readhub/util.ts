@@ -1,25 +1,12 @@
-import path from 'node:path';
-
-import dayjs from 'dayjs';
-
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 const domain = 'readhub.cn';
 const rootUrl = `https://${domain}`;
 const apiRootUrl = `https://api.${domain}`;
 const apiTopicUrl = new URL('topic/list', apiRootUrl).href;
-
-const formatDate = (date, format) => dayjs(date).format(format);
-const toTopicUrl = (id) => new URL(`topic/${id}`, rootUrl).href;
-
-art.defaults.imports = {
-    ...art.defaults.imports,
-
-    formatDate,
-    toTopicUrl,
-};
 
 /**
  * Process items asynchronously.
@@ -43,10 +30,11 @@ const processItems = async (items, tryGet) =>
 
                     item.title = data.title;
                     item.link = data.url ?? new URL(`topic/${data.uid}`, rootUrl).href;
-                    item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    item.description = renderDescription({
                         description: data.summary,
                         news: data.newsAggList,
                         timeline: data.timeline,
+                        rootUrl,
                     });
                     item.author = data.siteNameDisplay;
                     item.category = [...(data.entityList.map((c) => c.name) ?? []), ...(data.tagList.map((c) => c.name) ?? [])];
@@ -62,5 +50,3 @@ const processItems = async (items, tryGet) =>
     );
 
 export { apiRootUrl, apiTopicUrl, processItems, rootUrl };
-
-export { art } from '@/utils/render';

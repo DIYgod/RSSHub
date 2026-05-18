@@ -33,7 +33,7 @@ export const route: Route = {
 | ---------- | -------- | --------- | -------- |
 | test       | life     | complaint | topic    |
 
-  语言
+语言
 
 | 简体中文 | 繁体中文 |
 | -------- | -------- |

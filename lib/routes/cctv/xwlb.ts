@@ -44,7 +44,7 @@ export const route: Route = {
     maintainers: ['zengxs'],
     handler,
     url: 'tv.cctv.com/lm/xwlb',
-    description: `新闻联播内容摘要。`,
+    description: '新闻联播内容摘要。',
 };
 
 async function handler(ctx) {

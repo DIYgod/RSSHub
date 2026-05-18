@@ -56,8 +56,8 @@ export const route: Route = {
 | feed | elite | official | video |
 
 | 发布时间 | 回复时间  | 默认排序 |
-| -------- | --------- | ------- |
-| created  | commented | default |`,
+| -------- | --------- | -------- |
+| created  | commented | default  |`,
 };
 
 async function handler(ctx) {
@@ -90,15 +90,13 @@ async function handler(ctx) {
                     if (moment.reposted_moment.topic.footer_images) {
                         description += imagePost(moment.reposted_moment.topic.footer_images);
                     }
-                } else {
-                    if (moment.topic.pin_video) {
-                        description += videoPost(moment.topic.pin_video);
-                        if (moment.topic.footer_images?.images) {
-                            description += imagePost(moment.topic.footer_images.images);
-                        }
-                    } else {
-                        description = await topicPost(appId, topicId, lang);
+                } else if (moment.topic.pin_video) {
+                    description += videoPost(moment.topic.pin_video);
+                    if (moment.topic.footer_images?.images) {
+                        description += imagePost(moment.topic.footer_images.images);
                     }
+                } else {
+                    description = await topicPost(appId, topicId, lang);
                 }
                 return {
                     title,

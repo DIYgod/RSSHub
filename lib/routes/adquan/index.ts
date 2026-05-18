@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,29 +8,28 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://www.adquan.com';
+    const baseUrl = 'https://www.adquan.com';
     const targetUrl: string = baseUrl;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.article_1')
+    let items: DataItem[] = $('div.article_1')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('p.article_2_p').text();
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 intro: $el.find('div.article_1_fu p').first().text(),
             });
             const pubDateStr: string | undefined = $el.find('div.article_1_fu p').last().text();
@@ -72,8 +69,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('p.infoTitle_left').text();
-                    const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.articleContent').html(),
+                    const description: string | undefined = renderDescription({
+                        description: $$('div.articleContent').html() ?? undefined,
                     });
                     const pubDateStr: string | undefined = $$('p.time').text().split(/：/).pop();
                     const categoryEls: Element[] = $$('span.article_5').toArray();

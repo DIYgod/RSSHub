@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -43,7 +43,7 @@ async function handler(ctx) {
 
     const response = await ofetch(link);
     const $ = load(response);
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const list = $('.articlebox-compact')
         .toArray()

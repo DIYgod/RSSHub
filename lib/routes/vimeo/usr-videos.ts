@@ -1,10 +1,9 @@
-import path from 'node:path';
-
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/user/:username/:cat?',
@@ -27,7 +26,7 @@ export const route: Route = {
     maintainers: ['MisteryMonster'],
     handler,
     description: `::: tip Special category name attention
-  Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
+Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
 :::`,
 };
 
@@ -91,7 +90,7 @@ async function handler(ctx) {
 
             return {
                 title: picked ? item.clip.name : item.name,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     videoUrl: picked ? item.clip.uri.replace('/videos', '') : item.uri.replace('/videos', ''),
                     vdescription: vdescription ? vdescription.replaceAll('\n', '<br>') : '',
                 }),

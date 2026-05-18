@@ -55,13 +55,14 @@ const ParamsSchema = z.object({
 const route = createRoute({
     method: 'get',
     path: '/radar/rules/{domain}',
+    description: 'Radar rules for a domain name',
     tags: ['Radar'],
     request: {
         params: ParamsSchema,
     },
     responses: {
         200: {
-            description: 'Radar rules for a domain name (does not support subdomains)',
+            description: 'Radar rules for a domain name (no subdomains)',
         },
     },
 });

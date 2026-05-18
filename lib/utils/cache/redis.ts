@@ -54,6 +54,13 @@ export default {
             return null;
         }
     },
+    has: async (key: string) => {
+        if (key && status.available && clients.redisClient) {
+            const result = await clients.redisClient.exists(key);
+            return result > 0;
+        }
+        return false;
+    },
     set: (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
         if (!status.available || !clients.redisClient) {
             return;

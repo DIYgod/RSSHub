@@ -37,7 +37,7 @@ export const route: Route = {
 | zdzy     | jjbxs      | dydhly       |
 
 ::: tip
-  更多栏目请看 [这里](https://tv.cctv.com/lm)
+更多栏目请看 [这里](https://tv.cctv.com/lm)
 :::`,
 };
 

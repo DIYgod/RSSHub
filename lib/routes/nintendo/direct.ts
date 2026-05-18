@@ -1,11 +1,10 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDirectDescription } from './templates/direct';
 
 export const route: Route = {
     path: '/direct',
@@ -43,10 +42,7 @@ async function handler() {
         title: item.name,
         pubDate: parseDate(item.startDate),
         link: `https://www.nintendo.com/nintendo-direct/${item.slug}/`,
-        description: art(path.join(__dirname, 'templates/direct.art'), {
-            publicId: item.thumbnail.publicId,
-            content: item.description.json.content,
-        }),
+        description: renderDirectDescription(item.thumbnail.publicId, item.description.json.content),
     }));
 
     return {

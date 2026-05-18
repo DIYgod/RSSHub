@@ -1,13 +1,12 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderArticle } from './templates/article';
 
 export const route: Route = {
     path: '/database',
@@ -57,7 +56,7 @@ async function handler() {
                 const content = load(detailResponse.data);
 
                 item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), +8);
-                item.description = art(path.join(__dirname, 'templates/article.art'), {
+                item.description = renderArticle({
                     item,
                     $: content,
                 });

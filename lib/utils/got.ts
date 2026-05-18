@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {
-    const fakeGot = (request, options?: any) => {
+    const fakeGot = async (request, options?: any) => {
         if (!(typeof request === 'string' || request instanceof Request) && request.url) {
             options = {
                 ...request,
@@ -67,10 +67,11 @@ const getFakeGot = (defaultOptions?: any) => {
         const response = ofetch(request, options);
 
         if (options?.responseType === 'arrayBuffer') {
-            return response.then((responseData) => ({
+            const responseData = await response;
+            return {
                 data: Buffer.from(responseData),
                 body: Buffer.from(responseData),
-            }));
+            };
         }
         return response;
     };

@@ -14,7 +14,7 @@
             "value": "80",
             "required": false
         },
-        "PUPPETEER_SKIP_DOWNLOAD": {
+        "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": {
             "value": "1",
             "required": false
         }

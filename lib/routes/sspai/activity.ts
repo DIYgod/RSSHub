@@ -95,6 +95,8 @@ async function handler(ctx) {
                     item_desc = content_data.comment;
                     item_url = content_data.comment;
                     break;
+                default:
+                    throw new Error(`Unknown action key: ${item.key}`);
             }
 
             return {

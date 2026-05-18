@@ -1,9 +1,0 @@
-<text>许可日期：{{ dateText }} </text>
-<br>
-<text>行政名称：{{ hostingUnit }} </text>
-<br>
-<text>许可编号：{{ licenseNumber }} </text>
-<br>
-<text>项目名称：{{ performanceName }} </text>
-<br>
-<text>许可内容：{{ performanceContent }} </text>

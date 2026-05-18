@@ -12,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
 
     const apiSlug = 'wp-json/wp/v2';
-    const baseUrl: string = 'https://60s.aa1.cn';
+    const baseUrl = 'https://60s.aa1.cn';
 
     const apiUrl = new URL(`${apiSlug}/posts`, baseUrl).href;
     const apiSearchUrl = new URL(`${apiSlug}/categories`, baseUrl).href;
@@ -41,9 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(targetResponse);
     const language = $('html').attr('lang') ?? 'zh';
 
-    let items: DataItem[] = [];
-
-    items = response.slice(0, limit).map((item): DataItem => {
+    const items: DataItem[] = response.slice(0, limit).map((item): DataItem => {
         const title: string = item.title?.rendered ?? item.title;
         const description: string | undefined = item.content.rendered;
         const pubDate: number | string = item.date_gmt;
@@ -134,7 +132,7 @@ export const route: Route = {
         },
     },
     description: `::: tip
-订阅 [每天60秒读懂世界](https://60s.aa1.cn/category/news)，其源网址为 \`https://60s.aa1.cn/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/aa1/60s/news\`](https://rsshub.app/aa1/60s/news) 或 [\`/aa1/60s/每天60秒读懂世界\`](https://rsshub.app/aa1/60s/每天60秒读懂世界)。
+订阅 [每天 60 秒读懂世界](https://60s.aa1.cn/category/news)，其源网址为 \`https://60s.aa1.cn/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/aa1/60s/news\`](https://rsshub.app/aa1/60s/news) 或 [\`/aa1/60s/每天60秒读懂世界\`](https://rsshub.app/aa1/60s/每天60秒读懂世界)。
 :::
 
 | 分类                                                       | ID                                                      |
@@ -143,8 +141,7 @@ export const route: Route = {
 | [新闻词文章数据](https://60s.aa1.cn/category/freenewsdata) | [freenewsdata](https://rsshub.app/aa1/60s/freenewsdata) |
 | [最新](https://60s.aa1.cn/category/new)                    | [new](https://rsshub.app/aa1/60s/new)                   |
 | [本平台同款自动发文章插件](https://60s.aa1.cn/category/1)  | [1](https://rsshub.app/aa1/60s/1)                       |
-| [每天 60 秒读懂世界](https://60s.aa1.cn/category/news)     | [news](https://rsshub.app/aa1/60s/news)                 |
-`,
+| [每天 60 秒读懂世界](https://60s.aa1.cn/category/news)     | [news](https://rsshub.app/aa1/60s/news)                 |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

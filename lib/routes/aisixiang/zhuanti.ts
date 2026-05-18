@@ -25,7 +25,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
+更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
 :::`,
 };
 

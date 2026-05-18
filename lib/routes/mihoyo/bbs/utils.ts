@@ -1,9 +1,6 @@
-import path from 'node:path';
-
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 
-const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });
+import { renderDescription } from '../templates/description';
 
 const post2item = (e) => {
     const author = e.user.nickname;

@@ -3,6 +3,13 @@ import jsBeautify from 'js-beautify';
 const routeTestFailed = 'auto: not ready to review';
 const readyToReview = 'auto: ready to review';
 
+/**
+ * @param {{ github: ReturnType<typeof import('@actions/github').getOctokit>, context: typeof import('@actions/github').context, core: typeof import('@actions/core') }} githubScript
+ * @param {string} baseUrl
+ * @param {string[]} routes
+ * @param {number} number
+ * @returns {Promise<void>}
+ */
 export default async function test({ github, context, core }, baseUrl, routes, number) {
     if (routes[0] === 'NOROUTE') {
         return;

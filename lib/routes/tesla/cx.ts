@@ -1,12 +1,11 @@
-import path from 'node:path';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/cx/:category?/:city?',
@@ -28,7 +27,7 @@ export const route: Route = {
 | -------- | ---- | ---- | -------- |
 
 ::: tip
-  分类为 **充电免停** 时，城市参数不起作用
+分类为 **充电免停** 时，城市参数不起作用
 :::
 
 <details>
@@ -99,6 +98,7 @@ export const route: Route = {
 
 | 曲阜 | 郴州 | 济源 | 兴义 |
 | ---- | ---- | ---- | ---- |
+
 </details>`,
 };
 
@@ -116,9 +116,6 @@ async function handler(ctx) {
 
     const categoryToUrl = (category) => new URL(`user-right/list/${category}`, rootUrl).href;
     const mediaToUrl = (media) => new URL(`community-media/${media}`, rootMediaApi).href;
-
-    art.defaults.imports.categoryToUrl = categoryToUrl;
-    art.defaults.imports.mediaToUrl = mediaToUrl;
 
     const { data: categoryResponse } = await got(apiCategoryUrl, {
         searchParams: {
@@ -141,7 +138,7 @@ async function handler(ctx) {
     let items = response.data.pageDatas.slice(0, limit).map((item) => ({
         title: item.venueName ?? item.title,
         link: new URL(`user-right/detail/${item.id}`, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             image: item.coverImage
                 ? {
                       src: item.coverImage,
@@ -156,6 +153,8 @@ async function handler(ctx) {
                       description: `充电停车减免${item.parkingVoucherValue}小时`,
                   }
                 : undefined,
+            categoryToUrl,
+            mediaToUrl,
         }),
         category: item.categories,
         guid: item.id,
@@ -181,8 +180,10 @@ async function handler(ctx) {
                 const data = detailResponse.data;
 
                 item.title = data.title ?? item.title;
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     data,
+                    categoryToUrl,
+                    mediaToUrl,
                 });
                 item.author = data.merchants ? data.merchants.map((a) => a.name).join('/') : undefined;
                 item.category = [...new Set([...item.category, ...data.categories])].filter(Boolean);

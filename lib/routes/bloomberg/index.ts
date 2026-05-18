@@ -41,8 +41,7 @@ export const route: Route = {
     },
     name: 'Bloomberg Site',
     maintainers: ['bigfei'],
-    description: `
-| Site ID      | Title        |
+    description: `| Site ID      | Title        |
 | ------------ | ------------ |
 | /            | News         |
 | bpol         | Politics     |
@@ -55,8 +54,7 @@ export const route: Route = {
 | bview        | Opinion      |
 | equality     | Equality     |
 | businessweek | Businessweek |
-| citylab      | CityLab      |
-  `,
+| citylab      | CityLab      |`,
     handler,
 };
 

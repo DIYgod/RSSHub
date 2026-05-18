@@ -1,11 +1,6 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 
-import loadArticle from './article';
-import { SUB_NAME_PREFIX, SUB_URL } from './const';
+import { getPosts, getTagInfo, SUB_URL } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -33,21 +28,14 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit'));
+    const limit = Number.parseInt(ctx.req.query('limit') ?? 10, 10);
     const tag = ctx.req.param('tag');
-    const url = `${SUB_URL}tag/${tag}/`;
-    const resp = await got(url);
-    const $ = load(resp.body);
-    const itemRaw = $('li.item').toArray();
+    const tagInfo = await getTagInfo(tag);
+    const items = await getPosts(limit, { tags: tagInfo.id });
 
     return {
-        title: `${SUB_NAME_PREFIX}-${$('span[property=name]:not(.hide)').text()}`,
-        link: url,
-        item: await Promise.all(
-            (limit ? itemRaw.slice(0, limit) : itemRaw).map((e) => {
-                const { href } = load(e)('h2 > a')[0].attribs;
-                return cache.tryGet(href, () => loadArticle(href));
-            })
-        ),
+        title: `${tagInfo.title}`,
+        link: `${SUB_URL}/tag/${tag}/`,
+        item: items,
     };
 }

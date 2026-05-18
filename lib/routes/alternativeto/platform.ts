@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
-import { baseURL, puppeteerGet } from './utils';
+import { baseURL, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/platform/:name/:routeParams?',
@@ -27,7 +27,7 @@ export const route: Route = {
     name: 'Platform Software',
     maintainers: ['JimenezLi'],
     handler,
-    description: `> routeParms can be copied from original site URL, example: \`/alternativeto/platform/firefox/license=free\``,
+    description: '> routeParms can be copied from original site URL, example: `/alternativeto/platform/firefox/license=free`',
 };
 
 async function handler(ctx) {
@@ -35,8 +35,8 @@ async function handler(ctx) {
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     const link = `https://alternativeto.net/platform/${name}/?${query.toString()}`;
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const html = await puppeteerGet(link, cache);
+    // use Playwright due to the obstacle by cloudflare challenge
+    const html = await playwrightGet(link, cache);
     const $ = load(html);
 
     return {

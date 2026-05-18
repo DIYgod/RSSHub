@@ -1,8 +1,8 @@
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-const puppeteerGet = async (url) => {
+const playwrightGet = async (url) => {
     let data;
-    const { destory } = await getPuppeteerPage(url, {
+    const { destroy } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.setRequestInterception(true);
             page.on('request', (request) => {
@@ -13,8 +13,8 @@ const puppeteerGet = async (url) => {
             });
         },
     });
-    await destory();
+    await destroy();
     return data;
 };
 
-export { puppeteerGet };
+export { playwrightGet };

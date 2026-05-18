@@ -4,7 +4,7 @@ import ofetch from '@/utils/ofetch';
 export const route: Route = {
     path: '/:site',
     categories: ['social-media'],
-    example: '/likeshop/bloombergpursuits',
+    example: '/likeshop/nytimes',
     parameters: { site: 'the site attached to likeshop.me/' },
     radar: [
         {
@@ -30,9 +30,9 @@ async function handler(ctx) {
     const link = `https://api.likeshop.me/api/accounts/${site}/galleries/likeshop`;
     const data = await ofetch(link);
     const items = data.data.media.map((item) => ({
-        title: item.comment,
+        title: item.title === '-' ? item.comment : item.title,
         link: item.product_url.split('?')[0],
-        description: `<p><img src="${item.image_url.split('?')[0]}"></p>`,
+        description: `<p><img src="${item.image_url.split('?')[0]}"></p>${item.comment ? `<p>${item.comment}</p>` : ''}`,
         guid: item.id,
     }));
     return {

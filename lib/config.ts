@@ -8,12 +8,13 @@ type ConfigEnvKeys =
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
     | 'NODE_NAME'
-    | 'PUPPETEER_REAL_BROWSER_SERVICE'
+    | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
     // Network
     | 'PORT'
     | 'LISTEN_INADDR_ANY'
+    | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
     | 'UA'
@@ -26,6 +27,8 @@ type ConfigEnvKeys =
     | 'CACHE_CONTENT_EXPIRE'
     | 'MEMORY_MAX'
     | 'REDIS_URL'
+    | 'CACHE_HTTP_URL'
+    | 'CACHE_HTTP_TOKEN'
     // Proxy
     | 'PROXY_URI'
     | 'PROXY_URIS'
@@ -48,6 +51,8 @@ type ConfigEnvKeys =
     | 'OTEL_SECONDS_BUCKET'
     | 'OTEL_MILLISECONDS_BUCKET'
     | 'SHOW_LOGGER_TIMESTAMP'
+    | 'HONEYBADGER_API_KEY'
+    | 'ERROR_TRACKING_ROUTE_TIMEOUT'
     | 'SENTRY'
     | 'SENTRY_ROUTE_TIMEOUT'
     | 'ENABLE_REMOTE_DEBUGGING'
@@ -102,6 +107,7 @@ type ConfigEnvKeys =
     | 'EH_STAR'
     | 'EH_IMG_PROXY'
     | `EMAIL_CONFIG_${string}`
+    | 'F95ZONE_COOKIE'
     | 'FANBOX_SESSION_ID'
     | 'FANFOU_CONSUMER_KEY'
     | 'FANFOU_CONSUMER_SECRET'
@@ -117,10 +123,9 @@ type ConfigEnvKeys =
     | 'GUOZAOKE_COOKIES'
     | 'HEFENG_KEY'
     | 'HEFENG_API_HOST'
+    | 'HUITUN_COOKIE'
     | 'INFZM_COOKIE'
-    | 'INITIUM_USERNAME'
-    | 'INITIUM_PASSWORD'
-    | 'INITIUM_BEARER_TOKEN'
+    | 'INITIUM_MEMBER_COOKIE'
     | 'IG_USERNAME'
     | 'IG_PASSWORD'
     | 'IG_PROXY'
@@ -131,7 +136,7 @@ type ConfigEnvKeys =
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
-    | 'SECURITY_KEY'
+    | 'LOCALS_SESSION'
     | 'LOFTER_COOKIE'
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
@@ -182,6 +187,7 @@ type ConfigEnvKeys =
     | 'SCIHUB_HOST'
     | 'SDO_FF14RISINGSTONES'
     | 'SDO_UA'
+    | 'SECURITY_KEY'
     | 'SIS001_BASE_URL'
     | 'SKEB_BEARER_TOKEN'
     | 'SORRYCC_COOKIES'
@@ -202,10 +208,14 @@ type ConfigEnvKeys =
     | 'TUMBLR_CLIENT_ID'
     | 'TUMBLR_CLIENT_SECRET'
     | 'TUMBLR_REFRESH_TOKEN'
-    | 'TWITTER_USERNAME'
-    | 'TWITTER_PASSWORD'
-    | 'TWITTER_AUTHENTICATION_SECRET'
-    | 'TWITTER_PHONE_OR_EMAIL'
+    | 'TWITTER_CONSUMER_KEY'
+    | 'TWITTER_CONSUMER_SECRET'
+    | 'TWITTER_ACCESS_TOKEN'
+    | 'TWITTER_ACCESS_SECRET'
+    // | 'TWITTER_USERNAME'
+    // | 'TWITTER_PASSWORD'
+    // | 'TWITTER_AUTHENTICATION_SECRET'
+    // | 'TWITTER_PHONE_OR_EMAIL'
     | 'TWITTER_AUTH_TOKEN'
     | 'TWITTER_THIRD_PARTY_API'
     | 'UESTC_BBS_COOKIE'
@@ -219,6 +229,7 @@ type ConfigEnvKeys =
     | 'XIAOYUZHOU_ID'
     | 'XIAOYUZHOU_TOKEN'
     | 'XIAOHONGSHU_COOKIE'
+    | 'XIAOHONGSHU_PROXY'
     | 'XIMALAYA_TOKEN'
     | 'XSIJISHE_COOKIE'
     | 'XSIJISHE_USER_AGENT'
@@ -229,6 +240,8 @@ type ConfigEnvKeys =
     | 'YOUTUBE_CLIENT_ID'
     | 'YOUTUBE_CLIENT_SECRET'
     | 'YOUTUBE_REFRESH_TOKEN'
+    | 'YOUTUBE_VIDEO_EMBED_URL'
+    | 'ZAIMANHUA_TOKEN'
     | 'ZHIHU_COOKIES'
     | 'ZODGAME_COOKIE'
     | 'ZSXQ_ACCESS_TOKEN'
@@ -246,17 +259,18 @@ export type Config = {
     enableCluster?: string;
     isPackage: boolean;
     nodeName?: string;
-    puppeteerRealBrowserService?: string;
-    puppeteerWSEndpoint?: string;
+    playwrightWSEndpoint?: string;
     chromiumExecutablePath?: string;
     // network
     connect: {
         port: number;
     };
     listenInaddrAny: boolean;
+    disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
     ua: string;
+    isDefaultUA: boolean;
     trueUA: string;
     allowOrigin?: string;
     // cache
@@ -271,6 +285,10 @@ export type Config = {
     };
     redis: {
         url: string;
+    };
+    httpCache: {
+        url?: string;
+        token?: string;
     };
     // proxy
     proxyUri?: string;
@@ -298,10 +316,13 @@ export type Config = {
         milliseconds_bucket?: string;
     };
     showLoggerTimestamp?: boolean;
+    honeybadger: {
+        apiKey?: string;
+    };
     sentry: {
         dsn?: string;
-        routeTimeout: number;
     };
+    errorTrackingRouteTimeout: number;
     enableRemoteDebugging?: boolean;
     // feed config
     hotlink: {
@@ -391,6 +412,9 @@ export type Config = {
     email: {
         config: Record<string, string | undefined>;
     };
+    f95zone: {
+        cookie?: string;
+    };
     fanbox: {
         session?: string;
     };
@@ -426,13 +450,14 @@ export type Config = {
         key?: string;
         apiHost?: string;
     };
+    huitun: {
+        cookie?: string;
+    };
     infzm: {
         cookie?: string;
     };
     initium: {
-        username?: string;
-        password?: string;
-        bearertoken?: string;
+        memberCookie?: string;
     };
     instagram: {
         username?: string;
@@ -458,6 +483,9 @@ export type Config = {
     };
     lightnovel: {
         cookie?: string;
+    };
+    locals: {
+        session?: string;
     };
     lofter: {
         cookies?: string;
@@ -608,10 +636,14 @@ export type Config = {
         refreshToken?: string;
     };
     twitter: {
-        username?: string[];
-        password?: string[];
-        authenticationSecret?: string[];
-        phoneOrEmail?: string[];
+        consumerKey?: string;
+        consumerSecret?: string;
+        accessToken?: string;
+        accessSecret?: string;
+        // username?: string[];
+        // password?: string[];
+        // authenticationSecret?: string[];
+        // phoneOrEmail?: string[];
         authToken?: string[];
         thirdPartyApi?: string;
     };
@@ -637,6 +669,7 @@ export type Config = {
     };
     xiaohongshu: {
         cookie?: string;
+        proxy?: string;
     };
     ximalaya: {
         token?: string;
@@ -657,6 +690,10 @@ export type Config = {
         clientId?: string;
         clientSecret?: string;
         refreshToken?: string;
+        videoEmbedUrl?: string;
+    };
+    zaimanhua: {
+        token?: string;
     };
     zhihu: {
         cookies?: string;
@@ -718,22 +755,23 @@ const calculateValue = () => {
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
-        puppeteerRealBrowserService: envs.PUPPETEER_REAL_BROWSER_SERVICE,
-        puppeteerWSEndpoint: envs.PUPPETEER_WS_ENDPOINT,
+        playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         chromiumExecutablePath: envs.CHROMIUM_EXECUTABLE_PATH,
         // network
         connect: {
             port: toInt(envs.PORT, 1200), // 监听端口
         },
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
+        disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
-        ua: envs.UA ?? (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
+        ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
+        isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,
         allowOrigin: envs.ALLOW_ORIGIN,
         // cache
         cache: {
-            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
+            type: envs.CACHE_TYPE || (envs.CACHE_TYPE === '' ? '' : 'memory'), // Cache type; supports 'memory', 'redis', and 'http'. Set to empty string to disable cache.
             requestTimeout: toInt(envs.CACHE_REQUEST_TIMEOUT, 60),
             routeExpire: toInt(envs.CACHE_EXPIRE, 5 * 60), // 路由缓存时间，单位为秒
             contentExpire: toInt(envs.CACHE_CONTENT_EXPIRE, 1 * 60 * 60), // 不变内容缓存时间，单位为秒
@@ -744,6 +782,10 @@ const calculateValue = () => {
         },
         redis: {
             url: envs.REDIS_URL || 'redis://localhost:6379/',
+        },
+        httpCache: {
+            url: envs.CACHE_HTTP_URL,
+            token: envs.CACHE_HTTP_TOKEN,
         },
         // proxy
         proxyUri: envs.PROXY_URI,
@@ -776,10 +818,13 @@ const calculateValue = () => {
             milliseconds_bucket: envs.OTEL_MILLISECONDS_BUCKET || '10,20,50,100,250,500,1000,5000,15000',
         },
         showLoggerTimestamp: toBoolean(envs.SHOW_LOGGER_TIMESTAMP, false),
+        honeybadger: {
+            apiKey: envs.HONEYBADGER_API_KEY,
+        },
         sentry: {
             dsn: envs.SENTRY,
-            routeTimeout: toInt(envs.SENTRY_ROUTE_TIMEOUT, 30000),
         },
+        errorTrackingRouteTimeout: toInt(envs.ERROR_TRACKING_ROUTE_TIMEOUT || envs.SENTRY_ROUTE_TIMEOUT, 30000),
         enableRemoteDebugging: toBoolean(envs.ENABLE_REMOTE_DEBUGGING, false),
         // feed config
         hotlink: {
@@ -869,6 +914,9 @@ const calculateValue = () => {
         email: {
             config: email_config,
         },
+        f95zone: {
+            cookie: envs.F95ZONE_COOKIE,
+        },
         fanbox: {
             session: envs.FANBOX_SESSION_ID,
         },
@@ -904,13 +952,14 @@ const calculateValue = () => {
             key: envs.HEFENG_KEY,
             apiHost: envs.HEFENG_API_HOST,
         },
+        huitun: {
+            cookie: envs.HUITUN_COOKIE,
+        },
         infzm: {
             cookie: envs.INFZM_COOKIE,
         },
         initium: {
-            username: envs.INITIUM_USERNAME,
-            password: envs.INITIUM_PASSWORD,
-            bearertoken: envs.INITIUM_BEARER_TOKEN,
+            memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {
             username: envs.IG_USERNAME,
@@ -936,6 +985,9 @@ const calculateValue = () => {
         },
         lightnovel: {
             cookie: envs.SECURITY_KEY,
+        },
+        locals: {
+            session: envs.LOCALS_SESSION,
         },
         lofter: {
             cookies: envs.LOFTER_COOKIE,
@@ -1086,10 +1138,14 @@ const calculateValue = () => {
             refreshToken: envs.TUMBLR_REFRESH_TOKEN,
         },
         twitter: {
-            username: envs.TWITTER_USERNAME?.split(','),
-            password: envs.TWITTER_PASSWORD?.split(','),
-            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
-            phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
+            consumerKey: envs.TWITTER_CONSUMER_KEY,
+            consumerSecret: envs.TWITTER_CONSUMER_SECRET,
+            accessToken: envs.TWITTER_ACCESS_TOKEN,
+            accessSecret: envs.TWITTER_ACCESS_SECRET,
+            // username: envs.TWITTER_USERNAME?.split(','),
+            // password: envs.TWITTER_PASSWORD?.split(','),
+            // authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET?.split(','),
+            // phoneOrEmail: envs.TWITTER_PHONE_OR_EMAIL?.split(','),
             authToken: envs.TWITTER_AUTH_TOKEN?.split(','),
             thirdPartyApi: envs.TWITTER_THIRD_PARTY_API,
         },
@@ -1115,6 +1171,7 @@ const calculateValue = () => {
         },
         xiaohongshu: {
             cookie: envs.XIAOHONGSHU_COOKIE,
+            proxy: envs.XIAOHONGSHU_PROXY,
         },
         ximalaya: {
             token: envs.XIMALAYA_TOKEN,
@@ -1135,6 +1192,10 @@ const calculateValue = () => {
             clientId: envs.YOUTUBE_CLIENT_ID,
             clientSecret: envs.YOUTUBE_CLIENT_SECRET,
             refreshToken: envs.YOUTUBE_REFRESH_TOKEN,
+            videoEmbedUrl: envs.YOUTUBE_VIDEO_EMBED_URL || 'https://www.youtube-nocookie.com/embed/',
+        },
+        zaimanhua: {
+            token: envs.ZAIMANHUA_TOKEN,
         },
         zhihu: {
             cookies: envs.ZHIHU_COOKIES,
@@ -1155,7 +1216,6 @@ const calculateValue = () => {
     }
 };
 calculateValue();
-
 (async () => {
     if (envs.REMOTE_CONFIG) {
         const { default: logger } = await import('@/utils/logger');

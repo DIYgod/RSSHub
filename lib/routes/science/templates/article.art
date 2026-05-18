@@ -1,2 +1,0 @@
-{{ if abs }}{{@ abs }}{{ /if }}
-{{ if content }}<br>{{@ content }}{{ /if }}

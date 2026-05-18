@@ -71,9 +71,9 @@ export const route: Route = {
     handler,
     description: `#### 关税文件发布
 
-| 政策发布 | 政策解读 |
-| ------------- | -------------- |
-| zhengcefabu   | zhengcejiedu   |`,
+| 政策发布    | 政策解读     |
+| ----------- | ------------ |
+| zhengcefabu | zhengcejiedu |`,
     radar: [
         {
             source: ['gss.mof.gov.cn/gzdt/:category/'],

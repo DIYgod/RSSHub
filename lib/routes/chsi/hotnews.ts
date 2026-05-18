@@ -41,7 +41,7 @@ async function handler() {
             let itemUrl = '';
             itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 let itemDate;
                 if (path) {
                     const result = await got(itemUrl);
@@ -67,7 +67,7 @@ async function handler() {
     );
 
     return {
-        title: `中国研究生招生信息网 - 热点`,
+        title: '中国研究生招生信息网 - 热点',
         link: host,
         description: '中国研究生招生信息网 - 热点',
         item: items,

@@ -34,7 +34,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const list = $(`#ReportIDname > a`).parent().parent().toArray();
+    const list = $('#ReportIDname > a').parent().parent().toArray();
 
     const process = await Promise.all(
         list.map(async (item) => {
@@ -49,7 +49,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(time), +8),
             };
             const other = await loadContent(String(itemUrl));
-            return Object.assign({}, single, other);
+            return { ...single, ...other };
         })
     );
     return {
@@ -125,11 +125,18 @@ export const route: Route = {
     features: {
         supportRadar: true,
     },
-    radar: Object.entries(typeDic).map(([type, value]) => ({
-        title: `${value.title}动态`,
-        source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/local/${type}`,
-    })),
+    radar: Object.entries(typeDic).flatMap(([type, value]) => [
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.edu.cn`],
+            target: `/local/${type}`,
+        },
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.cn`],
+            target: `/local/${type}`,
+        },
+    ]),
     handler,
     description: `|              | 考试项目                      | type     |
 | ------------ | ----------------------------- | -------- |

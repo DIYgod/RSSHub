@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -10,23 +8,22 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'thelatest' } = ctx.req.param();
     const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
 
-    const baseUrl: string = 'https://language.chinadaily.com.cn';
+    const baseUrl = 'https://language.chinadaily.com.cn';
     const targetUrl: string = new URL(category, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = $('html').attr('lang') ?? 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.gy_box, ul.content_list li')
+    let items: DataItem[] = $('div.gy_box, ul.content_list li')
         .slice(0, limit)
         .toArray()
         .map((el): Element => {
@@ -36,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title: string = $aEl.text();
             const image: string | undefined = $el.find('a.gy_box_img img, a.a_img img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -126,8 +123,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const description: string | undefined =
                         item.description +
-                        art(path.join(__dirname, 'templates/description.art'), {
-                            description: $$('div#Content').html(),
+                        renderDescription({
+                            description: $$('div#Content').html() ?? undefined,
                         });
 
                     processedItem = {
@@ -231,22 +228,21 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-| 分类                                                                         | ID                                                                                                    |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [精彩推荐](https://language.chinadaily.com.cn/thelatest)                     | [thelatest](https://rsshub.app/chinadaily/language/thelatest)                                         |
-| [每日一词](https://language.chinadaily.com.cn/news_hotwords/word_of_the_day) | [news_hotwords/word_of_the_day](https://rsshub.app/chinadaily/language/news_hotwords/word_of_the_day) |
-| [双语新闻](https://language.chinadaily.com.cn/news_bilingual)                | [news_bilingual](https://rsshub.app/chinadaily/language/news_bilingual)                               |
-| [新闻热词](https://language.chinadaily.com.cn/news_hotwords)                 | [news_hotwords](https://rsshub.app/chinadaily/language/news_hotwords)                                 |
-| [实用口语](https://language.chinadaily.com.cn/practice_tongue)               | [practice_tongue](https://rsshub.app/chinadaily/language/practice_tongue)                             |
-| [译词课堂](https://language.chinadaily.com.cn/trans_collect)                 | [trans_collect](https://rsshub.app/chinadaily/language/trans_collect)                                 |
-| [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news_photo](https://rsshub.app/chinadaily/language/news_photo)                                       |
-| [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video_links](https://rsshub.app/chinadaily/language/video_links)                                     |
-| [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio_cd](https://rsshub.app/chinadaily/language/audio_cd)                                           |
-| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio_cd](https://rsshub.app/chinadaily/language/columnist)                                          |
-| [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)           |
+| 分类                                                                         | ID                                                                                                        |
+| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [精彩推荐](https://language.chinadaily.com.cn/thelatest)                     | [thelatest](https://rsshub.app/chinadaily/language/thelatest)                                             |
+| [每日一词](https://language.chinadaily.com.cn/news_hotwords/word_of_the_day) | [news\\_hotwords/word\\_of\\_the\\_day](https://rsshub.app/chinadaily/language/news_hotwords/word_of_the_day) |
+| [双语新闻](https://language.chinadaily.com.cn/news_bilingual)                | [news\\_bilingual](https://rsshub.app/chinadaily/language/news_bilingual)                                  |
+| [新闻热词](https://language.chinadaily.com.cn/news_hotwords)                 | [news\\_hotwords](https://rsshub.app/chinadaily/language/news_hotwords)                                    |
+| [实用口语](https://language.chinadaily.com.cn/practice_tongue)               | [practice\\_tongue](https://rsshub.app/chinadaily/language/practice_tongue)                                |
+| [译词课堂](https://language.chinadaily.com.cn/trans_collect)                 | [trans\\_collect](https://rsshub.app/chinadaily/language/trans_collect)                                    |
+| [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news\\_photo](https://rsshub.app/chinadaily/language/news_photo)                                          |
+| [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video\\_links](https://rsshub.app/chinadaily/language/video_links)                                        |
+| [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio\\_cd](https://rsshub.app/chinadaily/language/audio_cd)                                              |
+| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio\\_cd](https://rsshub.app/chinadaily/language/columnist)                                             |
+| [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)               |
 
-</details>
-`,
+</details>`,
     categories: ['traditional-media'],
     features: {
         requireConfig: false,

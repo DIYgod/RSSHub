@@ -81,7 +81,7 @@ export const route: Route = {
     example: '/chinania/xiehuidongtai/xiehuitongzhi',
     parameters: { category: '分类，默认为 `xiehuidongtai/xiehuitongzhi`，即协会通知，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)，网址为 \`https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/\`。截取 \`https://www.chinania.org.cn/html\` 到末尾 \`/\` 的部分 \`xiehuidongtai/xiehuitongzhi\` 作为参数填入，此时路由为 [\`/chinania/xiehuidongtai/xiehuitongzhi\`](https://rsshub.app/chinania/xiehuidongtai/xiehuitongzhi)。
+若订阅 [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)，网址为 \`https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/\`。截取 \`https://www.chinania.org.cn/html\` 到末尾 \`/\` 的部分 \`xiehuidongtai/xiehuitongzhi\` 作为参数填入，此时路由为 [\`/chinania/xiehuidongtai/xiehuitongzhi\`](https://rsshub.app/chinania/xiehuidongtai/xiehuitongzhi)。
 :::
 
 <details>
@@ -89,7 +89,7 @@ export const route: Route = {
 
 #### [协会动态](https://www.chinania.org.cn/html/xiehuidongtai/)
 
-| [协会动态](https://www.chinania.org.cn/html/xiehuidongtai/xiehuidongtai/)              | [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)              | [有色企业50强](https://www.chinania.org.cn/html/xiehuidongtai/youseqiye50qiang/)             |
+| [协会动态](https://www.chinania.org.cn/html/xiehuidongtai/xiehuidongtai/)              | [协会通知](https://www.chinania.org.cn/html/xiehuidongtai/xiehuitongzhi/)              | [有色企业 50 强](https://www.chinania.org.cn/html/xiehuidongtai/youseqiye50qiang/)           |
 | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [xiehuidongtai/xiehuidongtai](https://rsshub.app/chinania/xiehuidongtai/xiehuidongtai) | [xiehuidongtai/xiehuitongzhi](https://rsshub.app/chinania/xiehuidongtai/xiehuitongzhi) | [xiehuidongtai/youseqiye50qiang](https://rsshub.app/chinania/xiehuidongtai/youseqiye50qiang) |
 
@@ -129,8 +129,7 @@ export const route: Route = {
 | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
 | [hyzl/huiyizhanlan](https://rsshub.app/chinania/hyzl/huiyizhanlan) | [hyzl/huizhanbaodao](https://rsshub.app/chinania/hyzl/huizhanbaodao) |
 
-</details>
-    `,
+</details>`,
     categories: ['new-media'],
 
     features: {

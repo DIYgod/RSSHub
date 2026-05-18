@@ -41,7 +41,7 @@ async function handler(ctx) {
             variables: {
                 handle,
             },
-            query: `
+            query: /* GraphQL */ `
                 query getProfile($id: ID, $handle: String) {
                     profile(id: $id, handle: $handle) {
                         status
@@ -85,7 +85,6 @@ async function handler(ctx) {
                         }
                     }
                 }
-
             `,
         },
     });
