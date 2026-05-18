@@ -272,8 +272,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       youtube-caption-extractor:
-        specifier: 1.10.1
-        version: 1.10.1
+        specifier: 1.10.2
+        version: 1.10.2
       youtubei.js:
         specifier: 17.0.1
         version: 17.0.1
@@ -6472,8 +6472,8 @@ packages:
   youch@4.1.0-beta.10:
     resolution: {integrity: sha512-rLfVLB4FgQneDr0dv1oddCVZmKjcJ6yX6mS4pU82Mq/Dt9a3cLZQ62pDBL4AUO+uVrCvtWz3ZFUL2HFAFJ/BXQ==}
 
-  youtube-caption-extractor@1.10.1:
-    resolution: {integrity: sha512-XTSTDrS3hd3VN65gLQBXnjgrQzl/qgLeylCZlocEnGwe9kS8iS7vEbrPJkkRa+c2XBpX2B2nbO/BRxDdVV6nqQ==}
+  youtube-caption-extractor@1.10.2:
+    resolution: {integrity: sha512-G/WSJStuTrWiqXZ5PpmMtS6LInCQueN/47lz5dNUnIPm7cRIX0RGI+fhkuNEipavQprQH6m2URBn5Xc0jhh1wA==}
     engines: {node: '>=18.0.0'}
 
   youtubei.js@17.0.1:
@@ -12462,7 +12462,7 @@ snapshots:
       cookie: 1.1.1
       youch-core: 0.3.3
 
-  youtube-caption-extractor@1.10.1:
+  youtube-caption-extractor@1.10.2:
     dependencies:
       he: 1.2.0
       striptags: 3.2.0
