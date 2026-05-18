@@ -54,25 +54,20 @@ function parseListing(html: string): ListItem[] {
         .filter((it) => it.link && it.title);
 }
 
-function extractDate(timeText: string): Date | undefined {
-    // Examples: 2026.05.15 12:00 / 2025.12.15（周一）13:30 / 2025-08-03 / 2026.04.22 10:00
-    const dateMatch = timeText.match(/(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/);
-    if (!dateMatch) {
+function publishDateFromImage(imageUrl: string): Date | undefined {
+    // Image path encodes upload date: /upload/image/YYYYMMDD/...
+    const m = imageUrl.match(/\/upload\/[^/]+\/(\d{4})(\d{2})(\d{2})\//);
+    if (!m) {
         return undefined;
     }
-    const [, y, m, d] = dateMatch;
-    const timeMatch = timeText.match(/(\d{1,2}):(\d{2})/);
-    const dateStr = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-    if (timeMatch) {
-        const [, hh, mm] = timeMatch;
-        return timezone(parseDate(`${dateStr} ${hh.padStart(2, '0')}:${mm}`, 'YYYY-MM-DD HH:mm'), +8);
-    }
-    return timezone(parseDate(dateStr, 'YYYY-MM-DD'), +8);
+    const [, y, mo, d] = m;
+    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), +8);
 }
 
 function renderDescription(item: ListItem, body?: string): string {
     return renderToString(
         <>
+            {item.timeText && <p>举办时间：{item.timeText}</p>}
             {item.location && <p>地点：{item.location}</p>}
             {item.topic && <p>主题：{item.topic}</p>}
             {body && (
@@ -88,7 +83,7 @@ function renderDescription(item: ListItem, body?: string): string {
 function enrichItem(item: ListItem): Promise<DataItem> {
     return cache.tryGet(item.link, async () => {
         let body: string | undefined;
-        let pubDate = extractDate(item.timeText);
+        let pubDate = publishDateFromImage(item.image);
 
         try {
             const response = await got(item.link);
