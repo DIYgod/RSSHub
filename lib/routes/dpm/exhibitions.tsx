@@ -19,7 +19,7 @@ const TYPE_MAP = {
 export const route: Route = {
     path: '/exhibitions/:type?',
     categories: ['travel'],
-    example: '/dpm/exhibitions/special_exhibitions',
+    example: '/dpm/exhibitions/temporary_exhibitions',
     parameters: {
         type: 'Exhibition type, supported values: temporary_exhibitions（特展）、galleries（专馆）、longterm_exhibitions（常设展览）、period_halls（原状陈列）. Default: Current Exhibitions.',
     },
