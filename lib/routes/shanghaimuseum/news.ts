@@ -18,7 +18,7 @@ export const route = {
         },
     ],
     handler: async (ctx) => {
-        const type = ctx.req.param('type') || 'all';
+        const type = ctx.req.param('type')?.toLowerCase() || 'all';
 
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/infomation/search-info`;
