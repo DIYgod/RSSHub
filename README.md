@@ -69,6 +69,9 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 2026 年 5 月 18 日更新以下 routes：
 
 - `lib/routes/163/domestic.ts`
+- `lib/routes/aljazeera/index.tsx`
+- `lib/routes/aljazeera/middle-east.ts`
+- `lib/routes/bloomberg/index.ts`
 - `lib/routes/foreignpolicy/`
 - `lib/routes/fastbull/center_bank.ts`
 - `lib/routes/fastbull/crypto.ts`
@@ -81,6 +84,7 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 - `lib/routes/qq/world.ts`
 - `lib/routes/sina/china.ts`
 - `lib/routes/sina/world.ts`
+- `lib/routes/techcrunch/latest.ts`
 - `lib/routes/technologyreview/`
 - `lib/routes/thediplomat/`
 - `lib/routes/xinhua/`
@@ -91,5 +95,22 @@ FastBull 自定义快讯参数记录：
 - `lib/routes/fastbull/crypto.ts`：加密货币，`checkImportant=1`，只看重要。
 - `lib/routes/fastbull/stock.ts`：股票，`checkImportant=1`，只看重要。
 - `lib/routes/fastbull/trump.ts`：特朗普动态，`checkImportant=0`，不过滤重要性。
+
+常用自定义订阅链接记录：
+
+| 名称 | 订阅链接 | 对应 route |
+| --- | --- | --- |
+| The Github Blog | `https://rss.cnnewsnow.com/github/blog` | `lib/routes/github/blog.ts` |
+| The WSJ - Tech | `https://rss.cnnewsnow.com/technologyreview` | `lib/routes/technologyreview/` |
+| Bloomberg Markets | `https://rss.cnnewsnow.com/bloomberg/markets` | `lib/routes/bloomberg/index.ts` |
+| 腾讯财经新闻 | `https://rss.cnnewsnow.com/qq/finance` | `lib/routes/qq/finance.ts` |
+| 新浪国内新闻 | `https://rss.cnnewsnow.com/sina/china` | `lib/routes/sina/china.ts` |
+| Al Jazeera | `https://rss.cnnewsnow.com/aljazeera/middle-east` | `lib/routes/aljazeera/middle-east.ts` |
+| Foreign Policy | `https://rss.cnnewsnow.com/foreignpolicy` | `lib/routes/foreignpolicy/` |
+| The Diplomat | `https://rss.cnnewsnow.com/thediplomat` | `lib/routes/thediplomat/` |
+| 新华网英文 | `http://rss.cnnewsnow.com/xinhua/world` | `lib/routes/xinhua/` |
+| 腾讯国际新闻 | `https://rss.cnnewsnow.com/qq/world` | `lib/routes/qq/world.ts` |
+| 新浪国际新闻 | `https://rss.cnnewsnow.com/sina/world` | `lib/routes/sina/world.ts` |
+| TechCrunch Latest | `https://rss.cnnewsnow.com/techcrunch/latest` | `lib/routes/techcrunch/latest.ts` |
 
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
