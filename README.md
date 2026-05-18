@@ -64,4 +64,21 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [AGPL-3.0](./LICENSE) License.<br>
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
+## 个人自定义 Routes 记录
+
+2026 年 5 月 18 日更新以下 routes：
+
+- `lib/routes/163/domestic.ts`
+- `lib/routes/foreignpolicy/`
+- `lib/routes/github/blog.ts`
+- `lib/routes/github/latest.ts`
+- `lib/routes/qq/finance.ts`
+- `lib/routes/qq/health.ts`
+- `lib/routes/qq/world.ts`
+- `lib/routes/sina/china.ts`
+- `lib/routes/sina/world.ts`
+- `lib/routes/technologyreview/`
+- `lib/routes/thediplomat/`
+- `lib/routes/xinhua/`
+
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
