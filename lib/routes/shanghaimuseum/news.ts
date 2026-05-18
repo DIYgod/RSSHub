@@ -13,8 +13,8 @@ export const route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.shanghaimuseum.net/mu/frontend/pg/infomation/news?type=all'],
-            target: '/information/news',
+            source: ['www.shanghaimuseum.net/mu/frontend/pg/infomation/news'],
+            target: '/information/news/:type?',
         },
     ],
     handler: async (ctx) => {
