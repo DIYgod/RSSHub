@@ -27,11 +27,9 @@ function extractSection($: CheerioAPI, sectionName: string): string[] {
         return [];
     }
 
-    return ol
-        .find('> li')
-        .map((_, liEl) => $(liEl).text().trim().replaceAll(/\s+/g, ' '))
-        .filter((_, text) => text)
-        .toArray();
+    return ol.find('> li').toArray().map((liEl) =>
+        $(liEl as any).text().trim().replaceAll(/\s+/g, ' ')
+    ).filter((text) => text);
 }
 
 export const route: Route = {
@@ -54,10 +52,9 @@ export const route: Route = {
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
 
-        const paths = $('a[href^="/docs/20"]')
-            .map((_, el) => $(el).attr('href') || '')
-            .filter((_, href) => /^\/docs\/\d{4}-\d{2}\/\d{4}-\d{2}-\d{2}\/$/.test(href))
-            .toArray()
+        const paths = $('a[href^="/docs/20"]').toArray()
+            .map((el) => $(el as any).attr('href') || '')
+            .filter((href) => /^\/docs\/\d{4}-\d{2}\/\d{4}-\d{2}-\d{2}\/$/.test(href))
             .toSorted((a, b) => b.localeCompare(a));
         const latestPath = paths[0];
         if (!latestPath) {
