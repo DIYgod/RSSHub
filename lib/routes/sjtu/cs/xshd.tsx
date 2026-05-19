@@ -33,7 +33,7 @@ function parseListing(html: string): ListItem[] {
         .map((el) => {
             const $el = $(el);
             const link = absolutize($el.find('> a').attr('href'));
-            const title = $el.find('.txt .tit').text().trim();
+            const title = $el.find('.txt .tit').text();
             const image = absolutize($el.find('.imgk img').attr('src'));
             const adRows = $el
                 .find('.txt .ad p')
