@@ -13,7 +13,7 @@ jobs:
             contents: read
         steps:
             - name: Delete old container versions (30+ days)
-              uses: dataaxiom/ghcr-cleanup-action@cd0cdb900b5dbf3a6f2cc869f0dbb0b8211f50c4 # v1.0.16
+              uses: dataaxiom/ghcr-cleanup-action@34a2b6c814b9c6bcb92f78cba3e56a7ab9ca7a86 # v1.1.0
               with:
                   dry-run: false
                   token: ${{ secrets.GITHUB_TOKEN }}
