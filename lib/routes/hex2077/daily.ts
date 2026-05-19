@@ -1,7 +1,7 @@
-import { load, type CheerioAPI } from 'cheerio';
 import type { Route, DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import { load, type CheerioAPI } from 'cheerio';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const BASE = 'https://hex2077.dev';
 
@@ -29,7 +29,7 @@ function extractSection($: CheerioAPI, sectionName: string): string[] {
 
     return ol.find('> li').toArray().map((liEl) =>
         $(liEl as any).text().trim().replaceAll(/\s+/g, ' ')
-    ).filter((text) => text);
+    ).filter(Boolean);
 }
 
 export const route: Route = {
