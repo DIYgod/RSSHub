@@ -1,5 +1,4 @@
-import { load } from 'cheerio';
-import type { CheerioAPI } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import type { Route, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -28,14 +27,11 @@ function extractSection($: CheerioAPI, sectionName: string): string[] {
         return [];
     }
 
-    const items: string[] = [];
-    ol.find('> li').each((_, liEl) => {
-        const text = $(liEl).text().trim().replace(/\s+/g, ' ');
-        if (text) {
-            items.push(text);
-        }
-    });
-    return items;
+    return ol
+        .find('> li')
+        .map((_, liEl) => $(liEl).text().trim().replaceAll(/\s+/g, ' '))
+        .filter((_, text) => text)
+        .get();
 }
 
 export const route: Route = {
@@ -52,9 +48,9 @@ export const route: Route = {
     },
     handler: async (ctx) => {
         const sectionParam = ctx.req.param('section');
-        const sectionIndex = sectionParam ? parseInt(sectionParam, 10) - 1 : -1;
+        const sectionIndex = sectionParam ? Number.parseInt(sectionParam, 10) - 1 : -1;
 
-        // ── Step 1: 从 listing 页获取最新文章 ─────────────────
+        // Step 1: fetch listing page
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
 
@@ -71,28 +67,24 @@ export const route: Route = {
         const dateLabel = latestPath.match(/\d{4}-\d{2}-\d{2}/)?.[0] || '';
         const articleUrl = BASE + latestPath;
 
-        // ── Step 2: 抓取详情页 ─────────────────────────────
+        // Step 2: fetch article page
         const detailHtml = await ofetch<string>(articleUrl);
         const $d = load(detailHtml);
 
-        // ── Step 3: 解析并组装 RSS item ────────────────────
-        const items: DataItem[] = [];
-
+        // Step 3: build RSS items
         if (sectionIndex >= 0 && sectionIndex < SECTION_IDS.length) {
-            // 单栏目模式
+            // Single section mode
             const sectionName = SECTION_IDS[sectionIndex];
             const sectionDisplay = SECTION_NAMES[sectionIndex];
             const sectionItems = extractSection($d, sectionName);
 
-            for (const [i, text] of sectionItems.entries()) {
-                items.push({
-                    title: text,
-                    description: text,
-                    link: articleUrl,
-                    guid: `${latestPath}${sectionName}-${i}`,
-                    pubDate: parseDate(dateLabel),
-                });
-            }
+            const items: DataItem[] = sectionItems.map((text, i) => ({
+                title: text,
+                description: text,
+                link: articleUrl,
+                guid: `${latestPath}${sectionName}-${i}`,
+                pubDate: parseDate(dateLabel),
+            }));
 
             return {
                 title: `hex2077 AI日报 · ${sectionDisplay} (${dateLabel})`,
@@ -102,11 +94,11 @@ export const route: Route = {
                 item: items,
             };
         } else {
-            // 全文模式：遍历所有栏目
-            const allItems = SECTION_IDS.flatMap((sectionName, si) => {
+            // Full-text mode: all sections
+            const allItems: DataItem[] = SECTION_IDS.flatMap((sectionName, si) => {
                 const sectionDisplay = SECTION_NAMES[si];
                 return extractSection($d, sectionName).map((text, i) => ({
-                    title: `[${sectionDisplay}] ${text}` as const,
+                    title: `[${sectionDisplay}] ${text}`,
                     description: text,
                     link: articleUrl,
                     guid: `${latestPath}${sectionName}-${i}`,
