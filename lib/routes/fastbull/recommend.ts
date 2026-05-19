@@ -6,13 +6,13 @@ import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'https://www.fastbull.com';
 const currentUrl = `${rootUrl}/cn/express-news`;
 const apiUrl = 'https://api.fastbull.com/fastbull-news-service/api/getNewsPageByTagIds';
-const centerBankTagIds = '121,132,100,123,124,114,115,126,116,118,120';
+const recommendTagIds = '152,110,132,176,111,133,112,134,135,136,114,115,116,117,118,94,97,120,143,121,122,123,124,125,126,105,127,108,109';
 
 export const route: Route = {
-    path: '/center_bank',
+    path: '/recommend',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/fastbull/center_bank',
+    example: '/fastbull/recommend',
     parameters: {},
     features: {
         requireConfig: false,
@@ -25,10 +25,10 @@ export const route: Route = {
     radar: [
         {
             source: ['fastbull.com/cn/express-news', 'fastbull.com/express-news'],
-            target: '/fastbull/center_bank',
+            target: '/fastbull/recommend',
         },
     ],
-    name: '央行重要快讯',
+    name: '\u63a8\u8350\u5feb\u8baf',
     maintainers: ['maxlixiang'],
     handler,
     url: 'fastbull.com/cn/express-news',
@@ -58,12 +58,12 @@ type FastBullNews = {
 
 async function handler(ctx) {
     const limit = getLimit(ctx);
-    const body = await getFastBullBody(centerBankTagIds, '0', limit);
+    const body = await getFastBullBody(recommendTagIds, '0', limit);
 
     return {
-        title: 'FastBull 央行快讯',
+        title: 'FastBull \u63a8\u8350\u5feb\u8baf',
         link: currentUrl,
-        description: 'FastBull 快讯 - 央行 - 全部',
+        description: 'FastBull \u5feb\u8baf - \u63a8\u8350 - \u5168\u90e8',
         item: buildItems(body),
     };
 }

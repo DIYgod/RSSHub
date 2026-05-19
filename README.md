@@ -75,6 +75,7 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 - `lib/routes/foreignpolicy/`
 - `lib/routes/fastbull/center_bank.ts`
 - `lib/routes/fastbull/crypto.ts`
+- `lib/routes/fastbull/recommend.ts`
 - `lib/routes/fastbull/stock.ts`
 - `lib/routes/fastbull/trump.ts`
 - `lib/routes/github/blog.ts`
@@ -96,9 +97,10 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 
 FastBull 自定义快讯参数记录：
 
-- `lib/routes/fastbull/center_bank.ts`：央行，`checkImportant=1`，只看重要。
-- `lib/routes/fastbull/crypto.ts`：加密货币，`checkImportant=1`，只看重要。
-- `lib/routes/fastbull/stock.ts`：股票，`checkImportant=1`，只看重要。
+- `lib/routes/fastbull/center_bank.ts`：央行，`checkImportant=0`，全部。
+- `lib/routes/fastbull/crypto.ts`：加密货币，`checkImportant=0`，全部。
+- `lib/routes/fastbull/recommend.ts`：推荐，`checkImportant=0`，全部。
+- `lib/routes/fastbull/stock.ts`：股票，`checkImportant=0`，全部。
 - `lib/routes/fastbull/trump.ts`：特朗普动态，`checkImportant=0`，不过滤重要性。
 
 常用自定义订阅链接记录：

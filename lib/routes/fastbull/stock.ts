@@ -64,7 +64,7 @@ async function handler(ctx) {
         method: 'get',
         url: apiUrl,
         searchParams: {
-            checkImportant: '1',
+            checkImportant: '0',
             pageSize: String(limit),
             timestamp: '',
             includeCalendar: '1',
@@ -103,9 +103,9 @@ async function handler(ctx) {
         });
 
     return {
-        title: 'FastBull 股票重要快讯',
+        title: 'FastBull 股票快讯',
         link: currentUrl,
-        description: 'FastBull 快讯 - 股票 - 只看重要',
+        description: 'FastBull 快讯 - 股票 - 全部',
         item: items,
     };
 }

@@ -58,12 +58,12 @@ type FastBullNews = {
 
 async function handler(ctx) {
     const limit = getLimit(ctx);
-    const body = await getFastBullBody(cryptoTagIds, '1', limit);
+    const body = await getFastBullBody(cryptoTagIds, '0', limit);
 
     return {
-        title: 'FastBull 加密货币重要快讯',
+        title: 'FastBull 加密货币快讯',
         link: currentUrl,
-        description: 'FastBull 快讯 - 加密货币 - 只看重要',
+        description: 'FastBull 快讯 - 加密货币 - 全部',
         item: buildItems(body),
     };
 }
