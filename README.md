@@ -92,6 +92,7 @@ Authored and maintained by DIYgod with help from contributors ([list](https://gi
 2026 年 5 月 19 日更新以下 routes：
 
 - `lib/routes/kaopu/latest.ts`
+- `lib/routes/wallstreetcn/ai.ts`
 
 FastBull 自定义快讯参数记录：
 
@@ -117,5 +118,6 @@ FastBull 自定义快讯参数记录：
 | 新浪国际新闻 | `https://rss.cnnewsnow.com/sina/world` | `lib/routes/sina/world.ts` |
 | TechCrunch Latest | `https://rss.cnnewsnow.com/techcrunch/latest` | `lib/routes/techcrunch/latest.ts` |
 | 靠谱新闻最新 | `https://rss.cnnewsnow.com/kaopu/latest` | `lib/routes/kaopu/latest.ts` |
+| 华尔街见闻 AI | `https://rss.cnnewsnow.com/wallstreetcn/ai` | `lib/routes/wallstreetcn/ai.ts` |
 
 > Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · X (Twitter) [@DIYgod](https://x.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
