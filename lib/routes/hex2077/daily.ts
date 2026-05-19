@@ -1,7 +1,7 @@
 import { load, type CheerioAPI } from 'cheerio';
 import type { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
 
 const BASE = 'https://hex2077.dev';
 
@@ -31,7 +31,7 @@ function extractSection($: CheerioAPI, sectionName: string): string[] {
         .find('> li')
         .map((_, liEl) => $(liEl).text().trim().replaceAll(/\s+/g, ' '))
         .filter((_, text) => text)
-        .get();
+        .toArray();
 }
 
 export const route: Route = {
@@ -57,8 +57,8 @@ export const route: Route = {
         const paths = $('a[href^="/docs/20"]')
             .map((_, el) => $(el).attr('href') || '')
             .filter((_, href) => /^\/docs\/\d{4}-\d{2}\/\d{4}-\d{2}-\d{2}\/$/.test(href))
-            .get()
-            .sort((a, b) => b.localeCompare(a));
+            .toArray()
+            .toSorted((a, b) => b.localeCompare(a));
         const latestPath = paths[0];
         if (!latestPath) {
             throw new Error('未找到日报文章');
