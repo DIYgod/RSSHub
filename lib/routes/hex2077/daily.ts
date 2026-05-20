@@ -1,4 +1,5 @@
-import { load, type CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import type { Route, DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -32,7 +33,7 @@ export const route: Route = {
     path: '/daily',
     example: '/hex2077/daily',
     maintainers: ['fc525260'],
-    handler: async (ctx) => {
+    handler: async (_ctx) => {
         // Step 1: fetch listing page
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
@@ -54,8 +55,8 @@ export const route: Route = {
         const detailHtml = await ofetch<string>(articleUrl);
         const $d = load(detailHtml);
 
-        // Step 3: build RSS items - all sections combined
-        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay, si) => {
+        // Step 3: build RSS items from all sections
+        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay, _si) => {
             const sectionItems = extractSection($d, sectionDisplay);
             return sectionItems.map((text, i) => ({
                 title: `[${sectionDisplay}] ${text}`,
