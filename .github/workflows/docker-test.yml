@@ -55,12 +55,16 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
-                  actions: 'add-labels'
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ github.event.pull_request.number }}
-                  labels: 'auto: DO NOT merge'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ github.event.pull_request.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
 
             - name: Test Docker image
               run: bash scripts/docker/test-docker.sh
