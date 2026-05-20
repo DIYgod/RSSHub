@@ -12,7 +12,6 @@
     },
     "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
     "jsPlugins": [
-        { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
         { "name": "n", "specifier": "eslint-plugin-n" },
         { "name": "unicorn-js", "specifier": "eslint-plugin-unicorn" },
         "@stylistic/eslint-plugin",
@@ -533,7 +532,7 @@
         "simple-import-sort/exports": "error",
 
         "import-x/first": "error",
-        "import-x-js/newline-after-import": "error", // use jsPlugins
+        "import-x/newline-after-import": "error",
         "no-duplicate-imports": "off",
         "import-x/no-duplicates": "error",
 
