@@ -89,88 +89,76 @@ const parseExhibitionDuration = (duration: string) => {
     };
 };
 
-// to identify the route config and titletag based on type and subtype, and also to clean the input for better matching, this function is used in both route handler and radar to ensure consistency
+// to identify the route config and titletag based on type and subtype, this function is used in both route handler and radar to ensure consistency
 const resolveRouteConfig = (type: string | undefined, subType: string | undefined, baseUrl: string) => {
     let url = `${baseUrl}/zl/`;
     let cleanType = '';
 
     if (type) {
-        const firstLevel = type.toLowerCase().trim();
         if (subType) {
-            cleanType = `${firstLevel}/${subType.toLowerCase().trim()}`;
+            cleanType = `${type}/${subType}`;
             url = `${baseUrl}/zl/${cleanType}/`;
-        } else if (firstLevel === 'lszl') {
+        } else if (type === 'lszl') {
             url = `${baseUrl}/zl/lszl/`;
             cleanType = 'lszl';
         } else {
-            cleanType = firstLevel;
+            cleanType = type;
             url = `${baseUrl}/zl/${cleanType}/`;
         }
     }
-    return { cleanType, url, titleTag: titleTagMap[cleanType] || cleanType || '展览' };
+    return {
+        cleanType,
+        url,
+        titleTag: titleTagMap[cleanType] || '展览',
+    };
 };
 
 // to concurrent or single-page retrieval according to titletag
 const fetchTargetElements = async (cleanType: string, subType: string | undefined, url: string, baseUrl: string) => {
-    const items: Array<{ element: any; contextUrl: string }> = [];
+    const items: Array<{ $item: any; contextUrl: string }> = [];
+    // Use a Set to track visited links and filter out duplicate HTML elements directly at the source
+    // (e.g., when the same exhibition appears in both the main list and a specific sub-category list).
+    const seenLinks = new Set<string>();
+
+    const extractItems = (html: string, contextUrl: string) => {
+        const $ = load(html);
+        const pageElements = $('ul[id="div"] a.recurl, ul.cj_hb_list a.recurl').toArray();
+        for (const el of pageElements) {
+            const $item = $(el).closest('li');
+            if ($item.length > 0) {
+                const href = $(el).attr('href') || '';
+                if (href && !seenLinks.has(href)) {
+                    seenLinks.add(href);
+                    items.push({ $item, contextUrl });
+                }
+            }
+        }
+    };
+
     if (cleanType === 'lszl' && !subType) {
         const subKeys = Object.keys(titleTagMap).filter((key) => key.startsWith('lszl/'));
         const pagesData = await Promise.all(
             subKeys.map(async (subKey) => {
-                try {
-                    const targetSubUrl = `${baseUrl}/zl/${subKey}/`;
-                    const res = await got(targetSubUrl);
-                    return { html: res.data, targetSubUrl };
-                } catch {
-                    return null;
-                }
+                const targetSubUrl = `${baseUrl}/zl/${subKey}/`;
+                const res = await got(targetSubUrl);
+                return { html: res.data, targetSubUrl };
             })
         );
-        const seenLinks = new Set<string>();
         for (const page of pagesData) {
-            if (!page) {
-                continue;
-            }
-            const pageElements = load(page.html)('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
-            for (const el of pageElements) {
-                const href = load(el)('a.recurl').attr('href') || '';
-                if (href && !seenLinks.has(href)) {
-                    seenLinks.add(href);
-                    items.push({ element: el, contextUrl: page.targetSubUrl });
-                }
-            }
+            extractItems(page.html, page.targetSubUrl);
         }
     } else {
         const response = await got(url);
-        const pageElements = load(response.data)('ul#div li, ul.cj_hb_list li, li:has(a.recurl)').toArray();
-        for (const el of pageElements) {
-            items.push({ element: el, contextUrl: url });
-        }
+        extractItems(response.data, url);
     }
     return items;
 };
 
 // create itemLink
-const buildItemLink = (rawLink: string, contextUrl: string, baseUrl: string) => (rawLink && (rawLink.startsWith('.') || rawLink.startsWith('/')) ? new URL(rawLink, contextUrl).href : rawLink ? `${baseUrl}${rawLink}` : baseUrl);
+const buildItemLink = (rawLink: string, contextUrl: string, baseUrl: string) => (rawLink ? new URL(rawLink, contextUrl).href : baseUrl);
 
 // create exhibitionLink
-const buildExhibitionLink = (rawZtzl: string, itemLink: string, baseUrl: string) =>
-    rawZtzl && rawZtzl !== '#' && rawZtzl !== 'undefined' ? (rawZtzl.startsWith('http') ? rawZtzl : `${baseUrl}${rawZtzl.startsWith('/') ? '' : '/'}${rawZtzl}`) : itemLink;
-
-// create imgUrl
-const buildImgUrl = (rawSrc: string, contextUrl: string) => (rawSrc && (rawSrc.startsWith('.') || rawSrc.startsWith('/')) ? new URL(rawSrc, contextUrl).href : rawSrc.startsWith('http') ? rawSrc : '');
-
-// fetch full duration and check if with '...'
-const fetchFullDuration = async (itemLink: string, duration: string): Promise<string> => {
-    if (!duration.endsWith('...')) {
-        return duration;
-    }
-    return (await cache.tryGet(itemLink, async () => {
-        const detailResponse = await got(itemLink);
-        const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
-        return match && match[1] ? match[1] : duration;
-    })) as string;
-};
+const buildExhibitionLink = (rawZtzl: string, itemLink: string, baseUrl: string) => (rawZtzl ? new URL(rawZtzl, baseUrl).href : itemLink);
 
 export const route: Route = {
     path: '/zl/:type?/:subType?',
@@ -191,8 +179,8 @@ export const route: Route = {
         },
     ],
     handler: async (ctx: Context): Promise<Data> => {
-        const type = ctx.req.param('type');
-        const subType = ctx.req.param('subType');
+        const type = ctx.req.param('type')?.toLowerCase().trim();
+        const subType = ctx.req.param('subType')?.toLowerCase().trim();
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.chnmuseum.cn';
 
@@ -201,8 +189,7 @@ export const route: Route = {
 
         const list = (
             await Promise.all(
-                itemsToParse.map(async ({ element, contextUrl }) => {
-                    const $item = load(element).root();
+                itemsToParse.map(({ $item, contextUrl }) => {
                     const aTag = $item.find('a.recurl');
 
                     if (!aTag.length) {
@@ -212,83 +199,92 @@ export const route: Route = {
                     const rawLink = aTag.attr('href') || '';
                     const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
 
-                    // for detailed exhibition page if available, different from base exhibition page.
-                    const rawZtzl = aTag.attr('ztzlurl') ? aTag.attr('ztzlurl')!.trim() : '';
-                    const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
+                    return cache.tryGet(itemLink, async () => {
+                        // for detailed exhibition page if available, different from base exhibition page.
+                        const rawZtzl = aTag.attr('ztzlurl') ? aTag.attr('ztzlurl')!.trim() : '';
+                        const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
 
-                    // title may not have full display on the page, use the img alt information instead
-                    const imgTag = $item.find('img').first();
-                    const rawAltTitle = imgTag.attr('alt');
-                    const title = rawAltTitle || $item.find('div.cj_zxx3 p').text() || 'Title N/A';
+                        // title may not have full display on the page, use the img alt information instead
+                        const imgTag = $item.find('img');
+                        const title = imgTag.attr('alt')?.trim() || '';
 
-                    // if img alt is not available, use zxxx3 instead
-                    const rawSrc = imgTag.attr('src') || '';
-                    const imgUrl = buildImgUrl(rawSrc, contextUrl);
+                        const rawSrc = imgTag.attr('src')!;
+                        const imgUrl = new URL(rawSrc, contextUrl).href;
 
-                    const location = $item.find('div.cj_zxx1').text().trim();
+                        const location = $item.find('div.cj_zxx1').text().trim();
 
-                    const initialDuration = $item.find('div.cj_zxx2 p').text().trim();
-                    const fullDuration = await fetchFullDuration(itemLink, initialDuration);
+                        let fullDuration = $item.find('div.cj_zxx2 p').text().trim();
 
-                    const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                        if (fullDuration.endsWith('...')) {
+                            const detailResponse = await got(itemLink);
+                            const match = detailResponse.data.match(/var\s+qtxszq\s*=\s*"(.*?)";/);
+                            if (match && match[1]) {
+                                fullDuration = match[1];
+                            }
+                        }
 
-                    // CHN museum didnot have pubDate on the page, use exhibition startDate instead.
-                    // Variable Handling: If the value is `undefined`, it remains `undefined` to facilitate subsequent processing by the Calendar component.
-                    const pubDate = startDate ? parseDate(startDate) : undefined;
+                        const { startDate, endDate } = parseExhibitionDuration(fullDuration);
 
-                    const description = renderToString(
-                        <div>
-                            {imgUrl && (
-                                <>
-                                    <img src={imgUrl} />
-                                    <br />
-                                </>
-                            )}
-                            <p>
-                                <b>地点：</b>
-                                {location}
-                            </p>
-                            <p>
-                                <b>开展：</b>
-                                {startDate ?? '未定/常设'}
-                            </p>
-                            <p>
-                                <b>闭展：</b>
-                                {endDate ?? '未定/常设'}
-                            </p>
+                        // CHN museum didnot have pubDate on the page, use exhibition startDate instead.
+                        // Variable Handling: If the value is `undefined`, it remains `undefined` to facilitate subsequent processing by the Calendar component.
+                        const pubDate = startDate ? parseDate(startDate) : undefined;
 
-                            {fullDuration && (
+                        const description = renderToString(
+                            <div>
+                                {imgUrl && (
+                                    <>
+                                        <img src={imgUrl} />
+                                        <br />
+                                    </>
+                                )}
                                 <p>
-                                    <small>
-                                        原始展期：
-                                        {fullDuration.split('\n').map((line, i) => (
-                                            <span key={i}>
-                                                {line}
-                                                <br />
-                                            </span>
-                                        ))}
-                                    </small>
+                                    <b>地点：</b>
+                                    {location}
                                 </p>
-                            )}
-                        </div>
-                    );
+                                <p>
+                                    <b>开展：</b>
+                                    {startDate ?? '未定/常设'}
+                                </p>
+                                <p>
+                                    <b>闭展：</b>
+                                    {endDate ?? '未定/常设'}
+                                </p>
 
-                    return {
-                        title,
-                        link: exhibitionLink,
-                        guid: itemLink, // use href for guid to ensure uniqueness, as title may have duplicates and no pubDate provided by source
-                        pubDate,
-                        description,
-                        // For further .ics file processing
-                        _extra: {
-                            museumName,
+                                {fullDuration && (
+                                    <p>
+                                        <small>
+                                            原始展期：
+                                            {fullDuration.split('\n').map((line, i) => (
+                                                <span key={i}>
+                                                    {line}
+                                                    <br />
+                                                </span>
+                                            ))}
+                                        </small>
+                                    </p>
+                                )}
+                            </div>
+                        );
+
+                        return {
                             title,
-                            location,
-                            startDate, // format: YYYY-MM-DD or '未定/常设'
-                            endDate, // format: YYYY-MM-DD or '未定/常设'
-                            itemLink,
-                        },
-                    } as DataItem;
+                            link: exhibitionLink,
+                            // Force the guid to be the unique absolute path (itemLink) instead of relying on title hash.
+                            // This ensures uniqueness and prevents RSS readers from misjudging or duplicating items, as titles may repeat and exact pubDates are not provided.
+                            guid: itemLink,
+                            pubDate,
+                            description,
+                            // For further .ics file processing
+                            _extra: {
+                                museumName,
+                                title,
+                                location,
+                                startDate, // format: YYYY-MM-DD or '未定/常设'
+                                endDate, // format: YYYY-MM-DD or '未定/常设'
+                                itemLink,
+                            },
+                        } as DataItem;
+                    }) as Promise<DataItem>;
                 })
             )
         ).filter((i): i is DataItem => i !== null);
