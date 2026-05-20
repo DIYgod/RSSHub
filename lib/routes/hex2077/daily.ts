@@ -56,7 +56,7 @@ export const route: Route = {
         const $d = load(detailHtml);
 
         // Step 3: build RSS items from all sections
-        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay, _si) => {
+        const allItems: DataItem[] = SECTION_NAMES.flatMap((sectionDisplay) => {
             const sectionItems = extractSection($d, sectionDisplay);
             return sectionItems.map((text, i) => ({
                 title: `[${sectionDisplay}] ${text}`,
