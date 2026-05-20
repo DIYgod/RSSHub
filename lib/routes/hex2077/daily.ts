@@ -33,7 +33,7 @@ export const route: Route = {
     path: '/daily',
     example: '/hex2077/daily',
     maintainers: ['fc525260'],
-    handler: async (_ctx) => {
+    handler: async () => {
         // Step 1: fetch listing page
         const listingHtml = await ofetch<string>(BASE + '/docs/');
         const $ = load(listingHtml);
