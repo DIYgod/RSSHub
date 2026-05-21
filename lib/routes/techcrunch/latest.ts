@@ -1,11 +1,7 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-
-import { renderDescription } from './templates/description';
 
 const host = 'https://techcrunch.com';
 const link = `${host}/latest/`;
@@ -106,8 +102,8 @@ function normalizePost(post, detail) {
         };
     }
 
-    const $ = load(detail.content?.rendered ?? '', null, false);
-    $('.wp-block-techcrunch-inline-cta, .jw-player-inline-promo, script, style').remove();
+    const image = detail.yoast_head_json?.og_image?.[0]?.url?.split('?')[0];
+    const excerpt = detail.excerpt?.rendered || '';
 
     return {
         title,
@@ -116,10 +112,7 @@ function normalizePost(post, detail) {
         author,
         category,
         pubDate: parseDate(detail.date_gmt || detail.date),
-        description: renderDescription({
-            head: detail.yoast_head_json ?? {},
-            rendered: $.html(),
-        }),
+        description: buildDescription(image, excerpt),
     };
 }
 
@@ -135,3 +128,25 @@ const commonHeaders = {
     'user-agent':
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36',
 };
+
+function buildDescription(image?: string, excerpt?: string) {
+    const parts = [];
+
+    if (image) {
+        parts.push(`<p><img src="${escapeAttribute(image)}" referrerpolicy="no-referrer"></p>`);
+    }
+
+    if (excerpt) {
+        parts.push(excerpt);
+    }
+
+    return parts.join('\n');
+}
+
+function escapeHtml(value: string) {
+    return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function escapeAttribute(value: string) {
+    return escapeHtml(value).replace(/"/g, '&quot;');
+}
