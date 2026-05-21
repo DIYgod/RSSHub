@@ -103,6 +103,7 @@ async function handler(ctx): Promise<Data> {
         link: childText(channel, 'link') || rootUrl,
         item: items,
         image: childText(channel.children('image').first(), 'url') || childAttr(channel, itunesImageSelector, 'href'),
+        itunes_image: childAttr(channel, itunesImageSelector, 'href') || childText(channel.children('image').first(), 'url') || undefined,
         language: normalizeLanguage(childText(channel, 'language')),
         feedLink: feedUrl,
         itunes_author: childText(channel, itunesAuthorSelector) || undefined,

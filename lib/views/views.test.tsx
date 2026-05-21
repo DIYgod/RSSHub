@@ -91,6 +91,7 @@ describe('RSS view', () => {
                     itunes_author: 'Podcast Author',
                     itunes_category: 'Tech',
                     itunes_explicit: 'true',
+                    itunes_image: 'https://example.com/podcast-itunes.jpg',
                     image: 'https://example.com/image.jpg',
                     item: [
                         {
@@ -129,6 +130,7 @@ describe('RSS view', () => {
         expect(html).toContain('<itunes:author>Podcast Author</itunes:author>');
         expect(html).toContain('itunes:category text="Tech"');
         expect(html).toContain('<itunes:explicit>true</itunes:explicit>');
+        expect(html).toContain('<itunes:image href="https://example.com/podcast-itunes.jpg"');
         expect(html).toContain('<height>31</height>');
         expect(html).toContain('<width>88</width>');
         expect(html).toContain('media:content');

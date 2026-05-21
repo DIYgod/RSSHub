@@ -3,7 +3,7 @@ import type { FC } from 'hono/jsx';
 import type { Data } from '@/types';
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
-    const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
+    const hasItunes = data.itunes_author || data.itunes_category || data.itunes_image || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
     const hasMedia = data.item?.some((i) => i.media);
     const isTelegramLink = data.link?.startsWith('https://t.me/s/');
 
@@ -19,6 +19,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                 {data.itunes_author && <itunes:author>{data.itunes_author}</itunes:author>}
                 {data.itunes_category && <itunes:category text={data.itunes_category} />}
                 {data.itunes_author && <itunes:explicit>{data.itunes_explicit || 'false'}</itunes:explicit>}
+                {data.itunes_image && <itunes:image href={data.itunes_image} />}
                 <language>{data.language || 'en'}</language>
                 {data.image && (
                     <image>
