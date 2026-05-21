@@ -25629,6 +25629,20 @@
       }
     ]
   },
+  "itsec.gov.cn": {
+    "_name": "中国信息安全测评中心",
+    "www": [
+      {
+        "title": "新闻发布",
+        "docs": "https://docs.rsshub.app/routes/government",
+        "source": [
+          "/zxxw/index.html",
+          "/zxxw/"
+        ],
+        "target": "/itsec/news"
+      }
+    ]
+  },
   "iwara.tv": {
     "_name": "iwara",
     "www": [
