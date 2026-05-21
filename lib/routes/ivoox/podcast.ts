@@ -32,7 +32,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.ivoox.com/podcast-*_sq_f:id_1.html', 'www.ivoox.com/*_sq_f:id_1.html'],
+            source: ['www.ivoox.com/podcast-*_sq_f:id_1.html', 'www.ivoox.com/en/podcast-*_sq_f:id_1.html', 'www.ivoox.com/*_sq_f:id_1.html', 'www.ivoox.com/en/*_sq_f:id_1.html'],
             target: (params) => `/podcast/${params.id}`,
         },
     ],
