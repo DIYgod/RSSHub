@@ -78,7 +78,7 @@ async function handler(ctx): Promise<Data> {
                     const title = childText(itemElement, 'title');
                     const image = childAttr(itemElement, itunesImageSelector, 'href');
                     const length = parseOptionalInteger(enclosure.attr('length'));
-                    const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl) : enclosureUrl;
+                    const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl, childText(itemElement, 'link')) : enclosureUrl;
 
                     return {
                         title,
@@ -125,12 +125,31 @@ function normalizeEpisodeId(value: string): string | undefined {
     return match?.[1];
 }
 
-function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string): Promise<string> {
+function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string, referer: string): Promise<string> {
     return cache.tryGet(`ivoox:audio-url:${audioId}`, async () => {
         try {
             const response = await ofetch(`https://vcore-web.ivoox.com/v1/public/audios/${audioId}/download-url`);
             const downloadUrl = response?.data?.downloadUrl;
             if (typeof downloadUrl === 'string' && downloadUrl) {
+                const audioResponse = await ofetch.raw(new URL(downloadUrl, rootUrl).href, {
+                    headers: {
+                        Referer: referer,
+                    },
+                    redirect: 'manual',
+                    method: 'GET',
+                });
+
+                if (audioResponse.status >= 300 && audioResponse.status < 400) {
+                    const location = audioResponse.headers.get('location');
+                    if (location) {
+                        return new URL(location, rootUrl).href;
+                    }
+                }
+
+                if (audioResponse.url) {
+                    return audioResponse.url;
+                }
+
                 return new URL(downloadUrl, rootUrl).href;
             }
         } catch {
