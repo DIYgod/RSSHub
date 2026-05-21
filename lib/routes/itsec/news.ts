@@ -41,7 +41,7 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a').first();
-            const title = $link.text().trim() || $link.prop('title')?.trim();
+            const title = $link.text() || $link.prop('title');
             const href = $link.prop('href');
             const date = $item.find('span').first().text().trim();
 
@@ -65,7 +65,7 @@ async function handler() {
                 const { data: detailResponse } = await got(item.link);
                 const $detail = load(detailResponse);
 
-                const title = $detail('.article-tit').text().trim() || item.title;
+                const title = $detail('.article-tit').text() || item.title;
                 const date = $detail('.article .date').text().trim();
                 const author = $detail('.article .from').last().text().trim();
 
