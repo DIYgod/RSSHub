@@ -40,9 +40,7 @@ export const route: Route = {
     url: 'www.ivoox.com',
     maintainers: ['guillevc'],
     handler,
-    description: `Republishes iVoox podcast feeds through RSSHub while preserving the audio enclosures used by podcast clients.
-
-For example, the iVoox URL \`https://www.ivoox.com/podcast-horizonte-8211-iker-jimenez_sq_f11178419_1.html\` maps to [\`/ivoox/podcast/11178419\`](https://rsshub.app/ivoox/podcast/11178419).`,
+    description: 'Transforms an iVoox podcast page into an RSS feed that exposes the full episode audio enclosures instead of the short clip feed.',
     view: ViewType.Audios,
 };
 
