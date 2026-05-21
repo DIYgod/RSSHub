@@ -4,6 +4,7 @@ import { decodeHTML } from 'entities';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -46,6 +47,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const id = normalizePodcastId(ctx.req.param('id'));
+    const limit = Number.parseInt(ctx.req.query('limit') ?? '10', 10);
     const feedUrl = `${rootUrl}/feed_fg_f${id}_filtro_1.xml`;
     const response = await ofetch(feedUrl, {
         parseResponse: (txt) => txt,
@@ -57,43 +59,49 @@ async function handler(ctx): Promise<Data> {
         throw new Error(`Invalid iVoox podcast feed for ID ${id}`);
     }
 
-    const item = channel
-        .children('item')
-        .toArray()
-        .map((element): DataItem | undefined => {
-            const itemElement = $(element);
-            const enclosure = itemElement.children('enclosure').first();
-            const enclosureUrl = enclosure.attr('url');
+    const items = (
+        await Promise.all(
+            channel
+                .children('item')
+                .toArray()
+                .slice(0, Number.isNaN(limit) ? 10 : limit)
+                .map(async (element): Promise<DataItem | undefined> => {
+                    const itemElement = $(element);
+                    const enclosure = itemElement.children('enclosure').first();
+                    const enclosureUrl = enclosure.attr('url');
+                    const itemId = normalizeEpisodeId(childText(itemElement, 'guid') || childText(itemElement, 'link'));
 
-            if (!enclosureUrl) {
-                return;
-            }
+                    if (!enclosureUrl) {
+                        return;
+                    }
 
-            const title = childText(itemElement, 'title');
-            const image = childAttr(itemElement, itunesImageSelector, 'href');
-            const length = parseOptionalInteger(enclosure.attr('length'));
+                    const title = childText(itemElement, 'title');
+                    const image = childAttr(itemElement, itunesImageSelector, 'href');
+                    const length = parseOptionalInteger(enclosure.attr('length'));
+                    const resolvedEnclosureUrl = itemId ? await resolveEpisodeAudioUrl(itemId, enclosureUrl) : enclosureUrl;
 
-            return {
-                title,
-                description: childText(itemElement, 'description') || undefined,
-                link: childText(itemElement, 'link') || undefined,
-                pubDate: parseOptionalDate(childText(itemElement, 'pubDate')),
-                guid: childText(itemElement, 'guid') || undefined,
-                enclosure_url: enclosureUrl,
-                enclosure_type: enclosure.attr('type') || mediaTypeFromUrl(enclosureUrl),
-                enclosure_title: title,
-                ...(length === undefined ? {} : { enclosure_length: length }),
-                itunes_duration: childText(itemElement, itunesDurationSelector) || undefined,
-                itunes_item_image: image,
-            };
-        })
-        .filter((current): current is DataItem => current !== undefined);
+                    return {
+                        title,
+                        description: childText(itemElement, 'description') || undefined,
+                        link: childText(itemElement, 'link') || undefined,
+                        pubDate: parseOptionalDate(childText(itemElement, 'pubDate')),
+                        guid: childText(itemElement, 'guid') || undefined,
+                        enclosure_url: resolvedEnclosureUrl,
+                        enclosure_type: enclosure.attr('type') || mediaTypeFromUrl(resolvedEnclosureUrl),
+                        enclosure_title: title,
+                        ...(length === undefined ? {} : { enclosure_length: length }),
+                        itunes_duration: childText(itemElement, itunesDurationSelector) || undefined,
+                        itunes_item_image: image,
+                    };
+                })
+        )
+    ).filter((current): current is DataItem => current !== undefined);
 
     return {
         title: childText(channel, 'title'),
         description: childText(channel, 'description') || undefined,
         link: childText(channel, 'link') || rootUrl,
-        item,
+        item: items,
         image: childText(channel.children('image').first(), 'url') || childAttr(channel, itunesImageSelector, 'href'),
         language: normalizeLanguage(childText(channel, 'language')),
         feedLink: feedUrl,
@@ -110,6 +118,27 @@ function normalizePodcastId(id: string): string {
     }
 
     return match[1];
+}
+
+function normalizeEpisodeId(value: string): string | undefined {
+    const match = /(?:_rf_|\/)(\d+)(?:_\d+)?(?:\.html)?/i.exec(value) ?? /(\d+)/.exec(value);
+    return match?.[1];
+}
+
+function resolveEpisodeAudioUrl(audioId: string, fallbackUrl: string): Promise<string> {
+    return cache.tryGet(`ivoox:audio-url:${audioId}`, async () => {
+        try {
+            const response = await ofetch(`https://vcore-web.ivoox.com/v1/public/audios/${audioId}/download-url`);
+            const downloadUrl = response?.data?.downloadUrl;
+            if (typeof downloadUrl === 'string' && downloadUrl) {
+                return new URL(downloadUrl, rootUrl).href;
+            }
+        } catch {
+            // Fall back to the original feed enclosure when iVoox does not return a direct URL.
+        }
+
+        return fallbackUrl;
+    });
 }
 
 function childText(element, selector: string): string {
