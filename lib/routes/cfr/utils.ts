@@ -88,7 +88,7 @@ function parseArticle($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.article-header__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -102,7 +102,7 @@ function parseBlog($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.article-header-blog__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -115,7 +115,7 @@ function parseBook($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.article-header__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -125,7 +125,7 @@ function parseConferenceCalls($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('head title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -140,7 +140,7 @@ function parseEvent($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.msp-event-header-past__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -159,7 +159,7 @@ function parseBackgrounder($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.article-header-backgrounder__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -173,7 +173,7 @@ function parsePodcasts($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('head title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
         enclosure_url: audioSrc,
         enclosure_type: 'audio/mpeg',
     };
@@ -193,7 +193,7 @@ function parseTaskForceReport($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.hero__title').remove('.subtitle').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -215,7 +215,7 @@ function parseTimeline($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.timeline-header__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -231,7 +231,7 @@ function parseVideo($: CheerioAPI): DataItem {
     return {
         title: linkData?.title ?? $('.article-header__title').text(),
         pubDate: linkData?.pubDate,
-        description,
+        description: description || linkData?.description,
     };
 }
 
@@ -243,20 +243,47 @@ function parseDefault($): DataItem {
     return {
         title: linkData?.title ?? $('head title').text(),
         pubDate: linkData?.pubDate,
+        description: linkData?.description,
     };
 }
 
 function parseLinkData($: CheerioAPI) {
-    try {
-        const data = (JSON.parse($('script[type="application/ld+json"]').text()) as LinkData)['@graph'][0];
+    const ldItems: Array<LinkData['@graph'][number]> = [];
 
-        return {
-            title: data.name,
-            pubDate: parseDate(data.dateModified),
-        };
-    } catch {
-        // ignore
+    for (const script of $('script[type="application/ld+json"]').toArray()) {
+        try {
+            const data = JSON.parse($(script).text()) as LinkData | LinkData['@graph'][number] | Array<LinkData['@graph'][number]>;
+            if (Array.isArray(data)) {
+                ldItems.push(...data);
+            } else if ('@graph' in data && Array.isArray(data['@graph'])) {
+                ldItems.push(...data['@graph']);
+            } else {
+                ldItems.push(data);
+            }
+        } catch {
+            // ignore invalid JSON-LD blocks
+        }
     }
+
+    const data =
+        ldItems.find((item) => {
+            const type = Array.isArray(item['@type']) ? item['@type'] : [item['@type']];
+            return type.some((t) => ['Article', 'NewsArticle', 'BlogPosting', 'Report', 'PodcastEpisode', 'Event'].includes(t));
+        }) ?? ldItems.find((item) => item.headline || item.name);
+
+    const title = data?.headline || data?.name || getMeta($, 'og:title') || getMeta($, 'twitter:title') || $('h1').first().text().trim() || $('head title').text().replace(' | Council on Foreign Relations', '').trim();
+    const date = data?.datePublished || data?.dateModified || getMeta($, 'article:published_time') || getMeta($, 'article:modified_time');
+    const description = data?.description || getMeta($, 'og:description') || getMeta($, 'twitter:description');
+
+    return {
+        title,
+        pubDate: date ? parseDate(date) : undefined,
+        description: description ? `<p>${description}</p>` : undefined,
+    };
+}
+
+function getMeta($: CheerioAPI, name: string) {
+    return $(`meta[property="${name}"], meta[name="${name}"]`).attr('content')?.trim();
 }
 
 function getVideoIframe($ele: Cheerio<Element>) {
