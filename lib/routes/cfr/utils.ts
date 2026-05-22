@@ -22,6 +22,7 @@ export function getDataItem(href: string) {
 
         switch (prefix) {
             case 'article':
+            case 'articles':
                 dataItem = parseArticle($);
                 break;
             case 'blog':
@@ -37,6 +38,7 @@ export function getDataItem(href: string) {
                 dataItem = parseEvent($);
                 break;
             case 'backgrounder':
+            case 'backgrounders':
                 dataItem = parseBackgrounder($);
                 break;
             case 'podcasts':

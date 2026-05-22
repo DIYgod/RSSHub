@@ -49,9 +49,36 @@ async function handler(ctx: Context): Promise<Data> {
         'books-reports': '.card-article__link',
     };
 
-    const listSelector = selectorMap[category] ?? '.card-article-large__link';
+    const listSelector =
+        selectorMap[category] ??
+        [
+            'a[href^="/article/"]',
+            'a[href^="/articles/"]',
+            'a[href^="/backgrounder/"]',
+            'a[href^="/backgrounders/"]',
+            'a[href^="/blog/"]',
+            'a[href^="/book/"]',
+            'a[href^="/event/"]',
+            'a[href^="/podcasts/"]',
+            'a[href^="/task-force-report/"]',
+            'a[href^="/timeline/"]',
+            'a[href^="/video/"]',
+        ].join(',');
 
-    const items = await pMap($(listSelector).toArray(), (item) => getDataItem($(item).attr('href')!), { concurrency: 5 });
+    const seen = new Set<string>();
+    const links = $(listSelector)
+        .toArray()
+        .map((item) => $(item).attr('href'))
+        .filter((href): href is string => Boolean(href))
+        .filter((href) => {
+            if (seen.has(href)) {
+                return false;
+            }
+            seen.add(href);
+            return true;
+        });
+
+    const items = await pMap(links, (href) => getDataItem(href), { concurrency: 5 });
 
     return {
         title: $('head title').text().replace(' | Council on Foreign Relations', ''),
