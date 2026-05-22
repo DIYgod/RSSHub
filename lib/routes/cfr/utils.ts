@@ -9,6 +9,12 @@ import { parseDate } from '@/utils/parse-date';
 
 import type { LinkData, VideoSetup } from './types';
 
+type CFRListItem = {
+    href: string;
+    title?: string;
+    pubDate?: string;
+};
+
 const commonHeaders = {
     accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     'accept-language': 'en-US,en;q=0.9',
@@ -19,61 +25,53 @@ const commonHeaders = {
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36',
 };
 
-export function getDataItem(href: string) {
+export function getDataItem(input: string | CFRListItem) {
+    const listItem = typeof input === 'string' ? { href: input } : input;
+    const { href } = listItem;
     const origin = 'https://www.cfr.org';
     const link = `${origin}${href}`;
 
-    return cache.tryGet(link, async () => {
-        const prefix = href?.split('/')[1];
-        const res = await ofetch(link, {
-            headers: commonHeaders,
-        });
-        const $ = load(res);
+    return cache
+        .tryGet(link, async () => {
+            const prefix = href?.split('/')[1];
+            const res = await ofetch(link, {
+                headers: commonHeaders,
+            });
+            const $ = load(res);
 
-        let dataItem: DataItem;
-
-        switch (prefix) {
-            case 'article':
-            case 'articles':
-                dataItem = parseArticle($);
-                break;
-            case 'blog':
-                dataItem = parseBlog($);
-                break;
-            case 'book':
-                dataItem = parseBook($);
-                break;
-            case 'conference-calls':
-                dataItem = parseConferenceCalls($);
-                break;
-            case 'event':
-                dataItem = parseEvent($);
-                break;
-            case 'backgrounder':
-            case 'backgrounders':
-                dataItem = parseBackgrounder($);
-                break;
-            case 'podcasts':
-                dataItem = parsePodcasts($);
-                break;
-            case 'task-force-report':
-                dataItem = parseTaskForceReport($);
-                break;
-            case 'timeline':
-                dataItem = parseTimeline($);
-                break;
-            case 'video':
-                dataItem = parseVideo($);
-                break;
-            default:
-                dataItem = parseDefault($);
-        }
-
-        return {
+            switch (prefix) {
+                case 'article':
+                case 'articles':
+                    return parseArticle($);
+                case 'blog':
+                    return parseBlog($);
+                case 'book':
+                    return parseBook($);
+                case 'conference-calls':
+                    return parseConferenceCalls($);
+                case 'event':
+                    return parseEvent($);
+                case 'backgrounder':
+                case 'backgrounders':
+                    return parseBackgrounder($);
+                case 'podcasts':
+                    return parsePodcasts($);
+                case 'task-force-report':
+                    return parseTaskForceReport($);
+                case 'timeline':
+                    return parseTimeline($);
+                case 'video':
+                    return parseVideo($);
+                default:
+                    return parseDefault($);
+            }
+        })
+        .then((dataItem) => ({
             ...dataItem,
+            title: isValidTitle(dataItem.title) ? dataItem.title : listItem.title,
+            pubDate: dataItem.pubDate ?? (listItem.pubDate ? parseDate(listItem.pubDate) : undefined),
             link,
-        };
-    }) as Promise<DataItem>;
+        })) as Promise<DataItem>;
 }
 
 export { commonHeaders };
@@ -284,6 +282,10 @@ function parseLinkData($: CheerioAPI) {
 
 function getMeta($: CheerioAPI, name: string) {
     return $(`meta[property="${name}"], meta[name="${name}"]`).attr('content')?.trim();
+}
+
+function isValidTitle(title?: string) {
+    return Boolean(title && title.trim() && !/^error\s+404/i.test(title));
 }
 
 function getVideoIframe($ele: Cheerio<Element>) {

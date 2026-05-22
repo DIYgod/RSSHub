@@ -70,9 +70,26 @@ async function handler(ctx: Context): Promise<Data> {
     const seen = new Set<string>();
     const links = $(listSelector)
         .toArray()
-        .map((item) => $(item).attr('href'))
-        .filter((href): href is string => Boolean(href))
-        .filter((href) => {
+        .map((item) => {
+            const $item = $(item);
+            const href = $item.attr('href');
+            const $article = $item.closest('article');
+            const $card = $article.length
+                ? $article
+                : $item
+                      .parents()
+                      .filter((_, element) => $(element).find('time[datetime]').length > 0)
+                      .first();
+            const date = $card.find('time[datetime]').first().attr('datetime');
+
+            return {
+                href,
+                title: $item.text().trim() || $item.attr('aria-label') || $item.attr('title'),
+                pubDate: date,
+            };
+        })
+        .filter((item): item is { href: string; title?: string; pubDate?: string } => Boolean(item.href))
+        .filter(({ href }) => {
             if (seen.has(href)) {
                 return false;
             }
@@ -80,7 +97,7 @@ async function handler(ctx: Context): Promise<Data> {
             return true;
         });
 
-    const items = await pMap(links, (href) => getDataItem(href), { concurrency: 5 });
+    const items = await pMap(links, (item) => getDataItem(item), { concurrency: 5 });
 
     return {
         title: $('head title').text().replace(' | Council on Foreign Relations', ''),
