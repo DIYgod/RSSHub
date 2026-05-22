@@ -35,7 +35,7 @@ export const createFixedChannelRoute = ({ path, id, name, source }: FixedChannel
     handler: async (ctx) => {
         const channelUrl = `https://m.thepaper.cn/channel/${id}`;
         const channelUrlResp = await ofetch(channelUrl);
-        const $ = load(channelUrlResp.data);
+        const $ = load(channelUrlResp);
         const nextData = $('#__NEXT_DATA__').text();
         const channelUrlData = JSON.parse(nextData);
 
@@ -45,7 +45,7 @@ export const createFixedChannelRoute = ({ path, id, name, source }: FixedChannel
                 channelId: id,
             },
         });
-        const list = resp.data.list;
+        const list = resp.data?.list ?? [];
 
         const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
         return {
