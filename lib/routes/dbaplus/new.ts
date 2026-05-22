@@ -244,32 +244,31 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-  | [全部](https://dbaplus.cn/news-9-1.html) | [数据库](https://dbaplus.cn/news-153-1.html) | [运维](https://dbaplus.cn/news-134-1.html) | [大数据](https://dbaplus.cn/news-73-1.html) | [架构](https://dbaplus.cn/news-141-1.html) |
-  | ---------------------------------------- | -------------------------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------ |
-  | [9](https://rsshub.app/dbaplus/news/9)   | [153](https://rsshub.app/dbaplus/news/153)   | [134](https://rsshub.app/dbaplus/news/134) | [73](https://rsshub.app/dbaplus/news/73)    | [141](https://rsshub.app/dbaplus/news/141) |
+| [全部](https://dbaplus.cn/news-9-1.html) | [数据库](https://dbaplus.cn/news-153-1.html) | [运维](https://dbaplus.cn/news-134-1.html) | [大数据](https://dbaplus.cn/news-73-1.html) | [架构](https://dbaplus.cn/news-141-1.html) |
+| ---------------------------------------- | -------------------------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------ |
+| [9](https://rsshub.app/dbaplus/news/9)   | [153](https://rsshub.app/dbaplus/news/153)   | [134](https://rsshub.app/dbaplus/news/134) | [73](https://rsshub.app/dbaplus/news/73)    | [141](https://rsshub.app/dbaplus/news/141) |
 
-  | [PaaS云](https://dbaplus.cn/news-72-1.html) | [职场生涯](https://dbaplus.cn/news-149-1.html) | [标准评估](https://dbaplus.cn/news-248-1.html) | [这里有毒](https://dbaplus.cn/news-21-1.html) |
-  | ------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | --------------------------------------------- |
-  | [72](https://rsshub.app/dbaplus/news/72)    | [149](https://rsshub.app/dbaplus/news/149)     | [248](https://rsshub.app/dbaplus/news/248)     | [21](https://rsshub.app/dbaplus/news/21)      |
+| [PaaS 云](https://dbaplus.cn/news-72-1.html) | [职场生涯](https://dbaplus.cn/news-149-1.html) | [标准评估](https://dbaplus.cn/news-248-1.html) | [这里有毒](https://dbaplus.cn/news-21-1.html) |
+| -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | --------------------------------------------- |
+| [72](https://rsshub.app/dbaplus/news/72)     | [149](https://rsshub.app/dbaplus/news/149)     | [248](https://rsshub.app/dbaplus/news/248)     | [21](https://rsshub.app/dbaplus/news/21)      |
 
-  #### [数据库](https://dbaplus.cn/news-153-1.html)
+#### [数据库](https://dbaplus.cn/news-153-1.html)
 
-  | [国产数据库](https://dbaplus.cn/news-217-1.html) | [ORACLE](https://dbaplus.cn/news-10-1.html) | [MySQL](https://dbaplus.cn/news-11-1.html) | [SQL优化](https://dbaplus.cn/news-155-1.html) | [Newsletter](https://dbaplus.cn/news-156-1.html) |
-  | ------------------------------------------------ | ------------------------------------------- | ------------------------------------------ | --------------------------------------------- | ------------------------------------------------ |
-  | [217](https://rsshub.app/dbaplus/news/217)       | [10](https://rsshub.app/dbaplus/news/10)    | [11](https://rsshub.app/dbaplus/news/11)   | [155](https://rsshub.app/dbaplus/news/155)    | [156](https://rsshub.app/dbaplus/news/156)       |
+| [国产数据库](https://dbaplus.cn/news-217-1.html) | [ORACLE](https://dbaplus.cn/news-10-1.html) | [MySQL](https://dbaplus.cn/news-11-1.html) | [SQL 优化](https://dbaplus.cn/news-155-1.html) | [Newsletter](https://dbaplus.cn/news-156-1.html) |
+| ------------------------------------------------ | ------------------------------------------- | ------------------------------------------ | ---------------------------------------------- | ------------------------------------------------ |
+| [217](https://rsshub.app/dbaplus/news/217)       | [10](https://rsshub.app/dbaplus/news/10)    | [11](https://rsshub.app/dbaplus/news/11)   | [155](https://rsshub.app/dbaplus/news/155)     | [156](https://rsshub.app/dbaplus/news/156)       |
 
-  | [其它](https://dbaplus.cn/news-154-1.html) |
-  | ------------------------------------------ |
-  | [154](https://rsshub.app/dbaplus/news/154) |
+| [其它](https://dbaplus.cn/news-154-1.html) |
+| ------------------------------------------ |
+| [154](https://rsshub.app/dbaplus/news/154) |
 
-  #### [这里有毒](https://dbaplus.cn/news-21-1.html)
+#### [这里有毒](https://dbaplus.cn/news-21-1.html)
 
-  | [最新活动](https://dbaplus.cn/news-152-1.html) | [往期干货](https://dbaplus.cn/news-148-1.html) | [特别策划](https://dbaplus.cn/news-150-1.html) | [荐书](https://dbaplus.cn/news-151-1.html) |
-  | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------ |
-  | [152](https://rsshub.app/dbaplus/news/152)     | [148](https://rsshub.app/dbaplus/news/148)     | [150](https://rsshub.app/dbaplus/news/150)     | [151](https://rsshub.app/dbaplus/news/151) |
+| [最新活动](https://dbaplus.cn/news-152-1.html) | [往期干货](https://dbaplus.cn/news-148-1.html) | [特别策划](https://dbaplus.cn/news-150-1.html) | [荐书](https://dbaplus.cn/news-151-1.html) |
+| ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------ |
+| [152](https://rsshub.app/dbaplus/news/152)     | [148](https://rsshub.app/dbaplus/news/148)     | [150](https://rsshub.app/dbaplus/news/150)     | [151](https://rsshub.app/dbaplus/news/151) |
 
-</details>
-`,
+</details>`,
     categories: ['programming'],
     features: {
         requireConfig: false,

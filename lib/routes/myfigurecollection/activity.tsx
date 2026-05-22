@@ -44,7 +44,7 @@ export const route: Route = {
 | ------- | ----- | ----- |
 | 0       | 1     | 2     |
 
-  Language
+Language
 
 | Id | Language   |
 | -- | ---------- |

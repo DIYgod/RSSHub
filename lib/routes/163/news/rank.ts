@@ -100,14 +100,14 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  全站新闻 **点击榜** 的统计时间仅包含 “24 小时”、“本周”、“本月”，不包含 “1 小时”。即可用的\`time\`参数为\`day\`、\`week\`、\`month\`。
+全站新闻 **点击榜** 的统计时间仅包含 “24 小时”、“本周”、“本月”，不包含 “1 小时”。即可用的\`time\`参数为\`day\`、\`week\`、\`month\`。
 
-  其他分类 **点击榜** 的统计时间仅包含 “1 小时”、“24 小时”、“本周”。即可用的\`time\`参数为\`hour\`、\`day\`、\`week\`。
+其他分类 **点击榜** 的统计时间仅包含 “1 小时”、“24 小时”、“本周”。即可用的\`time\`参数为\`hour\`、\`day\`、\`week\`。
 
-  而所有分类（包括全站）的 **跟贴榜** 的统计时间皆仅包含 “24 小时”、“本周”、“本月”。即可用的\`time\`参数为\`day\`、\`week\`、\`month\`。
+而所有分类（包括全站）的 **跟贴榜** 的统计时间皆仅包含 “24 小时”、“本周”、“本月”。即可用的\`time\`参数为\`day\`、\`week\`、\`month\`。
 :::
 
-  新闻分类：
+新闻分类：
 
 | 全站  | 新闻 | 娱乐          | 体育   | 财经  | 科技 | 汽车 | 女人 | 房产  | 游戏 | 旅游   | 教育 |
 | ----- | ---- | ------------- | ------ | ----- | ---- | ---- | ---- | ----- | ---- | ------ | ---- |
@@ -167,8 +167,8 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     content('.bot_word, .js-open-app, .s-img').remove();
-                    content('video').each(function () {
-                        content(this).attr('src', content(this).attr('data-src'));
+                    content('video').each((_, el) => {
+                        content(el).attr('src', content(el).attr('data-src'));
                     });
                     content('.article-body .image-lazy').each((_, elem) => {
                         elem.attribs.src = elem.attribs['data-src'] ?? elem.attribs.src;

@@ -157,10 +157,9 @@ export const route: Route = {
             description: 'Category, `Fresh Fruits - Apple` by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Apples](https://www.producereport.com/produce/fresh-fruits/apples), where the source URL is \`https://www.producereport.com/produce/fresh-fruits/apples\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/producereport/produce/fresh-fruits/apples\`](https://rsshub.app/producereport/produce/fresh-fruits/apples).
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

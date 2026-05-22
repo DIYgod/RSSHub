@@ -8,8 +8,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
-import { setCookies } from '@/utils/puppeteer-utils';
+import playwright from '@/utils/playwright';
+import { setCookies } from '@/utils/playwright-utils';
 
 export const route: Route = {
     path: '/:topicPath{.+}?',
@@ -53,7 +53,7 @@ async function handler(ctx) {
             };
         });
 
-    const browser = await puppeteer();
+    const browser = await playwright();
 
     const out = await Promise.all(
         list.map((item) =>

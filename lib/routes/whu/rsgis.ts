@@ -232,9 +232,7 @@ export const route: Route = {
     ],
     name: '武汉大学遥感信息工程学院',
     maintainers: ['HPDell'],
-    description: `
-
-|  分类名  | \`type\` 值 |  子类名  | \`sub\` 值 |
+    description: `|  分类名  | \`type\` 值 |  子类名  | \`sub\` 值 |
 | :------: | :-------- | :------: | :------- |
 |   首页   | \`index\`   |          |          |
 | 学院新闻 | \`xyxw\`    |   全部   | \`all\`    |
@@ -251,8 +249,7 @@ export const route: Route = {
 |          |           | 学院通知 | \`xytz\`   |
 |          |           | 教学动态 | \`jxdt\`   |
 |          |           | 学术动态 | \`xsdt\`   |
-|          |           | 人才引进 | \`rcyj\`   |
-`,
+|          |           | 人才引进 | \`rcyj\`   |`,
     handler: async (ctx: Context) => {
         const { type = 'index', sub = 'all' } = ctx.req.param();
         let itemList: DataItem[];

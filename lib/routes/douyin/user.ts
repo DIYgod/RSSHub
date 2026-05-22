@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import type { PostData } from './types';
@@ -50,7 +50,7 @@ async function handler(ctx) {
         `douyin:user:${uid}`,
         async () => {
             let postData;
-            const browser = await puppeteer();
+            const browser = await playwright();
             const page = await browser.newPage();
             await page.setRequestInterception(true);
 

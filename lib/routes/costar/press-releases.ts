@@ -111,10 +111,9 @@ export const route: Route = {
             description: 'Filter',
         },
     },
-    description: `:::tip
-To subscribe to [Press Releases - Asia Pacific - Preliminary](https://www.costar.com/products/benchmark/resources/press-releases?region=406&tag=581), where the source URL is \`https://www.costar.com/products/benchmark/resources/press-releases?region=406&tag=581\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/costar/press-releases/region=406&tag=581\`](https://rsshub.app/costar/press-releases/region=406&tag=581).
-:::
-`,
+    description: `::: tip
+To subscribe to [Press Releases - Asia Pacific - Preliminary](https://www.costar.com/products/benchmark/resources/press-releases?region=406\\&tag=581), where the source URL is \`https://www.costar.com/products/benchmark/resources/press-releases?region=406&tag=581\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/costar/press-releases/region=406&tag=581\`](https://rsshub.app/costar/press-releases/region=406\\&tag=581).
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

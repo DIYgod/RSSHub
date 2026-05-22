@@ -351,8 +351,7 @@ To subscribe to [Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.A
 | ----------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | [arxiv/econ](https://rsshub.app/papers/category/arxiv/econ) | [arxiv/econ.EM](https://rsshub.app/papers/category/arxiv/econ.EM) | [arxiv/econ.GN](https://rsshub.app/papers/category/arxiv/econ.GN) | [arxiv/econ.TH](https://rsshub.app/papers/category/arxiv/econ.TH)    |
 
-</details>
-`,
+</details>`,
     categories: ['journal'],
     features: {
         requireConfig: false,

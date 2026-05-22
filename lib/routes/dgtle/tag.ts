@@ -54,10 +54,9 @@ export const route: Route = {
             description: '标签 ID，可在对应标签页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [#手机讨论区](https://www.dgtle.com/tag-394-1.html)，其源网址为 \`https://www.dgtle.com/tag-394-1.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/dgtle/tag/394\`](https://rsshub.app/dgtle/tag/394)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

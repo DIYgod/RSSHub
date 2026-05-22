@@ -181,6 +181,7 @@ export const route: Route = {
     description: `Get recent scientific publications from OpenAlex filtered by journal and optionally by topic classification (last 2 weeks).
 
 Examples:
+
 - /openalex/s64187185 - All works from a journal (no topic filter)
 - /openalex/s64187185/subfield/2604 - Filter by subfield
 - /openalex/s64187185|s123456/topic/T10001|T10002 - Filter by topic with multiple journals

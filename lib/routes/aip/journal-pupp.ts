@@ -3,10 +3,10 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import { isValidHost } from '@/utils/valid-host';
 
-import { puppeteerGet, renderDesc } from './utils';
+import { playwrightGet, renderDesc } from './utils';
 
 const handler = async (ctx) => {
     const pub = ctx.req.param('pub');
@@ -17,13 +17,13 @@ const handler = async (ctx) => {
         throw new InvalidParameterError('Invalid pub');
     }
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const browser = await puppeteer();
+    // use Playwright due to the obstacle by cloudflare challenge
+    const browser = await playwright();
 
     const { jrnlName, list } = await cache.tryGet(
         jrnlUrl,
         async () => {
-            const response = await puppeteerGet(jrnlUrl, browser);
+            const response = await playwrightGet(jrnlUrl, browser);
             const $ = load(response);
             const jrnlName = $('.header-journal-title').text();
             const list = $('.card')

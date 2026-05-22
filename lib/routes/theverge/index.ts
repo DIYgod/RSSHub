@@ -47,7 +47,7 @@ export const route: Route = {
 | policy      | Policy & Law        |
 | web         | Web & Social        |
 
-  Provides a better reading experience (full text articles) over the official one.`,
+Provides a better reading experience (full text articles) over the official one.`,
 };
 
 const renderBlock = (b) => {

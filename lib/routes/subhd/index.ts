@@ -41,8 +41,8 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    $('.align-middle').each(function () {
-        $(this).removeClass('link-dark');
+    $('.align-middle').each((_, el) => {
+        $(el).removeClass('link-dark');
     });
 
     let items = $('.link-dark')

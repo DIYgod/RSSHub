@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['tpnonthealps'],
     handler,
     url: 'caixin.com/',
-    description: '说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。订阅用户可根据文档设置环境变量后，在url传入`fulltext=`以解锁全文。',
+    description: '说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。订阅用户可根据文档设置环境变量后，在 url 传入`fulltext=`以解锁全文。',
 };
 
 async function handler(ctx) {

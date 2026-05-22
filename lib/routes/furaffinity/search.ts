@@ -30,14 +30,14 @@ export const route: Route = {
     ],
     handler,
     description: `Additional search parameters
-| Parameter       | Description          | Default   | Options                                                        |
-|-----------------|----------------------|-----------|----------------------------------------------------------------|
-| order_by        | Sort by              | relevancy | relevancy, date, popularity                                    |
-| order_direction | Sort order           | desc      | desc, asc                                                      |
-| range           | Date range           | all       | all, 1day, 3days, 7days, 30days, 90days, 1year, 3years, 5years |
-| pattern         | Query match pattern  | extended  | all, any, extended                                             |
-| type            | Category of artworks | all       | art, flash, photo, music, story, poetry                        |
-`,
+
+| Parameter        | Description          | Default   | Options                                                        |
+| ---------------- | -------------------- | --------- | -------------------------------------------------------------- |
+| order\\_by        | Sort by              | relevancy | relevancy, date, popularity                                    |
+| order\\_direction | Sort order           | desc      | desc, asc                                                      |
+| range            | Date range           | all       | all, 1day, 3days, 7days, 30days, 90days, 1year, 3years, 5years |
+| pattern          | Query match pattern  | extended  | all, any, extended                                             |
+| type             | Category of artworks | all       | art, flash, photo, music, story, poetry                        |`,
 };
 
 async function handler(ctx) {

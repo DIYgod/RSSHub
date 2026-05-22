@@ -1,8 +1,8 @@
-import type { Browser } from 'rebrowser-puppeteer';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import puppeteer from '@/utils/puppeteer';
-import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/puppeteer-utils';
+import type { Browser } from '@/utils/playwright';
+import playwright from '@/utils/playwright';
+import { constructCookieArray, getCookies, parseCookieArray, setCookies } from '@/utils/playwright-utils';
 
 let browser: Browser | null = null;
 
@@ -15,7 +15,7 @@ afterEach(async () => {
     vi.resetModules();
 });
 
-describe('puppeteer-utils', () => {
+describe('browser cookie utils', () => {
     const cookieArrayExampleCom = [
         { name: 'foobar', value: '', domain: 'example.com' },
         { name: 'foo', value: 'bar', domain: 'example.com' },
@@ -69,7 +69,7 @@ describe('puppeteer-utils', () => {
     });
 
     it('getCookies httpbingo', async () => {
-        browser = await puppeteer();
+        browser = await playwright();
         const page = await browser.newPage();
         await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
             waitUntil: 'domcontentloaded',
@@ -78,7 +78,7 @@ describe('puppeteer-utils', () => {
     }, 45000);
 
     it('setCookies httpbingo', async () => {
-        browser = await puppeteer();
+        browser = await playwright();
         const page = await browser.newPage();
         // httpbingo.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
         await setCookies(page, cookieStrExampleCom, 'httpbingo.org');
@@ -90,7 +90,7 @@ describe('puppeteer-utils', () => {
     }, 45000);
 
     it('setCookies & getCookies example.org', async () => {
-        browser = await puppeteer();
+        browser = await playwright();
         const page = await browser.newPage();
         // we can use cookieStrAll here!
         await setCookies(page, cookieStrAll, 'example.org');

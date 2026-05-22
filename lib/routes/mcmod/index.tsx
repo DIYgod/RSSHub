@@ -48,9 +48,9 @@ export const route: Route = {
     maintainers: ['hualiong'],
     description: `\`:type\` 类型可选如下
 
-| 随机显示MOD | 最新收录MOD | 最近编辑MOD |
-| ------ | --- | ---- |
-| random | new | edit |`,
+| 随机显示 MOD | 最新收录 MOD | 最近编辑 MOD |
+| ------------ | ------------ | ------------ |
+| random       | new          | edit         |`,
     handler: async (ctx) => {
         const type = ctx.req.param('type');
         const $get = ofetch.create({ baseURL: 'https://www.mcmod.cn' });

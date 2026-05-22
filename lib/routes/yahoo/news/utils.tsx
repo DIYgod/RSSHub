@@ -2,24 +2,67 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const getArchive = async (region, limit, tag, providerId?) => {
-    const { data: response } = await got(
-        `https://${region}.news.yahoo.com/_td-news/api/resource/NCPListService;api=archive;ncpParams=${encodeURIComponent(
-            JSON.stringify({
-                query: {
-                    count: limit,
-                    // imageSizes: '220x128',
-                    start: 0,
-                    providerid: providerId,
-                    tag,
-                },
-            })
-        )}`
-    );
-    return response;
+const regionConfig = {
+    hk: {
+        spaceId: '2143854493',
+        lang: 'zh-Hant-HK',
+        categoryMap: {
+            business: { name: '財經', tags: ['yct:001000298', 'yct:001000123', 'yct:001000721'] },
+            entertainment: { name: '娛樂', tags: ['yct:001000031'] },
+            health: { name: '健康', tags: ['yct:001000395'] },
+            'hong-kong': { name: '港聞', tags: ['yct:001000661'] },
+            parenting: { name: '親子', tags: ['yct:001000267'] },
+            sports: { name: '體育', tags: ['yct:001000001'] },
+            supplement: { name: '副刊', tags: ['yct:001000560', 'yct:001000780', 'yct:001000931', 'yct:001001039', 'yct:001000374'] },
+            world: { name: '兩岸國際', tags: ['yct:001000680'] },
+        },
+    },
+    tw: {
+        spaceId: '2144446726',
+        lang: 'zh-Hant-TW',
+        categoryMap: {
+            entertainment: { name: '娛樂', tags: ['yct:001000031'] },
+            finance: { name: '財經', tags: ['yct:001000298', 'yct:001000123'] },
+            health: { name: '健康', tags: ['yct:001000395'] },
+            lifestyle: { name: '生活', tags: ['ymedia:category=000000126', 'yct:001000560', 'yct:001000374', 'yct:001001117', 'yct:001000659', 'yct:001000616'] },
+            politics: { name: '政治', tags: ['yct:001000661'] },
+            society: { name: '社會地方', tags: ['ymedia:category=000000179', 'yct:001000798', 'yct:001000667'] },
+            sports: { name: '運動', tags: ['yct:001000001'] },
+            technology: { name: '科技', tags: ['yct:001000931', 'yct:001000742', 'ymedia:category=000000175'] },
+            world: { name: '國際', tags: ['ymedia:category=000000030', 'ymedia:category=000000032'] },
+        },
+    },
+};
+
+const getArchive = async (region, limit, tags?: string[], providerId?) => {
+    const { spaceId, lang } = regionConfig[region];
+    const params = new URLSearchParams({
+        count: limit,
+        device: 'desktop',
+        documentType: 'article,video',
+        id: 'search',
+        lang,
+        namespace: 'news',
+        region: region.toUpperCase(),
+        site: 'news',
+        start: '0',
+        version: 'v1',
+        imageSizes: '498x280,100x100',
+        providerid: providerId ?? '',
+        spaceId,
+    });
+    if (tags) {
+        for (const tag of tags) {
+            params.append('tag', tag);
+        }
+    }
+
+    const { data: response } = await got(`https://tw-gw-news.media.yahoo.com/api/v1/gql/saved_query?${params.toString()}`);
+    return response.data.stream.contents;
 };
 
 const getList = async (region, listId) => {
@@ -27,9 +70,9 @@ const getList = async (region, listId) => {
     return response;
 };
 
-const getCategories = (region, tryGet) =>
-    tryGet(`yahoo:${region}:categoryMap`, async () => {
-        const { PageStore } = await getStores(region, tryGet);
+const getCategories = (region) =>
+    cache.tryGet(`yahoo:${region}:categoryMap`, async () => {
+        const { PageStore } = await getStores(region);
 
         const { Col1: col1 } = PageStore.pagesConfigRaw.base.section.regions;
         const { categoryMap } = col1.find((c) => c.name === 'ArchiveFilterBar').props;
@@ -43,43 +86,59 @@ const getCategories = (region, tryGet) =>
         return categoryMap;
     });
 
-const getProviderList = (region, tryGet) =>
-    tryGet(`yahoo:${region}:providerList`, async () => {
-        const { ProviderListStore } = await getStores(region, tryGet);
+const getProviderList = async (region) => {
+    const stores = await getStores(region);
+    return stores.providerList.map((provider) => ({
+        title: provider.title,
+        key: provider.key,
+        link: new URL(`${provider.key}--所有類別/archive`, `https://${region}.news.yahoo.com`).href,
+    }));
+};
 
-        return ProviderListStore.providerList.flatMap((list) =>
-            list.providers.map((provider) => ({
-                title: `${list.title} - ${provider.title}`,
-                key: provider.key,
-                link: new URL(provider.url, `https://${region}.news.yahoo.com`).href,
-            }))
-        );
-    });
+const findStoresObject = (node) => {
+    if (!node || typeof node !== 'object') {
+        return null;
+    }
+    if ('breakingNews' in node) {
+        return node;
+    }
+    for (const value of Object.values(node)) {
+        const found = findStoresObject(value);
+        if (found) {
+            return found;
+        }
+    }
+    return null;
+};
 
-const getStores = (region, tryGet) =>
-    tryGet(`yahoo:${region}:stores`, async () => {
+const getStores = (region) =>
+    cache.tryGet(`yahoo:${region}:stores`, async () => {
         const { data: response } = await got(`https://${region}.news.yahoo.com/archive`);
         const $ = load(response);
 
-        const appData = JSON.parse(
-            $('script:contains("root.App.main")')
-                .text()
-                .match(/root.App.main\s+=\s+({.+});/)?.[1] as string
-        );
+        const script = $('script:contains("pageBenjiConfig")').text();
+        const rscText = script.match(/self\.__next_f\.push\(\[1,"\d:(.*)"\]\)/)?.[1];
+        const rscData = JSON.parse(JSON.parse(`"${rscText}"`));
 
-        return appData.context.dispatcher.stores;
+        const stores = findStoresObject(rscData);
+        if (!stores) {
+            throw new Error(`Unable to locate stores data for region ${region}`);
+        }
+
+        return stores;
     });
 
 const parseList = (region, response) =>
     response.map((item) => ({
         title: item.title,
-        link: item.url.startsWith('http') ? item.url : new URL(item.url, `https://${region}.news.yahoo.com`).href,
+        link: item.canonicalUrl ? item.canonicalUrl.url : item.url.startsWith('http') ? item.url : new URL(item.url, `https://${region}.news.yahoo.com`).href,
         description: item.summary,
-        pubDate: parseDate(item.published_at, 'X'),
+        pubDate: item.published_at ? parseDate(item.published_at, 'X') : item.pubDate ? parseDate(item.pubDate) : undefined,
+        author: item.provider_name ?? item.provider?.displayName ?? item.publisher,
     }));
 
-const parseItem = (item, tryGet) =>
-    tryGet(item.link, async () => {
+const parseItem = (item) =>
+    cache.tryGet(item.link, async () => {
         const { data: response } = await got(item.link, {
             headers: {
                 'User-Agent': config.trueUA,
@@ -90,10 +149,10 @@ const parseItem = (item, tryGet) =>
         const ldJson = JSON.parse(
             $('script[type="application/ld+json"]')
                 .toArray()
-                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data
+                .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'))?.children[0].data || '{}'
         );
-        const author = ldJson.author.name;
-        const body = $('.atoms');
+        const author = ldJson.author?.name;
+        const body = $('.atoms').length ? $('.atoms') : $('.article-detail').length ? $('.article-detail') : $('.bodyItems-wrapper');
 
         body.find('noscript, .recommendation-contents, .text-gandalf, [id^="sda-inbody-"]').remove();
         // remove padding
@@ -140,12 +199,12 @@ const parseItem = (item, tryGet) =>
             .toArray()
             .map((ele) => $(ele).html())
             .join('');
-        item.author = author;
+        item.author = author ?? item.author;
         item.category = ldJson.keywords;
-        item.pubDate = parseDate(ldJson.datePublished);
-        item.updated = parseDate(ldJson.dateModified);
+        item.pubDate = ldJson.datePublished ? parseDate(ldJson.datePublished) : item.pubDate;
+        item.updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : item.updated;
 
         return item;
     });
 
-export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList };
+export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList, regionConfig };

@@ -33,7 +33,7 @@ export const route: Route = {
     maintainers: ['JimenezLi'],
     handler,
     description: `::: warning
-  用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 

@@ -25,6 +25,7 @@ const getOriginalImg = (url) => {
     }
 };
 const replaceBreak = (text) => text.replaceAll(/<br><br>|<br>/g, ' ');
+const quoteSeparator = "<hr style='border:0;border-top:1px solid #80808030;margin:12px 0;'>";
 
 const formatText = (item) => {
     let text = item.full_text;
@@ -210,15 +211,16 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
         if (item.is_quote_status) {
             const quoteData = item.quoted_status;
 
-            if (quoteData) {
+            if (quoteData?.user) {
                 quoteData.full_text = quoteData.full_text || quoteData.text;
                 const author = quoteData.user;
+                if (!readable) {
+                    quote += quoteSeparator;
+                }
                 quote += '<div class="rsshub-quote">';
                 if (readable) {
                     quote += `<br clear='both' /><div style='clear: both'></div>`;
                     quote += `<blockquote style='background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;'>`;
-                } else {
-                    quote += '<br><br>';
                 }
 
                 if (readable) {
@@ -416,14 +418,15 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
                         },
                     ],
                 }) ||
-                (item.is_quote_status && {
-                    links: [
-                        {
-                            url: `https://x.com/${item.quoted_status?.user?.screen_name}/status/${item.quoted_status?.id_str || item.quoted_status?.conversation_id_str}`,
-                            type: 'quote',
-                        },
-                    ],
-                }) ||
+                (item.is_quote_status &&
+                    item.quoted_status?.user && {
+                        links: [
+                            {
+                                url: `https://x.com/${item.quoted_status?.user?.screen_name}/status/${item.quoted_status?.id_str || item.quoted_status?.conversation_id_str}`,
+                                type: 'quote',
+                            },
+                        ],
+                    }) ||
                 (item.in_reply_to_screen_name &&
                     item.in_reply_to_status_id_str && {
                         links: [

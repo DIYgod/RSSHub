@@ -33,17 +33,17 @@ export const route: Route = {
     name: 'Post',
     maintainers: ['TonyRL'],
     handler,
-    description: `
-| Filter Value | Description |
-|--------------|-------------|
-| posts_with_replies | Includes Posts, Replies, and Reposts |
-| posts_no_replies | Includes Posts and Reposts, without Replies |
-| posts_with_media | Shows only Posts containing media |
-| posts_and_author_threads | Shows Posts and Threads, without Replies and Reposts |
+    description: `| Filter Value                | Description                                          |
+| --------------------------- | ---------------------------------------------------- |
+| posts\\_with\\_replies        | Includes Posts, Replies, and Reposts                 |
+| posts\\_no\\_replies          | Includes Posts and Reposts, without Replies          |
+| posts\\_with\\_media          | Shows only Posts containing media                    |
+| posts\\_and\\_author\\_threads | Shows Posts and Threads, without Replies and Reposts |
 
 Default value for filter is \`posts_and_author_threads\` if not specified.
 
 Example:
+
 - \`/bsky/profile/bsky.app/filter=posts_with_replies\``,
 };
 

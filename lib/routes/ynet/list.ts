@@ -153,10 +153,9 @@ export const route: Route = {
             description: '列表 ID，可在对应列表页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [北青快讯](https://news.ynet.com/list/2121t76.html)，其源网址为 \`https://news.ynet.com/list/2121t76.html\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/ynet/list/news/2121t76\`](https://rsshub.app/ynet/list/news/2121t76)。
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

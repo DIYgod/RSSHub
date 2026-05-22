@@ -446,8 +446,8 @@ export const route: Route = {
             options: idOptions,
         },
     },
-    description: `:::tip
-订阅 [电子商务最新报告](https://www.iresearch.com.cn/report.shtml?type=1&classId=86)，其源网址为 \`https://www.iresearch.com.cn/report.shtml?type=1&classId=86\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/iresearch/report/最新报告/电子商务\`](https://rsshub.app/iresearch/report/最新报告/电子商务) 或 [\`/iresearch/report/1/86\`](https://rsshub.app/iresearch/report/1/86)。
+    description: `::: tip
+订阅 [电子商务最新报告](https://www.iresearch.com.cn/report.shtml?type=1\\&classId=86)，其源网址为 \`https://www.iresearch.com.cn/report.shtml?type=1&classId=86\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/iresearch/report/最新报告/电子商务\`](https://rsshub.app/iresearch/report/最新报告/电子商务) 或 [\`/iresearch/report/1/86\`](https://rsshub.app/iresearch/report/1/86)。
 :::
 
 #### 分类
@@ -459,40 +459,39 @@ export const route: Route = {
 <details>
   <summary>更多行业</summary>
 
-| 名称                                                                       | ID                                             |
-| -------------------------------------------------------------------------- | ---------------------------------------------- |
-| [家电行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=1)     | [1](https://rsshub.app/iresearch/report/3/1)   |
-| [服装行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=2)     | [2](https://rsshub.app/iresearch/report/3/2)   |
-| [美妆行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=3)     | [3](https://rsshub.app/iresearch/report/3/3)   |
-| [食品饮料行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=4) | [4](https://rsshub.app/iresearch/report/3/4)   |
-| [酒行业](https://www.iresearch.com.cn/report.shtml?type=3&classId=5)       | [5](https://rsshub.app/iresearch/report/3/5)   |
-| [媒体文娱](https://www.iresearch.com.cn/report.shtml?classId=59)           | [59](https://rsshub.app/iresearch/report/1/59) |
-| [广告营销](https://www.iresearch.com.cn/report.shtml?classId=89)           | [89](https://rsshub.app/iresearch/report/1/89) |
-| [游戏行业](https://www.iresearch.com.cn/report.shtml?classId=90)           | [90](https://rsshub.app/iresearch/report/1/90) |
-| [视频媒体](https://www.iresearch.com.cn/report.shtml?classId=91)           | [91](https://rsshub.app/iresearch/report/1/91) |
-| [消费电商](https://www.iresearch.com.cn/report.shtml?classId=69)           | [69](https://rsshub.app/iresearch/report/1/69) |
-| [电子商务](https://www.iresearch.com.cn/report.shtml?classId=86)           | [86](https://rsshub.app/iresearch/report/1/86) |
-| [消费者洞察](https://www.iresearch.com.cn/report.shtml?classId=87)         | [87](https://rsshub.app/iresearch/report/1/87) |
-| [旅游行业](https://www.iresearch.com.cn/report.shtml?classId=88)           | [88](https://rsshub.app/iresearch/report/1/88) |
-| [汽车行业](https://www.iresearch.com.cn/report.shtml?classId=80)           | [80](https://rsshub.app/iresearch/report/1/80) |
-| [教育行业](https://www.iresearch.com.cn/report.shtml?classId=63)           | [63](https://rsshub.app/iresearch/report/1/63) |
-| [企业服务](https://www.iresearch.com.cn/report.shtml?classId=60)           | [60](https://rsshub.app/iresearch/report/1/60) |
-| [网络服务](https://www.iresearch.com.cn/report.shtml?classId=84)           | [84](https://rsshub.app/iresearch/report/1/84) |
-| [应用服务](https://www.iresearch.com.cn/report.shtml?classId=85)           | [85](https://rsshub.app/iresearch/report/1/85) |
-| [AI 大数据](https://www.iresearch.com.cn/report.shtml?classId=65)          | [65](https://rsshub.app/iresearch/report/1/65) |
-| [人工智能](https://www.iresearch.com.cn/report.shtml?classId=83)           | [83](https://rsshub.app/iresearch/report/1/83) |
-| [物流行业](https://www.iresearch.com.cn/report.shtml?classId=75)           | [75](https://rsshub.app/iresearch/report/1/75) |
-| [金融行业](https://www.iresearch.com.cn/report.shtml?classId=70)           | [70](https://rsshub.app/iresearch/report/1/70) |
-| [支付行业](https://www.iresearch.com.cn/report.shtml?classId=82)           | [82](https://rsshub.app/iresearch/report/1/82) |
-| [房产行业](https://www.iresearch.com.cn/report.shtml?classId=68)           | [68](https://rsshub.app/iresearch/report/1/68) |
-| [医疗健康](https://www.iresearch.com.cn/report.shtml?classId=62)           | [62](https://rsshub.app/iresearch/report/1/62) |
-| [先进制造](https://www.iresearch.com.cn/report.shtml?classId=61)           | [61](https://rsshub.app/iresearch/report/1/61) |
-| [能源环保](https://www.iresearch.com.cn/report.shtml?classId=77)           | [77](https://rsshub.app/iresearch/report/1/77) |
-| [区块链](https://www.iresearch.com.cn/report.shtml?classId=76)             | [76](https://rsshub.app/iresearch/report/1/76) |
-| [其他](https://www.iresearch.com.cn/report.shtml?classId=81)               | [81](https://rsshub.app/iresearch/report/1/81) |
+| 名称                                                                        | ID                                             |
+| --------------------------------------------------------------------------- | ---------------------------------------------- |
+| [家电行业](https://www.iresearch.com.cn/report.shtml?type=3\\&classId=1)     | [1](https://rsshub.app/iresearch/report/3/1)   |
+| [服装行业](https://www.iresearch.com.cn/report.shtml?type=3\\&classId=2)     | [2](https://rsshub.app/iresearch/report/3/2)   |
+| [美妆行业](https://www.iresearch.com.cn/report.shtml?type=3\\&classId=3)     | [3](https://rsshub.app/iresearch/report/3/3)   |
+| [食品饮料行业](https://www.iresearch.com.cn/report.shtml?type=3\\&classId=4) | [4](https://rsshub.app/iresearch/report/3/4)   |
+| [酒行业](https://www.iresearch.com.cn/report.shtml?type=3\\&classId=5)       | [5](https://rsshub.app/iresearch/report/3/5)   |
+| [媒体文娱](https://www.iresearch.com.cn/report.shtml?classId=59)            | [59](https://rsshub.app/iresearch/report/1/59) |
+| [广告营销](https://www.iresearch.com.cn/report.shtml?classId=89)            | [89](https://rsshub.app/iresearch/report/1/89) |
+| [游戏行业](https://www.iresearch.com.cn/report.shtml?classId=90)            | [90](https://rsshub.app/iresearch/report/1/90) |
+| [视频媒体](https://www.iresearch.com.cn/report.shtml?classId=91)            | [91](https://rsshub.app/iresearch/report/1/91) |
+| [消费电商](https://www.iresearch.com.cn/report.shtml?classId=69)            | [69](https://rsshub.app/iresearch/report/1/69) |
+| [电子商务](https://www.iresearch.com.cn/report.shtml?classId=86)            | [86](https://rsshub.app/iresearch/report/1/86) |
+| [消费者洞察](https://www.iresearch.com.cn/report.shtml?classId=87)          | [87](https://rsshub.app/iresearch/report/1/87) |
+| [旅游行业](https://www.iresearch.com.cn/report.shtml?classId=88)            | [88](https://rsshub.app/iresearch/report/1/88) |
+| [汽车行业](https://www.iresearch.com.cn/report.shtml?classId=80)            | [80](https://rsshub.app/iresearch/report/1/80) |
+| [教育行业](https://www.iresearch.com.cn/report.shtml?classId=63)            | [63](https://rsshub.app/iresearch/report/1/63) |
+| [企业服务](https://www.iresearch.com.cn/report.shtml?classId=60)            | [60](https://rsshub.app/iresearch/report/1/60) |
+| [网络服务](https://www.iresearch.com.cn/report.shtml?classId=84)            | [84](https://rsshub.app/iresearch/report/1/84) |
+| [应用服务](https://www.iresearch.com.cn/report.shtml?classId=85)            | [85](https://rsshub.app/iresearch/report/1/85) |
+| [AI 大数据](https://www.iresearch.com.cn/report.shtml?classId=65)           | [65](https://rsshub.app/iresearch/report/1/65) |
+| [人工智能](https://www.iresearch.com.cn/report.shtml?classId=83)            | [83](https://rsshub.app/iresearch/report/1/83) |
+| [物流行业](https://www.iresearch.com.cn/report.shtml?classId=75)            | [75](https://rsshub.app/iresearch/report/1/75) |
+| [金融行业](https://www.iresearch.com.cn/report.shtml?classId=70)            | [70](https://rsshub.app/iresearch/report/1/70) |
+| [支付行业](https://www.iresearch.com.cn/report.shtml?classId=82)            | [82](https://rsshub.app/iresearch/report/1/82) |
+| [房产行业](https://www.iresearch.com.cn/report.shtml?classId=68)            | [68](https://rsshub.app/iresearch/report/1/68) |
+| [医疗健康](https://www.iresearch.com.cn/report.shtml?classId=62)            | [62](https://rsshub.app/iresearch/report/1/62) |
+| [先进制造](https://www.iresearch.com.cn/report.shtml?classId=61)            | [61](https://rsshub.app/iresearch/report/1/61) |
+| [能源环保](https://www.iresearch.com.cn/report.shtml?classId=77)            | [77](https://rsshub.app/iresearch/report/1/77) |
+| [区块链](https://www.iresearch.com.cn/report.shtml?classId=76)              | [76](https://rsshub.app/iresearch/report/1/76) |
+| [其他](https://www.iresearch.com.cn/report.shtml?classId=81)                | [81](https://rsshub.app/iresearch/report/1/81) |
 
-</details>
-`,
+</details>`,
     categories: ['other'],
     features: {
         requireConfig: false,

@@ -74,8 +74,7 @@ export const route: Route = {
 
 ::: tip
 前往 [用户排名](https://www.jisilu.cn/users/) 查看更多用户。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

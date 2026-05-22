@@ -37,12 +37,12 @@ export const route: Route = {
     description: `Sources
 
 | Posts | OnlyFans | Fansly | CandFans |
-| ----- | -------- | ------- | -------- |
-| posts | onlyfans | fansly   | candfans |
+| ----- | -------- | ------ | -------- |
+| posts | onlyfans | fansly | candfans |
 
 ::: tip
-  When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
-  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
+When \`posts\` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.
 :::`,
 };
 
@@ -87,9 +87,7 @@ async function handler(ctx) {
             }
             const filesHTML = renderSource(i);
             let $ = load(filesHTML);
-            const coomerFiles = $('img, a, audio, video').map(function () {
-                return $(this).prop('outerHTML')!;
-            });
+            const coomerFiles = $('img, a, audio, video').map((_, el) => $(el).prop('outerHTML')!);
             let desc = '';
             if (i.content) {
                 desc += `<div>${i.content}</div>`;
@@ -97,11 +95,11 @@ async function handler(ctx) {
             $ = load(desc);
             let count = 0;
             const regex = /downloads.fanbox.cc/;
-            $('a').each(function () {
-                const link = $(this).attr('href');
+            $('a').each((_, el) => {
+                const link = $(el).attr('href');
                 if (regex.test(link!)) {
                     count++;
-                    $(this).replaceWith(coomerFiles[count]);
+                    $(el).replaceWith(coomerFiles[count]);
                 }
             });
             desc = (coomerFiles.length > 0 ? coomerFiles[0] : '') + $.html();
@@ -110,8 +108,8 @@ async function handler(ctx) {
             }
 
             let enclosureInfo = {};
-            load(desc)('audio source, video source').each(function () {
-                const src = $(this).attr('src') ?? '';
+            load(desc)('audio source, video source').each((_, el) => {
+                const src = $(el).attr('src') ?? '';
                 const mimeType =
                     {
                         m4a: 'audio/mp4',

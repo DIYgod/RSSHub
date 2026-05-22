@@ -42,8 +42,8 @@ const parseArticle = (item) =>
         article.find('.bylineWrap').each((i, e) => {
             $(e)
                 .find('p')
-                .each(function () {
-                    $(this).replaceWith($(this).html());
+                .each((_, el) => {
+                    $(el).replaceWith($(el).html());
                 });
         });
 

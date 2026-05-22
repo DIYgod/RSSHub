@@ -30,17 +30,17 @@ export const route: Route = {
 | ------- | ------ | ------ | ---- |
 | en      | ja     | ko     | zh   |
 
-  **Category**
+**Category**
 
 | Chinese subtitles AV | Censored       | Amateur          | Uncensored       | Asian self-timer | H comics     |
 | -------------------- | -------------- | ---------------- | ---------------- | ---------------- | ------------ |
-| chinese_list        | censored_list | amateurjav_list | uncensored_list | amateur_list    | hcomic_list |
+| chinese\\_list        | censored\\_list | amateurjav\\_list | uncensored\\_list | amateur\\_list    | hcomic\\_list |
 
 | Chinese subtitles AV random | Censored random  | Amateur random     | Uncensored random  | Asian self-timer random | H comics random |
 | --------------------------- | ---------------- | ------------------ | ------------------ | ----------------------- | --------------- |
-| chinese_random             | censored_random | amateurjav_random | uncensored_random | amateur_random         | hcomic_random  |
+| chinese\\_random             | censored\\_random | amateurjav\\_random | uncensored\\_random | amateur\\_random         | hcomic\\_random  |
 
-  **Server**
+**Server**
 
 | All Server | fembed(Full DL) | streamsb(Full DL) | doodstream | streamtape(Full DL) | avgle | embedgram | videovard(Full DL) |
 | ---------- | --------------- | ----------------- | ---------- | ------------------- | ----- | --------- | ------------------ |

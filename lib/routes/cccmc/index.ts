@@ -152,8 +152,8 @@ export const route: Route = {
 | [党群动态](https://www.cccmc.org.cn/shdj/dqdt/) | [党内法规](https://www.cccmc.org.cn/shdj/dnfg/) | [青年工作](https://www.cccmc.org.cn/shdj/qngz/) |
 | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
 | [shdj/dqdt](https://rsshub.app/cccmc/shdj/dqdt) | [shdj/dnfg](https://rsshub.app/cccmc/shdj/dnfg) | [shdj/qngz](https://rsshub.app/cccmc/shdj/qngz) |
-</details>
-`,
+
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

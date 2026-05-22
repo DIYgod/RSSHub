@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { BASE_URL, enhanceItemsWithSummaries, fetchPageHtml, parseArticles } from './utils';
 
@@ -43,7 +43,7 @@ async function handler(ctx) {
     const { tag, sort = 'trending' } = ctx.req.param();
     const url = `${BASE_URL}/${tag}/${sort}`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     try {
         const html = await fetchPageHtml(browser, url, 'article');
         const $ = load(html);

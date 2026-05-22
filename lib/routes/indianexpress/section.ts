@@ -99,10 +99,9 @@ export const route: Route = {
             description: 'Section ID, `trending` as Trending by default',
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Section](https://indianexpress.com/), where the source URL is \`https://indianexpress.com/\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/indianexpress/section/explained\`](https://rsshub.app/indianexpress/section/explained).
-:::
-`,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

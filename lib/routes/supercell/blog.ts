@@ -30,30 +30,30 @@ export const route: Route = {
     handler: handler as any,
     description: `Supported games
 
-| Game              | Slug          |
-| ----------------- | ------------- |
-| Clash Royale      | clashroyale   |
-| Brawl Stars       | brawlstars    |
-| Clash of Clans    | clashofclans  |
-| Boom Beach        | boombeach     |
-| Hay Day           | hayday        |
+| Game           | Slug         |
+| -------------- | ------------ |
+| Clash Royale   | clashroyale  |
+| Brawl Stars    | brawlstars   |
+| Clash of Clans | clashofclans |
+| Boom Beach     | boombeach    |
+| Hay Day        | hayday       |
 
 Language codes
 
-| Language           | Code    |
-| ------------------ | ------- |
-| English            |         |
-| 繁體中文           | zh      |
-| 简体中文           | zh-hans |
-| Français           | fr      |
-| Deutsch            | de      |
-| Indonesia          | id      |
-| Italiano           | it      |
-| 日本語             | ja      |
-| 한국어             | ko      |
-| Português          | pt      |
-| Русский            | ru      |
-| Español            | es      |`,
+| Language  | Code    |
+| --------- | ------- |
+| English   |         |
+| 繁體中文  | zh      |
+| 简体中文  | zh-hans |
+| Français  | fr      |
+| Deutsch   | de      |
+| Indonesia | id      |
+| Italiano  | it      |
+| 日本語    | ja      |
+| 한국어    | ko      |
+| Português | pt      |
+| Русский   | ru      |
+| Español   | es      |`,
 };
 
 const GAME_NAMES = {

@@ -67,8 +67,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('img').each(function () {
-                    content(this).html(`<img src="${content(this).attr('data-src')}">`);
+                content('img').each((_, el) => {
+                    content(el).html(`<img src="${content(el).attr('data-src')}">`);
                 });
 
                 const image = content('meta[property="og:image"]').attr('content');

@@ -20,11 +20,9 @@ export const route: Route = {
     name: '宁波市人力资源和社会保障局-公告',
     url: 'rsj.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
-    description: `
-| 公告类别         | colId |
-| ------------ | -- |
-| 事业单位进人公告     | 1229676740  |
-    `,
+    description: `| 公告类别         | colId      |
+| ---------------- | ---------- |
+| 事业单位进人公告 | 1229676740 |`,
     async handler(ctx) {
         const { colId = '1229676740' } = ctx.req.param();
         const url = `http://rsj.ningbo.gov.cn/col/col${colId}/index.html`;

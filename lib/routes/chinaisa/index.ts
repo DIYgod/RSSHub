@@ -21,8 +21,8 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
-    description: `| 栏目     | id                                               |
-| -------- | --------------------------------------------------------------- |
+    description: `| 栏目     | id                                                               |
+| -------- | ---------------------------------------------------------------- |
 | 钢协动态 | 58af05dfb6b4300151760176d2aad0a04c275aaadbb1315039263f021f920dcd |
 | 钢协要闻 | 67ea4f106bd8f0843c0538d43833c463a0cd411fc35642cbd555a5f39fcf352b |
 | 会议报道 | e5070694f299a43b20d990e53b6a69dc02e755fef644ae667cf75deaff80407a |
@@ -158,6 +158,7 @@ export const route: Route = {
 | 钢协刊物   | ed51af486f6d4b313b3aaf8fea0b32a4a2d4a89714c61992caf01942eb61831b |
 | 中国钢铁业 | 6440bdfccadf87908b13d8bbd9a66bb89bbd60cc5e175c018ca1c62c7d55e61f |
 | 钢铁信息   | 2b66af0b2cda9b420739e55e255a6f72f277557670ef861c9956da8fde25da05 |
+
 </details>`,
 };
 

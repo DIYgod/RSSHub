@@ -19,9 +19,9 @@ export const route: Route = {
     name: '游戏折扣',
     maintainers: ['tssujt'],
     handler,
-    description: `| PC  | Switch  | PSN   | Xbox |
-| ----- | ------ | ----- | ----- |
-| pc    | switch | psn   | xbox  |`,
+    description: `| PC | Switch | PSN | Xbox |
+| -- | ------ | --- | ---- |
+| pc | switch | psn | xbox |`,
 };
 
 const PLATFORM_MAP = {

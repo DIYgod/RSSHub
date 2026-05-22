@@ -17,7 +17,7 @@ export const route: Route = {
     maintainers: ['KarasuShin'],
     handler,
     description: `::: tip
-    The \`seriesName\` can be extracted from the Series page URL: \`https://web.dev/series/:seriesName\`
+The \`seriesName\` can be extracted from the Series page URL: \`https://web.dev/series/:seriesName\`
 :::`,
 };
 

@@ -144,9 +144,8 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     name: 'Channel',
     maintainers: ['DIYgod', 'Rongronggg9', 'synchrone', 'pseudoyu'],
     handler,
-    description: `
-::: tip
-  Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
+    description: `::: tip
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
 :::`,
 };
 
@@ -659,13 +658,13 @@ async function handler(ctx) {
                 if (msgTypes.includes(UNSUPPORTED)) {
                     if (unsupportedNodes.length) {
                         unsupportedHtml += '<blockquote>';
-                        unsupportedNodes.find('.message_media_not_supported_label').each(function () {
-                            const $this = $(this);
+                        unsupportedNodes.find('.message_media_not_supported_label').each((_, el) => {
+                            const $this = $(el);
                             unsupportedTitle += $this.text();
                             unsupportedHtml += `<p>${$this.text()}</p>`;
                         });
-                        unsupportedNodes.find('.message_media_view_in_telegram').each(function () {
-                            const $this = $(this);
+                        unsupportedNodes.find('.message_media_view_in_telegram').each((_, el) => {
+                            const $this = $(el);
                             unsupportedHtml += $this.attr('href') ? `<p><a href="${$this.attr('href')}">${$this.text()}</a></p>` : `<p>${$this.text()}</p>`;
                         });
                         unsupportedHtml += '</blockquote>';

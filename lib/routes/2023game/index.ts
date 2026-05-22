@@ -27,9 +27,9 @@ export const route: Route = {
     url: 'www.2023game.com/',
     description: `分类
 
-| PS4游戏 | switch游戏 | 3DS游戏 | PSV游戏 | Xbox360 | PS3游戏 | 世嘉MD/SS | PSP游戏 | PC周边 | 怀旧掌机 | 怀旧主机 | PS4教程 | PS4金手指 | switch金手指 | switch教程 | switch补丁 | switch主题 | switch存档 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| ps4 | sgame | 3ds | psv | jiaocheng | ps3yx | zhuji.md | zhangji.psp | pcgame | zhangji | zhuji | ps4.psjc | ps41.ps4pkg | nsaita.cundang | nsaita.pojie | nsaita.buding | nsaita.zhutie | nsaita.zhuti |`,
+| PS4 游戏 | switch 游戏 | 3DS 游戏 | PSV 游戏 | Xbox360   | PS3 游戏 | 世嘉 MD/SS | PSP 游戏    | PC 周边 | 怀旧掌机 | 怀旧主机 | PS4 教程 | PS4 金手指  | switch 金手指  | switch 教程  | switch 补丁   | switch 主题   | switch 存档  |
+| -------- | ----------- | -------- | -------- | --------- | -------- | ---------- | ----------- | ------- | -------- | -------- | -------- | ----------- | -------------- | ------------ | ------------- | ------------- | ------------ |
+| ps4      | sgame       | 3ds      | psv      | jiaocheng | ps3yx    | zhuji.md   | zhangji.psp | pcgame  | zhangji  | zhuji    | ps4.psjc | ps41.ps4pkg | nsaita.cundang | nsaita.pojie | nsaita.buding | nsaita.zhutie | nsaita.zhuti |`,
 };
 
 async function handler(ctx: Context): Promise<Data> {

@@ -250,27 +250,26 @@ export const route: Route = {
     example: '/the',
     parameters: { filter: '过滤器，见下方描述' },
     description: `::: tip
-  如果你想订阅特定类别或出版物，可以在路由中填写 filter 参数。
+如果你想订阅特定类别或出版物，可以在路由中填写 filter 参数。
 
-  \`/category/rawj7o4ypewv94\` 可以实现订阅 [时局](https://river.to/occasus/rawj7o4ypewv94) 类别。此时，路由是 [\`/the/category/rawj7o4ypewv94/\`](https://rsshub.app/the/category/rawj7o4ypewv94).
+\`/category/rawj7o4ypewv94\` 可以实现订阅 [时局](https://river.to/occasus/rawj7o4ypewv94) 类别。此时，路由是 [\`/the/category/rawj7o4ypewv94/\`](https://rsshub.app/the/category/rawj7o4ypewv94).
 
-  也可以直接使用 slug：[\`/the/rawj7o4ypewv94\`](https://rsshub.app/the/rawj7o4ypewv94)
+也可以直接使用 slug：[\`/the/rawj7o4ypewv94\`](https://rsshub.app/the/rawj7o4ypewv94)
 :::
 
-| 分类                                                      | ID                                                               |
-| --------------------------------------------------------- | ---------------------------------------------------------------- |
-| [时局](https://river.to/occasus/rawj7o4ypewv94)           | [rawj7o4ypewv94](https://rsshub.app/the/category/rawj7o4ypewv94) |
-| [剩余价值](https://river.to/occasus/rawmw7dsta2jew)       | [rawmw7dsta2jew](https://rsshub.app/the/category/rawmw7dsta2jew) |
-| [Beijing](https://river.to/occasus/rawbcvxkktdkq8)        | [rawbcvxkktdkq8](https://rsshub.app/the/category/rawbcvxkktdkq8) |
-| [稳中向好](https://river.to/occasus/raw4krvx85dh27)       | [raw4krvx85dh27](https://rsshub.app/the/category/raw4krvx85dh27) |
-| [水深火热](https://river.to/occasus/rawtn8jpsc6uvv)       | [rawtn8jpsc6uvv](https://rsshub.app/the/category/rawtn8jpsc6uvv) |
-| [东升西降](https://river.to/occasus/rawai5kd4z15il)       | [rawai5kd4z15il](https://rsshub.app/the/category/rawai5kd4z15il) |
-| [大局](https://river.to/occasus/raw2efkzejrsx8)           | [raw2efkzejrsx8](https://rsshub.app/the/category/raw2efkzejrsx8) |
-| [境外势力](https://river.to/occasus/rawmpalhnlphuc)       | [rawmpalhnlphuc](https://rsshub.app/the/category/rawmpalhnlphuc) |
-| [副刊](https://river.to/occasus/rawxght2jr2u5z)           | [rawxght2jr2u5z](https://rsshub.app/the/category/rawxght2jr2u5z) |
-| [天高地厚](https://river.to/occasus/rawrsnh9zakqdx)       | [rawrsnh9zakqdx](https://rsshub.app/the/category/rawrsnh9zakqdx) |
-| [Oyster](https://river.to/occasus/rawdhl9hugdfn9)         | [rawdhl9hugdfn9](https://rsshub.app/the/category/rawdhl9hugdfn9) |
-  `,
+| 分类                                                | ID                                                               |
+| --------------------------------------------------- | ---------------------------------------------------------------- |
+| [时局](https://river.to/occasus/rawj7o4ypewv94)     | [rawj7o4ypewv94](https://rsshub.app/the/category/rawj7o4ypewv94) |
+| [剩余价值](https://river.to/occasus/rawmw7dsta2jew) | [rawmw7dsta2jew](https://rsshub.app/the/category/rawmw7dsta2jew) |
+| [Beijing](https://river.to/occasus/rawbcvxkktdkq8)  | [rawbcvxkktdkq8](https://rsshub.app/the/category/rawbcvxkktdkq8) |
+| [稳中向好](https://river.to/occasus/raw4krvx85dh27) | [raw4krvx85dh27](https://rsshub.app/the/category/raw4krvx85dh27) |
+| [水深火热](https://river.to/occasus/rawtn8jpsc6uvv) | [rawtn8jpsc6uvv](https://rsshub.app/the/category/rawtn8jpsc6uvv) |
+| [东升西降](https://river.to/occasus/rawai5kd4z15il) | [rawai5kd4z15il](https://rsshub.app/the/category/rawai5kd4z15il) |
+| [大局](https://river.to/occasus/raw2efkzejrsx8)     | [raw2efkzejrsx8](https://rsshub.app/the/category/raw2efkzejrsx8) |
+| [境外势力](https://river.to/occasus/rawmpalhnlphuc) | [rawmpalhnlphuc](https://rsshub.app/the/category/rawmpalhnlphuc) |
+| [副刊](https://river.to/occasus/rawxght2jr2u5z)     | [rawxght2jr2u5z](https://rsshub.app/the/category/rawxght2jr2u5z) |
+| [天高地厚](https://river.to/occasus/rawrsnh9zakqdx) | [rawrsnh9zakqdx](https://rsshub.app/the/category/rawrsnh9zakqdx) |
+| [Oyster](https://river.to/occasus/rawdhl9hugdfn9)   | [rawdhl9hugdfn9](https://rsshub.app/the/category/rawdhl9hugdfn9) |`,
     categories: ['new-media'],
 
     features: {

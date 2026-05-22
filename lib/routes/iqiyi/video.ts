@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 // /iqiyi/user/video/:uid
 // http://localhost:1200/iqiyi/user/video/2289191062
@@ -36,8 +36,8 @@ async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const link = `https://www.iqiyi.com/u/${uid}/videos`;
 
-    // Use puppeteer because iqiyi page has a delay.
-    const browser = await puppeteer();
+    // Use Playwright because iqiyi page has a delay.
+    const browser = await playwright();
     const data = await cache.tryGet(
         link,
         async () => {

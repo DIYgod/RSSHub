@@ -152,8 +152,7 @@ To subscribe to [Repositories](https://gitstar-ranking.com/repositories), where 
 | ---------------------------------------------------------- | ----------------------------------------------------------------- |
 | [Users](https://gitstar-ranking.com/users)                 | [users](https://rsshub.app/gitstar-ranking/users)                 |
 | [Organizations](https://gitstar-ranking.com/organizations) | [organizations](https://rsshub.app/gitstar-ranking/organizations) |
-| [Repositories](https://gitstar-ranking.com/repositories)   | [repositories](https://rsshub.app/gitstar-ranking/repositories)   |
-`,
+| [Repositories](https://gitstar-ranking.com/repositories)   | [repositories](https://rsshub.app/gitstar-ranking/repositories)   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

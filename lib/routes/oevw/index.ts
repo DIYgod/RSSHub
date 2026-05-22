@@ -18,9 +18,8 @@ export const route: Route = {
     path: '/:json?',
     maintainers: ['sk22'],
     categories: ['other'],
-    description: `
-When applying a filter on https://www.oevw.at/suche, a POST request is sent
-to https://www.oevw.at/suche/filter. You can take its JSON body, URL-encode it
+    description: `When applying a filter on <https://www.oevw.at/suche>, a POST request is sent
+to <https://www.oevw.at/suche/filter>. You can take its JSON body, URL-encode it
 (\`encodeURIComponent('{...}')\`) and append it to the URL, see example URL.
 for this route.`,
     parameters: {

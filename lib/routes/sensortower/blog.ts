@@ -67,10 +67,10 @@ async function handler(ctx) {
                 content('h5').parent().remove();
                 content('div[data-testid="Text-embedded-entry-block"]').remove();
 
-                content('img').each(function () {
-                    const image = (content(this).attr('srcset') ?? content(this).attr('src')).split('?w=')[0];
+                content('img').each((_, el) => {
+                    const image = (content(el).attr('srcset') ?? content(el).attr('src')).split('?w=')[0];
 
-                    content(this).replaceWith(renderDescription({ image }));
+                    content(el).replaceWith(renderDescription({ image }));
                 });
 
                 item.title = detail.title;

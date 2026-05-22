@@ -89,11 +89,11 @@ const processItems = async (apiUrl, limit, tryGet, ...params) => {
 
                 const content = load(data.content);
 
-                content('img').each(function () {
-                    if (content(this).prop('src')) {
-                        content(this).prop('src', content(this).prop('src').split('?')[0]);
+                content('img').each((_, el) => {
+                    if (content(el).prop('src')) {
+                        content(el).prop('src', content(el).prop('src').split('?')[0]);
                     } else {
-                        content(this).remove();
+                        content(el).remove();
                     }
                 });
 

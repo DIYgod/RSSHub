@@ -39,9 +39,9 @@ export const route: Route = {
     maintainers: ['boxie123'],
     handler,
     url: 'scms.ustc.edu.cn/',
-    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他 |
-| -------- | -------- | -------- | -------- | -------- |
-| ynxw     | tzgg     | kydt     | xshd     | 自定义id  |`,
+    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他      |
+| -------- | -------- | -------- | -------- | --------- |
+| ynxw     | tzgg     | kydt     | xshd     | 自定义 id |`,
 };
 
 async function handler(ctx) {

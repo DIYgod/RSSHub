@@ -5,13 +5,11 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/subscription/:parameters?',
-    description: `
-1. If no specific parameters are specified, all subscription sources will be output by default.
+    description: `1. If no specific parameters are specified, all subscription sources will be output by default.
 2. Please obtain the Category ID or Subscription Source ID on the \`Category\` (shortcut \`g\` \`c\`) or \`Source\` (shortcut \`g\` \`f\`) page. The URL of each category (or subscription source) will display its ID information.
 3. Support for category names and category IDs, to output multiple categories, please repeat entering \`category=\` and connect with \`&\`, or directly use **English** commas between different category names. For example, you can subscribe through \`/miniflux/subscription/category=technology&category=1\` or \`/miniflux/subscription/categories=technology,1\`.
 4. Support specifying the subscription source name or subscription source ID, similar to setting categories. For example, you can subscribe through \`/miniflux/subscription/feed=1&feed=Archdaily\` or \`/miniflux/subscription/feeds=1,Archdaily\`.
-5. Support simultaneously specifying subscription source information and category information; it will output subscription sources that meet the selected categories' criteria. Consider an example: by using \`/miniflux/subscription/feeds=1,archdaily&category=art,7\`, if the Subscription Source ID is 1 or the Subscription Source Name is ArchDaily indeed falls under Category 'art' or has a Category ID of 7, then output that subscription source information.
-    `,
+5. Support simultaneously specifying subscription source information and category information; it will output subscription sources that meet the selected categories' criteria. Consider an example: by using \`/miniflux/subscription/feeds=1,archdaily&category=art,7\`, if the Subscription Source ID is 1 or the Subscription Source Name is ArchDaily indeed falls under Category 'art' or has a Category ID of 7, then output that subscription source information.`,
     categories: ['other'],
     example: '/miniflux/subscription/categories=test',
     parameters: {

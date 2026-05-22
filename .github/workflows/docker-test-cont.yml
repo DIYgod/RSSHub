@@ -42,7 +42,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+            - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
             - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
               with:
@@ -70,7 +70,7 @@ jobs:
 
             - name: Fetch Docker image
               if: (env.TEST_CONTINUE)
-              uses: dawidd6/action-download-artifact@8305c0f1062bb0d184d09ef4493ecb9288447732 # v20
+              uses: dawidd6/action-download-artifact@b6e2e70617bc3265edd6dab6c906732b2f1ae151 # v21
               with:
                   workflow: ${{ github.event.workflow_run.workflow_id }}
                   run_id: ${{ github.event.workflow_run.id }}
@@ -141,12 +141,16 @@ jobs:
 
             - name: Pull Request Labeler
               if: ${{ failure() }}
-              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
-                  actions: 'add-labels'
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.number }}
-                  labels: 'auto: DO NOT merge'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
 
             - name: Print Docker container logs
               if: ${{ always() }}
@@ -177,17 +181,26 @@ jobs:
                     >> "${GITHUB_OUTPUT}"
 
             - name: Pull Request Labeler
-              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
-                  actions: 'add-labels'
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.number }}
-                  labels: 'auto: DO NOT merge'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.addLabels({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          labels: ['auto: DO NOT merge'],
+                      })
 
             - name: Close broken PR
               if: ${{ steps.source-run-info.outputs.author_association != 'OWNER' && steps.source-run-info.outputs.author_association != 'COLLABORATOR' && steps.source-run-info.outputs.author_association != 'MEMBER' }}
-              uses: actions-cool/issues-helper@200c78641dbf33838311e5a1e0c31bbdb92d7cf0 # v3.8.0
+              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
               with:
-                  actions: 'close-issue'
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  issue-number: ${{ steps.source-run-info.outputs.number }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      await github.rest.issues.update({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ steps.source-run-info.outputs.number }},
+                          state: 'closed',
+                      })

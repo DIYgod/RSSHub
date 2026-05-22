@@ -67,8 +67,8 @@ async function handler(ctx) {
                 item.enclosure_url = links.eq(-1).attr('href');
                 item.description = `<video controls><source src="${item.enclosure_url}"></video><br>`;
 
-                links.each(function () {
-                    item.description += `<li><a href="${content(this).attr('href')}">${content(this).text()}</a></li>`;
+                links.each((_, el) => {
+                    item.description += `<li><a href="${content(el).attr('href')}">${content(el).text()}</a></li>`;
                 });
 
                 return item;

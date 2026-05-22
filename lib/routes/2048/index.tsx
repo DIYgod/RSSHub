@@ -133,13 +133,13 @@ async function handler(ctx) {
 
                 content('.ads, .tips').remove();
 
-                content('ignore_js_op').each(function () {
-                    const img = content(this).find('img');
+                content('ignore_js_op').each((_, el) => {
+                    const img = content(el).find('img');
                     const originalSrc = img.attr('data-original');
                     const fallbackSrc = img.attr('src');
                     // 判断是否有 data-original 属性，若有则使用其值，否则使用 src 属性值
                     const imgSrc = originalSrc || fallbackSrc;
-                    content(this).replaceWith(`<img src="${imgSrc}">`);
+                    content(el).replaceWith(`<img src="${imgSrc}">`);
                 });
 
                 item.author = content('.fl.black').first().text();
@@ -174,8 +174,8 @@ async function handler(ctx) {
                     }
                 }
 
-                content('.showhide img').each(function () {
-                    readTpc.append(`<br><img style="max-width: 100%;" src="${content(this).attr('src')}">`);
+                content('.showhide img').each((_, el) => {
+                    readTpc.append(`<br><img style="max-width: 100%;" src="${content(el).attr('src')}">`);
                 });
 
                 item.description = readTpc.html();

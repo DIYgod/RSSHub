@@ -30,7 +30,7 @@ export const route: Route = {
     maintainers: ['LogicJake', 'nczitzk'],
     handler,
     description: `::: tip
-  更多社区参见 [社区](https://bbs.hupu.com)
+更多社区参见 [社区](https://bbs.hupu.com)
 :::`,
 };
 

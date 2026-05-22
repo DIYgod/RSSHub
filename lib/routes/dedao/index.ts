@@ -12,9 +12,9 @@ export const route: Route = {
     categories: ['new-media'],
     example: '/dedao',
     parameters: { category: '分类，见下表，默认为`news`' },
-    description: `| 新闻 | 人物故事 | 视频 |
-| ---- | ---- | ---- |
-| news | figure | video |`,
+    description: `| 新闻 | 人物故事 | 视频  |
+| ---- | -------- | ----- |
+| news | figure   | video |`,
     handler,
 };
 

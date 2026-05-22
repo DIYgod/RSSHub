@@ -1,8 +1,8 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
-import { baseUrl, getItem, parseList, puppeteerFetch } from './utils';
+import { baseUrl, getItem, parseList, playwrightFetch } from './utils';
 
 export const route: Route = {
     path: '/studios/:studio',
@@ -26,8 +26,8 @@ export const route: Route = {
 async function handler(ctx) {
     const { studio } = ctx.req.param();
 
-    const browser = await puppeteer();
-    const response = await puppeteerFetch(`${baseUrl}/api/studios/${studio}?page=0`, browser);
+    const browser = await playwright();
+    const response = await playwrightFetch(`${baseUrl}/api/studios/${studio}?page=0`, browser);
 
     const list = parseList(response.videos);
 

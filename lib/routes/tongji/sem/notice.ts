@@ -21,10 +21,9 @@ export const route: Route = {
     maintainers: ['sitdownkevin'],
     url: 'sem.tongji.edu.cn/semch',
     handler,
-    description: `| 学院通知 | 招生通知 | 学术观点 | 新闻 | 活动 | 视点 | 教师与行政人员招聘 |
-| -------- | -------------- | ------------------ | ---- | ---------- | --------- | ------------------ |
-| notice   | enrollment     | academic-paper     | news | events     | focus     | collegerecruitment |
-`,
+    description: `| 学院通知 | 招生通知   | 学术观点       | 新闻 | 活动   | 视点  | 教师与行政人员招聘 |
+| -------- | ---------- | -------------- | ---- | ------ | ----- | ------------------ |
+| notice   | enrollment | academic-paper | news | events | focus | collegerecruitment |`,
 };
 
 async function handler(ctx) {

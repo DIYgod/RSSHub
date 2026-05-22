@@ -178,27 +178,27 @@ export const route: Route = {
         },
     ],
     name: 'Announcement',
-    description: `
-type:
-| Type | Description |
-| --- | --- |
-| all | 全部通知 |
-| new-listing | 新币上线 |
-| latest-activities | 最新活动 |
-| new-announcement | 最新公告 |
+    description: `type:
+
+| Type              | Description |
+| ----------------- | ----------- |
+| all               | 全部通知    |
+| new-listing       | 新币上线    |
+| latest-activities | 最新活动    |
+| new-announcement  | 最新公告    |
 
 lang:
-| Lang | Description |
-| ---   | ---   |
-| zh-CN | 中文 |
-| en-US | English |
-| es-ES | Español |
-| fr-FR | Français |
-| de-DE | Deutsch |
-| ja-JP | 日本語 |
-| ru-RU | Русский |
-| ar-SA | العربية |
-`,
+
+| Lang  | Description |
+| ----- | ----------- |
+| zh-CN | 中文        |
+| en-US | English     |
+| es-ES | Español     |
+| fr-FR | Français    |
+| de-DE | Deutsch     |
+| ja-JP | 日本語      |
+| ru-RU | Русский     |
+| ar-SA | العربية     |`,
     maintainers: ['YukiCoco'],
     handler,
 };

@@ -57,11 +57,11 @@ export const route: Route = {
     example: '/aibase/topic',
     parameters: { id: '标签，默认为空，即全部产品，可在对应标签页 URL 中找到', filter: '过滤器，默认为 `id` 即最新，可选 `pv` 即热门' },
     description: `::: tip
-  若订阅 [AI](https://top.aibase.com/topic/AI)，网址为 \`https://top.aibase.com/topic/AI\`。截取 \`https://top.aibase.com/topic\` 到末尾的部分 \`AI\` 作为参数填入，此时路由为 [\`/aibase/topic/AI\`](https://rsshub.app/aibase/topic/AI)。
+若订阅 [AI](https://top.aibase.com/topic/AI)，网址为 \`https://top.aibase.com/topic/AI\`。截取 \`https://top.aibase.com/topic\` 到末尾的部分 \`AI\` 作为参数填入，此时路由为 [\`/aibase/topic/AI\`](https://rsshub.app/aibase/topic/AI)。
 :::
 
 ::: tip
-  此处查看 [全部标签](https://top.aibase.com/topic)
+此处查看 [全部标签](https://top.aibase.com/topic)
 :::
 
 <details>
@@ -88,8 +88,8 @@ export const route: Route = {
 | [笔记](https://top.aibase.com/topic/%E7%AC%94%E8%AE%B0)                                             | [搜索引擎](https://top.aibase.com/topic/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E)                       | [计算机视觉](https://top.aibase.com/topic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89) | [社区](https://top.aibase.com/topic/%E7%A4%BE%E5%8C%BA)                                  | [效率](https://top.aibase.com/topic/%E6%95%88%E7%8E%87)                       |
 | [知识管理](https://top.aibase.com/topic/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86)                       | [LLM](https://top.aibase.com/topic/LLM)                                                             | [智能聊天](https://top.aibase.com/topic/%E6%99%BA%E8%83%BD%E8%81%8A%E5%A4%A9)            | [社交](https://top.aibase.com/topic/%E7%A4%BE%E4%BA%A4)                                  | [语言学习](https://top.aibase.com/topic/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0) |
 | [娱乐](https://top.aibase.com/topic/%E5%A8%B1%E4%B9%90)                                             | [简历](https://top.aibase.com/topic/%E7%AE%80%E5%8E%86)                                             | [OpenAI](https://top.aibase.com/topic/OpenAI)                                            | [客户服务](https://top.aibase.com/topic/%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1)            | [室内设计](https://top.aibase.com/topic/%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1) |
-</details>
-    `,
+
+</details>`,
     categories: ['new-media'],
 
     features: {

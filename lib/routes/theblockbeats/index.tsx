@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -11,6 +12,56 @@ import { parseDate } from '@/utils/parse-date';
 const domain = 'theblockbeats.info';
 const rootUrl = `https://www.${domain}`;
 const apiBase = 'https://api.blockbeats.cn';
+const apiPrefix = '/v2';
+const appKey = 'bb_demo_app';
+const appSecret = 'bb_demo_secret_2026_01';
+
+type ApiQuery = Record<string, number | string | undefined>;
+
+type BlockBeatsItem = DataItem & {
+    articleId: number;
+    image?: string;
+};
+
+const createNonce = (length = 16) => {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let nonce = '';
+
+    for (let i = 0; i < length; i++) {
+        nonce += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    return nonce;
+};
+
+const cleanQuery = (query: ApiQuery) => Object.fromEntries(Object.entries(query).filter(([, value]) => value !== undefined)) as Record<string, number | string>;
+
+const buildSignedHeaders = (path: string, query: Record<string, number | string>) => {
+    const timestamp = Date.now().toString();
+    const nonce = createNonce();
+    const canonicalQuery = Object.keys(query)
+        .toSorted()
+        .map((key) => `${key}=${query[key] ?? ''}`)
+        .join('&');
+    const signature = CryptoJS.HmacSHA256(`GET|${path}|${timestamp}|${nonce}|${canonicalQuery}`, appSecret).toString();
+
+    return {
+        'X-App-Key': appKey,
+        'X-Timestamp': timestamp,
+        'X-Nonce': nonce,
+        'X-Signature': signature,
+        'X-Encrypt': 'false',
+    };
+};
+
+const fetchApi = (path: string, query: ApiQuery) => {
+    const cleanedQuery = cleanQuery(query);
+
+    return ofetch(`${apiBase}${apiPrefix}${path}`, {
+        query: cleanedQuery,
+        headers: buildSignedHeaders(`${apiPrefix}${path}`, cleanedQuery),
+    });
+};
 
 const render = (data: { image?: string; description?: string }) => {
     const html = renderToString(<BlockBeatsDescription image={data.image} description={data.description} />);
@@ -41,12 +92,12 @@ const channelMap = {
     newsflash: {
         title: '快讯',
         link: `${rootUrl}/newsflash`,
-        api: `${apiBase}/v2/newsflash/list`,
+        api: '/newsflash/list',
     },
     article: {
         title: '文章',
         link: `${rootUrl}/article`,
-        api: `${apiBase}/v2/article/list`,
+        api: '/article/list',
     },
 };
 
@@ -95,39 +146,39 @@ export const route: Route = {
 | newsflash | article |
 
 | 全部 | 深度 | 精选 | 热点追踪 |
-| :--: | :--: | :--: | :---: |
-|     | -2  | 1    |  2     |`,
+| :--: | :--: | :--: | :------: |
+|      |  -2  |   1  |     2    |`,
 };
 
 async function handler(ctx) {
     const { channel = 'newsflash', original } = ctx.req.param();
 
-    const response = await ofetch(channelMap[channel].api, {
-        query: {
-            limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
-            original: channel === 'article' ? original : undefined,
-        },
+    const response = await fetchApi(channelMap[channel].api, {
+        limit: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+        original: channel === 'article' ? original : undefined,
     });
 
-    let list = response.data.list.map((item) => ({
+    let list: BlockBeatsItem[] = response.data.list.map((item) => ({
         title: item.title,
         link: `${rootUrl}/${channel === 'newsflash' ? 'flash' : 'news'}/${item.article_id}`,
         description: item.content ?? item.abstract,
         pubDate: parseDate(item.add_time, 'X'),
         author: item.author?.nickname,
         category: item.tag_list,
-        imgUrl: item.img_url,
+        articleId: item.article_id,
+        image: item.img_url,
     }));
 
     if (channel !== 'newsflash') {
         list = await Promise.all(
             list.map((item) =>
                 cache.tryGet(`theblockbeats:${item.link}`, async () => {
-                    const response = await ofetch(item.link);
-                    const $ = load(response);
+                    const response = await fetchApi('/article/detail', {
+                        article_id: item.articleId,
+                    });
                     item.description = render({
-                        image: item.imgUrl,
-                        description: $('div.news-content').html(),
+                        image: response.data.img_url || item.image,
+                        description: response.data.content || item.description,
                     });
                     return item;
                 })
@@ -135,9 +186,19 @@ async function handler(ctx) {
         );
     }
 
+    const items = list.map(({ author, category, description, image, link, pubDate, title }) => ({
+        title,
+        link,
+        description,
+        pubDate,
+        author,
+        category,
+        image,
+    }));
+
     return {
         title: `TheBlockBeats - ${channelMap[channel].title}`,
         link: channelMap[channel].link,
-        item: list,
+        item: items,
     };
 }

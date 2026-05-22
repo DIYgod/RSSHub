@@ -27,7 +27,7 @@ export const parseList = (videos) =>
         contentId: item.contentId,
     }));
 
-export const puppeteerFetch = async (url: string, browser) => {
+export const playwrightFetch = async (url: string, browser) => {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders(headers);
     await page.setRequestInterception(true);
@@ -46,7 +46,7 @@ export const puppeteerFetch = async (url: string, browser) => {
 };
 
 export const getItem = async (item, browser) => {
-    const response = await puppeteerFetch(`${baseUrl}/api/video/${item.contentId}`, browser);
+    const response = await playwrightFetch(`${baseUrl}/api/video/${item.contentId}`, browser);
 
     const videoInfo: Video = response.video;
     videoInfo.gallery = hdGallery(videoInfo.gallery);

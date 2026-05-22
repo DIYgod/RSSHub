@@ -36,7 +36,7 @@ export const route: Route = {
     maintainers: ['5upernova-heng'],
     handler,
     description: `> 类型名与播客 id 可以在播客对应的 URL 中找到
-  > 如 URL \`https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4\` ，其 \`category\` 为 \`ezfm\` ，\`id\` 为 \`4\`，对应的订阅路由为 [\`/podcast/ezfm/4\`](https://rsshub.app/podcast/ezfm/4)`,
+> 如 URL \`https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4\` ，其 \`category\` 为 \`ezfm\` ，\`id\` 为 \`4\`，对应的订阅路由为 [\`/podcast/ezfm/4\`](https://rsshub.app/podcast/ezfm/4)`,
 };
 
 async function handler(ctx) {

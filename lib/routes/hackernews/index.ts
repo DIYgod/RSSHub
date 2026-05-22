@@ -105,14 +105,14 @@ async function handler(ctx) {
 
                     item.description = '';
 
-                    content('.comtr').each(function () {
-                        const author = content(this).find('.hnuser');
-                        const comment = content(this).find('.commtext');
+                    content('.comtr').each((_, el) => {
+                        const author = content(el).find('.hnuser');
+                        const comment = content(el).find('.commtext');
 
                         item.description +=
                             `<div><div><small><a href="${rootUrl}/${author.attr('href')}">${author.text()}</a></small>` +
-                            `&nbsp&nbsp<small><a href="${rootUrl}/item?id=${content(this).attr('id')}">` +
-                            `${content(this).find('.age').attr('title')}</a></small></div>`;
+                            `&nbsp&nbsp<small><a href="${rootUrl}/item?id=${content(el).attr('id')}">` +
+                            `${content(el).find('.age').attr('title')}</a></small></div>`;
 
                         const commentText = comment.clone();
 

@@ -112,7 +112,7 @@ export const route: Route = {
     maintainers: ['Rongronggg9'],
     handler,
     description: `::: tip
-  The parameters can be extracted from the Release page URL: \`https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group\`
+The parameters can be extracted from the Release page URL: \`https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group\`
 :::`,
 };
 

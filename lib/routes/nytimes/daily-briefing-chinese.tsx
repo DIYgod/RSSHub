@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['yueyericardo', 'nczitzk'],
     handler,
     url: 'nytimes.com/',
-    description: 'URL: [https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)',
+    description: 'URL: <https://www.nytimes.com/zh-hans/series/daily-briefing-chinese>',
 };
 
 async function handler() {
@@ -70,8 +70,8 @@ async function handler() {
                 const images = detailResponse.data.match(/"url":"[^{}]+","name":"articleLarge"/g).map((e) => JSON.parse(`{${e}}`).url);
 
                 let i = 0;
-                content('figure').each(function () {
-                    content(this).html(
+                content('figure').each((_, el) => {
+                    content(el).html(
                         renderToString(
                             <figure>
                                 <img src={images[i++]} />

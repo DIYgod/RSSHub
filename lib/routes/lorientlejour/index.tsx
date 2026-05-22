@@ -46,8 +46,8 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `  ::: tip
-For example, the path for the sites https://today.lorientlejour.com/section/977-lebanon and https://www.lorientlejour.com/rubrique/1-liban would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively.
+    description: `::: tip
+For example, the path for the sites <https://today.lorientlejour.com/section/977-lebanon> and <https://www.lorientlejour.com/rubrique/1-liban> would be /lorientlejour/977-lebanon and /lorientlejour/1-liban respectively.
 Multiple categories seperated by '|' is also supported, e.g. /lorientlejour/977-lebanon|1-liban.
 :::`,
     radar: [
@@ -158,12 +158,12 @@ async function handler(ctx) {
         article.find('.inline-embeded-article').remove();
         article.find('.relatedArticles').remove();
         if (item.inline_attachments) {
-            article.find('.inlineImage').each(function () {
-                const inlineImageSrc = $(this).attr('src');
+            article.find('.inlineImage').each((_, el) => {
+                const inlineImageSrc = $(el).attr('src');
                 const inlineAttachment = item.inline_attachments.find((inlineAttachment) => inlineAttachment.url === inlineImageSrc);
                 if (inlineAttachment && inlineAttachment.description) {
-                    $(this).wrap('<figure></figure>');
-                    $(this).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
+                    $(el).wrap('<figure></figure>');
+                    $(el).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
                 }
             });
         }

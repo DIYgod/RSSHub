@@ -22,7 +22,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    description: '免费版账户每天查询次数为10次, 若需增加查询次数请购买灰豚数据红薯版会员',
+    description: '免费版账户每天查询次数为 10 次，若需增加查询次数请购买灰豚数据红薯版会员',
     name: '小红书笔记',
     maintainers: ['Skylwn'],
     handler,

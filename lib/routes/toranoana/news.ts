@@ -41,11 +41,10 @@ export const route: Route = {
             target: '/news/:category',
         },
     ],
-    description: `
-::: warning TIP
-[総合新着記事](https://news.toranoana.jp)→\`/toranoana/news\`  
-[女性向け](https://news.toranoana.jp/joshi)→\`/toranoana/news/joshi\`  
-[イラスト展](https://news.toranoana.jp/exhibitions)→\`/toranoana/news/exhibition\`  
+    description: `::: warning TIP
+[総合新着記事](https://news.toranoana.jp)→\`/toranoana/news\`\\
+[女性向け](https://news.toranoana.jp/joshi)→\`/toranoana/news/joshi\`\\
+[イラスト展](https://news.toranoana.jp/exhibitions)→\`/toranoana/news/exhibition\`\\
 [\`https://news.toranoana.jp/category/media\`](https://news.toranoana.jp/category/media)→\`/toranoana/news/media\`
 :::`,
 };

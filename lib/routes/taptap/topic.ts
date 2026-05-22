@@ -56,8 +56,8 @@ export const route: Route = {
 | feed | elite | official | video |
 
 | 发布时间 | 回复时间  | 默认排序 |
-| -------- | --------- | ------- |
-| created  | commented | default |`,
+| -------- | --------- | -------- |
+| created  | commented | default  |`,
 };
 
 async function handler(ctx) {

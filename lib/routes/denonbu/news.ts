@@ -15,25 +15,24 @@ export const route: Route = {
         area: 'The id of the area or category; values are as follows.',
     },
     description: `**Area**
-| ID            | Group name/Area name                             |
-| ------------- | ------------------------------------------------ |
-| akiba         | 外神田文芸高校                                   |
-| harajuku      | 神宮前参道學園                                   |
-| azabu         | 港白金女学院                                     |
-| shibuya       | 帝音国際学院                                     |
-| kabuki        | 真新宿GR学園                                     |
-| deep-okubo    | Bellemule（深大久保DJ＆ダンスアカデミー）        |
-| deep-okubo-k  | 輝きノスタルジア（深大久保DJ＆ダンスアカデミー） |
-| shinsaibashi  | OKINI☆PARTY'S（心斎橋演芸高校）                  |
-| ikebukuro     | 池袋電音部（池袋空乗院高校）                     |
-| neotokyo      | 東京電脳（東京電脳学園）                         |
-| neonakano     | 中野電脳（中野電脳学園）                         |
-| shimokitazawa | Ma'Scar'Piece（北沢音箱高校）                    |
+
+| ID            | Group name/Area name                              |
+| ------------- | ------------------------------------------------- |
+| akiba         | 外神田文芸高校                                    |
+| harajuku      | 神宮前参道學園                                    |
+| azabu         | 港白金女学院                                      |
+| shibuya       | 帝音国際学院                                      |
+| kabuki        | 真新宿 GR 学園                                    |
+| deep-okubo    | Bellemule（深大久保 DJ＆ダンスアカデミー）        |
+| deep-okubo-k  | 輝きノスタルジア（深大久保 DJ＆ダンスアカデミー） |
+| shinsaibashi  | OKINI☆PARTY'S（心斎橋演芸高校）                   |
+| ikebukuro     | 池袋電音部（池袋空乗院高校）                      |
+| neotokyo      | 東京電脳（東京電脳学園）                          |
+| neonakano     | 中野電脳（中野電脳学園）                          |
+| shimokitazawa | Ma'Scar'Piece（北沢音箱高校）                     |
 
 **Category**
-Working category IDs include \`news\` (the default), \`event\`, \`goods\`, \`comic\`, \`movie\`, \`music\` or \`livearchives\`.
-
-`,
+Working category IDs include \`news\` (the default), \`event\`, \`goods\`, \`comic\`, \`movie\`, \`music\` or \`livearchives\`.`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,

@@ -91,13 +91,12 @@ export const route: Route = {
     example: '/hubu/www/index/tzgg',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为[通知公告](https://www.hubu.edu.cn/index/tzgg.htm)' },
     description: `::: tip
-  若订阅 [通知公告](https://www.hubu.edu.cn/index/tzgg.htm)，网址为 \`https://www.hubu.edu.cn/index/tzgg.htm\`。截取 \`https://www.hubu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数填入，此时路由为 [\`/hubu/www/index/tzgg\`](https://rsshub.app/hubu/www/index/tzgg)。
+若订阅 [通知公告](https://www.hubu.edu.cn/index/tzgg.htm)，网址为 \`https://www.hubu.edu.cn/index/tzgg.htm\`。截取 \`https://www.hubu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数填入，此时路由为 [\`/hubu/www/index/tzgg\`](https://rsshub.app/hubu/www/index/tzgg)。
 :::
 
 | 通知公告   | 学术预告   |
 | ---------- | ---------- |
-| index/tzgg | index/xsyg |
-  `,
+| index/tzgg | index/xsyg |`,
     categories: ['university'],
 
     features: {

@@ -25,7 +25,7 @@ export const route: Route = {
     handler,
     description: `注：小部分栏目的 URL 会给出 nodeid。如未给出，可打开某条新闻链接后，查看网页源代码，搜索 nodeid 的值。
 
-  常用栏目节点：
+常用栏目节点：
 
 | 首页 | 中国 | 国际 | 体育 | 要闻 | 珠江评论 | 民生观察 | 房产 | 金羊教育 | 金羊财富 | 金羊文化 | 金羊健康 | 金羊汽车 |
 | ---- | ---- | ---- | ---- | ---- | -------- | -------- | ---- | -------- | -------- | -------- | -------- | -------- |
@@ -82,17 +82,15 @@ async function handler(ctx) {
 
                 const $comments = content('.main_article')
                     .contents()
-                    .filter(function () {
-                        return this.nodeType === 8;
-                    });
-                $comments.each(function () {
+                    .filter((_, el) => el.nodeType === 8);
+                $comments.each((_, el) => {
                     // Remove useless comments
-                    if (/audioPlayer|audio-box/.test(this.data)) {
-                        this.data = '';
+                    if (/audioPlayer|audio-box/.test(el.data)) {
+                        el.data = '';
                     }
                     // Filter author from comments
-                    if (/author/.test(this.data)) {
-                        item.author = this.data.split('<author>')[1].split('</author>')[0];
+                    if (/author/.test(el.data)) {
+                        item.author = el.data.split('<author>')[1].split('</author>')[0];
                     }
                 });
 

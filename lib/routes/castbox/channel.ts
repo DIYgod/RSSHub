@@ -45,8 +45,8 @@ export const route: Route = {
     ],
     name: 'Channels',
     description: `Get the channel from the Castbox channel URL. For example, the URL of the channel "Lemonade Stand" is \`https://castbox.fm/channel/Lemonade-Stand-id6776228\`, where \`Lemonade-Stand-id6776228\` is the \`channel\` parameter.
-    
-    You can use the RSSHub global \`limit\` query parameter to specify the maximum number of episodes to fetch from the Castbox API (defaults to 50). For example: \`/castbox/channel/Lemonade-Stand-id6776228?limit=100\`.`,
+
+You can use the RSSHub global \`limit\` query parameter to specify the maximum number of episodes to fetch from the Castbox API (defaults to 50). For example: \`/castbox/channel/Lemonade-Stand-id6776228?limit=100\`.`,
     maintainers: ['ananyatimalsina'],
     handler: async (ctx) => {
         const { channel } = ctx.req.param();

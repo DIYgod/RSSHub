@@ -97,7 +97,7 @@ export const route: Route = {
 
 新增 \`second\` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: \`/domp4/detail/LBTANI22222I?second=1\`。
 
-域名频繁更换，目前使用 www.xlmp4.com
+域名频繁更换，目前使用 [www.xlmp4.com](http://www.xlmp4.com)
 :::`,
 };
 

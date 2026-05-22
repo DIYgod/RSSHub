@@ -74,8 +74,7 @@ export const route: Route = {
 
 | 全部 | 播客   | 文章     | 资讯 | 视频   |
 | ---- | ------ | -------- | ---- | ------ |
-|      | radios | articles | news | videos |
-`,
+|      | radios | articles | news | videos |`,
     categories: ['game'],
     features: {
         requireConfig: false,

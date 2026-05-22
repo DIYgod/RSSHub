@@ -177,8 +177,7 @@ export const route: Route = {
 
 | [数据研究](https://www.fangchan.com/datalist)         | [行业测评](https://www.fangchan.com/industrylist)             | [政策法规](https://www.fangchan.com/policylist)           |
 | ----------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------- |
-| [datalist](https://rsshub.app/fangchan/list/datalist) | [industrylist](https://rsshub.app/fangchan/list/industrylist) | [policylist](https://rsshub.app/fangchan/list/policylist) |
-`,
+| [datalist](https://rsshub.app/fangchan/list/datalist) | [industrylist](https://rsshub.app/fangchan/list/industrylist) | [policylist](https://rsshub.app/fangchan/list/policylist) |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

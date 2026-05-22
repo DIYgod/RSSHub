@@ -11,7 +11,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 import { baseUrl, fetchDesc, getItem } from './utils';
 
@@ -46,8 +46,8 @@ export const route: Route = {
 |  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
-  -   Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
-  -   Leaving it empty (\`/science/current\`) to get update from Science.`,
+- Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
+- Leaving it empty (\`/science/current\`) to get update from Science.`,
 };
 
 async function handler(ctx) {
@@ -66,7 +66,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => getItem(item, $));
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const items = await fetchDesc(list, browser, cache.tryGet);
     await browser.close();
 

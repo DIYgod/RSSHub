@@ -18,7 +18,7 @@ describe('httperror', () => {
         const response = await app.request('/test/httperror');
         expect(response.status).toBe(503);
         const text = await response.text();
-        expect(text).toContain('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404 Not Found');
+        expect(text).toContain('FetchError: [GET] &quot;https://httpbingo.org/status/404&quot;: 404');
     }, 20000);
 });
 

@@ -30,7 +30,7 @@ export const route: Route = {
     handler,
     url: 'wp.m.163.com/163/html/newsapp/todayFocus/index.html',
     description: `::: tip
-  参数 **需要获取全文** 设置为 \`true\` \`yes\` \`t\` \`y\` 等值后，RSS 会携带该新闻条目的对应全文。
+参数 **需要获取全文** 设置为 \`true\` \`yes\` \`t\` \`y\` 等值后，RSS 会携带该新闻条目的对应全文。
 :::`,
 };
 

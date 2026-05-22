@@ -20,11 +20,9 @@ export const route: Route = {
     name: '天津港保税区-公告',
     url: 'tjftz.gov.cn',
     maintainers: ['HaoyuLee'],
-    description: `
-| 公告类别         | channelId |
-| ------------ | -- |
-| 首页>新闻>保税区要闻>区域聚焦     | 6302  |
-    `,
+    description: `| 公告类别                            | channelId |
+| ----------------------------------- | --------- |
+| 首页 > 新闻 > 保税区要闻 > 区域聚焦 | 6302      |`,
     async handler(ctx) {
         const { channelId = '6302' } = ctx.req.param();
         const url = `https://www.tjftz.gov.cn/channels/${channelId}.html`;

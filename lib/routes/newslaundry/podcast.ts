@@ -32,10 +32,10 @@ export const route: Route = {
         },
     ],
     name: 'Podcast',
-    description: `| Category | URL |
-| -------- | --- |
-| All Podcasts | [/podcast](https://rsshub.app/newslaundry/podcast) |
-| NL Hafta | [/podcast/nl-hafta](https://rsshub.app/newslaundry/podcast/nl-hafta) |
+    description: `| Category         | URL                                                                              |
+| ---------------- | -------------------------------------------------------------------------------- |
+| All Podcasts     | [/podcast](https://rsshub.app/newslaundry/podcast)                               |
+| NL Hafta         | [/podcast/nl-hafta](https://rsshub.app/newslaundry/podcast/nl-hafta)             |
 | What's Your Ism? | [/podcast/whats-your-ism](https://rsshub.app/newslaundry/podcast/whats-your-ism) |`,
     maintainers: ['Rjnishant530'],
     handler,

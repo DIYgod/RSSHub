@@ -107,14 +107,14 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                content('a.c-button').each(function () {
-                    content(this).parent().remove();
+                content('a.c-button').each((_, el) => {
+                    content(el).parent().remove();
                 });
 
-                content('img').each(function () {
-                    content(this).replaceWith(
+                content('img').each((_, el) => {
+                    content(el).replaceWith(
                         renderDescription({
-                            src: content(this).prop('src'),
+                            src: content(el).prop('src'),
                         })
                     );
                 });

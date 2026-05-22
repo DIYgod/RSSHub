@@ -1,7 +1,7 @@
+// oxlint-disable simple-import-sort/imports
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-// import { importX } from 'eslint-plugin-import-x';
 // import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import eslintPluginYml from 'eslint-plugin-yml';
 import { defineConfig } from 'eslint/config';
@@ -17,7 +17,6 @@ export default defineConfig([
         files: [SOURCE_FILES_GLOB],
         plugins: {
             '@typescript-eslint': typescriptEslint,
-            // github,
             js,
         },
         // extends: [typescriptEslint.configs['flat/recommended'], typescriptEslint.configs['flat/stylistic'], n.configs['flat/recommended-script']],
@@ -54,34 +53,6 @@ export default defineConfig([
             */
             // #endregion
         },
-    },
-    {
-        files: ['.puppeteerrc.cjs'],
-        rules: {
-            '@typescript-eslint/no-require-imports': 'off',
-        },
-    },
-    {
-        /*
-        files: [SOURCE_FILES_GLOB],
-        plugins: {
-            'simple-import-sort': simpleImportSort,
-            'import-x': importX,
-        },
-        rules: {
-            'sort-imports': 'off',
-            'import-x/order': 'off',
-            'simple-import-sort/imports': 'error',
-            'simple-import-sort/exports': 'error',
-
-            'import-x/first': 'error',
-            'import-x/newline-after-import': 'error',
-            'no-duplicate-imports': 'off',
-            'import-x/no-duplicates': 'error',
-
-            '@typescript-eslint/consistent-type-imports': 'error',
-            'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
-        },*/
     },
     {
         files: ['**/*.yaml', '**/*.yml'],

@@ -165,35 +165,34 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [数码](https://www.dgtle.com/article)，其对应分类 ID 为 \`20\`，此时路由为 [\`/dgtle/article/20\`](https://rsshub.app/dgtle/article/20)。
 :::
 
 <details>
   <summary>更多分类</summary>
 
-  | [全部](https://www.dgtle.com/article)   | [数码](https://www.dgtle.com/article)     | [手机](https://www.dgtle.com/article)     | [平板](https://www.dgtle.com/article)   | [笔电](https://www.dgtle.com/article)     |
-  | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | --------------------------------------- | ----------------------------------------- |
-  | [0](https://rsshub.app/dgtle/article/0) | [20](https://rsshub.app/dgtle/article/20) | [18](https://rsshub.app/dgtle/article/18) | [4](https://rsshub.app/dgtle/article/4) | [17](https://rsshub.app/dgtle/article/17) |
+| [全部](https://www.dgtle.com/article)   | [数码](https://www.dgtle.com/article)     | [手机](https://www.dgtle.com/article)     | [平板](https://www.dgtle.com/article)   | [笔电](https://www.dgtle.com/article)     |
+| --------------------------------------- | ----------------------------------------- | ----------------------------------------- | --------------------------------------- | ----------------------------------------- |
+| [0](https://rsshub.app/dgtle/article/0) | [20](https://rsshub.app/dgtle/article/20) | [18](https://rsshub.app/dgtle/article/18) | [4](https://rsshub.app/dgtle/article/4) | [17](https://rsshub.app/dgtle/article/17) |
 
-  | [影音](https://www.dgtle.com/article)   | [汽车](https://www.dgtle.com/article)       | [视频](https://www.dgtle.com/article)       | [摄影](https://www.dgtle.com/article)     | [露营](https://www.dgtle.com/article)       |
-  | --------------------------------------- | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | ------------------------------------------- |
-  | [5](https://rsshub.app/dgtle/article/5) | [401](https://rsshub.app/dgtle/article/401) | [395](https://rsshub.app/dgtle/article/395) | [22](https://rsshub.app/dgtle/article/22) | [405](https://rsshub.app/dgtle/article/405) |
+| [影音](https://www.dgtle.com/article)   | [汽车](https://www.dgtle.com/article)       | [视频](https://www.dgtle.com/article)       | [摄影](https://www.dgtle.com/article)     | [露营](https://www.dgtle.com/article)       |
+| --------------------------------------- | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | ------------------------------------------- |
+| [5](https://rsshub.app/dgtle/article/5) | [401](https://rsshub.app/dgtle/article/401) | [395](https://rsshub.app/dgtle/article/395) | [22](https://rsshub.app/dgtle/article/22) | [405](https://rsshub.app/dgtle/article/405) |
 
-  | [家装](https://www.dgtle.com/article)       | [活动](https://www.dgtle.com/article)       | [生活](https://www.dgtle.com/article)     | [旅行](https://www.dgtle.com/article)       | [骑行](https://www.dgtle.com/article)       |
-  | ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | ------------------------------------------- | ------------------------------------------- |
-  | [402](https://rsshub.app/dgtle/article/402) | [138](https://rsshub.app/dgtle/article/138) | [34](https://rsshub.app/dgtle/article/34) | [137](https://rsshub.app/dgtle/article/137) | [412](https://rsshub.app/dgtle/article/412) |
+| [家装](https://www.dgtle.com/article)       | [活动](https://www.dgtle.com/article)       | [生活](https://www.dgtle.com/article)     | [旅行](https://www.dgtle.com/article)       | [骑行](https://www.dgtle.com/article)       |
+| ------------------------------------------- | ------------------------------------------- | ----------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| [402](https://rsshub.app/dgtle/article/402) | [138](https://rsshub.app/dgtle/article/138) | [34](https://rsshub.app/dgtle/article/34) | [137](https://rsshub.app/dgtle/article/137) | [412](https://rsshub.app/dgtle/article/412) |
 
-  | [游戏](https://www.dgtle.com/article)       | [宠物](https://www.dgtle.com/article)       | [时尚](https://www.dgtle.com/article)       | [运动](https://www.dgtle.com/article)       | [应用](https://www.dgtle.com/article)       |
-  | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
-  | [411](https://rsshub.app/dgtle/article/411) | [407](https://rsshub.app/dgtle/article/407) | [406](https://rsshub.app/dgtle/article/406) | [403](https://rsshub.app/dgtle/article/403) | [135](https://rsshub.app/dgtle/article/135) |
+| [游戏](https://www.dgtle.com/article)       | [宠物](https://www.dgtle.com/article)       | [时尚](https://www.dgtle.com/article)       | [运动](https://www.dgtle.com/article)       | [应用](https://www.dgtle.com/article)       |
+| ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| [411](https://rsshub.app/dgtle/article/411) | [407](https://rsshub.app/dgtle/article/407) | [406](https://rsshub.app/dgtle/article/406) | [403](https://rsshub.app/dgtle/article/403) | [135](https://rsshub.app/dgtle/article/135) |
 
-  | [玩物](https://www.dgtle.com/article)     | [周边](https://www.dgtle.com/article)     | [文具](https://www.dgtle.com/article)   | [官方](https://www.dgtle.com/article)       |
-  | ----------------------------------------- | ----------------------------------------- | --------------------------------------- | ------------------------------------------- |
-  | [75](https://rsshub.app/dgtle/article/75) | [19](https://rsshub.app/dgtle/article/19) | [7](https://rsshub.app/dgtle/article/7) | [400](https://rsshub.app/dgtle/article/400) |
+| [玩物](https://www.dgtle.com/article)     | [周边](https://www.dgtle.com/article)     | [文具](https://www.dgtle.com/article)   | [官方](https://www.dgtle.com/article)       |
+| ----------------------------------------- | ----------------------------------------- | --------------------------------------- | ------------------------------------------- |
+| [75](https://rsshub.app/dgtle/article/75) | [19](https://rsshub.app/dgtle/article/19) | [7](https://rsshub.app/dgtle/article/7) | [400](https://rsshub.app/dgtle/article/400) |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

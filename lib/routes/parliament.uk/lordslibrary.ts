@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -26,7 +26,7 @@ async function handler(ctx) {
     const { topic } = ctx.req.param();
     const baseUrl = 'https://lordslibrary.parliament.uk';
     const url = `${baseUrl}/type/${topic}/`;
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

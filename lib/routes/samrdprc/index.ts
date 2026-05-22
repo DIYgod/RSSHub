@@ -150,31 +150,31 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-  #### 网站首页
+#### 网站首页
 
-  | [新闻动态](https://www.samrdprc.org.cn/xwdt/gzdt/) | [网站公告](https://www.samrdprc.org.cn/wzgg/) | [汽车召回](https://www.samrdprc.org.cn/qczh/) | [消费品召回](https://www.samrdprc.org.cn/xfpzh/) |
-  | -------------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ------------------------------------------------ |
-  | [xwdt/gzdt](https://rsshub.app/samrdprc/xwdt/gzdt) | [wzgg](https://rsshub.app/samrdprc/wzgg)      | [qczh](https://rsshub.app/samrdprc/qczh)      | [xfpzh](https://rsshub.app/samrdprc/xfpzh)       |
+| [新闻动态](https://www.samrdprc.org.cn/xwdt/gzdt/) | [网站公告](https://www.samrdprc.org.cn/wzgg/) | [汽车召回](https://www.samrdprc.org.cn/qczh/) | [消费品召回](https://www.samrdprc.org.cn/xfpzh/) |
+| -------------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ------------------------------------------------ |
+| [xwdt/gzdt](https://rsshub.app/samrdprc/xwdt/gzdt) | [wzgg](https://rsshub.app/samrdprc/wzgg)      | [qczh](https://rsshub.app/samrdprc/qczh)      | [xfpzh](https://rsshub.app/samrdprc/xfpzh)       |
 
-  #### 科学研究
+#### 科学研究
 
-  | [技术报告](https://www.samrdprc.org.cn/yjgz/jsyj/) | [SAC/TC463](https://www.samrdprc.org.cn/yjgz/sactc/) | [研究动态](https://www.samrdprc.org.cn/yjgz/yjfx/) |
-  | -------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-  | [yjgz/jsyj](https://rsshub.app/samrdprc/yjgz/jsyj) | [yjgz/sactc](https://rsshub.app/samrdprc/yjgz/sactc) | [yjgz/yjfx](https://rsshub.app/samrdprc/yjgz/yjfx) |
+| [技术报告](https://www.samrdprc.org.cn/yjgz/jsyj/) | [SAC/TC463](https://www.samrdprc.org.cn/yjgz/sactc/) | [研究动态](https://www.samrdprc.org.cn/yjgz/yjfx/) |
+| -------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| [yjgz/jsyj](https://rsshub.app/samrdprc/yjgz/jsyj) | [yjgz/sactc](https://rsshub.app/samrdprc/yjgz/sactc) | [yjgz/yjfx](https://rsshub.app/samrdprc/yjgz/yjfx) |
 
-  #### 安全教育
+#### 安全教育
 
-  | [安全教育](https://www.samrdprc.org.cn/aqjy/) |
-  | --------------------------------------------- |
-  | [aqjy](https://rsshub.app/samrdprc/aqjy)      |
+| [安全教育](https://www.samrdprc.org.cn/aqjy/) |
+| --------------------------------------------- |
+| [aqjy](https://rsshub.app/samrdprc/aqjy)      |
 
-  #### 法律法规
+#### 法律法规
 
-  | [国内法规](https://www.samrdprc.org.cn/flfg/gnfg/) |
-  | -------------------------------------------------- |
-  | [flfg/gnfg](https://rsshub.app/samrdprc/flfg/gnfg) |
-</details>
-`,
+| [国内法规](https://www.samrdprc.org.cn/flfg/gnfg/) |
+| -------------------------------------------------- |
+| [flfg/gnfg](https://rsshub.app/samrdprc/flfg/gnfg) |
+
+</details>`,
     categories: ['government'],
     features: {
         requireConfig: false,

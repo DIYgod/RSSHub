@@ -10,7 +10,7 @@ export const route: Route = {
     parameters: { device: 'the device `codename` eg. `aries` for Mi 2S', type: 'type', region: 'Region, default to `cn`' },
     name: 'New firmware',
     maintainers: ['Indexyz'],
-    description: `  | stable  | development |
+    description: `| stable  | development |
 | ------- | ----------- |
 | release | dev         |
 

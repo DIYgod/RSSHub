@@ -25,9 +25,9 @@ export const route: Route = {
     name: '开源项目',
     maintainers: ['moke8', 'nczitzk', 'CaoMeiYouRen'],
     handler,
-    description: `| 精选 | 全部 |
-| ---- | ---- |
-| featured  | all |`,
+    description: `| 精选     | 全部 |
+| -------- | ---- |
+| featured | all  |`,
 };
 
 async function handler(ctx) {

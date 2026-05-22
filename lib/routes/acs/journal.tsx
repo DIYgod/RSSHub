@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/journal/:id',
@@ -28,7 +28,7 @@ async function handler(ctx) {
 
     let title = '';
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const items = await cache.tryGet(
         currentUrl,
         async () => {

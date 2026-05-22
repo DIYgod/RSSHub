@@ -69,7 +69,7 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     handler,
     url: 'www.hket.com/',
-    description: `香港经济日报已有提供简单 RSS，详细可前往官方网站： [https://www.hket.com/rss](https://www.hket.com/rss)
+    description: `香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
 
 此路由主要补全官方 RSS 全文输出及完善分类输出。
 
@@ -127,6 +127,7 @@ export const route: Route = {
 | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
 | -------- | ------------ | --------- | --------- | --------- |
 | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
+
 </details>`,
 };
 

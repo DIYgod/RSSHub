@@ -4,6 +4,7 @@ export default defineConfig({
     entry: ['./lib/container.ts'],
     outDir: 'dist-container',
     format: 'esm',
+    dts: false,
     minify: true,
     clean: true,
     platform: 'node',
@@ -12,8 +13,8 @@ export default defineConfig({
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
     },
-    external: ['@cloudflare/containers'],
     deps: {
         onlyBundle: false,
+        neverBundle: ['@cloudflare/containers'],
     },
 });

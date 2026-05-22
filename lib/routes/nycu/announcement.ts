@@ -55,7 +55,7 @@ export const route: Route = {
 | 校園徵才 |   9   |
 | 其他活動 |   8   |
 | 電子公文 |   3   |
-| 校外訊息 |  10   |`,
+| 校外訊息 |   10  |`,
     path: '/announcement/:type',
     parameters: { type: '類型，見下表' },
     example: '/nycu/announcement/5',

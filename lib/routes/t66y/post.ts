@@ -50,9 +50,9 @@ export const route: Route = {
     maintainers: ['cnzgray'],
     handler,
     description: `::: tip
-  帖子 id 查找办法:
+帖子 id 查找办法:
 
-  打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
+打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
 :::`,
 };
 

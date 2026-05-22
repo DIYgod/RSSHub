@@ -196,8 +196,7 @@ export const route: Route = {
 | 科技     | tech    |
 | 电竞     | esports |
 | 娱乐     | amuse   |
-| 手游     | mobile  |
-`,
+| 手游     | mobile  |`,
     categories: ['game'],
     features: {
         requireConfig: false,

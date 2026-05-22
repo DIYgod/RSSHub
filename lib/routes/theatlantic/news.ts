@@ -30,7 +30,7 @@ export const route: Route = {
 | ------------ | ------ | -------- | ---------- | -------- |
 | most-popular | latest | politics | technology | business |
 
-  More categories (except photo) can be found within the navigation bar at [https://www.theatlantic.com](https://www.theatlantic.com)`,
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com>`,
 };
 
 async function handler(ctx) {

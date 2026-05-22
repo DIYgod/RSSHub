@@ -5,7 +5,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const baseUrl = 'https://nhentai.net';
 
@@ -131,7 +131,7 @@ const fetchPage = async (url: string): Promise<string> => {
     } catch (error: unknown) {
         const status = (error as { status?: number; statusCode?: number }).status ?? (error as { status?: number; statusCode?: number }).statusCode;
         if (status === 403) {
-            const { page, destroy } = await getPuppeteerPage(url, {
+            const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                     await page.setRequestInterception(true);

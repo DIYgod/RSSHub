@@ -67,7 +67,7 @@ const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['pro
             logger.warn('PROXY_URI contains username and/or password, ignoring PROXY_AUTH');
             proxyObj.auth = undefined;
         } else if (['http:', 'https:'].includes(proxyUrlHandler.protocol)) {
-            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from puppeteer will not use it');
+            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from Playwright will not use it');
             promptProxyUri = true;
         } else {
             logger.warn(`PROXY_AUTH is only supported by HTTP(S) proxies, but got ${proxyUrlHandler.protocol}, ignoring`);
@@ -85,13 +85,13 @@ const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['pro
         const protocol = proxyUrlHandler.protocol.replace(':', '');
         if (possibleProtocol.includes(protocol)) {
             if (protocol !== 'http' && (proxyUrlHandler.username || proxyUrlHandler.password)) {
-                logger.warn("PROXY_URI is an HTTPS/SOCKS proxy with authentication, which is not supported by puppeteer (ignore if you don't need it)");
+                logger.warn("PROXY_URI is an HTTPS/SOCKS proxy with authentication, which is not supported by Playwright (ignore if you don't need it)");
                 logger.info('To get rid of this, consider using an HTTP proxy instead');
             }
             proxyObj.protocol = protocol;
             proxyObj.host = proxyUrlHandler.hostname;
             proxyObj.port = proxyUrlHandler.port || undefined;
-            // trailing slash will cause puppeteer to throw net::ERR_NO_SUPPORTED_PROXIES, trim it
+            // Trailing slash can make Chromium reject the proxy URL, trim it.
             proxyUri = proxyUrlHandler.href.endsWith('/') ? proxyUrlHandler.href.slice(0, -1) : proxyUrlHandler.href;
             isProxyValid = true;
         } else {

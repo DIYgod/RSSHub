@@ -6,7 +6,7 @@ import { renderUserEmbed } from '@/routes/tiktok/templates/user';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/profile/:id/:type?/:functionalFlag?',
@@ -85,7 +85,7 @@ async function handler(ctx) {
             });
         } catch (error) {
             if (error.status === 403) {
-                const { page, destroy } = await getPuppeteerPage(profileUrl, {
+                const { page, destroy } = await getPlaywrightPage(profileUrl, {
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                         await page.setRequestInterception(true);

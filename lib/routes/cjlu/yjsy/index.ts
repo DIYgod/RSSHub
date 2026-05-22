@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPuppeteerPage } from '@/utils/puppeteer';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
@@ -77,8 +77,8 @@ export const route: Route = {
     maintainers: ['chrisis58'],
     handler,
     description: `| 研究生通知 | 教师通知 |
-| -------- | -------- |
-| yjstz    | jstz     |`,
+| ---------- | -------- |
+| yjstz      | jstz     |`,
 };
 
 async function handler(ctx) {
@@ -86,7 +86,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const url = `${host}index/${cate}.htm`;
 
-    const { page, destroy, browser } = await getPuppeteerPage(url, {
+    const { page, destroy, browser } = await getPlaywrightPage(url, {
         onBeforeLoad: async (page) => {
             await page.setExtraHTTPHeaders(headers);
             await page.setUserAgent(headers['User-Agent']);

@@ -80,7 +80,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
                 url.host !== proxy.proxyUrlHandler?.host &&
                 url.host !== 'localhost' &&
                 !url.host.startsWith('127.') &&
-                !(config.puppeteerWSEndpoint?.includes(url.host) ?? false)
+                !(config.playwrightWSEndpoint?.includes(url.host) ?? false)
             ) {
                 options.agent = proxy.agent;
             }

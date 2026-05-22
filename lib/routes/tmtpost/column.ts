@@ -137,28 +137,27 @@ export const route: Route = {
 <details>
   <summary>更多分类</summary>
 
-  | [AGI](https://www.tmtpost.com/column/6916385)        | [出海](https://www.tmtpost.com/column/6998081)       | [创新场景](https://www.tmtpost.com/column/3882035)   | [钛度号](https://www.tmtpost.com/column/6100587)     | [深度](https://www.tmtpost.com/column/3189960)       |
-  | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-  | [6916385](https://rsshub.app/tmtpost/column/6916385) | [6998081](https://rsshub.app/tmtpost/column/6998081) | [3882035](https://rsshub.app/tmtpost/column/3882035) | [6100587](https://rsshub.app/tmtpost/column/6100587) | [3189960](https://rsshub.app/tmtpost/column/3189960) |
+| [AGI](https://www.tmtpost.com/column/6916385)        | [出海](https://www.tmtpost.com/column/6998081)       | [创新场景](https://www.tmtpost.com/column/3882035)   | [钛度号](https://www.tmtpost.com/column/6100587)     | [深度](https://www.tmtpost.com/column/3189960)       |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| [6916385](https://rsshub.app/tmtpost/column/6916385) | [6998081](https://rsshub.app/tmtpost/column/6998081) | [3882035](https://rsshub.app/tmtpost/column/3882035) | [6100587](https://rsshub.app/tmtpost/column/6100587) | [3189960](https://rsshub.app/tmtpost/column/3189960) |
 
-  | [焦点](https://www.tmtpost.com/column/6043895)       | [创投](https://www.tmtpost.com/column/5994956)       | [汽车](https://www.tmtpost.com/column/2573550)       | [3C](https://www.tmtpost.com/column/3615534)         | [消费](https://www.tmtpost.com/column/3882530)       |
-  | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-  | [6043895](https://rsshub.app/tmtpost/column/6043895) | [5994956](https://rsshub.app/tmtpost/column/5994956) | [2573550](https://rsshub.app/tmtpost/column/2573550) | [3615534](https://rsshub.app/tmtpost/column/3615534) | [3882530](https://rsshub.app/tmtpost/column/3882530) |
+| [焦点](https://www.tmtpost.com/column/6043895)       | [创投](https://www.tmtpost.com/column/5994956)       | [汽车](https://www.tmtpost.com/column/2573550)       | [3C](https://www.tmtpost.com/column/3615534)         | [消费](https://www.tmtpost.com/column/3882530)       |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| [6043895](https://rsshub.app/tmtpost/column/6043895) | [5994956](https://rsshub.app/tmtpost/column/5994956) | [2573550](https://rsshub.app/tmtpost/column/2573550) | [3615534](https://rsshub.app/tmtpost/column/3615534) | [3882530](https://rsshub.app/tmtpost/column/3882530) |
 
-  | [大健康](https://www.tmtpost.com/column/3882507)     | [金融](https://www.tmtpost.com/column/3882486)       | [钛智宏观](https://www.tmtpost.com/column/4277188)   | [产业研究](https://www.tmtpost.com/column/5506730)   | [地产](https://www.tmtpost.com/column/3882499)       |
-  | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-  | [3882507](https://rsshub.app/tmtpost/column/3882507) | [3882486](https://rsshub.app/tmtpost/column/3882486) | [4277188](https://rsshub.app/tmtpost/column/4277188) | [5506730](https://rsshub.app/tmtpost/column/5506730) | [3882499](https://rsshub.app/tmtpost/column/3882499) |
+| [大健康](https://www.tmtpost.com/column/3882507)     | [金融](https://www.tmtpost.com/column/3882486)       | [钛智宏观](https://www.tmtpost.com/column/4277188)   | [产业研究](https://www.tmtpost.com/column/5506730)   | [地产](https://www.tmtpost.com/column/3882499)       |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| [3882507](https://rsshub.app/tmtpost/column/3882507) | [3882486](https://rsshub.app/tmtpost/column/3882486) | [4277188](https://rsshub.app/tmtpost/column/4277188) | [5506730](https://rsshub.app/tmtpost/column/5506730) | [3882499](https://rsshub.app/tmtpost/column/3882499) |
 
-  | [大公司](https://www.tmtpost.com/column/2446153)     | [IPO](https://www.tmtpost.com/column/6043750)        | [钛度图闻](https://www.tmtpost.com/column/5750087)   | [城视](https://www.tmtpost.com/column/6998636)       | [创业家](https://www.tmtpost.com/column/4273329)     |
-  | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-  | [2446153](https://rsshub.app/tmtpost/column/2446153) | [6043750](https://rsshub.app/tmtpost/column/6043750) | [5750087](https://rsshub.app/tmtpost/column/5750087) | [6998636](https://rsshub.app/tmtpost/column/6998636) | [4273329](https://rsshub.app/tmtpost/column/4273329) |
+| [大公司](https://www.tmtpost.com/column/2446153)     | [IPO](https://www.tmtpost.com/column/6043750)        | [钛度图闻](https://www.tmtpost.com/column/5750087)   | [城视](https://www.tmtpost.com/column/6998636)       | [创业家](https://www.tmtpost.com/column/4273329)     |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| [2446153](https://rsshub.app/tmtpost/column/2446153) | [6043750](https://rsshub.app/tmtpost/column/6043750) | [5750087](https://rsshub.app/tmtpost/column/5750087) | [6998636](https://rsshub.app/tmtpost/column/6998636) | [4273329](https://rsshub.app/tmtpost/column/4273329) |
 
-  | [人文](https://www.tmtpost.com/column/6252390)       | [新职业研究所](https://www.tmtpost.com/column/5750104) | [科普](https://www.tmtpost.com/column/5714992)       | [文娱](https://www.tmtpost.com/column/2446157)       |
-  | ---------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------------- |
-  | [6252390](https://rsshub.app/tmtpost/column/6252390) | [5750104](https://rsshub.app/tmtpost/column/5750104)   | [5714992](https://rsshub.app/tmtpost/column/5714992) | [2446157](https://rsshub.app/tmtpost/column/2446157) |
+| [人文](https://www.tmtpost.com/column/6252390)       | [新职业研究所](https://www.tmtpost.com/column/5750104) | [科普](https://www.tmtpost.com/column/5714992)       | [文娱](https://www.tmtpost.com/column/2446157)       |
+| ---------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------------------- |
+| [6252390](https://rsshub.app/tmtpost/column/6252390) | [5750104](https://rsshub.app/tmtpost/column/5750104)   | [5714992](https://rsshub.app/tmtpost/column/5714992) | [2446157](https://rsshub.app/tmtpost/column/2446157) |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

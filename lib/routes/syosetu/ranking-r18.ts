@@ -80,21 +80,20 @@ export const route: Route = {
     url: 'syosetu.com/site/group',
     maintainers: ['SnowAgar25'],
     handler,
-    description: `
-| Period | Description | 説明 |
-| --- | --- | --- |
-| daily | Daily Ranking | 日間ランキング |
-| weekly | Weekly Ranking | 週間ランキング |
-| monthly | Monthly Ranking | 月間ランキング |
+    description: `| Period  | Description       | 説明             |
+| ------- | ----------------- | ---------------- |
+| daily   | Daily Ranking     | 日間ランキング   |
+| weekly  | Weekly Ranking    | 週間ランキング   |
+| monthly | Monthly Ranking   | 月間ランキング   |
 | quarter | Quarterly Ranking | 四半期ランキング |
-| yearly | Yearly Ranking | 年間ランキング |
+| yearly  | Yearly Ranking    | 年間ランキング   |
 
-| Novel Type | Description | 説明 |
-| --- | --- | --- |
-| total | All Works | 総合 |
-| t | Short Stories | 短編 |
-| r | Ongoing Series | 連載中 |
-| er | Completed Series | 完結済 |
+| Novel Type | Description      | 説明   |
+| ---------- | ---------------- | ------ |
+| total      | All Works        | 総合   |
+| t          | Short Stories    | 短編   |
+| r          | Ongoing Series   | 連載中 |
+| er         | Completed Series | 完結済 |
 
 ::: tip
 Combine Period and Novel Type with \`_\`.

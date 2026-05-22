@@ -26,7 +26,7 @@ export const route: Route = {
 | -------------- | --------------- |
 | 1              | 2               |
 
-  Date selection
+Date selection
 
 | 1 month | 3 months | 6 months | 12 months | 24 months |
 | ------- | -------- | -------- | --------- | --------- |

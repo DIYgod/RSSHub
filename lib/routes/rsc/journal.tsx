@@ -24,7 +24,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  All journals at [Current journals](https://pubs.rsc.org/en/journals)
+All journals at [Current journals](https://pubs.rsc.org/en/journals)
 :::
 
 | All Recent Articles | Advance Articles |
@@ -51,9 +51,9 @@ async function handler(ctx) {
 
     let $ = load(response);
 
-    $('div.capsule__article-image').each(function () {
-        const image = $(this).find('img').prop('data-original');
-        $(this).replaceWith(
+    $('div.capsule__article-image').each((_, el) => {
+        const image = $(el).find('img').prop('data-original');
+        $(el).replaceWith(
             renderToString(
                 image ? (
                     <figure>

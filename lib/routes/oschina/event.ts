@@ -203,8 +203,7 @@ export const route: Route = {
 
 | 强力推荐  | 最新活动 |
 | --------- | -------- |
-| recommend | latest   |
-`,
+| recommend | latest   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

@@ -54,14 +54,12 @@ export const route: Route = {
     parameters: {
         id: '分类 id，默认为空，即全部，见下表',
     },
-    description: `
-| 名称     | ID  |
-| -------- | --- |
-| 全部     |     |
-| 通告     | 1   |
-| 故事盐选 | 2   |
-| 趣集精选 | 3   |
-    `,
+    description: `| 名称     | ID |
+| -------- | -- |
+| 全部     |    |
+| 通告     | 1  |
+| 故事盐选 | 2  |
+| 趣集精选 | 3  |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

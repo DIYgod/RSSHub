@@ -20,11 +20,9 @@ export const route: Route = {
     name: '宁波市国资委-公告',
     url: 'gzw.ningbo.gov.cn',
     maintainers: ['HaoyuLee'],
-    description: `
-| 公告类别         | colId |
-| ------------ | -- |
-| 首页-市属国企招聘信息-招聘公告     | 1229116730  |
-    `,
+    description: `| 公告类别                           | colId      |
+| ---------------------------------- | ---------- |
+| 首页 - 市属国企招聘信息 - 招聘公告 | 1229116730 |`,
     async handler(ctx) {
         const { colId = '1229116730' } = ctx.req.param();
         const url = `http://gzw.ningbo.gov.cn/col/col${colId}/index.html`;

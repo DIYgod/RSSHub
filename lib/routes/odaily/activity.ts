@@ -56,10 +56,10 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data.match(/"content":"(.*)"}},"secondaryList":/)[1]);
 
-                content('img').each(function () {
-                    content(this).attr(
+                content('img').each((_, el) => {
+                    content(el).attr(
                         'src',
-                        content(this)
+                        content(el)
                             .attr('src')
                             .replaceAll(String.raw`\"`, '')
                     );

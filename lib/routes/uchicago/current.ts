@@ -4,8 +4,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
-import { getCookies, setCookies } from '@/utils/puppeteer-utils';
+import playwright from '@/utils/playwright';
+import { getCookies, setCookies } from '@/utils/playwright-utils';
 
 export const route: Route = {
     path: '/journals/current/:journal',
@@ -35,7 +35,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.journals.uchicago.edu';
     const link = `${baseUrl}/toc/${journal}/current`;
 
-    const browser = await puppeteer();
+    const browser = await playwright();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {

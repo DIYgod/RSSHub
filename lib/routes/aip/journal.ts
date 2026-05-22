@@ -29,7 +29,7 @@ export const route: Route = {
     description: `Refer to the URL format \`pubs.aip.org/:pub/:jrn\`
 
 ::: tip
-  More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
+More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
 :::`,
 };
 

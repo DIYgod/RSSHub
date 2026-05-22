@@ -28,8 +28,7 @@ export const route: Route = {
     maintainers: ['xtexChooser'],
     handler,
     url: 'minecraft.net/',
-    description: `
-arch:
+    description: `arch:
 
 - gamecore (Currently not used by Mojang)
 - linux
@@ -48,8 +47,7 @@ javaType:
 - java-runtime-gamma
 - java-runtime-gamma-snapshot
 - jre-legacy
-- minecraft-java-exe (Only on Windows)
-`,
+- minecraft-java-exe (Only on Windows)`,
     zh: {
         name: 'Java运行时',
     },
