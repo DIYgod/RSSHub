@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { getDataItem } from './utils';
+import { commonHeaders, getDataItem } from './utils';
 
 export const route: Route = {
     path: '/:category/:subCategory?',
@@ -37,7 +37,9 @@ async function handler(ctx: Context): Promise<Data> {
     if (subCategory) {
         link += `/${subCategory}`;
     }
-    const res = await ofetch(link);
+    const res = await ofetch(link, {
+        headers: commonHeaders,
+    });
 
     const $ = load(res);
 

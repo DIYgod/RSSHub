@@ -9,13 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 
 import type { LinkData, VideoSetup } from './types';
 
+const commonHeaders = {
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+    'accept-language': 'en-US,en;q=0.9',
+    'cache-control': 'no-cache',
+    pragma: 'no-cache',
+    referer: 'https://www.cfr.org/',
+    'user-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36',
+};
+
 export function getDataItem(href: string) {
     const origin = 'https://www.cfr.org';
     const link = `${origin}${href}`;
 
     return cache.tryGet(link, async () => {
         const prefix = href?.split('/')[1];
-        const res = await ofetch(link);
+        const res = await ofetch(link, {
+            headers: commonHeaders,
+        });
         const $ = load(res);
 
         let dataItem: DataItem;
@@ -63,6 +75,8 @@ export function getDataItem(href: string) {
         };
     }) as Promise<DataItem>;
 }
+
+export { commonHeaders };
 
 function parseArticle($: CheerioAPI): DataItem {
     const linkData = parseLinkData($);
