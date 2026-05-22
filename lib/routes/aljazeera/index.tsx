@@ -65,48 +65,57 @@ async function handler(ctx) {
           }))
         : $('.u-clickable-card__link')
               .toArray()
-              .map((item) => {
+              .flatMap((item) => {
                   item = $(item);
+                  const href = item.attr('href');
+                  if (!href) {
+                      return [];
+                  }
 
-                  return {
-                      link: `${rootUrl}${item.attr('href')}`,
-                  };
-              });
+                  return [
+                      {
+                          link: new URL(href, rootUrl).href,
+                      },
+                  ];
+              })
+              .filter((item) => item.link.startsWith(rootUrl) && /\/\d{4}\/\d{1,2}\/\d{1,2}\//.test(item.link));
 
     items = await Promise.all(
         items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache
+                .tryGet(item.link, async () => {
+                    const detailResponse = await ofetch(item.link);
 
-                const content = load(detailResponse);
+                    const content = load(detailResponse);
 
-                content('.more-on').parent().remove();
-                content('.responsive-image img').removeAttr('srcset');
-                let pubDate;
+                    content('.more-on').parent().remove();
+                    content('.responsive-image img').removeAttr('srcset');
+                    let pubDate;
 
-                const datePublished = detailResponse.match(/"datePublished": ?"(.*?)",/);
-                if (datePublished && datePublished.length > 1) {
-                    pubDate = detailResponse.match(/"datePublished": ?"(.*?)",/)[1];
-                } else {
-                    // uploadDate replaces datePublished for video articles
-                    const uploadDate = detailResponse.match(/"uploadDate": ?"(.*?)",/)[1];
+                    const datePublished = detailResponse.match(/"datePublished": ?"(.*?)",/);
+                    if (datePublished && datePublished.length > 1) {
+                        pubDate = detailResponse.match(/"datePublished": ?"(.*?)",/)[1];
+                    } else {
+                        // uploadDate replaces datePublished for video articles
+                        const uploadDate = detailResponse.match(/"uploadDate": ?"(.*?)",/)?.[1];
 
-                    pubDate = uploadDate && uploadDate.length > 1 ? uploadDate : content('div.date-simple > span:nth-child(2)').text();
-                }
+                        pubDate = uploadDate && uploadDate.length > 1 ? uploadDate : content('div.date-simple > span:nth-child(2)').text();
+                    }
 
-                item.title = content('h1').first().text();
-                item.author = content('.author').text();
-                item.pubDate = pubDate;
-                item.description = renderDescription(content('.article-featured-image').html(), content('.wysiwyg').html());
+                    item.title = content('h1').first().text();
+                    item.author = content('.author').text();
+                    item.pubDate = pubDate;
+                    item.description = renderDescription(content('.article-featured-image').html(), content('.wysiwyg').html());
 
-                return item;
-            })
+                    return item;
+                })
+                .catch(() => item)
         )
     );
 
     return {
         title: $('title').first().text(),
         link: currentUrl,
-        item: items,
+        item: items.filter((item) => item.title),
     };
 }
