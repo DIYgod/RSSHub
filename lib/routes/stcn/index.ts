@@ -95,7 +95,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         ...item,
                         ...processedItem,
                     };
-                });
+                }).then((dataItem) => ({
+                    ...dataItem,
+                    pubDate: dataItem.pubDate ?? item.pubDate,
+                    updated: dataItem.updated ?? item.updated,
+                }));
             })
         )
     ).filter((_): _ is DataItem => true);
