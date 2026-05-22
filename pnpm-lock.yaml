@@ -80,8 +80,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.10.16
-        version: 0.10.16(hono@4.12.21)
+        specifier: 0.10.18
+        version: 0.10.18(hono@4.12.21)
       '@sentry/node':
         specifier: 10.53.1
         version: 10.53.1(@opentelemetry/exporter-trace-otlp-http@0.218.0(@opentelemetry/api@1.9.1))
@@ -2633,30 +2633,30 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.1.9':
-    resolution: {integrity: sha512-Gv3CK0X+BqXYkVJLTQXNM8YgdquhuGV4hKlsM8S9k5GGonj8LBDSAiuU3W48JGX1pY7hRotBGcIIU+1a1X1mcw==}
+  '@scalar/client-side-rendering@0.1.11':
+    resolution: {integrity: sha512-0Iugq4wtkH8tLMezyabD7VxEXx66KpUxZ2zlw4BCmQKbQbcupnV2KxfgahTk6LuDBMkiUyFPj9YTFeLAAMoYmQ==}
     engines: {node: '>=22'}
 
   '@scalar/helpers@0.8.0':
     resolution: {integrity: sha512-gmOC6VravNB9VDl6wnt/GOj4K/hn48tj5bpW4AM4MhH8Ubil6uu7g1DSoKHwltu8Ks79KEtR6JmOrROi9R7jaQ==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.10.16':
-    resolution: {integrity: sha512-pllMIMZUXrTcbn1IeOhS5WHgpkw2kdtS3kFojz04DOdJptq3MawjHEunPhvydyMlIFlb1rhjieRllhPwt/y9Lw==}
+  '@scalar/hono-api-reference@0.10.18':
+    resolution: {integrity: sha512-x10TXJDIC0/dmGBQViyUf0m89MtCsd+HbN/uyhStT5ogGWbAf7u/N0BoSgsARxU1zmNyTmfbb23pcpFGeuD6Dw==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.2.0':
-    resolution: {integrity: sha512-FOpNecNoEKo8SogHEsdWlVRN4Q4PH3dzuOBWMA5tGt1xLZu5iFnPG2X/h6+Z/mOR34c7iW+hiKTqdUZoDgT9CA==}
+  '@scalar/schemas@0.3.1':
+    resolution: {integrity: sha512-vTAhka3M9EGVXx909d6MGvekCnUt2Lz/Hz4MIoM7oLP9LxjwPm0ZMX6PWSYtZrxDji9ASqfwd/9jcIKMf7jPlA==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.11.0':
-    resolution: {integrity: sha512-TGZR8sys1jRlaWxLYfBo8y6D1W4UClYuDmkJ6Hmsb7oNuqokEAAK+AVYIzascVdBmaly0D1fqoqK7CzuGYHgyg==}
+  '@scalar/types@0.12.1':
+    resolution: {integrity: sha512-qbUGuoRdzMUEDZmXuES9uZYnOw54wx+UgxE6fOwpaHVTyaCC/jcZultbcTLMiFFmgRinSoZjm/EJtSVtNknD2Q==}
     engines: {node: '>=22'}
 
-  '@scalar/validation@0.5.0':
-    resolution: {integrity: sha512-48CS1B0C7im57RQCHhS0GKt+qDLxB34IX8rO91jZj9D+Y/OosQZG3Gy57gJdHqZoD7l0sPUZtF8tVYry3BxRtw==}
+  '@scalar/validation@0.6.0':
+    resolution: {integrity: sha512-tpmmG+/xRE2Kn9RpflU3AIyZv08v10+E1ZrJCx7z6+/91zHVxy0M73kC1LT4/8PbYNt85ywyC8+n+D99JdMcGA==}
     engines: {node: '>=20'}
 
   '@scure/base@2.0.0':
@@ -7959,31 +7959,32 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.1.9':
+  '@scalar/client-side-rendering@0.1.11':
     dependencies:
-      '@scalar/schemas': 0.2.0
-      '@scalar/types': 0.11.0
-      '@scalar/validation': 0.5.0
+      '@scalar/schemas': 0.3.1
+      '@scalar/types': 0.12.1
+      '@scalar/validation': 0.6.0
 
   '@scalar/helpers@0.8.0': {}
 
-  '@scalar/hono-api-reference@0.10.16(hono@4.12.21)':
+  '@scalar/hono-api-reference@0.10.18(hono@4.12.21)':
     dependencies:
-      '@scalar/client-side-rendering': 0.1.9
+      '@scalar/client-side-rendering': 0.1.11
       hono: 4.12.21
 
-  '@scalar/schemas@0.2.0':
+  '@scalar/schemas@0.3.1':
     dependencies:
-      '@scalar/validation': 0.5.0
+      '@scalar/helpers': 0.8.0
+      '@scalar/validation': 0.6.0
 
-  '@scalar/types@0.11.0':
+  '@scalar/types@0.12.1':
     dependencies:
       '@scalar/helpers': 0.8.0
       nanoid: 5.1.11
       type-fest: 5.6.0
       zod: 4.4.3
 
-  '@scalar/validation@0.5.0': {}
+  '@scalar/validation@0.6.0': {}
 
   '@scure/base@2.0.0': {}
 
