@@ -22,32 +22,22 @@ export const route = {
         },
     ],
     handler: async (ctx) => {
-        let typeParam = ctx.req.param('type')?.toLowerCase();
-
-        let fetchTypes = ['now', 'future', 'past'];
-
-        if (typeParam) {
-            // replace list or offset with past to support old links like /temporary/list or /temporary/offset
-            typeParam = typeParam.replaceAll(/list|offset/g, 'past');
-
-            // support /now&future, /now+future, /now,future
-            const requestedTypes = typeParam.split(/[&+,|-]/);
-
-            const validTypes = requestedTypes.filter((t) => ['now', 'future', 'past'].includes(t));
-
-            if (validTypes.length > 0) {
-                fetchTypes = [...new Set<string>(validTypes)];
-            }
-        }
+        const typeParam = ctx.req.param('type');
+        // Support multiple status combinations separated by &, + or , (e.g., now&future)
+        const fetchTypes = typeParam ? [...new Set(typeParam.split(/[&+,|-]/))] : ['now', 'future', 'past'];
 
         const baseUrl = 'https://www.shanximuseum.com.cn';
         const apiUrl = `${baseUrl}/sx/exhibition`;
 
         const apiConfig = {
             now: { endpoint: '/temporary_now', name: '正在展出', query: {} },
-            future: { endpoint: '/temporary_future', name: '即将展出', query: {} },
+            future: {
+                endpoint: '/temporary_future',
+                name: '即将展出',
+                query: {},
+            },
             past: {
-                endpoint: '/temporary_list',
+                endpoint: '/temporary_list', // the same endpoint as the exhibition list page, but with different query parameters
                 name: '往期展览',
                 query: {
                     offset: 0,
@@ -60,21 +50,11 @@ export const route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        let titleTag = '全部展览';
-
-        // combine titletag with & if user specified type
-        if (typeParam && fetchTypes.length > 0) {
-            titleTag = fetchTypes.map((t) => apiConfig[t].name).join(' & ');
-
-            // all 3 titletag combination should be named as default
-            if (fetchTypes.length === 3) {
-                titleTag = '全部展览';
-            }
-        }
+        const titleTag = fetchTypes.length === 3 ? '全部展览' : fetchTypes.map((t) => apiConfig[t as keyof typeof apiConfig]?.name).join(' & ');
 
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
-                const config = apiConfig[t];
+                const config = apiConfig[t as keyof typeof apiConfig];
 
                 const response = await got({
                     method: 'get',
@@ -85,32 +65,18 @@ export const route = {
                     },
                 });
 
-                let list = response.data;
-                if (list && list.data) {
-                    list = list.data;
-                }
-
-                if (list && !Array.isArray(list)) {
-                    if (list.list && Array.isArray(list.list)) {
-                        list = list.list;
-                    } else if (list.rows && Array.isArray(list.rows)) {
-                        list = list.rows;
-                    }
-                }
-
-                if (!Array.isArray(list)) {
-                    list = [];
-                }
+                const resData = response.data?.data ?? response.data;
+                const list = Array.isArray(resData) ? resData : Array.isArray(resData?.list) ? resData.list : [];
 
                 return list.map((item) => {
                     const title = item.title;
-                    const itemLink = item.fullurl || `${baseUrl}${item.url}`;
+                    const itemLink = item.fullurl;
                     const pubDate = timezone(parseDate(item.publishtime * 1000), +8);
-                    const startDate = item.start_time ? item.start_time.split(' ')[0] : '';
-                    const endDate = item.end_time ? item.end_time.split(' ')[0] : '';
-                    const fullDuration = item.display_time || '';
-                    const location = item.area || '';
-                    const imgUrl = item.image.startsWith('http') ? item.image : `${baseUrl}${item.image}`;
+                    const startDate = item.start_time.split(' ')[0];
+                    const endDate = item.end_time.split(' ')[0];
+                    const fullDuration = item.display_time;
+                    const location = item.area;
+                    const imgUrl = `${baseUrl}${item.image}`;
 
                     const description = renderToString(
                         <div>
@@ -136,15 +102,7 @@ export const route = {
 
                             {fullDuration && (
                                 <p>
-                                    <small>
-                                        原始展期：
-                                        {fullDuration.split('\n').map((line, i) => (
-                                            <span key={i}>
-                                                {line}
-                                                <br />
-                                            </span>
-                                        ))}
-                                    </small>
+                                    <small>原始展期：{fullDuration}</small>
                                 </p>
                             )}
                         </div>
