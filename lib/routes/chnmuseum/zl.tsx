@@ -49,10 +49,7 @@ const parseExhibitionDuration = (duration: string) => {
     }
 
     // Remove all spaces and parentheses to prevent regex matching from breaking
-    const cleanStr = duration
-        .replaceAll(/\s+/g, '')
-        .replaceAll(/（[^）]*）/g, '')
-        .trim();
+    const cleanStr = duration.replaceAll(/\s+/g, '').replaceAll(/（[^）]*）/g, '');
 
     // Match YYYY-MM-DD or MM-DD
     const dateRegex = /(\d{4}[./年-]\d{1,2}[./月-]\d{1,2}日?)|(\d{1,2}[./月-]\d{1,2}日?)/g;
@@ -95,16 +92,8 @@ const resolveRouteConfig = (type: string | undefined, subType: string | undefine
     let cleanType = '';
 
     if (type) {
-        if (subType) {
-            cleanType = `${type}/${subType}`;
-            url = `${baseUrl}/zl/${cleanType}/`;
-        } else if (type === 'lszl') {
-            url = `${baseUrl}/zl/lszl/`;
-            cleanType = 'lszl';
-        } else {
-            cleanType = type;
-            url = `${baseUrl}/zl/${cleanType}/`;
-        }
+        cleanType = subType ? `${type}/${subType}` : type;
+        url = `${baseUrl}/zl/${cleanType}/`;
     }
     return {
         cleanType,
@@ -135,7 +124,7 @@ const fetchTargetElements = async (cleanType: string, subType: string | undefine
         }
     };
 
-    if (cleanType === 'lszl' && !subType) {
+    if (cleanType === 'lszl') {
         const subKeys = Object.keys(titleTagMap).filter((key) => key.startsWith('lszl/'));
         const pagesData = await Promise.all(
             subKeys.map(async (subKey) => {
@@ -201,7 +190,7 @@ export const route: Route = {
 
                     return cache.tryGet(itemLink, async () => {
                         // for detailed exhibition page if available, different from base exhibition page.
-                        const rawZtzl = aTag.attr('ztzlurl') ? aTag.attr('ztzlurl')!.trim() : '';
+                        const rawZtzl = aTag.attr('ztzlurl')?.trim() || '';
                         const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
 
                         // title may not have full display on the page, use the img alt information instead
@@ -231,12 +220,12 @@ export const route: Route = {
 
                         const description = renderToString(
                             <div>
-                                {imgUrl && (
+                                {
                                     <>
                                         <img src={imgUrl} />
                                         <br />
                                     </>
-                                )}
+                                }
                                 <p>
                                     <b>地点：</b>
                                     {location}
@@ -254,12 +243,7 @@ export const route: Route = {
                                     <p>
                                         <small>
                                             原始展期：
-                                            {fullDuration.split('\n').map((line, i) => (
-                                                <span key={i}>
-                                                    {line}
-                                                    <br />
-                                                </span>
-                                            ))}
+                                            {fullDuration}
                                         </small>
                                     </p>
                                 )}
