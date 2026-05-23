@@ -146,32 +146,6 @@ function gatherLegacyFromData(entries, filterNested, userId) {
         if (entry.entryId) {
             const content = entry.content || entry.item;
             let tweet = content?.content?.tweetResult?.result || content?.itemContent?.tweet_results?.result;
-            // Handle subscriber-only preview posts (must check before tweet.tweet reassignment)
-            if (tweet?.__typename === 'TweetPreviewDisplay') {
-                const preview = tweet.tweet;
-                if (preview?.rest_id) {
-                    const userResult = preview.core?.user_results?.result;
-                    const fakeLegacy = {
-                        id_str: preview.rest_id,
-                        full_text: `🔒 [Subscribers Only] ${preview.text ?? ''}`,
-                        created_at: preview.created_at ?? '',
-                        entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
-                        user_id_str: userResult?.rest_id ?? '',
-                        user: {
-                            name: userResult?.core?.name ?? userResult?.core?.screen_name ?? '',
-                            screen_name: userResult?.core?.screen_name ?? '',
-                            profile_image_url_https: userResult?.avatar?.image_url ?? '',
-                        },
-                        favorite_count: preview.favorite_count ?? 0,
-                        reply_count: preview.reply_count ?? 0,
-                        retweet_count: preview.retweet_count ?? 0,
-                    };
-                    if (userId === undefined || fakeLegacy.user_id_str === userId + '') {
-                        tweets.push(fakeLegacy);
-                    }
-                }
-                continue;
-            }
             if (tweet && tweet.tweet) {
                 tweet = tweet.tweet;
             }
