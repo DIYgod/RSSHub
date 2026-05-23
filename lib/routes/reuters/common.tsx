@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { PRESETS } from '@/utils/header-generator';
 
 type ReutersContent = {
     result: {
@@ -198,6 +199,7 @@ async function handler(ctx) {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         Referer: 'https://www.reuters.com/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0',
     };
 
     try {
@@ -213,7 +215,7 @@ async function handler(ctx) {
                             website: 'reuters',
                         }),
                     },
-                    headers: browserHeaders,
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                 });
 
                 return {
@@ -240,7 +242,7 @@ async function handler(ctx) {
                                 : {}),
                         }),
                     },
-                    headers: browserHeaders,
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                 });
                 return {
                     title: response.result.section.title,
