@@ -36,7 +36,7 @@ export const route: Route = {
         const baseUrl = 'https://www.dpm.org.cn';
         const apiUrl = `${baseUrl}/searchs/exhibition.html`;
 
-        const typeParam = ctx.req.param('type')?.toLowerCase();
+        const typeParam = ctx.req.param('type');
 
         const currentType = typeParam ? TYPE_MAP[typeParam] : undefined;
 
@@ -65,7 +65,7 @@ export const route: Route = {
             searchParams,
         });
 
-        const museumName = namespace.zh?.name || namespace.name || '故宫博物院';
+        const museumName = namespace.zh?.name || namespace.name;
         const titleTag = currentType ? `${currentType.name}` : '正在展览';
         const $ = load(response.data);
 
@@ -73,11 +73,7 @@ export const route: Route = {
 
         const rawItems = itemElements.map((item) => {
             const $item = $(item);
-            const title = $item.attr('title') || $item.find('h1').text() || $item.find('.t1').text();
-
-            if (!title.trim()) {
-                return null;
-            }
+            const title = $item.find('a.aa').attr('title') || '';
 
             // Filter out 结束 or 暂闭 status exhibition
             const status = $item.find('.label').text().trim();
@@ -86,7 +82,7 @@ export const route: Route = {
             }
 
             const rawImg = $item.find('img').attr('src');
-            const imgUrl = rawImg ? (rawImg.startsWith('http') ? rawImg : `${baseUrl}${rawImg}`) : '';
+            const imgUrl = `${baseUrl}${rawImg}`;
             const pTags = $item.find('.desc p');
             const location = pTags.eq(0).text().replaceAll('展览地点：', '').trim();
 
@@ -100,10 +96,11 @@ export const route: Route = {
 
             const isIncomplete = duration.endsWith('-') || !duration.includes('-');
 
-            const rawLink = $item.find('a.t1').attr('href') || $item.find('a.aa').attr('href');
-            const hasNoLink = !rawLink || rawLink.includes('javascript:void(0)') || rawLink === '#';
+            const rawLink = $item.find('a.aa').attr('href');
+            const hasNoLink = !rawLink;
 
             // if has no link, generate a fake one to store in cache, and add a flag in cache key to avoid conflict with real links
+            // period hall rawLink example: /explore/building/236465.html, not start with http, need to add baseUrl
             const itemLink = hasNoLink ? `https://www.dpm.org.cn/classify/exhibition.html#no-details-${encodeURIComponent(title)}-${duration.replaceAll('-', '')}` : rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`;
 
             const cacheKey = hasNoLink ? `dpm-exhibit-${title}-${duration}` : itemLink;
@@ -113,18 +110,17 @@ export const route: Route = {
 
                 // if the exhibition is marked as incomplete, try to fetch the detail page to get the full duration, but only if there is a valid link to follow
                 if (!hasNoLink && isIncomplete) {
-                    try {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: itemLink,
-                        });
-                        const $d = load(detailResponse.data);
-                        const detailTime = $d('.time em').text().trim();
-                        if (detailTime) {
-                            fullDuration = detailTime;
-                        }
-                    } catch {
-                        // If the detail page fails to load, just keep the original duration.
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: itemLink,
+                    });
+                    const $d = load(detailResponse.data);
+                    const detailTime = $d('.time em').text().trim();
+                    if (detailTime) {
+                        fullDuration = detailTime
+                            .replaceAll(/[\r\n]+/g, ' ')
+                            .replaceAll(/\s+/g, ' ')
+                            .trim(); // remove extra whitespace and newlines
                     }
                 }
 
@@ -138,8 +134,8 @@ export const route: Route = {
                 // use YYYY-MM-DD for date format
                 const dateMatches = cleanDuration.match(/\d{4}-\d{2}-\d{2}/g);
 
-                let startDate = '';
-                let endDate = '';
+                let startDate: string | undefined;
+                let endDate: string | undefined;
 
                 if (dateMatches) {
                     startDate = dateMatches[0];
@@ -166,23 +162,19 @@ export const route: Route = {
                             <b>开展：</b>
                             {startDate ?? '未定/常设'}
                         </p>
+                        <p>
+                            <b>闭展：</b>
+                            {endDate ?? '未定/常设'}
+                        </p>
+                        {fullDuration && (
+                            <p>
+                                <small>原始展期：{fullDuration}</small>
+                            </p>
+                        )}
                         {/* notice for exhibition w/o link */}
                         {hasNoLink && (
                             <p style={{ color: '#ff4d4f' }}>
                                 <b>注：该展览暂无详情页，已链接至官网院内展览页</b>
-                            </p>
-                        )}
-                        {fullDuration && (
-                            <p>
-                                <small>
-                                    原始展期：
-                                    {fullDuration.split('\n').map((line, i) => (
-                                        <span key={i}>
-                                            {line}
-                                            <br />
-                                        </span>
-                                    ))}
-                                </small>
                             </p>
                         )}
                     </div>
