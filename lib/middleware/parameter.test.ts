@@ -1,5 +1,5 @@
-import Parser from 'rss-parser';
 import { http, HttpResponse } from 'msw';
+import Parser from 'rss-parser';
 import { describe, expect, it, vi } from 'vitest';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
