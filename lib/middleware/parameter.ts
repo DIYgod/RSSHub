@@ -56,6 +56,43 @@ const getAiCompletion = async (prompt: string, text: string) => {
     return response.choices[0].message.content;
 };
 
+const getChatgptLanguageOptions = (ctx) => {
+    const targetLanguage = ctx.req.query('chatgpt_to') ?? ctx.req.query('chatgpt_lang');
+    const sourceLanguage = ctx.req.query('chatgpt_from');
+
+    return {
+        targetLanguage: targetLanguage?.trim() || undefined,
+        sourceLanguage: sourceLanguage?.trim() || undefined,
+    };
+};
+
+const buildTranslationPrompt = (field: 'title' | 'content', targetLanguage: string, sourceLanguage?: string) => {
+    const fromSegment = sourceLanguage ? ` from ${sourceLanguage}` : '';
+    const contentSegment = field === 'title' ? 'title' : 'content';
+    const formatSegment = field === 'title' ? 'reply only translated text' : 'preserve markdown formatting';
+
+    return `Please translate the following ${contentSegment}${fromSegment} into ${targetLanguage} and ${formatSegment}.`;
+};
+
+const getOpenAiPrompt = (ctx, field: 'title' | 'content') => {
+    const { targetLanguage, sourceLanguage } = getChatgptLanguageOptions(ctx);
+
+    if (!targetLanguage) {
+        return field === 'title' ? config.openai.promptTitle : config.openai.promptDescription;
+    }
+
+    return buildTranslationPrompt(field, targetLanguage, sourceLanguage);
+};
+
+const getOpenAiCachePrefix = (ctx) => {
+    const { targetLanguage, sourceLanguage } = getChatgptLanguageOptions(ctx);
+    if (!targetLanguage && !sourceLanguage) {
+        return 'default';
+    }
+
+    return `${sourceLanguage ?? 'auto'}->${targetLanguage ?? 'default'}`;
+};
+
 const getAuthorString = (item) => {
     let author = '';
     if (item.author) {
@@ -330,14 +367,18 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         // openai
         if (ctx.req.query('chatgpt') && config.openai.apiKey) {
+            const titlePrompt = getOpenAiPrompt(ctx, 'title');
+            const descriptionPrompt = getOpenAiPrompt(ctx, 'content');
+            const cachePrefix = getOpenAiCachePrefix(ctx);
+
             data.item = await Promise.all(
                 data.item.map(async (item) => {
                     try {
                         // handle description
                         if (config.openai.inputOption === 'description' && item.description) {
-                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                            const description = await cache.tryGet(`openai:${cachePrefix}:description:${item.link}`, async () => {
                                 const description = convert(item.description!);
-                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                const descriptionMd = await getAiCompletion(descriptionPrompt, description);
                                 return md.render(descriptionMd);
                             });
                             // add it to the description
@@ -347,9 +388,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         }
                         // handle title
                         else if (config.openai.inputOption === 'title' && item.title) {
-                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                            const title = await cache.tryGet(`openai:${cachePrefix}:title:${item.link}`, async () => {
                                 const title = convert(item.title!);
-                                return await getAiCompletion(config.openai.promptTitle, title);
+                                return await getAiCompletion(titlePrompt, title);
                             });
                             // replace the title
                             if (title !== '') {
@@ -358,18 +399,18 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         }
                         // handle both
                         else if (config.openai.inputOption === 'both' && item.title && item.description) {
-                            const title = await cache.tryGet(`openai:title:${item.link}`, async () => {
+                            const title = await cache.tryGet(`openai:${cachePrefix}:title:${item.link}`, async () => {
                                 const title = convert(item.title!);
-                                return await getAiCompletion(config.openai.promptTitle, title);
+                                return await getAiCompletion(titlePrompt, title);
                             });
                             // replace the title
                             if (title !== '') {
                                 item.title = title + '';
                             }
 
-                            const description = await cache.tryGet(`openai:description:${item.link}`, async () => {
+                            const description = await cache.tryGet(`openai:${cachePrefix}:description:${item.link}`, async () => {
                                 const description = convert(item.description!);
-                                const descriptionMd = await getAiCompletion(config.openai.promptDescription, description);
+                                const descriptionMd = await getAiCompletion(descriptionPrompt, description);
                                 return md.render(descriptionMd);
                             });
                             // add it to the description
