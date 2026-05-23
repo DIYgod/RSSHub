@@ -489,4 +489,31 @@ describe('openai', () => {
 
         config.openai.inputOption = originalInput;
     });
+
+    it('keeps the default cache key when only source language is provided', async () => {
+        const { default: server } = await import('@/setup.test');
+        const cache = (await import('@/utils/cache')).default;
+        const originalInput = config.openai.inputOption;
+        let requests = 0;
+
+        cache.clients.memoryCache?.clear();
+        server.use(
+            http.post('https://api.openai.mock/v1/chat/completions', () => {
+                requests += 1;
+                return HttpResponse.json({
+                    choices: [{ message: { content: 'cache-compatible output' } }],
+                });
+            })
+        );
+
+        config.openai.inputOption = 'title';
+        await app.request('/test/gpt?chatgpt=true');
+        const requestsAfterDefault = requests;
+        await app.request('/test/gpt?chatgpt=true&chatgpt_from=English');
+
+        expect(requests).toBe(requestsAfterDefault);
+
+        config.openai.inputOption = originalInput;
+        cache.clients.memoryCache?.clear();
+    });
 });

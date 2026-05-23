@@ -86,11 +86,11 @@ const getOpenAiPrompt = (ctx, field: 'title' | 'content') => {
 
 const getOpenAiCachePrefix = (ctx) => {
     const { targetLanguage, sourceLanguage } = getChatgptLanguageOptions(ctx);
-    if (!targetLanguage && !sourceLanguage) {
+    if (!targetLanguage) {
         return 'default';
     }
 
-    return `${sourceLanguage ?? 'auto'}->${targetLanguage ?? 'default'}`;
+    return `${sourceLanguage ?? 'auto'}->${targetLanguage}`;
 };
 
 const getAuthorString = (item) => {
