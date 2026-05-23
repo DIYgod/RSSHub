@@ -179,8 +179,8 @@ export const route: Route = {
         },
     ],
     handler: async (ctx: Context): Promise<Data> => {
-        const type = ctx.req.param('type')?.toLowerCase().trim();
-        const subType = ctx.req.param('subType')?.toLowerCase().trim();
+        const type = ctx.req.param('type')?.trim();
+        const subType = ctx.req.param('subType')?.trim();
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.chnmuseum.cn';
 
