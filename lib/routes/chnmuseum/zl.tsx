@@ -206,7 +206,7 @@ export const route: Route = {
 
                         // title may not have full display on the page, use the img alt information instead
                         const imgTag = $item.find('img');
-                        const title = imgTag.attr('alt')?.trim() || '';
+                        const title = imgTag.attr('alt') || '';
 
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;
