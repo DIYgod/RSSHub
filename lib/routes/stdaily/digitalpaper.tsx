@@ -22,6 +22,7 @@ export const route: Route = {
     name: '科技日报',
     maintainers: ['lyqluis', 'KarasuShin'],
     handler,
+    url: 'epaper.stdaily.com/statics/technology-site/index.html',
     features: {
         supportRadar: true,
     },
