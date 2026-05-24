@@ -37,11 +37,20 @@ async function handler(ctx: Context): Promise<Data> {
     if (subCategory) {
         link += `/${subCategory}`;
     }
-    const res = await ofetch(link, {
-        headers: commonHeaders,
-    });
+    const res = await fetchCfrPage(link);
 
-    const $ = load(res);
+    if (res.isMarkdown) {
+        const links = collectMarkdownLinks(res.data);
+        const items = await pMap(links, (item) => getDataItem(item), { concurrency: 5 });
+
+        return {
+            title: getMarkdownTitle(res.data),
+            link,
+            item: items,
+        };
+    }
+
+    const $ = load(res.data);
 
     const selectorMap: {
         [key: string]: string;
@@ -104,4 +113,58 @@ async function handler(ctx: Context): Promise<Data> {
         link,
         item: items,
     };
+}
+
+async function fetchCfrPage(link: string) {
+    try {
+        return {
+            data: await ofetch(link, {
+                headers: commonHeaders,
+            }),
+            isMarkdown: false,
+        };
+    } catch {
+        return {
+            data: await ofetch(`https://r.jina.ai/${link}`, {
+                headers: {
+                    ...commonHeaders,
+                    'x-respond-with': 'markdown',
+                    'x-target-selector': 'main',
+                    'x-retain-images': 'none',
+                    'x-timeout': '20',
+                },
+            }),
+            isMarkdown: true,
+        };
+    }
+}
+
+function collectMarkdownLinks(markdown: string) {
+    const seen = new Set<string>();
+    const items: { href: string; title?: string; pubDate?: string }[] = [];
+    const itemPattern = /(?:^#{1,6}\s*)?\[([^\]]+)\]\(https:\/\/www\.cfr\.org((?:\/articles|\/article|\/backgrounders|\/backgrounder|\/blog|\/book|\/event|\/podcasts|\/task-force-report|\/timeline|\/video)\/[^)#]+)\)/gm;
+    const matches = [...markdown.matchAll(itemPattern)];
+
+    for (const [index, match] of matches.entries()) {
+        const [, title, href] = match;
+        const start = match.index ?? 0;
+        const end = matches[index + 1]?.index ?? markdown.length;
+        const content = markdown.slice(start, end);
+        const date = content.match(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, \d{4}\b/)?.[0];
+
+        if (!seen.has(href)) {
+            seen.add(href);
+            items.push({
+                href,
+                title: title.trim(),
+                pubDate: date,
+            });
+        }
+    }
+
+    return items;
+}
+
+function getMarkdownTitle(markdown: string) {
+    return markdown.match(/^Title:\s*(.*?)\s*(?:\| Council on Foreign Relations)?$/m)?.[1] ?? 'Council on Foreign Relations';
 }

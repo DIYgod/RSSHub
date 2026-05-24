@@ -71,6 +71,11 @@ export function getDataItem(input: string | CFRListItem) {
             title: isValidTitle(dataItem.title) ? dataItem.title : listItem.title,
             pubDate: dataItem.pubDate ?? (listItem.pubDate ? parseDate(listItem.pubDate) : undefined),
             link,
+        }))
+        .catch(() => ({
+            title: listItem.title,
+            pubDate: listItem.pubDate ? parseDate(listItem.pubDate) : undefined,
+            link,
         })) as Promise<DataItem>;
 }
 
