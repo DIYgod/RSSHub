@@ -1,6 +1,5 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route = {
     path: '/information/news/:type?',
@@ -14,11 +13,11 @@ export const route = {
     radar: [
         {
             source: ['www.shanghaimuseum.net/mu/frontend/pg/infomation/news'],
-            target: '/information/news/:type?',
+            target: '/information/news',
         },
     ],
     handler: async (ctx) => {
-        const type = ctx.req.param('type')?.toLowerCase() || 'all';
+        const type = ctx.req.param('type') || 'all';
 
         const baseUrl = 'https://www.shanghaimuseum.net';
         const apiUrl = `${baseUrl}/mu/frontend/pg/infomation/search-info`;
@@ -57,7 +56,7 @@ export const route = {
             url: apiUrl,
             json: payload,
             headers: {
-                referer: `${baseUrl}/mu/frontend/pg/infomation/news?type=${type === 'all' ? 'all' : type}`,
+                referer: `${baseUrl}/mu/frontend/pg/infomation/news?type=${type}`,
             },
         });
 
@@ -68,7 +67,7 @@ export const route = {
 
             return {
                 title: item.titleDecoded || item.title,
-                pubDate: timezone(parseDate(item.issueTime, 'YYYY-MM-DD HH:mm:ss'), +8),
+                pubDate: parseDate(item.issueTime),
                 category: item.infoType?.entryItemName || item.bulletinInfoType?.entryItemName,
                 link: itemLink,
             };
@@ -76,7 +75,7 @@ export const route = {
 
         return {
             title: `上海博物馆 - ${titleTag}`,
-            link: `${baseUrl}/mu/frontend/pg/infomation/news?type=${type === 'all' ? 'all' : type}`,
+            link: `${baseUrl}/mu/frontend/pg/infomation/news?type=${type}`,
             language: 'zh-CN',
             item: items,
         };
