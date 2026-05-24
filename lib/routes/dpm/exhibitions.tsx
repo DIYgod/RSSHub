@@ -117,10 +117,7 @@ export const route: Route = {
                     const $d = load(detailResponse.data);
                     const detailTime = $d('.time em').text().trim();
                     if (detailTime) {
-                        fullDuration = detailTime
-                            .replaceAll(/[\r\n]+/g, ' ')
-                            .replaceAll(/\s+/g, ' ')
-                            .trim(); // remove extra whitespace and newlines
+                        fullDuration = detailTime.replaceAll(/[\r\n]+/g, ' ').replaceAll(/\s+/g, ' '); // remove extra whitespace and newlines
                     }
                 }
 
