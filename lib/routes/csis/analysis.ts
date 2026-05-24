@@ -6,6 +6,11 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+type CsisListItem = {
+    link: string;
+    pubDate?: string;
+};
+
 const rootUrl = 'https://www.csis.org';
 const currentUrl = `${rootUrl}/analysis`;
 
@@ -47,14 +52,26 @@ async function handler(ctx) {
     const $ = load(data);
     const seen = new Set<string>();
 
-    const links = $('a[href^="/analysis/"]')
+    const links = $('article')
         .toArray()
-        .map((item) => `${rootUrl}${$(item).attr('href')}`)
-        .filter((link) => {
-            if (seen.has(link)) {
+        .map((item) => {
+            const article = $(item);
+            const href = article.find('h3 a[href^="/analysis/"]').first().attr('href');
+            const date = article.find('.contributors span.inline-block').last().text().replace(/^—\s*/, '').trim();
+
+            return href
+                ? {
+                      link: new URL(href, rootUrl).href,
+                      pubDate: date,
+                  }
+                : undefined;
+        })
+        .filter((item): item is CsisListItem => Boolean(item?.link))
+        .filter((item) => {
+            if (seen.has(item.link)) {
                 return false;
             }
-            seen.add(link);
+            seen.add(item.link);
             return true;
         })
         .slice(0, limit);
@@ -69,9 +86,9 @@ async function handler(ctx) {
     };
 }
 
-async function getCsisItem(link: string) {
-    return await cache.tryGet(link, async () => {
-        const { data } = await got(link, {
+async function getCsisItem(item: CsisListItem) {
+    return await cache.tryGet(item.link, async () => {
+        const { data } = await got(item.link, {
             headers: commonHeaders,
         });
         const $ = load(data);
@@ -79,20 +96,36 @@ async function getCsisItem(link: string) {
         const title = getMeta($, 'og:title') || ld?.headline || $('h1').first().text().trim() || $('title').text().trim();
         const description = getMeta($, 'og:description') || ld?.description || '';
         const image = getMeta($, 'og:image') || getJsonLdImage(ld);
-        const pubDate = ld?.datePublished || ld?.dateModified || getMeta($, 'article:published_time');
+        const pubDate = ld?.datePublished || ld?.dateModified || getMeta($, 'article:published_time') || getMeta($, 'citation_publication_date');
 
         return {
             title,
-            link,
+            link: item.link,
             description: [description ? `<p>${description}</p>` : '', image ? `<p><img src="${image}" referrerpolicy="no-referrer"></p>` : ''].join(''),
-            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            pubDate: pubDate ? parseCsisDate(pubDate) : undefined,
             author: getJsonLdAuthor(ld),
         };
-    });
+    }).then((dataItem) => ({
+        ...dataItem,
+        pubDate: dataItem.pubDate ?? (item.pubDate ? parseCsisDate(item.pubDate) : undefined),
+    }));
 }
 
 function getMeta($, name: string) {
     return $(`meta[property="${name}"], meta[name="${name}"]`).attr('content')?.trim();
+}
+
+function parseCsisDate(date: string) {
+    const normalized = date.replace(/^[A-Za-z]{3},\s*/, '').replace(/\s+-\s+/, ' ').trim();
+    const citationDate = normalized.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{1,2}:\d{2}))?$/);
+
+    if (citationDate) {
+        const [, month, day, year, time] = citationDate;
+
+        return parseDate(`${year}-${month}-${day}${time ? ` ${time}` : ''}`, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD']);
+    }
+
+    return parseDate(normalized, ['MMMM D, YYYY', 'MMM D, YYYY']);
 }
 
 function parseJsonLd($) {
