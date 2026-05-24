@@ -65,13 +65,13 @@ export const route = {
                     },
                 });
 
-                const resData = response.data?.data ?? response.data;
-                const list = Array.isArray(resData) ? resData : Array.isArray(resData?.list) ? resData.list : [];
+                const resData = response.data?.data; // The actual data is nested under the 'data' property in the response
+                const list = Array.isArray(resData?.list) ? resData.list : []; // resData may be undefined or not an array, resDate.list is an array
 
                 return list.map((item) => {
                     const title = item.title;
                     const itemLink = item.fullurl;
-                    const pubDate = timezone(parseDate(item.publishtime * 1000), +8);
+                    const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
                     const startDate = item.start_time.split(' ')[0];
                     const endDate = item.end_time.split(' ')[0];
                     const fullDuration = item.display_time;
