@@ -1,12 +1,10 @@
 import sanitizeHtml from 'sanitize-html';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-
-import type { Data } from '../../types';
 
 const rootUrl = 'https://wx.soweather.com';
 const pageUrl = `${rootUrl}/wxapp/warn.jsp`;
