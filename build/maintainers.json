@@ -1674,6 +1674,9 @@
   "/chnmuseum/zx/xwzt": [
     "ShabbyWhineYear"
   ],
+  "/chnmuseum/zl/:type?/:subType?": [
+    "magazian"
+  ],
   "/chocolatey/packages/:id": [
     "nczitzk"
   ],

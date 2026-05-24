@@ -11357,6 +11357,16 @@
         ],
         "target": "/chnmuseum/zx/xwzt"
       }
+    ],
+    "www": [
+      {
+        "title": "Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zl/"
+        ],
+        "target": "/chnmuseum/zl"
+      }
     ]
   },
   "chocolatey.org": {
