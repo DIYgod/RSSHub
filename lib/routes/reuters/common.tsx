@@ -263,7 +263,7 @@ async function handler(ctx) {
             items.map((item) =>
                 ctx.req.query('fulltext') === 'true'
                     ? cache.tryGet(item.link, async () => {
-                          const detailResponse = await ofetch(item.link,{
+                          const detailResponse = await ofetch(item.link, {
                               headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                           });
                           const content = load(detailResponse.data);
