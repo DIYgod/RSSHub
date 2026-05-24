@@ -83,15 +83,25 @@ function isRealWarning(warning: RawWarning): boolean {
 
 function buildItem(warning: RawWarning, groupName: string): DataItem {
     const title = buildTitle(warning);
+    const content = buildContent(warning);
     const guid = `${warning.district}-${warning.id}-${warning.yjid}`;
     const image = warning.icon ? `${rootUrl}/wxapp/images/icon/${warning.icon.replaceAll('-', '_')}` : undefined;
+    const updated = !warning.isActive && warning.jcsj ? timezone(parseDate(warning.jcsj, 'YYYY-MM-DD HH:mm'), 8) : undefined;
 
     return {
         title,
         link: `${pageUrl}#${encodeURIComponent(guid)}`,
         guid,
-        description: buildDescription(warning),
+        description: content,
+        content: {
+            html: content,
+            text: content
+                .replaceAll(/<br\s*\/?>/gi, '\n')
+                .replaceAll(/<[^>]+>/g, '')
+                .trim(),
+        },
         pubDate: timezone(parseDate(warning.fbsj, 'YYYY-MM-DD HH:mm'), 8),
+        updated,
         author: warning.yjfbdw,
         category: [groupName, warning.district, warning.name, warning.isActive ? '生效中' : '已解除'],
         image,
@@ -104,7 +114,7 @@ function buildTitle(warning: RawWarning): string {
     return `${warning.isActive ? '' : '【已解除】'}${warning.yjfbdw}${warning.yjfbtype}${warning.name}${suffix}`;
 }
 
-function buildDescription(warning: RawWarning): string {
+function buildContent(warning: RawWarning): string {
     const sections = [
         !warning.isActive && warning.jcsj ? `解除时间：${warning.jcsj}<br>` : '',
         sanitizeHtml(getWarningInfo(warning.htmlword), {
