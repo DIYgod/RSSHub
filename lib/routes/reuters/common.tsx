@@ -195,13 +195,6 @@ async function handler(ctx) {
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
 
-    const browserHeaders = {
-        Accept: 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        Referer: 'https://www.reuters.com/',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0',
-    };
-
     try {
         const { title, description, rootUrl, response } = await (async () => {
             if (MUST_FETCH_BY_TOPICS.has(category)) {
@@ -270,8 +263,8 @@ async function handler(ctx) {
             items.map((item) =>
                 ctx.req.query('fulltext') === 'true'
                     ? cache.tryGet(item.link, async () => {
-                          const detailResponse = await ofetch(item.link, {
-                              headers: browserHeaders,
+                          const detailResponse = await ofetch(item.link,{
+                              headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
                           });
                           const content = load(detailResponse.data);
 
@@ -339,7 +332,7 @@ async function handler(ctx) {
         const arcUrl = topic ? `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section${section_id}?outputType=json` : `https://www.reuters.com/arc/outboundfeeds/v4/mobile/section/${category}/?outputType=json`;
 
         const arcResponse = await ofetch(arcUrl, {
-            headers: browserHeaders,
+            headerGeneratorOptions: PRESETS.MODERN_WINDOWS,
         });
         if (arcResponse.wireitems?.length) {
             const items = arcResponse.wireitems
