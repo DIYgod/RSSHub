@@ -37,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const path = ctx.req.param('path') ? `/${ctx.req.param('path')}` : '/hub/ap-top-news';
+    const path = ctx.req.param('path') ? `/${ctx.req.param('path')}` : '/';
     const apiRootUrl = 'https://apnews.com/graphql/delivery/ap/v1';
     const res = await ofetch(apiRootUrl, {
         query: {
