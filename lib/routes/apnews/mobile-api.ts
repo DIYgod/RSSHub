@@ -10,12 +10,12 @@ import { fetchArticle } from './utils';
 export const route: Route = {
     path: '/mobile/:path{.+}?',
     categories: ['traditional-media'],
-    example: '/apnews/mobile/ap-top-news',
+    example: '/apnews/mobile/',
     view: ViewType.Articles,
     parameters: {
         path: {
             description: 'Corresponding path from AP News website',
-            default: 'ap-top-news',
+            default: '/',
         },
     },
     features: {
