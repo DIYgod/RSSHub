@@ -1700,7 +1700,6 @@ export type RoutePath =
   | `/kiro/blog`
   | `/kiro/changelog`
   | `/kisskiss/blog/:category?`
-  | `/kleinanzeigen/search/:routeParams`
   | `/komiic/comic/:id`
   | `/konachan/post/popular_recent/:period?`
   | `/konachan/sfw/post/popular_recent/:period?`
