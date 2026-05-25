@@ -17,7 +17,7 @@ const categories = {
 };
 
 export const route: Route = {
-    path: ['/cs/:type?', '/ces/:type?'],
+    path: '/cs/:type?',
     categories: ['university'],
     example: '/shu/cs/zytz',
     parameters: { type: '分类，默认为重要通知' },
@@ -39,14 +39,12 @@ export const route: Route = {
     maintainers: ['GhhG123', 'linull24'],
     handler,
     url: 'cs.shu.edu.cn/',
-    description: `\`/shu/ces/:type?\` 是兼容别名。
-
-| 重要通知 |
+    description: `| 重要通知 |
 | -------- |
 | zytz     |`,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const type = ctx.req.param('type') || 'zytz';
     const category = categories[type] || categories.zytz;
     const link = new URL(category.path, rootUrl).href;
