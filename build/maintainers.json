@@ -5193,6 +5193,9 @@
   "/kisskiss/blog/:category?": [
     "keocheung"
   ],
+  "/kleinanzeigen/search/:routeParams": [
+    "LunyaaDev"
+  ],
   "/komiic/comic/:id": [
     "NekoAria"
   ],
