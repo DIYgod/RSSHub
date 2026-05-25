@@ -55,7 +55,7 @@ export const route: Route = {
 | notice   | news |`,
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const routeType = ctx.req.param('type') || 'notice';
     const type = alias.get(routeType) || routeType;
     const category = categories[type] || categories.notice;
