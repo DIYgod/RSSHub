@@ -122,7 +122,7 @@ export const route: Route = {
                 }
 
                 // if fullduration doesn't contain a 4-digit year, it means we probably got a type label like "特展" or "专馆", so reset it to '未定/常设'
-                if (!fullDuration || !/\d{4}/.test(fullDuration)) {
+                if (!/\d{4}/.test(fullDuration)) {
                     fullDuration = '未定/常设';
                 }
 
@@ -145,12 +145,8 @@ export const route: Route = {
 
                 const description = renderToString(
                     <div>
-                        {imgUrl && (
-                            <>
-                                <img src={imgUrl} />
-                                <br />
-                            </>
-                        )}
+                        <img src={imgUrl} />
+                        <br />
                         <p>
                             <b>地点：</b>
                             {location}
@@ -163,11 +159,9 @@ export const route: Route = {
                             <b>闭展：</b>
                             {endDate ?? '未定/常设'}
                         </p>
-                        {fullDuration && (
-                            <p>
-                                <small>原始展期：{fullDuration}</small>
-                            </p>
-                        )}
+                        <p>
+                            <small>原始展期：{fullDuration}</small>
+                        </p>
                         {/* notice for exhibition w/o link */}
                         {hasNoLink && (
                             <p style={{ color: '#ff4d4f' }}>
