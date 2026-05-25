@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import sanitize from 'sanitize-html';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -35,7 +36,10 @@ export const getProductPage = (url: string): Promise<DataItem> =>
         const address = product.find('[itemprop="address"]').text().trim();
 
         // description of the product
-        const description = (product.find('[itemprop="description"]').html() ?? '').replaceAll(/<(?!\/?br\s*\/?)[^>]*>/g, '');
+        const descriptionHtml = product.find('[itemprop="description"]').html() || '';
+        const description = sanitize(descriptionHtml, {
+            allowedTags: ['br'],
+        });
 
         // get images from page
         const images = product
