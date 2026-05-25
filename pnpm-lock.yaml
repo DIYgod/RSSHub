@@ -215,8 +215,8 @@ importers:
         specifier: 11.1.0
         version: 11.1.0
       re2js:
-        specifier: 2.8.2
-        version: 2.8.2
+        specifier: 2.8.3
+        version: 2.8.3
       rfc4648:
         specifier: 1.5.4
         version: 1.5.4
@@ -3545,7 +3545,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.47:
@@ -5246,8 +5246,8 @@ packages:
   rate-limiter-flexible@11.1.0:
     resolution: {integrity: sha512-lyyC0SqKz+dE5JoHZ4JMqdrM3LSZKBxzuAFAyKCYAnmHnPz/Rb6iDquxoL4CMipDXoR0G+QRhOzYWL3JKihbNw==}
 
-  re2js@2.8.2:
-    resolution: {integrity: sha512-Z+F0lxMaX7xLZk0zTVbDuDesEBWoEVCIWkFT3vrb2ZX3nqvybYqtD5VVVGZCe6pd3VAKfhe1A53nUNfm2y+vZA==}
+  re2js@2.8.3:
+    resolution: {integrity: sha512-lUKeXVwMqU302DM/WaOm33XF2hhzjGUZ8CbLg4zSAMpW2PPkJ2+is25AROevNiw+DytFmKU5gsQ92cB1Kxy+fA==}
     engines: {node: '>=18.0.0'}
 
   readable-stream@3.6.2:
@@ -11053,7 +11053,7 @@ snapshots:
 
   rate-limiter-flexible@11.1.0: {}
 
-  re2js@2.8.2: {}
+  re2js@2.8.3: {}
 
   readable-stream@3.6.2:
     dependencies:
