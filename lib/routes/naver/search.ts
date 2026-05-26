@@ -91,141 +91,123 @@ async function handler(ctx) {
 
 function extractItems(response: string, templateId: string) {
     const segments = response.split(`"templateId":"${templateId}"`);
-
     return segments
         .slice(0, -1)
-        .map((segment) => {
-            // videoItem: different field layout from other templates
-            if (templateId === 'videoItem') {
-                const htmlMatch = segment.match(/"html":"((?:[^"\\]|\\.)*)"/);
-                const title = htmlMatch ? cleanText(htmlMatch[1]) : '';
-                const authorMatch = segment.match(/"authorHtml":"((?:[^"\\]|\\.)*)"/);
-                const author = authorMatch ? cleanText(authorMatch[1]) : '';
-                const hrefMatches = [...segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g)];
-                const links = hrefMatches.map((m) => m[1]);
-                // Filter for real video links (YouTube, TikTok, Naver TV/blog/cafe)
-                const mediaDomains = /^(https?:\/\/)?(m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
-                const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
-                const dateMatch = segment.match(/"createdAt":"((?:[^"\\]|\\.)*)"/);
-                const timeText = dateMatch?.[1] || '';
-                const viewMatch = segment.match(/"viewCount":"((?:[^"\\]|\\.)*)"/);
-                const viewCount = viewMatch ? cleanText(viewMatch[1]) : '';
-                const durationMatch = segment.match(/"playDuration":(\d+)/);
-                const duration = durationMatch ? `${durationMatch[1]}초` : '';
+        .map((segment) => (templateId === 'videoItem' ? extractVideoItem(segment) : extractGenericItem(segment, templateId)))
+        .filter(Boolean);
+}
 
-                // Require videoPlayerType or playDuration to ensure it's a real video result
-                const hasVideoFields = segment.includes('"videoPlayerType"') || segment.includes('"playDuration"');
-                if (!title || !link || !timeText || !hasVideoFields) {
-                    return null;
-                }
+function extractVideoItem(segment: string) {
+    const htmlMatch = segment.match(/"html":"((?:[^"\\]|\\.)*)"/);
+    const title = htmlMatch ? cleanText(htmlMatch[1]) : '';
+    const authorMatch = segment.match(/"authorHtml":"((?:[^"\\]|\\.)*)"/);
+    const author = authorMatch ? cleanText(authorMatch[1]) : '';
+    const hrefMatches = [...segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g)];
+    const links = hrefMatches.map((m) => m[1]);
+    const mediaDomains = /^(https?:\/\/)?(m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
+    const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
+    const dateMatch = segment.match(/"createdAt":"((?:[^"\\]|\\.)*)"/);
+    const timeText = dateMatch?.[1] || '';
+    const viewMatch = segment.match(/"viewCount":"((?:[^"\\]|\\.)*)"/);
+    const viewCount = viewMatch ? cleanText(viewMatch[1]) : '';
+    const durationMatch = segment.match(/"playDuration":(\d+)/);
+    const duration = durationMatch ? `${durationMatch[1]}초` : '';
 
-                const parts = [];
-                if (viewCount) {
-                    parts.push(`조회수: ${viewCount}`);
-                }
-                if (duration && duration !== '0초') {
-                    parts.push(`재생시간: ${duration}`);
-                }
-                const description = parts.map((p) => `<p>${p}</p>`).join('');
+    const hasVideoFields = segment.includes('"videoPlayerType"') || segment.includes('"playDuration"');
+    if (!title || !link || !timeText || !hasVideoFields) {
+        return null;
+    }
 
-                const pubDate = parseKoreanRelativeTime(timeText);
+    const parts = [];
+    if (viewCount) {
+        parts.push(`조회수: ${viewCount}`);
+    }
+    if (duration && duration !== '0초') {
+        parts.push(`재생시간: ${duration}`);
+    }
+    const description = parts.map((p) => `<p>${p}</p>`).join('');
+
+    const pubDate = parseKoreanRelativeTime(timeText);
+    return {
+        title,
+        link,
+        description,
+        author: author || undefined,
+        ...(pubDate && { pubDate }),
+    };
+}
+
+function extractGenericItem(segment: string, templateId: string) {
+    const titleMatches = [...segment.matchAll(/"title":"((?:[^"\\]|\\.)*)"/g)];
+    const titles = titleMatches.map((m) => cleanText(m[1]));
+
+    let link = '';
+    if (templateId === 'webItem') {
+        const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+        link = hrefMatch?.[1] || '';
+    } else {
+        const hrefMatches = [...segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g)];
+        link = hrefMatches.length > 0 ? hrefMatches.at(-1)![1] : '';
+        if (!link) {
+            const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+            link = hrefMatch?.[1] || '';
+        }
+    }
+
+    const title = titles.at(-1) || '';
+    const sourceName = titles.at(-2) || '';
+
+    let bodyText = '';
+    const bodyMatch = segment.match(/"bodyText":"((?:[^"\\]|\\.)*)"/) || segment.match(/"content":"((?:[^"\\]|\\.)*)"/);
+    if (bodyMatch) {
+        bodyText = cleanText(bodyMatch[1]);
+    }
+
+    let timeText = '';
+    switch (templateId) {
+        case 'webItem': {
+            const timeMatch = segment.match(/\[{"text":"([^"]*)"}/);
+            timeText = timeMatch?.[1] || '';
+            break;
+        }
+        case 'newsItem': {
+            const textMatch = segment.match(/"text":"([^"]*)"/);
+            timeText = textMatch?.[1] || '';
+            break;
+        }
+        case 'ugcItem': {
+            const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
+            if (dateMatch?.[1]) {
                 return {
                     title,
                     link,
-                    description,
-                    author: author || undefined,
-                    ...(pubDate && { pubDate }),
+                    description: bodyText,
+                    author: sourceName || undefined,
+                    pubDate: new Date(dateMatch[1]),
                 };
             }
+            break;
+        }
+        default:
+            break;
+    }
 
-            // Extract all title fields
-            const titleMatches = [...segment.matchAll(/"title":"((?:[^"\\]|\\.)*)"/g)];
-            const titles = titleMatches.map((m) => cleanText(m[1]));
+    if (!title || !link) {
+        return null;
+    }
 
-            // Extract URLs depending on template type
-            let link = '';
-            if (templateId === 'webItem') {
-                // webItem: first href is the result link
-                const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-                link = hrefMatch?.[1] || '';
-            } else {
-                // ugcItem, newsItem: last titleHref is the result link
-                const hrefMatches = [...segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g)];
-                link = hrefMatches.length > 0 ? hrefMatches.at(-1)[1] : '';
-                // Fallback: try direct href
-                if (!link) {
-                    const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-                    link = hrefMatch?.[1] || '';
-                }
-            }
+    if (title === '더보기' || title === '관련도순' || title === '최신순') {
+        return null;
+    }
 
-            // Title: last title is always the result title
-            const title = titles.at(-1) || '';
-            // Source: second-to-last title
-            const sourceName = titles.at(-2) || '';
-
-            // Extract body/description
-            let bodyText = '';
-            const bodyMatch = segment.match(/"bodyText":"((?:[^"\\]|\\.)*)"/) || segment.match(/"content":"((?:[^"\\]|\\.)*)"/);
-            if (bodyMatch) {
-                bodyText = cleanText(bodyMatch[1]);
-            }
-
-            // Extract time
-            let timeText = '';
-            switch (templateId) {
-                case 'webItem': {
-                    const timeMatch = segment.match(/\[{"text":"([^"]*)"}/);
-                    timeText = timeMatch?.[1] || '';
-
-                    break;
-                }
-                case 'newsItem': {
-                    const textMatch = segment.match(/"text":"([^"]*)"/);
-                    timeText = textMatch?.[1] || '';
-
-                    break;
-                }
-                case 'ugcItem': {
-                    // blog uses createdDate like "2026-05-13T23:15:00+09:00"
-                    const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
-                    if (dateMatch?.[1]) {
-                        return {
-                            title,
-                            link,
-                            description: bodyText,
-                            author: sourceName || undefined,
-                            pubDate: new Date(dateMatch[1]),
-                        };
-                    }
-
-                    break;
-                }
-                default:
-                // Do nothing
-            }
-
-            if (!title || !link) {
-                return null;
-            }
-
-            // Skip non-result items
-            if (title === '더보기' || title === '관련도순' || title === '최신순') {
-                return null;
-            }
-
-            const description = bodyText;
-            const pubDate = parseKoreanRelativeTime(timeText);
-
-            return {
-                title,
-                link,
-                description,
-                author: sourceName || undefined,
-                ...(pubDate && { pubDate }),
-            };
-        })
-        .filter(Boolean);
+    const pubDate = parseKoreanRelativeTime(timeText);
+    return {
+        title,
+        link,
+        description: bodyText,
+        author: sourceName || undefined,
+        ...(pubDate && { pubDate }),
+    };
 }
 
 function extractCafeItems(html: string) {
