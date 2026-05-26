@@ -80,12 +80,8 @@ export const route = {
 
                     const description = renderToString(
                         <div>
-                            {imgUrl && (
-                                <>
-                                    <img src={imgUrl} />
-                                    <br />
-                                </>
-                            )}
+                            <img src={imgUrl} />
+                            <br />
                             <p>
                                 <b>地点：</b>
                                 {location || '参考展览图片'}
