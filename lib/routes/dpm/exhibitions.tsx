@@ -69,7 +69,7 @@ export const route: Route = {
         const titleTag = currentType ? `${currentType.name}` : '正在展览';
         const $ = load(response.data);
 
-        const itemElements = $('.item, .exhibition-item').toArray();
+        const itemElements = $('.item').toArray();
 
         const rawItems = itemElements.map((item) => {
             const $item = $(item);
