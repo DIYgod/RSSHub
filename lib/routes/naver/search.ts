@@ -118,78 +118,55 @@ function extractVideoItem(segment: string) {
         return null;
     }
 
-    const parts = [];
+    const pubDate = parseKoreanRelativeTime(timeText);
+    return buildVideoResult(title, link, viewCount, duration, author, pubDate);
+}
+
+function buildVideoResult(title: string, link: string, viewCount: string, duration: string, author: string, pubDate: Date | undefined) {
+    return {
+        title,
+        link,
+        description: buildVideoDescription(viewCount, duration),
+        author: author || undefined,
+        ...(pubDate && { pubDate }),
+    };
+}
+
+function buildVideoDescription(viewCount: string, duration: string): string {
+    const parts: string[] = [];
     if (viewCount) {
         parts.push(`조회수: ${viewCount}`);
     }
     if (duration && duration !== '0초') {
         parts.push(`재생시간: ${duration}`);
     }
-    const description = parts.map((p) => `<p>${p}</p>`).join('');
+    return parts.map((p) => `<p>${p}</p>`).join('');
+}
 
-    const pubDate = parseKoreanRelativeTime(timeText);
-    return {
-        title,
-        link,
-        description,
-        author: author || undefined,
-        ...(pubDate && { pubDate }),
-    };
+function extractLink(segment: string, templateId: string): string {
+    if (templateId === 'webItem') {
+        const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+        return hrefMatch?.[1] || '';
+    }
+    const hrefMatches = [...segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g)];
+    if (hrefMatches.length > 0) {
+        return hrefMatches.at(-1)![1];
+    }
+    const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
+    return hrefMatch?.[1] || '';
 }
 
 function extractGenericItem(segment: string, templateId: string) {
     const titleMatches = [...segment.matchAll(/"title":"((?:[^"\\]|\\.)*)"/g)];
     const titles = titleMatches.map((m) => cleanText(m[1]));
-
-    let link = '';
-    if (templateId === 'webItem') {
-        const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-        link = hrefMatch?.[1] || '';
-    } else {
-        const hrefMatches = [...segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g)];
-        link = hrefMatches.length > 0 ? hrefMatches.at(-1)![1] : '';
-        if (!link) {
-            const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-            link = hrefMatch?.[1] || '';
-        }
-    }
-
     const title = titles.at(-1) || '';
     const sourceName = titles.at(-2) || '';
+    const link = extractLink(segment, templateId);
 
     let bodyText = '';
     const bodyMatch = segment.match(/"bodyText":"((?:[^"\\]|\\.)*)"/) || segment.match(/"content":"((?:[^"\\]|\\.)*)"/);
     if (bodyMatch) {
         bodyText = cleanText(bodyMatch[1]);
-    }
-
-    let timeText = '';
-    switch (templateId) {
-        case 'webItem': {
-            const timeMatch = segment.match(/\[{"text":"([^"]*)"}/);
-            timeText = timeMatch?.[1] || '';
-            break;
-        }
-        case 'newsItem': {
-            const textMatch = segment.match(/"text":"([^"]*)"/);
-            timeText = textMatch?.[1] || '';
-            break;
-        }
-        case 'ugcItem': {
-            const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
-            if (dateMatch?.[1]) {
-                return {
-                    title,
-                    link,
-                    description: bodyText,
-                    author: sourceName || undefined,
-                    pubDate: new Date(dateMatch[1]),
-                };
-            }
-            break;
-        }
-        default:
-            break;
     }
 
     if (!title || !link) {
@@ -200,14 +177,29 @@ function extractGenericItem(segment: string, templateId: string) {
         return null;
     }
 
+    return buildItemFromTemplate(segment, templateId, title, link, bodyText, sourceName);
+}
+
+function buildItemFromTemplate(segment: string, templateId: string, title: string, link: string, bodyText: string, sourceName: string) {
+    if (templateId === 'ugcItem') {
+        const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
+        if (dateMatch?.[1]) {
+            return { title, link, description: bodyText, author: sourceName || undefined, pubDate: new Date(dateMatch[1]) };
+        }
+        return null;
+    }
+
+    let timeText = '';
+    if (templateId === 'webItem') {
+        const timeMatch = segment.match(/\[{"text":"([^"]*)"}/);
+        timeText = timeMatch?.[1] || '';
+    } else {
+        const textMatch = segment.match(/"text":"([^"]*)"/);
+        timeText = textMatch?.[1] || '';
+    }
+
     const pubDate = parseKoreanRelativeTime(timeText);
-    return {
-        title,
-        link,
-        description: bodyText,
-        author: sourceName || undefined,
-        ...(pubDate && { pubDate }),
-    };
+    return { title, link, description: bodyText, author: sourceName || undefined, ...(pubDate && { pubDate }) };
 }
 
 function extractCafeItems(html: string) {
