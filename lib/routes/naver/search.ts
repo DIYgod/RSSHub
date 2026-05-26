@@ -1,8 +1,10 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
-    path: ['/search/:category/:keyword', '/search/:keyword'],
+    path: '/search/:category/:keyword',
     categories: ['other'],
     example: '/naver/search/all/송소희',
     parameters: {
@@ -30,34 +32,34 @@ export const route: Route = {
     radar: [
         {
             source: ['m.search.naver.com/search.naver'],
-            target: '/search/:category?/:keyword',
+            target: '/search/:category/:keyword',
         },
     ],
     name: '검색',
-    maintainers: [''],
+    maintainers: ['slowmande'],
     handler,
 };
 
-const CATEGORY_CONFIG: Record<string, { url: (keyword: string) => string; templateId: string }> = {
+const CATEGORY_CONFIG: Record<string, { url: (keyword: string) => string; templateIds: string[] }> = {
     all: {
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m.all&where=m&sm=mtb_opt&query=${encodeURIComponent(keyword)}&nso=so%3Add&nso_open=1`,
-        templateId: 'webItem',
+        templateIds: ['webItem', 'ugcItem', 'newsItem', 'videoItem'],
     },
     blog: {
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m_blog.all&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
-        templateId: 'ugcItem',
+        templateIds: ['ugcItem'],
     },
     cafe: {
-        url: (keyword) => `https://m.search.naver.com/search.naver?where=m_cafe&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
-        templateId: 'webItem',
+        url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m_cafe.all&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
+        templateIds: ['webItem', 'ugcItem', 'newsItem', 'videoItem'],
     },
     news: {
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m_news.all&where=m_news&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
-        templateId: 'newsItem',
+        templateIds: ['newsItem'],
     },
     video: {
         url: (keyword) => `https://m.search.naver.com/search.naver?ssc=tab.m_video.all&where=m_video&sm=mtb_jum&query=${encodeURIComponent(keyword)}&nso=so%3Add`,
-        templateId: 'videoItem',
+        templateIds: ['videoItem'],
     },
 };
 
@@ -77,7 +79,7 @@ async function handler(ctx) {
 
     const response = await ofetch(url);
 
-    const items = extractItems(response, config.templateId);
+    const items = category === 'cafe' ? extractCafeItems(response) : config.templateIds.flatMap((tid) => extractItems(response, tid));
 
     return {
         title: `${keyword} - 네이버 ${CATEGORY_NAMES[category] || CATEGORY_NAMES.all}`,
@@ -118,9 +120,6 @@ function extractItems(response: string, templateId: string) {
                 }
 
                 const parts = [];
-                if (author) {
-                    parts.push(`출처: ${author}`);
-                }
                 if (viewCount) {
                     parts.push(`조회수: ${viewCount}`);
                 }
@@ -129,11 +128,13 @@ function extractItems(response: string, templateId: string) {
                 }
                 const description = parts.map((p) => `<p>${p}</p>`).join('');
 
+                const pubDate = parseKoreanRelativeTime(timeText);
                 return {
                     title,
                     link,
                     description,
-                    pubDate: parseKoreanRelativeTime(timeText),
+                    author: author || undefined,
+                    ...(pubDate && { pubDate }),
                 };
             }
 
@@ -192,7 +193,8 @@ function extractItems(response: string, templateId: string) {
                         return {
                             title,
                             link,
-                            description: sourceName ? `<p>출처: ${sourceName}</p><p>${bodyText}</p>` : bodyText,
+                            description: bodyText,
+                            author: sourceName || undefined,
                             pubDate: new Date(dateMatch[1]),
                         };
                     }
@@ -212,16 +214,56 @@ function extractItems(response: string, templateId: string) {
                 return null;
             }
 
-            const description = sourceName ? `<p>출처: ${sourceName}</p><p>${bodyText}</p>` : bodyText;
+            const description = bodyText;
+            const pubDate = parseKoreanRelativeTime(timeText);
 
             return {
                 title,
                 link,
                 description,
-                pubDate: parseKoreanRelativeTime(timeText),
+                author: sourceName || undefined,
+                ...(pubDate && { pubDate }),
             };
         })
         .filter(Boolean);
+}
+
+function extractCafeItems(html: string) {
+    const $ = load(html);
+    const items: Array<{
+        title: string;
+        link: string;
+        description: string;
+        author?: string;
+        pubDate?: Date;
+    }> = [];
+
+    $('li.bx').each((_i, el) => {
+        const $el = $(el);
+        const titleEl = $el.find('.title_link');
+        const title = titleEl.text().trim();
+        const link = titleEl.attr('href') || '';
+        const author = $el.find('.name').first().text().trim();
+        const timeText = $el.find('.sub').first().text().trim();
+        const descEl = $el.find('.dsc_link');
+        const description = descEl.length ? descEl.text().trim() : '';
+
+        if (!title || !link) {
+            return;
+        }
+
+        const pubDate = parseKoreanRelativeTime(timeText);
+
+        items.push({
+            title,
+            link,
+            description,
+            author: author || undefined,
+            ...(pubDate && { pubDate }),
+        });
+    });
+
+    return items;
 }
 
 function cleanText(text: string): string {
@@ -244,10 +286,10 @@ function cleanText(text: string): string {
         .replaceAll('</mark>', '');
 }
 
-function parseKoreanRelativeTime(timeText: string): Date {
+function parseKoreanRelativeTime(timeText: string): Date | undefined {
     const now = new Date();
     if (!timeText) {
-        return now;
+        return;
     }
 
     // Try absolute date formats first (e.g. "2025.12.01.", "2026-05-13T23:15:00+09:00")
@@ -258,11 +300,11 @@ function parseKoreanRelativeTime(timeText: string): Date {
 
     const match = timeText.match(/(\d+)\s*(시간|분|일|주) 전|(\d+)분 이내|(\d+)시간 이내|방금/);
     if (!match) {
-        return now;
+        return;
     }
 
     if (match[0] === '방금') {
-        return now;
+        return;
     }
 
     const num = Number.parseInt(match[1] || match[3] || match[4] || '0', 10);
@@ -281,5 +323,5 @@ function parseKoreanRelativeTime(timeText: string): Date {
         return new Date(now.getTime() - num * 7 * 24 * 60 * 60 * 1000);
     }
 
-    return now;
+    return;
 }
