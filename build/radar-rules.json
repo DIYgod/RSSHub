@@ -15311,6 +15311,19 @@
       }
     ]
   },
+  "dpm.org.cn": {
+    "_name": "The Palace Museum",
+    "www": [
+      {
+        "title": "Current Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/classify/exhibition.html"
+        ],
+        "target": "/dpm/exhibitions"
+      }
+    ]
+  },
   "dribbble.com": {
     "_name": "Dribbble",
     ".": [

@@ -856,6 +856,7 @@ export type RoutePath =
   | `/douyu/group/:id/:sort?`
   | `/douyu/post/:id`
   | `/douyu/room/:id`
+  | `/dpm/exhibitions/:type?`
   | `/dribbble/keyword/:keyword`
   | `/dribbble/popular/:timeframe?`
   | `/dribbble/user/:name`

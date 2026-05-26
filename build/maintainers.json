@@ -2583,6 +2583,9 @@
   "/douyu/post/:id": [
     "nczitzk"
   ],
+  "/dpm/exhibitions/:type?": [
+    "magazian"
+  ],
   "/dribbble/keyword/:keyword": [
     "DIYgod",
     "loganrockmore"
