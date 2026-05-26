@@ -1,5 +1,5 @@
 // oxlint-disable n/no-deprecated-api
-// oxlint-disable unicorn-js/import-style -- need full util module for CJS compatibility
+// oxlint-disable unicorn/import-style -- need full util module for CJS compatibility
 // Shim for node:module in Cloudflare Workers
 // Provides a createRequire that returns pre-imported modules
 

@@ -161,7 +161,7 @@
         // "unicorn/expiring-todo-comments": "error", // not yet implemented
         // "unicorn/explicit-length-check": "error",
         // "unicorn/filename-case": "error",
-        "unicorn-js/import-style": "error", // use jsPlugins
+        "unicorn/import-style": "error",
         "unicorn-js/isolated-functions": "error", // use jsPlugins
         "unicorn/new-for-builtins": "error",
         "unicorn/no-abusive-eslint-disable": "error",
