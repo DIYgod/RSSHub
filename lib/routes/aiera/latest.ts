@@ -27,7 +27,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler() {
     const response = await cache.tryGet('aiera:latest', async () => {
         const { data } = await got('https://aiera.com.cn/wp-json/wp/v2/posts', {
             searchParams: {
@@ -39,7 +39,7 @@ async function handler(ctx) {
     });
 
     if (!Array.isArray(response)) {
-        throw new Error('Invalid API response');
+        throw new TypeError('Invalid API response');
     }
 
     const items = response.map((item) => ({
