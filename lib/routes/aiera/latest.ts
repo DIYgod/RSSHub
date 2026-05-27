@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -27,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const response = await ctx.cache.tryGet('aiera:latest', async () => {
+    const response = await cache.tryGet('aiera:latest', async () => {
         const { data } = await got('https://aiera.com.cn/wp-json/wp/v2/posts', {
             searchParams: {
                 per_page: 20,
