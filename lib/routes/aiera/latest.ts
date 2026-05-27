@@ -6,7 +6,9 @@ export const route: Route = {
     path: '/latest',
     categories: ['new-media'],
     example: '/aiera/latest',
-    parameters: {},
+    url: 'aiera.com.cn',
+    name: '最新文章',
+    maintainers: ['panqingjie00'],
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,20 +23,25 @@ export const route: Route = {
             target: '/latest',
         },
     ],
-    name: '最新文章',
-    maintainers: ['panqingjie00'],
     handler,
 };
 
-async function handler() {
-    const response = await got(`https://aiera.com.cn/wp-json/wp/v2/posts`, {
-        searchParams: {
-            per_page: 20,
-            _embed: '',
-        },
+async function handler(ctx) {
+    const response = await ctx.cache.tryGet('aiera:latest', async () => {
+        const { data } = await got('https://aiera.com.cn/wp-json/wp/v2/posts', {
+            searchParams: {
+                per_page: 20,
+                _embed: '',
+            },
+        });
+        return data;
     });
 
-    const items = response.data.map((item) => ({
+    if (!Array.isArray(response)) {
+        throw new Error('Invalid API response');
+    }
+
+    const items = response.map((item) => ({
         title: item.title.rendered,
         description: item.content.rendered,
         pubDate: parseDate(item.date_gmt),
