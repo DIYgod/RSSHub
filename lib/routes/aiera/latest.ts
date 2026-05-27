@@ -56,6 +56,7 @@ async function handler() {
         link: 'https://aiera.com.cn',
         description: '新智元最新 AI 新闻资讯',
         language: 'zh-CN',
+        image: 'https://aiera.com.cn/wp-content/uploads/2025/01/%E6%96%B0%E6%99%BA%E5%85%83%E7%BD%91%E7%AB%99logo-150x150.png',
         item: items,
     };
 }
