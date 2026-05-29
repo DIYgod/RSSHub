@@ -41227,6 +41227,14 @@
     "_name": "Shanghai Museum",
     "www": [
       {
+        "title": "News & Announcements",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/mu/frontend/pg/infomation/news"
+        ],
+        "target": "/shanghaimuseum/information/news"
+      },
+      {
         "title": "Special Exhibitions",
         "docs": "https://docs.rsshub.app/routes/travel",
         "source": [

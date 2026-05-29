@@ -7778,6 +7778,9 @@
   "/sfacg/novel/chapter/:id": [
     "keocheung"
   ],
+  "/shanghaimuseum/information/news/:type?": [
+    "magazian"
+  ],
   "/shanghaimuseum/display/offline-exhibit/:type?": [
     "magazian"
   ],

@@ -2530,6 +2530,7 @@ export type RoutePath =
   | `/seu/yzb/:type`
   | `/sfacg/novel/chapter/:id`
   | `/shanghaimuseum/display/offline-exhibit/:type?`
+  | `/shanghaimuseum/information/news/:type?`
   | `/shcstheatre/programs`
   | `/shiep/:type/:id?`
   | `/shisu/en/:section`
