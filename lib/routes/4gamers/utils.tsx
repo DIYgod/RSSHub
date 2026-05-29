@@ -39,6 +39,7 @@ const parseItem = async (item) => {
             .map((section) => {
                 switch (section['@type']) {
                     case 'ContentAdsSection':
+                    case 'InsertOneAdsSection':
                     case 'ScrollerAdsSection':
                     case 'textScrollerAdsSection':
                         return '';

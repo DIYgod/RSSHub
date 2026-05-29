@@ -12,7 +12,6 @@
     },
     "plugins": ["eslint", "typescript", "node", "unicorn", "import"],
     "jsPlugins": [
-        { "name": "import-x-js", "specifier": "eslint-plugin-import-x" },
         { "name": "n", "specifier": "eslint-plugin-n" },
         { "name": "unicorn-js", "specifier": "eslint-plugin-unicorn" },
         "@stylistic/eslint-plugin",
@@ -162,7 +161,7 @@
         // "unicorn/expiring-todo-comments": "error", // not yet implemented
         // "unicorn/explicit-length-check": "error",
         // "unicorn/filename-case": "error",
-        "unicorn-js/import-style": "error", // use jsPlugins
+        "unicorn/import-style": "error",
         "unicorn-js/isolated-functions": "error", // use jsPlugins
         "unicorn/new-for-builtins": "error",
         "unicorn/no-abusive-eslint-disable": "error",
@@ -533,7 +532,7 @@
         "simple-import-sort/exports": "error",
 
         "import-x/first": "error",
-        "import-x-js/newline-after-import": "error", // use jsPlugins
+        "import-x/newline-after-import": "error",
         "no-duplicate-imports": "off",
         "import-x/no-duplicates": "error",
 
