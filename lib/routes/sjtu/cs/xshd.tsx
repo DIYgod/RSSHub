@@ -1,11 +1,14 @@
+import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { fetchArticle } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sjtu.edu.cn';
 
@@ -64,48 +67,54 @@ function publishDateFromImage(imageUrl: string): Date | undefined {
     return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), +8);
 }
 
-function renderDescription(item: ListItem, body?: string): string {
+function renderDescription(item: ListItem): string {
     return renderToString(
         <>
             {item.timeText && <p>举办时间：{item.timeText}</p>}
             {item.location && <p>地点：{item.location}</p>}
             {item.topic && <p>主题：{item.topic}</p>}
-            {body && (
-                <>
-                    <hr />
-                    <div dangerouslySetInnerHTML={{ __html: body }} />
-                </>
-            )}
         </>
     );
 }
 
+function rewriteRelativeUrls($: CheerioAPI, item: Cheerio<any>): void {
+    item.find('img').each((_, e) => {
+        const src = $(e).attr('src') || $(e).attr('_src');
+        if (src) {
+            $(e).attr('src', absolutize(src));
+        }
+    });
+    item.find('a').each((_, e) => {
+        const href = $(e).attr('href');
+        if (href) {
+            $(e).attr('href', absolutize(href));
+        }
+    });
+}
+
+function extractWechatUrl(finalUrl: string): string {
+    const url = new URL(finalUrl);
+    return url.searchParams.get('target_url') || finalUrl;
+}
+
 function enrichItem(item: ListItem): Promise<DataItem> {
     return cache.tryGet(item.link, async () => {
-        let body: string | undefined;
+        const response = await ofetch.raw<string>(item.link);
+        const finalUrl = response.url;
+        let description = renderDescription(item);
         let pubDate = publishDateFromImage(item.image);
 
-        try {
-            const response = await got(item.link);
-            const $ = load(response.data);
+        if (new URL(finalUrl).hostname === 'mp.weixin.qq.com') {
+            const article = await fetchArticle(extractWechatUrl(finalUrl));
+            description += `<hr>${article.description}`;
+            pubDate = article.pubDate || pubDate;
+        } else {
+            const $ = load(response._data ?? '');
             const $body = $('.xw-cont');
-            // In-site article page — enrich with body content.
-            // Otherwise it is a WeChat MP redirect interstitial; the SJTU link redirects to the original article when opened.
             if ($body.length > 0) {
                 const $txt = $body.find('.txt');
-                $txt.find('img').each((_, e) => {
-                    const src = $(e).attr('src') || $(e).attr('_src');
-                    if (src) {
-                        $(e).attr('src', absolutize(src));
-                    }
-                });
-                $txt.find('a').each((_, e) => {
-                    const href = $(e).attr('href');
-                    if (href) {
-                        $(e).attr('href', absolutize(href));
-                    }
-                });
-                body = $txt.html() ?? undefined;
+                rewriteRelativeUrls($, $txt);
+                description += `<hr>${$txt.html() ?? ''}`;
 
                 const publishedText = $body.find('.jj p').first().text();
                 const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
@@ -114,14 +123,12 @@ function enrichItem(item: ListItem): Promise<DataItem> {
                     pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), +8);
                 }
             }
-        } catch {
-            // Fall back to listing-only metadata
         }
 
         return {
             title: item.title,
             link: item.link,
-            description: renderDescription(item, body),
+            description,
             author: item.speakers || undefined,
             image: item.image || undefined,
             pubDate,
