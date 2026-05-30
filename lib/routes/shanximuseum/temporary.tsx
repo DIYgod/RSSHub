@@ -56,85 +56,79 @@ export const route = {
             fetchTypes.map(async (t) => {
                 const config = apiConfig[t as keyof typeof apiConfig];
 
-                const response = await got({
-                    method: 'get',
-                    url: `${apiUrl}${config.endpoint}`,
-                    searchParams: {
-                        ...config.query,
-                        _: Date.now(),
-                    },
-                });
-
-                const resData = response.data?.data; // The actual data is nested under the 'data' property in the response
-                const list = Array.isArray(resData?.list) ? resData.list : []; // resData may be undefined or not an array, resDate.list is an array
-
-                return list.map((item) => {
-                    const title = item.title;
-                    const itemLink = item.fullurl;
-                    const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
-                    const startDate = item.start_time.split(' ')[0];
-                    const endDate = item.end_time.split(' ')[0];
-                    const fullDuration = item.display_time;
-                    const location = item.area;
-                    const imgUrl = `${baseUrl}${item.image}`;
-
-                    const description = renderToString(
-                        <div>
-                            <img src={imgUrl} />
-                            <br />
-                            <p>
-                                <b>地点：</b>
-                                {location || '参考展览图片'}
-                                {/* location is only defined on the exhibition poster, cannot fetch directly from the website */}
-                            </p>
-                            <p>
-                                <b>开展：</b>
-                                {startDate || '未定/常设'}
-                            </p>
-                            <p>
-                                <b>闭展：</b>
-                                {endDate || '未定/常设'}
-                            </p>
-
-                            {fullDuration && (
-                                <p>
-                                    <small>原始展期：{fullDuration}</small>
-                                </p>
-                            )}
-                        </div>
-                    );
-
-                    return {
-                        title,
-                        link: itemLink,
-                        pubDate,
-                        description,
-                        // For further .ics file processing
-                        _extra: {
-                            museumName,
-                            title,
-                            location,
-                            startDate, // format: YYYY-MM-DD or '未定/常设'
-                            endDate, // format: YYYY-MM-DD or '未定/常设'
-                            itemLink,
+                // add trycatch to prevent one failed request, espacially for now/future exhibition.
+                try {
+                    const response = await got({
+                        method: 'get',
+                        url: `${apiUrl}${config.endpoint}`,
+                        searchParams: {
+                            ...config.query,
+                            _: Date.now(),
                         },
-                    };
-                });
+                    });
+
+                    const resData = response.data?.data; // The actual data is nested under the 'data' property in the response
+                    const list = Array.isArray(resData?.list) ? resData.list : []; // resData may be undefined or not an array, resDate.list is an array
+
+                    return list.map((item) => {
+                        const title = item.title;
+                        const itemLink = item.fullurl;
+                        const pubDate = timezone(parseDate(item.publishtime * 1000)); // Unix timestamp in seconds, convert to milliseconds
+                        const startDate = item.start_time.split(' ')[0];
+                        const endDate = item.end_time.split(' ')[0];
+                        const fullDuration = item.display_time;
+                        const location = item.area;
+                        const imgUrl = `${baseUrl}${item.image}`;
+
+                        const description = renderToString(
+                            <div>
+                                <img src={imgUrl} />
+                                <br />
+                                <p>
+                                    <b>地点：</b>
+                                    {location || '参考展览图片'}
+                                    {/* location is only defined on the exhibition poster, cannot fetch directly from the website */}
+                                </p>
+                                <p>
+                                    <b>开展：</b>
+                                    {startDate || '未定/常设'}
+                                </p>
+                                <p>
+                                    <b>闭展：</b>
+                                    {endDate || '未定/常设'}
+                                </p>
+
+                                {fullDuration && (
+                                    <p>
+                                        <small>原始展期：{fullDuration}</small>
+                                    </p>
+                                )}
+                            </div>
+                        );
+
+                        return {
+                            title,
+                            link: itemLink,
+                            pubDate,
+                            description,
+                            // For further .ics file processing
+                            _extra: {
+                                museumName,
+                                title,
+                                location,
+                                startDate, // format: YYYY-MM-DD or '未定/常设'
+                                endDate, // format: YYYY-MM-DD or '未定/常设'
+                                itemLink,
+                            },
+                        };
+                    });
+                } catch {
+                    return [];
+                }
             })
         );
 
         const items = responses.flat();
-
-        // return information if there is no exhibition available to fix "route is empty" issue.
-        if (items.length === 0) {
-            items.push({
-                title: `当前暂无${titleTag}`,
-                description: '<p>官方目前没有提供相关的展览数据。</p>',
-                link: `${baseUrl}/sx/exhibition/temporary.html`,
-                // fixed guid
-                guid: `shanxi-museum-empty-${fetchTypes.join('-')}`,
-            });
-        }
 
         return {
             title: `${museumName} - 临时展览 - ${titleTag}`,
