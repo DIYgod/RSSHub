@@ -96,6 +96,17 @@ function extractWechatUrl(finalUrl: string): string {
     return url.searchParams.get('target_url') || finalUrl;
 }
 
+function basicItem(item: ListItem): DataItem {
+    return {
+        title: item.title,
+        link: item.link,
+        description: renderDescription(item),
+        author: item.speakers || undefined,
+        image: item.image || undefined,
+        pubDate: publishDateFromImage(item.image),
+    };
+}
+
 function enrichItem(item: ListItem): Promise<DataItem> {
     return cache.tryGet(item.link, async () => {
         const response = await ofetch.raw<string>(item.link);
@@ -170,7 +181,8 @@ async function handler(): Promise<Data> {
     const listLink = `${host}/xshd.html`;
     const data = await ofetch<string>(listLink);
     const items = parseListing(data);
-    const enriched = await Promise.all(items.map((it) => enrichItem(it)));
+    const settledItems = await Promise.allSettled(items.map((it) => enrichItem(it)));
+    const enriched = settledItems.map((result, index) => (result.status === 'fulfilled' ? result.value : basicItem(items[index])));
 
     return {
         title: '上海交通大学计算机学院 - 学术活动',
