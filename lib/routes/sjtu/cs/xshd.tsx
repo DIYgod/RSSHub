@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { fetchArticle } from '@/utils/wechat-mp';
+import { fetchArticle, WeChatMpError } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sjtu.edu.cn';
 
@@ -104,9 +104,15 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         let pubDate = publishDateFromImage(item.image);
 
         if (new URL(finalUrl).hostname === 'mp.weixin.qq.com') {
-            const article = await fetchArticle(extractWechatUrl(finalUrl));
-            description += `<hr>${article.description}`;
-            pubDate = article.pubDate || pubDate;
+            try {
+                const article = await fetchArticle(extractWechatUrl(finalUrl));
+                description += `<hr>${article.description}`;
+                pubDate = article.pubDate || pubDate;
+            } catch (error) {
+                if (!(error instanceof WeChatMpError)) {
+                    throw error;
+                }
+            }
         } else {
             const $ = load(response._data ?? '');
             const $body = $('.xw-cont');
