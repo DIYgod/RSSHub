@@ -4,7 +4,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -163,7 +162,7 @@ export const route: Route = {
 
 async function handler(): Promise<Data> {
     const listLink = `${host}/xshd.html`;
-    const { data } = await got(listLink);
+    const data = await ofetch<string>(listLink);
     const items = parseListing(data);
     const enriched = await Promise.all(items.map((it) => enrichItem(it)));
 
