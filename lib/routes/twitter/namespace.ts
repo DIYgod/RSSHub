@@ -30,6 +30,9 @@ export const namespace: Namespace = {
 | \`count\`                        | \`count\` parameter passed to Twitter API, only available in \`/twitter/user\`                                                           | Unspecified/Integer    | Unspecified                               |
 | \`onlyMedia\`                    | Only get tweets with a media                                                                                                         | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 | \`mediaNumber \`                 | Number the medias                                                                                                                    | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
+| \`showEmojiForSubscriberOnly\`  | Use "🔒" as prefix for subscriber-only posts                                                                                         | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
+| \`showSymbolForSubscriberOnly\` | Use "[Subscribers Only]" as prefix for subscriber-only posts                                                                         | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`                                    |
+| \`showFullPrefixForSubscriberOnly\` | Use "🔒 [Subscribers Only]" as prefix for subscriber-only posts                                                                 | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |                                                                         | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`                                    |                                                                                                                    | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`                                   |
 
 Specify different option values than default values to improve readability. The URL
 
