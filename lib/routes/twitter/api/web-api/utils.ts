@@ -345,7 +345,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
                     const userResult = preview.core?.user_results?.result;
                     const fakeLegacy: any = {
                         id_str: preview.rest_id,
-                        full_text: `🔒 [Subscribers Only] ${preview.text ?? ''}`,
+                        full_text: `[Subscribers Only] ${preview.text ?? ''}`,
                         created_at: preview.created_at ?? '',
                         entities: { urls: [], hashtags: [], symbols: [], user_mentions: [] },
                         user_id_str: userResult?.rest_id ?? '',
