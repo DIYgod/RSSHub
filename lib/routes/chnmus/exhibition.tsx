@@ -138,10 +138,7 @@ export const route: Route = {
                         .toArray()
                         .map((el) => content(el).text());
 
-                    const title = texts
-                        .find((text) => text.includes('展览名称：'))
-                        ?.replaceAll('展览名称：', '')
-                        ?.trim();
+                    const title = texts.find((text) => text.includes('展览名称：'))?.replaceAll('展览名称：', '');
 
                     // filter out items without title, for example: https://www.chnmus.net/ch/information/exhibition/details.html?id=7400076083917230080#list
                     if (!title) {
