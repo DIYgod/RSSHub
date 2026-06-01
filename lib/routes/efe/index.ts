@@ -20,7 +20,7 @@ const categories: Record<string, string> = {
 export const route: Route = {
     path: '/:category?',
     name: 'Noticias',
-    maintainers: [],
+    maintainers: ['mlkgrnt'],
     example: '/efe/mundo',
     parameters: { category: 'Categoría, por defecto mundo' },
     handler,
