@@ -87,7 +87,8 @@ async function handler(ctx) {
                     pubDate = detailResponse.match(/"datePublished": ?"(.*?)",/)[1];
                 } else {
                     // uploadDate replaces datePublished for video articles
-                    const uploadDate = detailResponse.match(/"uploadDate": ?"(.*?)",/)[1];
+                    const uploadDateMatch = detailResponse.match(/"uploadDate": ?"(.*?)",/);
+                    const uploadDate = uploadDateMatch ? uploadDateMatch[1] : null;
 
                     pubDate = uploadDate && uploadDate.length > 1 ? uploadDate : content('div.date-simple > span:nth-child(2)').text();
                 }
