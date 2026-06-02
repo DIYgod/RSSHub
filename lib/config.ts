@@ -86,6 +86,7 @@ type ConfigEnvKeys =
     | 'BITBUCKET_PASSWORD'
     | 'BTBYR_HOST'
     | 'BTBYR_COOKIE'
+    | 'BUBBLE_COOKIE'
     | 'BUPT_PORTAL_COOKIE'
     | 'CAIXIN_COOKIE'
     | 'CIVITAI_COOKIE'
@@ -361,6 +362,9 @@ export type Config = {
     btbyr: {
         host?: string;
         cookies?: string;
+    };
+    bubble: {
+        cookie?: string;
     };
     bupt: {
         portal_cookie?: string;
@@ -856,6 +860,9 @@ const calculateValue = () => {
         btbyr: {
             host: envs.BTBYR_HOST,
             cookies: envs.BTBYR_COOKIE,
+        },
+        bubble: {
+            cookie: envs.BUBBLE_COOKIE,
         },
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,

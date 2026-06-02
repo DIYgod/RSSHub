@@ -1,0 +1,26 @@
+{
+    "_extras": [
+        {
+            "type": "youtube/video",
+            "platform": "youtube",
+            "sourceUrl": "https://www.youtube.com/watch?v=vid001",
+            "externalId": "vid001",
+            "seriesExternalId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "publishedAt": "2026-04-01T00:00:00.000Z",
+            "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelTitle": "Test Channel",
+            "isMembershipOnly": false
+        },
+        {
+            "type": "youtube/video",
+            "platform": "youtube",
+            "sourceUrl": "https://www.youtube.com/watch?v=vid002",
+            "externalId": "vid002",
+            "seriesExternalId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "publishedAt": "2026-03-30T00:00:00.000Z",
+            "channelId": "UCaaaaaaaaaaaaaaaaaaaaaA",
+            "channelTitle": "Test Channel",
+            "isMembershipOnly": false
+        }
+    ]
+}

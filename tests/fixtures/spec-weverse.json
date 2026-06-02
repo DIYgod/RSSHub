@@ -1,0 +1,28 @@
+{
+    "_extras": [
+        {
+            "type": "weverse/post",
+            "platform": "weverse",
+            "sourceUrl": "https://weverse.io/community/46/post/post001",
+            "externalId": "post001",
+            "seriesExternalId": "46",
+            "publishedAt": "2026-04-10T12:00:00.000Z",
+            "artistId": "46",
+            "communityId": "46",
+            "postType": "artist",
+            "isPaid": false
+        },
+        {
+            "type": "weverse/post",
+            "platform": "weverse",
+            "sourceUrl": "https://weverse.io/community/46/post/post002",
+            "externalId": "post002",
+            "seriesExternalId": "46",
+            "publishedAt": "2026-04-09T12:00:00.000Z",
+            "artistId": "46",
+            "communityId": "46",
+            "postType": "artist",
+            "isPaid": true
+        }
+    ]
+}

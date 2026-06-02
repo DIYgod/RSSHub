@@ -1,0 +1,26 @@
+{
+    "_extras": [
+        {
+            "type": "bubble/message",
+            "platform": "bubble",
+            "sourceUrl": "https://bubble.us/channel/12345/message/msg001",
+            "externalId": "msg001",
+            "seriesExternalId": "12345",
+            "publishedAt": "2026-04-10T08:00:00.000Z",
+            "artistId": "12345",
+            "bubbleRoomId": "12345",
+            "messageType": "text"
+        },
+        {
+            "type": "bubble/message",
+            "platform": "bubble",
+            "sourceUrl": "https://bubble.us/channel/12345/message/msg002",
+            "externalId": "msg002",
+            "seriesExternalId": "12345",
+            "publishedAt": "2026-04-09T08:00:00.000Z",
+            "artistId": "12345",
+            "bubbleRoomId": "12345",
+            "messageType": "image"
+        }
+    ]
+}
