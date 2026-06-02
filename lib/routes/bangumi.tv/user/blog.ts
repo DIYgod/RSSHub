@@ -4,7 +4,8 @@ import type { Route } from '@/types';
 import { bbcodeToHtml } from '../utils';
 import ofetch from '@/utils/ofetch';
 
-const BANGUMI_API_BASE = 'https://next.bgm.tv/p1';
+const baseUrl = 'https://bgm.tv';
+const apiUrl = 'https://next.bgm.tv/p1';
 
 export const route: Route = {
     path: '/user/blog/:id',
@@ -33,13 +34,9 @@ export const route: Route = {
 };
 
 async function fetchBlogList(user: string, limit = 20, offset = 0) {
-    const url = `${BANGUMI_API_BASE}/users/${user}/blogs`;
+    const url = `${apiUrl}/users/${user}/blogs?limit=${limit}&offset=${offset}`;
     const response = await ofetch(url, {
         method: 'get',
-        searchParams: queryString.stringify({
-            limit,
-            offset,
-        }),
         headers: {
             Accept: 'application/json',
             'User-Agent': config.trueUA,
@@ -49,7 +46,7 @@ async function fetchBlogList(user: string, limit = 20, offset = 0) {
 }
 
 async function fetchBlogDetail(blogId: number) {
-    const url = `${BANGUMI_API_BASE}/blogs/${blogId}`;
+    const url = `${apiUrl}/blogs/${blogId}`;
     const response = await ofetch(url, {
         method: 'get',
         headers: {
@@ -70,7 +67,7 @@ async function handler(ctx) {
     if (!blogListData.data || blogListData.data.length === 0) {
         return {
             title: `${user} 的日志`,
-            link: `https://bgm.tv/user/${user}/blogs`,
+            link: `${baseUrl}/user/${user}/blogs`,
             item: [],
         };
     }
@@ -84,8 +81,8 @@ async function handler(ctx) {
 
     const items = blogs.map((item) => ({
         title: item.title,
-        link: `https://bgm.tv/blog/${item.id}`,
-        description: bbcodeToHtml(item.content) || '',
+        link: `${baseUrl}/blog/${item.id}`,
+        description: bbcodeToHtml(item.content),
         // API 内的 createdAt 是秒级 Unix 时间戳，乘 1000 转为毫秒
         pubDate: new Date(item.createdAt * 1000),
         author: nickname,
@@ -94,7 +91,7 @@ async function handler(ctx) {
 
     return {
         title: `${nickname} 的日志`,
-        link: `https://bgm.tv/user/${user}/blogs`,
+        link: `${baseUrl}/user/${user}/blogs`,
         item: items,
     };
 }
