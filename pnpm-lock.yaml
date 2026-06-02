@@ -251,8 +251,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       tsx:
-        specifier: 4.22.3
-        version: 4.22.3
+        specifier: 4.22.4
+        version: 4.22.4
       twitter-api-v2:
         specifier: 1.29.0
         version: 1.29.0
@@ -454,7 +454,7 @@ importers:
         version: 11.0.0
       tsdown:
         specifier: 0.22.1
-        version: 0.22.1(tsx@4.22.3)(typescript@5.9.3)(unrun@0.2.37(synckit@0.11.12))
+        version: 0.22.1(tsx@4.22.4)(typescript@5.9.3)(unrun@0.2.37(synckit@0.11.12))
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -463,10 +463,10 @@ importers:
         version: 11.0.5
       vite-tsconfig-paths:
         specifier: 6.1.1
-        version: 6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0))
+        version: 6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       vitest:
         specifier: 4.1.8
-        version: 4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0))
+        version: 4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       wrangler:
         specifier: 4.95.0
         version: 4.95.0(@cloudflare/workers-types@4.20260529.1)(bufferutil@4.1.0)(utf-8-validate@5.0.10)
@@ -5474,10 +5474,6 @@ packages:
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
 
-  tinyexec@1.1.2:
-    resolution: {integrity: sha512-dAqSqE/RabpBKI8+h26GfLq6Vb3JVXs30XYQjdMjaj/c2tS8IYYMbIzP599KtRj7c57/wYApb3QjgRgXmrCukA==}
-    engines: {node: '>=18'}
-
   tinyexec@1.2.2:
     resolution: {integrity: sha512-M/Q0B2cp4K7kynaT/vnED1j8TlLY+Pp7C6Wl2bl/7u/F0mUVwdyOpwomQb8JpYLitHUssAJRmLZdMCGsrx7i+g==}
     engines: {node: '>=18'}
@@ -5632,8 +5628,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tsx@4.22.3:
-    resolution: {integrity: sha512-mdoNxBC/cSQObGGVQ5Bpn5i+yv7j68gk3Nfm3wFjcJg3Z0Mix9jzAFfP12prmm5eVGmDKtp0yyArrs0Q+8gZHg==}
+  tsx@4.22.4:
+    resolution: {integrity: sha512-X8EX+XV4QR5xCsrgxaED954zTDfY8KqlDtskKEL0cHhyS/P8b4IFOvGDQpsC9Q1XnLq915wEfwwY/zzskCtmhg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -7983,7 +7979,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0))
+      vitest: 4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
 
   '@vitest/expect@4.1.8':
     dependencies:
@@ -7994,14 +7990,14 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.8(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0))':
+  '@vitest/mocker@4.1.8(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))':
     dependencies:
       '@vitest/spy': 4.1.8
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       msw: 2.13.4(@types/node@25.9.1)(typescript@5.9.3)
-      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0)
+      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)
 
   '@vitest/pretty-format@4.1.8':
     dependencies:
@@ -11112,8 +11108,6 @@ snapshots:
 
   tinybench@2.9.0: {}
 
-  tinyexec@1.1.2: {}
-
   tinyexec@1.2.2: {}
 
   tinyexec@1.2.4: {}
@@ -11201,7 +11195,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  tsdown@0.22.1(tsx@4.22.3)(typescript@5.9.3)(unrun@0.2.37(synckit@0.11.12)):
+  tsdown@0.22.1(tsx@4.22.4)(typescript@5.9.3)(unrun@0.2.37(synckit@0.11.12)):
     dependencies:
       ansis: 4.3.0
       cac: 7.0.0
@@ -11219,7 +11213,7 @@ snapshots:
       tree-kill: 1.2.2
       unconfig-core: 7.5.0
     optionalDependencies:
-      tsx: 4.22.3
+      tsx: 4.22.4
       typescript: 5.9.3
       unrun: 0.2.37(synckit@0.11.12)
     transitivePeerDependencies:
@@ -11232,7 +11226,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsx@4.22.3:
+  tsx@4.22.4:
     dependencies:
       esbuild: 0.28.0
     optionalDependencies:
@@ -11426,17 +11420,17 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-tsconfig-paths@6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0)):
+  vite-tsconfig-paths@6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.9.3)
-      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0)
+      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0):
+  vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -11448,13 +11442,13 @@ snapshots:
       '@types/node': 25.9.1
       fsevents: 2.3.3
       jiti: 2.6.1
-      tsx: 4.22.3
+      tsx: 4.22.4
       yaml: 2.9.0
 
-  vitest@4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0)):
+  vitest@4.1.8(@edge-runtime/vm@3.2.0)(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(jsdom@29.1.1(@noble/hashes@2.0.1))(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)):
     dependencies:
       '@vitest/expect': 4.1.8
-      '@vitest/mocker': 4.1.8(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0))
+      '@vitest/mocker': 4.1.8(msw@2.13.4(@types/node@25.9.1)(typescript@5.9.3))(vite@7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0))
       '@vitest/pretty-format': 4.1.8
       '@vitest/runner': 4.1.8
       '@vitest/snapshot': 4.1.8
@@ -11471,7 +11465,7 @@ snapshots:
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.3)(yaml@2.9.0)
+      vite: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(tsx@4.22.4)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@edge-runtime/vm': 3.2.0
